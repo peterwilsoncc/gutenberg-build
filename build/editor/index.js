@@ -12193,7 +12193,7 @@ function getControlByType(type) {
   throw 'Control ' + type + ' not found';
 }
 
-;// ./packages/dataviews/build-module/normalize-fields.js
+;// ./packages/dataviews/build-module/utils/normalize-fields.js
 /**
  * External dependencies
  */
@@ -14784,7 +14784,7 @@ const renamePost = {
  */
 /* harmony default export */ const rename_post = (renamePost);
 
-;// ./packages/dataviews/build-module/validation.js
+;// ./packages/dataviews/build-module/utils/is-item-valid.js
 /**
  * Internal dependencies
  */

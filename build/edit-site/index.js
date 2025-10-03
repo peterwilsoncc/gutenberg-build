@@ -38361,7 +38361,7 @@ function getControlByType(type) {
   throw 'Control ' + type + ' not found';
 }
 
-;// ./packages/dataviews/build-module/normalize-fields.js
+;// ./packages/dataviews/build-module/utils/normalize-fields.js
 /**
  * External dependencies
  */
@@ -38507,7 +38507,7 @@ function normalizeFields(fields) {
   });
 }
 
-;// ./packages/dataviews/build-module/filter-and-sort-data-view.js
+;// ./packages/dataviews/build-module/utils/filter-sort-and-paginate.js
 /**
  * External dependencies
  */
@@ -38527,7 +38527,7 @@ function normalizeFields(fields) {
 function normalizeSearchInput(input = '') {
   return remove_accents_default()(input.trim().toLowerCase());
 }
-const filter_and_sort_data_view_EMPTY_ARRAY = [];
+const filter_sort_and_paginate_EMPTY_ARRAY = [];
 
 /**
  * Calculates a date offset from now.
@@ -38563,7 +38563,7 @@ function getRelativeDate(value, unit) {
 function filterSortAndPaginate(data, view, fields) {
   if (!data) {
     return {
-      data: filter_and_sort_data_view_EMPTY_ARRAY,
+      data: filter_sort_and_paginate_EMPTY_ARRAY,
       paginationInfo: {
         totalItems: 0,
         totalPages: 0
