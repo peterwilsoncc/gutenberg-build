@@ -61000,15 +61000,6 @@ const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
  */
 
 
-
-const inlinePadding = ({
-  size
-}) => {
-  return space(size === 'compact' ? 1 : 2);
-};
-const SuffixItemWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "effl84m1"
-} : 0)("display:flex;padding-inline-end:", inlinePadding, ";svg{fill:currentColor;}" + ( true ? "" : 0));
 const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_control,  true ? {
   target: "effl84m0"
 } : 0)("input[type='search']{&::-webkit-search-decoration,&::-webkit-search-cancel-button,&::-webkit-search-results-button,&::-webkit-search-results-decoration{-webkit-appearance:none;}}&:not( :focus-within ){--wp-components-color-background:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
@@ -61017,7 +61008,6 @@ const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_co
 /**
  * External dependencies
  */
-
 
 /**
  * WordPress dependencies
@@ -61035,6 +61025,8 @@ const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_co
 
 
 
+
+
 function SuffixItem({
   searchRef,
   value,
@@ -61042,9 +61034,7 @@ function SuffixItem({
   onClose
 }) {
   if (!onClose && !value) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
-      icon: library_search
-    });
+    return null;
   }
   if (onClose) {
     external_wp_deprecated_default()('`onClose` prop in wp.components.SearchControl', {
@@ -61055,11 +61045,14 @@ function SuffixItem({
     onChange('');
     searchRef.current?.focus();
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-    size: "small",
-    icon: close_small,
-    label: onClose ? (0,external_wp_i18n_namespaceObject.__)('Close search') : (0,external_wp_i18n_namespaceObject.__)('Reset search'),
-    onClick: onClose !== null && onClose !== void 0 ? onClose : onReset
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputControlSuffixWrapper, {
+    variant: "control",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      size: "small",
+      icon: close_small,
+      label: onClose ? (0,external_wp_i18n_namespaceObject.__)('Close search') : (0,external_wp_i18n_namespaceObject.__)('Reset search'),
+      onClick: onClose !== null && onClose !== void 0 ? onClose : onReset
+    })
   });
 }
 function UnforwardedSearchControl({
@@ -61112,14 +61105,18 @@ function UnforwardedSearchControl({
       autoComplete: "off",
       placeholder: placeholder,
       value: value !== null && value !== void 0 ? value : '',
-      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SuffixItemWrapper, {
-        size: size,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SuffixItem, {
-          searchRef: searchRef,
-          value: value,
-          onChange: onChange,
-          onClose: onClose
+      prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputControlPrefixWrapper, {
+        variant: "icon",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
+          icon: library_search,
+          fill: "currentColor"
         })
+      }),
+      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SuffixItem, {
+        searchRef: searchRef,
+        value: value,
+        onChange: onChange,
+        onClose: onClose
       }),
       ...filteredRestProps
     })
