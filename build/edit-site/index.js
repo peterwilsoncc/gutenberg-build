@@ -49339,6 +49339,7 @@ const {
   useHistory: dataviews_actions_useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const useSetActiveTemplateAction = () => {
+  const activeTheme = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getCurrentTheme());
   const {
     getEntityRecord
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_coreData_namespaceObject.store);
@@ -49354,7 +49355,7 @@ const useSetActiveTemplateAction = () => {
     isPrimary: true,
     icon: edit,
     isEligible(item) {
-      return !(item.slug === 'index' && item.source === 'theme');
+      return !(item.slug === 'index' && item.source === 'theme') && item.theme === activeTheme.stylesheet;
     },
     async callback(items) {
       var _await$getEntityRecor;
@@ -49383,7 +49384,7 @@ const useSetActiveTemplateAction = () => {
       });
       await saveEditedEntityRecord('root', 'site');
     }
-  }), [editEntityRecord, saveEditedEntityRecord, getEntityRecord]);
+  }), [editEntityRecord, saveEditedEntityRecord, getEntityRecord, activeTheme]);
 };
 const useEditPostAction = () => {
   const history = dataviews_actions_useHistory();
@@ -51901,6 +51902,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -52043,6 +52045,30 @@ const activeField = {
     });
   }
 };
+const useThemeField = () => {
+  const activeTheme = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getCurrentTheme());
+  return {
+    label: (0,external_wp_i18n_namespaceObject.__)('Compatible Theme'),
+    id: 'theme',
+    getValue: ({
+      item
+    }) => item.theme,
+    render: function Render({
+      item
+    }) {
+      if (item.theme === activeTheme.stylesheet) {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fields_Badge, {
+          intent: "success",
+          children: item.theme
+        });
+      }
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fields_Badge, {
+        intent: "error",
+        children: item.theme
+      });
+    }
+  };
+};
 const slugField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Template Type'),
   id: 'slug',
@@ -52118,7 +52144,7 @@ const page_templates_DEFAULT_VIEW = {
   titleField: 'title',
   descriptionField: 'description',
   mediaField: 'preview',
-  fields: ['author', 'active', 'slug'],
+  fields: ['author', 'active', 'slug', 'theme'],
   filters: [],
   ...page_templates_defaultLayouts[LAYOUT_GRID]
 };
@@ -52167,7 +52193,19 @@ function PageTemplates() {
       }] : []
     }));
   }, [setView, activeView]);
-  const activeTemplatesOption = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', 'site')?.active_templates);
+  const {
+    activeTemplatesOption,
+    activeTheme
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord,
+      getCurrentTheme
+    } = select(external_wp_coreData_namespaceObject.store);
+    return {
+      activeTemplatesOption: getEntityRecord('root', 'site')?.active_templates,
+      activeTheme: getCurrentTheme()
+    };
+  });
   // Todo: this will have to be better so that we're not fetching all the
   // records all the time. Active templates query will need to move server
   // side.
@@ -52196,9 +52234,7 @@ function PageTemplates() {
           }
         } else {
           // Replace the template in the array.
-          const template = userRecords.find(({
-            id
-          }) => id === activeId);
+          const template = userRecords.find(userRecord => userRecord.id === activeId && userRecord.theme === activeTheme.stylesheet);
           if (template) {
             const index = _active.findIndex(({
               slug
@@ -52213,7 +52249,7 @@ function PageTemplates() {
       }
     }
     return _active;
-  }, [userRecords, staticRecords, activeTemplatesOption]);
+  }, [userRecords, staticRecords, activeTemplatesOption, activeTheme]);
   let _records;
   let isLoadingData;
   if (activeView === 'active') {
@@ -52229,9 +52265,9 @@ function PageTemplates() {
   const records = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return _records.map(record => ({
       ...record,
-      _isActive: typeof record.id === 'string' ? activeTemplatesOption[record.slug] === record.id || activeTemplatesOption[record.slug] === undefined : Object.values(activeTemplatesOption).includes(record.id)
+      _isActive: activeTemplates.find(template => template.id === record.id)
     }));
-  }, [_records, activeTemplatesOption]);
+  }, [_records, activeTemplates]);
   const users = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getUser
@@ -52258,8 +52294,12 @@ function PageTemplates() {
       }));
     }
   }, [history, path, view?.type]);
+  const themeField = useThemeField();
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const _fields = [fields_previewField, templateTitleField, descriptionField, activeField, slugField];
+    if (activeView === 'user') {
+      _fields.push(themeField);
+    }
     const elements = [];
     for (const author in users) {
       var _users$author$id, _users$author$name;
@@ -52273,7 +52313,7 @@ function PageTemplates() {
       elements
     });
     return _fields;
-  }, [users]);
+  }, [users, activeView]);
   const {
     data,
     paginationInfo
