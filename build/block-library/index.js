@@ -2172,6 +2172,7 @@ const metadata = {
   description: "Displays a group of accordion headings and associated expandable content.",
   example: {},
   supports: {
+    anchor: true,
     html: false,
     align: ["wide", "full"],
     background: {
