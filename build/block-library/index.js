@@ -56531,7 +56531,6 @@ const block_metadata = {
     html: false,
     inserter: false,
     renaming: false,
-    blockVisibility: false,
     interactivity: {
       clientNavigation: true
     }
@@ -67374,7 +67373,6 @@ const template_part_metadata = {
     html: false,
     reusable: false,
     renaming: false,
-    blockVisibility: false,
     interactivity: {
       clientNavigation: true
     }
