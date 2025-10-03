@@ -1758,17 +1758,17 @@ __webpack_require__.d(footnotes_namespaceObject, {
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
-;// external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
+;// external ["wp","blockEditor"]
+const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","serverSideRender"]
 const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
 var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
 ;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// external ["wp","blockEditor"]
-const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
+;// external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// external ["wp","blob"]
 const external_wp_blob_namespaceObject = window["wp"]["blob"];
 ;// external ["wp","coreData"]
@@ -71309,6 +71309,7 @@ lock(privateApis, {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -71435,6 +71436,7 @@ lock(privateApis, {
 /**
  * Function to get all the block-library blocks in an array
  */
+
 const getAllBlocks = () => {
   const blocks = [
   // Common blocks are grouped at the top to prioritize their display
@@ -71508,12 +71510,36 @@ const registerCoreBlocks = (blocks = __experimentalGetCoreBlocks()) => {
         ...(bootstrappedApiVersion < 3 && {
           apiVersion: 3
         }),
-        edit: ({
+        edit: function Edit({
           attributes
-        }) => {
-          return (0,external_wp_element_namespaceObject.createElement)((external_wp_serverSideRender_default()), {
+        }) {
+          const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+          const {
+            content,
+            status,
+            error
+          } = (0,external_wp_serverSideRender_namespaceObject.useServerSideRender)({
             block: blockName,
             attributes
+          });
+          if (status === 'loading') {
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+              ...blockProps,
+              children: (0,external_wp_i18n_namespaceObject.__)('Loading…')
+            });
+          }
+          if (status === 'error') {
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+              ...blockProps,
+              children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: error message describing the problem */
+              (0,external_wp_i18n_namespaceObject.__)('Error loading block: %s'), error)
+            });
+          }
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            ...blockProps,
+            dangerouslySetInnerHTML: {
+              __html: content || ''
+            }
           });
         },
         save: () => null
