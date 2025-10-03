@@ -49255,7 +49255,6 @@ const post_time_to_read_variations_variations = [{
 const post_time_to_read_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
-  __experimental: true,
   name: "core/post-time-to-read",
   title: "Time to Read",
   category: "theme",
