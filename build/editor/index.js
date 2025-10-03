@@ -12339,7 +12339,7 @@ function normalizeFields(fields) {
   });
 }
 
-;// ./packages/dataviews/build-module/dataforms-layouts/is-combined-field.js
+;// ./packages/dataviews/build-module/dataform-layouts/is-combined-field.js
 /**
  * Internal dependencies
  */
@@ -12348,7 +12348,7 @@ function isCombinedField(field) {
   return field.children !== undefined;
 }
 
-;// ./packages/dataviews/build-module/normalize-form-fields.js
+;// ./packages/dataviews/build-module/dataform-layouts/normalize-form-fields.js
 /**
  * Internal dependencies
  */
@@ -12449,7 +12449,7 @@ function normalizeFormFields(form) {
   });
 }
 
-;// ./packages/dataviews/build-module/dataforms-layouts/regular/index.js
+;// ./packages/dataviews/build-module/dataform-layouts/regular/index.js
 /**
  * External dependencies
  */
@@ -12574,7 +12574,7 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 });
 /* harmony default export */ const close_small = (closeSmall);
 
-;// ./packages/dataviews/build-module/dataforms-layouts/panel/summary-button.js
+;// ./packages/dataviews/build-module/dataform-layouts/panel/summary-button.js
 /**
  * WordPress dependencies
  */
@@ -12635,7 +12635,7 @@ function SummaryButton({
 }
 /* harmony default export */ const summary_button = (SummaryButton);
 
-;// ./packages/dataviews/build-module/dataforms-layouts/panel/dropdown.js
+;// ./packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
 /**
  * WordPress dependencies
  */
@@ -12749,7 +12749,7 @@ function PanelDropdown({
 }
 /* harmony default export */ const dropdown = (PanelDropdown);
 
-;// ./packages/dataviews/build-module/dataforms-layouts/panel/modal.js
+;// ./packages/dataviews/build-module/dataform-layouts/panel/modal.js
 /**
  * External dependencies
  */
@@ -12863,7 +12863,7 @@ function PanelModal({
 }
 /* harmony default export */ const modal = (PanelModal);
 
-;// ./packages/dataviews/build-module/dataforms-layouts/get-summary-fields.js
+;// ./packages/dataviews/build-module/dataform-layouts/get-summary-fields.js
 /**
  * Internal dependencies
  */
@@ -12895,7 +12895,7 @@ const getSummaryFields = (summaryField, fields) => {
   return [];
 };
 
-;// ./packages/dataviews/build-module/dataforms-layouts/panel/index.js
+;// ./packages/dataviews/build-module/dataform-layouts/panel/index.js
 /**
  * External dependencies
  */
@@ -13073,7 +13073,7 @@ const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 });
 /* harmony default export */ const chevron_down = (chevronDown);
 
-;// ./packages/dataviews/build-module/dataforms-layouts/card/index.js
+;// ./packages/dataviews/build-module/dataform-layouts/card/index.js
 /**
  * WordPress dependencies
  */
@@ -13260,7 +13260,7 @@ function FormCardField({
   });
 }
 
-;// ./packages/dataviews/build-module/dataforms-layouts/row/index.js
+;// ./packages/dataviews/build-module/dataform-layouts/row/index.js
 /**
  * WordPress dependencies
  */
@@ -13367,7 +13367,7 @@ function FormRowField({
   });
 }
 
-;// ./packages/dataviews/build-module/dataforms-layouts/index.js
+;// ./packages/dataviews/build-module/dataform-layouts/index.js
 /**
  * WordPress dependencies
  */
@@ -13419,7 +13419,7 @@ function getFormFieldLayout(type) {
   return FORM_FIELD_LAYOUTS.find(layout => layout.type === type);
 }
 
-;// ./packages/dataviews/build-module/dataforms-layouts/data-form-layout.js
+;// ./packages/dataviews/build-module/dataform-layouts/data-form-layout.js
 /**
  * WordPress dependencies
  */
