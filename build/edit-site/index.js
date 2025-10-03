@@ -32620,7 +32620,7 @@ const constants_LAYOUT_LIST = 'list';
 // Picker view layouts.
 const LAYOUT_PICKER_GRID = 'pickerGrid';
 
-;// ./packages/dataviews/build-module/utils.js
+;// ./packages/dataviews/build-module/field-types/utils/render-from-elements.js
 /**
  * Internal dependencies
  */
