@@ -22381,6 +22381,21 @@ function MediaUploadCheck({
 ;// external ["wp","isShallowEqual"]
 const external_wp_isShallowEqual_namespaceObject = window["wp"]["isShallowEqual"];
 var external_wp_isShallowEqual_default = /*#__PURE__*/__webpack_require__.n(external_wp_isShallowEqual_namespaceObject);
+;// ./packages/icons/build-module/library/link-off.js
+/**
+ * WordPress dependencies
+ */
+
+
+const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z"
+  })
+});
+/* harmony default export */ const link_off = (linkOff);
+
 ;// ./packages/icons/build-module/library/keyboard-return.js
 /**
  * WordPress dependencies
@@ -22531,7 +22546,7 @@ class URLInput extends external_wp_element_namespaceObject.Component {
     this.handleOnClick = this.handleOnClick.bind(this);
     this.bindSuggestionNode = this.bindSuggestionNode.bind(this);
     this.autocompleteRef = props.autocompleteRef || (0,external_wp_element_namespaceObject.createRef)();
-    this.inputRef = (0,external_wp_element_namespaceObject.createRef)();
+    this.inputRef = props.inputRef || (0,external_wp_element_namespaceObject.createRef)();
     this.updateSuggestions = (0,external_wp_compose_namespaceObject.debounce)(this.updateSuggestions.bind(this), 200);
     this.suggestionNodes = [];
     this.suggestionsRequest = null;
@@ -22841,7 +22856,9 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       placeholder = (0,external_wp_i18n_namespaceObject.__)('Paste URL or type to search'),
       __experimentalRenderControl: renderControl,
       value = '',
-      hideLabelFromVision = false
+      hideLabelFromVision = false,
+      help = null,
+      disabled = false
     } = this.props;
     const {
       loading,
@@ -22865,10 +22882,13 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       value,
       required: true,
       type: 'text',
-      onChange: this.onChange,
-      onFocus: this.onFocus,
+      onChange: disabled ? () => {} : this.onChange,
+      // Disable onChange when disabled
+      onFocus: disabled ? () => {} : this.onFocus,
+      // Disable onFocus when disabled
       placeholder,
-      onKeyDown: this.onKeyDown,
+      onKeyDown: disabled ? () => {} : this.onKeyDown,
+      // Disable onKeyDown when disabled
       role: 'combobox',
       'aria-label': label ? undefined : (0,external_wp_i18n_namespaceObject.__)('URL'),
       // Ensure input always has an accessible label
@@ -22877,7 +22897,9 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       'aria-owns': suggestionsListboxId,
       'aria-activedescendant': selectedSuggestion !== null ? `${suggestionOptionIdPrefix}-${selectedSuggestion}` : undefined,
       ref: this.inputRef,
-      suffix: this.props.suffix
+      disabled,
+      suffix: this.props.suffix,
+      help
     };
     if (renderControl) {
       return renderControl(controlProps, inputProps, loading);
@@ -23626,7 +23648,8 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
   withURLSuggestion = true,
   createSuggestionButtonText,
   hideLabelFromVision = false,
-  suffix
+  suffix,
+  isEntity = false
 }, ref) => {
   const genericSearchHandler = useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggestion, withURLSuggestion);
   const searchHandler = showSuggestions ? fetchSuggestions || genericSearchHandler : noopSearchHandler;
@@ -23710,8 +23733,9 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
           });
         }
       },
-      ref: ref,
-      suffix: suffix
+      inputRef: ref,
+      suffix: suffix,
+      disabled: isEntity
     }), children]
   });
 });
@@ -23764,21 +23788,6 @@ const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 /* harmony default export */ const edit = (library_pencil);
-
-;// ./packages/icons/build-module/library/link-off.js
-/**
- * WordPress dependencies
- */
-
-
-const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z"
-  })
-});
-/* harmony default export */ const link_off = (linkOff);
 
 ;// ./packages/icons/build-module/library/copy-small.js
 /**
@@ -24237,6 +24246,7 @@ function useInternalValue(value) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -24322,6 +24332,7 @@ function useInternalValue(value) {
  * @property {boolean=}                   hasTextControl             Whether to add a text field to the UI to update the value.title.
  * @property {string|Function|undefined}  createSuggestionButtonText The text to use in the button that calls createSuggestion.
  * @property {Function}                   renderControlBottom        Optional controls to be rendered at the bottom of the component.
+ * @property {boolean=}                   handleEntities             Whether to handle entity links (links with ID). When true and a link has an ID, the input will be disabled and show an unlink button.
  */
 
 const link_control_noop = () => {};
@@ -24354,7 +24365,8 @@ function LinkControl({
   createSuggestionButtonText,
   hasRichPreviews = false,
   hasTextControl = false,
-  renderControlBottom = null
+  renderControlBottom = null,
+  handleEntities = false
 }) {
   if (withCreateSuggestion === undefined && createSuggestion) {
     withCreateSuggestion = true;
@@ -24397,11 +24409,19 @@ function LinkControl({
   const isMountingRef = (0,external_wp_element_namespaceObject.useRef)(true);
   const wrapperNode = (0,external_wp_element_namespaceObject.useRef)();
   const textInputRef = (0,external_wp_element_namespaceObject.useRef)();
+  const searchInputRef = (0,external_wp_element_namespaceObject.useRef)();
   const isEndingEditWithFocusRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const settingsKeys = settings.map(({
     id
   }) => id);
   const [internalControlValue, setInternalControlValue, setInternalURLInputValue, setInternalTextInputValue, createSetInternalSettingValueHandler] = useInternalValue(value);
+
+  // Compute isEntity internally based on handleEntities prop and presence of ID
+  const isEntity = handleEntities && !!internalControlValue?.id;
+
+  // Generate help text ID for accessibility association
+  const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkControl, 'link-control');
+  const helpTextId = isEntity ? `${baseId}__help` : null;
   const valueHasChanges = value && !(0,external_wp_isShallowEqual_namespaceObject.isShallowEqualObjects)(internalControlValue, value);
   const [isEditingLink, setIsEditingLink] = (0,external_wp_element_namespaceObject.useState)(forceIsEditingLink !== undefined ? forceIsEditingLink : !value || !value.url);
   const {
@@ -24511,6 +24531,32 @@ function LinkControl({
     }
     onCancel?.();
   };
+  const [shouldFocusSearchInput, setShouldFocusSearchInput] = (0,external_wp_element_namespaceObject.useState)(false);
+  const handleUnlink = () => {
+    // Clear the internal state to remove the ID and re-enable the field
+    // The user will need to submit to commit this change
+    const {
+      id,
+      ...restValue
+    } = internalControlValue;
+    setInternalControlValue({
+      ...restValue,
+      url: ''
+    });
+
+    // Request focus after the component re-renders with the cleared state
+    // We can't focus immediately because the input might still be disabled
+    setShouldFocusSearchInput(true);
+  };
+
+  // Focus the search input when requested, once the component has re-rendered
+  // This ensures the input is enabled and ready to receive focus
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (shouldFocusSearchInput) {
+      searchInputRef.current?.focus();
+      setShouldFocusSearchInput(false);
+    }
+  }, [shouldFocusSearchInput]);
   const currentUrlInputValue = propInputValue || internalControlValue?.url || '';
   const currentInputIsEmpty = !currentUrlInputValue?.trim()?.length;
   const shownUnlinkControl = onRemove && value && !isEditingLink && !isCreatingPage;
@@ -24547,6 +24593,7 @@ function LinkControl({
           onKeyDown: handleSubmitWithEnter,
           __next40pxDefaultSize: true
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_input, {
+          ref: searchInputRef,
           currentLink: value,
           className: "block-editor-link-control__field block-editor-link-control__search-input",
           placeholder: searchInputPlaceholder,
@@ -24562,17 +24609,20 @@ function LinkControl({
           withURLSuggestion: !noURLSuggestion,
           createSuggestionButtonText: createSuggestionButtonText,
           hideLabelFromVision: !showTextControl,
-          suffix: showActions ? undefined : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
-            variant: "control",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              onClick: isDisabled ? link_control_noop : handleSubmit,
-              label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
-              icon: keyboard_return,
-              className: "block-editor-link-control__search-submit",
-              "aria-disabled": isDisabled,
-              size: "small"
-            })
+          isEntity: isEntity,
+          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SearchSuffixControl, {
+            isEntity: isEntity,
+            showActions: showActions,
+            isDisabled: isDisabled,
+            onUnlink: handleUnlink,
+            onSubmit: handleSubmit,
+            helpTextId: helpTextId
           })
+        }), isEntity && helpTextId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+          id: helpTextId,
+          className: "block-editor-link-control__help",
+          children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: entity type (e.g., page, post) */
+          (0,external_wp_i18n_namespaceObject.__)('Synced with the selected %s.'), internalControlValue?.type || 'item')
         })]
       }), errorMessage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
         className: "block-editor-link-control__search-error",
@@ -24618,6 +24668,52 @@ function LinkControl({
         children: (0,external_wp_i18n_namespaceObject.__)('Apply')
       })]
     }), !isCreatingPage && renderControlBottom && renderControlBottom()]
+  });
+}
+
+/**
+ * Suffix control component for LinkControl search input.
+ * Handles the display of unlink button for entities and submit button for regular links.
+ *
+ * @param {Object}   props             - Component props
+ * @param {boolean}  props.isEntity    - Whether the link is bound to an entity
+ * @param {boolean}  props.showActions - Whether to show action buttons
+ * @param {boolean}  props.isDisabled  - Whether the submit button should be disabled
+ * @param {Function} props.onUnlink    - Callback when unlink button is clicked
+ * @param {Function} props.onSubmit    - Callback when submit button is clicked
+ * @param {string}   props.helpTextId  - ID of the help text element for accessibility
+ */
+function SearchSuffixControl({
+  isEntity,
+  showActions,
+  isDisabled,
+  onUnlink,
+  onSubmit,
+  helpTextId
+}) {
+  if (isEntity) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      icon: link_off,
+      onClick: onUnlink,
+      "aria-describedby": helpTextId,
+      showTooltip: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Unsync and edit'),
+      __next40pxDefaultSize: true
+    });
+  }
+  if (showActions) {
+    return undefined;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+    variant: "control",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      onClick: isDisabled ? link_control_noop : onSubmit,
+      label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
+      icon: keyboard_return,
+      className: "block-editor-link-control__search-submit",
+      "aria-disabled": isDisabled,
+      size: "small"
+    })
   });
 }
 LinkControl.ViewerFill = ViewerFill;
