@@ -64024,6 +64024,8 @@ const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -64036,23 +64038,47 @@ function BlockVisibilityMenuItem({
   const {
     updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    createSuccessNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const blocks = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(store).getBlocksByClientId(clientIds);
   }, [clientIds]);
+  const listViewShortcut = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_keyboardShortcuts_namespaceObject.store).getShortcutRepresentation('core/editor/toggle-list-view');
+  }, []);
   const hasHiddenBlock = blocks.some(block => block.attributes.metadata?.blockVisibility === false);
   const toggleBlockVisibility = () => {
+    const isHiding = !hasHiddenBlock;
     const attributesByClientId = Object.fromEntries(blocks?.map(({
       clientId,
       attributes
     }) => [clientId, {
       metadata: utils_cleanEmptyObject({
         ...attributes?.metadata,
-        blockVisibility: hasHiddenBlock ? undefined : false
+        blockVisibility: isHiding ? false : undefined
       })
     }]));
     updateBlockAttributes(clientIds, attributesByClientId, {
       uniqueByBlock: true
     });
+    if (isHiding) {
+      if (blocks.length > 1) {
+        createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %s: The shortcut key to access the List View.
+        (0,external_wp_i18n_namespaceObject.__)('Blocks hidden. You can access them via the List View (%s).'), listViewShortcut), {
+          id: 'block-visibility-hidden',
+          type: 'snackbar'
+        });
+      } else {
+        createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %s: The shortcut key to access the List View.
+        (0,external_wp_i18n_namespaceObject.__)('Block hidden. You can access it via the List View (%s).'), listViewShortcut), {
+          id: 'block-visibility-hidden',
+          type: 'snackbar'
+        });
+      }
+    }
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
     icon: hasHiddenBlock ? library_seen : library_unseen,
