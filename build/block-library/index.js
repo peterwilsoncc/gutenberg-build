@@ -2703,7 +2703,8 @@ const accordion_heading_metadata = {
       __experimentalDefaultControls: {
         padding: true
       },
-      __experimentalSkipSerialization: true
+      __experimentalSkipSerialization: true,
+      __experimentalSelector: ".wp-block-accordion-heading__toggle"
     },
     __experimentalBorder: {
       color: true,
