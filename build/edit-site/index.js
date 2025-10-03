@@ -53734,10 +53734,11 @@ function normalizeLayout(layout) {
       };
     }
   } else if (layout?.type === 'row') {
-    var _layout$alignment;
+    var _layout$alignment, _layout$styles;
     normalizedLayout = {
       type: 'row',
-      alignment: (_layout$alignment = layout?.alignment) !== null && _layout$alignment !== void 0 ? _layout$alignment : 'center'
+      alignment: (_layout$alignment = layout?.alignment) !== null && _layout$alignment !== void 0 ? _layout$alignment : 'center',
+      styles: (_layout$styles = layout?.styles) !== null && _layout$styles !== void 0 ? _layout$styles : {}
     };
   }
   return normalizedLayout;
@@ -54602,6 +54603,7 @@ function FormRowField({
           as: EMPTY_WRAPPER,
           children: (FieldLayout, nestedField) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "dataforms-layouts-row__field-control",
+            style: layout.styles[nestedField.id],
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldLayout, {
               data: data,
               field: nestedField,
