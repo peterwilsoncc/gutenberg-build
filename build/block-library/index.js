@@ -1938,7 +1938,7 @@ function Edit({
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   const isContentOnlyMode = blockEditingMode === 'contentOnly';
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    template: [[ACCORDION_BLOCK_NAME], [ACCORDION_BLOCK_NAME]],
+    template: [[ACCORDION_BLOCK_NAME]],
     defaultBlock: ACCORDION_BLOCK,
     directInsert: true,
     templateInsertUpdatesSelection: true
@@ -2590,6 +2590,7 @@ function accordion_heading_edit_Edit({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
       className: "wp-block-accordion-heading__toggle",
       style: spacingProps.style,
+      tabIndex: "-1",
       children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "wp-block-accordion-heading__toggle-icon",
         "aria-hidden": "true",
