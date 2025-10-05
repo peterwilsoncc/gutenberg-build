@@ -58519,6 +58519,11 @@ function BlockHooksControlPure({
 
 ;// ./packages/block-editor/build-module/hooks/block-bindings.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -58553,63 +58558,123 @@ const block_bindings_useToolsPanelDropdownMenuProps = () => {
   } : {};
 };
 function BlockBindingsPanelMenuContent({
-  fieldsList,
   attribute,
-  binding
+  binding,
+  sources,
+  onOpenModal
 }) {
   const {
     clientId
   } = useBlockEditContext();
-  const registeredSources = (0,external_wp_blocks_namespaceObject.getBlockBindingsSources)();
   const {
     updateBlockBindings
   } = useBlockBindingsUtils();
-  const currentKey = binding?.args?.key;
-  const attributeType = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
+  const {
+    attributeType,
+    select
+  } = (0,external_wp_data_namespaceObject.useSelect)(_select => {
     const {
       name: blockName
-    } = select(store).getBlock(clientId);
+    } = _select(store).getBlock(clientId);
     const _attributeType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName).attributes?.[attribute]?.type;
-    return _attributeType === 'rich-text' ? 'string' : _attributeType;
+    return {
+      attributeType: _attributeType === 'rich-text' ? 'string' : _attributeType,
+      select: _select
+    };
   }, [clientId, attribute]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: Object.entries(fieldsList).map(([name, fields], i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_element_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu.Group, {
-        children: [Object.keys(fieldsList).length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.GroupLabel, {
-          children: registeredSources[name].label
-        }), Object.entries(fields).filter(([, args]) => args?.type === attributeType).map(([key, args]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu.RadioItem, {
-          onChange: () => updateBlockBindings({
-            [attribute]: {
-              source: name,
-              args: {
-                key
-              }
-            }
-          }),
-          name: attribute + '-binding',
-          value: key,
-          checked: key === currentKey,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
-            children: args?.label
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemHelpText, {
-            children: args?.value
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
+    placement: isMobile ? 'bottom-start' : 'left-start',
+    children: Object.entries(sources).map(([sourceKey, source]) => {
+      // Only show sources that have compatible data for this specific attribute.
+      const sourceDataItems = source.data?.filter(item => item?.type === attributeType);
+      const noItemsAvailable = !sourceDataItems || sourceDataItems.length === 0;
+      if (source.mode === 'dropdown') {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
+          placement: isMobile ? 'bottom-start' : 'left-start',
+          children: [noItemsAvailable ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
+            disabled: true,
+            children: source.label
+          }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.SubmenuTriggerItem, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
+              children: source.label
+            })
+          }), !noItemsAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
+            gutter: 8,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Group, {
+              children: sourceDataItems.map(item => {
+                var _fastDeepEqual2;
+                const itemBindings = {
+                  source: sourceKey,
+                  args: item?.args || {
+                    key: item.key
+                  }
+                };
+                const values = source.getValues({
+                  select,
+                  context: blockContext,
+                  bindings: {
+                    [attribute]: itemBindings
+                  }
+                });
+                return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu.CheckboxItem, {
+                  onChange: () => {
+                    var _fastDeepEqual;
+                    const isCurrentlySelected = (_fastDeepEqual = es6_default()(binding?.args, item.args)) !== null && _fastDeepEqual !== void 0 ? _fastDeepEqual :
+                    // Deprecate key dependency in 7.0.
+                    item.key === binding?.args?.key;
+                    if (isCurrentlySelected) {
+                      // Unset if the same item is selected again.
+                      updateBlockBindings({
+                        [attribute]: undefined
+                      });
+                    } else {
+                      updateBlockBindings({
+                        [attribute]: itemBindings
+                      });
+                    }
+                  },
+                  name: attribute + '-binding',
+                  value: values[attribute],
+                  checked: (_fastDeepEqual2 = es6_default()(binding?.args, item.args)) !== null && _fastDeepEqual2 !== void 0 ? _fastDeepEqual2 :
+                  // Deprecate key dependency in 7.0.
+                  item.key === binding?.args?.key,
+                  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
+                    children: item?.label
+                  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemHelpText, {
+                    children: values[attribute]
+                  })]
+                }, sourceKey + JSON.stringify(item.args) || item.key);
+              })
+            })
           })]
-        }, key))]
-      }), i !== Object.keys(fieldsList).length - 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Separator, {})]
-    }, name))
+        }, sourceKey);
+      }
+      if (source.mode === 'modal') {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
+          onClick: () => onOpenModal({
+            sourceKey
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
+            children: source.label
+          })
+        }, sourceKey);
+      }
+      return null;
+    })
   });
 }
 function BlockBindingsAttribute({
   attribute,
   binding,
-  fieldsList
+  source
 }) {
   const {
     source: sourceName,
     args
   } = binding || {};
-  const sourceProps = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(sourceName);
-  const isSourceInvalid = !sourceProps;
+  const isSourceInvalid = !source;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     className: "block-editor-bindings__item",
     spacing: 0,
@@ -58620,63 +58685,71 @@ function BlockBindingsAttribute({
       truncate: true,
       variant: !isSourceInvalid && 'muted',
       isDestructive: isSourceInvalid,
-      children: isSourceInvalid ? (0,external_wp_i18n_namespaceObject.__)('Invalid source') : fieldsList?.[sourceName]?.[args?.key]?.label || sourceProps?.label || sourceName
+      children: isSourceInvalid ? (0,external_wp_i18n_namespaceObject.__)('Invalid source') : source?.data?.find(item => es6_default()(item.args, args))?.label || source?.label || sourceName
     })]
   });
 }
-function ReadOnlyBlockBindingsPanelItems({
-  bindings,
-  fieldsList
+function ReadOnlyBlockBindingsPanelItem({
+  attribute,
+  binding,
+  source
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: Object.entries(bindings).map(([attribute, binding]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+    hasValue: () => !!binding,
+    label: attribute,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
         attribute: attribute,
         binding: binding,
-        fieldsList: fieldsList
+        source: source
       })
-    }, attribute))
+    })
   });
 }
-function EditableBlockBindingsPanelItems({
-  attributes,
-  bindings,
-  fieldsList
+function EditableBlockBindingsPanelItem({
+  attribute,
+  binding,
+  sources,
+  setModalState
 }) {
   const {
     updateBlockBindings
   } = useBlockBindingsUtils();
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: attributes.map(attribute => {
-      const binding = bindings[attribute];
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-        hasValue: () => !!binding,
-        label: attribute,
-        onDeselect: () => {
-          updateBlockBindings({
-            [attribute]: undefined
-          });
-        },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
-          placement: isMobile ? 'bottom-start' : 'left-start',
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.TriggerButton, {
-            render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {}),
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
-              attribute: attribute,
-              binding: binding,
-              fieldsList: fieldsList
-            })
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
-            gutter: isMobile ? 8 : 36,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsPanelMenuContent, {
-              fieldsList: fieldsList,
-              attribute: attribute,
-              binding: binding
-            })
-          })]
+  const handleOpenModal = ({
+    sourceKey
+  }) => {
+    setModalState({
+      attribute,
+      sourceKey
+    });
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+    hasValue: () => !!binding,
+    label: attribute,
+    onDeselect: () => {
+      updateBlockBindings({
+        [attribute]: undefined
+      });
+    },
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
+      placement: isMobile ? 'bottom-start' : 'left-start',
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.TriggerButton, {
+        render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {}),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
+          attribute: attribute,
+          binding: binding,
+          source: sources?.[binding?.source]
         })
-      }, attribute);
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
+        gutter: isMobile ? 8 : 36,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsPanelMenuContent, {
+          attribute: attribute,
+          binding: binding,
+          sources: sources,
+          onOpenModal: handleOpenModal
+        })
+      })]
     })
   });
 }
@@ -58689,15 +58762,19 @@ const BlockBindingsPanel = ({
     removeAllBlockBindings
   } = useBlockBindingsUtils();
   const dropdownMenuProps = block_bindings_useToolsPanelDropdownMenuProps();
+  const [modalState, setModalState] = (0,external_wp_element_namespaceObject.useState)(null);
+  const handleCloseModal = () => {
+    setModalState(null);
+  };
 
-  // `useSelect` is used purposely here to ensure `getFieldsList`
-  // is updated whenever there are updates in block context.
-  // `source.getFieldsList` may also call a selector via `select`.
-  const _fieldsList = {};
+  // Use useSelect to ensure sources are updated whenever there are updates in block context
+  // or when underlying data changes.
+  // Still needs a fix regarding _sources scope.
+  const _sources = {};
   const {
-    bindableAttributes,
-    fieldsList,
-    canUpdateBlockBindings
+    sources,
+    canUpdateBlockBindings,
+    bindableAttributes
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       __experimentalBlockBindingsSupportedAttributes
@@ -58708,10 +58785,13 @@ const BlockBindingsPanel = ({
     }
     const registeredSources = (0,external_wp_blocks_namespaceObject.getBlockBindingsSources)();
     Object.entries(registeredSources).forEach(([sourceName, {
+      editorUI,
       getFieldsList,
-      usesContext
+      usesContext,
+      label,
+      getValues
     }]) => {
-      if (getFieldsList) {
+      if (editorUI) {
         // Populate context.
         const context = {};
         if (usesContext?.length) {
@@ -58719,29 +58799,80 @@ const BlockBindingsPanel = ({
             context[key] = blockContext[key];
           }
         }
-        const sourceList = getFieldsList({
+        const editorUIResult = editorUI({
           select,
           context
         });
-        // Only add source if the list is not empty.
-        if (Object.keys(sourceList || {}).length) {
-          _fieldsList[sourceName] = {
-            ...sourceList
+        const hasCompatibleData = _bindableAttributes.some(attribute => {
+          const _attributeType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName).attributes?.[attribute]?.type;
+          const attributeType = _attributeType === 'rich-text' ? 'string' : _attributeType;
+          return editorUIResult.data?.some(item => item?.type === attributeType);
+        });
+        if (hasCompatibleData) {
+          _sources[sourceName] = {
+            ...editorUIResult,
+            label,
+            getValues
           };
         }
+      } else if (getFieldsList) {
+        // Backward compatibility: Convert getFieldsList to editorUI format
+        const context = {};
+        if (usesContext?.length) {
+          for (const key of usesContext) {
+            context[key] = blockContext[key];
+          }
+        }
+        const fieldsListResult = getFieldsList({
+          select,
+          context
+        });
+        if (fieldsListResult) {
+          // Convert getFieldsList format to editorUI format
+          const data = Object.entries(fieldsListResult).map(([key, field]) => ({
+            label: field.label || key,
+            type: field.type || 'string',
+            args: {
+              key
+            }
+          }));
+          const hasCompatibleData = _bindableAttributes.some(attribute => {
+            const _attributeType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName).attributes?.[attribute]?.type;
+            const attributeType = _attributeType === 'rich-text' ? 'string' : _attributeType;
+            return data.some(item => item?.type === attributeType);
+          });
+          if (hasCompatibleData) {
+            _sources[sourceName] = {
+              mode: 'dropdown',
+              // Default mode for backward compatibility
+              data,
+              label,
+              getValues
+            };
+          }
+        }
+      } else {
+        /*
+         * Include sources without editorUI if they are introduced
+         * by other means (e.g. code editor).
+         */
+        _sources[sourceName] = {
+          label,
+          getValues
+        };
       }
     });
     return {
-      bindableAttributes: _bindableAttributes,
-      fieldsList: Object.values(_fieldsList).length > 0 ? _fieldsList : block_bindings_EMPTY_OBJECT,
-      canUpdateBlockBindings: select(store).getSettings().canUpdateBlockBindings
+      sources: Object.values(_sources).length > 0 ? _sources : block_bindings_EMPTY_OBJECT,
+      canUpdateBlockBindings: select(store).getSettings().canUpdateBlockBindings,
+      bindableAttributes: _bindableAttributes
     };
-  }, [blockContext]);
+  }, [blockContext, blockName]);
   // Return early if there are no bindable attributes.
   if (!bindableAttributes || bindableAttributes.length === 0) {
     return null;
   }
-  // Filter bindings to only show bindable attributes and remove pattern overrides.
+  // Filter bindings to only show bindable attributes.
   const {
     bindings
   } = metadata || {};
@@ -58749,19 +58880,20 @@ const BlockBindingsPanel = ({
     ...bindings
   };
   Object.keys(filteredBindings).forEach(key => {
-    if (!bindableAttributes.includes(key) && filteredBindings[key].source === 'core/pattern-overrides') {
+    if (!bindableAttributes.includes(key)) {
       delete filteredBindings[key];
     }
   });
 
   // Lock the UI when the user can't update bindings or there are no fields to connect to.
-  const readOnly = !canUpdateBlockBindings || !Object.keys(fieldsList).length;
+  const readOnly = !canUpdateBlockBindings || !Object.keys(sources).length;
   if (readOnly && Object.keys(filteredBindings).length === 0) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls, {
+  const RenderModalContent = sources[modalState?.sourceKey]?.renderModalContent;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(inspector_controls, {
     group: "bindings",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Attributes'),
       resetAll: () => {
         removeAllBlockBindings();
@@ -58771,13 +58903,19 @@ const BlockBindingsPanel = ({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
         isBordered: true,
         isSeparated: true,
-        children: readOnly ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReadOnlyBlockBindingsPanelItems, {
-          bindings: filteredBindings,
-          fieldsList: fieldsList
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditableBlockBindingsPanelItems, {
-          attributes: bindableAttributes,
-          bindings: filteredBindings,
-          fieldsList: fieldsList
+        children: bindableAttributes.map(attribute => {
+          const binding = filteredBindings[attribute];
+          const hasCompatibleData = Object.values(sources).some(source => source.data);
+          return readOnly || !hasCompatibleData ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReadOnlyBlockBindingsPanelItem, {
+            attribute: attribute,
+            binding: binding,
+            source: sources?.[binding?.source]
+          }, attribute) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditableBlockBindingsPanelItem, {
+            attribute: attribute,
+            binding: binding,
+            sources: sources,
+            setModalState: setModalState
+          }, attribute);
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         as: "div",
@@ -58786,7 +58924,13 @@ const BlockBindingsPanel = ({
           children: (0,external_wp_i18n_namespaceObject.__)('Attributes connected to custom fields or other dynamic data.')
         })
       })]
-    })
+    }), RenderModalContent && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+      onRequestClose: handleCloseModal,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RenderModalContent, {
+        attribute: modalState.attribute,
+        closeModal: handleCloseModal
+      })
+    })]
   });
 };
 /* harmony default export */ const block_bindings = ({
@@ -75305,6 +75449,7 @@ function withDeprecations(Component) {
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -75456,7 +75601,7 @@ function RichTextWrapper({
     bindingsPlaceholder,
     bindingsLabel
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _fieldsList$relatedBi;
+    var _clientSideFieldLabel;
     const {
       __experimentalBlockBindingsSupportedAttributes
     } = select(store).getSettings();
@@ -75490,11 +75635,15 @@ function RichTextWrapper({
       getBlockAttributes
     } = select(store);
     const blockAttributes = getBlockAttributes(clientId);
-    const fieldsList = blockBindingsSource?.getFieldsList?.({
-      select,
-      context: blockBindingsContext
-    });
-    const bindingKey = (_fieldsList$relatedBi = fieldsList?.[relatedBinding?.args?.key]?.label) !== null && _fieldsList$relatedBi !== void 0 ? _fieldsList$relatedBi : blockBindingsSource?.label;
+    let clientSideFieldLabel = null;
+    if (blockBindingsSource?.editorUI) {
+      const editorUIResult = blockBindingsSource.editorUI({
+        select,
+        context: blockBindingsContext
+      });
+      clientSideFieldLabel = editorUIResult.data?.find(item => es6_default()(item.args, relatedBinding?.args))?.label;
+    }
+    const bindingKey = (_clientSideFieldLabel = clientSideFieldLabel) !== null && _clientSideFieldLabel !== void 0 ? _clientSideFieldLabel : blockBindingsSource?.label;
     const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: connected field label or source label */
     (0,external_wp_i18n_namespaceObject.__)('Add %s'), bindingKey);
     const _bindingsLabel = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: source label or key */

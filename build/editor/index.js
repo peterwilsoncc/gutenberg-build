@@ -42216,7 +42216,31 @@ function getPostDataFields(select, context) {
     select,
     context
   }) {
+    // Deprecated, will be removed after 6.9.
     return getPostDataFields(select, context);
+  },
+  editorUI({
+    select,
+    context
+  }) {
+    const selectedBlock = select('core/block-editor').getSelectedBlock();
+    if (selectedBlock?.name !== 'core/post-date') {
+      return {};
+    }
+    const postDataFields = Object.entries(getPostDataFields(select, context) || {}).map(([key, field]) => ({
+      label: field.label,
+      args: {
+        key
+      },
+      type: field.type
+    }));
+    /*
+     * We need to define the data as [{ label: string, value: any, type: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/#type-validation }]
+     */
+    return {
+      mode: 'dropdown',
+      data: postDataFields
+    };
   }
 });
 
@@ -42371,7 +42395,27 @@ function getPostMetaFields(select, context) {
     select,
     context
   }) {
+    // Deprecated, will be removed after 6.9.
     return getPostMetaFields(select, context);
+  },
+  editorUI({
+    select,
+    context
+  }) {
+    const metaFields = Object.entries(getPostMetaFields(select, context) || {}).map(([key, field]) => ({
+      label: field.label,
+      args: {
+        key
+      },
+      type: field.type
+    }));
+    /*
+     * We need to define the data as [{ label: string, value: any, type: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/#type-validation }]
+     */
+    return {
+      mode: 'dropdown',
+      data: metaFields
+    };
   }
 });
 
@@ -42537,7 +42581,27 @@ function getTermDataFields(select, context) {
     select,
     context
   }) {
+    // Deprecated, will be removed after 6.9.
     return getTermDataFields(select, context);
+  },
+  editorUI({
+    select,
+    context
+  }) {
+    const termDataFields = Object.entries(getTermDataFields(select, context) || {}).map(([key, field]) => ({
+      label: field.label,
+      type: field.type,
+      args: {
+        key
+      }
+    }));
+    /*
+     * We need to define the data as [{ label: string, value: any, type: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/#type-validation }]
+     */
+    return {
+      mode: 'dropdown',
+      data: termDataFields
+    };
   }
 });
 
