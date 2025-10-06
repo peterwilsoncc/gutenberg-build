@@ -1987,22 +1987,20 @@ function Edit({
     });
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [isSingleSelected && !isContentOnlyMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
-            value: headingLevel,
-            options: levelOptions,
-            onChange: updateHeadingLevel
-          })
+    children: [isSingleSelected && !isContentOnlyMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
+          value: headingLevel,
+          options: levelOptions,
+          onChange: updateHeadingLevel
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-        group: "other",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: addAccordionItemBlock,
-          children: (0,external_wp_i18n_namespaceObject.__)('Add')
-        })
-      })]
+      })
+    }), isSingleSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      group: "other",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        onClick: addAccordionItemBlock,
+        children: (0,external_wp_i18n_namespaceObject.__)('Add')
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -2229,7 +2227,8 @@ const metadata = {
       __experimentalDefaultControls: {
         fontSize: true
       }
-    }
+    },
+    contentRole: true
   },
   attributes: {
     iconPosition: {
@@ -2533,7 +2532,8 @@ const accordion_item_metadata = {
       __experimentalDefaultControls: {
         fontSize: true
       }
-    }
+    },
+    contentRole: true
   },
   attributes: {
     openByDefault: {
@@ -2902,7 +2902,8 @@ const accordion_panel_metadata = {
       }
     },
     shadow: true,
-    blockVisibility: false
+    blockVisibility: false,
+    contentRole: true
   },
   attributes: {
     allowedBlocks: {
