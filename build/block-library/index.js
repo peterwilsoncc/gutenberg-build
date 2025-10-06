@@ -68337,24 +68337,18 @@ const getOptions = (displayTopLevelControl, displaySubtermsControl) => {
   }
   return options;
 };
-const allTermsQuery = {
-  include: [],
-  exclude: [],
-  parent: false
-};
-const topLevelTermsQuery = {
-  include: [],
-  exclude: [],
-  parent: 0,
-  hierarchical: false
-};
 const getQueryAttributes = value => {
   if (value === 'top-level') {
-    return topLevelTermsQuery;
+    return {
+      parent: 0,
+      hierarchical: false
+    };
   }
 
   // For 'all' and 'subterms', we fetch all terms and then filter them as the tree is built in Term Template.
-  return allTermsQuery;
+  return {
+    parent: false
+  };
 };
 function DisplayOptions({
   attributes,
@@ -68666,12 +68660,10 @@ function TermsQueryInspectorControls({
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/terms-query-content.js
+;// ./packages/block-library/build-module/terms-query/edit.js
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -68680,42 +68672,26 @@ function TermsQueryInspectorControls({
  */
 
 
-const terms_query_content_TEMPLATE = [['core/term-template']];
-function TermsQueryContent({
+const terms_query_edit_TEMPLATE = [['core/term-template']];
+function TermsQueryEdit({
   attributes,
   setAttributes,
   clientId,
   name
 }) {
   const {
-    termQueryId,
-    termQuery = {},
     tagName: TagName = 'div'
   } = attributes;
-  const {
-    __unstableMarkNextChangeAsNotPersistent
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(TermsQueryContent);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    template: terms_query_content_TEMPLATE
+    template: terms_query_edit_TEMPLATE
   });
-  const setQuery = newQuery => {
-    setAttributes({
-      termQuery: {
-        ...termQuery,
-        ...newQuery
-      }
-    });
-  };
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!termQueryId) {
-      __unstableMarkNextChangeAsNotPersistent();
-      setAttributes({
-        termQueryId: instanceId
-      });
+  const setQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes(prevAttributes => ({
+    termQuery: {
+      ...prevAttributes.termQuery,
+      ...newQuery
     }
-  }, [termQueryId, instanceId, setAttributes, __unstableMarkNextChangeAsNotPersistent]);
+  })), [setAttributes]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermsQueryInspectorControls, {
       name: name,
@@ -68729,19 +68705,6 @@ function TermsQueryContent({
     })]
   });
 }
-
-;// ./packages/block-library/build-module/terms-query/edit.js
-/**
- * Internal dependencies
- */
-
-
-const TermsQueryEdit = props => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermsQueryContent, {
-    ...props
-  });
-};
-/* harmony default export */ const terms_query_edit = (TermsQueryEdit);
 
 ;// ./packages/block-library/build-module/terms-query/save.js
 /**
@@ -68782,20 +68745,14 @@ const terms_query_metadata = {
   keywords: ["terms", "taxonomy", "categories", "tags", "list"],
   textdomain: "default",
   attributes: {
-    termQueryId: {
-      type: "number"
-    },
     termQuery: {
       type: "object",
       "default": {
         perPage: 10,
-        pages: 0,
         taxonomy: "category",
         order: "asc",
         orderBy: "name",
         hideEmpty: true,
-        include: [],
-        exclude: [],
         parent: false,
         hierarchical: false
       }
@@ -68808,13 +68765,9 @@ const terms_query_metadata = {
     tagName: {
       type: "string",
       "default": "div"
-    },
-    namespace: {
-      type: "string"
     }
   },
   providesContext: {
-    termQueryId: "termQueryId",
     termQuery: "termQuery",
     termsToShow: "termsToShow"
   },
@@ -68834,7 +68787,7 @@ const {
 
 const terms_query_settings = {
   icon: loop,
-  edit: terms_query_edit,
+  edit: TermsQueryEdit,
   save: terms_query_save_save,
   example: {}
 };
@@ -69267,11 +69220,6 @@ const term_template_metadata = {
   description: "Contains the block elements used to render a taxonomy term, like the name, description, and more.",
   textdomain: "default",
   usesContext: ["termQuery", "termsToShow"],
-  attributes: {
-    namespace: {
-      type: "string"
-    }
-  },
   supports: {
     reusable: false,
     html: false,
