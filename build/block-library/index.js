@@ -24266,7 +24266,7 @@ function GalleryEdit(props) {
     isContentLocked,
     onFocus
   } = props;
-  const [lightboxSetting] = (0,external_wp_blockEditor_namespaceObject.useSettings)('blocks.core/image.lightbox');
+  const [lightboxSetting, defaultRatios, themeRatios, showDefaultRatios] = (0,external_wp_blockEditor_namespaceObject.useSettings)('blocks.core/image.lightbox', 'dimensions.aspectRatios.default', 'dimensions.aspectRatios.theme', 'dimensions.defaultAspectRatios');
   const linkOptions = !lightboxSetting?.allowEditing ? LINK_OPTIONS.filter(option => option.value !== LINK_DESTINATION_LIGHTBOX) : LINK_OPTIONS;
   const {
     columns,
@@ -24274,7 +24274,8 @@ function GalleryEdit(props) {
     randomOrder,
     linkTarget,
     linkTo,
-    sizeSlug
+    sizeSlug,
+    aspectRatio
   } = attributes;
   const {
     __unstableMarkNextChangeAsNotPersistent,
@@ -24319,6 +24320,24 @@ function GalleryEdit(props) {
   })), [innerBlockImages]);
   const imageData = useGetMedia(innerBlockImages);
   const newImages = useGetNewImages(images, imageData);
+  const themeOptions = themeRatios?.map(({
+    name,
+    ratio
+  }) => ({
+    label: name,
+    value: ratio
+  }));
+  const defaultOptions = defaultRatios?.map(({
+    name,
+    ratio
+  }) => ({
+    label: name,
+    value: ratio
+  }));
+  const aspectRatioOptions = [{
+    label: (0,external_wp_i18n_namespaceObject._x)('Original', 'Aspect ratio option for dimensions control'),
+    value: 'auto'
+  }, ...(showDefaultRatios ? defaultOptions || [] : []), ...(themeOptions || [])];
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     newImages?.forEach(newImage => {
       // Update the images data without creating new undo levels.
@@ -24370,7 +24389,8 @@ function GalleryEdit(props) {
       className: newClassName,
       sizeSlug,
       caption: imageAttributes.caption || image.caption?.raw,
-      alt: imageAttributes.alt || image.alt_text
+      alt: imageAttributes.alt || image.alt_text,
+      aspectRatio: aspectRatio === 'auto' ? undefined : aspectRatio
     };
   }
   function isValidFileType(file) {
@@ -24515,6 +24535,28 @@ function GalleryEdit(props) {
       type: 'snackbar'
     });
   }
+  function setAspectRatio(value) {
+    setAttributes({
+      aspectRatio: value
+    });
+
+    // Update all inner image blocks with the new aspect ratio
+    const changedAttributes = {};
+    const blocks = [];
+    getBlock(clientId).innerBlocks.forEach(block => {
+      blocks.push(block.clientId);
+      changedAttributes[block.clientId] = {
+        aspectRatio: value === 'auto' ? undefined : value
+      };
+    });
+    updateBlockAttributes(blocks, changedAttributes, true);
+    const aspectRatioText = aspectRatioOptions.find(option => option.value === value);
+    createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: aspect ratio setting */
+    (0,external_wp_i18n_namespaceObject.__)('All gallery images updated to aspect ratio: %s'), aspectRatioText?.label || value), {
+      id: 'gallery-attributes-aspectRatio',
+      type: 'snackbar'
+    });
+  }
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // linkTo attribute must be saved so blocks don't break when changing image_default_link_type in options.php.
     if (!linkTo) {
@@ -24590,6 +24632,7 @@ function GalleryEdit(props) {
             imageCrop: true,
             randomOrder: false
           });
+          setAspectRatio('auto');
           if (sizeSlug !== constants_DEFAULT_MEDIA_SIZE_SLUG) {
             updateImagesSize(constants_DEFAULT_MEDIA_SIZE_SLUG);
           }
@@ -24665,6 +24708,20 @@ function GalleryEdit(props) {
             checked: linkTarget === '_blank',
             onChange: toggleOpenInNewTab
           })
+        }), aspectRatioOptions.length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!aspectRatio && aspectRatio !== 'auto',
+          label: (0,external_wp_i18n_namespaceObject.__)('Aspect ratio'),
+          onDeselect: () => setAspectRatio('auto'),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Aspect ratio'),
+            help: (0,external_wp_i18n_namespaceObject.__)('Set a consistent aspect ratio for all images in the gallery.'),
+            value: aspectRatio,
+            options: aspectRatioOptions,
+            onChange: setAspectRatio
+          })
         })]
       }), external_wp_element_namespaceObject.Platform.isNative && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
         title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -24710,6 +24767,15 @@ function GalleryEdit(props) {
           label: (0,external_wp_i18n_namespaceObject.__)('Open images in new tab'),
           checked: linkTarget === '_blank',
           onChange: toggleOpenInNewTab
+        }), aspectRatioOptions.length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Aspect Ratio'),
+          help: (0,external_wp_i18n_namespaceObject.__)('Set a consistent aspect ratio for all images in the gallery.'),
+          value: aspectRatio,
+          options: aspectRatioOptions,
+          onChange: setAspectRatio,
+          hideCancelButton: true,
+          size: "__unstable-large"
         })]
       })]
     }), external_wp_element_namespaceObject.Platform.isWeb ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
@@ -25145,6 +25211,10 @@ const gallery_metadata = {
     allowResize: {
       type: "boolean",
       "default": false
+    },
+    aspectRatio: {
+      type: "string",
+      "default": "auto"
     }
   },
   providesContext: {
