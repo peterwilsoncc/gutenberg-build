@@ -53112,25 +53112,21 @@ const {
 function DataViewItem({
   title,
   slug,
-  customViewId,
   type,
   icon,
   isActive,
-  isCustom,
   suffix
 }) {
   const {
     path
   } = dataview_item_useLocation();
   const iconToUse = icon || VIEW_LAYOUTS.find(v => v.type === type).icon;
-  let activeView = isCustom ? customViewId : slug;
-  if (activeView === 'all') {
-    activeView = undefined;
+  if (slug === 'all') {
+    slug = undefined;
   }
   const query = {
     layout: type,
-    activeView,
-    isCustom: isCustom ? 'true' : undefined
+    activeView: slug
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     justify: "flex-start",
@@ -53143,339 +53139,6 @@ function DataViewItem({
       "aria-current": isActive ? 'true' : undefined,
       children: title
     }), suffix]
-  });
-}
-
-;// ./packages/edit-site/build-module/components/sidebar-dataviews/add-new-view.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-const {
-  useLocation: add_new_view_useLocation,
-  useHistory: add_new_view_useHistory
-} = unlock(external_wp_router_namespaceObject.privateApis);
-function AddNewItemModalContent({
-  type,
-  setIsAdding
-}) {
-  const history = add_new_view_useHistory();
-  const {
-    path
-  } = add_new_view_useLocation();
-  const {
-    saveEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)('');
-  const [isSaving, setIsSaving] = (0,external_wp_element_namespaceObject.useState)(false);
-  const defaultViews = useDefaultViews({
-    postType: type
-  });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-    onSubmit: async event => {
-      event.preventDefault();
-      setIsSaving(true);
-      const {
-        getEntityRecords
-      } = (0,external_wp_data_namespaceObject.resolveSelect)(external_wp_coreData_namespaceObject.store);
-      let dataViewTaxonomyId;
-      const dataViewTypeRecords = await getEntityRecords('taxonomy', 'wp_dataviews_type', {
-        slug: type
-      });
-      if (dataViewTypeRecords && dataViewTypeRecords.length > 0) {
-        dataViewTaxonomyId = dataViewTypeRecords[0].id;
-      } else {
-        const record = await saveEntityRecord('taxonomy', 'wp_dataviews_type', {
-          name: type
-        });
-        if (record && record.id) {
-          dataViewTaxonomyId = record.id;
-        }
-      }
-      const savedRecord = await saveEntityRecord('postType', 'wp_dataviews', {
-        title,
-        status: 'publish',
-        wp_dataviews_type: dataViewTaxonomyId,
-        content: JSON.stringify(defaultViews[0].view)
-      });
-      history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
-        activeView: savedRecord.id,
-        isCustom: 'true'
-      }));
-      setIsSaving(false);
-      setIsAdding(false);
-    },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: "5",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Name'),
-        value: title,
-        onChange: setTitle,
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('My view'),
-        className: "patterns-create-modal__name-input"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        justify: "right",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          __next40pxDefaultSize: true,
-          variant: "tertiary",
-          onClick: () => {
-            setIsAdding(false);
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          __next40pxDefaultSize: true,
-          variant: "primary",
-          type: "submit",
-          "aria-disabled": !title || isSaving,
-          isBusy: isSaving,
-          children: (0,external_wp_i18n_namespaceObject.__)('Create')
-        })]
-      })]
-    })
-  });
-}
-function AddNewItem({
-  type
-}) {
-  const [isAdding, setIsAdding] = (0,external_wp_element_namespaceObject.useState)(false);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
-      icon: plus,
-      onClick: () => {
-        setIsAdding(true);
-      },
-      className: "dataviews__siderbar-content-add-new-item",
-      children: (0,external_wp_i18n_namespaceObject.__)('New view')
-    }), isAdding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Add new view'),
-      onRequestClose: () => {
-        setIsAdding(false);
-      },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddNewItemModalContent, {
-        type: type,
-        setIsAdding: setIsAdding
-      })
-    })]
-  });
-}
-
-;// ./packages/edit-site/build-module/components/sidebar-dataviews/custom-dataviews-list.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-const {
-  useHistory: custom_dataviews_list_useHistory,
-  useLocation: custom_dataviews_list_useLocation
-} = unlock(external_wp_router_namespaceObject.privateApis);
-const custom_dataviews_list_EMPTY_ARRAY = [];
-function RenameItemModalContent({
-  dataviewId,
-  currentTitle,
-  setIsRenaming
-}) {
-  const {
-    editEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(currentTitle);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-    onSubmit: async event => {
-      event.preventDefault();
-      await editEntityRecord('postType', 'wp_dataviews', dataviewId, {
-        title
-      });
-      setIsRenaming(false);
-    },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: "5",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Name'),
-        value: title,
-        onChange: setTitle,
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('My view'),
-        className: "patterns-create-modal__name-input"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        justify: "right",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "tertiary",
-          __next40pxDefaultSize: true,
-          onClick: () => {
-            setIsRenaming(false);
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "primary",
-          type: "submit",
-          "aria-disabled": !title,
-          __next40pxDefaultSize: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Save')
-        })]
-      })]
-    })
-  });
-}
-function CustomDataViewItem({
-  dataviewId,
-  isActive
-}) {
-  const history = custom_dataviews_list_useHistory();
-  const location = custom_dataviews_list_useLocation();
-  const {
-    dataview
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEditedEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    return {
-      dataview: getEditedEntityRecord('postType', 'wp_dataviews', dataviewId)
-    };
-  }, [dataviewId]);
-  const {
-    deleteEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const type = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const viewContent = JSON.parse(dataview.content);
-    return viewContent.type;
-  }, [dataview.content]);
-  const [isRenaming, setIsRenaming] = (0,external_wp_element_namespaceObject.useState)(false);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewItem, {
-      title: dataview.title,
-      type: type,
-      isActive: isActive,
-      isCustom: true,
-      customViewId: dataviewId,
-      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-        icon: more_vertical,
-        label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-        className: "edit-site-sidebar-dataviews-dataview-item__dropdown-menu",
-        toggleProps: {
-          style: {
-            color: 'inherit'
-          },
-          size: 'small'
-        },
-        children: ({
-          onClose
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            onClick: () => {
-              setIsRenaming(true);
-              onClose();
-            },
-            children: (0,external_wp_i18n_namespaceObject.__)('Rename')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            onClick: async () => {
-              await deleteEntityRecord('postType', 'wp_dataviews', dataview.id, {
-                force: true
-              });
-              if (isActive) {
-                history.replace({
-                  postType: location.query.postType
-                });
-              }
-              onClose();
-            },
-            isDestructive: true,
-            children: (0,external_wp_i18n_namespaceObject.__)('Delete')
-          })]
-        })
-      })
-    }), isRenaming && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
-      onRequestClose: () => {
-        setIsRenaming(false);
-      },
-      focusOnMount: "firstContentElement",
-      size: "small",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RenameItemModalContent, {
-        dataviewId: dataviewId,
-        setIsRenaming: setIsRenaming,
-        currentTitle: dataview.title
-      })
-    })]
-  });
-}
-function useCustomDataViews(type) {
-  const customDataViews = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecords
-    } = select(external_wp_coreData_namespaceObject.store);
-    const dataViewTypeRecords = getEntityRecords('taxonomy', 'wp_dataviews_type', {
-      slug: type
-    });
-    if (!dataViewTypeRecords || dataViewTypeRecords.length === 0) {
-      return custom_dataviews_list_EMPTY_ARRAY;
-    }
-    const dataViews = getEntityRecords('postType', 'wp_dataviews', {
-      wp_dataviews_type: dataViewTypeRecords[0].id,
-      orderby: 'date',
-      order: 'asc'
-    });
-    if (!dataViews) {
-      return custom_dataviews_list_EMPTY_ARRAY;
-    }
-    return dataViews;
-  });
-  return customDataViews;
-}
-function CustomDataViewsList({
-  type,
-  activeView,
-  isCustom
-}) {
-  const customDataViews = useCustomDataViews(type);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "edit-site-sidebar-navigation-screen-dataviews__group-header",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHeading, {
-        level: 2,
-        children: (0,external_wp_i18n_namespaceObject.__)('Custom Views')
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-      className: "edit-site-sidebar-navigation-screen-dataviews__custom-items",
-      children: [customDataViews.map(customViewRecord => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomDataViewItem, {
-          dataviewId: customViewRecord.id,
-          isActive: isCustom && Number(activeView) === customViewRecord.id
-        }, customViewRecord.id);
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddNewItem, {
-        type: type
-      })]
-    })]
   });
 }
 
@@ -53493,7 +53156,6 @@ function CustomDataViewsList({
 
 
 
-
 const {
   useLocation: sidebar_dataviews_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -53502,8 +53164,7 @@ function DataViewsSidebarContent({
 }) {
   const {
     query: {
-      activeView = 'all',
-      isCustom = 'false'
+      activeView = 'all'
     }
   } = sidebar_dataviews_useLocation();
   const defaultViews = useDefaultViews({
@@ -53512,9 +53173,8 @@ function DataViewsSidebarContent({
   if (!postType) {
     return null;
   }
-  const isCustomBoolean = isCustom === 'true';
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
       className: "edit-site-sidebar-dataviews",
       children: defaultViews.map(dataview => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewItem, {
@@ -53522,15 +53182,10 @@ function DataViewsSidebarContent({
           title: dataview.title,
           icon: dataview.icon,
           type: dataview.view.type,
-          isActive: !isCustomBoolean && dataview.slug === activeView,
-          isCustom: false
+          isActive: dataview.slug === activeView
         }, dataview.slug);
       })
-    }), window?.__experimentalCustomViews && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomDataViewsList, {
-      activeView: activeView,
-      type: postType,
-      isCustom: true
-    })]
+    })
   });
 }
 
@@ -53697,26 +53352,13 @@ const getDefaultView = (defaultViews, activeView) => {
     slug
   }) => slug === activeView)?.view;
 };
-const getCustomView = editedEntityRecord => {
-  if (!editedEntityRecord?.content) {
-    return undefined;
-  }
-  const content = JSON.parse(editedEntityRecord.content);
-  if (!content) {
-    return undefined;
-  }
-  return {
-    ...content,
-    ...default_views_defaultLayouts[content.type]
-  };
-};
 
 /**
- * This function abstracts working with default & custom views by
+ * This function abstracts working with default views by
  * providing a [ state, setState ] tuple based on the URL parameters.
  *
  * Consumers use the provided tuple to work with state
- * and don't have to deal with the specifics of default & custom views.
+ * and don't have to deal with the specifics.
  *
  * @param {string} postType Post type to retrieve default views for.
  * @return {Array} The [ state, setState ] tuple.
@@ -53726,7 +53368,6 @@ function post_list_useView(postType) {
     path,
     query: {
       activeView = 'all',
-      isCustom = 'false',
       layout
     }
   } = post_list_useLocation();
@@ -53734,31 +53375,11 @@ function post_list_useView(postType) {
   const defaultViews = useDefaultViews({
     postType
   });
-  const {
-    editEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const editedEntityRecord = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (isCustom !== 'true') {
-      return undefined;
-    }
-    const {
-      getEditedEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    return getEditedEntityRecord('postType', 'wp_dataviews', Number(activeView));
-  }, [activeView, isCustom]);
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(() => {
-    let initialView;
-    if (isCustom === 'true') {
-      var _getCustomView;
-      initialView = (_getCustomView = getCustomView(editedEntityRecord)) !== null && _getCustomView !== void 0 ? _getCustomView : {
-        type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
-      };
-    } else {
-      var _getDefaultView;
-      initialView = (_getDefaultView = getDefaultView(defaultViews, activeView)) !== null && _getDefaultView !== void 0 ? _getDefaultView : {
-        type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
-      };
-    }
+    var _getDefaultView;
+    const initialView = (_getDefaultView = getDefaultView(defaultViews, activeView)) !== null && _getDefaultView !== void 0 ? _getDefaultView : {
+      type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
+    };
     const type = layout !== null && layout !== void 0 ? layout : initialView.type;
     return {
       ...initialView,
@@ -53768,11 +53389,6 @@ function post_list_useView(postType) {
   });
   const setViewWithUrlUpdate = (0,external_wp_compose_namespaceObject.useEvent)(newView => {
     setView(newView);
-    if (isCustom === 'true' && editedEntityRecord?.id) {
-      editEntityRecord('postType', 'wp_dataviews', editedEntityRecord?.id, {
-        content: JSON.stringify(newView)
-      });
-    }
     const currentUrlLayout = layout !== null && layout !== void 0 ? layout : LAYOUT_LIST;
     if (newView.type !== currentUrlLayout) {
       history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
@@ -53800,14 +53416,9 @@ function post_list_useView(postType) {
     onUrlLayoutChange();
   }, [onUrlLayoutChange, layout]);
 
-  // When activeView or isCustom URL parameters change, reset the view.
+  // When activeView URL parameters change, reset the view.
   const onUrlActiveViewChange = (0,external_wp_compose_namespaceObject.useEvent)(() => {
-    let newView;
-    if (isCustom === 'true') {
-      newView = getCustomView(editedEntityRecord);
-    } else {
-      newView = getDefaultView(defaultViews, activeView);
-    }
+    const newView = getDefaultView(defaultViews, activeView);
     if (newView) {
       const type = layout !== null && layout !== void 0 ? layout : newView.type;
       setView({
@@ -53819,7 +53430,7 @@ function post_list_useView(postType) {
   });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     onUrlActiveViewChange();
-  }, [onUrlActiveViewChange, activeView, isCustom, defaultViews, editedEntityRecord]);
+  }, [onUrlActiveViewChange, activeView]);
   return [view, setViewWithUrlUpdate];
 }
 const DEFAULT_STATUSES = 'draft,future,pending,private,publish'; // All but 'trash'.
@@ -53840,19 +53451,15 @@ function PostList({
   const {
     postId,
     quickEdit = false,
-    isCustom,
     activeView = 'all'
   } = location.query;
   const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)((_postId$split = postId?.split(',')) !== null && _postId$split !== void 0 ? _postId$split : []);
   const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
-    var _location$query$isCus;
     setSelection(items);
-    if (((_location$query$isCus = location.query.isCustom) !== null && _location$query$isCus !== void 0 ? _location$query$isCus : 'false') === 'false') {
-      history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(location.path, {
-        postId: items.join(',')
-      }));
-    }
-  }, [location.path, location.query.isCustom, history]);
+    history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(location.path, {
+      postId: items.join(',')
+    }));
+  }, [location.path, history]);
   const {
     isLoading: isLoadingFields,
     fields: fields
@@ -53997,7 +53604,7 @@ function PostList({
           }));
         }
       })
-    }, activeView + isCustom)
+    }, activeView)
   });
 }
 
@@ -55396,7 +55003,7 @@ const pagesRoute = {
       if (!isBlockTheme) {
         return undefined;
       }
-      const isListView = (query.layout === 'list' || !query.layout) && query.isCustom !== 'true';
+      const isListView = query.layout === 'list' || !query.layout;
       return isListView ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : undefined;
     },
     mobile({
@@ -55420,7 +55027,7 @@ const pagesRoute = {
     content({
       query
     }) {
-      const isListView = (query.layout === 'list' || !query.layout) && query.isCustom !== 'true';
+      const isListView = query.layout === 'list' || !query.layout;
       return isListView ? 380 : undefined;
     },
     edit({
@@ -55774,7 +55381,7 @@ const postsRoute = {
     preview({
       query
     }) {
-      const isListView = (query.layout === 'list' || !query.layout) && query.isCustom !== 'true';
+      const isListView = query.layout === 'list' || !query.layout;
       return isListView ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
         isPostsList: true
       }) : undefined;
@@ -55795,7 +55402,7 @@ const postsRoute = {
     content({
       query
     }) {
-      const isListView = (query.layout === 'list' || !query.layout) && query.isCustom !== 'true';
+      const isListView = query.layout === 'list' || !query.layout;
       return isListView ? 380 : undefined;
     },
     edit({
