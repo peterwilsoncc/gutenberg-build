@@ -35852,6 +35852,39 @@ function getCommentExcerpt(text, excerptLength = 10) {
   return isTrimmed ? trimmedExcerpt + '…' : trimmedExcerpt;
 }
 
+/**
+ * Shift focus to the comment thread associated with a particular comment ID.
+ * If an additional selector is provided, the focus will be shifted to the element matching the selector.
+ *
+ * @typedef {import('@wordpress/element').RefObject} RefObject
+ *
+ * @param {string}       commentId          The ID of the comment thread to focus.
+ * @param {?HTMLElement} container          The container element to search within.
+ * @param {string}       additionalSelector The additional selector to focus on.
+ */
+function focusCommentThread(commentId, container, additionalSelector) {
+  const getFocusElement = () => {
+    const commentThread = container?.querySelector(`[role=listitem][id="comment-thread-${commentId}"]`);
+    if (additionalSelector) {
+      return commentThread?.querySelector(additionalSelector);
+    }
+    return commentThread;
+  };
+  let focusElement = getFocusElement();
+  if (focusElement) {
+    focusElement.focus();
+  } else {
+    // The element hasn't been painted yet. Defer focusing on the next frame.
+    window.requestAnimationFrame(() => {
+      focusElement = getFocusElement();
+      // Ignore if the element still doesn't exist.
+      if (focusElement) {
+        focusElement.focus();
+      }
+    });
+  }
+}
+
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-author-info.js
 /**
  * WordPress dependencies
@@ -36078,6 +36111,7 @@ const {
  * @param {Function} props.onAddReply          - The function to add a reply to a comment.
  * @param {Function} props.onCommentDelete     - The function to delete a comment.
  * @param {Function} props.setShowCommentBoard - The function to set the comment board visibility.
+ * @param {Ref}      props.commentSidebarRef   - The ref to the comment sidebar.
  * @return {React.ReactNode} The rendered Comments component.
  */
 function Comments({
@@ -36085,7 +36119,8 @@ function Comments({
   onEditComment,
   onAddReply,
   onCommentDelete,
-  setShowCommentBoard
+  setShowCommentBoard,
+  commentSidebarRef
 }) {
   const [selectedThread, setSelectedThread] = (0,external_wp_element_namespaceObject.useState)();
   const blockCommentId = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -36120,7 +36155,8 @@ function Comments({
     onEditComment: onEditComment,
     isSelected: selectedThread === thread.id,
     setSelectedThread: setSelectedThread,
-    setShowCommentBoard: setShowCommentBoard
+    setShowCommentBoard: setShowCommentBoard,
+    commentSidebarRef: commentSidebarRef
   }, thread.id));
 }
 function Thread({
@@ -36130,9 +36166,9 @@ function Thread({
   onCommentDelete,
   isSelected,
   setSelectedThread,
-  setShowCommentBoard
+  setShowCommentBoard,
+  commentSidebarRef
 }) {
-  const threadRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const {
     toggleBlockHighlight,
     selectBlock
@@ -36150,9 +36186,6 @@ function Thread({
     setSelectedThread(thread.id);
     // pass `null` as the second parameter to prevent focusing the block.
     selectBlock(thread.blockClientId, null);
-  };
-  const focusThread = () => {
-    threadRef.current?.focus();
   };
   const unselectThread = () => {
     setSelectedThread(null);
@@ -36175,7 +36208,7 @@ function Thread({
       className: dist_clsx('editor-collab-sidebar-panel__thread', {
         'is-selected': isSelected
       }),
-      id: `thread-${thread.id}`,
+      id: `comment-thread-${thread.id}`,
       spacing: "2",
       onClick: handleCommentSelect,
       onMouseEnter: onMouseEnter,
@@ -36194,12 +36227,11 @@ function Thread({
         // Collapse thread and focus the thread.
         if (event.key === 'Escape') {
           unselectThread();
-          focusThread();
+          focusCommentThread(thread.id, commentSidebarRef.current);
         }
       },
       tabIndex: 0,
       role: "listitem",
-      ref: threadRef,
       "aria-label": ariaLabel,
       "aria-expanded": isSelected,
       children: [!relatedBlockElement && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
@@ -36216,7 +36248,7 @@ function Thread({
           onEditComment(params);
           if (status === 'approved') {
             unselectThread();
-            focusThread();
+            focusCommentThread(thread.id, commentSidebarRef.current);
           }
         },
         onDelete: onCommentDelete,
@@ -36236,7 +36268,10 @@ function Thread({
           size: "compact",
           variant: "tertiary",
           className: "editor-collab-sidebar-panel__more-reply-button",
-          onClick: () => setSelectedThread(thread.id),
+          onClick: () => {
+            setSelectedThread(thread.id);
+            focusCommentThread(thread.id, commentSidebarRef.current);
+          },
           children: (0,external_wp_i18n_namespaceObject.sprintf)(
           // translators: %s: number of replies.
           (0,external_wp_i18n_namespaceObject._n)('%s more reply', '%s more replies', restReplies.length), restReplies.length)
@@ -36269,9 +36304,9 @@ function Thread({
               });
             },
             onCancel: event => {
-              threadRef.current?.focus();
               event.stopPropagation(); // Prevent the parent onClick from being triggered
               unselectThread();
+              focusCommentThread(thread.id, commentSidebarRef.current);
             },
             submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject.__)('Reopen & Reply') : (0,external_wp_i18n_namespaceObject.__)('Reply'),
             rows: 'approved' === thread.status ? 2 : 4,
@@ -36747,7 +36782,8 @@ function CollabSidebarContent({
   showCommentBoard,
   setShowCommentBoard,
   styles,
-  comments
+  comments,
+  commentSidebarRef
 }) {
   const {
     createNotice
@@ -36866,6 +36902,7 @@ function CollabSidebarContent({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "editor-collab-sidebar-panel",
     style: styles,
+    ref: commentSidebarRef,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       role: "list",
       spacing: "3",
@@ -36879,7 +36916,8 @@ function CollabSidebarContent({
         onAddReply: addNewComment,
         onCommentDelete: onCommentDelete,
         showCommentBoard: showCommentBoard,
-        setShowCommentBoard: setShowCommentBoard
+        setShowCommentBoard: setShowCommentBoard,
+        commentSidebarRef: commentSidebarRef
       })]
     })
   });
@@ -36897,6 +36935,7 @@ function CollabSidebar() {
     getActiveComplementaryArea
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
+  const commentSidebarRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const {
     postId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -36964,7 +37003,8 @@ function CollabSidebar() {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
         comments: resultComments,
         showCommentBoard: showCommentBoard,
-        setShowCommentBoard: setShowCommentBoard
+        setShowCommentBoard: setShowCommentBoard,
+        commentSidebarRef: commentSidebarRef
       })
     }), isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       isPinnable: false,
@@ -36976,6 +37016,7 @@ function CollabSidebar() {
         comments: unresolvedSortedThreads,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard,
+        commentSidebarRef: commentSidebarRef,
         styles: {
           backgroundColor
         }
