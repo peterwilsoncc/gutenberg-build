@@ -49646,14 +49646,14 @@ function PatternsHeader({
   });
 }
 
-;// ./packages/icons/build-module/library/edit.js
+;// ./packages/icons/build-module/library/pencil.js
 /* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-/* harmony default export */ const edit = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pencil = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -49696,7 +49696,7 @@ const useSetActiveTemplateAction = () => {
       return items.some(item => item._isActive) ? (0,external_wp_i18n_namespaceObject.__)('Deactivate') : (0,external_wp_i18n_namespaceObject.__)('Activate');
     },
     isPrimary: true,
-    icon: edit,
+    icon: pencil,
     isEligible(item) {
       return !(item.slug === 'index' && item.source === 'theme') && item.theme === activeTheme.stylesheet;
     },
@@ -49735,7 +49735,7 @@ const useEditPostAction = () => {
     id: 'edit-post',
     label: (0,external_wp_i18n_namespaceObject.__)('Edit'),
     isPrimary: true,
-    icon: edit,
+    icon: pencil,
     isEligible(post) {
       if (post.status === 'trash') {
         return false;
@@ -52162,7 +52162,7 @@ function NewTemplateModal({
         title: (0,external_wp_i18n_namespaceObject.__)('Custom template'),
         direction: "row",
         className: "edit-site-add-new-template__custom-template-button",
-        icon: edit,
+        icon: pencil,
         onClick: () => setModalContent(modalContentMap.customGenericTemplate),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
           lineHeight: 1.53846153846 // 20px

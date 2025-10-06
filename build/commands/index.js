@@ -3969,7 +3969,7 @@ function useCommand(command) {
  * @example
  * ```js
  * import { useCommands } from '@wordpress/commands';
- * import { plus, edit } from '@wordpress/icons';
+ * import { plus, pencil } from '@wordpress/icons';
  *
  * useCommands( [
  *     {
@@ -3984,7 +3984,7 @@ function useCommand(command) {
  *     {
  *         name: 'myplugin/edit-posts',
  *         label: __( 'Edit posts' ),
- *         icon: edit,
+ *         icon: pencil,
  *         callback: ({ close }) => {
  *             document.location.href = 'edit.php';
  *             close();

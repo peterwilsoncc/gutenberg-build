@@ -67627,13 +67627,13 @@ function UnforwardedToolbarButton(props, ref) {
  *
  * ```jsx
  * import { Toolbar, ToolbarButton } from '@wordpress/components';
- * import { edit } from '@wordpress/icons';
+ * import { pencil } from '@wordpress/icons';
  *
  * function MyToolbar() {
  *   return (
  *		<Toolbar label="Options">
  *			<ToolbarButton
- *				icon={ edit }
+ *				icon={ pencil }
  *				label="Edit"
  *				onClick={ () => alert( 'Editing' ) }
  *			/>

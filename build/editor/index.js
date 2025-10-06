@@ -18980,14 +18980,14 @@ function useHideBlocksFromInserter(postType, mode) {
 }));
 /* eslint-enable */
 
-;// ./packages/icons/build-module/library/edit.js
+;// ./packages/icons/build-module/library/pencil.js
 /* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-/* harmony default export */ const library_edit = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pencil = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -20713,7 +20713,7 @@ const getEditedEntityContextualCommands = () => function useEditedEntityContextu
     commands.push({
       name: 'core/rename-pattern',
       label: (0,external_wp_i18n_namespaceObject.__)('Rename pattern'),
-      icon: library_edit,
+      icon: pencil,
       callback: ({
         close
       }) => {

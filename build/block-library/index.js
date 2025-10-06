@@ -18509,14 +18509,14 @@ const details_init = () => initBlock({
   settings: details_settings
 });
 
-;// ./packages/icons/build-module/library/edit.js
+;// ./packages/icons/build-module/library/pencil.js
 /* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-/* harmony default export */ const library_edit = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pencil = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -18557,7 +18557,7 @@ const EmbedControls = ({
         children: showEditButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           className: "components-toolbar__control",
           label: (0,external_wp_i18n_namespaceObject.__)('Edit URL'),
-          icon: library_edit,
+          icon: pencil,
           onClick: switchBackToURLInput
         })
       })
@@ -46841,7 +46841,7 @@ function PostDateEdit({
             };
             return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
               "aria-expanded": isOpen,
-              icon: library_edit,
+              icon: pencil,
               title: (0,external_wp_i18n_namespaceObject.__)('Change Date'),
               onClick: onToggle,
               onKeyDown: openOnArrowDown
@@ -57348,7 +57348,7 @@ function RSSEdit({
     });
   }
   const toolbarControls = [{
-    icon: library_edit,
+    icon: pencil,
     title: (0,external_wp_i18n_namespaceObject.__)('Edit RSS URL'),
     onClick: () => setIsEditing(true)
   }, {

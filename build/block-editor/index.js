@@ -23811,14 +23811,14 @@ const __experimentalLinkControlSearchInput = props => {
 }));
 /* eslint-enable */
 
-;// ./packages/icons/build-module/library/edit.js
+;// ./packages/icons/build-module/library/pencil.js
 /* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-/* harmony default export */ const edit = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pencil = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -24073,7 +24073,7 @@ function LinkPreview({
           })
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        icon: edit,
+        icon: pencil,
         label: (0,external_wp_i18n_namespaceObject.__)('Edit link'),
         onClick: onEditClick,
         size: "compact",
@@ -40363,7 +40363,7 @@ const EditWithGeneratedProps = props => {
     setAttributes: setBoundAttributes
   });
 };
-/* harmony default export */ const block_edit_edit = (EditWithGeneratedProps);
+/* harmony default export */ const edit = (EditWithGeneratedProps);
 
 ;// ./packages/icons/build-module/library/more-vertical.js
 /* eslint-disable prettier/prettier */
@@ -40565,7 +40565,7 @@ function BlockEdit({
       [blockBindingsKey]: bindings,
       [isPreviewModeKey]: isPreviewMode
     }), [name, isSelected, clientId, layoutSupport, layout, __unstableLayoutClassNames, mayDisplayControls, mayDisplayParentControls, blockEditingMode, bindings, isPreviewMode]),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_edit_edit, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit, {
       ...props
     }), originalBlockClientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultipleUsageWarning, {
       originalBlockClientId: originalBlockClientId,
@@ -73500,7 +73500,7 @@ function LinkViewer({
       urlLabel: urlLabel,
       className: linkClassName
     }), onEditLinkClick && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      icon: edit,
+      icon: pencil,
       label: (0,external_wp_i18n_namespaceObject.__)('Edit'),
       onClick: onEditLinkClick,
       size: "compact"
@@ -76283,7 +76283,7 @@ function ToolSelector(props, ref) {
       size: "compact",
       ...props,
       ref: ref,
-      icon: mode === 'navigation' ? edit : selectIcon,
+      icon: mode === 'navigation' ? pencil : selectIcon,
       "aria-expanded": isOpen,
       "aria-haspopup": "true",
       onClick: onToggle
@@ -76307,7 +76307,7 @@ function ToolSelector(props, ref) {
             value: 'navigation',
             label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-                icon: edit
+                icon: pencil
               }), (0,external_wp_i18n_namespaceObject.__)('Write')]
             }),
             info: (0,external_wp_i18n_namespaceObject.__)('Focus on content.'),
