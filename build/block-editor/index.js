@@ -11662,6 +11662,7 @@ function isPatternFiltered(pattern, sourceFilter, syncFilter) {
 
 
 
+
 const isFiltered = Symbol('isFiltered');
 const parsedPatternCache = new WeakMap();
 const grammarMapCache = new WeakMap();
@@ -11755,7 +11756,7 @@ const getAllPatternsDependants = select => state => {
   return [state.settings.__experimentalBlockPatterns, state.settings.__experimentalUserPatternCategories, state.settings.__experimentalReusableBlocks, state.settings[selectBlockPatternsKey]?.(select), state.blockPatterns, unlock(select(STORE_NAME)).getReusableBlocks()];
 };
 const getInsertBlockTypeDependants = select => (state, rootClientId) => {
-  return [state.blockListSettings[rootClientId], state.blocks.byClientId.get(rootClientId), state.settings.allowedBlockTypes, state.settings.templateLock, state.blockEditingModes, select(STORE_NAME).__unstableGetEditorMode(state), getSectionRootClientId(state)];
+  return [state.blockListSettings[rootClientId], state.blocks.byClientId.get(rootClientId), state.settings.allowedBlockTypes, state.settings.templateLock, getBlockEditingMode(state, rootClientId), select(STORE_NAME).__unstableGetEditorMode(state), getSectionRootClientId(state)];
 };
 
 ;// ./packages/block-editor/build-module/utils/sorting.js
