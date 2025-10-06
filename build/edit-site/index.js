@@ -39687,10 +39687,14 @@ const ColumnHeaderMenu = _HeaderMenu;
 /* harmony default export */ const column_header_menu = (ColumnHeaderMenu);
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/utils/item-click-wrapper.js
-
 /**
  * External dependencies
  */
+
+/**
+ * WordPress dependencies
+ */
+
 
 function getClickableItemProps({
   item,
@@ -39736,11 +39740,34 @@ function ItemClickWrapper({
 
   // If we have a renderItemLink, use it
   if (renderItemLink) {
-    return renderItemLink({
+    const renderedElement = renderItemLink({
       item,
       className: `${className} ${className}--clickable`,
       ...extraProps,
       children
+    });
+
+    // Clone the element and enhance onClick to stop propagation
+    return (0,external_wp_element_namespaceObject.cloneElement)(renderedElement, {
+      onClick: event => {
+        // Always stop propagation to prevent selection
+        event.stopPropagation();
+
+        // If consumer provided an onClick, call it
+        if (renderedElement.props.onClick) {
+          renderedElement.props.onClick(event);
+        }
+      },
+      onKeyDown: event => {
+        if (event.key === 'Enter' || event.key === '' || event.key === ' ') {
+          // Prevents onChangeSelection from triggering.
+          event.stopPropagation();
+          // If consumer provided an onKeyDown, call it
+          if (renderedElement.props.onKeyDown) {
+            renderedElement.props.onKeyDown(event);
+          }
+        }
+      }
     });
   }
 
