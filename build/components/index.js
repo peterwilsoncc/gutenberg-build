@@ -61013,6 +61013,7 @@ const useNavigationTreeMenu = props => {
 
 ;// ./packages/components/build-module/search-control/styles.js
 
+function search_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -61022,9 +61023,16 @@ const useNavigationTreeMenu = props => {
  */
 
 
+
 const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_control,  true ? {
-  target: "effl84m0"
+  target: "effl84m1"
 } : 0)("input[type='search']{&::-webkit-search-decoration,&::-webkit-search-cancel-button,&::-webkit-search-results-button,&::-webkit-search-results-decoration{-webkit-appearance:none;}}&:not( :focus-within ){--wp-components-color-background:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
+const StyledIcon = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_icon,  true ? {
+  target: "effl84m0"
+} : 0)( true ? {
+  name: "1i54h4p",
+  styles: "&:dir( ltr ){transform:scaleX( -1 );}"
+} : 0);
 
 ;// ./packages/components/build-module/search-control/index.js
 /**
@@ -61129,7 +61137,7 @@ function UnforwardedSearchControl({
       value: value !== null && value !== void 0 ? value : '',
       prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputControlPrefixWrapper, {
         variant: "icon",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledIcon, {
           icon: library_search,
           fill: "currentColor"
         })

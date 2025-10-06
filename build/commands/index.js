@@ -3821,6 +3821,7 @@ function CommandMenu() {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "commands-command-menu__header",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon, {
+            className: "commands-command-menu__header-search-icon",
             icon: library_search
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommandInput, {
             search: search,
