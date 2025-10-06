@@ -744,6 +744,16 @@ __webpack_require__.d(build_module_audio_namespaceObject, {
   settings: () => (audio_settings)
 });
 
+// NAMESPACE OBJECT: ./packages/block-library/build-module/breadcrumbs/index.js
+var build_module_breadcrumbs_namespaceObject = {};
+__webpack_require__.r(build_module_breadcrumbs_namespaceObject);
+__webpack_require__.d(build_module_breadcrumbs_namespaceObject, {
+  init: () => (breadcrumbs_init),
+  metadata: () => (breadcrumbs_metadata),
+  name: () => (breadcrumbs_name),
+  settings: () => (breadcrumbs_settings)
+});
+
 // NAMESPACE OBJECT: ./packages/block-library/build-module/button/index.js
 var build_module_button_namespaceObject = {};
 __webpack_require__.r(build_module_button_namespaceObject);
@@ -4903,6 +4913,239 @@ const audio_init = () => initBlock({
   name: audio_name,
   metadata: audio_metadata,
   settings: audio_settings
+});
+
+;// ./packages/icons/build-module/library/breadcrumbs.js
+/* eslint-disable prettier/prettier */
+/**
+ * WordPress dependencies
+ */
+
+
+/* harmony default export */ const breadcrumbs = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4 13.5h3v-3H4v3Zm6-3.5 2 2-2 2 1 1 3-3-3-3-1 1Zm7 .5v3h3v-3h-3Z"
+  })
+}));
+/* eslint-enable */
+
+;// ./packages/block-library/build-module/breadcrumbs/edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const separatorDefaultValue = '/';
+function BreadcrumbEdit({
+  attributes,
+  setAttributes,
+  context: {
+    postId,
+    postType
+  }
+}) {
+  const {
+    separator,
+    showHomeLink
+  } = attributes;
+  const isPostTypeHierarchical = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!postType) {
+      return null;
+    }
+    return select(external_wp_coreData_namespaceObject.store).getPostType(postType)?.hierarchical;
+  }, [postType]);
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const {
+    content
+  } = (0,external_wp_serverSideRender_namespaceObject.useServerSideRender)({
+    attributes,
+    skipBlockSupportAttributes: true,
+    block: 'core/breadcrumbs',
+    urlQueryArgs: {
+      post_id: postId
+    }
+  });
+  let placeholder = null;
+  // If no post context or the post type is not hierarchical, show placeholder.
+  // This is fragile because this block is server side rendered and we'll have to
+  // update the placeholder html if the server side rendering output changes.
+  if (!postId || !postType || !isPostTypeHierarchical) {
+    const placeholderItems = [showHomeLink && (0,external_wp_i18n_namespaceObject.__)('Home'), (0,external_wp_i18n_namespaceObject.__)('Ancestor'), (0,external_wp_i18n_namespaceObject.__)('Parent')].filter(Boolean);
+    placeholder = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("nav", {
+      style: {
+        '--separator': `'${separator}'`
+      },
+      inert: "true",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ol", {
+        children: [placeholderItems.map((text, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+            href: `#breadcrumbs-pseudo-link-${index}`,
+            children: text
+          })
+        }, index)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            children: (0,external_wp_i18n_namespaceObject.__)('Current')
+          })
+        })]
+      })
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            separator: separatorDefaultValue,
+            showHomeLink: true
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Show home link'),
+          isShownByDefault: true,
+          hasValue: () => !showHomeLink,
+          onDeselect: () => setAttributes({
+            showHomeLink: true
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show home link'),
+            onChange: value => setAttributes({
+              showHomeLink: value
+            }),
+            checked: showHomeLink
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Separator'),
+          isShownByDefault: true,
+          hasValue: () => separator !== separatorDefaultValue,
+          onDeselect: () => setAttributes({
+            separator: separatorDefaultValue
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            autoComplete: "off",
+            label: (0,external_wp_i18n_namespaceObject.__)('Separator'),
+            value: separator,
+            onChange: value => setAttributes({
+              separator: value
+            })
+          })
+        })]
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...blockProps,
+      children: placeholder || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
+        inert: "true",
+        children: content
+      })
+    })]
+  });
+}
+
+;// ./packages/block-library/build-module/breadcrumbs/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const breadcrumbs_metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/breadcrumbs",
+  title: "Breadcrumbs",
+  category: "theme",
+  description: "Display a breadcrumb trail only for Pages, or for hierarchical post types. The block is useful to insert in the Pages template.",
+  textdomain: "default",
+  attributes: {
+    separator: {
+      type: "string",
+      "default": "/"
+    },
+    showHomeLink: {
+      type: "boolean",
+      "default": true
+    }
+  },
+  usesContext: ["postId", "postType"],
+  supports: {
+    html: false,
+    spacing: {
+      margin: true,
+      padding: true
+    },
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true
+      }
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: false,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
+    interactivity: {
+      clientNavigation: true
+    }
+  },
+  style: "wp-block-breadcrumbs"
+};
+
+const {
+  name: breadcrumbs_name
+} = breadcrumbs_metadata;
+
+const breadcrumbs_settings = {
+  icon: breadcrumbs,
+  edit: BreadcrumbEdit
+};
+const breadcrumbs_init = () => initBlock({
+  name: breadcrumbs_name,
+  metadata: breadcrumbs_metadata,
+  settings: breadcrumbs_settings
 });
 
 ;// ./packages/icons/build-module/library/button.js
@@ -71557,6 +71800,7 @@ lock(privateApis, {
 
 
 
+
 /**
  * Function to get all the block-library blocks in an array
  */
@@ -71567,7 +71811,7 @@ const getAllBlocks = () => {
   // in various contexts — like the inserter and auto-complete components.
   build_module_paragraph_namespaceObject, build_module_image_namespaceObject, build_module_heading_namespaceObject, build_module_gallery_namespaceObject, build_module_list_namespaceObject, build_module_list_item_namespaceObject, build_module_quote_namespaceObject,
   // Register all remaining core blocks.
-  accordion_namespaceObject, accordion_item_namespaceObject, accordion_heading_namespaceObject, accordion_panel_namespaceObject, archives_namespaceObject, build_module_audio_namespaceObject, build_module_button_namespaceObject, build_module_buttons_namespaceObject, build_module_calendar_namespaceObject, categories_namespaceObject, build_module_code_namespaceObject, build_module_column_namespaceObject, build_module_columns_namespaceObject, build_module_comment_author_avatar_namespaceObject, build_module_cover_namespaceObject, build_module_details_namespaceObject, embed_namespaceObject, build_module_file_namespaceObject, build_module_group_namespaceObject, build_module_html_namespaceObject, latest_comments_namespaceObject, latest_posts_namespaceObject, media_text_namespaceObject, missing_namespaceObject, build_module_more_namespaceObject, nextpage_namespaceObject, page_list_namespaceObject, page_list_item_namespaceObject, pattern_namespaceObject, build_module_preformatted_namespaceObject, build_module_pullquote_namespaceObject, block_namespaceObject, build_module_rss_namespaceObject, build_module_search_namespaceObject, build_module_separator_namespaceObject, build_module_shortcode_namespaceObject, social_link_namespaceObject, social_links_namespaceObject, spacer_namespaceObject, build_module_table_namespaceObject, tag_cloud_namespaceObject, text_columns_namespaceObject, build_module_verse_namespaceObject, build_module_video_namespaceObject, footnotes_namespaceObject,
+  accordion_namespaceObject, accordion_item_namespaceObject, accordion_heading_namespaceObject, accordion_panel_namespaceObject, archives_namespaceObject, build_module_audio_namespaceObject, build_module_breadcrumbs_namespaceObject, build_module_button_namespaceObject, build_module_buttons_namespaceObject, build_module_calendar_namespaceObject, categories_namespaceObject, build_module_code_namespaceObject, build_module_column_namespaceObject, build_module_columns_namespaceObject, build_module_comment_author_avatar_namespaceObject, build_module_cover_namespaceObject, build_module_details_namespaceObject, embed_namespaceObject, build_module_file_namespaceObject, build_module_group_namespaceObject, build_module_html_namespaceObject, latest_comments_namespaceObject, latest_posts_namespaceObject, media_text_namespaceObject, missing_namespaceObject, build_module_more_namespaceObject, nextpage_namespaceObject, page_list_namespaceObject, page_list_item_namespaceObject, pattern_namespaceObject, build_module_preformatted_namespaceObject, build_module_pullquote_namespaceObject, block_namespaceObject, build_module_rss_namespaceObject, build_module_search_namespaceObject, build_module_separator_namespaceObject, build_module_shortcode_namespaceObject, social_link_namespaceObject, social_links_namespaceObject, spacer_namespaceObject, build_module_table_namespaceObject, tag_cloud_namespaceObject, text_columns_namespaceObject, build_module_verse_namespaceObject, build_module_video_namespaceObject, footnotes_namespaceObject,
   // theme blocks
   build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, query_total_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
   if (window?.__experimentalEnableBlockExperiments) {
