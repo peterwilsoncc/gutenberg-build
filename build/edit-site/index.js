@@ -48869,6 +48869,272 @@ DataViewsSubComponents.ViewConfig = DataviewsViewConfigDropdown;
 DataViewsSubComponents.Footer = DataViewsFooter;
 /* harmony default export */ const dataviews = (DataViewsSubComponents);
 
+;// ./node_modules/dequal/dist/index.mjs
+var has = Object.prototype.hasOwnProperty;
+
+function find(iter, tar, key) {
+	for (key of iter.keys()) {
+		if (dequal(key, tar)) return key;
+	}
+}
+
+function dequal(foo, bar) {
+	var ctor, len, tmp;
+	if (foo === bar) return true;
+
+	if (foo && bar && (ctor=foo.constructor) === bar.constructor) {
+		if (ctor === Date) return foo.getTime() === bar.getTime();
+		if (ctor === RegExp) return foo.toString() === bar.toString();
+
+		if (ctor === Array) {
+			if ((len=foo.length) === bar.length) {
+				while (len-- && dequal(foo[len], bar[len]));
+			}
+			return len === -1;
+		}
+
+		if (ctor === Set) {
+			if (foo.size !== bar.size) {
+				return false;
+			}
+			for (len of foo) {
+				tmp = len;
+				if (tmp && typeof tmp === 'object') {
+					tmp = find(bar, tmp);
+					if (!tmp) return false;
+				}
+				if (!bar.has(tmp)) return false;
+			}
+			return true;
+		}
+
+		if (ctor === Map) {
+			if (foo.size !== bar.size) {
+				return false;
+			}
+			for (len of foo) {
+				tmp = len[0];
+				if (tmp && typeof tmp === 'object') {
+					tmp = find(bar, tmp);
+					if (!tmp) return false;
+				}
+				if (!dequal(len[1], bar.get(tmp))) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		if (ctor === ArrayBuffer) {
+			foo = new Uint8Array(foo);
+			bar = new Uint8Array(bar);
+		} else if (ctor === DataView) {
+			if ((len=foo.byteLength) === bar.byteLength) {
+				while (len-- && foo.getInt8(len) === bar.getInt8(len));
+			}
+			return len === -1;
+		}
+
+		if (ArrayBuffer.isView(foo)) {
+			if ((len=foo.byteLength) === bar.byteLength) {
+				while (len-- && foo[len] === bar[len]);
+			}
+			return len === -1;
+		}
+
+		if (!ctor || typeof foo === 'object') {
+			len = 0;
+			for (ctor in foo) {
+				if (has.call(foo, ctor) && ++len && !has.call(bar, ctor)) return false;
+				if (!(ctor in bar) || !dequal(foo[ctor], bar[ctor])) return false;
+			}
+			return Object.keys(bar).length === len;
+		}
+	}
+
+	return foo !== foo && bar !== bar;
+}
+
+;// ./packages/views/build-module/preference-keys.js
+/**
+ * Generates a unique preference key for a DataViews view.
+ *
+ * @param kind The entity kind (e.g., 'postType', 'root')
+ * @param name The specific entity name (e.g., 'post', 'user', 'site')
+ * @param slug The specific entity slug (e.g., 'category', 'post', 'all')
+ * @return The preference key string
+ */
+function preference_keys_generatePreferenceKey(kind, name, slug) {
+  return `dataviews-${kind}-${name}-${slug}`;
+}
+
+;// ./packages/views/build-module/use-view.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+// @ts-ignore - Preferences package is not typed
+
+function use_view_omit(obj, keys) {
+  const result = {
+    ...obj
+  };
+  for (const key of keys) {
+    delete result[key];
+  }
+  return result;
+}
+
+/**
+ * Hook for managing DataViews view state with local persistence.
+ *
+ * @param config                     Configuration object for loading the view.
+ * @param config.kind                Entity kind (e.g., 'postType', 'taxonomy', 'root').
+ * @param config.name                Specific entity name.
+ * @param config.slug                View identifier.
+ * @param config.defaultView         Default view configuration.
+ * @param config.queryParams         Object with `page` and/or `search` from URL.
+ * @param config.onChangeQueryParams Optional callback to update URL parameters.
+ *
+ * @return Object with current view, modification state, and update functions.
+ */
+function useView(config) {
+  var _ref, _queryParams$page, _ref2, _queryParams$search;
+  const {
+    kind,
+    name,
+    slug,
+    defaultView,
+    queryParams,
+    onChangeQueryParams
+  } = config;
+  const preferenceKey = preference_keys_generatePreferenceKey(kind, name, slug);
+  const persistedView = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_preferences_namespaceObject.store).get('core/views', preferenceKey);
+  }, [preferenceKey]);
+  const {
+    set
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
+  const baseView = persistedView !== null && persistedView !== void 0 ? persistedView : defaultView;
+  const page = (_ref = (_queryParams$page = queryParams?.page) !== null && _queryParams$page !== void 0 ? _queryParams$page : baseView.page) !== null && _ref !== void 0 ? _ref : 1;
+  const search = (_ref2 = (_queryParams$search = queryParams?.search) !== null && _queryParams$search !== void 0 ? _queryParams$search : baseView.search) !== null && _ref2 !== void 0 ? _ref2 : '';
+
+  // Merge URL query parameters (page, search) into the view
+  const view = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return {
+      ...baseView,
+      page,
+      search
+    };
+  }, [baseView, page, search]);
+  const isModified = !!persistedView;
+  const updateView = (0,external_wp_element_namespaceObject.useCallback)(newView => {
+    // Extract URL params (page, search) from the new view
+    const urlParams = {
+      page: newView?.page,
+      search: newView?.search
+    };
+    const preferenceView = use_view_omit(newView, ['page', 'search']);
+
+    // If we have URL handling enabled, separate URL state from preference state
+    if (onChangeQueryParams && !dequal(urlParams, {
+      page,
+      search
+    })) {
+      onChangeQueryParams(urlParams);
+    }
+
+    // Only persist non-URL preferences if different from baseView
+    if (!dequal(baseView, preferenceView)) {
+      if (dequal(preferenceView, defaultView)) {
+        set('core/views', preferenceKey, undefined);
+      } else {
+        set('core/views', preferenceKey, preferenceView);
+      }
+    }
+  }, [onChangeQueryParams, page, search, baseView, defaultView, set, preferenceKey]);
+  const resetToDefault = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    set('core/views', preferenceKey, undefined);
+  }, [preferenceKey, set]);
+  return {
+    view,
+    isModified,
+    updateView,
+    resetToDefault
+  };
+}
+
+;// ./packages/views/build-module/load-view.js
+/**
+ * WordPress dependencies
+ */
+
+// @ts-ignore - Preferences package is not typed
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Async function for loading view state in route loaders with optional URL parameters.
+ *
+ * @example
+ *
+ * ```typescript
+ * // In route loader
+ * const view = await loadView( {
+ * 	kind: 'taxonomy',
+ * 	name: 'category',
+ * 	slug: 'all',
+ * 	defaultView,
+ * 	queryParams: { page: search.page, search: search.search },
+ * } );
+ * ```
+ *
+ * @param config             Configuration object for loading the view.
+ * @param config.kind        Entity kind (e.g., 'postType', 'taxonomy', 'root').
+ * @param config.name        Specific entity name.
+ * @param config.slug        View identifier.
+ * @param config.defaultView Default view configuration.
+ * @param config.queryParams Object with `page` and/or `search` from URL.
+ *
+ * @return Promise resolving to the loaded view object.
+ */
+async function loadView(config) {
+  var _queryParams$page, _queryParams$search;
+  const {
+    kind,
+    name,
+    slug,
+    defaultView,
+    queryParams
+  } = config;
+  const preferenceKey = generatePreferenceKey(kind, name, slug);
+  const persistedView = select(preferencesStore).get('core/views', preferenceKey);
+  const baseView = persistedView !== null && persistedView !== void 0 ? persistedView : defaultView;
+  const page = (_queryParams$page = queryParams?.page) !== null && _queryParams$page !== void 0 ? _queryParams$page : 1;
+  const search = (_queryParams$search = queryParams?.search) !== null && _queryParams$search !== void 0 ? _queryParams$search : '';
+  return {
+    ...baseView,
+    page,
+    search
+  };
+}
+
+;// ./packages/views/build-module/index.js
+
+
+
 ;// ./packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
 /**
  * WordPress dependencies
@@ -49308,7 +49574,9 @@ function PatternsHeader({
   categoryId,
   type,
   titleId,
-  descriptionId
+  descriptionId,
+  isModifiedView = false,
+  resetView = () => {}
 }) {
   const {
     patternCategories
@@ -49342,7 +49610,11 @@ function PatternsHeader({
         children: title
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         expanded: false,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddNewPattern, {}), !!patternCategory?.id && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
+        children: [isModifiedView && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          onClick: resetView,
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset View')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddNewPattern, {}), !!patternCategory?.id && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
           icon: more_vertical,
           label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
           toggleProps: {
@@ -49778,6 +50050,7 @@ const templatePartAuthorField = {
 
 
 
+
 const {
   ExperimentalBlockEditorProvider: page_patterns_ExperimentalBlockEditorProvider
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -49808,8 +50081,6 @@ const defaultLayouts = {
 };
 const DEFAULT_VIEW = {
   type: LAYOUT_GRID,
-  search: '',
-  page: 1,
   perPage: 20,
   titleField: 'title',
   mediaField: 'preview',
@@ -49818,17 +50089,39 @@ const DEFAULT_VIEW = {
   ...defaultLayouts[LAYOUT_GRID]
 };
 function DataviewsPatterns() {
+  var _query$pageNumber;
   const {
-    query: {
-      postType = 'wp_block',
-      categoryId: categoryIdFromURL
-    }
+    path,
+    query
   } = page_patterns_useLocation();
+  const {
+    postType = 'wp_block',
+    categoryId: categoryIdFromURL
+  } = query;
   const history = page_patterns_useHistory();
   const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
-  const [view, setView] = (0,external_wp_element_namespaceObject.useState)(DEFAULT_VIEW);
-  const previousCategoryId = (0,external_wp_compose_namespaceObject.usePrevious)(categoryId);
-  const previousPostType = (0,external_wp_compose_namespaceObject.usePrevious)(postType);
+  const {
+    view,
+    updateView,
+    isModified,
+    resetToDefault
+  } = useView({
+    kind: 'postType',
+    name: postType,
+    slug: categoryId,
+    defaultView: DEFAULT_VIEW,
+    queryParams: {
+      page: Number((_query$pageNumber = query.pageNumber) !== null && _query$pageNumber !== void 0 ? _query$pageNumber : 1),
+      search: query.search
+    },
+    onChangeQueryParams: params => {
+      history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+        ...query,
+        pageNumber: params.page,
+        search: params.search
+      }));
+    }
+  });
   const viewSyncStatus = view.filters?.find(({
     field
   }) => field === 'sync-status')?.value;
@@ -49869,16 +50162,6 @@ function DataviewsPatterns() {
     }
     return _fields;
   }, [postType, authors]);
-
-  // Reset the page number when the category changes.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (previousCategoryId !== categoryId || previousPostType !== postType) {
-      setView(prevView => ({
-        ...prevView,
-        page: 1
-      }));
-    }
-  }, [categoryId, previousCategoryId, previousPostType, postType]);
   const {
     data,
     paginationInfo
@@ -49925,7 +50208,9 @@ function DataviewsPatterns() {
         categoryId: categoryId,
         type: postType,
         titleId: `${id}-title`,
-        descriptionId: `${id}-description`
+        descriptionId: `${id}-description`,
+        isModifiedView: isModified,
+        resetView: resetToDefault
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
         paginationInfo: paginationInfo,
         fields: fields,
@@ -49941,7 +50226,7 @@ function DataviewsPatterns() {
           history.navigate(`/${item.type}/${[PATTERN_TYPES.user, TEMPLATE_PART_POST_TYPE].includes(item.type) ? item.id : item.name}?canvas=edit`);
         },
         view: view,
-        onChangeView: setView,
+        onChangeView: updateView,
         defaultLayouts: defaultLayouts
       }, categoryId + postType)]
     })
@@ -53436,7 +53721,7 @@ const getCustomView = editedEntityRecord => {
  * @param {string} postType Post type to retrieve default views for.
  * @return {Array} The [ state, setState ] tuple.
  */
-function useView(postType) {
+function post_list_useView(postType) {
   const {
     path,
     query: {
@@ -53549,7 +53834,7 @@ function PostList({
   postType
 }) {
   var _postId$split, _data$map, _usePrevious;
-  const [view, setView] = useView(postType);
+  const [view, setView] = post_list_useView(postType);
   const history = post_list_useHistory();
   const location = post_list_useLocation();
   const {
