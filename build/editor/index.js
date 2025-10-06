@@ -36073,6 +36073,7 @@ function Comments({
   onCommentDelete,
   setShowCommentBoard
 }) {
+  const [selectedThread, setSelectedThread] = (0,external_wp_element_namespaceObject.useState)();
   const blockCommentId = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockAttributes,
@@ -36081,7 +36082,11 @@ function Comments({
     const clientId = getSelectedBlockClientId();
     return clientId ? getBlockAttributes(clientId)?.metadata?.commentId : null;
   }, []);
-  const [selectedThread = blockCommentId, setSelectedThread] = (0,external_wp_element_namespaceObject.useState)();
+
+  // Auto-select the related comment thread when a block is selected.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setSelectedThread(blockCommentId !== null && blockCommentId !== void 0 ? blockCommentId : undefined);
+  }, [blockCommentId]);
   const hasThreads = Array.isArray(threads) && threads.length > 0;
   if (!hasThreads) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -36115,7 +36120,8 @@ function Thread({
 }) {
   const threadRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const {
-    toggleBlockHighlight
+    toggleBlockHighlight,
+    selectBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const relatedBlockElement = useBlockElement(thread.blockClientId);
   const debouncedToggleBlockHighlight = (0,external_wp_compose_namespaceObject.useDebounce)(toggleBlockHighlight, 50);
@@ -36125,18 +36131,11 @@ function Thread({
   const onMouseLeave = () => {
     debouncedToggleBlockHighlight(thread.blockClientId, false);
   };
-  const handleCommentSelect = ({
-    id,
-    blockClientId
-  }) => {
+  const handleCommentSelect = () => {
     setShowCommentBoard(false);
-    setSelectedThread(id);
-    if (blockClientId && relatedBlockElement) {
-      relatedBlockElement.scrollIntoView({
-        behavior: 'instant',
-        block: 'center'
-      });
-    }
+    setSelectedThread(thread.id);
+    // pass `null` as the second parameter to prevent focusing the block.
+    selectBlock(thread.blockClientId, null);
   };
   const focusThread = () => {
     threadRef.current?.focus();
@@ -36164,7 +36163,7 @@ function Thread({
       }),
       id: `thread-${thread.id}`,
       spacing: "2",
-      onClick: () => handleCommentSelect(thread),
+      onClick: handleCommentSelect,
       onMouseEnter: onMouseEnter,
       onMouseLeave: onMouseLeave,
       onFocus: onMouseEnter,
@@ -36175,7 +36174,7 @@ function Thread({
           if (isSelected) {
             unselectThread();
           } else {
-            handleCommentSelect(thread);
+            handleCommentSelect();
           }
         }
         // Collapse thread and focus the thread.
@@ -36867,7 +36866,7 @@ function CollabSidebarContent({
         onCommentDelete: onCommentDelete,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard
-      }, getSelectedBlockClientId())]
+      })]
     })
   });
 }
