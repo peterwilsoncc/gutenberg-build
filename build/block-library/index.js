@@ -40998,16 +40998,14 @@ function getEntityTypeName(type, kind) {
  * This component provides the inspector controls (ToolsPanel) that are identical
  * between both navigation blocks.
  *
- * @param {Object}   props                     - Component props
- * @param {Object}   props.attributes          - Block attributes
- * @param {Function} props.setAttributes       - Function to update block attributes
- * @param {Function} props.setIsEditingControl - Function to set editing state (optional)
- * @param {string}   props.clientId            - Block client ID
+ * @param {Object}   props               - Component props
+ * @param {Object}   props.attributes    - Block attributes
+ * @param {Function} props.setAttributes - Function to update block attributes
+ * @param {string}   props.clientId      - Block client ID
  */
 function controls_Controls({
   attributes,
   setAttributes,
-  setIsEditingControl = () => {},
   clientId
 }) {
   const {
@@ -41069,9 +41067,7 @@ function controls_Controls({
             label: labelValue
           });
         },
-        autoComplete: "off",
-        onFocus: () => setIsEditingControl(true),
-        onBlur: () => setIsEditingControl(false)
+        autoComplete: "off"
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!url,
@@ -41102,7 +41098,6 @@ function controls_Controls({
             return;
           }
           lastURLRef.current = url;
-          setIsEditingControl(true);
         },
         onBlur: () => {
           if (hasUrlBinding) {
@@ -41115,7 +41110,6 @@ function controls_Controls({
             ...attributes,
             url: lastURLRef.current
           });
-          setIsEditingControl(false);
         },
         help: hasUrlBinding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BindingHelpText, {
           type: attributes.type,
@@ -41383,11 +41377,6 @@ function NavigationLinkEdit({
   const ref = (0,external_wp_element_namespaceObject.useRef)();
   const linkUIref = (0,external_wp_element_namespaceObject.useRef)();
   const prevUrl = (0,external_wp_compose_namespaceObject.usePrevious)(url);
-
-  // Change the `label` and `url` using inspector causes RichText to change focus.
-  // This is a workaround to keep the focus on the field when it's focused we don't render the RichText.
-  // See: https://github.com/WordPress/gutenberg/pull/61374.
-  const [isEditingControl, setIsEditingControl] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     isAtMaxNesting,
     isTopLevelLink,
@@ -41582,20 +41571,19 @@ function NavigationLinkEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(controls_Controls, {
         attributes: attributes,
         setAttributes: setAttributes,
-        setIsEditingControl: setIsEditingControl,
         clientId: clientId
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
         className: classes,
-        children: [!url && !isEditingControl && !metadata?.bindings?.url ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: [!url && !metadata?.bindings?.url ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "wp-block-navigation-link__placeholder-text",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: missingText
           })
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [!isInvalid && !isDraft && !isEditingControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [!isInvalid && !isDraft && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
               ref: ref,
               identifier: "label",
@@ -41614,7 +41602,7 @@ function NavigationLinkEdit({
               className: "wp-block-navigation-item__description",
               children: description
             })]
-          }), (isInvalid || isDraft || isEditingControl) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          }), (isInvalid || isDraft) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: dist_clsx('wp-block-navigation-link__placeholder-text', 'wp-block-navigation-link__label', {
               'is-invalid': isInvalid,
               'is-draft': isDraft
