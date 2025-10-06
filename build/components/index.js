@@ -61023,10 +61023,12 @@ function search_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You ha
  */
 
 
-
 const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_control,  true ? {
   target: "effl84m1"
-} : 0)("input[type='search']{&::-webkit-search-decoration,&::-webkit-search-cancel-button,&::-webkit-search-results-button,&::-webkit-search-results-decoration{-webkit-appearance:none;}}&:not( :focus-within ){--wp-components-color-background:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
+} : 0)( true ? {
+  name: "37btb2",
+  styles: "input[type='search']{&::-webkit-search-decoration,&::-webkit-search-cancel-button,&::-webkit-search-results-button,&::-webkit-search-results-decoration{-webkit-appearance:none;}}"
+} : 0);
 const StyledIcon = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_icon,  true ? {
   target: "effl84m0"
 } : 0)( true ? {
@@ -61114,10 +61116,6 @@ function UnforwardedSearchControl({
         __nextHasNoMarginBottom
       },
       __associatedWPComponentName: 'SearchControl'
-    },
-    // `isBorderless` is still experimental and not a public prop for InputControl yet.
-    InputBase: {
-      isBorderless: true
     }
   }), [__nextHasNoMarginBottom]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContextSystemProvider, {
