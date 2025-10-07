@@ -39085,7 +39085,6 @@ function ButtonTrigger({
     icon: action.icon,
     disabled: !!action.disabled,
     accessibleWhenDisabled: true,
-    isDestructive: action.isDestructive,
     size: "compact",
     onClick: onClick
   });
@@ -39356,7 +39355,6 @@ function ActionTrigger({
     accessibleWhenDisabled: true,
     label: label,
     icon: action.icon,
-    isDestructive: action.isDestructive,
     size: "compact",
     onClick: onClick,
     isBusy: isBusy,
@@ -40812,7 +40810,6 @@ function PrimaryActionGridCell({
         disabled: !!primaryAction.disabled,
         accessibleWhenDisabled: true,
         icon: primaryAction.icon,
-        isDestructive: primaryAction.isDestructive,
         size: "small",
         onClick: () => setIsModalOpen(true)
       }),
@@ -40831,7 +40828,6 @@ function PrimaryActionGridCell({
         disabled: !!primaryAction.disabled,
         accessibleWhenDisabled: true,
         icon: primaryAction.icon,
-        isDestructive: primaryAction.isDestructive,
         size: "small",
         onClick: () => {
           primaryAction.callback([item], {
@@ -41262,7 +41258,6 @@ function ActionButtons({
         label,
         icon,
         isPrimary,
-        isDestructive,
         callback
       } = action;
       const _label = typeof label === 'string' ? label : label(items);
@@ -41281,7 +41276,6 @@ function ActionButtons({
           setActionInProgress(null);
         },
         size: "compact",
-        isDestructive: isDestructive,
         variant: variant,
         children: _label
       }, id);
