@@ -68277,245 +68277,163 @@ const term_description_init = () => initBlock({
   settings: term_description_settings
 });
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/taxonomy-control.js
+;// ./packages/block-library/build-module/terms-query/utils.js
 /**
  * WordPress dependencies
  */
 
+
+
+
+/**
+ * Retrieve publicly-queryable taxonomies.
+ *
+ * @return {Object[]} Array of public taxonomy objects.
+ */
+function usePublicTaxonomies() {
+  const taxonomies = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getTaxonomies({
+    per_page: -1
+  }), []);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return taxonomies?.filter(({
+      visibility
+    }) => visibility?.publicly_queryable) || [];
+  }, [taxonomies]);
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/taxonomy-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
 
 
 function TaxonomyControl({
-  attributes,
-  setQuery,
-  setAttributes,
-  taxonomyOptions
+  value,
+  onChange,
+  ...props
 }) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.taxonomy !== 'category',
-    label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
-    onDeselect: () => {
-      setQuery({
-        taxonomy: 'category'
-      });
-      setAttributes({
-        termsToShow: 'all'
-      });
+  const taxonomies = usePublicTaxonomies();
+  const taxonomyOptions = taxonomies.map(taxonomy => ({
+    label: taxonomy.name,
+    value: taxonomy.slug
+  }));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    options: taxonomyOptions,
+    value: value,
+    onChange: onChange,
+    ...props
+  });
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/order-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+function order_control_OrderControl({
+  orderBy,
+  order,
+  onChange,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    options: [{
+      label: (0,external_wp_i18n_namespaceObject.__)('Name: A → Z'),
+      value: 'name/asc'
+    }, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Name: Z → A'),
+      value: 'name/desc'
+    }, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Count, high to low'),
+      value: 'count/desc'
+    }, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Count, low to high'),
+      value: 'count/asc'
+    }],
+    value: orderBy + '/' + order,
+    onChange: value => {
+      const [newOrderBy, newOrder] = value.split('/');
+      onChange(newOrderBy, newOrder);
     },
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
-      options: taxonomyOptions,
-      value: termQuery.taxonomy,
-      onChange: selectedTaxonomy => {
-        setQuery({
-          taxonomy: selectedTaxonomy
-        });
-        setAttributes({
-          termsToShow: 'all'
-        });
-      }
-    })
+    ...props
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/ordering-controls.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/empty-terms-control.js
 /**
  * WordPress dependencies
  */
-
-
-
-function OrderingControls({
-  attributes,
-  setQuery
-}) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.orderBy !== 'name' || termQuery.order !== 'asc',
-    label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
-    onDeselect: () => setQuery({
-      orderBy: 'name',
-      order: 'asc'
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
-      options: [{
-        label: (0,external_wp_i18n_namespaceObject.__)('Name: A → Z'),
-        value: 'name/asc'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Name: Z → A'),
-        value: 'name/desc'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Count, high to low'),
-        value: 'count/desc'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Count, low to high'),
-        value: 'count/asc'
-      }],
-      value: termQuery.orderBy + '/' + termQuery.order,
-      onChange: orderBy => {
-        const [newOrderBy, newOrder] = orderBy.split('/');
-        setQuery({
-          orderBy: newOrderBy,
-          order: newOrder
-        });
-      }
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/terms-query/inspector-controls/display-options.js
-/**
- * WordPress dependencies
- */
-
-
-
-const getOptions = (displayTopLevelControl, displaySubtermsControl) => {
-  const options = [{
-    label: (0,external_wp_i18n_namespaceObject.__)('Show all'),
-    value: 'all'
-  }];
-  if (displayTopLevelControl) {
-    options.push({
-      label: (0,external_wp_i18n_namespaceObject.__)('Show only top level terms'),
-      value: 'top-level'
-    });
-  }
-  if (displaySubtermsControl) {
-    options.push({
-      label: (0,external_wp_i18n_namespaceObject.__)('Show subterms only'),
-      value: 'subterms',
-      description: (0,external_wp_i18n_namespaceObject.__)('Display subterms of the current term. E.g. subcategories of current category.')
-    });
-  }
-  return options;
-};
-const getQueryAttributes = value => {
-  if (value === 'top-level') {
-    return {
-      parent: 0,
-      hierarchical: false
-    };
-  }
-
-  // For 'all' and 'subterms', we fetch all terms and then filter them as the tree is built in Term Template.
-  return {
-    parent: false
-  };
-};
-function DisplayOptions({
-  attributes,
-  displayTopLevelControl,
-  displaySubtermsControl,
-  setAttributes
-}) {
-  const {
-    termQuery,
-    termsToShow
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termsToShow !== 'all',
-    label: (0,external_wp_i18n_namespaceObject.__)('Terms to show'),
-    onDeselect: () => setAttributes({
-      termsToShow: 'all'
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Terms to show'),
-      options: getOptions(displayTopLevelControl, displaySubtermsControl),
-      selected: termsToShow,
-      onChange: value => {
-        const queryAttributes = getQueryAttributes(value);
-        setAttributes({
-          termsToShow: value,
-          termQuery: {
-            ...termQuery,
-            ...queryAttributes
-          }
-        });
-      }
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/terms-query/inspector-controls/hierarchy-control.js
-/**
- * WordPress dependencies
- */
-
-
-
-function HierarchyControl({
-  attributes,
-  setQuery
-}) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.hierarchical !== false,
-    label: (0,external_wp_i18n_namespaceObject.__)('Show hierarchy'),
-    onDeselect: () => setQuery({
-      hierarchical: false
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Show hierarchy'),
-      checked: termQuery.hierarchical,
-      onChange: hierarchical => {
-        setQuery({
-          hierarchical
-        });
-      }
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/terms-query/inspector-controls/empty-terms-control.js
-/**
- * WordPress dependencies
- */
-
 
 
 function EmptyTermsControl({
-  attributes,
-  setQuery
+  value,
+  onChange,
+  ...props
 }) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.hideEmpty !== true,
-    label: (0,external_wp_i18n_namespaceObject.__)('Show empty terms'),
-    onDeselect: () => setQuery({
-      hideEmpty: true
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Show empty terms'),
-      checked: !termQuery.hideEmpty,
-      onChange: showEmpty => setQuery({
-        hideEmpty: !showEmpty
-      })
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    checked: !value,
+    onChange: showEmpty => onChange(!showEmpty),
+    ...props
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/max-terms-control.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/nested-terms-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+function NestedTermsControl({
+  value,
+  onChange,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    checked: value,
+    onChange: onChange,
+    ...props
+  });
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+function InheritControl({
+  value,
+  onChange,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    checked: value,
+    onChange: inherit => onChange({
+      inherit,
+      // When enabling inherit, hierarchical is not supported.
+      ...(inherit ? {
+        hierarchical: false
+      } : {})
+    }),
+    ...props
+  });
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/max-terms-control.js
 /**
  * WordPress dependencies
  */
@@ -68523,43 +68441,23 @@ function EmptyTermsControl({
 
 
 function MaxTermsControl({
-  attributes,
-  setQuery
+  value,
+  onChange,
+  ...props
 }) {
-  const {
-    termQuery
-  } = attributes;
-
-  // Only show pagination control when not hierarchical.
-  if (termQuery.hierarchical) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.perPage !== 10,
-    label: (0,external_wp_i18n_namespaceObject.__)('Max terms'),
-    onDeselect: () => setQuery({
-      perPage: 10
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Max terms'),
-      value: termQuery.perPage,
-      min: 0,
-      max: 100,
-      onChange: perPage => {
-        // Show all terms (-1) when 0 is selected.
-        setQuery({
-          perPage: perPage === 0 ? -1 : perPage
-        });
-      },
-      help: (0,external_wp_i18n_namespaceObject.__)('Limit the number of terms you want to show. To show all terms, use 0 (zero).')
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    value: value,
+    min: 0,
+    max: 100,
+    onChange: onChange,
+    help: (0,external_wp_i18n_namespaceObject.__)('Limit the number of terms you want to show. To show all terms, use 0 (zero).'),
+    ...props
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/advanced-controls.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/advanced-controls.js
 /**
  * WordPress dependencies
  */
@@ -68604,12 +68502,10 @@ function AdvancedControls({
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/index.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/index.js
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -68627,16 +68523,7 @@ function AdvancedControls({
 
 
 
-const usePublicTaxonomies = () => {
-  const taxonomies = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getTaxonomies({
-    per_page: -1
-  }), []);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return taxonomies?.filter(({
-      visibility
-    }) => visibility?.publicly_queryable) || [];
-  }, [taxonomies]);
-};
+
 function TermsQueryInspectorControls({
   attributes,
   setQuery,
@@ -68645,11 +68532,18 @@ function TermsQueryInspectorControls({
   clientId
 }) {
   const {
-    termQuery,
-    termsToShow
+    termQuery
   } = attributes;
+  const {
+    taxonomy,
+    orderBy,
+    order,
+    hideEmpty,
+    inherit,
+    hierarchical,
+    perPage
+  } = termQuery;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const taxonomies = usePublicTaxonomies();
   const {
     templateSlug
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -68666,13 +68560,23 @@ function TermsQueryInspectorControls({
       templateSlug: getEditedPostSlug()
     };
   }, []);
-  const taxonomyOptions = taxonomies.map(taxonomy => ({
-    label: taxonomy.name,
-    value: taxonomy.slug
-  }));
-  const isTaxonomyHierarchical = taxonomies.find(taxonomy => taxonomy.slug === termQuery.taxonomy)?.hierarchical;
-  const isTaxonomyMatchingTemplate = typeof templateSlug === 'string' && templateSlug.includes(termQuery.taxonomy);
-  const displaySubtermsControl = isTaxonomyHierarchical && isTaxonomyMatchingTemplate;
+  const taxonomies = usePublicTaxonomies();
+  const isTaxonomyHierarchical = taxonomies.find(_taxonomy => _taxonomy.slug === taxonomy)?.hierarchical;
+  const isTaxonomyMatchingTemplate = typeof templateSlug === 'string' && templateSlug.includes(taxonomy);
+
+  // Only display the inherit control if the taxonomy is hierarchical and matches the current template.
+  const displayInheritControl = isTaxonomyHierarchical && isTaxonomyMatchingTemplate;
+
+  // Only display the hierarchical control if the taxonomy is hierarchical and not inheriting.
+  const displayHierarchicalControl = isTaxonomyHierarchical && !termQuery.inherit;
+
+  // Labels shared between ToolsPanelItem and its child control.
+  const taxonomyControlLabel = (0,external_wp_i18n_namespaceObject.__)('Taxonomy');
+  const orderByControlLabel = (0,external_wp_i18n_namespaceObject.__)('Order by');
+  const emptyTermsControlLabel = (0,external_wp_i18n_namespaceObject.__)('Show empty terms');
+  const inheritControlLabel = (0,external_wp_i18n_namespaceObject.__)('Inherit parent term from archive');
+  const nestedTermsControlLabel = (0,external_wp_i18n_namespaceObject.__)('Show nested terms');
+  const maxTermsControlLabel = (0,external_wp_i18n_namespaceObject.__)('Max terms');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -68687,33 +68591,99 @@ function TermsQueryInspectorControls({
               hierarchical: false,
               parent: false,
               perPage: 10
-            },
-            termsToShow: 'all'
+            }
           });
         },
         dropdownMenuProps: dropdownMenuProps,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TaxonomyControl, {
-          attributes: attributes,
-          setQuery: setQuery,
-          setAttributes: setAttributes,
-          taxonomyOptions: taxonomyOptions
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OrderingControls, {
-          attributes: attributes,
-          setQuery: setQuery
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmptyTermsControl, {
-          attributes: attributes,
-          setQuery: setQuery
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DisplayOptions, {
-          attributes: attributes,
-          setAttributes: setAttributes,
-          displayTopLevelControl: isTaxonomyHierarchical,
-          displaySubtermsControl: displaySubtermsControl
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MaxTermsControl, {
-          attributes: attributes,
-          setQuery: setQuery
-        }), isTaxonomyHierarchical && termsToShow === 'all' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HierarchyControl, {
-          attributes: attributes,
-          setQuery: setQuery
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => taxonomy !== 'category',
+          label: taxonomyControlLabel,
+          onDeselect: () => {
+            setQuery({
+              taxonomy: 'category'
+            });
+          },
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TaxonomyControl, {
+            label: taxonomyControlLabel,
+            value: taxonomy,
+            onChange: value => setQuery({
+              taxonomy: value
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => orderBy !== 'name' || order !== 'asc',
+          label: orderByControlLabel,
+          onDeselect: () => setQuery({
+            orderBy: 'name',
+            order: 'asc'
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(order_control_OrderControl, {
+            label: orderByControlLabel,
+            orderBy,
+            order,
+            onChange: (newOrderBy, newOrder) => {
+              setQuery({
+                orderBy: newOrderBy,
+                order: newOrder
+              });
+            }
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => hideEmpty !== true,
+          label: emptyTermsControlLabel,
+          onDeselect: () => setQuery({
+            hideEmpty: true
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmptyTermsControl, {
+            label: emptyTermsControlLabel,
+            value: hideEmpty,
+            onChange: value => setQuery({
+              hideEmpty: value
+            })
+          })
+        }), displayInheritControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => inherit !== false,
+          label: inheritControlLabel,
+          onDeselect: () => setQuery({
+            inherit: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InheritControl, {
+            label: inheritControlLabel,
+            value: inherit,
+            onChange: setQuery
+          })
+        }), displayHierarchicalControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => hierarchical !== false,
+          label: nestedTermsControlLabel,
+          onDeselect: () => setQuery({
+            hierarchical: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NestedTermsControl, {
+            label: nestedTermsControlLabel,
+            value: hierarchical,
+            onChange: value => setQuery({
+              hierarchical: value
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => perPage !== 10,
+          label: maxTermsControlLabel,
+          onDeselect: () => setQuery({
+            perPage: 10
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MaxTermsControl, {
+            label: maxTermsControlLabel,
+            value: perPage,
+            onChange: value => setQuery({
+              perPage: value
+            })
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AdvancedControls, {
@@ -68724,7 +68694,7 @@ function TermsQueryInspectorControls({
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/edit.js
+;// ./packages/block-library/build-module/terms-query/edit/index.js
 /**
  * WordPress dependencies
  */
@@ -68818,13 +68788,9 @@ const terms_query_metadata = {
         orderBy: "name",
         hideEmpty: true,
         parent: false,
-        hierarchical: false
+        hierarchical: false,
+        inherit: false
       }
-    },
-    termsToShow: {
-      type: "string",
-      "default": "all",
-      "enum": ["all", "top-level", "subterms"]
     },
     tagName: {
       type: "string",
@@ -68832,8 +68798,7 @@ const terms_query_metadata = {
     }
   },
   providesContext: {
-    termQuery: "termQuery",
-    termsToShow: "termsToShow"
+    termQuery: "termQuery"
   },
   supports: {
     align: ["wide", "full"],
@@ -68963,70 +68928,17 @@ function TermTemplateBlockPreview({
 
 // Prevent re-rendering of the block preview when the terms data changes.
 const MemoizedTermTemplateBlockPreview = (0,external_wp_element_namespaceObject.memo)(TermTemplateBlockPreview);
-
-/**
- * Builds a hierarchical tree structure from flat terms array.
- *
- * @param {Array} terms Array of term objects.
- * @return {Array} Tree structure with parent/child relationships.
- */
-function buildTermsTree(terms) {
-  const termsById = {};
-  const rootTerms = [];
-  terms.forEach(term => {
-    termsById[term.id] = {
-      term,
-      children: []
-    };
-  });
-  terms.forEach(term => {
-    if (term.parent && termsById[term.parent]) {
-      termsById[term.parent].children.push(termsById[term.id]);
-    } else {
-      rootTerms.push(termsById[term.id]);
-    }
-  });
-  return rootTerms;
-}
-
-/**
- * Renders a single term node and its children recursively.
- *
- * @param {Object}   termNode   Term node with term object and children.
- * @param {Function} renderTerm Function to render individual terms.
- * @return {JSX.Element} Rendered term node with children.
- */
-function renderTermNode(termNode, renderTerm) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-    className: "wp-block-term",
-    children: [renderTerm(termNode.term), termNode.children.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
-      children: termNode.children.map(child => renderTermNode(child, renderTerm))
-    })]
-  });
-}
-
-/**
- * Checks if a term is the currently active term.
- *
- * @param {number} termId               The term ID to check.
- * @param {number} activeBlockContextId The currently active block context ID.
- * @param {Array}  blockContexts        Array of block contexts.
- * @return {boolean} True if the term is active, false otherwise.
- */
-function isActiveTerm(termId, activeBlockContextId, blockContexts) {
-  return termId === (activeBlockContextId || blockContexts[0]?.termId);
-}
 function TermTemplateEdit({
   clientId,
   setAttributes,
   context: {
-    termsToShow,
     termQuery: {
       taxonomy,
       order,
       orderBy,
       hideEmpty,
-      hierarchical,
+      hierarchical = false,
+      parent = 0,
       perPage = 10
     } = {}
   },
@@ -69037,14 +68949,20 @@ function TermTemplateEdit({
     replaceInnerBlocks
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const queryArgs = {
+    hide_empty: hideEmpty,
     order,
     orderby: orderBy,
-    hide_empty: hideEmpty,
     // To preview the data the closest to the frontend, we fetch the largest number of terms
     // and limit them during rendering. This is because WP_Term_Query fetches data in hierarchical manner,
     // while in editor we build the hierarchy manually. It also allows us to avoid re-fetching data when max terms changes.
     per_page: 100
   };
+
+  // Nested terms are returned by default from REST API as long as parent is not set.
+  // If we want to show nested terms, we must not set parent at all.
+  if (parent || !hierarchical) {
+    queryArgs.parent = parent || 0;
+  }
   const {
     records: terms,
     isResolving
@@ -69053,14 +68971,9 @@ function TermTemplateEdit({
     if (!terms) {
       return [];
     }
-    if (termsToShow === 'top-level') {
-      return terms.filter(term => !term.parent);
-    }
-    if (termsToShow === 'subterms') {
-      return terms.filter(term => term.parent);
-    }
-    return terms;
-  }, [terms, termsToShow]);
+    // Limit to the number of terms defined by perPage.
+    return perPage === 0 ? terms : terms.slice(0, perPage);
+  }, [terms, perPage]);
   const {
     blocks,
     variations,
@@ -69137,30 +69050,10 @@ function TermTemplateEdit({
       children: [" ", (0,external_wp_i18n_namespaceObject.__)('No terms found.')]
     });
   }
-  const renderTerm = term => {
-    const blockContext = {
-      taxonomy,
-      termId: term.id,
-      classList: `term-${term.id}`,
-      termData: term
-    };
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
-      value: blockContext,
-      children: [isActiveTerm(term.id, activeBlockContextId, blockContexts) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermTemplateInnerBlocks, {
-        classList: blockContext.classList
-      }) : null, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MemoizedTermTemplateBlockPreview, {
-        blocks: blocks,
-        blockContextId: term.id,
-        classList: blockContext.classList,
-        setActiveBlockContextId: setActiveBlockContextId,
-        isHidden: isActiveTerm(term.id, activeBlockContextId, blockContexts)
-      })]
-    }, term.id);
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
       ...blockProps,
-      children: hierarchical ? buildTermsTree(filteredTerms).map(termNode => renderTermNode(termNode, renderTerm)) : blockContexts && blockContexts.slice(0, perPage).map(blockContext => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
+      children: blockContexts && blockContexts.map(blockContext => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
         value: blockContext,
         children: [blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermTemplateInnerBlocks, {
           classList: blockContext.classList
@@ -69283,7 +69176,7 @@ const term_template_metadata = {
   ancestor: ["core/terms-query"],
   description: "Contains the block elements used to render a taxonomy term, like the name, description, and more.",
   textdomain: "default",
-  usesContext: ["termQuery", "termsToShow"],
+  usesContext: ["termQuery"],
   supports: {
     reusable: false,
     html: false,
