@@ -38673,7 +38673,8 @@ function UnforwardedLinkUI(props, ref) {
     url,
     opensInNewTab,
     type,
-    kind
+    kind,
+    id
   } = props.link;
   const postType = type || 'page';
   const [addingBlock, setAddingBlock] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -38690,8 +38691,11 @@ function UnforwardedLinkUI(props, ref) {
   const link = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     url,
     opensInNewTab,
-    title: label && (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label)
-  }), [label, opensInNewTab, url]);
+    title: label && (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label),
+    kind,
+    type,
+    id
+  }), [label, opensInNewTab, url, kind, type, id]);
   const handlePageCreated = pageLink => {
     // Set the new page as the current link
     props.onChange(pageLink);
@@ -38731,6 +38735,7 @@ function UnforwardedLinkUI(props, ref) {
         onChange: props.onChange,
         onRemove: props.onRemove,
         onCancel: props.onCancel,
+        handleEntities: true,
         renderControlBottom: () => {
           // Don't show the tools when there is submitted link (preview state).
           if (link?.url?.length) {
@@ -40560,10 +40565,67 @@ const navigation_init = () => initBlock({
   settings: navigation_settings
 });
 
+;// ./packages/block-library/build-module/navigation-link/shared/use-entity-binding.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Shared hook for entity binding functionality in Navigation blocks.
+ *
+ * This hook provides common entity binding logic that can be used by both
+ * Navigation Link and Navigation Submenu blocks to maintain feature parity.
+ *
+ * @param {Object} props            - Hook parameters
+ * @param {string} props.clientId   - Block client ID
+ * @param {Object} props.attributes - Block attributes
+ * @return {Object} Hook return value
+ */
+function useEntityBinding({
+  clientId,
+  attributes
+}) {
+  const {
+    updateBlockBindings
+  } = (0,external_wp_blockEditor_namespaceObject.useBlockBindingsUtils)(clientId);
+  const {
+    metadata,
+    id
+  } = attributes;
+  const hasUrlBinding = !!metadata?.bindings?.url && !!id;
+  const clearBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    updateBlockBindings({
+      url: {
+        source: null,
+        args: null
+      }
+    });
+  }, [updateBlockBindings]);
+  const createBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    updateBlockBindings({
+      url: {
+        source: 'core/entity',
+        args: {
+          key: 'url'
+        }
+      }
+    });
+  }, [updateBlockBindings]);
+  return {
+    hasUrlBinding,
+    clearBinding,
+    createBinding
+  };
+}
+
 ;// ./packages/block-library/build-module/navigation-link/shared/controls.js
 /**
  * WordPress dependencies
  */
+
+
 
 
 
@@ -40576,6 +40638,39 @@ const navigation_init = () => initBlock({
 
 
 
+
+/**
+ * Get a human-readable entity type name.
+ *
+ * @param {string} type - The entity type
+ * @param {string} kind - The entity kind
+ * @return {string} Human-readable entity type name
+ */
+
+function getEntityTypeName(type, kind) {
+  if (kind === 'post-type') {
+    switch (type) {
+      case 'post':
+        return (0,external_wp_i18n_namespaceObject.__)('post');
+      case 'page':
+        return (0,external_wp_i18n_namespaceObject.__)('page');
+      default:
+        return type || (0,external_wp_i18n_namespaceObject.__)('post');
+    }
+  }
+  if (kind === 'taxonomy') {
+    switch (type) {
+      case 'category':
+        return (0,external_wp_i18n_namespaceObject.__)('category');
+      case 'tag':
+        return (0,external_wp_i18n_namespaceObject.__)('tag');
+      default:
+        return type || (0,external_wp_i18n_namespaceObject.__)('term');
+    }
+  }
+  return type || (0,external_wp_i18n_namespaceObject.__)('item');
+}
+
 /**
  * Shared Controls component for Navigation Link and Navigation Submenu blocks.
  *
@@ -40586,12 +40681,13 @@ const navigation_init = () => initBlock({
  * @param {Object}   props.attributes          - Block attributes
  * @param {Function} props.setAttributes       - Function to update block attributes
  * @param {Function} props.setIsEditingControl - Function to set editing state (optional)
+ * @param {string}   props.clientId            - Block client ID
  */
-
 function controls_Controls({
   attributes,
   setAttributes,
-  setIsEditingControl = () => {}
+  setIsEditingControl = () => {},
+  clientId
 }) {
   const {
     label,
@@ -40602,6 +40698,27 @@ function controls_Controls({
   } = attributes;
   const lastURLRef = (0,external_wp_element_namespaceObject.useRef)(url);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const inputId = (0,external_wp_compose_namespaceObject.useInstanceId)(controls_Controls, 'link-input');
+  const helpTextId = `${inputId}__help`;
+
+  // Use the entity binding hook internally
+  const {
+    hasUrlBinding,
+    clearBinding
+  } = useEntityBinding({
+    clientId,
+    attributes
+  });
+  const editBoundLink = () => {
+    // Remove the binding
+    clearBinding();
+
+    // Clear url and id to allow picking a new entity (keep type and kind)
+    setAttributes({
+      url: undefined,
+      id: undefined
+    });
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
     resetAll: () => {
@@ -40642,23 +40759,34 @@ function controls_Controls({
         url: ''
       }),
       isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
+        id: inputId,
         label: (0,external_wp_i18n_namespaceObject.__)('Link'),
         value: url ? (0,external_wp_url_namespaceObject.safeDecodeURI)(url) : '',
         onChange: urlValue => {
+          if (hasUrlBinding) {
+            return; // Prevent editing when URL is bound
+          }
           setAttributes({
             url: encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(urlValue))
           });
         },
         autoComplete: "off",
         type: "url",
+        disabled: hasUrlBinding,
         onFocus: () => {
+          if (hasUrlBinding) {
+            return;
+          }
           lastURLRef.current = url;
           setIsEditingControl(true);
         },
         onBlur: () => {
+          if (hasUrlBinding) {
+            return;
+          }
           // Defer the updateAttributes call to ensure entity connection isn't severed by accident.
           updateAttributes({
             url: !url ? lastURLRef.current : url
@@ -40667,7 +40795,19 @@ function controls_Controls({
             url: lastURLRef.current
           });
           setIsEditingControl(false);
-        }
+        },
+        help: hasUrlBinding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BindingHelpText, {
+          type: attributes.type,
+          kind: attributes.kind
+        }),
+        suffix: hasUrlBinding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          icon: link_off,
+          onClick: editBoundLink,
+          "aria-describedby": helpTextId,
+          showTooltip: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Unsync and edit'),
+          __next40pxDefaultSize: true
+        })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!opensInNewTab,
@@ -40726,6 +40866,23 @@ function controls_Controls({
   });
 }
 
+/**
+ * Component to display help text for bound URL attributes.
+ *
+ * @param {Object} props      - Component props
+ * @param {string} props.type - The entity type
+ * @param {string} props.kind - The entity kind
+ * @return {string} Help text for the bound URL
+ */
+function BindingHelpText({
+  type,
+  kind
+}) {
+  const entityType = getEntityTypeName(type, kind);
+  return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s is the entity type (e.g., "page", "post", "category") */
+  (0,external_wp_i18n_namespaceObject.__)('Synced with the selected %s.'), entityType);
+}
+
 ;// ./packages/block-library/build-module/navigation-link/edit.js
 /**
  * External dependencies
@@ -40751,8 +40908,6 @@ function controls_Controls({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -40866,13 +41021,6 @@ function getMissingText(type) {
   }
   return missingText;
 }
-
-/*
- * Warning, this duplicated in
- * packages/block-library/src/navigation-submenu/edit.js
- * Consider reusing this components for both blocks.
- */
-
 function NavigationLinkEdit({
   attributes,
   isSelected,
@@ -40889,7 +41037,8 @@ function NavigationLinkEdit({
     type,
     url,
     description,
-    kind
+    kind,
+    metadata
   } = attributes;
   const {
     maxNestingLevel
@@ -40951,12 +41100,21 @@ function NavigationLinkEdit({
   const {
     getBlocks
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+
+  // URL binding logic
+  const {
+    clearBinding,
+    createBinding
+  } = useEntityBinding({
+    clientId,
+    attributes
+  });
   const [isInvalid, isDraft] = useIsInvalidLink(kind, type, id, validateLinkStatus);
 
   /**
    * Transform to submenu block.
    */
-  const transformToSubmenu = () => {
+  const transformToSubmenu = (0,external_wp_element_namespaceObject.useCallback)(() => {
     let innerBlocks = getBlocks(clientId);
     if (innerBlocks.length === 0) {
       innerBlocks = [(0,external_wp_blocks_namespaceObject.createBlock)('core/navigation-link')];
@@ -40964,7 +41122,7 @@ function NavigationLinkEdit({
     }
     const newSubmenu = (0,external_wp_blocks_namespaceObject.createBlock)('core/navigation-submenu', attributes, innerBlocks);
     replaceBlock(clientId, newSubmenu);
-  };
+  }, [getBlocks, clientId, selectBlock, replaceBlock, attributes]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // If block has inner blocks, transform to Submenu.
     if (hasChildren) {
@@ -41103,13 +41261,14 @@ function NavigationLinkEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(controls_Controls, {
         attributes: attributes,
         setAttributes: setAttributes,
-        setIsEditingControl: setIsEditingControl
+        setIsEditingControl: setIsEditingControl,
+        clientId: clientId
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
         className: classes,
-        children: [!url && !isEditingControl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: [!url && !isEditingControl && !metadata?.bindings?.url ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "wp-block-navigation-link__placeholder-text",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: missingText
@@ -41187,6 +41346,13 @@ function NavigationLinkEdit({
           onRemove: removeLink,
           onChange: updatedValue => {
             updateAttributes(updatedValue, setAttributes, attributes);
+
+            // Handle URL binding
+            if (!updatedValue?.id) {
+              clearBinding();
+            } else {
+              createBinding();
+            }
           }
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -41628,8 +41794,6 @@ const ItemSubmenuIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespace
 
 
 
-
-
 const ALLOWED_BLOCKS = ['core/navigation-link', 'core/navigation-submenu', 'core/page-list'];
 
 /**
@@ -41717,6 +41881,15 @@ function NavigationSubmenuEdit({
     maxNestingLevel,
     openSubmenusOnClick
   } = context;
+
+  // URL binding logic
+  const {
+    clearBinding,
+    createBinding
+  } = useEntityBinding({
+    clientId,
+    attributes
+  });
   const {
     __unstableMarkNextChangeAsNotPersistent,
     replaceBlock,
@@ -41912,7 +42085,8 @@ function NavigationSubmenuEdit({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(controls_Controls, {
         attributes: attributes,
-        setAttributes: setAttributes
+        setAttributes: setAttributes,
+        clientId: clientId
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
@@ -41961,6 +42135,13 @@ function NavigationSubmenuEdit({
           },
           onChange: updatedValue => {
             updateAttributes(updatedValue, setAttributes, attributes);
+
+            // Handle URL binding
+            if (!updatedValue?.id) {
+              clearBinding();
+            } else {
+              createBinding();
+            }
           }
         })]
       }), (showSubmenuIcon || openSubmenusOnClick) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
