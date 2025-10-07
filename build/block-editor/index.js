@@ -66952,6 +66952,7 @@ const external_wp_commands_namespaceObject = window["wp"]["commands"];
 
 
 
+
 const getTransformCommands = () => function useTransformCommands() {
   const {
     replaceBlocks,
@@ -67072,7 +67073,8 @@ const getQuickActionsCommands = () => function useQuickActionsCommands() {
     canInsertBlockType,
     getBlockRootClientId,
     getBlocksByClientId,
-    canRemoveBlocks
+    canRemoveBlocks,
+    getBlockName
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     getDefaultBlockName,
@@ -67084,7 +67086,8 @@ const getQuickActionsCommands = () => function useQuickActionsCommands() {
     replaceBlocks,
     duplicateBlocks,
     insertAfterBlock,
-    insertBeforeBlock
+    insertBeforeBlock,
+    updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const onGroup = () => {
     if (!blocks.length) {
@@ -67121,6 +67124,9 @@ const getQuickActionsCommands = () => function useQuickActionsCommands() {
     return !!block && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'multiple', true) && canInsertBlockType(block.name, rootClientId);
   });
   const canRemove = canRemoveBlocks(clientIds);
+  const canToggleBlockVisibility = blocks.every(({
+    clientId
+  }) => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(getBlockName(clientId), 'blockVisibility', true));
   const commands = [];
   if (canDuplicate) {
     commands.push({
@@ -67171,6 +67177,28 @@ const getQuickActionsCommands = () => function useQuickActionsCommands() {
       label: (0,external_wp_i18n_namespaceObject.__)('Delete'),
       callback: () => removeBlocks(clientIds, true),
       icon: trash
+    });
+  }
+  if (canToggleBlockVisibility) {
+    const hasHiddenBlock = blocks.some(block => block.attributes.metadata?.blockVisibility === false);
+    commands.push({
+      name: 'core/toggle-block-visibility',
+      label: hasHiddenBlock ? (0,external_wp_i18n_namespaceObject.__)('Show') : (0,external_wp_i18n_namespaceObject.__)('Hide'),
+      callback: () => {
+        const attributesByClientId = Object.fromEntries(blocks?.map(({
+          clientId,
+          attributes
+        }) => [clientId, {
+          metadata: utils_cleanEmptyObject({
+            ...attributes?.metadata,
+            blockVisibility: hasHiddenBlock ? undefined : false
+          })
+        }]));
+        updateBlockAttributes(clientIds, attributesByClientId, {
+          uniqueByBlock: true
+        });
+      },
+      icon: hasHiddenBlock ? seen : unseen
     });
   }
   return {
