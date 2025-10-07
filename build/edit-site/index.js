@@ -48964,7 +48964,7 @@ function dequal(foo, bar) {
  * @param slug The specific entity slug (e.g., 'category', 'post', 'all')
  * @return The preference key string
  */
-function preference_keys_generatePreferenceKey(kind, name, slug) {
+function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
@@ -49018,7 +49018,7 @@ function useView(config) {
     queryParams,
     onChangeQueryParams
   } = config;
-  const preferenceKey = preference_keys_generatePreferenceKey(kind, name, slug);
+  const preferenceKey = generatePreferenceKey(kind, name, slug);
   const persistedView = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_preferences_namespaceObject.store).get('core/views', preferenceKey);
   }, [preferenceKey]);
@@ -49120,7 +49120,7 @@ async function loadView(config) {
     queryParams
   } = config;
   const preferenceKey = generatePreferenceKey(kind, name, slug);
-  const persistedView = select(preferencesStore).get('core/views', preferenceKey);
+  const persistedView = (0,external_wp_data_namespaceObject.select)(external_wp_preferences_namespaceObject.store).get('core/views', preferenceKey);
   const baseView = persistedView !== null && persistedView !== void 0 ? persistedView : defaultView;
   const page = (_queryParams$page = queryParams?.page) !== null && _queryParams$page !== void 0 ? _queryParams$page : 1;
   const search = (_queryParams$search = queryParams?.search) !== null && _queryParams$search !== void 0 ? _queryParams$search : '';
@@ -49613,7 +49613,7 @@ function PatternsHeader({
         children: [isModifiedView && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
           onClick: resetView,
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset View')
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset view')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddNewPattern, {}), !!patternCategory?.id && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
           icon: more_vertical,
           label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
@@ -52456,10 +52456,51 @@ const slugField = {
   }
 };
 
+;// ./packages/edit-site/build-module/components/page-templates/view-utils.js
+const view_utils_defaultLayouts = {
+  table: {
+    showMedia: false
+  },
+  grid: {
+    showMedia: true
+  },
+  list: {
+    showMedia: false
+  }
+};
+const view_utils_DEFAULT_VIEW = {
+  type: 'grid',
+  search: '',
+  page: 1,
+  perPage: 20,
+  sort: {
+    field: 'title',
+    direction: 'asc'
+  },
+  titleField: 'title',
+  descriptionField: 'description',
+  mediaField: 'preview',
+  fields: ['author', 'active', 'slug', 'theme'],
+  filters: [],
+  ...view_utils_defaultLayouts.grid
+};
+function getDefaultView(activeView) {
+  return {
+    ...view_utils_DEFAULT_VIEW,
+    filters: !['active', 'user'].includes(activeView) ? [{
+      field: 'author',
+      operator: 'isAny',
+      value: [activeView]
+    }] : []
+  };
+}
+
 ;// ./packages/edit-site/build-module/components/page-templates/index.js
 /**
  * WordPress dependencies
  */
+
+
 
 
 
@@ -52480,6 +52521,7 @@ const slugField = {
 
 
 
+
 const {
   usePostActions: page_templates_usePostActions,
   templateTitleField
@@ -52491,33 +52533,6 @@ const {
 const {
   useEntityRecordsWithPermissions: page_templates_useEntityRecordsWithPermissions
 } = unlock(external_wp_coreData_namespaceObject.privateApis);
-const page_templates_defaultLayouts = {
-  [LAYOUT_TABLE]: {
-    showMedia: false
-  },
-  [LAYOUT_GRID]: {
-    showMedia: true
-  },
-  [LAYOUT_LIST]: {
-    showMedia: false
-  }
-};
-const page_templates_DEFAULT_VIEW = {
-  type: LAYOUT_GRID,
-  search: '',
-  page: 1,
-  perPage: 20,
-  sort: {
-    field: 'title',
-    direction: 'asc'
-  },
-  titleField: 'title',
-  descriptionField: 'description',
-  mediaField: 'preview',
-  fields: ['author', 'active', 'slug', 'theme'],
-  filters: [],
-  ...page_templates_defaultLayouts[LAYOUT_GRID]
-};
 function PageTemplates() {
   const {
     path,
@@ -52525,44 +52540,34 @@ function PageTemplates() {
   } = page_templates_useLocation();
   const {
     activeView = 'active',
-    layout,
     postId
   } = query;
   const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([postId]);
   const defaultView = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const usedType = layout !== null && layout !== void 0 ? layout : page_templates_DEFAULT_VIEW.type;
-    return {
-      ...page_templates_DEFAULT_VIEW,
-      type: usedType,
-      filters: !['active', 'user'].includes(activeView) ? [{
-        field: 'author',
-        operator: 'isAny',
-        value: [activeView]
-      }] : [],
-      ...page_templates_defaultLayouts[usedType]
-    };
-  }, [layout, activeView]);
-  const [view, setView] = (0,external_wp_element_namespaceObject.useState)(defaultView);
-
-  // Sync the layout from the URL to the view state.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setView(currentView => ({
-      ...currentView,
-      type: layout !== null && layout !== void 0 ? layout : page_templates_DEFAULT_VIEW.type
-    }));
-  }, [setView, layout]);
-
-  // Sync the active view from the URL to the view state.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setView(currentView => ({
-      ...currentView,
-      filters: !['active', 'user'].includes(activeView) ? [{
-        field: 'author',
-        operator: OPERATOR_IS_ANY,
-        value: [activeView]
-      }] : []
-    }));
-  }, [setView, activeView]);
+    return getDefaultView(activeView);
+  }, [activeView]);
+  const {
+    view,
+    updateView,
+    isModified,
+    resetToDefault
+  } = useView({
+    kind: 'postType',
+    name: TEMPLATE_POST_TYPE,
+    slug: activeView,
+    defaultView,
+    queryParams: {
+      page: query.pageNumber,
+      search: query.search
+    },
+    onChangeQueryParams: newQueryParams => {
+      history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+        ...query,
+        pageNumber: newQueryParams.page,
+        search: newQueryParams.search || undefined
+      }));
+    }
+  });
   const {
     activeTemplatesOption,
     activeTheme
@@ -52658,7 +52663,7 @@ function PageTemplates() {
   const history = page_templates_useHistory();
   const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
     setSelection(items);
-    if (view?.type === LAYOUT_LIST) {
+    if (view?.type === 'list') {
       history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
         postId: items.length === 1 ? items[0] : undefined
       }));
@@ -52698,17 +52703,25 @@ function PageTemplates() {
   const setActiveTemplateAction = useSetActiveTemplateAction();
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => activeView === 'user' ? [setActiveTemplateAction, editAction, ...postTypeActions] : [setActiveTemplateAction, ...postTypeActions], [postTypeActions, setActiveTemplateAction, editAction, activeView]);
   const onChangeView = (0,external_wp_compose_namespaceObject.useEvent)(newView => {
-    setView(newView);
-    if (newView.type !== layout) {
-      history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
-        layout: newView.type
-      }));
+    if (newView.type !== view.type) {
+      // Find a way to retrigger the routing resolution.
+      history.invalidate();
     }
+    updateView(newView);
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Page, {
     className: "edit-site-page-templates",
     title: (0,external_wp_i18n_namespaceObject.__)('Templates'),
-    actions: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_new_template, {}),
+    actions: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [isModified && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        onClick: () => {
+          resetToDefault();
+          history.invalidate();
+        },
+        children: (0,external_wp_i18n_namespaceObject.__)('Reset view')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_new_template, {})]
+    }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
       paginationInfo: paginationInfo,
       fields: fields,
@@ -52723,12 +52736,17 @@ function PageTemplates() {
         history.navigate(`/${item.type}/${item.id}?canvas=edit`);
       },
       selection: selection,
-      defaultLayouts: page_templates_defaultLayouts
+      defaultLayouts: view_utils_defaultLayouts
     }, activeView)
   });
 }
 
 ;// ./packages/edit-site/build-module/components/site-editor-routes/templates.js
+/**
+ * WordPress dependencies
+ */
+
+
 /**
  * Internal dependencies
  */
@@ -52737,6 +52755,19 @@ function PageTemplates() {
 
 
 
+
+async function isTemplateListView(query) {
+  const {
+    activeView = 'active'
+  } = query;
+  const view = await loadView({
+    kind: 'postType',
+    name: 'wp_template',
+    slug: activeView,
+    defaultView: getDefaultView(activeView)
+  });
+  return view.type === 'list';
+}
 const templatesRoute = {
   name: 'templates',
   path: '/template',
@@ -52755,7 +52786,7 @@ const templatesRoute = {
       const isBlockTheme = siteData.currentTheme?.is_block_theme;
       return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {}) : undefined;
     },
-    preview({
+    async preview({
       query,
       siteData
     }) {
@@ -52763,7 +52794,7 @@ const templatesRoute = {
       if (!isBlockTheme) {
         return undefined;
       }
-      const isListView = query.layout === 'list';
+      const isListView = await isTemplateListView(query);
       return isListView ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : undefined;
     },
     mobile({
@@ -52774,10 +52805,10 @@ const templatesRoute = {
     }
   },
   widths: {
-    content({
+    async content({
       query
     }) {
-      const isListView = query.layout === 'list';
+      const isListView = await isTemplateListView(query);
       return isListView ? 380 : undefined;
     }
   }
@@ -53347,7 +53378,7 @@ const {
   useEntityRecordsWithPermissions: post_list_useEntityRecordsWithPermissions
 } = unlock(external_wp_coreData_namespaceObject.privateApis);
 const post_list_EMPTY_ARRAY = [];
-const getDefaultView = (defaultViews, activeView) => {
+const post_list_getDefaultView = (defaultViews, activeView) => {
   return defaultViews.find(({
     slug
   }) => slug === activeView)?.view;
@@ -53377,7 +53408,7 @@ function post_list_useView(postType) {
   });
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(() => {
     var _getDefaultView;
-    const initialView = (_getDefaultView = getDefaultView(defaultViews, activeView)) !== null && _getDefaultView !== void 0 ? _getDefaultView : {
+    const initialView = (_getDefaultView = post_list_getDefaultView(defaultViews, activeView)) !== null && _getDefaultView !== void 0 ? _getDefaultView : {
       type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
     };
     const type = layout !== null && layout !== void 0 ? layout : initialView.type;
@@ -53418,7 +53449,7 @@ function post_list_useView(postType) {
 
   // When activeView URL parameters change, reset the view.
   const onUrlActiveViewChange = (0,external_wp_compose_namespaceObject.useEvent)(() => {
-    const newView = getDefaultView(defaultViews, activeView);
+    const newView = post_list_getDefaultView(defaultViews, activeView);
     if (newView) {
       const type = layout !== null && layout !== void 0 ? layout : newView.type;
       setView({
