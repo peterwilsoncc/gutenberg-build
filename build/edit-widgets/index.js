@@ -1349,17 +1349,22 @@ function ComplementaryArea({
 ComplementaryArea.Slot = ComplementaryAreaSlot;
 /* harmony default export */ const complementary_area = (ComplementaryArea);
 
-;// ./packages/interface/build-module/components/navigable-region/index.js
+;// ./packages/admin-ui/build-module/navigable-region/index.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
 
 
 /**
- * External dependencies
+ * Type definitions
  */
 
-
+// This is a copy of the private `NavigableRegion` component from the '@wordpress/editor' private APIs.
 const NavigableRegion = (0,external_wp_element_namespaceObject.forwardRef)(({
   children,
   className,
@@ -1369,7 +1374,7 @@ const NavigableRegion = (0,external_wp_element_namespaceObject.forwardRef)(({
 }, ref) => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tag, {
     ref: ref,
-    className: dist_clsx('interface-navigable-region', className),
+    className: dist_clsx('admin-ui-navigable-region', className),
     "aria-label": ariaLabel,
     role: "region",
     tabIndex: "-1",
@@ -1393,10 +1398,6 @@ NavigableRegion.displayName = 'NavigableRegion';
 
 
 
-
-/**
- * Internal dependencies
- */
 
 
 const interface_skeleton_ANIMATION_DURATION = 0.25;
@@ -1573,7 +1574,6 @@ function InterfaceSkeleton({
 /* harmony default export */ const interface_skeleton = ((0,external_wp_element_namespaceObject.forwardRef)(InterfaceSkeleton));
 
 ;// ./packages/interface/build-module/components/index.js
-
 
 
 

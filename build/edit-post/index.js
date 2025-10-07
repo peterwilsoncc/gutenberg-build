@@ -154,6 +154,44 @@ const external_wp_widgets_namespaceObject = window["wp"]["widgets"];
 const external_wp_editor_namespaceObject = window["wp"]["editor"];
 ;// ./node_modules/clsx/dist/clsx.mjs
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
+;// external "ReactJSXRuntime"
+const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
+;// ./packages/admin-ui/build-module/navigable-region/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Type definitions
+ */
+
+// This is a copy of the private `NavigableRegion` component from the '@wordpress/editor' private APIs.
+const NavigableRegion = (0,external_wp_element_namespaceObject.forwardRef)(({
+  children,
+  className,
+  ariaLabel,
+  as: Tag = 'div',
+  ...props
+}, ref) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tag, {
+    ref: ref,
+    className: dist_clsx('admin-ui-navigable-region', className),
+    "aria-label": ariaLabel,
+    role: "region",
+    tabIndex: "-1",
+    ...props,
+    children: children
+  });
+});
+NavigableRegion.displayName = 'NavigableRegion';
+/* harmony default export */ const navigable_region = (NavigableRegion);
+
 ;// external ["wp","blockEditor"]
 const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","plugins"]
@@ -162,8 +200,6 @@ const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// external ["wp","primitives"]
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
-;// external "ReactJSXRuntime"
-const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/icons/build-module/library/chevron-up.js
 /* eslint-disable prettier/prettier */
 /**
@@ -2778,6 +2814,7 @@ const useMetaBoxInitialization = enabled => {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -2805,8 +2842,7 @@ const {
 } = unlock(external_wp_commands_namespaceObject.privateApis);
 const {
   Editor,
-  FullscreenMode,
-  NavigableRegion
+  FullscreenMode
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   BlockKeyboardShortcuts
@@ -3042,7 +3078,7 @@ function MetaBoxesMain({
     })]
   });
   const paneProps = /** @type {Parameters<typeof ResizableBox>[0]} */{
-    as: NavigableRegion,
+    as: navigable_region,
     ref: metaBoxesMainRef,
     className: 'edit-post-meta-boxes-main',
     defaultSize: {
