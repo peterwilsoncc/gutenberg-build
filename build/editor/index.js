@@ -36280,16 +36280,16 @@ function Thread({
             focusCommentThread(thread.id, commentSidebarRef.current);
           }
         },
-        onDelete: onCommentDelete,
-        status: thread.status
+        onDelete: onCommentDelete
       }), isSelected && replies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__child-thread",
         id: reply.id,
         spacing: "2",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
           thread: reply,
-          onEdit: 'approved' !== thread.status ? onEditComment : undefined,
-          onDelete: 'approved' !== thread.status ? onCommentDelete : undefined
+          parent: thread,
+          onEdit: onEditComment,
+          onDelete: onCommentDelete
         })
       }, reply.id)), !isSelected && restReplies.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "editor-collab-sidebar-panel__more-reply-separator",
@@ -36307,8 +36307,9 @@ function Thread({
         })
       }), !isSelected && lastReply && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
         thread: lastReply,
-        onEdit: 'approved' !== thread.status ? onEditComment : undefined,
-        onDelete: 'approved' !== thread.status ? onCommentDelete : undefined
+        parent: thread,
+        onEdit: onEditComment,
+        onDelete: onCommentDelete
       }), isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__child-thread",
         spacing: "2",
@@ -36350,9 +36351,9 @@ function Thread({
 }
 const CommentBoard = ({
   thread,
+  parent,
   onEdit,
-  onDelete,
-  status
+  onDelete
 }) => {
   const [actionState, setActionState] = (0,external_wp_element_namespaceObject.useState)(false);
   const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -36365,31 +36366,38 @@ const CommentBoard = ({
     setActionState(false);
     setShowConfirmDialog(false);
   };
-  const actions = [onEdit && status !== 'approved' && {
+  const actions = [{
     id: 'edit',
     title: (0,external_wp_i18n_namespaceObject._x)('Edit', 'Edit comment'),
+    isEligible: ({
+      status
+    }) => status !== 'approved',
     onClick: () => {
       setActionState('edit');
     }
-  }, onDelete && {
-    id: 'delete',
-    title: (0,external_wp_i18n_namespaceObject._x)('Delete', 'Delete comment'),
-    onClick: () => {
-      setActionState('delete');
-      setShowConfirmDialog(true);
-    }
-  }, onEdit && status === 'approved' && {
+  }, {
     id: 'reopen',
     title: (0,external_wp_i18n_namespaceObject._x)('Reopen', 'Reopen comment'),
+    isEligible: ({
+      status
+    }) => status === 'approved',
     onClick: () => {
       onEdit({
         id: thread.id,
         status: 'hold'
       });
     }
+  }, {
+    id: 'delete',
+    title: (0,external_wp_i18n_namespaceObject._x)('Delete', 'Delete comment'),
+    isEligible: () => true,
+    onClick: () => {
+      setActionState('delete');
+      setShowConfirmDialog(true);
+    }
   }];
-  const canResolve = thread?.parent === 0;
-  const moreActions = actions.filter(item => item?.onClick);
+  const canResolve = thread.parent === 0;
+  const moreActions = parent?.status !== 'approved' ? actions.filter(item => item.isEligible(thread)) : [];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "left",
@@ -36412,8 +36420,8 @@ const CommentBoard = ({
             label: (0,external_wp_i18n_namespaceObject._x)('Resolve', 'Mark comment as resolved'),
             size: "small",
             icon: published,
-            disabled: status === 'approved',
-            accessibleWhenDisabled: status === 'approved',
+            disabled: thread.status === 'approved',
+            accessibleWhenDisabled: thread.status === 'approved',
             onClick: () => {
               onEdit({
                 id: thread.id,
@@ -36463,9 +36471,7 @@ const CommentBoard = ({
       onConfirm: handleConfirmDelete,
       onCancel: handleCancel,
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
-      children:
-      // translators: message displayed when confirming an action
-      (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this comment?')
+      children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this comment?')
     })]
   });
 };
