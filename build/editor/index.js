@@ -35892,26 +35892,35 @@ function getCommentExcerpt(text, excerptLength = 10) {
  * @param {string}       additionalSelector The additional selector to focus on.
  */
 function focusCommentThread(commentId, container, additionalSelector) {
-  const getFocusElement = () => {
-    const commentThread = container?.querySelector(`[role=listitem][id="comment-thread-${commentId}"]`);
-    if (additionalSelector) {
-      return commentThread?.querySelector(additionalSelector);
+  if (!commentId || !container) {
+    return;
+  }
+  const threadSelector = `[role=listitem][id="comment-thread-${commentId}"]`;
+  const selector = additionalSelector ? `${threadSelector} ${additionalSelector}` : threadSelector;
+  return new Promise(resolve => {
+    if (container.querySelector(selector)) {
+      return resolve(container.querySelector(selector));
     }
-    return commentThread;
-  };
-  let focusElement = getFocusElement();
-  if (focusElement) {
-    focusElement.focus();
-  } else {
-    // The element hasn't been painted yet. Defer focusing on the next frame.
-    window.requestAnimationFrame(() => {
-      focusElement = getFocusElement();
-      // Ignore if the element still doesn't exist.
-      if (focusElement) {
-        focusElement.focus();
+    let timer = null;
+    // Wait for the element to be added to the DOM.
+    const observer = new window.MutationObserver(() => {
+      if (container.querySelector(selector)) {
+        clearTimeout(timer);
+        observer.disconnect();
+        resolve(container.querySelector(selector));
       }
     });
-  }
+    observer.observe(container, {
+      childList: true,
+      subtree: true
+    });
+
+    // Stop trying after 3 seconds.
+    timer = setTimeout(() => {
+      observer.disconnect();
+      resolve(null);
+    }, 3000);
+  }).then(element => element?.focus());
 }
 
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-author-info.js
@@ -36492,6 +36501,7 @@ const CommentBoard = ({
 
 
 
+
 /**
  * Renders the UI for adding a comment in the Gutenberg editor's collaboration sidebar.
  *
@@ -36499,13 +36509,15 @@ const CommentBoard = ({
  * @param {Function} props.onSubmit            - A callback function to be called when the user submits a comment.
  * @param {boolean}  props.showCommentBoard    - The function to edit the comment.
  * @param {Function} props.setShowCommentBoard - The function to delete the comment.
+ * @param {Ref}      props.commentSidebarRef   - The ref to the comment sidebar.
  * @return {React.ReactNode} The rendered comment input UI.
  */
 
 function AddComment({
   onSubmit,
   showCommentBoard,
-  setShowCommentBoard
+  setShowCommentBoard,
+  commentSidebarRef
 }) {
   const {
     clientId,
@@ -36536,10 +36548,13 @@ function AddComment({
       spacing: "3",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
-      onSubmit: inputComment => {
-        onSubmit({
+      onSubmit: async inputComment => {
+        const {
+          id
+        } = await onSubmit({
           content: inputComment
         });
+        focusCommentThread(id, commentSidebarRef.current);
       },
       onCancel: () => {
         setShowCommentBoard(false);
@@ -36893,6 +36908,7 @@ function CollabSidebarContent({
         type: 'snackbar',
         isDismissible: true
       });
+      return savedRecord;
     } catch (error) {
       onError(error);
     }
@@ -36957,7 +36973,8 @@ function CollabSidebarContent({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddComment, {
         onSubmit: addNewComment,
         showCommentBoard: showCommentBoard,
-        setShowCommentBoard: setShowCommentBoard
+        setShowCommentBoard: setShowCommentBoard,
+        commentSidebarRef: commentSidebarRef
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Comments, {
         threads: comments,
         onEditComment: onEditComment,
