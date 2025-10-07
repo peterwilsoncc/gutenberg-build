@@ -36680,18 +36680,18 @@ function useBlockComments(postId) {
   } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'comment', queryArgs, {
     enabled: !!postId && typeof postId === 'number'
   });
-  const blocksWithComments = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    getBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    clientIds
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockAttributes,
       getClientIdsWithDescendants
     } = select(external_wp_blockEditor_namespaceObject.store);
-    return getClientIdsWithDescendants().reduce((results, clientId) => {
-      const commentId = getBlockAttributes(clientId)?.metadata?.commentId;
-      if (commentId) {
-        results[clientId] = commentId;
-      }
-      return results;
-    }, {});
+    return {
+      clientIds: getClientIdsWithDescendants()
+    };
   }, []);
 
   // Process comments to build the tree structure.
@@ -36699,6 +36699,14 @@ function useBlockComments(postId) {
     resultComments,
     unresolvedSortedThreads
   } = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const blocksWithComments = clientIds.reduce((results, clientId) => {
+      const commentId = getBlockAttributes(clientId)?.metadata?.commentId;
+      if (commentId) {
+        results[clientId] = commentId;
+      }
+      return results;
+    }, {});
+
     // Create a compare to store the references to all objects by id.
     const compare = {};
     const result = [];
@@ -36746,7 +36754,7 @@ function useBlockComments(postId) {
       resultComments: allSortedComments,
       unresolvedSortedThreads: unresolvedSortedComments
     };
-  }, [threads, blocksWithComments]);
+  }, [clientIds, threads, getBlockAttributes]);
   return {
     resultComments,
     unresolvedSortedThreads,
