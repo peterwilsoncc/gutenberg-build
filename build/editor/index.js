@@ -27315,18 +27315,22 @@ function BlockThemeControl({
     isTemplateHidden,
     onNavigateToEntityRecord,
     getEditorSettings,
-    hasGoBack
+    hasGoBack,
+    hasSpecificTemplate
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getRenderingMode,
-      getEditorSettings: _getEditorSettings
+      getEditorSettings: _getEditorSettings,
+      getCurrentPost
     } = unlock(select(store_store));
     const editorSettings = _getEditorSettings();
+    const currentPost = getCurrentPost();
     return {
       isTemplateHidden: getRenderingMode() === 'post-only',
       onNavigateToEntityRecord: editorSettings.onNavigateToEntityRecord,
       getEditorSettings: _getEditorSettings,
-      hasGoBack: editorSettings.hasOwnProperty('onNavigateToPreviousEntityRecord')
+      hasGoBack: editorSettings.hasOwnProperty('onNavigateToPreviousEntityRecord'),
+      hasSpecificTemplate: !!currentPost.template
     };
   }, []);
   const {
@@ -27336,6 +27340,12 @@ function BlockThemeControl({
     editedRecord: template,
     hasResolved
   } = (0,external_wp_coreData_namespaceObject.useEntityRecord)('postType', 'wp_template', id);
+  const {
+    getEntityRecord
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_coreData_namespaceObject.store);
+  const {
+    editEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
@@ -27395,11 +27405,31 @@ function BlockThemeControl({
       }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
           children: [canCreateTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            onClick: () => {
+            onClick: async () => {
               onNavigateToEntityRecord({
                 postId: template.id,
                 postType: 'wp_template'
               });
+              // When editing a global template,
+              // activate the auto-draft. This is not
+              // immediately live (we're not saving
+              // site options), and when nothing is
+              // saved, the setting will be ignored.
+              // In the future, we should make the
+              // duplication explicit, so there
+              // wouldn't be an "edit" button for
+              // static theme templates.
+              if (!hasSpecificTemplate) {
+                const activeTemplates = await getEntityRecord('root', 'site').active_templates;
+                if (activeTemplates[template.slug] !== template.id) {
+                  editEntityRecord('root', 'site', undefined, {
+                    active_templates: {
+                      ...activeTemplates,
+                      [template.slug]: template.id
+                    }
+                  });
+                }
+              }
               onClose();
               mayShowTemplateEditNotice();
             },

@@ -4541,11 +4541,29 @@ const getTemplateId = (0,external_wp_data_namespaceObject.createRegistrySelector
   // First see if the post/page has an assigned template and fetch it.
   const currentTemplateSlug = editedEntity.template;
   if (currentTemplateSlug) {
-    const currentTemplate = select(STORE_NAME).getDefaultTemplateId({
-      slug: currentTemplateSlug
+    const userTemplates = select(STORE_NAME).getEntityRecords('postType', 'wp_template', {
+      per_page: -1
     });
-    if (currentTemplate) {
-      return currentTemplate;
+    if (!userTemplates) {
+      return;
+    }
+    const userTemplateWithSlug = userTemplates.find(({
+      slug
+    }) => slug === currentTemplateSlug);
+    if (userTemplateWithSlug) {
+      return userTemplateWithSlug.id;
+    }
+    const registeredTemplates = select(STORE_NAME).getEntityRecords('postType', 'wp_registered_template', {
+      per_page: -1
+    });
+    if (!registeredTemplates) {
+      return;
+    }
+    const registeredTemplateWithSlug = registeredTemplates.find(({
+      slug
+    }) => slug === currentTemplateSlug);
+    if (registeredTemplateWithSlug) {
+      return registeredTemplateWithSlug.id;
     }
   }
   // If no template is assigned, use the default template.
