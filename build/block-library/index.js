@@ -26158,9 +26158,6 @@ const group_metadata = {
     templateLock: {
       type: ["string", "boolean"],
       "enum": ["all", "insert", "contentOnly", false]
-    },
-    allowedBlocks: {
-      type: "array"
     }
   },
   supports: {
@@ -26234,7 +26231,8 @@ const group_metadata = {
     },
     interactivity: {
       clientNavigation: true
-    }
+    },
+    allowedBlocks: true
   },
   editorStyle: "wp-block-group-editor",
   style: "wp-block-group"

@@ -41692,10 +41692,12 @@ function EnablePublishSidebarOption(props) {
   });
 }
 
-;// ./packages/editor/build-module/components/preferences-modal/block-visibility.js
+;// ./packages/editor/build-module/components/block-visibility/index.js
 /**
  * WordPress dependencies
  */
+
+
 
 
 
@@ -41750,6 +41752,10 @@ function BlockVisibility() {
     return filteredBlockTypes.some(registeredBlock => registeredBlock.name === hiddenBlock);
   });
   const selectedBlockTypes = filteredBlockTypes.filter(blockType => !hiddenBlockTypes.includes(blockType.name));
+  const numberOfHiddenBlocks = filteredBlockTypes.length - selectedBlockTypes.length;
+  function enableAllBlockTypes() {
+    onChangeSelectedBlockTypes(filteredBlockTypes);
+  }
   const onChangeSelectedBlockTypes = newSelectedBlockTypes => {
     if (selectedBlockTypes.length > newSelectedBlockTypes.length) {
       const blockTypesToHide = selectedBlockTypes.filter(blockType => !newSelectedBlockTypes.find(({
@@ -41767,10 +41773,23 @@ function BlockVisibility() {
       }) => name));
     }
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockManager, {
-    blockTypes: filteredBlockTypes,
-    selectedBlockTypes: selectedBlockTypes,
-    onChange: onChangeSelectedBlockTypes
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "editor-block-visibility",
+    children: [!!numberOfHiddenBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      className: "editor-block-visibility__disabled-blocks-count",
+      children: [(0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of blocks. */
+      (0,external_wp_i18n_namespaceObject._n)('%d block is hidden.', '%d blocks are hidden.', numberOfHiddenBlocks), numberOfHiddenBlocks), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        variant: "link",
+        onClick: enableAllBlockTypes,
+        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockManager, {
+      blockTypes: filteredBlockTypes,
+      selectedBlockTypes: selectedBlockTypes,
+      onChange: onChangeSelectedBlockTypes,
+      showSelectAll: false
+    })]
   });
 }
 

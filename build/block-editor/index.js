@@ -21991,6 +21991,9 @@ const groups_groups = {
 };
 /* harmony default export */ const inspector_controls_groups = (groups_groups);
 
+// Private slot for allowed blocks control UI.
+const PrivateInspectorControlsAllowedBlocks = (0,external_wp_components_namespaceObject.createSlotFill)(Symbol('PrivateInspectorControlsAllowedBlocks'));
+
 ;// ./packages/block-editor/build-module/components/inspector-controls/fill.js
 /**
  * WordPress dependencies
@@ -25901,6 +25904,486 @@ function lock_addAttribute(settings) {
   return settings;
 }
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/lock/addAttribute', lock_addAttribute);
+
+;// ./packages/icons/build-module/library/block-default.js
+/* eslint-disable prettier/prettier */
+/**
+ * WordPress dependencies
+ */
+
+
+/* harmony default export */ const block_default = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z"
+  })
+}));
+/* eslint-enable */
+
+;// ./packages/block-editor/build-module/components/block-icon/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+function BlockIcon({
+  icon,
+  showColors = false,
+  className,
+  context
+}) {
+  if (icon?.src === 'block-default') {
+    icon = {
+      src: block_default
+    };
+  }
+  const renderedIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+    icon: icon && icon.src ? icon.src : icon,
+    context: context
+  });
+  const style = showColors ? {
+    backgroundColor: icon && icon.background,
+    color: icon && icon.foreground
+  } : {};
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+    style: style,
+    className: dist_clsx('block-editor-block-icon', className, {
+      'has-colors': showColors
+    }),
+    children: renderedIcon
+  });
+}
+
+/**
+ * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/block-icon/README.md
+ */
+/* harmony default export */ const block_icon = ((0,external_wp_element_namespaceObject.memo)(BlockIcon));
+
+;// ./packages/block-editor/build-module/components/block-manager/checklist.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function BlockTypesChecklist({
+  blockTypes,
+  value,
+  onItemChange
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+    className: "block-editor-block-manager__checklist",
+    children: blockTypes.map(blockType => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+      className: "block-editor-block-manager__checklist-item",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+        __nextHasNoMarginBottom: true,
+        label: blockType.title,
+        checked: value.includes(blockType.name),
+        onChange: (...args) => onItemChange(blockType, ...args)
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
+        icon: blockType.icon
+      })]
+    }, blockType.name))
+  });
+}
+/* harmony default export */ const checklist = (BlockTypesChecklist);
+
+;// ./packages/block-editor/build-module/components/block-manager/category.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function BlockManagerCategory({
+  title,
+  blockTypes,
+  selectedBlockTypes,
+  onChange
+}) {
+  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(BlockManagerCategory);
+  const toggleVisible = (0,external_wp_element_namespaceObject.useCallback)((blockType, nextIsChecked) => {
+    if (nextIsChecked) {
+      onChange([...selectedBlockTypes, blockType]);
+    } else {
+      onChange(selectedBlockTypes.filter(({
+        name
+      }) => name !== blockType.name));
+    }
+  }, [selectedBlockTypes, onChange]);
+  const toggleAllVisible = (0,external_wp_element_namespaceObject.useCallback)(nextIsChecked => {
+    if (nextIsChecked) {
+      onChange([...selectedBlockTypes, ...blockTypes.filter(blockType => !selectedBlockTypes.find(({
+        name
+      }) => name === blockType.name))]);
+    } else {
+      onChange(selectedBlockTypes.filter(selectedBlockType => !blockTypes.find(({
+        name
+      }) => name === selectedBlockType.name)));
+    }
+  }, [blockTypes, selectedBlockTypes, onChange]);
+  if (!blockTypes.length) {
+    return null;
+  }
+  const checkedBlockNames = blockTypes.map(({
+    name
+  }) => name).filter(type => (selectedBlockTypes !== null && selectedBlockTypes !== void 0 ? selectedBlockTypes : []).some(selectedBlockType => selectedBlockType.name === type));
+  const titleId = 'block-editor-block-manager__category-title-' + instanceId;
+  const isAllChecked = checkedBlockNames.length === blockTypes.length;
+  const isIndeterminate = !isAllChecked && checkedBlockNames.length > 0;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    role: "group",
+    "aria-labelledby": titleId,
+    className: "block-editor-block-manager__category",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+      __nextHasNoMarginBottom: true,
+      checked: isAllChecked,
+      onChange: toggleAllVisible,
+      className: "block-editor-block-manager__category-title",
+      indeterminate: isIndeterminate,
+      label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        id: titleId,
+        children: title
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(checklist, {
+      blockTypes: blockTypes,
+      value: checkedBlockNames,
+      onItemChange: toggleVisible
+    })]
+  });
+}
+/* harmony default export */ const block_manager_category = (BlockManagerCategory);
+
+;// ./packages/block-editor/build-module/components/block-manager/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Provides a list of blocks with checkboxes.
+ *
+ * @param {Object}   props                    Props.
+ * @param {Array}    props.blockTypes         An array of blocks.
+ * @param {Array}    props.selectedBlockTypes An array of selected blocks.
+ * @param {Function} props.onChange           Function to be called when the selected blocks change.
+ * @param {boolean}  props.showSelectAll      Whether to show the select all checkbox.
+ */
+
+function BlockManager({
+  blockTypes,
+  selectedBlockTypes,
+  onChange,
+  showSelectAll = true
+}) {
+  const debouncedSpeak = (0,external_wp_compose_namespaceObject.useDebounce)(external_wp_a11y_namespaceObject.speak, 500);
+  const [search, setSearch] = (0,external_wp_element_namespaceObject.useState)('');
+  const {
+    categories,
+    isMatchingSearchTerm
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      categories: select(external_wp_blocks_namespaceObject.store).getCategories(),
+      isMatchingSearchTerm: select(external_wp_blocks_namespaceObject.store).isMatchingSearchTerm
+    };
+  }, []);
+  const filteredBlockTypes = blockTypes.filter(blockType => {
+    return !search || isMatchingSearchTerm(blockType, search);
+  });
+  const isIndeterminate = selectedBlockTypes.length > 0 && selectedBlockTypes.length !== blockTypes.length;
+  const isAllChecked = blockTypes.length > 0 && selectedBlockTypes.length === blockTypes.length;
+
+  // Announce search results on change
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!search) {
+      return;
+    }
+    const count = filteredBlockTypes.length;
+    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
+    (0,external_wp_i18n_namespaceObject._n)('%d result found.', '%d results found.', count), count);
+    debouncedSpeak(resultsFoundMessage);
+  }, [filteredBlockTypes?.length, search, debouncedSpeak]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: "block-editor-block-manager__content",
+    spacing: 4,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
+      __nextHasNoMarginBottom: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Search for a block'),
+      placeholder: (0,external_wp_i18n_namespaceObject.__)('Search for a block'),
+      value: search,
+      onChange: nextSearch => setSearch(nextSearch),
+      className: "block-editor-block-manager__search"
+    }), showSelectAll && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+      className: "block-editor-block-manager__select-all",
+      label: (0,external_wp_i18n_namespaceObject.__)('Select all'),
+      checked: isAllChecked,
+      onChange: () => {
+        if (isAllChecked) {
+          onChange([]);
+        } else {
+          onChange(blockTypes);
+        }
+      },
+      indeterminate: isIndeterminate,
+      __nextHasNoMarginBottom: true
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      tabIndex: "0",
+      role: "region",
+      "aria-label": (0,external_wp_i18n_namespaceObject.__)('Available block types'),
+      className: "block-editor-block-manager__results",
+      children: [filteredBlockTypes.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        className: "block-editor-block-manager__no-results",
+        children: (0,external_wp_i18n_namespaceObject.__)('No blocks found.')
+      }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
+        title: category.title,
+        blockTypes: filteredBlockTypes.filter(blockType => blockType.category === category.slug),
+        selectedBlockTypes: selectedBlockTypes,
+        onChange: onChange
+      }, category.slug)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Uncategorized'),
+        blockTypes: filteredBlockTypes.filter(({
+          category
+        }) => !category),
+        selectedBlockTypes: selectedBlockTypes,
+        onChange: onChange
+      })]
+    })]
+  });
+}
+
+;// ./packages/block-editor/build-module/components/block-allowed-blocks/modal.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function BlockAllowedBlocksModal({
+  clientId,
+  blockTypes,
+  selectedBlockTypes,
+  onClose
+}) {
+  const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0,external_wp_element_namespaceObject.useState)(selectedBlockTypes);
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const handleSubmit = () => {
+    const isFullySelected = currentSelectedBlockTypes.length === blockTypes.length;
+    const newBlockNames = currentSelectedBlockTypes.map(({
+      name
+    }) => name);
+    updateBlockAttributes(clientId, {
+      allowedBlocks: isFullySelected ? undefined : newBlockNames
+    });
+    onClose();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+    title: (0,external_wp_i18n_namespaceObject.__)('Manage allowed blocks'),
+    onRequestClose: onClose,
+    overlayClassName: "block-editor-block-allowed-blocks-modal",
+    focusOnMount: "firstContentElement",
+    size: "medium",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      as: "form",
+      onSubmit: e => {
+        e.preventDefault();
+        handleSubmit();
+      },
+      spacing: "4",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        children: (0,external_wp_i18n_namespaceObject.__)('Select which blocks can be added inside this container.')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockManager, {
+        blockTypes: blockTypes,
+        selectedBlockTypes: currentSelectedBlockTypes,
+        onChange: newSelectedBlockTypes => {
+          setCurrentSelectedBlockTypes(newSelectedBlockTypes);
+        }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+        className: "block-editor-block-allowed-blocks-modal__actions",
+        justify: "flex-end",
+        expanded: false,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            variant: "tertiary",
+            onClick: onClose,
+            __next40pxDefaultSize: true,
+            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            variant: "primary",
+            type: "submit",
+            __next40pxDefaultSize: true,
+            children: (0,external_wp_i18n_namespaceObject.__)('Apply')
+          })
+        })]
+      })]
+    })
+  });
+}
+
+;// ./packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function BlockAllowedBlocksControl({
+  clientId
+}) {
+  const [isBlockControlOpened, setIsBlockControlOpened] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    blockTypes,
+    selectedBlockNames
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockAttributes
+    } = select(store);
+    return {
+      blockTypes: select(external_wp_blocks_namespaceObject.store).getBlockTypes(),
+      selectedBlockNames: getBlockAttributes(clientId)?.allowedBlocks
+    };
+  }, [clientId]);
+  const filteredBlockTypes = blockTypes.filter(blockType => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'inserter', true) && (!blockType.parent || blockType.parent.includes('core/post-content')));
+  if (!filteredBlockTypes) {
+    return null;
+  }
+  const selectedBlockTypes = selectedBlockNames === undefined ? filteredBlockTypes : filteredBlockTypes.filter(blockType => selectedBlockNames.includes(blockType.name));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "block-editor-block-allowed-blocks-control",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
+      help: (0,external_wp_i18n_namespaceObject.__)('Specify which blocks are allowed inside this container.'),
+      __nextHasNoMarginBottom: true,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+        children: (0,external_wp_i18n_namespaceObject.__)('Allowed Blocks')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        variant: "secondary",
+        onClick: () => {
+          setIsBlockControlOpened(true);
+        },
+        className: "block-editor-block-allowed-blocks-control__button",
+        children: (0,external_wp_i18n_namespaceObject.__)('Manage allowed blocks')
+      })]
+    }), isBlockControlOpened && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockAllowedBlocksModal, {
+      clientId: clientId,
+      blockTypes: filteredBlockTypes,
+      selectedBlockTypes: selectedBlockTypes,
+      onClose: () => setIsBlockControlOpened(false)
+    })]
+  });
+}
+
+;// ./packages/block-editor/build-module/hooks/allowed-blocks.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+function BlockEditAllowedBlocksControlPure({
+  clientId
+}) {
+  const isContentOnly = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(store).getBlockEditingMode(clientId) === 'contentOnly';
+  }, [clientId]);
+  if (isContentOnly) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivateInspectorControlsAllowedBlocks.Fill, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockAllowedBlocksControl, {
+      clientId: clientId
+    })
+  });
+}
+/* harmony default export */ const allowed_blocks = ({
+  edit: BlockEditAllowedBlocksControlPure,
+  attributeKeys: ['allowedBlocks'],
+  hasSupport(name) {
+    return (0,external_wp_blocks_namespaceObject.hasBlockSupport)(name, 'allowedBlocks');
+  }
+});
+
+/**
+ * Filters registered block settings, extending attributes with allowedBlocks.
+ *
+ * @param {Object} settings Original block settings.
+ *
+ * @return {Object} Filtered block settings.
+ */
+function allowed_blocks_addAttribute(settings) {
+  // Allow blocks to specify their own attribute definition with default values if needed.
+  if (settings?.attributes?.allowedBlocks?.type) {
+    return settings;
+  }
+  if ((0,external_wp_blocks_namespaceObject.hasBlockSupport)(settings, 'allowedBlocks')) {
+    // Gracefully handle if settings.attributes is undefined.
+    settings.attributes = {
+      ...settings.attributes,
+      allowedBlocks: {
+        type: 'array'
+      }
+    };
+  }
+  return settings;
+}
+(0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/allowedBlocks/attribute', allowed_blocks_addAttribute);
 
 ;// ./packages/block-editor/build-module/hooks/anchor.js
 /**
@@ -37786,68 +38269,6 @@ function Tips() {
   })
 }));
 /* eslint-enable */
-
-;// ./packages/icons/build-module/library/block-default.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
-
-
-/* harmony default export */ const block_default = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z"
-  })
-}));
-/* eslint-enable */
-
-;// ./packages/block-editor/build-module/components/block-icon/index.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-function BlockIcon({
-  icon,
-  showColors = false,
-  className,
-  context
-}) {
-  if (icon?.src === 'block-default') {
-    icon = {
-      src: block_default
-    };
-  }
-  const renderedIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-    icon: icon && icon.src ? icon.src : icon,
-    context: context
-  });
-  const style = showColors ? {
-    backgroundColor: icon && icon.background,
-    color: icon && icon.foreground
-  } : {};
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-    style: style,
-    className: dist_clsx('block-editor-block-icon', className, {
-      'has-colors': showColors
-    }),
-    children: renderedIcon
-  });
-}
-
-/**
- * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/block-icon/README.md
- */
-/* harmony default export */ const block_icon = ((0,external_wp_element_namespaceObject.memo)(BlockIcon));
 
 ;// ./packages/block-editor/build-module/components/block-card/index.js
 /**
@@ -59584,7 +60005,8 @@ function useCachedTruthy(value) {
 
 
 
-createBlockEditFilter([align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, block_bindings, layout_child].filter(Boolean));
+
+createBlockEditFilter([align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, block_bindings, layout_child, allowed_blocks].filter(Boolean));
 createBlockListBlockFilter([align, text_align, background, style, color, dimensions, duotone, font_family, font_size, border, position, block_style_variation, layout_child]);
 createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class_name, border, color, style, font_family, font_size]);
 
@@ -77020,19 +77442,22 @@ const TAB_LIST_VIEW = {
  */
 
 
+
 const AdvancedControls = () => {
   const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName);
+  const privateFills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(PrivateInspectorControlsAllowedBlocks.name);
   const hasFills = Boolean(fills && fills.length);
-  if (!hasFills) {
+  const hasPrivateFills = Boolean(privateFills && privateFills.length);
+  if (!hasFills && !hasPrivateFills) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
     className: "block-editor-block-inspector__advanced",
     title: (0,external_wp_i18n_namespaceObject.__)('Advanced'),
     initialOpen: false,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
       group: "advanced"
-    })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivateInspectorControlsAllowedBlocks.Slot, {})]
   });
 };
 /* harmony default export */ const advanced_controls_panel = (AdvancedControls);
@@ -79173,214 +79598,6 @@ function ResizableBoxPopover({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
       ...resizableBoxProps
     })
-  });
-}
-
-;// ./packages/block-editor/build-module/components/block-manager/checklist.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-function BlockTypesChecklist({
-  blockTypes,
-  value,
-  onItemChange
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
-    className: "block-editor-block-manager__checklist",
-    children: blockTypes.map(blockType => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-      className: "block-editor-block-manager__checklist-item",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-        __nextHasNoMarginBottom: true,
-        label: blockType.title,
-        checked: value.includes(blockType.name),
-        onChange: (...args) => onItemChange(blockType, ...args)
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-        icon: blockType.icon
-      })]
-    }, blockType.name))
-  });
-}
-/* harmony default export */ const checklist = (BlockTypesChecklist);
-
-;// ./packages/block-editor/build-module/components/block-manager/category.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-function BlockManagerCategory({
-  title,
-  blockTypes,
-  selectedBlockTypes,
-  onChange
-}) {
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(BlockManagerCategory);
-  const toggleVisible = (0,external_wp_element_namespaceObject.useCallback)((blockType, nextIsChecked) => {
-    if (nextIsChecked) {
-      onChange([...selectedBlockTypes, blockType]);
-    } else {
-      onChange(selectedBlockTypes.filter(({
-        name
-      }) => name !== blockType.name));
-    }
-  }, [selectedBlockTypes, onChange]);
-  const toggleAllVisible = (0,external_wp_element_namespaceObject.useCallback)(nextIsChecked => {
-    if (nextIsChecked) {
-      onChange([...selectedBlockTypes, ...blockTypes.filter(blockType => !selectedBlockTypes.find(({
-        name
-      }) => name === blockType.name))]);
-    } else {
-      onChange(selectedBlockTypes.filter(selectedBlockType => !blockTypes.find(({
-        name
-      }) => name === selectedBlockType.name)));
-    }
-  }, [blockTypes, selectedBlockTypes, onChange]);
-  if (!blockTypes.length) {
-    return null;
-  }
-  const checkedBlockNames = blockTypes.map(({
-    name
-  }) => name).filter(type => (selectedBlockTypes !== null && selectedBlockTypes !== void 0 ? selectedBlockTypes : []).some(selectedBlockType => selectedBlockType.name === type));
-  const titleId = 'block-editor-block-manager__category-title-' + instanceId;
-  const isAllChecked = checkedBlockNames.length === blockTypes.length;
-  const isIndeterminate = !isAllChecked && checkedBlockNames.length > 0;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    role: "group",
-    "aria-labelledby": titleId,
-    className: "block-editor-block-manager__category",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-      __nextHasNoMarginBottom: true,
-      checked: isAllChecked,
-      onChange: toggleAllVisible,
-      className: "block-editor-block-manager__category-title",
-      indeterminate: isIndeterminate,
-      label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        id: titleId,
-        children: title
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(checklist, {
-      blockTypes: blockTypes,
-      value: checkedBlockNames,
-      onItemChange: toggleVisible
-    })]
-  });
-}
-/* harmony default export */ const block_manager_category = (BlockManagerCategory);
-
-;// ./packages/block-editor/build-module/components/block-manager/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Provides a list of blocks with checkboxes.
- *
- * @param {Object}   props                    Props.
- * @param {Array}    props.blockTypes         An array of blocks.
- * @param {Array}    props.selectedBlockTypes An array of selected blocks.
- * @param {Function} props.onChange           Function to be called when the selected blocks change.
- */
-
-function BlockManager({
-  blockTypes,
-  selectedBlockTypes,
-  onChange
-}) {
-  const debouncedSpeak = (0,external_wp_compose_namespaceObject.useDebounce)(external_wp_a11y_namespaceObject.speak, 500);
-  const [search, setSearch] = (0,external_wp_element_namespaceObject.useState)('');
-  const {
-    categories,
-    isMatchingSearchTerm
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return {
-      categories: select(external_wp_blocks_namespaceObject.store).getCategories(),
-      isMatchingSearchTerm: select(external_wp_blocks_namespaceObject.store).isMatchingSearchTerm
-    };
-  }, []);
-  function enableAllBlockTypes() {
-    onChange(blockTypes);
-  }
-  const filteredBlockTypes = blockTypes.filter(blockType => {
-    return !search || isMatchingSearchTerm(blockType, search);
-  });
-  const numberOfHiddenBlocks = blockTypes.length - selectedBlockTypes.length;
-
-  // Announce search results on change
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!search) {
-      return;
-    }
-    const count = filteredBlockTypes.length;
-    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
-    (0,external_wp_i18n_namespaceObject._n)('%d result found.', '%d results found.', count), count);
-    debouncedSpeak(resultsFoundMessage);
-  }, [filteredBlockTypes?.length, search, debouncedSpeak]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    className: "block-editor-block-manager__content",
-    children: [!!numberOfHiddenBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "block-editor-block-manager__disabled-blocks-count",
-      children: [(0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of blocks. */
-      (0,external_wp_i18n_namespaceObject._n)('%d block is hidden.', '%d blocks are hidden.', numberOfHiddenBlocks), numberOfHiddenBlocks), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        variant: "link",
-        onClick: enableAllBlockTypes,
-        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-      })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Search for a block'),
-      placeholder: (0,external_wp_i18n_namespaceObject.__)('Search for a block'),
-      value: search,
-      onChange: nextSearch => setSearch(nextSearch),
-      className: "block-editor-block-manager__search"
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      tabIndex: "0",
-      role: "region",
-      "aria-label": (0,external_wp_i18n_namespaceObject.__)('Available block types'),
-      className: "block-editor-block-manager__results",
-      children: [filteredBlockTypes.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        className: "block-editor-block-manager__no-results",
-        children: (0,external_wp_i18n_namespaceObject.__)('No blocks found.')
-      }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
-        title: category.title,
-        blockTypes: filteredBlockTypes.filter(blockType => blockType.category === category.slug),
-        selectedBlockTypes: selectedBlockTypes,
-        onChange: onChange
-      }, category.slug)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Uncategorized'),
-        blockTypes: filteredBlockTypes.filter(({
-          category
-        }) => !category),
-        selectedBlockTypes: selectedBlockTypes,
-        onChange: onChange
-      })]
-    })]
   });
 }
 
