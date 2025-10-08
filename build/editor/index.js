@@ -25990,21 +25990,32 @@ function useTemplates(postType) {
   // of and unbound request. In the modal, the user templates should be
   // paginated and we should not make an unbound request.
   const {
-    staticTemplates,
-    templates
+    defaultTemplateTypes,
+    registeredTemplates,
+    userTemplates
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
-      staticTemplates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_registered_template', {
+      defaultTemplateTypes: select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_types,
+      registeredTemplates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_registered_template', {
         per_page: -1,
         post_type: postType
       }),
-      templates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
-        per_page: -1,
-        post_type: postType
+      userTemplates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
+        per_page: -1
       })
     };
   }, [postType]);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => [...(staticTemplates || []), ...(templates || [])], [staticTemplates, templates]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!defaultTemplateTypes || !registeredTemplates || !userTemplates) {
+      return [];
+    }
+    return [...registeredTemplates, ...userTemplates.filter(template =>
+    // Only give "custom" templates as an option, which
+    // means the is_wp_suggestion meta field is not set and
+    // the slug is not found in the default template types.
+    // https://github.com/WordPress/wordpress-develop/blob/97382397b2bd7c85aef6d4cd1c10bafd397957fc/src/wp-includes/block-template-utils.php#L858-L867
+    !template.meta.is_wp_suggestion && !defaultTemplateTypes.find(type => type.slug === template.slug))];
+  }, [registeredTemplates, userTemplates, defaultTemplateTypes]);
 }
 function useAvailableTemplates(postType) {
   const currentTemplateSlug = useCurrentTemplateSlug();
