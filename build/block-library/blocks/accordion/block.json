@@ -6,8 +6,8 @@
 	"category": "design",
 	"description": "Displays a group of accordion headings and associated expandable content.",
 	"example": {},
+	"__experimental": true,
 	"supports": {
-		"anchor": true,
 		"html": false,
 		"align": [ "wide", "full" ],
 		"background": {
@@ -40,7 +40,6 @@
 		},
 		"shadow": true,
 		"layout": true,
-		"ariaLabel": true,
 		"interactivity": true,
 		"typography": {
 			"fontSize": true,
@@ -54,8 +53,7 @@
 			"__experimentalDefaultControls": {
 				"fontSize": true
 			}
-		},
-		"contentRole": true
+		}
 	},
 	"attributes": {
 		"iconPosition": {

@@ -1630,65 +1630,51 @@ function useHistory() {
   });
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
     navigate,
-    back: router_history.back,
-    invalidate: () => {
-      router_history.replace({
-        search: router_history.location.search
-      });
-    }
+    back: router_history.back
   }), [navigate]);
 }
 function useMatch(location, matcher, pathArg, matchResolverArgs) {
   const {
     query: rawQuery = {}
   } = location;
-  const [resolvedMatch, setMatch] = (0,external_wp_element_namespaceObject.useState)();
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
     const {
       [pathArg]: path = '/',
       ...query
     } = rawQuery;
-    const ret = matcher.recognize(path)?.[0];
-    async function resolveMatch(result) {
-      const matchedRoute = result.handler;
-      const resolveFunctions = async (record = {}) => {
-        const entries = await Promise.all(Object.entries(record).map(async ([key, value]) => {
-          if (typeof value === 'function') {
-            return [key, await value({
-              query,
-              params: result.params,
-              ...matchResolverArgs
-            })];
-          }
-          return [key, value];
-        }));
-        return Object.fromEntries(entries);
-      };
-      const [resolvedAreas, resolvedWidths] = await Promise.all([resolveFunctions(matchedRoute.areas), resolveFunctions(matchedRoute.widths)]);
-      setMatch({
-        name: matchedRoute.name,
-        areas: resolvedAreas,
-        widths: resolvedWidths,
-        params: result.params,
-        query,
-        path: (0,external_wp_url_namespaceObject.addQueryArgs)(path, query)
-      });
-    }
-    if (!ret) {
-      setMatch({
+    const result = matcher.recognize(path)?.[0];
+    if (!result) {
+      return {
         name: '404',
         path: (0,external_wp_url_namespaceObject.addQueryArgs)(path, query),
         areas: {},
         widths: {},
         query,
         params: {}
-      });
-    } else {
-      resolveMatch(ret);
+      };
     }
-    return () => setMatch(undefined);
+    const matchedRoute = result.handler;
+    const resolveFunctions = (record = {}) => {
+      return Object.fromEntries(Object.entries(record).map(([key, value]) => {
+        if (typeof value === 'function') {
+          return [key, value({
+            query,
+            params: result.params,
+            ...matchResolverArgs
+          })];
+        }
+        return [key, value];
+      }));
+    };
+    return {
+      name: matchedRoute.name,
+      areas: resolveFunctions(matchedRoute.areas),
+      widths: resolveFunctions(matchedRoute.widths),
+      params: result.params,
+      query,
+      path: (0,external_wp_url_namespaceObject.addQueryArgs)(path, query)
+    };
   }, [matcher, rawQuery, pathArg, matchResolverArgs]);
-  return resolvedMatch;
 }
 function RouterProvider({
   routes,
@@ -1711,19 +1697,14 @@ function RouterProvider({
     return ret;
   }, [routes]);
   const match = useMatch(location, matcher, pathArg, matchResolverArgs);
-  const previousMatch = (0,external_wp_compose_namespaceObject.usePrevious)(match);
   const config = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     beforeNavigate,
     pathArg
   }), [beforeNavigate, pathArg]);
-  const renderedMatch = match || previousMatch;
-  if (!renderedMatch) {
-    return null;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ConfigContext.Provider, {
     value: config,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RoutesContext.Provider, {
-      value: renderedMatch,
+      value: match,
       children: children
     })
   });

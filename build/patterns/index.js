@@ -854,20 +854,19 @@ function RenamePatternModal({
 ;// external ["wp","primitives"]
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// ./packages/icons/build-module/library/symbol.js
-/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-/* harmony default export */ const symbol = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const symbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z"
   })
-}));
-/* eslint-enable */
+});
+/* harmony default export */ const library_symbol = (symbol);
 
 ;// ./packages/patterns/build-module/components/pattern-convert-button.js
 /**
@@ -1004,7 +1003,7 @@ function PatternConvertButton({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-      icon: symbol,
+      icon: library_symbol,
       onClick: () => setIsModalOpen(true),
       "aria-expanded": isModalOpen,
       "aria-haspopup": "dialog",
@@ -1596,13 +1595,12 @@ function ResetOverridesControl(props) {
 }
 
 ;// ./packages/icons/build-module/library/copy.js
-/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-/* harmony default export */ const copy = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const copy = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -1610,8 +1608,8 @@ function ResetOverridesControl(props) {
     clipRule: "evenodd",
     d: "M5 4.5h11a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5ZM3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm17 3v10.75c0 .69-.56 1.25-1.25 1.25H6v1.5h12.75a2.75 2.75 0 0 0 2.75-2.75V8H20Z"
   })
-}));
-/* eslint-enable */
+});
+/* harmony default export */ const library_copy = (copy);
 
 ;// ./packages/patterns/build-module/components/pattern-overrides-block-controls.js
 /**
@@ -1662,7 +1660,7 @@ function PatternOverridesToolbarIndicator({
       const isSelectionOfSameType = new Set(blockTypeNames).size === 1;
       // When selection consists of blocks of multiple types, display an
       // appropriate icon to communicate the non-uniformity.
-      _icon = isSelectionOfSameType ? firstBlockType.icon : copy;
+      _icon = isSelectionOfSameType ? firstBlockType.icon : library_copy;
     }
     return {
       icon: _icon,

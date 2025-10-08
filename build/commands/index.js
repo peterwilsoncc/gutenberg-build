@@ -3206,20 +3206,19 @@ const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/icons/build-module/library/search.js
-/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-/* harmony default export */ const library_search = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
   })
-}));
-/* eslint-enable */
+});
+/* harmony default export */ const library_search = (search);
 
 ;// ./packages/commands/build-module/store/reducer.js
 /**
@@ -3820,13 +3819,12 @@ function CommandMenu() {
         onKeyDown: onKeyDown,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "commands-command-menu__header",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon, {
-            className: "commands-command-menu__header-search-icon",
-            icon: library_search
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommandInput, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommandInput, {
             search: search,
             setSearch: setSearch,
             isOpen: isOpen
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon, {
+            icon: library_search
           })]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(He.List, {
           label: (0,external_wp_i18n_namespaceObject.__)('Command suggestions'),
@@ -3970,7 +3968,7 @@ function useCommand(command) {
  * @example
  * ```js
  * import { useCommands } from '@wordpress/commands';
- * import { plus, pencil } from '@wordpress/icons';
+ * import { plus, edit } from '@wordpress/icons';
  *
  * useCommands( [
  *     {
@@ -3985,7 +3983,7 @@ function useCommand(command) {
  *     {
  *         name: 'myplugin/edit-posts',
  *         label: __( 'Edit posts' ),
- *         icon: pencil,
+ *         icon: edit,
  *         callback: ({ close }) => {
  *             document.location.href = 'edit.php';
  *             close();
