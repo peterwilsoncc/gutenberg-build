@@ -16404,8 +16404,6 @@ const featuredImageField = {
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -16413,22 +16411,8 @@ const featuredImageField = {
 function AuthorView({
   item
 }) {
-  const {
-    text,
-    imageUrl
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    let user;
-    if (!!item.author) {
-      user = getEntityRecord('root', 'user', item.author);
-    }
-    return {
-      imageUrl: user?.avatar_urls?.[48],
-      text: user?.name
-    };
-  }, [item]);
+  const text = item?._embedded?.author?.[0]?.name;
+  const imageUrl = item?._embedded?.author?.[0]?.avatar_urls?.[48];
   const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     alignment: "left",
