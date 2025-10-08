@@ -1417,10 +1417,33 @@ function pascalCase(input, options) {
 ;// external ["wp","apiFetch"]
 const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
 var external_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_wp_apiFetch_namespaceObject);
+;// external ["wp","blocks"]
+const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// external ["wp","richText"]
 const external_wp_richText_namespaceObject = window["wp"]["richText"];
+;// ./packages/sync/build-module/config.js
+const CRDT_RECORD_MAP_KEY = "document";
+
+
+;// ./packages/core-data/build-module/utils/crdt.js
+/**
+ * WordPress dependencies
+ */
+
+function defaultApplyChangesToCRDTDoc(crdtDoc, changes) {
+  const document = crdtDoc.getMap(CRDT_RECORD_MAP_KEY);
+  Object.entries(changes).forEach(([key, value]) => {
+    if (document.get(key) !== value) {
+      document.set(key, value);
+    }
+  });
+}
+function defaultGetChangesFromCRDTDoc(crdtDoc) {
+  return crdtDoc.getMap(CRDT_RECORD_MAP_KEY).toJSON();
+}
+
 ;// ./packages/core-data/build-module/entities.js
 /**
  * External dependencies
@@ -1433,8 +1456,25 @@ const external_wp_richText_namespaceObject = window["wp"]["richText"];
 
 
 
+
+
+/**
+ * Internal dependencies
+ */
+
 const DEFAULT_ENTITY_KEY = 'id';
 const POST_RAW_ATTRIBUTES = ['title', 'excerpt', 'content'];
+const blocksTransientEdits = {
+  blocks: {
+    read: record => {
+      var _record$content$raw;
+      return (0,external_wp_blocks_namespaceObject.parse)((_record$content$raw = record.content?.raw) !== null && _record$content$raw !== void 0 ? _record$content$raw : '');
+    },
+    write: record => ({
+      content: (0,external_wp_blocks_namespaceObject.__unstableSerializeAndClean)(record.blocks)
+    })
+  }
+};
 const rootEntitiesConfig = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Base'),
   kind: 'root',
@@ -1447,27 +1487,7 @@ const rootEntitiesConfig = [{
   },
   // The entity doesn't support selecting multiple records.
   // The property is maintained for backward compatibility.
-  plural: '__unstableBases',
-  syncConfig: {
-    fetch: async () => {
-      return external_wp_apiFetch_default()({
-        path: '/'
-      });
-    },
-    applyChangesToDoc: (doc, changes) => {
-      const document = doc.getMap('document');
-      Object.entries(changes).forEach(([key, value]) => {
-        if (document.get(key) !== value) {
-          document.set(key, value);
-        }
-      });
-    },
-    fromCRDTDoc: doc => {
-      return doc.getMap('document').toJSON();
-    }
-  },
-  syncObjectType: 'root/base',
-  getSyncObjectId: () => 'index'
+  plural: '__unstableBases'
 }, {
   label: (0,external_wp_i18n_namespaceObject.__)('Post Type'),
   name: 'postType',
@@ -1477,27 +1497,7 @@ const rootEntitiesConfig = [{
   baseURLParams: {
     context: 'edit'
   },
-  plural: 'postTypes',
-  syncConfig: {
-    fetch: async id => {
-      return external_wp_apiFetch_default()({
-        path: `/wp/v2/types/${id}?context=edit`
-      });
-    },
-    applyChangesToDoc: (doc, changes) => {
-      const document = doc.getMap('document');
-      Object.entries(changes).forEach(([key, value]) => {
-        if (document.get(key) !== value) {
-          document.set(key, value);
-        }
-      });
-    },
-    fromCRDTDoc: doc => {
-      return doc.getMap('document').toJSON();
-    }
-  },
-  syncObjectType: 'root/postType',
-  getSyncObjectId: id => id
+  plural: 'postTypes'
 }, {
   name: 'media',
   kind: 'root',
@@ -1744,7 +1744,7 @@ async function loadPostTypeEntities() {
       name,
       label: postType.name,
       transientEdits: {
-        blocks: true,
+        ...blocksTransientEdits,
         selection: true
       },
       mergedEdits: {
@@ -1758,13 +1758,16 @@ async function loadPostTypeEntities() {
       __unstablePrePersist: isTemplate ? undefined : prePersistPostType,
       __unstable_rest_base: postType.rest_base,
       syncConfig: {
-        fetch: async id => {
-          return external_wp_apiFetch_default()({
-            path: `/${namespace}/${postType.rest_base}/${id}?context=edit`
-          });
-        },
-        applyChangesToDoc: (doc, changes) => {
-          const document = doc.getMap('document');
+        /**
+         * Apply changes from the local editor to the local CRDT document so
+         * that those changes can be synced to other peers (via the provider).
+         *
+         * @param {import('@wordpress/sync').CRDTDoc}               crdtDoc
+         * @param {Partial< import('@wordpress/sync').ObjectData >} changes
+         * @return {void}
+         */
+        applyChangesToCRDTDoc: (crdtDoc, changes) => {
+          const document = crdtDoc.getMap('document');
           Object.entries(changes).forEach(([key, value]) => {
             if (!syncedProperties.has(key)) {
               return;
@@ -1782,12 +1785,21 @@ async function loadPostTypeEntities() {
             }
           });
         },
-        fromCRDTDoc: doc => {
-          return doc.getMap('document').toJSON();
-        }
+        /**
+         * Extract changes from a CRDT document that can be used to update the
+         * local editor state.
+         *
+         * @param {import('@wordpress/sync').CRDTDoc} crdtDoc
+         * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
+         */
+        getChangesFromCRDTDoc: defaultGetChangesFromCRDTDoc,
+        /**
+         * Sync features supported by the entity.
+         *
+         * @type {Record< string, boolean >}
+         */
+        supports: {}
       },
-      syncObjectType: 'postType/' + postType.name,
-      getSyncObjectId: id => id,
       supportsPagination: true,
       getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? '/' + revisionId : ''}`,
       revisionKey: DEFAULT_ENTITY_KEY
@@ -1834,25 +1846,9 @@ async function loadSiteEntity() {
     kind: 'root',
     baseURL: '/wp/v2/settings',
     syncConfig: {
-      fetch: async () => {
-        return external_wp_apiFetch_default()({
-          path: '/wp/v2/settings'
-        });
-      },
-      applyChangesToDoc: (doc, changes) => {
-        const document = doc.getMap('document');
-        Object.entries(changes).forEach(([key, value]) => {
-          if (document.get(key) !== value) {
-            document.set(key, value);
-          }
-        });
-      },
-      fromCRDTDoc: doc => {
-        return doc.getMap('document').toJSON();
-      }
+      applyChangesToCRDTDoc: defaultApplyChangesToCRDTDoc,
+      getChangesFromCRDTDoc: defaultGetChangesFromCRDTDoc
     },
-    syncObjectType: 'root/site',
-    getSyncObjectId: () => 'index',
     meta: {}
   };
   const site = await external_wp_apiFetch_default()({
@@ -19201,12 +19197,12 @@ const createSyncProvider = (connectLocal, connectRemote) => {
   function register(objectType, objectConfig) {
     config[objectType] = objectConfig;
   }
-  async function bootstrap(objectType, objectId, handleChanges) {
+  async function bootstrap(objectType, objectId, record, handleChanges) {
     const doc = new Doc();
     docs[objectType] = docs[objectType] || {};
     docs[objectType][objectId] = doc;
     const updateHandler = () => {
-      const data = config[objectType].fromCRDTDoc(doc);
+      const data = config[objectType].getChangesFromCRDTDoc(doc);
       handleChanges(data);
     };
     doc.on("update", updateHandler);
@@ -19218,14 +19214,9 @@ const createSyncProvider = (connectLocal, connectRemote) => {
     if (connectRemote) {
       await connectRemote(objectId, objectType, doc);
     }
-    const loadRemotely = config[objectType].fetch;
-    if (loadRemotely) {
-      loadRemotely(objectId).then((data) => {
-        doc.transact(() => {
-          config[objectType].applyChangesToDoc(doc, data);
-        });
-      });
-    }
+    doc.transact(() => {
+      config[objectType].applyChangesToCRDTDoc(doc, record);
+    });
     listeners[objectType] = listeners[objectType] || {};
     listeners[objectType][objectId] = () => {
       destroyLocalConnection();
@@ -19238,7 +19229,7 @@ const createSyncProvider = (connectLocal, connectRemote) => {
       throw "Error doc " + objectType + " " + objectId + " not found";
     }
     doc.transact(() => {
-      config[objectType].applyChangesToDoc(doc, data);
+      config[objectType].applyChangesToCRDTDoc(doc, data);
     });
   }
   async function discard(objectType, objectId) {
@@ -21934,8 +21925,9 @@ const editEntityRecord = (kind, name, recordId, edits, options = {}) => ({
   };
   if (window.__experimentalEnableSync && entityConfig.syncConfig) {
     if (true) {
-      const objectId = entityConfig.getSyncObjectId(recordId);
-      getSyncProvider().update(entityConfig.syncObjectType + '--edit', objectId, edit.edits);
+      const objectType = `${kind}/${name}`;
+      const objectId = recordId;
+      getSyncProvider().update(objectType, objectId, edit.edits);
     }
   }
   if (!options.undoIgnore) {
@@ -23025,11 +23017,24 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
     // Entity supports syncing.
     if (window.__experimentalEnableSync && entityConfig.syncConfig && !query) {
       if (true) {
-        const objectId = entityConfig.getSyncObjectId(key);
-        getSyncProvider().register(entityConfig.syncObjectType + '--edit', entityConfig.syncConfig);
+        var _entityConfig$transie;
+        const objectType = `${kind}/${name}`;
+        const objectId = key;
+
+        // Use the new transient "read/write" config to compute transients for
+        // the sync provider. Otherwise these transients are not available
+        // if / until the record is edited. Use a copy of the record so that
+        // it does not change the behavior outside this experimental flag.
+        const recordWithTransients = {
+          ...record
+        };
+        Object.entries((_entityConfig$transie = entityConfig.transientEdits) !== null && _entityConfig$transie !== void 0 ? _entityConfig$transie : {}).filter(([propName, transientConfig]) => undefined === recordWithTransients[propName] && transientConfig && 'object' === typeof transientConfig && 'read' in transientConfig && 'function' === typeof transientConfig.read).forEach(([propName, transientConfig]) => {
+          recordWithTransients[propName] = transientConfig.read(recordWithTransients);
+        });
+        getSyncProvider().register(objectType, entityConfig.syncConfig);
 
         // Bootstraps the edited document (and load from peers).
-        await getSyncProvider().bootstrap(entityConfig.syncObjectType + '--edit', objectId, edits => {
+        await getSyncProvider().bootstrap(objectType, objectId, recordWithTransients, edits => {
           dispatch({
             type: 'EDIT_ENTITY_RECORD',
             kind,
@@ -24843,8 +24848,6 @@ function __experimentalUseResourcePermissions(resource, id) {
   return useResourcePermissions(resource, id);
 }
 
-;// external ["wp","blocks"]
-const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// ./packages/core-data/build-module/hooks/use-entity-id.js
 /**
  * WordPress dependencies

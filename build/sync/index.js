@@ -2954,10 +2954,14 @@ var wp;
   // packages/sync/build-module/index.js
   var build_module_exports = {};
   __export(build_module_exports, {
+    CRDT_RECORD_MAP_KEY: () => CRDT_RECORD_MAP_KEY,
     connectIndexDb: () => connectIndexDb,
     createSyncProvider: () => createSyncProvider,
     createWebRTCConnection: () => createWebRTCConnection
   });
+
+  // packages/sync/build-module/config.js
+  var CRDT_RECORD_MAP_KEY = "document";
 
   // node_modules/lib0/map.js
   var create = () => /* @__PURE__ */ new Map();
@@ -12257,12 +12261,12 @@ var wp;
     function register(objectType, objectConfig) {
       config[objectType] = objectConfig;
     }
-    async function bootstrap(objectType, objectId, handleChanges) {
+    async function bootstrap(objectType, objectId, record, handleChanges) {
       const doc2 = new Doc();
       docs[objectType] = docs[objectType] || {};
       docs[objectType][objectId] = doc2;
       const updateHandler = () => {
-        const data = config[objectType].fromCRDTDoc(doc2);
+        const data = config[objectType].getChangesFromCRDTDoc(doc2);
         handleChanges(data);
       };
       doc2.on("update", updateHandler);
@@ -12274,14 +12278,9 @@ var wp;
       if (connectRemote) {
         await connectRemote(objectId, objectType, doc2);
       }
-      const loadRemotely = config[objectType].fetch;
-      if (loadRemotely) {
-        loadRemotely(objectId).then((data) => {
-          doc2.transact(() => {
-            config[objectType].applyChangesToDoc(doc2, data);
-          });
-        });
-      }
+      doc2.transact(() => {
+        config[objectType].applyChangesToCRDTDoc(doc2, record);
+      });
       listeners[objectType] = listeners[objectType] || {};
       listeners[objectType][objectId] = () => {
         destroyLocalConnection();
@@ -12294,7 +12293,7 @@ var wp;
         throw "Error doc " + objectType + " " + objectId + " not found";
       }
       doc2.transact(() => {
-        config[objectType].applyChangesToDoc(doc2, data);
+        config[objectType].applyChangesToCRDTDoc(doc2, data);
       });
     }
     async function discard(objectType, objectId) {
