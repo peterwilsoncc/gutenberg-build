@@ -2498,6 +2498,7 @@ const accordion_item_metadata = {
   parent: ["core/accordion"],
   allowedBlocks: ["core/accordion-heading", "core/accordion-panel"],
   supports: {
+    html: false,
     color: {
       background: true,
       gradients: true
@@ -2863,6 +2864,7 @@ const accordion_panel_metadata = {
   description: "Displays an accordion panel.",
   parent: ["core/accordion-item"],
   supports: {
+    html: false,
     color: {
       background: true,
       gradients: true
