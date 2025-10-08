@@ -36948,9 +36948,11 @@ const CommentAvatarIndicator = ({
 
 
 
+
 /**
  * Internal dependencies
  */
+
 
 function useBlockComments(postId) {
   const queryArgs = {
@@ -37163,6 +37165,20 @@ function useBlockCommentsActions() {
     onDelete
   };
 }
+function useEnableFloatingSidebar(enabled = false) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!enabled) {
+      return;
+    }
+    return registry.subscribe(() => {
+      const activeSidebar = registry.select(store).getActiveComplementaryArea('core');
+      if (!activeSidebar) {
+        registry.dispatch(store).enableComplementaryArea('core', collabSidebarName);
+      }
+    });
+  }, [enabled, registry]);
+}
 
 ;// ./packages/editor/build-module/components/collab-sidebar/index.js
 /**
@@ -37235,9 +37251,6 @@ function CollabSidebar() {
   const {
     enableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const {
-    getActiveComplementaryArea
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const commentSidebarRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const {
@@ -37267,6 +37280,7 @@ function CollabSidebar() {
     unresolvedSortedThreads,
     totalPages
   } = useBlockComments(postId);
+  useEnableFloatingSidebar(resultComments.length > 0);
   const hasMoreComments = totalPages && totalPages > 1;
 
   // Get the global styles to set the background color of the sidebar.
@@ -37274,15 +37288,6 @@ function CollabSidebar() {
     merged: GlobalStyles
   } = useGlobalStylesContext();
   const backgroundColor = GlobalStyles?.styles?.color?.background;
-  if (0 < resultComments.length) {
-    const unsubscribe = (0,external_wp_data_namespaceObject.subscribe)(() => {
-      const activeSidebar = getActiveComplementaryArea('core');
-      if (!activeSidebar) {
-        enableComplementaryArea('core', collabSidebarName);
-        unsubscribe();
-      }
-    });
-  }
 
   // Find the current thread for the selected block.
   const currentThread = blockCommentId ? resultComments.find(thread => thread.id === blockCommentId) : null;
