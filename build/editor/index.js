@@ -36565,7 +36565,7 @@ function AddComment({
   });
 }
 
-;// ./packages/editor/build-module/components/collab-sidebar/comment-button.js
+;// ./packages/editor/build-module/components/collab-sidebar/comment-menu-item.js
 /**
  * WordPress dependencies
  */
@@ -36582,7 +36582,7 @@ function AddComment({
 const {
   CommentIconSlotFill
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-const AddCommentButton = ({
+const AddCommentMenuItem = ({
   onClick
 }) => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentIconSlotFill.Fill, {
@@ -36595,11 +36595,11 @@ const AddCommentButton = ({
         onClose();
       },
       "aria-haspopup": "dialog",
-      children: (0,external_wp_i18n_namespaceObject._x)('Comment', 'Add comment button')
+      children: (0,external_wp_i18n_namespaceObject.__)('Comment')
     })
   });
 };
-/* harmony default export */ const comment_button = (AddCommentButton);
+/* harmony default export */ const comment_menu_item = (AddCommentMenuItem);
 
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-indicator-toolbar.js
 /**
@@ -37044,7 +37044,6 @@ function CollabSidebar() {
       }
     });
   }
-  const AddCommentComponent = blockCommentId ? comment_indicator_toolbar : comment_button;
 
   // Find the current thread for the selected block.
   const currentThread = blockCommentId ? resultComments.find(thread => thread.id === blockCommentId) : null;
@@ -37054,10 +37053,11 @@ function CollabSidebar() {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddCommentComponent, {
-      onClick: openCollabBoard,
+    children: [blockCommentId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_indicator_toolbar, {
       thread: currentThread,
       hasMoreComments: hasMoreComments
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_menu_item, {
+      onClick: openCollabBoard
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       identifier: collabHistorySidebarName
       // translators: Comments sidebar title
