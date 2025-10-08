@@ -10095,16 +10095,17 @@ function RelativeDateControl({
 
 ;// ./packages/dataviews/build-module/dataform-controls/datetime.js
 /**
+ * External dependencies
+ */
+
+
+
+/**
  * WordPress dependencies
  */
 
 
 
-
-
-/**
- * External dependencies
- */
 
 
 /**
@@ -10116,7 +10117,8 @@ function RelativeDateControl({
 
 
 const {
-  DateCalendar
+  DateCalendar,
+  ValidatedInputControl
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const parseDateTime = dateTimeString => {
   if (!dateTimeString) {
@@ -10136,18 +10138,59 @@ const formatDateTime = date => {
   return format(date, "yyyy-MM-dd'T'HH:mm");
 };
 function CalendarDateTimeControl({
-  id,
-  value,
+  data,
+  field,
   onChange,
-  label,
-  description,
   hideLabelFromVision
 }) {
+  const {
+    id,
+    label,
+    description,
+    setValue,
+    getValue
+  } = field;
+  const fieldValue = getValue({
+    item: data
+  });
+  const value = typeof fieldValue === 'string' ? fieldValue : undefined;
   const [calendarMonth, setCalendarMonth] = (0,external_wp_element_namespaceObject.useState)(() => {
     const parsedDate = parseDateTime(value);
     return parsedDate || new Date(); // Default to current month
   });
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const inputControlRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const validationTimeoutRef = (0,external_wp_element_namespaceObject.useRef)();
+  const previousFocusRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const onChangeCallback = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
+
+  // Cleanup timeout on unmount
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    return () => {
+      if (validationTimeoutRef.current) {
+        clearTimeout(validationTimeoutRef.current);
+      }
+    };
+  }, []);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   const onSelectDate = (0,external_wp_element_namespaceObject.useCallback)(newDate => {
+    let dateTimeValue;
     if (newDate) {
       // Preserve time if it exists in current value, otherwise use current time
       let finalDateTime = newDate;
@@ -10160,17 +10203,42 @@ function CalendarDateTimeControl({
           finalDateTime.setMinutes(currentDateTime.getMinutes());
         }
       }
-      const dateTimeValue = finalDateTime.toISOString();
-      onChange(dateTimeValue);
+      dateTimeValue = finalDateTime.toISOString();
+      onChangeCallback(dateTimeValue);
+      onValidateControl(dateTimeValue);
+
+      // Clear any existing timeout
+      if (validationTimeoutRef.current) {
+        clearTimeout(validationTimeoutRef.current);
+      }
     } else {
-      onChange(undefined);
+      onChangeCallback(undefined);
+      onValidateControl(undefined);
     }
-  }, [onChange, value]);
+    // Save the currently focused element
+    previousFocusRef.current = inputControlRef.current && inputControlRef.current.ownerDocument.activeElement;
+
+    // Trigger validation display by simulating focus, blur, and changes.
+    // Use a timeout to ensure it runs after the value update.
+    validationTimeoutRef.current = setTimeout(() => {
+      if (inputControlRef.current) {
+        inputControlRef.current.focus();
+        inputControlRef.current.blur();
+        onChangeCallback(dateTimeValue);
+        onValidateControl(dateTimeValue);
+
+        // Restore focus to the previously focused element
+        if (previousFocusRef.current && previousFocusRef.current instanceof HTMLElement) {
+          previousFocusRef.current.focus();
+        }
+      }
+    }, 0);
+  }, [onChangeCallback, value, onValidateControl]);
   const handleManualDateTimeChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
     if (newValue) {
       // Convert from datetime-local format to ISO string
       const dateTime = new Date(newValue);
-      onChange(dateTime.toISOString());
+      onChangeCallback(dateTime.toISOString());
 
       // Update calendar month to match
       const parsedDate = parseDateTime(dateTime.toISOString());
@@ -10178,9 +10246,9 @@ function CalendarDateTimeControl({
         setCalendarMonth(parsedDate);
       }
     } else {
-      onChange(undefined);
+      onChangeCallback(undefined);
     }
-  }, [onChange]);
+  }, [onChangeCallback]);
   const {
     timezone: {
       string: timezoneString
@@ -10189,10 +10257,11 @@ function CalendarDateTimeControl({
       startOfWeek
     }
   } = (0,external_wp_date_namespaceObject.getSettings)();
+  const displayLabel = field.isValid?.required && !hideLabelFromVision ? `${label} (${(0,external_wp_i18n_namespaceObject.__)('Required')})` : label;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
     __nextHasNoMarginBottom: true,
     id: id,
-    label: label,
+    label: displayLabel,
     help: description,
     hideLabelFromVision: hideLabelFromVision,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -10207,8 +10276,12 @@ function CalendarDateTimeControl({
         onMonthChange: setCalendarMonth,
         timeZone: timezoneString || undefined,
         weekStartsOn: startOfWeek
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedInputControl, {
+        ref: inputControlRef,
         __next40pxDefaultSize: true,
+        required: !!field.isValid?.required,
+        onValidate: onValidateControl,
+        customValidity: customValidity,
         type: "datetime-local",
         label: (0,external_wp_i18n_namespaceObject.__)('Date time'),
         hideLabelFromVision: true,
@@ -10228,7 +10301,6 @@ function DateTime({
   const {
     id,
     label,
-    description,
     getValue,
     setValue
   } = field;
@@ -10236,10 +10308,6 @@ function DateTime({
     item: data
   });
   const onChangeRelativeDateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
-    item: data,
-    value: newValue
-  })), [data, onChange, setValue]);
-  const onChangeCalendarDateTimeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
     item: data,
     value: newValue
   })), [data, onChange, setValue]);
@@ -10255,11 +10323,9 @@ function DateTime({
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CalendarDateTimeControl, {
-    id: id,
-    value: typeof value === 'string' ? value : undefined,
-    onChange: onChangeCalendarDateTimeControl,
-    label: label,
-    description: description,
+    data: data,
+    field: field,
+    onChange: onChange,
     hideLabelFromVision: hideLabelFromVision
   });
 }
@@ -11134,7 +11200,7 @@ function DateControl({
 
 
 const {
-  ValidatedInputControl
+  ValidatedInputControl: validated_input_ValidatedInputControl
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ValidatedText({
   data,
@@ -11175,7 +11241,7 @@ function ValidatedText({
     }
     setCustomValidity(undefined);
   }, [data, field, isValid, setValue]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedInputControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(validated_input_ValidatedInputControl, {
     required: !!isValid?.required,
     onValidate: onValidateControl,
     customValidity: customValidity,
