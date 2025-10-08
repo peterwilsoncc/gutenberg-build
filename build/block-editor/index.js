@@ -31986,6 +31986,314 @@ function addAssignedTextAlign(props, blockType, attributes) {
   return props;
 }
 
+;// ./packages/block-editor/build-module/utils/fit-text-utils.js
+/**
+ * Shared utility functions for fit text functionality.
+ * Uses callback-based approach for maximum code reuse between editor and frontend.
+ */
+
+/**
+ * Generate CSS rule for single text element.
+ *
+ * @param {string} elementSelector CSS selector for the text element
+ * @param {number} fontSize        Font size in pixels
+ * @return {string} CSS rule string
+ */
+function generateCSSRule(elementSelector, fontSize) {
+  return `${elementSelector} { font-size: ${fontSize}px !important; }`;
+}
+
+/**
+ * Find optimal font size using simple binary search between 5-600px.
+ *
+ * @param {HTMLElement} textElement     The text element
+ * @param {string}      elementSelector CSS selector for the text element
+ * @param {Function}    applyStylesFn   Function to apply test styles
+ * @return {number} Optimal font size
+ */
+function findOptimalFontSize(textElement, elementSelector, applyStylesFn) {
+  const alreadyHasScrollableHeight = textElement.scrollHeight > textElement.clientHeight;
+  let minSize = 5;
+  let maxSize = 600;
+  let bestSize = minSize;
+  while (minSize <= maxSize) {
+    const midSize = Math.floor((minSize + maxSize) / 2);
+    applyStylesFn(generateCSSRule(elementSelector, midSize));
+    const fitsWidth = textElement.scrollWidth <= textElement.clientWidth;
+    const fitsHeight = alreadyHasScrollableHeight || textElement.scrollHeight <= textElement.clientHeight;
+    if (fitsWidth && fitsHeight) {
+      bestSize = midSize;
+      minSize = midSize + 1;
+    } else {
+      maxSize = midSize - 1;
+    }
+  }
+  return bestSize;
+}
+
+/**
+ * Complete fit text optimization for a single text element.
+ * Handles the full flow using callbacks for style management.
+ *
+ * @param {HTMLElement} textElement     The text element (paragraph, heading, etc.)
+ * @param {string}      elementSelector CSS selector for the text element
+ * @param {Function}    applyStylesFn   Function to apply CSS styles (pass empty string to clear)
+ */
+function optimizeFitText(textElement, elementSelector, applyStylesFn) {
+  if (!textElement) {
+    return;
+  }
+  applyStylesFn('');
+  const optimalSize = findOptimalFontSize(textElement, elementSelector, applyStylesFn);
+  const cssRule = generateCSSRule(elementSelector, optimalSize);
+  applyStylesFn(cssRule);
+}
+
+;// ./packages/block-editor/build-module/hooks/fit-text.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const FIT_TEXT_SUPPORT_KEY = 'typography.fitText';
+
+/**
+ * Filters registered block settings, extending attributes to include
+ * the `fitText` attribute.
+ *
+ * @param {Object} settings Original block settings.
+ * @return {Object} Filtered block settings.
+ */
+function fit_text_addAttributes(settings) {
+  if (!(0,external_wp_blocks_namespaceObject.hasBlockSupport)(settings, FIT_TEXT_SUPPORT_KEY)) {
+    return settings;
+  }
+
+  // Allow blocks to specify their own attribute definition.
+  if (settings.attributes?.fitText) {
+    return settings;
+  }
+
+  // Add fitText attribute.
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      fitText: {
+        type: 'boolean'
+      }
+    }
+  };
+}
+
+/**
+ * Custom hook to handle fit text functionality in the editor.
+ *
+ * @param {Object}   props          Component props.
+ * @param {?boolean} props.fitText  Fit text attribute.
+ * @param {string}   props.name     Block name.
+ * @param {string}   props.clientId Block client ID.
+ */
+function useFitText({
+  fitText,
+  name,
+  clientId
+}) {
+  const hasFitTextSupport = (0,external_wp_blocks_namespaceObject.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
+  const blockElement = useBlockElement(clientId);
+
+  // Monitor block attribute changes
+  // Any attribute may change the available space.
+  const blockAttributes = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!clientId) {
+      return;
+    }
+    return select(store).getBlockAttributes(clientId);
+  }, [clientId]);
+  const applyFitText = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    if (!blockElement || !hasFitTextSupport || !fitText) {
+      return;
+    }
+
+    // Get or create style element with unique ID
+    const styleId = `fit-text-${clientId}`;
+    let styleElement = blockElement.ownerDocument.getElementById(styleId);
+    if (!styleElement) {
+      styleElement = blockElement.ownerDocument.createElement('style');
+      styleElement.id = styleId;
+      blockElement.ownerDocument.head.appendChild(styleElement);
+    }
+    const blockSelector = `#block-${clientId}`;
+    const applyStylesFn = css => {
+      styleElement.textContent = css;
+    };
+    optimizeFitText(blockElement, blockSelector, applyStylesFn);
+  }, [blockElement, clientId, hasFitTextSupport, fitText]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!fitText || !blockElement || !clientId || !hasFitTextSupport) {
+      return;
+    }
+
+    // Apply initially
+    applyFitText();
+
+    // Store current element value for cleanup
+    const currentElement = blockElement;
+
+    // Watch for size changes
+    let resizeObserver;
+    if (window.ResizeObserver && currentElement.parentElement) {
+      resizeObserver = new window.ResizeObserver(applyFitText);
+      resizeObserver.observe(currentElement.parentElement);
+    }
+
+    // Cleanup function
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+      const styleId = `fit-text-${clientId}`;
+      const styleElement = currentElement.ownerDocument.getElementById(styleId);
+      if (styleElement) {
+        styleElement.remove();
+      }
+    };
+  }, [fitText, clientId, applyFitText, blockElement, hasFitTextSupport]);
+
+  // Trigger fit text recalculation when content changes
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (fitText && blockElement && hasFitTextSupport) {
+      // Small delay to ensure DOM has updated after content changes
+      const timer = setTimeout(() => {
+        if (blockElement) {
+          applyFitText();
+        }
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [blockAttributes, fitText, applyFitText, blockElement, hasFitTextSupport]);
+}
+
+/**
+ * Fit text control component for the typography panel.
+ *
+ * @param {Object}   props               Component props.
+ * @param {string}   props.clientId      Block client ID.
+ * @param {Function} props.setAttributes Function to set block attributes.
+ * @param {string}   props.name          Block name.
+ * @param {boolean}  props.fitText       Whether fit text is enabled.
+ */
+function FitTextControl({
+  clientId,
+  fitText = false,
+  setAttributes,
+  name
+}) {
+  if (!(0,external_wp_blocks_namespaceObject.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls, {
+    group: "typography",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => fitText,
+      label: (0,external_wp_i18n_namespaceObject.__)('Fit text'),
+      onDeselect: () => setAttributes({
+        fitText: undefined
+      }),
+      resetAllFilter: () => ({
+        fitText: undefined
+      }),
+      panelId: clientId,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Fit text'),
+        checked: fitText,
+        onChange: () => setAttributes({
+          fitText: !fitText || undefined
+        }),
+        help: fitText ? (0,external_wp_i18n_namespaceObject.__)('Text will resize to fit its container.') : (0,external_wp_i18n_namespaceObject.__)('Resize text to fit its container.')
+      })
+    })
+  });
+}
+
+/**
+ * Override props applied to the block element on save.
+ *
+ * @param {Object} props      Additional props applied to the block element.
+ * @param {Object} blockType  Block type.
+ * @param {Object} attributes Block attributes.
+ * @return {Object} Filtered props applied to the block element.
+ */
+function fit_text_addSaveProps(props, blockType, attributes) {
+  if (!(0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, FIT_TEXT_SUPPORT_KEY)) {
+    return props;
+  }
+  const {
+    fitText
+  } = attributes;
+  if (!fitText) {
+    return props;
+  }
+
+  // Add CSS class for frontend detection and styling
+  const className = props.className ? `${props.className} has-fit-text` : 'has-fit-text';
+  return {
+    ...props,
+    className
+  };
+}
+/**
+ * Override props applied to the block element in the editor.
+ *
+ * @param {Object}  props          Component props including block attributes.
+ * @param {string}  props.name     Block name.
+ * @param {boolean} props.fitText  Whether fit text is enabled.
+ * @param {string}  props.clientId Block client ID.
+ * @return {Object} Filtered props applied to the block element.
+ */
+function fit_text_useBlockProps({
+  name,
+  fitText,
+  clientId
+}) {
+  useFitText({
+    fitText,
+    name,
+    clientId
+  });
+  if (!fitText || !(0,external_wp_blocks_namespaceObject.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
+    return {};
+  }
+  return {
+    className: 'has-fit-text'
+  };
+}
+(0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/fit-text/addAttribute', fit_text_addAttributes);
+const hasFitTextSupport = blockNameOrType => {
+  return (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockNameOrType, FIT_TEXT_SUPPORT_KEY);
+};
+/* harmony default export */ const fit_text = ({
+  useBlockProps: fit_text_useBlockProps,
+  addSaveProps: fit_text_addSaveProps,
+  attributeKeys: ['fitText'],
+  hasSupport: hasFitTextSupport,
+  edit: FitTextControl
+});
+
 ;// ./packages/block-editor/build-module/hooks/typography.js
 /**
  * WordPress dependencies
@@ -32006,6 +32314,7 @@ function addAssignedTextAlign(props, blockType, attributes) {
 
 
 
+
 function omit(object, keys) {
   return Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key)));
 }
@@ -32017,7 +32326,7 @@ const FONT_STYLE_SUPPORT_KEY = 'typography.__experimentalFontStyle';
 const FONT_WEIGHT_SUPPORT_KEY = 'typography.__experimentalFontWeight';
 const WRITING_MODE_SUPPORT_KEY = 'typography.__experimentalWritingMode';
 const TYPOGRAPHY_SUPPORT_KEY = 'typography';
-const TYPOGRAPHY_SUPPORT_KEYS = [LINE_HEIGHT_SUPPORT_KEY, FONT_SIZE_SUPPORT_KEY, FONT_STYLE_SUPPORT_KEY, FONT_WEIGHT_SUPPORT_KEY, FONT_FAMILY_SUPPORT_KEY, TEXT_ALIGN_SUPPORT_KEY, TEXT_COLUMNS_SUPPORT_KEY, TEXT_DECORATION_SUPPORT_KEY, WRITING_MODE_SUPPORT_KEY, TEXT_TRANSFORM_SUPPORT_KEY, LETTER_SPACING_SUPPORT_KEY];
+const TYPOGRAPHY_SUPPORT_KEYS = [LINE_HEIGHT_SUPPORT_KEY, FONT_SIZE_SUPPORT_KEY, FONT_STYLE_SUPPORT_KEY, FONT_WEIGHT_SUPPORT_KEY, FONT_FAMILY_SUPPORT_KEY, TEXT_ALIGN_SUPPORT_KEY, TEXT_COLUMNS_SUPPORT_KEY, TEXT_DECORATION_SUPPORT_KEY, WRITING_MODE_SUPPORT_KEY, TEXT_TRANSFORM_SUPPORT_KEY, LETTER_SPACING_SUPPORT_KEY, FIT_TEXT_SUPPORT_KEY];
 function typography_styleToAttributes(style) {
   const updatedStyle = {
     ...omit(style, ['fontFamily'])
@@ -60079,9 +60388,10 @@ function useCachedTruthy(value) {
 
 
 
-createBlockEditFilter([align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, block_bindings, layout_child, allowed_blocks].filter(Boolean));
-createBlockListBlockFilter([align, text_align, background, style, color, dimensions, duotone, font_family, font_size, border, position, block_style_variation, layout_child]);
-createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class_name, border, color, style, font_family, font_size]);
+
+createBlockEditFilter([align, text_align, hooks_anchor, custom_class_name, style, duotone, fit_text, position, layout, content_lock_ui, block_hooks, block_bindings, layout_child, allowed_blocks].filter(Boolean));
+createBlockListBlockFilter([align, text_align, background, style, color, dimensions, duotone, font_family, font_size, fit_text, border, position, block_style_variation, layout_child]);
+createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class_name, border, fit_text, color, style, font_family, font_size]);
 
 
 

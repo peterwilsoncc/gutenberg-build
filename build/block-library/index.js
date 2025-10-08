@@ -26972,6 +26972,47 @@ const heading_transforms_transforms = {
 };
 /* harmony default export */ const heading_transforms = (heading_transforms_transforms);
 
+;// ./packages/icons/build-module/library/text-color.js
+/* eslint-disable prettier/prettier */
+/**
+ * WordPress dependencies
+ */
+
+
+/* harmony default export */ const text_color = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12.9 6h-2l-4 11h1.9l1.1-3h4.2l1.1 3h1.9L12.9 6zm-2.5 6.5l1.5-4.9 1.7 4.9h-3.2z"
+  })
+}));
+/* eslint-enable */
+
+;// ./packages/block-library/build-module/heading/variations.js
+/**
+ * WordPress dependencies
+ */
+
+
+const heading_variations_variations = [{
+  name: 'Stretchy Heading',
+  title: (0,external_wp_i18n_namespaceObject.__)('Stretchy Heading'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Heading text automatically resizes to fit the container width.'),
+  attributes: {
+    fitText: true
+  },
+  scope: ['inserter'],
+  isActive: blockAttributes => blockAttributes.fitText,
+  icon: text_color,
+  example: {
+    attributes: {
+      content: (0,external_wp_i18n_namespaceObject.__)('This heading will automatically resize to fit its container width.'),
+      fitText: true
+    }
+  }
+}];
+/* harmony default export */ const heading_variations = (heading_variations_variations);
+
 ;// ./packages/block-library/build-module/heading/index.js
 /**
  * WordPress dependencies
@@ -27052,6 +27093,7 @@ const heading_metadata = {
       __experimentalTextTransform: true,
       __experimentalTextDecoration: true,
       __experimentalWritingMode: true,
+      fitText: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -27065,6 +27107,7 @@ const heading_metadata = {
   editorStyle: "wp-block-heading-editor",
   style: "wp-block-heading"
 };
+
 
 
 const {
@@ -27109,7 +27152,8 @@ const heading_settings = {
     };
   },
   edit: heading_edit,
-  save: heading_save_save
+  save: heading_save_save,
+  variations: heading_variations
 };
 const heading_init = () => initBlock({
   name: heading_name,
@@ -44680,6 +44724,7 @@ const {
       __experimentalLetterSpacing: true,
       __experimentalTextTransform: true,
       __experimentalWritingMode: true,
+      fitText: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -44721,6 +44766,31 @@ const paragraph_transforms_transforms = {
   }]
 };
 /* harmony default export */ const paragraph_transforms = (paragraph_transforms_transforms);
+
+;// ./packages/block-library/build-module/paragraph/variations.js
+/**
+ * WordPress dependencies
+ */
+
+
+const paragraph_variations_variations = [{
+  name: 'Stretchy Paragraph',
+  title: (0,external_wp_i18n_namespaceObject.__)('Stretchy Paragraph'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Text automatically resizes to fit the container width.'),
+  attributes: {
+    fitText: true
+  },
+  scope: ['inserter'],
+  isActive: blockAttributes => blockAttributes.fitText,
+  icon: text_color,
+  example: {
+    attributes: {
+      content: (0,external_wp_i18n_namespaceObject.__)('This text will automatically resize to fit its container width.'),
+      fitText: true
+    }
+  }
+}];
+/* harmony default export */ const paragraph_variations = (paragraph_variations_variations);
 
 ;// ./packages/block-library/build-module/paragraph/index.js
 /**
@@ -44802,6 +44872,7 @@ const paragraph_metadata = {
       __experimentalLetterSpacing: true,
       __experimentalTextTransform: true,
       __experimentalWritingMode: true,
+      fitText: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -44815,6 +44886,7 @@ const paragraph_metadata = {
   editorStyle: "wp-block-paragraph-editor",
   style: "wp-block-paragraph"
 };
+
 
 
 const {
@@ -44853,7 +44925,8 @@ const paragraph_settings = {
     };
   },
   edit: paragraph_edit,
-  save: paragraph_save_save
+  save: paragraph_save_save,
+  variations: paragraph_variations
 };
 const paragraph_init = () => initBlock({
   name: paragraph_name,
