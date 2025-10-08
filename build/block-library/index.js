@@ -38506,6 +38506,64 @@ function LeafMoreMenu(props) {
   });
 }
 
+;// ./packages/block-library/build-module/navigation-link/shared/use-entity-binding.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Shared hook for entity binding functionality in Navigation blocks.
+ *
+ * This hook provides common entity binding logic that can be used by both
+ * Navigation Link and Navigation Submenu blocks to maintain feature parity.
+ *
+ * @param {Object} props            - Hook parameters
+ * @param {string} props.clientId   - Block client ID
+ * @param {Object} props.attributes - Block attributes
+ * @return {Object} Hook return value
+ */
+function useEntityBinding({
+  clientId,
+  attributes
+}) {
+  const {
+    updateBlockBindings
+  } = (0,external_wp_blockEditor_namespaceObject.useBlockBindingsUtils)(clientId);
+  const {
+    metadata,
+    id
+  } = attributes;
+
+  // Check if there's a URL binding with the core/entity source
+  const hasUrlBinding = metadata?.bindings?.url?.source === 'core/entity' && !!id;
+  const clearBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    // Only clear if there's actually a valid binding to clear
+    if (hasUrlBinding) {
+      // Remove the URL binding by setting it to undefined
+      updateBlockBindings({
+        url: undefined
+      });
+    }
+  }, [hasUrlBinding, updateBlockBindings]);
+  const createBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    updateBlockBindings({
+      url: {
+        source: 'core/entity',
+        args: {
+          key: 'url'
+        }
+      }
+    });
+  }, [updateBlockBindings]);
+  return {
+    hasUrlBinding,
+    clearBinding,
+    createBinding
+  };
+}
+
 ;// ./packages/icons/build-module/library/plus.js
 /* eslint-disable prettier/prettier */
 /**
@@ -39261,6 +39319,19 @@ const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}
     attributes.type = type;
   }
   setAttributes(attributes);
+
+  // Return metadata about the final state for binding decisions.
+  // We need to distinguish between:
+  // 1. Property not set in attributes (use blockAttributes fallback)
+  // 2. Property explicitly set to undefined (means "remove this")
+  // Using 'in' operator checks if property exists, even if undefined.
+  // This is critical for severing: attributes.id = undefined means "remove the ID",
+  // not "keep the old ID from blockAttributes".
+  const finalId = 'id' in attributes ? attributes.id : blockAttributes.id;
+  const finalKind = 'kind' in attributes ? attributes.kind : blockAttributes.kind;
+  return {
+    isEntityLink: !!finalId && finalKind !== 'custom'
+  };
 };
 
 ;// ./packages/block-library/build-module/navigation/edit/menu-inspector-controls.js
@@ -39299,6 +39370,15 @@ function AdditionalBlockContent({
   const supportsLinkControls = BLOCKS_WITH_LINK_UI_SUPPORT?.includes(insertedBlock?.name);
   const blockWasJustInserted = insertedBlock?.clientId === block.clientId;
   const showLinkControls = supportsLinkControls && blockWasJustInserted;
+
+  // Get binding utilities for the inserted block
+  const {
+    createBinding,
+    clearBinding
+  } = useEntityBinding({
+    clientId: insertedBlock?.clientId,
+    attributes: insertedBlock?.attributes || {}
+  });
   if (!showLinkControls) {
     return null;
   }
@@ -39352,7 +39432,19 @@ function AdditionalBlockContent({
       cleanupInsertedBlock();
     },
     onChange: updatedValue => {
-      updateAttributes(updatedValue, setInsertedBlockAttributes(insertedBlock?.clientId), insertedBlock?.attributes);
+      // updateAttributes determines the final state and returns metadata
+      const {
+        isEntityLink
+      } = updateAttributes(updatedValue, setInsertedBlockAttributes(insertedBlock?.clientId), insertedBlock?.attributes);
+
+      // Handle URL binding based on the final computed state
+      // Only create bindings for entity links (posts, pages, taxonomies)
+      // Never create bindings for custom links (manual URLs)
+      if (isEntityLink) {
+        createBinding();
+      } else {
+        clearBinding();
+      }
       setInsertedBlock(null);
     }
   });
@@ -40991,64 +41083,6 @@ const navigation_init = () => initBlock({
   settings: navigation_settings
 });
 
-;// ./packages/block-library/build-module/navigation-link/shared/use-entity-binding.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Shared hook for entity binding functionality in Navigation blocks.
- *
- * This hook provides common entity binding logic that can be used by both
- * Navigation Link and Navigation Submenu blocks to maintain feature parity.
- *
- * @param {Object} props            - Hook parameters
- * @param {string} props.clientId   - Block client ID
- * @param {Object} props.attributes - Block attributes
- * @return {Object} Hook return value
- */
-function useEntityBinding({
-  clientId,
-  attributes
-}) {
-  const {
-    updateBlockBindings
-  } = (0,external_wp_blockEditor_namespaceObject.useBlockBindingsUtils)(clientId);
-  const {
-    metadata,
-    id
-  } = attributes;
-
-  // Check if there's a URL binding with the core/entity source
-  const hasUrlBinding = metadata?.bindings?.url?.source === 'core/entity' && !!id;
-  const clearBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
-    // Only clear if there's actually a valid binding to clear
-    if (hasUrlBinding) {
-      // Remove the URL binding by setting it to undefined
-      updateBlockBindings({
-        url: undefined
-      });
-    }
-  }, [hasUrlBinding, updateBlockBindings]);
-  const createBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
-    updateBlockBindings({
-      url: {
-        source: 'core/entity',
-        args: {
-          key: 'url'
-        }
-      }
-    });
-  }, [updateBlockBindings]);
-  return {
-    hasUrlBinding,
-    clearBinding,
-    createBinding
-  };
-}
-
 ;// ./packages/block-library/build-module/navigation-link/shared/controls.js
 /**
  * WordPress dependencies
@@ -41756,13 +41790,17 @@ function NavigationLinkEdit({
           anchor: popoverAnchor,
           onRemove: removeLink,
           onChange: updatedValue => {
-            updateAttributes(updatedValue, setAttributes, attributes);
+            const {
+              isEntityLink
+            } = updateAttributes(updatedValue, setAttributes, attributes);
 
-            // Handle URL binding
-            if (!updatedValue?.id) {
-              clearBinding();
-            } else {
+            // Handle URL binding based on the final computed state
+            // Only create bindings for entity links (posts, pages, taxonomies)
+            // Never create bindings for custom links (manual URLs)
+            if (isEntityLink) {
               createBinding();
+            } else {
+              clearBinding();
             }
           }
         })]
@@ -42536,13 +42574,18 @@ function NavigationSubmenuEdit({
             (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Link removed.'), 'assertive');
           },
           onChange: updatedValue => {
-            updateAttributes(updatedValue, setAttributes, attributes);
+            // updateAttributes determines the final state and returns metadata
+            const {
+              isEntityLink
+            } = updateAttributes(updatedValue, setAttributes, attributes);
 
-            // Handle URL binding
-            if (!updatedValue?.id) {
-              clearBinding();
-            } else {
+            // Handle URL binding based on the final computed state
+            // Only create bindings for entity links (posts, pages, taxonomies)
+            // Never create bindings for custom links (manual URLs)
+            if (isEntityLink) {
               createBinding();
+            } else {
+              clearBinding();
             }
           }
         })]
