@@ -11624,13 +11624,12 @@ const isBlockHidden = (state, clientId) => {
 /**
  * Returns true if the current spotlighted block matches the block clientId.
  *
- * @param {Object} state    Global application state.
- * @param {string} clientId The block to check.
+ * @param {Object} state Global application state.
  *
  * @return {boolean} Whether the block is currently spotlighted.
  */
-function private_selectors_hasBlockSpotlight(state, clientId) {
-  return state.hasBlockSpotlight === clientId;
+function private_selectors_hasBlockSpotlight(state) {
+  return !!state.hasBlockSpotlight;
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.js
@@ -46809,8 +46808,7 @@ function use_block_props_useBlockProps(props = {}, {
     defaultClassName,
     isSectionBlock,
     canMove,
-    isBlockHidden,
-    hasBlockSpotlight
+    isBlockHidden
   } = (0,external_wp_element_namespaceObject.useContext)(PrivateBlockContext);
 
   // translators: %s: Type of block (i.e. Text, Image etc)
@@ -46877,8 +46875,7 @@ function use_block_props_useBlockProps(props = {}, {
       'has-editable-outline': hasEditableOutline,
       'has-negative-margin': hasNegativeMargin,
       'is-content-locked-temporarily-editing-as-blocks': isTemporarilyEditingAsBlocks,
-      'is-block-hidden': isBlockHidden,
-      'is-spotlighted': hasBlockSpotlight
+      'is-block-hidden': isBlockHidden
     }, className, props.className, wrapperProps.className, defaultClassName),
     style: {
       ...wrapperProps.style,
@@ -47340,7 +47337,6 @@ function BlockListBlockProvider(props) {
       getBlockAttributes,
       canRemoveBlock,
       canMoveBlock,
-      hasBlockSpotlight,
       getSettings,
       getTemporarilyEditingAsBlocks,
       getBlockEditingMode,
@@ -47447,8 +47443,7 @@ function BlockListBlockProvider(props) {
       isEditingDisabled: blockEditingMode === 'disabled',
       hasEditableOutline: blockEditingMode !== 'disabled' && getBlockEditingMode(rootClientId) === 'disabled',
       originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
-      isBlockHidden: _isBlockHidden(clientId),
-      hasBlockSpotlight: hasBlockSpotlight(clientId)
+      isBlockHidden: _isBlockHidden(clientId)
     };
   }, [clientId, rootClientId]);
   const {
@@ -47488,8 +47483,7 @@ function BlockListBlockProvider(props) {
     className,
     defaultClassName,
     originalBlockClientId,
-    isBlockHidden,
-    hasBlockSpotlight
+    isBlockHidden
   } = selectedProps;
 
   // Users of the editor.BlockListBlock filter used to be able to
@@ -47537,8 +47531,7 @@ function BlockListBlockProvider(props) {
     originalBlockClientId,
     themeSupportsLayout,
     canMove,
-    isBlockHidden,
-    hasBlockSpotlight
+    isBlockHidden
   };
   if (isBlockHidden && !isSelected && !isMultiSelected && !hasChildSelected) {
     return null;
@@ -50220,7 +50213,8 @@ function Root({
     const {
       getSettings,
       getTemporarilyEditingAsBlocks,
-      isTyping
+      isTyping,
+      hasBlockSpotlight
     } = unlock(select(store));
     const {
       outlineMode,
@@ -50228,7 +50222,7 @@ function Root({
     } = getSettings();
     return {
       isOutlineMode: outlineMode && !isTyping(),
-      isFocusMode: focusMode,
+      isFocusMode: focusMode || hasBlockSpotlight(),
       temporarilyEditingAsBlocks: getTemporarilyEditingAsBlocks()
     };
   }, []);
