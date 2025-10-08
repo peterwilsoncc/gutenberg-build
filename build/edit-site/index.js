@@ -36776,6 +36776,24 @@ function DateTime({
   });
 }
 
+;// ./packages/icons/build-module/library/error.js
+/* eslint-disable prettier/prettier */
+/**
+ * WordPress dependencies
+ */
+
+
+/* harmony default export */ const error = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z"
+  })
+}));
+/* eslint-enable */
+
 ;// ./packages/dataviews/node_modules/date-fns/startOfMonth.js
 
 
@@ -36825,9 +36843,12 @@ function startOfMonth(date, options) {
 
 
 
+
 /**
  * External dependencies
  */
+
+
 
 
 /**
@@ -36916,33 +36937,128 @@ const formatDate = date => {
   }
   return typeof date === 'string' ? date : format(date, 'yyyy-MM-dd');
 };
-function CalendarDateControl({
-  id,
+function ValidatedDateControl({
   value,
-  onChange,
-  label,
-  hideLabelFromVision,
-  className
+  field,
+  data,
+  setValue,
+  inputRefs,
+  isTouched,
+  setIsTouched,
+  children
 }) {
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const onValidate = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    // Check custom validation (only if value exists)
+    if (newValue) {
+      const customMessage = field.isValid?.custom?.(cjs_default()(data, setValue({
+        item: data,
+        value: newValue
+      })), field);
+      if (customMessage) {
+        setCustomValidity({
+          type: 'invalid',
+          message: customMessage
+        });
+        return;
+      }
+    }
+
+    // Check HTML5 validity on all refs
+    const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
+    for (const ref of refs) {
+      const input = ref.current;
+      if (input && !input.validity.valid) {
+        setCustomValidity({
+          type: 'invalid',
+          message: input.validationMessage
+        });
+        return;
+      }
+    }
+
+    // No errors
+    setCustomValidity(undefined);
+  }, [data, field, setValue, inputRefs]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (isTouched) {
+      const timeoutId = setTimeout(() => {
+        onValidate(value);
+      }, 0);
+      return () => clearTimeout(timeoutId);
+    }
+    return undefined;
+  }, [isTouched, value, onValidate]);
+  const onBlur = event => {
+    if (isTouched) {
+      return;
+    }
+
+    // Only consider "blurred from the component" if focus has fully left the wrapping div.
+    // This prevents unnecessary blurs from components with multiple focusable elements.
+    if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
+      setIsTouched(true);
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    onBlur: onBlur,
+    children: [children, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      "aria-live": "polite",
+      children: customValidity && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
+        className: dist_clsx('components-validated-control__indicator', 'is-invalid'),
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+          className: "components-validated-control__indicator-icon",
+          icon: error,
+          size: 16,
+          fill: "currentColor"
+        }), customValidity.message]
+      })
+    })]
+  });
+}
+function CalendarDateControl({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    label,
+    setValue,
+    getValue
+  } = field;
   const [selectedPresetId, setSelectedPresetId] = (0,external_wp_element_namespaceObject.useState)(null);
+  const fieldValue = getValue({
+    item: data
+  });
+  const value = typeof fieldValue === 'string' ? fieldValue : undefined;
   const [calendarMonth, setCalendarMonth] = (0,external_wp_element_namespaceObject.useState)(() => {
     const parsedDate = parseDate(value);
     return parsedDate || new Date(); // Default to current month
   });
+  const [isTouched, setIsTouched] = (0,external_wp_element_namespaceObject.useState)(false);
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const onChangeCallback = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
   const onSelectDate = (0,external_wp_element_namespaceObject.useCallback)(newDate => {
     const dateValue = newDate ? format(newDate, 'yyyy-MM-dd') : undefined;
-    onChange(dateValue);
+    onChangeCallback(dateValue);
     setSelectedPresetId(null);
-  }, [onChange]);
+    setIsTouched(true);
+  }, [onChangeCallback]);
   const handlePresetClick = (0,external_wp_element_namespaceObject.useCallback)(preset => {
     const presetDate = preset.getValue();
     const dateValue = formatDate(presetDate);
     setCalendarMonth(presetDate);
-    onChange(dateValue);
+    onChangeCallback(dateValue);
     setSelectedPresetId(preset.id);
-  }, [onChange]);
+    setIsTouched(true);
+  }, [onChangeCallback]);
   const handleManualDateChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
-    onChange(newValue);
+    onChangeCallback(newValue);
     if (newValue) {
       const parsedDate = parseDate(newValue);
       if (parsedDate) {
@@ -36950,7 +37066,8 @@ function CalendarDateControl({
       }
     }
     setSelectedPresetId(null);
-  }, [onChange]);
+    setIsTouched(true);
+  }, [onChangeCallback]);
   const {
     timezone: {
       string: timezoneString
@@ -36959,66 +37076,95 @@ function CalendarDateControl({
       startOfWeek
     }
   } = (0,external_wp_date_namespaceObject.getSettings)();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-    __nextHasNoMarginBottom: true,
-    id: id,
-    className: className,
-    label: label,
-    hideLabelFromVision: hideLabelFromVision,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: 4,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        spacing: 2,
-        wrap: true,
-        justify: "flex-start",
-        children: [DATE_PRESETS.map(preset => {
-          const isSelected = selectedPresetId === preset.id;
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+  const displayLabel = field.isValid?.required ? `${label} (${(0,external_wp_i18n_namespaceObject.__)('Required')})` : label;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedDateControl, {
+    value: value,
+    field: field,
+    data: data,
+    setValue: setValue,
+    inputRefs: validityTargetRef,
+    isTouched: isTouched,
+    setIsTouched: setIsTouched,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+      __nextHasNoMarginBottom: true,
+      id: id,
+      className: "dataviews-controls__date",
+      label: displayLabel,
+      hideLabelFromVision: hideLabelFromVision,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 4,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          spacing: 2,
+          wrap: true,
+          justify: "flex-start",
+          children: [DATE_PRESETS.map(preset => {
+            const isSelected = selectedPresetId === preset.id;
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              className: "dataviews-controls__date-preset",
+              variant: "tertiary",
+              isPressed: isSelected,
+              size: "small",
+              onClick: () => handlePresetClick(preset),
+              children: preset.label
+            }, preset.id);
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             className: "dataviews-controls__date-preset",
             variant: "tertiary",
-            isPressed: isSelected,
+            isPressed: !selectedPresetId,
             size: "small",
-            onClick: () => handlePresetClick(preset),
-            children: preset.label
-          }, preset.id);
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          className: "dataviews-controls__date-preset",
-          variant: "tertiary",
-          isPressed: !selectedPresetId,
-          size: "small",
-          disabled: !!selectedPresetId,
-          accessibleWhenDisabled: false,
-          children: (0,external_wp_i18n_namespaceObject.__)('Custom')
+            disabled: !!selectedPresetId,
+            accessibleWhenDisabled: false,
+            children: (0,external_wp_i18n_namespaceObject.__)('Custom')
+          })]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+          __next40pxDefaultSize: true,
+          ref: validityTargetRef,
+          type: "date",
+          label: (0,external_wp_i18n_namespaceObject.__)('Date'),
+          hideLabelFromVision: true,
+          value: value,
+          onChange: handleManualDateChange,
+          required: !!field.isValid?.required
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date_DateCalendar, {
+          style: {
+            width: '100%'
+          },
+          selected: value ? parseDate(value) || undefined : undefined,
+          onSelect: onSelectDate,
+          month: calendarMonth,
+          onMonthChange: setCalendarMonth,
+          timeZone: timezoneString || undefined,
+          weekStartsOn: startOfWeek
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-        __next40pxDefaultSize: true,
-        type: "date",
-        label: (0,external_wp_i18n_namespaceObject.__)('Date'),
-        hideLabelFromVision: true,
-        value: value,
-        onChange: handleManualDateChange
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date_DateCalendar, {
-        style: {
-          width: '100%'
-        },
-        selected: value ? parseDate(value) || undefined : undefined,
-        onSelect: onSelectDate,
-        month: calendarMonth,
-        onMonthChange: setCalendarMonth,
-        timeZone: timezoneString || undefined,
-        weekStartsOn: startOfWeek
-      })]
+      })
     })
   });
 }
 function CalendarDateRangeControl({
-  id,
-  value,
+  data,
+  field,
   onChange,
-  label,
-  hideLabelFromVision,
-  className
+  hideLabelFromVision
 }) {
+  const {
+    id,
+    label,
+    getValue,
+    setValue
+  } = field;
+  let value;
+  const fieldValue = getValue({
+    item: data
+  });
+  if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every(date => typeof date === 'string')) {
+    value = fieldValue;
+  }
+  const onChangeCallback = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    onChange(setValue({
+      item: data,
+      value: newValue
+    }));
+  }, [data, onChange, setValue]);
   const [selectedPresetId, setSelectedPresetId] = (0,external_wp_element_namespaceObject.useState)(null);
   const selectedRange = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!value) {
@@ -37036,23 +37182,28 @@ function CalendarDateRangeControl({
   const [calendarMonth, setCalendarMonth] = (0,external_wp_element_namespaceObject.useState)(() => {
     return selectedRange.from || new Date();
   });
+  const [isTouched, setIsTouched] = (0,external_wp_element_namespaceObject.useState)(false);
+  const fromInputRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const toInputRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const updateDateRange = (0,external_wp_element_namespaceObject.useCallback)((fromDate, toDate) => {
     if (fromDate && toDate) {
-      onChange([formatDate(fromDate), formatDate(toDate)]);
+      onChangeCallback([formatDate(fromDate), formatDate(toDate)]);
     } else if (!fromDate && !toDate) {
-      onChange(undefined);
+      onChangeCallback(undefined);
     }
     // Do nothing if only one date is set - wait for both
-  }, [onChange]);
+  }, [onChangeCallback]);
   const onSelectCalendarRange = (0,external_wp_element_namespaceObject.useCallback)(newRange => {
     updateDateRange(newRange?.from, newRange?.to);
     setSelectedPresetId(null);
+    setIsTouched(true);
   }, [updateDateRange]);
   const handlePresetClick = (0,external_wp_element_namespaceObject.useCallback)(preset => {
     const [startDate, endDate] = preset.getValue();
     setCalendarMonth(startDate);
     updateDateRange(startDate, endDate);
     setSelectedPresetId(preset.id);
+    setIsTouched(true);
   }, [updateDateRange]);
   const handleManualDateChange = (0,external_wp_element_namespaceObject.useCallback)((fromOrTo, newValue) => {
     const [currentFrom, currentTo] = value || [undefined, undefined];
@@ -37066,70 +37217,85 @@ function CalendarDateRangeControl({
       }
     }
     setSelectedPresetId(null);
+    setIsTouched(true);
   }, [value, updateDateRange]);
   const {
     timezone,
     l10n
   } = (0,external_wp_date_namespaceObject.getSettings)();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-    __nextHasNoMarginBottom: true,
-    id: id,
-    className: className,
-    label: label,
-    hideLabelFromVision: hideLabelFromVision,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: 4,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        spacing: 2,
-        wrap: true,
-        justify: "flex-start",
-        children: [DATE_RANGE_PRESETS.map(preset => {
-          const isSelected = selectedPresetId === preset.id;
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+  const displayLabel = field.isValid?.required ? `${label} (${(0,external_wp_i18n_namespaceObject.__)('Required')})` : label;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedDateControl, {
+    value: value,
+    field: field,
+    data: data,
+    setValue: setValue,
+    inputRefs: [fromInputRef, toInputRef],
+    isTouched: isTouched,
+    setIsTouched: setIsTouched,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+      __nextHasNoMarginBottom: true,
+      id: id,
+      className: "dataviews-controls__date",
+      label: displayLabel,
+      hideLabelFromVision: hideLabelFromVision,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 4,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          spacing: 2,
+          wrap: true,
+          justify: "flex-start",
+          children: [DATE_RANGE_PRESETS.map(preset => {
+            const isSelected = selectedPresetId === preset.id;
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              className: "dataviews-controls__date-preset",
+              variant: "tertiary",
+              isPressed: isSelected,
+              size: "small",
+              onClick: () => handlePresetClick(preset),
+              children: preset.label
+            }, preset.id);
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             className: "dataviews-controls__date-preset",
             variant: "tertiary",
-            isPressed: isSelected,
+            isPressed: !selectedPresetId,
             size: "small",
-            onClick: () => handlePresetClick(preset),
-            children: preset.label
-          }, preset.id);
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          className: "dataviews-controls__date-preset",
-          variant: "tertiary",
-          isPressed: !selectedPresetId,
-          size: "small",
-          accessibleWhenDisabled: false,
-          disabled: !!selectedPresetId,
-          children: (0,external_wp_i18n_namespaceObject.__)('Custom')
+            accessibleWhenDisabled: false,
+            disabled: !!selectedPresetId,
+            children: (0,external_wp_i18n_namespaceObject.__)('Custom')
+          })]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          spacing: 2,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+            __next40pxDefaultSize: true,
+            ref: fromInputRef,
+            type: "date",
+            label: (0,external_wp_i18n_namespaceObject.__)('From'),
+            hideLabelFromVision: true,
+            value: value?.[0],
+            onChange: newValue => handleManualDateChange('from', newValue),
+            required: !!field.isValid?.required
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+            __next40pxDefaultSize: true,
+            ref: toInputRef,
+            type: "date",
+            label: (0,external_wp_i18n_namespaceObject.__)('To'),
+            hideLabelFromVision: true,
+            value: value?.[1],
+            onChange: newValue => handleManualDateChange('to', newValue),
+            required: !!field.isValid?.required
+          })]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DateRangeCalendar, {
+          style: {
+            width: '100%'
+          },
+          selected: selectedRange,
+          onSelect: onSelectCalendarRange,
+          month: calendarMonth,
+          onMonthChange: setCalendarMonth,
+          timeZone: timezone.string || undefined,
+          weekStartsOn: l10n.startOfWeek
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        spacing: 2,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-          __next40pxDefaultSize: true,
-          type: "date",
-          label: (0,external_wp_i18n_namespaceObject.__)('From'),
-          hideLabelFromVision: true,
-          value: value?.[0],
-          onChange: newValue => handleManualDateChange('from', newValue)
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-          __next40pxDefaultSize: true,
-          type: "date",
-          label: (0,external_wp_i18n_namespaceObject.__)('To'),
-          hideLabelFromVision: true,
-          value: value?.[1],
-          onChange: newValue => handleManualDateChange('to', newValue)
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DateRangeCalendar, {
-        style: {
-          width: '100%'
-        },
-        selected: selectedRange,
-        onSelect: onSelectCalendarRange,
-        month: calendarMonth,
-        onMonthChange: setCalendarMonth,
-        timeZone: timezone.string || undefined,
-        weekStartsOn: l10n.startOfWeek
-      })]
+      })
     })
   });
 }
@@ -37155,16 +37321,6 @@ function DateControl({
       value: newValue
     }));
   }, [data, onChange, setValue]);
-  const onChangeCalendarDateRangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
-    onChange(setValue({
-      item: data,
-      value: newValue
-    }));
-  }, [data, onChange, setValue]);
-  const onChangeCalendarDateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
-    item: data,
-    value: newValue
-  })), [data, onChange, setValue]);
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControl, {
       className: "dataviews-controls__date",
@@ -37177,26 +37333,17 @@ function DateControl({
     });
   }
   if (operator === OPERATOR_BETWEEN) {
-    let dateRangeValue;
-    if (Array.isArray(value) && value.length === 2 && value.every(date => typeof date === 'string')) {
-      // Ensure the value is expected format
-      dateRangeValue = value;
-    }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CalendarDateRangeControl, {
-      className: "dataviews-controls__date",
-      id: id,
-      value: dateRangeValue,
-      onChange: onChangeCalendarDateRangeControl,
-      label: label,
+      data: data,
+      field: field,
+      onChange: onChange,
       hideLabelFromVision: hideLabelFromVision
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CalendarDateControl, {
-    className: "dataviews-controls__date",
-    id: id,
-    value: typeof value === 'string' ? value : undefined,
-    onChange: onChangeCalendarDateControl,
-    label: label,
+    data: data,
+    field: field,
+    onChange: onChange,
     hideLabelFromVision: hideLabelFromVision
   });
 }
