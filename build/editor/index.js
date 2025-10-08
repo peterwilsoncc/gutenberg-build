@@ -36506,6 +36506,7 @@ function Thread({
         children: (0,external_wp_i18n_namespaceObject.__)('Original block deleted.')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
         thread: thread,
+        isExpanded: isSelected,
         onEdit: (params = {}) => {
           const {
             status
@@ -36524,6 +36525,7 @@ function Thread({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
           thread: reply,
           parent: thread,
+          isExpanded: isSelected,
           onEdit: onEditComment,
           onDelete: onCommentDelete
         })
@@ -36544,6 +36546,7 @@ function Thread({
       }), !isSelected && lastReply && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
         thread: lastReply,
         parent: thread,
+        isExpanded: isSelected,
         onEdit: onEditComment,
         onDelete: onCommentDelete
       }), isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -36588,6 +36591,7 @@ function Thread({
 const CommentBoard = ({
   thread,
   parent,
+  isExpanded,
   onEdit,
   onDelete
 }) => {
@@ -36644,7 +36648,7 @@ const CommentBoard = ({
         name: thread?.author_name,
         date: thread?.date,
         userId: thread?.author
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+      }), isExpanded && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         className: "editor-collab-sidebar-panel__comment-status",
         onClick: event => {
           // Prevent the thread from being selected.
