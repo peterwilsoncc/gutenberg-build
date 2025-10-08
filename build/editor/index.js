@@ -36209,8 +36209,9 @@ function Thread({
 }) {
   const {
     toggleBlockHighlight,
-    selectBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+    selectBlock,
+    toggleBlockSpotlight
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
   const relatedBlockElement = useBlockElement(thread.blockClientId);
   const debouncedToggleBlockHighlight = (0,external_wp_compose_namespaceObject.useDebounce)(toggleBlockHighlight, 50);
   const onMouseEnter = () => {
@@ -36224,10 +36225,12 @@ function Thread({
     setSelectedThread(thread.id);
     // pass `null` as the second parameter to prevent focusing the block.
     selectBlock(thread.blockClientId, null);
+    toggleBlockSpotlight(thread.blockClientId, true);
   };
   const unselectThread = () => {
     setSelectedThread(null);
     setShowCommentBoard(false);
+    toggleBlockSpotlight(thread.blockClientId, false);
   };
   const replies = thread?.reply;
   const lastReply = !!replies.length ? replies[replies.length - 1] : undefined;

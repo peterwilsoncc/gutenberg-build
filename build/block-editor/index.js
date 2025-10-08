@@ -7553,6 +7553,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getTemporarilyEditingFocusModeToRevert: () => (getTemporarilyEditingFocusModeToRevert),
   getZoomLevel: () => (getZoomLevel),
   hasAllowedPatterns: () => (hasAllowedPatterns),
+  hasBlockSpotlight: () => (private_selectors_hasBlockSpotlight),
   isBlockHidden: () => (isBlockHidden),
   isBlockInterfaceHidden: () => (private_selectors_isBlockInterfaceHidden),
   isBlockSubtreeDisabled: () => (isBlockSubtreeDisabled),
@@ -7705,7 +7706,8 @@ __webpack_require__.d(private_actions_namespaceObject, {
   showBlockInterface: () => (showBlockInterface),
   startDragging: () => (startDragging),
   stopDragging: () => (stopDragging),
-  stopEditingAsBlocks: () => (stopEditingAsBlocks)
+  stopEditingAsBlocks: () => (stopEditingAsBlocks),
+  toggleBlockSpotlight: () => (toggleBlockSpotlight)
 });
 
 // NAMESPACE OBJECT: ./packages/block-editor/build-module/store/actions.js
@@ -9854,6 +9856,43 @@ function highlightedBlock(state, action) {
 }
 
 /**
+ * Reducer returning current spotlighted block.
+ *
+ * @param {string|null} state  Current clientId or null.
+ * @param {Object}      action Dispatched action.
+ *
+ * @return {string|null} Updated state.
+ */
+function hasBlockSpotlight(state, action) {
+  switch (action.type) {
+    case 'TOGGLE_BLOCK_SPOTLIGHT':
+      const {
+        clientId,
+        hasBlockSpotlight: _hasBlockSpotlight
+      } = action;
+      if (_hasBlockSpotlight) {
+        return clientId;
+      } else if (state === clientId) {
+        return null;
+      }
+      return state;
+    case 'SELECT_BLOCK':
+      if (action.clientId !== state) {
+        return null;
+      }
+      return state;
+    case 'SELECTION_CHANGE':
+      if (action.start?.clientId !== state || action.end?.clientId !== state) {
+        return null;
+      }
+      return state;
+    case 'CLEAR_SELECTED_BLOCK':
+      return null;
+  }
+  return state;
+}
+
+/**
  * Reducer returning current expanded block in the list view.
  *
  * @param {string|null} state  Current expanded block.
@@ -10100,7 +10139,8 @@ const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blockRemovalRules,
   openedBlockSettingsMenu,
   registeredInserterMediaCategories,
-  zoomLevel
+  zoomLevel,
+  hasBlockSpotlight
 });
 
 /**
@@ -11580,6 +11620,18 @@ const isBlockHidden = (state, clientId) => {
   const attributes = state.blocks.attributes.get(clientId);
   return attributes?.metadata?.blockVisibility === false;
 };
+
+/**
+ * Returns true if the current spotlighted block matches the block clientId.
+ *
+ * @param {Object} state    Global application state.
+ * @param {string} clientId The block to check.
+ *
+ * @return {boolean} Whether the block is currently spotlighted.
+ */
+function private_selectors_hasBlockSpotlight(state, clientId) {
+  return state.hasBlockSpotlight === clientId;
+}
 
 ;// ./packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.js
 /**
@@ -14936,6 +14988,21 @@ const setZoomLevel = (zoom = 100) => ({
 function resetZoomLevel() {
   return {
     type: 'RESET_ZOOM_LEVEL'
+  };
+}
+
+/**
+ * Action that toggles the spotlighted block state.
+ *
+ * @param {string}  clientId          The block's clientId.
+ * @param {boolean} hasBlockSpotlight The spotlight state.
+ * @return {Object} Action object.
+ */
+function toggleBlockSpotlight(clientId, hasBlockSpotlight) {
+  return {
+    type: 'TOGGLE_BLOCK_SPOTLIGHT',
+    clientId,
+    hasBlockSpotlight
   };
 }
 
@@ -46431,7 +46498,8 @@ function use_block_props_useBlockProps(props = {}, {
     defaultClassName,
     isSectionBlock,
     canMove,
-    isBlockHidden
+    isBlockHidden,
+    hasBlockSpotlight
   } = (0,external_wp_element_namespaceObject.useContext)(PrivateBlockContext);
 
   // translators: %s: Type of block (i.e. Text, Image etc)
@@ -46498,7 +46566,8 @@ function use_block_props_useBlockProps(props = {}, {
       'has-editable-outline': hasEditableOutline,
       'has-negative-margin': hasNegativeMargin,
       'is-content-locked-temporarily-editing-as-blocks': isTemporarilyEditingAsBlocks,
-      'is-block-hidden': isBlockHidden
+      'is-block-hidden': isBlockHidden,
+      'is-spotlighted': hasBlockSpotlight
     }, className, props.className, wrapperProps.className, defaultClassName),
     style: {
       ...wrapperProps.style,
@@ -46960,6 +47029,7 @@ function BlockListBlockProvider(props) {
       getBlockAttributes,
       canRemoveBlock,
       canMoveBlock,
+      hasBlockSpotlight,
       getSettings,
       getTemporarilyEditingAsBlocks,
       getBlockEditingMode,
@@ -47066,7 +47136,8 @@ function BlockListBlockProvider(props) {
       isEditingDisabled: blockEditingMode === 'disabled',
       hasEditableOutline: blockEditingMode !== 'disabled' && getBlockEditingMode(rootClientId) === 'disabled',
       originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
-      isBlockHidden: _isBlockHidden(clientId)
+      isBlockHidden: _isBlockHidden(clientId),
+      hasBlockSpotlight: hasBlockSpotlight(clientId)
     };
   }, [clientId, rootClientId]);
   const {
@@ -47106,7 +47177,8 @@ function BlockListBlockProvider(props) {
     className,
     defaultClassName,
     originalBlockClientId,
-    isBlockHidden
+    isBlockHidden,
+    hasBlockSpotlight
   } = selectedProps;
 
   // Users of the editor.BlockListBlock filter used to be able to
@@ -47154,7 +47226,8 @@ function BlockListBlockProvider(props) {
     originalBlockClientId,
     themeSupportsLayout,
     canMove,
-    isBlockHidden
+    isBlockHidden,
+    hasBlockSpotlight
   };
   if (isBlockHidden && !isSelected && !isMultiSelected && !hasChildSelected) {
     return null;
