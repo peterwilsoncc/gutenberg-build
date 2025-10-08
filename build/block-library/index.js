@@ -40594,15 +40594,18 @@ function useEntityBinding({
     metadata,
     id
   } = attributes;
-  const hasUrlBinding = !!metadata?.bindings?.url && !!id;
+
+  // Check if there's a URL binding with the core/entity source
+  const hasUrlBinding = metadata?.bindings?.url?.source === 'core/entity' && !!id;
   const clearBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
-    updateBlockBindings({
-      url: {
-        source: null,
-        args: null
-      }
-    });
-  }, [updateBlockBindings]);
+    // Only clear if there's actually a valid binding to clear
+    if (hasUrlBinding) {
+      // Remove the URL binding by setting it to undefined
+      updateBlockBindings({
+        url: undefined
+      });
+    }
+  }, [hasUrlBinding, updateBlockBindings]);
   const createBinding = (0,external_wp_element_namespaceObject.useCallback)(() => {
     updateBlockBindings({
       url: {
