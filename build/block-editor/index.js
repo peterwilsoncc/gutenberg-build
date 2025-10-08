@@ -24182,14 +24182,32 @@ const LinkControlSettings = ({
       [setting.id]: newValue
     });
   };
-  const theSettings = settings.map(setting => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-    __nextHasNoMarginBottom: true,
-    className: "block-editor-link-control__setting",
-    label: setting.title,
-    onChange: handleSettingChange(setting),
-    checked: value ? !!value[setting.id] : false,
-    help: setting?.help
-  }, setting.id));
+  const theSettings = settings.map(setting => {
+    // If render property is provided
+    if ('render' in setting) {
+      // If it's a valid function, use it
+      if (typeof setting.render === 'function') {
+        const renderedContent = setting.render(setting, value, onChange);
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "block-editor-link-control__setting",
+          children: renderedContent
+        }, setting.id);
+      }
+      // If render is provided but invalid, return null
+      return null;
+    }
+
+    // If render property is not provided, use CheckboxControl
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+      __nextHasNoMarginBottom: true,
+      className: "block-editor-link-control__setting",
+      label: setting.title,
+      onChange: handleSettingChange(setting),
+      checked: value ? !!value[setting.id] : false,
+      help: setting?.help
+    }, setting.id);
+  }).filter(Boolean); // Remove null entries
+
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
     className: "block-editor-link-control__settings",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {

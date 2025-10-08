@@ -548,6 +548,7 @@ function isValidHref(href) {
  * @param {string}  options.id               The ID of the link.
  * @param {boolean} options.opensInNewWindow Whether this link will open in a new window.
  * @param {boolean} options.nofollow         Whether this link is marked as no follow relationship.
+ * @param {string}  options.cssClasses       The CSS classes to apply to the link.
  * @return {Object} The final format object.
  */
 function createLinkFormat({
@@ -555,7 +556,8 @@ function createLinkFormat({
   type,
   id,
   opensInNewWindow,
-  nofollow
+  nofollow,
+  cssClasses
 }) {
   const format = {
     type: 'core/link',
@@ -575,6 +577,10 @@ function createLinkFormat({
   }
   if (nofollow) {
     format.attributes.rel = format.attributes.rel ? format.attributes.rel + ' nofollow' : 'nofollow';
+  }
+  const trimmedCssClasses = cssClasses?.trim();
+  if (trimmedCssClasses?.length) {
+    format.attributes.class = trimmedCssClasses;
   }
   return format;
 }
@@ -685,6 +691,88 @@ const partialRight = (fn, ...partialArgs) => (...args) => fn(...args, ...partial
 const walkToStart = partialRight(walkToBoundary, 'backwards');
 const walkToEnd = partialRight(walkToBoundary, 'forwards');
 
+;// external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
+;// ./packages/format-library/build-module/link/css-classes-setting.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * CSSClassesSettingComponent
+ *
+ * Presents a toggleable text input for editing link CSS classes. The input
+ * is shown when the toggle is enabled or when there is already a value. When
+ * toggled off and a value exists, it resets the value to an empty string.
+ *
+ * @param {Object}   props          - Component props.
+ * @param {Object}   props.setting  - Setting configuration object.
+ * @param {Object}   props.value    - Current link value object.
+ * @param {Function} props.onChange - Callback when value changes.
+ */
+
+const CSSClassesSettingComponent = ({
+  setting,
+  value,
+  onChange
+}) => {
+  const hasValue = value ? value?.cssClasses?.length > 0 : false;
+  const [isSettingActive, setIsSettingActive] = (0,external_wp_element_namespaceObject.useState)(hasValue);
+  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(CSSClassesSettingComponent);
+  const controlledRegionId = `css-classes-setting-${instanceId}`;
+
+  // Sanitize user input: replace commas with spaces, collapse repeated spaces, and trim
+  const handleSettingChange = newValue => {
+    const sanitizedValue = typeof newValue === 'string' ? newValue.replace(/,/g, ' ').replace(/\s+/g, ' ').trim() : newValue;
+    onChange({
+      ...value,
+      [setting.id]: sanitizedValue
+    });
+  };
+  const handleCheckboxChange = () => {
+    if (isSettingActive) {
+      if (hasValue) {
+        // Reset the value when hiding the input and a value exists.
+        handleSettingChange('');
+      }
+      setIsSettingActive(false);
+    } else {
+      setIsSettingActive(true);
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+      as: "legend",
+      children: setting.title
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 3,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+        __nextHasNoMarginBottom: true,
+        label: setting.title,
+        onChange: handleCheckboxChange,
+        checked: isSettingActive || hasValue,
+        "aria-expanded": isSettingActive,
+        "aria-controls": isSettingActive ? controlledRegionId : undefined
+      }), isSettingActive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        id: controlledRegionId,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+          label: (0,external_wp_i18n_namespaceObject.__)('CSS classes'),
+          value: value?.cssClasses,
+          onChange: handleSettingChange,
+          help: (0,external_wp_i18n_namespaceObject.__)('Separate multiple classes with spaces.'),
+          __unstableInputWidth: "100%",
+          __next40pxDefaultSize: true
+        })
+      })]
+    })]
+  });
+};
+/* harmony default export */ const css_classes_setting = (CSSClassesSettingComponent);
+
 ;// ./packages/format-library/build-module/link/inline.js
 /**
  * WordPress dependencies
@@ -704,9 +792,22 @@ const walkToEnd = partialRight(walkToBoundary, 'forwards');
 
 
 
+
+// CSSClassesSettingComponent moved to its own file and imported above.
+
 const LINK_SETTINGS = [...external_wp_blockEditor_namespaceObject.LinkControl.DEFAULT_LINK_SETTINGS, {
   id: 'nofollow',
   title: (0,external_wp_i18n_namespaceObject.__)('Mark as nofollow')
+}, {
+  id: 'cssClasses',
+  title: (0,external_wp_i18n_namespaceObject.__)('Additional CSS class(es)'),
+  render: (setting, value, onChange) => {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(css_classes_setting, {
+      setting: setting,
+      value: value,
+      onChange: onChange
+    });
+  }
 }];
 function InlineLinkUI({
   isActive,
@@ -747,8 +848,9 @@ function InlineLinkUI({
     id: activeAttributes.id,
     opensInNewTab: activeAttributes.target === '_blank',
     nofollow: activeAttributes.rel?.includes('nofollow'),
-    title: richTextText
-  }), [activeAttributes.id, activeAttributes.rel, activeAttributes.target, activeAttributes.type, activeAttributes.url, richTextText]);
+    title: richTextText,
+    cssClasses: activeAttributes.class
+  }), [activeAttributes.class, activeAttributes.id, activeAttributes.rel, activeAttributes.target, activeAttributes.type, activeAttributes.url, richTextText]);
   function removeLink() {
     const newValue = (0,external_wp_richText_namespaceObject.removeFormat)(value, 'core/link');
     onChange(newValue);
@@ -770,7 +872,8 @@ function InlineLinkUI({
       type: nextValue.type,
       id: nextValue.id !== undefined && nextValue.id !== null ? String(nextValue.id) : undefined,
       opensInNewWindow: nextValue.opensInNewTab,
-      nofollow: nextValue.nofollow
+      nofollow: nextValue.nofollow,
+      cssClasses: nextValue.cssClasses
     });
     const newText = nextValue.title || newUrl;
 
@@ -1129,7 +1232,8 @@ const link_link = {
     id: 'data-id',
     _id: 'id',
     target: 'target',
-    rel: 'rel'
+    rel: 'rel',
+    class: 'class'
   },
   [link_essentialFormatKey]: true,
   __unstablePasteRule(value, {
