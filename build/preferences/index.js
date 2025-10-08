@@ -84,19 +84,20 @@ const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/icons/build-module/library/check.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const check = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M16.7 7.1l-6.3 8.5-3.3-2.5-.9 1.2 4.5 3.4L17.9 8z"
+    d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z"
   })
-});
-/* harmony default export */ const library_check = (check);
+}));
+/* eslint-enable */
 
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
@@ -396,7 +397,7 @@ function PreferenceToggleMenuItem({
     }
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-    icon: isActive && library_check,
+    icon: isActive && check,
     isSelected: isActive,
     onClick: () => {
       onToggle();
@@ -555,34 +556,36 @@ const external_wp_element_namespaceObject = window["wp"]["element"];
 }));
 
 ;// ./packages/icons/build-module/library/chevron-left.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"
   })
-});
-/* harmony default export */ const chevron_left = (chevronLeft);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/chevron-right.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"
   })
-});
-/* harmony default export */ const chevron_right = (chevronRight);
+}));
+/* eslint-enable */
 
 ;// external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];

@@ -28755,34 +28755,36 @@ const Spacer = contextConnect(UnconnectedSpacer, 'Spacer');
 /* harmony default export */ const spacer_component = (Spacer);
 
 ;// ./packages/icons/build-module/library/plus.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const plus = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
   })
-});
-/* harmony default export */ const library_plus = (plus);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/reset.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_reset = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M7 11.5h10V13H7z"
   })
-});
-/* harmony default export */ const library_reset = (reset_reset);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/flex/flex-item/component.js
 /**
@@ -33728,7 +33730,7 @@ function UnforwardedNumberControl(props, forwardedRef) {
           spacing: 1,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SpinButton, {
             className: spinButtonClasses,
-            icon: library_plus,
+            icon: plus,
             size: "small",
             label: (0,external_wp_i18n_namespaceObject.__)('Increment'),
             onClick: buildSpinButtonClickHandler('up')
@@ -34414,19 +34416,20 @@ function useFloating(options) {
 
 
 ;// ./packages/icons/build-module/library/close.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const close_close = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_close = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"
   })
-});
-/* harmony default export */ const library_close = (close_close);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/scroll-lock/index.js
 /**
@@ -36192,34 +36195,36 @@ function useBaseControlProps(props) {
 }
 
 ;// ./packages/icons/build-module/library/link.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const link_link = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z"
   })
-});
-/* harmony default export */ const library_link = (link_link);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/link-off.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const link_off = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z"
   })
-});
-/* harmony default export */ const link_off = (linkOff);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/border-box-control/styles.js
 function border_box_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -36390,27 +36395,29 @@ const ConnectedBorderBoxControlVisualizer = contextConnect(BorderBoxControlVisua
 /* harmony default export */ const border_box_control_visualizer_component = (ConnectedBorderBoxControlVisualizer);
 
 ;// ./packages/icons/build-module/library/line-solid.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const lineSolid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const line_solid = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M5 11.25h14v1.5H5z"
   })
-});
-/* harmony default export */ const line_solid = (lineSolid);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/line-dashed.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const lineDashed = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const line_dashed = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -36418,16 +36425,17 @@ const lineDashed = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
     d: "M5 11.25h3v1.5H5v-1.5zm5.5 0h3v1.5h-3v-1.5zm8.5 0h-3v1.5h3v-1.5z",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const line_dashed = (lineDashed);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/line-dotted.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const lineDotted = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const line_dotted = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -36435,8 +36443,8 @@ const lineDotted = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
     d: "M5.25 11.25h1.5v1.5h-1.5v-1.5zm3 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5zm1.5 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5z",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const line_dotted = (lineDotted);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/toggle-group-control/toggle-group-control/styles.js
 
@@ -38087,19 +38095,20 @@ const InputControlSuffixWrapperWithClickThrough = /*#__PURE__*/emotion_styled_ba
 }));
 
 ;// ./packages/icons/build-module/library/chevron-down.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_down = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
   })
-});
-/* harmony default export */ const chevron_down = (chevronDown);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/select-control/chevron-down.js
 /**
@@ -39238,27 +39247,29 @@ const ColorfulWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  tru
 } : 0)(boxSizingReset, ";width:216px;.react-colorful{display:flex;flex-direction:column;align-items:center;width:216px;height:auto;}.react-colorful__saturation{width:100%;border-radius:0;height:216px;margin-bottom:", space(4), ";border-bottom:none;}.react-colorful__hue,.react-colorful__alpha{width:184px;height:16px;border-radius:", config_values.radiusFull, ";margin-bottom:", space(2), ";}.react-colorful__pointer{height:16px;width:16px;border:none;box-shadow:0 0 2px 0 rgba( 0, 0, 0, 0.25 );outline:2px solid transparent;@media not ( prefers-reduced-motion ){transition:transform ", config_values.transitionDurationFast, " ease-in-out;}}.react-colorful__interactive:focus .react-colorful__pointer{box-shadow:0 0 0 ", config_values.borderWidthFocus, " ", config_values.surfaceColor, ";border:", config_values.borderWidthFocus, " solid black;transform:translate( -50%, -50% ) scale( 1.5 );}.react-colorful__pointer-fill{box-shadow:inset 0 0 0 ", config_values.borderWidthFocus, " #fff;}", interactiveHueStyles, ";" + ( true ? "" : 0));
 
 ;// ./packages/icons/build-module/library/check.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const check = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M16.7 7.1l-6.3 8.5-3.3-2.5-.9 1.2 4.5 3.4L17.9 8z"
+    d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z"
   })
-});
-/* harmony default export */ const library_check = (check);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/copy.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const copy_copy = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_copy = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -39266,8 +39277,8 @@ const copy_copy = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
     clipRule: "evenodd",
     d: "M5 4.5h11a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5ZM3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm17 3v10.75c0 .69-.56 1.25-1.25 1.25H6v1.5h12.75a2.75 2.75 0 0 0 2.75-2.75V8H20Z"
   })
-});
-/* harmony default export */ const library_copy = (copy_copy);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/color-picker/color-copy-button.js
 /**
@@ -39335,7 +39346,7 @@ const ColorCopyButton = props => {
       size: "compact",
       "aria-label": label,
       ref: copyRef,
-      icon: isCopied ? library_check : library_copy,
+      icon: isCopied ? check : library_copy,
       showTooltip: false
     })
   });
@@ -40061,7 +40072,7 @@ function Option({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: dist_clsx(className, 'components-circular-option-picker__option-wrapper'),
     children: [optionControl, isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
-      icon: library_check,
+      icon: check,
       ...selectedIconProps
     })]
   });
@@ -43083,12 +43094,13 @@ const BorderBoxControl = contextConnect(UnconnectedBorderBoxControl, 'BorderBoxC
 /* harmony default export */ const border_box_control_component = (BorderBoxControl);
 
 ;// ./packages/icons/build-module/library/settings.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const settings = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -43096,8 +43108,8 @@ const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
   })]
-});
-/* harmony default export */ const library_settings = (settings);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/box-control/utils.js
 /**
@@ -43824,7 +43836,7 @@ function BoxInputControl({
       __nextHasNoMarginBottom: true
     }), hasPresets && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       label: showCustomValueControl ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
-      icon: library_settings,
+      icon: settings,
       onClick: () => {
         setShowCustomValueControl(!showCustomValueControl);
       },
@@ -45268,7 +45280,7 @@ function CheckboxControl(props) {
           className: "components-checkbox-control__indeterminate",
           role: "presentation"
         }) : null, showCheckedIcon ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
-          icon: library_check,
+          icon: check,
           className: "components-checkbox-control__checked",
           role: "presentation"
         }) : null]
@@ -45351,19 +45363,20 @@ function ClipboardButton({
 }
 
 ;// ./packages/icons/build-module/library/more-vertical.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const more_vertical = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z"
   })
-});
-/* harmony default export */ const more_vertical = (moreVertical);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/item-group/styles.js
 function item_group_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -46018,7 +46031,7 @@ function InsertPoint({
         onToggle();
       },
       className: "components-custom-gradient-picker__insert-point-dropdown",
-      icon: library_plus
+      icon: plus
     }),
     renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_content_wrapper, {
       paddingSize: "none",
@@ -46827,19 +46840,20 @@ function GradientPicker({
 /* harmony default export */ const gradient_picker = (GradientPicker);
 
 ;// ./packages/icons/build-module/library/menu.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const menu = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const menu = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M5 5v1.5h14V5H5zm0 7.8h14v-1.5H5v1.5zM5 19h14v-1.5H5V19z"
   })
-});
-/* harmony default export */ const library_menu = (menu);
+}));
+/* eslint-enable */
 
 ;// external ["wp","dom"]
 const external_wp_dom_namespaceObject = window["wp"]["dom"];
@@ -47135,7 +47149,7 @@ function UnconnectedDropdownMenu(dropdownMenuProps) {
     children,
     className,
     controls,
-    icon = library_menu,
+    icon = menu,
     label,
     popoverProps,
     toggleProps,
@@ -47726,7 +47740,7 @@ function PaletteEdit({
           ref: addColorRef,
           size: "small",
           isPressed: isAdding,
-          icon: library_plus,
+          icon: plus,
           label: isGradient ? (0,external_wp_i18n_namespaceObject.__)('Add gradient') : (0,external_wp_i18n_namespaceObject.__)('Add color'),
           onClick: () => {
             const {
@@ -47840,19 +47854,20 @@ function PaletteEdit({
 /* harmony default export */ const palette_edit = (PaletteEdit);
 
 ;// ./packages/icons/build-module/library/close-small.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const close_small = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"
   })
-});
-/* harmony default export */ const close_small = (closeSmall);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/combobox-control/styles.js
 
@@ -50843,7 +50858,7 @@ function CustomSelectItem({
     ...props,
     children: [children !== null && children !== void 0 ? children : props.value, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectedItemCheck, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
-        icon: library_check
+        icon: check
       })
     })]
   });
@@ -54493,34 +54508,36 @@ function endOfWeek(date, options) {
 /* harmony default export */ const date_fns_endOfWeek = ((/* unused pure expression or super */ null && (endOfWeek)));
 
 ;// ./packages/icons/build-module/library/arrow-right.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const arrowRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const arrow_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z"
   })
-});
-/* harmony default export */ const arrow_right = (arrowRight);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/arrow-left.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const arrowLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const arrow_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z"
   })
-});
-/* harmony default export */ const arrow_left = (arrowLeft);
+}));
+/* eslint-enable */
 
 ;// external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
@@ -56982,19 +56999,20 @@ function Draggable({
 /* harmony default export */ const draggable = (Draggable);
 
 ;// ./packages/icons/build-module/library/upload.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const upload = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z"
   })
-});
-/* harmony default export */ const library_upload = (upload);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/drop-zone/index.js
 /**
@@ -57040,7 +57058,7 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
  */
 function DropZoneComponent({
   className,
-  icon = library_upload,
+  icon = upload,
   label,
   onFilesDrop,
   onHTMLDrop,
@@ -57146,19 +57164,20 @@ function DropZoneProvider({
 }
 
 ;// ./packages/icons/build-module/library/swatch.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const swatch = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const swatch = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M7.1 5.7 8 6.9c.4-.3.9-.6 1.5-.8l-.6-1.4c-.7.3-1.3.6-1.8 1ZM4.6 8.9l1.4.6c.2-.5.5-1 .8-1.5l-1.2-.9c-.4.6-.8 1.2-1 1.8Zm14.8 0c-.3-.7-.6-1.3-1-1.8l-1.2.9c.3.4.6.9.8 1.5l1.4-.6ZM7.1 18.3c.6.4 1.2.8 1.8 1l.6-1.4c-.5-.2-1-.5-1.5-.8l-.9 1.2ZM5.5 12v-.9h-.7l-.7-.2v2l1.5-.2v-.9Zm-.7 3h-.2c.3.7.6 1.3 1 1.9l1.2-.9c-.3-.4-.6-.9-.8-1.5l-1.2.5Zm9.7 3 .5 1.2v.2c.7-.3 1.3-.6 1.9-1l-.9-1.2c-.4.3-.9.6-1.5.8Zm-2.5.5h-.9l-.2 1.3v.2h2l-.2-1.5h-.9Zm7.9-7.5-1.5.2V13h.7l.7.2v-2ZM18 14.5c-.2.5-.5 1-.8 1.5l1.2.9c.4-.6.8-1.2 1-1.8h-.2l-1.2-.6ZM11 4.1l.2 1.5H13V4.2h-1.9ZM14.5 6c.5.2 1 .5 1.5.8l.9-1.2c-.6-.4-1.2-.8-1.8-1L14.5 6Z"
   })
-});
-/* harmony default export */ const library_swatch = (swatch);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/duotone-picker/utils.js
 /**
@@ -57272,7 +57291,7 @@ function DuotoneSwatch({
   return values ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_indicator, {
     colorValue: getGradientFromCSSColors(values, '135deg')
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-    icon: library_swatch
+    icon: swatch
   });
 }
 /* harmony default export */ const duotone_swatch = (DuotoneSwatch);
@@ -57318,7 +57337,7 @@ function ColorOption({
         colorValue: value,
         className: "components-color-list-picker__swatch-color"
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-        icon: library_swatch
+        icon: swatch
       }),
       text: label
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -58525,7 +58544,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
           children: (0,external_wp_i18n_namespaceObject.__)('Font size')
         }), !disableCustomFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderToggle, {
           label: currentPickerType === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
-          icon: library_settings,
+          icon: settings,
           onClick: () => setUserRequestedCustom(!userRequestedCustom),
           isPressed: currentPickerType === 'custom',
           size: "small"
@@ -60032,7 +60051,7 @@ function MenuItemsChoice({
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(menu_item, {
         role: "menuitemradio",
         disabled: item.disabled,
-        icon: isSelected ? library_check : null,
+        icon: isSelected ? check : null,
         info: item.info,
         isSelected: isSelected,
         shortcut: item.shortcut,
@@ -60509,34 +60528,36 @@ function Navigation({
 /* harmony default export */ const navigation = (Navigation);
 
 ;// ./packages/icons/build-module/library/chevron-right.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"
   })
-});
-/* harmony default export */ const chevron_right = (chevronRight);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/chevron-left.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"
   })
-});
-/* harmony default export */ const chevron_left = (chevronLeft);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/navigation/back-button/index.js
 /**
@@ -60950,19 +60971,20 @@ const useNavigationTreeMenu = props => {
 };
 
 ;// ./packages/icons/build-module/library/search.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_search = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
   })
-});
-/* harmony default export */ const library_search = (search);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/higher-order/with-spoken-messages/index.js
 /**
@@ -60991,6 +61013,7 @@ const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 ;// ./packages/components/build-module/search-control/styles.js
 
+function search_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -61000,24 +61023,23 @@ const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
  */
 
 
-
-const inlinePadding = ({
-  size
-}) => {
-  return space(size === 'compact' ? 1 : 2);
-};
-const SuffixItemWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "effl84m1"
-} : 0)("display:flex;padding-inline-end:", inlinePadding, ";svg{fill:currentColor;}" + ( true ? "" : 0));
 const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_control,  true ? {
+  target: "effl84m1"
+} : 0)( true ? {
+  name: "37btb2",
+  styles: "input[type='search']{&::-webkit-search-decoration,&::-webkit-search-cancel-button,&::-webkit-search-results-button,&::-webkit-search-results-decoration{-webkit-appearance:none;}}"
+} : 0);
+const StyledIcon = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_icon,  true ? {
   target: "effl84m0"
-} : 0)("input[type='search']{&::-webkit-search-decoration,&::-webkit-search-cancel-button,&::-webkit-search-results-button,&::-webkit-search-results-decoration{-webkit-appearance:none;}}&:not( :focus-within ){--wp-components-color-background:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
+} : 0)( true ? {
+  name: "1i54h4p",
+  styles: "&:dir( ltr ){transform:scaleX( -1 );}"
+} : 0);
 
 ;// ./packages/components/build-module/search-control/index.js
 /**
  * External dependencies
  */
-
 
 /**
  * WordPress dependencies
@@ -61035,6 +61057,8 @@ const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_co
 
 
 
+
+
 function SuffixItem({
   searchRef,
   value,
@@ -61042,9 +61066,7 @@ function SuffixItem({
   onClose
 }) {
   if (!onClose && !value) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
-      icon: library_search
-    });
+    return null;
   }
   if (onClose) {
     external_wp_deprecated_default()('`onClose` prop in wp.components.SearchControl', {
@@ -61055,11 +61077,14 @@ function SuffixItem({
     onChange('');
     searchRef.current?.focus();
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-    size: "small",
-    icon: close_small,
-    label: onClose ? (0,external_wp_i18n_namespaceObject.__)('Close search') : (0,external_wp_i18n_namespaceObject.__)('Reset search'),
-    onClick: onClose !== null && onClose !== void 0 ? onClose : onReset
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputControlSuffixWrapper, {
+    variant: "control",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      size: "small",
+      icon: close_small,
+      label: onClose ? (0,external_wp_i18n_namespaceObject.__)('Close search') : (0,external_wp_i18n_namespaceObject.__)('Reset search'),
+      onClick: onClose !== null && onClose !== void 0 ? onClose : onReset
+    })
   });
 }
 function UnforwardedSearchControl({
@@ -61091,10 +61116,6 @@ function UnforwardedSearchControl({
         __nextHasNoMarginBottom
       },
       __associatedWPComponentName: 'SearchControl'
-    },
-    // `isBorderless` is still experimental and not a public prop for InputControl yet.
-    InputBase: {
-      isBorderless: true
     }
   }), [__nextHasNoMarginBottom]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContextSystemProvider, {
@@ -61112,14 +61133,18 @@ function UnforwardedSearchControl({
       autoComplete: "off",
       placeholder: placeholder,
       value: value !== null && value !== void 0 ? value : '',
-      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SuffixItemWrapper, {
-        size: size,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SuffixItem, {
-          searchRef: searchRef,
-          value: value,
-          onChange: onChange,
-          onClose: onClose
+      prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputControlPrefixWrapper, {
+        variant: "icon",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledIcon, {
+          icon: library_search,
+          fill: "currentColor"
         })
+      }),
+      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SuffixItem, {
+        searchRef: searchRef,
+        value: value,
+        onChange: onChange,
+        onClose: onClose
       }),
       ...filteredRestProps
     })
@@ -63259,19 +63284,20 @@ const Panel = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedPane
 /* harmony default export */ const panel = (Panel);
 
 ;// ./packages/icons/build-module/library/chevron-up.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_up = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
   })
-});
-/* harmony default export */ const chevron_up = (chevronUp);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/panel/body.js
 /**
@@ -67227,19 +67253,20 @@ const TextHighlight = props => {
 /* harmony default export */ const text_highlight = (TextHighlight);
 
 ;// ./packages/icons/build-module/library/tip.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tip = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const tip = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12 15.8c-3.7 0-6.8-3-6.8-6.8s3-6.8 6.8-6.8c3.7 0 6.8 3 6.8 6.8s-3.1 6.8-6.8 6.8zm0-12C9.1 3.8 6.8 6.1 6.8 9s2.4 5.2 5.2 5.2c2.9 0 5.2-2.4 5.2-5.2S14.9 3.8 12 3.8zM8 17.5h8V19H8zM10 20.5h4V22h-4z"
   })
-});
-/* harmony default export */ const library_tip = (tip);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/tip/index.js
 /**
@@ -67258,7 +67285,7 @@ function Tip(props) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "components-tip",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
-      icon: library_tip
+      icon: tip
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
       children: children
     })]
@@ -67606,13 +67633,13 @@ function UnforwardedToolbarButton(props, ref) {
  *
  * ```jsx
  * import { Toolbar, ToolbarButton } from '@wordpress/components';
- * import { edit } from '@wordpress/icons';
+ * import { pencil } from '@wordpress/icons';
  *
  * function MyToolbar() {
  *   return (
  *		<Toolbar label="Options">
  *			<ToolbarButton
- *				icon={ edit }
+ *				icon={ pencil }
  *				label="Edit"
  *				onClick={ () => alert( 'Editing' ) }
  *			/>
@@ -68263,7 +68290,7 @@ const DefaultControlsGroup = ({
         }, label);
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(menu_item, {
-        icon: library_check,
+        icon: check,
         className: itemClassName,
         role: "menuitemcheckbox",
         isSelected: true,
@@ -68288,7 +68315,7 @@ const OptionalControlsGroup = ({
       // translators: %s: The name of the control to display e.g. "Padding".
       (0,external_wp_i18n_namespaceObject._x)('Show %s', 'input control'), label);
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(menu_item, {
-        icon: isSelected ? library_check : null,
+        icon: isSelected ? check : null,
         isSelected: isSelected,
         label: itemLabel,
         onClick: () => {
@@ -68329,7 +68356,7 @@ const component_ToolsPanelHeader = (props, forwardedRef) => {
   }
   const defaultItems = Object.entries(menuItems?.default || {});
   const optionalItems = Object.entries(menuItems?.optional || {});
-  const dropDownMenuIcon = areAllOptionalControlsHidden ? library_plus : more_vertical;
+  const dropDownMenuIcon = areAllOptionalControlsHidden ? plus : more_vertical;
   const dropDownMenuLabelText = (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: %s: The name of the tool e.g. "Color" or "Typography".
   (0,external_wp_i18n_namespaceObject._x)('%s options', 'Button label to reveal tool panel options'), labelText);
@@ -71316,7 +71343,7 @@ const CheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(function
         height: 'auto'
       },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
-        icon: library_check,
+        icon: check,
         size: 24
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ItemContentWrapper, {
@@ -71773,19 +71800,20 @@ const TriggerButton = (0,external_wp_element_namespaceObject.forwardRef)(functio
 });
 
 ;// ./packages/icons/build-module/library/chevron-right-small.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronRightSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_right_small = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z"
   })
-});
-/* harmony default export */ const chevron_right_small = (chevronRightSmall);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/menu/submenu-trigger-item.js
 /**
@@ -73134,12 +73162,13 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/components');
 
 ;// ./packages/icons/build-module/library/info.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const info = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const info = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -73147,16 +73176,17 @@ const info = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
     clipRule: "evenodd",
     d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z"
   })
-});
-/* harmony default export */ const library_info = (info);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/published.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const published = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const published = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -73164,16 +73194,17 @@ const published = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
     clipRule: "evenodd",
     d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z"
   })
-});
-/* harmony default export */ const library_published = (published);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/caution.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const caution = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const caution = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -73181,16 +73212,17 @@ const caution = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
     clipRule: "evenodd",
     d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z"
   })
-});
-/* harmony default export */ const library_caution = (caution);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/error.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const error = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const error = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -73198,8 +73230,8 @@ const error = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
     clipRule: "evenodd",
     d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z"
   })
-});
-/* harmony default export */ const library_error = (error);
+}));
+/* eslint-enable */
 
 ;// ./packages/components/build-module/badge/index.js
 /**
@@ -73227,13 +73259,13 @@ const error = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 function contextBasedIcon(intent = 'default') {
   switch (intent) {
     case 'info':
-      return library_info;
+      return info;
     case 'success':
-      return library_published;
+      return published;
     case 'warning':
-      return library_caution;
+      return caution;
     case 'error':
-      return library_error;
+      return error;
     default:
       return null;
   }
@@ -82004,8 +82036,8 @@ function ValidityIndicator({
   message
 }) {
   const ICON = {
-    valid: library_published,
-    invalid: library_error
+    valid: published,
+    invalid: error
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
     className: dist_clsx('components-validated-control__indicator', `is-${type}`),

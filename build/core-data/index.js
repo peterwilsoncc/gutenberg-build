@@ -1791,6 +1791,7 @@ async function loadPostTypeEntities() {
     var _postType$rest_namesp;
     const isTemplate = ['wp_template', 'wp_template_part'].includes(name);
     const namespace = (_postType$rest_namesp = postType?.rest_namespace) !== null && _postType$rest_namesp !== void 0 ? _postType$rest_namesp : 'wp/v2';
+    const syncedProperties = new Set(['blocks']);
     return {
       kind: 'postType',
       baseURL: `/${namespace}/${postType.rest_base}`,
@@ -1822,6 +1823,9 @@ async function loadPostTypeEntities() {
         applyChangesToDoc: (doc, changes) => {
           const document = doc.getMap('document');
           Object.entries(changes).forEach(([key, value]) => {
+            if (!syncedProperties.has(key)) {
+              return;
+            }
             if (typeof value !== 'function') {
               if (key === 'blocks') {
                 if (!serialisableBlocksCache.has(value)) {
@@ -22135,28 +22139,27 @@ const editEntityRecord = (kind, name, recordId, edits, options = {}) => ({
       const objectId = entityConfig.getSyncObjectId(recordId);
       getSyncProvider().update(entityConfig.syncObjectType + '--edit', objectId, edit.edits);
     }
-  } else {
-    if (!options.undoIgnore) {
-      select.getUndoManager().addRecord([{
-        id: {
-          kind,
-          name,
-          recordId
-        },
-        changes: Object.keys(edits).reduce((acc, key) => {
-          acc[key] = {
-            from: editedRecord[key],
-            to: edits[key]
-          };
-          return acc;
-        }, {})
-      }], options.isCached);
-    }
-    dispatch({
-      type: 'EDIT_ENTITY_RECORD',
-      ...edit
-    });
   }
+  if (!options.undoIgnore) {
+    select.getUndoManager().addRecord([{
+      id: {
+        kind,
+        name,
+        recordId
+      },
+      changes: Object.keys(edits).reduce((acc, key) => {
+        acc[key] = {
+          from: editedRecord[key],
+          to: edits[key]
+        };
+        return acc;
+      }, {})
+    }], options.isCached);
+  }
+  dispatch({
+    type: 'EDIT_ENTITY_RECORD',
+    ...edit
+  });
 };
 
 /**
@@ -23178,80 +23181,75 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
     exclusive: false
   });
   try {
-    // Entity supports configs,
-    // use the sync algorithm instead of the old fetch behavior.
+    if (query !== undefined && query._fields) {
+      // If requesting specific fields, items and query association to said
+      // records are stored by ID reference. Thus, fields must always include
+      // the ID.
+      query = {
+        ...query,
+        _fields: [...new Set([...(get_normalized_comma_separable(query._fields) || []), entityConfig.key || DEFAULT_ENTITY_KEY])].join()
+      };
+    }
+    if (query !== undefined && query._fields) {
+      // The resolution cache won't consider query as reusable based on the
+      // fields, so it's tested here, prior to initiating the REST request,
+      // and without causing `getEntityRecord` resolution to occur.
+      const hasRecord = select.hasEntityRecord(kind, name, key, query);
+      if (hasRecord) {
+        return;
+      }
+    }
+    const path = (0,external_wp_url_namespaceObject.addQueryArgs)(entityConfig.baseURL + (key ? '/' + key : ''), {
+      ...entityConfig.baseURLParams,
+      ...query
+    });
+    const response = await external_wp_apiFetch_default()({
+      path,
+      parse: false
+    });
+    const record = await response.json();
+    const permissions = getUserPermissionsFromAllowHeader(response.headers?.get('allow'));
+    const canUserResolutionsArgs = [];
+    const receiveUserPermissionArgs = {};
+    for (const action of ALLOWED_RESOURCE_ACTIONS) {
+      receiveUserPermissionArgs[getUserPermissionCacheKey(action, {
+        kind,
+        name,
+        id: key
+      })] = permissions[action];
+      canUserResolutionsArgs.push([action, {
+        kind,
+        name,
+        id: key
+      }]);
+    }
+
+    // Entity supports syncing.
     if (window.__experimentalEnableSync && entityConfig.syncConfig && !query) {
       if (true) {
         const objectId = entityConfig.getSyncObjectId(key);
+        getSyncProvider().register(entityConfig.syncObjectType + '--edit', entityConfig.syncConfig);
 
-        // Loads the persisted document.
-        await getSyncProvider().bootstrap(entityConfig.syncObjectType, objectId, record => {
-          dispatch.receiveEntityRecords(kind, name, record, query);
-        });
-
-        // Bootstraps the edited document as well (and load from peers).
-        await getSyncProvider().bootstrap(entityConfig.syncObjectType + '--edit', objectId, record => {
+        // Bootstraps the edited document (and load from peers).
+        await getSyncProvider().bootstrap(entityConfig.syncObjectType + '--edit', objectId, edits => {
           dispatch({
             type: 'EDIT_ENTITY_RECORD',
             kind,
             name,
             recordId: key,
-            edits: record,
+            edits,
             meta: {
               undo: undefined
             }
           });
         });
       }
-    } else {
-      if (query !== undefined && query._fields) {
-        // If requesting specific fields, items and query association to said
-        // records are stored by ID reference. Thus, fields must always include
-        // the ID.
-        query = {
-          ...query,
-          _fields: [...new Set([...(get_normalized_comma_separable(query._fields) || []), entityConfig.key || DEFAULT_ENTITY_KEY])].join()
-        };
-      }
-      if (query !== undefined && query._fields) {
-        // The resolution cache won't consider query as reusable based on the
-        // fields, so it's tested here, prior to initiating the REST request,
-        // and without causing `getEntityRecord` resolution to occur.
-        const hasRecord = select.hasEntityRecord(kind, name, key, query);
-        if (hasRecord) {
-          return;
-        }
-      }
-      const path = (0,external_wp_url_namespaceObject.addQueryArgs)(entityConfig.baseURL + (key ? '/' + key : ''), {
-        ...entityConfig.baseURLParams,
-        ...query
-      });
-      const response = await external_wp_apiFetch_default()({
-        path,
-        parse: false
-      });
-      const record = await response.json();
-      const permissions = getUserPermissionsFromAllowHeader(response.headers?.get('allow'));
-      const canUserResolutionsArgs = [];
-      const receiveUserPermissionArgs = {};
-      for (const action of ALLOWED_RESOURCE_ACTIONS) {
-        receiveUserPermissionArgs[getUserPermissionCacheKey(action, {
-          kind,
-          name,
-          id: key
-        })] = permissions[action];
-        canUserResolutionsArgs.push([action, {
-          kind,
-          name,
-          id: key
-        }]);
-      }
-      registry.batch(() => {
-        dispatch.receiveEntityRecords(kind, name, record, query);
-        dispatch.receiveUserPermissions(receiveUserPermissionArgs);
-        dispatch.finishResolutions('canUser', canUserResolutionsArgs);
-      });
     }
+    registry.batch(() => {
+      dispatch.receiveEntityRecords(kind, name, record, query);
+      dispatch.receiveUserPermissions(receiveUserPermissionArgs);
+      dispatch.finishResolutions('canUser', canUserResolutionsArgs);
+    });
   } finally {
     dispatch.__unstableReleaseStoreLock(lock);
   }

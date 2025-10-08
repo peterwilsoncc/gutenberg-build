@@ -6957,6 +6957,28 @@ const i18nBlockSchema = {
  */
 
 /**
+ * An object describing data for a field in block bindings EditorUI.
+ *
+ * @typedef {Object} WPBlockBindingsEditorUIDataItem
+ *
+ * @property {string} key     The unique identifier for the field.
+ * @property {string} [label] Human-readable label for the field.
+ * @property {string} [type]  The data type of the field (e.g., 'string', 'number').
+ * @property {Object} [args]  Source-specific arguments used to retrieve the value from the source.
+ */
+
+/**
+ * An object describing the EditorUI configuration for block bindings.
+ *
+ * @typedef {Object} WPBlockBindingsEditorUI
+ *
+ * @property {string}   mode                 The UI mode - either 'dropdown' or 'modal'.
+ * @property {Array}    [data]               Array of field data items.
+ * @property {Function} [renderModalContent] Required for modal mode. Function that renders the modal content.
+ *                                           Receives an object with the `attribute` that is being changed, and a `closeModal` function to close the modal.
+ */
+
+/**
  * An object describing a Block Bindings source.
  *
  * @typedef {Object} WPBlockBindingsSource
@@ -6967,6 +6989,7 @@ const i18nBlockSchema = {
  * @property {Function} [getValues]        Optional function to get the values from the source.
  * @property {Function} [setValues]        Optional function to update multiple values connected to the source.
  * @property {Function} [canUserEditValue] Optional function to determine if the user can edit the value.
+ * @property {Function} [editorUI]         Optional function that returns WPBlockBindingsEditorUI configuration.
  */
 
 function isObject(object) {
@@ -7578,7 +7601,8 @@ const registerBlockBindingsSource = source => {
     getValues,
     setValues,
     canUserEditValue,
-    getFieldsList
+    getFieldsList,
+    editorUI
   } = source;
   const existingSource = unlock((0,external_wp_data_namespaceObject.select)(store)).getBlockBindingsSource(name);
 
@@ -7659,6 +7683,74 @@ const registerBlockBindingsSource = source => {
     // eslint-disable-next-line no-console
      false ? 0 : void 0;
     return;
+  }
+  if (editorUI) {
+    if (typeof editorUI === 'function') {
+      // If it's a function, we can't validate the returned object at registration time
+      // since it may depend on runtime context, so we just validate it's a function
+      return unlock((0,external_wp_data_namespaceObject.dispatch)(store)).addBlockBindingsSource(source);
+    }
+    if (typeof editorUI !== 'object' || Array.isArray(editorUI)) {
+       false ? 0 : void 0;
+      return;
+    }
+    const {
+      mode,
+      data
+    } = editorUI;
+    if (mode && !['dropdown', 'modal'].includes(mode)) {
+       false ? 0 : void 0;
+      return;
+    }
+    if (mode === 'dropdown') {
+      if (!data || !Array.isArray(data)) {
+         false ? 0 : void 0;
+        return;
+      }
+      for (const field of data) {
+        if (!field || typeof field !== 'object') {
+           false ? 0 : void 0;
+          return;
+        }
+        if (!field.label || !field.args) {
+           false ? 0 : void 0;
+          return;
+        }
+        if (typeof field.label !== 'string') {
+           false ? 0 : void 0;
+          return;
+        }
+
+        // Validate type field if provided (follows WordPress block attributes type validation).
+        if (field.type) {
+          const validTypes = ['null', 'boolean', 'object', 'array', 'string', 'integer', 'number'];
+          if (!validTypes.includes(field.type)) {
+             false ? 0 : void 0;
+            return;
+          }
+          if (field.format) {
+            if (field.type !== 'string') {
+               false ? 0 : void 0;
+              return;
+            }
+            const validFormats = ['date-time', 'uri', 'email', 'ip', 'uuid', 'hex-color'];
+            if (!validFormats.includes(field.format)) {
+               false ? 0 : void 0;
+              return;
+            }
+          }
+        }
+      }
+    } else if (mode === 'modal') {
+      if (!editorUI.renderModalContent) {
+         false ? 0 : void 0;
+        return;
+      }
+      if (typeof editorUI.renderModalContent !== 'function') {
+         false ? 0 : void 0;
+        return;
+      }
+    }
   }
   return unlock((0,external_wp_data_namespaceObject.dispatch)(store)).addBlockBindingsSource(source);
 };
@@ -8433,7 +8525,8 @@ function blockBindingsSources(state = {}, action) {
           setValues: action.setValues,
           // Only set `canUserEditValue` if `setValues` is also defined.
           canUserEditValue: action.setValues && action.canUserEditValue,
-          getFieldsList
+          getFieldsList,
+          editorUI: action.editorUI
         }
       };
     case 'REMOVE_BLOCK_BINDINGS_SOURCE':
@@ -10058,7 +10151,8 @@ function addBlockBindingsSource(source) {
     getValues: source.getValues,
     setValues: source.setValues,
     canUserEditValue: source.canUserEditValue,
-    getFieldsList: source.getFieldsList
+    getFieldsList: source.getFieldsList,
+    editorUI: source.editorUI
   };
 }
 

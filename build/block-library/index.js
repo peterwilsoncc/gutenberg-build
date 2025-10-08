@@ -744,6 +744,16 @@ __webpack_require__.d(build_module_audio_namespaceObject, {
   settings: () => (audio_settings)
 });
 
+// NAMESPACE OBJECT: ./packages/block-library/build-module/breadcrumbs/index.js
+var build_module_breadcrumbs_namespaceObject = {};
+__webpack_require__.r(build_module_breadcrumbs_namespaceObject);
+__webpack_require__.d(build_module_breadcrumbs_namespaceObject, {
+  init: () => (breadcrumbs_init),
+  metadata: () => (breadcrumbs_metadata),
+  name: () => (breadcrumbs_name),
+  settings: () => (breadcrumbs_settings)
+});
+
 // NAMESPACE OBJECT: ./packages/block-library/build-module/button/index.js
 var build_module_button_namespaceObject = {};
 __webpack_require__.r(build_module_button_namespaceObject);
@@ -1756,19 +1766,19 @@ __webpack_require__.d(footnotes_namespaceObject, {
 
 ;// external ["wp","blocks"]
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
-;// external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
+;// external ["wp","data"]
+const external_wp_data_namespaceObject = window["wp"]["data"];
+;// external ["wp","blockEditor"]
+const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","serverSideRender"]
 const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
 var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
 ;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// external ["wp","blockEditor"]
-const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
-;// external ["wp","data"]
-const external_wp_data_namespaceObject = window["wp"]["data"];
+;// external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// external ["wp","blob"]
 const external_wp_blob_namespaceObject = window["wp"]["blob"];
 ;// external ["wp","coreData"]
@@ -1927,7 +1937,9 @@ function Edit({
   const {
     getBlockOrder
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    role: 'group'
+  });
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     updateBlockAttributes,
@@ -1936,7 +1948,7 @@ function Edit({
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   const isContentOnlyMode = blockEditingMode === 'contentOnly';
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    template: [[ACCORDION_BLOCK_NAME], [ACCORDION_BLOCK_NAME]],
+    template: [[ACCORDION_BLOCK_NAME]],
     defaultBlock: ACCORDION_BLOCK,
     directInsert: true,
     templateInsertUpdatesSelection: true
@@ -1975,22 +1987,20 @@ function Edit({
     });
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [isSingleSelected && !isContentOnlyMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
-            value: headingLevel,
-            options: levelOptions,
-            onChange: updateHeadingLevel
-          })
+    children: [isSingleSelected && !isContentOnlyMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
+          value: headingLevel,
+          options: levelOptions,
+          onChange: updateHeadingLevel
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-        group: "other",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: addAccordionItemBlock,
-          children: (0,external_wp_i18n_namespaceObject.__)('Add')
-        })
-      })]
+      })
+    }), isSingleSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      group: "other",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        onClick: addAccordionItemBlock,
+        children: (0,external_wp_i18n_namespaceObject.__)('Add')
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -2083,7 +2093,9 @@ function Edit({
 
 
 function save() {
-  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save({
+    role: 'group'
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save(blockProps)
   });
@@ -2167,8 +2179,8 @@ const metadata = {
   category: "design",
   description: "Displays a group of accordion headings and associated expandable content.",
   example: {},
-  __experimental: true,
   supports: {
+    anchor: true,
     html: false,
     align: ["wide", "full"],
     background: {
@@ -2201,6 +2213,7 @@ const metadata = {
     },
     shadow: true,
     layout: true,
+    ariaLabel: true,
     interactivity: true,
     typography: {
       fontSize: true,
@@ -2214,7 +2227,8 @@ const metadata = {
       __experimentalDefaultControls: {
         fontSize: true
       }
-    }
+    },
+    contentRole: true
   },
   attributes: {
     iconPosition: {
@@ -2481,10 +2495,10 @@ const accordion_item_metadata = {
   title: "Accordion Item",
   category: "design",
   description: "Displays a section of content in an accordion, including a heading and expandable content.",
-  __experimental: true,
   parent: ["core/accordion"],
   allowedBlocks: ["core/accordion-heading", "core/accordion-panel"],
   supports: {
+    html: false,
     color: {
       background: true,
       gradients: true
@@ -2507,7 +2521,6 @@ const accordion_item_metadata = {
       }
     },
     shadow: true,
-    layout: true,
     typography: {
       fontSize: true,
       lineHeight: true,
@@ -2520,7 +2533,8 @@ const accordion_item_metadata = {
       __experimentalDefaultControls: {
         fontSize: true
       }
-    }
+    },
+    contentRole: true
   },
   attributes: {
     openByDefault: {
@@ -2587,6 +2601,7 @@ function accordion_heading_edit_Edit({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
       className: "wp-block-accordion-heading__toggle",
       style: spacingProps.style,
+      tabIndex: "-1",
       children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "wp-block-accordion-heading__toggle-icon",
         "aria-hidden": "true",
@@ -2683,7 +2698,6 @@ const accordion_heading_metadata = {
   title: "Accordion Heading",
   category: "design",
   description: "Displays an accordion heading.",
-  __experimental: true,
   parent: ["core/accordion-item"],
   usesContext: ["core/accordion-icon-position", "core/accordion-show-icon", "core/accordion-heading-level"],
   supports: {
@@ -2699,7 +2713,8 @@ const accordion_heading_metadata = {
       __experimentalDefaultControls: {
         padding: true
       },
-      __experimentalSkipSerialization: true
+      __experimentalSkipSerialization: true,
+      __experimentalSelector: ".wp-block-accordion-heading__toggle"
     },
     __experimentalBorder: {
       color: true,
@@ -2847,9 +2862,9 @@ const accordion_panel_metadata = {
   title: "Accordion Panel",
   category: "design",
   description: "Displays an accordion panel.",
-  __experimental: true,
   parent: ["core/accordion-item"],
   supports: {
+    html: false,
     color: {
       background: true,
       gradients: true
@@ -2889,8 +2904,8 @@ const accordion_panel_metadata = {
       }
     },
     shadow: true,
-    layout: true,
-    blockVisibility: false
+    blockVisibility: false,
+    contentRole: true
   },
   attributes: {
     allowedBlocks: {
@@ -2931,12 +2946,13 @@ const accordion_panel_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/archive.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const archive = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const archive = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -2944,8 +2960,8 @@ const archive = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
     clipRule: "evenodd",
     d: "M11.934 7.406a1 1 0 0 0 .914.594H19a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5h5.764a.5.5 0 0 1 .447.276l.723 1.63Zm1.064-1.216a.5.5 0 0 0 .462.31H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.764a2 2 0 0 1 1.789 1.106l.445 1.084ZM8.5 10.5h7V12h-7v-1.5Zm7 3.5h-7v1.5h7V14Z"
   })
-});
-/* harmony default export */ const library_archive = (archive);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/archives/edit.js
 /**
@@ -3161,7 +3177,7 @@ const {
 } = archives_metadata;
 
 const archives_settings = {
-  icon: library_archive,
+  icon: archive,
   example: {},
   edit: ArchivesEdit
 };
@@ -3172,12 +3188,13 @@ const archives_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-author-avatar.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const comment_author_avatar = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -3185,8 +3202,8 @@ const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceOb
     d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const comment_author_avatar = (commentAuthorAvatar);
+}));
+/* eslint-enable */
 
 ;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
@@ -3675,19 +3692,20 @@ const avatar_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/audio.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const audio = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const audio = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.7 4.3c-1.2 0-2.8 0-3.8 1-.6.6-.9 1.5-.9 2.6V14c-.6-.6-1.5-1-2.5-1C8.6 13 7 14.6 7 16.5S8.6 20 10.5 20c1.5 0 2.8-1 3.3-2.3.5-.8.7-1.8.7-2.5V7.9c0-.7.2-1.2.5-1.6.6-.6 1.8-.6 2.8-.6h.3V4.3h-.4z"
   })
-});
-/* harmony default export */ const library_audio = (audio);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/audio/deprecated.js
 /**
@@ -4321,12 +4339,13 @@ const getMergedAttributesWithPreview = (currentAttributes, preview, title, isRes
 };
 
 ;// ./packages/icons/build-module/library/caption.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const caption = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_caption = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -4334,8 +4353,8 @@ const caption = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
     clipRule: "evenodd",
     d: "M6 5.5h12a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5ZM4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Zm4 10h2v-1.5H8V16Zm5 0h-2v-1.5h2V16Zm1 0h2v-1.5h-2V16Z"
   })
-});
-/* harmony default export */ const library_caption = (caption);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/utils/caption.js
 /**
@@ -4570,7 +4589,7 @@ function AudioEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: library_audio
+          icon: audio
         }),
         onSelect: onSelectAudio,
         onSelectURL: onSelectURL,
@@ -4881,7 +4900,7 @@ const {
 } = audio_metadata;
 
 const audio_settings = {
-  icon: library_audio,
+  icon: audio,
   example: {
     attributes: {
       src: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Armstrong_Small_Step.ogg'
@@ -4899,20 +4918,254 @@ const audio_init = () => initBlock({
   settings: audio_settings
 });
 
-;// ./packages/icons/build-module/library/button.js
+;// ./packages/icons/build-module/library/breadcrumbs.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const button_button = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const breadcrumbs = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4 13.5h3v-3H4v3Zm6-3.5 2 2-2 2 1 1 3-3-3-3-1 1Zm7 .5v3h3v-3h-3Z"
+  })
+}));
+/* eslint-enable */
+
+;// ./packages/block-library/build-module/breadcrumbs/edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const separatorDefaultValue = '/';
+function BreadcrumbEdit({
+  attributes,
+  setAttributes,
+  context: {
+    postId,
+    postType
+  }
+}) {
+  const {
+    separator,
+    showHomeLink
+  } = attributes;
+  const isPostTypeHierarchical = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!postType) {
+      return null;
+    }
+    return select(external_wp_coreData_namespaceObject.store).getPostType(postType)?.hierarchical;
+  }, [postType]);
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const {
+    content
+  } = (0,external_wp_serverSideRender_namespaceObject.useServerSideRender)({
+    attributes,
+    skipBlockSupportAttributes: true,
+    block: 'core/breadcrumbs',
+    urlQueryArgs: {
+      post_id: postId
+    }
+  });
+  let placeholder = null;
+  // If no post context or the post type is not hierarchical, show placeholder.
+  // This is fragile because this block is server side rendered and we'll have to
+  // update the placeholder html if the server side rendering output changes.
+  if (!postId || !postType || !isPostTypeHierarchical) {
+    const placeholderItems = [showHomeLink && (0,external_wp_i18n_namespaceObject.__)('Home'), (0,external_wp_i18n_namespaceObject.__)('Ancestor'), (0,external_wp_i18n_namespaceObject.__)('Parent')].filter(Boolean);
+    placeholder = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("nav", {
+      style: {
+        '--separator': `'${separator}'`
+      },
+      inert: "true",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ol", {
+        children: [placeholderItems.map((text, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+            href: `#breadcrumbs-pseudo-link-${index}`,
+            children: text
+          })
+        }, index)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            children: (0,external_wp_i18n_namespaceObject.__)('Current')
+          })
+        })]
+      })
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            separator: separatorDefaultValue,
+            showHomeLink: true
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Show home link'),
+          isShownByDefault: true,
+          hasValue: () => !showHomeLink,
+          onDeselect: () => setAttributes({
+            showHomeLink: true
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show home link'),
+            onChange: value => setAttributes({
+              showHomeLink: value
+            }),
+            checked: showHomeLink
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Separator'),
+          isShownByDefault: true,
+          hasValue: () => separator !== separatorDefaultValue,
+          onDeselect: () => setAttributes({
+            separator: separatorDefaultValue
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            autoComplete: "off",
+            label: (0,external_wp_i18n_namespaceObject.__)('Separator'),
+            value: separator,
+            onChange: value => setAttributes({
+              separator: value
+            })
+          })
+        })]
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...blockProps,
+      children: placeholder || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
+        inert: "true",
+        children: content
+      })
+    })]
+  });
+}
+
+;// ./packages/block-library/build-module/breadcrumbs/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const breadcrumbs_metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/breadcrumbs",
+  title: "Breadcrumbs",
+  category: "theme",
+  description: "Display a breadcrumb trail only for Pages, or for hierarchical post types. The block is useful to insert in the Pages template.",
+  textdomain: "default",
+  attributes: {
+    separator: {
+      type: "string",
+      "default": "/"
+    },
+    showHomeLink: {
+      type: "boolean",
+      "default": true
+    }
+  },
+  usesContext: ["postId", "postType"],
+  supports: {
+    html: false,
+    spacing: {
+      margin: true,
+      padding: true
+    },
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true
+      }
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: false,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
+    interactivity: {
+      clientNavigation: true
+    }
+  },
+  style: "wp-block-breadcrumbs"
+};
+
+const {
+  name: breadcrumbs_name
+} = breadcrumbs_metadata;
+
+const breadcrumbs_settings = {
+  icon: breadcrumbs,
+  edit: BreadcrumbEdit
+};
+const breadcrumbs_init = () => initBlock({
+  name: breadcrumbs_name,
+  metadata: breadcrumbs_metadata,
+  settings: breadcrumbs_settings
+});
+
+;// ./packages/icons/build-module/library/button.js
+/* eslint-disable prettier/prettier */
+/**
+ * WordPress dependencies
+ */
+
+
+/* harmony default export */ const library_button = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M8 12.5h8V11H8v1.5Z M19 6.5H5a2 2 0 0 0-2 2V15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2ZM5 8h14a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8.5A.5.5 0 0 1 5 8Z"
   })
-});
-/* harmony default export */ const library_button = (button_button);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/utils/migrate-font-family.js
 /**
@@ -6280,34 +6533,36 @@ function removeAnchorTag(value) {
 ;// external ["wp","keycodes"]
 const external_wp_keycodes_namespaceObject = window["wp"]["keycodes"];
 ;// ./packages/icons/build-module/library/link.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const link_link = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z"
   })
-});
-/* harmony default export */ const library_link = (link_link);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/link-off.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const link_off = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z"
   })
-});
-/* harmony default export */ const link_off = (linkOff);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/button/edit.js
 /**
@@ -6950,19 +7205,20 @@ const button_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/buttons.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const buttons = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const buttons = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M14.5 17.5H9.5V16H14.5V17.5Z M14.5 8H9.5V6.5H14.5V8Z M7 3.5H17C18.1046 3.5 19 4.39543 19 5.5V9C19 10.1046 18.1046 11 17 11H7C5.89543 11 5 10.1046 5 9V5.5C5 4.39543 5.89543 3.5 7 3.5ZM17 5H7C6.72386 5 6.5 5.22386 6.5 5.5V9C6.5 9.27614 6.72386 9.5 7 9.5H17C17.2761 9.5 17.5 9.27614 17.5 9V5.5C17.5 5.22386 17.2761 5 17 5Z M7 13H17C18.1046 13 19 13.8954 19 15V18.5C19 19.6046 18.1046 20.5 17 20.5H7C5.89543 20.5 5 19.6046 5 18.5V15C5 13.8954 5.89543 13 7 13ZM17 14.5H7C6.72386 14.5 6.5 14.7239 6.5 15V18.5C6.5 18.7761 6.72386 19 7 19H17C17.2761 19 17.5 18.7761 17.5 18.5V15C17.5 14.7239 17.2761 14.5 17 14.5Z"
   })
-});
-/* harmony default export */ const library_buttons = (buttons);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/buttons/deprecated.js
 /**
@@ -7376,7 +7632,7 @@ const {
 } = buttons_metadata;
 
 const buttons_settings = {
-  icon: library_buttons,
+  icon: buttons,
   example: {
     attributes: {
       layout: {
@@ -7408,19 +7664,20 @@ const buttons_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/calendar.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const calendar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const calendar = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z"
   })
-});
-/* harmony default export */ const library_calendar = (calendar);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/calendar/edit.js
 /**
@@ -7502,7 +7759,7 @@ function CalendarEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-        icon: library_calendar,
+        icon: calendar,
         label: (0,external_wp_i18n_namespaceObject.__)('Calendar'),
         children: !hasPostsResolved ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('No published posts found.')
       })
@@ -7605,7 +7862,7 @@ const {
 } = calendar_metadata;
 
 const calendar_settings = {
-  icon: library_calendar,
+  icon: calendar,
   example: {},
   edit: CalendarEdit,
   transforms: calendar_transforms
@@ -7617,12 +7874,13 @@ const calendar_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/category.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const category = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const category = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -7630,23 +7888,24 @@ const category = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
     fillRule: "evenodd",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const library_category = (category);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/pin.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const pin = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pin = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m21.5 9.1-6.6-6.6-4.2 5.6c-1.2-.1-2.4.1-3.6.7-.1 0-.1.1-.2.1-.5.3-.9.6-1.2.9l3.7 3.7-5.7 5.7v1.1h1.1l5.7-5.7 3.7 3.7c.4-.4.7-.8.9-1.2.1-.1.1-.2.2-.3.6-1.1.8-2.4.6-3.6l5.6-4.1zm-7.3 3.5.1.9c.1.9 0 1.8-.4 2.6l-6-6c.8-.4 1.7-.5 2.6-.4l.9.1L15 4.9 19.1 9l-4.9 3.6z"
   })
-});
-/* harmony default export */ const library_pin = (pin);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/categories/edit.js
 /**
@@ -7931,7 +8190,7 @@ function CategoriesEdit({
         })]
       })
     }), isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-      icon: library_pin,
+      icon: pin,
       label: (0,external_wp_i18n_namespaceObject.__)('Terms'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
     }), !isResolving && categories?.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
@@ -7949,7 +8208,7 @@ function CategoriesEdit({
 const variations = [{
   name: 'terms',
   title: (0,external_wp_i18n_namespaceObject.__)('Terms List'),
-  icon: library_category,
+  icon: category,
   attributes: {
     // We need to set an attribute here that will be set when inserting the block.
     // We cannot leave this empty, as that would be interpreted as the default value,
@@ -7965,7 +8224,7 @@ const variations = [{
   name: 'categories',
   title: (0,external_wp_i18n_namespaceObject.__)('Categories List'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display a list of all categories.'),
-  icon: library_category,
+  icon: category,
   attributes: {
     taxonomy: 'category'
   },
@@ -8090,7 +8349,7 @@ const {
 } = categories_metadata;
 
 const categories_settings = {
-  icon: library_category,
+  icon: category,
   example: {},
   edit: CategoriesEdit,
   variations: categories_variations
@@ -8102,19 +8361,20 @@ const categories_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/classic.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const classic = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const classic = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M20 6H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h16c.3 0 .5.2.5.5v9zM10 10H8v2h2v-2zm-5 2h2v-2H5v2zm8-2h-2v2h2v-2zm-5 6h8v-2H8v2zm6-4h2v-2h-2v2zm3 0h2v-2h-2v2zm0 4h2v-2h-2v2zM5 16h2v-2H5v2z"
   })
-});
-/* harmony default export */ const library_classic = (classic);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/freeform/convert-to-blocks-button.js
 /**
@@ -8145,19 +8405,20 @@ const ConvertToBlocksButton = ({
 /* harmony default export */ const convert_to_blocks_button = (ConvertToBlocksButton);
 
 ;// ./packages/icons/build-module/library/fullscreen.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const fullscreen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const fullscreen = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6 4a2 2 0 0 0-2 2v3h1.5V6a.5.5 0 0 1 .5-.5h3V4H6Zm3 14.5H6a.5.5 0 0 1-.5-.5v-3H4v3a2 2 0 0 0 2 2h3v-1.5Zm6 1.5v-1.5h3a.5.5 0 0 0 .5-.5v-3H20v3a2 2 0 0 1-2 2h-3Zm3-16a2 2 0 0 1 2 2v3h-1.5V6a.5.5 0 0 0-.5-.5h-3V4h3Z"
   })
-});
-/* harmony default export */ const library_fullscreen = (fullscreen);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/freeform/modal.js
 /**
@@ -8183,7 +8444,7 @@ function ModalAuxiliaryActions({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     size: "compact",
     onClick: onClick,
-    icon: library_fullscreen,
+    icon: fullscreen,
     isPressed: isModalFullScreen,
     label: isModalFullScreen ? (0,external_wp_i18n_namespaceObject.__)('Exit fullscreen') : (0,external_wp_i18n_namespaceObject.__)('Enter fullscreen')
   });
@@ -8596,7 +8857,7 @@ const {
 } = freeform_metadata;
 
 const freeform_settings = {
-  icon: library_classic,
+  icon: classic,
   edit: FreeformEdit,
   save: freeform_save_save
 };
@@ -8607,19 +8868,20 @@ const freeform_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/code.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const code = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const code = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z"
   })
-});
-/* harmony default export */ const library_code = (code);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/code/edit.js
 /**
@@ -8895,7 +9157,7 @@ const {
 } = code_metadata;
 
 const code_settings = {
-  icon: library_code,
+  icon: code,
   example: {
     attributes: {
       /* eslint-disable @wordpress/i18n-no-collapsible-whitespace */
@@ -8920,19 +9182,20 @@ const code_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/column.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const column = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const column = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 6H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM6 17.5c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h3v10H6zm13.5-.5c0 .3-.2.5-.5.5h-3v-10h3c.3 0 .5.2.5.5v9z"
   })
-});
-/* harmony default export */ const library_column = (column);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/column/deprecated.js
 /**
@@ -9270,7 +9533,7 @@ const {
 } = column_metadata;
 
 const column_settings = {
-  icon: library_column,
+  icon: column,
   edit: column_edit,
   save: column_save_save,
   deprecated: column_deprecated
@@ -9282,12 +9545,13 @@ const column_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/columns.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const columns = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const columns = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -9295,8 +9559,8 @@ const columns = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
     clipRule: "evenodd",
     d: "M15 7.5h-5v10h5v-10Zm1.5 0v10H19a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5h-2.5ZM6 7.5h2.5v10H6a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5ZM6 6h13a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
   })
-});
-/* harmony default export */ const library_columns = (columns);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/columns/deprecated.js
 /**
@@ -10301,7 +10565,7 @@ const {
 } = columns_metadata;
 
 const columns_settings = {
-  icon: library_columns,
+  icon: columns,
   variations: columns_variations,
   example: {
     viewportWidth: 782,
@@ -10355,19 +10619,20 @@ const columns_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-comments.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postComments = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_comments = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M14 10.1V4c0-.6-.4-1-1-1H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1zm-1.5-.5H6.7l-1.2 1.2V4.5h7v5.1zM19 12h-8c-.6 0-1 .4-1 1v6.1c0 .6.4 1 1 1h5.7l1.8 1.8c.1.2.4.3.6.3.1 0 .2 0 .3-.1.4-.1.6-.5.6-.8V13c0-.6-.4-1-1-1zm-.5 7.8l-1.2-1.2h-5.8v-5.1h7v6.3z"
   })
-});
-/* harmony default export */ const post_comments = (postComments);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comments/deprecated.js
 /**
@@ -11120,12 +11385,13 @@ const comment_author_avatar_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-author-name.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const commentAuthorName = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const comment_author_name = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -11143,8 +11409,8 @@ const commentAuthorName = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
     fillRule: "evenodd",
     clipRule: "evenodd"
   })]
-});
-/* harmony default export */ const comment_author_name = (commentAuthorName);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comment-author-name/edit.js
 /**
@@ -11431,12 +11697,13 @@ const comment_author_name_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-content.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const commentContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const comment_content = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -11444,8 +11711,8 @@ const commentContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.
     clipRule: "evenodd",
     d: "M6.68822 16.625L5.5 17.8145L5.5 5.5L18.5 5.5L18.5 16.625L6.68822 16.625ZM7.31 18.125L19 18.125C19.5523 18.125 20 17.6773 20 17.125L20 5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19.5247C4 19.8173 4.16123 20.086 4.41935 20.2237C4.72711 20.3878 5.10601 20.3313 5.35252 20.0845L7.31 18.125ZM16 9.99997H8V8.49997H16V9.99997ZM8 14H13V12.5H8V14Z"
   })
-});
-/* harmony default export */ const comment_content = (commentContent);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comment-content/edit.js
 /**
@@ -11607,12 +11874,13 @@ const comment_content_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-date.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postDate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_date = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -11620,8 +11888,8 @@ const postDate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19.5 7h-15v12a.5.5 0 00.5.5h14a.5.5 0 00.5-.5V7zM3 7V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"
   })]
-});
-/* harmony default export */ const post_date = (postDate);
+}));
+/* eslint-enable */
 
 ;// external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
@@ -11880,19 +12148,20 @@ const comment_date_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-edit-link.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const commentEditLink = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const comment_edit_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m6.249 11.065.44-.44h3.186l-1.5 1.5H7.31l-1.957 1.96A.792.792 0 0 1 4 13.524V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5L12.5 8V5.5h-7v6.315l.749-.75ZM20 19.75H7v-1.5h13v1.5Zm0-12.653-8.967 9.064L8 17l.867-2.935L17.833 5 20 7.097Z"
   })
-});
-/* harmony default export */ const comment_edit_link = (commentEditLink);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comment-edit-link/edit.js
 /**
@@ -12063,19 +12332,20 @@ const comment_edit_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-reply-link.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const commentReplyLink = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const comment_reply_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6.68822 10.625L6.24878 11.0649L5.5 11.8145L5.5 5.5L12.5 5.5V8L14 6.5V5C14 4.44772 13.5523 4 13 4H5C4.44772 4 4 4.44771 4 5V13.5247C4 13.8173 4.16123 14.086 4.41935 14.2237C4.72711 14.3878 5.10601 14.3313 5.35252 14.0845L7.31 12.125H8.375L9.875 10.625H7.31H6.68822ZM14.5605 10.4983L11.6701 13.75H16.9975C17.9963 13.75 18.7796 14.1104 19.3553 14.7048C19.9095 15.2771 20.2299 16.0224 20.4224 16.7443C20.7645 18.0276 20.7543 19.4618 20.7487 20.2544C20.7481 20.345 20.7475 20.4272 20.7475 20.4999L19.2475 20.5001C19.2475 20.4191 19.248 20.3319 19.2484 20.2394V20.2394C19.2526 19.4274 19.259 18.2035 18.973 17.1307C18.8156 16.5401 18.586 16.0666 18.2778 15.7483C17.9909 15.4521 17.5991 15.25 16.9975 15.25H11.8106L14.5303 17.9697L13.4696 19.0303L8.96956 14.5303L13.4394 9.50171L14.5605 10.4983Z"
   })
-});
-/* harmony default export */ const comment_reply_link = (commentReplyLink);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comment-reply-link/edit.js
 /**
@@ -12216,19 +12486,20 @@ const comment_reply_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/layout.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const layout = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const layout = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
   })
-});
-/* harmony default export */ const library_layout = (layout);
+}));
+/* eslint-enable */
 
 ;// external ["wp","apiFetch"]
 const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
@@ -12744,7 +13015,7 @@ const {
 } = comment_template_metadata;
 
 const comment_template_settings = {
-  icon: library_layout,
+  icon: layout,
   edit: CommentTemplateEdit,
   save: CommentTemplateSave
 };
@@ -12755,19 +13026,20 @@ const comment_template_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination-previous.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const queryPaginationPrevious = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const query_pagination_previous = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M16 10.5v3h3v-3h-3zm-5 3h3v-3h-3v3zM7 9l-3 3 3 3 1-1-2-2 2-2-1-1z"
   })
-});
-/* harmony default export */ const query_pagination_previous = (queryPaginationPrevious);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comments-pagination-previous/edit.js
 /**
@@ -12886,19 +13158,20 @@ const comments_pagination_previous_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const queryPagination = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const query_pagination = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 13.5h6v-3H4v3zm8 0h3v-3h-3v3zm5-3v3h3v-3h-3z"
   })
-});
-/* harmony default export */ const query_pagination = (queryPagination);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comments-pagination/comments-pagination-arrow-controls.js
 /**
@@ -13127,19 +13400,20 @@ const comments_pagination_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination-next.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const queryPaginationNext = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const query_pagination_next = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M5 13.5h3v-3H5v3zm5 0h3v-3h-3v3zM17 9l-1 1 2 2-2 2 1 1 3-3-3-3z"
   })
-});
-/* harmony default export */ const query_pagination_next = (queryPaginationNext);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comments-pagination-next/edit.js
 /**
@@ -13258,19 +13532,20 @@ const comments_pagination_next_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination-numbers.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const queryPaginationNumbers = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const query_pagination_numbers = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 13.5h6v-3H4v3zm8.2-2.5.8-.3V14h1V9.3l-2.2.7.4 1zm7.1-1.2c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3-.1-.8-.3-1.1z"
   })
-});
-/* harmony default export */ const query_pagination_numbers = (queryPaginationNumbers);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comments-pagination-numbers/edit.js
 /**
@@ -13381,19 +13656,20 @@ const comments_pagination_numbers_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/title.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const title = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const title = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m4 5.5h2v6.5h1.5v-6.5h2v-1.5h-5.5zm16 10.5h-16v-1.5h16zm-7 4h-9v-1.5h9z"
   })
-});
-/* harmony default export */ const library_title = (title);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/comments-title/edit.js
 /**
@@ -13771,7 +14047,7 @@ const {
 } = comments_title_metadata;
 
 const comments_title_settings = {
-  icon: library_title,
+  icon: title,
   edit: comments_title_edit_Edit,
   deprecated: comments_title_deprecated,
   example: {}
@@ -13783,19 +14059,20 @@ const comments_title_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/cover.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const cover = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const cover = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h6.2v8.9l2.5-3.1 2.5 3.1V4.5h2.2c.4 0 .8.4.8.8v13.4z"
   })
-});
-/* harmony default export */ const library_cover = (cover);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/cover/shared.js
 /**
@@ -16090,7 +16367,7 @@ function CoverPlaceholder({
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
     icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-      icon: library_cover
+      icon: cover
     }),
     labels: {
       title: (0,external_wp_i18n_namespaceObject.__)('Cover')
@@ -17683,7 +17960,7 @@ const cover_variations_variations = [{
     }
   },
   isDefault: true,
-  icon: library_cover
+  icon: cover
 }];
 /* harmony default export */ const cover_variations = (cover_variations_variations);
 
@@ -17868,7 +18145,7 @@ const {
 } = cover_metadata;
 
 const cover_settings = {
-  icon: library_cover,
+  icon: cover,
   example: {
     attributes: {
       customOverlayColor: '#065174',
@@ -17904,12 +18181,13 @@ const cover_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/details.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const details = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const details = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -17919,8 +18197,8 @@ const details = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(e
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m4 5.25 4 2.5-4 2.5v-5Z"
   })]
-});
-/* harmony default export */ const library_details = (details);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/details/edit.js
 /**
@@ -18192,7 +18470,7 @@ const {
 } = details_metadata;
 
 const details_settings = {
-  icon: library_details,
+  icon: details,
   example: {
     attributes: {
       summary: (0,external_wp_i18n_namespaceObject.__)('La Mancha'),
@@ -18235,27 +18513,20 @@ const details_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/pencil.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pencil = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z"
   })
-});
-/* harmony default export */ const library_pencil = (pencil);
-
-;// ./packages/icons/build-module/library/edit.js
-/**
- * Internal dependencies
- */
-
-
-/* harmony default export */ const library_edit = (library_pencil);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/embed/embed-controls.js
 /**
@@ -18289,7 +18560,7 @@ const EmbedControls = ({
         children: showEditButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           className: "components-toolbar__control",
           label: (0,external_wp_i18n_namespaceObject.__)('Edit URL'),
-          icon: library_edit,
+          icon: pencil,
           onClick: switchBackToURLInput
         })
       })
@@ -19832,12 +20103,13 @@ const embed_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/file.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const file = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const file = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -19845,8 +20117,8 @@ const file = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
     clipRule: "evenodd",
     d: "M12.848 8a1 1 0 0 1-.914-.594l-.723-1.63a.5.5 0 0 0-.447-.276H5a.5.5 0 0 0-.5.5v11.5a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5v-9A.5.5 0 0 0 19 8h-6.152Zm.612-1.5a.5.5 0 0 1-.462-.31l-.445-1.084A2 2 0 0 0 10.763 4H5a2 2 0 0 0-2 2v11.5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-5.54Z"
   })
-});
-/* harmony default export */ const library_file = (file);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/file/deprecated.js
 /**
@@ -20548,7 +20820,7 @@ function FileEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: library_file
+          icon: file
         }),
         labels: {
           title: (0,external_wp_i18n_namespaceObject.__)('File'),
@@ -20996,7 +21268,7 @@ const {
 } = file_metadata;
 
 const file_settings = {
-  icon: library_file,
+  icon: file,
   example: {
     attributes: {
       href: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Armstrong_Small_Step.ogg',
@@ -22277,19 +22549,20 @@ const form_submit_button_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/group.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const group = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const group = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 4h-7c-1.1 0-2 .9-2 2v3H6c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2v-3h3c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h3V13c0 1.1.9 2 2 2h2.5v3zm0-4.5H11c-.3 0-.5-.2-.5-.5v-2.5H13c.3 0 .5.2.5.5v2.5zm5-.5c0 .3-.2.5-.5.5h-3V11c0-1.1-.9-2-2-2h-2.5V6c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v7z"
   })
-});
-/* harmony default export */ const library_group = (group);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/form-submission-notification/edit.js
 /**
@@ -22461,7 +22734,7 @@ const {
 } = form_submission_notification_metadata;
 
 const form_submission_notification_settings = {
-  icon: library_group,
+  icon: group,
   edit: form_submission_notification_edit,
   save: form_submission_notification_save_save,
   variations: form_submission_notification_variations,
@@ -22474,12 +22747,13 @@ const form_submission_notification_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/gallery.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const gallery = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const gallery = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -22487,8 +22761,8 @@ const gallery = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
     fillRule: "evenodd",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const library_gallery = (gallery);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/gallery/constants.js
 const LINK_DESTINATION_NONE = 'none';
@@ -23461,34 +23735,36 @@ const gallery_deprecated_v1 = {
 /* harmony default export */ const gallery_deprecated = ([deprecated_v7, deprecated_v6, deprecated_v5, deprecated_v4, gallery_deprecated_v3, gallery_deprecated_v2, gallery_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/custom-link.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const customLink = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const custom_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12.5 14.5h-1V16h1c2.2 0 4-1.8 4-4s-1.8-4-4-4h-1v1.5h1c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5zm-4 1.5v-1.5h-1C6.1 14.5 5 13.4 5 12s1.1-2.5 2.5-2.5h1V8h-1c-2.2 0-4 1.8-4 4s1.8 4 4 4h1zm-1-3.2h5v-1.5h-5v1.5zM18 4H9c-1.1 0-2 .9-2 2v.5h1.5V6c0-.3.2-.5.5-.5h9c.3 0 .5.2.5.5v12c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5v-.5H7v.5c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"
   })
-});
-/* harmony default export */ const custom_link = (customLink);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/image.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const image_image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_image = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z"
   })
-});
-/* harmony default export */ const library_image = (image_image);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/gallery/shared-icon.js
 /**
@@ -23498,7 +23774,7 @@ const image_image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 
 
 const sharedIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-  icon: library_gallery
+  icon: gallery
 });
 
 ;// ./packages/block-library/build-module/gallery/shared.js
@@ -23961,7 +24237,7 @@ const LINK_OPTIONS = [{
   value: LINK_DESTINATION_MEDIA,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Media Files')
 }, {
-  icon: library_fullscreen,
+  icon: fullscreen,
   label: (0,external_wp_i18n_namespaceObject.__)('Enlarge on click'),
   value: LINK_DESTINATION_LIGHTBOX,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Lightbox effect'),
@@ -23992,7 +24268,7 @@ function GalleryEdit(props) {
     isContentLocked,
     onFocus
   } = props;
-  const [lightboxSetting] = (0,external_wp_blockEditor_namespaceObject.useSettings)('blocks.core/image.lightbox');
+  const [lightboxSetting, defaultRatios, themeRatios, showDefaultRatios] = (0,external_wp_blockEditor_namespaceObject.useSettings)('blocks.core/image.lightbox', 'dimensions.aspectRatios.default', 'dimensions.aspectRatios.theme', 'dimensions.defaultAspectRatios');
   const linkOptions = !lightboxSetting?.allowEditing ? LINK_OPTIONS.filter(option => option.value !== LINK_DESTINATION_LIGHTBOX) : LINK_OPTIONS;
   const {
     columns,
@@ -24000,7 +24276,8 @@ function GalleryEdit(props) {
     randomOrder,
     linkTarget,
     linkTo,
-    sizeSlug
+    sizeSlug,
+    aspectRatio
   } = attributes;
   const {
     __unstableMarkNextChangeAsNotPersistent,
@@ -24045,6 +24322,24 @@ function GalleryEdit(props) {
   })), [innerBlockImages]);
   const imageData = useGetMedia(innerBlockImages);
   const newImages = useGetNewImages(images, imageData);
+  const themeOptions = themeRatios?.map(({
+    name,
+    ratio
+  }) => ({
+    label: name,
+    value: ratio
+  }));
+  const defaultOptions = defaultRatios?.map(({
+    name,
+    ratio
+  }) => ({
+    label: name,
+    value: ratio
+  }));
+  const aspectRatioOptions = [{
+    label: (0,external_wp_i18n_namespaceObject._x)('Original', 'Aspect ratio option for dimensions control'),
+    value: 'auto'
+  }, ...(showDefaultRatios ? defaultOptions || [] : []), ...(themeOptions || [])];
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     newImages?.forEach(newImage => {
       // Update the images data without creating new undo levels.
@@ -24096,7 +24391,8 @@ function GalleryEdit(props) {
       className: newClassName,
       sizeSlug,
       caption: imageAttributes.caption || image.caption?.raw,
-      alt: imageAttributes.alt || image.alt_text
+      alt: imageAttributes.alt || image.alt_text,
+      aspectRatio: aspectRatio === 'auto' ? undefined : aspectRatio
     };
   }
   function isValidFileType(file) {
@@ -24241,6 +24537,28 @@ function GalleryEdit(props) {
       type: 'snackbar'
     });
   }
+  function setAspectRatio(value) {
+    setAttributes({
+      aspectRatio: value
+    });
+
+    // Update all inner image blocks with the new aspect ratio
+    const changedAttributes = {};
+    const blocks = [];
+    getBlock(clientId).innerBlocks.forEach(block => {
+      blocks.push(block.clientId);
+      changedAttributes[block.clientId] = {
+        aspectRatio: value === 'auto' ? undefined : value
+      };
+    });
+    updateBlockAttributes(blocks, changedAttributes, true);
+    const aspectRatioText = aspectRatioOptions.find(option => option.value === value);
+    createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: aspect ratio setting */
+    (0,external_wp_i18n_namespaceObject.__)('All gallery images updated to aspect ratio: %s'), aspectRatioText?.label || value), {
+      id: 'gallery-attributes-aspectRatio',
+      type: 'snackbar'
+    });
+  }
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // linkTo attribute must be saved so blocks don't break when changing image_default_link_type in options.php.
     if (!linkTo) {
@@ -24316,6 +24634,7 @@ function GalleryEdit(props) {
             imageCrop: true,
             randomOrder: false
           });
+          setAspectRatio('auto');
           if (sizeSlug !== constants_DEFAULT_MEDIA_SIZE_SLUG) {
             updateImagesSize(constants_DEFAULT_MEDIA_SIZE_SLUG);
           }
@@ -24391,6 +24710,20 @@ function GalleryEdit(props) {
             checked: linkTarget === '_blank',
             onChange: toggleOpenInNewTab
           })
+        }), aspectRatioOptions.length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!aspectRatio && aspectRatio !== 'auto',
+          label: (0,external_wp_i18n_namespaceObject.__)('Aspect ratio'),
+          onDeselect: () => setAspectRatio('auto'),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Aspect ratio'),
+            help: (0,external_wp_i18n_namespaceObject.__)('Set a consistent aspect ratio for all images in the gallery.'),
+            value: aspectRatio,
+            options: aspectRatioOptions,
+            onChange: setAspectRatio
+          })
         })]
       }), external_wp_element_namespaceObject.Platform.isNative && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
         title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -24436,6 +24769,15 @@ function GalleryEdit(props) {
           label: (0,external_wp_i18n_namespaceObject.__)('Open images in new tab'),
           checked: linkTarget === '_blank',
           onChange: toggleOpenInNewTab
+        }), aspectRatioOptions.length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Aspect Ratio'),
+          help: (0,external_wp_i18n_namespaceObject.__)('Set a consistent aspect ratio for all images in the gallery.'),
+          value: aspectRatio,
+          options: aspectRatioOptions,
+          onChange: setAspectRatio,
+          hideCancelButton: true,
+          size: "__unstable-large"
         })]
       })]
     }), external_wp_element_namespaceObject.Platform.isWeb ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
@@ -24871,6 +25213,10 @@ const gallery_metadata = {
     allowResize: {
       type: "boolean",
       "default": false
+    },
+    aspectRatio: {
+      type: "string",
+      "default": "auto"
     }
   },
   providesContext: {
@@ -24931,7 +25277,7 @@ const {
 } = gallery_metadata;
 
 const gallery_settings = {
-  icon: library_gallery,
+  icon: gallery,
   example: {
     attributes: {
       columns: 2
@@ -25640,42 +25986,45 @@ const group_transforms_transforms = {
 /* harmony default export */ const group_transforms = (group_transforms_transforms);
 
 ;// ./packages/icons/build-module/library/row.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const row = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const row = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 6.5h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4V16h5a.5.5 0 0 0 .5-.5v-7A.5.5 0 0 0 9 8H4V6.5Zm16 0h-5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h5V16h-5a.5.5 0 0 1-.5-.5v-7A.5.5 0 0 1 15 8h5V6.5Z"
   })
-});
-/* harmony default export */ const library_row = (row);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/stack.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const stack = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const stack = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.5 4v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V4H8v5a.5.5 0 0 0 .5.5h7A.5.5 0 0 0 16 9V4h1.5Zm0 16v-5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v5H8v-5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v5h1.5Z"
   })
-});
-/* harmony default export */ const library_stack = (stack);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/grid.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const grid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const grid = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -25683,8 +26032,8 @@ const grid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
     fillRule: "evenodd",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const library_grid = (grid);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/group/variations.js
 /**
@@ -25736,7 +26085,7 @@ const group_variations_variations = [{
   },
   isDefault: true,
   scope: ['block', 'inserter', 'transform'],
-  icon: library_group
+  icon: group
 }, {
   name: 'group-row',
   title: (0,external_wp_i18n_namespaceObject._x)('Row', 'single horizontal line'),
@@ -25749,7 +26098,7 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: ['layout.type'],
-  icon: library_row,
+  icon: row,
   example
 }, {
   name: 'group-stack',
@@ -25763,7 +26112,7 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: ['layout.type', 'layout.orientation'],
-  icon: library_stack,
+  icon: stack,
   example
 }, {
   name: 'group-grid',
@@ -25776,7 +26125,7 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: ['layout.type'],
-  icon: library_grid,
+  icon: grid,
   example
 }];
 /* harmony default export */ const group_variations = (group_variations_variations);
@@ -25811,9 +26160,6 @@ const group_metadata = {
     templateLock: {
       type: ["string", "boolean"],
       "enum": ["all", "insert", "contentOnly", false]
-    },
-    allowedBlocks: {
-      type: "array"
     }
   },
   supports: {
@@ -25887,7 +26233,8 @@ const group_metadata = {
     },
     interactivity: {
       clientNavigation: true
-    }
+    },
+    allowedBlocks: true
   },
   editorStyle: "wp-block-group-editor",
   style: "wp-block-group"
@@ -25900,7 +26247,7 @@ const {
 } = group_metadata;
 
 const group_settings = {
-  icon: library_group,
+  icon: group,
   example: {
     attributes: {
       layout: {
@@ -25956,19 +26303,20 @@ const group_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/heading.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const heading = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const heading = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6 5V18.5911L12 13.8473L18 18.5911V5H6Z"
   })
-});
-/* harmony default export */ const library_heading = (heading);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/heading/deprecated.js
 /**
@@ -26624,6 +26972,47 @@ const heading_transforms_transforms = {
 };
 /* harmony default export */ const heading_transforms = (heading_transforms_transforms);
 
+;// ./packages/icons/build-module/library/text-color.js
+/* eslint-disable prettier/prettier */
+/**
+ * WordPress dependencies
+ */
+
+
+/* harmony default export */ const text_color = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12.9 6h-2l-4 11h1.9l1.1-3h4.2l1.1 3h1.9L12.9 6zm-2.5 6.5l1.5-4.9 1.7 4.9h-3.2z"
+  })
+}));
+/* eslint-enable */
+
+;// ./packages/block-library/build-module/heading/variations.js
+/**
+ * WordPress dependencies
+ */
+
+
+const heading_variations_variations = [{
+  name: 'Stretchy Heading',
+  title: (0,external_wp_i18n_namespaceObject.__)('Stretchy Heading'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Heading text automatically resizes to fit the container width.'),
+  attributes: {
+    fitText: true
+  },
+  scope: ['inserter'],
+  isActive: blockAttributes => blockAttributes.fitText,
+  icon: text_color,
+  example: {
+    attributes: {
+      content: (0,external_wp_i18n_namespaceObject.__)('This heading will automatically resize to fit its container width.'),
+      fitText: true
+    }
+  }
+}];
+/* harmony default export */ const heading_variations = (heading_variations_variations);
+
 ;// ./packages/block-library/build-module/heading/index.js
 /**
  * WordPress dependencies
@@ -26704,6 +27093,7 @@ const heading_metadata = {
       __experimentalTextTransform: true,
       __experimentalTextDecoration: true,
       __experimentalWritingMode: true,
+      fitText: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -26719,12 +27109,13 @@ const heading_metadata = {
 };
 
 
+
 const {
   name: heading_name
 } = heading_metadata;
 
 const heading_settings = {
-  icon: library_heading,
+  icon: heading,
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('Code is Poetry'),
@@ -26761,7 +27152,8 @@ const heading_settings = {
     };
   },
   edit: heading_edit,
-  save: heading_save_save
+  save: heading_save_save,
+  variations: heading_variations
 };
 const heading_init = () => initBlock({
   name: heading_name,
@@ -26770,19 +27162,20 @@ const heading_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/home.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const home = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const home = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z"
   })
-});
-/* harmony default export */ const library_home = (home);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/home-link/edit.js
 /**
@@ -26915,7 +27308,7 @@ const {
 } = home_link_metadata;
 
 const home_link_settings = {
-  icon: library_home,
+  icon: home,
   edit: HomeEdit,
   save: home_link_save_save,
   example: {
@@ -26931,19 +27324,20 @@ const home_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/html.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const html = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const html = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4.8 11.4H2.1V9H1v6h1.1v-2.6h2.7V15h1.1V9H4.8v2.4zm1.9-1.3h1.7V15h1.1v-4.9h1.7V9H6.7v1.1zM16.2 9l-1.5 2.7L13.3 9h-.9l-.8 6h1.1l.5-4 1.5 2.8 1.5-2.8.5 4h1.1L17 9h-.8zm3.8 5V9h-1.1v6h3.6v-1H20z"
   })
-});
-/* harmony default export */ const library_html = (html);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/html/preview.js
 /**
@@ -27138,7 +27532,7 @@ const {
 } = html_metadata;
 
 const html_settings = {
-  icon: library_html,
+  icon: html,
   example: {
     attributes: {
       content: '<marquee>' + (0,external_wp_i18n_namespaceObject.__)('Welcome to the wonderful world of blocks…') + '</marquee>'
@@ -28285,79 +28679,84 @@ const deprecated_v8 = {
 /* harmony default export */ const image_deprecated = ([deprecated_v8, image_deprecated_v7, image_deprecated_v6, image_deprecated_v5, image_deprecated_v4, image_deprecated_v3, image_deprecated_v2, image_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/plugins.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const plugins = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const plugins = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z"
   })
-});
-/* harmony default export */ const library_plugins = (plugins);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/chevron-down.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_down = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
   })
-});
-/* harmony default export */ const chevron_down = (chevronDown);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/crop.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const crop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const crop = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 20v-2h2v-1.5H7.75a.25.25 0 0 1-.25-.25V4H6v2H4v1.5h2v8.75c0 .966.784 1.75 1.75 1.75h8.75v2H18ZM9.273 7.5h6.977a.25.25 0 0 1 .25.25v6.977H18V7.75A1.75 1.75 0 0 0 16.25 6H9.273v1.5Z"
   })
-});
-/* harmony default export */ const library_crop = (crop);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/overlay-text.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const overlayText = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const overlay_text = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12-9.8c.4 0 .8-.3.9-.7l1.1-3h3.6l.5 1.7h1.9L13 9h-2.2l-3.4 9.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12H20V6c0-1.1-.9-2-2-2zm-6 7l1.4 3.9h-2.7L12 11z"
   })
-});
-/* harmony default export */ const overlay_text = (overlayText);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/upload.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const upload = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z"
   })
-});
-/* harmony default export */ const library_upload = (upload);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/image/image.js
 /**
@@ -28968,7 +29367,7 @@ function image_Image({
         resetLightbox: resetLightbox
       }), allowCrop && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         onClick: () => setIsEditingImage(true),
-        icon: library_crop,
+        icon: crop,
         label: (0,external_wp_i18n_namespaceObject.__)('Crop')
       }), showCoverControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         icon: overlay_text,
@@ -28979,7 +29378,7 @@ function image_Image({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           onClick: uploadExternal,
-          icon: library_upload,
+          icon: upload,
           label: (0,external_wp_i18n_namespaceObject.__)('Upload to Media Library')
         })
       })
@@ -29634,7 +30033,7 @@ function ImageEdit({
       className: dist_clsx('block-editor-media-placeholder', {
         [borderProps.className]: !!borderProps.className && !isSingleSelected
       }),
-      icon: !isSmallContainer && (lockUrlControls ? library_plugins : library_image),
+      icon: !isSmallContainer && (lockUrlControls ? plugins : library_image),
       withIllustration: !isSingleSelected || isSmallContainer,
       label: !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Image'),
       instructions: !lockUrlControls && !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Drag and drop an image, upload, or choose from your library.'),
@@ -30170,19 +30569,20 @@ const image_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const comment = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const comment = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z"
   })
-});
-/* harmony default export */ const library_comment = (comment);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/latest-comments/edit.js
 /**
@@ -30406,7 +30806,7 @@ const {
 } = latest_comments_metadata;
 
 const latest_comments_settings = {
-  icon: library_comment,
+  icon: comment,
   example: {},
   edit: LatestComments
 };
@@ -30417,19 +30817,20 @@ const latest_comments_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-list.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postList = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_list = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 5.5H6a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5ZM6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1 5h1.5v1.5H7V9Zm1.5 4.5H7V15h1.5v-1.5ZM10 9h7v1.5h-7V9Zm7 4.5h-7V15h7v-1.5Z"
   })
-});
-/* harmony default export */ const post_list = (postList);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/latest-posts/deprecated.js
 /**
@@ -30597,79 +30998,84 @@ const {
 }]);
 
 ;// ./packages/icons/build-module/library/align-none.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const alignNone = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const align_none = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM5 9h14v6H5V9Z"
   })
-});
-/* harmony default export */ const align_none = (alignNone);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/position-left.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const positionLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const position_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M5 5.5h8V4H5v1.5ZM5 20h8v-1.5H5V20ZM19 9H5v6h14V9Z"
   })
-});
-/* harmony default export */ const position_left = (positionLeft);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/position-center.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const positionCenter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const position_center = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM7 9h10v6H7V9Z"
   })
-});
-/* harmony default export */ const position_center = (positionCenter);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/position-right.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const positionRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const position_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 5.5h-8V4h8v1.5ZM19 20h-8v-1.5h8V20ZM5 9h14v6H5V9Z"
   })
-});
-/* harmony default export */ const position_right = (positionRight);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/list.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const list = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const list = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 4v1.5h16V4H4zm8 8.5h8V11h-8v1.5zM4 20h16v-1.5H4V20zm4-8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z"
   })
-});
-/* harmony default export */ const library_list = (list);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/latest-posts/constants.js
 const MIN_EXCERPT_LENGTH = 10;
@@ -31178,7 +31584,7 @@ function LatestPostsEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
       children: [inspectorControls, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-        icon: library_pin,
+        icon: pin,
         label: (0,external_wp_i18n_namespaceObject.__)('Latest Posts'),
         children: !Array.isArray(latestPosts) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('No posts found.')
       })]
@@ -31188,14 +31594,14 @@ function LatestPostsEdit({
   // Removing posts from display should be instant.
   const displayPosts = latestPosts.length > postsToShow ? latestPosts.slice(0, postsToShow) : latestPosts;
   const layoutControls = [{
-    icon: library_list,
+    icon: list,
     title: (0,external_wp_i18n_namespaceObject._x)('List view', 'Latest posts block display setting'),
     onClick: () => setAttributes({
       postLayout: 'list'
     }),
     isActive: postLayout === 'list'
   }, {
-    icon: library_grid,
+    icon: grid,
     title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'Latest posts block display setting'),
     onClick: () => setAttributes({
       postLayout: 'grid'
@@ -31899,94 +32305,100 @@ const list_deprecated_v3 = {
 /* harmony default export */ const list_deprecated = ([list_deprecated_v3, list_deprecated_v2, list_deprecated_v1, v0]);
 
 ;// ./packages/icons/build-module/library/format-outdent-rtl.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatOutdentRTL = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_outdent_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM15.4697 14.9697L18.4393 12L15.4697 9.03033L16.5303 7.96967L20.0303 11.4697L20.5607 12L20.0303 12.5303L16.5303 16.0303L15.4697 14.9697Z"
   })
-});
-/* harmony default export */ const format_outdent_rtl = (formatOutdentRTL);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/format-outdent.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatOutdent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_outdent = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-4-4.6l-4 4 4 4 1-1-3-3 3-3-1-1z"
   })
-});
-/* harmony default export */ const format_outdent = (formatOutdent);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/format-list-bullets-rtl.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatListBulletsRTL = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_list_bullets_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
   })
-});
-/* harmony default export */ const format_list_bullets_rtl = (formatListBulletsRTL);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/format-list-bullets.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatListBullets = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_list_bullets = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   })
-});
-/* harmony default export */ const format_list_bullets = (formatListBullets);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/format-list-numbered-rtl.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatListNumberedRTL = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_list_numbered_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M3.8 15.8h8.9v-1.5H3.8v1.5zm0-7h8.9V7.2H3.8v1.6zm14.7-2.1V10h1V5.3l-2.2.7.3 1 .9-.3zm1.2 6.1c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5H20v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3 0-.8-.3-1.1z"
   })
-});
-/* harmony default export */ const format_list_numbered_rtl = (formatListNumberedRTL);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/format-list-numbered.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatListNumbered = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_list_numbered = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM5 6.7V10h1V5.3L3.8 6l.4 1 .8-.3zm-.4 5.7c-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-1c.3-.6.8-1.4.9-2.1.1-.3 0-.8-.2-1.1-.5-.6-1.3-.5-1.7-.4z"
   })
-});
-/* harmony default export */ const format_list_numbered = (formatListNumbered);
+}));
+/* eslint-enable */
 
 ;// external ["wp","deprecated"]
 const external_wp_deprecated_namespaceObject = window["wp"]["deprecated"];
@@ -32588,7 +33000,7 @@ const {
 } = list_metadata;
 
 const list_settings = {
-  icon: library_list,
+  icon: list,
   example: {
     innerBlocks: [{
       name: 'core/list-item',
@@ -32630,49 +33042,52 @@ const list_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/list-item.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const listItem = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const list_item = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12 11v1.5h8V11h-8zm-6-1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   })
-});
-/* harmony default export */ const list_item = (listItem);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/format-indent-rtl.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatIndentRTL = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_indent_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM20.0303 9.03033L17.0607 12L20.0303 14.9697L18.9697 16.0303L15.4697 12.5303L14.9393 12L15.4697 11.4697L18.9697 7.96967L20.0303 9.03033Z"
   })
-});
-/* harmony default export */ const format_indent_rtl = (formatIndentRTL);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/format-indent.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatIndent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_indent = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-8-3.5l3 3-3 3 1 1 4-4-4-4-1 1z"
   })
-});
-/* harmony default export */ const format_indent = (formatIndent);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/list-item/hooks/use-indent-list-item.js
 /**
@@ -33312,19 +33727,20 @@ const list_item_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/login.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const login = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const login = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11 14.5l1.1 1.1 3-3 .5-.5-.6-.6-3-3-1 1 1.7 1.7H5v1.5h7.7L11 14.5zM16.8 5h-7c-1.1 0-2 .9-2 2v1.5h1.5V7c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v10c0 .3-.2.5-.5.5h-7c-.3 0-.5-.2-.5-.5v-1.5H7.8V17c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"
   })
-});
-/* harmony default export */ const library_login = (login);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/loginout/edit.js
 /**
@@ -33481,7 +33897,7 @@ const {
 } = loginout_metadata;
 
 const loginout_settings = {
-  icon: library_login,
+  icon: login,
   edit: LoginOutEdit
 };
 const loginout_init = () => initBlock({
@@ -33491,19 +33907,20 @@ const loginout_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/media-and-text.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const mediaAndText = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const media_and_text = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M3 6v11.5h8V6H3Zm11 3h7V7.5h-7V9Zm7 3.5h-7V11h7v1.5ZM14 16h7v-1.5h-7V16Z"
   })
-});
-/* harmony default export */ const media_and_text = (mediaAndText);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/media-text/constants.js
 /**
@@ -34472,42 +34889,45 @@ const media_text_deprecated_v1 = {
 /* harmony default export */ const media_text_deprecated = ([media_text_deprecated_v7, media_text_deprecated_v6, media_text_deprecated_v5, media_text_deprecated_v4, media_text_deprecated_v3, media_text_deprecated_v2, media_text_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/pull-left.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const pullLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pull_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 18h6V6H4v12zm9-9.5V10h7V8.5h-7zm0 7h7V14h-7v1.5z"
   })
-});
-/* harmony default export */ const pull_left = (pullLeft);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/pull-right.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const pullRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pull_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M14 6v12h6V6h-6zM4 10h7V8.5H4V10zm0 5.5h7V14H4v1.5z"
   })
-});
-/* harmony default export */ const pull_right = (pullRight);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/media.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const media = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const media = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -34517,8 +34937,8 @@ const media = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ext
     clipRule: "evenodd",
     d: "m5 3c-1.10457 0-2 .89543-2 2v14c0 1.1046.89543 2 2 2h14c1.1046 0 2-.8954 2-2v-14c0-1.10457-.8954-2-2-2zm14 1.5h-14c-.27614 0-.5.22386-.5.5v10.7072l3.62953-2.6465c.25108-.1831.58905-.1924.84981-.0234l2.92666 1.8969 3.5712-3.4719c.2911-.2831.7545-.2831 1.0456 0l2.9772 2.8945v-9.3568c0-.27614-.2239-.5-.5-.5zm-14.5 14.5v-1.4364l4.09643-2.987 2.99567 1.9417c.2936.1903.6798.1523.9307-.0917l3.4772-3.3806 3.4772 3.3806.0228-.0234v2.5968c0 .2761-.2239.5-.5.5h-14c-.27614 0-.5-.2239-.5-.5z"
   })]
-});
-/* harmony default export */ const library_media = (media);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/media-text/image-fill.js
 function imageFillStyles(url, focalPoint) {
@@ -34606,7 +35026,7 @@ function PlaceholderContainer({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
     icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-      icon: library_media
+      icon: media
     }),
     labels: {
       title: (0,external_wp_i18n_namespaceObject.__)('Media area')
@@ -35841,19 +36261,20 @@ const missing_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/more.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const more = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const more = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 9v1.5h16V9H4zm12 5.5h4V13h-4v1.5zm-6 0h4V13h-4v1.5zm-6 0h4V13H4v1.5z"
   })
-});
-/* harmony default export */ const library_more = (more);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/more/edit.js
 /**
@@ -36027,7 +36448,7 @@ const {
 } = more_metadata;
 
 const more_settings = {
-  icon: library_more,
+  icon: more,
   example: {},
   __experimentalLabel(attributes, {
     context
@@ -36051,29 +36472,31 @@ const more_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/navigation.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const navigation = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const navigation = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z"
   })
-});
-/* harmony default export */ const library_navigation = (navigation);
+}));
+/* eslint-enable */
 
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 ;// ./packages/icons/build-module/library/page.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const page = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -36081,8 +36504,8 @@ const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(exte
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
   })]
-});
-/* harmony default export */ const library_page = (page);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/icon/index.js
 /**
@@ -36115,19 +36538,20 @@ const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(exte
 }));
 
 ;// ./packages/icons/build-module/library/close.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const close_close = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const library_close = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"
   })
-});
-/* harmony default export */ const library_close = (close_close);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/navigation/constants.js
 const constants_DEFAULT_BLOCK = {
@@ -36326,7 +36750,7 @@ const PlaceholderPreview = ({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "wp-block-navigation-placeholder__actions__indicator",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-        icon: library_navigation
+        icon: navigation
       }), (0,external_wp_i18n_namespaceObject.__)('Navigation')]
     })
   });
@@ -36334,19 +36758,20 @@ const PlaceholderPreview = ({
 /* harmony default export */ const placeholder_preview = (PlaceholderPreview);
 
 ;// ./packages/icons/build-module/library/more-vertical.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const more_vertical = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z"
   })
-});
-/* harmony default export */ const more_vertical = (moreVertical);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/navigation/edit/navigation-menu-selector.js
 /**
@@ -36550,7 +36975,7 @@ function NavigationPlaceholder({
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
             className: "wp-block-navigation-placeholder__actions__indicator",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-              icon: library_navigation
+              icon: navigation
             }), " ", (0,external_wp_i18n_namespaceObject.__)('Navigation')]
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("hr", {}), isResolvingActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigation_menu_selector, {
             currentMenuId: currentMenuId,
@@ -36570,19 +36995,20 @@ function NavigationPlaceholder({
 }
 
 ;// ./packages/icons/build-module/library/menu.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const menu = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const menu = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M5 5v1.5h14V5H5zm0 7.8h14v-1.5H5v1.5zM5 19h14v-1.5H5V19z"
   })
-});
-/* harmony default export */ const library_menu = (menu);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/navigation/edit/overlay-menu-icon.js
 /**
@@ -36596,7 +37022,7 @@ function OverlayMenuIcon({
 }) {
   if (icon === 'menu') {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-      icon: library_menu
+      icon: menu
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
@@ -36740,7 +37166,8 @@ function NavigationInnerBlocks({
   const {
     isImmediateParentOfSelectedBlock,
     selectedBlockHasChildren,
-    isSelected
+    isSelected,
+    hasSelectedDescendant
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockCount,
@@ -36751,6 +37178,7 @@ function NavigationInnerBlocks({
     return {
       isImmediateParentOfSelectedBlock: hasSelectedInnerBlock(clientId, false),
       selectedBlockHasChildren: !!getBlockCount(selectedBlockId),
+      hasSelectedDescendant: hasSelectedInnerBlock(clientId, true),
       // This prop is already available but computing it here ensures it's
       // fresh compared to isImmediateParentOfSelectedBlock.
       isSelected: selectedBlockId === clientId
@@ -36786,7 +37214,7 @@ function NavigationInnerBlocks({
     // This should be a temporary fix, to be replaced by improvements to
     // the sibling inserter.
     // See https://github.com/WordPress/gutenberg/issues/37572.
-    renderAppender: isSelected || isImmediateParentOfSelectedBlock && !selectedBlockHasChildren ||
+    renderAppender: isSelected || isImmediateParentOfSelectedBlock && !selectedBlockHasChildren || hasSelectedDescendant ||
     // Show the appender while dragging to allow inserting element between item and the appender.
     parentOrChildHasSelection ? external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender : false,
     placeholder: showPlaceholder ? placeholder : undefined,
@@ -37445,65 +37873,69 @@ function createTemplatePartId(theme, slug) {
 }
 
 ;// ./packages/icons/build-module/library/header.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const header = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const header = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18.5 10.5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
   })
-});
-/* harmony default export */ const library_header = (header);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/footer.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const footer = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const footer = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     fillRule: "evenodd",
     d: "M18 5.5h-8v8h8.5V6a.5.5 0 00-.5-.5zm-9.5 8h-3V6a.5.5 0 01.5-.5h2.5v8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
   })
-});
-/* harmony default export */ const library_footer = (footer);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/sidebar.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const sidebar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const sidebar = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
   })
-});
-/* harmony default export */ const library_sidebar = (sidebar);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/symbol-filled.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const symbolFilled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const symbol_filled = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z"
   })
-});
-/* harmony default export */ const symbol_filled = (symbolFilled);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/template-part/edit/utils/get-template-part-icon.js
 /**
@@ -37512,11 +37944,11 @@ const symbolFilled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 const getTemplatePartIcon = iconName => {
   if ('header' === iconName) {
-    return library_header;
+    return header;
   } else if ('footer' === iconName) {
-    return library_footer;
+    return footer;
   } else if ('sidebar' === iconName) {
-    return library_sidebar;
+    return sidebar;
   }
   return symbol_filled;
 };
@@ -37916,34 +38348,36 @@ function DeletedNavigationWarning({
 /* harmony default export */ const deleted_navigation_warning = (DeletedNavigationWarning);
 
 ;// ./packages/icons/build-module/library/add-submenu.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const addSubmenu = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const add_submenu = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M2 12c0 3.6 2.4 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.5 0-4.5-1.5-4.5-4s2-4.5 4.5-4.5h3.5V6H8c-3.6 0-6 2.4-6 6zm19.5-1h-8v1.5h8V11zm0 5h-8v1.5h8V16zm0-10h-8v1.5h8V6z"
   })
-});
-/* harmony default export */ const add_submenu = (addSubmenu);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/chevron-up.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_up = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
   })
-});
-/* harmony default export */ const chevron_up = (chevronUp);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/navigation/edit/leaf-more-menu.js
 /**
@@ -38082,249 +38516,55 @@ function LeafMoreMenu(props) {
   });
 }
 
-;// external ["wp","escapeHtml"]
-const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
-;// ./packages/block-library/build-module/navigation-link/update-attributes.js
-/* wp:polyfill */
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Determines if an entity link should be severed based on URL changes.
- *
- * @param {string} originalUrl - The original URL
- * @param {string} newUrl      - The new URL
- * @return {boolean} True if the entity link should be severed
- */
-const shouldSeverEntityLink = (originalUrl, newUrl) => {
-  if (!originalUrl || !newUrl) {
-    return false;
-  }
-  const normalizePath = path => {
-    if (!path) {
-      return '';
-    }
-    return path.replace(/\/+$/, ''); // Remove trailing slashes
-  };
-
-  // Helper function to create URL objects with proper base handling
-  const createUrlObject = (url, baseUrl = null) => {
-    try {
-      // Always provide a base URL - it will be ignored for absolute URLs
-      // Use window.location.origin in browser, fallback for Node/tests
-      const base = baseUrl || (typeof window !== 'undefined' ? window.location.origin : 'https://wordpress.org');
-      return new URL(url, base);
-    } catch (error) {
-      // If URL construction still fails, it's likely an invalid URL
-      // and we should sever the entity link
-      return null;
-    }
-  };
-  const originalUrlObj = createUrlObject(originalUrl);
-  if (!originalUrlObj) {
-    return true;
-  }
-  const newUrlObj = createUrlObject(newUrl, originalUrl);
-  if (!newUrlObj) {
-    return true;
-  }
-
-  // Move these declarations here, after the null checks
-  const originalHostname = originalUrlObj.hostname;
-  const newHostname = newUrlObj.hostname;
-  const originalPath = normalizePath((0,external_wp_url_namespaceObject.getPath)(originalUrlObj.toString()));
-  const newPath = normalizePath((0,external_wp_url_namespaceObject.getPath)(newUrlObj.toString()));
-
-  // If hostname or path changed, sever the entity link
-  if (originalHostname !== newHostname || originalPath !== newPath) {
-    return true;
-  }
-
-  // Special handling for plain permalinks (query string post IDs)
-  const originalP = originalUrlObj.searchParams.get('p');
-  const newP = newUrlObj.searchParams.get('p');
-
-  // If both are plain permalinks (with ?p= or ?page_id=), compare the IDs
-  if (originalP && newP && originalP !== newP) {
-    return true;
-  }
-  const originalPageId = originalUrlObj.searchParams.get('page_id');
-  const newPageId = newUrlObj.searchParams.get('page_id');
-  if (originalPageId && newPageId && originalPageId !== newPageId) {
-    return true;
-  }
-  // If switching between ?p= and ?page_id=, or one is missing, sever
-  if (originalP && newPageId || originalPageId && newP) {
-    return true;
-  }
-
-  // If only query string or fragment changed, preserve the entity link
-  return false;
-};
-
-/**
- * @typedef {'post-type'|'custom'|'taxonomy'|'post-type-archive'} WPNavigationLinkKind
- */
-/**
- * Navigation Link Block Attributes
- *
- * @typedef {Object} WPNavigationLinkBlockAttributes
- *
- * @property {string}               [label]         Link text.
- * @property {WPNavigationLinkKind} [kind]          Kind is used to differentiate between term and post ids to check post draft status.
- * @property {string}               [type]          The type such as post, page, tag, category and other custom types.
- * @property {string}               [rel]           The relationship of the linked URL.
- * @property {number}               [id]            A post or term id.
- * @property {boolean}              [opensInNewTab] Sets link target to _blank when true.
- * @property {string}               [url]           Link href.
- * @property {string}               [title]         Link title attribute.
- */
-/**
- * Link Control onChange handler that updates block attributes when a setting is changed.
- *
- * @param {Object}                          updatedValue    New block attributes to update.
- * @param {Function}                        setAttributes   Block attribute update function.
- * @param {WPNavigationLinkBlockAttributes} blockAttributes Current block attributes.
- */
-
-const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}) => {
-  var _newUrl$replace;
-  const {
-    label: originalLabel = '',
-    kind: originalKind = '',
-    type: originalType = ''
-  } = blockAttributes;
-  const {
-    title: newLabel = '',
-    // the title of any provided Post.
-    label: newLabelFromLabel = '',
-    // alternative to title
-    url: newUrl,
-    opensInNewTab,
-    id: newID,
-    kind: newKind = originalKind,
-    type: newType = originalType
-  } = updatedValue;
-
-  // Use title if provided, otherwise fall back to label
-  const finalNewLabel = newLabel || newLabelFromLabel;
-  const newLabelWithoutHttp = finalNewLabel.replace(/http(s?):\/\//gi, '');
-  const newUrlWithoutHttp = (_newUrl$replace = newUrl?.replace(/http(s?):\/\//gi, '')) !== null && _newUrl$replace !== void 0 ? _newUrl$replace : '';
-  const useNewLabel = finalNewLabel && finalNewLabel !== originalLabel &&
-  // LinkControl without the title field relies
-  // on the check below. Specifically, it assumes that
-  // the URL is the same as a title.
-  // This logic a) looks suspicious and b) should really
-  // live in the LinkControl and not here. It's a great
-  // candidate for future refactoring.
-  newLabelWithoutHttp !== newUrlWithoutHttp;
-
-  // Unfortunately this causes the escaping model to be inverted.
-  // The escaped content is stored in the block attributes (and ultimately in the database),
-  // and then the raw data is "recovered" when outputting into the DOM.
-  // It would be preferable to store the **raw** data in the block attributes and escape it in JS.
-  // Why? Because there isn't one way to escape data. Depending on the context, you need to do
-  // different transforms. It doesn't make sense to me to choose one of them for the purposes of storage.
-  // See also:
-  // - https://github.com/WordPress/gutenberg/pull/41063
-  // - https://github.com/WordPress/gutenberg/pull/18617.
-  const label = useNewLabel ? (0,external_wp_escapeHtml_namespaceObject.escapeHTML)(finalNewLabel) : originalLabel || (0,external_wp_escapeHtml_namespaceObject.escapeHTML)(newUrlWithoutHttp);
-
-  // In https://github.com/WordPress/gutenberg/pull/24670 we decided to use "tag" in favor of "post_tag"
-  const type = newType === 'post_tag' ? 'tag' : newType.replace('-', '_');
-  const isBuiltInType = ['post', 'page', 'tag', 'category'].indexOf(type) > -1;
-  const isCustomLink = !newKind && !isBuiltInType || newKind === 'custom';
-  const kind = isCustomLink ? 'custom' : newKind;
-  const attributes = {
-    // Passed `url` may already be encoded. To prevent double encoding, decodeURI is executed to revert to the original string.
-    ...(newUrl !== undefined ? {
-      url: newUrl ? encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(newUrl)) : newUrl
-    } : {}),
-    ...(label && {
-      label
-    }),
-    ...(undefined !== opensInNewTab && {
-      opensInNewTab
-    }),
-    ...(kind && {
-      kind
-    }),
-    ...(type && type !== 'URL' && {
-      type
-    })
-  };
-
-  // If the block's id is set then the menu item is linking to an entity.
-  // Therefore, if the URL is set but a new ID is not provided, check if
-  // the entity link should be severed based on URL changes.
-  if (newUrl && !newID && blockAttributes.id) {
-    const shouldSever = shouldSeverEntityLink(blockAttributes.url, newUrl);
-    if (shouldSever) {
-      attributes.id = undefined; // explicitly "unset" the ID.
-      // When URL is manually changed in a way that severs the entity link,
-      // update kind and type to "custom" to indicate this is now a custom link.
-      attributes.kind = 'custom';
-      attributes.type = 'custom';
-    }
-  } else if (newID && Number.isInteger(newID)) {
-    attributes.id = newID;
-  } else if (blockAttributes.id) {
-    // If we have an existing ID and no URL change, ensure kind and type are preserved
-    attributes.kind = kind;
-    attributes.type = type;
-  }
-  setAttributes(attributes);
-};
-
 ;// ./packages/icons/build-module/library/plus.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const plus = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
   })
-});
-/* harmony default export */ const library_plus = (plus);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/chevron-right-small.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronRightSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_right_small = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z"
   })
-});
-/* harmony default export */ const chevron_right_small = (chevronRightSmall);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/chevron-left-small.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const chevronLeftSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const chevron_left_small = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z"
   })
-});
-/* harmony default export */ const chevron_left_small = (chevronLeftSmall);
+}));
+/* eslint-enable */
 
-;// ./packages/block-library/build-module/navigation-link/dialog-wrapper.js
+;// ./packages/block-library/build-module/navigation-link/link-ui/dialog-wrapper.js
 /**
  * WordPress dependencies
  */
@@ -38400,7 +38640,7 @@ function DialogWrapper({
 }
 /* harmony default export */ const dialog_wrapper = (DialogWrapper);
 
-;// ./packages/block-library/build-module/navigation-link/page-creator.js
+;// ./packages/block-library/build-module/navigation-link/link-ui/page-creator.js
 /**
  * WordPress dependencies
  */
@@ -38531,7 +38771,7 @@ function LinkUIPageCreator({
   });
 }
 
-;// ./packages/block-library/build-module/navigation-link/block-inserter.js
+;// ./packages/block-library/build-module/navigation-link/link-ui/block-inserter.js
 /**
  * WordPress dependencies
  */
@@ -38593,7 +38833,7 @@ function LinkUIBlockInserter({
 }
 /* harmony default export */ const block_inserter = (LinkUIBlockInserter);
 
-;// ./packages/block-library/build-module/navigation-link/link-ui.js
+;// ./packages/block-library/build-module/navigation-link/link-ui/index.js
 /**
  * WordPress dependencies
  */
@@ -38814,7 +39054,7 @@ const LinkUITools = ({
     children: [canAddPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addPageButtonRef,
-      icon: library_plus,
+      icon: plus,
       onClick: e => {
         e.preventDefault();
         setAddingPage(true);
@@ -38824,7 +39064,7 @@ const LinkUITools = ({
     }), canAddBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addBlockButtonRef,
-      icon: library_plus,
+      icon: plus,
       onClick: e => {
         e.preventDefault();
         setAddingBlock(true);
@@ -38835,6 +39075,203 @@ const LinkUITools = ({
   });
 };
 /* harmony default export */ const link_ui = ((/* unused pure expression or super */ null && (LinkUITools)));
+
+;// external ["wp","escapeHtml"]
+const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
+;// ./packages/block-library/build-module/navigation-link/shared/update-attributes.js
+/* wp:polyfill */
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Determines if an entity link should be severed based on URL changes.
+ *
+ * @param {string} originalUrl - The original URL
+ * @param {string} newUrl      - The new URL
+ * @return {boolean} True if the entity link should be severed
+ */
+const shouldSeverEntityLink = (originalUrl, newUrl) => {
+  if (!originalUrl || !newUrl) {
+    return false;
+  }
+  const normalizePath = path => {
+    if (!path) {
+      return '';
+    }
+    return path.replace(/\/+$/, ''); // Remove trailing slashes
+  };
+
+  // Helper function to create URL objects with proper base handling
+  const createUrlObject = (url, baseUrl = null) => {
+    try {
+      // Always provide a base URL - it will be ignored for absolute URLs
+      // Use window.location.origin in browser, fallback for Node/tests
+      const base = baseUrl || (typeof window !== 'undefined' ? window.location.origin : 'https://wordpress.org');
+      return new URL(url, base);
+    } catch (error) {
+      // If URL construction still fails, it's likely an invalid URL
+      // and we should sever the entity link
+      return null;
+    }
+  };
+  const originalUrlObj = createUrlObject(originalUrl);
+  if (!originalUrlObj) {
+    return true;
+  }
+  const newUrlObj = createUrlObject(newUrl, originalUrl);
+  if (!newUrlObj) {
+    return true;
+  }
+
+  // Move these declarations here, after the null checks
+  const originalHostname = originalUrlObj.hostname;
+  const newHostname = newUrlObj.hostname;
+  const originalPath = normalizePath((0,external_wp_url_namespaceObject.getPath)(originalUrlObj.toString()));
+  const newPath = normalizePath((0,external_wp_url_namespaceObject.getPath)(newUrlObj.toString()));
+
+  // If hostname or path changed, sever the entity link
+  if (originalHostname !== newHostname || originalPath !== newPath) {
+    return true;
+  }
+
+  // Special handling for plain permalinks (query string post IDs)
+  const originalP = originalUrlObj.searchParams.get('p');
+  const newP = newUrlObj.searchParams.get('p');
+
+  // If both are plain permalinks (with ?p= or ?page_id=), compare the IDs
+  if (originalP && newP && originalP !== newP) {
+    return true;
+  }
+  const originalPageId = originalUrlObj.searchParams.get('page_id');
+  const newPageId = newUrlObj.searchParams.get('page_id');
+  if (originalPageId && newPageId && originalPageId !== newPageId) {
+    return true;
+  }
+  // If switching between ?p= and ?page_id=, or one is missing, sever
+  if (originalP && newPageId || originalPageId && newP) {
+    return true;
+  }
+
+  // If only query string or fragment changed, preserve the entity link
+  return false;
+};
+
+/**
+ * @typedef {'post-type'|'custom'|'taxonomy'|'post-type-archive'} WPNavigationLinkKind
+ */
+/**
+ * Navigation Link Block Attributes
+ *
+ * @typedef {Object} WPNavigationLinkBlockAttributes
+ *
+ * @property {string}               [label]         Link text.
+ * @property {WPNavigationLinkKind} [kind]          Kind is used to differentiate between term and post ids to check post draft status.
+ * @property {string}               [type]          The type such as post, page, tag, category and other custom types.
+ * @property {string}               [rel]           The relationship of the linked URL.
+ * @property {number}               [id]            A post or term id.
+ * @property {boolean}              [opensInNewTab] Sets link target to _blank when true.
+ * @property {string}               [url]           Link href.
+ * @property {string}               [title]         Link title attribute.
+ */
+/**
+ * Link Control onChange handler that updates block attributes when a setting is changed.
+ *
+ * @param {Object}                          updatedValue    New block attributes to update.
+ * @param {Function}                        setAttributes   Block attribute update function.
+ * @param {WPNavigationLinkBlockAttributes} blockAttributes Current block attributes.
+ */
+
+const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}) => {
+  var _newUrl$replace;
+  const {
+    label: originalLabel = '',
+    kind: originalKind = '',
+    type: originalType = ''
+  } = blockAttributes;
+  const {
+    title: newLabel = '',
+    // the title of any provided Post.
+    label: newLabelFromLabel = '',
+    // alternative to title
+    url: newUrl,
+    opensInNewTab,
+    id: newID,
+    kind: newKind = originalKind,
+    type: newType = originalType
+  } = updatedValue;
+
+  // Use title if provided, otherwise fall back to label
+  const finalNewLabel = newLabel || newLabelFromLabel;
+  const newLabelWithoutHttp = finalNewLabel.replace(/http(s?):\/\//gi, '');
+  const newUrlWithoutHttp = (_newUrl$replace = newUrl?.replace(/http(s?):\/\//gi, '')) !== null && _newUrl$replace !== void 0 ? _newUrl$replace : '';
+  const useNewLabel = finalNewLabel && finalNewLabel !== originalLabel &&
+  // LinkControl without the title field relies
+  // on the check below. Specifically, it assumes that
+  // the URL is the same as a title.
+  // This logic a) looks suspicious and b) should really
+  // live in the LinkControl and not here. It's a great
+  // candidate for future refactoring.
+  newLabelWithoutHttp !== newUrlWithoutHttp;
+
+  // Unfortunately this causes the escaping model to be inverted.
+  // The escaped content is stored in the block attributes (and ultimately in the database),
+  // and then the raw data is "recovered" when outputting into the DOM.
+  // It would be preferable to store the **raw** data in the block attributes and escape it in JS.
+  // Why? Because there isn't one way to escape data. Depending on the context, you need to do
+  // different transforms. It doesn't make sense to me to choose one of them for the purposes of storage.
+  // See also:
+  // - https://github.com/WordPress/gutenberg/pull/41063
+  // - https://github.com/WordPress/gutenberg/pull/18617.
+  const label = useNewLabel ? (0,external_wp_escapeHtml_namespaceObject.escapeHTML)(finalNewLabel) : originalLabel || (0,external_wp_escapeHtml_namespaceObject.escapeHTML)(newUrlWithoutHttp);
+
+  // In https://github.com/WordPress/gutenberg/pull/24670 we decided to use "tag" in favor of "post_tag"
+  const type = newType === 'post_tag' ? 'tag' : newType.replace('-', '_');
+  const isBuiltInType = ['post', 'page', 'tag', 'category'].indexOf(type) > -1;
+  const isCustomLink = !newKind && !isBuiltInType || newKind === 'custom';
+  const kind = isCustomLink ? 'custom' : newKind;
+  const attributes = {
+    // Passed `url` may already be encoded. To prevent double encoding, decodeURI is executed to revert to the original string.
+    ...(newUrl !== undefined ? {
+      url: newUrl ? encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(newUrl)) : newUrl
+    } : {}),
+    ...(label && {
+      label
+    }),
+    ...(undefined !== opensInNewTab && {
+      opensInNewTab
+    }),
+    ...(kind && {
+      kind
+    }),
+    ...(type && type !== 'URL' && {
+      type
+    })
+  };
+
+  // If the block's id is set then the menu item is linking to an entity.
+  // Therefore, if the URL is set but a new ID is not provided, check if
+  // the entity link should be severed based on URL changes.
+  if (newUrl && !newID && blockAttributes.id) {
+    const shouldSever = shouldSeverEntityLink(blockAttributes.url, newUrl);
+    if (shouldSever) {
+      attributes.id = undefined; // explicitly "unset" the ID.
+      // When URL is manually changed in a way that severs the entity link,
+      // update kind and type to "custom" to indicate this is now a custom link.
+      attributes.kind = 'custom';
+      attributes.type = 'custom';
+    }
+  } else if (newID && Number.isInteger(newID)) {
+    attributes.id = newID;
+  } else if (blockAttributes.id) {
+    // If we have an existing ID and no URL change, ensure kind and type are preserved
+    attributes.kind = kind;
+    attributes.type = type;
+  }
+  setAttributes(attributes);
+};
 
 ;// ./packages/block-library/build-module/navigation/edit/menu-inspector-controls.js
 /**
@@ -38848,7 +39285,6 @@ const LinkUITools = ({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -39133,7 +39569,7 @@ function NavigationAddPageButton({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         name: "add-page",
-        icon: library_page,
+        icon: page,
         onClick: onAddPage,
         children: (0,external_wp_i18n_namespaceObject.__)('Add page')
       })
@@ -40515,7 +40951,7 @@ const {
 } = navigation_metadata;
 
 const navigation_settings = {
-  icon: library_navigation,
+  icon: navigation,
   example: {
     attributes: {
       overlayMenu: 'never'
@@ -40680,16 +41116,14 @@ function getEntityTypeName(type, kind) {
  * This component provides the inspector controls (ToolsPanel) that are identical
  * between both navigation blocks.
  *
- * @param {Object}   props                     - Component props
- * @param {Object}   props.attributes          - Block attributes
- * @param {Function} props.setAttributes       - Function to update block attributes
- * @param {Function} props.setIsEditingControl - Function to set editing state (optional)
- * @param {string}   props.clientId            - Block client ID
+ * @param {Object}   props               - Component props
+ * @param {Object}   props.attributes    - Block attributes
+ * @param {Function} props.setAttributes - Function to update block attributes
+ * @param {string}   props.clientId      - Block client ID
  */
 function controls_Controls({
   attributes,
   setAttributes,
-  setIsEditingControl = () => {},
   clientId
 }) {
   const {
@@ -40751,9 +41185,7 @@ function controls_Controls({
             label: labelValue
           });
         },
-        autoComplete: "off",
-        onFocus: () => setIsEditingControl(true),
-        onBlur: () => setIsEditingControl(false)
+        autoComplete: "off"
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!url,
@@ -40784,7 +41216,6 @@ function controls_Controls({
             return;
           }
           lastURLRef.current = url;
-          setIsEditingControl(true);
         },
         onBlur: () => {
           if (hasUrlBinding) {
@@ -40797,7 +41228,6 @@ function controls_Controls({
             ...attributes,
             url: lastURLRef.current
           });
-          setIsEditingControl(false);
         },
         help: hasUrlBinding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BindingHelpText, {
           type: attributes.type,
@@ -41049,13 +41479,10 @@ function NavigationLinkEdit({
   const {
     replaceBlock,
     __unstableMarkNextChangeAsNotPersistent,
-    selectBlock,
-    selectPreviousBlock
+    selectBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   // Have the link editing ui open on mount when lacking a url and selected.
   const [isLinkOpen, setIsLinkOpen] = (0,external_wp_element_namespaceObject.useState)(isSelected && !url);
-  // Store what element opened the popover, so we know where to return focus to (toolbar button vs navigation link text)
-  const [openedBy, setOpenedBy] = (0,external_wp_element_namespaceObject.useState)(null);
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
   const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -41065,17 +41492,14 @@ function NavigationLinkEdit({
   const ref = (0,external_wp_element_namespaceObject.useRef)();
   const linkUIref = (0,external_wp_element_namespaceObject.useRef)();
   const prevUrl = (0,external_wp_compose_namespaceObject.usePrevious)(url);
-
-  // Change the `label` and `url` using inspector causes RichText to change focus.
-  // This is a workaround to keep the focus on the field when it's focused we don't render the RichText.
-  // See: https://github.com/WordPress/gutenberg/pull/61374.
-  const [isEditingControl, setIsEditingControl] = (0,external_wp_element_namespaceObject.useState)(false);
+  const isNewLink = (0,external_wp_element_namespaceObject.useRef)(!url);
   const {
     isAtMaxNesting,
     isTopLevelLink,
     isParentOfSelectedBlock,
     hasChildren,
-    validateLinkStatus
+    validateLinkStatus,
+    parentBlockClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockCount,
@@ -41086,9 +41510,13 @@ function NavigationLinkEdit({
       getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
     const rootClientId = getBlockRootClientId(clientId);
-    const isTopLevel = getBlockName(rootClientId) === 'core/navigation';
+    const parentBlockName = getBlockName(rootClientId);
+    const isTopLevel = parentBlockName === 'core/navigation';
     const selectedBlockClientId = getSelectedBlockClientId();
     const rootNavigationClientId = isTopLevel ? rootClientId : getBlockParentsByBlockName(clientId, 'core/navigation')[0];
+
+    // Get the immediate parent - if it's a submenu, use it; otherwise use the navigation block
+    const parentBlockId = parentBlockName === 'core/navigation-submenu' ? rootClientId : rootNavigationClientId;
 
     // Enable when the root Navigation block is selected or any of its inner blocks.
     const enableLinkStatusValidation = selectedBlockClientId === rootNavigationClientId || hasSelectedInnerBlock(rootNavigationClientId, true);
@@ -41097,7 +41525,8 @@ function NavigationLinkEdit({
       isTopLevelLink: isTopLevel,
       isParentOfSelectedBlock: hasSelectedInnerBlock(clientId, true),
       hasChildren: !!getBlockCount(clientId),
-      validateLinkStatus: enableLinkStatusValidation
+      validateLinkStatus: enableLinkStatusValidation,
+      parentBlockClientId: parentBlockId
     };
   }, [clientId, maxNestingLevel]);
   const {
@@ -41126,6 +41555,18 @@ function NavigationLinkEdit({
     const newSubmenu = (0,external_wp_blocks_namespaceObject.createBlock)('core/navigation-submenu', attributes, innerBlocks);
     replaceBlock(clientId, newSubmenu);
   }, [getBlocks, clientId, selectBlock, replaceBlock, attributes]);
+
+  // On mount, if this is a new link without a URL and it's selected,
+  // select the parent block (submenu or navigation) instead to keep the appender visible.
+  // This helps us return focus to the appender if the user closes the link ui without creating a link.
+  // If we leave focus on this block, then when we close the link without creating a link, focus will
+  // be lost during the new block selection process.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (isNewLink.current && isSelected && !url) {
+      selectBlock(parentBlockClientId);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // If block has inner blocks, transform to Submenu.
     if (hasChildren) {
@@ -41134,7 +41575,7 @@ function NavigationLinkEdit({
       __unstableMarkNextChangeAsNotPersistent();
       transformToSubmenu();
     }
-  }, [hasChildren]);
+  }, [hasChildren, __unstableMarkNextChangeAsNotPersistent, transformToSubmenu]);
 
   // If the LinkControl popover is open and the URL has changed, close the LinkControl and focus the label text.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -41200,7 +41641,6 @@ function NavigationLinkEdit({
       // If this link is a child of a parent submenu item, the parent submenu item event will also open, closing this popover
       event.stopPropagation();
       setIsLinkOpen(true);
-      setOpenedBy(ref.current);
     }
   }
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -41232,7 +41672,6 @@ function NavigationLinkEdit({
   if (!url || isInvalid || isDraft) {
     blockProps.onClick = () => {
       setIsLinkOpen(true);
-      setOpenedBy(ref.current);
     };
   }
   const classes = dist_clsx('wp-block-navigation-item__content', {
@@ -41249,9 +41688,8 @@ function NavigationLinkEdit({
           icon: library_link,
           title: (0,external_wp_i18n_namespaceObject.__)('Link'),
           shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('k'),
-          onClick: event => {
+          onClick: () => {
             setIsLinkOpen(true);
-            setOpenedBy(event.currentTarget);
           }
         }), !isAtMaxNesting && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           name: "submenu",
@@ -41264,20 +41702,19 @@ function NavigationLinkEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(controls_Controls, {
         attributes: attributes,
         setAttributes: setAttributes,
-        setIsEditingControl: setIsEditingControl,
         clientId: clientId
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
         className: classes,
-        children: [!url && !isEditingControl && !metadata?.bindings?.url ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: [!url && !metadata?.bindings?.url ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "wp-block-navigation-link__placeholder-text",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: missingText
           })
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [!isInvalid && !isDraft && !isEditingControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [!isInvalid && !isDraft && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
               ref: ref,
               identifier: "label",
@@ -41296,7 +41733,7 @@ function NavigationLinkEdit({
               className: "wp-block-navigation-item__description",
               children: description
             })]
-          }), (isInvalid || isDraft || isEditingControl) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          }), (isInvalid || isDraft) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: dist_clsx('wp-block-navigation-link__placeholder-text', 'wp-block-navigation-link__label', {
               'is-invalid': isInvalid,
               'is-draft': isDraft
@@ -41316,33 +41753,14 @@ function NavigationLinkEdit({
           clientId: clientId,
           link: attributes,
           onClose: () => {
+            setIsLinkOpen(false);
             // If there is no link then remove the auto-inserted block.
             // This avoids empty blocks which can provided a poor UX.
             if (!url) {
-              // Fixes https://github.com/WordPress/gutenberg/issues/61361
-              // There's a chance we're closing due to the user selecting the browse all button.
-              // Only move focus if the focus is still within the popover ui. If it's not within
-              // the popover, it's because something has taken the focus from the popover, and
-              // we don't want to steal it back.
-              if (linkUIref.current.contains(window.document.activeElement)) {
-                // Select the previous block to keep focus nearby
-                selectPreviousBlock(clientId, true);
-              }
-
-              // Remove the link.
               onReplace([]);
-              return;
-            }
-            setIsLinkOpen(false);
-            if (openedBy) {
-              openedBy.focus();
-              setOpenedBy(null);
-            } else if (ref.current) {
-              // select the ref when adding a new link
-              ref.current.focus();
-            } else {
-              // Fallback
-              selectPreviousBlock(clientId, true);
+            } else if (isNewLink.current) {
+              // If we just created a new link, select it
+              selectBlock(clientId);
             }
           },
           anchor: popoverAnchor,
@@ -41376,34 +41794,36 @@ function navigation_link_save_save() {
 }
 
 ;// ./packages/icons/build-module/library/tag.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tag = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const tag = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4.75 4a.75.75 0 0 0-.75.75v7.826c0 .2.08.39.22.53l6.72 6.716a2.313 2.313 0 0 0 3.276-.001l5.61-5.611-.531-.53.532.528a2.315 2.315 0 0 0 0-3.264L13.104 4.22a.75.75 0 0 0-.53-.22H4.75ZM19 12.576a.815.815 0 0 1-.236.574l-5.61 5.611a.814.814 0 0 1-1.153 0L5.5 12.264V5.5h6.763l6.5 6.502a.816.816 0 0 1 .237.574ZM8.75 9.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
   })
-});
-/* harmony default export */ const library_tag = (tag);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/custom-post-type.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const customPostType = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const custom_post_type = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4zm.8-4l.7.7 2-2V12h1V9.2l2 2 .7-.7-2-2H12v-1H9.2l2-2-.7-.7-2 2V4h-1v2.8l-2-2-.7.7 2 2H4v1h2.8l-2 2z"
   })
-});
-/* harmony default export */ const custom_post_type = (customPostType);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/navigation-link/hooks.js
 /**
@@ -41415,11 +41835,11 @@ function getIcon(variationName) {
     case 'post':
       return post_list;
     case 'page':
-      return library_page;
+      return page;
     case 'tag':
-      return library_tag;
+      return tag;
     case 'category':
-      return library_category;
+      return category;
     default:
       return custom_post_type;
   }
@@ -41734,12 +42154,13 @@ const navigation_link_init = () => {
 };
 
 ;// ./packages/icons/build-module/library/remove-submenu.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const removeSubmenu = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const remove_submenu = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -41747,8 +42168,8 @@ const removeSubmenu = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.j
     clipRule: "evenodd",
     d: "m13.955 20.748 8-17.5-.91-.416L19.597 6H13.5v1.5h5.411l-1.6 3.5H13.5v1.5h3.126l-1.6 3.5H13.5l.028 1.5h.812l-1.295 2.832.91.416ZM17.675 16l-.686 1.5h4.539L21.5 16h-3.825Zm2.286-5-.686 1.5H21.5V11h-1.54ZM2 12c0 3.58 2.42 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.48 0-4.5-1.52-4.5-4S5.52 7.5 8 7.5h3.5V6H8c-3.58 0-6 2.42-6 6Z"
   })
-});
-/* harmony default export */ const remove_submenu = (removeSubmenu);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/navigation-submenu/icons.js
 /**
@@ -41895,12 +42316,9 @@ function NavigationSubmenuEdit({
   });
   const {
     __unstableMarkNextChangeAsNotPersistent,
-    replaceBlock,
-    selectBlock
+    replaceBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const [isLinkOpen, setIsLinkOpen] = (0,external_wp_element_namespaceObject.useState)(false);
-  // Store what element opened the popover, so we know where to return focus to (toolbar button vs navigation link text)
-  const [openedBy, setOpenedBy] = (0,external_wp_element_namespaceObject.useState)(null);
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
   const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -42010,7 +42428,6 @@ function NavigationSubmenuEdit({
       // If we don't stop propagation, this event bubbles up to the parent submenu item
       event.stopPropagation();
       setIsLinkOpen(true);
-      setOpenedBy(ref.current);
     }
   }
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -42072,9 +42489,8 @@ function NavigationSubmenuEdit({
           icon: library_link,
           title: (0,external_wp_i18n_namespaceObject.__)('Link'),
           shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('k'),
-          onClick: event => {
+          onClick: () => {
             setIsLinkOpen(true);
-            setOpenedBy(event.currentTarget);
           }
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           name: "revert",
@@ -42111,7 +42527,6 @@ function NavigationSubmenuEdit({
           onClick: () => {
             if (!openSubmenusOnClick && !url) {
               setIsLinkOpen(true);
-              setOpenedBy(ref.current);
             }
           }
         }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -42122,12 +42537,6 @@ function NavigationSubmenuEdit({
           link: attributes,
           onClose: () => {
             setIsLinkOpen(false);
-            if (openedBy) {
-              openedBy.focus();
-              setOpenedBy(null);
-            } else {
-              selectBlock(clientId);
-            }
           },
           anchor: popoverAnchor,
           onRemove: () => {
@@ -42307,7 +42716,7 @@ const navigation_submenu_settings = {
     context
   }) => {
     if (context === 'list-view') {
-      return library_page;
+      return page;
     }
     return add_submenu;
   },
@@ -42343,19 +42752,20 @@ const navigation_submenu_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/page-break.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const pageBreak = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const page_break = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.5 9V6a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v3H8V6a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v3h1.5Zm0 6.5V18a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-2.5H8V18a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2.5h1.5ZM4 13h16v-1.5H4V13Z"
   })
-});
-/* harmony default export */ const page_break = (pageBreak);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/nextpage/edit.js
 /**
@@ -42758,12 +43168,13 @@ const pattern_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/pages.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const pages = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pages = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -42773,8 +43184,8 @@ const pages = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ext
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z"
   })]
-});
-/* harmony default export */ const library_pages = (pages);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/page-list/use-convert-to-navigation-links.js
 /**
@@ -43354,7 +43765,7 @@ const {
 } = page_list_metadata;
 
 const page_list_settings = {
-  icon: library_pages,
+  icon: pages,
   example: {},
   edit: PageListEdit
 };
@@ -43530,7 +43941,7 @@ const page_list_item_settings = {
   __experimentalLabel: ({
     label
   }) => label,
-  icon: library_page,
+  icon: page,
   example: {},
   edit: PageListItemEdit
 };
@@ -43541,19 +43952,20 @@ const page_list_item_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/paragraph.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const paragraph = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const paragraph = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m9.99609 14v-.2251l.00391.0001v6.225h1.5v-14.5h2.5v14.5h1.5v-14.5h3v-1.5h-8.50391c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5z"
   })
-});
-/* harmony default export */ const library_paragraph = (paragraph);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/paragraph/deprecated.js
 /**
@@ -43914,19 +44326,20 @@ const paragraph_deprecated_deprecated = [
 /* harmony default export */ const paragraph_deprecated = (paragraph_deprecated_deprecated);
 
 ;// ./packages/icons/build-module/library/format-ltr.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const formatLtr = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const format_ltr = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M3 9c0 2.8 2.2 5 5 5v-.2V20h1.5V5.5H12V20h1.5V5.5h3V4H8C5.2 4 3 6.2 3 9Zm15.9-1-1.1 1 2.6 3-2.6 3 1.1 1 3.4-4-3.4-4Z"
   })
-});
-/* harmony default export */ const format_ltr = (formatLtr);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/paragraph/use-enter.js
 /**
@@ -44293,6 +44706,7 @@ const {
       __experimentalLetterSpacing: true,
       __experimentalTextTransform: true,
       __experimentalWritingMode: true,
+      fitText: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -44334,6 +44748,31 @@ const paragraph_transforms_transforms = {
   }]
 };
 /* harmony default export */ const paragraph_transforms = (paragraph_transforms_transforms);
+
+;// ./packages/block-library/build-module/paragraph/variations.js
+/**
+ * WordPress dependencies
+ */
+
+
+const paragraph_variations_variations = [{
+  name: 'Stretchy Paragraph',
+  title: (0,external_wp_i18n_namespaceObject.__)('Stretchy Paragraph'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Text automatically resizes to fit the container width.'),
+  attributes: {
+    fitText: true
+  },
+  scope: ['inserter'],
+  isActive: blockAttributes => blockAttributes.fitText,
+  icon: text_color,
+  example: {
+    attributes: {
+      content: (0,external_wp_i18n_namespaceObject.__)('This text will automatically resize to fit its container width.'),
+      fitText: true
+    }
+  }
+}];
+/* harmony default export */ const paragraph_variations = (paragraph_variations_variations);
 
 ;// ./packages/block-library/build-module/paragraph/index.js
 /**
@@ -44415,6 +44854,7 @@ const paragraph_metadata = {
       __experimentalLetterSpacing: true,
       __experimentalTextTransform: true,
       __experimentalWritingMode: true,
+      fitText: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -44430,12 +44870,13 @@ const paragraph_metadata = {
 };
 
 
+
 const {
   name: paragraph_name
 } = paragraph_metadata;
 
 const paragraph_settings = {
-  icon: library_paragraph,
+  icon: paragraph,
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing.')
@@ -44466,7 +44907,8 @@ const paragraph_settings = {
     };
   },
   edit: paragraph_edit,
-  save: paragraph_save_save
+  save: paragraph_save_save,
+  variations: paragraph_variations
 };
 const paragraph_init = () => initBlock({
   name: paragraph_name,
@@ -44475,12 +44917,13 @@ const paragraph_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-author.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postAuthor = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_author = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -44488,8 +44931,8 @@ const postAuthor = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
     fillRule: "evenodd",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const post_author = (postAuthor);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-author/edit.js
 /**
@@ -45333,19 +45776,20 @@ const post_author_biography_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/block-default.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const blockDefault = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const block_default = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z"
   })
-});
-/* harmony default export */ const block_default = (blockDefault);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-comment/edit.js
 /**
@@ -45456,7 +45900,7 @@ const {
 } = post_comment_metadata;
 
 const post_comment_settings = {
-  icon: library_comment,
+  icon: comment,
   edit: post_comment_edit_Edit,
   save: post_comment_save_save
 };
@@ -45467,19 +45911,20 @@ const post_comment_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-comments-count.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postCommentsCount = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_comments_count = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-2.2 6.6H7l1.6-2.2c.3-.4.5-.7.6-.9.1-.2.2-.4.2-.5 0-.2-.1-.3-.1-.4-.1-.1-.2-.1-.4-.1s-.4 0-.6.1c-.3.1-.5.3-.7.4l-.2.2-.2-1.2.1-.1c.3-.2.5-.3.8-.4.3-.1.6-.1.9-.1.3 0 .6.1.9.2.2.1.4.3.6.5.1.2.2.5.2.7 0 .3-.1.6-.2.9-.1.3-.4.7-.7 1.1l-.5.6h1.6v1.2z"
   })
-});
-/* harmony default export */ const post_comments_count = (postCommentsCount);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-comments-count/edit.js
 /**
@@ -45659,19 +46104,20 @@ const post_comments_count_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-comments-form.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postCommentsForm = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_comments_form = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-.5 6.6H6.7l-1.2 1.2v-6.3h7v5.1z"
   })
-});
-/* harmony default export */ const post_comments_form = (postCommentsForm);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-comments-form/edit.js
 /**
@@ -46031,19 +46477,20 @@ const post_comments_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-content.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_content = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 6h12V4.5H4V6Zm16 4.5H4V9h16v1.5ZM4 15h16v-1.5H4V15Zm0 4.5h16V18H4v1.5Z"
   })
-});
-/* harmony default export */ const post_content = (postContent);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-content/edit.js
 /**
@@ -46511,7 +46958,7 @@ function PostDateEdit({
             };
             return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
               "aria-expanded": isOpen,
-              icon: library_edit,
+              icon: pencil,
               title: (0,external_wp_i18n_namespaceObject.__)('Change Date'),
               onClick: onToggle,
               onKeyDown: openOnArrowDown
@@ -46890,19 +47337,20 @@ const post_date_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-excerpt.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postExcerpt = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_excerpt = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M8.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H4v-3h4.001ZM4 20h9v-1.5H4V20Zm16-4H4v-1.5h16V16ZM13.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H9v-3h4.001Z"
   })
-});
-/* harmony default export */ const post_excerpt = (postExcerpt);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-excerpt/edit.js
 /**
@@ -47262,19 +47710,20 @@ const post_excerpt_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-featured-image.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postFeaturedImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_featured_image = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-.6 0-1 .4-1 1v7c0 .5.4 1 1 1h14c.5 0 1-.4 1-1V4c0-.6-.4-1-1-1zM5.5 10.5v-.4l1.8-1.3 1.3.8c.3.2.7.2.9-.1L11 8.1l2.4 2.4H5.5zm13 0h-2.9l-4-4c-.3-.3-.8-.3-1.1 0L8.9 8l-1.2-.8c-.3-.2-.6-.2-.9 0l-1.3 1V4.5h13v6zM4 20h9v-1.5H4V20zm0-4h16v-1.5H4V16z"
   })
-});
-/* harmony default export */ const post_featured_image = (postFeaturedImage);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-featured-image/dimension-controls.js
 /**
@@ -47920,7 +48369,7 @@ function PostFeaturedImageEdit({
       }) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
-          icon: library_upload,
+          icon: upload,
           variant: "primary",
           label: label,
           showTooltip: true,
@@ -48320,34 +48769,36 @@ function PostNavigationLinkEdit({
 }
 
 ;// ./packages/icons/build-module/library/previous.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const previous = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z"
   })
-});
-/* harmony default export */ const library_previous = (previous);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/next.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const next = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const next = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z"
   })
-});
-/* harmony default export */ const library_next = (next);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-navigation-link/variations.js
 /**
@@ -48359,7 +48810,7 @@ const post_navigation_link_variations_variations = [{
   name: 'post-previous',
   title: (0,external_wp_i18n_namespaceObject.__)('Previous Post'),
   description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that precedes the current post.'),
-  icon: library_previous,
+  icon: previous,
   attributes: {
     type: 'previous'
   },
@@ -48375,7 +48826,7 @@ const post_navigation_link_variations_variations = [{
   name: 'post-next',
   title: (0,external_wp_i18n_namespaceObject.__)('Next Post'),
   description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that follows the current post.'),
-  icon: library_next,
+  icon: next,
   attributes: {
     type: 'next'
   },
@@ -48741,14 +49192,14 @@ function PostTemplateEdit({
     }
   });
   const displayLayoutControls = [{
-    icon: library_list,
+    icon: list,
     title: (0,external_wp_i18n_namespaceObject._x)('List view', 'Post template block display setting'),
     onClick: () => setDisplayLayout({
       type: 'default'
     }),
     isActive: layoutType === 'default' || layoutType === 'constrained'
   }, {
-    icon: library_grid,
+    icon: grid,
     title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'Post template block display setting'),
     onClick: () => setDisplayLayout({
       type: 'grid',
@@ -48872,7 +49323,7 @@ const {
 } = post_template_metadata;
 
 const post_template_settings = {
-  icon: library_layout,
+  icon: layout,
   edit: PostTemplateEdit,
   save: PostTemplateSave
 };
@@ -48883,12 +49334,13 @@ const post_template_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-categories.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postCategories = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_categories = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -48896,8 +49348,8 @@ const postCategories = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.
     fillRule: "evenodd",
     clipRule: "evenodd"
   })
-});
-/* harmony default export */ const post_categories = (postCategories);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-terms/use-post-terms.js
 /**
@@ -49080,19 +49532,20 @@ function PostTermsEdit({
 }
 
 ;// ./packages/icons/build-module/library/post-terms.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const postTerms = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const post_terms = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M8.1 12.3c.1.1.3.3.5.3.2.1.4.1.6.1.2 0 .4 0 .6-.1.2-.1.4-.2.5-.3l3-3c.3-.3.5-.7.5-1.1 0-.4-.2-.8-.5-1.1L9.7 3.5c-.1-.2-.3-.3-.5-.3H5c-.4 0-.8.4-.8.8v4.2c0 .2.1.4.2.5l3.7 3.6zM5.8 4.8h3.1l3.4 3.4v.1l-3 3 .5.5-.7-.5-3.3-3.4V4.8zM4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4z"
   })
-});
-/* harmony default export */ const post_terms = (postTerms);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/post-terms/hooks.js
 /**
@@ -49437,7 +49890,6 @@ const post_time_to_read_variations_variations = [{
 const post_time_to_read_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
-  __experimental: true,
   name: "core/post-time-to-read",
   title: "Time to Read",
   category: "theme",
@@ -49900,7 +50352,7 @@ const {
 } = post_title_metadata;
 
 const post_title_settings = {
-  icon: library_title,
+  icon: title,
   edit: PostTitleEdit,
   deprecated: post_title_deprecated
 };
@@ -49911,19 +50363,20 @@ const post_title_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/preformatted.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const preformatted = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const preformatted = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12zM7 16.5h6V15H7v1.5zm4-4h6V11h-6v1.5zM9 11H7v1.5h2V11zm6 5.5h2V15h-2v1.5z"
   })
-});
-/* harmony default export */ const library_preformatted = (preformatted);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/preformatted/edit.js
 /**
@@ -50110,7 +50563,7 @@ const {
 } = preformatted_metadata;
 
 const preformatted_settings = {
-  icon: library_preformatted,
+  icon: preformatted,
   example: {
     attributes: {
       /* eslint-disable @wordpress/i18n-no-collapsible-whitespace */
@@ -50135,19 +50588,20 @@ const preformatted_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/pullquote.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const pullquote = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const pullquote = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18 8H6c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zm.5 6c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-4c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v4zM4 4v1.5h16V4H4zm0 16h16v-1.5H4V20z"
   })
-});
-/* harmony default export */ const library_pullquote = (pullquote);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/pullquote/shared.js
 const SOLID_COLOR_CLASS = `is-style-solid-color`;
@@ -51049,7 +51503,7 @@ const {
 } = pullquote_metadata;
 
 const pullquote_settings = {
-  icon: library_pullquote,
+  icon: pullquote,
   example: {
     attributes: {
       value:
@@ -51070,19 +51524,20 @@ const pullquote_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/loop.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const loop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const loop = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18.1823 11.6392C18.1823 13.0804 17.0139 14.2487 15.5727 14.2487C14.3579 14.2487 13.335 13.4179 13.0453 12.2922L13.0377 12.2625L13.0278 12.2335L12.3985 10.377L12.3942 10.3785C11.8571 8.64997 10.246 7.39405 8.33961 7.39405C5.99509 7.39405 4.09448 9.29465 4.09448 11.6392C4.09448 13.9837 5.99509 15.8843 8.33961 15.8843C8.88499 15.8843 9.40822 15.781 9.88943 15.5923L9.29212 14.0697C8.99812 14.185 8.67729 14.2487 8.33961 14.2487C6.89838 14.2487 5.73003 13.0804 5.73003 11.6392C5.73003 10.1979 6.89838 9.02959 8.33961 9.02959C9.55444 9.02959 10.5773 9.86046 10.867 10.9862L10.8772 10.9836L11.4695 12.7311C11.9515 14.546 13.6048 15.8843 15.5727 15.8843C17.9172 15.8843 19.8178 13.9837 19.8178 11.6392C19.8178 9.29465 17.9172 7.39404 15.5727 7.39404C15.0287 7.39404 14.5066 7.4968 14.0264 7.6847L14.6223 9.20781C14.9158 9.093 15.2358 9.02959 15.5727 9.02959C17.0139 9.02959 18.1823 10.1979 18.1823 11.6392Z"
   })
-});
-/* harmony default export */ const library_loop = (loop);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/query/utils.js
 /**
@@ -53928,7 +54383,7 @@ const {
 } = query_metadata;
 
 const query_settings = {
-  icon: library_loop,
+  icon: loop,
   edit: query_edit,
   example: {
     viewportWidth: 650,
@@ -54058,7 +54513,7 @@ const {
 } = query_no_results_metadata;
 
 const query_no_results_settings = {
-  icon: library_loop,
+  icon: loop,
   edit: QueryNoResultsEdit,
   save: query_no_results_save_save,
   example: {
@@ -55083,7 +55538,7 @@ const query_title_variations_variations = [{
   name: 'archive-title',
   title: (0,external_wp_i18n_namespaceObject.__)('Archive Title'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display the archive title based on the queried object.'),
-  icon: library_title,
+  icon: title,
   attributes: {
     type: 'archive'
   },
@@ -55093,7 +55548,7 @@ const query_title_variations_variations = [{
   name: 'search-title',
   title: (0,external_wp_i18n_namespaceObject.__)('Search Results Title'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display the search results title based on the queried object.'),
-  icon: library_title,
+  icon: title,
   attributes: {
     type: 'search'
   },
@@ -55103,7 +55558,7 @@ const query_title_variations_variations = [{
   name: 'post-type-label',
   title: (0,external_wp_i18n_namespaceObject.__)('Post Type Label'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display the post type label based on the queried object.'),
-  icon: library_title,
+  icon: title,
   attributes: {
     type: 'post-type'
   },
@@ -55277,7 +55732,7 @@ const {
 } = query_title_metadata;
 
 const query_title_settings = {
-  icon: library_title,
+  icon: title,
   edit: QueryTitleEdit,
   variations: query_title_variations,
   deprecated: query_title_deprecated
@@ -55497,19 +55952,20 @@ const query_total_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/quote.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const quote = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const quote = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 6v6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H13zm-9 6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H4v6z"
   })
-});
-/* harmony default export */ const library_quote = (quote);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/quote/deprecated.js
 /**
@@ -55882,19 +56338,20 @@ const quote_deprecated_v0 = {
 /* harmony default export */ const quote_deprecated = ([quote_deprecated_v4, quote_deprecated_v3, quote_deprecated_v2, quote_deprecated_v1, quote_deprecated_v0]);
 
 ;// ./packages/icons/build-module/library/verse.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const verse = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const verse = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z"
   })
-});
-/* harmony default export */ const library_verse = (verse);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/quote/edit.js
 /**
@@ -56005,7 +56462,7 @@ function QuoteEdit({
         attributes: attributes,
         setAttributes: setAttributes,
         __unstableMobileNoFocusOnMount: true,
-        icon: library_verse,
+        icon: verse,
         label: (0,external_wp_i18n_namespaceObject.__)('Quote citation'),
         placeholder:
         // translators: placeholder text used for the
@@ -56305,7 +56762,7 @@ const {
 } = quote_metadata;
 
 const quote_settings = {
-  icon: library_quote,
+  icon: quote,
   example: {
     attributes: {
       citation: (0,external_wp_i18n_namespaceObject.__)('Julio Cortázar')
@@ -56329,19 +56786,20 @@ const quote_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/symbol.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const symbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const symbol = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z"
   })
-});
-/* harmony default export */ const library_symbol = (symbol);
+}));
+/* eslint-enable */
 
 ;// external ["wp","patterns"]
 const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
@@ -56713,7 +57171,6 @@ const block_metadata = {
     html: false,
     inserter: false,
     renaming: false,
-    blockVisibility: false,
     interactivity: {
       clientNavigation: true
     }
@@ -56728,7 +57185,7 @@ const {
 const block_settings = {
   deprecated: block_deprecated,
   edit: ReusableBlockEditRecursionWrapper,
-  icon: library_symbol,
+  icon: symbol,
   __experimentalLabel: ({
     ref
   }) => {
@@ -56905,19 +57362,20 @@ const read_more_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/rss.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const rss = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const rss = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M5 10.2h-.8v1.5H5c1.9 0 3.8.8 5.1 2.1 1.4 1.4 2.1 3.2 2.1 5.1v.8h1.5V19c0-2.3-.9-4.5-2.6-6.2-1.6-1.6-3.8-2.6-6.1-2.6zm10.4-1.6C12.6 5.8 8.9 4.2 5 4.2h-.8v1.5H5c3.5 0 6.9 1.4 9.4 3.9s3.9 5.8 3.9 9.4v.8h1.5V19c0-3.9-1.6-7.6-4.4-10.4zM4 20h3v-3H4v3z"
   })
-});
-/* harmony default export */ const library_rss = (rss);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/rss/edit.js
 /**
@@ -56979,7 +57437,7 @@ function RSSEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-        icon: library_rss,
+        icon: rss,
         label: label,
         instructions: (0,external_wp_i18n_namespaceObject.__)('Display entries from any RSS or Atom feed.'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
@@ -57007,18 +57465,18 @@ function RSSEdit({
     });
   }
   const toolbarControls = [{
-    icon: library_edit,
+    icon: pencil,
     title: (0,external_wp_i18n_namespaceObject.__)('Edit RSS URL'),
     onClick: () => setIsEditing(true)
   }, {
-    icon: library_list,
+    icon: list,
     title: (0,external_wp_i18n_namespaceObject._x)('List view', 'RSS block display setting'),
     onClick: () => setAttributes({
       blockLayout: 'list'
     }),
     isActive: blockLayout === 'list'
   }, {
-    icon: library_grid,
+    icon: grid,
     title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'RSS block display setting'),
     onClick: () => setAttributes({
       blockLayout: 'grid'
@@ -57297,7 +57755,7 @@ const {
 } = rss_metadata;
 
 const rss_settings = {
-  icon: library_rss,
+  icon: rss,
   example: {
     attributes: {
       feedURL: 'https://wordpress.org'
@@ -57312,19 +57770,20 @@ const rss_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/search.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const search = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
   })
-});
-/* harmony default export */ const library_search = (search);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/search/utils.js
 /**
@@ -57559,7 +58018,7 @@ function SearchEdit({
         onClick: handleButtonClick,
         ref: buttonRef,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-          icon: library_search
+          icon: search
         })
       }), !buttonUseIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
         identifier: "buttonText",
@@ -57931,7 +58390,7 @@ const {
 } = search_metadata;
 
 const search_settings = {
-  icon: library_search,
+  icon: search,
   example: {
     attributes: {
       buttonText: (0,external_wp_i18n_namespaceObject.__)('Search'),
@@ -57949,19 +58408,20 @@ const search_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/separator.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const separator = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const separator = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4.5 12.5v4H3V7h1.5v3.987h15V7H21v9.5h-1.5v-4h-15Z"
   })
-});
-/* harmony default export */ const library_separator = (separator);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/separator/use-deprecated-opacity.js
 /**
@@ -58303,7 +58763,7 @@ const {
 } = separator_metadata;
 
 const separator_settings = {
-  icon: library_separator,
+  icon: separator,
   example: {
     attributes: {
       customColor: '#065174',
@@ -58322,19 +58782,20 @@ const separator_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/shortcode.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const shortcode = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const shortcode = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M16 4.2v1.5h2.5v12.5H16v1.5h4V4.2h-4zM4.2 19.8h4v-1.5H5.8V5.8h2.5V4.2h-4l-.1 15.6zm5.1-3.1l1.4.6 4-10-1.4-.6-4 10z"
   })
-});
-/* harmony default export */ const library_shortcode = (shortcode);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/shortcode/edit.js
 /**
@@ -58355,7 +58816,7 @@ function ShortcodeEdit({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)(),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-      icon: library_shortcode,
+      icon: shortcode,
       label: (0,external_wp_i18n_namespaceObject.__)('Shortcode'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.PlainText, {
         className: "blocks-shortcode__textarea",
@@ -58458,7 +58919,7 @@ const {
 } = shortcode_metadata;
 
 const shortcode_settings = {
-  icon: library_shortcode,
+  icon: shortcode,
   transforms: shortcode_transforms,
   edit: ShortcodeEdit,
   save: shortcode_save_save
@@ -58470,19 +58931,20 @@ const shortcode_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/site-logo.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const siteLogo = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const site_logo = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm0 1.5c3.4 0 6.2 2.7 6.5 6l-1.2-.6-.8-.4c-.1 0-.2 0-.3-.1H16c-.1-.2-.4-.2-.7 0l-2.9 2.1L9 11.3h-.7L5.5 13v-1.1c0-3.6 2.9-6.5 6.5-6.5Zm0 13c-2.7 0-5-1.7-6-4l2.8-1.7 3.5 1.2h.4s.2 0 .4-.2l2.9-2.1.4.2c.6.3 1.4.7 2.1 1.1-.5 3.1-3.2 5.4-6.4 5.4Z"
   })
-});
-/* harmony default export */ const site_logo = (siteLogo);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/site-logo/edit.js
 /**
@@ -58547,9 +59009,7 @@ const SiteLogo = ({
 
   // Check if we're in contentOnly mode
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
-  const isNavigationMode = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).isNavigationMode(), []);
   const isContentOnlyMode = blockEditingMode === 'contentOnly';
-  const isContentOnlyWriteMode = isNavigationMode && isContentOnlyMode;
   const {
     imageEditing,
     maxWidth,
@@ -58676,7 +59136,7 @@ const SiteLogo = ({
   const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing;
 
   // Hide crop and dimensions editing in write mode
-  const shouldShowCropAndDimensions = !isContentOnlyWriteMode;
+  const shouldShowCropAndDimensions = !isContentOnlyMode;
   let imgEdit;
   if (canEditImage && isEditingImage) {
     imgEdit = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalImageEditor, {
@@ -58821,7 +59281,7 @@ const SiteLogo = ({
       group: "block",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         onClick: () => setIsEditingImage(true),
-        icon: library_crop,
+        icon: crop,
         label: (0,external_wp_i18n_namespaceObject.__)('Crop')
       })
     }), imgEdit]
@@ -59126,7 +59586,7 @@ function LogoEdit({
       }) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
-          icon: library_upload,
+          icon: upload,
           variant: "primary",
           label: (0,external_wp_i18n_namespaceObject.__)('Choose logo'),
           showTooltip: true,
@@ -59520,19 +59980,20 @@ const site_tagline_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/map-marker.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const mapMarker = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const map_marker = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M12 9c-.8 0-1.5.7-1.5 1.5S11.2 12 12 12s1.5-.7 1.5-1.5S12.8 9 12 9zm0-5c-3.6 0-6.5 2.8-6.5 6.2 0 .8.3 1.8.9 3.1.5 1.1 1.2 2.3 2 3.6.7 1 3 3.8 3.2 3.9l.4.5.4-.5c.2-.2 2.6-2.9 3.2-3.9.8-1.2 1.5-2.5 2-3.6.6-1.3.9-2.3.9-3.1C18.5 6.8 15.6 4 12 4zm4.3 8.7c-.5 1-1.1 2.2-1.9 3.4-.5.7-1.7 2.2-2.4 3-.7-.8-1.9-2.3-2.4-3-.8-1.2-1.4-2.3-1.9-3.3-.6-1.4-.7-2.2-.7-2.5 0-2.6 2.2-4.7 5-4.7s5 2.1 5 4.7c0 .2-.1 1-.7 2.4z"
   })
-});
-/* harmony default export */ const map_marker = (mapMarker);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/site-title/edit.js
 /**
@@ -59570,17 +60031,13 @@ function SiteTitleEdit({
   } = attributes;
   const {
     canUserEdit,
-    title,
-    isNavigationMode
+    title
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       canUser,
       getEntityRecord,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const {
-      isNavigationMode: _isNavigationMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
     const canEdit = canUser('update', {
       kind: 'root',
       name: 'site'
@@ -59589,8 +60046,7 @@ function SiteTitleEdit({
     const readOnlySettings = getEntityRecord('root', '__unstableBase');
     return {
       canUserEdit: canEdit,
-      title: canEdit ? settings?.title : readOnlySettings?.name,
-      isNavigationMode: _isNavigationMode()
+      title: canEdit ? settings?.title : readOnlySettings?.name
     };
   }, []);
   const {
@@ -59634,7 +60090,7 @@ function SiteTitleEdit({
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [!isNavigationMode && blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: [blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
         value: level,
@@ -59900,34 +60356,36 @@ const site_title_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/share.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const share = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const share = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M9 11.8l6.1-4.5c.1.4.4.7.9.7h2c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1h-2c-.6 0-1 .4-1 1v.4l-6.4 4.8c-.2-.1-.4-.2-.6-.2H6c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h2c.2 0 .4-.1.6-.2l6.4 4.8v.4c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1h-2c-.5 0-.8.3-.9.7L9 12.2v-.4z"
   })
-});
-/* harmony default export */ const library_share = (share);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/keyboard-return.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const keyboardReturn = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const keyboard_return = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "m6.734 16.106 2.176-2.38-1.093-1.028-3.846 4.158 3.846 4.158 1.093-1.028-2.176-2.38h2.811c1.125 0 2.25.03 3.374 0 1.428-.001 3.362-.25 4.963-1.277 1.66-1.065 2.868-2.906 2.868-5.859 0-2.479-1.327-4.896-3.65-5.93-1.82-.813-3.044-.8-4.806-.788l-.567.002v1.5c.184 0 .368 0 .553-.002 1.82-.007 2.704-.014 4.21.657 1.854.827 2.76 2.657 2.76 4.561 0 2.472-.973 3.824-2.178 4.596-1.258.807-2.864 1.04-4.163 1.04h-.02c-1.115.03-2.229 0-3.344 0H6.734Z"
   })
-});
-/* harmony default export */ const keyboard_return = (keyboardReturn);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/social-link/icons/chain.js
 /**
@@ -61407,7 +61865,7 @@ const {
 } = social_link_metadata;
 
 const social_link_settings = {
-  icon: library_share,
+  icon: share,
   edit: social_link_edit,
   variations: social_link_variations
 };
@@ -61971,7 +62429,7 @@ const social_links_settings = {
       }
     }]
   },
-  icon: library_share,
+  icon: share,
   edit: social_links_edit,
   save: social_links_save_save,
   deprecated: social_links_deprecated
@@ -61983,19 +62441,20 @@ const social_links_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/resize-corner-n-e.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const resizeCornerNE = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const resize_corner_n_e = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M7 18h4.5v1.5h-7v-7H6V17L17 6h-4.5V4.5h7v7H18V7L7 18Z"
   })
-});
-/* harmony default export */ const resize_corner_n_e = (resizeCornerNE);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/spacer/deprecated.js
 /**
@@ -62604,19 +63063,20 @@ const spacer_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/block-table.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const blockTable = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const block_table = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z"
   })
-});
-/* harmony default export */ const block_table = (blockTable);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/table/deprecated.js
 /**
@@ -63382,154 +63842,164 @@ const table_deprecated_v1 = {
 /* harmony default export */ const table_deprecated = ([table_deprecated_v4, table_deprecated_v3, table_deprecated_v2, table_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/align-left.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const alignLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const align_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 5.5H4V4h9v1.5Zm7 7H4V11h16v1.5Zm-7 7H4V18h9v1.5Z"
   })
-});
-/* harmony default export */ const align_left = (alignLeft);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/align-center.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const alignCenter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const align_center = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M7.5 5.5h9V4h-9v1.5Zm-3.5 7h16V11H4v1.5Zm3.5 7h9V18h-9v1.5Z"
   })
-});
-/* harmony default export */ const align_center = (alignCenter);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/align-right.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const alignRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const align_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11.111 5.5H20V4h-8.889v1.5ZM4 12.5h16V11H4v1.5Zm7.111 7H20V18h-8.889v1.5Z"
   })
-});
-/* harmony default export */ const align_right = (alignRight);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/table-row-before.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tableRowBefore = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table_row_before = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M21 5c0-1.1-.9-2-2-2H5c-1 0-1.9.8-2 1.8V19.2c.1.9.9 1.7 1.8 1.8H19c1.1 0 2-.9 2-2V5ZM4.5 14V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v9h-15Zm4 5.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm5.5 0h-4v-4h4v4Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19ZM11.2 10h-3V8.5h3v-3h1.5v3h3V10h-3v3h-1.5v-3Z"
   })
-});
-/* harmony default export */ const table_row_before = (tableRowBefore);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/table-row-after.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tableRowAfter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table_row_after = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm-9 1.5h4v4h-4v-4ZM4.5 5c0-.3.2-.5.5-.5h3.5v4h-4V5Zm15 14c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-8.3 10h1.5v-3h3V14h-3v-3h-1.5v3h-3v1.5h3v3Z"
   })
-});
-/* harmony default export */ const table_row_after = (tableRowAfter);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/table-row-delete.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tableRowDelete = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table_row_delete = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-15V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v3.5Zm-9.6 9.4 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1 2.1-2.1-1.1-1.1-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1Z"
   })
-});
-/* harmony default export */ const table_row_delete = (tableRowDelete);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/table-column-before.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tableColumnBefore = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table_column_before = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1 .8 1.9 1.8 2H19.2c.9-.1 1.7-.9 1.8-1.8V5c0-1.1-.9-2-2-2Zm-5 16.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h9v15Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19Zm0-5h-4v-4h4v4Zm0-5.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-11 7.3H10v-3h3v-1.5h-3v-3H8.5v3h-3v1.5h3v3Z"
   })
-});
-/* harmony default export */ const table_column_before = (tableColumnBefore);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/table-column-after.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tableColumnAfter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table_column_after = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0  24 24",
+  viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm0-5.5h-4v-4h4v4Zm0-5.5h-4V5c0-.3.2-.5.5-.5h3.5v4Zm11 10.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14Zm-4-10.8H14v3h-3v1.5h3v3h1.5v-3h3v-1.5h-3v-3Z"
   })
-});
-/* harmony default export */ const table_column_after = (tableColumnAfter);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/table-column-delete.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tableColumnDelete = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table_column_delete = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h3.5v15Zm11-.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14ZM16.9 8.8l-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1L18 9.9l-1.1-1.1Z"
   })
-});
-/* harmony default export */ const table_column_delete = (tableColumnDelete);
+}));
+/* eslint-enable */
 
 ;// ./packages/icons/build-module/library/table.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const table = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 2v6.2h-6.8V4.4h6.2c.3 0 .5.2.5.5ZM5 4.5h6.2v6.8H4.4V5.1c0-.3.2-.5.5-.5ZM4.5 19v-6.2h6.8v6.8H5.1c-.3 0-.5-.2-.5-.5Zm14.5.5h-6.2v-6.8h6.8v6.2c0 .3-.2.5-.5.5Z"
   })
-});
-/* harmony default export */ const library_table = (table);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/table/state.js
 const INHERITED_COLUMN_ATTRIBUTES = ['align'];
@@ -64218,7 +64688,7 @@ function TableEdit({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
         group: "other",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
-          icon: library_table,
+          icon: table,
           label: (0,external_wp_i18n_namespaceObject.__)('Edit table'),
           controls: tableControls
         })
@@ -64847,12 +65317,13 @@ const table_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/table-of-contents.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const tableOfContents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const table_of_contents = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -64862,8 +65333,8 @@ const tableOfContents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M13 15.516a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 8.484a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
   })]
-});
-/* harmony default export */ const table_of_contents = (tableOfContents);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/table-of-contents/list.js
 
@@ -65835,7 +66306,7 @@ const {
 } = tag_cloud_metadata;
 
 const tag_cloud_settings = {
-  icon: library_tag,
+  icon: tag,
   example: {},
   edit: tag_cloud_edit,
   transforms: tag_cloud_transforms
@@ -67556,7 +68027,6 @@ const template_part_metadata = {
     html: false,
     reusable: false,
     renaming: false,
-    blockVisibility: false,
     interactivity: {
       clientNavigation: true
     }
@@ -67620,19 +68090,20 @@ const template_part_init = () => {
 };
 
 ;// ./packages/icons/build-module/library/term-description.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const term_description_tag = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const term_description = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6.08 10.103h2.914L9.657 12h1.417L8.23 4H6.846L4 12h1.417l.663-1.897Zm1.463-4.137.994 2.857h-2l1.006-2.857ZM11 16H4v-1.5h7V16Zm1 0h8v-1.5h-8V16Zm-4 4H4v-1.5h4V20Zm7-1.5V20H9v-1.5h6Z"
   })
-});
-/* harmony default export */ const term_description = (term_description_tag);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/term-description/use-term-description.js
 /**
@@ -67863,251 +68334,163 @@ const term_description_init = () => initBlock({
   settings: term_description_settings
 });
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/taxonomy-control.js
+;// ./packages/block-library/build-module/terms-query/utils.js
 /**
  * WordPress dependencies
  */
 
+
+
+
+/**
+ * Retrieve publicly-queryable taxonomies.
+ *
+ * @return {Object[]} Array of public taxonomy objects.
+ */
+function usePublicTaxonomies() {
+  const taxonomies = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getTaxonomies({
+    per_page: -1
+  }), []);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return taxonomies?.filter(({
+      visibility
+    }) => visibility?.publicly_queryable) || [];
+  }, [taxonomies]);
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/taxonomy-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
 
 
 function TaxonomyControl({
-  attributes,
-  setQuery,
-  setAttributes,
-  taxonomyOptions
+  value,
+  onChange,
+  ...props
 }) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.taxonomy !== 'category',
-    label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
-    onDeselect: () => {
-      setQuery({
-        taxonomy: 'category'
-      });
-      setAttributes({
-        termsToShow: 'all'
-      });
+  const taxonomies = usePublicTaxonomies();
+  const taxonomyOptions = taxonomies.map(taxonomy => ({
+    label: taxonomy.name,
+    value: taxonomy.slug
+  }));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    options: taxonomyOptions,
+    value: value,
+    onChange: onChange,
+    ...props
+  });
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/order-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+function order_control_OrderControl({
+  orderBy,
+  order,
+  onChange,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    options: [{
+      label: (0,external_wp_i18n_namespaceObject.__)('Name: A → Z'),
+      value: 'name/asc'
+    }, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Name: Z → A'),
+      value: 'name/desc'
+    }, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Count, high to low'),
+      value: 'count/desc'
+    }, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Count, low to high'),
+      value: 'count/asc'
+    }],
+    value: orderBy + '/' + order,
+    onChange: value => {
+      const [newOrderBy, newOrder] = value.split('/');
+      onChange(newOrderBy, newOrder);
     },
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
-      options: taxonomyOptions,
-      value: termQuery.taxonomy,
-      onChange: selectedTaxonomy => {
-        setQuery({
-          taxonomy: selectedTaxonomy
-        });
-        setAttributes({
-          termsToShow: 'all'
-        });
-      }
-    })
+    ...props
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/ordering-controls.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/empty-terms-control.js
 /**
  * WordPress dependencies
  */
-
-
-
-function OrderingControls({
-  attributes,
-  setQuery
-}) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.orderBy !== 'name' || termQuery.order !== 'asc',
-    label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
-    onDeselect: () => setQuery({
-      orderBy: 'name',
-      order: 'asc'
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
-      options: [{
-        label: (0,external_wp_i18n_namespaceObject.__)('Name: A → Z'),
-        value: 'name/asc'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Name: Z → A'),
-        value: 'name/desc'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Count, high to low'),
-        value: 'count/desc'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Count, low to high'),
-        value: 'count/asc'
-      }],
-      value: termQuery.orderBy + '/' + termQuery.order,
-      onChange: orderBy => {
-        const [newOrderBy, newOrder] = orderBy.split('/');
-        setQuery({
-          orderBy: newOrderBy,
-          order: newOrder
-        });
-      }
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/terms-query/inspector-controls/display-options.js
-/**
- * WordPress dependencies
- */
-
-
-
-const getOptions = (displayTopLevelControl, displaySubtermsControl) => {
-  const options = [{
-    label: (0,external_wp_i18n_namespaceObject.__)('Show all'),
-    value: 'all'
-  }];
-  if (displayTopLevelControl) {
-    options.push({
-      label: (0,external_wp_i18n_namespaceObject.__)('Show only top level terms'),
-      value: 'top-level'
-    });
-  }
-  if (displaySubtermsControl) {
-    options.push({
-      label: (0,external_wp_i18n_namespaceObject.__)('Show subterms only'),
-      value: 'subterms',
-      description: (0,external_wp_i18n_namespaceObject.__)('Display subterms of the current term. E.g. subcategories of current category.')
-    });
-  }
-  return options;
-};
-const allTermsQuery = {
-  include: [],
-  exclude: [],
-  parent: false
-};
-const topLevelTermsQuery = {
-  include: [],
-  exclude: [],
-  parent: 0,
-  hierarchical: false
-};
-const getQueryAttributes = value => {
-  if (value === 'top-level') {
-    return topLevelTermsQuery;
-  }
-
-  // For 'all' and 'subterms', we fetch all terms and then filter them as the tree is built in Term Template.
-  return allTermsQuery;
-};
-function DisplayOptions({
-  attributes,
-  displayTopLevelControl,
-  displaySubtermsControl,
-  setAttributes
-}) {
-  const {
-    termQuery,
-    termsToShow
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termsToShow !== 'all',
-    label: (0,external_wp_i18n_namespaceObject.__)('Terms to show'),
-    onDeselect: () => setAttributes({
-      termsToShow: 'all'
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Terms to show'),
-      options: getOptions(displayTopLevelControl, displaySubtermsControl),
-      selected: termsToShow,
-      onChange: value => {
-        const queryAttributes = getQueryAttributes(value);
-        setAttributes({
-          termsToShow: value,
-          termQuery: {
-            ...termQuery,
-            ...queryAttributes
-          }
-        });
-      }
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/terms-query/inspector-controls/hierarchy-control.js
-/**
- * WordPress dependencies
- */
-
-
-
-function HierarchyControl({
-  attributes,
-  setQuery
-}) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.hierarchical !== false,
-    label: (0,external_wp_i18n_namespaceObject.__)('Show hierarchy'),
-    onDeselect: () => setQuery({
-      hierarchical: false
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Show hierarchy'),
-      checked: termQuery.hierarchical,
-      onChange: hierarchical => {
-        setQuery({
-          hierarchical
-        });
-      }
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/terms-query/inspector-controls/empty-terms-control.js
-/**
- * WordPress dependencies
- */
-
 
 
 function EmptyTermsControl({
-  attributes,
-  setQuery
+  value,
+  onChange,
+  ...props
 }) {
-  const {
-    termQuery
-  } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.hideEmpty !== true,
-    label: (0,external_wp_i18n_namespaceObject.__)('Show empty terms'),
-    onDeselect: () => setQuery({
-      hideEmpty: true
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Show empty terms'),
-      checked: !termQuery.hideEmpty,
-      onChange: showEmpty => setQuery({
-        hideEmpty: !showEmpty
-      })
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    checked: !value,
+    onChange: showEmpty => onChange(!showEmpty),
+    ...props
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/max-terms-control.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/nested-terms-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+function NestedTermsControl({
+  value,
+  onChange,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    checked: value,
+    onChange: onChange,
+    ...props
+  });
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+function InheritControl({
+  value,
+  onChange,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    checked: value,
+    onChange: inherit => onChange({
+      inherit,
+      // When enabling inherit, hierarchical is not supported.
+      ...(inherit ? {
+        hierarchical: false
+      } : {})
+    }),
+    ...props
+  });
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/max-terms-control.js
 /**
  * WordPress dependencies
  */
@@ -68115,43 +68498,23 @@ function EmptyTermsControl({
 
 
 function MaxTermsControl({
-  attributes,
-  setQuery
+  value,
+  onChange,
+  ...props
 }) {
-  const {
-    termQuery
-  } = attributes;
-
-  // Only show pagination control when not hierarchical.
-  if (termQuery.hierarchical) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => termQuery.perPage !== 10,
-    label: (0,external_wp_i18n_namespaceObject.__)('Max terms'),
-    onDeselect: () => setQuery({
-      perPage: 10
-    }),
-    isShownByDefault: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Max terms'),
-      value: termQuery.perPage,
-      min: 0,
-      max: 100,
-      onChange: perPage => {
-        // Show all terms (-1) when 0 is selected.
-        setQuery({
-          perPage: perPage === 0 ? -1 : perPage
-        });
-      },
-      help: (0,external_wp_i18n_namespaceObject.__)('Limit the number of terms you want to show. To show all terms, use 0 (zero).')
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    value: value,
+    min: 0,
+    max: 100,
+    onChange: onChange,
+    help: (0,external_wp_i18n_namespaceObject.__)('Limit the number of terms you want to show. To show all terms, use 0 (zero).'),
+    ...props
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/advanced-controls.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/advanced-controls.js
 /**
  * WordPress dependencies
  */
@@ -68196,12 +68559,10 @@ function AdvancedControls({
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/inspector-controls/index.js
+;// ./packages/block-library/build-module/terms-query/edit/inspector-controls/index.js
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -68219,16 +68580,7 @@ function AdvancedControls({
 
 
 
-const usePublicTaxonomies = () => {
-  const taxonomies = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getTaxonomies({
-    per_page: -1
-  }), []);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return taxonomies?.filter(({
-      visibility
-    }) => visibility?.publicly_queryable) || [];
-  }, [taxonomies]);
-};
+
 function TermsQueryInspectorControls({
   attributes,
   setQuery,
@@ -68237,11 +68589,18 @@ function TermsQueryInspectorControls({
   clientId
 }) {
   const {
-    termQuery,
-    termsToShow
+    termQuery
   } = attributes;
+  const {
+    taxonomy,
+    orderBy,
+    order,
+    hideEmpty,
+    inherit,
+    hierarchical,
+    perPage
+  } = termQuery;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const taxonomies = usePublicTaxonomies();
   const {
     templateSlug
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -68258,13 +68617,23 @@ function TermsQueryInspectorControls({
       templateSlug: getEditedPostSlug()
     };
   }, []);
-  const taxonomyOptions = taxonomies.map(taxonomy => ({
-    label: taxonomy.name,
-    value: taxonomy.slug
-  }));
-  const isTaxonomyHierarchical = taxonomies.find(taxonomy => taxonomy.slug === termQuery.taxonomy)?.hierarchical;
-  const isTaxonomyMatchingTemplate = typeof templateSlug === 'string' && templateSlug.includes(termQuery.taxonomy);
-  const displaySubtermsControl = isTaxonomyHierarchical && isTaxonomyMatchingTemplate;
+  const taxonomies = usePublicTaxonomies();
+  const isTaxonomyHierarchical = taxonomies.find(_taxonomy => _taxonomy.slug === taxonomy)?.hierarchical;
+  const isTaxonomyMatchingTemplate = typeof templateSlug === 'string' && templateSlug.includes(taxonomy);
+
+  // Only display the inherit control if the taxonomy is hierarchical and matches the current template.
+  const displayInheritControl = isTaxonomyHierarchical && isTaxonomyMatchingTemplate;
+
+  // Only display the hierarchical control if the taxonomy is hierarchical and not inheriting.
+  const displayHierarchicalControl = isTaxonomyHierarchical && !termQuery.inherit;
+
+  // Labels shared between ToolsPanelItem and its child control.
+  const taxonomyControlLabel = (0,external_wp_i18n_namespaceObject.__)('Taxonomy');
+  const orderByControlLabel = (0,external_wp_i18n_namespaceObject.__)('Order by');
+  const emptyTermsControlLabel = (0,external_wp_i18n_namespaceObject.__)('Show empty terms');
+  const inheritControlLabel = (0,external_wp_i18n_namespaceObject.__)('Inherit parent term from archive');
+  const nestedTermsControlLabel = (0,external_wp_i18n_namespaceObject.__)('Show nested terms');
+  const maxTermsControlLabel = (0,external_wp_i18n_namespaceObject.__)('Max terms');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -68279,33 +68648,99 @@ function TermsQueryInspectorControls({
               hierarchical: false,
               parent: false,
               perPage: 10
-            },
-            termsToShow: 'all'
+            }
           });
         },
         dropdownMenuProps: dropdownMenuProps,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TaxonomyControl, {
-          attributes: attributes,
-          setQuery: setQuery,
-          setAttributes: setAttributes,
-          taxonomyOptions: taxonomyOptions
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OrderingControls, {
-          attributes: attributes,
-          setQuery: setQuery
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmptyTermsControl, {
-          attributes: attributes,
-          setQuery: setQuery
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DisplayOptions, {
-          attributes: attributes,
-          setAttributes: setAttributes,
-          displayTopLevelControl: isTaxonomyHierarchical,
-          displaySubtermsControl: displaySubtermsControl
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MaxTermsControl, {
-          attributes: attributes,
-          setQuery: setQuery
-        }), isTaxonomyHierarchical && termsToShow === 'all' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HierarchyControl, {
-          attributes: attributes,
-          setQuery: setQuery
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => taxonomy !== 'category',
+          label: taxonomyControlLabel,
+          onDeselect: () => {
+            setQuery({
+              taxonomy: 'category'
+            });
+          },
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TaxonomyControl, {
+            label: taxonomyControlLabel,
+            value: taxonomy,
+            onChange: value => setQuery({
+              taxonomy: value
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => orderBy !== 'name' || order !== 'asc',
+          label: orderByControlLabel,
+          onDeselect: () => setQuery({
+            orderBy: 'name',
+            order: 'asc'
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(order_control_OrderControl, {
+            label: orderByControlLabel,
+            orderBy,
+            order,
+            onChange: (newOrderBy, newOrder) => {
+              setQuery({
+                orderBy: newOrderBy,
+                order: newOrder
+              });
+            }
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => hideEmpty !== true,
+          label: emptyTermsControlLabel,
+          onDeselect: () => setQuery({
+            hideEmpty: true
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmptyTermsControl, {
+            label: emptyTermsControlLabel,
+            value: hideEmpty,
+            onChange: value => setQuery({
+              hideEmpty: value
+            })
+          })
+        }), displayInheritControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => inherit !== false,
+          label: inheritControlLabel,
+          onDeselect: () => setQuery({
+            inherit: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InheritControl, {
+            label: inheritControlLabel,
+            value: inherit,
+            onChange: setQuery
+          })
+        }), displayHierarchicalControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => hierarchical !== false,
+          label: nestedTermsControlLabel,
+          onDeselect: () => setQuery({
+            hierarchical: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NestedTermsControl, {
+            label: nestedTermsControlLabel,
+            value: hierarchical,
+            onChange: value => setQuery({
+              hierarchical: value
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => perPage !== 10,
+          label: maxTermsControlLabel,
+          onDeselect: () => setQuery({
+            perPage: 10
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MaxTermsControl, {
+            label: maxTermsControlLabel,
+            value: perPage,
+            onChange: value => setQuery({
+              perPage: value
+            })
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AdvancedControls, {
@@ -68316,12 +68751,10 @@ function TermsQueryInspectorControls({
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/terms-query-content.js
+;// ./packages/block-library/build-module/terms-query/edit/index.js
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -68330,42 +68763,26 @@ function TermsQueryInspectorControls({
  */
 
 
-const terms_query_content_TEMPLATE = [['core/term-template']];
-function TermsQueryContent({
+const terms_query_edit_TEMPLATE = [['core/term-template']];
+function TermsQueryEdit({
   attributes,
   setAttributes,
   clientId,
   name
 }) {
   const {
-    termQueryId,
-    termQuery = {},
     tagName: TagName = 'div'
   } = attributes;
-  const {
-    __unstableMarkNextChangeAsNotPersistent
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(TermsQueryContent);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    template: terms_query_content_TEMPLATE
+    template: terms_query_edit_TEMPLATE
   });
-  const setQuery = newQuery => {
-    setAttributes({
-      termQuery: {
-        ...termQuery,
-        ...newQuery
-      }
-    });
-  };
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!termQueryId) {
-      __unstableMarkNextChangeAsNotPersistent();
-      setAttributes({
-        termQueryId: instanceId
-      });
+  const setQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes(prevAttributes => ({
+    termQuery: {
+      ...prevAttributes.termQuery,
+      ...newQuery
     }
-  }, [termQueryId, instanceId, setAttributes, __unstableMarkNextChangeAsNotPersistent]);
+  })), [setAttributes]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermsQueryInspectorControls, {
       name: name,
@@ -68379,19 +68796,6 @@ function TermsQueryContent({
     })]
   });
 }
-
-;// ./packages/block-library/build-module/terms-query/edit.js
-/**
- * Internal dependencies
- */
-
-
-const TermsQueryEdit = props => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermsQueryContent, {
-    ...props
-  });
-};
-/* harmony default export */ const terms_query_edit = (TermsQueryEdit);
 
 ;// ./packages/block-library/build-module/terms-query/save.js
 /**
@@ -68432,41 +68836,26 @@ const terms_query_metadata = {
   keywords: ["terms", "taxonomy", "categories", "tags", "list"],
   textdomain: "default",
   attributes: {
-    termQueryId: {
-      type: "number"
-    },
     termQuery: {
       type: "object",
       "default": {
         perPage: 10,
-        pages: 0,
         taxonomy: "category",
         order: "asc",
         orderBy: "name",
         hideEmpty: true,
-        include: [],
-        exclude: [],
         parent: false,
-        hierarchical: false
+        hierarchical: false,
+        inherit: false
       }
-    },
-    termsToShow: {
-      type: "string",
-      "default": "all",
-      "enum": ["all", "top-level", "subterms"]
     },
     tagName: {
       type: "string",
       "default": "div"
-    },
-    namespace: {
-      type: "string"
     }
   },
   providesContext: {
-    termQueryId: "termQueryId",
-    termQuery: "termQuery",
-    termsToShow: "termsToShow"
+    termQuery: "termQuery"
   },
   supports: {
     align: ["wide", "full"],
@@ -68483,8 +68872,8 @@ const {
 } = terms_query_metadata;
 
 const terms_query_settings = {
-  icon: library_loop,
-  edit: terms_query_edit,
+  icon: loop,
+  edit: TermsQueryEdit,
   save: terms_query_save_save,
   example: {}
 };
@@ -68596,70 +68985,17 @@ function TermTemplateBlockPreview({
 
 // Prevent re-rendering of the block preview when the terms data changes.
 const MemoizedTermTemplateBlockPreview = (0,external_wp_element_namespaceObject.memo)(TermTemplateBlockPreview);
-
-/**
- * Builds a hierarchical tree structure from flat terms array.
- *
- * @param {Array} terms Array of term objects.
- * @return {Array} Tree structure with parent/child relationships.
- */
-function buildTermsTree(terms) {
-  const termsById = {};
-  const rootTerms = [];
-  terms.forEach(term => {
-    termsById[term.id] = {
-      term,
-      children: []
-    };
-  });
-  terms.forEach(term => {
-    if (term.parent && termsById[term.parent]) {
-      termsById[term.parent].children.push(termsById[term.id]);
-    } else {
-      rootTerms.push(termsById[term.id]);
-    }
-  });
-  return rootTerms;
-}
-
-/**
- * Renders a single term node and its children recursively.
- *
- * @param {Object}   termNode   Term node with term object and children.
- * @param {Function} renderTerm Function to render individual terms.
- * @return {JSX.Element} Rendered term node with children.
- */
-function renderTermNode(termNode, renderTerm) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-    className: "wp-block-term",
-    children: [renderTerm(termNode.term), termNode.children.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
-      children: termNode.children.map(child => renderTermNode(child, renderTerm))
-    })]
-  });
-}
-
-/**
- * Checks if a term is the currently active term.
- *
- * @param {number} termId               The term ID to check.
- * @param {number} activeBlockContextId The currently active block context ID.
- * @param {Array}  blockContexts        Array of block contexts.
- * @return {boolean} True if the term is active, false otherwise.
- */
-function isActiveTerm(termId, activeBlockContextId, blockContexts) {
-  return termId === (activeBlockContextId || blockContexts[0]?.termId);
-}
 function TermTemplateEdit({
   clientId,
   setAttributes,
   context: {
-    termsToShow,
     termQuery: {
       taxonomy,
       order,
       orderBy,
       hideEmpty,
-      hierarchical,
+      hierarchical = false,
+      parent = 0,
       perPage = 10
     } = {}
   },
@@ -68670,14 +69006,20 @@ function TermTemplateEdit({
     replaceInnerBlocks
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const queryArgs = {
+    hide_empty: hideEmpty,
     order,
     orderby: orderBy,
-    hide_empty: hideEmpty,
     // To preview the data the closest to the frontend, we fetch the largest number of terms
     // and limit them during rendering. This is because WP_Term_Query fetches data in hierarchical manner,
     // while in editor we build the hierarchy manually. It also allows us to avoid re-fetching data when max terms changes.
     per_page: 100
   };
+
+  // Nested terms are returned by default from REST API as long as parent is not set.
+  // If we want to show nested terms, we must not set parent at all.
+  if (parent || !hierarchical) {
+    queryArgs.parent = parent || 0;
+  }
   const {
     records: terms,
     isResolving
@@ -68686,14 +69028,9 @@ function TermTemplateEdit({
     if (!terms) {
       return [];
     }
-    if (termsToShow === 'top-level') {
-      return terms.filter(term => !term.parent);
-    }
-    if (termsToShow === 'subterms') {
-      return terms.filter(term => term.parent);
-    }
-    return terms;
-  }, [terms, termsToShow]);
+    // Limit to the number of terms defined by perPage.
+    return perPage === 0 ? terms : terms.slice(0, perPage);
+  }, [terms, perPage]);
   const {
     blocks,
     variations,
@@ -68727,7 +69064,7 @@ function TermTemplateEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockVariationPicker, {
-        icon: library_layout,
+        icon: layout,
         label: (0,external_wp_i18n_namespaceObject.__)('Term Template'),
         variations: variations,
         instructions: (0,external_wp_i18n_namespaceObject.__)('Choose a layout for displaying terms:'),
@@ -68770,30 +69107,10 @@ function TermTemplateEdit({
       children: [" ", (0,external_wp_i18n_namespaceObject.__)('No terms found.')]
     });
   }
-  const renderTerm = term => {
-    const blockContext = {
-      taxonomy,
-      termId: term.id,
-      classList: `term-${term.id}`,
-      termData: term
-    };
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
-      value: blockContext,
-      children: [isActiveTerm(term.id, activeBlockContextId, blockContexts) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermTemplateInnerBlocks, {
-        classList: blockContext.classList
-      }) : null, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MemoizedTermTemplateBlockPreview, {
-        blocks: blocks,
-        blockContextId: term.id,
-        classList: blockContext.classList,
-        setActiveBlockContextId: setActiveBlockContextId,
-        isHidden: isActiveTerm(term.id, activeBlockContextId, blockContexts)
-      })]
-    }, term.id);
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
       ...blockProps,
-      children: hierarchical ? buildTermsTree(filteredTerms).map(termNode => renderTermNode(termNode, renderTerm)) : blockContexts && blockContexts.slice(0, perPage).map(blockContext => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
+      children: blockContexts && blockContexts.map(blockContext => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
         value: blockContext,
         children: [blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermTemplateInnerBlocks, {
           classList: blockContext.classList
@@ -68875,7 +69192,7 @@ const term_template_variations_variations = [{
     }
   },
   isDefault: true,
-  icon: library_list,
+  icon: list,
   scope: ['block', 'inserter'],
   innerBlocks: createInnerBlocks((0,external_wp_i18n_namespaceObject.__)('Term Name with Count'))
 }, {
@@ -68888,7 +69205,7 @@ const term_template_variations_variations = [{
       columnCount: 3
     }
   },
-  icon: library_grid,
+  icon: grid,
   scope: ['block', 'inserter'],
   innerBlocks: createInnerBlocks((0,external_wp_i18n_namespaceObject.__)('Term Card'), {
     padding: '1rem'
@@ -68916,12 +69233,7 @@ const term_template_metadata = {
   ancestor: ["core/terms-query"],
   description: "Contains the block elements used to render a taxonomy term, like the name, description, and more.",
   textdomain: "default",
-  usesContext: ["termQuery", "termsToShow"],
-  attributes: {
-    namespace: {
-      type: "string"
-    }
-  },
+  usesContext: ["termQuery"],
   supports: {
     reusable: false,
     html: false,
@@ -68987,7 +69299,7 @@ const {
 } = term_template_metadata;
 
 const term_template_settings = {
-  icon: library_layout,
+  icon: layout,
   variations: term_template_variations,
   edit: TermTemplateEdit,
   save: TermTemplateSave,
@@ -69525,7 +69837,7 @@ const {
 } = verse_metadata;
 
 const verse_settings = {
-  icon: library_verse,
+  icon: verse,
   example: {
     attributes: {
       /* eslint-disable @wordpress/i18n-no-collapsible-whitespace */
@@ -69551,19 +69863,20 @@ const verse_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/video.js
+/* eslint-disable prettier/prettier */
 /**
  * WordPress dependencies
  */
 
 
-const video = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+/* harmony default export */ const video = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z"
   })
-});
-/* harmony default export */ const library_video = (video);
+}));
+/* eslint-enable */
 
 ;// ./packages/block-library/build-module/video/tracks.js
 
@@ -70213,7 +70526,7 @@ function TracksEditor({
                 render: ({
                   open
                 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-                  icon: library_media,
+                  icon: media,
                   onClick: open,
                   children: (0,external_wp_i18n_namespaceObject.__)('Open Media Library')
                 })
@@ -70225,7 +70538,7 @@ function TracksEditor({
                   openFileDialog
                 }) => {
                   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-                    icon: library_upload,
+                    icon: upload,
                     onClick: openFileDialog,
                     children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
                   });
@@ -70369,7 +70682,7 @@ function VideoEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
       className: "block-editor-media-placeholder",
       withIllustration: !isSingleSelected,
-      icon: library_video,
+      icon: video,
       label: (0,external_wp_i18n_namespaceObject.__)('Video'),
       instructions: (0,external_wp_i18n_namespaceObject.__)('Drag and drop a video, upload, or choose from your library.'),
       children: content
@@ -70386,7 +70699,7 @@ function VideoEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: library_video
+          icon: video
         }),
         onSelect: onSelectVideo,
         onSelectURL: onSelectURL,
@@ -70750,7 +71063,7 @@ const {
 } = video_metadata;
 
 const video_settings = {
-  icon: library_video,
+  icon: video,
   example: {
     attributes: {
       src: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Wood_thrush_in_Central_Park_switch_sides_%2816510%29.webm',
@@ -71313,6 +71626,8 @@ lock(privateApis, {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -71435,23 +71750,22 @@ lock(privateApis, {
 
 
 
+
+
 /**
  * Function to get all the block-library blocks in an array
  */
+
 const getAllBlocks = () => {
   const blocks = [
   // Common blocks are grouped at the top to prioritize their display
   // in various contexts — like the inserter and auto-complete components.
   build_module_paragraph_namespaceObject, build_module_image_namespaceObject, build_module_heading_namespaceObject, build_module_gallery_namespaceObject, build_module_list_namespaceObject, build_module_list_item_namespaceObject, build_module_quote_namespaceObject,
   // Register all remaining core blocks.
-  archives_namespaceObject, build_module_audio_namespaceObject, build_module_button_namespaceObject, build_module_buttons_namespaceObject, build_module_calendar_namespaceObject, categories_namespaceObject, build_module_code_namespaceObject, build_module_column_namespaceObject, build_module_columns_namespaceObject, build_module_comment_author_avatar_namespaceObject, build_module_cover_namespaceObject, build_module_details_namespaceObject, embed_namespaceObject, build_module_file_namespaceObject, build_module_group_namespaceObject, build_module_html_namespaceObject, latest_comments_namespaceObject, latest_posts_namespaceObject, media_text_namespaceObject, missing_namespaceObject, build_module_more_namespaceObject, nextpage_namespaceObject, page_list_namespaceObject, page_list_item_namespaceObject, pattern_namespaceObject, build_module_preformatted_namespaceObject, build_module_pullquote_namespaceObject, block_namespaceObject, build_module_rss_namespaceObject, build_module_search_namespaceObject, build_module_separator_namespaceObject, build_module_shortcode_namespaceObject, social_link_namespaceObject, social_links_namespaceObject, spacer_namespaceObject, build_module_table_namespaceObject, tag_cloud_namespaceObject, text_columns_namespaceObject, build_module_verse_namespaceObject, build_module_video_namespaceObject, footnotes_namespaceObject,
+  accordion_namespaceObject, accordion_item_namespaceObject, accordion_heading_namespaceObject, accordion_panel_namespaceObject, archives_namespaceObject, build_module_audio_namespaceObject, build_module_breadcrumbs_namespaceObject, build_module_button_namespaceObject, build_module_buttons_namespaceObject, build_module_calendar_namespaceObject, categories_namespaceObject, build_module_code_namespaceObject, build_module_column_namespaceObject, build_module_columns_namespaceObject, build_module_comment_author_avatar_namespaceObject, build_module_cover_namespaceObject, build_module_details_namespaceObject, embed_namespaceObject, build_module_file_namespaceObject, build_module_group_namespaceObject, build_module_html_namespaceObject, latest_comments_namespaceObject, latest_posts_namespaceObject, media_text_namespaceObject, missing_namespaceObject, build_module_more_namespaceObject, nextpage_namespaceObject, page_list_namespaceObject, page_list_item_namespaceObject, pattern_namespaceObject, build_module_preformatted_namespaceObject, build_module_pullquote_namespaceObject, block_namespaceObject, build_module_rss_namespaceObject, build_module_search_namespaceObject, build_module_separator_namespaceObject, build_module_shortcode_namespaceObject, social_link_namespaceObject, social_links_namespaceObject, spacer_namespaceObject, build_module_table_namespaceObject, tag_cloud_namespaceObject, text_columns_namespaceObject, build_module_verse_namespaceObject, build_module_video_namespaceObject, footnotes_namespaceObject,
   // theme blocks
   build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, query_total_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
   if (window?.__experimentalEnableBlockExperiments) {
-    blocks.push(accordion_namespaceObject);
-    blocks.push(accordion_item_namespaceObject);
-    blocks.push(accordion_heading_namespaceObject);
-    blocks.push(accordion_panel_namespaceObject);
     blocks.push(terms_query_namespaceObject);
     blocks.push(term_template_namespaceObject);
   }
@@ -71508,14 +71822,43 @@ const registerCoreBlocks = (blocks = __experimentalGetCoreBlocks()) => {
   // Auto-register PHP-only blocks with ServerSideRender
   if (window.__unstableAutoRegisterBlocks) {
     window.__unstableAutoRegisterBlocks.forEach(blockName => {
+      const bootstrappedBlockType = unlock((0,external_wp_data_namespaceObject.select)(external_wp_blocks_namespaceObject.store)).getBootstrappedBlockType(blockName);
+      const bootstrappedApiVersion = bootstrappedBlockType.apiVersion;
       (0,external_wp_blocks_namespaceObject.registerBlockType)(blockName, {
         title: blockName,
-        edit: ({
+        ...(bootstrappedApiVersion < 3 && {
+          apiVersion: 3
+        }),
+        edit: function Edit({
           attributes
-        }) => {
-          return (0,external_wp_element_namespaceObject.createElement)((external_wp_serverSideRender_default()), {
+        }) {
+          const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+          const {
+            content,
+            status,
+            error
+          } = (0,external_wp_serverSideRender_namespaceObject.useServerSideRender)({
             block: blockName,
             attributes
+          });
+          if (status === 'loading') {
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+              ...blockProps,
+              children: (0,external_wp_i18n_namespaceObject.__)('Loading…')
+            });
+          }
+          if (status === 'error') {
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+              ...blockProps,
+              children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: error message describing the problem */
+              (0,external_wp_i18n_namespaceObject.__)('Error loading block: %s'), error)
+            });
+          }
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            ...blockProps,
+            dangerouslySetInnerHTML: {
+              __html: content || ''
+            }
           });
         },
         save: () => null
