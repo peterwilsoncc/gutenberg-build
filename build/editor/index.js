@@ -36116,10 +36116,12 @@ function getCommentExcerpt(text, excerptLength = 10) {
  * @param {string}       additionalSelector The additional selector to focus on.
  */
 function focusCommentThread(commentId, container, additionalSelector) {
-  if (!commentId || !container) {
+  if (!container) {
     return;
   }
-  const threadSelector = `[role=listitem][id="comment-thread-${commentId}"]`;
+
+  // A thread without a commentId is a new comment thread.
+  const threadSelector = commentId ? `[role=listitem][id="comment-thread-${commentId}"]` : '[role=listitem]:not([id])';
   const selector = additionalSelector ? `${threadSelector} ${additionalSelector}` : threadSelector;
   return new Promise(resolve => {
     if (container.querySelector(selector)) {
@@ -36733,17 +36735,10 @@ const CommentBoard = ({
 
 
 
-/**
- * Renders the UI for adding a comment in the Gutenberg editor's collaboration sidebar.
- *
- * @param {Object}   props                     - The component props.
- * @param {Function} props.onSubmit            - A callback function to be called when the user submits a comment.
- * @param {boolean}  props.showCommentBoard    - The function to edit the comment.
- * @param {Function} props.setShowCommentBoard - The function to delete the comment.
- * @param {Ref}      props.commentSidebarRef   - The ref to the comment sidebar.
- * @return {React.ReactNode} The rendered comment input UI.
- */
 
+const {
+  useBlockElement: add_comment_useBlockElement
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function AddComment({
   onSubmit,
   showCommentBoard,
@@ -36764,11 +36759,11 @@ function AddComment({
       blockCommentId: selectedBlock?.attributes?.metadata?.commentId,
       isEmptyDefaultBlock: selectedBlock ? (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(selectedBlock) : false
     };
-  });
+  }, []);
+  const blockElement = add_comment_useBlockElement(clientId);
   if (!showCommentBoard || !clientId || undefined !== blockCommentId || isEmptyDefaultBlock) {
     return null;
   }
-  const commentLabel = (0,external_wp_i18n_namespaceObject.__)('New Comment');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     className: "editor-collab-sidebar-panel__thread is-selected",
     spacing: "3",
@@ -36789,9 +36784,10 @@ function AddComment({
       },
       onCancel: () => {
         setShowCommentBoard(false);
+        blockElement?.focus();
       },
       submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Comment', 'Add comment button'),
-      labelText: commentLabel
+      labelText: (0,external_wp_i18n_namespaceObject.__)('New Comment')
     })]
   });
 }
@@ -37210,6 +37206,7 @@ function useEnableFloatingSidebar(enabled = false) {
 
 
 
+
 function CollabSidebarContent({
   showCommentBoard,
   setShowCommentBoard,
@@ -37253,6 +37250,9 @@ function CollabSidebarContent({
 function CollabSidebar() {
   const [showCommentBoard, setShowCommentBoard] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
+    getActiveComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const {
     enableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
@@ -37275,10 +37275,6 @@ function CollabSidebar() {
     const _clientId = getSelectedBlockClientId();
     return _clientId ? getBlockAttributes(_clientId)?.metadata?.commentId : null;
   }, []);
-  const openCollabBoard = () => {
-    setShowCommentBoard(true);
-    enableComplementaryArea('core', collabHistorySidebarName);
-  };
   const {
     resultComments,
     unresolvedSortedThreads,
@@ -37300,12 +37296,25 @@ function CollabSidebar() {
   if (!(!!postId && typeof postId === 'number')) {
     return null;
   }
+  async function openTheSidebar() {
+    enableComplementaryArea('core', collabHistorySidebarName);
+    const activeArea = await getActiveComplementaryArea('core');
+
+    // Move focus to the target element after the sidebar has opened.
+    if ([collabHistorySidebarName, collabSidebarName].includes(activeArea)) {
+      setShowCommentBoard(!blockCommentId);
+      focusCommentThread(blockCommentId, commentSidebarRef.current,
+      // Focus a comment thread when there's a selected block with a comment.
+      !blockCommentId ? 'textarea' : undefined);
+    }
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [blockCommentId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_indicator_toolbar, {
       thread: currentThread,
-      hasMoreComments: hasMoreComments
+      hasMoreComments: hasMoreComments,
+      onClick: openTheSidebar
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_menu_item, {
-      onClick: openCollabBoard
+      onClick: openTheSidebar
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       identifier: collabHistorySidebarName
       // translators: Comments sidebar title
