@@ -58954,9 +58954,7 @@ const SiteLogo = ({
 
   // Check if we're in contentOnly mode
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
-  const isNavigationMode = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).isNavigationMode(), []);
   const isContentOnlyMode = blockEditingMode === 'contentOnly';
-  const isContentOnlyWriteMode = isNavigationMode && isContentOnlyMode;
   const {
     imageEditing,
     maxWidth,
@@ -59083,7 +59081,7 @@ const SiteLogo = ({
   const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing;
 
   // Hide crop and dimensions editing in write mode
-  const shouldShowCropAndDimensions = !isContentOnlyWriteMode;
+  const shouldShowCropAndDimensions = !isContentOnlyMode;
   let imgEdit;
   if (canEditImage && isEditingImage) {
     imgEdit = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalImageEditor, {
@@ -59978,17 +59976,13 @@ function SiteTitleEdit({
   } = attributes;
   const {
     canUserEdit,
-    title,
-    isNavigationMode
+    title
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       canUser,
       getEntityRecord,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const {
-      isNavigationMode: _isNavigationMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
     const canEdit = canUser('update', {
       kind: 'root',
       name: 'site'
@@ -59997,8 +59991,7 @@ function SiteTitleEdit({
     const readOnlySettings = getEntityRecord('root', '__unstableBase');
     return {
       canUserEdit: canEdit,
-      title: canEdit ? settings?.title : readOnlySettings?.name,
-      isNavigationMode: _isNavigationMode()
+      title: canEdit ? settings?.title : readOnlySettings?.name
     };
   }, []);
   const {
@@ -60042,7 +60035,7 @@ function SiteTitleEdit({
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [!isNavigationMode && blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: [blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
         value: level,

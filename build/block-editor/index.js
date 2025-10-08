@@ -11433,15 +11433,7 @@ function isSectionBlock(state, clientId) {
   if ((attributes?.metadata?.patternName || isTemplatePart) && !!window?.__experimentalContentOnlyPatternInsertion) {
     return true;
   }
-
-  // Template parts become sections in navigation mode.
-  const _isNavigationMode = isNavigationMode(state);
-  if (_isNavigationMode && isTemplatePart) {
-    return true;
-  }
-  const sectionRootClientId = getSectionRootClientId(state);
-  const sectionClientIds = getBlockOrder(state, sectionRootClientId);
-  return _isNavigationMode && sectionClientIds.includes(clientId);
+  return false;
 }
 
 /**
@@ -13296,7 +13288,7 @@ const canInsertBlockTypeUnmemoized = (state, blockName, rootClientId = null) => 
   }
 
   // In write mode, check if this container allows insertion.
-  if (blockEditingMode === 'contentOnly' && isNavigationMode(state) && !isContainerInsertableToInWriteMode(state, blockName, rootClientId)) {
+  if (blockEditingMode === 'contentOnly' && !isContainerInsertableToInWriteMode(state, blockName, rootClientId)) {
     return false;
   }
   const parentName = getBlockName(state, rootClientId);
@@ -13402,7 +13394,7 @@ function canRemoveBlock(state, clientId) {
   const blockEditingMode = getBlockEditingMode(state, rootClientId);
 
   // Check if the parent container allows insertion/removal in write mode
-  if (blockEditingMode === 'contentOnly' && isNavigationMode(state) && !isContainerInsertableToInWriteMode(state, getBlockName(state, rootClientId), rootClientId)) {
+  if (blockEditingMode === 'contentOnly' && !isContainerInsertableToInWriteMode(state, getBlockName(state, rootClientId), rootClientId)) {
     return false;
   }
   return blockEditingMode !== 'disabled';
@@ -64651,7 +64643,6 @@ function BlockSettingsDropdown({
     selectedBlockClientIds,
     openedBlockSettingsMenu,
     isContentOnly,
-    isNavigationMode,
     isZoomOut
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -64662,7 +64653,6 @@ function BlockSettingsDropdown({
       getBlockAttributes,
       getOpenedBlockSettingsMenu,
       getBlockEditingMode,
-      isNavigationMode: _isNavigationMode,
       isZoomOut: _isZoomOut
     } = unlock(select(store));
     const {
@@ -64677,7 +64667,6 @@ function BlockSettingsDropdown({
       selectedBlockClientIds: getSelectedBlockClientIds(),
       openedBlockSettingsMenu: getOpenedBlockSettingsMenu(),
       isContentOnly: getBlockEditingMode(firstBlockClientId) === 'contentOnly',
-      isNavigationMode: _isNavigationMode(),
       isZoomOut: _isZoomOut()
     };
   }, [firstBlockClientId]);
@@ -64702,7 +64691,6 @@ function BlockSettingsDropdown({
     };
   }, []);
   const hasSelectedBlocks = selectedBlockClientIds.length > 0;
-  const isContentOnlyWriteMode = isNavigationMode && isContentOnly;
   async function updateSelectionAfterDuplicate(clientIdsPromise) {
     if (!__experimentalSelectBlock) {
       return;
@@ -64793,11 +64781,11 @@ function BlockSettingsDropdown({
               parentBlockType: parentBlockType
             }), count === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_html_convert_button, {
               clientId: firstBlockClientId
-            }), !isContentOnlyWriteMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
+            }), !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               onCopy: onCopy,
               shortcut: shortcuts.copy
-            }), !isContentOnlyWriteMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
+            }), !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               label: (0,external_wp_i18n_namespaceObject.__)('Cut'),
               eventType: "cut",
@@ -65785,9 +65773,7 @@ function PrivateBlockToolbar({
     showGroupButtons,
     showLockButtons,
     showBlockVisibilityButton,
-    showSwitchSectionStyleButton,
-    hasFixedToolbar,
-    isNavigationMode
+    showSwitchSectionStyleButton
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockName,
@@ -65799,10 +65785,8 @@ function PrivateBlockToolbar({
       getBlockAttributes,
       getBlockParentsByBlockName,
       getTemplateLock,
-      getSettings,
       getParentSectionBlock,
       isZoomOut,
-      isNavigationMode: _isNavigationMode,
       isSectionBlock
     } = unlock(select(store));
     const selectedBlockClientIds = getSelectedBlockClientIds();
@@ -65813,7 +65797,6 @@ function PrivateBlockToolbar({
     const parentBlockName = getBlockName(parentClientId);
     const parentBlockType = (0,external_wp_blocks_namespaceObject.getBlockType)(parentBlockName);
     const editingMode = getBlockEditingMode(selectedBlockClientId);
-    const isNavigationModeEnabled = _isNavigationMode();
     const _isDefaultEditingMode = editingMode === 'default';
     const _blockName = getBlockName(selectedBlockClientId);
     const isValid = selectedBlockClientIds.every(id => isBlockValid(id));
@@ -65827,7 +65810,7 @@ function PrivateBlockToolbar({
 
     // The switch style button appears more prominently with the
     // content only pattern experiment.
-    const _showSwitchSectionStyleButton = window?.__experimentalContentOnlyPatternInsertion ? _isZoomOut || isSectionBlock(selectedBlockClientId) : _isZoomOut || isNavigationModeEnabled && editingMode === 'contentOnly' && isSectionBlock(selectedBlockClientId);
+    const _showSwitchSectionStyleButton = window?.__experimentalContentOnlyPatternInsertion && (_isZoomOut || isSectionBlock(selectedBlockClientId));
     return {
       blockClientId: selectedBlockClientId,
       blockClientIds: selectedBlockClientIds,
@@ -65844,9 +65827,7 @@ function PrivateBlockToolbar({
       showGroupButtons: !_isZoomOut,
       showLockButtons: !_isZoomOut,
       showBlockVisibilityButton: !_isZoomOut,
-      showSwitchSectionStyleButton: _showSwitchSectionStyleButton,
-      hasFixedToolbar: getSettings().hasFixedToolbar,
-      isNavigationMode: isNavigationModeEnabled
+      showSwitchSectionStyleButton: _showSwitchSectionStyleButton
     };
   }, []);
   const toolbarWrapperRef = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -65867,8 +65848,7 @@ function PrivateBlockToolbar({
 
   // Shifts the toolbar to make room for the parent block selector.
   const classes = dist_clsx('block-editor-block-contextual-toolbar', {
-    'has-parent': showParentSelector,
-    'is-inverted-toolbar': isNavigationMode && !hasFixedToolbar
+    'has-parent': showParentSelector
   });
   const innerClasses = dist_clsx('block-editor-block-toolbar', {
     'is-synced': isSynced,
@@ -75572,8 +75552,7 @@ function RichTextWrapper({
     const {
       getSelectionStart,
       getSelectionEnd,
-      getBlockEditingMode,
-      isNavigationMode
+      getBlockEditingMode
     } = select(store);
     const selectionStart = getSelectionStart();
     const selectionEnd = getSelectionEnd();
@@ -75587,14 +75566,14 @@ function RichTextWrapper({
       selectionStart: isSelected ? selectionStart.offset : undefined,
       selectionEnd: isSelected ? selectionEnd.offset : undefined,
       isSelected,
-      isContentOnlyWriteMode: isNavigationMode() && getBlockEditingMode(clientId) === 'contentOnly'
+      isContentOnly: getBlockEditingMode(clientId) === 'contentOnly'
     };
   };
   const {
     selectionStart,
     selectionEnd,
     isSelected,
-    isContentOnlyWriteMode
+    isContentOnly
   } = (0,external_wp_data_namespaceObject.useSelect)(selector, [clientId, identifier, instanceId, originalIsSelected, isBlockSelected]);
   const {
     disableBoundBlock,
@@ -75713,7 +75692,7 @@ function RichTextWrapper({
     identifier,
     allowedFormats: adjustedAllowedFormats,
     withoutInteractiveFormatting,
-    disableNoneEssentialFormatting: isContentOnlyWriteMode
+    disableNoneEssentialFormatting: isContentOnly
   });
   function addEditorOnlyFormats(value) {
     return valueHandlers.reduce((accumulator, fn) => fn(accumulator, value.text), value.formats);
