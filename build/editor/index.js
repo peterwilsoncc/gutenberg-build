@@ -36720,6 +36720,14 @@ const CommentAvatarIndicator = ({
 
 
 
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
 function useBlockComments(postId) {
   const queryArgs = {
     post: postId,
@@ -36814,14 +36822,128 @@ function useBlockComments(postId) {
     totalPages
   };
 }
+function useBlockCommentsActions() {
+  const {
+    createNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  const {
+    saveEntityRecord,
+    deleteEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const {
+    getCurrentPostId
+  } = (0,external_wp_data_namespaceObject.useSelect)(store_store);
+  const {
+    getBlockAttributes,
+    getSelectedBlockClientId
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const onError = error => {
+    const errorMessage = error.message && error.code !== 'unknown_error' ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(error.message) : (0,external_wp_i18n_namespaceObject.__)('An error occurred while performing an update.');
+    createNotice('error', errorMessage, {
+      type: 'snackbar',
+      isDismissible: true
+    });
+  };
+  const onCreate = async ({
+    content,
+    parent
+  }) => {
+    try {
+      const savedRecord = await saveEntityRecord('root', 'comment', {
+        post: getCurrentPostId(),
+        content,
+        comment_type: 'block_comment',
+        comment_approved: 0,
+        parent: parent || 0
+      }, {
+        throwOnError: true
+      });
+
+      // If it's a main comment, update the block attributes with the comment id.
+      if (!parent && savedRecord?.id) {
+        const clientId = getSelectedBlockClientId();
+        const metadata = getBlockAttributes(clientId)?.metadata;
+        updateBlockAttributes(clientId, {
+          metadata: {
+            ...metadata,
+            commentId: savedRecord.id
+          }
+        });
+      }
+      createNotice('snackbar', parent ? (0,external_wp_i18n_namespaceObject.__)('Reply added successfully.') : (0,external_wp_i18n_namespaceObject.__)('Comment added successfully.'), {
+        type: 'snackbar',
+        isDismissible: true
+      });
+      return savedRecord;
+    } catch (error) {
+      onError(error);
+    }
+  };
+  const onEdit = async ({
+    id,
+    content,
+    status
+  }) => {
+    const messageType = status ? status : 'updated';
+    const messages = {
+      approved: (0,external_wp_i18n_namespaceObject.__)('Comment marked as resolved.'),
+      hold: (0,external_wp_i18n_namespaceObject.__)('Comment reopened.'),
+      updated: (0,external_wp_i18n_namespaceObject.__)('Comment updated.')
+    };
+    try {
+      var _messages$messageType;
+      await saveEntityRecord('root', 'comment', {
+        id,
+        content,
+        status
+      }, {
+        throwOnError: true
+      });
+      createNotice('snackbar', (_messages$messageType = messages[messageType]) !== null && _messages$messageType !== void 0 ? _messages$messageType : (0,external_wp_i18n_namespaceObject.__)('Comment updated.'), {
+        type: 'snackbar',
+        isDismissible: true
+      });
+    } catch (error) {
+      onError(error);
+    }
+  };
+  const onDelete = async comment => {
+    try {
+      await deleteEntityRecord('root', 'comment', comment.id, undefined, {
+        throwOnError: true
+      });
+      if (!comment.parent) {
+        const clientId = getSelectedBlockClientId();
+        const metadata = getBlockAttributes(clientId)?.metadata;
+        updateBlockAttributes(clientId, {
+          metadata: {
+            ...metadata,
+            commentId: undefined
+          }
+        });
+      }
+      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment deleted successfully.'), {
+        type: 'snackbar',
+        isDismissible: true
+      });
+    } catch (error) {
+      onError(error);
+    }
+  };
+  return {
+    onCreate,
+    onEdit,
+    onDelete
+  };
+}
 
 ;// ./packages/editor/build-module/components/collab-sidebar/index.js
 /**
  * WordPress dependencies
  */
-
-
-
 
 
 
@@ -36852,120 +36974,10 @@ function CollabSidebarContent({
   commentSidebarRef
 }) {
   const {
-    createNotice
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  const {
-    saveEntityRecord,
-    deleteEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const {
-    updateBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const {
-    currentPostId,
-    getSelectedBlockClientId,
-    getBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCurrentPostId
-    } = select(store_store);
-    return {
-      getSelectedBlockClientId: select(external_wp_blockEditor_namespaceObject.store).getSelectedBlockClientId,
-      getBlockAttributes: select(external_wp_blockEditor_namespaceObject.store).getBlockAttributes,
-      currentPostId: getCurrentPostId()
-    };
-  }, []);
-  const onError = error => {
-    const errorMessage = error.message && error.code !== 'unknown_error' ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(error.message) : (0,external_wp_i18n_namespaceObject.__)('An error occurred while performing an update.');
-    createNotice('error', errorMessage, {
-      type: 'snackbar',
-      isDismissible: true
-    });
-  };
-  const addNewComment = async ({
-    content,
-    parent
-  }) => {
-    try {
-      const savedRecord = await saveEntityRecord('root', 'comment', {
-        post: currentPostId,
-        content,
-        comment_type: 'block_comment',
-        comment_approved: 0,
-        parent: parent || 0
-      }, {
-        throwOnError: true
-      });
-
-      // If it's a main comment, update the block attributes with the comment id.
-      if (!parent && savedRecord?.id) {
-        const metadata = getBlockAttributes(getSelectedBlockClientId())?.metadata;
-        updateBlockAttributes(getSelectedBlockClientId(), {
-          metadata: {
-            ...metadata,
-            commentId: savedRecord.id
-          }
-        });
-      }
-      createNotice('snackbar', parent ? (0,external_wp_i18n_namespaceObject.__)('Reply added successfully.') : (0,external_wp_i18n_namespaceObject.__)('Comment added successfully.'), {
-        type: 'snackbar',
-        isDismissible: true
-      });
-      return savedRecord;
-    } catch (error) {
-      onError(error);
-    }
-  };
-  const onEditComment = async ({
-    id,
-    content,
-    status
-  }) => {
-    const messageType = status ? status : 'updated';
-    const messages = {
-      approved: (0,external_wp_i18n_namespaceObject.__)('Comment marked as resolved.'),
-      hold: (0,external_wp_i18n_namespaceObject.__)('Comment reopened.'),
-      updated: (0,external_wp_i18n_namespaceObject.__)('Comment updated.')
-    };
-    try {
-      var _messages$messageType;
-      await saveEntityRecord('root', 'comment', {
-        id,
-        content,
-        status
-      }, {
-        throwOnError: true
-      });
-      createNotice('snackbar', (_messages$messageType = messages[messageType]) !== null && _messages$messageType !== void 0 ? _messages$messageType : (0,external_wp_i18n_namespaceObject.__)('Comment updated.'), {
-        type: 'snackbar',
-        isDismissible: true
-      });
-    } catch (error) {
-      onError(error);
-    }
-  };
-  const onCommentDelete = async comment => {
-    try {
-      await deleteEntityRecord('root', 'comment', comment.id, undefined, {
-        throwOnError: true
-      });
-      if (!comment.parent) {
-        const metadata = getBlockAttributes(getSelectedBlockClientId())?.metadata;
-        updateBlockAttributes(getSelectedBlockClientId(), {
-          metadata: {
-            ...metadata,
-            commentId: undefined
-          }
-        });
-      }
-      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment deleted successfully.'), {
-        type: 'snackbar',
-        isDismissible: true
-      });
-    } catch (error) {
-      onError(error);
-    }
-  };
+    onCreate,
+    onEdit,
+    onDelete
+  } = useBlockCommentsActions();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "editor-collab-sidebar-panel",
     style: styles,
@@ -36974,15 +36986,15 @@ function CollabSidebarContent({
       role: "list",
       spacing: "3",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddComment, {
-        onSubmit: addNewComment,
+        onSubmit: onCreate,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard,
         commentSidebarRef: commentSidebarRef
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Comments, {
         threads: comments,
-        onEditComment: onEditComment,
-        onAddReply: addNewComment,
-        onCommentDelete: onCommentDelete,
+        onEditComment: onEdit,
+        onAddReply: onCreate,
+        onCommentDelete: onDelete,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard,
         commentSidebarRef: commentSidebarRef
