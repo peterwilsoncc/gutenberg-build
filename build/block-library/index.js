@@ -2905,12 +2905,10 @@ const accordion_panel_metadata = {
     },
     shadow: true,
     blockVisibility: false,
-    contentRole: true
+    contentRole: true,
+    allowedBlocks: true
   },
   attributes: {
-    allowedBlocks: {
-      type: "array"
-    },
     templateLock: {
       type: ["string", "boolean"],
       "enum": ["all", "insert", "contentOnly", false],
@@ -9464,9 +9462,6 @@ const column_metadata = {
     width: {
       type: "string"
     },
-    allowedBlocks: {
-      type: "array"
-    },
     templateLock: {
       type: ["string", "boolean"],
       "enum": ["all", "insert", "contentOnly", false]
@@ -9524,7 +9519,8 @@ const column_metadata = {
     layout: true,
     interactivity: {
       clientNavigation: true
-    }
+    },
+    allowedBlocks: true
   }
 };
 
@@ -18048,9 +18044,6 @@ const cover_metadata = {
       type: "boolean",
       "default": true
     },
-    allowedBlocks: {
-      type: "array"
-    },
     templateLock: {
       type: ["string", "boolean"],
       "enum": ["all", "insert", "contentOnly", false]
@@ -18127,7 +18120,8 @@ const cover_metadata = {
     },
     filter: {
       duotone: true
-    }
+    },
+    allowedBlocks: true
   },
   selectors: {
     filter: {
@@ -18405,9 +18399,6 @@ const details_metadata = {
       attribute: "name",
       selector: ".wp-block-details"
     },
-    allowedBlocks: {
-      type: "array"
-    },
     placeholder: {
       type: "string"
     }
@@ -18457,7 +18448,8 @@ const details_metadata = {
     },
     interactivity: {
       clientNavigation: true
-    }
+    },
+    allowedBlocks: true
   },
   editorStyle: "wp-block-details-editor",
   style: "wp-block-details"
@@ -35999,9 +35991,6 @@ const media_text_metadata = {
     focalPoint: {
       type: "object"
     },
-    allowedBlocks: {
-      type: "array"
-    },
     useFeaturedImage: {
       type: "boolean",
       "default": false
@@ -36052,7 +36041,8 @@ const media_text_metadata = {
     },
     interactivity: {
       clientNavigation: true
-    }
+    },
+    allowedBlocks: true
   },
   editorStyle: "wp-block-media-text-editor",
   style: "wp-block-media-text"
@@ -56422,7 +56412,8 @@ function QuoteEdit({
   isSelected
 }) {
   const {
-    textAlign
+    textAlign,
+    allowedBlocks
   } = attributes;
   edit_useMigrateOnLoad(attributes, clientId);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -56437,7 +56428,8 @@ function QuoteEdit({
     template: quote_edit_TEMPLATE,
     templateInsertUpdatesSelection: true,
     __experimentalCaptureToolbars: true,
-    renderAppender: false
+    renderAppender: false,
+    allowedBlocks
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
@@ -56742,7 +56734,8 @@ const quote_metadata = {
     },
     interactivity: {
       clientNavigation: true
-    }
+    },
+    allowedBlocks: true
   },
   styles: [{
     name: "default",
