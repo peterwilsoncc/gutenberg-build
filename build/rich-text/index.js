@@ -3915,8 +3915,22 @@ function useRichText({
     forceRender();
   }
   function applyFromProps() {
+    // Get previous value before updating
+    const previousValue = _valueRef.current;
     setRecordFromProps();
-    applyRecord(recordRef.current);
+
+    // Check if content length changed (text was added/removed, not just formatted)
+    const contentLengthChanged = previousValue && typeof previousValue === 'string' && typeof value === 'string' && previousValue.length !== value.length;
+
+    // Check if focus is on this element
+    const hasFocus = ref.current?.contains(ref.current.ownerDocument.activeElement);
+
+    // Skip re-applying the selection state when content changed from external source
+    // (e.g., typing in sidebar input changes canvas text)
+    const skipSelection = contentLengthChanged && !hasFocus;
+    applyRecord(recordRef.current, {
+      domOnly: skipSelection
+    });
   }
   const didMountRef = (0,external_wp_element_namespaceObject.useRef)(false);
 
