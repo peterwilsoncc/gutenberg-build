@@ -37312,7 +37312,7 @@ function CollabSidebar() {
         setShowCommentBoard: setShowCommentBoard,
         commentSidebarRef: commentSidebarRef
       })
-    }), isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
+    }), isLargeViewport && unresolvedSortedThreads.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       isPinnable: false,
       header: false,
       identifier: collabSidebarName,
