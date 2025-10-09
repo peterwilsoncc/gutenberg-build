@@ -27246,6 +27246,7 @@ function Header({
           flexShrink: 0
         },
         spacing: 2,
+        className: "admin-ui-page__header-actions",
         children: actions
       })]
     }), subTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
@@ -27275,7 +27276,7 @@ function Page({
   children,
   className,
   actions,
-  hasPadding = true
+  hasPadding = false
 }) {
   const classes = dist_clsx('admin-ui-page', className);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(navigable_region, {
@@ -27287,12 +27288,10 @@ function Page({
       title: title,
       subTitle: subTitle,
       actions: actions
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: dist_clsx('admin-ui-page__content', {
-        'has-padding': hasPadding
-      }),
+    }), hasPadding ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "admin-ui-page__content has-padding",
       children: children
-    })]
+    }) : children]
   });
 }
 /* harmony default export */ const build_module_page = (Page);
@@ -27409,7 +27408,6 @@ function GlobalStylesUIWrapper() {
     }) : null,
     className: "edit-site-styles",
     title: (0,external_wp_i18n_namespaceObject.__)('Styles'),
-    hasPadding: false,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ui, {
       path: section,
       onPathChange: onChangeSection
@@ -50440,7 +50438,6 @@ function DataviewsPatterns() {
           children: (0,external_wp_i18n_namespaceObject.__)('Reset view')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternsActions, {})]
       }),
-      hasPadding: false,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
         paginationInfo: paginationInfo,
         fields: fields,
@@ -52952,7 +52949,6 @@ function PageTemplates() {
         children: (0,external_wp_i18n_namespaceObject.__)('Reset view')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_new_template, {})]
     }),
-    hasPadding: false,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
       paginationInfo: paginationInfo,
       fields: fields,
@@ -53792,7 +53788,6 @@ function PostList({
         })]
       })]
     }),
-    hasPadding: false,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
       paginationInfo: paginationInfo,
       fields: fields,
