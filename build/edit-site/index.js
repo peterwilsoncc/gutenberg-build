@@ -53692,7 +53692,7 @@ function PostList({
     return {
       per_page: view.perPage,
       page: view.page,
-      _embed: 'author',
+      _embed: 'author,wp:featuredmedia',
       order: view.sort?.direction,
       orderby: view.sort?.field,
       orderby_hierarchy: !!view.showLevels,

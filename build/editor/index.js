@@ -16308,11 +16308,10 @@ const FeaturedImageEdit = ({
 };
 
 ;// ./packages/fields/build-module/fields/featured-image/featured-image-view.js
+
 /**
  * WordPress dependencies
  */
-
-
 
 /**
  * Internal dependencies
@@ -16322,13 +16321,7 @@ const FeaturedImageView = ({
   item,
   config
 }) => {
-  const mediaId = item.featured_media;
-  const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    return mediaId ? getEntityRecord('postType', 'attachment', mediaId) : null;
-  }, [mediaId]);
+  const media = item?._embedded?.['wp:featuredmedia']?.[0];
   const url = media?.source_url;
   if (url) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
@@ -16368,7 +16361,7 @@ const featuredImageField = {
 };
 
 /**
- * Featured Image field for BasePost.
+ * Featured Image field for BasePostWithEmbeddedFeaturedMedia.
  */
 /* harmony default export */ const featured_image = (featuredImageField);
 
