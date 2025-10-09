@@ -68631,11 +68631,11 @@ function TermsQueryInspectorControls({
   attributes,
   setQuery,
   setAttributes,
-  TagName,
   clientId
 }) {
   const {
-    termQuery
+    termQuery,
+    tagName: TagName
   } = attributes;
   const {
     taxonomy,
@@ -68797,7 +68797,7 @@ function TermsQueryInspectorControls({
   });
 }
 
-;// ./packages/block-library/build-module/terms-query/edit/index.js
+;// ./packages/block-library/build-module/terms-query/edit/terms-query-content.js
 /**
  * WordPress dependencies
  */
@@ -68809,19 +68809,19 @@ function TermsQueryInspectorControls({
  */
 
 
-const terms_query_edit_TEMPLATE = [['core/term-template']];
-function TermsQueryEdit({
+const terms_query_content_TEMPLATE = [['core/term-template']];
+function TermsQueryContent({
   attributes,
   setAttributes,
   clientId,
   name
 }) {
   const {
-    tagName: TagName = 'div'
+    tagName: TagName
   } = attributes;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    template: terms_query_edit_TEMPLATE
+    template: terms_query_content_TEMPLATE
   });
   const setQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes(prevAttributes => ({
     termQuery: {
@@ -68835,13 +68835,84 @@ function TermsQueryEdit({
       attributes: attributes,
       setQuery: setQuery,
       setAttributes: setAttributes,
-      clientId: clientId,
-      tagName: TagName
+      clientId: clientId
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
       ...innerBlocksProps
     })]
   });
 }
+
+;// ./packages/block-library/build-module/terms-query/edit/terms-query-placeholder.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+function TermsQueryPlaceholder({
+  attributes,
+  clientId,
+  name
+}) {
+  const {
+    blockType,
+    activeBlockVariation,
+    scopeVariations
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getActiveBlockVariation,
+      getBlockType,
+      getBlockVariations
+    } = select(external_wp_blocks_namespaceObject.store);
+    return {
+      blockType: getBlockType(name),
+      activeBlockVariation: getActiveBlockVariation(name, attributes),
+      scopeVariations: getBlockVariations(name, 'block')
+    };
+  }, [name, attributes]);
+  const icon = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
+  const label = activeBlockVariation?.title || blockType?.title;
+  const {
+    replaceInnerBlocks
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ...blockProps,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockVariationPicker, {
+      icon: icon,
+      label: label,
+      variations: scopeVariations,
+      onSelect: variation => {
+        if (variation.innerBlocks) {
+          replaceInnerBlocks(clientId, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(variation.innerBlocks), false);
+        }
+      }
+    })
+  });
+}
+
+;// ./packages/block-library/build-module/terms-query/edit/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const TermsQueryEdit = props => {
+  const hasInnerBlocks = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_blockEditor_namespaceObject.store).getBlocks(props.clientId).length, [props.clientId]);
+  const Component = hasInnerBlocks ? TermsQueryContent : TermsQueryPlaceholder;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Component, {
+    ...props
+  });
+};
+/* harmony default export */ const terms_query_edit = (TermsQueryEdit);
 
 ;// ./packages/block-library/build-module/terms-query/save.js
 /**
@@ -68860,6 +68931,78 @@ function terms_query_save_save({
     ...innerBlocksProps
   });
 }
+
+;// ./packages/block-library/build-module/terms-query/variations.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+const variations_titleDate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 48 48",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+    d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zM7 26h12v1H7v-1zm34-5H7v3h34v-3zM7 38h12v1H7v-1zm34-5H7v3h34v-3z"
+  })
+});
+const variations_titleExcerpt = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 48 48",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+    d: "M41 9H7v3h34V9zm-4 5H7v1h30v-1zm4 3H7v1h34v-1zM7 20h30v1H7v-1zm0 12h30v1H7v-1zm34 3H7v1h34v-1zM7 38h30v1H7v-1zm34-11H7v3h34v-3z"
+  })
+});
+const termName = ['core/paragraph', {
+  metadata: {
+    name: (0,external_wp_i18n_namespaceObject.__)('Term Name'),
+    bindings: {
+      content: {
+        source: 'core/term-data',
+        args: {
+          key: 'name'
+        }
+      }
+    }
+  }
+}];
+const termCount = ['core/paragraph', {
+  placeholder: (0,external_wp_i18n_namespaceObject.__)('(count)'),
+  metadata: {
+    name: (0,external_wp_i18n_namespaceObject.__)('Term Count'),
+    bindings: {
+      content: {
+        source: 'core/term-data',
+        args: {
+          key: 'count'
+        }
+      }
+    }
+  }
+}];
+const terms_query_variations_variations = [{
+  name: 'title',
+  title: (0,external_wp_i18n_namespaceObject.__)('Title'),
+  description: (0,external_wp_i18n_namespaceObject.__)("Display the terms' titles."),
+  attributes: {},
+  icon: variations_titleDate,
+  scope: ['block'],
+  innerBlocks: [['core/term-template', {}, [termName]]]
+}, {
+  name: 'title-count',
+  title: (0,external_wp_i18n_namespaceObject.__)('Title & Count'),
+  description: (0,external_wp_i18n_namespaceObject.__)("Display the terms' titles and number of posts assigned to each term."),
+  attributes: {},
+  icon: variations_titleExcerpt,
+  scope: ['block'],
+  innerBlocks: [['core/term-template', {}, [['core/group', {
+    layout: {
+      type: 'flex',
+      flexWrap: 'nowrap'
+    }
+  }, [termName, termCount]]]]]
+}];
+/* harmony default export */ const terms_query_variations = (terms_query_variations_variations);
 
 ;// ./packages/block-library/build-module/terms-query/index.js
 /**
@@ -68906,11 +69049,11 @@ const terms_query_metadata = {
   supports: {
     align: ["wide", "full"],
     html: false,
+    layout: true,
     interactivity: true
-  },
-  allowedBlocks: ["core/term-template"],
-  style: "wp-block-terms-query"
+  }
 };
+
 
 
 const {
@@ -68919,9 +69062,10 @@ const {
 
 const terms_query_settings = {
   icon: loop,
-  edit: TermsQueryEdit,
+  edit: terms_query_edit,
   save: terms_query_save_save,
-  example: {}
+  example: {},
+  variations: terms_query_variations
 };
 const terms_query_init = () => initBlock({
   name: terms_query_name,
@@ -68946,20 +69090,7 @@ const terms_query_init = () => initBlock({
 
 
 
-const term_template_edit_TEMPLATE = [['core/group', {
-  layout: {
-    type: 'flex',
-    orientation: 'horizontal'
-  },
-  style: {
-    spacing: {
-      blockGap: '0.5rem'
-    }
-  },
-  metadata: {
-    name: (0,external_wp_i18n_namespaceObject.__)('Term Name with Count')
-  }
-}, [['core/paragraph', {
+const term_template_edit_TEMPLATE = [['core/paragraph', {
   metadata: {
     name: (0,external_wp_i18n_namespaceObject.__)('Term Name'),
     bindings: {
@@ -68971,20 +69102,7 @@ const term_template_edit_TEMPLATE = [['core/group', {
       }
     }
   }
-}], ['core/paragraph', {
-  placeholder: (0,external_wp_i18n_namespaceObject.__)('(count)'),
-  metadata: {
-    name: (0,external_wp_i18n_namespaceObject.__)('Term Count'),
-    bindings: {
-      content: {
-        source: 'core/term-data',
-        args: {
-          key: 'count'
-        }
-      }
-    }
-  }
-}]]]];
+}]];
 function TermTemplateInnerBlocks({
   classList
 }) {
@@ -69033,6 +69151,9 @@ function TermTemplateBlockPreview({
 const MemoizedTermTemplateBlockPreview = (0,external_wp_element_namespaceObject.memo)(TermTemplateBlockPreview);
 function TermTemplateEdit({
   clientId,
+  attributes: {
+    layout
+  },
   setAttributes,
   context: {
     termQuery: {
@@ -69047,10 +69168,11 @@ function TermTemplateEdit({
   },
   __unstableLayoutClassNames
 }) {
-  const [activeBlockContextId, setActiveBlockContextId] = (0,external_wp_element_namespaceObject.useState)();
   const {
-    replaceInnerBlocks
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+    type: layoutType,
+    columnCount = 3
+  } = layout || {};
+  const [activeBlockContextId, setActiveBlockContextId] = (0,external_wp_element_namespaceObject.useState)();
   const queryArgs = {
     hide_empty: hideEmpty,
     order,
@@ -69077,24 +69199,7 @@ function TermTemplateEdit({
     // Limit to the number of terms defined by perPage.
     return perPage === 0 ? terms : terms.slice(0, perPage);
   }, [terms, perPage]);
-  const {
-    blocks,
-    variations,
-    defaultVariation
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlocks
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    const {
-      getBlockVariations,
-      getDefaultBlockVariation
-    } = select(external_wp_blocks_namespaceObject.store);
-    return {
-      blocks: getBlocks(clientId),
-      variations: getBlockVariations('core/term-template', 'block'),
-      defaultVariation: getDefaultBlockVariation('core/term-template', 'block')
-    };
-  }, [clientId]);
+  const blocks = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getBlocks(clientId), [clientId]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: __unstableLayoutClassNames
   });
@@ -69104,47 +69209,15 @@ function TermTemplateEdit({
     classList: `term-${term.id}`,
     termData: term
   })), [filteredTerms, taxonomy]);
-
-  // Show variation picker if no blocks exist.
-  if (!blocks?.length) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockVariationPicker, {
-        icon: layout,
-        label: (0,external_wp_i18n_namespaceObject.__)('Term Template'),
-        variations: variations,
-        instructions: (0,external_wp_i18n_namespaceObject.__)('Choose a layout for displaying terms:'),
-        onSelect: (nextVariation = defaultVariation) => {
-          if (nextVariation.attributes) {
-            setAttributes(nextVariation.attributes);
-          }
-          if (nextVariation.innerBlocks) {
-            replaceInnerBlocks(clientId, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(nextVariation.innerBlocks), true);
-          }
-        },
-        allowSkip: true
-      })
-    });
-  }
   if (isResolving) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ul", {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
       ...blockProps,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
         className: "wp-block-term term-loading",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "term-loading-placeholder"
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
-        className: "wp-block-term term-loading",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          className: "term-loading-placeholder"
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
-        className: "wp-block-term term-loading",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          className: "term-loading-placeholder"
-        })
-      })]
+      })
     });
   }
   if (!filteredTerms?.length) {
@@ -69153,10 +69226,35 @@ function TermTemplateEdit({
       children: [" ", (0,external_wp_i18n_namespaceObject.__)('No terms found.')]
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+  const setDisplayLayout = newDisplayLayout => setAttributes(prevAttributes => ({
+    layout: {
+      ...prevAttributes.layout,
+      ...newDisplayLayout
+    }
+  }));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        controls: [{
+          icon: list,
+          title: (0,external_wp_i18n_namespaceObject._x)('List view', 'Term template block display setting'),
+          onClick: () => setDisplayLayout({
+            type: 'default'
+          }),
+          isActive: layoutType === 'default' || layoutType === 'constrained'
+        }, {
+          icon: grid,
+          title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'Term template block display setting'),
+          onClick: () => setDisplayLayout({
+            type: 'grid',
+            columnCount
+          }),
+          isActive: layoutType === 'grid'
+        }]
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
       ...blockProps,
-      children: blockContexts && blockContexts.map(blockContext => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
+      children: blockContexts?.map(blockContext => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
         value: blockContext,
         children: [blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermTemplateInnerBlocks, {
           classList: blockContext.classList
@@ -69168,7 +69266,7 @@ function TermTemplateEdit({
           isHidden: blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId)
         })]
       }, blockContext.termId))
-    })
+    })]
   });
 }
 
@@ -69181,83 +69279,6 @@ function TermTemplateEdit({
 function TermTemplateSave() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InnerBlocks.Content, {});
 }
-
-;// ./packages/block-library/build-module/term-template/variations.js
-/**
- * WordPress dependencies
- */
-
-
-const createInnerBlocks = (groupMetadata, groupStyle = {}) => [['core/group', {
-  layout: {
-    type: 'flex',
-    orientation: 'horizontal'
-  },
-  style: {
-    spacing: {
-      blockGap: '0.5rem'
-    },
-    ...groupStyle
-  },
-  metadata: {
-    name: groupMetadata
-  }
-}, [['core/paragraph', {
-  metadata: {
-    name: (0,external_wp_i18n_namespaceObject.__)('Term Name'),
-    bindings: {
-      content: {
-        source: 'core/term-data',
-        args: {
-          key: 'name'
-        }
-      }
-    }
-  }
-}], ['core/paragraph', {
-  placeholder: (0,external_wp_i18n_namespaceObject.__)('(count)'),
-  metadata: {
-    name: (0,external_wp_i18n_namespaceObject.__)('Term Count'),
-    bindings: {
-      content: {
-        source: 'core/term-data',
-        args: {
-          key: 'count'
-        }
-      }
-    }
-  }
-}]]]];
-const term_template_variations_variations = [{
-  name: 'list',
-  title: (0,external_wp_i18n_namespaceObject.__)('List'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Display terms in a list layout.'),
-  attributes: {
-    layout: {
-      type: 'default'
-    }
-  },
-  isDefault: true,
-  icon: list,
-  scope: ['block', 'inserter'],
-  innerBlocks: createInnerBlocks((0,external_wp_i18n_namespaceObject.__)('Term Name with Count'))
-}, {
-  name: 'grid',
-  title: (0,external_wp_i18n_namespaceObject.__)('Grid'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Display terms in a grid layout.'),
-  attributes: {
-    layout: {
-      type: 'grid',
-      columnCount: 3
-    }
-  },
-  icon: grid,
-  scope: ['block', 'inserter'],
-  innerBlocks: createInnerBlocks((0,external_wp_i18n_namespaceObject.__)('Term Card'), {
-    padding: '1rem'
-  })
-}];
-/* harmony default export */ const term_template_variations = (term_template_variations_variations);
 
 ;// ./packages/block-library/build-module/term-template/index.js
 /**
@@ -69284,13 +69305,7 @@ const term_template_metadata = {
     reusable: false,
     html: false,
     align: ["wide", "full"],
-    layout: {
-      allowSwitching: true,
-      allowEditing: true,
-      "default": {
-        type: "flex"
-      }
-    },
+    layout: true,
     color: {
       gradients: true,
       link: true,
@@ -69335,9 +69350,8 @@ const term_template_metadata = {
     }
   },
   style: "wp-block-term-template",
-  variations: "file:./variations.js"
+  editorStyle: "wp-block-term-template-editor"
 };
-
 
 
 const {
@@ -69346,7 +69360,6 @@ const {
 
 const term_template_settings = {
   icon: layout,
-  variations: term_template_variations,
   edit: TermTemplateEdit,
   save: TermTemplateSave,
   example: {}
