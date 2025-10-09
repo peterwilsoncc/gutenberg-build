@@ -40551,6 +40551,15 @@ function KeyboardShortcutsRegister() {
         character: 'g'
       }
     });
+    registerShortcut({
+      name: 'core/block-editor/toggle-block-visibility',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Show or hide the selected block(s).'),
+      keyCombination: {
+        modifier: 'primaryShift',
+        character: 'h'
+      }
+    });
   }, [registerShortcut]);
   return null;
 }
@@ -67036,6 +67045,7 @@ function useShowBlockTools() {
 
 
 
+
 function block_tools_selector(select) {
   const {
     getSelectedBlockClientId,
@@ -67081,7 +67091,8 @@ function BlockTools({
     getBlocksByClientId,
     getSelectedBlockClientIds,
     getBlockRootClientId,
-    isGroupable
+    isGroupable,
+    getBlockName
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     getGroupingBlockName
@@ -67100,7 +67111,8 @@ function BlockTools({
     selectBlock,
     moveBlocksUp,
     moveBlocksDown,
-    expandBlock
+    expandBlock,
+    updateBlockAttributes
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   function onKeyDown(event) {
     if (event.defaultPrevented) {
@@ -67189,6 +67201,29 @@ function BlockTools({
         const newBlocks = (0,external_wp_blocks_namespaceObject.switchToBlockType)(blocks, groupingBlockName);
         replaceBlocks(clientIds, newBlocks);
         (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Selected blocks are grouped.'));
+      }
+    } else if (isMatch('core/block-editor/toggle-block-visibility', event)) {
+      const clientIds = getSelectedBlockClientIds();
+      if (clientIds.length) {
+        event.preventDefault();
+        const blocks = getBlocksByClientId(clientIds);
+        const canToggleBlockVisibility = blocks.every(block => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(getBlockName(block.clientId), 'blockVisibility', true));
+        if (!canToggleBlockVisibility) {
+          return;
+        }
+        const hasHiddenBlock = blocks.some(block => block.attributes.metadata?.blockVisibility === false);
+        const attributesByClientId = Object.fromEntries(blocks.map(({
+          clientId: mapClientId,
+          attributes
+        }) => [mapClientId, {
+          metadata: utils_cleanEmptyObject({
+            ...attributes?.metadata,
+            blockVisibility: hasHiddenBlock ? undefined : false
+          })
+        }]));
+        updateBlockAttributes(clientIds, attributesByClientId, {
+          uniqueByBlock: true
+        });
       }
     }
   }
@@ -68664,6 +68699,7 @@ function getDragDisplacementValues({
 
 
 
+
 function ListViewBlock({
   block: {
     clientId
@@ -68705,7 +68741,8 @@ function ListViewBlock({
     removeBlocks,
     insertAfterBlock,
     insertBeforeBlock,
-    setOpenedBlockSettingsMenu
+    setOpenedBlockSettingsMenu,
+    updateBlockAttributes
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const debouncedToggleBlockHighlight = (0,external_wp_compose_namespaceObject.useDebounce)(toggleBlockHighlight, 50);
   const {
@@ -68931,6 +68968,29 @@ function ListViewBlock({
         setOpenedBlockSettingsMenu(undefined);
         updateFocusAndSelection(newlySelectedBlocks[0], false);
       }
+    } else if (isMatch('core/block-editor/toggle-block-visibility', event)) {
+      event.preventDefault();
+      const {
+        blocksToUpdate
+      } = getBlocksToUpdate();
+      const blocks = getBlocksByClientId(blocksToUpdate);
+      const canToggleBlockVisibility = blocks.every(blockToUpdate => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockToUpdate.name, 'blockVisibility', true));
+      if (!canToggleBlockVisibility) {
+        return;
+      }
+      const hasHiddenBlock = blocks.some(blockToUpdate => blockToUpdate.attributes.metadata?.blockVisibility === false);
+      const attributesByClientId = Object.fromEntries(blocks.map(({
+        clientId: mapClientId,
+        attributes
+      }) => [mapClientId, {
+        metadata: utils_cleanEmptyObject({
+          ...attributes?.metadata,
+          blockVisibility: hasHiddenBlock ? undefined : false
+        })
+      }]));
+      updateBlockAttributes(blocksToUpdate, attributesByClientId, {
+        uniqueByBlock: true
+      });
     }
   }
   const onMouseEnter = (0,external_wp_element_namespaceObject.useCallback)(() => {
