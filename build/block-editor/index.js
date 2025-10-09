@@ -38711,14 +38711,15 @@ const {
  * }
  * ```
  *
- * @param {Object}        props             Component props.
- * @param {string}        props.title       The title of the block.
- * @param {string|Object} props.icon        The icon of the block. This can be any of [WordPress' Dashicons](https://developer.wordpress.org/resource/dashicons/), or a custom `svg` element.
- * @param {string}        props.description The description of the block.
- * @param {Object}        [props.blockType] Deprecated: Object containing block type data.
- * @param {string}        [props.className] Additional classes to apply to the card.
- * @param {string}        [props.name]      Custom block name to display before the title.
- * @param {Element}       [props.children]  Children.
+ * @param {Object}        props                         Component props.
+ * @param {string}        props.title                   The title of the block.
+ * @param {string|Object} props.icon                    The icon of the block. This can be any of [WordPress' Dashicons](https://developer.wordpress.org/resource/dashicons/), or a custom `svg` element.
+ * @param {string}        props.description             The description of the block.
+ * @param {Object}        [props.blockType]             Deprecated: Object containing block type data.
+ * @param {string}        [props.className]             Additional classes to apply to the card.
+ * @param {string}        [props.name]                  Custom block name to display before the title.
+ * @param {string}        [props.allowParentNavigation] Show a back arrow to the parent block in some situations.
+ * @param {Element}       [props.children]              Children.
  * @return {Element}                        Block card component.
  */
 function BlockCard({
@@ -38728,6 +38729,7 @@ function BlockCard({
   blockType,
   className,
   name,
+  allowParentNavigation,
   children
 }) {
   if (blockType) {
@@ -38741,24 +38743,23 @@ function BlockCard({
       description
     } = blockType);
   }
-  const {
-    parentNavBlockClientId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const parentNavBlockClientId = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!allowParentNavigation) {
+      return;
+    }
     const {
       getSelectedBlockClientId,
       getBlockParentsByBlockName
     } = select(store);
     const _selectedBlockClientId = getSelectedBlockClientId();
-    return {
-      parentNavBlockClientId: getBlockParentsByBlockName(_selectedBlockClientId, 'core/navigation', true)[0]
-    };
-  }, []);
+    return getBlockParentsByBlockName(_selectedBlockClientId, 'core/navigation', true)[0];
+  }, [allowParentNavigation]);
   const {
     selectBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: dist_clsx('block-editor-block-card', className),
-    children: [parentNavBlockClientId &&
+    children: [allowParentNavigation && parentNavBlockClientId &&
     /*#__PURE__*/
     // This is only used by the Navigation block for now. It's not ideal having Navigation block specific code here.
     (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -78637,6 +78638,7 @@ const BlockInspectorSingleBlock = ({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_card, {
       ...blockInformation,
       className: isBlockSynced && 'is-synced',
+      allowParentNavigation: true,
       children: window?.__experimentalContentOnlyPatternInsertion && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditContentsButton, {
         clientId: clientId
       })
