@@ -65634,7 +65634,7 @@ function BlockSettingsDropdown({
                 shortcut: shortcuts.insertAfter,
                 children: (0,external_wp_i18n_namespaceObject.__)('Add after')
               })]
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_comment_icon_slot.Slot, {
+            }), count === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_comment_icon_slot.Slot, {
               fillProps: {
                 onClose
               }
