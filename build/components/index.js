@@ -45224,6 +45224,7 @@ function CheckboxControl(props) {
     help,
     id: idProp,
     onChange,
+    onClick,
     ...additionalProps
   } = props;
   if (heading) {
@@ -45274,6 +45275,11 @@ function CheckboxControl(props) {
           onChange: onChangeValue,
           checked: checked,
           "aria-describedby": !!help ? id + '__help' : undefined,
+          onClick: event => {
+            // Compat code for Safari to ensure that the checkbox is focused when clicked.
+            event.currentTarget.focus();
+            onClick?.(event);
+          },
           ...additionalProps
         }), showIndeterminateIcon ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
           icon: library_reset,
@@ -58752,6 +58758,7 @@ function UnforwardedFormToggle(props, ref) {
     id,
     disabled,
     onChange = form_toggle_noop,
+    onClick,
     ...additionalProps
   } = props;
   const wrapperClasses = dist_clsx('components-form-toggle', className, {
@@ -58767,6 +58774,11 @@ function UnforwardedFormToggle(props, ref) {
       checked: checked,
       onChange: onChange,
       disabled: disabled,
+      onClick: event => {
+        // Compat code for Safari to ensure that the toggle is focused when clicked.
+        event.currentTarget.focus();
+        onClick?.(event);
+      },
       ...additionalProps,
       ref: ref
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -64239,6 +64251,7 @@ function RadioControl(props) {
     selected,
     help,
     onChange,
+    onClick,
     hideLabelFromVision,
     options = [],
     id: preferredId,
@@ -64275,6 +64288,11 @@ function RadioControl(props) {
           onChange: onChangeValue,
           checked: option.value === selected,
           "aria-describedby": !!option.description ? generateOptionDescriptionId(id, index) : undefined,
+          onClick: event => {
+            // Compat code for Safari to ensure that the radio is focused when clicked.
+            event.currentTarget.focus();
+            onClick?.(event);
+          },
           ...additionalProps
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("label", {
           className: "components-radio-control__label",
