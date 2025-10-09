@@ -2520,6 +2520,9 @@ const accordion_item_metadata = {
       }
     },
     shadow: true,
+    layout: {
+      allowEditing: false
+    },
     typography: {
       fontSize: true,
       lineHeight: true,
