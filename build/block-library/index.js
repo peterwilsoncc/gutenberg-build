@@ -2906,6 +2906,9 @@ const accordion_panel_metadata = {
       }
     },
     shadow: true,
+    layout: {
+      allowEditing: false
+    },
     blockVisibility: false,
     contentRole: true,
     allowedBlocks: true
