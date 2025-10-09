@@ -2008,8 +2008,7 @@ function Edit({
           setAttributes({
             autoclose: false,
             showIcon: true,
-            iconPosition: 'right',
-            headingLevel: 3
+            iconPosition: 'right'
           });
         },
         dropdownMenuProps: dropdownMenuProps,
