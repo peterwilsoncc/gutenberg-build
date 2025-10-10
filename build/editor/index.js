@@ -36363,15 +36363,44 @@ function Comments({
   setShowCommentBoard,
   commentSidebarRef
 }) {
-  const [selectedThread, setSelectedThread] = (0,external_wp_element_namespaceObject.useState)();
-  const blockCommentId = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    blockCommentId,
+    selectedBlockClientId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockAttributes,
       getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
     const clientId = getSelectedBlockClientId();
-    return clientId ? getBlockAttributes(clientId)?.metadata?.commentId : null;
+    return {
+      blockCommentId: clientId ? getBlockAttributes(clientId)?.metadata?.commentId : null,
+      selectedBlockClientId: clientId
+    };
   }, []);
+  const {
+    selectBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const [selectedThread = blockCommentId, setSelectedThread] = (0,external_wp_element_namespaceObject.useState)();
+  const handleDelete = async comment => {
+    const currentIndex = threads.findIndex(t => t.id === comment.id);
+    const nextThread = threads[currentIndex + 1];
+    const prevThread = threads[currentIndex - 1];
+    await onCommentDelete(comment);
+
+    // Focus logic after deletion completes.
+    if (nextThread) {
+      setSelectedThread(nextThread.id);
+      focusCommentThread(nextThread.id, commentSidebarRef.current);
+    } else if (prevThread) {
+      setSelectedThread(prevThread.id);
+      focusCommentThread(prevThread.id, commentSidebarRef.current);
+    } else {
+      setSelectedThread(null);
+      setShowCommentBoard(false);
+      // Focus the parent block instead of just scrolling into view.
+      selectBlock(selectedBlockClientId);
+    }
+  };
 
   // Auto-select the related comment thread when a block is selected.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -36392,7 +36421,7 @@ function Comments({
   return threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
     thread: thread,
     onAddReply: onAddReply,
-    onCommentDelete: onCommentDelete,
+    onCommentDelete: handleDelete,
     onEditComment: onEditComment,
     isSelected: selectedThread === thread.id,
     setSelectedThread: setSelectedThread,
