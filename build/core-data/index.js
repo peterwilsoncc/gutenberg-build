@@ -19652,9 +19652,9 @@ class IndexeddbPersistence extends Observable {
   }
 }
 
-;// ./packages/sync/build-module/connect-indexdb.js
+;// ./packages/sync/build-module/providers/indexeddb-provider.js
 
-function connectIndexDb(objectType, objectId, doc) {
+function createIndexedDbProvider(objectType, objectId, doc) {
   const roomName = `${objectType}-${objectId}`;
   const provider = new IndexeddbPersistence(roomName, doc);
   return Promise.resolve({
@@ -20427,7 +20427,7 @@ const applyAwarenessUpdate = (awareness, update, origin) => {
   }
 }
 
-;// ./packages/sync/build-module/y-webrtc/crypto.js
+;// ./packages/sync/build-module/providers/y-webrtc/crypto.js
 
 
 
@@ -20515,7 +20515,7 @@ const decryptJson = (data, key) => decrypt(data, key).then(
 );
 
 
-;// ./packages/sync/build-module/y-webrtc/y-webrtc.js
+;// ./packages/sync/build-module/providers/y-webrtc/y-webrtc.js
 
 
 
@@ -21182,7 +21182,7 @@ class WebrtcProvider extends Observable {
 }
 
 
-;// ./packages/sync/build-module/webrtc-http-stream-signaling.js
+;// ./packages/sync/build-module/providers/webrtc-http-stream-signaling.js
 
 
 
@@ -21475,9 +21475,9 @@ class WebrtcProviderWithHttpSignaling extends WebrtcProvider {
 }
 
 
-;// ./packages/sync/build-module/create-webrtc-connection.js
+;// ./packages/sync/build-module/providers/webrtc-provider.js
 
-function createWebRTCConnection({ signaling, password }) {
+function createWebRTCProvider({ signaling, password }) {
   return function(objectType, objectId, doc) {
     const roomName = `${objectType}-${objectId}`;
     const provider = new WebrtcProviderWithHttpSignaling(roomName, doc, {
@@ -21491,7 +21491,7 @@ function createWebRTCConnection({ signaling, password }) {
 }
 
 
-;// ./packages/sync/build-module/providers.js
+;// ./packages/sync/build-module/providers/index.js
 
 
 
@@ -21502,8 +21502,8 @@ function getDefaultProviderCreators() {
     return [];
   }
   return [
-    connectIndexDb,
-    createWebRTCConnection({
+    createIndexedDbProvider,
+    createWebRTCProvider({
       password: window?.__experimentalCollaborativeEditingSecret,
       signaling: [signalingUrl]
     })

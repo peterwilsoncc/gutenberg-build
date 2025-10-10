@@ -11372,7 +11372,7 @@ var wp;
   var LOCAL_EDITOR_ORIGIN = "gutenberg";
   var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
 
-  // packages/sync/build-module/providers.js
+  // packages/sync/build-module/providers/index.js
   var import_hooks = __toESM(require_hooks());
 
   // node_modules/lib0/indexeddb.js
@@ -11579,8 +11579,8 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/connect-indexdb.js
-  function connectIndexDb(objectType, objectId, doc2) {
+  // packages/sync/build-module/providers/indexeddb-provider.js
+  function createIndexedDbProvider(objectType, objectId, doc2) {
     const roomName = `${objectType}-${objectId}`;
     const provider = new IndexeddbPersistence(roomName, doc2);
     return Promise.resolve({
@@ -11764,7 +11764,7 @@ var wp;
     };
   };
 
-  // packages/sync/build-module/y-webrtc/y-webrtc.js
+  // packages/sync/build-module/providers/y-webrtc/y-webrtc.js
   var import_simplepeer_min = __toESM(require_simplepeer_min());
 
   // node_modules/y-protocols/sync.js
@@ -12013,7 +12013,7 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/y-webrtc/crypto.js
+  // packages/sync/build-module/providers/y-webrtc/crypto.js
   var deriveKey = (secret, roomName) => {
     const secretBuffer = encodeUtf8(secret).buffer;
     const salt = encodeUtf8(roomName).buffer;
@@ -12095,7 +12095,7 @@ var wp;
     )
   );
 
-  // packages/sync/build-module/y-webrtc/y-webrtc.js
+  // packages/sync/build-module/providers/y-webrtc/y-webrtc.js
   var log = createModuleLogger2("y-webrtc");
   var messageSync = 0;
   var messageQueryAwareness = 3;
@@ -12743,7 +12743,7 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/webrtc-http-stream-signaling.js
+  // packages/sync/build-module/providers/webrtc-http-stream-signaling.js
   var import_url = __toESM(require_url());
   function setupSignalEventHandlers(signalCon, url) {
     signalCon.on("connect", () => {
@@ -13030,8 +13030,8 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/create-webrtc-connection.js
-  function createWebRTCConnection({ signaling, password }) {
+  // packages/sync/build-module/providers/webrtc-provider.js
+  function createWebRTCProvider({ signaling, password }) {
     return function(objectType, objectId, doc2) {
       const roomName = `${objectType}-${objectId}`;
       const provider = new WebrtcProviderWithHttpSignaling(roomName, doc2, {
@@ -13044,7 +13044,7 @@ var wp;
     };
   }
 
-  // packages/sync/build-module/providers.js
+  // packages/sync/build-module/providers/index.js
   var providerCreators = null;
   function getDefaultProviderCreators() {
     const signalingUrl = window?.wp?.ajax?.settings?.url;
@@ -13052,8 +13052,8 @@ var wp;
       return [];
     }
     return [
-      connectIndexDb,
-      createWebRTCConnection({
+      createIndexedDbProvider,
+      createWebRTCProvider({
         password: window?.__experimentalCollaborativeEditingSecret,
         signaling: [signalingUrl]
       })
