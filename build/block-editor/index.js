@@ -24652,14 +24652,22 @@ function LinkControl({
   const [shouldFocusSearchInput, setShouldFocusSearchInput] = (0,external_wp_element_namespaceObject.useState)(false);
   const handleUnlink = () => {
     // Clear the internal state to remove the ID and re-enable the field
-    // The user will need to submit to commit this change
+    // Explicitly set id, kind, and type to undefined so they override
+    // the original values when spread in handleSubmit. This ensures that
+    // when the user types a custom URL and submits, the entity link is
+    // properly severed (not just when selecting a different entity from suggestions).
     const {
       id,
+      kind,
+      type,
       ...restValue
     } = internalControlValue;
     setInternalControlValue({
       ...restValue,
-      url: ''
+      id: undefined,
+      kind: undefined,
+      type: undefined,
+      url: undefined
     });
 
     // Request focus after the component re-renders with the cleared state
