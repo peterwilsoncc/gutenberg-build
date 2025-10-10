@@ -255,21 +255,18 @@ var wp;
         return true;
       };
       var error = exports.error = function error2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.error(value))
-          return false;
+        if (!_is2.default.error(value)) return false;
         raiseNext(value.error);
         return true;
       };
       var object = exports.object = function object2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.all(value) || !_is2.default.obj(value.value))
-          return false;
+        if (!_is2.default.all(value) || !_is2.default.obj(value.value)) return false;
         var result = {};
         var keys = Object.keys(value.value);
         var count = 0;
         var hasError = false;
         var gotResultSuccess = function gotResultSuccess2(key, ret) {
-          if (hasError)
-            return;
+          if (hasError) return;
           result[key] = ret;
           count++;
           if (count === keys.length) {
@@ -277,8 +274,7 @@ var wp;
           }
         };
         var gotResultError = function gotResultError2(key, error2) {
-          if (hasError)
-            return;
+          if (hasError) return;
           hasError = true;
           raiseNext(error2);
         };
@@ -292,14 +288,12 @@ var wp;
         return true;
       };
       var array = exports.array = function array2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.all(value) || !_is2.default.array(value.value))
-          return false;
+        if (!_is2.default.all(value) || !_is2.default.array(value.value)) return false;
         var result = [];
         var count = 0;
         var hasError = false;
         var gotResultSuccess = function gotResultSuccess2(key, ret) {
-          if (hasError)
-            return;
+          if (hasError) return;
           result[key] = ret;
           count++;
           if (count === value.value.length) {
@@ -307,8 +301,7 @@ var wp;
           }
         };
         var gotResultError = function gotResultError2(key, error2) {
-          if (hasError)
-            return;
+          if (hasError) return;
           hasError = true;
           raiseNext(error2);
         };
@@ -322,8 +315,7 @@ var wp;
         return true;
       };
       var iterator = exports.iterator = function iterator2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.iterator(value))
-          return false;
+        if (!_is2.default.iterator(value)) return false;
         rungen(value, next, raiseNext);
         return true;
       };
@@ -370,8 +362,7 @@ var wp;
                   var _ref = isError ? gen.throw(ret) : gen.next(ret);
                   var value = _ref.value;
                   var done = _ref.done;
-                  if (done)
-                    return success(value);
+                  if (done) return success(value);
                   next(value);
                 } catch (e) {
                   return error(e);
@@ -455,15 +446,13 @@ var wp;
         return obj && obj.__esModule ? obj : { default: obj };
       }
       var promise = exports.promise = function promise2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.promise(value))
-          return false;
+        if (!_is2.default.promise(value)) return false;
         value.then(next, raiseNext);
         return true;
       };
       var forkedTasks = /* @__PURE__ */ new Map();
       var fork = exports.fork = function fork2(value, next, rungen) {
-        if (!_is2.default.fork(value))
-          return false;
+        if (!_is2.default.fork(value)) return false;
         var task = Symbol("fork");
         var dispatcher = (0, _dispatcher2.default)();
         forkedTasks.set(task, dispatcher);
@@ -480,8 +469,7 @@ var wp;
         return true;
       };
       var join = exports.join = function join2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.join(value))
-          return false;
+        if (!_is2.default.join(value)) return false;
         var dispatcher = forkedTasks.get(value.task);
         if (!dispatcher) {
           raiseNext("join error : task not found");
@@ -496,19 +484,16 @@ var wp;
         return true;
       };
       var race = exports.race = function race2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.race(value))
-          return false;
+        if (!_is2.default.race(value)) return false;
         var finished = false;
         var success = function success2(result, k, v) {
-          if (finished)
-            return;
+          if (finished) return;
           finished = true;
           result[k] = v;
           next(result);
         };
         var fail = function fail2(err) {
-          if (finished)
-            return;
+          if (finished) return;
           raiseNext(err);
         };
         if (_is2.default.array(value.competitors)) {
@@ -538,8 +523,7 @@ var wp;
         return true;
       };
       var subscribe = function subscribe2(value, next) {
-        if (!_is2.default.subscribe(value))
-          return false;
+        if (!_is2.default.subscribe(value)) return false;
         if (!_is2.default.channel(value.channel)) {
           throw new Error('the first argument of "subscribe" must be a valid channel');
         }
@@ -577,8 +561,7 @@ var wp;
         }
       }
       var call = exports.call = function call2(value, next, rungen, yieldNext, raiseNext) {
-        if (!_is2.default.call(value))
-          return false;
+        if (!_is2.default.call(value)) return false;
         try {
           next(value.func.apply(value.context, value.args));
         } catch (err) {
@@ -588,13 +571,10 @@ var wp;
       };
       var cps = exports.cps = function cps2(value, next, rungen, yieldNext, raiseNext) {
         var _value$func;
-        if (!_is2.default.cps(value))
-          return false;
+        if (!_is2.default.cps(value)) return false;
         (_value$func = value.func).call.apply(_value$func, [null].concat(_toConsumableArray(value.args), [function(err, result) {
-          if (err)
-            raiseNext(err);
-          else
-            next(result);
+          if (err) raiseNext(err);
+          else next(result);
         }]));
         return true;
       };
@@ -612,8 +592,7 @@ var wp;
       exports.wrapControls = exports.asyncControls = exports.create = void 0;
       var _helpers = require_helpers();
       Object.keys(_helpers).forEach(function(key) {
-        if (key === "default")
-          return;
+        if (key === "default") return;
         Object.defineProperty(exports, key, {
           enumerable: true,
           get: function get() {
@@ -637,8 +616,8 @@ var wp;
   });
 
   // packages/redux-routine/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     default: () => createMiddleware
   });
 
@@ -661,14 +640,11 @@ var wp;
   }
   function isPlainObject(o) {
     var ctor, prot;
-    if (isObject(o) === false)
-      return false;
+    if (isObject(o) === false) return false;
     ctor = o.constructor;
-    if (ctor === void 0)
-      return true;
+    if (ctor === void 0) return true;
     prot = ctor.prototype;
-    if (isObject(prot) === false)
-      return false;
+    if (isObject(prot) === false) return false;
     if (prot.hasOwnProperty("isPrototypeOf") === false) {
       return false;
     }
@@ -735,7 +711,7 @@ var wp;
       };
     };
   }
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
 

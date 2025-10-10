@@ -10,8 +10,7 @@ var wp;
   var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
     get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
   }) : x)(function(x) {
-    if (typeof require !== "undefined")
-      return require.apply(this, arguments);
+    if (typeof require !== "undefined") return require.apply(this, arguments);
     throw Error('Dynamic require of "' + x + '" is not supported');
   });
   var __commonJS = (cb, mod) => function __require2() {
@@ -43,26 +42,22 @@ var wp;
   var require_simplepeer_min = __commonJS({
     "node_modules/simple-peer/simplepeer.min.js"(exports, module) {
       (function(e) {
-        if ("object" == typeof exports && "undefined" != typeof module)
-          module.exports = e();
-        else if ("function" == typeof define && define.amd)
-          define([], e);
+        if ("object" == typeof exports && "undefined" != typeof module) module.exports = e();
+        else if ("function" == typeof define && define.amd) define([], e);
         else {
           var t;
           t = "undefined" == typeof window ? "undefined" == typeof global ? "undefined" == typeof self ? this : self : global : window, t.SimplePeer = e();
         }
       })(function() {
         var t = Math.floor, n = Math.abs, r = Math.pow;
-        return function() {
+        return (/* @__PURE__ */ (function() {
           function d(s, e, n2) {
             function t2(o, i) {
               if (!e[o]) {
                 if (!s[o]) {
                   var l = "function" == typeof __require && __require;
-                  if (!i && l)
-                    return l(o, true);
-                  if (r2)
-                    return r2(o, true);
+                  if (!i && l) return l(o, true);
+                  if (r2) return r2(o, true);
                   var c = new Error("Cannot find module '" + o + "'");
                   throw c.code = "MODULE_NOT_FOUND", c;
                 }
@@ -74,17 +69,15 @@ var wp;
               }
               return e[o].exports;
             }
-            for (var r2 = "function" == typeof __require && __require, a = 0; a < n2.length; a++)
-              t2(n2[a]);
+            for (var r2 = "function" == typeof __require && __require, a = 0; a < n2.length; a++) t2(n2[a]);
             return t2;
           }
           return d;
-        }()({ 1: [function(e, t2, n2) {
+        })())({ 1: [function(e, t2, n2) {
           "use strict";
           function r2(e2) {
             var t3 = e2.length;
-            if (0 < t3 % 4)
-              throw new Error("Invalid string. Length must be a multiple of 4");
+            if (0 < t3 % 4) throw new Error("Invalid string. Length must be a multiple of 4");
             var n3 = e2.indexOf("=");
             -1 === n3 && (n3 = t3);
             var r3 = n3 === t3 ? 0 : 4 - n3 % 4;
@@ -95,29 +88,25 @@ var wp;
           }
           function o(e2) {
             var t3, n3, o2 = r2(e2), d2 = o2[0], s2 = o2[1], l2 = new p(a(e2, d2, s2)), c2 = 0, f2 = 0 < s2 ? d2 - 4 : d2;
-            for (n3 = 0; n3 < f2; n3 += 4)
-              t3 = u[e2.charCodeAt(n3)] << 18 | u[e2.charCodeAt(n3 + 1)] << 12 | u[e2.charCodeAt(n3 + 2)] << 6 | u[e2.charCodeAt(n3 + 3)], l2[c2++] = 255 & t3 >> 16, l2[c2++] = 255 & t3 >> 8, l2[c2++] = 255 & t3;
+            for (n3 = 0; n3 < f2; n3 += 4) t3 = u[e2.charCodeAt(n3)] << 18 | u[e2.charCodeAt(n3 + 1)] << 12 | u[e2.charCodeAt(n3 + 2)] << 6 | u[e2.charCodeAt(n3 + 3)], l2[c2++] = 255 & t3 >> 16, l2[c2++] = 255 & t3 >> 8, l2[c2++] = 255 & t3;
             return 2 === s2 && (t3 = u[e2.charCodeAt(n3)] << 2 | u[e2.charCodeAt(n3 + 1)] >> 4, l2[c2++] = 255 & t3), 1 === s2 && (t3 = u[e2.charCodeAt(n3)] << 10 | u[e2.charCodeAt(n3 + 1)] << 4 | u[e2.charCodeAt(n3 + 2)] >> 2, l2[c2++] = 255 & t3 >> 8, l2[c2++] = 255 & t3), l2;
           }
           function d(e2) {
             return c[63 & e2 >> 18] + c[63 & e2 >> 12] + c[63 & e2 >> 6] + c[63 & e2];
           }
           function s(e2, t3, n3) {
-            for (var r3, a2 = [], o2 = t3; o2 < n3; o2 += 3)
-              r3 = (16711680 & e2[o2] << 16) + (65280 & e2[o2 + 1] << 8) + (255 & e2[o2 + 2]), a2.push(d(r3));
+            for (var r3, a2 = [], o2 = t3; o2 < n3; o2 += 3) r3 = (16711680 & e2[o2] << 16) + (65280 & e2[o2 + 1] << 8) + (255 & e2[o2 + 2]), a2.push(d(r3));
             return a2.join("");
           }
           function l(e2) {
-            for (var t3, n3 = e2.length, r3 = n3 % 3, a2 = [], o2 = 16383, d2 = 0, l2 = n3 - r3; d2 < l2; d2 += o2)
-              a2.push(s(e2, d2, d2 + o2 > l2 ? l2 : d2 + o2));
+            for (var t3, n3 = e2.length, r3 = n3 % 3, a2 = [], o2 = 16383, d2 = 0, l2 = n3 - r3; d2 < l2; d2 += o2) a2.push(s(e2, d2, d2 + o2 > l2 ? l2 : d2 + o2));
             return 1 === r3 ? (t3 = e2[n3 - 1], a2.push(c[t3 >> 2] + c[63 & t3 << 4] + "==")) : 2 === r3 && (t3 = (e2[n3 - 2] << 8) + e2[n3 - 1], a2.push(c[t3 >> 10] + c[63 & t3 >> 4] + c[63 & t3 << 2] + "=")), a2.join("");
           }
           n2.byteLength = function(e2) {
             var t3 = r2(e2), n3 = t3[0], a2 = t3[1];
             return 3 * (n3 + a2) / 4 - a2;
           }, n2.toByteArray = o, n2.fromByteArray = l;
-          for (var c = [], u = [], p = "undefined" == typeof Uint8Array ? Array : Uint8Array, f = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", g = 0, _ = f.length; g < _; ++g)
-            c[g] = f[g], u[f.charCodeAt(g)] = g;
+          for (var c = [], u = [], p = "undefined" == typeof Uint8Array ? Array : Uint8Array, f = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", g = 0, _ = f.length; g < _; ++g) c[g] = f[g], u[f.charCodeAt(g)] = g;
           u[45] = 62, u[95] = 63;
         }, {}], 2: [function() {
         }, {}], 3: [function(e, t2, n2) {
@@ -126,45 +115,33 @@ var wp;
               "use strict";
               var t3 = String.fromCharCode, o = Math.min;
               function d(e2) {
-                if (2147483647 < e2)
-                  throw new RangeError('The value "' + e2 + '" is invalid for option "size"');
+                if (2147483647 < e2) throw new RangeError('The value "' + e2 + '" is invalid for option "size"');
                 var t4 = new Uint8Array(e2);
                 return t4.__proto__ = s.prototype, t4;
               }
               function s(e2, t4, n3) {
                 if ("number" == typeof e2) {
-                  if ("string" == typeof t4)
-                    throw new TypeError('The "string" argument must be of type string. Received type number');
+                  if ("string" == typeof t4) throw new TypeError('The "string" argument must be of type string. Received type number');
                   return p(e2);
                 }
                 return l(e2, t4, n3);
               }
               function l(e2, t4, n3) {
-                if ("string" == typeof e2)
-                  return f(e2, t4);
-                if (ArrayBuffer.isView(e2))
-                  return g(e2);
-                if (null == e2)
-                  throw TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof e2);
-                if (K(e2, ArrayBuffer) || e2 && K(e2.buffer, ArrayBuffer))
-                  return _(e2, t4, n3);
-                if ("number" == typeof e2)
-                  throw new TypeError('The "value" argument must not be of type number. Received type number');
+                if ("string" == typeof e2) return f(e2, t4);
+                if (ArrayBuffer.isView(e2)) return g(e2);
+                if (null == e2) throw TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof e2);
+                if (K(e2, ArrayBuffer) || e2 && K(e2.buffer, ArrayBuffer)) return _(e2, t4, n3);
+                if ("number" == typeof e2) throw new TypeError('The "value" argument must not be of type number. Received type number');
                 var r2 = e2.valueOf && e2.valueOf();
-                if (null != r2 && r2 !== e2)
-                  return s.from(r2, t4, n3);
+                if (null != r2 && r2 !== e2) return s.from(r2, t4, n3);
                 var a = h(e2);
-                if (a)
-                  return a;
-                if ("undefined" != typeof Symbol && null != Symbol.toPrimitive && "function" == typeof e2[Symbol.toPrimitive])
-                  return s.from(e2[Symbol.toPrimitive]("string"), t4, n3);
+                if (a) return a;
+                if ("undefined" != typeof Symbol && null != Symbol.toPrimitive && "function" == typeof e2[Symbol.toPrimitive]) return s.from(e2[Symbol.toPrimitive]("string"), t4, n3);
                 throw new TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof e2);
               }
               function c(e2) {
-                if ("number" != typeof e2)
-                  throw new TypeError('"size" argument must be of type number');
-                else if (0 > e2)
-                  throw new RangeError('The value "' + e2 + '" is invalid for option "size"');
+                if ("number" != typeof e2) throw new TypeError('"size" argument must be of type number');
+                else if (0 > e2) throw new RangeError('The value "' + e2 + '" is invalid for option "size"');
               }
               function u(e2, t4, n3) {
                 return c(e2), 0 >= e2 ? d(e2) : void 0 === t4 ? d(e2) : "string" == typeof n3 ? d(e2).fill(t4, n3) : d(e2).fill(t4);
@@ -173,21 +150,17 @@ var wp;
                 return c(e2), d(0 > e2 ? 0 : 0 | m(e2));
               }
               function f(e2, t4) {
-                if (("string" != typeof t4 || "" === t4) && (t4 = "utf8"), !s.isEncoding(t4))
-                  throw new TypeError("Unknown encoding: " + t4);
+                if (("string" != typeof t4 || "" === t4) && (t4 = "utf8"), !s.isEncoding(t4)) throw new TypeError("Unknown encoding: " + t4);
                 var n3 = 0 | b(e2, t4), r2 = d(n3), a = r2.write(e2, t4);
                 return a !== n3 && (r2 = r2.slice(0, a)), r2;
               }
               function g(e2) {
-                for (var t4 = 0 > e2.length ? 0 : 0 | m(e2.length), n3 = d(t4), r2 = 0; r2 < t4; r2 += 1)
-                  n3[r2] = 255 & e2[r2];
+                for (var t4 = 0 > e2.length ? 0 : 0 | m(e2.length), n3 = d(t4), r2 = 0; r2 < t4; r2 += 1) n3[r2] = 255 & e2[r2];
                 return n3;
               }
               function _(e2, t4, n3) {
-                if (0 > t4 || e2.byteLength < t4)
-                  throw new RangeError('"offset" is outside of buffer bounds');
-                if (e2.byteLength < t4 + (n3 || 0))
-                  throw new RangeError('"length" is outside of buffer bounds');
+                if (0 > t4 || e2.byteLength < t4) throw new RangeError('"offset" is outside of buffer bounds');
+                if (e2.byteLength < t4 + (n3 || 0)) throw new RangeError('"length" is outside of buffer bounds');
                 var r2;
                 return r2 = void 0 === t4 && void 0 === n3 ? new Uint8Array(e2) : void 0 === n3 ? new Uint8Array(e2, t4) : new Uint8Array(e2, t4, n3), r2.__proto__ = s.prototype, r2;
               }
@@ -199,97 +172,78 @@ var wp;
                 return void 0 === e2.length ? "Buffer" === e2.type && Array.isArray(e2.data) ? g(e2.data) : void 0 : "number" != typeof e2.length || X(e2.length) ? d(0) : g(e2);
               }
               function m(e2) {
-                if (e2 >= 2147483647)
-                  throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x" + 2147483647 .toString(16) + " bytes");
+                if (e2 >= 2147483647) throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x" + 2147483647 .toString(16) + " bytes");
                 return 0 | e2;
               }
               function b(e2, t4) {
-                if (s.isBuffer(e2))
-                  return e2.length;
-                if (ArrayBuffer.isView(e2) || K(e2, ArrayBuffer))
-                  return e2.byteLength;
-                if ("string" != typeof e2)
-                  throw new TypeError('The "string" argument must be one of type string, Buffer, or ArrayBuffer. Received type ' + typeof e2);
+                if (s.isBuffer(e2)) return e2.length;
+                if (ArrayBuffer.isView(e2) || K(e2, ArrayBuffer)) return e2.byteLength;
+                if ("string" != typeof e2) throw new TypeError('The "string" argument must be one of type string, Buffer, or ArrayBuffer. Received type ' + typeof e2);
                 var n3 = e2.length, r2 = 2 < arguments.length && true === arguments[2];
-                if (!r2 && 0 === n3)
-                  return 0;
-                for (var a = false; ; )
-                  switch (t4) {
-                    case "ascii":
-                    case "latin1":
-                    case "binary":
-                      return n3;
-                    case "utf8":
-                    case "utf-8":
-                      return H(e2).length;
-                    case "ucs2":
-                    case "ucs-2":
-                    case "utf16le":
-                    case "utf-16le":
-                      return 2 * n3;
-                    case "hex":
-                      return n3 >>> 1;
-                    case "base64":
-                      return z(e2).length;
-                    default:
-                      if (a)
-                        return r2 ? -1 : H(e2).length;
-                      t4 = ("" + t4).toLowerCase(), a = true;
-                  }
+                if (!r2 && 0 === n3) return 0;
+                for (var a = false; ; ) switch (t4) {
+                  case "ascii":
+                  case "latin1":
+                  case "binary":
+                    return n3;
+                  case "utf8":
+                  case "utf-8":
+                    return H(e2).length;
+                  case "ucs2":
+                  case "ucs-2":
+                  case "utf16le":
+                  case "utf-16le":
+                    return 2 * n3;
+                  case "hex":
+                    return n3 >>> 1;
+                  case "base64":
+                    return z(e2).length;
+                  default:
+                    if (a) return r2 ? -1 : H(e2).length;
+                    t4 = ("" + t4).toLowerCase(), a = true;
+                }
               }
               function y(e2, t4, n3) {
                 var r2 = false;
-                if ((void 0 === t4 || 0 > t4) && (t4 = 0), t4 > this.length)
-                  return "";
-                if ((void 0 === n3 || n3 > this.length) && (n3 = this.length), 0 >= n3)
-                  return "";
-                if (n3 >>>= 0, t4 >>>= 0, n3 <= t4)
-                  return "";
-                for (e2 || (e2 = "utf8"); ; )
-                  switch (e2) {
-                    case "hex":
-                      return P(this, t4, n3);
-                    case "utf8":
-                    case "utf-8":
-                      return x(this, t4, n3);
-                    case "ascii":
-                      return D(this, t4, n3);
-                    case "latin1":
-                    case "binary":
-                      return I(this, t4, n3);
-                    case "base64":
-                      return A(this, t4, n3);
-                    case "ucs2":
-                    case "ucs-2":
-                    case "utf16le":
-                    case "utf-16le":
-                      return M(this, t4, n3);
-                    default:
-                      if (r2)
-                        throw new TypeError("Unknown encoding: " + e2);
-                      e2 = (e2 + "").toLowerCase(), r2 = true;
-                  }
+                if ((void 0 === t4 || 0 > t4) && (t4 = 0), t4 > this.length) return "";
+                if ((void 0 === n3 || n3 > this.length) && (n3 = this.length), 0 >= n3) return "";
+                if (n3 >>>= 0, t4 >>>= 0, n3 <= t4) return "";
+                for (e2 || (e2 = "utf8"); ; ) switch (e2) {
+                  case "hex":
+                    return P(this, t4, n3);
+                  case "utf8":
+                  case "utf-8":
+                    return x(this, t4, n3);
+                  case "ascii":
+                    return D(this, t4, n3);
+                  case "latin1":
+                  case "binary":
+                    return I(this, t4, n3);
+                  case "base64":
+                    return A(this, t4, n3);
+                  case "ucs2":
+                  case "ucs-2":
+                  case "utf16le":
+                  case "utf-16le":
+                    return M(this, t4, n3);
+                  default:
+                    if (r2) throw new TypeError("Unknown encoding: " + e2);
+                    e2 = (e2 + "").toLowerCase(), r2 = true;
+                }
               }
               function C(e2, t4, n3) {
                 var r2 = e2[t4];
                 e2[t4] = e2[n3], e2[n3] = r2;
               }
               function R(e2, t4, n3, r2, a) {
-                if (0 === e2.length)
-                  return -1;
+                if (0 === e2.length) return -1;
                 if ("string" == typeof n3 ? (r2 = n3, n3 = 0) : 2147483647 < n3 ? n3 = 2147483647 : -2147483648 > n3 && (n3 = -2147483648), n3 = +n3, X(n3) && (n3 = a ? 0 : e2.length - 1), 0 > n3 && (n3 = e2.length + n3), n3 >= e2.length) {
-                  if (a)
-                    return -1;
+                  if (a) return -1;
                   n3 = e2.length - 1;
-                } else if (0 > n3)
-                  if (a)
-                    n3 = 0;
-                  else
-                    return -1;
-                if ("string" == typeof t4 && (t4 = s.from(t4, r2)), s.isBuffer(t4))
-                  return 0 === t4.length ? -1 : E(e2, t4, n3, r2, a);
-                if ("number" == typeof t4)
-                  return t4 &= 255, "function" == typeof Uint8Array.prototype.indexOf ? a ? Uint8Array.prototype.indexOf.call(e2, t4, n3) : Uint8Array.prototype.lastIndexOf.call(e2, t4, n3) : E(e2, [t4], n3, r2, a);
+                } else if (0 > n3) if (a) n3 = 0;
+                else return -1;
+                if ("string" == typeof t4 && (t4 = s.from(t4, r2)), s.isBuffer(t4)) return 0 === t4.length ? -1 : E(e2, t4, n3, r2, a);
+                if ("number" == typeof t4) return t4 &= 255, "function" == typeof Uint8Array.prototype.indexOf ? a ? Uint8Array.prototype.indexOf.call(e2, t4, n3) : Uint8Array.prototype.lastIndexOf.call(e2, t4, n3) : E(e2, [t4], n3, r2, a);
                 throw new TypeError("val must be string, number or Buffer");
               }
               function E(e2, t4, n3, r2, a) {
@@ -298,28 +252,21 @@ var wp;
                 }
                 var d2 = 1, s2 = e2.length, l2 = t4.length;
                 if (void 0 !== r2 && (r2 = (r2 + "").toLowerCase(), "ucs2" === r2 || "ucs-2" === r2 || "utf16le" === r2 || "utf-16le" === r2)) {
-                  if (2 > e2.length || 2 > t4.length)
-                    return -1;
+                  if (2 > e2.length || 2 > t4.length) return -1;
                   d2 = 2, s2 /= 2, l2 /= 2, n3 /= 2;
                 }
                 var c2;
                 if (a) {
                   var u2 = -1;
-                  for (c2 = n3; c2 < s2; c2++)
-                    if (o2(e2, c2) !== o2(t4, -1 === u2 ? 0 : c2 - u2))
-                      -1 !== u2 && (c2 -= c2 - u2), u2 = -1;
-                    else if (-1 === u2 && (u2 = c2), c2 - u2 + 1 === l2)
-                      return u2 * d2;
-                } else
-                  for (n3 + l2 > s2 && (n3 = s2 - l2), c2 = n3; 0 <= c2; c2--) {
-                    for (var p2 = true, f2 = 0; f2 < l2; f2++)
-                      if (o2(e2, c2 + f2) !== o2(t4, f2)) {
-                        p2 = false;
-                        break;
-                      }
-                    if (p2)
-                      return c2;
+                  for (c2 = n3; c2 < s2; c2++) if (o2(e2, c2) !== o2(t4, -1 === u2 ? 0 : c2 - u2)) -1 !== u2 && (c2 -= c2 - u2), u2 = -1;
+                  else if (-1 === u2 && (u2 = c2), c2 - u2 + 1 === l2) return u2 * d2;
+                } else for (n3 + l2 > s2 && (n3 = s2 - l2), c2 = n3; 0 <= c2; c2--) {
+                  for (var p2 = true, f2 = 0; f2 < l2; f2++) if (o2(e2, c2 + f2) !== o2(t4, f2)) {
+                    p2 = false;
+                    break;
                   }
+                  if (p2) return c2;
+                }
                 return -1;
               }
               function w(e2, t4, n3, r2) {
@@ -329,8 +276,7 @@ var wp;
                 var o2 = t4.length;
                 r2 > o2 / 2 && (r2 = o2 / 2);
                 for (var d2, s2 = 0; s2 < r2; ++s2) {
-                  if (d2 = parseInt(t4.substr(2 * s2, 2), 16), X(d2))
-                    return s2;
+                  if (d2 = parseInt(t4.substr(2 * s2, 2), 16), X(d2)) return s2;
                   e2[n3 + s2] = d2;
                 }
                 return s2;
@@ -367,57 +313,44 @@ var wp;
               }
               function N(e2) {
                 var n3 = e2.length;
-                if (n3 <= 4096)
-                  return t3.apply(String, e2);
-                for (var r2 = "", a = 0; a < n3; )
-                  r2 += t3.apply(String, e2.slice(a, a += 4096));
+                if (n3 <= 4096) return t3.apply(String, e2);
+                for (var r2 = "", a = 0; a < n3; ) r2 += t3.apply(String, e2.slice(a, a += 4096));
                 return r2;
               }
               function D(e2, n3, r2) {
                 var a = "";
                 r2 = o(e2.length, r2);
-                for (var d2 = n3; d2 < r2; ++d2)
-                  a += t3(127 & e2[d2]);
+                for (var d2 = n3; d2 < r2; ++d2) a += t3(127 & e2[d2]);
                 return a;
               }
               function I(e2, n3, r2) {
                 var a = "";
                 r2 = o(e2.length, r2);
-                for (var d2 = n3; d2 < r2; ++d2)
-                  a += t3(e2[d2]);
+                for (var d2 = n3; d2 < r2; ++d2) a += t3(e2[d2]);
                 return a;
               }
               function P(e2, t4, n3) {
                 var r2 = e2.length;
                 (!t4 || 0 > t4) && (t4 = 0), (!n3 || 0 > n3 || n3 > r2) && (n3 = r2);
-                for (var a = "", o2 = t4; o2 < n3; ++o2)
-                  a += W(e2[o2]);
+                for (var a = "", o2 = t4; o2 < n3; ++o2) a += W(e2[o2]);
                 return a;
               }
               function M(e2, n3, r2) {
-                for (var a = e2.slice(n3, r2), o2 = "", d2 = 0; d2 < a.length; d2 += 2)
-                  o2 += t3(a[d2] + 256 * a[d2 + 1]);
+                for (var a = e2.slice(n3, r2), o2 = "", d2 = 0; d2 < a.length; d2 += 2) o2 += t3(a[d2] + 256 * a[d2 + 1]);
                 return o2;
               }
               function O(e2, t4, n3) {
-                if (0 != e2 % 1 || 0 > e2)
-                  throw new RangeError("offset is not uint");
-                if (e2 + t4 > n3)
-                  throw new RangeError("Trying to access beyond buffer length");
+                if (0 != e2 % 1 || 0 > e2) throw new RangeError("offset is not uint");
+                if (e2 + t4 > n3) throw new RangeError("Trying to access beyond buffer length");
               }
               function F(e2, t4, n3, r2, a, o2) {
-                if (!s.isBuffer(e2))
-                  throw new TypeError('"buffer" argument must be a Buffer instance');
-                if (t4 > a || t4 < o2)
-                  throw new RangeError('"value" argument is out of bounds');
-                if (n3 + r2 > e2.length)
-                  throw new RangeError("Index out of range");
+                if (!s.isBuffer(e2)) throw new TypeError('"buffer" argument must be a Buffer instance');
+                if (t4 > a || t4 < o2) throw new RangeError('"value" argument is out of bounds');
+                if (n3 + r2 > e2.length) throw new RangeError("Index out of range");
               }
               function B(e2, t4, n3, r2) {
-                if (n3 + r2 > e2.length)
-                  throw new RangeError("Index out of range");
-                if (0 > n3)
-                  throw new RangeError("Index out of range");
+                if (n3 + r2 > e2.length) throw new RangeError("Index out of range");
+                if (0 > n3) throw new RangeError("Index out of range");
               }
               function U(e2, t4, n3, r2, a) {
                 return t4 = +t4, n3 >>>= 0, a || B(e2, t4, n3, 4, 34028234663852886e22, -34028234663852886e22), J.write(e2, t4, n3, r2, 23, 4), n3 + 4;
@@ -426,10 +359,8 @@ var wp;
                 return t4 = +t4, n3 >>>= 0, a || B(e2, t4, n3, 8, 17976931348623157e292, -17976931348623157e292), J.write(e2, t4, n3, r2, 52, 8), n3 + 8;
               }
               function q(e2) {
-                if (e2 = e2.split("=")[0], e2 = e2.trim().replace(Q, ""), 2 > e2.length)
-                  return "";
-                for (; 0 != e2.length % 4; )
-                  e2 += "=";
+                if (e2 = e2.split("=")[0], e2 = e2.trim().replace(Q, ""), 2 > e2.length) return "";
+                for (; 0 != e2.length % 4; ) e2 += "=";
                 return e2;
               }
               function W(e2) {
@@ -455,45 +386,36 @@ var wp;
                       continue;
                     }
                     n3 = (a - 55296 << 10 | n3 - 56320) + 65536;
-                  } else
-                    a && -1 < (t4 -= 3) && o2.push(239, 191, 189);
+                  } else a && -1 < (t4 -= 3) && o2.push(239, 191, 189);
                   if (a = null, 128 > n3) {
-                    if (0 > (t4 -= 1))
-                      break;
+                    if (0 > (t4 -= 1)) break;
                     o2.push(n3);
                   } else if (2048 > n3) {
-                    if (0 > (t4 -= 2))
-                      break;
+                    if (0 > (t4 -= 2)) break;
                     o2.push(192 | n3 >> 6, 128 | 63 & n3);
                   } else if (65536 > n3) {
-                    if (0 > (t4 -= 3))
-                      break;
+                    if (0 > (t4 -= 3)) break;
                     o2.push(224 | n3 >> 12, 128 | 63 & n3 >> 6, 128 | 63 & n3);
                   } else if (1114112 > n3) {
-                    if (0 > (t4 -= 4))
-                      break;
+                    if (0 > (t4 -= 4)) break;
                     o2.push(240 | n3 >> 18, 128 | 63 & n3 >> 12, 128 | 63 & n3 >> 6, 128 | 63 & n3);
-                  } else
-                    throw new Error("Invalid code point");
+                  } else throw new Error("Invalid code point");
                 }
                 return o2;
               }
               function Y(e2) {
-                for (var t4 = [], n3 = 0; n3 < e2.length; ++n3)
-                  t4.push(255 & e2.charCodeAt(n3));
+                for (var t4 = [], n3 = 0; n3 < e2.length; ++n3) t4.push(255 & e2.charCodeAt(n3));
                 return t4;
               }
               function V(e2, t4) {
-                for (var n3, r2, a, o2 = [], d2 = 0; d2 < e2.length && !(0 > (t4 -= 2)); ++d2)
-                  n3 = e2.charCodeAt(d2), r2 = n3 >> 8, a = n3 % 256, o2.push(a), o2.push(r2);
+                for (var n3, r2, a, o2 = [], d2 = 0; d2 < e2.length && !(0 > (t4 -= 2)); ++d2) n3 = e2.charCodeAt(d2), r2 = n3 >> 8, a = n3 % 256, o2.push(a), o2.push(r2);
                 return o2;
               }
               function z(e2) {
                 return $.toByteArray(q(e2));
               }
               function G(e2, t4, n3, r2) {
-                for (var a = 0; a < r2 && !(a + n3 >= t4.length || a >= e2.length); ++a)
-                  t4[a + n3] = e2[a];
+                for (var a = 0; a < r2 && !(a + n3 >= t4.length || a >= e2.length); ++a) t4[a + n3] = e2[a];
                 return a;
               }
               function K(e2, t4) {
@@ -506,7 +428,7 @@ var wp;
               n2.Buffer = s, n2.SlowBuffer = function(e2) {
                 return +e2 != e2 && (e2 = 0), s.alloc(+e2);
               }, n2.INSPECT_MAX_BYTES = 50;
-              n2.kMaxLength = 2147483647, s.TYPED_ARRAY_SUPPORT = function() {
+              n2.kMaxLength = 2147483647, s.TYPED_ARRAY_SUPPORT = (function() {
                 try {
                   var e2 = new Uint8Array(1);
                   return e2.__proto__ = { __proto__: Uint8Array.prototype, foo: function() {
@@ -515,7 +437,7 @@ var wp;
                 } catch (t4) {
                   return false;
                 }
-              }(), s.TYPED_ARRAY_SUPPORT || "undefined" == typeof console || "function" != typeof console.error || console.error("This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."), Object.defineProperty(s.prototype, "parent", { enumerable: true, get: function() {
+              })(), s.TYPED_ARRAY_SUPPORT || "undefined" == typeof console || "function" != typeof console.error || console.error("This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."), Object.defineProperty(s.prototype, "parent", { enumerable: true, get: function() {
                 return s.isBuffer(this) ? this.buffer : void 0;
               } }), Object.defineProperty(s.prototype, "offset", { enumerable: true, get: function() {
                 return s.isBuffer(this) ? this.byteOffset : void 0;
@@ -530,15 +452,12 @@ var wp;
               }, s.isBuffer = function(e2) {
                 return null != e2 && true === e2._isBuffer && e2 !== s.prototype;
               }, s.compare = function(e2, t4) {
-                if (K(e2, Uint8Array) && (e2 = s.from(e2, e2.offset, e2.byteLength)), K(t4, Uint8Array) && (t4 = s.from(t4, t4.offset, t4.byteLength)), !s.isBuffer(e2) || !s.isBuffer(t4))
-                  throw new TypeError('The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array');
-                if (e2 === t4)
-                  return 0;
-                for (var n3 = e2.length, r2 = t4.length, d2 = 0, l2 = o(n3, r2); d2 < l2; ++d2)
-                  if (e2[d2] !== t4[d2]) {
-                    n3 = e2[d2], r2 = t4[d2];
-                    break;
-                  }
+                if (K(e2, Uint8Array) && (e2 = s.from(e2, e2.offset, e2.byteLength)), K(t4, Uint8Array) && (t4 = s.from(t4, t4.offset, t4.byteLength)), !s.isBuffer(e2) || !s.isBuffer(t4)) throw new TypeError('The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array');
+                if (e2 === t4) return 0;
+                for (var n3 = e2.length, r2 = t4.length, d2 = 0, l2 = o(n3, r2); d2 < l2; ++d2) if (e2[d2] !== t4[d2]) {
+                  n3 = e2[d2], r2 = t4[d2];
+                  break;
+                }
                 return n3 < r2 ? -1 : r2 < n3 ? 1 : 0;
               }, s.isEncoding = function(e2) {
                 switch ((e2 + "").toLowerCase()) {
@@ -558,71 +477,52 @@ var wp;
                     return false;
                 }
               }, s.concat = function(e2, t4) {
-                if (!Array.isArray(e2))
-                  throw new TypeError('"list" argument must be an Array of Buffers');
-                if (0 === e2.length)
-                  return s.alloc(0);
+                if (!Array.isArray(e2)) throw new TypeError('"list" argument must be an Array of Buffers');
+                if (0 === e2.length) return s.alloc(0);
                 var n3;
-                if (t4 === void 0)
-                  for (t4 = 0, n3 = 0; n3 < e2.length; ++n3)
-                    t4 += e2[n3].length;
+                if (t4 === void 0) for (t4 = 0, n3 = 0; n3 < e2.length; ++n3) t4 += e2[n3].length;
                 var r2 = s.allocUnsafe(t4), a = 0;
                 for (n3 = 0; n3 < e2.length; ++n3) {
                   var o2 = e2[n3];
-                  if (K(o2, Uint8Array) && (o2 = s.from(o2)), !s.isBuffer(o2))
-                    throw new TypeError('"list" argument must be an Array of Buffers');
+                  if (K(o2, Uint8Array) && (o2 = s.from(o2)), !s.isBuffer(o2)) throw new TypeError('"list" argument must be an Array of Buffers');
                   o2.copy(r2, a), a += o2.length;
                 }
                 return r2;
               }, s.byteLength = b, s.prototype._isBuffer = true, s.prototype.swap16 = function() {
                 var e2 = this.length;
-                if (0 != e2 % 2)
-                  throw new RangeError("Buffer size must be a multiple of 16-bits");
-                for (var t4 = 0; t4 < e2; t4 += 2)
-                  C(this, t4, t4 + 1);
+                if (0 != e2 % 2) throw new RangeError("Buffer size must be a multiple of 16-bits");
+                for (var t4 = 0; t4 < e2; t4 += 2) C(this, t4, t4 + 1);
                 return this;
               }, s.prototype.swap32 = function() {
                 var e2 = this.length;
-                if (0 != e2 % 4)
-                  throw new RangeError("Buffer size must be a multiple of 32-bits");
-                for (var t4 = 0; t4 < e2; t4 += 4)
-                  C(this, t4, t4 + 3), C(this, t4 + 1, t4 + 2);
+                if (0 != e2 % 4) throw new RangeError("Buffer size must be a multiple of 32-bits");
+                for (var t4 = 0; t4 < e2; t4 += 4) C(this, t4, t4 + 3), C(this, t4 + 1, t4 + 2);
                 return this;
               }, s.prototype.swap64 = function() {
                 var e2 = this.length;
-                if (0 != e2 % 8)
-                  throw new RangeError("Buffer size must be a multiple of 64-bits");
-                for (var t4 = 0; t4 < e2; t4 += 8)
-                  C(this, t4, t4 + 7), C(this, t4 + 1, t4 + 6), C(this, t4 + 2, t4 + 5), C(this, t4 + 3, t4 + 4);
+                if (0 != e2 % 8) throw new RangeError("Buffer size must be a multiple of 64-bits");
+                for (var t4 = 0; t4 < e2; t4 += 8) C(this, t4, t4 + 7), C(this, t4 + 1, t4 + 6), C(this, t4 + 2, t4 + 5), C(this, t4 + 3, t4 + 4);
                 return this;
               }, s.prototype.toString = function() {
                 var e2 = this.length;
                 return 0 === e2 ? "" : 0 === arguments.length ? x(this, 0, e2) : y.apply(this, arguments);
               }, s.prototype.toLocaleString = s.prototype.toString, s.prototype.equals = function(e2) {
-                if (!s.isBuffer(e2))
-                  throw new TypeError("Argument must be a Buffer");
+                if (!s.isBuffer(e2)) throw new TypeError("Argument must be a Buffer");
                 return this === e2 || 0 === s.compare(this, e2);
               }, s.prototype.inspect = function() {
                 var e2 = "", t4 = n2.INSPECT_MAX_BYTES;
                 return e2 = this.toString("hex", 0, t4).replace(/(.{2})/g, "$1 ").trim(), this.length > t4 && (e2 += " ... "), "<Buffer " + e2 + ">";
               }, s.prototype.compare = function(e2, t4, n3, r2, a) {
-                if (K(e2, Uint8Array) && (e2 = s.from(e2, e2.offset, e2.byteLength)), !s.isBuffer(e2))
-                  throw new TypeError('The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof e2);
-                if (void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = e2 ? e2.length : 0), void 0 === r2 && (r2 = 0), void 0 === a && (a = this.length), 0 > t4 || n3 > e2.length || 0 > r2 || a > this.length)
-                  throw new RangeError("out of range index");
-                if (r2 >= a && t4 >= n3)
-                  return 0;
-                if (r2 >= a)
-                  return -1;
-                if (t4 >= n3)
-                  return 1;
-                if (t4 >>>= 0, n3 >>>= 0, r2 >>>= 0, a >>>= 0, this === e2)
-                  return 0;
-                for (var d2 = a - r2, l2 = n3 - t4, c2 = o(d2, l2), u2 = this.slice(r2, a), p2 = e2.slice(t4, n3), f2 = 0; f2 < c2; ++f2)
-                  if (u2[f2] !== p2[f2]) {
-                    d2 = u2[f2], l2 = p2[f2];
-                    break;
-                  }
+                if (K(e2, Uint8Array) && (e2 = s.from(e2, e2.offset, e2.byteLength)), !s.isBuffer(e2)) throw new TypeError('The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof e2);
+                if (void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = e2 ? e2.length : 0), void 0 === r2 && (r2 = 0), void 0 === a && (a = this.length), 0 > t4 || n3 > e2.length || 0 > r2 || a > this.length) throw new RangeError("out of range index");
+                if (r2 >= a && t4 >= n3) return 0;
+                if (r2 >= a) return -1;
+                if (t4 >= n3) return 1;
+                if (t4 >>>= 0, n3 >>>= 0, r2 >>>= 0, a >>>= 0, this === e2) return 0;
+                for (var d2 = a - r2, l2 = n3 - t4, c2 = o(d2, l2), u2 = this.slice(r2, a), p2 = e2.slice(t4, n3), f2 = 0; f2 < c2; ++f2) if (u2[f2] !== p2[f2]) {
+                  d2 = u2[f2], l2 = p2[f2];
+                  break;
+                }
                 return d2 < l2 ? -1 : l2 < d2 ? 1 : 0;
               }, s.prototype.includes = function(e2, t4, n3) {
                 return -1 !== this.indexOf(e2, t4, n3);
@@ -631,42 +531,35 @@ var wp;
               }, s.prototype.lastIndexOf = function(e2, t4, n3) {
                 return R(this, e2, t4, n3, false);
               }, s.prototype.write = function(e2, t4, n3, r2) {
-                if (void 0 === t4)
-                  r2 = "utf8", n3 = this.length, t4 = 0;
-                else if (void 0 === n3 && "string" == typeof t4)
-                  r2 = t4, n3 = this.length, t4 = 0;
-                else if (isFinite(t4))
-                  t4 >>>= 0, isFinite(n3) ? (n3 >>>= 0, void 0 === r2 && (r2 = "utf8")) : (r2 = n3, n3 = void 0);
-                else
-                  throw new Error("Buffer.write(string, encoding, offset[, length]) is no longer supported");
+                if (void 0 === t4) r2 = "utf8", n3 = this.length, t4 = 0;
+                else if (void 0 === n3 && "string" == typeof t4) r2 = t4, n3 = this.length, t4 = 0;
+                else if (isFinite(t4)) t4 >>>= 0, isFinite(n3) ? (n3 >>>= 0, void 0 === r2 && (r2 = "utf8")) : (r2 = n3, n3 = void 0);
+                else throw new Error("Buffer.write(string, encoding, offset[, length]) is no longer supported");
                 var a = this.length - t4;
-                if ((void 0 === n3 || n3 > a) && (n3 = a), 0 < e2.length && (0 > n3 || 0 > t4) || t4 > this.length)
-                  throw new RangeError("Attempt to write outside buffer bounds");
+                if ((void 0 === n3 || n3 > a) && (n3 = a), 0 < e2.length && (0 > n3 || 0 > t4) || t4 > this.length) throw new RangeError("Attempt to write outside buffer bounds");
                 r2 || (r2 = "utf8");
-                for (var o2 = false; ; )
-                  switch (r2) {
-                    case "hex":
-                      return w(this, e2, t4, n3);
-                    case "utf8":
-                    case "utf-8":
-                      return S(this, e2, t4, n3);
-                    case "ascii":
-                      return T(this, e2, t4, n3);
-                    case "latin1":
-                    case "binary":
-                      return v(this, e2, t4, n3);
-                    case "base64":
-                      return k(this, e2, t4, n3);
-                    case "ucs2":
-                    case "ucs-2":
-                    case "utf16le":
-                    case "utf-16le":
-                      return L(this, e2, t4, n3);
-                    default:
-                      if (o2)
-                        throw new TypeError("Unknown encoding: " + r2);
-                      r2 = ("" + r2).toLowerCase(), o2 = true;
-                  }
+                for (var o2 = false; ; ) switch (r2) {
+                  case "hex":
+                    return w(this, e2, t4, n3);
+                  case "utf8":
+                  case "utf-8":
+                    return S(this, e2, t4, n3);
+                  case "ascii":
+                    return T(this, e2, t4, n3);
+                  case "latin1":
+                  case "binary":
+                    return v(this, e2, t4, n3);
+                  case "base64":
+                    return k(this, e2, t4, n3);
+                  case "ucs2":
+                  case "ucs-2":
+                  case "utf16le":
+                  case "utf-16le":
+                    return L(this, e2, t4, n3);
+                  default:
+                    if (o2) throw new TypeError("Unknown encoding: " + r2);
+                    r2 = ("" + r2).toLowerCase(), o2 = true;
+                }
               }, s.prototype.toJSON = function() {
                 return { type: "Buffer", data: Array.prototype.slice.call(this._arr || this, 0) };
               };
@@ -677,13 +570,11 @@ var wp;
                 return r2.__proto__ = s.prototype, r2;
               }, s.prototype.readUIntLE = function(e2, t4, n3) {
                 e2 >>>= 0, t4 >>>= 0, n3 || O(e2, t4, this.length);
-                for (var r2 = this[e2], a = 1, o2 = 0; ++o2 < t4 && (a *= 256); )
-                  r2 += this[e2 + o2] * a;
+                for (var r2 = this[e2], a = 1, o2 = 0; ++o2 < t4 && (a *= 256); ) r2 += this[e2 + o2] * a;
                 return r2;
               }, s.prototype.readUIntBE = function(e2, t4, n3) {
                 e2 >>>= 0, t4 >>>= 0, n3 || O(e2, t4, this.length);
-                for (var r2 = this[e2 + --t4], a = 1; 0 < t4 && (a *= 256); )
-                  r2 += this[e2 + --t4] * a;
+                for (var r2 = this[e2 + --t4], a = 1; 0 < t4 && (a *= 256); ) r2 += this[e2 + --t4] * a;
                 return r2;
               }, s.prototype.readUInt8 = function(e2, t4) {
                 return e2 >>>= 0, t4 || O(e2, 1, this.length), this[e2];
@@ -697,13 +588,11 @@ var wp;
                 return e2 >>>= 0, t4 || O(e2, 4, this.length), 16777216 * this[e2] + (this[e2 + 1] << 16 | this[e2 + 2] << 8 | this[e2 + 3]);
               }, s.prototype.readIntLE = function(e2, t4, n3) {
                 e2 >>>= 0, t4 >>>= 0, n3 || O(e2, t4, this.length);
-                for (var a = this[e2], o2 = 1, d2 = 0; ++d2 < t4 && (o2 *= 256); )
-                  a += this[e2 + d2] * o2;
+                for (var a = this[e2], o2 = 1, d2 = 0; ++d2 < t4 && (o2 *= 256); ) a += this[e2 + d2] * o2;
                 return o2 *= 128, a >= o2 && (a -= r(2, 8 * t4)), a;
               }, s.prototype.readIntBE = function(e2, t4, n3) {
                 e2 >>>= 0, t4 >>>= 0, n3 || O(e2, t4, this.length);
-                for (var a = t4, o2 = 1, d2 = this[e2 + --a]; 0 < a && (o2 *= 256); )
-                  d2 += this[e2 + --a] * o2;
+                for (var a = t4, o2 = 1, d2 = this[e2 + --a]; 0 < a && (o2 *= 256); ) d2 += this[e2 + --a] * o2;
                 return o2 *= 128, d2 >= o2 && (d2 -= r(2, 8 * t4)), d2;
               }, s.prototype.readInt8 = function(e2, t4) {
                 return e2 >>>= 0, t4 || O(e2, 1, this.length), 128 & this[e2] ? -1 * (255 - this[e2] + 1) : this[e2];
@@ -733,8 +622,7 @@ var wp;
                   F(this, e2, t4, n3, o2, 0);
                 }
                 var d2 = 1, s2 = 0;
-                for (this[t4] = 255 & e2; ++s2 < n3 && (d2 *= 256); )
-                  this[t4 + s2] = 255 & e2 / d2;
+                for (this[t4] = 255 & e2; ++s2 < n3 && (d2 *= 256); ) this[t4 + s2] = 255 & e2 / d2;
                 return t4 + n3;
               }, s.prototype.writeUIntBE = function(e2, t4, n3, a) {
                 if (e2 = +e2, t4 >>>= 0, n3 >>>= 0, !a) {
@@ -742,8 +630,7 @@ var wp;
                   F(this, e2, t4, n3, o2, 0);
                 }
                 var d2 = n3 - 1, s2 = 1;
-                for (this[t4 + d2] = 255 & e2; 0 <= --d2 && (s2 *= 256); )
-                  this[t4 + d2] = 255 & e2 / s2;
+                for (this[t4 + d2] = 255 & e2; 0 <= --d2 && (s2 *= 256); ) this[t4 + d2] = 255 & e2 / s2;
                 return t4 + n3;
               }, s.prototype.writeUInt8 = function(e2, t4, n3) {
                 return e2 = +e2, t4 >>>= 0, n3 || F(this, e2, t4, 1, 255, 0), this[t4] = 255 & e2, t4 + 1;
@@ -761,8 +648,7 @@ var wp;
                   F(this, e2, t4, n3, o2 - 1, -o2);
                 }
                 var d2 = 0, s2 = 1, l2 = 0;
-                for (this[t4] = 255 & e2; ++d2 < n3 && (s2 *= 256); )
-                  0 > e2 && 0 === l2 && 0 !== this[t4 + d2 - 1] && (l2 = 1), this[t4 + d2] = 255 & (e2 / s2 >> 0) - l2;
+                for (this[t4] = 255 & e2; ++d2 < n3 && (s2 *= 256); ) 0 > e2 && 0 === l2 && 0 !== this[t4 + d2 - 1] && (l2 = 1), this[t4 + d2] = 255 & (e2 / s2 >> 0) - l2;
                 return t4 + n3;
               }, s.prototype.writeIntBE = function(e2, t4, n3, a) {
                 if (e2 = +e2, t4 >>>= 0, !a) {
@@ -770,8 +656,7 @@ var wp;
                   F(this, e2, t4, n3, o2 - 1, -o2);
                 }
                 var d2 = n3 - 1, s2 = 1, l2 = 0;
-                for (this[t4 + d2] = 255 & e2; 0 <= --d2 && (s2 *= 256); )
-                  0 > e2 && 0 === l2 && 0 !== this[t4 + d2 + 1] && (l2 = 1), this[t4 + d2] = 255 & (e2 / s2 >> 0) - l2;
+                for (this[t4 + d2] = 255 & e2; 0 <= --d2 && (s2 *= 256); ) 0 > e2 && 0 === l2 && 0 !== this[t4 + d2 + 1] && (l2 = 1), this[t4 + d2] = 255 & (e2 / s2 >> 0) - l2;
                 return t4 + n3;
               }, s.prototype.writeInt8 = function(e2, t4, n3) {
                 return e2 = +e2, t4 >>>= 0, n3 || F(this, e2, t4, 1, 127, -128), 0 > e2 && (e2 = 255 + e2 + 1), this[t4] = 255 & e2, t4 + 1;
@@ -792,55 +677,36 @@ var wp;
               }, s.prototype.writeDoubleBE = function(e2, t4, n3) {
                 return j(this, e2, t4, false, n3);
               }, s.prototype.copy = function(e2, t4, n3, r2) {
-                if (!s.isBuffer(e2))
-                  throw new TypeError("argument should be a Buffer");
-                if (n3 || (n3 = 0), r2 || 0 === r2 || (r2 = this.length), t4 >= e2.length && (t4 = e2.length), t4 || (t4 = 0), 0 < r2 && r2 < n3 && (r2 = n3), r2 === n3)
-                  return 0;
-                if (0 === e2.length || 0 === this.length)
-                  return 0;
-                if (0 > t4)
-                  throw new RangeError("targetStart out of bounds");
-                if (0 > n3 || n3 >= this.length)
-                  throw new RangeError("Index out of range");
-                if (0 > r2)
-                  throw new RangeError("sourceEnd out of bounds");
+                if (!s.isBuffer(e2)) throw new TypeError("argument should be a Buffer");
+                if (n3 || (n3 = 0), r2 || 0 === r2 || (r2 = this.length), t4 >= e2.length && (t4 = e2.length), t4 || (t4 = 0), 0 < r2 && r2 < n3 && (r2 = n3), r2 === n3) return 0;
+                if (0 === e2.length || 0 === this.length) return 0;
+                if (0 > t4) throw new RangeError("targetStart out of bounds");
+                if (0 > n3 || n3 >= this.length) throw new RangeError("Index out of range");
+                if (0 > r2) throw new RangeError("sourceEnd out of bounds");
                 r2 > this.length && (r2 = this.length), e2.length - t4 < r2 - n3 && (r2 = e2.length - t4 + n3);
                 var a = r2 - n3;
-                if (this === e2 && "function" == typeof Uint8Array.prototype.copyWithin)
-                  this.copyWithin(t4, n3, r2);
-                else if (this === e2 && n3 < t4 && t4 < r2)
-                  for (var o2 = a - 1; 0 <= o2; --o2)
-                    e2[o2 + t4] = this[o2 + n3];
-                else
-                  Uint8Array.prototype.set.call(e2, this.subarray(n3, r2), t4);
+                if (this === e2 && "function" == typeof Uint8Array.prototype.copyWithin) this.copyWithin(t4, n3, r2);
+                else if (this === e2 && n3 < t4 && t4 < r2) for (var o2 = a - 1; 0 <= o2; --o2) e2[o2 + t4] = this[o2 + n3];
+                else Uint8Array.prototype.set.call(e2, this.subarray(n3, r2), t4);
                 return a;
               }, s.prototype.fill = function(e2, t4, n3, r2) {
                 if ("string" == typeof e2) {
-                  if ("string" == typeof t4 ? (r2 = t4, t4 = 0, n3 = this.length) : "string" == typeof n3 && (r2 = n3, n3 = this.length), void 0 !== r2 && "string" != typeof r2)
-                    throw new TypeError("encoding must be a string");
-                  if ("string" == typeof r2 && !s.isEncoding(r2))
-                    throw new TypeError("Unknown encoding: " + r2);
+                  if ("string" == typeof t4 ? (r2 = t4, t4 = 0, n3 = this.length) : "string" == typeof n3 && (r2 = n3, n3 = this.length), void 0 !== r2 && "string" != typeof r2) throw new TypeError("encoding must be a string");
+                  if ("string" == typeof r2 && !s.isEncoding(r2)) throw new TypeError("Unknown encoding: " + r2);
                   if (1 === e2.length) {
                     var a = e2.charCodeAt(0);
                     ("utf8" === r2 && 128 > a || "latin1" === r2) && (e2 = a);
                   }
-                } else
-                  "number" == typeof e2 && (e2 &= 255);
-                if (0 > t4 || this.length < t4 || this.length < n3)
-                  throw new RangeError("Out of range index");
-                if (n3 <= t4)
-                  return this;
+                } else "number" == typeof e2 && (e2 &= 255);
+                if (0 > t4 || this.length < t4 || this.length < n3) throw new RangeError("Out of range index");
+                if (n3 <= t4) return this;
                 t4 >>>= 0, n3 = n3 === void 0 ? this.length : n3 >>> 0, e2 || (e2 = 0);
                 var o2;
-                if ("number" == typeof e2)
-                  for (o2 = t4; o2 < n3; ++o2)
-                    this[o2] = e2;
+                if ("number" == typeof e2) for (o2 = t4; o2 < n3; ++o2) this[o2] = e2;
                 else {
                   var d2 = s.isBuffer(e2) ? e2 : s.from(e2, r2), l2 = d2.length;
-                  if (0 === l2)
-                    throw new TypeError('The value "' + e2 + '" is invalid for argument "value"');
-                  for (o2 = 0; o2 < n3 - t4; ++o2)
-                    this[o2 + t4] = d2[o2 % l2];
+                  if (0 === l2) throw new TypeError('The value "' + e2 + '" is invalid for argument "value"');
+                  for (o2 = 0; o2 < n3 - t4; ++o2) this[o2 + t4] = d2[o2 % l2];
                 }
                 return this;
               };
@@ -859,8 +725,7 @@ var wp;
                 return !e2 && "undefined" != typeof a && "env" in a && (e2 = a.env.DEBUG), e2;
               }
               n2.formatArgs = function(e2) {
-                if (e2[0] = (this.useColors ? "%c" : "") + this.namespace + (this.useColors ? " %c" : " ") + e2[0] + (this.useColors ? "%c " : " ") + "+" + t2.exports.humanize(this.diff), !this.useColors)
-                  return;
+                if (e2[0] = (this.useColors ? "%c" : "") + this.namespace + (this.useColors ? " %c" : " ") + e2[0] + (this.useColors ? "%c " : " ") + "+" + t2.exports.humanize(this.diff), !this.useColors) return;
                 const n3 = "color: " + this.color;
                 e2.splice(1, 0, n3, "color: inherit");
                 let r3 = 0, a2 = 0;
@@ -874,12 +739,12 @@ var wp;
                 }
               }, n2.load = r2, n2.useColors = function() {
                 return !!("undefined" != typeof window && window.process && ("renderer" === window.process.type || window.process.__nwjs)) || !("undefined" != typeof navigator && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) && ("undefined" != typeof document && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance || "undefined" != typeof window && window.console && (window.console.firebug || window.console.exception && window.console.table) || "undefined" != typeof navigator && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && 31 <= parseInt(RegExp.$1, 10) || "undefined" != typeof navigator && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
-              }, n2.storage = function() {
+              }, n2.storage = (function() {
                 try {
                   return localStorage;
                 } catch (e2) {
                 }
-              }(), n2.destroy = (() => {
+              })(), n2.destroy = /* @__PURE__ */ (() => {
                 let e2 = false;
                 return () => {
                   e2 || (e2 = true, console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`."));
@@ -900,14 +765,12 @@ var wp;
           t2.exports = function(t3) {
             function r2(e2) {
               function t4(...e3) {
-                if (!t4.enabled)
-                  return;
+                if (!t4.enabled) return;
                 const a2 = t4, o3 = +/* @__PURE__ */ new Date(), i = o3 - (n2 || o3);
                 a2.diff = i, a2.prev = n2, a2.curr = o3, n2 = o3, e3[0] = r2.coerce(e3[0]), "string" != typeof e3[0] && e3.unshift("%O");
                 let d = 0;
                 e3[0] = e3[0].replace(/%([a-zA-Z%])/g, (t5, n3) => {
-                  if ("%%" === t5)
-                    return "%";
+                  if ("%%" === t5) return "%";
                   d++;
                   const o4 = r2.formatters[n3];
                   if ("function" == typeof o4) {
@@ -940,18 +803,12 @@ var wp;
               r2.save(e2), r2.names = [], r2.skips = [];
               let t4;
               const n2 = ("string" == typeof e2 ? e2 : "").split(/[\s,]+/), a2 = n2.length;
-              for (t4 = 0; t4 < a2; t4++)
-                n2[t4] && (e2 = n2[t4].replace(/\*/g, ".*?"), "-" === e2[0] ? r2.skips.push(new RegExp("^" + e2.substr(1) + "$")) : r2.names.push(new RegExp("^" + e2 + "$")));
+              for (t4 = 0; t4 < a2; t4++) n2[t4] && (e2 = n2[t4].replace(/\*/g, ".*?"), "-" === e2[0] ? r2.skips.push(new RegExp("^" + e2.substr(1) + "$")) : r2.names.push(new RegExp("^" + e2 + "$")));
             }, r2.enabled = function(e2) {
-              if ("*" === e2[e2.length - 1])
-                return true;
+              if ("*" === e2[e2.length - 1]) return true;
               let t4, n2;
-              for (t4 = 0, n2 = r2.skips.length; t4 < n2; t4++)
-                if (r2.skips[t4].test(e2))
-                  return false;
-              for (t4 = 0, n2 = r2.names.length; t4 < n2; t4++)
-                if (r2.names[t4].test(e2))
-                  return true;
+              for (t4 = 0, n2 = r2.skips.length; t4 < n2; t4++) if (r2.skips[t4].test(e2)) return false;
+              for (t4 = 0, n2 = r2.names.length; t4 < n2; t4++) if (r2.names[t4].test(e2)) return true;
               return false;
             }, r2.humanize = e("ms"), r2.destroy = function() {
               console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.");
@@ -959,21 +816,18 @@ var wp;
               r2[e2] = t3[e2];
             }), r2.names = [], r2.skips = [], r2.formatters = {}, r2.selectColor = function(e2) {
               let t4 = 0;
-              for (let n2 = 0; n2 < e2.length; n2++)
-                t4 = (t4 << 5) - t4 + e2.charCodeAt(n2), t4 |= 0;
+              for (let n2 = 0; n2 < e2.length; n2++) t4 = (t4 << 5) - t4 + e2.charCodeAt(n2), t4 |= 0;
               return r2.colors[n(t4) % r2.colors.length];
             }, r2.enable(r2.load()), r2;
           };
         }, { ms: 11 }], 6: [function(e, t2) {
           "use strict";
           function n2(e2, t3) {
-            for (const n3 in t3)
-              Object.defineProperty(e2, n3, { value: t3[n3], enumerable: true, configurable: true });
+            for (const n3 in t3) Object.defineProperty(e2, n3, { value: t3[n3], enumerable: true, configurable: true });
             return e2;
           }
           t2.exports = function(e2, t3, r2) {
-            if (!e2 || "string" == typeof e2)
-              throw new TypeError("Please pass an Error to err-code");
+            if (!e2 || "string" == typeof e2) throw new TypeError("Please pass an Error to err-code");
             r2 || (r2 = {}), "object" == typeof t3 && (r2 = t3, t3 = ""), t3 && (r2.code = t3);
             try {
               return n2(e2, r2);
@@ -995,16 +849,14 @@ var wp;
             r2.init.call(this);
           }
           function a(e2) {
-            if ("function" != typeof e2)
-              throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof e2);
+            if ("function" != typeof e2) throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof e2);
           }
           function o(e2) {
             return void 0 === e2._maxListeners ? r2.defaultMaxListeners : e2._maxListeners;
           }
           function i(e2, t3, r3, i2) {
             var d2, s2, l2;
-            if (a(r3), s2 = e2._events, void 0 === s2 ? (s2 = e2._events = /* @__PURE__ */ Object.create(null), e2._eventsCount = 0) : (void 0 !== s2.newListener && (e2.emit("newListener", t3, r3.listener ? r3.listener : r3), s2 = e2._events), l2 = s2[t3]), void 0 === l2)
-              l2 = s2[t3] = r3, ++e2._eventsCount;
+            if (a(r3), s2 = e2._events, void 0 === s2 ? (s2 = e2._events = /* @__PURE__ */ Object.create(null), e2._eventsCount = 0) : (void 0 !== s2.newListener && (e2.emit("newListener", t3, r3.listener ? r3.listener : r3), s2 = e2._events), l2 = s2[t3]), void 0 === l2) l2 = s2[t3] = r3, ++e2._eventsCount;
             else if ("function" == typeof l2 ? l2 = s2[t3] = i2 ? [r3, l2] : [l2, r3] : i2 ? l2.unshift(r3) : l2.push(r3), d2 = o(e2), 0 < d2 && l2.length > d2 && !l2.warned) {
               l2.warned = true;
               var c2 = new Error("Possible EventEmitter memory leak detected. " + l2.length + " " + (t3 + " listeners added. Use emitter.setMaxListeners() to increase limit"));
@@ -1013,8 +865,7 @@ var wp;
             return e2;
           }
           function d() {
-            if (!this.fired)
-              return this.target.removeListener(this.type, this.wrapFn), this.fired = true, 0 === arguments.length ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
+            if (!this.fired) return this.target.removeListener(this.type, this.wrapFn), this.fired = true, 0 === arguments.length ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
           }
           function s(e2, t3, n3) {
             var r3 = { fired: false, wrapFn: void 0, target: e2, type: t3, listener: n3 }, a2 = d.bind(r3);
@@ -1022,8 +873,7 @@ var wp;
           }
           function l(e2, t3, n3) {
             var r3 = e2._events;
-            if (r3 === void 0)
-              return [];
+            if (r3 === void 0) return [];
             var a2 = r3[t3];
             return void 0 === a2 ? [] : "function" == typeof a2 ? n3 ? [a2.listener || a2] : [a2] : n3 ? f(a2) : u(a2, a2.length);
           }
@@ -1031,40 +881,32 @@ var wp;
             var t3 = this._events;
             if (t3 !== void 0) {
               var n3 = t3[e2];
-              if ("function" == typeof n3)
-                return 1;
-              if (void 0 !== n3)
-                return n3.length;
+              if ("function" == typeof n3) return 1;
+              if (void 0 !== n3) return n3.length;
             }
             return 0;
           }
           function u(e2, t3) {
-            for (var n3 = Array(t3), r3 = 0; r3 < t3; ++r3)
-              n3[r3] = e2[r3];
+            for (var n3 = Array(t3), r3 = 0; r3 < t3; ++r3) n3[r3] = e2[r3];
             return n3;
           }
           function p(e2, t3) {
-            for (; t3 + 1 < e2.length; t3++)
-              e2[t3] = e2[t3 + 1];
+            for (; t3 + 1 < e2.length; t3++) e2[t3] = e2[t3 + 1];
             e2.pop();
           }
           function f(e2) {
-            for (var t3 = Array(e2.length), n3 = 0; n3 < t3.length; ++n3)
-              t3[n3] = e2[n3].listener || e2[n3];
+            for (var t3 = Array(e2.length), n3 = 0; n3 < t3.length; ++n3) t3[n3] = e2[n3].listener || e2[n3];
             return t3;
           }
           function g(e2, t3, n3) {
             "function" == typeof e2.on && _(e2, "error", t3, n3);
           }
           function _(e2, t3, n3, r3) {
-            if ("function" == typeof e2.on)
-              r3.once ? e2.once(t3, n3) : e2.on(t3, n3);
-            else if ("function" == typeof e2.addEventListener)
-              e2.addEventListener(t3, function a2(o2) {
-                r3.once && e2.removeEventListener(t3, a2), n3(o2);
-              });
-            else
-              throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof e2);
+            if ("function" == typeof e2.on) r3.once ? e2.once(t3, n3) : e2.on(t3, n3);
+            else if ("function" == typeof e2.addEventListener) e2.addEventListener(t3, function a2(o2) {
+              r3.once && e2.removeEventListener(t3, a2), n3(o2);
+            });
+            else throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof e2);
           }
           var h, m = "object" == typeof Reflect ? Reflect : null, b = m && "function" == typeof m.apply ? m.apply : function(e2, t3, n3) {
             return Function.prototype.apply.call(e2, t3, n3);
@@ -1092,40 +934,30 @@ var wp;
           Object.defineProperty(r2, "defaultMaxListeners", { enumerable: true, get: function() {
             return C;
           }, set: function(e2) {
-            if ("number" != typeof e2 || 0 > e2 || y(e2))
-              throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + e2 + ".");
+            if ("number" != typeof e2 || 0 > e2 || y(e2)) throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + e2 + ".");
             C = e2;
           } }), r2.init = function() {
             (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) && (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0), this._maxListeners = this._maxListeners || void 0;
           }, r2.prototype.setMaxListeners = function(e2) {
-            if ("number" != typeof e2 || 0 > e2 || y(e2))
-              throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + e2 + ".");
+            if ("number" != typeof e2 || 0 > e2 || y(e2)) throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + e2 + ".");
             return this._maxListeners = e2, this;
           }, r2.prototype.getMaxListeners = function() {
             return o(this);
           }, r2.prototype.emit = function(e2) {
-            for (var t3 = [], n3 = 1; n3 < arguments.length; n3++)
-              t3.push(arguments[n3]);
+            for (var t3 = [], n3 = 1; n3 < arguments.length; n3++) t3.push(arguments[n3]);
             var r3 = "error" === e2, a2 = this._events;
-            if (a2 !== void 0)
-              r3 = r3 && a2.error === void 0;
-            else if (!r3)
-              return false;
+            if (a2 !== void 0) r3 = r3 && a2.error === void 0;
+            else if (!r3) return false;
             if (r3) {
               var o2;
-              if (0 < t3.length && (o2 = t3[0]), o2 instanceof Error)
-                throw o2;
+              if (0 < t3.length && (o2 = t3[0]), o2 instanceof Error) throw o2;
               var d2 = new Error("Unhandled error." + (o2 ? " (" + o2.message + ")" : ""));
               throw d2.context = o2, d2;
             }
             var s2 = a2[e2];
-            if (s2 === void 0)
-              return false;
-            if ("function" == typeof s2)
-              b(s2, this, t3);
-            else
-              for (var l2 = s2.length, c2 = u(s2, l2), n3 = 0; n3 < l2; ++n3)
-                b(c2[n3], this, t3);
+            if (s2 === void 0) return false;
+            if ("function" == typeof s2) b(s2, this, t3);
+            else for (var l2 = s2.length, c2 = u(s2, l2), n3 = 0; n3 < l2; ++n3) b(c2[n3], this, t3);
             return true;
           }, r2.prototype.addListener = function(e2, t3) {
             return i(this, e2, t3, false);
@@ -1137,40 +969,29 @@ var wp;
             return a(t3), this.prependListener(e2, s(this, e2, t3)), this;
           }, r2.prototype.removeListener = function(e2, t3) {
             var n3, r3, o2, d2, s2;
-            if (a(t3), r3 = this._events, void 0 === r3)
-              return this;
-            if (n3 = r3[e2], void 0 === n3)
-              return this;
-            if (n3 === t3 || n3.listener === t3)
-              0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : (delete r3[e2], r3.removeListener && this.emit("removeListener", e2, n3.listener || t3));
+            if (a(t3), r3 = this._events, void 0 === r3) return this;
+            if (n3 = r3[e2], void 0 === n3) return this;
+            if (n3 === t3 || n3.listener === t3) 0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : (delete r3[e2], r3.removeListener && this.emit("removeListener", e2, n3.listener || t3));
             else if ("function" != typeof n3) {
-              for (o2 = -1, d2 = n3.length - 1; 0 <= d2; d2--)
-                if (n3[d2] === t3 || n3[d2].listener === t3) {
-                  s2 = n3[d2].listener, o2 = d2;
-                  break;
-                }
-              if (0 > o2)
-                return this;
+              for (o2 = -1, d2 = n3.length - 1; 0 <= d2; d2--) if (n3[d2] === t3 || n3[d2].listener === t3) {
+                s2 = n3[d2].listener, o2 = d2;
+                break;
+              }
+              if (0 > o2) return this;
               0 === o2 ? n3.shift() : p(n3, o2), 1 === n3.length && (r3[e2] = n3[0]), void 0 !== r3.removeListener && this.emit("removeListener", e2, s2 || t3);
             }
             return this;
           }, r2.prototype.off = r2.prototype.removeListener, r2.prototype.removeAllListeners = function(e2) {
             var t3, n3, r3;
-            if (n3 = this._events, void 0 === n3)
-              return this;
-            if (void 0 === n3.removeListener)
-              return 0 === arguments.length ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : void 0 !== n3[e2] && (0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : delete n3[e2]), this;
+            if (n3 = this._events, void 0 === n3) return this;
+            if (void 0 === n3.removeListener) return 0 === arguments.length ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : void 0 !== n3[e2] && (0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : delete n3[e2]), this;
             if (0 === arguments.length) {
               var a2, o2 = Object.keys(n3);
-              for (r3 = 0; r3 < o2.length; ++r3)
-                a2 = o2[r3], "removeListener" !== a2 && this.removeAllListeners(a2);
+              for (r3 = 0; r3 < o2.length; ++r3) a2 = o2[r3], "removeListener" !== a2 && this.removeAllListeners(a2);
               return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
             }
-            if (t3 = n3[e2], "function" == typeof t3)
-              this.removeListener(e2, t3);
-            else if (void 0 !== t3)
-              for (r3 = t3.length - 1; 0 <= r3; r3--)
-                this.removeListener(e2, t3[r3]);
+            if (t3 = n3[e2], "function" == typeof t3) this.removeListener(e2, t3);
+            else if (void 0 !== t3) for (r3 = t3.length - 1; 0 <= r3; r3--) this.removeListener(e2, t3[r3]);
             return this;
           }, r2.prototype.listeners = function(e2) {
             return l(this, e2, true);
@@ -1183,32 +1004,25 @@ var wp;
           };
         }, {}], 8: [function(e, t2) {
           t2.exports = function() {
-            if ("undefined" == typeof globalThis)
-              return null;
+            if ("undefined" == typeof globalThis) return null;
             var e2 = { RTCPeerConnection: globalThis.RTCPeerConnection || globalThis.mozRTCPeerConnection || globalThis.webkitRTCPeerConnection, RTCSessionDescription: globalThis.RTCSessionDescription || globalThis.mozRTCSessionDescription || globalThis.webkitRTCSessionDescription, RTCIceCandidate: globalThis.RTCIceCandidate || globalThis.mozRTCIceCandidate || globalThis.webkitRTCIceCandidate };
             return e2.RTCPeerConnection ? e2 : null;
           };
         }, {}], 9: [function(e, a, o) {
           o.read = function(t2, n2, a2, o2, l) {
             var c, u, p = 8 * l - o2 - 1, f = (1 << p) - 1, g = f >> 1, _ = -7, h = a2 ? l - 1 : 0, b = a2 ? -1 : 1, d = t2[n2 + h];
-            for (h += b, c = d & (1 << -_) - 1, d >>= -_, _ += p; 0 < _; c = 256 * c + t2[n2 + h], h += b, _ -= 8)
-              ;
-            for (u = c & (1 << -_) - 1, c >>= -_, _ += o2; 0 < _; u = 256 * u + t2[n2 + h], h += b, _ -= 8)
-              ;
-            if (0 === c)
-              c = 1 - g;
+            for (h += b, c = d & (1 << -_) - 1, d >>= -_, _ += p; 0 < _; c = 256 * c + t2[n2 + h], h += b, _ -= 8) ;
+            for (u = c & (1 << -_) - 1, c >>= -_, _ += o2; 0 < _; u = 256 * u + t2[n2 + h], h += b, _ -= 8) ;
+            if (0 === c) c = 1 - g;
             else {
-              if (c === f)
-                return u ? NaN : (d ? -1 : 1) * (1 / 0);
+              if (c === f) return u ? NaN : (d ? -1 : 1) * (1 / 0);
               u += r(2, o2), c -= g;
             }
             return (d ? -1 : 1) * u * r(2, c - o2);
           }, o.write = function(a2, o2, l, u, p, f) {
             var h, b, y, g = Math.LN2, _ = Math.log, C = 8 * f - p - 1, R = (1 << C) - 1, E = R >> 1, w = 23 === p ? r(2, -24) - r(2, -77) : 0, S = u ? 0 : f - 1, T = u ? 1 : -1, d = 0 > o2 || 0 === o2 && 0 > 1 / o2 ? 1 : 0;
-            for (o2 = n(o2), isNaN(o2) || o2 === 1 / 0 ? (b = isNaN(o2) ? 1 : 0, h = R) : (h = t(_(o2) / g), 1 > o2 * (y = r(2, -h)) && (h--, y *= 2), o2 += 1 <= h + E ? w / y : w * r(2, 1 - E), 2 <= o2 * y && (h++, y /= 2), h + E >= R ? (b = 0, h = R) : 1 <= h + E ? (b = (o2 * y - 1) * r(2, p), h += E) : (b = o2 * r(2, E - 1) * r(2, p), h = 0)); 8 <= p; a2[l + S] = 255 & b, S += T, b /= 256, p -= 8)
-              ;
-            for (h = h << p | b, C += p; 0 < C; a2[l + S] = 255 & h, S += T, h /= 256, C -= 8)
-              ;
+            for (o2 = n(o2), isNaN(o2) || o2 === 1 / 0 ? (b = isNaN(o2) ? 1 : 0, h = R) : (h = t(_(o2) / g), 1 > o2 * (y = r(2, -h)) && (h--, y *= 2), o2 += 1 <= h + E ? w / y : w * r(2, 1 - E), 2 <= o2 * y && (h++, y /= 2), h + E >= R ? (b = 0, h = R) : 1 <= h + E ? (b = (o2 * y - 1) * r(2, p), h += E) : (b = o2 * r(2, E - 1) * r(2, p), h = 0)); 8 <= p; a2[l + S] = 255 & b, S += T, b /= 256, p -= 8) ;
+            for (h = h << p | b, C += p; 0 < C; a2[l + S] = 255 & h, S += T, h /= 256, C -= 8) ;
             a2[l + S - T] |= 128 * d;
           };
         }, {}], 10: [function(e, t2) {
@@ -1248,10 +1062,8 @@ var wp;
           t2.exports = function(e2, t3) {
             t3 = t3 || {};
             var n2 = typeof e2;
-            if ("string" == n2 && 0 < e2.length)
-              return a(e2);
-            if ("number" === n2 && isFinite(e2))
-              return t3.long ? i(e2) : o(e2);
+            if ("string" == n2 && 0 < e2.length) return a(e2);
+            if ("number" === n2 && isFinite(e2)) return t3.long ? i(e2) : o(e2);
             throw new Error("val is not a non-empty string or a valid number. val=" + JSON.stringify(e2));
           };
         }, {}], 12: [function(e, t2) {
@@ -1262,10 +1074,8 @@ var wp;
             throw new Error("clearTimeout has not been defined");
           }
           function a(t3) {
-            if (c === setTimeout)
-              return setTimeout(t3, 0);
-            if ((c === n2 || !c) && setTimeout)
-              return c = setTimeout, setTimeout(t3, 0);
+            if (c === setTimeout) return setTimeout(t3, 0);
+            if ((c === n2 || !c) && setTimeout) return c = setTimeout, setTimeout(t3, 0);
             try {
               return c(t3, 0);
             } catch (n3) {
@@ -1277,10 +1087,8 @@ var wp;
             }
           }
           function o(t3) {
-            if (u === clearTimeout)
-              return clearTimeout(t3);
-            if ((u === r2 || !u) && clearTimeout)
-              return u = clearTimeout, clearTimeout(t3);
+            if (u === clearTimeout) return clearTimeout(t3);
+            if ((u === r2 || !u) && clearTimeout) return u = clearTimeout, clearTimeout(t3);
             try {
               return u(t3);
             } catch (n3) {
@@ -1299,8 +1107,7 @@ var wp;
               var e2 = a(i);
               _ = true;
               for (var t3 = g.length; t3; ) {
-                for (f = g, g = []; ++h < t3; )
-                  f && f[h].run();
+                for (f = g, g = []; ++h < t3; ) f && f[h].run();
                 h = -1, t3 = g.length;
               }
               f = null, _ = false, o(e2);
@@ -1327,9 +1134,7 @@ var wp;
           var f, g = [], _ = false, h = -1;
           p.nextTick = function(e2) {
             var t3 = Array(arguments.length - 1);
-            if (1 < arguments.length)
-              for (var n3 = 1; n3 < arguments.length; n3++)
-                t3[n3 - 1] = arguments[n3];
+            if (1 < arguments.length) for (var n3 = 1; n3 < arguments.length; n3++) t3[n3 - 1] = arguments[n3];
             g.push(new s(e2, t3)), 1 !== g.length || _ || a(d);
           }, s.prototype.run = function() {
             this.fun.apply(null, this.array);
@@ -1359,15 +1164,10 @@ var wp;
               "use strict";
               var a = e("safe-buffer").Buffer, o = r2.crypto || r2.msCrypto;
               t2.exports = o && o.getRandomValues ? function(e2, t3) {
-                if (e2 > 4294967295)
-                  throw new RangeError("requested too many random bytes");
+                if (e2 > 4294967295) throw new RangeError("requested too many random bytes");
                 var r3 = a.allocUnsafe(e2);
-                if (0 < e2)
-                  if (65536 < e2)
-                    for (var i = 0; i < e2; i += 65536)
-                      o.getRandomValues(r3.slice(i, i + 65536));
-                  else
-                    o.getRandomValues(r3);
+                if (0 < e2) if (65536 < e2) for (var i = 0; i < e2; i += 65536) o.getRandomValues(r3.slice(i, i + 65536));
+                else o.getRandomValues(r3);
                 return "function" == typeof t3 ? n2.nextTick(function() {
                   t3(null, r3);
                 }) : r3;
@@ -1386,12 +1186,12 @@ var wp;
               return "string" == typeof t3 ? t3 : t3(e3, n3, r4);
             }
             r3 || (r3 = Error);
-            var o2 = function(e3) {
+            var o2 = (function(e3) {
               function t4(t5, n3, r4) {
                 return e3.call(this, a2(t5, n3, r4)) || this;
               }
               return n2(t4, e3), t4;
-            }(r3);
+            })(r3);
             o2.prototype.name = r3.name, o2.prototype.code = e2, s[e2] = o2;
           }
           function a(e2, t3) {
@@ -1419,8 +1219,7 @@ var wp;
             var r3;
             "string" == typeof t3 && o(t3, "not ") ? (r3 = "must not be", t3 = t3.replace(/^not /, "")) : r3 = "must be";
             var s2;
-            if (i(e2, " argument"))
-              s2 = "The ".concat(e2, " ").concat(r3, " ").concat(a(t3, "type"));
+            if (i(e2, " argument")) s2 = "The ".concat(e2, " ").concat(r3, " ").concat(a(t3, "type"));
             else {
               var l = d(e2, ".") ? "property" : "argument";
               s2 = 'The "'.concat(e2, '" ').concat(l, " ").concat(r3, " ").concat(a(t3, "type"));
@@ -1448,15 +1247,13 @@ var wp;
               }
               var i = Object.keys || function(e2) {
                 var t3 = [];
-                for (var n3 in e2)
-                  t3.push(n3);
+                for (var n3 in e2) t3.push(n3);
                 return t3;
               };
               t2.exports = r2;
               var d = e("./_stream_readable"), s = e("./_stream_writable");
               e("inherits")(r2, d);
-              for (var l, c = i(s.prototype), u = 0; u < c.length; u++)
-                l = c[u], r2.prototype[l] || (r2.prototype[l] = s.prototype[l]);
+              for (var l, c = i(s.prototype), u = 0; u < c.length; u++) l = c[u], r2.prototype[l] || (r2.prototype[l] = s.prototype[l]);
               Object.defineProperty(r2.prototype, "writableHighWaterMark", { enumerable: false, get: function() {
                 return this._writableState.highWaterMark;
               } }), Object.defineProperty(r2.prototype, "writableBuffer", { enumerable: false, get: function() {
@@ -1497,29 +1294,22 @@ var wp;
                 A = A || e("./_stream_duplex"), t3 = t3 || {}, "boolean" != typeof r3 && (r3 = n3 instanceof A), this.objectMode = !!t3.objectMode, r3 && (this.objectMode = this.objectMode || !!t3.readableObjectMode), this.highWaterMark = H(this, t3, "readableHighWaterMark", r3), this.buffer = new j(), this.length = 0, this.pipes = null, this.pipesCount = 0, this.flowing = null, this.ended = false, this.endEmitted = false, this.reading = false, this.sync = true, this.needReadable = false, this.emittedReadable = false, this.readableListening = false, this.resumeScheduled = false, this.paused = true, this.emitClose = false !== t3.emitClose, this.autoDestroy = !!t3.autoDestroy, this.destroyed = false, this.defaultEncoding = t3.defaultEncoding || "utf8", this.awaitDrain = 0, this.readingMore = false, this.decoder = null, this.encoding = null, t3.encoding && (!F && (F = e("string_decoder/").StringDecoder), this.decoder = new F(t3.encoding), this.encoding = t3.encoding);
               }
               function s(t3) {
-                if (A = A || e("./_stream_duplex"), !(this instanceof s))
-                  return new s(t3);
+                if (A = A || e("./_stream_duplex"), !(this instanceof s)) return new s(t3);
                 var n3 = this instanceof A;
                 this._readableState = new d(t3, this, n3), this.readable = true, t3 && ("function" == typeof t3.read && (this._read = t3.read), "function" == typeof t3.destroy && (this._destroy = t3.destroy)), I.call(this);
               }
               function l(e2, t3, n3, r3, o2) {
                 x("readableAddChunk", t3);
                 var i2 = e2._readableState;
-                if (null === t3)
-                  i2.reading = false, g(e2, i2);
+                if (null === t3) i2.reading = false, g(e2, i2);
                 else {
                   var d2;
-                  if (o2 || (d2 = u(i2, t3)), d2)
-                    X(e2, d2);
-                  else if (!(i2.objectMode || t3 && 0 < t3.length))
-                    r3 || (i2.reading = false, m(e2, i2));
-                  else if ("string" == typeof t3 || i2.objectMode || Object.getPrototypeOf(t3) === P.prototype || (t3 = a(t3)), r3)
-                    i2.endEmitted ? X(e2, new K()) : c(e2, i2, t3, true);
-                  else if (i2.ended)
-                    X(e2, new z());
+                  if (o2 || (d2 = u(i2, t3)), d2) X(e2, d2);
+                  else if (!(i2.objectMode || t3 && 0 < t3.length)) r3 || (i2.reading = false, m(e2, i2));
+                  else if ("string" == typeof t3 || i2.objectMode || Object.getPrototypeOf(t3) === P.prototype || (t3 = a(t3)), r3) i2.endEmitted ? X(e2, new K()) : c(e2, i2, t3, true);
+                  else if (i2.ended) X(e2, new z());
                   else {
-                    if (i2.destroyed)
-                      return false;
+                    if (i2.destroyed) return false;
                     i2.reading = false, i2.decoder && !n3 ? (t3 = i2.decoder.write(t3), i2.objectMode || 0 !== t3.length ? c(e2, i2, t3, false) : m(e2, i2)) : c(e2, i2, t3, false);
                   }
                 }
@@ -1561,8 +1351,7 @@ var wp;
               function b(e2, t3) {
                 for (; !t3.reading && !t3.ended && (t3.length < t3.highWaterMark || t3.flowing && 0 === t3.length); ) {
                   var n3 = t3.length;
-                  if (x("maybeReadMore read 0"), e2.read(0), n3 === t3.length)
-                    break;
+                  if (x("maybeReadMore read 0"), e2.read(0), n3 === t3.length) break;
                 }
                 t3.readingMore = false;
               }
@@ -1587,12 +1376,10 @@ var wp;
               }
               function S(e2) {
                 var t3 = e2._readableState;
-                for (x("flow", t3.flowing); t3.flowing && null !== e2.read(); )
-                  ;
+                for (x("flow", t3.flowing); t3.flowing && null !== e2.read(); ) ;
               }
               function T(e2, t3) {
-                if (0 === t3.length)
-                  return null;
+                if (0 === t3.length) return null;
                 var n3;
                 return t3.objectMode ? n3 = t3.buffer.shift() : !e2 || e2 >= t3.length ? (n3 = t3.decoder ? t3.buffer.join("") : 1 === t3.buffer.length ? t3.buffer.first() : t3.buffer.concat(t3.length), t3.buffer.clear()) : n3 = t3.buffer.consume(e2, t3.decoder), n3;
               }
@@ -1607,9 +1394,7 @@ var wp;
                 }
               }
               function L(e2, t3) {
-                for (var n3 = 0, r3 = e2.length; n3 < r3; n3++)
-                  if (e2[n3] === t3)
-                    return n3;
+                for (var n3 = 0, r3 = e2.length; n3 < r3; n3++) if (e2[n3] === t3) return n3;
                 return -1;
               }
               t2.exports = s;
@@ -1641,17 +1426,14 @@ var wp;
                 F || (F = e("string_decoder/").StringDecoder);
                 var n3 = new F(t3);
                 this._readableState.decoder = n3, this._readableState.encoding = this._readableState.decoder.encoding;
-                for (var r3 = this._readableState.buffer.head, a2 = ""; null !== r3; )
-                  a2 += n3.write(r3.data), r3 = r3.next;
+                for (var r3 = this._readableState.buffer.head, a2 = ""; null !== r3; ) a2 += n3.write(r3.data), r3 = r3.next;
                 return this._readableState.buffer.clear(), "" !== a2 && this._readableState.buffer.push(a2), this._readableState.length = a2.length, this;
               };
               s.prototype.read = function(e2) {
                 x("read", e2), e2 = parseInt(e2, 10);
                 var t3 = this._readableState, r3 = e2;
-                if (0 !== e2 && (t3.emittedReadable = false), 0 === e2 && t3.needReadable && ((0 === t3.highWaterMark ? 0 < t3.length : t3.length >= t3.highWaterMark) || t3.ended))
-                  return x("read: emitReadable", t3.length, t3.ended), 0 === t3.length && t3.ended ? v(this) : _(this), null;
-                if (e2 = f(e2, t3), 0 === e2 && t3.ended)
-                  return 0 === t3.length && v(this), null;
+                if (0 !== e2 && (t3.emittedReadable = false), 0 === e2 && t3.needReadable && ((0 === t3.highWaterMark ? 0 < t3.length : t3.length >= t3.highWaterMark) || t3.ended)) return x("read: emitReadable", t3.length, t3.ended), 0 === t3.length && t3.ended ? v(this) : _(this), null;
+                if (e2 = f(e2, t3), 0 === e2 && t3.ended) return 0 === t3.length && v(this), null;
                 var a2 = t3.needReadable;
                 x("need readable", a2), (0 === t3.length || t3.length - e2 < t3.highWaterMark) && (a2 = true, x("length less than watermark", a2)), t3.ended || t3.reading ? (a2 = false, x("reading or ended", a2)) : a2 && (x("do read"), t3.reading = true, t3.sync = true, 0 === t3.length && (t3.needReadable = true), this._read(t3.highWaterMark), t3.sync = false, !t3.reading && (e2 = f(r3, t3)));
                 var o2;
@@ -1705,15 +1487,12 @@ var wp;
                 return p2.on("data", d2), i(e2, "error", s2), e2.once("close", l2), e2.once("finish", c2), e2.emit("pipe", p2), f2.flowing || (x("pipe resume"), p2.resume()), e2;
               }, s.prototype.unpipe = function(e2) {
                 var t3 = this._readableState, n3 = { hasUnpiped: false };
-                if (0 === t3.pipesCount)
-                  return this;
-                if (1 === t3.pipesCount)
-                  return e2 && e2 !== t3.pipes ? this : (e2 || (e2 = t3.pipes), t3.pipes = null, t3.pipesCount = 0, t3.flowing = false, e2 && e2.emit("unpipe", this, n3), this);
+                if (0 === t3.pipesCount) return this;
+                if (1 === t3.pipesCount) return e2 && e2 !== t3.pipes ? this : (e2 || (e2 = t3.pipes), t3.pipes = null, t3.pipesCount = 0, t3.flowing = false, e2 && e2.emit("unpipe", this, n3), this);
                 if (!e2) {
                   var r3 = t3.pipes, a2 = t3.pipesCount;
                   t3.pipes = null, t3.pipesCount = 0, t3.flowing = false;
-                  for (var o2 = 0; o2 < a2; o2++)
-                    r3[o2].emit("unpipe", this, { hasUnpiped: false });
+                  for (var o2 = 0; o2 < a2; o2++) r3[o2].emit("unpipe", this, { hasUnpiped: false });
                   return this;
                 }
                 var d2 = L(t3.pipes, e2);
@@ -1745,14 +1524,12 @@ var wp;
                     var o3 = t3.push(n3);
                     o3 || (a2 = true, e2.pause());
                   }
-                }), e2)
-                  void 0 === this[o2] && "function" == typeof e2[o2] && (this[o2] = function(t4) {
-                    return function() {
-                      return e2[t4].apply(e2, arguments);
-                    };
-                  }(o2));
-                for (var i2 = 0; i2 < $.length; i2++)
-                  e2.on($[i2], this.emit.bind(this, $[i2]));
+                }), e2) void 0 === this[o2] && "function" == typeof e2[o2] && (this[o2] = /* @__PURE__ */ (function(t4) {
+                  return function() {
+                    return e2[t4].apply(e2, arguments);
+                  };
+                })(o2));
+                for (var i2 = 0; i2 < $.length; i2++) e2.on($[i2], this.emit.bind(this, $[i2]));
                 return this._read = function(t4) {
                   x("wrapped _read", t4), a2 && (a2 = false, e2.resume());
                 }, this;
@@ -1779,8 +1556,7 @@ var wp;
             var n3 = this._transformState;
             n3.transforming = false;
             var r3 = n3.writecb;
-            if (null === r3)
-              return this.emit("error", new s());
+            if (null === r3) return this.emit("error", new s());
             n3.writechunk = null, n3.writecb = null, null != t3 && this.push(t3), r3(e2);
             var a2 = this._readableState;
             a2.reading = false, (a2.needReadable || a2.length < a2.highWaterMark) && this._read(a2.highWaterMark);
@@ -1795,12 +1571,9 @@ var wp;
             });
           }
           function o(e2, t3, n3) {
-            if (t3)
-              return e2.emit("error", t3);
-            if (null != n3 && e2.push(n3), e2._writableState.length)
-              throw new c();
-            if (e2._transformState.transforming)
-              throw new l();
+            if (t3) return e2.emit("error", t3);
+            if (null != n3 && e2.push(n3), e2._writableState.length) throw new c();
+            if (e2._transformState.transforming) throw new l();
             return e2.push(null);
           }
           t2.exports = r2;
@@ -1875,8 +1648,7 @@ var wp;
                 if (s2 || (t3.needDrain = true), t3.writing || t3.corked) {
                   var l2 = t3.lastBufferedRequest;
                   t3.lastBufferedRequest = { chunk: r3, encoding: a2, isBuf: n3, callback: o2, next: null }, l2 ? l2.next = t3.lastBufferedRequest : t3.bufferedRequest = t3.lastBufferedRequest, t3.bufferedRequestCount += 1;
-                } else
-                  g(e2, t3, false, d2, r3, a2, o2);
+                } else g(e2, t3, false, d2, r3, a2, o2);
                 return s2;
               }
               function g(e2, t3, n3, r3, a2, o2, i2) {
@@ -1890,10 +1662,8 @@ var wp;
               }
               function m(e2, t3) {
                 var r3 = e2._writableState, a2 = r3.sync, o2 = r3.writecb;
-                if ("function" != typeof o2)
-                  throw new B();
-                if (h(r3), t3)
-                  _(e2, r3, a2, t3, o2);
+                if ("function" != typeof o2) throw new B();
+                if (h(r3), t3) _(e2, r3, a2, t3, o2);
                 else {
                   var i2 = R(r3) || e2.destroyed;
                   i2 || r3.corked || r3.bufferProcessing || !r3.bufferedRequest || C(e2, r3), a2 ? n2.nextTick(b, e2, r3, i2, o2) : b(e2, r3, i2, o2);
@@ -1911,14 +1681,12 @@ var wp;
                 if (e2._writev && n3 && n3.next) {
                   var r3 = t3.bufferedRequestCount, o2 = Array(r3), i2 = t3.corkedRequestsFree;
                   i2.entry = n3;
-                  for (var d2 = 0, s2 = true; n3; )
-                    o2[d2] = n3, n3.isBuf || (s2 = false), n3 = n3.next, d2 += 1;
+                  for (var d2 = 0, s2 = true; n3; ) o2[d2] = n3, n3.isBuf || (s2 = false), n3 = n3.next, d2 += 1;
                   o2.allBuffers = s2, g(e2, t3, true, t3.length, o2, "", i2.finish), t3.pendingcb++, t3.lastBufferedRequest = null, i2.next ? (t3.corkedRequestsFree = i2.next, i2.next = null) : t3.corkedRequestsFree = new a(t3), t3.bufferedRequestCount = 0;
                 } else {
                   for (; n3; ) {
                     var l2 = n3.chunk, c2 = n3.encoding, u2 = n3.callback, p2 = t3.objectMode ? 1 : l2.length;
-                    if (g(e2, t3, false, p2, l2, c2, u2), n3 = n3.next, t3.bufferedRequestCount--, t3.writing)
-                      break;
+                    if (g(e2, t3, false, p2, l2, c2, u2), n3 = n3.next, t3.bufferedRequestCount--, t3.writing) break;
                   }
                   null === n3 && (t3.lastBufferedRequest = null);
                 }
@@ -1960,17 +1728,16 @@ var wp;
               var L = { deprecate: e("util-deprecate") }, A = e("./internal/streams/stream"), x = e("buffer").Buffer, N = r2.Uint8Array || function() {
               }, D = e("./internal/streams/destroy"), I = e("./internal/streams/state"), P = I.getHighWaterMark, M = e("../errors").codes, O = M.ERR_INVALID_ARG_TYPE, F = M.ERR_METHOD_NOT_IMPLEMENTED, B = M.ERR_MULTIPLE_CALLBACK, U = M.ERR_STREAM_CANNOT_PIPE, j = M.ERR_STREAM_DESTROYED, q = M.ERR_STREAM_NULL_VALUES, W = M.ERR_STREAM_WRITE_AFTER_END, H = M.ERR_UNKNOWN_ENCODING, Y = D.errorOrDestroy;
               e("inherits")(l, A), s.prototype.getBuffer = function() {
-                for (var e2 = this.bufferedRequest, t3 = []; e2; )
-                  t3.push(e2), e2 = e2.next;
+                for (var e2 = this.bufferedRequest, t3 = []; e2; ) t3.push(e2), e2 = e2.next;
                 return t3;
-              }, function() {
+              }, (function() {
                 try {
                   Object.defineProperty(s.prototype, "buffer", { get: L.deprecate(function() {
                     return this.getBuffer();
                   }, "_writableState.buffer is deprecated. Use _writableState.getBuffer instead.", "DEP0003") });
                 } catch (e2) {
                 }
-              }();
+              })();
               var V;
               "function" == typeof Symbol && Symbol.hasInstance && "function" == typeof Function.prototype[Symbol.hasInstance] ? (V = Function.prototype[Symbol.hasInstance], Object.defineProperty(l, Symbol.hasInstance, { value: function(e2) {
                 return !!V.call(this, e2) || !(this !== l) && e2 && e2._writableState instanceof s;
@@ -1987,8 +1754,7 @@ var wp;
                 var e2 = this._writableState;
                 e2.corked && (e2.corked--, !e2.writing && !e2.corked && !e2.bufferProcessing && e2.bufferedRequest && C(this, e2));
               }, l.prototype.setDefaultEncoding = function(e2) {
-                if ("string" == typeof e2 && (e2 = e2.toLowerCase()), !(-1 < ["hex", "utf8", "utf-8", "ascii", "binary", "base64", "ucs2", "ucs-2", "utf16le", "utf-16le", "raw"].indexOf((e2 + "").toLowerCase())))
-                  throw new H(e2);
+                if ("string" == typeof e2 && (e2 = e2.toLowerCase()), !(-1 < ["hex", "utf8", "utf-8", "ascii", "binary", "base64", "ucs2", "ucs-2", "utf16le", "utf-16le", "raw"].indexOf((e2 + "").toLowerCase()))) throw new H(e2);
                 return this._writableState.defaultEncoding = e2, this;
               }, Object.defineProperty(l.prototype, "writableBuffer", { enumerable: false, get: function() {
                 return this._writableState && this._writableState.getBuffer();
@@ -2042,23 +1808,18 @@ var wp;
                 return this[h];
               }, next: function() {
                 var e2 = this, t3 = this[p];
-                if (null !== t3)
-                  return Promise.reject(t3);
-                if (this[f])
-                  return Promise.resolve(a(void 0, true));
-                if (this[h].destroyed)
-                  return new Promise(function(t4, r4) {
-                    n2.nextTick(function() {
-                      e2[p] ? r4(e2[p]) : t4(a(void 0, true));
-                    });
+                if (null !== t3) return Promise.reject(t3);
+                if (this[f]) return Promise.resolve(a(void 0, true));
+                if (this[h].destroyed) return new Promise(function(t4, r4) {
+                  n2.nextTick(function() {
+                    e2[p] ? r4(e2[p]) : t4(a(void 0, true));
                   });
+                });
                 var r3, o2 = this[g];
-                if (o2)
-                  r3 = new Promise(d(o2, this));
+                if (o2) r3 = new Promise(d(o2, this));
                 else {
                   var i2 = this[h].read();
-                  if (null !== i2)
-                    return Promise.resolve(a(i2, false));
+                  if (null !== i2) return Promise.resolve(a(i2, false));
                   r3 = new Promise(this[_]);
                 }
                 return this[g] = r3, r3;
@@ -2101,24 +1862,21 @@ var wp;
             return n3;
           }
           function r2(e2) {
-            for (var t3, r3 = 1; r3 < arguments.length; r3++)
-              t3 = null == arguments[r3] ? {} : arguments[r3], r3 % 2 ? n2(Object(t3), true).forEach(function(n3) {
-                a(e2, n3, t3[n3]);
-              }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e2, Object.getOwnPropertyDescriptors(t3)) : n2(Object(t3)).forEach(function(n3) {
-                Object.defineProperty(e2, n3, Object.getOwnPropertyDescriptor(t3, n3));
-              });
+            for (var t3, r3 = 1; r3 < arguments.length; r3++) t3 = null == arguments[r3] ? {} : arguments[r3], r3 % 2 ? n2(Object(t3), true).forEach(function(n3) {
+              a(e2, n3, t3[n3]);
+            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e2, Object.getOwnPropertyDescriptors(t3)) : n2(Object(t3)).forEach(function(n3) {
+              Object.defineProperty(e2, n3, Object.getOwnPropertyDescriptor(t3, n3));
+            });
             return e2;
           }
           function a(e2, t3, n3) {
             return t3 in e2 ? Object.defineProperty(e2, t3, { value: n3, enumerable: true, configurable: true, writable: true }) : e2[t3] = n3, e2;
           }
           function o(e2, t3) {
-            if (!(e2 instanceof t3))
-              throw new TypeError("Cannot call a class as a function");
+            if (!(e2 instanceof t3)) throw new TypeError("Cannot call a class as a function");
           }
           function i(e2, t3) {
-            for (var n3, r3 = 0; r3 < t3.length; r3++)
-              n3 = t3[r3], n3.enumerable = n3.enumerable || false, n3.configurable = true, "value" in n3 && (n3.writable = true), Object.defineProperty(e2, n3.key, n3);
+            for (var n3, r3 = 0; r3 < t3.length; r3++) n3 = t3[r3], n3.enumerable = n3.enumerable || false, n3.configurable = true, "value" in n3 && (n3.writable = true), Object.defineProperty(e2, n3.key, n3);
           }
           function d(e2, t3, n3) {
             return t3 && i(e2.prototype, t3), n3 && i(e2, n3), e2;
@@ -2127,7 +1885,7 @@ var wp;
             u.prototype.copy.call(e2, t3, n3);
           }
           var l = e("buffer"), u = l.Buffer, p = e("util"), f = p.inspect, g = f && f.custom || "inspect";
-          t2.exports = function() {
+          t2.exports = (function() {
             function e2() {
               o(this, e2), this.head = null, this.tail = null, this.length = 0;
             }
@@ -2145,16 +1903,12 @@ var wp;
             } }, { key: "clear", value: function() {
               this.head = this.tail = null, this.length = 0;
             } }, { key: "join", value: function(e3) {
-              if (0 === this.length)
-                return "";
-              for (var t3 = this.head, n3 = "" + t3.data; t3 = t3.next; )
-                n3 += e3 + t3.data;
+              if (0 === this.length) return "";
+              for (var t3 = this.head, n3 = "" + t3.data; t3 = t3.next; ) n3 += e3 + t3.data;
               return n3;
             } }, { key: "concat", value: function(e3) {
-              if (0 === this.length)
-                return u.alloc(0);
-              for (var t3 = u.allocUnsafe(e3 >>> 0), n3 = this.head, r3 = 0; n3; )
-                s(n3.data, t3, r3), r3 += n3.data.length, n3 = n3.next;
+              if (0 === this.length) return u.alloc(0);
+              for (var t3 = u.allocUnsafe(e3 >>> 0), n3 = this.head, r3 = 0; n3; ) s(n3.data, t3, r3), r3 += n3.data.length, n3 = n3.next;
               return t3;
             } }, { key: "consume", value: function(e3, t3) {
               var n3;
@@ -2186,7 +1940,7 @@ var wp;
             } }, { key: g, value: function(e3, t3) {
               return f(this, r2({}, t3, { depth: 0, customInspect: false }));
             } }]), e2;
-          }();
+          })();
         }, { buffer: 3, util: 2 }], 23: [function(e, t2) {
           (function(e2) {
             (function() {
@@ -2220,8 +1974,7 @@ var wp;
             return function() {
               if (!t3) {
                 t3 = true;
-                for (var n3 = arguments.length, r3 = Array(n3), a2 = 0; a2 < n3; a2++)
-                  r3[a2] = arguments[a2];
+                for (var n3 = arguments.length, r3 = Array(n3), a2 = 0; a2 < n3; a2++) r3[a2] = arguments[a2];
                 e2.apply(this, r3);
               }
             };
@@ -2232,8 +1985,7 @@ var wp;
             return e2.setHeader && "function" == typeof e2.abort;
           }
           function o(e2, t3, d) {
-            if ("function" == typeof t3)
-              return o(e2, null, t3);
+            if ("function" == typeof t3) return o(e2, null, t3);
             t3 || (t3 = {}), d = n2(d || r2);
             var s = t3.readable || false !== t3.readable && e2.readable, l = t3.writable || false !== t3.writable && e2.writable, c = function() {
               e2.writable || p();
@@ -2268,8 +2020,7 @@ var wp;
             };
           }
           function r2(e2) {
-            if (e2)
-              throw e2;
+            if (e2) throw e2;
           }
           function a(e2) {
             return e2.setHeader && "function" == typeof e2.abort;
@@ -2284,8 +2035,7 @@ var wp;
             });
             var s2 = false;
             return function(e2) {
-              if (!d2)
-                return s2 ? void 0 : (s2 = true, a(t3) ? t3.abort() : "function" == typeof t3.destroy ? t3.destroy() : void i2(e2 || new p("pipe")));
+              if (!d2) return s2 ? void 0 : (s2 = true, a(t3) ? t3.abort() : "function" == typeof t3.destroy ? t3.destroy() : void i2(e2 || new p("pipe")));
             };
           }
           function i(e2) {
@@ -2299,11 +2049,9 @@ var wp;
           }
           var l, c = e("../../../errors").codes, u = c.ERR_MISSING_ARGS, p = c.ERR_STREAM_DESTROYED;
           t2.exports = function() {
-            for (var e2 = arguments.length, t3 = Array(e2), n3 = 0; n3 < e2; n3++)
-              t3[n3] = arguments[n3];
+            for (var e2 = arguments.length, t3 = Array(e2), n3 = 0; n3 < e2; n3++) t3[n3] = arguments[n3];
             var r3 = s(t3);
-            if (Array.isArray(t3[0]) && (t3 = t3[0]), 2 > t3.length)
-              throw new u("streams");
+            if (Array.isArray(t3[0]) && (t3 = t3[0]), 2 > t3.length) throw new u("streams");
             var a2, l2 = t3.map(function(e3, n4) {
               var d2 = n4 < t3.length - 1;
               return o(e3, d2, 0 < n4, function(e4) {
@@ -2335,63 +2083,54 @@ var wp;
           n2 = t2.exports = e("./lib/_stream_readable.js"), n2.Stream = n2, n2.Readable = n2, n2.Writable = e("./lib/_stream_writable.js"), n2.Duplex = e("./lib/_stream_duplex.js"), n2.Transform = e("./lib/_stream_transform.js"), n2.PassThrough = e("./lib/_stream_passthrough.js"), n2.finished = e("./lib/internal/streams/end-of-stream.js"), n2.pipeline = e("./lib/internal/streams/pipeline.js");
         }, { "./lib/_stream_duplex.js": 16, "./lib/_stream_passthrough.js": 17, "./lib/_stream_readable.js": 18, "./lib/_stream_transform.js": 19, "./lib/_stream_writable.js": 20, "./lib/internal/streams/end-of-stream.js": 24, "./lib/internal/streams/pipeline.js": 26 }], 30: [function(e, t2, n2) {
           function r2(e2, t3) {
-            for (var n3 in e2)
-              t3[n3] = e2[n3];
+            for (var n3 in e2) t3[n3] = e2[n3];
           }
           function a(e2, t3, n3) {
             return i(e2, t3, n3);
           }
           var o = e("buffer"), i = o.Buffer;
           i.from && i.alloc && i.allocUnsafe && i.allocUnsafeSlow ? t2.exports = o : (r2(o, n2), n2.Buffer = a), a.prototype = Object.create(i.prototype), r2(i, a), a.from = function(e2, t3, n3) {
-            if ("number" == typeof e2)
-              throw new TypeError("Argument must not be a number");
+            if ("number" == typeof e2) throw new TypeError("Argument must not be a number");
             return i(e2, t3, n3);
           }, a.alloc = function(e2, t3, n3) {
-            if ("number" != typeof e2)
-              throw new TypeError("Argument must be a number");
+            if ("number" != typeof e2) throw new TypeError("Argument must be a number");
             var r3 = i(e2);
             return void 0 === t3 ? r3.fill(0) : "string" == typeof n3 ? r3.fill(t3, n3) : r3.fill(t3), r3;
           }, a.allocUnsafe = function(e2) {
-            if ("number" != typeof e2)
-              throw new TypeError("Argument must be a number");
+            if ("number" != typeof e2) throw new TypeError("Argument must be a number");
             return i(e2);
           }, a.allocUnsafeSlow = function(e2) {
-            if ("number" != typeof e2)
-              throw new TypeError("Argument must be a number");
+            if ("number" != typeof e2) throw new TypeError("Argument must be a number");
             return o.SlowBuffer(e2);
           };
         }, { buffer: 3 }], 31: [function(e, t2, n2) {
           "use strict";
           function r2(e2) {
-            if (!e2)
-              return "utf8";
-            for (var t3; ; )
-              switch (e2) {
-                case "utf8":
-                case "utf-8":
-                  return "utf8";
-                case "ucs2":
-                case "ucs-2":
-                case "utf16le":
-                case "utf-16le":
-                  return "utf16le";
-                case "latin1":
-                case "binary":
-                  return "latin1";
-                case "base64":
-                case "ascii":
-                case "hex":
-                  return e2;
-                default:
-                  if (t3)
-                    return;
-                  e2 = ("" + e2).toLowerCase(), t3 = true;
-              }
+            if (!e2) return "utf8";
+            for (var t3; ; ) switch (e2) {
+              case "utf8":
+              case "utf-8":
+                return "utf8";
+              case "ucs2":
+              case "ucs-2":
+              case "utf16le":
+              case "utf-16le":
+                return "utf16le";
+              case "latin1":
+              case "binary":
+                return "latin1";
+              case "base64":
+              case "ascii":
+              case "hex":
+                return e2;
+              default:
+                if (t3) return;
+                e2 = ("" + e2).toLowerCase(), t3 = true;
+            }
           }
           function a(e2) {
             var t3 = r2(e2);
-            if ("string" != typeof t3 && (m.isEncoding === b || !b(e2)))
-              throw new Error("Unknown encoding: " + e2);
+            if ("string" != typeof t3 && (m.isEncoding === b || !b(e2))) throw new Error("Unknown encoding: " + e2);
             return t3 || e2;
           }
           function o(e2) {
@@ -2413,25 +2152,20 @@ var wp;
             this.lastNeed = 0, this.lastTotal = 0, this.lastChar = m.allocUnsafe(t3);
           }
           function d(e2) {
-            if (127 >= e2)
-              return 0;
+            if (127 >= e2) return 0;
             return 6 == e2 >> 5 ? 2 : 14 == e2 >> 4 ? 3 : 30 == e2 >> 3 ? 4 : 2 == e2 >> 6 ? -1 : -2;
           }
           function s(e2, t3, n3) {
             var r3 = t3.length - 1;
-            if (r3 < n3)
-              return 0;
+            if (r3 < n3) return 0;
             var a2 = d(t3[r3]);
             return 0 <= a2 ? (0 < a2 && (e2.lastNeed = a2 - 1), a2) : --r3 < n3 || -2 === a2 ? 0 : (a2 = d(t3[r3]), 0 <= a2) ? (0 < a2 && (e2.lastNeed = a2 - 2), a2) : --r3 < n3 || -2 === a2 ? 0 : (a2 = d(t3[r3]), 0 <= a2 ? (0 < a2 && (2 === a2 ? a2 = 0 : e2.lastNeed = a2 - 3), a2) : 0);
           }
           function l(e2, t3) {
-            if (128 != (192 & t3[0]))
-              return e2.lastNeed = 0, "\uFFFD";
+            if (128 != (192 & t3[0])) return e2.lastNeed = 0, "\uFFFD";
             if (1 < e2.lastNeed && 1 < t3.length) {
-              if (128 != (192 & t3[1]))
-                return e2.lastNeed = 1, "\uFFFD";
-              if (2 < e2.lastNeed && 2 < t3.length && 128 != (192 & t3[2]))
-                return e2.lastNeed = 2, "\uFFFD";
+              if (128 != (192 & t3[1])) return e2.lastNeed = 1, "\uFFFD";
+              if (2 < e2.lastNeed && 2 < t3.length && 128 != (192 & t3[2])) return e2.lastNeed = 2, "\uFFFD";
             }
           }
           function c(e2) {
@@ -2443,8 +2177,7 @@ var wp;
               var n3 = e2.toString("utf16le", t3);
               if (n3) {
                 var r3 = n3.charCodeAt(n3.length - 1);
-                if (55296 <= r3 && 56319 >= r3)
-                  return this.lastNeed = 2, this.lastTotal = 4, this.lastChar[0] = e2[e2.length - 2], this.lastChar[1] = e2[e2.length - 1], n3.slice(0, -1);
+                if (55296 <= r3 && 56319 >= r3) return this.lastNeed = 2, this.lastTotal = 4, this.lastChar[0] = e2[e2.length - 2], this.lastChar[1] = e2[e2.length - 1], n3.slice(0, -1);
               }
               return n3;
             }
@@ -2491,23 +2224,19 @@ var wp;
             }
           };
           n2.StringDecoder = o, o.prototype.write = function(e2) {
-            if (0 === e2.length)
-              return "";
+            if (0 === e2.length) return "";
             var t3, n3;
             if (this.lastNeed) {
-              if (t3 = this.fillLast(e2), void 0 === t3)
-                return "";
+              if (t3 = this.fillLast(e2), void 0 === t3) return "";
               n3 = this.lastNeed, this.lastNeed = 0;
-            } else
-              n3 = 0;
+            } else n3 = 0;
             return n3 < e2.length ? t3 ? t3 + this.text(e2, n3) : this.text(e2, n3) : t3 || "";
           }, o.prototype.end = function(e2) {
             var t3 = e2 && e2.length ? this.write(e2) : "";
             return this.lastNeed ? t3 + "\uFFFD" : t3;
           }, o.prototype.text = function(e2, t3) {
             var n3 = s(this, e2, t3);
-            if (!this.lastNeed)
-              return e2.toString("utf8", t3);
+            if (!this.lastNeed) return e2.toString("utf8", t3);
             this.lastTotal = n3;
             var r3 = e2.length - (n3 - this.lastNeed);
             return e2.copy(this.lastChar, 0, r3), e2.toString("utf8", t3, r3);
@@ -2519,8 +2248,7 @@ var wp;
             (function() {
               function n2(t3) {
                 try {
-                  if (!e2.localStorage)
-                    return false;
+                  if (!e2.localStorage) return false;
                 } catch (e3) {
                   return false;
                 }
@@ -2530,16 +2258,13 @@ var wp;
               t2.exports = function(e3, t3) {
                 function r2() {
                   if (!a) {
-                    if (n2("throwDeprecation"))
-                      throw new Error(t3);
-                    else
-                      n2("traceDeprecation") ? console.trace(t3) : console.warn(t3);
+                    if (n2("throwDeprecation")) throw new Error(t3);
+                    else n2("traceDeprecation") ? console.trace(t3) : console.warn(t3);
                     a = true;
                   }
                   return e3.apply(this, arguments);
                 }
-                if (n2("noDeprecation"))
-                  return e3;
+                if (n2("noDeprecation")) return e3;
                 var a = false;
                 return r2;
               };
@@ -2555,11 +2280,8 @@ var wp;
           const a = e("debug")("simple-peer"), o = e("get-browser-rtc"), i = e("randombytes"), d = e("readable-stream"), s = e("queue-microtask"), l = e("err-code"), { Buffer: c } = e("buffer"), u = 65536;
           class p extends d.Duplex {
             constructor(e2) {
-              if (e2 = Object.assign({ allowHalfOpen: false }, e2), super(e2), this._id = i(4).toString("hex").slice(0, 7), this._debug("new peer %o", e2), this.channelName = e2.initiator ? e2.channelName || i(20).toString("hex") : null, this.initiator = e2.initiator || false, this.channelConfig = e2.channelConfig || p.channelConfig, this.channelNegotiated = this.channelConfig.negotiated, this.config = Object.assign({}, p.config, e2.config), this.offerOptions = e2.offerOptions || {}, this.answerOptions = e2.answerOptions || {}, this.sdpTransform = e2.sdpTransform || ((e3) => e3), this.streams = e2.streams || (e2.stream ? [e2.stream] : []), this.trickle = void 0 === e2.trickle || e2.trickle, this.allowHalfTrickle = void 0 !== e2.allowHalfTrickle && e2.allowHalfTrickle, this.iceCompleteTimeout = e2.iceCompleteTimeout || 5e3, this.destroyed = false, this.destroying = false, this._connected = false, this.remoteAddress = void 0, this.remoteFamily = void 0, this.remotePort = void 0, this.localAddress = void 0, this.localFamily = void 0, this.localPort = void 0, this._wrtc = e2.wrtc && "object" == typeof e2.wrtc ? e2.wrtc : o(), !this._wrtc)
-                if ("undefined" == typeof window)
-                  throw l(new Error("No WebRTC support: Specify `opts.wrtc` option in this environment"), "ERR_WEBRTC_SUPPORT");
-                else
-                  throw l(new Error("No WebRTC support: Not a supported browser"), "ERR_WEBRTC_SUPPORT");
+              if (e2 = Object.assign({ allowHalfOpen: false }, e2), super(e2), this._id = i(4).toString("hex").slice(0, 7), this._debug("new peer %o", e2), this.channelName = e2.initiator ? e2.channelName || i(20).toString("hex") : null, this.initiator = e2.initiator || false, this.channelConfig = e2.channelConfig || p.channelConfig, this.channelNegotiated = this.channelConfig.negotiated, this.config = Object.assign({}, p.config, e2.config), this.offerOptions = e2.offerOptions || {}, this.answerOptions = e2.answerOptions || {}, this.sdpTransform = e2.sdpTransform || ((e3) => e3), this.streams = e2.streams || (e2.stream ? [e2.stream] : []), this.trickle = void 0 === e2.trickle || e2.trickle, this.allowHalfTrickle = void 0 !== e2.allowHalfTrickle && e2.allowHalfTrickle, this.iceCompleteTimeout = e2.iceCompleteTimeout || 5e3, this.destroyed = false, this.destroying = false, this._connected = false, this.remoteAddress = void 0, this.remoteFamily = void 0, this.remotePort = void 0, this.localAddress = void 0, this.localFamily = void 0, this.localPort = void 0, this._wrtc = e2.wrtc && "object" == typeof e2.wrtc ? e2.wrtc : o(), !this._wrtc) if ("undefined" == typeof window) throw l(new Error("No WebRTC support: Specify `opts.wrtc` option in this environment"), "ERR_WEBRTC_SUPPORT");
+              else throw l(new Error("No WebRTC support: Not a supported browser"), "ERR_WEBRTC_SUPPORT");
               this._pcReady = false, this._channelReady = false, this._iceComplete = false, this._iceCompleteTimer = null, this._channel = null, this._pendingCandidates = [], this._isNegotiating = false, this._firstNegotiation = true, this._batchedNegotiation = false, this._queuedNegotiation = false, this._sendersAwaitingStable = [], this._senderMap = /* @__PURE__ */ new Map(), this._closingInterval = null, this._remoteTracks = [], this._remoteStreams = [], this._chunk = null, this._cb = null, this._interval = null;
               try {
                 this._pc = new this._wrtc.RTCPeerConnection(this.config);
@@ -2599,14 +2321,12 @@ var wp;
             }
             signal(e2) {
               if (!this.destroying) {
-                if (this.destroyed)
-                  throw l(new Error("cannot signal after peer is destroyed"), "ERR_DESTROYED");
-                if ("string" == typeof e2)
-                  try {
-                    e2 = JSON.parse(e2);
-                  } catch (t3) {
-                    e2 = {};
-                  }
+                if (this.destroyed) throw l(new Error("cannot signal after peer is destroyed"), "ERR_DESTROYED");
+                if ("string" == typeof e2) try {
+                  e2 = JSON.parse(e2);
+                } catch (t3) {
+                  e2 = {};
+                }
                 this._debug("signal()"), e2.renegotiate && this.initiator && (this._debug("got request to renegotiate"), this._needsNegotiation()), e2.transceiverRequest && this.initiator && (this._debug("got request for transceiver"), this.addTransceiver(e2.transceiverRequest.kind, e2.transceiverRequest.init)), e2.candidate && (this._pc.remoteDescription && this._pc.remoteDescription.type ? this._addIceCandidate(e2.candidate) : this._pendingCandidates.push(e2.candidate)), e2.sdp && this._pc.setRemoteDescription(new this._wrtc.RTCSessionDescription(e2)).then(() => {
                   this.destroyed || (this._pendingCandidates.forEach((e3) => {
                     this._addIceCandidate(e3);
@@ -2624,69 +2344,53 @@ var wp;
             }
             send(e2) {
               if (!this.destroying) {
-                if (this.destroyed)
-                  throw l(new Error("cannot send after peer is destroyed"), "ERR_DESTROYED");
+                if (this.destroyed) throw l(new Error("cannot send after peer is destroyed"), "ERR_DESTROYED");
                 this._channel.send(e2);
               }
             }
             addTransceiver(e2, t3) {
               if (!this.destroying) {
-                if (this.destroyed)
-                  throw l(new Error("cannot addTransceiver after peer is destroyed"), "ERR_DESTROYED");
-                if (this._debug("addTransceiver()"), this.initiator)
-                  try {
-                    this._pc.addTransceiver(e2, t3), this._needsNegotiation();
-                  } catch (e3) {
-                    this.destroy(l(e3, "ERR_ADD_TRANSCEIVER"));
-                  }
-                else
-                  this.emit("signal", { type: "transceiverRequest", transceiverRequest: { kind: e2, init: t3 } });
+                if (this.destroyed) throw l(new Error("cannot addTransceiver after peer is destroyed"), "ERR_DESTROYED");
+                if (this._debug("addTransceiver()"), this.initiator) try {
+                  this._pc.addTransceiver(e2, t3), this._needsNegotiation();
+                } catch (e3) {
+                  this.destroy(l(e3, "ERR_ADD_TRANSCEIVER"));
+                }
+                else this.emit("signal", { type: "transceiverRequest", transceiverRequest: { kind: e2, init: t3 } });
               }
             }
             addStream(e2) {
               if (!this.destroying) {
-                if (this.destroyed)
-                  throw l(new Error("cannot addStream after peer is destroyed"), "ERR_DESTROYED");
+                if (this.destroyed) throw l(new Error("cannot addStream after peer is destroyed"), "ERR_DESTROYED");
                 this._debug("addStream()"), e2.getTracks().forEach((t3) => {
                   this.addTrack(t3, e2);
                 });
               }
             }
             addTrack(e2, t3) {
-              if (this.destroying)
-                return;
-              if (this.destroyed)
-                throw l(new Error("cannot addTrack after peer is destroyed"), "ERR_DESTROYED");
+              if (this.destroying) return;
+              if (this.destroyed) throw l(new Error("cannot addTrack after peer is destroyed"), "ERR_DESTROYED");
               this._debug("addTrack()");
               const n3 = this._senderMap.get(e2) || /* @__PURE__ */ new Map();
               let r3 = n3.get(t3);
-              if (!r3)
-                r3 = this._pc.addTrack(e2, t3), n3.set(t3, r3), this._senderMap.set(e2, n3), this._needsNegotiation();
-              else if (r3.removed)
-                throw l(new Error("Track has been removed. You should enable/disable tracks that you want to re-add."), "ERR_SENDER_REMOVED");
-              else
-                throw l(new Error("Track has already been added to that stream."), "ERR_SENDER_ALREADY_ADDED");
+              if (!r3) r3 = this._pc.addTrack(e2, t3), n3.set(t3, r3), this._senderMap.set(e2, n3), this._needsNegotiation();
+              else if (r3.removed) throw l(new Error("Track has been removed. You should enable/disable tracks that you want to re-add."), "ERR_SENDER_REMOVED");
+              else throw l(new Error("Track has already been added to that stream."), "ERR_SENDER_ALREADY_ADDED");
             }
             replaceTrack(e2, t3, n3) {
-              if (this.destroying)
-                return;
-              if (this.destroyed)
-                throw l(new Error("cannot replaceTrack after peer is destroyed"), "ERR_DESTROYED");
+              if (this.destroying) return;
+              if (this.destroyed) throw l(new Error("cannot replaceTrack after peer is destroyed"), "ERR_DESTROYED");
               this._debug("replaceTrack()");
               const r3 = this._senderMap.get(e2), a2 = r3 ? r3.get(n3) : null;
-              if (!a2)
-                throw l(new Error("Cannot replace track that was never added."), "ERR_TRACK_NOT_ADDED");
+              if (!a2) throw l(new Error("Cannot replace track that was never added."), "ERR_TRACK_NOT_ADDED");
               t3 && this._senderMap.set(t3, r3), null == a2.replaceTrack ? this.destroy(l(new Error("replaceTrack is not supported in this browser"), "ERR_UNSUPPORTED_REPLACETRACK")) : a2.replaceTrack(t3);
             }
             removeTrack(e2, t3) {
-              if (this.destroying)
-                return;
-              if (this.destroyed)
-                throw l(new Error("cannot removeTrack after peer is destroyed"), "ERR_DESTROYED");
+              if (this.destroying) return;
+              if (this.destroyed) throw l(new Error("cannot removeTrack after peer is destroyed"), "ERR_DESTROYED");
               this._debug("removeSender()");
               const n3 = this._senderMap.get(e2), r3 = n3 ? n3.get(t3) : null;
-              if (!r3)
-                throw l(new Error("Cannot remove track that was never added."), "ERR_TRACK_NOT_ADDED");
+              if (!r3) throw l(new Error("Cannot remove track that was never added."), "ERR_TRACK_NOT_ADDED");
               try {
                 r3.removed = true, this._pc.removeTrack(r3);
               } catch (e3) {
@@ -2696,8 +2400,7 @@ var wp;
             }
             removeStream(e2) {
               if (!this.destroying) {
-                if (this.destroyed)
-                  throw l(new Error("cannot removeStream after peer is destroyed"), "ERR_DESTROYED");
+                if (this.destroyed) throw l(new Error("cannot removeStream after peer is destroyed"), "ERR_DESTROYED");
                 this._debug("removeSenders()"), e2.getTracks().forEach((t3) => {
                   this.removeTrack(t3, e2);
                 });
@@ -2710,8 +2413,7 @@ var wp;
             }
             negotiate() {
               if (!this.destroying) {
-                if (this.destroyed)
-                  throw l(new Error("cannot negotiate after peer is destroyed"), "ERR_DESTROYED");
+                if (this.destroyed) throw l(new Error("cannot negotiate after peer is destroyed"), "ERR_DESTROYED");
                 this.initiator ? this._isNegotiating ? (this._queuedNegotiation = true, this._debug("already negotiating, queueing")) : (this._debug("start negotiation"), setTimeout(() => {
                   this._createOffer();
                 }, 0)) : this._isNegotiating ? (this._queuedNegotiation = true, this._debug("already negotiating, queueing")) : (this._debug("requesting negotiation from initiator"), this.emit("signal", { type: "renegotiate", renegotiate: true })), this._isNegotiating = true;
@@ -2741,8 +2443,7 @@ var wp;
               }));
             }
             _setupData(e2) {
-              if (!e2.channel)
-                return this.destroy(l(new Error("Data channel event is missing `channel` property"), "ERR_DATA_CHANNEL"));
+              if (!e2.channel) return this.destroy(l(new Error("Data channel event is missing `channel` property"), "ERR_DATA_CHANNEL"));
               this._channel = e2.channel, this._channel.binaryType = "arraybuffer", "number" == typeof this._channel.bufferedAmountLowThreshold && (this._channel.bufferedAmountLowThreshold = u), this.channelName = this._channel.label, this._channel.onmessage = (e3) => {
                 this._onChannelMessage(e3);
               }, this._channel.onbufferedamountlow = () => {
@@ -2763,8 +2464,7 @@ var wp;
             _read() {
             }
             _write(e2, t3, n3) {
-              if (this.destroyed)
-                return n3(l(new Error("cannot write after peer is destroyed"), "ERR_DATA_CHANNEL"));
+              if (this.destroyed) return n3(l(new Error("cannot write after peer is destroyed"), "ERR_DATA_CHANNEL"));
               if (this._connected) {
                 try {
                   this.send(e2);
@@ -2772,8 +2472,7 @@ var wp;
                   return this.destroy(l(e3, "ERR_DATA_CHANNEL"));
                 }
                 this._channel.bufferedAmount > u ? (this._debug("start backpressure: bufferedAmount %d", this._channel.bufferedAmount), this._cb = n3) : n3(null);
-              } else
-                this._debug("write before connect"), this._chunk = e2, this._cb = n3;
+              } else this._debug("write before connect"), this._chunk = e2, this._cb = n3;
             }
             _onFinish() {
               if (!this.destroyed) {
@@ -2790,8 +2489,7 @@ var wp;
             }
             _createOffer() {
               this.destroyed || this._pc.createOffer(this.offerOptions).then((e2) => {
-                if (this.destroyed)
-                  return;
+                if (this.destroyed) return;
                 this.trickle || this.allowHalfTrickle || (e2.sdp = n2(e2.sdp)), e2.sdp = this.sdpTransform(e2.sdp);
                 const t3 = () => {
                   if (!this.destroyed) {
@@ -2815,8 +2513,7 @@ var wp;
             }
             _createAnswer() {
               this.destroyed || this._pc.createAnswer(this.answerOptions).then((e2) => {
-                if (this.destroyed)
-                  return;
+                if (this.destroyed) return;
                 this.trickle || this.allowHalfTrickle || (e2.sdp = n2(e2.sdp)), e2.sdp = this.sdpTransform(e2.sdp);
                 const t3 = () => {
                   if (!this.destroyed) {
@@ -2837,8 +2534,7 @@ var wp;
               this.destroyed || "failed" === this._pc.connectionState && this.destroy(l(new Error("Connection failed."), "ERR_CONNECTION_FAILURE"));
             }
             _onIceStateChange() {
-              if (this.destroyed)
-                return;
+              if (this.destroyed) return;
               const e2 = this._pc.iceConnectionState, t3 = this._pc.iceGatheringState;
               this._debug("iceStateChange (connection: %s) (gathering: %s)", e2, t3), this.emit("iceStateChange", e2, t3), ("connected" === e2 || "completed" === e2) && (this._pcReady = true, this._maybeReady()), "failed" === e2 && this.destroy(l(new Error("Ice connection failed."), "ERR_ICE_CONNECTION_FAILURE")), "closed" === e2 && this.destroy(l(new Error("Ice connection closed."), "ERR_ICE_CONNECTION_CLOSED"));
             }
@@ -2852,8 +2548,7 @@ var wp;
                   r3.push(t3(e3));
                 }), e2(null, r3);
               }, (t4) => e2(t4)) : 0 < this._pc.getStats.length ? this._pc.getStats((n3) => {
-                if (this.destroyed)
-                  return;
+                if (this.destroyed) return;
                 const r3 = [];
                 n3.result().forEach((e3) => {
                   const n4 = {};
@@ -2864,13 +2559,11 @@ var wp;
               }, (t4) => e2(t4)) : e2(null, []);
             }
             _maybeReady() {
-              if (this._debug("maybeReady pc %s channel %s", this._pcReady, this._channelReady), this._connected || this._connecting || !this._pcReady || !this._channelReady)
-                return;
+              if (this._debug("maybeReady pc %s channel %s", this._pcReady, this._channelReady), this._connected || this._connecting || !this._pcReady || !this._channelReady) return;
               this._connecting = true;
               const e2 = () => {
                 this.destroyed || this.getStats((t3, n3) => {
-                  if (this.destroyed)
-                    return;
+                  if (this.destroyed) return;
                   t3 && (n3 = []);
                   const r3 = {}, a2 = {}, o2 = {};
                   let i2 = false;
@@ -2886,8 +2579,7 @@ var wp;
                   };
                   if (n3.forEach((e3) => {
                     "transport" === e3.type && e3.selectedCandidatePairId && d2(o2[e3.selectedCandidatePairId]), ("googCandidatePair" === e3.type && "true" === e3.googActiveConnection || ("candidatepair" === e3.type || "candidate-pair" === e3.type) && e3.selected) && d2(e3);
-                  }), !i2 && (!Object.keys(o2).length || Object.keys(a2).length))
-                    return void setTimeout(e2, 100);
+                  }), !i2 && (!Object.keys(o2).length || Object.keys(a2).length)) return void setTimeout(e2, 100);
                   if (this._connecting = false, this._connected = true, this._chunk) {
                     try {
                       this.send(this._chunk);
@@ -2915,8 +2607,7 @@ var wp;
               this.destroyed || (e2.candidate && this.trickle ? this.emit("signal", { type: "candidate", candidate: { candidate: e2.candidate.candidate, sdpMLineIndex: e2.candidate.sdpMLineIndex, sdpMid: e2.candidate.sdpMid } }) : !e2.candidate && !this._iceComplete && (this._iceComplete = true, this.emit("_iceComplete")), e2.candidate && this._startIceCompleteTimeout());
             }
             _onChannelMessage(e2) {
-              if (this.destroyed)
-                return;
+              if (this.destroyed) return;
               let t3 = e2.data;
               t3 instanceof ArrayBuffer && (t3 = c.from(t3)), this.push(t3);
             }
@@ -2951,9 +2642,16 @@ var wp;
     }
   });
 
+  // wordpress-external:@wordpress/url
+  var require_url = __commonJS({
+    "wordpress-external:@wordpress/url"(exports, module) {
+      module.exports = window.wp.url;
+    }
+  });
+
   // packages/sync/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     CRDT_RECORD_MAP_KEY: () => CRDT_RECORD_MAP_KEY,
     connectIndexDb: () => connectIndexDb,
     createSyncProvider: () => createSyncProvider,
@@ -3199,6 +2897,7 @@ var wp;
       case ArrayBuffer:
         a = new Uint8Array(a);
         b = new Uint8Array(b);
+      // eslint-disable-next-line no-fallthrough
       case Uint8Array: {
         if (a.byteLength !== b.byteLength) {
           return false;
@@ -3950,7 +3649,7 @@ var wp;
   // node_modules/lib0/random.js
   var rand = Math.random;
   var uint32 = () => getRandomValues(new Uint32Array(1))[0];
-  var uuidv4Template = [1e7] + -1e3 + -4e3 + -8e3 + -1e11;
+  var uuidv4Template = "10000000-1000-4000-8000" + -1e11;
   var uuidv4 = () => uuidv4Template.replace(
     /[018]/g,
     /** @param {number} c */
@@ -7435,8 +7134,7 @@ var wp;
         ] || null,
         /** @type {ContentFormat} */
         currPos.right.content.value
-      ))
-        ;
+      )) ;
       else {
         break;
       }
@@ -7490,41 +7188,40 @@ var wp;
     const ownClientId = doc2.clientID;
     minimizeAttributeChanges(currPos, attributes);
     const negatedAttributes = insertAttributes(transaction, parent, currPos, attributes);
-    iterationLoop:
-      while (currPos.right !== null && (length3 > 0 || negatedAttributes.size > 0 && (currPos.right.deleted || currPos.right.content.constructor === ContentFormat))) {
-        if (!currPos.right.deleted) {
-          switch (currPos.right.content.constructor) {
-            case ContentFormat: {
-              const { key, value } = (
-                /** @type {ContentFormat} */
-                currPos.right.content
-              );
-              const attr = attributes[key];
-              if (attr !== void 0) {
-                if (equalAttrs(attr, value)) {
-                  negatedAttributes.delete(key);
-                } else {
-                  if (length3 === 0) {
-                    break iterationLoop;
-                  }
-                  negatedAttributes.set(key, value);
-                }
-                currPos.right.delete(transaction);
+    iterationLoop: while (currPos.right !== null && (length3 > 0 || negatedAttributes.size > 0 && (currPos.right.deleted || currPos.right.content.constructor === ContentFormat))) {
+      if (!currPos.right.deleted) {
+        switch (currPos.right.content.constructor) {
+          case ContentFormat: {
+            const { key, value } = (
+              /** @type {ContentFormat} */
+              currPos.right.content
+            );
+            const attr = attributes[key];
+            if (attr !== void 0) {
+              if (equalAttrs(attr, value)) {
+                negatedAttributes.delete(key);
               } else {
-                currPos.currentAttributes.set(key, value);
+                if (length3 === 0) {
+                  break iterationLoop;
+                }
+                negatedAttributes.set(key, value);
               }
-              break;
+              currPos.right.delete(transaction);
+            } else {
+              currPos.currentAttributes.set(key, value);
             }
-            default:
-              if (length3 < currPos.right.length) {
-                getItemCleanStart(transaction, createID(currPos.right.id.client, currPos.right.id.clock + length3));
-              }
-              length3 -= currPos.right.length;
-              break;
+            break;
           }
+          default:
+            if (length3 < currPos.right.length) {
+              getItemCleanStart(transaction, createID(currPos.right.id.client, currPos.right.id.clock + length3));
+            }
+            length3 -= currPos.right.length;
+            break;
         }
-        currPos.forward();
       }
+      currPos.forward();
+    }
     if (length3 > 0) {
       let newlines = "";
       for (; length3 > 0; length3--) {
@@ -7823,8 +7520,7 @@ var wp;
                   retain = 0;
                   break;
               }
-              if (op)
-                delta.push(op);
+              if (op) delta.push(op);
               action = null;
             }
           };
@@ -10599,8 +10295,7 @@ var wp;
         this.db = db;
         const beforeApplyUpdatesCallback = (updatesStore) => addAutoKey(updatesStore, encodeStateAsUpdate(doc2));
         const afterApplyUpdatesCallback = () => {
-          if (this._destroyed)
-            return this;
+          if (this._destroyed) return this;
           this.synced = true;
           this.emit("synced", [this]);
         };
@@ -11851,110 +11546,8 @@ var wp;
     }
   };
 
-  // packages/url/build-module/get-query-string.js
-  function getQueryString(url) {
-    let query;
-    try {
-      query = new URL(url, "http://example.com").search.substring(1);
-    } catch (error) {
-    }
-    if (query) {
-      return query;
-    }
-  }
-
-  // packages/url/build-module/build-query-string.js
-  function buildQueryString(data) {
-    let string = "";
-    const stack = Object.entries(data);
-    let pair;
-    while (pair = stack.shift()) {
-      let [key, value] = pair;
-      const hasNestedData = Array.isArray(value) || value && value.constructor === Object;
-      if (hasNestedData) {
-        const valuePairs = Object.entries(value).reverse();
-        for (const [member, memberValue] of valuePairs) {
-          stack.unshift([`${key}[${member}]`, memberValue]);
-        }
-      } else if (value !== void 0) {
-        if (value === null) {
-          value = "";
-        }
-        string += "&" + [key, String(value)].map(encodeURIComponent).join("=");
-      }
-    }
-    return string.substr(1);
-  }
-
-  // packages/url/build-module/get-fragment.js
-  function getFragment(url) {
-    const matches = /^\S+?(#[^\s\?]*)/.exec(url);
-    if (matches) {
-      return matches[1];
-    }
-  }
-
-  // packages/url/build-module/safe-decode-uri-component.js
-  function safeDecodeURIComponent(uriComponent) {
-    try {
-      return decodeURIComponent(uriComponent);
-    } catch (uriComponentError) {
-      return uriComponent;
-    }
-  }
-
-  // packages/url/build-module/get-query-args.js
-  function setPath(object, path, value) {
-    const length3 = path.length;
-    const lastIndex = length3 - 1;
-    for (let i = 0; i < length3; i++) {
-      let key = path[i];
-      if (!key && Array.isArray(object)) {
-        key = object.length.toString();
-      }
-      key = ["__proto__", "constructor", "prototype"].includes(key) ? key.toUpperCase() : key;
-      const isNextKeyArrayIndex = !isNaN(Number(path[i + 1]));
-      object[key] = i === lastIndex ? (
-        // If at end of path, assign the intended value.
-        value
-      ) : (
-        // Otherwise, advance to the next object in the path, creating
-        // it if it does not yet exist.
-        object[key] || (isNextKeyArrayIndex ? [] : {})
-      );
-      if (Array.isArray(object[key]) && !isNextKeyArrayIndex) {
-        object[key] = { ...object[key] };
-      }
-      object = object[key];
-    }
-  }
-  function getQueryArgs(url) {
-    return (getQueryString(url) || "").replace(/\+/g, "%20").split("&").reduce((accumulator, keyValue) => {
-      const [key, value = ""] = keyValue.split("=").filter(Boolean).map(safeDecodeURIComponent);
-      if (key) {
-        const segments = key.replace(/\]/g, "").split("[");
-        setPath(accumulator, segments, value);
-      }
-      return accumulator;
-    }, /* @__PURE__ */ Object.create(null));
-  }
-
-  // packages/url/build-module/add-query-args.js
-  function addQueryArgs(url = "", args2) {
-    if (!args2 || !Object.keys(args2).length) {
-      return url;
-    }
-    const fragment = getFragment(url) || "";
-    let baseUrl = url.replace(fragment, "");
-    const queryStringIndex = url.indexOf("?");
-    if (queryStringIndex !== -1) {
-      args2 = Object.assign(getQueryArgs(url), args2);
-      baseUrl = baseUrl.substr(0, queryStringIndex);
-    }
-    return baseUrl + "?" + buildQueryString(args2) + fragment;
-  }
-
   // packages/sync/build-module/webrtc-http-stream-signaling.js
+  var import_url = __toESM(require_url());
   function setupSignalEventHandlers(signalCon, url) {
     signalCon.on("connect", () => {
       log(`connected (${url})`);
@@ -12074,7 +11667,7 @@ var wp;
       const subscriberId = Math.floor(1e5 + Math.random() * 9e5);
       const url = httpClient.url;
       const eventSource = new window.EventSource(
-        addQueryArgs(url, {
+        (0, import_url.addQueryArgs)(url, {
           subscriber_id: subscriberId,
           action: "gutenberg_signaling_server"
         })
@@ -12308,7 +11901,7 @@ var wp;
       discard
     };
   };
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
 

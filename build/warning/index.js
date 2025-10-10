@@ -20,8 +20,8 @@ var wp;
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // packages/warning/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     default: () => warning
   });
 
@@ -30,7 +30,7 @@ var wp;
 
   // packages/warning/build-module/index.js
   function isDev() {
-    return globalThis.SCRIPT_DEBUG === true;
+    return false;
   }
   function warning(message) {
     if (!isDev()) {
@@ -46,7 +46,7 @@ var wp;
     }
     logged.add(message);
   }
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 if (typeof wp.warning === 'object' && wp.warning.default) { wp.warning = wp.warning.default; }
 //# sourceMappingURL=index.js.map

@@ -515,8 +515,8 @@ var wp;
   });
 
   // packages/url/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     addQueryArgs: () => addQueryArgs,
     buildQueryString: () => buildQueryString,
     cleanForSlug: () => cleanForSlug,
@@ -875,6 +875,6 @@ var wp;
     url = prependHTTP(url);
     return url.replace(/^http:/, "https:");
   }
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map

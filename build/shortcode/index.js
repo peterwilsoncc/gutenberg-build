@@ -20,10 +20,10 @@ var wp;
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // packages/shortcode/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     attrs: () => attrs,
-    default: () => src_default,
+    default: () => index_default,
     fromMatch: () => fromMatch,
     next: () => next,
     regexp: () => regexp,
@@ -39,33 +39,32 @@ var wp;
     options = options || {};
     function memoized() {
       var node = head, len = arguments.length, args, i;
-      searchCache:
-        while (node) {
-          if (node.args.length !== arguments.length) {
-            node = node.next;
-            continue;
-          }
-          for (i = 0; i < len; i++) {
-            if (node.args[i] !== arguments[i]) {
-              node = node.next;
-              continue searchCache;
-            }
-          }
-          if (node !== head) {
-            if (node === tail) {
-              tail = node.prev;
-            }
-            node.prev.next = node.next;
-            if (node.next) {
-              node.next.prev = node.prev;
-            }
-            node.next = head;
-            node.prev = null;
-            head.prev = node;
-            head = node;
-          }
-          return node.val;
+      searchCache: while (node) {
+        if (node.args.length !== arguments.length) {
+          node = node.next;
+          continue;
         }
+        for (i = 0; i < len; i++) {
+          if (node.args[i] !== arguments[i]) {
+            node = node.next;
+            continue searchCache;
+          }
+        }
+        if (node !== head) {
+          if (node === tail) {
+            tail = node.prev;
+          }
+          node.prev.next = node.next;
+          if (node.next) {
+            node.next.prev = node.prev;
+          }
+          node.next = head;
+          node.prev = null;
+          head.prev = node;
+          head = node;
+        }
+        return node.val;
+      }
       args = new Array(len);
       for (i = 0; i < len; i++) {
         args[i] = arguments[i];
@@ -274,8 +273,8 @@ var wp;
       return text + "[/" + this.tag + "]";
     }
   });
-  var src_default = shortcode;
-  return __toCommonJS(build_module_exports);
+  var index_default = shortcode;
+  return __toCommonJS(index_exports);
 })();
 if (typeof wp.shortcode === 'object' && wp.shortcode.default) { wp.shortcode = wp.shortcode.default; }
 //# sourceMappingURL=index.js.map

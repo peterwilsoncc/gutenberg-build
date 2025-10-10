@@ -20,8 +20,8 @@ var wp;
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // packages/html-entities/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     decodeEntities: () => decodeEntities
   });
   var _decodeTextArea;
@@ -41,6 +41,6 @@ var wp;
     _decodeTextArea.innerHTML = "";
     return decoded;
   }
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map

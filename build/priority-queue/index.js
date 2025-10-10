@@ -225,8 +225,8 @@ var wp;
   });
 
   // packages/priority-queue/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     createQueue: () => createQueue
   });
 
@@ -290,6 +290,6 @@ var wp;
       reset
     };
   };
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map

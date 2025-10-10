@@ -20,8 +20,8 @@ var wp;
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // packages/escape-html/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     escapeAmpersand: () => escapeAmpersand,
     escapeAttribute: () => escapeAttribute,
     escapeEditableHTML: () => escapeEditableHTML,
@@ -61,6 +61,6 @@ var wp;
   function isValidAttributeName(name) {
     return !REGEXP_INVALID_ATTRIBUTE_NAME.test(name);
   }
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map

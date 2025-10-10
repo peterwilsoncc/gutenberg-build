@@ -1,10 +1,15 @@
 "use strict";
 var wp;
 (wp ||= {}).undoManager = (() => {
+  var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -17,72 +22,29 @@ var wp;
     }
     return to;
   };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // packages/undo-manager/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
-    createUndoManager: () => createUndoManager
+  // wordpress-external:@wordpress/is-shallow-equal
+  var require_is_shallow_equal = __commonJS({
+    "wordpress-external:@wordpress/is-shallow-equal"(exports, module) {
+      module.exports = window.wp.isShallowEqual;
+    }
   });
 
-  // packages/is-shallow-equal/build-module/objects.js
-  function isShallowEqualObjects(a, b) {
-    if (a === b) {
-      return true;
-    }
-    const aKeys = Object.keys(a);
-    const bKeys = Object.keys(b);
-    if (aKeys.length !== bKeys.length) {
-      return false;
-    }
-    let i = 0;
-    while (i < aKeys.length) {
-      const key = aKeys[i];
-      const aValue = a[key];
-      if (
-        // In iterating only the keys of the first object after verifying
-        // equal lengths, account for the case that an explicit `undefined`
-        // value in the first is implicitly undefined in the second.
-        //
-        // Example: isShallowEqualObjects( { a: undefined }, { b: 5 } )
-        aValue === void 0 && !b.hasOwnProperty(key) || aValue !== b[key]
-      ) {
-        return false;
-      }
-      i++;
-    }
-    return true;
-  }
-
-  // packages/is-shallow-equal/build-module/arrays.js
-  function isShallowEqualArrays(a, b) {
-    if (a === b) {
-      return true;
-    }
-    if (a.length !== b.length) {
-      return false;
-    }
-    for (let i = 0, len = a.length; i < len; i++) {
-      if (a[i] !== b[i]) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  // packages/is-shallow-equal/build-module/index.js
-  function isShallowEqual(a, b) {
-    if (a && b) {
-      if (a.constructor === Object && b.constructor === Object) {
-        return isShallowEqualObjects(a, b);
-      } else if (Array.isArray(a) && Array.isArray(b)) {
-        return isShallowEqualArrays(a, b);
-      }
-    }
-    return a === b;
-  }
-
   // packages/undo-manager/build-module/index.js
+  var index_exports = {};
+  __export(index_exports, {
+    createUndoManager: () => createUndoManager
+  });
+  var import_is_shallow_equal = __toESM(require_is_shallow_equal());
   function mergeHistoryChanges(changes1, changes2) {
     const newChanges = { ...changes1 };
     Object.entries(changes2).forEach(([key, value]) => {
@@ -97,7 +59,7 @@ var wp;
   var addHistoryChangesIntoRecord = (record, changes) => {
     const existingChangesIndex = record?.findIndex(
       ({ id: recordIdentifier }) => {
-        return typeof recordIdentifier === "string" ? recordIdentifier === changes.id : isShallowEqual(recordIdentifier, changes.id);
+        return typeof recordIdentifier === "string" ? recordIdentifier === changes.id : (0, import_is_shallow_equal.default)(recordIdentifier, changes.id);
       }
     );
     const nextRecord = [...record];
@@ -134,7 +96,7 @@ var wp;
     const isRecordEmpty = (record) => {
       const filteredRecord = record.filter(({ changes }) => {
         return Object.values(changes).some(
-          ({ from, to }) => typeof from !== "function" && typeof to !== "function" && !isShallowEqual(from, to)
+          ({ from, to }) => typeof from !== "function" && typeof to !== "function" && !(0, import_is_shallow_equal.default)(from, to)
         );
       });
       return !filteredRecord.length;
@@ -191,6 +153,6 @@ var wp;
       }
     };
   }
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map

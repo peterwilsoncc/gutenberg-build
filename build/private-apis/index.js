@@ -20,8 +20,8 @@ var wp;
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // packages/private-apis/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     __dangerousOptInToUnstableAPIsOnlyForCoreModules: () => __dangerousOptInToUnstableAPIsOnlyForCoreModules
   });
 
@@ -53,7 +53,7 @@ var wp;
   ];
   var registeredPrivateApis = [];
   var requiredConsent = "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.";
-  var allowReRegistration = globalThis.IS_WORDPRESS_CORE ? false : true;
+  var allowReRegistration = false ? false : true;
   var __dangerousOptInToUnstableAPIsOnlyForCoreModules = (consent, moduleName) => {
     if (!CORE_MODULES_USING_PRIVATE_APIS.includes(moduleName)) {
       throw new Error(
@@ -100,6 +100,6 @@ var wp;
   }
   var lockedData = /* @__PURE__ */ new WeakMap();
   var __private = Symbol("Private API ID");
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map

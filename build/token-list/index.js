@@ -20,8 +20,8 @@ var wp;
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // packages/token-list/build-module/index.js
-  var build_module_exports = {};
-  __export(build_module_exports, {
+  var index_exports = {};
+  __export(index_exports, {
     default: () => TokenList
   });
   var TokenList = class {
@@ -208,7 +208,7 @@ var wp;
     }
     /* eslint-enable @typescript-eslint/no-unused-vars */
   };
-  return __toCommonJS(build_module_exports);
+  return __toCommonJS(index_exports);
 })();
 if (typeof wp.tokenList === 'object' && wp.tokenList.default) { wp.tokenList = wp.tokenList.default; }
 //# sourceMappingURL=index.js.map
