@@ -323,25 +323,15 @@ const external_wp_components_namespaceObject = window["wp"]["components"];
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
-;// external ["wp","primitives"]
-const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
+;// external ["wp","primitives"]
+const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// ./packages/icons/build-module/library/close.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const library_close = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"
-  })
-}));
-/* eslint-enable */
+var close_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
+
 
 ;// ./packages/nux/build-module/components/dot-tip/index.js
 /**
@@ -405,7 +395,7 @@ function DotTip({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       size: "small",
       className: "nux-dot-tip__disable",
-      icon: library_close,
+      icon: close_default,
       label: (0,external_wp_i18n_namespaceObject.__)('Disable tips'),
       onClick: onDisable
     })]

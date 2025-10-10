@@ -79,25 +79,15 @@ const external_wp_data_namespaceObject = window["wp"]["data"];
 const external_wp_components_namespaceObject = window["wp"]["components"];
 ;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// external ["wp","primitives"]
-const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
+;// external ["wp","primitives"]
+const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// ./packages/icons/build-module/library/check.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const check = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z"
-  })
-}));
-/* eslint-enable */
+var check_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
+
 
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
@@ -397,7 +387,7 @@ function PreferenceToggleMenuItem({
     }
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-    icon: isActive && check,
+    icon: isActive && check_default,
     isSelected: isActive,
     onClick: () => {
       onToggle();
@@ -526,66 +516,30 @@ const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// ./packages/icons/build-module/icon/index.js
-/**
- * WordPress dependencies
- */
 
+var icon_default = (0,external_wp_element_namespaceObject.forwardRef)(
+  ({ icon, size = 24, ...props }, ref) => {
+    return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
+      width: size,
+      height: size,
+      ...props,
+      ref
+    });
+  }
+);
 
-/**
- * External dependencies
- */
-
-/**
- * Return an SVG icon.
- *
- * @param props The component props.
- *
- * @return Icon component
- */
-/* harmony default export */ const icon = ((0,external_wp_element_namespaceObject.forwardRef)(({
-  icon,
-  size = 24,
-  ...props
-}, ref) => {
-  return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
-    width: size,
-    height: size,
-    ...props,
-    ref
-  });
-}));
 
 ;// ./packages/icons/build-module/library/chevron-left.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const chevron_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"
-  })
-}));
-/* eslint-enable */
+var chevron_left_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
+
 
 ;// ./packages/icons/build-module/library/chevron-right.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const chevron_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"
-  })
-}));
-/* eslint-enable */
+var chevron_right_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
+
 
 ;// external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
@@ -705,8 +659,8 @@ function PreferencesModalTabs({
                         children: tab.title
                       })
                     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-                      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon, {
-                        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
+                      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
+                        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left_default : chevron_right_default
                       })
                     })]
                   })
@@ -727,7 +681,7 @@ function PreferencesModalTabs({
               size: "small",
               gap: "6",
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.BackButton, {
-                icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
+                icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_default : chevron_left_default,
                 label: (0,external_wp_i18n_namespaceObject.__)('Back')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
                 size: "16",

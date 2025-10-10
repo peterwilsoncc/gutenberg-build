@@ -2959,22 +2959,17 @@ const accordion_panel_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/archive.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const archive = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var archive_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M11.934 7.406a1 1 0 0 0 .914.594H19a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5h5.764a.5.5 0 0 1 .447.276l.723 1.63Zm1.064-1.216a.5.5 0 0 0 .462.31H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.764a2 2 0 0 1 1.789 1.106l.445 1.084ZM8.5 10.5h7V12h-7v-1.5Zm7 3.5h-7v1.5h7V14Z"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/archives/edit.js
 /**
@@ -3190,7 +3185,7 @@ const {
 } = archives_metadata;
 
 const archives_settings = {
-  icon: archive,
+  icon: archive_default,
   example: {},
   edit: ArchivesEdit
 };
@@ -3201,22 +3196,17 @@ const archives_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-author-avatar.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const comment_author_avatar = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var comment_author_avatar_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
     clipRule: "evenodd"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
@@ -3694,7 +3684,7 @@ const {
 } = avatar_metadata;
 
 const avatar_settings = {
-  icon: comment_author_avatar,
+  icon: comment_author_avatar_default,
   edit: avatar_edit_Edit,
   example: {}
 };
@@ -3705,20 +3695,10 @@ const avatar_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/audio.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const audio = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.7 4.3c-1.2 0-2.8 0-3.8 1-.6.6-.9 1.5-.9 2.6V14c-.6-.6-1.5-1-2.5-1C8.6 13 7 14.6 7 16.5S8.6 20 10.5 20c1.5 0 2.8-1 3.3-2.3.5-.8.7-1.8.7-2.5V7.9c0-.7.2-1.2.5-1.6.6-.6 1.8-.6 2.8-.6h.3V4.3h-.4z"
-  })
-}));
-/* eslint-enable */
+var audio_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M17.7 4.3c-1.2 0-2.8 0-3.8 1-.6.6-.9 1.5-.9 2.6V14c-.6-.6-1.5-1-2.5-1C8.6 13 7 14.6 7 16.5S8.6 20 10.5 20c1.5 0 2.8-1 3.3-2.3.5-.8.7-1.8.7-2.5V7.9c0-.7.2-1.2.5-1.6.6-.6 1.8-.6 2.8-.6h.3V4.3h-.4z" }) });
+
 
 ;// ./packages/block-library/build-module/audio/deprecated.js
 /**
@@ -4352,22 +4332,17 @@ const getMergedAttributesWithPreview = (currentAttributes, preview, title, isRes
 };
 
 ;// ./packages/icons/build-module/library/caption.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const library_caption = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var caption_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M6 5.5h12a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5ZM4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Zm4 10h2v-1.5H8V16Zm5 0h-2v-1.5h2V16Zm1 0h2v-1.5h-2V16Z"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/utils/caption.js
 /**
@@ -4406,7 +4381,7 @@ function Caption({
   tagName = 'figcaption',
   addLabel = (0,external_wp_i18n_namespaceObject.__)('Add caption'),
   removeLabel = (0,external_wp_i18n_namespaceObject.__)('Remove caption'),
-  icon = library_caption,
+  icon = caption_default,
   ...props
 }) {
   const caption = attributes[attributeKey];
@@ -4602,7 +4577,7 @@ function AudioEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: audio
+          icon: audio_default
         }),
         onSelect: onSelectAudio,
         onSelectURL: onSelectURL,
@@ -4913,7 +4888,7 @@ const {
 } = audio_metadata;
 
 const audio_settings = {
-  icon: audio,
+  icon: audio_default,
   example: {
     attributes: {
       src: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Armstrong_Small_Step.ogg'
@@ -4932,20 +4907,10 @@ const audio_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/breadcrumbs.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const breadcrumbs = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 13.5h3v-3H4v3Zm6-3.5 2 2-2 2 1 1 3-3-3-3-1 1Zm7 .5v3h3v-3h-3Z"
-  })
-}));
-/* eslint-enable */
+var breadcrumbs_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 13.5h3v-3H4v3Zm6-3.5 2 2-2 2 1 1 3-3-3-3-1 1Zm7 .5v3h3v-3h-3Z" }) });
+
 
 ;// ./packages/block-library/build-module/breadcrumbs/edit.js
 /**
@@ -5155,7 +5120,7 @@ const {
 } = breadcrumbs_metadata;
 
 const breadcrumbs_settings = {
-  icon: breadcrumbs,
+  icon: breadcrumbs_default,
   edit: BreadcrumbEdit
 };
 const breadcrumbs_init = () => initBlock({
@@ -5165,20 +5130,10 @@ const breadcrumbs_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/button.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const library_button = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M8 12.5h8V11H8v1.5Z M19 6.5H5a2 2 0 0 0-2 2V15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2ZM5 8h14a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8.5A.5.5 0 0 1 5 8Z"
-  })
-}));
-/* eslint-enable */
+var button_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M8 12.5h8V11H8v1.5Z M19 6.5H5a2 2 0 0 0-2 2V15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2ZM5 8h14a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8.5A.5.5 0 0 1 5 8Z" }) });
+
 
 ;// ./packages/block-library/build-module/utils/migrate-font-family.js
 /**
@@ -6546,36 +6501,16 @@ function removeAnchorTag(value) {
 ;// external ["wp","keycodes"]
 const external_wp_keycodes_namespaceObject = window["wp"]["keycodes"];
 ;// ./packages/icons/build-module/library/link.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const library_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z"
-  })
-}));
-/* eslint-enable */
+var link_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
+
 
 ;// ./packages/icons/build-module/library/link-off.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const link_off = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z"
-  })
-}));
-/* eslint-enable */
+var link_off_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z" }) });
+
 
 ;// ./packages/block-library/build-module/button/edit.js
 /**
@@ -6876,7 +6811,7 @@ function ButtonEdit(props) {
         }
       }), isLinkTag && !lockUrlControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         name: "link",
-        icon: !isURLSet ? library_link : link_off,
+        icon: !isURLSet ? link_default : link_off_default,
         title: !isURLSet ? (0,external_wp_i18n_namespaceObject.__)('Link') : (0,external_wp_i18n_namespaceObject.__)('Unlink'),
         shortcut: !isURLSet ? external_wp_keycodes_namespaceObject.displayShortcut.primary('k') : external_wp_keycodes_namespaceObject.displayShortcut.primaryShift('k'),
         onClick: !isURLSet ? startEditing : unlink,
@@ -7194,7 +7129,7 @@ const {
 } = button_metadata;
 
 const button_settings = {
-  icon: library_button,
+  icon: button_default,
   example: {
     attributes: {
       className: 'is-style-fill',
@@ -7218,20 +7153,10 @@ const button_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/buttons.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const buttons = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M14.5 17.5H9.5V16H14.5V17.5Z M14.5 8H9.5V6.5H14.5V8Z M7 3.5H17C18.1046 3.5 19 4.39543 19 5.5V9C19 10.1046 18.1046 11 17 11H7C5.89543 11 5 10.1046 5 9V5.5C5 4.39543 5.89543 3.5 7 3.5ZM17 5H7C6.72386 5 6.5 5.22386 6.5 5.5V9C6.5 9.27614 6.72386 9.5 7 9.5H17C17.2761 9.5 17.5 9.27614 17.5 9V5.5C17.5 5.22386 17.2761 5 17 5Z M7 13H17C18.1046 13 19 13.8954 19 15V18.5C19 19.6046 18.1046 20.5 17 20.5H7C5.89543 20.5 5 19.6046 5 18.5V15C5 13.8954 5.89543 13 7 13ZM17 14.5H7C6.72386 14.5 6.5 14.7239 6.5 15V18.5C6.5 18.7761 6.72386 19 7 19H17C17.2761 19 17.5 18.7761 17.5 18.5V15C17.5 14.7239 17.2761 14.5 17 14.5Z"
-  })
-}));
-/* eslint-enable */
+var buttons_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M14.5 17.5H9.5V16H14.5V17.5Z M14.5 8H9.5V6.5H14.5V8Z M7 3.5H17C18.1046 3.5 19 4.39543 19 5.5V9C19 10.1046 18.1046 11 17 11H7C5.89543 11 5 10.1046 5 9V5.5C5 4.39543 5.89543 3.5 7 3.5ZM17 5H7C6.72386 5 6.5 5.22386 6.5 5.5V9C6.5 9.27614 6.72386 9.5 7 9.5H17C17.2761 9.5 17.5 9.27614 17.5 9V5.5C17.5 5.22386 17.2761 5 17 5Z M7 13H17C18.1046 13 19 13.8954 19 15V18.5C19 19.6046 18.1046 20.5 17 20.5H7C5.89543 20.5 5 19.6046 5 18.5V15C5 13.8954 5.89543 13 7 13ZM17 14.5H7C6.72386 14.5 6.5 14.7239 6.5 15V18.5C6.5 18.7761 6.72386 19 7 19H17C17.2761 19 17.5 18.7761 17.5 18.5V15C17.5 14.7239 17.2761 14.5 17 14.5Z" }) });
+
 
 ;// ./packages/block-library/build-module/buttons/deprecated.js
 /**
@@ -7645,7 +7570,7 @@ const {
 } = buttons_metadata;
 
 const buttons_settings = {
-  icon: buttons,
+  icon: buttons_default,
   example: {
     attributes: {
       layout: {
@@ -7677,20 +7602,10 @@ const buttons_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/calendar.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const calendar = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z"
-  })
-}));
-/* eslint-enable */
+var calendar_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z" }) });
+
 
 ;// ./packages/block-library/build-module/calendar/edit.js
 /**
@@ -7772,7 +7687,7 @@ function CalendarEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-        icon: calendar,
+        icon: calendar_default,
         label: (0,external_wp_i18n_namespaceObject.__)('Calendar'),
         children: !hasPostsResolved ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('No published posts found.')
       })
@@ -7875,7 +7790,7 @@ const {
 } = calendar_metadata;
 
 const calendar_settings = {
-  icon: calendar,
+  icon: calendar_default,
   example: {},
   edit: CalendarEdit,
   transforms: calendar_transforms
@@ -7887,38 +7802,23 @@ const calendar_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/category.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const category = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var category_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     d: "M6 5.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM4 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm11-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM13 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V6zm5 8.5h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zM15 13a2 2 0 00-2 2v3a2 2 0 002 2h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3zm-9 1.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM4 15a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z",
     fillRule: "evenodd",
     clipRule: "evenodd"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/icons/build-module/library/pin.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const pin = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m21.5 9.1-6.6-6.6-4.2 5.6c-1.2-.1-2.4.1-3.6.7-.1 0-.1.1-.2.1-.5.3-.9.6-1.2.9l3.7 3.7-5.7 5.7v1.1h1.1l5.7-5.7 3.7 3.7c.4-.4.7-.8.9-1.2.1-.1.1-.2.2-.3.6-1.1.8-2.4.6-3.6l5.6-4.1zm-7.3 3.5.1.9c.1.9 0 1.8-.4 2.6l-6-6c.8-.4 1.7-.5 2.6-.4l.9.1L15 4.9 19.1 9l-4.9 3.6z"
-  })
-}));
-/* eslint-enable */
+var pin_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m21.5 9.1-6.6-6.6-4.2 5.6c-1.2-.1-2.4.1-3.6.7-.1 0-.1.1-.2.1-.5.3-.9.6-1.2.9l3.7 3.7-5.7 5.7v1.1h1.1l5.7-5.7 3.7 3.7c.4-.4.7-.8.9-1.2.1-.1.1-.2.2-.3.6-1.1.8-2.4.6-3.6l5.6-4.1zm-7.3 3.5.1.9c.1.9 0 1.8-.4 2.6l-6-6c.8-.4 1.7-.5 2.6-.4l.9.1L15 4.9 19.1 9l-4.9 3.6z" }) });
+
 
 ;// ./packages/block-library/build-module/categories/edit.js
 /**
@@ -8203,7 +8103,7 @@ function CategoriesEdit({
         })]
       })
     }), isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-      icon: pin,
+      icon: pin_default,
       label: (0,external_wp_i18n_namespaceObject.__)('Terms'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
     }), !isResolving && categories?.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
@@ -8221,7 +8121,7 @@ function CategoriesEdit({
 const variations = [{
   name: 'terms',
   title: (0,external_wp_i18n_namespaceObject.__)('Terms List'),
-  icon: category,
+  icon: category_default,
   attributes: {
     // We need to set an attribute here that will be set when inserting the block.
     // We cannot leave this empty, as that would be interpreted as the default value,
@@ -8237,7 +8137,7 @@ const variations = [{
   name: 'categories',
   title: (0,external_wp_i18n_namespaceObject.__)('Categories List'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display a list of all categories.'),
-  icon: category,
+  icon: category_default,
   attributes: {
     taxonomy: 'category'
   },
@@ -8362,7 +8262,7 @@ const {
 } = categories_metadata;
 
 const categories_settings = {
-  icon: category,
+  icon: category_default,
   example: {},
   edit: CategoriesEdit,
   variations: categories_variations
@@ -8374,20 +8274,10 @@ const categories_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/classic.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const classic = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20 6H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h16c.3 0 .5.2.5.5v9zM10 10H8v2h2v-2zm-5 2h2v-2H5v2zm8-2h-2v2h2v-2zm-5 6h8v-2H8v2zm6-4h2v-2h-2v2zm3 0h2v-2h-2v2zm0 4h2v-2h-2v2zM5 16h2v-2H5v2z"
-  })
-}));
-/* eslint-enable */
+var classic_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M20 6H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h16c.3 0 .5.2.5.5v9zM10 10H8v2h2v-2zm-5 2h2v-2H5v2zm8-2h-2v2h2v-2zm-5 6h8v-2H8v2zm6-4h2v-2h-2v2zm3 0h2v-2h-2v2zm0 4h2v-2h-2v2zM5 16h2v-2H5v2z" }) });
+
 
 ;// ./packages/block-library/build-module/freeform/convert-to-blocks-button.js
 /**
@@ -8418,20 +8308,10 @@ const ConvertToBlocksButton = ({
 /* harmony default export */ const convert_to_blocks_button = (ConvertToBlocksButton);
 
 ;// ./packages/icons/build-module/library/fullscreen.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const fullscreen = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6 4a2 2 0 0 0-2 2v3h1.5V6a.5.5 0 0 1 .5-.5h3V4H6Zm3 14.5H6a.5.5 0 0 1-.5-.5v-3H4v3a2 2 0 0 0 2 2h3v-1.5Zm6 1.5v-1.5h3a.5.5 0 0 0 .5-.5v-3H20v3a2 2 0 0 1-2 2h-3Zm3-16a2 2 0 0 1 2 2v3h-1.5V6a.5.5 0 0 0-.5-.5h-3V4h3Z"
-  })
-}));
-/* eslint-enable */
+var fullscreen_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M6 4a2 2 0 0 0-2 2v3h1.5V6a.5.5 0 0 1 .5-.5h3V4H6Zm3 14.5H6a.5.5 0 0 1-.5-.5v-3H4v3a2 2 0 0 0 2 2h3v-1.5Zm6 1.5v-1.5h3a.5.5 0 0 0 .5-.5v-3H20v3a2 2 0 0 1-2 2h-3Zm3-16a2 2 0 0 1 2 2v3h-1.5V6a.5.5 0 0 0-.5-.5h-3V4h3Z" }) });
+
 
 ;// ./packages/block-library/build-module/freeform/modal.js
 /**
@@ -8457,7 +8337,7 @@ function ModalAuxiliaryActions({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     size: "compact",
     onClick: onClick,
-    icon: fullscreen,
+    icon: fullscreen_default,
     isPressed: isModalFullScreen,
     label: isModalFullScreen ? (0,external_wp_i18n_namespaceObject.__)('Exit fullscreen') : (0,external_wp_i18n_namespaceObject.__)('Enter fullscreen')
   });
@@ -8870,7 +8750,7 @@ const {
 } = freeform_metadata;
 
 const freeform_settings = {
-  icon: classic,
+  icon: classic_default,
   edit: FreeformEdit,
   save: freeform_save_save
 };
@@ -8881,20 +8761,10 @@ const freeform_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/code.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const code = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z"
-  })
-}));
-/* eslint-enable */
+var code_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z" }) });
+
 
 ;// ./packages/block-library/build-module/code/edit.js
 /**
@@ -9170,7 +9040,7 @@ const {
 } = code_metadata;
 
 const code_settings = {
-  icon: code,
+  icon: code_default,
   example: {
     attributes: {
       /* eslint-disable @wordpress/i18n-no-collapsible-whitespace */
@@ -9195,20 +9065,10 @@ const code_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/column.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const column = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 6H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM6 17.5c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h3v10H6zm13.5-.5c0 .3-.2.5-.5.5h-3v-10h3c.3 0 .5.2.5.5v9z"
-  })
-}));
-/* eslint-enable */
+var column_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 6H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM6 17.5c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h3v10H6zm13.5-.5c0 .3-.2.5-.5.5h-3v-10h3c.3 0 .5.2.5.5v9z" }) });
+
 
 ;// ./packages/block-library/build-module/column/deprecated.js
 /**
@@ -9544,7 +9404,7 @@ const {
 } = column_metadata;
 
 const column_settings = {
-  icon: column,
+  icon: column_default,
   edit: column_edit,
   save: column_save_save,
   deprecated: column_deprecated
@@ -9556,22 +9416,17 @@ const column_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/columns.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const columns = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var columns_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M15 7.5h-5v10h5v-10Zm1.5 0v10H19a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5h-2.5ZM6 7.5h2.5v10H6a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5ZM6 6h13a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/columns/deprecated.js
 /**
@@ -10576,7 +10431,7 @@ const {
 } = columns_metadata;
 
 const columns_settings = {
-  icon: columns,
+  icon: columns_default,
   variations: columns_variations,
   example: {
     viewportWidth: 782,
@@ -10630,20 +10485,10 @@ const columns_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-comments.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_comments = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M14 10.1V4c0-.6-.4-1-1-1H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1zm-1.5-.5H6.7l-1.2 1.2V4.5h7v5.1zM19 12h-8c-.6 0-1 .4-1 1v6.1c0 .6.4 1 1 1h5.7l1.8 1.8c.1.2.4.3.6.3.1 0 .2 0 .3-.1.4-.1.6-.5.6-.8V13c0-.6-.4-1-1-1zm-.5 7.8l-1.2-1.2h-5.8v-5.1h7v6.3z"
-  })
-}));
-/* eslint-enable */
+var post_comments_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M14 10.1V4c0-.6-.4-1-1-1H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1zm-1.5-.5H6.7l-1.2 1.2V4.5h7v5.1zM19 12h-8c-.6 0-1 .4-1 1v6.1c0 .6.4 1 1 1h5.7l1.8 1.8c.1.2.4.3.6.3.1 0 .2 0 .3-.1.4-.1.6-.5.6-.8V13c0-.6-.4-1-1-1zm-.5 7.8l-1.2-1.2h-5.8v-5.1h7v6.3z" }) });
+
 
 ;// ./packages/block-library/build-module/comments/deprecated.js
 /**
@@ -11216,7 +11061,7 @@ const {
 } = comments_metadata;
 
 const comments_settings = {
-  icon: post_comments,
+  icon: post_comments_default,
   example: {},
   edit: CommentsEdit,
   save: comments_save_save,
@@ -11386,7 +11231,7 @@ const {
 } = comment_author_avatar_metadata;
 
 const comment_author_avatar_settings = {
-  icon: comment_author_avatar,
+  icon: comment_author_avatar_default,
   edit: comment_author_avatar_edit_Edit
 };
 const comment_author_avatar_init = () => initBlock({
@@ -11396,32 +11241,28 @@ const comment_author_avatar_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-author-name.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const comment_author_name = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z",
-    fillRule: "evenodd",
-    clipRule: "evenodd"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M15 15V15C15 13.8954 14.1046 13 13 13L11 13C9.89543 13 9 13.8954 9 15V15",
-    fillRule: "evenodd",
-    clipRule: "evenodd"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Circle, {
-    cx: "12",
-    cy: "9",
-    r: "2",
-    fillRule: "evenodd",
-    clipRule: "evenodd"
-  })]
-}));
-/* eslint-enable */
+var comment_author_name_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+    external_wp_primitives_namespaceObject.Path,
+    {
+      d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z",
+      fillRule: "evenodd",
+      clipRule: "evenodd"
+    }
+  ),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+    external_wp_primitives_namespaceObject.Path,
+    {
+      d: "M15 15V15C15 13.8954 14.1046 13 13 13L11 13C9.89543 13 9 13.8954 9 15V15",
+      fillRule: "evenodd",
+      clipRule: "evenodd"
+    }
+  ),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Circle, { cx: "12", cy: "9", r: "2", fillRule: "evenodd", clipRule: "evenodd" })
+] });
+
 
 ;// ./packages/block-library/build-module/comment-author-name/edit.js
 /**
@@ -11696,7 +11537,7 @@ const {
 } = comment_author_name_metadata;
 
 const comment_author_name_settings = {
-  icon: comment_author_name,
+  icon: comment_author_name_default,
   edit: comment_author_name_edit_Edit,
   deprecated: comment_author_name_deprecated,
   example: {}
@@ -11708,22 +11549,17 @@ const comment_author_name_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-content.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const comment_content = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var comment_content_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M6.68822 16.625L5.5 17.8145L5.5 5.5L18.5 5.5L18.5 16.625L6.68822 16.625ZM7.31 18.125L19 18.125C19.5523 18.125 20 17.6773 20 17.125L20 5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19.5247C4 19.8173 4.16123 20.086 4.41935 20.2237C4.72711 20.3878 5.10601 20.3313 5.35252 20.0845L7.31 18.125ZM16 9.99997H8V8.49997H16V9.99997ZM8 14H13V12.5H8V14Z"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/comment-content/edit.js
 /**
@@ -11874,7 +11710,7 @@ const {
 } = comment_content_metadata;
 
 const comment_content_settings = {
-  icon: comment_content,
+  icon: comment_content_default,
   edit: comment_content_edit_Edit,
   example: {}
 };
@@ -11885,22 +11721,13 @@ const comment_content_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-date.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_date = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11.696 13.972c.356-.546.599-.958.728-1.235a1.79 1.79 0 00.203-.783c0-.264-.077-.47-.23-.618-.148-.153-.354-.23-.618-.23-.295 0-.569.07-.82.212a3.413 3.413 0 00-.738.571l-.147-1.188c.289-.234.59-.41.903-.526.313-.117.66-.175 1.041-.175.375 0 .695.08.959.24.264.153.46.362.59.626.135.265.203.556.203.876 0 .362-.08.734-.24 1.115-.154.381-.427.87-.82 1.466l-.756 1.152H14v1.106h-4l1.696-2.609z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19.5 7h-15v12a.5.5 0 00.5.5h14a.5.5 0 00.5-.5V7zM3 7V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"
-  })]
-}));
-/* eslint-enable */
+var post_date_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11.696 13.972c.356-.546.599-.958.728-1.235a1.79 1.79 0 00.203-.783c0-.264-.077-.47-.23-.618-.148-.153-.354-.23-.618-.23-.295 0-.569.07-.82.212a3.413 3.413 0 00-.738.571l-.147-1.188c.289-.234.59-.41.903-.526.313-.117.66-.175 1.041-.175.375 0 .695.08.959.24.264.153.46.362.59.626.135.265.203.556.203.876 0 .362-.08.734-.24 1.115-.154.381-.427.87-.82 1.466l-.756 1.152H14v1.106h-4l1.696-2.609z" }),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19.5 7h-15v12a.5.5 0 00.5.5h14a.5.5 0 00.5-.5V7zM3 7V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" })
+] });
+
 
 ;// external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
@@ -12147,7 +11974,7 @@ const {
 } = comment_date_metadata;
 
 const comment_date_settings = {
-  icon: post_date,
+  icon: post_date_default,
   edit: comment_date_edit_Edit,
   deprecated: comment_date_deprecated,
   example: {}
@@ -12159,20 +11986,10 @@ const comment_date_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-edit-link.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const comment_edit_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m6.249 11.065.44-.44h3.186l-1.5 1.5H7.31l-1.957 1.96A.792.792 0 0 1 4 13.524V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5L12.5 8V5.5h-7v6.315l.749-.75ZM20 19.75H7v-1.5h13v1.5Zm0-12.653-8.967 9.064L8 17l.867-2.935L17.833 5 20 7.097Z"
-  })
-}));
-/* eslint-enable */
+var comment_edit_link_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m6.249 11.065.44-.44h3.186l-1.5 1.5H7.31l-1.957 1.96A.792.792 0 0 1 4 13.524V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5L12.5 8V5.5h-7v6.315l.749-.75ZM20 19.75H7v-1.5h13v1.5Zm0-12.653-8.967 9.064L8 17l.867-2.935L17.833 5 20 7.097Z" }) });
+
 
 ;// ./packages/block-library/build-module/comment-edit-link/edit.js
 /**
@@ -12332,7 +12149,7 @@ const {
 } = comment_edit_link_metadata;
 
 const comment_edit_link_settings = {
-  icon: comment_edit_link,
+  icon: comment_edit_link_default,
   edit: comment_edit_link_edit_Edit,
   example: {}
 };
@@ -12343,20 +12160,10 @@ const comment_edit_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment-reply-link.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const comment_reply_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.68822 10.625L6.24878 11.0649L5.5 11.8145L5.5 5.5L12.5 5.5V8L14 6.5V5C14 4.44772 13.5523 4 13 4H5C4.44772 4 4 4.44771 4 5V13.5247C4 13.8173 4.16123 14.086 4.41935 14.2237C4.72711 14.3878 5.10601 14.3313 5.35252 14.0845L7.31 12.125H8.375L9.875 10.625H7.31H6.68822ZM14.5605 10.4983L11.6701 13.75H16.9975C17.9963 13.75 18.7796 14.1104 19.3553 14.7048C19.9095 15.2771 20.2299 16.0224 20.4224 16.7443C20.7645 18.0276 20.7543 19.4618 20.7487 20.2544C20.7481 20.345 20.7475 20.4272 20.7475 20.4999L19.2475 20.5001C19.2475 20.4191 19.248 20.3319 19.2484 20.2394V20.2394C19.2526 19.4274 19.259 18.2035 18.973 17.1307C18.8156 16.5401 18.586 16.0666 18.2778 15.7483C17.9909 15.4521 17.5991 15.25 16.9975 15.25H11.8106L14.5303 17.9697L13.4696 19.0303L8.96956 14.5303L13.4394 9.50171L14.5605 10.4983Z"
-  })
-}));
-/* eslint-enable */
+var comment_reply_link_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M6.68822 10.625L6.24878 11.0649L5.5 11.8145L5.5 5.5L12.5 5.5V8L14 6.5V5C14 4.44772 13.5523 4 13 4H5C4.44772 4 4 4.44771 4 5V13.5247C4 13.8173 4.16123 14.086 4.41935 14.2237C4.72711 14.3878 5.10601 14.3313 5.35252 14.0845L7.31 12.125H8.375L9.875 10.625H7.31H6.68822ZM14.5605 10.4983L11.6701 13.75H16.9975C17.9963 13.75 18.7796 14.1104 19.3553 14.7048C19.9095 15.2771 20.2299 16.0224 20.4224 16.7443C20.7645 18.0276 20.7543 19.4618 20.7487 20.2544C20.7481 20.345 20.7475 20.4272 20.7475 20.4999L19.2475 20.5001C19.2475 20.4191 19.248 20.3319 19.2484 20.2394V20.2394C19.2526 19.4274 19.259 18.2035 18.973 17.1307C18.8156 16.5401 18.586 16.0666 18.2778 15.7483C17.9909 15.4521 17.5991 15.25 16.9975 15.25H11.8106L14.5303 17.9697L13.4696 19.0303L8.96956 14.5303L13.4394 9.50171L14.5605 10.4983Z" }) });
+
 
 ;// ./packages/block-library/build-module/comment-reply-link/edit.js
 /**
@@ -12487,7 +12294,7 @@ const {
 
 const comment_reply_link_settings = {
   edit: comment_reply_link_edit,
-  icon: comment_reply_link,
+  icon: comment_reply_link_default,
   example: {}
 };
 const comment_reply_link_init = () => initBlock({
@@ -12497,20 +12304,10 @@ const comment_reply_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/layout.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const layout = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-}));
-/* eslint-enable */
+var layout_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
+
 
 ;// external ["wp","apiFetch"]
 const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
@@ -13026,7 +12823,7 @@ const {
 } = comment_template_metadata;
 
 const comment_template_settings = {
-  icon: layout,
+  icon: layout_default,
   edit: CommentTemplateEdit,
   save: CommentTemplateSave
 };
@@ -13037,20 +12834,10 @@ const comment_template_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination-previous.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const query_pagination_previous = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M16 10.5v3h3v-3h-3zm-5 3h3v-3h-3v3zM7 9l-3 3 3 3 1-1-2-2 2-2-1-1z"
-  })
-}));
-/* eslint-enable */
+var query_pagination_previous_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M16 10.5v3h3v-3h-3zm-5 3h3v-3h-3v3zM7 9l-3 3 3 3 1-1-2-2 2-2-1-1z" }) });
+
 
 ;// ./packages/block-library/build-module/comments-pagination-previous/edit.js
 /**
@@ -13154,7 +12941,7 @@ const {
 } = comments_pagination_previous_metadata;
 
 const comments_pagination_previous_settings = {
-  icon: query_pagination_previous,
+  icon: query_pagination_previous_default,
   edit: CommentsPaginationPreviousEdit,
   example: {
     attributes: {
@@ -13169,20 +12956,10 @@ const comments_pagination_previous_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const query_pagination = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 13.5h6v-3H4v3zm8 0h3v-3h-3v3zm5-3v3h3v-3h-3z"
-  })
-}));
-/* eslint-enable */
+var query_pagination_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 13.5h6v-3H4v3zm8 0h3v-3h-3v3zm5-3v3h3v-3h-3z" }) });
+
 
 ;// ./packages/block-library/build-module/comments-pagination/comments-pagination-arrow-controls.js
 /**
@@ -13400,7 +13177,7 @@ const {
 } = comments_pagination_metadata;
 
 const comments_pagination_settings = {
-  icon: query_pagination,
+  icon: query_pagination_default,
   edit: QueryPaginationEdit,
   save: comments_pagination_save_save
 };
@@ -13411,20 +13188,10 @@ const comments_pagination_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination-next.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const query_pagination_next = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M5 13.5h3v-3H5v3zm5 0h3v-3h-3v3zM17 9l-1 1 2 2-2 2 1 1 3-3-3-3z"
-  })
-}));
-/* eslint-enable */
+var query_pagination_next_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M5 13.5h3v-3H5v3zm5 0h3v-3h-3v3zM17 9l-1 1 2 2-2 2 1 1 3-3-3-3z" }) });
+
 
 ;// ./packages/block-library/build-module/comments-pagination-next/edit.js
 /**
@@ -13528,7 +13295,7 @@ const {
 } = comments_pagination_next_metadata;
 
 const comments_pagination_next_settings = {
-  icon: query_pagination_next,
+  icon: query_pagination_next_default,
   edit: CommentsPaginationNextEdit,
   example: {
     attributes: {
@@ -13543,20 +13310,10 @@ const comments_pagination_next_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/query-pagination-numbers.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const query_pagination_numbers = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 13.5h6v-3H4v3zm8.2-2.5.8-.3V14h1V9.3l-2.2.7.4 1zm7.1-1.2c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3-.1-.8-.3-1.1z"
-  })
-}));
-/* eslint-enable */
+var query_pagination_numbers_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 13.5h6v-3H4v3zm8.2-2.5.8-.3V14h1V9.3l-2.2.7.4 1zm7.1-1.2c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3-.1-.8-.3-1.1z" }) });
+
 
 ;// ./packages/block-library/build-module/comments-pagination-numbers/edit.js
 /**
@@ -13656,7 +13413,7 @@ const {
 } = comments_pagination_numbers_metadata;
 
 const comments_pagination_numbers_settings = {
-  icon: query_pagination_numbers,
+  icon: query_pagination_numbers_default,
   edit: CommentsPaginationNumbersEdit,
   example: {}
 };
@@ -13667,20 +13424,10 @@ const comments_pagination_numbers_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/title.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const title = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m4 5.5h2v6.5h1.5v-6.5h2v-1.5h-5.5zm16 10.5h-16v-1.5h16zm-7 4h-9v-1.5h9z"
-  })
-}));
-/* eslint-enable */
+var title_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m4 5.5h2v6.5h1.5v-6.5h2v-1.5h-5.5zm16 10.5h-16v-1.5h16zm-7 4h-9v-1.5h9z" }) });
+
 
 ;// ./packages/block-library/build-module/comments-title/edit.js
 /**
@@ -14058,7 +13805,7 @@ const {
 } = comments_title_metadata;
 
 const comments_title_settings = {
-  icon: title,
+  icon: title_default,
   edit: comments_title_edit_Edit,
   deprecated: comments_title_deprecated,
   example: {}
@@ -14070,20 +13817,10 @@ const comments_title_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/cover.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const cover = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h6.2v8.9l2.5-3.1 2.5 3.1V4.5h2.2c.4 0 .8.4.8.8v13.4z"
-  })
-}));
-/* eslint-enable */
+var cover_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h6.2v8.9l2.5-3.1 2.5 3.1V4.5h2.2c.4 0 .8.4.8.8v13.4z" }) });
+
 
 ;// ./packages/block-library/build-module/cover/shared.js
 /**
@@ -16378,7 +16115,7 @@ function CoverPlaceholder({
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
     icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-      icon: cover
+      icon: cover_default
     }),
     labels: {
       title: (0,external_wp_i18n_namespaceObject.__)('Cover')
@@ -17971,7 +17708,7 @@ const cover_variations_variations = [{
     }
   },
   isDefault: true,
-  icon: cover
+  icon: cover_default
 }];
 /* harmony default export */ const cover_variations = (cover_variations_variations);
 
@@ -18154,7 +17891,7 @@ const {
 } = cover_metadata;
 
 const cover_settings = {
-  icon: cover,
+  icon: cover_default,
   example: {
     attributes: {
       customOverlayColor: '#065174',
@@ -18190,24 +17927,20 @@ const cover_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/details.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const details = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 16h10v1.5H4V16Zm0-4.5h16V13H4v-1.5ZM10 7h10v1.5H10V7Z",
-    fillRule: "evenodd",
-    clipRule: "evenodd"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m4 5.25 4 2.5-4 2.5v-5Z"
-  })]
-}));
-/* eslint-enable */
+var details_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+    external_wp_primitives_namespaceObject.Path,
+    {
+      d: "M4 16h10v1.5H4V16Zm0-4.5h16V13H4v-1.5ZM10 7h10v1.5H10V7Z",
+      fillRule: "evenodd",
+      clipRule: "evenodd"
+    }
+  ),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m4 5.25 4 2.5-4 2.5v-5Z" })
+] });
+
 
 ;// ./packages/block-library/build-module/details/edit.js
 /**
@@ -18477,7 +18210,7 @@ const {
 } = details_metadata;
 
 const details_settings = {
-  icon: details,
+  icon: details_default,
   example: {
     attributes: {
       summary: (0,external_wp_i18n_namespaceObject.__)('La Mancha'),
@@ -18520,20 +18253,10 @@ const details_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/pencil.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const pencil = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z"
-  })
-}));
-/* eslint-enable */
+var pencil_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
+
 
 ;// ./packages/block-library/build-module/embed/embed-controls.js
 /**
@@ -18567,7 +18290,7 @@ const EmbedControls = ({
         children: showEditButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           className: "components-toolbar__control",
           label: (0,external_wp_i18n_namespaceObject.__)('Edit URL'),
-          icon: pencil,
+          icon: pencil_default,
           onClick: switchBackToURLInput
         })
       })
@@ -20110,22 +19833,17 @@ const embed_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/file.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const file = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var file_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M12.848 8a1 1 0 0 1-.914-.594l-.723-1.63a.5.5 0 0 0-.447-.276H5a.5.5 0 0 0-.5.5v11.5a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5v-9A.5.5 0 0 0 19 8h-6.152Zm.612-1.5a.5.5 0 0 1-.462-.31l-.445-1.084A2 2 0 0 0 10.763 4H5a2 2 0 0 0-2 2v11.5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-5.54Z"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/file/deprecated.js
 /**
@@ -20827,7 +20545,7 @@ function FileEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: file
+          icon: file_default
         }),
         labels: {
           title: (0,external_wp_i18n_namespaceObject.__)('File'),
@@ -21275,7 +20993,7 @@ const {
 } = file_metadata;
 
 const file_settings = {
-  icon: file,
+  icon: file_default,
   example: {
     attributes: {
       href: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Armstrong_Small_Step.ogg',
@@ -22556,20 +22274,10 @@ const form_submit_button_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/group.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const group = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 4h-7c-1.1 0-2 .9-2 2v3H6c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2v-3h3c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h3V13c0 1.1.9 2 2 2h2.5v3zm0-4.5H11c-.3 0-.5-.2-.5-.5v-2.5H13c.3 0 .5.2.5.5v2.5zm5-.5c0 .3-.2.5-.5.5h-3V11c0-1.1-.9-2-2-2h-2.5V6c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v7z"
-  })
-}));
-/* eslint-enable */
+var group_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 4h-7c-1.1 0-2 .9-2 2v3H6c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2v-3h3c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h3V13c0 1.1.9 2 2 2h2.5v3zm0-4.5H11c-.3 0-.5-.2-.5-.5v-2.5H13c.3 0 .5.2.5.5v2.5zm5-.5c0 .3-.2.5-.5.5h-3V11c0-1.1-.9-2-2-2h-2.5V6c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v7z" }) });
+
 
 ;// ./packages/block-library/build-module/form-submission-notification/edit.js
 /**
@@ -22741,7 +22449,7 @@ const {
 } = form_submission_notification_metadata;
 
 const form_submission_notification_settings = {
-  icon: group,
+  icon: group_default,
   edit: form_submission_notification_edit,
   save: form_submission_notification_save_save,
   variations: form_submission_notification_variations,
@@ -22754,22 +22462,17 @@ const form_submission_notification_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/gallery.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const gallery = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var gallery_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     d: "M16.375 4.5H4.625a.125.125 0 0 0-.125.125v8.254l2.859-1.54a.75.75 0 0 1 .68-.016l2.384 1.142 2.89-2.074a.75.75 0 0 1 .874 0l2.313 1.66V4.625a.125.125 0 0 0-.125-.125Zm.125 9.398-2.75-1.975-2.813 2.02a.75.75 0 0 1-.76.067l-2.444-1.17L4.5 14.583v1.792c0 .069.056.125.125.125h11.75a.125.125 0 0 0 .125-.125v-2.477ZM4.625 3C3.728 3 3 3.728 3 4.625v11.75C3 17.273 3.728 18 4.625 18h11.75c.898 0 1.625-.727 1.625-1.625V4.625C18 3.728 17.273 3 16.375 3H4.625ZM20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z",
     fillRule: "evenodd",
     clipRule: "evenodd"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/gallery/constants.js
 const LINK_DESTINATION_NONE = 'none';
@@ -23742,36 +23445,16 @@ const gallery_deprecated_v1 = {
 /* harmony default export */ const gallery_deprecated = ([deprecated_v7, deprecated_v6, deprecated_v5, deprecated_v4, gallery_deprecated_v3, gallery_deprecated_v2, gallery_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/custom-link.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const custom_link = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12.5 14.5h-1V16h1c2.2 0 4-1.8 4-4s-1.8-4-4-4h-1v1.5h1c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5zm-4 1.5v-1.5h-1C6.1 14.5 5 13.4 5 12s1.1-2.5 2.5-2.5h1V8h-1c-2.2 0-4 1.8-4 4s1.8 4 4 4h1zm-1-3.2h5v-1.5h-5v1.5zM18 4H9c-1.1 0-2 .9-2 2v.5h1.5V6c0-.3.2-.5.5-.5h9c.3 0 .5.2.5.5v12c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5v-.5H7v.5c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"
-  })
-}));
-/* eslint-enable */
+var custom_link_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12.5 14.5h-1V16h1c2.2 0 4-1.8 4-4s-1.8-4-4-4h-1v1.5h1c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5zm-4 1.5v-1.5h-1C6.1 14.5 5 13.4 5 12s1.1-2.5 2.5-2.5h1V8h-1c-2.2 0-4 1.8-4 4s1.8 4 4 4h1zm-1-3.2h5v-1.5h-5v1.5zM18 4H9c-1.1 0-2 .9-2 2v.5h1.5V6c0-.3.2-.5.5-.5h9c.3 0 .5.2.5.5v12c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5v-.5H7v.5c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" }) });
+
 
 ;// ./packages/icons/build-module/library/image.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const library_image = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z"
-  })
-}));
-/* eslint-enable */
+var image_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" }) });
+
 
 ;// ./packages/block-library/build-module/gallery/shared-icon.js
 /**
@@ -23781,7 +23464,7 @@ const gallery_deprecated_v1 = {
 
 
 const sharedIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-  icon: gallery
+  icon: gallery_default
 });
 
 ;// ./packages/block-library/build-module/gallery/shared.js
@@ -24234,23 +23917,23 @@ function GapStyles({
 
 const MAX_COLUMNS = 8;
 const LINK_OPTIONS = [{
-  icon: custom_link,
+  icon: custom_link_default,
   label: (0,external_wp_i18n_namespaceObject.__)('Link images to attachment pages'),
   value: LINK_DESTINATION_ATTACHMENT,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Attachment Pages')
 }, {
-  icon: library_image,
+  icon: image_default,
   label: (0,external_wp_i18n_namespaceObject.__)('Link images to media files'),
   value: LINK_DESTINATION_MEDIA,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Media Files')
 }, {
-  icon: fullscreen,
+  icon: fullscreen_default,
   label: (0,external_wp_i18n_namespaceObject.__)('Enlarge on click'),
   value: LINK_DESTINATION_LIGHTBOX,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Lightbox effect'),
   infoText: (0,external_wp_i18n_namespaceObject.__)('Scale images with a lightbox effect')
 }, {
-  icon: link_off,
+  icon: link_off_default,
   label: (0,external_wp_i18n_namespaceObject._x)('None', 'Media item link option'),
   value: LINK_DESTINATION_NONE,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('None')
@@ -24790,7 +24473,7 @@ function GalleryEdit(props) {
     }), external_wp_element_namespaceObject.Platform.isWeb ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
-        icon: library_link,
+        icon: link_default,
         label: (0,external_wp_i18n_namespaceObject.__)('Link'),
         children: ({
           onClose
@@ -25284,7 +24967,7 @@ const {
 } = gallery_metadata;
 
 const gallery_settings = {
-  icon: gallery,
+  icon: gallery_default,
   example: {
     attributes: {
       columns: 2
@@ -25993,54 +25676,29 @@ const group_transforms_transforms = {
 /* harmony default export */ const group_transforms = (group_transforms_transforms);
 
 ;// ./packages/icons/build-module/library/row.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const row = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 6.5h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4V16h5a.5.5 0 0 0 .5-.5v-7A.5.5 0 0 0 9 8H4V6.5Zm16 0h-5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h5V16h-5a.5.5 0 0 1-.5-.5v-7A.5.5 0 0 1 15 8h5V6.5Z"
-  })
-}));
-/* eslint-enable */
+var row_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 6.5h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4V16h5a.5.5 0 0 0 .5-.5v-7A.5.5 0 0 0 9 8H4V6.5Zm16 0h-5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h5V16h-5a.5.5 0 0 1-.5-.5v-7A.5.5 0 0 1 15 8h5V6.5Z" }) });
+
 
 ;// ./packages/icons/build-module/library/stack.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const stack = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.5 4v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V4H8v5a.5.5 0 0 0 .5.5h7A.5.5 0 0 0 16 9V4h1.5Zm0 16v-5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v5H8v-5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v5h1.5Z"
-  })
-}));
-/* eslint-enable */
+var stack_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M17.5 4v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V4H8v5a.5.5 0 0 0 .5.5h7A.5.5 0 0 0 16 9V4h1.5Zm0 16v-5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v5H8v-5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v5h1.5Z" }) });
+
 
 ;// ./packages/icons/build-module/library/grid.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const grid = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var grid_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     d: "m3 5c0-1.10457.89543-2 2-2h13.5c1.1046 0 2 .89543 2 2v13.5c0 1.1046-.8954 2-2 2h-13.5c-1.10457 0-2-.8954-2-2zm2-.5h6v6.5h-6.5v-6c0-.27614.22386-.5.5-.5zm-.5 8v6c0 .2761.22386.5.5.5h6v-6.5zm8 0v6.5h6c.2761 0 .5-.2239.5-.5v-6zm0-8v6.5h6.5v-6c0-.27614-.2239-.5-.5-.5z",
     fillRule: "evenodd",
     clipRule: "evenodd"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/group/variations.js
 /**
@@ -26092,7 +25750,7 @@ const group_variations_variations = [{
   },
   isDefault: true,
   scope: ['block', 'inserter', 'transform'],
-  icon: group
+  icon: group_default
 }, {
   name: 'group-row',
   title: (0,external_wp_i18n_namespaceObject._x)('Row', 'single horizontal line'),
@@ -26105,7 +25763,7 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: ['layout.type'],
-  icon: row,
+  icon: row_default,
   example
 }, {
   name: 'group-stack',
@@ -26119,7 +25777,7 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: ['layout.type', 'layout.orientation'],
-  icon: stack,
+  icon: stack_default,
   example
 }, {
   name: 'group-grid',
@@ -26132,7 +25790,7 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: ['layout.type'],
-  icon: grid,
+  icon: grid_default,
   example
 }];
 /* harmony default export */ const group_variations = (group_variations_variations);
@@ -26254,7 +25912,7 @@ const {
 } = group_metadata;
 
 const group_settings = {
-  icon: group,
+  icon: group_default,
   example: {
     attributes: {
       layout: {
@@ -26310,20 +25968,10 @@ const group_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/heading.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const heading = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6 5V18.5911L12 13.8473L18 18.5911V5H6Z"
-  })
-}));
-/* eslint-enable */
+var heading_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M6 5V18.5911L12 13.8473L18 18.5911V5H6Z" }) });
+
 
 ;// ./packages/block-library/build-module/heading/deprecated.js
 /**
@@ -26980,20 +26628,10 @@ const heading_transforms_transforms = {
 /* harmony default export */ const heading_transforms = (heading_transforms_transforms);
 
 ;// ./packages/icons/build-module/library/text-color.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const text_color = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12.9 6h-2l-4 11h1.9l1.1-3h4.2l1.1 3h1.9L12.9 6zm-2.5 6.5l1.5-4.9 1.7 4.9h-3.2z"
-  })
-}));
-/* eslint-enable */
+var text_color_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12.9 6h-2l-4 11h1.9l1.1-3h4.2l1.1 3h1.9L12.9 6zm-2.5 6.5l1.5-4.9 1.7 4.9h-3.2z" }) });
+
 
 ;// ./packages/block-library/build-module/heading/variations.js
 /**
@@ -27010,7 +26648,7 @@ const heading_variations_variations = [{
   },
   scope: ['inserter'],
   isActive: blockAttributes => blockAttributes.fitText,
-  icon: text_color,
+  icon: text_color_default,
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('This heading will automatically resize to fit its container width.'),
@@ -27122,7 +26760,7 @@ const {
 } = heading_metadata;
 
 const heading_settings = {
-  icon: heading,
+  icon: heading_default,
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('Code is Poetry'),
@@ -27169,20 +26807,10 @@ const heading_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/home.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const home = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z"
-  })
-}));
-/* eslint-enable */
+var home_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
+
 
 ;// ./packages/block-library/build-module/home-link/edit.js
 /**
@@ -27315,7 +26943,7 @@ const {
 } = home_link_metadata;
 
 const home_link_settings = {
-  icon: home,
+  icon: home_default,
   edit: HomeEdit,
   save: home_link_save_save,
   example: {
@@ -27331,20 +26959,10 @@ const home_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/html.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const html = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.8 11.4H2.1V9H1v6h1.1v-2.6h2.7V15h1.1V9H4.8v2.4zm1.9-1.3h1.7V15h1.1v-4.9h1.7V9H6.7v1.1zM16.2 9l-1.5 2.7L13.3 9h-.9l-.8 6h1.1l.5-4 1.5 2.8 1.5-2.8.5 4h1.1L17 9h-.8zm3.8 5V9h-1.1v6h3.6v-1H20z"
-  })
-}));
-/* eslint-enable */
+var html_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4.8 11.4H2.1V9H1v6h1.1v-2.6h2.7V15h1.1V9H4.8v2.4zm1.9-1.3h1.7V15h1.1v-4.9h1.7V9H6.7v1.1zM16.2 9l-1.5 2.7L13.3 9h-.9l-.8 6h1.1l.5-4 1.5 2.8 1.5-2.8.5 4h1.1L17 9h-.8zm3.8 5V9h-1.1v6h3.6v-1H20z" }) });
+
 
 ;// ./packages/block-library/build-module/html/preview.js
 /**
@@ -27539,7 +27157,7 @@ const {
 } = html_metadata;
 
 const html_settings = {
-  icon: html,
+  icon: html_default,
   example: {
     attributes: {
       content: '<marquee>' + (0,external_wp_i18n_namespaceObject.__)('Welcome to the wonderful world of blocks…') + '</marquee>'
@@ -28686,84 +28304,34 @@ const deprecated_v8 = {
 /* harmony default export */ const image_deprecated = ([deprecated_v8, image_deprecated_v7, image_deprecated_v6, image_deprecated_v5, image_deprecated_v4, image_deprecated_v3, image_deprecated_v2, image_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/plugins.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const plugins = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z"
-  })
-}));
-/* eslint-enable */
+var plugins_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
+
 
 ;// ./packages/icons/build-module/library/chevron-down.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const chevron_down = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
-  })
-}));
-/* eslint-enable */
+var chevron_down_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+
 
 ;// ./packages/icons/build-module/library/crop.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const crop = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 20v-2h2v-1.5H7.75a.25.25 0 0 1-.25-.25V4H6v2H4v1.5h2v8.75c0 .966.784 1.75 1.75 1.75h8.75v2H18ZM9.273 7.5h6.977a.25.25 0 0 1 .25.25v6.977H18V7.75A1.75 1.75 0 0 0 16.25 6H9.273v1.5Z"
-  })
-}));
-/* eslint-enable */
+var crop_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 20v-2h2v-1.5H7.75a.25.25 0 0 1-.25-.25V4H6v2H4v1.5h2v8.75c0 .966.784 1.75 1.75 1.75h8.75v2H18ZM9.273 7.5h6.977a.25.25 0 0 1 .25.25v6.977H18V7.75A1.75 1.75 0 0 0 16.25 6H9.273v1.5Z" }) });
+
 
 ;// ./packages/icons/build-module/library/overlay-text.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const overlay_text = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12-9.8c.4 0 .8-.3.9-.7l1.1-3h3.6l.5 1.7h1.9L13 9h-2.2l-3.4 9.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12H20V6c0-1.1-.9-2-2-2zm-6 7l1.4 3.9h-2.7L12 11z"
-  })
-}));
-/* eslint-enable */
+var overlay_text_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12-9.8c.4 0 .8-.3.9-.7l1.1-3h3.6l.5 1.7h1.9L13 9h-2.2l-3.4 9.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12H20V6c0-1.1-.9-2-2-2zm-6 7l1.4 3.9h-2.7L12 11z" }) });
+
 
 ;// ./packages/icons/build-module/library/upload.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const upload = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z"
-  })
-}));
-/* eslint-enable */
+var upload_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z" }) });
+
 
 ;// ./packages/block-library/build-module/image/image.js
 /**
@@ -28851,7 +28419,7 @@ function ContentOnlyControls({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
       ref: setPopoverAnchor,
       children: toggleProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-        icon: chevron_down
+        icon: chevron_down_default
         /* translators: button label text should, if possible, be under 16 characters. */,
         label: (0,external_wp_i18n_namespaceObject.__)('More'),
         toggleProps: {
@@ -29374,10 +28942,10 @@ function image_Image({
         resetLightbox: resetLightbox
       }), allowCrop && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         onClick: () => setIsEditingImage(true),
-        icon: crop,
+        icon: crop_default,
         label: (0,external_wp_i18n_namespaceObject.__)('Crop')
       }), showCoverControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        icon: overlay_text,
+        icon: overlay_text_default,
         label: (0,external_wp_i18n_namespaceObject.__)('Add text over image'),
         onClick: switchToCover
       })]
@@ -29385,7 +28953,7 @@ function image_Image({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           onClick: uploadExternal,
-          icon: upload,
+          icon: upload_default,
           label: (0,external_wp_i18n_namespaceObject.__)('Upload to Media Library')
         })
       })
@@ -30040,7 +29608,7 @@ function ImageEdit({
       className: dist_clsx('block-editor-media-placeholder', {
         [borderProps.className]: !!borderProps.className && !isSingleSelected
       }),
-      icon: !isSmallContainer && (lockUrlControls ? plugins : library_image),
+      icon: !isSmallContainer && (lockUrlControls ? plugins_default : image_default),
       withIllustration: !isSingleSelected || isSmallContainer,
       label: !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Image'),
       instructions: !lockUrlControls && !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Drag and drop an image, upload, or choose from your library.'),
@@ -30075,7 +29643,7 @@ function ImageEdit({
         maxContentWidth: maxContentWidth
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: library_image
+          icon: image_default
         }),
         onSelect: onSelectImage,
         onSelectURL: onSelectURL,
@@ -30525,7 +30093,7 @@ const {
 } = image_metadata;
 
 const image_settings = {
-  icon: library_image,
+  icon: image_default,
   example: {
     attributes: {
       sizeSlug: 'large',
@@ -30576,20 +30144,10 @@ const image_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/comment.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const comment = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z"
-  })
-}));
-/* eslint-enable */
+var comment_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z" }) });
+
 
 ;// ./packages/block-library/build-module/latest-comments/edit.js
 /**
@@ -30813,7 +30371,7 @@ const {
 } = latest_comments_metadata;
 
 const latest_comments_settings = {
-  icon: comment,
+  icon: comment_default,
   example: {},
   edit: LatestComments
 };
@@ -30824,20 +30382,10 @@ const latest_comments_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-list.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_list = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 5.5H6a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5ZM6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1 5h1.5v1.5H7V9Zm1.5 4.5H7V15h1.5v-1.5ZM10 9h7v1.5h-7V9Zm7 4.5h-7V15h7v-1.5Z"
-  })
-}));
-/* eslint-enable */
+var post_list_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 5.5H6a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5ZM6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1 5h1.5v1.5H7V9Zm1.5 4.5H7V15h1.5v-1.5ZM10 9h7v1.5h-7V9Zm7 4.5h-7V15h7v-1.5Z" }) });
+
 
 ;// ./packages/block-library/build-module/latest-posts/deprecated.js
 /**
@@ -31005,84 +30553,34 @@ const {
 }]);
 
 ;// ./packages/icons/build-module/library/align-none.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const align_none = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM5 9h14v6H5V9Z"
-  })
-}));
-/* eslint-enable */
+var align_none_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM5 9h14v6H5V9Z" }) });
+
 
 ;// ./packages/icons/build-module/library/position-left.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const position_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M5 5.5h8V4H5v1.5ZM5 20h8v-1.5H5V20ZM19 9H5v6h14V9Z"
-  })
-}));
-/* eslint-enable */
+var position_left_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M5 5.5h8V4H5v1.5ZM5 20h8v-1.5H5V20ZM19 9H5v6h14V9Z" }) });
+
 
 ;// ./packages/icons/build-module/library/position-center.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const position_center = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM7 9h10v6H7V9Z"
-  })
-}));
-/* eslint-enable */
+var position_center_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM7 9h10v6H7V9Z" }) });
+
 
 ;// ./packages/icons/build-module/library/position-right.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const position_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 5.5h-8V4h8v1.5ZM19 20h-8v-1.5h8V20ZM5 9h14v6H5V9Z"
-  })
-}));
-/* eslint-enable */
+var position_right_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 5.5h-8V4h8v1.5ZM19 20h-8v-1.5h8V20ZM5 9h14v6H5V9Z" }) });
+
 
 ;// ./packages/icons/build-module/library/list.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const list = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 4v1.5h16V4H4zm8 8.5h8V11h-8v1.5zM4 20h16v-1.5H4V20zm4-8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z"
-  })
-}));
-/* eslint-enable */
+var list_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 4v1.5h16V4H4zm8 8.5h8V11h-8v1.5zM4 20h16v-1.5H4V20zm4-8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z" }) });
+
 
 ;// ./packages/block-library/build-module/latest-posts/constants.js
 const MIN_EXCERPT_LENGTH = 10;
@@ -31132,19 +30630,19 @@ const USERS_LIST_QUERY = {
 };
 const imageAlignmentOptions = [{
   value: 'none',
-  icon: align_none,
+  icon: align_none_default,
   label: (0,external_wp_i18n_namespaceObject.__)('None')
 }, {
   value: 'left',
-  icon: position_left,
+  icon: position_left_default,
   label: (0,external_wp_i18n_namespaceObject.__)('Left')
 }, {
   value: 'center',
-  icon: position_center,
+  icon: position_center_default,
   label: (0,external_wp_i18n_namespaceObject.__)('Center')
 }, {
   value: 'right',
-  icon: position_right,
+  icon: position_right_default,
   label: (0,external_wp_i18n_namespaceObject.__)('Right')
 }];
 function getFeaturedImageDetails(post, size) {
@@ -31591,7 +31089,7 @@ function LatestPostsEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
       children: [inspectorControls, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-        icon: pin,
+        icon: pin_default,
         label: (0,external_wp_i18n_namespaceObject.__)('Latest Posts'),
         children: !Array.isArray(latestPosts) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('No posts found.')
       })]
@@ -31601,14 +31099,14 @@ function LatestPostsEdit({
   // Removing posts from display should be instant.
   const displayPosts = latestPosts.length > postsToShow ? latestPosts.slice(0, postsToShow) : latestPosts;
   const layoutControls = [{
-    icon: list,
+    icon: list_default,
     title: (0,external_wp_i18n_namespaceObject._x)('List view', 'Latest posts block display setting'),
     onClick: () => setAttributes({
       postLayout: 'list'
     }),
     isActive: postLayout === 'list'
   }, {
-    icon: grid,
+    icon: grid_default,
     title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'Latest posts block display setting'),
     onClick: () => setAttributes({
       postLayout: 'grid'
@@ -31853,7 +31351,7 @@ const {
 } = latest_posts_metadata;
 
 const latest_posts_settings = {
-  icon: post_list,
+  icon: post_list_default,
   example: {},
   edit: LatestPostsEdit,
   deprecated: latest_posts_deprecated
@@ -32312,100 +31810,40 @@ const list_deprecated_v3 = {
 /* harmony default export */ const list_deprecated = ([list_deprecated_v3, list_deprecated_v2, list_deprecated_v1, v0]);
 
 ;// ./packages/icons/build-module/library/format-outdent-rtl.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_outdent_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM15.4697 14.9697L18.4393 12L15.4697 9.03033L16.5303 7.96967L20.0303 11.4697L20.5607 12L20.0303 12.5303L16.5303 16.0303L15.4697 14.9697Z"
-  })
-}));
-/* eslint-enable */
+var format_outdent_rtl_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM15.4697 14.9697L18.4393 12L15.4697 9.03033L16.5303 7.96967L20.0303 11.4697L20.5607 12L20.0303 12.5303L16.5303 16.0303L15.4697 14.9697Z" }) });
+
 
 ;// ./packages/icons/build-module/library/format-outdent.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_outdent = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-4-4.6l-4 4 4 4 1-1-3-3 3-3-1-1z"
-  })
-}));
-/* eslint-enable */
+var format_outdent_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-4-4.6l-4 4 4 4 1-1-3-3 3-3-1-1z" }) });
+
 
 ;// ./packages/icons/build-module/library/format-list-bullets-rtl.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_list_bullets_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
-  })
-}));
-/* eslint-enable */
+var format_list_bullets_rtl_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
+
 
 ;// ./packages/icons/build-module/library/format-list-bullets.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_list_bullets = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-  })
-}));
-/* eslint-enable */
+var format_list_bullets_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
+
 
 ;// ./packages/icons/build-module/library/format-list-numbered-rtl.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_list_numbered_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M3.8 15.8h8.9v-1.5H3.8v1.5zm0-7h8.9V7.2H3.8v1.6zm14.7-2.1V10h1V5.3l-2.2.7.3 1 .9-.3zm1.2 6.1c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5H20v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3 0-.8-.3-1.1z"
-  })
-}));
-/* eslint-enable */
+var format_list_numbered_rtl_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M3.8 15.8h8.9v-1.5H3.8v1.5zm0-7h8.9V7.2H3.8v1.6zm14.7-2.1V10h1V5.3l-2.2.7.3 1 .9-.3zm1.2 6.1c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5H20v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3 0-.8-.3-1.1z" }) });
+
 
 ;// ./packages/icons/build-module/library/format-list-numbered.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_list_numbered = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM5 6.7V10h1V5.3L3.8 6l.4 1 .8-.3zm-.4 5.7c-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-1c.3-.6.8-1.4.9-2.1.1-.3 0-.8-.2-1.1-.5-.6-1.3-.5-1.7-.4z"
-  })
-}));
-/* eslint-enable */
+var format_list_numbered_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM5 6.7V10h1V5.3L3.8 6l.4 1 .8-.3zm-.4 5.7c-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-1c.3-.6.8-1.4.9-2.1.1-.3 0-.8-.2-1.1-.5-.6-1.3-.5-1.7-.4z" }) });
+
 
 ;// external ["wp","deprecated"]
 const external_wp_deprecated_namespaceObject = window["wp"]["deprecated"];
@@ -32674,7 +32112,7 @@ function IndentUI({
   }, [clientId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_outdent_rtl : format_outdent,
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_outdent_rtl_default : format_outdent_default,
       title: (0,external_wp_i18n_namespaceObject.__)('Outdent'),
       description: (0,external_wp_i18n_namespaceObject.__)('Outdent list item'),
       disabled: !canOutdent,
@@ -32717,7 +32155,7 @@ function list_edit_Edit({
   const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
     group: "block",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_bullets_rtl : format_list_bullets,
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
       title: (0,external_wp_i18n_namespaceObject.__)('Unordered'),
       description: (0,external_wp_i18n_namespaceObject.__)('Convert to unordered list'),
       isActive: ordered === false,
@@ -32727,7 +32165,7 @@ function list_edit_Edit({
         });
       }
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_numbered_rtl : format_list_numbered,
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
       title: (0,external_wp_i18n_namespaceObject.__)('Ordered'),
       description: (0,external_wp_i18n_namespaceObject.__)('Convert to ordered list'),
       isActive: ordered === true,
@@ -33007,7 +32445,7 @@ const {
 } = list_metadata;
 
 const list_settings = {
-  icon: list,
+  icon: list_default,
   example: {
     innerBlocks: [{
       name: 'core/list-item',
@@ -33049,52 +32487,22 @@ const list_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/list-item.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const list_item = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 11v1.5h8V11h-8zm-6-1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-  })
-}));
-/* eslint-enable */
+var list_item_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12 11v1.5h8V11h-8zm-6-1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
+
 
 ;// ./packages/icons/build-module/library/format-indent-rtl.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_indent_rtl = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM20.0303 9.03033L17.0607 12L20.0303 14.9697L18.9697 16.0303L15.4697 12.5303L14.9393 12L15.4697 11.4697L18.9697 7.96967L20.0303 9.03033Z"
-  })
-}));
-/* eslint-enable */
+var format_indent_rtl_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM20.0303 9.03033L17.0607 12L20.0303 14.9697L18.9697 16.0303L15.4697 12.5303L14.9393 12L15.4697 11.4697L18.9697 7.96967L20.0303 9.03033Z" }) });
+
 
 ;// ./packages/icons/build-module/library/format-indent.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_indent = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-8-3.5l3 3-3 3 1 1 4-4-4-4-1 1z"
-  })
-}));
-/* eslint-enable */
+var format_indent_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-8-3.5l3 3-3 3 1 1 4-4-4-4-1 1z" }) });
+
 
 ;// ./packages/block-library/build-module/list-item/hooks/use-indent-list-item.js
 /**
@@ -33534,14 +32942,14 @@ function edit_IndentUI({
   }, [clientId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_outdent_rtl : format_outdent,
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_outdent_rtl_default : format_outdent_default,
       title: (0,external_wp_i18n_namespaceObject.__)('Outdent'),
       shortcut: external_wp_keycodes_namespaceObject.displayShortcut.shift('Tab'),
       description: (0,external_wp_i18n_namespaceObject.__)('Outdent list item'),
       disabled: !canOutdent,
       onClick: () => outdentListItem()
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_indent_rtl : format_indent,
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_indent_rtl_default : format_indent_default,
       title: (0,external_wp_i18n_namespaceObject.__)('Indent'),
       shortcut: "Tab",
       description: (0,external_wp_i18n_namespaceObject.__)('Indent list item'),
@@ -33715,7 +33123,7 @@ const {
 } = list_item_metadata;
 
 const list_item_settings = {
-  icon: list_item,
+  icon: list_item_default,
   edit: ListItemEdit,
   save: list_item_save_save,
   merge(attributes, attributesToMerge) {
@@ -33734,20 +33142,10 @@ const list_item_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/login.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const login = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11 14.5l1.1 1.1 3-3 .5-.5-.6-.6-3-3-1 1 1.7 1.7H5v1.5h7.7L11 14.5zM16.8 5h-7c-1.1 0-2 .9-2 2v1.5h1.5V7c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v10c0 .3-.2.5-.5.5h-7c-.3 0-.5-.2-.5-.5v-1.5H7.8V17c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"
-  })
-}));
-/* eslint-enable */
+var login_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11 14.5l1.1 1.1 3-3 .5-.5-.6-.6-3-3-1 1 1.7 1.7H5v1.5h7.7L11 14.5zM16.8 5h-7c-1.1 0-2 .9-2 2v1.5h1.5V7c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v10c0 .3-.2.5-.5.5h-7c-.3 0-.5-.2-.5-.5v-1.5H7.8V17c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z" }) });
+
 
 ;// ./packages/block-library/build-module/loginout/edit.js
 /**
@@ -33904,7 +33302,7 @@ const {
 } = loginout_metadata;
 
 const loginout_settings = {
-  icon: login,
+  icon: login_default,
   edit: LoginOutEdit
 };
 const loginout_init = () => initBlock({
@@ -33914,20 +33312,10 @@ const loginout_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/media-and-text.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const media_and_text = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M3 6v11.5h8V6H3Zm11 3h7V7.5h-7V9Zm7 3.5h-7V11h7v1.5ZM14 16h7v-1.5h-7V16Z"
-  })
-}));
-/* eslint-enable */
+var media_and_text_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M3 6v11.5h8V6H3Zm11 3h7V7.5h-7V9Zm7 3.5h-7V11h7v1.5ZM14 16h7v-1.5h-7V16Z" }) });
+
 
 ;// ./packages/block-library/build-module/media-text/constants.js
 /**
@@ -34896,56 +34284,32 @@ const media_text_deprecated_v1 = {
 /* harmony default export */ const media_text_deprecated = ([media_text_deprecated_v7, media_text_deprecated_v6, media_text_deprecated_v5, media_text_deprecated_v4, media_text_deprecated_v3, media_text_deprecated_v2, media_text_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/pull-left.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const pull_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 18h6V6H4v12zm9-9.5V10h7V8.5h-7zm0 7h7V14h-7v1.5z"
-  })
-}));
-/* eslint-enable */
+var pull_left_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 18h6V6H4v12zm9-9.5V10h7V8.5h-7zm0 7h7V14h-7v1.5z" }) });
+
 
 ;// ./packages/icons/build-module/library/pull-right.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const pull_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M14 6v12h6V6h-6zM4 10h7V8.5H4V10zm0 5.5h7V14H4v1.5z"
-  })
-}));
-/* eslint-enable */
+var pull_right_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M14 6v12h6V6h-6zM4 10h7V8.5H4V10zm0 5.5h7V14H4v1.5z" }) });
+
 
 ;// ./packages/icons/build-module/library/media.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const media = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m7 6.5 4 2.5-4 2.5z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "m5 3c-1.10457 0-2 .89543-2 2v14c0 1.1046.89543 2 2 2h14c1.1046 0 2-.8954 2-2v-14c0-1.10457-.8954-2-2-2zm14 1.5h-14c-.27614 0-.5.22386-.5.5v10.7072l3.62953-2.6465c.25108-.1831.58905-.1924.84981-.0234l2.92666 1.8969 3.5712-3.4719c.2911-.2831.7545-.2831 1.0456 0l2.9772 2.8945v-9.3568c0-.27614-.2239-.5-.5-.5zm-14.5 14.5v-1.4364l4.09643-2.987 2.99567 1.9417c.2936.1903.6798.1523.9307-.0917l3.4772-3.3806 3.4772 3.3806.0228-.0234v2.5968c0 .2761-.2239.5-.5.5h-14c-.27614 0-.5-.2239-.5-.5z"
-  })]
-}));
-/* eslint-enable */
+var media_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m7 6.5 4 2.5-4 2.5z" }),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+    external_wp_primitives_namespaceObject.Path,
+    {
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      d: "m5 3c-1.10457 0-2 .89543-2 2v14c0 1.1046.89543 2 2 2h14c1.1046 0 2-.8954 2-2v-14c0-1.10457-.8954-2-2-2zm14 1.5h-14c-.27614 0-.5.22386-.5.5v10.7072l3.62953-2.6465c.25108-.1831.58905-.1924.84981-.0234l2.92666 1.8969 3.5712-3.4719c.2911-.2831.7545-.2831 1.0456 0l2.9772 2.8945v-9.3568c0-.27614-.2239-.5-.5-.5zm-14.5 14.5v-1.4364l4.09643-2.987 2.99567 1.9417c.2936.1903.6798.1523.9307-.0917l3.4772-3.3806 3.4772 3.3806.0228-.0234v2.5968c0 .2761-.2239.5-.5.5h-14c-.27614 0-.5-.2239-.5-.5z"
+    }
+  )
+] });
+
 
 ;// ./packages/block-library/build-module/media-text/image-fill.js
 function imageFillStyles(url, focalPoint) {
@@ -35033,7 +34397,7 @@ function PlaceholderContainer({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
     icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-      icon: media
+      icon: media_default
     }),
     labels: {
       title: (0,external_wp_i18n_namespaceObject.__)('Media area')
@@ -35538,14 +34902,14 @@ function MediaTextEdit({
           onChange: onVerticalAlignmentChange,
           value: verticalAlignment
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          icon: pull_left,
+          icon: pull_left_default,
           title: (0,external_wp_i18n_namespaceObject.__)('Show media on left'),
           isActive: mediaPosition === 'left',
           onClick: () => setAttributes({
             mediaPosition: 'left'
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          icon: pull_right,
+          icon: pull_right_default,
           title: (0,external_wp_i18n_namespaceObject.__)('Show media on right'),
           isActive: mediaPosition === 'right',
           onClick: () => setAttributes({
@@ -36069,7 +35433,7 @@ const {
 } = media_text_metadata;
 
 const media_text_settings = {
-  icon: media_and_text,
+  icon: media_and_text_default,
   example: {
     viewportWidth: 601,
     // Columns collapse "@media (max-width: 600px)".
@@ -36266,20 +35630,10 @@ const missing_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/more.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const more = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 9v1.5h16V9H4zm12 5.5h4V13h-4v1.5zm-6 0h4V13h-4v1.5zm-6 0h4V13H4v1.5z"
-  })
-}));
-/* eslint-enable */
+var more_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 9v1.5h16V9H4zm12 5.5h4V13h-4v1.5zm-6 0h4V13h-4v1.5zm-6 0h4V13H4v1.5z" }) });
+
 
 ;// ./packages/block-library/build-module/more/edit.js
 /**
@@ -36453,7 +35807,7 @@ const {
 } = more_metadata;
 
 const more_settings = {
-  icon: more,
+  icon: more_default,
   example: {},
   __experimentalLabel(attributes, {
     context
@@ -36477,86 +35831,41 @@ const more_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/navigation.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const navigation = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z"
-  })
-}));
-/* eslint-enable */
+var navigation_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z" }) });
+
 
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 ;// ./packages/icons/build-module/library/page.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const page = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
-  })]
-}));
-/* eslint-enable */
+var page_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z" }),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z" })
+] });
+
 
 ;// ./packages/icons/build-module/icon/index.js
-/**
- * WordPress dependencies
- */
 
+var icon_default = (0,external_wp_element_namespaceObject.forwardRef)(
+  ({ icon, size = 24, ...props }, ref) => {
+    return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
+      width: size,
+      height: size,
+      ...props,
+      ref
+    });
+  }
+);
 
-/**
- * External dependencies
- */
-
-/**
- * Return an SVG icon.
- *
- * @param props The component props.
- *
- * @return Icon component
- */
-/* harmony default export */ const build_module_icon = ((0,external_wp_element_namespaceObject.forwardRef)(({
-  icon,
-  size = 24,
-  ...props
-}, ref) => {
-  return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
-    width: size,
-    height: size,
-    ...props,
-    ref
-  });
-}));
 
 ;// ./packages/icons/build-module/library/close.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const library_close = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"
-  })
-}));
-/* eslint-enable */
+var close_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
+
 
 ;// ./packages/block-library/build-module/navigation/constants.js
 const constants_DEFAULT_BLOCK = {
@@ -36754,8 +36063,8 @@ const PlaceholderPreview = ({
     className: "wp-block-navigation-placeholder__preview",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "wp-block-navigation-placeholder__actions__indicator",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-        icon: navigation
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
+        icon: navigation_default
       }), (0,external_wp_i18n_namespaceObject.__)('Navigation')]
     })
   });
@@ -36763,20 +36072,10 @@ const PlaceholderPreview = ({
 /* harmony default export */ const placeholder_preview = (PlaceholderPreview);
 
 ;// ./packages/icons/build-module/library/more-vertical.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const more_vertical = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z"
-  })
-}));
-/* eslint-enable */
+var more_vertical_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
+
 
 ;// ./packages/block-library/build-module/navigation/edit/navigation-menu-selector.js
 /**
@@ -36872,7 +36171,7 @@ function NavigationMenuSelector({
   }, [hasResolvedNavigationMenus, createNavigationMenuIsSuccess, canUserCreateNavigationMenus, createNavigationMenuIsError, isUpdatingMenuRef, menuUnavailable, noBlockMenus, noMenuSelected]);
   const NavigationMenuSelectorDropdown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
     label: selectorLabel,
-    icon: more_vertical,
+    icon: more_vertical_default,
     toggleProps: {
       size: 'small'
     },
@@ -36979,8 +36278,8 @@ function NavigationPlaceholder({
           className: "wp-block-navigation-placeholder__actions",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
             className: "wp-block-navigation-placeholder__actions__indicator",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-              icon: navigation
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
+              icon: navigation_default
             }), " ", (0,external_wp_i18n_namespaceObject.__)('Navigation')]
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("hr", {}), isResolvingActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigation_menu_selector, {
             currentMenuId: currentMenuId,
@@ -37000,20 +36299,10 @@ function NavigationPlaceholder({
 }
 
 ;// ./packages/icons/build-module/library/menu.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const menu = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M5 5v1.5h14V5H5zm0 7.8h14v-1.5H5v1.5zM5 19h14v-1.5H5V19z"
-  })
-}));
-/* eslint-enable */
+var menu_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M5 5v1.5h14V5H5zm0 7.8h14v-1.5H5v1.5zM5 19h14v-1.5H5V19z" }) });
+
 
 ;// ./packages/block-library/build-module/navigation/edit/overlay-menu-icon.js
 /**
@@ -37026,8 +36315,8 @@ function OverlayMenuIcon({
   icon
 }) {
   if (icon === 'menu') {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-      icon: menu
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
+      icon: menu_default
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
@@ -37133,8 +36422,8 @@ function ResponsiveWrapper({
             className: "wp-block-navigation__responsive-container-close",
             "aria-label": hasIcon && (0,external_wp_i18n_namespaceObject.__)('Close menu'),
             onClick: () => onToggle(false),
-            children: [hasIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-              icon: library_close
+            children: [hasIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
+              icon: close_default
             }), !hasIcon && (0,external_wp_i18n_namespaceObject.__)('Close')]
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "wp-block-navigation__responsive-container-content",
@@ -37878,69 +37167,34 @@ function createTemplatePartId(theme, slug) {
 }
 
 ;// ./packages/icons/build-module/library/header.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const header = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18.5 10.5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-}));
-/* eslint-enable */
+var header_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18.5 10.5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
+
 
 ;// ./packages/icons/build-module/library/footer.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const footer = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var footer_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     d: "M18 5.5h-8v8h8.5V6a.5.5 0 00-.5-.5zm-9.5 8h-3V6a.5.5 0 01.5-.5h2.5v8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/icons/build-module/library/sidebar.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const sidebar = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-}));
-/* eslint-enable */
+var sidebar_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
+
 
 ;// ./packages/icons/build-module/library/symbol-filled.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const symbol_filled = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z"
-  })
-}));
-/* eslint-enable */
+var symbol_filled_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
+
 
 ;// ./packages/block-library/build-module/template-part/edit/utils/get-template-part-icon.js
 /**
@@ -37949,13 +37203,13 @@ function createTemplatePartId(theme, slug) {
 
 const getTemplatePartIcon = iconName => {
   if ('header' === iconName) {
-    return header;
+    return header_default;
   } else if ('footer' === iconName) {
-    return footer;
+    return footer_default;
   } else if ('sidebar' === iconName) {
-    return sidebar;
+    return sidebar_default;
   }
-  return symbol_filled;
+  return symbol_filled_default;
 };
 
 ;// ./packages/block-library/build-module/navigation/use-template-part-area-label.js
@@ -38353,36 +37607,16 @@ function DeletedNavigationWarning({
 /* harmony default export */ const deleted_navigation_warning = (DeletedNavigationWarning);
 
 ;// ./packages/icons/build-module/library/add-submenu.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const add_submenu = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M2 12c0 3.6 2.4 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.5 0-4.5-1.5-4.5-4s2-4.5 4.5-4.5h3.5V6H8c-3.6 0-6 2.4-6 6zm19.5-1h-8v1.5h8V11zm0 5h-8v1.5h8V16zm0-10h-8v1.5h8V6z"
-  })
-}));
-/* eslint-enable */
+var add_submenu_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M2 12c0 3.6 2.4 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.5 0-4.5-1.5-4.5-4s2-4.5 4.5-4.5h3.5V6H8c-3.6 0-6 2.4-6 6zm19.5-1h-8v1.5h8V11zm0 5h-8v1.5h8V16zm0-10h-8v1.5h8V6z" }) });
+
 
 ;// ./packages/icons/build-module/library/chevron-up.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const chevron_up = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
-  })
-}));
-/* eslint-enable */
+var chevron_up_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
+
 
 ;// ./packages/block-library/build-module/navigation/edit/leaf-more-menu.js
 /**
@@ -38420,7 +37654,7 @@ function AddSubmenuItem({
   const clientId = block.clientId;
   const isDisabled = !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(block.name);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-    icon: add_submenu,
+    icon: add_submenu_default,
     disabled: isDisabled,
     onClick: () => {
       const updateSelectionOnInsert = false;
@@ -38477,7 +37711,7 @@ function LeafMoreMenu(props) {
     return getBlockRootClientId(clientId);
   }, [clientId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-    icon: more_vertical,
+    icon: more_vertical_default,
     label: (0,external_wp_i18n_namespaceObject.__)('Options'),
     className: "block-editor-block-settings-menu",
     popoverProps: POPOVER_PROPS,
@@ -38488,14 +37722,14 @@ function LeafMoreMenu(props) {
     }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          icon: chevron_up,
+          icon: chevron_up_default,
           onClick: () => {
             moveBlocksUp([clientId], rootClientId);
             onClose();
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Move up')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          icon: chevron_down,
+          icon: chevron_down_default,
           onClick: () => {
             moveBlocksDown([clientId], rootClientId);
             onClose();
@@ -38580,52 +37814,22 @@ function useEntityBinding({
 }
 
 ;// ./packages/icons/build-module/library/plus.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const plus = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
-  })
-}));
-/* eslint-enable */
+var plus_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
+
 
 ;// ./packages/icons/build-module/library/chevron-right-small.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const chevron_right_small = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z"
-  })
-}));
-/* eslint-enable */
+var chevron_right_small_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
+
 
 ;// ./packages/icons/build-module/library/chevron-left-small.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const chevron_left_small = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z"
-  })
-}));
-/* eslint-enable */
+var chevron_left_small_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z" }) });
+
 
 ;// ./packages/block-library/build-module/navigation-link/link-ui/dialog-wrapper.js
 /**
@@ -38650,7 +37854,7 @@ function BackButton({
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     className: className,
-    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small : chevron_left_small,
+    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small_default : chevron_left_small_default,
     onClick: e => {
       e.preventDefault();
       onBack();
@@ -39122,7 +38326,7 @@ const LinkUITools = ({
     children: [canAddPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addPageButtonRef,
-      icon: plus,
+      icon: plus_default,
       onClick: e => {
         e.preventDefault();
         setAddingPage(true);
@@ -39132,7 +38336,7 @@ const LinkUITools = ({
     }), canAddBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addBlockButtonRef,
-      icon: plus,
+      icon: plus_default,
       onClick: e => {
         e.preventDefault();
         setAddingBlock(true);
@@ -39671,7 +38875,7 @@ function NavigationAddPageButton({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         name: "add-page",
-        icon: page,
+        icon: page_default,
         onClick: onAddPage,
         children: (0,external_wp_i18n_namespaceObject.__)('Add page')
       })
@@ -40042,8 +39246,8 @@ function Navigation({
             children: [hasIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverlayMenuIcon, {
                 icon: icon
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-                icon: library_close
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
+                icon: close_default
               })]
             }), !hasIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -41053,7 +40257,7 @@ const {
 } = navigation_metadata;
 
 const navigation_settings = {
-  icon: navigation,
+  icon: navigation_default,
   example: {
     attributes: {
       overlayMenu: 'never'
@@ -41278,7 +40482,7 @@ function controls_Controls({
           kind: attributes.kind
         }),
         suffix: hasUrlBinding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          icon: link_off,
+          icon: link_off_default,
           onClick: editBoundLink,
           "aria-describedby": helpTextId,
           showTooltip: true,
@@ -41729,7 +40933,7 @@ function NavigationLinkEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           name: "link",
-          icon: library_link,
+          icon: link_default,
           title: (0,external_wp_i18n_namespaceObject.__)('Link'),
           shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('k'),
           onClick: () => {
@@ -41737,7 +40941,7 @@ function NavigationLinkEdit({
           }
         }), !isAtMaxNesting && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           name: "submenu",
-          icon: add_submenu,
+          icon: add_submenu_default,
           title: (0,external_wp_i18n_namespaceObject.__)('Add submenu'),
           onClick: transformToSubmenu
         })]
@@ -41842,36 +41046,16 @@ function navigation_link_save_save() {
 }
 
 ;// ./packages/icons/build-module/library/tag.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const tag = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.75 4a.75.75 0 0 0-.75.75v7.826c0 .2.08.39.22.53l6.72 6.716a2.313 2.313 0 0 0 3.276-.001l5.61-5.611-.531-.53.532.528a2.315 2.315 0 0 0 0-3.264L13.104 4.22a.75.75 0 0 0-.53-.22H4.75ZM19 12.576a.815.815 0 0 1-.236.574l-5.61 5.611a.814.814 0 0 1-1.153 0L5.5 12.264V5.5h6.763l6.5 6.502a.816.816 0 0 1 .237.574ZM8.75 9.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
-  })
-}));
-/* eslint-enable */
+var tag_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4.75 4a.75.75 0 0 0-.75.75v7.826c0 .2.08.39.22.53l6.72 6.716a2.313 2.313 0 0 0 3.276-.001l5.61-5.611-.531-.53.532.528a2.315 2.315 0 0 0 0-3.264L13.104 4.22a.75.75 0 0 0-.53-.22H4.75ZM19 12.576a.815.815 0 0 1-.236.574l-5.61 5.611a.814.814 0 0 1-1.153 0L5.5 12.264V5.5h6.763l6.5 6.502a.816.816 0 0 1 .237.574ZM8.75 9.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" }) });
+
 
 ;// ./packages/icons/build-module/library/custom-post-type.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const custom_post_type = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4zm.8-4l.7.7 2-2V12h1V9.2l2 2 .7-.7-2-2H12v-1H9.2l2-2-.7-.7-2 2V4h-1v2.8l-2-2-.7.7 2 2H4v1h2.8l-2 2z"
-  })
-}));
-/* eslint-enable */
+var custom_post_type_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4zm.8-4l.7.7 2-2V12h1V9.2l2 2 .7-.7-2-2H12v-1H9.2l2-2-.7-.7-2 2V4h-1v2.8l-2-2-.7.7 2 2H4v1h2.8l-2 2z" }) });
+
 
 ;// ./packages/block-library/build-module/navigation-link/hooks.js
 /**
@@ -41881,15 +41065,15 @@ function navigation_link_save_save() {
 function getIcon(variationName) {
   switch (variationName) {
     case 'post':
-      return post_list;
+      return post_list_default;
     case 'page':
-      return page;
+      return page_default;
     case 'tag':
-      return tag;
+      return tag_default;
     case 'category':
-      return category;
+      return category_default;
     default:
-      return custom_post_type;
+      return custom_post_type_default;
   }
 }
 function enhanceNavigationLinkVariations(settings, name) {
@@ -42129,7 +41313,7 @@ const {
 } = navigation_link_metadata;
 
 const navigation_link_settings = {
-  icon: custom_link,
+  icon: custom_link_default,
   __experimentalLabel: ({
     label
   }) => label,
@@ -42202,22 +41386,17 @@ const navigation_link_init = () => {
 };
 
 ;// ./packages/icons/build-module/library/remove-submenu.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const remove_submenu = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var remove_submenu_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "m13.955 20.748 8-17.5-.91-.416L19.597 6H13.5v1.5h5.411l-1.6 3.5H13.5v1.5h3.126l-1.6 3.5H13.5l.028 1.5h.812l-1.295 2.832.91.416ZM17.675 16l-.686 1.5h4.539L21.5 16h-3.825Zm2.286-5-.686 1.5H21.5V11h-1.54ZM2 12c0 3.58 2.42 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.48 0-4.5-1.52-4.5-4S5.52 7.5 8 7.5h3.5V6H8c-3.58 0-6 2.42-6 6Z"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/navigation-submenu/icons.js
 /**
@@ -42534,7 +41713,7 @@ function NavigationSubmenuEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
         children: [!openSubmenusOnClick && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           name: "link",
-          icon: library_link,
+          icon: link_default,
           title: (0,external_wp_i18n_namespaceObject.__)('Link'),
           shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('k'),
           onClick: () => {
@@ -42542,7 +41721,7 @@ function NavigationSubmenuEdit({
           }
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           name: "revert",
-          icon: remove_submenu,
+          icon: remove_submenu_default,
           title: (0,external_wp_i18n_namespaceObject.__)('Convert to Link'),
           onClick: transformToLink,
           className: "wp-block-navigation__submenu__revert",
@@ -42769,9 +41948,9 @@ const navigation_submenu_settings = {
     context
   }) => {
     if (context === 'list-view') {
-      return page;
+      return page_default;
     }
-    return add_submenu;
+    return add_submenu_default;
   },
   __experimentalLabel(attributes, {
     context
@@ -42805,20 +41984,10 @@ const navigation_submenu_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/page-break.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const page_break = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.5 9V6a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v3H8V6a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v3h1.5Zm0 6.5V18a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-2.5H8V18a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2.5h1.5ZM4 13h16v-1.5H4V13Z"
-  })
-}));
-/* eslint-enable */
+var page_break_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M17.5 9V6a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v3H8V6a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v3h1.5Zm0 6.5V18a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-2.5H8V18a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2.5h1.5ZM4 13h16v-1.5H4V13Z" }) });
+
 
 ;// ./packages/block-library/build-module/nextpage/edit.js
 /**
@@ -42907,7 +42076,7 @@ const {
 } = nextpage_metadata;
 
 const nextpage_settings = {
-  icon: page_break,
+  icon: page_break_default,
   example: {},
   transforms: nextpage_transforms,
   edit: NextPageEdit,
@@ -43221,24 +42390,14 @@ const pattern_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/pages.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const pages = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M14.5 5.5h-7V7h7V5.5ZM7.5 9h7v1.5h-7V9Zm7 3.5h-7V14h7v-1.5Z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M16 2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM6 3.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5Z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z"
-  })]
-}));
-/* eslint-enable */
+var pages_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M14.5 5.5h-7V7h7V5.5ZM7.5 9h7v1.5h-7V9Zm7 3.5h-7V14h7v-1.5Z" }),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M16 2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM6 3.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5Z" }),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z" })
+] });
+
 
 ;// ./packages/block-library/build-module/page-list/use-convert-to-navigation-links.js
 /**
@@ -43818,7 +42977,7 @@ const {
 } = page_list_metadata;
 
 const page_list_settings = {
-  icon: pages,
+  icon: pages_default,
   example: {},
   edit: PageListEdit
 };
@@ -43994,7 +43153,7 @@ const page_list_item_settings = {
   __experimentalLabel: ({
     label
   }) => label,
-  icon: page,
+  icon: page_default,
   example: {},
   edit: PageListItemEdit
 };
@@ -44005,20 +43164,10 @@ const page_list_item_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/paragraph.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const paragraph = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m9.99609 14v-.2251l.00391.0001v6.225h1.5v-14.5h2.5v14.5h1.5v-14.5h3v-1.5h-8.50391c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5z"
-  })
-}));
-/* eslint-enable */
+var paragraph_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m9.99609 14v-.2251l.00391.0001v6.225h1.5v-14.5h2.5v14.5h1.5v-14.5h3v-1.5h-8.50391c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5z" }) });
+
 
 ;// ./packages/block-library/build-module/paragraph/deprecated.js
 /**
@@ -44379,20 +43528,10 @@ const paragraph_deprecated_deprecated = [
 /* harmony default export */ const paragraph_deprecated = (paragraph_deprecated_deprecated);
 
 ;// ./packages/icons/build-module/library/format-ltr.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const format_ltr = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M3 9c0 2.8 2.2 5 5 5v-.2V20h1.5V5.5H12V20h1.5V5.5h3V4H8C5.2 4 3 6.2 3 9Zm15.9-1-1.1 1 2.6 3-2.6 3 1.1 1 3.4-4-3.4-4Z"
-  })
-}));
-/* eslint-enable */
+var format_ltr_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M3 9c0 2.8 2.2 5 5 5v-.2V20h1.5V5.5H12V20h1.5V5.5h3V4H8C5.2 4 3 6.2 3 9Zm15.9-1-1.1 1 2.6 3-2.6 3 1.1 1 3.4-4-3.4-4Z" }) });
+
 
 ;// ./packages/block-library/build-module/paragraph/use-enter.js
 /**
@@ -44508,7 +43647,7 @@ function ParagraphRTLControl({
   setDirection
 }) {
   return (0,external_wp_i18n_namespaceObject.isRTL)() && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-    icon: format_ltr,
+    icon: format_ltr_default,
     title: (0,external_wp_i18n_namespaceObject._x)('Left to right', 'editor button'),
     isActive: direction === 'ltr',
     onClick: () => {
@@ -44817,7 +43956,7 @@ const paragraph_variations_variations = [{
   },
   scope: ['inserter'],
   isActive: blockAttributes => blockAttributes.fitText,
-  icon: text_color,
+  icon: text_color_default,
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('This text will automatically resize to fit its container width.'),
@@ -44929,7 +44068,7 @@ const {
 } = paragraph_metadata;
 
 const paragraph_settings = {
-  icon: paragraph,
+  icon: paragraph_default,
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing.')
@@ -44970,22 +44109,17 @@ const paragraph_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-author.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_author = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var post_author_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     d: "M10 4.5a1 1 0 11-2 0 1 1 0 012 0zm1.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm2.25 7.5v-1A2.75 2.75 0 0011 8.25H7A2.75 2.75 0 004.25 11v1h1.5v-1c0-.69.56-1.25 1.25-1.25h4c.69 0 1.25.56 1.25 1.25v1h1.5zM4 20h9v-1.5H4V20zm16-4H4v-1.5h16V16z",
     fillRule: "evenodd",
     clipRule: "evenodd"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/post-author/edit.js
 /**
@@ -45412,7 +44546,7 @@ const {
 } = post_author_metadata;
 
 const post_author_settings = {
-  icon: post_author,
+  icon: post_author_default,
   example: {
     viewportWidth: 350,
     attributes: {
@@ -45669,7 +44803,7 @@ const {
 } = post_author_name_metadata;
 
 const post_author_name_settings = {
-  icon: post_author,
+  icon: post_author_default,
   transforms: post_author_name_transforms,
   edit: post_author_name_edit
 };
@@ -45819,7 +44953,7 @@ const {
 } = post_author_biography_metadata;
 
 const post_author_biography_settings = {
-  icon: post_author,
+  icon: post_author_default,
   edit: post_author_biography_edit
 };
 const post_author_biography_init = () => initBlock({
@@ -45829,20 +44963,10 @@ const post_author_biography_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/block-default.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const block_default = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z"
-  })
-}));
-/* eslint-enable */
+var block_default_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z" }) });
+
 
 ;// ./packages/block-library/build-module/post-comment/edit.js
 /**
@@ -45870,7 +44994,7 @@ function post_comment_edit_Edit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
-        icon: block_default,
+        icon: block_default_default,
         label: (0,external_wp_i18n_namespaceObject._x)('Post Comment', 'block title'),
         instructions: (0,external_wp_i18n_namespaceObject.__)('To show a comment, input the comment ID.'),
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
@@ -45953,7 +45077,7 @@ const {
 } = post_comment_metadata;
 
 const post_comment_settings = {
-  icon: comment,
+  icon: comment_default,
   edit: post_comment_edit_Edit,
   save: post_comment_save_save
 };
@@ -45964,20 +45088,10 @@ const post_comment_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-comments-count.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_comments_count = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-2.2 6.6H7l1.6-2.2c.3-.4.5-.7.6-.9.1-.2.2-.4.2-.5 0-.2-.1-.3-.1-.4-.1-.1-.2-.1-.4-.1s-.4 0-.6.1c-.3.1-.5.3-.7.4l-.2.2-.2-1.2.1-.1c.3-.2.5-.3.8-.4.3-.1.6-.1.9-.1.3 0 .6.1.9.2.2.1.4.3.6.5.1.2.2.5.2.7 0 .3-.1.6-.2.9-.1.3-.4.7-.7 1.1l-.5.6h1.6v1.2z"
-  })
-}));
-/* eslint-enable */
+var post_comments_count_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-2.2 6.6H7l1.6-2.2c.3-.4.5-.7.6-.9.1-.2.2-.4.2-.5 0-.2-.1-.3-.1-.4-.1-.1-.2-.1-.4-.1s-.4 0-.6.1c-.3.1-.5.3-.7.4l-.2.2-.2-1.2.1-.1c.3-.2.5-.3.8-.4.3-.1.6-.1.9-.1.3 0 .6.1.9.2.2.1.4.3.6.5.1.2.2.5.2.7 0 .3-.1.6-.2.9-.1.3-.4.7-.7 1.1l-.5.6h1.6v1.2z" }) });
+
 
 ;// ./packages/block-library/build-module/post-comments-count/edit.js
 /**
@@ -46146,7 +45260,7 @@ const {
 } = post_comments_count_metadata;
 
 const post_comments_count_settings = {
-  icon: post_comments_count,
+  icon: post_comments_count_default,
   edit: PostCommentsCountEdit,
   transforms: post_comments_count_transforms
 };
@@ -46157,20 +45271,10 @@ const post_comments_count_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-comments-form.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_comments_form = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-.5 6.6H6.7l-1.2 1.2v-6.3h7v5.1z"
-  })
-}));
-/* eslint-enable */
+var post_comments_form_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-.5 6.6H6.7l-1.2 1.2v-6.3h7v5.1z" }) });
+
 
 ;// ./packages/block-library/build-module/post-comments-form/edit.js
 /**
@@ -46312,7 +45416,7 @@ const {
 } = post_comments_form_metadata;
 
 const post_comments_form_settings = {
-  icon: post_comments_form,
+  icon: post_comments_form_default,
   edit: PostCommentsFormEdit
 };
 const post_comments_form_init = () => initBlock({
@@ -46520,7 +45624,7 @@ const {
 
 const post_comments_link_settings = {
   edit: post_comments_link_edit,
-  icon: post_comments_count,
+  icon: post_comments_count_default,
   transforms: post_comments_link_transforms
 };
 const post_comments_link_init = () => initBlock({
@@ -46530,20 +45634,10 @@ const post_comments_link_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-content.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_content = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 6h12V4.5H4V6Zm16 4.5H4V9h16v1.5ZM4 15h16v-1.5H4V15Zm0 4.5h16V18H4v1.5Z"
-  })
-}));
-/* eslint-enable */
+var post_content_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4 6h12V4.5H4V6Zm16 4.5H4V9h16v1.5ZM4 15h16v-1.5H4V15Zm0 4.5h16V18H4v1.5Z" }) });
+
 
 ;// ./packages/block-library/build-module/post-content/edit.js
 /**
@@ -46865,7 +45959,7 @@ const {
 } = post_content_metadata;
 
 const post_content_settings = {
-  icon: post_content,
+  icon: post_content_default,
   edit: PostContentEdit
 };
 const post_content_init = () => initBlock({
@@ -47011,7 +46105,7 @@ function PostDateEdit({
             };
             return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
               "aria-expanded": isOpen,
-              icon: pencil,
+              icon: pencil_default,
               title: (0,external_wp_i18n_namespaceObject.__)('Change Date'),
               onClick: onToggle,
               onKeyDown: openOnArrowDown
@@ -47262,7 +46356,7 @@ const post_date_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: blockAttributes => blockAttributes?.metadata?.bindings?.datetime?.source === 'core/post-data' && blockAttributes?.metadata?.bindings?.datetime?.args?.key === 'date',
-  icon: post_date
+  icon: post_date_default
 }, {
   name: 'post-date-modified',
   title: (0,external_wp_i18n_namespaceObject.__)('Modified Date'),
@@ -47282,7 +46376,7 @@ const post_date_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: blockAttributes => blockAttributes?.metadata?.bindings?.datetime?.source === 'core/post-data' && blockAttributes?.metadata?.bindings?.datetime?.args?.key === 'modified',
-  icon: post_date
+  icon: post_date_default
 }];
 /* harmony default export */ const post_date_variations = (post_date_variations_variations);
 
@@ -47378,7 +46472,7 @@ const {
 } = post_date_metadata;
 
 const post_date_settings = {
-  icon: post_date,
+  icon: post_date_default,
   edit: PostDateEdit,
   deprecated: post_date_deprecated,
   variations: post_date_variations
@@ -47390,20 +46484,10 @@ const post_date_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-excerpt.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_excerpt = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M8.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H4v-3h4.001ZM4 20h9v-1.5H4V20Zm16-4H4v-1.5h16V16ZM13.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H9v-3h4.001Z"
-  })
-}));
-/* eslint-enable */
+var post_excerpt_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M8.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H4v-3h4.001ZM4 20h9v-1.5H4V20Zm16-4H4v-1.5h16V16ZM13.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H9v-3h4.001Z" }) });
+
 
 ;// ./packages/block-library/build-module/post-excerpt/edit.js
 /**
@@ -47752,7 +46836,7 @@ const {
 } = post_excerpt_metadata;
 
 const post_excerpt_settings = {
-  icon: post_excerpt,
+  icon: post_excerpt_default,
   transforms: post_excerpt_transforms,
   edit: PostExcerptEditor
 };
@@ -47763,20 +46847,10 @@ const post_excerpt_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-featured-image.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_featured_image = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-.6 0-1 .4-1 1v7c0 .5.4 1 1 1h14c.5 0 1-.4 1-1V4c0-.6-.4-1-1-1zM5.5 10.5v-.4l1.8-1.3 1.3.8c.3.2.7.2.9-.1L11 8.1l2.4 2.4H5.5zm13 0h-2.9l-4-4c-.3-.3-.8-.3-1.1 0L8.9 8l-1.2-.8c-.3-.2-.6-.2-.9 0l-1.3 1V4.5h13v6zM4 20h9v-1.5H4V20zm0-4h16v-1.5H4V16z"
-  })
-}));
-/* eslint-enable */
+var post_featured_image_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-.6 0-1 .4-1 1v7c0 .5.4 1 1 1h14c.5 0 1-.4 1-1V4c0-.6-.4-1-1-1zM5.5 10.5v-.4l1.8-1.3 1.3.8c.3.2.7.2.9-.1L11 8.1l2.4 2.4H5.5zm13 0h-2.9l-4-4c-.3-.3-.8-.3-1.1 0L8.9 8l-1.2-.8c-.3-.2-.6-.2-.9 0l-1.3 1V4.5h13v6zM4 20h9v-1.5H4V20zm0-4h16v-1.5H4V16z" }) });
+
 
 ;// ./packages/block-library/build-module/post-featured-image/dimension-controls.js
 /**
@@ -48422,7 +47496,7 @@ function PostFeaturedImageEdit({
       }) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
-          icon: upload,
+          icon: upload_default,
           variant: "primary",
           label: label,
           showTooltip: true,
@@ -48604,7 +47678,7 @@ const {
 } = post_featured_image_metadata;
 
 const post_featured_image_settings = {
-  icon: post_featured_image,
+  icon: post_featured_image_default,
   edit: PostFeaturedImageEdit
 };
 const post_featured_image_init = () => initBlock({
@@ -48822,36 +47896,16 @@ function PostNavigationLinkEdit({
 }
 
 ;// ./packages/icons/build-module/library/previous.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const previous = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z"
-  })
-}));
-/* eslint-enable */
+var previous_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
+
 
 ;// ./packages/icons/build-module/library/next.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const next = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z"
-  })
-}));
-/* eslint-enable */
+var next_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
+
 
 ;// ./packages/block-library/build-module/post-navigation-link/variations.js
 /**
@@ -48863,7 +47917,7 @@ const post_navigation_link_variations_variations = [{
   name: 'post-previous',
   title: (0,external_wp_i18n_namespaceObject.__)('Previous Post'),
   description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that precedes the current post.'),
-  icon: previous,
+  icon: previous_default,
   attributes: {
     type: 'previous'
   },
@@ -48879,7 +47933,7 @@ const post_navigation_link_variations_variations = [{
   name: 'post-next',
   title: (0,external_wp_i18n_namespaceObject.__)('Next Post'),
   description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that follows the current post.'),
-  icon: next,
+  icon: next_default,
   attributes: {
     type: 'next'
   },
@@ -49245,14 +48299,14 @@ function PostTemplateEdit({
     }
   });
   const displayLayoutControls = [{
-    icon: list,
+    icon: list_default,
     title: (0,external_wp_i18n_namespaceObject._x)('List view', 'Post template block display setting'),
     onClick: () => setDisplayLayout({
       type: 'default'
     }),
     isActive: layoutType === 'default' || layoutType === 'constrained'
   }, {
-    icon: grid,
+    icon: grid_default,
     title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'Post template block display setting'),
     onClick: () => setDisplayLayout({
       type: 'grid',
@@ -49376,7 +48430,7 @@ const {
 } = post_template_metadata;
 
 const post_template_settings = {
-  icon: layout,
+  icon: layout_default,
   edit: PostTemplateEdit,
   save: PostTemplateSave
 };
@@ -49387,22 +48441,17 @@ const post_template_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/post-categories.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_categories = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+var post_categories_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+  external_wp_primitives_namespaceObject.Path,
+  {
     d: "M20 4H4v1.5h16V4zm-2 9h-3c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm.5 5c0 .3-.2.5-.5.5h-3c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5v3zM4 9.5h9V8H4v1.5zM9 13H6c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm.5 5c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5v3z",
     fillRule: "evenodd",
     clipRule: "evenodd"
-  })
-}));
-/* eslint-enable */
+  }
+) });
+
 
 ;// ./packages/block-library/build-module/post-terms/use-post-terms.js
 /**
@@ -49585,20 +48634,10 @@ function PostTermsEdit({
 }
 
 ;// ./packages/icons/build-module/library/post-terms.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const post_terms = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M8.1 12.3c.1.1.3.3.5.3.2.1.4.1.6.1.2 0 .4 0 .6-.1.2-.1.4-.2.5-.3l3-3c.3-.3.5-.7.5-1.1 0-.4-.2-.8-.5-1.1L9.7 3.5c-.1-.2-.3-.3-.5-.3H5c-.4 0-.8.4-.8.8v4.2c0 .2.1.4.2.5l3.7 3.6zM5.8 4.8h3.1l3.4 3.4v.1l-3 3 .5.5-.7-.5-3.3-3.4V4.8zM4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4z"
-  })
-}));
-/* eslint-enable */
+var post_terms_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M8.1 12.3c.1.1.3.3.5.3.2.1.4.1.6.1.2 0 .4 0 .6-.1.2-.1.4-.2.5-.3l3-3c.3-.3.5-.7.5-1.1 0-.4-.2-.8-.5-1.1L9.7 3.5c-.1-.2-.3-.3-.5-.3H5c-.4 0-.8.4-.8.8v4.2c0 .2.1.4.2.5l3.7 3.6zM5.8 4.8h3.1l3.4 3.4v.1l-3 3 .5.5-.7-.5-3.3-3.4V4.8zM4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4z" }) });
+
 
 ;// ./packages/block-library/build-module/post-terms/hooks.js
 /**
@@ -49606,8 +48645,8 @@ function PostTermsEdit({
  */
 
 const variationIconMap = {
-  category: post_categories,
-  post_tag: post_terms
+  category: post_categories_default,
+  post_tag: post_terms_default
 };
 
 // We add `icons` to categories and tags. The remaining ones use
@@ -49621,7 +48660,7 @@ function enhanceVariations(settings, name) {
     return {
       ...variation,
       ...{
-        icon: (_variationIconMap$var = variationIconMap[variation.name]) !== null && _variationIconMap$var !== void 0 ? _variationIconMap$var : post_categories
+        icon: (_variationIconMap$var = variationIconMap[variation.name]) !== null && _variationIconMap$var !== void 0 ? _variationIconMap$var : post_categories_default
       }
     };
   });
@@ -49729,7 +48768,7 @@ const {
 } = post_terms_metadata;
 
 const post_terms_settings = {
-  icon: post_categories,
+  icon: post_categories_default,
   edit: PostTermsEdit
 };
 const post_terms_init = () => {
@@ -50405,7 +49444,7 @@ const {
 } = post_title_metadata;
 
 const post_title_settings = {
-  icon: title,
+  icon: title_default,
   edit: PostTitleEdit,
   deprecated: post_title_deprecated
 };
@@ -50416,20 +49455,10 @@ const post_title_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/preformatted.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const preformatted = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12zM7 16.5h6V15H7v1.5zm4-4h6V11h-6v1.5zM9 11H7v1.5h2V11zm6 5.5h2V15h-2v1.5z"
-  })
-}));
-/* eslint-enable */
+var preformatted_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12zM7 16.5h6V15H7v1.5zm4-4h6V11h-6v1.5zM9 11H7v1.5h2V11zm6 5.5h2V15h-2v1.5z" }) });
+
 
 ;// ./packages/block-library/build-module/preformatted/edit.js
 /**
@@ -50616,7 +49645,7 @@ const {
 } = preformatted_metadata;
 
 const preformatted_settings = {
-  icon: preformatted,
+  icon: preformatted_default,
   example: {
     attributes: {
       /* eslint-disable @wordpress/i18n-no-collapsible-whitespace */
@@ -50641,20 +49670,10 @@ const preformatted_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/pullquote.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const pullquote = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 8H6c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zm.5 6c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-4c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v4zM4 4v1.5h16V4H4zm0 16h16v-1.5H4V20z"
-  })
-}));
-/* eslint-enable */
+var pullquote_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18 8H6c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zm.5 6c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-4c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v4zM4 4v1.5h16V4H4zm0 16h16v-1.5H4V20z" }) });
+
 
 ;// ./packages/block-library/build-module/pullquote/shared.js
 const SOLID_COLOR_CLASS = `is-style-solid-color`;
@@ -51556,7 +50575,7 @@ const {
 } = pullquote_metadata;
 
 const pullquote_settings = {
-  icon: pullquote,
+  icon: pullquote_default,
   example: {
     attributes: {
       value:
@@ -51577,20 +50596,10 @@ const pullquote_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/loop.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const loop = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18.1823 11.6392C18.1823 13.0804 17.0139 14.2487 15.5727 14.2487C14.3579 14.2487 13.335 13.4179 13.0453 12.2922L13.0377 12.2625L13.0278 12.2335L12.3985 10.377L12.3942 10.3785C11.8571 8.64997 10.246 7.39405 8.33961 7.39405C5.99509 7.39405 4.09448 9.29465 4.09448 11.6392C4.09448 13.9837 5.99509 15.8843 8.33961 15.8843C8.88499 15.8843 9.40822 15.781 9.88943 15.5923L9.29212 14.0697C8.99812 14.185 8.67729 14.2487 8.33961 14.2487C6.89838 14.2487 5.73003 13.0804 5.73003 11.6392C5.73003 10.1979 6.89838 9.02959 8.33961 9.02959C9.55444 9.02959 10.5773 9.86046 10.867 10.9862L10.8772 10.9836L11.4695 12.7311C11.9515 14.546 13.6048 15.8843 15.5727 15.8843C17.9172 15.8843 19.8178 13.9837 19.8178 11.6392C19.8178 9.29465 17.9172 7.39404 15.5727 7.39404C15.0287 7.39404 14.5066 7.4968 14.0264 7.6847L14.6223 9.20781C14.9158 9.093 15.2358 9.02959 15.5727 9.02959C17.0139 9.02959 18.1823 10.1979 18.1823 11.6392Z"
-  })
-}));
-/* eslint-enable */
+var loop_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18.1823 11.6392C18.1823 13.0804 17.0139 14.2487 15.5727 14.2487C14.3579 14.2487 13.335 13.4179 13.0453 12.2922L13.0377 12.2625L13.0278 12.2335L12.3985 10.377L12.3942 10.3785C11.8571 8.64997 10.246 7.39405 8.33961 7.39405C5.99509 7.39405 4.09448 9.29465 4.09448 11.6392C4.09448 13.9837 5.99509 15.8843 8.33961 15.8843C8.88499 15.8843 9.40822 15.781 9.88943 15.5923L9.29212 14.0697C8.99812 14.185 8.67729 14.2487 8.33961 14.2487C6.89838 14.2487 5.73003 13.0804 5.73003 11.6392C5.73003 10.1979 6.89838 9.02959 8.33961 9.02959C9.55444 9.02959 10.5773 9.86046 10.867 10.9862L10.8772 10.9836L11.4695 12.7311C11.9515 14.546 13.6048 15.8843 15.5727 15.8843C17.9172 15.8843 19.8178 13.9837 19.8178 11.6392C19.8178 9.29465 17.9172 7.39404 15.5727 7.39404C15.0287 7.39404 14.5066 7.4968 14.0264 7.6847L14.6223 9.20781C14.9158 9.093 15.2358 9.02959 15.5727 9.02959C17.0139 9.02959 18.1823 10.1979 18.1823 11.6392Z" }) });
+
 
 ;// ./packages/block-library/build-module/query/utils.js
 /**
@@ -54436,7 +53445,7 @@ const {
 } = query_metadata;
 
 const query_settings = {
-  icon: loop,
+  icon: loop_default,
   edit: query_edit,
   example: {
     viewportWidth: 650,
@@ -54566,7 +53575,7 @@ const {
 } = query_no_results_metadata;
 
 const query_no_results_settings = {
-  icon: loop,
+  icon: loop_default,
   edit: QueryNoResultsEdit,
   save: query_no_results_save_save,
   example: {
@@ -54853,7 +53862,7 @@ const {
 } = query_pagination_metadata;
 
 const query_pagination_settings = {
-  icon: query_pagination,
+  icon: query_pagination_default,
   edit: edit_QueryPaginationEdit,
   save: query_pagination_save_save,
   deprecated: query_pagination_deprecated
@@ -54967,7 +53976,7 @@ const {
 } = query_pagination_next_metadata;
 
 const query_pagination_next_settings = {
-  icon: query_pagination_next,
+  icon: query_pagination_next_default,
   edit: QueryPaginationNextEdit
 };
 const query_pagination_next_init = () => initBlock({
@@ -55127,7 +54136,7 @@ const {
 } = query_pagination_numbers_metadata;
 
 const query_pagination_numbers_settings = {
-  icon: query_pagination_numbers,
+  icon: query_pagination_numbers_default,
   edit: QueryPaginationNumbersEdit,
   example: {}
 };
@@ -55240,7 +54249,7 @@ const {
 } = query_pagination_previous_metadata;
 
 const query_pagination_previous_settings = {
-  icon: query_pagination_previous,
+  icon: query_pagination_previous_default,
   edit: QueryPaginationPreviousEdit
 };
 const query_pagination_previous_init = () => initBlock({
@@ -55591,7 +54600,7 @@ const query_title_variations_variations = [{
   name: 'archive-title',
   title: (0,external_wp_i18n_namespaceObject.__)('Archive Title'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display the archive title based on the queried object.'),
-  icon: title,
+  icon: title_default,
   attributes: {
     type: 'archive'
   },
@@ -55601,7 +54610,7 @@ const query_title_variations_variations = [{
   name: 'search-title',
   title: (0,external_wp_i18n_namespaceObject.__)('Search Results Title'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display the search results title based on the queried object.'),
-  icon: title,
+  icon: title_default,
   attributes: {
     type: 'search'
   },
@@ -55611,7 +54620,7 @@ const query_title_variations_variations = [{
   name: 'post-type-label',
   title: (0,external_wp_i18n_namespaceObject.__)('Post Type Label'),
   description: (0,external_wp_i18n_namespaceObject.__)('Display the post type label based on the queried object.'),
-  icon: title,
+  icon: title_default,
   attributes: {
     type: 'post-type'
   },
@@ -55785,7 +54794,7 @@ const {
 } = query_title_metadata;
 
 const query_title_settings = {
-  icon: title,
+  icon: title_default,
   edit: QueryTitleEdit,
   variations: query_title_variations,
   deprecated: query_title_deprecated
@@ -56005,20 +55014,10 @@ const query_total_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/quote.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const quote = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 6v6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H13zm-9 6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H4v6z"
-  })
-}));
-/* eslint-enable */
+var quote_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 6v6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H13zm-9 6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H4v6z" }) });
+
 
 ;// ./packages/block-library/build-module/quote/deprecated.js
 /**
@@ -56391,20 +55390,10 @@ const quote_deprecated_v0 = {
 /* harmony default export */ const quote_deprecated = ([quote_deprecated_v4, quote_deprecated_v3, quote_deprecated_v2, quote_deprecated_v1, quote_deprecated_v0]);
 
 ;// ./packages/icons/build-module/library/verse.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const verse = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z"
-  })
-}));
-/* eslint-enable */
+var verse_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z" }) });
+
 
 ;// ./packages/block-library/build-module/quote/edit.js
 /**
@@ -56517,7 +55506,7 @@ function QuoteEdit({
         attributes: attributes,
         setAttributes: setAttributes,
         __unstableMobileNoFocusOnMount: true,
-        icon: verse,
+        icon: verse_default,
         label: (0,external_wp_i18n_namespaceObject.__)('Quote citation'),
         placeholder:
         // translators: placeholder text used for the
@@ -56818,7 +55807,7 @@ const {
 } = quote_metadata;
 
 const quote_settings = {
-  icon: quote,
+  icon: quote_default,
   example: {
     attributes: {
       citation: (0,external_wp_i18n_namespaceObject.__)('Julio Cortázar')
@@ -56842,20 +55831,10 @@ const quote_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/symbol.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const symbol = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z"
-  })
-}));
-/* eslint-enable */
+var symbol_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
+
 
 ;// external ["wp","patterns"]
 const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
@@ -57241,7 +56220,7 @@ const {
 const block_settings = {
   deprecated: block_deprecated,
   edit: ReusableBlockEditRecursionWrapper,
-  icon: symbol,
+  icon: symbol_default,
   __experimentalLabel: ({
     ref
   }) => {
@@ -57403,7 +56382,7 @@ const {
 } = read_more_metadata;
 
 const read_more_settings = {
-  icon: library_link,
+  icon: link_default,
   edit: ReadMore,
   example: {
     attributes: {
@@ -57418,20 +56397,10 @@ const read_more_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/rss.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const rss = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M5 10.2h-.8v1.5H5c1.9 0 3.8.8 5.1 2.1 1.4 1.4 2.1 3.2 2.1 5.1v.8h1.5V19c0-2.3-.9-4.5-2.6-6.2-1.6-1.6-3.8-2.6-6.1-2.6zm10.4-1.6C12.6 5.8 8.9 4.2 5 4.2h-.8v1.5H5c3.5 0 6.9 1.4 9.4 3.9s3.9 5.8 3.9 9.4v.8h1.5V19c0-3.9-1.6-7.6-4.4-10.4zM4 20h3v-3H4v3z"
-  })
-}));
-/* eslint-enable */
+var rss_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M5 10.2h-.8v1.5H5c1.9 0 3.8.8 5.1 2.1 1.4 1.4 2.1 3.2 2.1 5.1v.8h1.5V19c0-2.3-.9-4.5-2.6-6.2-1.6-1.6-3.8-2.6-6.1-2.6zm10.4-1.6C12.6 5.8 8.9 4.2 5 4.2h-.8v1.5H5c3.5 0 6.9 1.4 9.4 3.9s3.9 5.8 3.9 9.4v.8h1.5V19c0-3.9-1.6-7.6-4.4-10.4zM4 20h3v-3H4v3z" }) });
+
 
 ;// ./packages/block-library/build-module/rss/edit.js
 /**
@@ -57493,7 +56462,7 @@ function RSSEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-        icon: rss,
+        icon: rss_default,
         label: label,
         instructions: (0,external_wp_i18n_namespaceObject.__)('Display entries from any RSS or Atom feed.'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
@@ -57521,18 +56490,18 @@ function RSSEdit({
     });
   }
   const toolbarControls = [{
-    icon: pencil,
+    icon: pencil_default,
     title: (0,external_wp_i18n_namespaceObject.__)('Edit RSS URL'),
     onClick: () => setIsEditing(true)
   }, {
-    icon: list,
+    icon: list_default,
     title: (0,external_wp_i18n_namespaceObject._x)('List view', 'RSS block display setting'),
     onClick: () => setAttributes({
       blockLayout: 'list'
     }),
     isActive: blockLayout === 'list'
   }, {
-    icon: grid,
+    icon: grid_default,
     title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'RSS block display setting'),
     onClick: () => setAttributes({
       blockLayout: 'grid'
@@ -57811,7 +56780,7 @@ const {
 } = rss_metadata;
 
 const rss_settings = {
-  icon: rss,
+  icon: rss_default,
   example: {
     attributes: {
       feedURL: 'https://wordpress.org'
@@ -57826,20 +56795,10 @@ const rss_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/search.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const search = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
-  })
-}));
-/* eslint-enable */
+var search_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
+
 
 ;// ./packages/block-library/build-module/search/utils.js
 /**
@@ -58073,8 +57032,8 @@ function SearchEdit({
         "aria-label": buttonText ? (0,external_wp_dom_namespaceObject.__unstableStripHTML)(buttonText) : (0,external_wp_i18n_namespaceObject.__)('Search'),
         onClick: handleButtonClick,
         ref: buttonRef,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-          icon: search
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
+          icon: search_default
         })
       }), !buttonUseIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
         identifier: "buttonText",
@@ -58446,7 +57405,7 @@ const {
 } = search_metadata;
 
 const search_settings = {
-  icon: search,
+  icon: search_default,
   example: {
     attributes: {
       buttonText: (0,external_wp_i18n_namespaceObject.__)('Search'),
@@ -58464,20 +57423,10 @@ const search_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/separator.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const separator = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.5 12.5v4H3V7h1.5v3.987h15V7H21v9.5h-1.5v-4h-15Z"
-  })
-}));
-/* eslint-enable */
+var separator_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M4.5 12.5v4H3V7h1.5v3.987h15V7H21v9.5h-1.5v-4h-15Z" }) });
+
 
 ;// ./packages/block-library/build-module/separator/use-deprecated-opacity.js
 /**
@@ -58819,7 +57768,7 @@ const {
 } = separator_metadata;
 
 const separator_settings = {
-  icon: separator,
+  icon: separator_default,
   example: {
     attributes: {
       customColor: '#065174',
@@ -58838,20 +57787,10 @@ const separator_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/shortcode.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const shortcode = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M16 4.2v1.5h2.5v12.5H16v1.5h4V4.2h-4zM4.2 19.8h4v-1.5H5.8V5.8h2.5V4.2h-4l-.1 15.6zm5.1-3.1l1.4.6 4-10-1.4-.6-4 10z"
-  })
-}));
-/* eslint-enable */
+var shortcode_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M16 4.2v1.5h2.5v12.5H16v1.5h4V4.2h-4zM4.2 19.8h4v-1.5H5.8V5.8h2.5V4.2h-4l-.1 15.6zm5.1-3.1l1.4.6 4-10-1.4-.6-4 10z" }) });
+
 
 ;// ./packages/block-library/build-module/shortcode/edit.js
 /**
@@ -58872,7 +57811,7 @@ function ShortcodeEdit({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)(),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-      icon: shortcode,
+      icon: shortcode_default,
       label: (0,external_wp_i18n_namespaceObject.__)('Shortcode'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.PlainText, {
         className: "blocks-shortcode__textarea",
@@ -58975,7 +57914,7 @@ const {
 } = shortcode_metadata;
 
 const shortcode_settings = {
-  icon: shortcode,
+  icon: shortcode_default,
   transforms: shortcode_transforms,
   edit: ShortcodeEdit,
   save: shortcode_save_save
@@ -58987,20 +57926,10 @@ const shortcode_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/site-logo.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const site_logo = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm0 1.5c3.4 0 6.2 2.7 6.5 6l-1.2-.6-.8-.4c-.1 0-.2 0-.3-.1H16c-.1-.2-.4-.2-.7 0l-2.9 2.1L9 11.3h-.7L5.5 13v-1.1c0-3.6 2.9-6.5 6.5-6.5Zm0 13c-2.7 0-5-1.7-6-4l2.8-1.7 3.5 1.2h.4s.2 0 .4-.2l2.9-2.1.4.2c.6.3 1.4.7 2.1 1.1-.5 3.1-3.2 5.4-6.4 5.4Z"
-  })
-}));
-/* eslint-enable */
+var site_logo_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm0 1.5c3.4 0 6.2 2.7 6.5 6l-1.2-.6-.8-.4c-.1 0-.2 0-.3-.1H16c-.1-.2-.4-.2-.7 0l-2.9 2.1L9 11.3h-.7L5.5 13v-1.1c0-3.6 2.9-6.5 6.5-6.5Zm0 13c-2.7 0-5-1.7-6-4l2.8-1.7 3.5 1.2h.4s.2 0 .4-.2l2.9-2.1.4.2c.6.3 1.4.7 2.1 1.1-.5 3.1-3.2 5.4-6.4 5.4Z" }) });
+
 
 ;// ./packages/block-library/build-module/site-logo/edit.js
 /**
@@ -59337,7 +58266,7 @@ const SiteLogo = ({
       group: "block",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         onClick: () => setIsEditingImage(true),
-        icon: crop,
+        icon: crop_default,
         label: (0,external_wp_i18n_namespaceObject.__)('Crop')
       })
     }), imgEdit]
@@ -59642,7 +58571,7 @@ function LogoEdit({
       }) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
-          icon: upload,
+          icon: upload_default,
           variant: "primary",
           label: (0,external_wp_i18n_namespaceObject.__)('Choose logo'),
           showTooltip: true,
@@ -59767,7 +58696,7 @@ const {
 } = site_logo_metadata;
 
 const site_logo_settings = {
-  icon: site_logo,
+  icon: site_logo_default,
   example: {},
   edit: LogoEdit,
   transforms: site_logo_transforms
@@ -60036,20 +58965,10 @@ const site_tagline_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/map-marker.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const map_marker = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 9c-.8 0-1.5.7-1.5 1.5S11.2 12 12 12s1.5-.7 1.5-1.5S12.8 9 12 9zm0-5c-3.6 0-6.5 2.8-6.5 6.2 0 .8.3 1.8.9 3.1.5 1.1 1.2 2.3 2 3.6.7 1 3 3.8 3.2 3.9l.4.5.4-.5c.2-.2 2.6-2.9 3.2-3.9.8-1.2 1.5-2.5 2-3.6.6-1.3.9-2.3.9-3.1C18.5 6.8 15.6 4 12 4zm4.3 8.7c-.5 1-1.1 2.2-1.9 3.4-.5.7-1.7 2.2-2.4 3-.7-.8-1.9-2.3-2.4-3-.8-1.2-1.4-2.3-1.9-3.3-.6-1.4-.7-2.2-.7-2.5 0-2.6 2.2-4.7 5-4.7s5 2.1 5 4.7c0 .2-.1 1-.7 2.4z"
-  })
-}));
-/* eslint-enable */
+var map_marker_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12 9c-.8 0-1.5.7-1.5 1.5S11.2 12 12 12s1.5-.7 1.5-1.5S12.8 9 12 9zm0-5c-3.6 0-6.5 2.8-6.5 6.2 0 .8.3 1.8.9 3.1.5 1.1 1.2 2.3 2 3.6.7 1 3 3.8 3.2 3.9l.4.5.4-.5c.2-.2 2.6-2.9 3.2-3.9.8-1.2 1.5-2.5 2-3.6.6-1.3.9-2.3.9-3.1C18.5 6.8 15.6 4 12 4zm4.3 8.7c-.5 1-1.1 2.2-1.9 3.4-.5.7-1.7 2.2-2.4 3-.7-.8-1.9-2.3-2.4-3-.8-1.2-1.4-2.3-1.9-3.3-.6-1.4-.7-2.2-.7-2.5 0-2.6 2.2-4.7 5-4.7s5 2.1 5 4.7c0 .2-.1 1-.7 2.4z" }) });
+
 
 ;// ./packages/block-library/build-module/site-title/edit.js
 /**
@@ -60394,7 +59313,7 @@ const {
 } = site_title_metadata;
 
 const site_title_settings = {
-  icon: map_marker,
+  icon: map_marker_default,
   example: {
     viewportWidth: 350,
     attributes: {
@@ -60412,36 +59331,16 @@ const site_title_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/share.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const share = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M9 11.8l6.1-4.5c.1.4.4.7.9.7h2c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1h-2c-.6 0-1 .4-1 1v.4l-6.4 4.8c-.2-.1-.4-.2-.6-.2H6c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h2c.2 0 .4-.1.6-.2l6.4 4.8v.4c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1h-2c-.5 0-.8.3-.9.7L9 12.2v-.4z"
-  })
-}));
-/* eslint-enable */
+var share_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M9 11.8l6.1-4.5c.1.4.4.7.9.7h2c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1h-2c-.6 0-1 .4-1 1v.4l-6.4 4.8c-.2-.1-.4-.2-.6-.2H6c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h2c.2 0 .4-.1.6-.2l6.4 4.8v.4c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1h-2c-.5 0-.8.3-.9.7L9 12.2v-.4z" }) });
+
 
 ;// ./packages/icons/build-module/library/keyboard-return.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const keyboard_return = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m6.734 16.106 2.176-2.38-1.093-1.028-3.846 4.158 3.846 4.158 1.093-1.028-2.176-2.38h2.811c1.125 0 2.25.03 3.374 0 1.428-.001 3.362-.25 4.963-1.277 1.66-1.065 2.868-2.906 2.868-5.859 0-2.479-1.327-4.896-3.65-5.93-1.82-.813-3.044-.8-4.806-.788l-.567.002v1.5c.184 0 .368 0 .553-.002 1.82-.007 2.704-.014 4.21.657 1.854.827 2.76 2.657 2.76 4.561 0 2.472-.973 3.824-2.178 4.596-1.258.807-2.864 1.04-4.163 1.04h-.02c-1.115.03-2.229 0-3.344 0H6.734Z"
-  })
-}));
-/* eslint-enable */
+var keyboard_return_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m6.734 16.106 2.176-2.38-1.093-1.028-3.846 4.158 3.846 4.158 1.093-1.028-2.176-2.38h2.811c1.125 0 2.25.03 3.374 0 1.428-.001 3.362-.25 4.963-1.277 1.66-1.065 2.868-2.906 2.868-5.859 0-2.479-1.327-4.896-3.65-5.93-1.82-.813-3.044-.8-4.806-.788l-.567.002v1.5c.184 0 .368 0 .553-.002 1.82-.007 2.704-.014 4.21.657 1.854.827 2.76 2.657 2.76 4.561 0 2.472-.973 3.824-2.178 4.596-1.258.807-2.864 1.04-4.163 1.04h-.02c-1.115.03-2.229 0-3.344 0H6.734Z" }) });
+
 
 ;// ./packages/block-library/build-module/social-link/icons/chain.js
 /**
@@ -60559,7 +59458,7 @@ const SocialLinkURLPopover = ({
           suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
             variant: "control",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              icon: keyboard_return,
+              icon: keyboard_return_default,
               label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
               type: "submit",
               size: "small"
@@ -61921,7 +60820,7 @@ const {
 } = social_link_metadata;
 
 const social_link_settings = {
-  icon: share,
+  icon: share_default,
   edit: social_link_edit,
   variations: social_link_variations
 };
@@ -62485,7 +61384,7 @@ const social_links_settings = {
       }
     }]
   },
-  icon: share,
+  icon: share_default,
   edit: social_links_edit,
   save: social_links_save_save,
   deprecated: social_links_deprecated
@@ -62497,20 +61396,10 @@ const social_links_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/resize-corner-n-e.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const resize_corner_n_e = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M7 18h4.5v1.5h-7v-7H6V17L17 6h-4.5V4.5h7v7H18V7L7 18Z"
-  })
-}));
-/* eslint-enable */
+var resize_corner_n_e_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M7 18h4.5v1.5h-7v-7H6V17L17 6h-4.5V4.5h7v7H18V7L7 18Z" }) });
+
 
 ;// ./packages/block-library/build-module/spacer/deprecated.js
 /**
@@ -63106,7 +61995,7 @@ const {
 } = spacer_metadata;
 
 const spacer_settings = {
-  icon: resize_corner_n_e,
+  icon: resize_corner_n_e_default,
   transforms: spacer_transforms,
   edit: spacer_edit,
   save: spacer_save_save,
@@ -63119,20 +62008,10 @@ const spacer_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/block-table.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const block_table = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z"
-  })
-}));
-/* eslint-enable */
+var block_table_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
+
 
 ;// ./packages/block-library/build-module/table/deprecated.js
 /**
@@ -63898,164 +62777,64 @@ const table_deprecated_v1 = {
 /* harmony default export */ const table_deprecated = ([table_deprecated_v4, table_deprecated_v3, table_deprecated_v2, table_deprecated_v1]);
 
 ;// ./packages/icons/build-module/library/align-left.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const align_left = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 5.5H4V4h9v1.5Zm7 7H4V11h16v1.5Zm-7 7H4V18h9v1.5Z"
-  })
-}));
-/* eslint-enable */
+var align_left_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 5.5H4V4h9v1.5Zm7 7H4V11h16v1.5Zm-7 7H4V18h9v1.5Z" }) });
+
 
 ;// ./packages/icons/build-module/library/align-center.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const align_center = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M7.5 5.5h9V4h-9v1.5Zm-3.5 7h16V11H4v1.5Zm3.5 7h9V18h-9v1.5Z"
-  })
-}));
-/* eslint-enable */
+var align_center_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M7.5 5.5h9V4h-9v1.5Zm-3.5 7h16V11H4v1.5Zm3.5 7h9V18h-9v1.5Z" }) });
+
 
 ;// ./packages/icons/build-module/library/align-right.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const align_right = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11.111 5.5H20V4h-8.889v1.5ZM4 12.5h16V11H4v1.5Zm7.111 7H20V18h-8.889v1.5Z"
-  })
-}));
-/* eslint-enable */
+var align_right_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11.111 5.5H20V4h-8.889v1.5ZM4 12.5h16V11H4v1.5Zm7.111 7H20V18h-8.889v1.5Z" }) });
+
 
 ;// ./packages/icons/build-module/library/table-row-before.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table_row_before = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M21 5c0-1.1-.9-2-2-2H5c-1 0-1.9.8-2 1.8V19.2c.1.9.9 1.7 1.8 1.8H19c1.1 0 2-.9 2-2V5ZM4.5 14V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v9h-15Zm4 5.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm5.5 0h-4v-4h4v4Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19ZM11.2 10h-3V8.5h3v-3h1.5v3h3V10h-3v3h-1.5v-3Z"
-  })
-}));
-/* eslint-enable */
+var table_row_before_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M21 5c0-1.1-.9-2-2-2H5c-1 0-1.9.8-2 1.8V19.2c.1.9.9 1.7 1.8 1.8H19c1.1 0 2-.9 2-2V5ZM4.5 14V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v9h-15Zm4 5.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm5.5 0h-4v-4h4v4Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19ZM11.2 10h-3V8.5h3v-3h1.5v3h3V10h-3v3h-1.5v-3Z" }) });
+
 
 ;// ./packages/icons/build-module/library/table-row-after.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table_row_after = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm-9 1.5h4v4h-4v-4ZM4.5 5c0-.3.2-.5.5-.5h3.5v4h-4V5Zm15 14c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-8.3 10h1.5v-3h3V14h-3v-3h-1.5v3h-3v1.5h3v3Z"
-  })
-}));
-/* eslint-enable */
+var table_row_after_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm-9 1.5h4v4h-4v-4ZM4.5 5c0-.3.2-.5.5-.5h3.5v4h-4V5Zm15 14c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-8.3 10h1.5v-3h3V14h-3v-3h-1.5v3h-3v1.5h3v3Z" }) });
+
 
 ;// ./packages/icons/build-module/library/table-row-delete.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table_row_delete = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-15V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v3.5Zm-9.6 9.4 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1 2.1-2.1-1.1-1.1-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1Z"
-  })
-}));
-/* eslint-enable */
+var table_row_delete_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-15V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v3.5Zm-9.6 9.4 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1 2.1-2.1-1.1-1.1-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1Z" }) });
+
 
 ;// ./packages/icons/build-module/library/table-column-before.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table_column_before = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1 .8 1.9 1.8 2H19.2c.9-.1 1.7-.9 1.8-1.8V5c0-1.1-.9-2-2-2Zm-5 16.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h9v15Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19Zm0-5h-4v-4h4v4Zm0-5.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-11 7.3H10v-3h3v-1.5h-3v-3H8.5v3h-3v1.5h3v3Z"
-  })
-}));
-/* eslint-enable */
+var table_column_before_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1 .8 1.9 1.8 2H19.2c.9-.1 1.7-.9 1.8-1.8V5c0-1.1-.9-2-2-2Zm-5 16.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h9v15Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19Zm0-5h-4v-4h4v4Zm0-5.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-11 7.3H10v-3h3v-1.5h-3v-3H8.5v3h-3v1.5h3v3Z" }) });
+
 
 ;// ./packages/icons/build-module/library/table-column-after.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table_column_after = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm0-5.5h-4v-4h4v4Zm0-5.5h-4V5c0-.3.2-.5.5-.5h3.5v4Zm11 10.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14Zm-4-10.8H14v3h-3v1.5h3v3h1.5v-3h3v-1.5h-3v-3Z"
-  })
-}));
-/* eslint-enable */
+var table_column_after_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm0-5.5h-4v-4h4v4Zm0-5.5h-4V5c0-.3.2-.5.5-.5h3.5v4Zm11 10.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14Zm-4-10.8H14v3h-3v1.5h3v3h1.5v-3h3v-1.5h-3v-3Z" }) });
+
 
 ;// ./packages/icons/build-module/library/table-column-delete.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table_column_delete = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h3.5v15Zm11-.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14ZM16.9 8.8l-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1L18 9.9l-1.1-1.1Z"
-  })
-}));
-/* eslint-enable */
+var table_column_delete_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h3.5v15Zm11-.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14ZM16.9 8.8l-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1L18 9.9l-1.1-1.1Z" }) });
+
 
 ;// ./packages/icons/build-module/library/table.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 2v6.2h-6.8V4.4h6.2c.3 0 .5.2.5.5ZM5 4.5h6.2v6.8H4.4V5.1c0-.3.2-.5.5-.5ZM4.5 19v-6.2h6.8v6.8H5.1c-.3 0-.5-.2-.5-.5Zm14.5.5h-6.2v-6.8h6.8v6.2c0 .3-.2.5-.5.5Z"
-  })
-}));
-/* eslint-enable */
+var table_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 2v6.2h-6.8V4.4h6.2c.3 0 .5.2.5.5ZM5 4.5h6.2v6.8H4.4V5.1c0-.3.2-.5.5-.5ZM4.5 19v-6.2h6.8v6.8H5.1c-.3 0-.5-.2-.5-.5Zm14.5.5h-6.2v-6.8h6.8v6.2c0 .3-.2.5-.5.5Z" }) });
+
 
 ;// ./packages/block-library/build-module/table/state.js
 const INHERITED_COLUMN_ATTRIBUTES = ['align'];
@@ -64378,15 +63157,15 @@ function isEmptyRow(row) {
 
 
 const ALIGNMENT_CONTROLS = [{
-  icon: align_left,
+  icon: align_left_default,
   title: (0,external_wp_i18n_namespaceObject.__)('Align column left'),
   align: 'left'
 }, {
-  icon: align_center,
+  icon: align_center_default,
   title: (0,external_wp_i18n_namespaceObject.__)('Align column center'),
   align: 'center'
 }, {
-  icon: align_right,
+  icon: align_right_default,
   title: (0,external_wp_i18n_namespaceObject.__)('Align column right'),
   align: 'right'
 }];
@@ -64661,32 +63440,32 @@ function TableEdit({
   }, [hasTableCreated]);
   const sections = ['head', 'body', 'foot'].filter(name => !isEmptyTableSection(attributes[name]));
   const tableControls = [{
-    icon: table_row_before,
+    icon: table_row_before_default,
     title: (0,external_wp_i18n_namespaceObject.__)('Insert row before'),
     isDisabled: !selectedCell,
     onClick: onInsertRowBefore
   }, {
-    icon: table_row_after,
+    icon: table_row_after_default,
     title: (0,external_wp_i18n_namespaceObject.__)('Insert row after'),
     isDisabled: !selectedCell,
     onClick: onInsertRowAfter
   }, {
-    icon: table_row_delete,
+    icon: table_row_delete_default,
     title: (0,external_wp_i18n_namespaceObject.__)('Delete row'),
     isDisabled: !selectedCell,
     onClick: onDeleteRow
   }, {
-    icon: table_column_before,
+    icon: table_column_before_default,
     title: (0,external_wp_i18n_namespaceObject.__)('Insert column before'),
     isDisabled: !selectedCell,
     onClick: onInsertColumnBefore
   }, {
-    icon: table_column_after,
+    icon: table_column_after_default,
     title: (0,external_wp_i18n_namespaceObject.__)('Insert column after'),
     isDisabled: !selectedCell,
     onClick: onInsertColumnAfter
   }, {
-    icon: table_column_delete,
+    icon: table_column_delete_default,
     title: (0,external_wp_i18n_namespaceObject.__)('Delete column'),
     isDisabled: !selectedCell,
     onClick: onDeleteColumn
@@ -64744,7 +63523,7 @@ function TableEdit({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
         group: "other",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
-          icon: table,
+          icon: table_default,
           label: (0,external_wp_i18n_namespaceObject.__)('Edit table'),
           controls: tableControls
         })
@@ -64819,7 +63598,7 @@ function TableEdit({
     }), isEmpty ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
       label: (0,external_wp_i18n_namespaceObject.__)('Table'),
       icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-        icon: block_table,
+        icon: block_table_default,
         showColors: true
       }),
       instructions: (0,external_wp_i18n_namespaceObject.__)('Insert a table for sharing data.'),
@@ -65309,7 +64088,7 @@ const {
 } = table_metadata;
 
 const table_settings = {
-  icon: block_table,
+  icon: block_table_default,
   example: {
     attributes: {
       head: [{
@@ -65373,24 +64152,20 @@ const table_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/table-of-contents.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const table_of_contents = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M20 9.484h-8.889v-1.5H20v1.5Zm0 7h-4.889v-1.5H20v1.5Zm-14 .032a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 15.516a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 8.484a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
-  })]
-}));
-/* eslint-enable */
+var table_of_contents_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+    external_wp_primitives_namespaceObject.Path,
+    {
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      d: "M20 9.484h-8.889v-1.5H20v1.5Zm0 7h-4.889v-1.5H20v1.5Zm-14 .032a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+    }
+  ),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 15.516a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 8.484a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" })
+] });
+
 
 ;// ./packages/block-library/build-module/table-of-contents/list.js
 
@@ -65724,7 +64499,7 @@ function TableOfContentsEdit({
   const toolbarControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_bullets_rtl : format_list_bullets,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
         title: (0,external_wp_i18n_namespaceObject.__)('Unordered'),
         description: (0,external_wp_i18n_namespaceObject.__)('Convert to unordered list'),
         onClick: () => setAttributes({
@@ -65732,7 +64507,7 @@ function TableOfContentsEdit({
         }),
         isActive: ordered === false
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_numbered_rtl : format_list_numbered,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
         title: (0,external_wp_i18n_namespaceObject.__)('Ordered'),
         description: (0,external_wp_i18n_namespaceObject.__)('Convert to ordered list'),
         onClick: () => setAttributes({
@@ -65832,7 +64607,7 @@ function TableOfContentsEdit({
         ...blockProps,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
           icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-            icon: table_of_contents
+            icon: table_of_contents_default
           }),
           label: (0,external_wp_i18n_namespaceObject.__)('Table of Contents'),
           instructions: (0,external_wp_i18n_namespaceObject.__)('Start adding Heading blocks to create a table of contents. Headings with HTML anchors will be linked here.')
@@ -65981,7 +64756,7 @@ const {
 } = table_of_contents_metadata;
 
 const table_of_contents_settings = {
-  icon: table_of_contents,
+  icon: table_of_contents_default,
   edit: TableOfContentsEdit,
   save: table_of_contents_save_save,
   example: {
@@ -66362,7 +65137,7 @@ const {
 } = tag_cloud_metadata;
 
 const tag_cloud_settings = {
-  icon: tag,
+  icon: tag_default,
   example: {},
   edit: tag_cloud_edit,
   transforms: tag_cloud_transforms
@@ -68096,7 +66871,7 @@ const {
 } = template_part_metadata;
 
 const template_part_settings = {
-  icon: symbol_filled,
+  icon: symbol_filled_default,
   __experimentalLabel: ({
     slug,
     theme
@@ -68146,20 +66921,10 @@ const template_part_init = () => {
 };
 
 ;// ./packages/icons/build-module/library/term-description.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const term_description = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.08 10.103h2.914L9.657 12h1.417L8.23 4H6.846L4 12h1.417l.663-1.897Zm1.463-4.137.994 2.857h-2l1.006-2.857ZM11 16H4v-1.5h7V16Zm1 0h8v-1.5h-8V16Zm-4 4H4v-1.5h4V20Zm7-1.5V20H9v-1.5h6Z"
-  })
-}));
-/* eslint-enable */
+var term_description_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M6.08 10.103h2.914L9.657 12h1.417L8.23 4H6.846L4 12h1.417l.663-1.897Zm1.463-4.137.994 2.857h-2l1.006-2.857ZM11 16H4v-1.5h7V16Zm1 0h8v-1.5h-8V16Zm-4 4H4v-1.5h4V20Zm7-1.5V20H9v-1.5h6Z" }) });
+
 
 ;// ./packages/block-library/build-module/term-description/use-term-description.js
 /**
@@ -68380,7 +67145,7 @@ const {
 } = term_description_metadata;
 
 const term_description_settings = {
-  icon: term_description,
+  icon: term_description_default,
   edit: TermDescriptionEdit,
   example: {}
 };
@@ -68391,22 +67156,13 @@ const term_description_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/term-name.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const term_name = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m14.95 13.889-1.061 1.061-5.552-5.553 1.06-1.06 5.552 5.552Z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12.574 4a.75.75 0 0 1 .53.22l6.723 6.724a2.315 2.315 0 0 1 0 3.264l-.532-.528.531.53-5.61 5.611a2.31 2.31 0 0 1-3.276.001l-6.72-6.716a.75.75 0 0 1-.22-.53V4.75A.75.75 0 0 1 4.75 4h7.824ZM5.5 5.5v6.764l6.501 6.497a.817.817 0 0 0 .889.178.816.816 0 0 0 .264-.178l5.61-5.61a.816.816 0 0 0-.001-1.149l-6.5-6.502H5.5Z"
-  })]
-}));
-/* eslint-enable */
+var term_name_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "m14.95 13.889-1.061 1.061-5.552-5.553 1.06-1.06 5.552 5.552Z" }),
+  /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12.574 4a.75.75 0 0 1 .53.22l6.723 6.724a2.315 2.315 0 0 1 0 3.264l-.532-.528.531.53-5.61 5.611a2.31 2.31 0 0 1-3.276.001l-6.72-6.716a.75.75 0 0 1-.22-.53V4.75A.75.75 0 0 1 4.75 4h7.824ZM5.5 5.5v6.764l6.501 6.497a.817.817 0 0 0 .889.178.816.816 0 0 0 .264-.178l5.61-5.61a.816.816 0 0 0-.001-1.149l-6.5-6.502H5.5Z" })
+] });
+
 
 ;// ./packages/block-library/build-module/term-name/use-term-name.js
 /**
@@ -68675,7 +67431,7 @@ const {
 } = term_name_metadata;
 
 const term_name_settings = {
-  icon: term_name,
+  icon: term_name_default,
   edit: TermNameEdit
 };
 const term_name_init = () => initBlock({
@@ -69365,7 +68121,7 @@ const {
 } = terms_query_metadata;
 
 const terms_query_settings = {
-  icon: loop,
+  icon: loop_default,
   edit: terms_query_edit,
   save: terms_query_save_save,
   example: {},
@@ -69540,14 +68296,14 @@ function TermTemplateEdit({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
         controls: [{
-          icon: list,
+          icon: list_default,
           title: (0,external_wp_i18n_namespaceObject._x)('List view', 'Term template block display setting'),
           onClick: () => setDisplayLayout({
             type: 'default'
           }),
           isActive: layoutType === 'default' || layoutType === 'constrained'
         }, {
-          icon: grid,
+          icon: grid_default,
           title: (0,external_wp_i18n_namespaceObject._x)('Grid view', 'Term template block display setting'),
           onClick: () => setDisplayLayout({
             type: 'grid',
@@ -69663,7 +68419,7 @@ const {
 } = term_template_metadata;
 
 const term_template_settings = {
-  icon: layout,
+  icon: layout_default,
   edit: TermTemplateEdit,
   save: TermTemplateSave,
   example: {}
@@ -70200,7 +68956,7 @@ const {
 } = verse_metadata;
 
 const verse_settings = {
-  icon: verse,
+  icon: verse_default,
   example: {
     attributes: {
       /* eslint-disable @wordpress/i18n-no-collapsible-whitespace */
@@ -70226,20 +68982,10 @@ const verse_init = () => initBlock({
 });
 
 ;// ./packages/icons/build-module/library/video.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const video = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z"
-  })
-}));
-/* eslint-enable */
+var video_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z" }) });
+
 
 ;// ./packages/block-library/build-module/video/tracks.js
 
@@ -70889,7 +69635,7 @@ function TracksEditor({
                 render: ({
                   open
                 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-                  icon: media,
+                  icon: media_default,
                   onClick: open,
                   children: (0,external_wp_i18n_namespaceObject.__)('Open Media Library')
                 })
@@ -70901,7 +69647,7 @@ function TracksEditor({
                   openFileDialog
                 }) => {
                   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-                    icon: upload,
+                    icon: upload_default,
                     onClick: openFileDialog,
                     children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
                   });
@@ -71045,7 +69791,7 @@ function VideoEdit({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
       className: "block-editor-media-placeholder",
       withIllustration: !isSingleSelected,
-      icon: video,
+      icon: video_default,
       label: (0,external_wp_i18n_namespaceObject.__)('Video'),
       instructions: (0,external_wp_i18n_namespaceObject.__)('Drag and drop a video, upload, or choose from your library.'),
       children: content
@@ -71062,7 +69808,7 @@ function VideoEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: video
+          icon: video_default
         }),
         onSelect: onSelectVideo,
         onSelectURL: onSelectURL,
@@ -71426,7 +70172,7 @@ const {
 } = video_metadata;
 
 const video_settings = {
-  icon: video,
+  icon: video_default,
   example: {
     attributes: {
       src: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Wood_thrush_in_Central_Park_switch_sides_%2816510%29.webm',
@@ -71470,7 +70216,7 @@ function FootnotesEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: format_list_numbered
+          icon: format_list_numbered_default
         }),
         label: (0,external_wp_i18n_namespaceObject.__)('Footnotes'),
         instructions: (0,external_wp_i18n_namespaceObject.__)('Footnotes are not supported here. Add this block to post or page content.')
@@ -71482,7 +70228,7 @@ function FootnotesEdit({
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: format_list_numbered
+          icon: format_list_numbered_default
         }),
         label: (0,external_wp_i18n_namespaceObject.__)('Footnotes'),
         instructions: (0,external_wp_i18n_namespaceObject.__)('Footnotes found in blocks within this document will be displayed here.')
@@ -71769,7 +70515,7 @@ const format = {
       });
     }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichTextToolbarButton, {
-      icon: format_list_numbered,
+      icon: format_list_numbered_default,
       title: (0,external_wp_i18n_namespaceObject.__)('Footnote'),
       onClick: onClick,
       isActive: isObjectActive
@@ -71859,7 +70605,7 @@ const {
 } = footnotes_metadata;
 
 const footnotes_settings = {
-  icon: format_list_numbered,
+  icon: format_list_numbered_default,
   edit: FootnotesEdit
 };
 const footnotes_init = () => {

@@ -331,20 +331,10 @@ class PluginErrorBoundary extends external_wp_element_namespaceObject.Component 
 ;// external ["wp","primitives"]
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// ./packages/icons/build-module/library/plugins.js
-/* eslint-disable prettier/prettier */
-/**
- * WordPress dependencies
- */
 
 
-/* harmony default export */ const plugins = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z"
-  })
-}));
-/* eslint-enable */
+var plugins_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
+
 
 ;// ./packages/plugins/build-module/api/index.js
 /* eslint no-console: [ 'error', { allow: [ 'error' ] } ] */
@@ -365,7 +355,7 @@ const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 /**
  * Plugin definitions keyed by plugin name.
  */
-const api_plugins = {};
+const plugins = {};
 
 /**
  * Registers a plugin to the editor.
@@ -457,7 +447,7 @@ function registerPlugin(name, settings) {
     console.error('Plugin name must include only lowercase alphanumeric characters or dashes, and start with a letter. Example: "my-plugin".');
     return null;
   }
-  if (api_plugins[name]) {
+  if (plugins[name]) {
     console.error(`Plugin "${name}" is already registered.`);
   }
   settings = (0,external_wp_hooks_namespaceObject.applyFilters)('plugins.registerPlugin', settings, name);
@@ -479,9 +469,9 @@ function registerPlugin(name, settings) {
       return null;
     }
   }
-  api_plugins[name] = {
+  plugins[name] = {
     name,
-    icon: plugins,
+    icon: plugins_default,
     ...settings
   };
   (0,external_wp_hooks_namespaceObject.doAction)('plugins.pluginRegistered', settings, name);
@@ -513,12 +503,12 @@ function registerPlugin(name, settings) {
  *         successfully unregistered; otherwise `undefined`.
  */
 function unregisterPlugin(name) {
-  if (!api_plugins[name]) {
+  if (!plugins[name]) {
     console.error('Plugin "' + name + '" is not registered.');
     return;
   }
-  const oldPlugin = api_plugins[name];
-  delete api_plugins[name];
+  const oldPlugin = plugins[name];
+  delete plugins[name];
   (0,external_wp_hooks_namespaceObject.doAction)('plugins.pluginUnregistered', oldPlugin, name);
   return oldPlugin;
 }
@@ -531,7 +521,7 @@ function unregisterPlugin(name) {
  * @return Plugin setting.
  */
 function getPlugin(name) {
-  return api_plugins[name];
+  return plugins[name];
 }
 
 /**
@@ -543,7 +533,7 @@ function getPlugin(name) {
  * @return The list of plugins without a scope or for a given scope.
  */
 function getPlugins(scope) {
-  return Object.values(api_plugins).filter(plugin => plugin.scope === scope);
+  return Object.values(plugins).filter(plugin => plugin.scope === scope);
 }
 
 ;// ./packages/plugins/build-module/components/plugin-area/index.js
