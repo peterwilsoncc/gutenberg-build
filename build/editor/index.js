@@ -11534,7 +11534,6 @@ function Radio({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -11581,22 +11580,7 @@ function Select({
     }
     setCustomValidity(undefined);
   }, [data, field, setValue]);
-  const fieldElements = (_field$elements = field?.elements) !== null && _field$elements !== void 0 ? _field$elements : [];
-  const hasEmptyValue = fieldElements.some(({
-    value: elementValue
-  }) => elementValue === '');
-  const elements = hasEmptyValue || isMultiple ? fieldElements : [
-  /*
-   * Value can be undefined when:
-   *
-   * - the field is not required
-   * - in bulk editing
-   *
-   */
-  {
-    label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
-    value: ''
-  }, ...fieldElements];
+  const elements = (_field$elements = field?.elements) !== null && _field$elements !== void 0 ? _field$elements : [];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedSelectControl, {
     required: !!field.isValid?.required,
     onValidate: onValidateControl,
