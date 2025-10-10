@@ -41530,8 +41530,12 @@ function NavigationSubmenuEdit({
   const {
     showSubmenuIcon,
     maxNestingLevel,
-    openSubmenusOnClick
+    openSubmenusOnClick: contextOpenSubmenusOnClick
   } = context;
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+
+  // Force click-only behavior in contentOnly mode to prevent hover dropdowns
+  const openSubmenusOnClick = blockEditingMode !== 'default' ? true : contextOpenSubmenusOnClick;
 
   // URL binding logic
   const {
