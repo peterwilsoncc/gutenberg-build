@@ -1704,6 +1704,16 @@ __webpack_require__.d(build_module_term_description_namespaceObject, {
   settings: () => (term_description_settings)
 });
 
+// NAMESPACE OBJECT: ./packages/block-library/build-module/term-name/index.js
+var build_module_term_name_namespaceObject = {};
+__webpack_require__.r(build_module_term_name_namespaceObject);
+__webpack_require__.d(build_module_term_name_namespaceObject, {
+  init: () => (term_name_init),
+  metadata: () => (term_name_metadata),
+  name: () => (term_name_name),
+  settings: () => (term_name_settings)
+});
+
 // NAMESPACE OBJECT: ./packages/block-library/build-module/terms-query/index.js
 var terms_query_namespaceObject = {};
 __webpack_require__.r(terms_query_namespaceObject);
@@ -68380,6 +68390,300 @@ const term_description_init = () => initBlock({
   settings: term_description_settings
 });
 
+;// ./packages/icons/build-module/library/term-name.js
+/* eslint-disable prettier/prettier */
+/**
+ * WordPress dependencies
+ */
+
+
+/* harmony default export */ const term_name = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m14.95 13.889-1.061 1.061-5.552-5.553 1.06-1.06 5.552 5.552Z"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12.574 4a.75.75 0 0 1 .53.22l6.723 6.724a2.315 2.315 0 0 1 0 3.264l-.532-.528.531.53-5.61 5.611a2.31 2.31 0 0 1-3.276.001l-6.72-6.716a.75.75 0 0 1-.22-.53V4.75A.75.75 0 0 1 4.75 4h7.824ZM5.5 5.5v6.764l6.501 6.497a.817.817 0 0 0 .889.178.816.816 0 0 0 .264-.178l5.61-5.61a.816.816 0 0 0-.001-1.149l-6.5-6.502H5.5Z"
+  })]
+}));
+/* eslint-enable */
+
+;// ./packages/block-library/build-module/term-name/use-term-name.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Hook to fetch term name based on context or fallback to template parsing.
+ *
+ * This hook prioritizes context-provided termId and taxonomy, but falls back to
+ * template-based detection when no context is available.
+ *
+ * @param {string|number} termId   The term ID from context
+ * @param {string}        taxonomy The taxonomy name from context
+ */
+function useTermName(termId, taxonomy) {
+  // Get term from context if available.
+  const contextBasedTerm = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!termId || !taxonomy) {
+      return null;
+    }
+    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('taxonomy', taxonomy, termId);
+  }, [termId, taxonomy]);
+
+  // Fallback approach: Parse template slug when no context is available.
+  const templateBasedTerm = use_term_name_useTemplateBasedTermData();
+  const hasContext = Boolean(termId && taxonomy);
+  return {
+    hasContext,
+    term: hasContext ? contextBasedTerm : templateBasedTerm
+  };
+}
+
+/**
+ * Fallback hook to fetch term data from template context.
+ * Parses the template slug to determine if we're on a specific term archive.
+ */
+function use_term_name_useTemplateBasedTermData() {
+  const templateSlug = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // Access core/editor by string to avoid @wordpress/editor dependency.
+    // eslint-disable-next-line @wordpress/data-no-store-string-literals
+    const {
+      getCurrentPostId,
+      getCurrentPostType,
+      getCurrentTemplateId
+    } = select('core/editor');
+    const currentPostType = getCurrentPostType();
+    const templateId = getCurrentTemplateId() || (currentPostType === 'wp_template' ? getCurrentPostId() : null);
+    return templateId ? select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', 'wp_template', templateId)?.slug : null;
+  }, []);
+  const taxonomyMatches = templateSlug?.match(/^(category|tag|taxonomy-([^-]+))$|^(((category|tag)|taxonomy-([^-]+))-(.+))$/);
+  let taxonomy;
+  let termSlug;
+  if (taxonomyMatches) {
+    // If it's for a specific term (e.g., category-news, tag-featured).
+    if (taxonomyMatches[3]) {
+      taxonomy = taxonomyMatches[6] ? taxonomyMatches[6] : taxonomyMatches[4];
+      termSlug = taxonomyMatches[7];
+    }
+    taxonomy = taxonomy === 'tag' ? 'post_tag' : taxonomy;
+  }
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!taxonomy || !termSlug) {
+      return null;
+    }
+    const {
+      getEntityRecords
+    } = select(external_wp_coreData_namespaceObject.store);
+    const termRecords = getEntityRecords('taxonomy', taxonomy, {
+      slug: termSlug,
+      per_page: 1
+    });
+    if (termRecords && termRecords[0]) {
+      return termRecords[0];
+    }
+    return null;
+  }, [taxonomy, termSlug]);
+}
+
+;// ./packages/block-library/build-module/term-name/edit.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function TermNameEdit({
+  attributes,
+  setAttributes,
+  context: {
+    termId,
+    taxonomy
+  }
+}) {
+  const {
+    textAlign,
+    level = 0,
+    isLink
+  } = attributes;
+  const {
+    term
+  } = useTermName(termId, taxonomy);
+  const termName = term?.name || (0,external_wp_i18n_namespaceObject.__)('Term Name');
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    className: dist_clsx({
+      [`has-text-align-${textAlign}`]: textAlign
+    })
+  });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const TagName = level === 0 ? 'p' : `h${level}`;
+  let termNameDisplay = termName;
+  if (isLink) {
+    termNameDisplay = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+      href: "#term-name-pseudo-link",
+      onClick: e => e.preventDefault(),
+      children: termName
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      group: "block",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
+        value: level,
+        options: [0, 1, 2, 3, 4, 5, 6],
+        onChange: newLevel => {
+          setAttributes({
+            level: newLevel
+          });
+        }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentControl, {
+        value: textAlign,
+        onChange: nextAlign => {
+          setAttributes({
+            textAlign: nextAlign
+          });
+        }
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            isLink: false
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!isLink,
+          label: (0,external_wp_i18n_namespaceObject.__)('Make term name a link'),
+          onDeselect: () => setAttributes({
+            isLink: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Make term name a link'),
+            onChange: () => setAttributes({
+              isLink: !isLink
+            }),
+            checked: isLink
+          })
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+      ...blockProps,
+      children: termNameDisplay
+    })]
+  });
+}
+
+;// ./packages/block-library/build-module/term-name/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const term_name_metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/term-name",
+  title: "Term Name",
+  category: "theme",
+  description: "Displays the name of a taxonomy term.",
+  keywords: ["term title"],
+  textdomain: "default",
+  usesContext: ["termId", "taxonomy"],
+  attributes: {
+    textAlign: {
+      type: "string"
+    },
+    level: {
+      type: "number",
+      "default": 0
+    },
+    isLink: {
+      type: "boolean",
+      "default": false
+    }
+  },
+  supports: {
+    align: ["wide", "full"],
+    html: false,
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true,
+        link: true
+      }
+    },
+    spacing: {
+      padding: true
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
+    interactivity: {
+      clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        color: true,
+        width: true,
+        style: true
+      }
+    }
+  },
+  style: "wp-block-term-name"
+};
+
+const {
+  name: term_name_name
+} = term_name_metadata;
+
+const term_name_settings = {
+  icon: term_name,
+  edit: TermNameEdit
+};
+const term_name_init = () => initBlock({
+  name: term_name_name,
+  metadata: term_name_metadata,
+  settings: term_name_settings
+});
+
 ;// ./packages/block-library/build-module/terms-query/utils.js
 /**
  * WordPress dependencies
@@ -71811,6 +72115,7 @@ lock(privateApis, {
 
 
 
+
 /**
  * Function to get all the block-library blocks in an array
  */
@@ -71823,7 +72128,7 @@ const getAllBlocks = () => {
   // Register all remaining core blocks.
   accordion_namespaceObject, accordion_item_namespaceObject, accordion_heading_namespaceObject, accordion_panel_namespaceObject, archives_namespaceObject, build_module_audio_namespaceObject, build_module_breadcrumbs_namespaceObject, build_module_button_namespaceObject, build_module_buttons_namespaceObject, build_module_calendar_namespaceObject, categories_namespaceObject, build_module_code_namespaceObject, build_module_column_namespaceObject, build_module_columns_namespaceObject, build_module_comment_author_avatar_namespaceObject, build_module_cover_namespaceObject, build_module_details_namespaceObject, embed_namespaceObject, build_module_file_namespaceObject, build_module_group_namespaceObject, build_module_html_namespaceObject, latest_comments_namespaceObject, latest_posts_namespaceObject, media_text_namespaceObject, missing_namespaceObject, build_module_more_namespaceObject, nextpage_namespaceObject, page_list_namespaceObject, page_list_item_namespaceObject, pattern_namespaceObject, build_module_preformatted_namespaceObject, build_module_pullquote_namespaceObject, block_namespaceObject, build_module_rss_namespaceObject, build_module_search_namespaceObject, build_module_separator_namespaceObject, build_module_shortcode_namespaceObject, social_link_namespaceObject, social_links_namespaceObject, spacer_namespaceObject, build_module_table_namespaceObject, tag_cloud_namespaceObject, text_columns_namespaceObject, build_module_verse_namespaceObject, build_module_video_namespaceObject, footnotes_namespaceObject,
   // theme blocks
-  build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, query_total_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
+  build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, query_total_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, build_module_term_name_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
   if (window?.__experimentalEnableBlockExperiments) {
     blocks.push(terms_query_namespaceObject);
     blocks.push(term_template_namespaceObject);
