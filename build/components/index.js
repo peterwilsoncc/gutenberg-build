@@ -55352,7 +55352,7 @@ The screen with id ${screen.id} will not be added.`
   }) {
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
       "span",
       {
         className: clsx_default("components-badge", className, {
@@ -55360,7 +55360,7 @@ The screen with id ${screen.id} will not be added.`
           "has-icon": hasIcon
         }),
         ...props,
-        children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)("span", { className: "components-badge__flex-wrapper", children: [
           hasIcon && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
             icon_default2,
             {
@@ -55371,7 +55371,7 @@ The screen with id ${screen.id} will not be added.`
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime290.jsx)("span", { className: "components-badge__content", children })
-        ]
+        ] })
       }
     );
   }

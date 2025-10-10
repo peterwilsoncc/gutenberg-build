@@ -174,16 +174,9 @@
 .components-badge {
   background-color: color-mix(in srgb, #fff 90%, var(--base-color));
   color: color-mix(in srgb, #000 50%, var(--base-color));
-  padding: 0 8px;
+  padding: 2px 8px;
   min-height: 24px;
-  max-width: 100%;
   border-radius: 2px;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
 }
 .components-badge:where(.is-default) {
   background-color: #f0f0f0;
@@ -203,6 +196,16 @@
 }
 .components-badge.is-success {
   --base-color: #4ab866;
+}
+
+.components-badge__flex-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 .components-badge__icon {
