@@ -38,6 +38,13 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
+  // wordpress-external:@wordpress/hooks
+  var require_hooks = __commonJS({
+    "wordpress-external:@wordpress/hooks"(exports, module) {
+      module.exports = window.wp.hooks;
+    }
+  });
+
   // node_modules/simple-peer/simplepeer.min.js
   var require_simplepeer_min = __commonJS({
     "node_modules/simple-peer/simplepeer.min.js"(exports, module) {
@@ -2653,13 +2660,109 @@ var wp;
   var index_exports = {};
   __export(index_exports, {
     CRDT_RECORD_MAP_KEY: () => CRDT_RECORD_MAP_KEY,
-    connectIndexDb: () => connectIndexDb,
-    createSyncProvider: () => createSyncProvider,
-    createWebRTCConnection: () => createWebRTCConnection
+    LOCAL_EDITOR_ORIGIN: () => LOCAL_EDITOR_ORIGIN,
+    Y: () => yjs_exports,
+    createSyncManager: () => createSyncManager
   });
 
-  // packages/sync/build-module/config.js
-  var CRDT_RECORD_MAP_KEY = "document";
+  // node_modules/yjs/dist/yjs.mjs
+  var yjs_exports = {};
+  __export(yjs_exports, {
+    AbsolutePosition: () => AbsolutePosition,
+    AbstractConnector: () => AbstractConnector,
+    AbstractStruct: () => AbstractStruct,
+    AbstractType: () => AbstractType,
+    Array: () => YArray,
+    ContentAny: () => ContentAny,
+    ContentBinary: () => ContentBinary,
+    ContentDeleted: () => ContentDeleted,
+    ContentEmbed: () => ContentEmbed,
+    ContentFormat: () => ContentFormat,
+    ContentJSON: () => ContentJSON,
+    ContentString: () => ContentString,
+    ContentType: () => ContentType,
+    Doc: () => Doc,
+    GC: () => GC,
+    ID: () => ID,
+    Item: () => Item,
+    Map: () => YMap,
+    PermanentUserData: () => PermanentUserData,
+    RelativePosition: () => RelativePosition,
+    Snapshot: () => Snapshot,
+    Text: () => YText,
+    Transaction: () => Transaction,
+    UndoManager: () => UndoManager,
+    UpdateEncoderV1: () => UpdateEncoderV1,
+    XmlElement: () => YXmlElement,
+    XmlFragment: () => YXmlFragment,
+    XmlHook: () => YXmlHook,
+    XmlText: () => YXmlText,
+    YArrayEvent: () => YArrayEvent,
+    YEvent: () => YEvent,
+    YMapEvent: () => YMapEvent,
+    YTextEvent: () => YTextEvent,
+    YXmlEvent: () => YXmlEvent,
+    applyUpdate: () => applyUpdate,
+    applyUpdateV2: () => applyUpdateV2,
+    cleanupYTextFormatting: () => cleanupYTextFormatting,
+    compareIDs: () => compareIDs,
+    compareRelativePositions: () => compareRelativePositions,
+    convertUpdateFormatV1ToV2: () => convertUpdateFormatV1ToV2,
+    convertUpdateFormatV2ToV1: () => convertUpdateFormatV2ToV1,
+    createAbsolutePositionFromRelativePosition: () => createAbsolutePositionFromRelativePosition,
+    createDeleteSet: () => createDeleteSet,
+    createDeleteSetFromStructStore: () => createDeleteSetFromStructStore,
+    createDocFromSnapshot: () => createDocFromSnapshot,
+    createID: () => createID,
+    createRelativePositionFromJSON: () => createRelativePositionFromJSON,
+    createRelativePositionFromTypeIndex: () => createRelativePositionFromTypeIndex,
+    createSnapshot: () => createSnapshot,
+    decodeRelativePosition: () => decodeRelativePosition,
+    decodeSnapshot: () => decodeSnapshot,
+    decodeSnapshotV2: () => decodeSnapshotV2,
+    decodeStateVector: () => decodeStateVector,
+    decodeUpdate: () => decodeUpdate,
+    decodeUpdateV2: () => decodeUpdateV2,
+    diffUpdate: () => diffUpdate,
+    diffUpdateV2: () => diffUpdateV2,
+    emptySnapshot: () => emptySnapshot,
+    encodeRelativePosition: () => encodeRelativePosition,
+    encodeSnapshot: () => encodeSnapshot,
+    encodeSnapshotV2: () => encodeSnapshotV2,
+    encodeStateAsUpdate: () => encodeStateAsUpdate,
+    encodeStateAsUpdateV2: () => encodeStateAsUpdateV2,
+    encodeStateVector: () => encodeStateVector,
+    encodeStateVectorFromUpdate: () => encodeStateVectorFromUpdate,
+    encodeStateVectorFromUpdateV2: () => encodeStateVectorFromUpdateV2,
+    equalDeleteSets: () => equalDeleteSets,
+    equalSnapshots: () => equalSnapshots,
+    findIndexSS: () => findIndexSS,
+    findRootTypeKey: () => findRootTypeKey,
+    getItem: () => getItem,
+    getState: () => getState,
+    getTypeChildren: () => getTypeChildren,
+    isDeleted: () => isDeleted,
+    isParentOf: () => isParentOf,
+    iterateDeletedStructs: () => iterateDeletedStructs,
+    logType: () => logType,
+    logUpdate: () => logUpdate,
+    logUpdateV2: () => logUpdateV2,
+    mergeUpdates: () => mergeUpdates,
+    mergeUpdatesV2: () => mergeUpdatesV2,
+    obfuscateUpdate: () => obfuscateUpdate,
+    obfuscateUpdateV2: () => obfuscateUpdateV2,
+    parseUpdateMeta: () => parseUpdateMeta,
+    parseUpdateMetaV2: () => parseUpdateMetaV2,
+    readUpdate: () => readUpdate,
+    readUpdateV2: () => readUpdateV2,
+    relativePositionToJSON: () => relativePositionToJSON,
+    snapshot: () => snapshot,
+    snapshotContainsUpdate: () => snapshotContainsUpdate,
+    transact: () => transact,
+    tryGc: () => tryGc,
+    typeListToArraySnapshot: () => typeListToArraySnapshot,
+    typeMapGetSnapshot: () => typeMapGetSnapshot
+  });
 
   // node_modules/lib0/map.js
   var create = () => /* @__PURE__ */ new Map();
@@ -2704,6 +2807,21 @@ var wp;
     }
   };
   var from = Array.from;
+  var some = (arr, f) => {
+    for (let i = 0; i < arr.length; i++) {
+      if (f(arr[i], i, arr)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  var unfold = (len, f) => {
+    const array = new Array(len);
+    for (let i = 0; i < len; i++) {
+      array[i] = f(i, array);
+    }
+    return array;
+  };
   var isArray = Array.isArray;
 
   // node_modules/lib0/observable.js
@@ -2797,6 +2915,7 @@ var wp;
   if (utf8TextDecoder && utf8TextDecoder.decode(new Uint8Array()).length === 1) {
     utf8TextDecoder = null;
   }
+  var repeat = (source, n) => unfold(n, () => source).join("");
 
   // node_modules/lib0/conditions.js
   var undefinedToNull = (v) => v === void 0 ? null : v;
@@ -3436,6 +3555,7 @@ var wp;
   };
   var writeVarString = utf8TextEncoder && /** @type {any} */
   utf8TextEncoder.encodeInto ? _writeVarStringNative : _writeVarStringPolyfill;
+  var writeBinaryEncoder = (encoder, append2) => writeUint8Array(encoder, toUint8Array(append2));
   var writeUint8Array = (encoder, uint8Array) => {
     const bufferLen = encoder.cbuf.length;
     const cpos = encoder.cpos;
@@ -3834,6 +3954,17 @@ var wp;
   });
 
   // node_modules/yjs/dist/yjs.mjs
+  var AbstractConnector = class extends Observable {
+    /**
+     * @param {Doc} ydoc
+     * @param {any} awareness
+     */
+    constructor(ydoc, awareness) {
+      super();
+      this.doc = ydoc;
+      this.awareness = awareness;
+    }
+  };
   var DeleteItem = class {
     /**
      * @param {number} clock
@@ -4026,6 +4157,24 @@ var wp;
       return ds.toUint8Array();
     }
     return null;
+  };
+  var equalDeleteSets = (ds1, ds2) => {
+    if (ds1.clients.size !== ds2.clients.size) return false;
+    for (const [client, deleteItems1] of ds1.clients.entries()) {
+      const deleteItems2 = (
+        /** @type {Array<import('../internals.js').DeleteItem>} */
+        ds2.clients.get(client)
+      );
+      if (deleteItems2 === void 0 || deleteItems1.length !== deleteItems2.length) return false;
+      for (let i = 0; i < deleteItems1.length; i++) {
+        const di1 = deleteItems1[i];
+        const di2 = deleteItems2[i];
+        if (di1.clock !== di2.clock || di1.len !== di2.len) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
   var generateNewClientId = uint32;
   var Doc = class _Doc extends Observable {
@@ -5023,6 +5172,7 @@ var wp;
       applyUpdateV2(transaction.doc, update);
     }
   }, transactionOrigin, false);
+  var readUpdate = (decoder, ydoc, transactionOrigin) => readUpdateV2(decoder, ydoc, transactionOrigin, new UpdateDecoderV1(decoder));
   var applyUpdateV2 = (ydoc, update, transactionOrigin, YDecoder = UpdateDecoderV2) => {
     const decoder = createDecoder(update);
     readUpdateV2(decoder, ydoc, transactionOrigin, new YDecoder(decoder));
@@ -5109,6 +5259,11 @@ var wp;
   };
   var compareIDs = (a, b) => a === b || a !== null && b !== null && a.client === b.client && a.clock === b.clock;
   var createID = (client, clock) => new ID(client, clock);
+  var writeID = (encoder, id2) => {
+    writeVarUint(encoder, id2.client);
+    writeVarUint(encoder, id2.clock);
+  };
+  var readID = (decoder) => createID(readVarUint(decoder), readVarUint(decoder));
   var findRootTypeKey = (type) => {
     for (const [key, value] of type.doc.share.entries()) {
       if (value === type) {
@@ -5117,6 +5272,313 @@ var wp;
     }
     throw unexpectedCase();
   };
+  var isParentOf = (parent, child) => {
+    while (child !== null) {
+      if (child.parent === parent) {
+        return true;
+      }
+      child = /** @type {AbstractType<any>} */
+      child.parent._item;
+    }
+    return false;
+  };
+  var logType = (type) => {
+    const res = [];
+    let n = type._start;
+    while (n) {
+      res.push(n);
+      n = n.right;
+    }
+    console.log("Children: ", res);
+    console.log("Children content: ", res.filter((m) => !m.deleted).map((m) => m.content));
+  };
+  var PermanentUserData = class {
+    /**
+     * @param {Doc} doc
+     * @param {YMap<any>} [storeType]
+     */
+    constructor(doc2, storeType = doc2.getMap("users")) {
+      const dss = /* @__PURE__ */ new Map();
+      this.yusers = storeType;
+      this.doc = doc2;
+      this.clients = /* @__PURE__ */ new Map();
+      this.dss = dss;
+      const initUser = (user, userDescription) => {
+        const ds = user.get("ds");
+        const ids = user.get("ids");
+        const addClientId = (
+          /** @param {number} clientid */
+          (clientid) => this.clients.set(clientid, userDescription)
+        );
+        ds.observe(
+          /** @param {YArrayEvent<any>} event */
+          (event) => {
+            event.changes.added.forEach((item) => {
+              item.content.getContent().forEach((encodedDs) => {
+                if (encodedDs instanceof Uint8Array) {
+                  this.dss.set(userDescription, mergeDeleteSets([this.dss.get(userDescription) || createDeleteSet(), readDeleteSet(new DSDecoderV1(createDecoder(encodedDs)))]));
+                }
+              });
+            });
+          }
+        );
+        this.dss.set(userDescription, mergeDeleteSets(ds.map((encodedDs) => readDeleteSet(new DSDecoderV1(createDecoder(encodedDs))))));
+        ids.observe(
+          /** @param {YArrayEvent<any>} event */
+          (event) => event.changes.added.forEach((item) => item.content.getContent().forEach(addClientId))
+        );
+        ids.forEach(addClientId);
+      };
+      storeType.observe((event) => {
+        event.keysChanged.forEach(
+          (userDescription) => initUser(storeType.get(userDescription), userDescription)
+        );
+      });
+      storeType.forEach(initUser);
+    }
+    /**
+     * @param {Doc} doc
+     * @param {number} clientid
+     * @param {string} userDescription
+     * @param {Object} conf
+     * @param {function(Transaction, DeleteSet):boolean} [conf.filter]
+     */
+    setUserMapping(doc2, clientid, userDescription, { filter = () => true } = {}) {
+      const users = this.yusers;
+      let user = users.get(userDescription);
+      if (!user) {
+        user = new YMap();
+        user.set("ids", new YArray());
+        user.set("ds", new YArray());
+        users.set(userDescription, user);
+      }
+      user.get("ids").push([clientid]);
+      users.observe((_event) => {
+        setTimeout(() => {
+          const userOverwrite = users.get(userDescription);
+          if (userOverwrite !== user) {
+            user = userOverwrite;
+            this.clients.forEach((_userDescription, clientid2) => {
+              if (userDescription === _userDescription) {
+                user.get("ids").push([clientid2]);
+              }
+            });
+            const encoder = new DSEncoderV1();
+            const ds = this.dss.get(userDescription);
+            if (ds) {
+              writeDeleteSet(encoder, ds);
+              user.get("ds").push([encoder.toUint8Array()]);
+            }
+          }
+        }, 0);
+      });
+      doc2.on(
+        "afterTransaction",
+        /** @param {Transaction} transaction */
+        (transaction) => {
+          setTimeout(() => {
+            const yds = user.get("ds");
+            const ds = transaction.deleteSet;
+            if (transaction.local && ds.clients.size > 0 && filter(transaction, ds)) {
+              const encoder = new DSEncoderV1();
+              writeDeleteSet(encoder, ds);
+              yds.push([encoder.toUint8Array()]);
+            }
+          });
+        }
+      );
+    }
+    /**
+     * @param {number} clientid
+     * @return {any}
+     */
+    getUserByClientId(clientid) {
+      return this.clients.get(clientid) || null;
+    }
+    /**
+     * @param {ID} id
+     * @return {string | null}
+     */
+    getUserByDeletedId(id2) {
+      for (const [userDescription, ds] of this.dss.entries()) {
+        if (isDeleted(ds, id2)) {
+          return userDescription;
+        }
+      }
+      return null;
+    }
+  };
+  var RelativePosition = class {
+    /**
+     * @param {ID|null} type
+     * @param {string|null} tname
+     * @param {ID|null} item
+     * @param {number} assoc
+     */
+    constructor(type, tname, item, assoc = 0) {
+      this.type = type;
+      this.tname = tname;
+      this.item = item;
+      this.assoc = assoc;
+    }
+  };
+  var relativePositionToJSON = (rpos) => {
+    const json = {};
+    if (rpos.type) {
+      json.type = rpos.type;
+    }
+    if (rpos.tname) {
+      json.tname = rpos.tname;
+    }
+    if (rpos.item) {
+      json.item = rpos.item;
+    }
+    if (rpos.assoc != null) {
+      json.assoc = rpos.assoc;
+    }
+    return json;
+  };
+  var createRelativePositionFromJSON = (json) => new RelativePosition(json.type == null ? null : createID(json.type.client, json.type.clock), json.tname || null, json.item == null ? null : createID(json.item.client, json.item.clock), json.assoc == null ? 0 : json.assoc);
+  var AbsolutePosition = class {
+    /**
+     * @param {AbstractType<any>} type
+     * @param {number} index
+     * @param {number} [assoc]
+     */
+    constructor(type, index, assoc = 0) {
+      this.type = type;
+      this.index = index;
+      this.assoc = assoc;
+    }
+  };
+  var createAbsolutePosition = (type, index, assoc = 0) => new AbsolutePosition(type, index, assoc);
+  var createRelativePosition = (type, item, assoc) => {
+    let typeid = null;
+    let tname = null;
+    if (type._item === null) {
+      tname = findRootTypeKey(type);
+    } else {
+      typeid = createID(type._item.id.client, type._item.id.clock);
+    }
+    return new RelativePosition(typeid, tname, item, assoc);
+  };
+  var createRelativePositionFromTypeIndex = (type, index, assoc = 0) => {
+    let t = type._start;
+    if (assoc < 0) {
+      if (index === 0) {
+        return createRelativePosition(type, null, assoc);
+      }
+      index--;
+    }
+    while (t !== null) {
+      if (!t.deleted && t.countable) {
+        if (t.length > index) {
+          return createRelativePosition(type, createID(t.id.client, t.id.clock + index), assoc);
+        }
+        index -= t.length;
+      }
+      if (t.right === null && assoc < 0) {
+        return createRelativePosition(type, t.lastId, assoc);
+      }
+      t = t.right;
+    }
+    return createRelativePosition(type, null, assoc);
+  };
+  var writeRelativePosition = (encoder, rpos) => {
+    const { type, tname, item, assoc } = rpos;
+    if (item !== null) {
+      writeVarUint(encoder, 0);
+      writeID(encoder, item);
+    } else if (tname !== null) {
+      writeUint8(encoder, 1);
+      writeVarString(encoder, tname);
+    } else if (type !== null) {
+      writeUint8(encoder, 2);
+      writeID(encoder, type);
+    } else {
+      throw unexpectedCase();
+    }
+    writeVarInt(encoder, assoc);
+    return encoder;
+  };
+  var encodeRelativePosition = (rpos) => {
+    const encoder = createEncoder();
+    writeRelativePosition(encoder, rpos);
+    return toUint8Array(encoder);
+  };
+  var readRelativePosition = (decoder) => {
+    let type = null;
+    let tname = null;
+    let itemID = null;
+    switch (readVarUint(decoder)) {
+      case 0:
+        itemID = readID(decoder);
+        break;
+      case 1:
+        tname = readVarString(decoder);
+        break;
+      case 2: {
+        type = readID(decoder);
+      }
+    }
+    const assoc = hasContent(decoder) ? readVarInt(decoder) : 0;
+    return new RelativePosition(type, tname, itemID, assoc);
+  };
+  var decodeRelativePosition = (uint8Array) => readRelativePosition(createDecoder(uint8Array));
+  var createAbsolutePositionFromRelativePosition = (rpos, doc2) => {
+    const store = doc2.store;
+    const rightID = rpos.item;
+    const typeID = rpos.type;
+    const tname = rpos.tname;
+    const assoc = rpos.assoc;
+    let type = null;
+    let index = 0;
+    if (rightID !== null) {
+      if (getState(store, rightID.client) <= rightID.clock) {
+        return null;
+      }
+      const res = followRedone(store, rightID);
+      const right = res.item;
+      if (!(right instanceof Item)) {
+        return null;
+      }
+      type = /** @type {AbstractType<any>} */
+      right.parent;
+      if (type._item === null || !type._item.deleted) {
+        index = right.deleted || !right.countable ? 0 : res.diff + (assoc >= 0 ? 0 : 1);
+        let n = right.left;
+        while (n !== null) {
+          if (!n.deleted && n.countable) {
+            index += n.length;
+          }
+          n = n.left;
+        }
+      }
+    } else {
+      if (tname !== null) {
+        type = doc2.get(tname);
+      } else if (typeID !== null) {
+        if (getState(store, typeID.client) <= typeID.clock) {
+          return null;
+        }
+        const { item } = followRedone(store, typeID);
+        if (item instanceof Item && item.content instanceof ContentType) {
+          type = item.content.type;
+        } else {
+          return null;
+        }
+      } else {
+        throw unexpectedCase();
+      }
+      if (assoc >= 0) {
+        index = type._length;
+      } else {
+        index = 0;
+      }
+    }
+    return createAbsolutePosition(type, index, rpos.assoc);
+  };
+  var compareRelativePositions = (a, b) => a === b || a !== null && b !== null && a.tname === b.tname && compareIDs(a.item, b.item) && compareIDs(a.type, b.type) && a.assoc === b.assoc;
   var Snapshot = class {
     /**
      * @param {DeleteSet} ds
@@ -5127,23 +5589,109 @@ var wp;
       this.sv = sv;
     }
   };
+  var equalSnapshots = (snap1, snap2) => {
+    const ds1 = snap1.ds.clients;
+    const ds2 = snap2.ds.clients;
+    const sv1 = snap1.sv;
+    const sv2 = snap2.sv;
+    if (sv1.size !== sv2.size || ds1.size !== ds2.size) {
+      return false;
+    }
+    for (const [key, value] of sv1.entries()) {
+      if (sv2.get(key) !== value) {
+        return false;
+      }
+    }
+    for (const [client, dsitems1] of ds1.entries()) {
+      const dsitems2 = ds2.get(client) || [];
+      if (dsitems1.length !== dsitems2.length) {
+        return false;
+      }
+      for (let i = 0; i < dsitems1.length; i++) {
+        const dsitem1 = dsitems1[i];
+        const dsitem2 = dsitems2[i];
+        if (dsitem1.clock !== dsitem2.clock || dsitem1.len !== dsitem2.len) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+  var encodeSnapshotV2 = (snapshot2, encoder = new DSEncoderV2()) => {
+    writeDeleteSet(encoder, snapshot2.ds);
+    writeStateVector(encoder, snapshot2.sv);
+    return encoder.toUint8Array();
+  };
+  var encodeSnapshot = (snapshot2) => encodeSnapshotV2(snapshot2, new DSEncoderV1());
+  var decodeSnapshotV2 = (buf, decoder = new DSDecoderV2(createDecoder(buf))) => {
+    return new Snapshot(readDeleteSet(decoder), readStateVector(decoder));
+  };
+  var decodeSnapshot = (buf) => decodeSnapshotV2(buf, new DSDecoderV1(createDecoder(buf)));
   var createSnapshot = (ds, sm) => new Snapshot(ds, sm);
   var emptySnapshot = createSnapshot(createDeleteSet(), /* @__PURE__ */ new Map());
-  var isVisible = (item, snapshot) => snapshot === void 0 ? !item.deleted : snapshot.sv.has(item.id.client) && (snapshot.sv.get(item.id.client) || 0) > item.id.clock && !isDeleted(snapshot.ds, item.id);
-  var splitSnapshotAffectedStructs = (transaction, snapshot) => {
+  var snapshot = (doc2) => createSnapshot(createDeleteSetFromStructStore(doc2.store), getStateVector(doc2.store));
+  var isVisible = (item, snapshot2) => snapshot2 === void 0 ? !item.deleted : snapshot2.sv.has(item.id.client) && (snapshot2.sv.get(item.id.client) || 0) > item.id.clock && !isDeleted(snapshot2.ds, item.id);
+  var splitSnapshotAffectedStructs = (transaction, snapshot2) => {
     const meta = setIfUndefined(transaction.meta, splitSnapshotAffectedStructs, create2);
     const store = transaction.doc.store;
-    if (!meta.has(snapshot)) {
-      snapshot.sv.forEach((clock, client) => {
+    if (!meta.has(snapshot2)) {
+      snapshot2.sv.forEach((clock, client) => {
         if (clock < getState(store, client)) {
           getItemCleanStart(transaction, createID(client, clock));
         }
       });
-      iterateDeletedStructs(transaction, snapshot.ds, (_item) => {
+      iterateDeletedStructs(transaction, snapshot2.ds, (_item) => {
       });
-      meta.add(snapshot);
+      meta.add(snapshot2);
     }
   };
+  var createDocFromSnapshot = (originDoc, snapshot2, newDoc = new Doc()) => {
+    if (originDoc.gc) {
+      throw new Error("Garbage-collection must be disabled in `originDoc`!");
+    }
+    const { sv, ds } = snapshot2;
+    const encoder = new UpdateEncoderV2();
+    originDoc.transact((transaction) => {
+      let size = 0;
+      sv.forEach((clock) => {
+        if (clock > 0) {
+          size++;
+        }
+      });
+      writeVarUint(encoder.restEncoder, size);
+      for (const [client, clock] of sv) {
+        if (clock === 0) {
+          continue;
+        }
+        if (clock < getState(originDoc.store, client)) {
+          getItemCleanStart(transaction, createID(client, clock));
+        }
+        const structs = originDoc.store.clients.get(client) || [];
+        const lastStructIndex = findIndexSS(structs, clock - 1);
+        writeVarUint(encoder.restEncoder, lastStructIndex + 1);
+        encoder.writeClient(client);
+        writeVarUint(encoder.restEncoder, 0);
+        for (let i = 0; i <= lastStructIndex; i++) {
+          structs[i].write(encoder, 0);
+        }
+      }
+      writeDeleteSet(encoder, ds);
+    });
+    applyUpdateV2(newDoc, encoder.toUint8Array(), "snapshot");
+    return newDoc;
+  };
+  var snapshotContainsUpdateV2 = (snapshot2, update, YDecoder = UpdateDecoderV2) => {
+    const updateDecoder = new YDecoder(createDecoder(update));
+    const lazyDecoder = new LazyStructReader(updateDecoder, false);
+    for (let curr = lazyDecoder.curr; curr !== null; curr = lazyDecoder.next()) {
+      if ((snapshot2.sv.get(curr.id.client) || 0) < curr.id.clock + curr.length) {
+        return false;
+      }
+    }
+    const mergedDS = mergeDeleteSets([snapshot2.ds, readDeleteSet(updateDecoder)]);
+    return equalDeleteSets(snapshot2.ds, mergedDS);
+  };
+  var snapshotContainsUpdate = (snapshot2, update) => snapshotContainsUpdateV2(snapshot2, update, UpdateDecoderV1);
   var StructStore = class {
     constructor() {
       this.clients = /* @__PURE__ */ new Map();
@@ -5359,6 +5907,10 @@ var wp;
       }
     });
   };
+  var tryGc = (ds, store, gcFilter) => {
+    tryGcDeleteSet(ds, store, gcFilter);
+    tryMergeDeleteSet(ds, store);
+  };
   var cleanupTransactions = (transactionCleanups, i) => {
     if (i < transactionCleanups.length) {
       const transaction = transactionCleanups[i];
@@ -5499,6 +6051,287 @@ var wp;
     }
     return result;
   };
+  var StackItem = class {
+    /**
+     * @param {DeleteSet} deletions
+     * @param {DeleteSet} insertions
+     */
+    constructor(deletions, insertions) {
+      this.insertions = insertions;
+      this.deletions = deletions;
+      this.meta = /* @__PURE__ */ new Map();
+    }
+  };
+  var clearUndoManagerStackItem = (tr, um, stackItem) => {
+    iterateDeletedStructs(tr, stackItem.deletions, (item) => {
+      if (item instanceof Item && um.scope.some((type) => isParentOf(type, item))) {
+        keepItem(item, false);
+      }
+    });
+  };
+  var popStackItem = (undoManager, stack, eventType) => {
+    let result = null;
+    let _tr = null;
+    const doc2 = undoManager.doc;
+    const scope = undoManager.scope;
+    transact(doc2, (transaction) => {
+      while (stack.length > 0 && result === null) {
+        const store = doc2.store;
+        const stackItem = (
+          /** @type {StackItem} */
+          stack.pop()
+        );
+        const itemsToRedo = /* @__PURE__ */ new Set();
+        const itemsToDelete = [];
+        let performedChange = false;
+        iterateDeletedStructs(transaction, stackItem.insertions, (struct) => {
+          if (struct instanceof Item) {
+            if (struct.redone !== null) {
+              let { item, diff } = followRedone(store, struct.id);
+              if (diff > 0) {
+                item = getItemCleanStart(transaction, createID(item.id.client, item.id.clock + diff));
+              }
+              struct = item;
+            }
+            if (!struct.deleted && scope.some((type) => isParentOf(
+              type,
+              /** @type {Item} */
+              struct
+            ))) {
+              itemsToDelete.push(struct);
+            }
+          }
+        });
+        iterateDeletedStructs(transaction, stackItem.deletions, (struct) => {
+          if (struct instanceof Item && scope.some((type) => isParentOf(type, struct)) && // Never redo structs in stackItem.insertions because they were created and deleted in the same capture interval.
+          !isDeleted(stackItem.insertions, struct.id)) {
+            itemsToRedo.add(struct);
+          }
+        });
+        itemsToRedo.forEach((struct) => {
+          performedChange = redoItem(transaction, struct, itemsToRedo, stackItem.insertions, undoManager.ignoreRemoteMapChanges, undoManager) !== null || performedChange;
+        });
+        for (let i = itemsToDelete.length - 1; i >= 0; i--) {
+          const item = itemsToDelete[i];
+          if (undoManager.deleteFilter(item)) {
+            item.delete(transaction);
+            performedChange = true;
+          }
+        }
+        result = performedChange ? stackItem : null;
+      }
+      transaction.changed.forEach((subProps, type) => {
+        if (subProps.has(null) && type._searchMarker) {
+          type._searchMarker.length = 0;
+        }
+      });
+      _tr = transaction;
+    }, undoManager);
+    if (result != null) {
+      const changedParentTypes = _tr.changedParentTypes;
+      undoManager.emit("stack-item-popped", [{ stackItem: result, type: eventType, changedParentTypes }, undoManager]);
+    }
+    return result;
+  };
+  var UndoManager = class extends Observable {
+    /**
+     * @param {AbstractType<any>|Array<AbstractType<any>>} typeScope Accepts either a single type, or an array of types
+     * @param {UndoManagerOptions} options
+     */
+    constructor(typeScope, {
+      captureTimeout = 500,
+      captureTransaction = (_tr) => true,
+      deleteFilter = () => true,
+      trackedOrigins = /* @__PURE__ */ new Set([null]),
+      ignoreRemoteMapChanges = false,
+      doc: doc2 = (
+        /** @type {Doc} */
+        isArray(typeScope) ? typeScope[0].doc : typeScope.doc
+      )
+    } = {}) {
+      super();
+      this.scope = [];
+      this.addToScope(typeScope);
+      this.deleteFilter = deleteFilter;
+      trackedOrigins.add(this);
+      this.trackedOrigins = trackedOrigins;
+      this.captureTransaction = captureTransaction;
+      this.undoStack = [];
+      this.redoStack = [];
+      this.undoing = false;
+      this.redoing = false;
+      this.doc = doc2;
+      this.lastChange = 0;
+      this.ignoreRemoteMapChanges = ignoreRemoteMapChanges;
+      this.captureTimeout = captureTimeout;
+      this.afterTransactionHandler = (transaction) => {
+        if (!this.captureTransaction(transaction) || !this.scope.some((type) => transaction.changedParentTypes.has(type)) || !this.trackedOrigins.has(transaction.origin) && (!transaction.origin || !this.trackedOrigins.has(transaction.origin.constructor))) {
+          return;
+        }
+        const undoing = this.undoing;
+        const redoing = this.redoing;
+        const stack = undoing ? this.redoStack : this.undoStack;
+        if (undoing) {
+          this.stopCapturing();
+        } else if (!redoing) {
+          this.clear(false, true);
+        }
+        const insertions = new DeleteSet();
+        transaction.afterState.forEach((endClock, client) => {
+          const startClock = transaction.beforeState.get(client) || 0;
+          const len = endClock - startClock;
+          if (len > 0) {
+            addToDeleteSet(insertions, client, startClock, len);
+          }
+        });
+        const now = getUnixTime();
+        let didAdd = false;
+        if (this.lastChange > 0 && now - this.lastChange < this.captureTimeout && stack.length > 0 && !undoing && !redoing) {
+          const lastOp = stack[stack.length - 1];
+          lastOp.deletions = mergeDeleteSets([lastOp.deletions, transaction.deleteSet]);
+          lastOp.insertions = mergeDeleteSets([lastOp.insertions, insertions]);
+        } else {
+          stack.push(new StackItem(transaction.deleteSet, insertions));
+          didAdd = true;
+        }
+        if (!undoing && !redoing) {
+          this.lastChange = now;
+        }
+        iterateDeletedStructs(
+          transaction,
+          transaction.deleteSet,
+          /** @param {Item|GC} item */
+          (item) => {
+            if (item instanceof Item && this.scope.some((type) => isParentOf(type, item))) {
+              keepItem(item, true);
+            }
+          }
+        );
+        const changeEvent = [{ stackItem: stack[stack.length - 1], origin: transaction.origin, type: undoing ? "redo" : "undo", changedParentTypes: transaction.changedParentTypes }, this];
+        if (didAdd) {
+          this.emit("stack-item-added", changeEvent);
+        } else {
+          this.emit("stack-item-updated", changeEvent);
+        }
+      };
+      this.doc.on("afterTransaction", this.afterTransactionHandler);
+      this.doc.on("destroy", () => {
+        this.destroy();
+      });
+    }
+    /**
+     * @param {Array<AbstractType<any>> | AbstractType<any>} ytypes
+     */
+    addToScope(ytypes) {
+      ytypes = isArray(ytypes) ? ytypes : [ytypes];
+      ytypes.forEach((ytype) => {
+        if (this.scope.every((yt) => yt !== ytype)) {
+          this.scope.push(ytype);
+        }
+      });
+    }
+    /**
+     * @param {any} origin
+     */
+    addTrackedOrigin(origin) {
+      this.trackedOrigins.add(origin);
+    }
+    /**
+     * @param {any} origin
+     */
+    removeTrackedOrigin(origin) {
+      this.trackedOrigins.delete(origin);
+    }
+    clear(clearUndoStack = true, clearRedoStack = true) {
+      if (clearUndoStack && this.canUndo() || clearRedoStack && this.canRedo()) {
+        this.doc.transact((tr) => {
+          if (clearUndoStack) {
+            this.undoStack.forEach((item) => clearUndoManagerStackItem(tr, this, item));
+            this.undoStack = [];
+          }
+          if (clearRedoStack) {
+            this.redoStack.forEach((item) => clearUndoManagerStackItem(tr, this, item));
+            this.redoStack = [];
+          }
+          this.emit("stack-cleared", [{ undoStackCleared: clearUndoStack, redoStackCleared: clearRedoStack }]);
+        });
+      }
+    }
+    /**
+     * UndoManager merges Undo-StackItem if they are created within time-gap
+     * smaller than `options.captureTimeout`. Call `um.stopCapturing()` so that the next
+     * StackItem won't be merged.
+     *
+     *
+     * @example
+     *     // without stopCapturing
+     *     ytext.insert(0, 'a')
+     *     ytext.insert(1, 'b')
+     *     um.undo()
+     *     ytext.toString() // => '' (note that 'ab' was removed)
+     *     // with stopCapturing
+     *     ytext.insert(0, 'a')
+     *     um.stopCapturing()
+     *     ytext.insert(0, 'b')
+     *     um.undo()
+     *     ytext.toString() // => 'a' (note that only 'b' was removed)
+     *
+     */
+    stopCapturing() {
+      this.lastChange = 0;
+    }
+    /**
+     * Undo last changes on type.
+     *
+     * @return {StackItem?} Returns StackItem if a change was applied
+     */
+    undo() {
+      this.undoing = true;
+      let res;
+      try {
+        res = popStackItem(this, this.undoStack, "undo");
+      } finally {
+        this.undoing = false;
+      }
+      return res;
+    }
+    /**
+     * Redo last undo operation.
+     *
+     * @return {StackItem?} Returns StackItem if a change was applied
+     */
+    redo() {
+      this.redoing = true;
+      let res;
+      try {
+        res = popStackItem(this, this.redoStack, "redo");
+      } finally {
+        this.redoing = false;
+      }
+      return res;
+    }
+    /**
+     * Are undo steps available?
+     *
+     * @return {boolean} `true` if undo is possible
+     */
+    canUndo() {
+      return this.undoStack.length > 0;
+    }
+    /**
+     * Are redo steps available?
+     *
+     * @return {boolean} `true` if redo is possible
+     */
+    canRedo() {
+      return this.redoStack.length > 0;
+    }
+    destroy() {
+      this.trackedOrigins.delete(this);
+      this.doc.off("afterTransaction", this.afterTransactionHandler);
+      super.destroy();
+    }
+  };
   function* lazyStructReaderGenerator(decoder) {
     const numOfStateUpdates = readVarUint(decoder.restDecoder);
     for (let i = 0; i < numOfStateUpdates; i++) {
@@ -5563,6 +6396,31 @@ var wp;
       return this.curr;
     }
   };
+  var logUpdate = (update) => logUpdateV2(update, UpdateDecoderV1);
+  var logUpdateV2 = (update, YDecoder = UpdateDecoderV2) => {
+    const structs = [];
+    const updateDecoder = new YDecoder(createDecoder(update));
+    const lazyDecoder = new LazyStructReader(updateDecoder, false);
+    for (let curr = lazyDecoder.curr; curr !== null; curr = lazyDecoder.next()) {
+      structs.push(curr);
+    }
+    print("Structs: ", structs);
+    const ds = readDeleteSet(updateDecoder);
+    print("DeleteSet: ", ds);
+  };
+  var decodeUpdate = (update) => decodeUpdateV2(update, UpdateDecoderV1);
+  var decodeUpdateV2 = (update, YDecoder = UpdateDecoderV2) => {
+    const structs = [];
+    const updateDecoder = new YDecoder(createDecoder(update));
+    const lazyDecoder = new LazyStructReader(updateDecoder, false);
+    for (let curr = lazyDecoder.curr; curr !== null; curr = lazyDecoder.next()) {
+      structs.push(curr);
+    }
+    return {
+      structs,
+      ds: readDeleteSet(updateDecoder)
+    };
+  };
   var LazyStructWriter = class {
     /**
      * @param {UpdateEncoderV1 | UpdateEncoderV2} encoder
@@ -5576,6 +6434,71 @@ var wp;
     }
   };
   var mergeUpdates = (updates) => mergeUpdatesV2(updates, UpdateDecoderV1, UpdateEncoderV1);
+  var encodeStateVectorFromUpdateV2 = (update, YEncoder = DSEncoderV2, YDecoder = UpdateDecoderV2) => {
+    const encoder = new YEncoder();
+    const updateDecoder = new LazyStructReader(new YDecoder(createDecoder(update)), false);
+    let curr = updateDecoder.curr;
+    if (curr !== null) {
+      let size = 0;
+      let currClient = curr.id.client;
+      let stopCounting = curr.id.clock !== 0;
+      let currClock = stopCounting ? 0 : curr.id.clock + curr.length;
+      for (; curr !== null; curr = updateDecoder.next()) {
+        if (currClient !== curr.id.client) {
+          if (currClock !== 0) {
+            size++;
+            writeVarUint(encoder.restEncoder, currClient);
+            writeVarUint(encoder.restEncoder, currClock);
+          }
+          currClient = curr.id.client;
+          currClock = 0;
+          stopCounting = curr.id.clock !== 0;
+        }
+        if (curr.constructor === Skip) {
+          stopCounting = true;
+        }
+        if (!stopCounting) {
+          currClock = curr.id.clock + curr.length;
+        }
+      }
+      if (currClock !== 0) {
+        size++;
+        writeVarUint(encoder.restEncoder, currClient);
+        writeVarUint(encoder.restEncoder, currClock);
+      }
+      const enc = createEncoder();
+      writeVarUint(enc, size);
+      writeBinaryEncoder(enc, encoder.restEncoder);
+      encoder.restEncoder = enc;
+      return encoder.toUint8Array();
+    } else {
+      writeVarUint(encoder.restEncoder, 0);
+      return encoder.toUint8Array();
+    }
+  };
+  var encodeStateVectorFromUpdate = (update) => encodeStateVectorFromUpdateV2(update, DSEncoderV1, UpdateDecoderV1);
+  var parseUpdateMetaV2 = (update, YDecoder = UpdateDecoderV2) => {
+    const from2 = /* @__PURE__ */ new Map();
+    const to = /* @__PURE__ */ new Map();
+    const updateDecoder = new LazyStructReader(new YDecoder(createDecoder(update)), false);
+    let curr = updateDecoder.curr;
+    if (curr !== null) {
+      let currClient = curr.id.client;
+      let currClock = curr.id.clock;
+      from2.set(currClient, currClock);
+      for (; curr !== null; curr = updateDecoder.next()) {
+        if (currClient !== curr.id.client) {
+          to.set(currClient, currClock);
+          from2.set(curr.id.client, curr.id.clock);
+          currClient = curr.id.client;
+        }
+        currClock = curr.id.clock + curr.length;
+      }
+      to.set(currClient, currClock);
+    }
+    return { from: from2, to };
+  };
+  var parseUpdateMeta = (update) => parseUpdateMetaV2(update, UpdateDecoderV1);
   var sliceStruct = (left, diff) => {
     if (left.constructor === GC) {
       const { client, clock } = left.id;
@@ -5737,6 +6660,7 @@ var wp;
     writeDeleteSet(encoder, ds);
     return encoder.toUint8Array();
   };
+  var diffUpdate = (update, sv) => diffUpdateV2(update, sv, UpdateDecoderV1, UpdateEncoderV1);
   var flushLazyStructWriter = (lazyWriter) => {
     if (lazyWriter.written > 0) {
       lazyWriter.clientStructs.push({ written: lazyWriter.written, restEncoder: toUint8Array(lazyWriter.encoder.restEncoder) });
@@ -5779,6 +6703,121 @@ var wp;
     writeDeleteSet(updateEncoder, ds);
     return updateEncoder.toUint8Array();
   };
+  var createObfuscator = ({ formatting = true, subdocs = true, yxml = true } = {}) => {
+    let i = 0;
+    const mapKeyCache = create();
+    const nodeNameCache = create();
+    const formattingKeyCache = create();
+    const formattingValueCache = create();
+    formattingValueCache.set(null, null);
+    return (block) => {
+      switch (block.constructor) {
+        case GC:
+        case Skip:
+          return block;
+        case Item: {
+          const item = (
+            /** @type {Item} */
+            block
+          );
+          const content = item.content;
+          switch (content.constructor) {
+            case ContentDeleted:
+              break;
+            case ContentType: {
+              if (yxml) {
+                const type = (
+                  /** @type {ContentType} */
+                  content.type
+                );
+                if (type instanceof YXmlElement) {
+                  type.nodeName = setIfUndefined(nodeNameCache, type.nodeName, () => "node-" + i);
+                }
+                if (type instanceof YXmlHook) {
+                  type.hookName = setIfUndefined(nodeNameCache, type.hookName, () => "hook-" + i);
+                }
+              }
+              break;
+            }
+            case ContentAny: {
+              const c = (
+                /** @type {ContentAny} */
+                content
+              );
+              c.arr = c.arr.map(() => i);
+              break;
+            }
+            case ContentBinary: {
+              const c = (
+                /** @type {ContentBinary} */
+                content
+              );
+              c.content = new Uint8Array([i]);
+              break;
+            }
+            case ContentDoc: {
+              const c = (
+                /** @type {ContentDoc} */
+                content
+              );
+              if (subdocs) {
+                c.opts = {};
+                c.doc.guid = i + "";
+              }
+              break;
+            }
+            case ContentEmbed: {
+              const c = (
+                /** @type {ContentEmbed} */
+                content
+              );
+              c.embed = {};
+              break;
+            }
+            case ContentFormat: {
+              const c = (
+                /** @type {ContentFormat} */
+                content
+              );
+              if (formatting) {
+                c.key = setIfUndefined(formattingKeyCache, c.key, () => i + "");
+                c.value = setIfUndefined(formattingValueCache, c.value, () => ({ i }));
+              }
+              break;
+            }
+            case ContentJSON: {
+              const c = (
+                /** @type {ContentJSON} */
+                content
+              );
+              c.arr = c.arr.map(() => i);
+              break;
+            }
+            case ContentString: {
+              const c = (
+                /** @type {ContentString} */
+                content
+              );
+              c.str = repeat(i % 10 + "", c.str.length);
+              break;
+            }
+            default:
+              unexpectedCase();
+          }
+          if (item.parentSub) {
+            item.parentSub = setIfUndefined(mapKeyCache, item.parentSub, () => i + "");
+          }
+          i++;
+          return block;
+        }
+        default:
+          unexpectedCase();
+      }
+    };
+  };
+  var obfuscateUpdate = (update, opts) => convertUpdateFormat(update, createObfuscator(opts), UpdateDecoderV1, UpdateEncoderV1);
+  var obfuscateUpdateV2 = (update, opts) => convertUpdateFormat(update, createObfuscator(opts), UpdateDecoderV2, UpdateEncoderV2);
+  var convertUpdateFormatV1ToV2 = (update) => convertUpdateFormat(update, id, UpdateDecoderV1, UpdateEncoderV2);
   var convertUpdateFormatV2ToV1 = (update) => convertUpdateFormat(update, id, UpdateDecoderV2, UpdateEncoderV1);
   var errorComputeChanges = "You must not compute changes after the event-handler fired.";
   var YEvent = class {
@@ -6103,6 +7142,15 @@ var wp;
       }
     }
   };
+  var getTypeChildren = (t) => {
+    let s = t._start;
+    const arr = [];
+    while (s) {
+      arr.push(s);
+      s = s.right;
+    }
+    return arr;
+  };
   var callTypeObservers = (type, transaction, event) => {
     const changedType = type;
     const changedParentTypes = transaction.changedParentTypes;
@@ -6260,6 +7308,20 @@ var wp;
     let n = type._start;
     while (n !== null) {
       if (n.countable && !n.deleted) {
+        const c = n.content.getContent();
+        for (let i = 0; i < c.length; i++) {
+          cs.push(c[i]);
+        }
+      }
+      n = n.right;
+    }
+    return cs;
+  };
+  var typeListToArraySnapshot = (type, snapshot2) => {
+    const cs = [];
+    let n = type._start;
+    while (n !== null) {
+      if (n.countable && isVisible(n, snapshot2)) {
         const c = n.content.getContent();
         for (let i = 0; i < c.length; i++) {
           cs.push(c[i]);
@@ -6546,6 +7608,13 @@ var wp;
   var typeMapHas = (parent, key) => {
     const val = parent._map.get(key);
     return val !== void 0 && !val.deleted;
+  };
+  var typeMapGetSnapshot = (parent, key, snapshot2) => {
+    let v = parent._map.get(key) || null;
+    while (v !== null && (!snapshot2.sv.has(v.id.client) || v.id.clock >= (snapshot2.sv.get(v.id.client) || 0))) {
+      v = v.left;
+    }
+    return v !== null && isVisible(v, snapshot2) ? v.content.getContent()[v.length - 1] : void 0;
   };
   var createMapIterator = (map2) => iteratorFilter(
     map2.entries(),
@@ -7778,7 +8847,7 @@ var wp;
      *
      * @public
      */
-    toDelta(snapshot, prevSnapshot, computeYChange) {
+    toDelta(snapshot2, prevSnapshot, computeYChange) {
       const ops = [];
       const currentAttributes = /* @__PURE__ */ new Map();
       const doc2 = (
@@ -7805,11 +8874,11 @@ var wp;
       }
       const computeDelta = () => {
         while (n !== null) {
-          if (isVisible(n, snapshot) || prevSnapshot !== void 0 && isVisible(n, prevSnapshot)) {
+          if (isVisible(n, snapshot2) || prevSnapshot !== void 0 && isVisible(n, prevSnapshot)) {
             switch (n.content.constructor) {
               case ContentString: {
                 const cur = currentAttributes.get("ychange");
-                if (snapshot !== void 0 && !isVisible(n, snapshot)) {
+                if (snapshot2 !== void 0 && !isVisible(n, snapshot2)) {
                   if (cur === void 0 || cur.user !== n.id.client || cur.type !== "removed") {
                     packStr();
                     currentAttributes.set("ychange", computeYChange ? computeYChange("removed", n.id) : { type: "removed" });
@@ -7847,7 +8916,7 @@ var wp;
                 break;
               }
               case ContentFormat:
-                if (isVisible(n, snapshot)) {
+                if (isVisible(n, snapshot2)) {
                   packStr();
                   updateCurrentAttributes(
                     currentAttributes,
@@ -7862,10 +8931,10 @@ var wp;
         }
         packStr();
       };
-      if (snapshot || prevSnapshot) {
+      if (snapshot2 || prevSnapshot) {
         transact(doc2, (transaction) => {
-          if (snapshot) {
-            splitSnapshotAffectedStructs(transaction, snapshot);
+          if (snapshot2) {
+            splitSnapshotAffectedStructs(transaction, snapshot2);
           }
           if (prevSnapshot) {
             splitSnapshotAffectedStructs(transaction, prevSnapshot);
@@ -9700,6 +10769,30 @@ var wp;
     }
   };
   var readContentType = (decoder) => new ContentType(typeRefs[decoder.readTypeRef()](decoder));
+  var followRedone = (store, id2) => {
+    let nextID = id2;
+    let diff = 0;
+    let item;
+    do {
+      if (diff > 0) {
+        nextID = createID(nextID.client, nextID.clock + diff);
+      }
+      item = getItem(store, nextID);
+      diff = nextID.clock - item.id.clock;
+      nextID = item.redone;
+    } while (nextID !== null && item instanceof Item);
+    return {
+      item,
+      diff
+    };
+  };
+  var keepItem = (item, keep) => {
+    while (item !== null && item.keep !== keep) {
+      item.keep = keep;
+      item = /** @type {AbstractType<any>} */
+      item.parent._item;
+    }
+  };
   var splitItem = (transaction, leftItem, diff) => {
     const { client, clock } = leftItem.id;
     const rightItem = new Item(
@@ -9731,6 +10824,101 @@ var wp;
     }
     leftItem.length = diff;
     return rightItem;
+  };
+  var isDeletedByUndoStack = (stack, id2) => some(
+    stack,
+    /** @param {StackItem} s */
+    (s) => isDeleted(s.deletions, id2)
+  );
+  var redoItem = (transaction, item, redoitems, itemsToDelete, ignoreRemoteMapChanges, um) => {
+    const doc2 = transaction.doc;
+    const store = doc2.store;
+    const ownClientID = doc2.clientID;
+    const redone = item.redone;
+    if (redone !== null) {
+      return getItemCleanStart(transaction, redone);
+    }
+    let parentItem = (
+      /** @type {AbstractType<any>} */
+      item.parent._item
+    );
+    let left = null;
+    let right;
+    if (parentItem !== null && parentItem.deleted === true) {
+      if (parentItem.redone === null && (!redoitems.has(parentItem) || redoItem(transaction, parentItem, redoitems, itemsToDelete, ignoreRemoteMapChanges, um) === null)) {
+        return null;
+      }
+      while (parentItem.redone !== null) {
+        parentItem = getItemCleanStart(transaction, parentItem.redone);
+      }
+    }
+    const parentType = parentItem === null ? (
+      /** @type {AbstractType<any>} */
+      item.parent
+    ) : (
+      /** @type {ContentType} */
+      parentItem.content.type
+    );
+    if (item.parentSub === null) {
+      left = item.left;
+      right = item;
+      while (left !== null) {
+        let leftTrace = left;
+        while (leftTrace !== null && /** @type {AbstractType<any>} */
+        leftTrace.parent._item !== parentItem) {
+          leftTrace = leftTrace.redone === null ? null : getItemCleanStart(transaction, leftTrace.redone);
+        }
+        if (leftTrace !== null && /** @type {AbstractType<any>} */
+        leftTrace.parent._item === parentItem) {
+          left = leftTrace;
+          break;
+        }
+        left = left.left;
+      }
+      while (right !== null) {
+        let rightTrace = right;
+        while (rightTrace !== null && /** @type {AbstractType<any>} */
+        rightTrace.parent._item !== parentItem) {
+          rightTrace = rightTrace.redone === null ? null : getItemCleanStart(transaction, rightTrace.redone);
+        }
+        if (rightTrace !== null && /** @type {AbstractType<any>} */
+        rightTrace.parent._item === parentItem) {
+          right = rightTrace;
+          break;
+        }
+        right = right.right;
+      }
+    } else {
+      right = null;
+      if (item.right && !ignoreRemoteMapChanges) {
+        left = item;
+        while (left !== null && left.right !== null && (left.right.redone || isDeleted(itemsToDelete, left.right.id) || isDeletedByUndoStack(um.undoStack, left.right.id) || isDeletedByUndoStack(um.redoStack, left.right.id))) {
+          left = left.right;
+          while (left.redone) left = getItemCleanStart(transaction, left.redone);
+        }
+        if (left && left.right !== null) {
+          return null;
+        }
+      } else {
+        left = parentType._map.get(item.parentSub) || null;
+      }
+    }
+    const nextClock = getState(store, ownClientID);
+    const nextId = createID(ownClientID, nextClock);
+    const redoneItem = new Item(
+      nextId,
+      left,
+      left && left.lastId,
+      right,
+      right && right.id,
+      parentType,
+      item.parentSub,
+      item.content.copy()
+    );
+    item.redone = nextId;
+    keepItem(redoneItem, true);
+    redoneItem.integrate(transaction, 0);
+    return redoneItem;
   };
   var Item = class _Item extends AbstractStruct {
     /**
@@ -10176,6 +11364,17 @@ var wp;
   }
   glo[importIdentifier] = true;
 
+  // packages/sync/build-module/config.js
+  var CRDT_DOC_VERSION = 1;
+  var CRDT_RECORD_MAP_KEY = "document";
+  var CRDT_STATE_MAP_KEY = "state";
+  var CRDT_STATE_VERSION_KEY = "version";
+  var LOCAL_EDITOR_ORIGIN = "gutenberg";
+  var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
+
+  // packages/sync/build-module/providers.js
+  var import_hooks = __toESM(require_hooks());
+
   // node_modules/lib0/indexeddb.js
   var rtop = (request) => create4((resolve2, reject2) => {
     request.onerror = (event) => reject2(new Error(event.target.error));
@@ -10381,13 +11580,11 @@ var wp;
   };
 
   // packages/sync/build-module/connect-indexdb.js
-  function connectIndexDb(objectId, objectType, doc2) {
+  function connectIndexDb(objectType, objectId, doc2) {
     const roomName = `${objectType}-${objectId}`;
     const provider = new IndexeddbPersistence(roomName, doc2);
-    return new Promise((resolve2) => {
-      provider.on("synced", () => {
-        resolve2(() => provider.destroy());
-      });
+    return Promise.resolve({
+      destroy: () => provider.destroy()
     });
   }
 
@@ -10595,7 +11792,7 @@ var wp;
     writeVarUint(encoder, messageYjsUpdate);
     writeVarUint8Array(encoder, update);
   };
-  var readUpdate = readSyncStep2;
+  var readUpdate2 = readSyncStep2;
   var readSyncMessage = (decoder, encoder, doc2, transactionOrigin) => {
     const messageType = readVarUint(decoder);
     switch (messageType) {
@@ -10606,7 +11803,7 @@ var wp;
         readSyncStep2(decoder, doc2, transactionOrigin);
         break;
       case messageYjsUpdate:
-        readUpdate(decoder, doc2, transactionOrigin);
+        readUpdate2(decoder, doc2, transactionOrigin);
         break;
       default:
         throw new Error("Unknown message type");
@@ -11835,72 +13032,139 @@ var wp;
 
   // packages/sync/build-module/create-webrtc-connection.js
   function createWebRTCConnection({ signaling, password }) {
-    return function(objectId, objectType, doc2) {
+    return function(objectType, objectId, doc2) {
       const roomName = `${objectType}-${objectId}`;
-      new WebrtcProviderWithHttpSignaling(roomName, doc2, {
+      const provider = new WebrtcProviderWithHttpSignaling(roomName, doc2, {
         signaling,
-        // @ts-ignore
         password
       });
-      return Promise.resolve(() => true);
+      return Promise.resolve({
+        destroy: () => provider.destroy()
+      });
     };
   }
 
-  // packages/sync/build-module/provider.js
-  var createSyncProvider = (connectLocal, connectRemote) => {
-    const config = {};
-    const listeners = {};
-    const docs = {};
-    function register(objectType, objectConfig) {
-      config[objectType] = objectConfig;
+  // packages/sync/build-module/providers.js
+  var providerCreators = null;
+  function getDefaultProviderCreators() {
+    const signalingUrl = window?.wp?.ajax?.settings?.url;
+    if (!signalingUrl) {
+      return [];
     }
-    async function bootstrap(objectType, objectId, record, handleChanges) {
-      const doc2 = new Doc();
-      docs[objectType] = docs[objectType] || {};
-      docs[objectType][objectId] = doc2;
-      const updateHandler = () => {
-        const data = config[objectType].getChangesFromCRDTDoc(doc2);
-        handleChanges(data);
+    return [
+      connectIndexDb,
+      createWebRTCConnection({
+        password: window?.__experimentalCollaborativeEditingSecret,
+        signaling: [signalingUrl]
+      })
+    ];
+  }
+  function isProviderCreator(creator) {
+    return "function" === typeof creator;
+  }
+  function getProviderCreators() {
+    if (providerCreators) {
+      return providerCreators;
+    }
+    const filteredProviderCreators = (0, import_hooks.applyFilters)(
+      "sync.providers",
+      getDefaultProviderCreators()
+    );
+    if (!Array.isArray(filteredProviderCreators)) {
+      providerCreators = [];
+      return providerCreators;
+    }
+    providerCreators = filteredProviderCreators.filter(isProviderCreator);
+    return providerCreators;
+  }
+
+  // packages/sync/build-module/utils.js
+  function createYjsDoc(documentMeta) {
+    const metaMap = new Map(
+      Object.entries(documentMeta)
+    );
+    const ydoc = new Doc({ meta: metaMap });
+    const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
+    stateMap.set(CRDT_STATE_VERSION_KEY, CRDT_DOC_VERSION);
+    return ydoc;
+  }
+
+  // packages/sync/build-module/manager.js
+  function createSyncManager() {
+    const entityStates = /* @__PURE__ */ new Map();
+    async function loadEntity(syncConfig, objectType, objectId, record, handlers) {
+      const providerCreators2 = getProviderCreators();
+      if (0 === providerCreators2.length) {
+        return;
+      }
+      const entityId = getEntityId(objectType, objectId);
+      if (entityStates.has(entityId)) {
+        return;
+      }
+      const ydoc = createYjsDoc({ objectType });
+      const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
+      const unload = () => {
+        providerResults.forEach((result) => result.destroy());
+        recordMap.unobserveDeep(onRecordUpdate);
+        ydoc.destroy();
+        entityStates.delete(entityId);
       };
-      doc2.on("update", updateHandler);
-      const destroyLocalConnection = await connectLocal(
+      const onRecordUpdate = (_events, transaction) => {
+        if (transaction.local && !(transaction.origin instanceof UndoManager)) {
+          return;
+        }
+        updateEntityRecord(objectType, objectId);
+      };
+      const entityState = {
+        handlers,
         objectId,
         objectType,
-        doc2
-      );
-      if (connectRemote) {
-        await connectRemote(objectId, objectType, doc2);
-      }
-      doc2.transact(() => {
-        config[objectType].applyChangesToCRDTDoc(doc2, record);
-      });
-      listeners[objectType] = listeners[objectType] || {};
-      listeners[objectType][objectId] = () => {
-        destroyLocalConnection();
-        doc2.off("update", updateHandler);
+        syncConfig,
+        unload,
+        ydoc
       };
+      entityStates.set(entityId, entityState);
+      const providerResults = await Promise.all(
+        providerCreators2.map(
+          (create7) => create7(objectType, objectId, ydoc)
+        )
+      );
+      recordMap.observeDeep(onRecordUpdate);
+      ydoc.transact(() => {
+        syncConfig.applyChangesToCRDTDoc(ydoc, record);
+      }, LOCAL_SYNC_MANAGER_ORIGIN);
     }
-    async function update(objectType, objectId, data) {
-      const doc2 = docs[objectType][objectId];
-      if (!doc2) {
-        throw "Error doc " + objectType + " " + objectId + " not found";
-      }
-      doc2.transact(() => {
-        config[objectType].applyChangesToCRDTDoc(doc2, data);
-      });
+    function unloadEntity(objectType, objectId) {
+      entityStates.get(getEntityId(objectType, objectId))?.unload();
     }
-    async function discard(objectType, objectId) {
-      if (listeners?.[objectType]?.[objectId]) {
-        listeners[objectType][objectId]();
+    function getEntityId(objectType, objectId) {
+      return `${objectType}_${objectId}`;
+    }
+    function updateCRDTDoc(objectType, objectId, changes, origin) {
+      const entityId = getEntityId(objectType, objectId);
+      const entityState = entityStates.get(entityId);
+      const syncConfig = entityState?.syncConfig;
+      const ydoc = entityState?.ydoc;
+      ydoc?.transact(() => {
+        syncConfig?.applyChangesToCRDTDoc(ydoc, changes);
+      }, origin);
+    }
+    function updateEntityRecord(objectType, objectId) {
+      const entityId = getEntityId(objectType, objectId);
+      const entityState = entityStates.get(entityId);
+      if (!entityState) {
+        return;
       }
+      const { handlers, syncConfig, ydoc } = entityState;
+      const changes = syncConfig.getChangesFromCRDTDoc(ydoc);
+      handlers.editRecord(changes);
     }
     return {
-      register,
-      bootstrap,
-      update,
-      discard
+      load: loadEntity,
+      unload: unloadEntity,
+      update: updateCRDTDoc
     };
-  };
+  }
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:

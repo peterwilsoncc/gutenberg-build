@@ -1424,12 +1424,21 @@ const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// external ["wp","richText"]
 const external_wp_richText_namespaceObject = window["wp"]["richText"];
 ;// ./packages/sync/build-module/config.js
+const CRDT_DOC_VERSION = 1;
 const CRDT_RECORD_MAP_KEY = "document";
+const CRDT_STATE_MAP_KEY = "state";
+const CRDT_STATE_VERSION_KEY = "version";
+const LOCAL_EDITOR_ORIGIN = "gutenberg";
+const LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
 
 
 ;// ./packages/core-data/build-module/utils/crdt.js
 /**
  * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
  */
 
 function defaultApplyChangesToCRDTDoc(crdtDoc, changes) {
@@ -19188,64 +19197,8 @@ glo[importIdentifier] = true;
 
 //# sourceMappingURL=yjs.mjs.map
 
-;// ./packages/sync/build-module/provider.js
-
-const createSyncProvider = (connectLocal, connectRemote) => {
-  const config = {};
-  const listeners = {};
-  const docs = {};
-  function register(objectType, objectConfig) {
-    config[objectType] = objectConfig;
-  }
-  async function bootstrap(objectType, objectId, record, handleChanges) {
-    const doc = new Doc();
-    docs[objectType] = docs[objectType] || {};
-    docs[objectType][objectId] = doc;
-    const updateHandler = () => {
-      const data = config[objectType].getChangesFromCRDTDoc(doc);
-      handleChanges(data);
-    };
-    doc.on("update", updateHandler);
-    const destroyLocalConnection = await connectLocal(
-      objectId,
-      objectType,
-      doc
-    );
-    if (connectRemote) {
-      await connectRemote(objectId, objectType, doc);
-    }
-    doc.transact(() => {
-      config[objectType].applyChangesToCRDTDoc(doc, record);
-    });
-    listeners[objectType] = listeners[objectType] || {};
-    listeners[objectType][objectId] = () => {
-      destroyLocalConnection();
-      doc.off("update", updateHandler);
-    };
-  }
-  async function update(objectType, objectId, data) {
-    const doc = docs[objectType][objectId];
-    if (!doc) {
-      throw "Error doc " + objectType + " " + objectId + " not found";
-    }
-    doc.transact(() => {
-      config[objectType].applyChangesToCRDTDoc(doc, data);
-    });
-  }
-  async function discard(objectType, objectId) {
-    if (listeners?.[objectType]?.[objectId]) {
-      listeners[objectType][objectId]();
-    }
-  }
-  return {
-    register,
-    bootstrap,
-    update,
-    discard
-  };
-};
-
-
+;// external ["wp","hooks"]
+const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
 ;// ./node_modules/lib0/indexeddb.js
 /* eslint-env browser */
 
@@ -19701,13 +19654,11 @@ class IndexeddbPersistence extends Observable {
 
 ;// ./packages/sync/build-module/connect-indexdb.js
 
-function connectIndexDb(objectId, objectType, doc) {
+function connectIndexDb(objectType, objectId, doc) {
   const roomName = `${objectType}-${objectId}`;
   const provider = new IndexeddbPersistence(roomName, doc);
-  return new Promise((resolve) => {
-    provider.on("synced", () => {
-      resolve(() => provider.destroy());
-    });
+  return Promise.resolve({
+    destroy: () => provider.destroy()
   });
 }
 
@@ -21527,14 +21478,149 @@ class WebrtcProviderWithHttpSignaling extends WebrtcProvider {
 ;// ./packages/sync/build-module/create-webrtc-connection.js
 
 function createWebRTCConnection({ signaling, password }) {
-  return function(objectId, objectType, doc) {
+  return function(objectType, objectId, doc) {
     const roomName = `${objectType}-${objectId}`;
-    new WebrtcProviderWithHttpSignaling(roomName, doc, {
+    const provider = new WebrtcProviderWithHttpSignaling(roomName, doc, {
       signaling,
-      // @ts-ignore
       password
     });
-    return Promise.resolve(() => true);
+    return Promise.resolve({
+      destroy: () => provider.destroy()
+    });
+  };
+}
+
+
+;// ./packages/sync/build-module/providers.js
+
+
+
+let providerCreators = null;
+function getDefaultProviderCreators() {
+  const signalingUrl = window?.wp?.ajax?.settings?.url;
+  if (!signalingUrl) {
+    return [];
+  }
+  return [
+    connectIndexDb,
+    createWebRTCConnection({
+      password: window?.__experimentalCollaborativeEditingSecret,
+      signaling: [signalingUrl]
+    })
+  ];
+}
+function isProviderCreator(creator) {
+  return "function" === typeof creator;
+}
+function getProviderCreators() {
+  if (providerCreators) {
+    return providerCreators;
+  }
+  const filteredProviderCreators = (0,external_wp_hooks_namespaceObject.applyFilters)(
+    "sync.providers",
+    getDefaultProviderCreators()
+  );
+  if (!Array.isArray(filteredProviderCreators)) {
+    providerCreators = [];
+    return providerCreators;
+  }
+  providerCreators = filteredProviderCreators.filter(isProviderCreator);
+  return providerCreators;
+}
+
+
+;// ./packages/sync/build-module/utils.js
+
+
+function createYjsDoc(documentMeta) {
+  const metaMap = new Map(
+    Object.entries(documentMeta)
+  );
+  const ydoc = new Doc({ meta: metaMap });
+  const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
+  stateMap.set(CRDT_STATE_VERSION_KEY, CRDT_DOC_VERSION);
+  return ydoc;
+}
+
+
+;// ./packages/sync/build-module/manager.js
+
+
+
+
+function createSyncManager() {
+  const entityStates = /* @__PURE__ */ new Map();
+  async function loadEntity(syncConfig, objectType, objectId, record, handlers) {
+    const providerCreators = getProviderCreators();
+    if (0 === providerCreators.length) {
+      return;
+    }
+    const entityId = getEntityId(objectType, objectId);
+    if (entityStates.has(entityId)) {
+      return;
+    }
+    const ydoc = createYjsDoc({ objectType });
+    const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
+    const unload = () => {
+      providerResults.forEach((result) => result.destroy());
+      recordMap.unobserveDeep(onRecordUpdate);
+      ydoc.destroy();
+      entityStates.delete(entityId);
+    };
+    const onRecordUpdate = (_events, transaction) => {
+      if (transaction.local && !(transaction.origin instanceof UndoManager)) {
+        return;
+      }
+      updateEntityRecord(objectType, objectId);
+    };
+    const entityState = {
+      handlers,
+      objectId,
+      objectType,
+      syncConfig,
+      unload,
+      ydoc
+    };
+    entityStates.set(entityId, entityState);
+    const providerResults = await Promise.all(
+      providerCreators.map(
+        (create) => create(objectType, objectId, ydoc)
+      )
+    );
+    recordMap.observeDeep(onRecordUpdate);
+    ydoc.transact(() => {
+      syncConfig.applyChangesToCRDTDoc(ydoc, record);
+    }, LOCAL_SYNC_MANAGER_ORIGIN);
+  }
+  function unloadEntity(objectType, objectId) {
+    entityStates.get(getEntityId(objectType, objectId))?.unload();
+  }
+  function getEntityId(objectType, objectId) {
+    return `${objectType}_${objectId}`;
+  }
+  function updateCRDTDoc(objectType, objectId, changes, origin) {
+    const entityId = getEntityId(objectType, objectId);
+    const entityState = entityStates.get(entityId);
+    const syncConfig = entityState?.syncConfig;
+    const ydoc = entityState?.ydoc;
+    ydoc?.transact(() => {
+      syncConfig?.applyChangesToCRDTDoc(ydoc, changes);
+    }, origin);
+  }
+  function updateEntityRecord(objectType, objectId) {
+    const entityId = getEntityId(objectType, objectId);
+    const entityState = entityStates.get(entityId);
+    if (!entityState) {
+      return;
+    }
+    const { handlers, syncConfig, ydoc } = entityState;
+    const changes = syncConfig.getChangesFromCRDTDoc(ydoc);
+    handlers.editRecord(changes);
+  }
+  return {
+    load: loadEntity,
+    unload: unloadEntity,
+    update: updateCRDTDoc
   };
 }
 
@@ -21544,18 +21630,8 @@ function createWebRTCConnection({ signaling, password }) {
  * WordPress dependencies
  */
 
-let syncProvider;
-function getSyncProvider() {
-  if (!syncProvider) {
-    syncProvider = createSyncProvider(connectIndexDb, createWebRTCConnection({
-      signaling: [
-      //'ws://localhost:4444',
-      window?.wp?.ajax?.settings?.url],
-      password: window?.__experimentalCollaborativeEditingSecret
-    }));
-  }
-  return syncProvider;
-}
+
+const syncManager = createSyncManager();
 
 ;// ./packages/core-data/build-module/actions.js
 /**
@@ -21927,7 +22003,7 @@ const editEntityRecord = (kind, name, recordId, edits, options = {}) => ({
     if (true) {
       const objectType = `${kind}/${name}`;
       const objectId = recordId;
-      getSyncProvider().update(objectType, objectId, edit.edits);
+      syncManager.update(objectType, objectId, edit.edits, LOCAL_EDITOR_ORIGIN);
     }
   }
   if (!options.undoIgnore) {
@@ -23022,7 +23098,7 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
         const objectId = key;
 
         // Use the new transient "read/write" config to compute transients for
-        // the sync provider. Otherwise these transients are not available
+        // the sync manager. Otherwise these transients are not available
         // if / until the record is edited. Use a copy of the record so that
         // it does not change the behavior outside this experimental flag.
         const recordWithTransients = {
@@ -23031,20 +23107,25 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
         Object.entries((_entityConfig$transie = entityConfig.transientEdits) !== null && _entityConfig$transie !== void 0 ? _entityConfig$transie : {}).filter(([propName, transientConfig]) => undefined === recordWithTransients[propName] && transientConfig && 'object' === typeof transientConfig && 'read' in transientConfig && 'function' === typeof transientConfig.read).forEach(([propName, transientConfig]) => {
           recordWithTransients[propName] = transientConfig.read(recordWithTransients);
         });
-        getSyncProvider().register(objectType, entityConfig.syncConfig);
 
-        // Bootstraps the edited document (and load from peers).
-        await getSyncProvider().bootstrap(objectType, objectId, recordWithTransients, edits => {
-          dispatch({
-            type: 'EDIT_ENTITY_RECORD',
-            kind,
-            name,
-            recordId: key,
-            edits,
-            meta: {
-              undo: undefined
+        // Load the entity record for syncing.
+        await syncManager.load(entityConfig.syncConfig, objectType, objectId, recordWithTransients, {
+          // Handle edits sourced from the sync manager.
+          editRecord: edits => {
+            if (!Object.keys(edits).length) {
+              return;
             }
-          });
+            dispatch({
+              type: 'EDIT_ENTITY_RECORD',
+              kind,
+              name,
+              recordId: key,
+              edits,
+              meta: {
+                undo: undefined
+              }
+            });
+          }
         });
       }
     }
