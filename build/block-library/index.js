@@ -48780,6 +48780,12 @@ const post_terms_init = () => {
   });
 };
 
+;// ./packages/icons/build-module/library/time-to-read.js
+
+
+var time_to_read_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12 3c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm0 16.5c-4.1 0-7.5-3.4-7.5-7.5S7.9 4.5 12 4.5s7.5 3.4 7.5 7.5-3.4 7.5-7.5 7.5zM12 7l-1 5c0 .3.2.6.4.8l4.2 2.8-2.7-4.1L12 7z" }) });
+
+
 ;// external ["wp","wordcount"]
 const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 ;// ./packages/block-library/build-module/post-time-to-read/edit.js
@@ -48924,31 +48930,17 @@ function PostTimeToReadEdit({
 }
 /* harmony default export */ const post_time_to_read_edit = (PostTimeToReadEdit);
 
-;// ./packages/block-library/build-module/post-time-to-read/icon.js
-/**
- * WordPress dependencies
- */
+;// ./packages/icons/build-module/library/word-count.js
 
 
-/* harmony default export */ const post_time_to_read_icon = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
-    d: "M12 3c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm0 16.5c-4.1 0-7.5-3.4-7.5-7.5S7.9 4.5 12 4.5s7.5 3.4 7.5 7.5-3.4 7.5-7.5 7.5zM12 7l-1 5c0 .3.2.6.4.8l4.2 2.8-2.7-4.1L12 7z"
-  })
-}));
+var word_count_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 5c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2zM5 6.5c-.3 0-.5.2-.5.5v10c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V7c0-.3-.2-.5-.5-.5zM14.734 9q.714 0 1.15.253.437.247.639.84.2.591.2 1.61v1.15q0 .402.036.667.04.258.172.39.138.127.437.127h.104l-.162.828h-.08q-.5 0-.776-.097a.9.9 0 0 1-.414-.283 2 2 0 0 1-.259-.448q-.316.367-.748.598-.43.23-.977.23-.524 0-.914-.213a1.56 1.56 0 0 1-.61-.58 1.65 1.65 0 0 1-.213-.84q0-.477.207-.817.213-.345.564-.568.357-.23.794-.363.437-.139.902-.196.471-.062.902-.068 0-.805-.315-1.053-.316-.247-.915-.247-.316 0-.678.098-.356.097-.805.408l-.15-.84a2.8 2.8 0 0 1 .846-.419A3.4 3.4 0 0 1 14.734 9m-5.877 1.669H9.86l.59-1.531h.689l-.585 1.53h.898l-.249.727h-.922l-.337.866h1.019l-.354.773h-.962l-.681 1.804h-.701l.69-1.804h-.999l-.693 1.804h-.69l.685-1.804H6.3l.34-.773h.915l.333-.866h-.994l.244-.726H8.16l.594-1.531h.693zm6.832 1.264q-.823.029-1.335.16-.506.133-.74.397-.236.265-.236.685 0 .454.241.66.248.202.632.202.414 0 .8-.207.39-.207.637-.552zm-7.441.328h1l.34-.866h-1z" }) });
+
 
 ;// ./packages/block-library/build-module/post-time-to-read/variations.js
 /**
  * WordPress dependencies
  */
 
-
-/**
- * Internal dependencies
- */
 
 const post_time_to_read_variations_variations = [{
   name: 'time-to-read',
@@ -48959,7 +48951,7 @@ const post_time_to_read_variations_variations = [{
   },
   scope: ['inserter', 'transform'],
   isActive: blockAttributes => blockAttributes?.displayMode === 'time',
-  icon: post_time_to_read_icon,
+  icon: time_to_read_default,
   isDefault: true
 }, {
   name: 'word-count',
@@ -48970,11 +48962,16 @@ const post_time_to_read_variations_variations = [{
   },
   scope: ['inserter', 'transform'],
   isActive: blockAttributes => blockAttributes?.displayMode === 'words',
-  icon: post_time_to_read_icon
+  icon: word_count_default
 }];
 /* harmony default export */ const post_time_to_read_variations = (post_time_to_read_variations_variations);
 
 ;// ./packages/block-library/build-module/post-time-to-read/index.js
+/**
+ * WordPress dependencies
+ */
+
+
 /**
  * Internal dependencies
  */
@@ -49048,13 +49045,12 @@ const post_time_to_read_metadata = {
 };
 
 
-
 const {
   name: post_time_to_read_name
 } = post_time_to_read_metadata;
 
 const post_time_to_read_settings = {
-  icon: post_time_to_read_icon,
+  icon: time_to_read_default,
   edit: post_time_to_read_edit,
   variations: post_time_to_read_variations,
   example: {}
