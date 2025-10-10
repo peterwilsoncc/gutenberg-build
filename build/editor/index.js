@@ -36478,7 +36478,15 @@ function Thread({
       role: "listitem",
       "aria-label": ariaLabel,
       "aria-expanded": isSelected,
-      children: [!relatedBlockElement && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        className: "editor-collab-sidebar-panel__skip-link",
+        variant: "secondary",
+        size: "compact",
+        onClick: () => {
+          focusCommentThread(thread.id, commentSidebarRef.current, 'textarea');
+        },
+        children: (0,external_wp_i18n_namespaceObject.__)('Add New Comment')
+      }), !relatedBlockElement && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         as: "p",
         weight: 500,
         variant: "muted",
