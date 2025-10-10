@@ -23336,10 +23336,121 @@ const withNavigationViewButton = (0,external_wp_compose_namespaceObject.createHi
 // Register the filter.
 (0,external_wp_hooks_namespaceObject.addFilter)('editor.BlockEdit', 'core/editor/with-navigation-view-button', withNavigationViewButton);
 
+;// ./packages/editor/build-module/hooks/template-part-navigation-edit-button.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+
+// Block name constants
+
+const NAVIGATION_BLOCK_NAME = 'core/navigation';
+const TEMPLATE_PART_BLOCK_NAME = 'core/template-part';
+
+// Complementary area identifier for the block inspector
+const BLOCK_INSPECTOR_AREA = 'edit-post/block';
+
+/**
+ * Component that renders the "Edit navigation" button for template parts
+ * that contain navigation blocks.
+ *
+ * @param {Object} props          Component props.
+ * @param {string} props.clientId The template part block client ID.
+ * @return {JSX.Element|null} The Edit navigation button component or null if not applicable.
+ */
+function TemplatePartNavigationEditButton({
+  clientId
+}) {
+  const {
+    selectBlock,
+    flashBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    enableComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    hasNavigationBlocks,
+    firstNavigationBlockId,
+    isNavigationEditable
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getClientIdsOfDescendants,
+      getBlockName,
+      getBlockEditingMode
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const descendants = getClientIdsOfDescendants(clientId);
+    const navigationBlocksInTemplatePart = descendants.filter(blockId => getBlockName(blockId) === NAVIGATION_BLOCK_NAME);
+    const _hasNavigationBlocks = navigationBlocksInTemplatePart.length > 0;
+    const _firstNavigationBlockId = _hasNavigationBlocks ? navigationBlocksInTemplatePart[0] : null;
+    return {
+      hasNavigationBlocks: _hasNavigationBlocks,
+      firstNavigationBlockId: _firstNavigationBlockId,
+      // We can't use the useBlockEditingMode hook here because the current
+      // context is the template part, not the navigation block.
+      isNavigationEditable: getBlockEditingMode(_firstNavigationBlockId) !== 'disabled'
+    };
+  }, [clientId]);
+  const onEditNavigation = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    if (firstNavigationBlockId) {
+      // Select the first Navigation block
+      selectBlock(firstNavigationBlockId);
+
+      // Flash the block for 500ms to make it obvious
+      flashBlock(firstNavigationBlockId, 500);
+
+      // Enable the complementary area (inspector)
+      enableComplementaryArea('core', BLOCK_INSPECTOR_AREA);
+    }
+  }, [firstNavigationBlockId, selectBlock, flashBlock, enableComplementaryArea]);
+
+  // Only show if template part contains navigation blocks and they are editable
+  if (!hasNavigationBlocks || !isNavigationEditable) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    group: "other",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDivider, {
+        orientation: "vertical",
+        marginEnd: 3
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Edit navigation'),
+        onClick: onEditNavigation,
+        children: (0,external_wp_i18n_namespaceObject.__)('Edit navigation')
+      })]
+    })
+  });
+}
+
+/**
+ * Higher-order component that adds the Edit navigation button to template part blocks.
+ */
+const withTemplatePartNavigationEditButton = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => {
+  const isTemplatePart = props.name === TEMPLATE_PART_BLOCK_NAME;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
+      ...props
+    }, "edit"), props.isSelected && isTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartNavigationEditButton, {
+      clientId: props.clientId
+    })]
+  });
+}, 'withTemplatePartNavigationEditButton');
+
+// Register the filter.
+(0,external_wp_hooks_namespaceObject.addFilter)('editor.BlockEdit', 'core/editor/with-template-part-navigation-edit-button', withTemplatePartNavigationEditButton);
+
 ;// ./packages/editor/build-module/hooks/index.js
 /**
  * Internal dependencies
  */
+
 
 
 
