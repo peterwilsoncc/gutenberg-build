@@ -18128,7 +18128,7 @@ const details_metadata = {
   title: "Details",
   category: "text",
   description: "Hide and show additional content.",
-  keywords: ["accordion", "summary", "toggle", "disclosure"],
+  keywords: ["summary", "toggle", "disclosure"],
   textdomain: "default",
   attributes: {
     showContent: {
