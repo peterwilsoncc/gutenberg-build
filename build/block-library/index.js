@@ -2606,6 +2606,15 @@ function accordion_heading_edit_Edit({
       });
     }
   }, [iconPosition, showIcon, setAttributes]);
+  const [fluidTypographySettings, layout] = (0,external_wp_blockEditor_namespaceObject.useSettings)('typography.fluid', 'layout');
+  const typographyProps = (0,external_wp_blockEditor_namespaceObject.getTypographyClassesAndStyles)(attributes, {
+    typography: {
+      fluid: fluidTypographySettings
+    },
+    layout: {
+      wideSize: layout?.wideSize
+    }
+  });
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
@@ -2627,7 +2636,11 @@ function accordion_heading_edit_Edit({
           title: newTitle
         }),
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title'),
-        className: "wp-block-accordion-heading__toggle-title"
+        className: "wp-block-accordion-heading__toggle-title",
+        style: {
+          letterSpacing: typographyProps.style.letterSpacing,
+          textDecoration: typographyProps.style.textDecoration
+        }
       }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "wp-block-accordion-heading__toggle-icon",
         "aria-hidden": "true",
@@ -2653,6 +2666,7 @@ function accordion_heading_save_save({
     showIcon
   } = attributes;
   const TagName = 'h' + (level || 3);
+  const typographyProps = (0,external_wp_blockEditor_namespaceObject.getTypographyClassesAndStyles)(attributes);
   const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
@@ -2667,7 +2681,11 @@ function accordion_heading_save_save({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
         className: "wp-block-accordion-heading__toggle-title",
         tagName: "span",
-        value: title
+        value: title,
+        style: {
+          letterSpacing: typographyProps.style.letterSpacing,
+          textDecoration: typographyProps.style.textDecoration
+        }
       }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "wp-block-accordion-heading__toggle-icon",
         "aria-hidden": "true",
@@ -2696,6 +2714,117 @@ function accordion_heading_save_save({
     fill: "currentColor"
   })]
 }));
+
+;// ./packages/block-library/build-module/accordion-heading/deprecated.js
+/**
+ * WordPress dependencies
+ */
+
+
+const v1 = {
+  attributes: {
+    openByDefault: {
+      type: 'boolean',
+      default: false
+    },
+    title: {
+      type: 'rich-text',
+      source: 'rich-text',
+      selector: '.wp-block-accordion-heading__toggle-title',
+      role: 'content'
+    },
+    level: {
+      type: 'number'
+    },
+    iconPosition: {
+      type: 'string',
+      enum: ['left', 'right'],
+      default: 'right'
+    },
+    showIcon: {
+      type: 'boolean',
+      default: true
+    }
+  },
+  supports: {
+    anchor: true,
+    color: {
+      background: true,
+      gradients: true
+    },
+    align: false,
+    interactivity: true,
+    spacing: {
+      padding: true,
+      __experimentalDefaultControls: {
+        padding: true
+      },
+      __experimentalSkipSerialization: true,
+      __experimentalSelector: '.wp-block-accordion-heading__toggle'
+    },
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
+    typography: {
+      fontSize: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true,
+        fontFamily: true
+      }
+    },
+    shadow: true,
+    blockVisibility: false
+  },
+  save({
+    attributes
+  }) {
+    const {
+      level,
+      title,
+      iconPosition,
+      showIcon
+    } = attributes;
+    const TagName = 'h' + (level || 3);
+    const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+    const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+      ...blockProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
+        className: "wp-block-accordion-heading__toggle",
+        style: spacingProps.style,
+        children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "wp-block-accordion-heading__toggle-icon",
+          "aria-hidden": "true",
+          children: "+"
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+          className: "wp-block-accordion-heading__toggle-title",
+          tagName: "span",
+          value: title
+        }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "wp-block-accordion-heading__toggle-icon",
+          "aria-hidden": "true",
+          children: "+"
+        })]
+      })
+    });
+  }
+};
+/* harmony default export */ const deprecated = ([v1]);
 
 ;// ./packages/block-library/build-module/accordion-heading/index.js
 /**
@@ -2741,6 +2870,7 @@ const accordion_heading_metadata = {
       }
     },
     typography: {
+      __experimentalSkipSerialization: ["textDecoration", "letterSpacing"],
       fontSize: true,
       __experimentalFontFamily: true,
       __experimentalFontWeight: true,
@@ -2755,6 +2885,12 @@ const accordion_heading_metadata = {
     },
     shadow: true,
     blockVisibility: false
+  },
+  selectors: {
+    typography: {
+      letterSpacing: ".wp-block-accordion-heading .wp-block-accordion-heading__toggle-title",
+      textDecoration: ".wp-block-accordion-heading .wp-block-accordion-heading__toggle-title"
+    }
   },
   attributes: {
     openByDefault: {
@@ -2784,6 +2920,7 @@ const accordion_heading_metadata = {
 };
 
 
+
 const {
   name: accordion_heading_name
 } = accordion_heading_metadata;
@@ -2791,7 +2928,8 @@ const {
 const accordion_heading_settings = {
   icon: accordion_heading_icon,
   edit: accordion_heading_edit_Edit,
-  save: accordion_heading_save_save
+  save: accordion_heading_save_save,
+  deprecated: deprecated
 };
 const accordion_heading_init = () => initBlock({
   name: accordion_heading_name,
@@ -3706,7 +3844,7 @@ var audio_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.
  */
 
 
-/* harmony default export */ const deprecated = ([{
+/* harmony default export */ const audio_deprecated = ([{
   attributes: {
     src: {
       type: 'string',
@@ -4896,7 +5034,7 @@ const audio_settings = {
     viewportWidth: 350
   },
   transforms: audio_transforms,
-  deprecated: deprecated,
+  deprecated: audio_deprecated,
   edit: edit,
   save: audio_save_save
 };
@@ -10499,7 +10637,7 @@ var post_comments_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespac
 // v1: Deprecate the initial version of the block which was called "Comments
 // Query Loop" instead of "Comments".
 
-const v1 = {
+const deprecated_v1 = {
   attributes: {
     tagName: {
       type: 'string',
@@ -10545,7 +10683,7 @@ const v1 = {
     });
   }
 };
-/* harmony default export */ const comments_deprecated = ([v1]);
+/* harmony default export */ const comments_deprecated = ([deprecated_v1]);
 
 ;// ./packages/block-library/build-module/comments/edit/comments-inspector-controls.js
 /**
@@ -11403,7 +11541,7 @@ function comment_author_name_edit_Edit({
  * Internal dependencies
  */
 
-const deprecated_v1 = {
+const comment_author_name_deprecated_v1 = {
   attributes: {
     isLink: {
       type: 'boolean',
@@ -11449,7 +11587,7 @@ const deprecated_v1 = {
  *
  * See block-deprecation.md
  */
-/* harmony default export */ const comment_author_name_deprecated = ([deprecated_v1]);
+/* harmony default export */ const comment_author_name_deprecated = ([comment_author_name_deprecated_v1]);
 
 ;// ./packages/block-library/build-module/comment-author-name/index.js
 /**
