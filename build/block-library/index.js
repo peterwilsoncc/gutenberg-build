@@ -68469,33 +68469,6 @@ const variations_titleExcerpt = /*#__PURE__*/(0,external_ReactJSXRuntime_namespa
     d: "M41 9H7v3h34V9zm-4 5H7v1h30v-1zm4 3H7v1h34v-1zM7 20h30v1H7v-1zm0 12h30v1H7v-1zm34 3H7v1h34v-1zM7 38h30v1H7v-1zm34-11H7v3h34v-3z"
   })
 });
-const termName = ['core/paragraph', {
-  metadata: {
-    name: (0,external_wp_i18n_namespaceObject.__)('Term Name'),
-    bindings: {
-      content: {
-        source: 'core/term-data',
-        args: {
-          key: 'name'
-        }
-      }
-    }
-  }
-}];
-const termCount = ['core/paragraph', {
-  placeholder: (0,external_wp_i18n_namespaceObject.__)('(count)'),
-  metadata: {
-    name: (0,external_wp_i18n_namespaceObject.__)('Term Count'),
-    bindings: {
-      content: {
-        source: 'core/term-data',
-        args: {
-          key: 'count'
-        }
-      }
-    }
-  }
-}];
 const terms_query_variations_variations = [{
   name: 'title',
   title: (0,external_wp_i18n_namespaceObject.__)('Title'),
@@ -68503,7 +68476,7 @@ const terms_query_variations_variations = [{
   attributes: {},
   icon: variations_titleDate,
   scope: ['block'],
-  innerBlocks: [['core/term-template', {}, [termName]]]
+  innerBlocks: [['core/term-template', {}, [['core/term-name']]]]
 }, {
   name: 'title-count',
   title: (0,external_wp_i18n_namespaceObject.__)('Title & Count'),
@@ -68516,7 +68489,7 @@ const terms_query_variations_variations = [{
       type: 'flex',
       flexWrap: 'nowrap'
     }
-  }, [termName, termCount]]]]]
+  }, [['core/term-name'], ['core/term-count']]]]]]
 }];
 /* harmony default export */ const terms_query_variations = (terms_query_variations_variations);
 
@@ -68606,19 +68579,7 @@ const terms_query_init = () => initBlock({
 
 
 
-const term_template_edit_TEMPLATE = [['core/paragraph', {
-  metadata: {
-    name: (0,external_wp_i18n_namespaceObject.__)('Term Name'),
-    bindings: {
-      content: {
-        source: 'core/term-data',
-        args: {
-          key: 'name'
-        }
-      }
-    }
-  }
-}]];
+const term_template_edit_TEMPLATE = [['core/term-name']];
 function TermTemplateInnerBlocks({
   classList
 }) {
