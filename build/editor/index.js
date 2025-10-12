@@ -17141,7 +17141,8 @@ const discussionField = {
       return (0,external_wp_i18n_namespaceObject.__)('Pings only');
     }
     return (0,external_wp_i18n_namespaceObject.__)('Closed');
-  }
+  },
+  filterBy: false
 };
 
 /**
