@@ -64810,7 +64810,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot_default,
     mediaEditKey,
     essentialFormatKey,
-    useBlockElement
+    useBlockElement,
+    useBlockElementRef
   });
   return __toCommonJS(index_exports);
 })();
