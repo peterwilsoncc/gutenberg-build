@@ -2894,7 +2894,8 @@ const accordion_heading_metadata = {
       }
     },
     shadow: true,
-    blockVisibility: false
+    blockVisibility: false,
+    lock: false
   },
   selectors: {
     typography: {
@@ -3069,7 +3070,8 @@ const accordion_panel_metadata = {
     },
     blockVisibility: false,
     contentRole: true,
-    allowedBlocks: true
+    allowedBlocks: true,
+    lock: false
   },
   attributes: {
     templateLock: {
