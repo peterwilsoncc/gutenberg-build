@@ -68131,7 +68131,6 @@ function AdvancedControls({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -68149,7 +68148,8 @@ function TermsQueryInspectorControls({
   attributes,
   setQuery,
   setAttributes,
-  clientId
+  clientId,
+  templateSlug
 }) {
   const {
     termQuery,
@@ -68165,25 +68165,11 @@ function TermsQueryInspectorControls({
     perPage
   } = termQuery;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const {
-    templateSlug
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // @wordpress/block-library should not depend on @wordpress/editor.
-    // Blocks can be loaded into a *non-post* block editor, so to avoid
-    // declaring @wordpress/editor as a dependency, we must access its
-    // store by string.
-    // The solution here is to split WP specific blocks from generic blocks.
-    // eslint-disable-next-line @wordpress/data-no-store-string-literals
-    const {
-      getEditedPostSlug
-    } = select('core/editor');
-    return {
-      templateSlug: getEditedPostSlug()
-    };
-  }, []);
   const taxonomies = usePublicTaxonomies();
   const isTaxonomyHierarchical = taxonomies.find(_taxonomy => _taxonomy.slug === taxonomy)?.hierarchical;
-  const isTaxonomyMatchingTemplate = typeof templateSlug === 'string' && templateSlug.includes(taxonomy);
+  const isTaxonomyMatchingTemplate = templateSlug?.startsWith(
+  // `Tags` are a special case in WP template hierarchy.
+  taxonomy === 'post_tag' ? 'tag' : taxonomy);
 
   // Only display the inherit control if the taxonomy is hierarchical and matches the current template.
   const displayInheritControl = isTaxonomyHierarchical && isTaxonomyMatchingTemplate;
@@ -68201,7 +68187,7 @@ function TermsQueryInspectorControls({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Terms Query Settings'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
           setAttributes({
             termQuery: {
@@ -68332,7 +68318,7 @@ function TermsQueryContent({
   attributes,
   setAttributes,
   clientId,
-  name
+  context
 }) {
   const {
     tagName: TagName
@@ -68349,11 +68335,11 @@ function TermsQueryContent({
   })), [setAttributes]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TermsQueryInspectorControls, {
-      name: name,
       attributes: attributes,
       setQuery: setQuery,
       setAttributes: setAttributes,
-      clientId: clientId
+      clientId: clientId,
+      templateSlug: context?.templateSlug
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
       ...innerBlocksProps
     })]
@@ -68534,6 +68520,7 @@ const terms_query_metadata = {
       "default": "div"
     }
   },
+  usesContext: ["templateSlug"],
   providesContext: {
     termQuery: "termQuery"
   },
