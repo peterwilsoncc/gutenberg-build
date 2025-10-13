@@ -68642,7 +68642,7 @@ function TermTemplateEdit({
       hideEmpty,
       showNested = false,
       parent = 0,
-      perPage = 10
+      perPage
     } = {}
   },
   __unstableLayoutClassNames
@@ -68656,10 +68656,7 @@ function TermTemplateEdit({
     hide_empty: hideEmpty,
     order,
     orderby: orderBy,
-    // To preview the data the closest to the frontend, we fetch the largest number of terms
-    // and limit them during rendering. This allows us to avoid re-fetching data when max
-    // terms changes.
-    per_page: 100
+    per_page: perPage
   };
 
   // Nested terms are returned by default from REST API as long as parent is not set.
@@ -68668,27 +68665,19 @@ function TermTemplateEdit({
     queryArgs.parent = parent || 0;
   }
   const {
-    records: terms,
-    isResolving
+    records: terms
   } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('taxonomy', taxonomy, queryArgs);
-  const filteredTerms = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!terms) {
-      return [];
-    }
-    // Limit to the number of terms defined by perPage.
-    return perPage === 0 ? terms : terms.slice(0, perPage);
-  }, [terms, perPage]);
   const blocks = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getBlocks(clientId), [clientId]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: __unstableLayoutClassNames
   });
-  const blockContexts = (0,external_wp_element_namespaceObject.useMemo)(() => filteredTerms?.map(term => ({
+  const blockContexts = (0,external_wp_element_namespaceObject.useMemo)(() => terms?.map(term => ({
     taxonomy,
     termId: term.id,
     classList: `term-${term.id}`,
     termData: term
-  })), [filteredTerms, taxonomy]);
-  if (isResolving) {
+  })), [terms, taxonomy]);
+  if (!terms) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
@@ -68699,7 +68688,7 @@ function TermTemplateEdit({
       })
     });
   }
-  if (!filteredTerms?.length) {
+  if (!terms.length) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
       ...blockProps,
       children: [" ", (0,external_wp_i18n_namespaceObject.__)('No terms found.')]
