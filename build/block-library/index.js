@@ -68159,7 +68159,7 @@ function TermsQueryInspectorControls({
     order,
     hideEmpty,
     inherit,
-    hierarchical,
+    showNested,
     perPage
   } = termQuery;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -68186,8 +68186,8 @@ function TermsQueryInspectorControls({
   // Only display the inherit control if the taxonomy is hierarchical and matches the current template.
   const displayInheritControl = isTaxonomyHierarchical && isTaxonomyMatchingTemplate;
 
-  // Only display the hierarchical control if the taxonomy is hierarchical and not inheriting.
-  const displayHierarchicalControl = isTaxonomyHierarchical && !termQuery.inherit;
+  // Only display the showNested control if the taxonomy is hierarchical and not inheriting.
+  const displayShowNestedControl = isTaxonomyHierarchical && !termQuery.inherit;
 
   // Labels shared between ToolsPanelItem and its child control.
   const taxonomyControlLabel = (0,external_wp_i18n_namespaceObject.__)('Taxonomy');
@@ -68207,7 +68207,7 @@ function TermsQueryInspectorControls({
               order: 'asc',
               orderBy: 'name',
               hideEmpty: true,
-              hierarchical: false,
+              showNested: false,
               parent: false,
               perPage: 10
             }
@@ -68275,18 +68275,18 @@ function TermsQueryInspectorControls({
             value: inherit,
             onChange: setQuery
           })
-        }), displayHierarchicalControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => hierarchical !== false,
+        }), displayShowNestedControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => showNested !== false,
           label: nestedTermsControlLabel,
           onDeselect: () => setQuery({
-            hierarchical: false
+            showNested: false
           }),
           isShownByDefault: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NestedTermsControl, {
             label: nestedTermsControlLabel,
-            value: hierarchical,
+            value: showNested,
             onChange: value => setQuery({
-              hierarchical: value
+              showNested: value
             })
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
@@ -68523,7 +68523,7 @@ const terms_query_metadata = {
         orderBy: "name",
         hideEmpty: true,
         parent: false,
-        hierarchical: false,
+        showNested: false,
         inherit: false
       }
     },
@@ -68638,7 +68638,7 @@ function TermTemplateEdit({
       order,
       orderBy,
       hideEmpty,
-      hierarchical = false,
+      showNested = false,
       parent = 0,
       perPage = 10
     } = {}
@@ -68655,14 +68655,14 @@ function TermTemplateEdit({
     order,
     orderby: orderBy,
     // To preview the data the closest to the frontend, we fetch the largest number of terms
-    // and limit them during rendering. This is because WP_Term_Query fetches data in hierarchical manner,
-    // while in editor we build the hierarchy manually. It also allows us to avoid re-fetching data when max terms changes.
+    // and limit them during rendering. This allows us to avoid re-fetching data when max
+    // terms changes.
     per_page: 100
   };
 
   // Nested terms are returned by default from REST API as long as parent is not set.
   // If we want to show nested terms, we must not set parent at all.
-  if (parent || !hierarchical) {
+  if (parent || !showNested) {
     queryArgs.parent = parent || 0;
   }
   const {
