@@ -35961,10 +35961,8 @@ function Comments({
       selectedBlockClientId: clientId
     };
   }, []);
-  const {
-    selectBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const [selectedThread = blockCommentId, setSelectedThread] = (0,external_wp_element_namespaceObject.useState)();
+  const relatedBlockElement = useBlockElement(selectedBlockClientId);
   const handleDelete = async comment => {
     const currentIndex = threads.findIndex(t => t.id === comment.id);
     const nextThread = threads[currentIndex + 1];
@@ -35982,7 +35980,7 @@ function Comments({
       setSelectedThread(null);
       setShowCommentBoard(false);
       // Focus the parent block instead of just scrolling into view.
-      selectBlock(selectedBlockClientId);
+      relatedBlockElement?.focus();
     }
   };
 
@@ -36092,13 +36090,13 @@ function Thread({
       "aria-label": ariaLabel,
       "aria-expanded": isSelected,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        className: "editor-collab-sidebar-panel__skip-link",
+        className: "editor-collab-sidebar-panel__skip-to-comment",
         variant: "secondary",
         size: "compact",
         onClick: () => {
           focusCommentThread(thread.id, commentSidebarRef.current, 'textarea');
         },
-        children: (0,external_wp_i18n_namespaceObject.__)('Add New Comment')
+        children: (0,external_wp_i18n_namespaceObject.__)('Add new comment')
       }), !relatedBlockElement && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         as: "p",
         weight: 500,
@@ -36184,6 +36182,15 @@ function Thread({
             (0,external_wp_i18n_namespaceObject.__)('Reply to Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown')
           })
         })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        className: "editor-collab-sidebar-panel__skip-to-block",
+        variant: "secondary",
+        size: "compact",
+        onClick: event => {
+          event.stopPropagation();
+          relatedBlockElement?.focus();
+        },
+        children: (0,external_wp_i18n_namespaceObject.__)('Back to block')
       })]
     })
   );
