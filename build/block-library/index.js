@@ -68447,28 +68447,28 @@ const variations_titleDate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceO
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 48 48",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
-    d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zM7 26h12v1H7v-1zm34-5H7v3h34v-3zM7 38h12v1H7v-1zm34-5H7v3h34v-3z"
+    d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z"
   })
 });
 const variations_titleExcerpt = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 48 48",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
-    d: "M41 9H7v3h34V9zm-4 5H7v1h30v-1zm4 3H7v1h34v-1zM7 20h30v1H7v-1zm0 12h30v1H7v-1zm34 3H7v1h34v-1zM7 38h30v1H7v-1zm34-11H7v3h34v-3z"
+    d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z"
   })
 });
 const terms_query_variations_variations = [{
-  name: 'title',
-  title: (0,external_wp_i18n_namespaceObject.__)('Title'),
-  description: (0,external_wp_i18n_namespaceObject.__)("Display the terms' titles."),
+  name: 'name',
+  title: (0,external_wp_i18n_namespaceObject.__)('Name'),
+  description: (0,external_wp_i18n_namespaceObject.__)("Display the terms' names."),
   attributes: {},
   icon: variations_titleDate,
   scope: ['block'],
   innerBlocks: [['core/term-template', {}, [['core/term-name']]]]
 }, {
-  name: 'title-count',
-  title: (0,external_wp_i18n_namespaceObject.__)('Title & Count'),
-  description: (0,external_wp_i18n_namespaceObject.__)("Display the terms' titles and number of posts assigned to each term."),
+  name: 'name-count',
+  title: (0,external_wp_i18n_namespaceObject.__)('Name & Count'),
+  description: (0,external_wp_i18n_namespaceObject.__)("Display the terms' names and number of posts assigned to each term."),
   attributes: {},
   icon: variations_titleExcerpt,
   scope: ['block'],
