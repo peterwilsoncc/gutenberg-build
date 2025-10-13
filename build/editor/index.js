@@ -36001,16 +36001,23 @@ function Comments({
       (0,external_wp_i18n_namespaceObject.__)('No comments available')
     });
   }
-  return threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
-    thread: thread,
-    onAddReply: onAddReply,
-    onCommentDelete: handleDelete,
-    onEditComment: onEditComment,
-    isSelected: selectedThread === thread.id,
-    setSelectedThread: setSelectedThread,
-    setShowCommentBoard: setShowCommentBoard,
-    commentSidebarRef: commentSidebarRef
-  }, thread.id));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: "3",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      as: "p",
+      variant: "muted",
+      children: (0,external_wp_i18n_namespaceObject.__)('Only logged in users can see Notes')
+    }), threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
+      thread: thread,
+      onAddReply: onAddReply,
+      onCommentDelete: handleDelete,
+      onEditComment: onEditComment,
+      isSelected: selectedThread === thread.id,
+      setSelectedThread: setSelectedThread,
+      setShowCommentBoard: setShowCommentBoard,
+      commentSidebarRef: commentSidebarRef
+    }, thread.id))]
+  });
 }
 function Thread({
   thread,
