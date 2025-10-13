@@ -18577,16 +18577,13 @@ function usePostContentBlocks() {
 function DisableNonPageContentBlocks() {
   const contentOnlyIds = usePostContentBlocks();
   const {
-    templateParts,
-    isNavigationMode
+    templateParts
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlocksByName,
-      isNavigationMode: _isNavigationMode
+      getBlocksByName
     } = select(external_wp_blockEditor_namespaceObject.store);
     return {
-      templateParts: getBlocksByName('core/template-part'),
-      isNavigationMode: _isNavigationMode()
+      templateParts: getBlocksByName('core/template-part')
     };
   }, []);
   const disabledIds = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -18639,22 +18636,18 @@ function DisableNonPageContentBlocks() {
       unsetBlockEditingMode
     } = registry.dispatch(external_wp_blockEditor_namespaceObject.store);
     registry.batch(() => {
-      if (!isNavigationMode) {
-        for (const clientId of templateParts) {
-          setBlockEditingMode(clientId, 'contentOnly');
-        }
+      for (const clientId of templateParts) {
+        setBlockEditingMode(clientId, 'contentOnly');
       }
     });
     return () => {
       registry.batch(() => {
-        if (!isNavigationMode) {
-          for (const clientId of templateParts) {
-            unsetBlockEditingMode(clientId);
-          }
+        for (const clientId of templateParts) {
+          unsetBlockEditingMode(clientId);
         }
       });
     };
-  }, [templateParts, isNavigationMode, registry]);
+  }, [templateParts, registry]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const {
       setBlockEditingMode,
@@ -37080,8 +37073,7 @@ function DocumentTools({
     listViewShortcut,
     inserterSidebarToggleRef,
     listViewToggleRef,
-    showIconLabels,
-    showTools
+    showIconLabels
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get
@@ -37090,9 +37082,7 @@ function DocumentTools({
       isListViewOpened,
       getEditorMode,
       getInserterSidebarToggleRef,
-      getListViewToggleRef,
-      getRenderingMode,
-      getCurrentPostType
+      getListViewToggleRef
     } = unlock(select(store_store));
     const {
       getShortcutRepresentation
@@ -37105,8 +37095,7 @@ function DocumentTools({
       listViewToggleRef: getListViewToggleRef(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      isVisualMode: getEditorMode() === 'visual',
-      showTools: !!window?.__experimentalEditorWriteMode && (getRenderingMode() !== 'post-only' || getCurrentPostType() === 'wp_template')
+      isVisualMode: getEditorMode() === 'visual'
     };
   }, []);
   const preventDefault = event => {
@@ -37121,7 +37110,6 @@ function DocumentTools({
       event.preventDefault();
     }
   };
-  const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('wide');
 
   /* translators: accessibility text for the editor toolbar */
@@ -37157,13 +37145,7 @@ function DocumentTools({
           showTooltip: !showIconLabels,
           "aria-expanded": isInserterOpened
         }), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [showTools && isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
-            as: external_wp_blockEditor_namespaceObject.ToolSelector,
-            showTooltip: !showIconLabels,
-            variant: showIconLabels ? 'tertiary' : undefined,
-            disabled: disableBlockTools,
-            size: "compact"
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
             as: editor_history_undo,
             showTooltip: !showIconLabels,
             variant: showIconLabels ? 'tertiary' : undefined,

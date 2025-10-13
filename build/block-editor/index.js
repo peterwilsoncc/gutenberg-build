@@ -7416,7 +7416,6 @@ __webpack_require__.d(__webpack_exports__, {
   RichTextToolbarButton: () => (/* reexport */ RichTextToolbarButton),
   SETTINGS_DEFAULTS: () => (/* reexport */ SETTINGS_DEFAULTS),
   SkipToSelectedBlock: () => (/* reexport */ SkipToSelectedBlock),
-  ToolSelector: () => (/* reexport */ tool_selector),
   Typewriter: () => (/* reexport */ typewriter),
   URLInput: () => (/* reexport */ url_input),
   URLInputButton: () => (/* reexport */ url_input_button),
@@ -7582,7 +7581,6 @@ __webpack_require__.d(selectors_namespaceObject, {
   __unstableGetClientIdWithClientIdsTree: () => (__unstableGetClientIdWithClientIdsTree),
   __unstableGetClientIdsTree: () => (__unstableGetClientIdsTree),
   __unstableGetContentLockingParent: () => (__unstableGetContentLockingParent),
-  __unstableGetEditorMode: () => (__unstableGetEditorMode),
   __unstableGetSelectedBlocksWithPartialSelection: () => (__unstableGetSelectedBlocksWithPartialSelection),
   __unstableGetTemporarilyEditingAsBlocks: () => (__unstableGetTemporarilyEditingAsBlocks),
   __unstableGetTemporarilyEditingFocusModeToRevert: () => (__unstableGetTemporarilyEditingFocusModeToRevert),
@@ -7676,7 +7674,6 @@ __webpack_require__.d(selectors_namespaceObject, {
   isGroupable: () => (isGroupable),
   isLastBlockChangePersistent: () => (isLastBlockChangePersistent),
   isMultiSelecting: () => (selectors_isMultiSelecting),
-  isNavigationMode: () => (isNavigationMode),
   isSelectionEnabled: () => (selectors_isSelectionEnabled),
   isTyping: () => (selectors_isTyping),
   isUngroupable: () => (isUngroupable),
@@ -7758,7 +7755,6 @@ __webpack_require__.d(actions_namespaceObject, {
   setBlockMovingClientId: () => (setBlockMovingClientId),
   setBlockVisibility: () => (setBlockVisibility),
   setHasControlledInnerBlocks: () => (setHasControlledInnerBlocks),
-  setNavigationMode: () => (setNavigationMode),
   setTemplateValidity: () => (setTemplateValidity),
   showInsertionPoint: () => (showInsertionPoint),
   startDraggingBlocks: () => (startDraggingBlocks),
@@ -10235,14 +10231,13 @@ function hasBindings(block) {
  * Computes and returns derived block editing modes for a given block tree.
  *
  * This function calculates the editing modes for each block in the tree, taking into account
- * various factors such as zoom level, navigation mode, sections, and synced patterns.
+ * various factors such as zoom level, sections, and synced patterns.
  *
- * @param {Object}  state        The current state object.
- * @param {boolean} isNavMode    Whether the navigation mode is active.
- * @param {string}  treeClientId The client ID of the root block for the tree. Defaults to an empty string.
+ * @param {Object} state        The current state object.
+ * @param {string} treeClientId The client ID of the root block for the tree. Defaults to an empty string.
  * @return {Map} A Map containing the derived block editing modes, keyed by block client ID.
  */
-function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClientId = '') {
+function getDerivedBlockEditingModesForTree(state, treeClientId = '') {
   const isZoomedOut = state?.zoomLevel < 100 || state?.zoomLevel === 'auto-scaled';
   const derivedBlockEditingModes = new Map();
 
@@ -10304,7 +10299,7 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
         return;
       }
     }
-    if (isZoomedOut || isNavMode) {
+    if (isZoomedOut) {
       // If the root block is the section root set its editing mode to contentOnly.
       if (clientId === sectionRootClientId) {
         derivedBlockEditingModes.set(clientId, 'contentOnly');
@@ -10323,57 +10318,6 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
 
       // If zoomed out, all blocks that aren't sections or the section root are
       // disabled.
-      if (isZoomedOut) {
-        derivedBlockEditingModes.set(clientId, 'disabled');
-        return;
-      }
-      const isInSection = !!findParentInClientIdsList(state, clientId, sectionClientIds);
-      if (!isInSection) {
-        if (clientId === '') {
-          derivedBlockEditingModes.set(clientId, 'disabled');
-          return;
-        }
-
-        // Allow selection of template parts outside of sections.
-        if (blockName === 'core/template-part') {
-          derivedBlockEditingModes.set(clientId, 'contentOnly');
-          return;
-        }
-        const isInTemplatePart = !!findParentInClientIdsList(state, clientId, templatePartClientIds);
-        // Allow contentOnly blocks in template parts outside of sections
-        // to be editable. Only disable blocks that don't fit this criteria.
-        if (!isInTemplatePart && !isContentBlock(blockName)) {
-          derivedBlockEditingModes.set(clientId, 'disabled');
-          return;
-        }
-      }
-
-      // Handle synced pattern content so the inner blocks of a synced pattern are
-      // properly disabled.
-      if (syncedPatternClientIds.length) {
-        const parentPatternClientId = findParentInClientIdsList(state, clientId, syncedPatternClientIds);
-        if (parentPatternClientId) {
-          // This is a pattern nested in another pattern, it should be disabled.
-          if (findParentInClientIdsList(state, parentPatternClientId, syncedPatternClientIds)) {
-            derivedBlockEditingModes.set(clientId, 'disabled');
-            return;
-          }
-          if (hasBindings(block)) {
-            derivedBlockEditingModes.set(clientId, 'contentOnly');
-            return;
-          }
-
-          // Synced pattern content without a binding isn't editable
-          // from the instance, the user has to edit the pattern source,
-          // so return 'disabled'.
-          derivedBlockEditingModes.set(clientId, 'disabled');
-          return;
-        }
-      }
-      if (blockName && isContentBlock(blockName)) {
-        derivedBlockEditingModes.set(clientId, 'contentOnly');
-        return;
-      }
       derivedBlockEditingModes.set(clientId, 'disabled');
       return;
     }
@@ -10433,22 +10377,20 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
  *
  * It only returns a value when modifications are made to the block editing modes.
  *
- * @param {Object}  options                    The options for updating derived block editing modes.
- * @param {Object}  options.prevState          The previous state object.
- * @param {Object}  options.nextState          The next state object.
- * @param {Array}   [options.addedBlocks]      An array of blocks that were added.
- * @param {Array}   [options.removedClientIds] An array of client IDs of blocks that were removed.
- * @param {boolean} [options.isNavMode]        Whether the navigation mode is active.
+ * @param {Object} options                    The options for updating derived block editing modes.
+ * @param {Object} options.prevState          The previous state object.
+ * @param {Object} options.nextState          The next state object.
+ * @param {Array}  [options.addedBlocks]      An array of blocks that were added.
+ * @param {Array}  [options.removedClientIds] An array of client IDs of blocks that were removed.
  * @return {Map|undefined} The updated derived block editing modes, or undefined if no changes were made.
  */
 function getDerivedBlockEditingModesUpdates({
   prevState,
   nextState,
   addedBlocks,
-  removedClientIds,
-  isNavMode = false
+  removedClientIds
 }) {
-  const prevDerivedBlockEditingModes = isNavMode ? prevState.derivedNavModeBlockEditingModes : prevState.derivedBlockEditingModes;
+  const prevDerivedBlockEditingModes = prevState.derivedBlockEditingModes;
   let nextDerivedBlockEditingModes;
 
   // Perform removals before additions to handle cases like the `MOVE_BLOCKS_TO_POSITION` action.
@@ -10468,7 +10410,7 @@ function getDerivedBlockEditingModesUpdates({
     });
   });
   addedBlocks?.forEach(addedBlock => {
-    const updates = getDerivedBlockEditingModesForTree(nextState, isNavMode, addedBlock.clientId);
+    const updates = getDerivedBlockEditingModesForTree(nextState, addedBlock.clientId);
     if (updates.size) {
       if (!nextDerivedBlockEditingModes) {
         nextDerivedBlockEditingModes = new Map([...(prevDerivedBlockEditingModes?.size ? prevDerivedBlockEditingModes : []), ...updates]);
@@ -10493,7 +10435,7 @@ function getDerivedBlockEditingModesUpdates({
  */
 function withDerivedBlockEditingModes(reducer) {
   return (state, action) => {
-    var _state$derivedBlockEd, _state$derivedNavMode;
+    var _state$derivedBlockEd;
     const nextState = reducer(state, action);
 
     // An exception is needed here to still recompute the block editing modes when
@@ -10508,20 +10450,12 @@ function withDerivedBlockEditingModes(reducer) {
           const nextDerivedBlockEditingModes = getDerivedBlockEditingModesUpdates({
             prevState: state,
             nextState,
-            removedClientIds: action.clientIds,
-            isNavMode: false
+            removedClientIds: action.clientIds
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            removedClientIds: action.clientIds,
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10532,20 +10466,12 @@ function withDerivedBlockEditingModes(reducer) {
           const nextDerivedBlockEditingModes = getDerivedBlockEditingModesUpdates({
             prevState: state,
             nextState,
-            addedBlocks: action.blocks,
-            isNavMode: false
+            addedBlocks: action.blocks
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            addedBlocks: action.blocks,
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10585,21 +10511,12 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             addedBlocks,
-            removedClientIds,
-            isNavMode: false
+            removedClientIds
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            addedBlocks,
-            removedClientIds,
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10628,21 +10545,12 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             addedBlocks,
-            removedClientIds,
-            isNavMode: false
+            removedClientIds
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            addedBlocks,
-            removedClientIds,
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10662,21 +10570,12 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             removedClientIds: [action.clientId],
-            addedBlocks: [updatedBlock],
-            isNavMode: false
+            addedBlocks: [updatedBlock]
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            removedClientIds: [action.clientId],
-            addedBlocks: [updatedBlock],
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10687,21 +10586,12 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             addedBlocks: action.blocks,
-            removedClientIds: action.clientIds,
-            isNavMode: false
+            removedClientIds: action.clientIds
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            addedBlocks: action.blocks,
-            removedClientIds: action.clientIds,
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10715,21 +10605,12 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             addedBlocks: action.blocks,
-            removedClientIds,
-            isNavMode: false
+            removedClientIds
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            addedBlocks: action.blocks,
-            removedClientIds,
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10743,21 +10624,12 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             addedBlocks,
-            removedClientIds: action.clientIds,
-            isNavMode: false
+            removedClientIds: action.clientIds
           });
-          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
-            prevState: state,
-            nextState,
-            addedBlocks,
-            removedClientIds: action.clientIds,
-            isNavMode: true
-          });
-          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+          if (nextDerivedBlockEditingModes) {
             return {
               ...nextState,
-              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
-              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes
             };
           }
           break;
@@ -10768,8 +10640,7 @@ function withDerivedBlockEditingModes(reducer) {
           if (state?.settings?.[sectionRootClientIdKey] !== nextState?.settings?.[sectionRootClientIdKey]) {
             return {
               ...nextState,
-              derivedBlockEditingModes: getDerivedBlockEditingModesForTree(nextState, false /* Nav mode off */),
-              derivedNavModeBlockEditingModes: getDerivedBlockEditingModesForTree(nextState, true /* Nav mode on */)
+              derivedBlockEditingModes: getDerivedBlockEditingModesForTree(nextState)
             };
           }
           break;
@@ -10783,8 +10654,7 @@ function withDerivedBlockEditingModes(reducer) {
           // or if all the blocks are reset.
           return {
             ...nextState,
-            derivedBlockEditingModes: getDerivedBlockEditingModesForTree(nextState, false /* Nav mode off */),
-            derivedNavModeBlockEditingModes: getDerivedBlockEditingModesForTree(nextState, true /* Nav mode on */)
+            derivedBlockEditingModes: getDerivedBlockEditingModesForTree(nextState)
           };
         }
     }
@@ -10792,7 +10662,6 @@ function withDerivedBlockEditingModes(reducer) {
     // If there's no change, the derivedBlockEditingModes from the previous
     // state need to be preserved.
     nextState.derivedBlockEditingModes = (_state$derivedBlockEd = state?.derivedBlockEditingModes) !== null && _state$derivedBlockEd !== void 0 ? _state$derivedBlockEd : new Map();
-    nextState.derivedNavModeBlockEditingModes = (_state$derivedNavMode = state?.derivedNavModeBlockEditingModes) !== null && _state$derivedNavMode !== void 0 ? _state$derivedNavMode : new Map();
     return nextState;
   };
 }
@@ -10850,8 +10719,6 @@ var symbol_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject
 
 ;// external ["wp","richText"]
 const external_wp_richText_namespaceObject = window["wp"]["richText"];
-;// external ["wp","preferences"]
-const external_wp_preferences_namespaceObject = window["wp"]["preferences"];
 ;// external ["wp","blockSerializationDefaultParser"]
 const external_wp_blockSerializationDefaultParser_namespaceObject = window["wp"]["blockSerializationDefaultParser"];
 ;// ./packages/block-editor/build-module/store/constants.js
@@ -11173,7 +11040,7 @@ function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
  *
  * @return {Object[]} Tree of block objects with only clientID and innerBlocks set.
  */
-const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.derivedNavModeBlockEditingModes, state.blockEditingModes, select(STORE_NAME).__unstableGetEditorMode(state)]));
+const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(() => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.blockEditingModes]));
 
 /**
  * Returns a list of a given block's ancestors, from top to bottom. Blocks with
@@ -11788,8 +11655,8 @@ const checkAllowListRecursive = (blocks, allowedBlockTypes) => {
 const getAllPatternsDependants = select => state => {
   return [state.settings.__experimentalBlockPatterns, state.settings.__experimentalUserPatternCategories, state.settings.__experimentalReusableBlocks, state.settings[selectBlockPatternsKey]?.(select), state.blockPatterns, unlock(select(STORE_NAME)).getReusableBlocks()];
 };
-const getInsertBlockTypeDependants = select => (state, rootClientId) => {
-  return [state.blockListSettings[rootClientId], state.blocks.byClientId.get(rootClientId), state.settings.allowedBlockTypes, state.settings.templateLock, getBlockEditingMode(state, rootClientId), select(STORE_NAME).__unstableGetEditorMode(state), getSectionRootClientId(state)];
+const getInsertBlockTypeDependants = () => (state, rootClientId) => {
+  return [state.blockListSettings[rootClientId], state.blocks.byClientId.get(rootClientId), state.settings.allowedBlockTypes, state.settings.templateLock, getBlockEditingMode(state, rootClientId), getSectionRootClientId(state)];
 };
 
 ;// ./packages/block-editor/build-module/utils/sorting.js
@@ -11848,7 +11715,6 @@ function orderBy(items, field, order = 'asc') {
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -14147,32 +14013,6 @@ function __experimentalGetLastBlockAttributeChanges(state) {
 }
 
 /**
- * Returns whether the navigation mode is enabled.
- *
- * @param {Object} state Editor state.
- *
- * @return {boolean} Is navigation mode enabled.
- */
-function isNavigationMode(state) {
-  return __unstableGetEditorMode(state) === 'navigation';
-}
-
-/**
- * Returns the current editor mode.
- *
- * @param {Object} state Editor state.
- *
- * @return {string} the editor mode.
- */
-const __unstableGetEditorMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
-  var _state$settings$edito;
-  if (!window?.__experimentalEditorWriteMode) {
-    return 'edit';
-  }
-  return (_state$settings$edito = state.settings.editorTool) !== null && _state$settings$edito !== void 0 ? _state$settings$edito : select(external_wp_preferences_namespaceObject.store).get('core', 'editorTool');
-});
-
-/**
  * Returns whether block moving mode is enabled.
  *
  * @deprecated
@@ -14387,20 +14227,12 @@ function getBlockEditingMode(state, clientId = '') {
   if (clientId === null) {
     clientId = '';
   }
-  const isNavMode = isNavigationMode(state);
 
-  // If the editor is currently not in navigation mode, check if the clientId
-  // has an editing mode set in the regular derived map.
+  // Check if the clientId has an editing mode set in the regular derived map.
   // There may be an editing mode set here for synced patterns or in zoomed out
   // mode.
-  if (!isNavMode && state.derivedBlockEditingModes?.has(clientId)) {
+  if (state.derivedBlockEditingModes?.has(clientId)) {
     return state.derivedBlockEditingModes.get(clientId);
-  }
-
-  // If the editor *is* in navigation mode, the block editing mode states
-  // are stored in the derivedNavModeBlockEditingModes map.
-  if (isNavMode && state.derivedNavModeBlockEditingModes?.has(clientId)) {
-    return state.derivedNavModeBlockEditingModes.get(clientId);
   }
 
   // In normal mode, consider that an explicitly set editing mode takes over.
@@ -14997,6 +14829,8 @@ function toggleBlockSpotlight(clientId, hasBlockSpotlight) {
 
 ;// external ["wp","notices"]
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
+;// external ["wp","preferences"]
+const external_wp_preferences_namespaceObject = window["wp"]["preferences"];
 ;// ./packages/block-editor/build-module/utils/selection.js
 /**
  * WordPress dependencies
@@ -16433,17 +16267,6 @@ const __unstableMarkAutomaticChange = () => ({
       type: 'MARK_AUTOMATIC_CHANGE_FINAL'
     });
   });
-};
-
-/**
- * Action that enables or disables the navigation mode.
- *
- * @param {boolean} isNavigationMode Enable/Disable navigation mode.
- */
-const setNavigationMode = (isNavigationMode = true) => ({
-  dispatch
-}) => {
-  dispatch.__unstableSetEditorMode(isNavigationMode ? 'navigation' : 'edit');
 };
 
 /**
@@ -66187,19 +66010,14 @@ function useShowBlockTools() {
       getBlock,
       getBlockMode,
       getSettings,
-      __unstableGetEditorMode,
       isTyping,
       isBlockInterfaceHidden
     } = unlock(select(store));
     const clientId = getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId();
     const block = getBlock(clientId);
-    const editorMode = __unstableGetEditorMode();
     const hasSelectedBlock = !!clientId && !!block;
     const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block, 'content') && getBlockMode(clientId) !== 'html';
-    const _showEmptyBlockSideInserter = clientId && !isTyping() &&
-    // Hide the block inserter on the navigation mode.
-    // See https://github.com/WordPress/gutenberg/pull/66636#discussion_r1824728483.
-    editorMode !== 'navigation' && isEmptyDefaultBlock;
+    const _showEmptyBlockSideInserter = clientId && !isTyping() && isEmptyDefaultBlock;
     const _showBlockToolbarPopover = !isBlockInterfaceHidden() && !getSettings().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock && !isEmptyDefaultBlock;
     return {
       showEmptyBlockSideInserter: _showEmptyBlockSideInserter,
@@ -76172,90 +75990,6 @@ function __unstableRichTextInputEvent({
   return null;
 }
 
-;// ./packages/block-editor/build-module/components/tool-selector/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const selectIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
-    d: "M9.4 20.5L5.2 3.8l14.6 9-2 .3c-.2 0-.4.1-.7.1-.9.2-1.6.3-2.2.5-.8.3-1.4.5-1.8.8-.4.3-.8.8-1.3 1.5-.4.5-.8 1.2-1.2 2l-.3.6-.9 1.9zM7.6 7.1l2.4 9.3c.2-.4.5-.8.7-1.1.6-.8 1.1-1.4 1.6-1.8.5-.4 1.3-.8 2.2-1.1l1.2-.3-8.1-5z"
-  })
-});
-function ToolSelector(props, ref) {
-  const mode = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).__unstableGetEditorMode(), []);
-  const {
-    __unstableSetEditorMode
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-    renderToggle: ({
-      isOpen,
-      onToggle
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      size: "compact",
-      ...props,
-      ref: ref,
-      icon: mode === 'navigation' ? pencil_default : selectIcon,
-      "aria-expanded": isOpen,
-      "aria-haspopup": "true",
-      onClick: onToggle
-      /* translators: button label text should, if possible, be under 16 characters. */,
-      label: (0,external_wp_i18n_namespaceObject.__)('Tools')
-    }),
-    popoverProps: {
-      placement: 'bottom-start'
-    },
-    renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.NavigableMenu, {
-        className: "block-editor-tool-selector__menu",
-        role: "menu",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Tools'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
-          value: mode === 'navigation' ? 'navigation' : 'edit',
-          onSelect: newMode => {
-            __unstableSetEditorMode(newMode);
-          },
-          choices: [{
-            value: 'navigation',
-            label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon_default, {
-                icon: pencil_default
-              }), (0,external_wp_i18n_namespaceObject.__)('Write')]
-            }),
-            info: (0,external_wp_i18n_namespaceObject.__)('Focus on content.'),
-            'aria-label': (0,external_wp_i18n_namespaceObject.__)('Write')
-          }, {
-            value: 'edit',
-            label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-              children: [selectIcon, (0,external_wp_i18n_namespaceObject.__)('Design')]
-            }),
-            info: (0,external_wp_i18n_namespaceObject.__)('Edit layout and styles.'),
-            'aria-label': (0,external_wp_i18n_namespaceObject.__)('Design')
-          }]
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "block-editor-tool-selector__help",
-        children: (0,external_wp_i18n_namespaceObject.__)('Tools provide different sets of interactions for blocks. Choose between simplified content tools (Write) and advanced visual editing tools (Design).')
-      })]
-    })
-  });
-}
-/* harmony default export */ const tool_selector = ((0,external_wp_element_namespaceObject.forwardRef)(ToolSelector));
-
 ;// ./packages/block-editor/build-module/components/unit-control/index.js
 /**
  * WordPress dependencies
@@ -78317,7 +78051,6 @@ function PublicPublishDateTimePicker(props, ref) {
 /*
  * Block Creation Components
  */
-
 
 
 

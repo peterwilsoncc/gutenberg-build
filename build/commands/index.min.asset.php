@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('react', 'react-dom', 'react-jsx-runtime', 'wp-components', 'wp-data', 'wp-element', 'wp-i18n', 'wp-icons', 'wp-keyboard-shortcuts', 'wp-private-apis'), 'version' => '1760318874707');
+<?php return array('dependencies' => array('react', 'react-dom', 'react-jsx-runtime', 'wp-components', 'wp-data', 'wp-element', 'wp-i18n', 'wp-icons', 'wp-keyboard-shortcuts', 'wp-private-apis'), 'version' => '1760335009172');
