@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 7734:
+/***/ 734:
 /***/ ((module) => {
 
 
@@ -1033,7 +1033,7 @@ function useInserter(inserter) {
 }
 
 // EXTERNAL MODULE: ./node_modules/fast-deep-equal/es6/index.js
-var es6 = __webpack_require__(7734);
+var es6 = __webpack_require__(734);
 var es6_default = /*#__PURE__*/__webpack_require__.n(es6);
 ;// external ["wp","isShallowEqual"]
 const external_wp_isShallowEqual_namespaceObject = window["wp"]["isShallowEqual"];

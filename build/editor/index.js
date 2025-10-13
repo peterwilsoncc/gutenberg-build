@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 4306:
+/***/ 306:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -290,7 +290,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 6109:
+/***/ 109:
 /***/ ((module) => {
 
 // This code has been refactored for 140 bytes
@@ -465,7 +465,7 @@ module.exports = deepmerge_1;
 
 /***/ }),
 
-/***/ 5215:
+/***/ 215:
 /***/ ((module) => {
 
 "use strict";
@@ -523,7 +523,7 @@ module.exports = function equal(a, b) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 // Load in dependencies
-var computedStyle = __webpack_require__(6109);
+var computedStyle = __webpack_require__(109);
 
 /**
  * Calculate the `line-height` of a given node
@@ -636,7 +636,7 @@ module.exports = lineHeight;
 
 
 
-var ReactPropTypesSecret = __webpack_require__(4067);
+var ReactPropTypesSecret = __webpack_require__(67);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -696,7 +696,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 5826:
+/***/ 826:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -715,7 +715,7 @@ if (false) { var throwOnDirectAccess, ReactIs; } else {
 
 /***/ }),
 
-/***/ 4067:
+/***/ 67:
 /***/ ((module) => {
 
 "use strict";
@@ -735,7 +735,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 4462:
+/***/ 462:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -768,9 +768,9 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 exports.__esModule = true;
-var React = __webpack_require__(1609);
-var PropTypes = __webpack_require__(5826);
-var autosize = __webpack_require__(4306);
+var React = __webpack_require__(609);
+var PropTypes = __webpack_require__(826);
+var autosize = __webpack_require__(306);
 var _getLineHeight = __webpack_require__(461);
 var getLineHeight = _getLineHeight;
 var RESIZED = "autosize:resized";
@@ -869,20 +869,20 @@ exports.TextareaAutosize = React.forwardRef(function (props, ref) {
 
 /***/ }),
 
-/***/ 4132:
+/***/ 132:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 var __webpack_unused_export__;
 
 __webpack_unused_export__ = true;
-var TextareaAutosize_1 = __webpack_require__(4462);
+var TextareaAutosize_1 = __webpack_require__(462);
 exports.A = TextareaAutosize_1.TextareaAutosize;
 
 
 /***/ }),
 
-/***/ 9681:
+/***/ 681:
 /***/ ((module) => {
 
 var characterMap = {
@@ -1370,7 +1370,7 @@ module.exports.remove = removeAccents;
 
 /***/ }),
 
-/***/ 1609:
+/***/ 609:
 /***/ ((module) => {
 
 "use strict";
@@ -16708,7 +16708,7 @@ const slugField = {
 /* harmony default export */ const slug = (slugField);
 
 // EXTERNAL MODULE: ./node_modules/remove-accents/index.js
-var remove_accents = __webpack_require__(9681);
+var remove_accents = __webpack_require__(681);
 var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
 ;// ./packages/fields/build-module/fields/parent/utils.js
 /**
@@ -22710,7 +22710,7 @@ const setDefaultRenderingMode = mode => ({
 };
 
 // EXTERNAL MODULE: ./node_modules/fast-deep-equal/index.js
-var fast_deep_equal = __webpack_require__(5215);
+var fast_deep_equal = __webpack_require__(215);
 var fast_deep_equal_default = /*#__PURE__*/__webpack_require__.n(fast_deep_equal);
 ;// ./packages/icons/build-module/library/navigation.js
 
@@ -33759,7 +33759,7 @@ function panel_PostTaxonomies() {
 }
 
 // EXTERNAL MODULE: ./node_modules/react-autosize-textarea/lib/index.js
-var lib = __webpack_require__(4132);
+var lib = __webpack_require__(132);
 ;// ./packages/editor/build-module/components/post-text-editor/index.js
 /**
  * External dependencies
