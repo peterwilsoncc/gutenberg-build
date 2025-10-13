@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('react-jsx-runtime', 'wp-element'), 'version' => '1760416282672');
+<?php return array('dependencies' => array('react-jsx-runtime', 'wp-element'), 'version' => '1760419937062');

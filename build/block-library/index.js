@@ -68457,6 +68457,9 @@ const variations_titleExcerpt = /*#__PURE__*/(0,external_ReactJSXRuntime_namespa
     d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z"
   })
 });
+const termName = ['core/term-name', {
+  isLink: true
+}];
 const terms_query_variations_variations = [{
   name: 'name',
   title: (0,external_wp_i18n_namespaceObject.__)('Name'),
@@ -68464,7 +68467,7 @@ const terms_query_variations_variations = [{
   attributes: {},
   icon: variations_titleDate,
   scope: ['block'],
-  innerBlocks: [['core/term-template', {}, [['core/term-name']]]]
+  innerBlocks: [['core/term-template', {}, [termName]]]
 }, {
   name: 'name-count',
   title: (0,external_wp_i18n_namespaceObject.__)('Name & Count'),
@@ -68477,7 +68480,7 @@ const terms_query_variations_variations = [{
       type: 'flex',
       flexWrap: 'nowrap'
     }
-  }, [['core/term-name'], ['core/term-count']]]]]]
+  }, [termName, ['core/term-count']]]]]]
 }];
 /* harmony default export */ const terms_query_variations = (terms_query_variations_variations);
 
