@@ -35782,7 +35782,7 @@ function CommentAuthorInfo({
   (0,external_wp_i18n_namespaceObject._x)('F j, Y g:i\xa0a', 'Comment date full date format'), date);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-      src: avatar !== null && avatar !== void 0 ? avatar : currentUserAvatar,
+      src: avatar || currentUserAvatar,
       className: "editor-collab-sidebar-panel__user-avatar"
       // translators: alt text for user avatar image
       ,
@@ -38504,13 +38504,41 @@ function useBlockCommentsActions(reflowComments) {
     };
     try {
       var _messages$messageType;
-      await saveEntityRecord('root', 'comment', {
-        id,
-        content,
-        status
-      }, {
-        throwOnError: true
-      });
+      // For resolution or reopen actions, create a new comment with metadata.
+      if (status === 'approved' || status === 'hold') {
+        // First, update the thread status.
+        await saveEntityRecord('root', 'comment', {
+          id,
+          status
+        }, {
+          throwOnError: true
+        });
+
+        // Then create a new comment with the metadata.
+        const newCommentData = {
+          post: getCurrentPostId(),
+          content: content || '',
+          // Empty content for resolve, content for reopen.
+          type: 'block_comment',
+          status,
+          parent: id,
+          meta: {
+            _wp_block_comment_status: status === 'approved' ? 'resolved' : 'reopen'
+          }
+        };
+        await saveEntityRecord('root', 'comment', newCommentData, {
+          throwOnError: true
+        });
+      } else {
+        const updateData = {
+          id,
+          content,
+          status
+        };
+        await saveEntityRecord('root', 'comment', updateData, {
+          throwOnError: true
+        });
+      }
       createNotice('snackbar', (_messages$messageType = messages[messageType]) !== null && _messages$messageType !== void 0 ? _messages$messageType : (0,external_wp_i18n_namespaceObject.__)('Comment updated.'), {
         type: 'snackbar',
         isDismissible: true
@@ -38885,9 +38913,9 @@ function Thread({
     setShowCommentBoard(false);
     toggleBlockSpotlight(thread.blockClientId, false);
   };
-  const replies = thread?.reply;
-  const lastReply = !!replies.length ? replies[replies.length - 1] : undefined;
-  const restReplies = !!replies.length ? replies.slice(0, -1) : [];
+  const allReplies = thread?.reply || [];
+  const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : undefined;
+  const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
   const commentExcerpt = getCommentExcerpt((0,external_wp_dom_namespaceObject.__unstableStripHTML)(thread.content.rendered), 10);
   const ariaLabel = relatedBlockElement ? (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: %s: comment excerpt
@@ -38961,7 +38989,7 @@ function Thread({
         },
         onDelete: onCommentDelete,
         reflowComments: reflowComments
-      }), isSelected && replies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+      }), isSelected && allReplies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__child-thread",
         id: reply.id,
         spacing: "2",
@@ -39007,15 +39035,19 @@ function Thread({
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
             onSubmit: inputComment => {
               if ('approved' === thread.status) {
+                // For reopening, include the content in the reopen action.
                 onEditComment({
                   id: thread.id,
-                  status: 'hold'
+                  status: 'hold',
+                  content: inputComment
+                });
+              } else {
+                // For regular replies, add as separate comment.
+                onAddReply({
+                  content: inputComment,
+                  parent: thread.id
                 });
               }
-              onAddReply({
-                content: inputComment,
-                parent: thread.id
-              });
             },
             onCancel: event => {
               event.stopPropagation(); // Prevent the parent onClick from being triggered
@@ -39062,6 +39094,9 @@ const CommentBoard = ({
     setActionState(false);
     setShowConfirmDialog(false);
   };
+
+  // Check if this is a resolution comment by checking metadata.
+  const isResolutionComment = thread.type === 'block_comment' && thread.meta && (thread.meta._wp_block_comment_status === 'resolved' || thread.meta._wp_block_comment_status === 'reopen');
   const actions = [{
     id: 'edit',
     title: (0,external_wp_i18n_namespaceObject._x)('Edit', 'Edit comment'),
@@ -39161,8 +39196,20 @@ const CommentBoard = ({
       (0,external_wp_i18n_namespaceObject.__)('Edit Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown'),
       reflowComments: reflowComments
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
-      className: "editor-collab-sidebar-panel__user-comment",
-      children: thread?.content?.rendered
+      className: dist_clsx('editor-collab-sidebar-panel__user-comment', {
+        'editor-collab-sidebar-panel__resolution-text': isResolutionComment
+      }),
+      children: isResolutionComment ? (() => {
+        const actionText = thread.meta._wp_block_comment_status === 'resolved' ? (0,external_wp_i18n_namespaceObject.__)('Marked as resolved') : (0,external_wp_i18n_namespaceObject.__)('Reopened');
+        const content = thread?.content?.raw;
+        if (content && typeof content === 'string' && content.trim() !== '') {
+          return (0,external_wp_i18n_namespaceObject.sprintf)(
+          // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: comment text.
+          (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), actionText, content);
+        }
+        // If no content, just show the action.
+        return actionText;
+      })() : thread?.content?.rendered
     }), 'delete' === actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
       isOpen: showConfirmDialog,
       onConfirm: handleConfirmDelete,
@@ -39172,6 +39219,7 @@ const CommentBoard = ({
     })]
   });
 };
+/* harmony default export */ const comments = ((/* unused pure expression or super */ null && (Comments)));
 
 ;// ./packages/editor/build-module/components/collab-sidebar/add-comment.js
 /**
