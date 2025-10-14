@@ -30384,6 +30384,9 @@ var wp;
   var IntersectionObserver = (0, import_element85.createContext)();
   IntersectionObserver.displayName = "IntersectionObserverContext";
   var pendingBlockVisibilityUpdatesPerRegistry = /* @__PURE__ */ new WeakMap();
+  var delayedBlockVisibilityDebounceOptions = {
+    trailing: true
+  };
   function Root({ className, ...settings4 }) {
     const { isOutlineMode, isFocusMode, temporarilyEditingAsBlocks: temporarilyEditingAsBlocks2 } = (0, import_data70.useSelect)((select2) => {
       const {
@@ -30410,9 +30413,7 @@ var wp;
         setBlockVisibility2(updates);
       }, [registry]),
       300,
-      {
-        trailing: true
-      }
+      delayedBlockVisibilityDebounceOptions
     );
     const intersectionObserver = (0, import_element85.useMemo)(() => {
       const { IntersectionObserver: Observer } = window;

@@ -2703,7 +2703,7 @@ var wp;
   function useDebounce(fn, wait, options) {
     const debounced = useMemoOne(
       () => debounce(fn, wait ?? 0, options),
-      [fn, wait, options]
+      [fn, wait, options?.leading, options?.trailing, options?.maxWait]
     );
     (0, import_element25.useEffect)(() => () => debounced.cancel(), [debounced]);
     return debounced;
