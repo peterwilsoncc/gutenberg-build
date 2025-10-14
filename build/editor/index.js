@@ -4587,7 +4587,7 @@ const savePost = (options = {}) => async ({
     type: 'REQUEST_POST_UPDATE_FINISH',
     options
   });
-  if (!options.isAutosave && previousRecord.type === 'wp_template') {
+  if (!options.isAutosave && previousRecord.type === 'wp_template' && (typeof previousRecord.id === 'number' || /^\d+$/.test(previousRecord.id))) {
     templateActivationNotice({
       select,
       dispatch,
@@ -25169,7 +25169,8 @@ function useTemplates(postType) {
         post_type: postType
       }),
       userTemplates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
-        per_page: -1
+        per_page: -1,
+        combinedTemplates: false
       })
     };
   }, [postType]);

@@ -29194,7 +29194,7 @@ const {
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const postTypesWithoutParentTemplate = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE, PATTERN_TYPES.user, 'wp_registered_template'];
 const authorizedPostTypes = ['page', 'post'];
-function getPostType(name, postId) {
+function getPostType(name) {
   let postType;
   if (name === 'navigation-item') {
     postType = NAVIGATION_POST_TYPE;
@@ -29203,7 +29203,7 @@ function getPostType(name, postId) {
   } else if (name === 'template-part-item') {
     postType = TEMPLATE_PART_POST_TYPE;
   } else if (name === 'templates') {
-    postType = /^\d+$/.test(postId) ? TEMPLATE_POST_TYPE : 'wp_registered_template';
+    postType = TEMPLATE_POST_TYPE;
   } else if (name === 'template-item') {
     postType = TEMPLATE_POST_TYPE;
   } else if (name === 'static-template-item') {
@@ -29274,12 +29274,6 @@ function useResolveEditedEntity() {
       return homePage?.postId;
     }
   }, [homePage, postId, postType]);
-  const editableResolvedTemplateId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (typeof resolvedTemplateId !== 'string') {
-      return resolvedTemplateId;
-    }
-    return unlock(select(external_wp_coreData_namespaceObject.store)).getTemplateAutoDraftId(resolvedTemplateId);
-  }, [resolvedTemplateId]);
   const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (postTypesWithoutParentTemplate.includes(postType) && postId) {
       return {};
@@ -29310,9 +29304,9 @@ function useResolveEditedEntity() {
   }
   if (!!homePage) {
     return {
-      isReady: editableResolvedTemplateId !== undefined,
+      isReady: resolvedTemplateId !== undefined,
       postType: TEMPLATE_POST_TYPE,
-      postId: editableResolvedTemplateId,
+      postId: resolvedTemplateId,
       context
     };
   }
@@ -52256,7 +52250,8 @@ function PageTemplates() {
     records: userRecords,
     isResolving: isLoadingUserRecords
   } = page_templates_useEntityRecordsWithPermissions('postType', TEMPLATE_POST_TYPE, {
-    per_page: -1
+    per_page: -1,
+    combinedTemplates: false
   });
   const {
     records: staticRecords,

@@ -14300,11 +14300,6 @@ var wp;
   var getEntityRecord = (0, import_data4.createSelector)(
     ((state, kind, name, key, query) => {
       logEntityDeprecation(kind, name, "getEntityRecord");
-      if (kind === "postType" && name === "wp_template" && typeof key === "string" && // __experimentalGetDirtyEntityRecords always calls getEntityRecord
-      // with a string key, so we need that it's not a numeric ID.
-      !/^\d+$/.test(key)) {
-        name = "wp_registered_template";
-      }
       const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
       if (!queriedState) {
         return void 0;
@@ -15347,8 +15342,12 @@ var wp;
         recordId
       });
       let hasError = false;
+      let { baseURL } = entityConfig;
+      if (kind === "postType" && name === "wp_template" && recordId && typeof recordId === "string" && !/^\d+$/.test(recordId)) {
+        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
+      }
       try {
-        let path = `${entityConfig.baseURL}/${recordId}`;
+        let path = `${baseURL}/${recordId}`;
         if (query) {
           path = (0, import_url4.addQueryArgs)(path, query);
         }
@@ -15477,35 +15476,6 @@ var wp;
     }
     const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
     const recordId = record[entityIdKey];
-    if (kind === "postType" && name === "wp_template" && typeof recordId === "string" && !/^\d+$/.test(recordId)) {
-      const template = await select.getEntityRecord(
-        "postType",
-        "wp_registered_template",
-        recordId
-      );
-      const newTemplate = await dispatch.saveEntityRecord(
-        "postType",
-        "wp_template",
-        {
-          ...template,
-          ...record,
-          id: void 0,
-          type: "wp_template",
-          status: "publish"
-        }
-      );
-      const activeTemplates = await select.getEntityRecord(
-        "root",
-        "site"
-      );
-      await dispatch.saveEntityRecord("root", "site", {
-        active_templates: {
-          ...activeTemplates.active_templates,
-          [newTemplate.slug]: newTemplate.id
-        }
-      });
-      return newTemplate;
-    }
     const lock2 = await dispatch.__unstableAcquireStoreLock(
       STORE_NAME,
       ["entities", "records", kind, name, recordId || v4_default()],
@@ -15539,8 +15509,12 @@ var wp;
       let updatedRecord;
       let error;
       let hasError = false;
+      let { baseURL } = entityConfig;
+      if (kind === "postType" && name === "wp_template" && recordId && typeof recordId === "string" && !/^\d+$/.test(recordId)) {
+        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
+      }
       try {
-        const path = `${entityConfig.baseURL}${recordId ? "/" + recordId : ""}`;
+        const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
         const persistedRecord = select.getRawEntityRecord(
           kind,
           name,
@@ -16153,11 +16127,6 @@ var wp;
     dispatch.receiveCurrentUser(currentUser2);
   };
   var getEntityRecord2 = (kind, name, key = "", query) => async ({ select, dispatch, registry, resolveSelect }) => {
-    if (kind === "postType" && name === "wp_template" && typeof key === "string" && // __experimentalGetDirtyEntityRecords always calls getEntityRecord
-    // with a string key, so we need that it's not a numeric ID.
-    !/^\d+$/.test(key)) {
-      name = "wp_registered_template";
-    }
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -16193,13 +16162,14 @@ var wp;
           return;
         }
       }
-      const path = (0, import_url7.addQueryArgs)(
-        entityConfig.baseURL + (key ? "/" + key : ""),
-        {
-          ...entityConfig.baseURLParams,
-          ...query
-        }
-      );
+      let { baseURL } = entityConfig;
+      if (kind === "postType" && name === "wp_template" && key && typeof key === "string" && !/^\d+$/.test(key)) {
+        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
+      }
+      const path = (0, import_url7.addQueryArgs)(baseURL + (key ? "/" + key : ""), {
+        ...entityConfig.baseURLParams,
+        ...query
+      });
       const response = await (0, import_api_fetch8.default)({ path, parse: false });
       const record = await response.json();
       const permissions = getUserPermissionsFromAllowHeader(
@@ -16262,6 +16232,12 @@ var wp;
     } finally {
       dispatch.__unstableReleaseStoreLock(lock2);
     }
+  };
+  getEntityRecord2.shouldInvalidate = (action, kind, name) => {
+    return kind === "root" && name === "site" && (action.type === "RECEIVE_ITEMS" && // Making sure persistedEdits is set seems to be the only way of
+    // knowing whether it's an update or fetch. Only an update would
+    // have persistedEdits.
+    action.persistedEdits && action.persistedEdits.status !== "auto-draft" || action.type === "REMOVE_ITEMS") && action.kind === "postType" && action.name === "wp_template";
   };
   var getTemplateAutoDraftId2 = (staticTemplateId) => async ({ resolveSelect, dispatch }) => {
     const record = await resolveSelect.getEntityRecord(
@@ -16326,7 +16302,12 @@ var wp;
           ].join()
         };
       }
-      const path = (0, import_url7.addQueryArgs)(entityConfig.baseURL, {
+      let { baseURL } = entityConfig;
+      const { combinedTemplates = true } = query;
+      if (kind === "postType" && name === "wp_template" && combinedTemplates) {
+        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
+      }
+      const path = (0, import_url7.addQueryArgs)(baseURL, {
         ...entityConfig.baseURLParams,
         ...query
       });
@@ -16708,7 +16689,7 @@ var wp;
     }
   };
   getDefaultTemplateId2.shouldInvalidate = (action) => {
-    return action.type === "EDIT_ENTITY_RECORD" && action.kind === "root" && action.name === "site";
+    return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site";
   };
   var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch, registry, resolveSelect }) => {
     const configs = await resolveSelect.getEntitiesConfig(kind);
