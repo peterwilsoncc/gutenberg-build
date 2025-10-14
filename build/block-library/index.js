@@ -46092,6 +46092,9 @@ const post_content_metadata = {
         fontSize: true
       }
     },
+    interactivity: {
+      clientNavigation: true
+    },
     __experimentalBorder: {
       radius: true,
       color: true,
@@ -51153,23 +51156,10 @@ const usePatterns = (clientId, name) => {
 };
 
 /**
- * The object returned by useUnsupportedBlocks with info about the type of
- * unsupported blocks present inside the Query block.
- *
- * @typedef  {Object}  UnsupportedBlocksInfo
- * @property {boolean} hasBlocksFromPlugins True if blocks from plugins are present.
- * @property {boolean} hasPostContentBlock  True if a 'core/post-content' block is present.
- * @property {boolean} hasUnsupportedBlocks True if there are any unsupported blocks.
- */
-
-/**
- * Hook that returns an object with information about the unsupported blocks
- * present inside a Query Loop with the given `clientId`. The returned object
- * contains props that are true when a certain type of unsupported block is
- * present.
+ * Hook that, given a block clientId, determines if it has unsupported blocks or not.
  *
  * @param {string} clientId The block's client ID.
- * @return {UnsupportedBlocksInfo} The object containing the information.
+ * @return {boolean} True if there are any unsupported blocks.
  */
 const useUnsupportedBlocks = clientId => {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -51177,8 +51167,7 @@ const useUnsupportedBlocks = clientId => {
       getClientIdsOfDescendants,
       getBlockName
     } = select(external_wp_blockEditor_namespaceObject.store);
-    const blocks = {};
-    getClientIdsOfDescendants(clientId).forEach(descendantClientId => {
+    return getClientIdsOfDescendants(clientId).some(descendantClientId => {
       const blockName = getBlockName(descendantClientId);
       /*
        * Client side navigation can be true in two states:
@@ -51187,15 +51176,8 @@ const useUnsupportedBlocks = clientId => {
        */
       const blockSupportsInteractivity = Object.is((0,external_wp_blocks_namespaceObject.getBlockSupport)(blockName, 'interactivity'), true);
       const blockSupportsInteractivityClientNavigation = (0,external_wp_blocks_namespaceObject.getBlockSupport)(blockName, 'interactivity.clientNavigation');
-      const blockInteractivity = blockSupportsInteractivity || blockSupportsInteractivityClientNavigation;
-      if (!blockInteractivity) {
-        blocks.hasBlocksFromPlugins = true;
-      } else if (blockName === 'core/post-content') {
-        blocks.hasPostContentBlock = true;
-      }
+      return !blockSupportsInteractivity && !blockSupportsInteractivityClientNavigation;
     });
-    blocks.hasUnsupportedBlocks = blocks.hasBlocksFromPlugins || blocks.hasPostContentBlock;
-    return blocks;
   }, [clientId]);
 };
 
@@ -51245,9 +51227,7 @@ function EnhancedPaginationControl({
   setAttributes,
   clientId
 }) {
-  const {
-    hasUnsupportedBlocks
-  } = useUnsupportedBlocks(clientId);
+  const hasUnsupportedBlocks = useUnsupportedBlocks(clientId);
   let help = (0,external_wp_i18n_namespaceObject.__)('Reload the full page—instead of just the posts list—when visitors navigate between pages.');
   if (hasUnsupportedBlocks) {
     help = (0,external_wp_i18n_namespaceObject.__)('Enhancement disabled because there are non-compatible blocks inside the Query block.');
@@ -52322,11 +52302,7 @@ function EnhancedPaginationModal({
   setAttributes
 }) {
   const [isOpen, setOpen] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    hasBlocksFromPlugins,
-    hasPostContentBlock,
-    hasUnsupportedBlocks
-  } = useUnsupportedBlocks(clientId);
+  const hasUnsupportedBlocks = useUnsupportedBlocks(clientId);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (enhancedPagination && hasUnsupportedBlocks) {
       setAttributes({
@@ -52338,12 +52314,7 @@ function EnhancedPaginationModal({
   const closeModal = () => {
     setOpen(false);
   };
-  let notice = (0,external_wp_i18n_namespaceObject.__)('If you still want to prevent full page reloads, remove that block, then disable "Reload full page" again in the Query Block settings.');
-  if (hasBlocksFromPlugins) {
-    notice = (0,external_wp_i18n_namespaceObject.__)('Currently, avoiding full page reloads is not possible when non-interactive or non-client Navigation compatible blocks from plugins are present inside the Query block.') + ' ' + notice;
-  } else if (hasPostContentBlock) {
-    notice = (0,external_wp_i18n_namespaceObject.__)('Currently, avoiding full page reloads is not possible when a Content block is present inside the Query block.') + ' ' + notice;
-  }
+  const notice = (0,external_wp_i18n_namespaceObject.__)('Currently, avoiding full page reloads is not possible when non-interactive or non-client Navigation compatible blocks from plugins are present inside the Query block.') + ' ' + (0,external_wp_i18n_namespaceObject.__)('If you still want to prevent full page reloads, remove that block, then disable "Reload full page" again in the Query Block settings.');
   return isOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: (0,external_wp_i18n_namespaceObject.__)('Query block: Reload full page enabled'),
     className: "wp-block-query__enhanced-pagination-modal",
