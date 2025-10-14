@@ -43,8 +43,8 @@ function gutenberg_register_block_comment_metadata() {
 					'enum' => array( 'resolved', 'reopen' ),
 				),
 			),
-			'auth_callback' => function () {
-				return current_user_can( 'edit_posts' );
+			'auth_callback' => function ( $allowed, $meta_key, $object_id ) {
+				return current_user_can( 'edit_comment', $object_id );
 			},
 		)
 	);
@@ -130,5 +130,6 @@ function gutenberg_allow_duplicate_note_resolution( $dupe_id, $commentdata ) {
 	if ( isset( $commentdata['meta']['_wp_note_status'] ) && in_array( $commentdata['meta']['_wp_note_status'], array( 'resolved', 'reopen' ), true ) ) {
 		return false;
 	}
+	return $dupe_id;
 }
 add_filter( 'duplicate_comment_id', 'gutenberg_allow_duplicate_note_resolution', 10, 2 );
