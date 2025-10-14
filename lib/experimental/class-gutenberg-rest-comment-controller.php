@@ -21,7 +21,7 @@ class Gutenberg_REST_Comment_Controller extends WP_REST_Comments_Controller {
 				if ( $post && $is_note && ! $this->check_post_type_supports_notes( $post->post_type ) ) {
 					return new WP_Error(
 						'rest_comment_not_supported_post_type',
-						__( 'Sorry, this post type does not support block comments.', 'gutenberg' ),
+						__( 'Sorry, this post type does not support notes.', 'gutenberg' ),
 						array( 'status' => 403 )
 					);
 				}
@@ -229,7 +229,7 @@ class Gutenberg_REST_Comment_Controller extends WP_REST_Comments_Controller {
 		if ( $is_note && ! $this->check_post_type_supports_notes( $post->post_type ) ) {
 			return new WP_Error(
 				'rest_comment_not_supported_post_type',
-				__( 'Sorry, this post type does not support block comments.', 'gutenberg' ),
+				__( 'Sorry, this post type does not support notes.', 'gutenberg' ),
 				array( 'status' => 403 )
 			);
 		}

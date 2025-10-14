@@ -35784,7 +35784,7 @@ function CommentAuthorInfo({
   const commentDateText = shouldShowHumanTimeDiff ? (0,external_wp_date_namespaceObject.humanTimeDiff)(commentDate) : (0,external_wp_date_namespaceObject.dateI18n)(dateFormat, commentDate);
   const tooltipText = (0,external_wp_date_namespaceObject.dateI18n)(
   // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
-  (0,external_wp_i18n_namespaceObject._x)('F j, Y g:i\xa0a', 'Comment date full date format'), date);
+  (0,external_wp_i18n_namespaceObject._x)('F j, Y g:i\xa0a', 'Note date full date format'), date);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
       src: avatar || currentUserAvatar,
@@ -35859,7 +35859,7 @@ function CommentForm({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
       as: "label",
       htmlFor: inputId,
-      children: labelText !== null && labelText !== void 0 ? labelText : (0,external_wp_i18n_namespaceObject.__)('Comment')
+      children: labelText !== null && labelText !== void 0 ? labelText : (0,external_wp_i18n_namespaceObject.__)('Note')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(lib/* default */.A, {
       id: inputId,
       value: inputComment !== null && inputComment !== void 0 ? inputComment : '',
@@ -38470,7 +38470,7 @@ function useBlockCommentsActions(reflowComments = utils_noop) {
           }
         });
       }
-      createNotice('snackbar', parent ? (0,external_wp_i18n_namespaceObject.__)('Reply added successfully.') : (0,external_wp_i18n_namespaceObject.__)('Comment added successfully.'), {
+      createNotice('snackbar', parent ? (0,external_wp_i18n_namespaceObject.__)('Reply added successfully.') : (0,external_wp_i18n_namespaceObject.__)('Note added successfully.'), {
         type: 'snackbar',
         isDismissible: true
       });
@@ -38488,13 +38488,13 @@ function useBlockCommentsActions(reflowComments = utils_noop) {
   }) => {
     const messageType = status ? status : 'updated';
     const messages = {
-      approved: (0,external_wp_i18n_namespaceObject.__)('Comment marked as resolved.'),
-      hold: (0,external_wp_i18n_namespaceObject.__)('Comment reopened.'),
-      updated: (0,external_wp_i18n_namespaceObject.__)('Comment updated.')
+      approved: (0,external_wp_i18n_namespaceObject.__)('Note marked as resolved.'),
+      hold: (0,external_wp_i18n_namespaceObject.__)('Note reopened.'),
+      updated: (0,external_wp_i18n_namespaceObject.__)('Note updated.')
     };
     try {
       var _messages$messageType;
-      // For resolution or reopen actions, create a new comment with metadata.
+      // For resolution or reopen actions, create a new note with metadata.
       if (status === 'approved' || status === 'hold') {
         // First, update the thread status.
         await saveEntityRecord('root', 'comment', {
@@ -38529,7 +38529,7 @@ function useBlockCommentsActions(reflowComments = utils_noop) {
           throwOnError: true
         });
       }
-      createNotice('snackbar', (_messages$messageType = messages[messageType]) !== null && _messages$messageType !== void 0 ? _messages$messageType : (0,external_wp_i18n_namespaceObject.__)('Comment updated.'), {
+      createNotice('snackbar', (_messages$messageType = messages[messageType]) !== null && _messages$messageType !== void 0 ? _messages$messageType : (0,external_wp_i18n_namespaceObject.__)('Note updated.'), {
         type: 'snackbar',
         isDismissible: true
       });
@@ -38554,7 +38554,7 @@ function useBlockCommentsActions(reflowComments = utils_noop) {
           }
         });
       }
-      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment deleted successfully.'), {
+      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Note deleted successfully.'), {
         type: 'snackbar',
         isDismissible: true
       });
@@ -38820,9 +38820,7 @@ function Comments({
       className: "editor-collab-sidebar-panel__thread",
       justify: "flex-start",
       spacing: "3",
-      children:
-      // translators: message displayed when there are no comments available
-      (0,external_wp_i18n_namespaceObject.__)('No comments available')
+      children: (0,external_wp_i18n_namespaceObject.__)('No notes available.')
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -38908,10 +38906,10 @@ function Thread({
   const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
   const commentExcerpt = getCommentExcerpt((0,external_wp_dom_namespaceObject.__unstableStripHTML)(thread.content.rendered), 10);
   const ariaLabel = relatedBlockElement ? (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: comment excerpt
-  (0,external_wp_i18n_namespaceObject.__)('Comment: %s'), commentExcerpt) : (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: comment excerpt
-  (0,external_wp_i18n_namespaceObject.__)('Original block deleted. Comment: %s'), commentExcerpt);
+  // translators: %s: note excerpt
+  (0,external_wp_i18n_namespaceObject.__)('Note: %s'), commentExcerpt) : (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: note excerpt
+  (0,external_wp_i18n_namespaceObject.__)('Original block deleted. Note: %s'), commentExcerpt);
   return (
     /*#__PURE__*/
     // Disable reason: role="listitem" does in fact support aria-expanded.
@@ -38958,7 +38956,7 @@ function Thread({
         onClick: () => {
           focusCommentThread(thread.id, commentSidebarRef.current, 'textarea');
         },
-        children: (0,external_wp_i18n_namespaceObject.__)('Add new comment')
+        children: (0,external_wp_i18n_namespaceObject.__)('Add new note')
       }), !relatedBlockElement && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         as: "p",
         weight: 500,
@@ -39034,15 +39032,16 @@ function Thread({
               }
             },
             onCancel: event => {
-              event.stopPropagation(); // Prevent the parent onClick from being triggered
+              // Prevent the parent onClick from being triggered.
+              event.stopPropagation();
               unselectThread();
               focusCommentThread(thread.id, commentSidebarRef.current);
             },
             submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject.__)('Reopen & Reply') : (0,external_wp_i18n_namespaceObject.__)('Reply'),
             rows: 'approved' === thread.status ? 2 : 4,
             labelText: (0,external_wp_i18n_namespaceObject.sprintf)(
-            // translators: %1$s: comment identifier, %2$s: author name
-            (0,external_wp_i18n_namespaceObject.__)('Reply to Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown'),
+            // translators: %1$s: note identifier, %2$s: author name
+            (0,external_wp_i18n_namespaceObject.__)('Reply to Note %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown'),
             reflowComments: reflowComments
           })
         })]
@@ -39083,7 +39082,7 @@ const CommentBoard = ({
   const isResolutionComment = thread.type === 'note' && thread.meta && (thread.meta._wp_note_status === 'resolved' || thread.meta._wp_note_status === 'reopen');
   const actions = [{
     id: 'edit',
-    title: (0,external_wp_i18n_namespaceObject._x)('Edit', 'Edit comment'),
+    title: (0,external_wp_i18n_namespaceObject.__)('Edit'),
     isEligible: ({
       status
     }) => status !== 'approved',
@@ -39092,7 +39091,7 @@ const CommentBoard = ({
     }
   }, {
     id: 'reopen',
-    title: (0,external_wp_i18n_namespaceObject._x)('Reopen', 'Reopen comment'),
+    title: (0,external_wp_i18n_namespaceObject._x)('Reopen', 'Reopen note'),
     isEligible: ({
       status
     }) => status === 'approved',
@@ -39104,7 +39103,7 @@ const CommentBoard = ({
     }
   }, {
     id: 'delete',
-    title: (0,external_wp_i18n_namespaceObject._x)('Delete', 'Delete comment'),
+    title: (0,external_wp_i18n_namespaceObject.__)('Delete'),
     isEligible: () => true,
     onClick: () => {
       setActionState('delete');
@@ -39133,7 +39132,7 @@ const CommentBoard = ({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           spacing: "0",
           children: [canResolve && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            label: (0,external_wp_i18n_namespaceObject._x)('Resolve', 'Mark comment as resolved'),
+            label: (0,external_wp_i18n_namespaceObject._x)('Resolve', 'Mark note as resolved'),
             size: "small",
             icon: published_default,
             disabled: thread.status === 'approved',
@@ -39177,8 +39176,8 @@ const CommentBoard = ({
       thread: thread,
       submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Update', 'verb'),
       labelText: (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %1$s: comment identifier, %2$s: author name.
-      (0,external_wp_i18n_namespaceObject.__)('Edit Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown'),
+      // translators: %1$s: note identifier, %2$s: author name.
+      (0,external_wp_i18n_namespaceObject.__)('Edit note %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown'),
       reflowComments: reflowComments
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
       className: dist_clsx('editor-collab-sidebar-panel__user-comment', {
@@ -39189,7 +39188,7 @@ const CommentBoard = ({
         const content = thread?.content?.raw;
         if (content && typeof content === 'string' && content.trim() !== '') {
           return (0,external_wp_i18n_namespaceObject.sprintf)(
-          // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: comment text.
+          // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: note text.
           (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), actionText, content);
         }
         // If no content, just show the action.
@@ -39200,7 +39199,7 @@ const CommentBoard = ({
       onConfirm: handleConfirmDelete,
       onCancel: handleCancel,
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
-      children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this comment?')
+      children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this note?')
     })]
   });
 };
@@ -39274,8 +39273,8 @@ function AddComment({
         setShowCommentBoard(false);
         blockElement?.focus();
       },
-      submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Comment', 'Add comment button'),
-      labelText: (0,external_wp_i18n_namespaceObject.__)('New Comment')
+      submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Note', 'Add note button'),
+      labelText: (0,external_wp_i18n_namespaceObject.__)('New Note')
     })]
   });
 }
@@ -39310,7 +39309,7 @@ const AddCommentMenuItem = ({
         onClose();
       },
       "aria-haspopup": "dialog",
-      children: (0,external_wp_i18n_namespaceObject.__)('Comment')
+      children: (0,external_wp_i18n_namespaceObject.__)('Note')
     })
   });
 };
@@ -39397,7 +39396,7 @@ const CommentAvatarIndicator = ({
       className: dist_clsx('comment-avatar-indicator', {
         'has-unresolved': hasUnresolved
       }),
-      label: (0,external_wp_i18n_namespaceObject._x)('View comments', 'View comment thread'),
+      label: (0,external_wp_i18n_namespaceObject.__)('View notes'),
       onClick: onClick,
       showTooltip: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -39566,12 +39565,10 @@ function CollabSidebar() {
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_menu_item, {
       onClick: openTheSidebar
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
-      identifier: collabHistorySidebarName
-      // translators: Comments sidebar title
-      ,
-      title: (0,external_wp_i18n_namespaceObject.__)('Comments'),
+      identifier: collabHistorySidebarName,
+      title: (0,external_wp_i18n_namespaceObject.__)('Notes'),
       icon: comment_default,
-      closeLabel: (0,external_wp_i18n_namespaceObject.__)('Close Comments'),
+      closeLabel: (0,external_wp_i18n_namespaceObject.__)('Close Notes'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
         comments: resultComments,
         showCommentBoard: showCommentBoard,
