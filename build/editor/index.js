@@ -38336,7 +38336,7 @@ function useBlockComments(postId) {
   };
   const queryArgs = {
     post: postId,
-    type: 'block_comment',
+    type: 'note',
     status: 'all',
     per_page: 100
   };
@@ -38463,7 +38463,7 @@ function useBlockCommentsActions(reflowComments) {
         post: getCurrentPostId(),
         content,
         status: 'hold',
-        type: 'block_comment',
+        type: 'note',
         parent: parent || 0
       }, {
         throwOnError: true
@@ -38519,11 +38519,11 @@ function useBlockCommentsActions(reflowComments) {
           post: getCurrentPostId(),
           content: content || '',
           // Empty content for resolve, content for reopen.
-          type: 'block_comment',
+          type: 'note',
           status,
           parent: id,
           meta: {
-            _wp_block_comment_status: status === 'approved' ? 'resolved' : 'reopen'
+            _wp_note_status: status === 'approved' ? 'resolved' : 'reopen'
           }
         };
         await saveEntityRecord('root', 'comment', newCommentData, {
@@ -39096,7 +39096,7 @@ const CommentBoard = ({
   };
 
   // Check if this is a resolution comment by checking metadata.
-  const isResolutionComment = thread.type === 'block_comment' && thread.meta && (thread.meta._wp_block_comment_status === 'resolved' || thread.meta._wp_block_comment_status === 'reopen');
+  const isResolutionComment = thread.type === 'note' && thread.meta && (thread.meta._wp_note_status === 'resolved' || thread.meta._wp_note_status === 'reopen');
   const actions = [{
     id: 'edit',
     title: (0,external_wp_i18n_namespaceObject._x)('Edit', 'Edit comment'),
@@ -39200,7 +39200,7 @@ const CommentBoard = ({
         'editor-collab-sidebar-panel__resolution-text': isResolutionComment
       }),
       children: isResolutionComment ? (() => {
-        const actionText = thread.meta._wp_block_comment_status === 'resolved' ? (0,external_wp_i18n_namespaceObject.__)('Marked as resolved') : (0,external_wp_i18n_namespaceObject.__)('Reopened');
+        const actionText = thread.meta._wp_note_status === 'resolved' ? (0,external_wp_i18n_namespaceObject.__)('Marked as resolved') : (0,external_wp_i18n_namespaceObject.__)('Reopened');
         const content = thread?.content?.raw;
         if (content && typeof content === 'string' && content.trim() !== '') {
           return (0,external_wp_i18n_namespaceObject.sprintf)(
@@ -40761,7 +40761,7 @@ function header_Header({
         forceIsDirty: forceIsDirty,
         setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback
       }), isBlockCommentExperimentEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
-        supportKeys: "editor.block-comments",
+        supportKeys: "editor.notes",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {})
       }), customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
     })]
