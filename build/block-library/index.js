@@ -18195,6 +18195,7 @@ function DetailsEdit({
       ...innerBlocksProps,
       open: isOpen || hasSelectedInnerBlock,
       onToggle: event => setIsOpen(event.target.open),
+      name: name || '',
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("summary", {
         onKeyDown: withIgnoreIMEEvents(handleSummaryKeyDown),
         onKeyUp: handleSummaryKeyUp,
