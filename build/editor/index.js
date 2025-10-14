@@ -38819,7 +38819,7 @@ function Comments({
       alignment: "left",
       className: "editor-collab-sidebar-panel__thread",
       justify: "flex-start",
-      spacing: "2",
+      spacing: "3",
       children:
       // translators: message displayed when there are no comments available
       (0,external_wp_i18n_namespaceObject.__)('No comments available')
@@ -38922,7 +38922,7 @@ function Thread({
         'is-floating': isFloating
       }),
       id: `comment-thread-${thread.id}`,
-      spacing: isFloating ? '0' : '2',
+      spacing: "3",
       onClick: handleCommentSelect,
       onMouseEnter: onMouseEnter,
       onMouseLeave: onMouseLeave,
@@ -38979,18 +38979,13 @@ function Thread({
         },
         onDelete: onCommentDelete,
         reflowComments: reflowComments
-      }), isSelected && allReplies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-        className: "editor-collab-sidebar-panel__child-thread",
-        id: reply.id,
-        spacing: "2",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-          thread: reply,
-          parent: thread,
-          isExpanded: isSelected,
-          onEdit: onEditComment,
-          onDelete: onCommentDelete,
-          reflowComments: reflowComments
-        })
+      }), isSelected && allReplies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+        thread: reply,
+        parent: thread,
+        isExpanded: isSelected,
+        onEdit: onEditComment,
+        onDelete: onCommentDelete,
+        reflowComments: reflowComments
       }, reply.id)), !isSelected && restReplies.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "editor-collab-sidebar-panel__more-reply-separator",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -39013,7 +39008,6 @@ function Thread({
         onDelete: onCommentDelete,
         reflowComments: reflowComments
       }), isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        className: "editor-collab-sidebar-panel__child-thread",
         spacing: "2",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
           alignment: "left",
@@ -39119,7 +39113,8 @@ const CommentBoard = ({
   }];
   const canResolve = thread.parent === 0;
   const moreActions = parent?.status !== 'approved' ? actions.filter(item => item.isEligible(thread)) : [];
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: "2",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "left",
       spacing: "3",
