@@ -5129,6 +5129,7 @@ function BreadcrumbEdit({
           })
         }, index)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            "aria-current": "page",
             children: (0,external_wp_i18n_namespaceObject.__)('Current')
           })
         })]
@@ -5176,7 +5177,14 @@ function BreadcrumbEdit({
             value: separator,
             onChange: value => setAttributes({
               separator: value
-            })
+            }),
+            onBlur: () => {
+              if (!separator) {
+                setAttributes({
+                  separator: separatorDefaultValue
+                });
+              }
+            }
           })
         })]
       })
