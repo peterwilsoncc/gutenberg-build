@@ -41,6 +41,7 @@ function gutenberg_reregister_core_block_types() {
 				'spacer',
 				'table',
 				'table-of-contents',
+				'terms-query',
 				'text-columns',
 				'verse',
 				'embed',
@@ -51,6 +52,7 @@ function gutenberg_reregister_core_block_types() {
 				'archives.php'                     => 'core/archives',
 				'avatar.php'                       => 'core/avatar',
 				'block.php'                        => 'core/block',
+				'breadcrumbs.php'                  => 'core/breadcrumbs',
 				'button.php'                       => 'core/button',
 				'calendar.php'                     => 'core/calendar',
 				'categories.php'                   => 'core/categories',
@@ -123,8 +125,9 @@ function gutenberg_reregister_core_block_types() {
 				'table-of-contents.php'            => 'core/table-of-contents',
 				'tag-cloud.php'                    => 'core/tag-cloud',
 				'template-part.php'                => 'core/template-part',
+				'term-count.php'                   => 'core/term-count',
 				'term-description.php'             => 'core/term-description',
-				'terms-query.php'                  => 'core/terms-query',
+				'term-name.php'                    => 'core/term-name',
 				'term-template.php'                => 'core/term-template',
 				'video.php'                        => 'core/video',
 			),
@@ -263,6 +266,7 @@ function gutenberg_register_core_block_assets( $block_name ) {
 	$stylesheet_path = gutenberg_dir_path() . $style_path . ( is_rtl() ? 'style-rtl.css' : 'style.css' );
 
 	if ( file_exists( $stylesheet_path ) ) {
+
 		wp_deregister_style( "wp-block-{$block_name}" );
 		wp_register_style(
 			"wp-block-{$block_name}",
@@ -271,7 +275,6 @@ function gutenberg_register_core_block_assets( $block_name ) {
 			$default_version
 		);
 		wp_style_add_data( "wp-block-{$block_name}", 'rtl', 'replace' );
-
 		// Add a reference to the stylesheet's path to allow calculations for inlining styles in `wp_head`.
 		wp_style_add_data( "wp-block-{$block_name}", 'path', $stylesheet_path );
 	} else {
