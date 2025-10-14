@@ -3426,15 +3426,6 @@ function getEntityConfig(state, kind, name) {
 const getEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, key, query) => {
   var _query$context, _getNormalizedCommaSe;
   logEntityDeprecation(kind, name, 'getEntityRecord');
-
-  // For back-compat, we allow querying for static templates through
-  // wp_template.
-  if (kind === 'postType' && name === 'wp_template' && typeof key === 'string' &&
-  // __experimentalGetDirtyEntityRecords always calls getEntityRecord
-  // with a string key, so we need that it's not a numeric ID.
-  !/^\d+$/.test(key)) {
-    name = 'wp_registered_template';
-  }
   const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
   if (!queriedState) {
     return undefined;
@@ -22056,8 +22047,14 @@ const deleteEntityRecord = (kind, name, recordId, query, {
       recordId
     });
     let hasError = false;
+    let {
+      baseURL
+    } = entityConfig;
+    if (kind === 'postType' && name === 'wp_template' && recordId && typeof recordId === 'string' && !/^\d+$/.test(recordId)) {
+      baseURL = baseURL.slice(0, baseURL.lastIndexOf('/')) + '/templates';
+    }
     try {
-      let path = `${entityConfig.baseURL}/${recordId}`;
+      let path = `${baseURL}/${recordId}`;
       if (query) {
         path = (0,external_wp_url_namespaceObject.addQueryArgs)(path, query);
       }
@@ -22237,30 +22234,6 @@ const saveEntityRecord = (kind, name, record, {
   }
   const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
   const recordId = record[entityIdKey];
-
-  // When called with a theme template ID, trigger the compatibility
-  // logic.
-  if (kind === 'postType' && name === 'wp_template' && typeof recordId === 'string' && !/^\d+$/.test(recordId)) {
-    // Get the theme template.
-    const template = await select.getEntityRecord('postType', 'wp_registered_template', recordId);
-    // Duplicate the theme template and make the edit.
-    const newTemplate = await dispatch.saveEntityRecord('postType', 'wp_template', {
-      ...template,
-      ...record,
-      id: undefined,
-      type: 'wp_template',
-      status: 'publish'
-    });
-    // Make the new template active.
-    const activeTemplates = await select.getEntityRecord('root', 'site');
-    await dispatch.saveEntityRecord('root', 'site', {
-      active_templates: {
-        ...activeTemplates.active_templates,
-        [newTemplate.slug]: newTemplate.id
-      }
-    });
-    return newTemplate;
-  }
   const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, ['entities', 'records', kind, name, recordId || esm_browser_v4()], {
     exclusive: true
   });
@@ -22288,8 +22261,15 @@ const saveEntityRecord = (kind, name, record, {
     let updatedRecord;
     let error;
     let hasError = false;
+    let {
+      baseURL
+    } = entityConfig;
+    // For "string" IDs, use the old templates endpoint.
+    if (kind === 'postType' && name === 'wp_template' && recordId && typeof recordId === 'string' && !/^\d+$/.test(recordId)) {
+      baseURL = baseURL.slice(0, baseURL.lastIndexOf('/')) + '/templates';
+    }
     try {
-      const path = `${entityConfig.baseURL}${recordId ? '/' + recordId : ''}`;
+      const path = `${baseURL}${recordId ? '/' + recordId : ''}`;
       const persistedRecord = select.getRawEntityRecord(kind, name, recordId);
       if (isAutosave) {
         // Most of this autosave logic is very specific to posts.
@@ -23161,14 +23141,6 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
   registry,
   resolveSelect
 }) => {
-  // For back-compat, we allow querying for static templates through
-  // wp_template.
-  if (kind === 'postType' && name === 'wp_template' && typeof key === 'string' &&
-  // __experimentalGetDirtyEntityRecords always calls getEntityRecord
-  // with a string key, so we need that it's not a numeric ID.
-  !/^\d+$/.test(key)) {
-    name = 'wp_registered_template';
-  }
   const configs = await resolveSelect.getEntitiesConfig(kind);
   const entityConfig = configs.find(config => config.name === name && config.kind === kind);
   if (!entityConfig) {
@@ -23222,7 +23194,15 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
           return;
         }
       }
-      const path = (0,external_wp_url_namespaceObject.addQueryArgs)(entityConfig.baseURL + (key ? '/' + key : ''), {
+      let {
+        baseURL
+      } = entityConfig;
+
+      // For "string" IDs, use the old templates endpoint.
+      if (kind === 'postType' && name === 'wp_template' && key && typeof key === 'string' && !/^\d+$/.test(key)) {
+        baseURL = baseURL.slice(0, baseURL.lastIndexOf('/')) + '/templates';
+      }
+      const path = (0,external_wp_url_namespaceObject.addQueryArgs)(baseURL + (key ? '/' + key : ''), {
         ...entityConfig.baseURLParams,
         ...query
       });
@@ -23255,6 +23235,16 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
   } finally {
     dispatch.__unstableReleaseStoreLock(lock);
   }
+};
+
+// Whenever a template is saved, the active templates might be updated, so
+// invalidate the site settings when a template is updated or deleted.
+resolvers_getEntityRecord.shouldInvalidate = (action, kind, name) => {
+  return kind === 'root' && name === 'site' && (action.type === 'RECEIVE_ITEMS' &&
+  // Making sure persistedEdits is set seems to be the only way of
+  // knowing whether it's an update or fetch. Only an update would
+  // have persistedEdits.
+  action.persistedEdits && action.persistedEdits.status !== 'auto-draft' || action.type === 'REMOVE_ITEMS') && action.kind === 'postType' && action.name === 'wp_template';
 };
 const resolvers_getTemplateAutoDraftId = staticTemplateId => async ({
   resolveSelect,
@@ -23326,7 +23316,22 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
         _fields: [...new Set([...(get_normalized_comma_separable(query._fields) || []), key])].join()
       };
     }
-    const path = (0,external_wp_url_namespaceObject.addQueryArgs)(entityConfig.baseURL, {
+    let {
+      baseURL
+    } = entityConfig;
+    // `combinedTemplates` means that we fetch templates from the "old"
+    // /templates endpoint, which combines active user templates with
+    // the registered templates and rewrites IDs in the form of
+    // `theme-slug/template-slug`. When turned off, we only fetch
+    // database templates (posts). To fetch registered templates without
+    // edits applied, use the `wp_registered_template` entity.
+    const {
+      combinedTemplates = true
+    } = query;
+    if (kind === 'postType' && name === 'wp_template' && combinedTemplates) {
+      baseURL = baseURL.slice(0, baseURL.lastIndexOf('/')) + '/templates';
+    }
+    const path = (0,external_wp_url_namespaceObject.addQueryArgs)(baseURL, {
       ...entityConfig.baseURLParams,
       ...query
     });
@@ -23767,7 +23772,7 @@ const resolvers_getDefaultTemplateId = query => async ({
   }
 };
 resolvers_getDefaultTemplateId.shouldInvalidate = action => {
-  return action.type === 'EDIT_ENTITY_RECORD' && action.kind === 'root' && action.name === 'site';
+  return action.type === 'RECEIVE_ITEMS' && action.kind === 'root' && action.name === 'site';
 };
 
 /**
