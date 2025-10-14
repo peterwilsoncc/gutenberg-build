@@ -8,12 +8,23 @@
 	"ancestor": [ "core/terms-query" ],
 	"description": "Contains the block elements used to render a taxonomy term, like the name, description, and more.",
 	"textdomain": "default",
-	"usesContext": [ "termQuery" ],
+	"usesContext": [ "termQuery", "termsToShow" ],
+	"attributes": {
+		"namespace": {
+			"type": "string"
+		}
+	},
 	"supports": {
 		"reusable": false,
 		"html": false,
 		"align": [ "wide", "full" ],
-		"layout": true,
+		"layout": {
+			"allowSwitching": true,
+			"allowEditing": true,
+			"default": {
+				"type": "flex"
+			}
+		},
 		"color": {
 			"gradients": true,
 			"link": true,
@@ -58,5 +69,5 @@
 		}
 	},
 	"style": "wp-block-term-template",
-	"editorStyle": "wp-block-term-template-editor"
+	"variations": "file:./variations.js"
 }

@@ -202,20 +202,6 @@ function gutenberg_render_block_core_navigation_link( $attributes, $content, $bl
 		return '';
 	}
 
-	// Resolve URL binding if present
-	$url = $attributes['url'] ?? '';
-	if ( isset( $attributes['metadata']['bindings']['url']['source'] ) ) {
-		$binding = $attributes['metadata']['bindings']['url'];
-		$source  = get_block_bindings_source( $binding['source'] );
-		if ( $source ) {
-			$source_args  = $binding['args'] ?? array();
-			$resolved_url = $source->get_value( $source_args, $block, 'url' );
-			if ( $resolved_url ) {
-				$url = $resolved_url;
-			}
-		}
-	}
-
 	$font_sizes      = gutenberg_block_core_navigation_link_build_css_font_sizes( $block->context );
 	$classes         = array_merge(
 		$font_sizes['css_classes']
@@ -227,9 +213,9 @@ function gutenberg_render_block_core_navigation_link( $attributes, $content, $bl
 	$kind        = empty( $attributes['kind'] ) ? 'post_type' : str_replace( '-', '_', $attributes['kind'] );
 	$is_active   = ! empty( $attributes['id'] ) && get_queried_object_id() === (int) $attributes['id'] && ! empty( get_queried_object()->$kind );
 
-	if ( is_post_type_archive() && ! empty( $url ) ) {
+	if ( is_post_type_archive() && ! empty( $attributes['url'] ) ) {
 		$queried_archive_link = get_post_type_archive_link( get_queried_object()->name );
-		if ( $url === $queried_archive_link ) {
+		if ( $attributes['url'] === $queried_archive_link ) {
 			$is_active = true;
 		}
 	}
@@ -245,8 +231,8 @@ function gutenberg_render_block_core_navigation_link( $attributes, $content, $bl
 		'<a class="wp-block-navigation-item__content" ';
 
 	// Start appending HTML attributes to anchor tag.
-	if ( ! empty( $url ) ) {
-		$html .= ' href="' . esc_url( gutenberg_block_core_navigation_link_maybe_urldecode( $url ) ) . '"';
+	if ( isset( $attributes['url'] ) ) {
+		$html .= ' href="' . esc_url( gutenberg_block_core_navigation_link_maybe_urldecode( $attributes['url'] ) ) . '"';
 	}
 
 	if ( $is_active ) {

@@ -314,38 +314,60 @@ function widgetSavingLock(state = {}, action) {
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// external ["wp","notices"]
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
-;// external "ReactJSXRuntime"
-const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./node_modules/clsx/dist/clsx.mjs
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
 ;// external ["wp","primitives"]
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
+;// external "ReactJSXRuntime"
+const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/icons/build-module/library/check.js
+/**
+ * WordPress dependencies
+ */
 
 
-var check_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
-
+const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M16.7 7.1l-6.3 8.5-3.3-2.5-.9 1.2 4.5 3.4L17.9 8z"
+  })
+});
+/* harmony default export */ const library_check = (check);
 
 ;// ./packages/icons/build-module/library/star-filled.js
+/**
+ * WordPress dependencies
+ */
 
 
-var star_filled_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z" }) });
-
+const starFilled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z"
+  })
+});
+/* harmony default export */ const star_filled = (starFilled);
 
 ;// ./packages/icons/build-module/library/star-empty.js
+/**
+ * WordPress dependencies
+ */
 
 
-var star_empty_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-  external_wp_primitives_namespaceObject.Path,
-  {
+const starEmpty = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     fillRule: "evenodd",
     d: "M9.706 8.646a.25.25 0 01-.188.137l-4.626.672a.25.25 0 00-.139.427l3.348 3.262a.25.25 0 01.072.222l-.79 4.607a.25.25 0 00.362.264l4.138-2.176a.25.25 0 01.233 0l4.137 2.175a.25.25 0 00.363-.263l-.79-4.607a.25.25 0 01.072-.222l3.347-3.262a.25.25 0 00-.139-.427l-4.626-.672a.25.25 0 01-.188-.137l-2.069-4.192a.25.25 0 00-.448 0L9.706 8.646zM12 7.39l-.948 1.921a1.75 1.75 0 01-1.317.957l-2.12.308 1.534 1.495c.412.402.6.982.503 1.55l-.362 2.11 1.896-.997a1.75 1.75 0 011.629 0l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39z",
     clipRule: "evenodd"
-  }
-) });
-
+  })
+});
+/* harmony default export */ const star_empty = (starEmpty);
 
 ;// external ["wp","viewport"]
 const external_wp_viewport_namespaceObject = window["wp"]["viewport"];
@@ -354,279 +376,473 @@ const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// external ["wp","plugins"]
 const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 ;// ./packages/icons/build-module/library/close-small.js
+/**
+ * WordPress dependencies
+ */
 
 
-var close_small_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
-
+const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"
+  })
+});
+/* harmony default export */ const close_small = (closeSmall);
 
 ;// ./packages/interface/build-module/store/deprecated.js
+/**
+ * WordPress dependencies
+ */
 
 function normalizeComplementaryAreaScope(scope) {
-  if (["core/edit-post", "core/edit-site"].includes(scope)) {
+  if (['core/edit-post', 'core/edit-site'].includes(scope)) {
     external_wp_deprecated_default()(`${scope} interface scope`, {
-      alternative: "core interface scope",
-      hint: "core/edit-post and core/edit-site are merging.",
-      version: "6.6"
+      alternative: 'core interface scope',
+      hint: 'core/edit-post and core/edit-site are merging.',
+      version: '6.6'
     });
-    return "core";
+    return 'core';
   }
   return scope;
 }
 function normalizeComplementaryAreaName(scope, name) {
-  if (scope === "core" && name === "edit-site/template") {
+  if (scope === 'core' && name === 'edit-site/template') {
     external_wp_deprecated_default()(`edit-site/template sidebar`, {
-      alternative: "edit-post/document",
-      version: "6.6"
+      alternative: 'edit-post/document',
+      version: '6.6'
     });
-    return "edit-post/document";
+    return 'edit-post/document';
   }
-  if (scope === "core" && name === "edit-site/block-inspector") {
+  if (scope === 'core' && name === 'edit-site/block-inspector') {
     external_wp_deprecated_default()(`edit-site/block-inspector sidebar`, {
-      alternative: "edit-post/block",
-      version: "6.6"
+      alternative: 'edit-post/block',
+      version: '6.6'
     });
-    return "edit-post/block";
+    return 'edit-post/block';
   }
   return name;
 }
 
-
 ;// ./packages/interface/build-module/store/actions.js
+/**
+ * WordPress dependencies
+ */
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Set a default complementary area.
+ *
+ * @param {string} scope Complementary area scope.
+ * @param {string} area  Area identifier.
+ *
+ * @return {Object} Action object.
+ */
 const setDefaultComplementaryArea = (scope, area) => {
   scope = normalizeComplementaryAreaScope(scope);
   area = normalizeComplementaryAreaName(scope, area);
   return {
-    type: "SET_DEFAULT_COMPLEMENTARY_AREA",
+    type: 'SET_DEFAULT_COMPLEMENTARY_AREA',
     scope,
     area
   };
 };
-const enableComplementaryArea = (scope, area) => ({ registry, dispatch }) => {
+
+/**
+ * Enable the complementary area.
+ *
+ * @param {string} scope Complementary area scope.
+ * @param {string} area  Area identifier.
+ */
+const enableComplementaryArea = (scope, area) => ({
+  registry,
+  dispatch
+}) => {
+  // Return early if there's no area.
   if (!area) {
     return;
   }
   scope = normalizeComplementaryAreaScope(scope);
   area = normalizeComplementaryAreaName(scope, area);
-  const isComplementaryAreaVisible = registry.select(external_wp_preferences_namespaceObject.store).get(scope, "isComplementaryAreaVisible");
+  const isComplementaryAreaVisible = registry.select(external_wp_preferences_namespaceObject.store).get(scope, 'isComplementaryAreaVisible');
   if (!isComplementaryAreaVisible) {
-    registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, "isComplementaryAreaVisible", true);
+    registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, 'isComplementaryAreaVisible', true);
   }
   dispatch({
-    type: "ENABLE_COMPLEMENTARY_AREA",
+    type: 'ENABLE_COMPLEMENTARY_AREA',
     scope,
     area
   });
 };
-const disableComplementaryArea = (scope) => ({ registry }) => {
+
+/**
+ * Disable the complementary area.
+ *
+ * @param {string} scope Complementary area scope.
+ */
+const disableComplementaryArea = scope => ({
+  registry
+}) => {
   scope = normalizeComplementaryAreaScope(scope);
-  const isComplementaryAreaVisible = registry.select(external_wp_preferences_namespaceObject.store).get(scope, "isComplementaryAreaVisible");
+  const isComplementaryAreaVisible = registry.select(external_wp_preferences_namespaceObject.store).get(scope, 'isComplementaryAreaVisible');
   if (isComplementaryAreaVisible) {
-    registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, "isComplementaryAreaVisible", false);
+    registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, 'isComplementaryAreaVisible', false);
   }
 };
-const pinItem = (scope, item) => ({ registry }) => {
+
+/**
+ * Pins an item.
+ *
+ * @param {string} scope Item scope.
+ * @param {string} item  Item identifier.
+ *
+ * @return {Object} Action object.
+ */
+const pinItem = (scope, item) => ({
+  registry
+}) => {
+  // Return early if there's no item.
   if (!item) {
     return;
   }
   scope = normalizeComplementaryAreaScope(scope);
   item = normalizeComplementaryAreaName(scope, item);
-  const pinnedItems = registry.select(external_wp_preferences_namespaceObject.store).get(scope, "pinnedItems");
+  const pinnedItems = registry.select(external_wp_preferences_namespaceObject.store).get(scope, 'pinnedItems');
+
+  // The item is already pinned, there's nothing to do.
   if (pinnedItems?.[item] === true) {
     return;
   }
-  registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, "pinnedItems", {
+  registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, 'pinnedItems', {
     ...pinnedItems,
     [item]: true
   });
 };
-const unpinItem = (scope, item) => ({ registry }) => {
+
+/**
+ * Unpins an item.
+ *
+ * @param {string} scope Item scope.
+ * @param {string} item  Item identifier.
+ */
+const unpinItem = (scope, item) => ({
+  registry
+}) => {
+  // Return early if there's no item.
   if (!item) {
     return;
   }
   scope = normalizeComplementaryAreaScope(scope);
   item = normalizeComplementaryAreaName(scope, item);
-  const pinnedItems = registry.select(external_wp_preferences_namespaceObject.store).get(scope, "pinnedItems");
-  registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, "pinnedItems", {
+  const pinnedItems = registry.select(external_wp_preferences_namespaceObject.store).get(scope, 'pinnedItems');
+  registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, 'pinnedItems', {
     ...pinnedItems,
     [item]: false
   });
 };
+
+/**
+ * Returns an action object used in signalling that a feature should be toggled.
+ *
+ * @param {string} scope       The feature scope (e.g. core/edit-post).
+ * @param {string} featureName The feature name.
+ */
 function toggleFeature(scope, featureName) {
-  return function({ registry }) {
+  return function ({
+    registry
+  }) {
     external_wp_deprecated_default()(`dispatch( 'core/interface' ).toggleFeature`, {
-      since: "6.0",
+      since: '6.0',
       alternative: `dispatch( 'core/preferences' ).toggle`
     });
     registry.dispatch(external_wp_preferences_namespaceObject.store).toggle(scope, featureName);
   };
 }
+
+/**
+ * Returns an action object used in signalling that a feature should be set to
+ * a true or false value
+ *
+ * @param {string}  scope       The feature scope (e.g. core/edit-post).
+ * @param {string}  featureName The feature name.
+ * @param {boolean} value       The value to set.
+ *
+ * @return {Object} Action object.
+ */
 function setFeatureValue(scope, featureName, value) {
-  return function({ registry }) {
+  return function ({
+    registry
+  }) {
     external_wp_deprecated_default()(`dispatch( 'core/interface' ).setFeatureValue`, {
-      since: "6.0",
+      since: '6.0',
       alternative: `dispatch( 'core/preferences' ).set`
     });
     registry.dispatch(external_wp_preferences_namespaceObject.store).set(scope, featureName, !!value);
   };
 }
+
+/**
+ * Returns an action object used in signalling that defaults should be set for features.
+ *
+ * @param {string}                  scope    The feature scope (e.g. core/edit-post).
+ * @param {Object<string, boolean>} defaults A key/value map of feature names to values.
+ *
+ * @return {Object} Action object.
+ */
 function setFeatureDefaults(scope, defaults) {
-  return function({ registry }) {
+  return function ({
+    registry
+  }) {
     external_wp_deprecated_default()(`dispatch( 'core/interface' ).setFeatureDefaults`, {
-      since: "6.0",
+      since: '6.0',
       alternative: `dispatch( 'core/preferences' ).setDefaults`
     });
     registry.dispatch(external_wp_preferences_namespaceObject.store).setDefaults(scope, defaults);
   };
 }
+
+/**
+ * Returns an action object used in signalling that the user opened a modal.
+ *
+ * @param {string} name A string that uniquely identifies the modal.
+ *
+ * @return {Object} Action object.
+ */
 function openModal(name) {
   return {
-    type: "OPEN_MODAL",
+    type: 'OPEN_MODAL',
     name
   };
 }
+
+/**
+ * Returns an action object signalling that the user closed a modal.
+ *
+ * @return {Object} Action object.
+ */
 function closeModal() {
   return {
-    type: "CLOSE_MODAL"
+    type: 'CLOSE_MODAL'
   };
 }
 
-
 ;// ./packages/interface/build-module/store/selectors.js
+/**
+ * WordPress dependencies
+ */
 
 
 
 
-const getActiveComplementaryArea = (0,external_wp_data_namespaceObject.createRegistrySelector)(
-  (select) => (state, scope) => {
-    scope = normalizeComplementaryAreaScope(scope);
-    const isComplementaryAreaVisible = select(external_wp_preferences_namespaceObject.store).get(
-      scope,
-      "isComplementaryAreaVisible"
-    );
-    if (isComplementaryAreaVisible === void 0) {
-      return void 0;
-    }
-    if (isComplementaryAreaVisible === false) {
-      return null;
-    }
-    return state?.complementaryAreas?.[scope];
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Returns the complementary area that is active in a given scope.
+ *
+ * @param {Object} state Global application state.
+ * @param {string} scope Item scope.
+ *
+ * @return {string | null | undefined} The complementary area that is active in the given scope.
+ */
+const getActiveComplementaryArea = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, scope) => {
+  scope = normalizeComplementaryAreaScope(scope);
+  const isComplementaryAreaVisible = select(external_wp_preferences_namespaceObject.store).get(scope, 'isComplementaryAreaVisible');
+
+  // Return `undefined` to indicate that the user has never toggled
+  // visibility, this is the vanilla default. Other code relies on this
+  // nuance in the return value.
+  if (isComplementaryAreaVisible === undefined) {
+    return undefined;
   }
-);
-const isComplementaryAreaLoading = (0,external_wp_data_namespaceObject.createRegistrySelector)(
-  (select) => (state, scope) => {
-    scope = normalizeComplementaryAreaScope(scope);
-    const isVisible = select(external_wp_preferences_namespaceObject.store).get(
-      scope,
-      "isComplementaryAreaVisible"
-    );
-    const identifier = state?.complementaryAreas?.[scope];
-    return isVisible && identifier === void 0;
+
+  // Return `null` to indicate the user hid the complementary area.
+  if (isComplementaryAreaVisible === false) {
+    return null;
   }
-);
-const isItemPinned = (0,external_wp_data_namespaceObject.createRegistrySelector)(
-  (select) => (state, scope, item) => {
-    scope = normalizeComplementaryAreaScope(scope);
-    item = normalizeComplementaryAreaName(scope, item);
-    const pinnedItems = select(external_wp_preferences_namespaceObject.store).get(
-      scope,
-      "pinnedItems"
-    );
-    return pinnedItems?.[item] ?? true;
-  }
-);
-const isFeatureActive = (0,external_wp_data_namespaceObject.createRegistrySelector)(
-  (select) => (state, scope, featureName) => {
-    external_wp_deprecated_default()(
-      `select( 'core/interface' ).isFeatureActive( scope, featureName )`,
-      {
-        since: "6.0",
-        alternative: `select( 'core/preferences' ).get( scope, featureName )`
-      }
-    );
-    return !!select(external_wp_preferences_namespaceObject.store).get(scope, featureName);
-  }
-);
+  return state?.complementaryAreas?.[scope];
+});
+const isComplementaryAreaLoading = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, scope) => {
+  scope = normalizeComplementaryAreaScope(scope);
+  const isVisible = select(external_wp_preferences_namespaceObject.store).get(scope, 'isComplementaryAreaVisible');
+  const identifier = state?.complementaryAreas?.[scope];
+  return isVisible && identifier === undefined;
+});
+
+/**
+ * Returns a boolean indicating if an item is pinned or not.
+ *
+ * @param {Object} state Global application state.
+ * @param {string} scope Scope.
+ * @param {string} item  Item to check.
+ *
+ * @return {boolean} True if the item is pinned and false otherwise.
+ */
+const isItemPinned = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, scope, item) => {
+  var _pinnedItems$item;
+  scope = normalizeComplementaryAreaScope(scope);
+  item = normalizeComplementaryAreaName(scope, item);
+  const pinnedItems = select(external_wp_preferences_namespaceObject.store).get(scope, 'pinnedItems');
+  return (_pinnedItems$item = pinnedItems?.[item]) !== null && _pinnedItems$item !== void 0 ? _pinnedItems$item : true;
+});
+
+/**
+ * Returns a boolean indicating whether a feature is active for a particular
+ * scope.
+ *
+ * @param {Object} state       The store state.
+ * @param {string} scope       The scope of the feature (e.g. core/edit-post).
+ * @param {string} featureName The name of the feature.
+ *
+ * @return {boolean} Is the feature enabled?
+ */
+const isFeatureActive = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, scope, featureName) => {
+  external_wp_deprecated_default()(`select( 'core/interface' ).isFeatureActive( scope, featureName )`, {
+    since: '6.0',
+    alternative: `select( 'core/preferences' ).get( scope, featureName )`
+  });
+  return !!select(external_wp_preferences_namespaceObject.store).get(scope, featureName);
+});
+
+/**
+ * Returns true if a modal is active, or false otherwise.
+ *
+ * @param {Object} state     Global application state.
+ * @param {string} modalName A string that uniquely identifies the modal.
+ *
+ * @return {boolean} Whether the modal is active.
+ */
 function isModalActive(state, modalName) {
   return state.activeModal === modalName;
 }
 
-
 ;// ./packages/interface/build-module/store/reducer.js
+/**
+ * WordPress dependencies
+ */
 
 function complementaryAreas(state = {}, action) {
   switch (action.type) {
-    case "SET_DEFAULT_COMPLEMENTARY_AREA": {
-      const { scope, area } = action;
-      if (state[scope]) {
-        return state;
+    case 'SET_DEFAULT_COMPLEMENTARY_AREA':
+      {
+        const {
+          scope,
+          area
+        } = action;
+
+        // If there's already an area, don't overwrite it.
+        if (state[scope]) {
+          return state;
+        }
+        return {
+          ...state,
+          [scope]: area
+        };
       }
-      return {
-        ...state,
-        [scope]: area
-      };
-    }
-    case "ENABLE_COMPLEMENTARY_AREA": {
-      const { scope, area } = action;
-      return {
-        ...state,
-        [scope]: area
-      };
-    }
+    case 'ENABLE_COMPLEMENTARY_AREA':
+      {
+        const {
+          scope,
+          area
+        } = action;
+        return {
+          ...state,
+          [scope]: area
+        };
+      }
   }
   return state;
 }
+
+/**
+ * Reducer for storing the name of the open modal, or null if no modal is open.
+ *
+ * @param {Object} state  Previous state.
+ * @param {Object} action Action object containing the `name` of the modal
+ *
+ * @return {Object} Updated state
+ */
 function activeModal(state = null, action) {
   switch (action.type) {
-    case "OPEN_MODAL":
+    case 'OPEN_MODAL':
       return action.name;
-    case "CLOSE_MODAL":
+    case 'CLOSE_MODAL':
       return null;
   }
   return state;
 }
-var reducer_default = (0,external_wp_data_namespaceObject.combineReducers)({
+/* harmony default export */ const store_reducer = ((0,external_wp_data_namespaceObject.combineReducers)({
   complementaryAreas,
   activeModal
-});
-
+}));
 
 ;// ./packages/interface/build-module/store/constants.js
-const STORE_NAME = "core/interface";
-
+/**
+ * The identifier for the data store.
+ *
+ * @type {string}
+ */
+const STORE_NAME = 'core/interface';
 
 ;// ./packages/interface/build-module/store/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
 
 
 
 
 
+/**
+ * Store definition for the interface namespace.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/data/README.md#createReduxStore
+ *
+ * @type {Object}
+ */
 const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, {
-  reducer: reducer_default,
+  reducer: store_reducer,
   actions: actions_namespaceObject,
   selectors: selectors_namespaceObject
 });
 (0,external_wp_data_namespaceObject.register)(store);
 
-
 ;// ./packages/interface/build-module/components/complementary-area-toggle/index.js
+/**
+ * WordPress dependencies
+ */
 
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Whether the role supports checked state.
+ *
+ * @see https://www.w3.org/TR/wai-aria-1.1/#aria-checked
+ * @param {import('react').AriaRole} role Role.
+ * @return {boolean} Whether the role supports checked state.
+ */
 
 function roleSupportsCheckedState(role) {
-  return [
-    "checkbox",
-    "option",
-    "radio",
-    "switch",
-    "menuitemcheckbox",
-    "menuitemradio",
-    "treeitem"
-  ].includes(role);
+  return ['checkbox', 'option', 'radio', 'switch', 'menuitemcheckbox', 'menuitemradio', 'treeitem'].includes(role);
 }
 function ComplementaryAreaToggle({
   as = external_wp_components_namespaceObject.Button,
@@ -642,34 +858,43 @@ function ComplementaryAreaToggle({
   const context = (0,external_wp_plugins_namespaceObject.usePluginContext)();
   const icon = iconProp || context.icon;
   const identifier = identifierProp || `${context.name}/${name}`;
-  const isSelected = (0,external_wp_data_namespaceObject.useSelect)(
-    (select) => select(store).getActiveComplementaryArea(scope) === identifier,
-    [identifier, scope]
-  );
-  const { enableComplementaryArea, disableComplementaryArea } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-    ComponentToUse,
-    {
-      icon: selectedIcon && isSelected ? selectedIcon : icon,
-      "aria-controls": identifier.replace("/", ":"),
-      "aria-checked": roleSupportsCheckedState(props.role) ? isSelected : void 0,
-      onClick: () => {
-        if (isSelected) {
-          disableComplementaryArea(scope);
-        } else {
-          enableComplementaryArea(scope, identifier);
-        }
-      },
-      shortcut,
-      ...props
-    }
-  );
+  const isSelected = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getActiveComplementaryArea(scope) === identifier, [identifier, scope]);
+  const {
+    enableComplementaryArea,
+    disableComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComponentToUse, {
+    icon: selectedIcon && isSelected ? selectedIcon : icon,
+    "aria-controls": identifier.replace('/', ':')
+    // Make sure aria-checked matches spec https://www.w3.org/TR/wai-aria-1.1/#aria-checked
+    ,
+    "aria-checked": roleSupportsCheckedState(props.role) ? isSelected : undefined,
+    onClick: () => {
+      if (isSelected) {
+        disableComplementaryArea(scope);
+      } else {
+        enableComplementaryArea(scope, identifier);
+      }
+    },
+    shortcut: shortcut,
+    ...props
+  });
 }
 
-
 ;// ./packages/interface/build-module/components/complementary-area-header/index.js
+/**
+ * External dependencies
+ */
 
 
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
 
 
 const ComplementaryAreaHeader = ({
@@ -677,32 +902,26 @@ const ComplementaryAreaHeader = ({
   className,
   toggleButtonProps
 }) => {
-  const toggleButton = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(
-    "div",
-    {
-      className: dist_clsx(
-        "components-panel__header",
-        "interface-complementary-area-header",
-        className
-      ),
-      tabIndex: -1,
-      children: [
-        children,
-        toggleButton
-      ]
-    }
-  );
+  const toggleButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaToggle, {
+    icon: close_small,
+    ...toggleButtonProps
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: dist_clsx('components-panel__header', 'interface-complementary-area-header', className),
+    tabIndex: -1,
+    children: [children, toggleButton]
+  });
 };
-var complementary_area_header_default = ComplementaryAreaHeader;
-
+/* harmony default export */ const complementary_area_header = (ComplementaryAreaHeader);
 
 ;// ./packages/interface/build-module/components/action-item/index.js
+/**
+ * WordPress dependencies
+ */
 
 
 
-const noop = () => {
-};
+const noop = () => {};
 function ActionItemSlot({
   name,
   as: Component = external_wp_components_namespaceObject.MenuGroup,
@@ -710,61 +929,78 @@ function ActionItemSlot({
   bubblesVirtually,
   ...props
 }) {
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-    external_wp_components_namespaceObject.Slot,
-    {
-      name,
-      bubblesVirtually,
-      fillProps,
-      children: (fills) => {
-        if (!external_wp_element_namespaceObject.Children.toArray(fills).length) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Slot, {
+    name: name,
+    bubblesVirtually: bubblesVirtually,
+    fillProps: fillProps,
+    children: fills => {
+      if (!external_wp_element_namespaceObject.Children.toArray(fills).length) {
+        return null;
+      }
+
+      // Special handling exists for backward compatibility.
+      // It ensures that menu items created by plugin authors aren't
+      // duplicated with automatically injected menu items coming
+      // from pinnable plugin sidebars.
+      // @see https://github.com/WordPress/gutenberg/issues/14457
+      const initializedByPlugins = [];
+      external_wp_element_namespaceObject.Children.forEach(fills, ({
+        props: {
+          __unstableExplicitMenuItem,
+          __unstableTarget
+        }
+      }) => {
+        if (__unstableTarget && __unstableExplicitMenuItem) {
+          initializedByPlugins.push(__unstableTarget);
+        }
+      });
+      const children = external_wp_element_namespaceObject.Children.map(fills, child => {
+        if (!child.props.__unstableExplicitMenuItem && initializedByPlugins.includes(child.props.__unstableTarget)) {
           return null;
         }
-        const initializedByPlugins = [];
-        external_wp_element_namespaceObject.Children.forEach(
-          fills,
-          ({
-            props: { __unstableExplicitMenuItem, __unstableTarget }
-          }) => {
-            if (__unstableTarget && __unstableExplicitMenuItem) {
-              initializedByPlugins.push(__unstableTarget);
-            }
-          }
-        );
-        const children = external_wp_element_namespaceObject.Children.map(fills, (child) => {
-          if (!child.props.__unstableExplicitMenuItem && initializedByPlugins.includes(
-            child.props.__unstableTarget
-          )) {
-            return null;
-          }
-          return child;
-        });
-        return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(Component, { ...props, children });
-      }
+        return child;
+      });
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Component, {
+        ...props,
+        children: children
+      });
     }
-  );
+  });
 }
-function ActionItem({ name, as: Component = external_wp_components_namespaceObject.Button, onClick, ...props }) {
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Fill, { name, children: ({ onClick: fpOnClick }) => {
-    return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-      Component,
-      {
+function ActionItem({
+  name,
+  as: Component = external_wp_components_namespaceObject.Button,
+  onClick,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Fill, {
+    name: name,
+    children: ({
+      onClick: fpOnClick
+    }) => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Component, {
         onClick: onClick || fpOnClick ? (...args) => {
           (onClick || noop)(...args);
           (fpOnClick || noop)(...args);
-        } : void 0,
+        } : undefined,
         ...props
-      }
-    );
-  } });
+      });
+    }
+  });
 }
 ActionItem.Slot = ActionItemSlot;
-var action_item_default = ActionItem;
-
+/* harmony default export */ const action_item = (ActionItem);
 
 ;// ./packages/interface/build-module/components/complementary-area-more-menu-item/index.js
+/**
+ * WordPress dependencies
+ */
 
 
+
+/**
+ * Internal dependencies
+ */
 
 
 
@@ -775,62 +1011,79 @@ const PluginsMenuItem = ({
   __unstableExplicitMenuItem,
   __unstableTarget,
   ...restProps
-}) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, { ...restProps });
+}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+  ...restProps
+});
 function ComplementaryAreaMoreMenuItem({
   scope,
   target,
   __unstableExplicitMenuItem,
   ...props
 }) {
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-    ComplementaryAreaToggle,
-    {
-      as: (toggleProps) => {
-        return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-          action_item_default,
-          {
-            __unstableExplicitMenuItem,
-            __unstableTarget: `${scope}/${target}`,
-            as: PluginsMenuItem,
-            name: `${scope}/plugin-more-menu`,
-            ...toggleProps
-          }
-        );
-      },
-      role: "menuitemcheckbox",
-      selectedIcon: check_default,
-      name: target,
-      scope,
-      ...props
-    }
-  );
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaToggle, {
+    as: toggleProps => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action_item, {
+        __unstableExplicitMenuItem: __unstableExplicitMenuItem,
+        __unstableTarget: `${scope}/${target}`,
+        as: PluginsMenuItem,
+        name: `${scope}/plugin-more-menu`,
+        ...toggleProps
+      });
+    },
+    role: "menuitemcheckbox",
+    selectedIcon: library_check,
+    name: target,
+    scope: scope,
+    ...props
+  });
 }
-
 
 ;// ./packages/interface/build-module/components/pinned-items/index.js
+/**
+ * External dependencies
+ */
 
 
+/**
+ * WordPress dependencies
+ */
 
-function PinnedItems({ scope, ...props }) {
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Fill, { name: `PinnedItems/${scope}`, ...props });
+
+function PinnedItems({
+  scope,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Fill, {
+    name: `PinnedItems/${scope}`,
+    ...props
+  });
 }
-function PinnedItemsSlot({ scope, className, ...props }) {
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-    "div",
-    {
-      className: dist_clsx(
-        className,
-        "interface-pinned-items"
-      ),
+function PinnedItemsSlot({
+  scope,
+  className,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Slot, {
+    name: `PinnedItems/${scope}`,
+    ...props,
+    children: fills => fills?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx(className, 'interface-pinned-items'),
       children: fills
-    }
-  ) });
+    })
+  });
 }
 PinnedItems.Slot = PinnedItemsSlot;
-var pinned_items_default = PinnedItems;
-
+/* harmony default export */ const pinned_items = (PinnedItems);
 
 ;// ./packages/interface/build-module/components/complementary-area/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
 
 
 
@@ -841,6 +1094,9 @@ var pinned_items_default = PinnedItems;
 
 
 
+/**
+ * Internal dependencies
+ */
 
 
 
@@ -848,14 +1104,26 @@ var pinned_items_default = PinnedItems;
 
 
 const ANIMATION_DURATION = 0.3;
-function ComplementaryAreaSlot({ scope, ...props }) {
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Slot, { name: `ComplementaryArea/${scope}`, ...props });
+function ComplementaryAreaSlot({
+  scope,
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Slot, {
+    name: `ComplementaryArea/${scope}`,
+    ...props
+  });
 }
 const SIDEBAR_WIDTH = 280;
 const variants = {
-  open: { width: SIDEBAR_WIDTH },
-  closed: { width: 0 },
-  mobileOpen: { width: "100vw" }
+  open: {
+    width: SIDEBAR_WIDTH
+  },
+  closed: {
+    width: 0
+  },
+  mobileOpen: {
+    width: '100vw'
+  }
 };
 function ComplementaryAreaFill({
   activeArea,
@@ -866,7 +1134,11 @@ function ComplementaryAreaFill({
   id
 }) {
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
-  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  // This is used to delay the exit animation to the next tick.
+  // The reason this is done is to allow us to apply the right transition properties
+  // When we switch from an open sidebar to another open sidebar.
+  // we don't want to animate in this case.
   const previousActiveArea = (0,external_wp_compose_namespaceObject.usePrevious)(activeArea);
   const previousIsActive = (0,external_wp_compose_namespaceObject.usePrevious)(isActive);
   const [, setState] = (0,external_wp_element_namespaceObject.useState)({});
@@ -874,74 +1146,73 @@ function ComplementaryAreaFill({
     setState({});
   }, [isActive]);
   const transition = {
-    type: "tween",
+    type: 'tween',
     duration: disableMotion || isMobileViewport || !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea ? 0 : ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-    external_wp_components_namespaceObject.__unstableMotion.div,
-    {
-      variants,
-      initial: "closed",
-      animate: isMobileViewport ? "mobileOpen" : "open",
-      exit: "closed",
-      transition,
-      className: "interface-complementary-area__fill",
-      children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-        "div",
-        {
-          id,
-          className,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Fill, {
+    name: `ComplementaryArea/${scope}`,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
+      initial: false,
+      children: (previousIsActive || isActive) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+        variants: variants,
+        initial: "closed",
+        animate: isMobileViewport ? 'mobileOpen' : 'open',
+        exit: "closed",
+        transition: transition,
+        className: "interface-complementary-area__fill",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          id: id,
+          className: className,
           style: {
-            width: isMobileViewport ? "100vw" : SIDEBAR_WIDTH
+            width: isMobileViewport ? '100vw' : SIDEBAR_WIDTH
           },
-          children
-        }
-      )
-    }
-  ) }) });
+          children: children
+        })
+      })
+    })
+  });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
   const previousIsSmallRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const shouldOpenWhenNotSmallRef = (0,external_wp_element_namespaceObject.useRef)(false);
-  const { enableComplementaryArea, disableComplementaryArea } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    enableComplementaryArea,
+    disableComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // If the complementary area is active and the editor is switching from
+    // a big to a small window size.
     if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea(scope);
+      // Flag the complementary area to be reopened when the window size
+      // goes from small to big.
       shouldOpenWhenNotSmallRef.current = true;
     } else if (
-      // If there is a flag indicating the complementary area should be
-      // enabled when we go from small to big window size and we are going
-      // from a small to big window size.
-      shouldOpenWhenNotSmallRef.current && !isSmall && previousIsSmallRef.current
-    ) {
+    // If there is a flag indicating the complementary area should be
+    // enabled when we go from small to big window size and we are going
+    // from a small to big window size.
+    shouldOpenWhenNotSmallRef.current && !isSmall && previousIsSmallRef.current) {
+      // Remove the flag indicating the complementary area should be
+      // enabled.
       shouldOpenWhenNotSmallRef.current = false;
       enableComplementaryArea(scope, identifier);
     } else if (
-      // If the flag is indicating the current complementary should be
-      // reopened but another complementary area becomes active, remove
-      // the flag.
-      shouldOpenWhenNotSmallRef.current && activeArea && activeArea !== identifier
-    ) {
+    // If the flag is indicating the current complementary should be
+    // reopened but another complementary area becomes active, remove
+    // the flag.
+    shouldOpenWhenNotSmallRef.current && activeArea && activeArea !== identifier) {
       shouldOpenWhenNotSmallRef.current = false;
     }
     if (isSmall !== previousIsSmallRef.current) {
       previousIsSmallRef.current = isSmall;
     }
-  }, [
-    isActive,
-    isSmall,
-    scope,
-    identifier,
-    activeArea,
-    disableComplementaryArea,
-    enableComplementaryArea
-  ]);
+  }, [isActive, isSmall, scope, identifier, activeArea, disableComplementaryArea, enableComplementaryArea]);
 }
 function ComplementaryArea({
   children,
   className,
-  closeLabel = (0,external_wp_i18n_namespaceObject.__)("Close plugin"),
+  closeLabel = (0,external_wp_i18n_namespaceObject.__)('Close plugin'),
   identifier: identifierProp,
   header,
   headerClassName,
@@ -957,6 +1228,11 @@ function ComplementaryArea({
   const context = (0,external_wp_plugins_namespaceObject.usePluginContext)();
   const icon = iconProp || context.icon;
   const identifier = identifierProp || `${context.name}/${name}`;
+
+  // This state is used to delay the rendering of the Fill
+  // until the initial effect runs.
+  // This prevents the animation from running on mount if
+  // the complementary area is active by default.
   const [isReady, setIsReady] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     isLoading,
@@ -966,35 +1242,28 @@ function ComplementaryArea({
     isSmall,
     isLarge,
     showIconLabels
-  } = (0,external_wp_data_namespaceObject.useSelect)(
-    (select) => {
-      const {
-        getActiveComplementaryArea,
-        isComplementaryAreaLoading,
-        isItemPinned
-      } = select(store);
-      const { get } = select(external_wp_preferences_namespaceObject.store);
-      const _activeArea = getActiveComplementaryArea(scope);
-      return {
-        isLoading: isComplementaryAreaLoading(scope),
-        isActive: _activeArea === identifier,
-        isPinned: isItemPinned(scope, identifier),
-        activeArea: _activeArea,
-        isSmall: select(external_wp_viewport_namespaceObject.store).isViewportMatch("< medium"),
-        isLarge: select(external_wp_viewport_namespaceObject.store).isViewportMatch("large"),
-        showIconLabels: get("core", "showIconLabels")
-      };
-    },
-    [identifier, scope]
-  );
-  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)("medium", "<");
-  useAdjustComplementaryListener(
-    scope,
-    identifier,
-    activeArea,
-    isActive,
-    isSmall
-  );
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getActiveComplementaryArea,
+      isComplementaryAreaLoading,
+      isItemPinned
+    } = select(store);
+    const {
+      get
+    } = select(external_wp_preferences_namespaceObject.store);
+    const _activeArea = getActiveComplementaryArea(scope);
+    return {
+      isLoading: isComplementaryAreaLoading(scope),
+      isActive: _activeArea === identifier,
+      isPinned: isItemPinned(scope, identifier),
+      activeArea: _activeArea,
+      isSmall: select(external_wp_viewport_namespaceObject.store).isViewportMatch('< medium'),
+      isLarge: select(external_wp_viewport_namespaceObject.store).isViewportMatch('large'),
+      showIconLabels: get('core', 'showIconLabels')
+    };
+  }, [identifier, scope]);
+  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall);
   const {
     enableComplementaryArea,
     disableComplementaryArea,
@@ -1002,137 +1271,133 @@ function ComplementaryArea({
     unpinItem
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (isActiveByDefault && activeArea === void 0 && !isSmall) {
+    // Set initial visibility: For large screens, enable if it's active by
+    // default. For small screens, always initially disable.
+    if (isActiveByDefault && activeArea === undefined && !isSmall) {
       enableComplementaryArea(scope, identifier);
-    } else if (activeArea === void 0 && isSmall) {
+    } else if (activeArea === undefined && isSmall) {
       disableComplementaryArea(scope, identifier);
     }
     setIsReady(true);
-  }, [
-    activeArea,
-    isActiveByDefault,
-    scope,
-    identifier,
-    isSmall,
-    enableComplementaryArea,
-    disableComplementaryArea
-  ]);
+  }, [activeArea, isActiveByDefault, scope, identifier, isSmall, enableComplementaryArea, disableComplementaryArea]);
   if (!isReady) {
     return;
   }
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, { children: [
-    isPinnable && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-      ComplementaryAreaToggle,
-      {
-        scope,
-        identifier,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [isPinnable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items, {
+      scope: scope,
+      children: isPinned && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaToggle, {
+        scope: scope,
+        identifier: identifier,
         isPressed: isActive && (!showIconLabels || isLarge),
         "aria-expanded": isActive,
         "aria-disabled": isLoading,
         label: title,
-        icon: showIconLabels ? check_default : icon,
+        icon: showIconLabels ? library_check : icon,
         showTooltip: !showIconLabels,
-        variant: showIconLabels ? "tertiary" : void 0,
+        variant: showIconLabels ? 'tertiary' : undefined,
         size: "compact",
         shortcut: toggleShortcut
-      }
-    ) }),
-    name && isPinnable && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-      ComplementaryAreaMoreMenuItem,
-      {
-        target: name,
-        scope,
-        icon,
-        children: title
-      }
-    ),
-    /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(
-      ComplementaryAreaFill,
-      {
-        activeArea,
-        isActive,
-        className: dist_clsx("interface-complementary-area", className),
-        scope,
-        id: identifier.replace("/", ":"),
-        children: [
-          /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-            complementary_area_header_default,
-            {
-              className: headerClassName,
-              closeLabel,
-              onClose: () => disableComplementaryArea(scope),
-              toggleButtonProps: {
-                label: closeLabel,
-                size: "compact",
-                shortcut: toggleShortcut,
-                scope,
-                identifier
-              },
-              children: header || /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, { children: [
-                /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
-                isPinnable && !isMobileViewport && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-                  external_wp_components_namespaceObject.Button,
-                  {
-                    className: "interface-complementary-area__pin-unpin-item",
-                    icon: isPinned ? star_filled_default : star_empty_default,
-                    label: isPinned ? (0,external_wp_i18n_namespaceObject.__)("Unpin from toolbar") : (0,external_wp_i18n_namespaceObject.__)("Pin to toolbar"),
-                    onClick: () => (isPinned ? unpinItem : pinItem)(
-                      scope,
-                      identifier
-                    ),
-                    isPressed: isPinned,
-                    "aria-expanded": isPinned,
-                    size: "compact"
-                  }
-                )
-              ] })
-            }
-          ),
-          /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Panel, { className: panelClassName, children })
-        ]
-      }
-    )
-  ] });
+      })
+    }), name && isPinnable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaMoreMenuItem, {
+      target: name,
+      scope: scope,
+      icon: icon,
+      children: title
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ComplementaryAreaFill, {
+      activeArea: activeArea,
+      isActive: isActive,
+      className: dist_clsx('interface-complementary-area', className),
+      scope: scope,
+      id: identifier.replace('/', ':'),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area_header, {
+        className: headerClassName,
+        closeLabel: closeLabel,
+        onClose: () => disableComplementaryArea(scope),
+        toggleButtonProps: {
+          label: closeLabel,
+          size: 'compact',
+          shortcut: toggleShortcut,
+          scope,
+          identifier
+        },
+        children: header || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
+            className: "interface-complementary-area-header__title",
+            children: title
+          }), isPinnable && !isMobileViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            className: "interface-complementary-area__pin-unpin-item",
+            icon: isPinned ? star_filled : star_empty,
+            label: isPinned ? (0,external_wp_i18n_namespaceObject.__)('Unpin from toolbar') : (0,external_wp_i18n_namespaceObject.__)('Pin to toolbar'),
+            onClick: () => (isPinned ? unpinItem : pinItem)(scope, identifier),
+            isPressed: isPinned,
+            "aria-expanded": isPinned,
+            size: "compact"
+          })]
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Panel, {
+        className: panelClassName,
+        children: children
+      })]
+    })]
+  });
 }
 ComplementaryArea.Slot = ComplementaryAreaSlot;
-var complementary_area_default = ComplementaryArea;
+/* harmony default export */ const complementary_area = (ComplementaryArea);
+
+;// ./packages/interface/build-module/components/navigable-region/index.js
+/**
+ * WordPress dependencies
+ */
 
 
-;// ./packages/admin-ui/build-module/navigable-region/index.js
+/**
+ * External dependencies
+ */
 
 
-
-const NavigableRegion = (0,external_wp_element_namespaceObject.forwardRef)(
-  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-      Tag,
-      {
-        ref,
-        className: dist_clsx("admin-ui-navigable-region", className),
-        "aria-label": ariaLabel,
-        role: "region",
-        tabIndex: "-1",
-        ...props,
-        children
-      }
-    );
-  }
-);
-NavigableRegion.displayName = "NavigableRegion";
-var navigable_region_default = NavigableRegion;
-
+const NavigableRegion = (0,external_wp_element_namespaceObject.forwardRef)(({
+  children,
+  className,
+  ariaLabel,
+  as: Tag = 'div',
+  ...props
+}, ref) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tag, {
+    ref: ref,
+    className: dist_clsx('interface-navigable-region', className),
+    "aria-label": ariaLabel,
+    role: "region",
+    tabIndex: "-1",
+    ...props,
+    children: children
+  });
+});
+NavigableRegion.displayName = 'NavigableRegion';
+/* harmony default export */ const navigable_region = (NavigableRegion);
 
 ;// ./packages/interface/build-module/components/interface-skeleton/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
 
 
 
 
 
+/**
+ * Internal dependencies
+ */
 
 
 const interface_skeleton_ANIMATION_DURATION = 0.25;
 const commonTransition = {
-  type: "tween",
+  type: 'tween',
   duration: interface_skeleton_ANIMATION_DURATION,
   ease: [0.6, 0, 0.4, 1]
 };
@@ -1149,8 +1414,14 @@ function useHTMLClass(className) {
   }, [className]);
 }
 const headerVariants = {
-  hidden: { opacity: 1, marginTop: -60 },
-  visible: { opacity: 1, marginTop: 0 },
+  hidden: {
+    opacity: 1,
+    marginTop: -60
+  },
+  visible: {
+    opacity: 1,
+    marginTop: 0
+  },
   distractionFreeHover: {
     opacity: 1,
     marginTop: 0,
@@ -1187,133 +1458,115 @@ function InterfaceSkeleton({
   className
 }, ref) {
   const [secondarySidebarResizeListener, secondarySidebarSize] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
-  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const defaultTransition = {
-    type: "tween",
+    type: 'tween',
     duration: disableMotion ? 0 : interface_skeleton_ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  useHTMLClass("interface-interface-skeleton__html-container");
+  useHTMLClass('interface-interface-skeleton__html-container');
   const defaultLabels = {
     /* translators: accessibility text for the top bar landmark region. */
-    header: (0,external_wp_i18n_namespaceObject._x)("Header", "header landmark area"),
+    header: (0,external_wp_i18n_namespaceObject._x)('Header', 'header landmark area'),
     /* translators: accessibility text for the content landmark region. */
-    body: (0,external_wp_i18n_namespaceObject.__)("Content"),
+    body: (0,external_wp_i18n_namespaceObject.__)('Content'),
     /* translators: accessibility text for the secondary sidebar landmark region. */
-    secondarySidebar: (0,external_wp_i18n_namespaceObject.__)("Block Library"),
+    secondarySidebar: (0,external_wp_i18n_namespaceObject.__)('Block Library'),
     /* translators: accessibility text for the settings landmark region. */
-    sidebar: (0,external_wp_i18n_namespaceObject._x)("Settings", "settings landmark area"),
+    sidebar: (0,external_wp_i18n_namespaceObject._x)('Settings', 'settings landmark area'),
     /* translators: accessibility text for the publish landmark region. */
-    actions: (0,external_wp_i18n_namespaceObject.__)("Publish"),
+    actions: (0,external_wp_i18n_namespaceObject.__)('Publish'),
     /* translators: accessibility text for the footer landmark region. */
-    footer: (0,external_wp_i18n_namespaceObject.__)("Footer")
+    footer: (0,external_wp_i18n_namespaceObject.__)('Footer')
   };
-  const mergedLabels = { ...defaultLabels, ...labels };
-  return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(
-    "div",
-    {
-      ref,
-      className: dist_clsx(
-        className,
-        "interface-interface-skeleton",
-        !!footer && "has-footer"
-      ),
-      children: [
-        /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
-          /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-            navigable_region_default,
-            {
-              as: external_wp_components_namespaceObject.__unstableMotion.div,
-              className: "interface-interface-skeleton__header",
-              "aria-label": mergedLabels.header,
-              initial: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
-              whileHover: isDistractionFree && !isMobileViewport ? "distractionFreeHover" : "visible",
-              animate: isDistractionFree && !isMobileViewport ? "distractionFreeDisabled" : "visible",
-              exit: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
-              variants: headerVariants,
-              transition: defaultTransition,
-              children: header
-            }
-          ) }),
-          isDistractionFree && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
-          /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
-            /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-              navigable_region_default,
-              {
-                className: "interface-interface-skeleton__secondary-sidebar",
-                ariaLabel: mergedLabels.secondarySidebar,
-                as: external_wp_components_namespaceObject.__unstableMotion.div,
-                initial: "closed",
-                animate: "open",
-                exit: "closed",
-                variants: {
-                  open: { width: secondarySidebarSize.width },
-                  closed: { width: 0 }
+  const mergedLabels = {
+    ...defaultLabels,
+    ...labels
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    ref: ref,
+    className: dist_clsx(className, 'interface-interface-skeleton', !!footer && 'has-footer'),
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      className: "interface-interface-skeleton__editor",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
+        initial: false,
+        children: !!header && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigable_region, {
+          as: external_wp_components_namespaceObject.__unstableMotion.div,
+          className: "interface-interface-skeleton__header",
+          "aria-label": mergedLabels.header,
+          initial: isDistractionFree && !isMobileViewport ? 'distractionFreeHidden' : 'hidden',
+          whileHover: isDistractionFree && !isMobileViewport ? 'distractionFreeHover' : 'visible',
+          animate: isDistractionFree && !isMobileViewport ? 'distractionFreeDisabled' : 'visible',
+          exit: isDistractionFree && !isMobileViewport ? 'distractionFreeHidden' : 'hidden',
+          variants: headerVariants,
+          transition: defaultTransition,
+          children: header
+        })
+      }), isDistractionFree && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "interface-interface-skeleton__header",
+        children: editorNotices
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "interface-interface-skeleton__body",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
+          initial: false,
+          children: !!secondarySidebar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigable_region, {
+            className: "interface-interface-skeleton__secondary-sidebar",
+            ariaLabel: mergedLabels.secondarySidebar,
+            as: external_wp_components_namespaceObject.__unstableMotion.div,
+            initial: "closed",
+            animate: "open",
+            exit: "closed",
+            variants: {
+              open: {
+                width: secondarySidebarSize.width
+              },
+              closed: {
+                width: 0
+              }
+            },
+            transition: defaultTransition,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
+              style: {
+                position: 'absolute',
+                width: isMobileViewport ? '100vw' : 'fit-content',
+                height: '100%',
+                left: 0
+              },
+              variants: {
+                open: {
+                  x: 0
                 },
-                transition: defaultTransition,
-                children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsxs)(
-                  external_wp_components_namespaceObject.__unstableMotion.div,
-                  {
-                    style: {
-                      position: "absolute",
-                      width: isMobileViewport ? "100vw" : "fit-content",
-                      height: "100%",
-                      left: 0
-                    },
-                    variants: {
-                      open: { x: 0 },
-                      closed: { x: "-100%" }
-                    },
-                    transition: defaultTransition,
-                    children: [
-                      secondarySidebarResizeListener,
-                      secondarySidebar
-                    ]
-                  }
-                )
-              }
-            ) }),
-            /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-              navigable_region_default,
-              {
-                className: "interface-interface-skeleton__content",
-                ariaLabel: mergedLabels.body,
-                children: content
-              }
-            ),
-            !!sidebar && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-              navigable_region_default,
-              {
-                className: "interface-interface-skeleton__sidebar",
-                ariaLabel: mergedLabels.sidebar,
-                children: sidebar
-              }
-            ),
-            !!actions && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-              navigable_region_default,
-              {
-                className: "interface-interface-skeleton__actions",
-                ariaLabel: mergedLabels.actions,
-                children: actions
-              }
-            )
-          ] })
-        ] }),
-        !!footer && /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-          navigable_region_default,
-          {
-            className: "interface-interface-skeleton__footer",
-            ariaLabel: mergedLabels.footer,
-            children: footer
-          }
-        )
-      ]
-    }
-  );
+                closed: {
+                  x: '-100%'
+                }
+              },
+              transition: defaultTransition,
+              children: [secondarySidebarResizeListener, secondarySidebar]
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigable_region, {
+          className: "interface-interface-skeleton__content",
+          ariaLabel: mergedLabels.body,
+          children: content
+        }), !!sidebar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigable_region, {
+          className: "interface-interface-skeleton__sidebar",
+          ariaLabel: mergedLabels.sidebar,
+          children: sidebar
+        }), !!actions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigable_region, {
+          className: "interface-interface-skeleton__actions",
+          ariaLabel: mergedLabels.actions,
+          children: actions
+        })]
+      })]
+    }), !!footer && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigable_region, {
+      className: "interface-interface-skeleton__footer",
+      ariaLabel: mergedLabels.footer,
+      children: footer
+    })]
+  });
 }
-var interface_skeleton_default = (0,external_wp_element_namespaceObject.forwardRef)(InterfaceSkeleton);
-
+/* harmony default export */ const interface_skeleton = ((0,external_wp_element_namespaceObject.forwardRef)(InterfaceSkeleton));
 
 ;// ./packages/interface/build-module/components/index.js
 
@@ -1325,7 +1578,6 @@ var interface_skeleton_default = (0,external_wp_element_namespaceObject.forwardR
 
 
 ;// ./packages/interface/build-module/index.js
-
 
 
 
@@ -3028,36 +3280,53 @@ function WidgetAreasBlockEditorProvider({
 }
 
 ;// ./packages/icons/build-module/library/drawer-left.js
+/**
+ * WordPress dependencies
+ */
 
 
-var drawer_left_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-  external_wp_primitives_namespaceObject.Path,
-  {
+const drawerLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM8.5 18.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h2.5v13zm10-.5c0 .3-.2.5-.5.5h-8v-13h8c.3 0 .5.2.5.5v12z"
-  }
-) });
-
+  })
+});
+/* harmony default export */ const drawer_left = (drawerLeft);
 
 ;// ./packages/icons/build-module/library/drawer-right.js
+/**
+ * WordPress dependencies
+ */
 
 
-var drawer_right_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
-  external_wp_primitives_namespaceObject.Path,
-  {
+const drawerRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4 14.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h8v13zm4.5-.5c0 .3-.2.5-.5.5h-2.5v-13H18c.3 0 .5.2.5.5v12z"
-  }
-) });
-
+  })
+});
+/* harmony default export */ const drawer_right = (drawerRight);
 
 ;// ./packages/icons/build-module/library/block-default.js
+/**
+ * WordPress dependencies
+ */
 
 
-var block_default_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z" }) });
-
+const blockDefault = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z"
+  })
+});
+/* harmony default export */ const block_default = (blockDefault);
 
 ;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
@@ -3101,7 +3370,7 @@ function WidgetAreas({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "edit-widgets-widget-areas__top-container",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-        icon: block_default_default
+        icon: block_default
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           // Use `dangerouslySetInnerHTML` to keep backwards
@@ -3192,7 +3461,7 @@ function SidebarContent({
     // block selection changes, not sidebar state changes.
   }, [hasSelectedNonAreaBlock, enableComplementaryArea]);
   const tabsContextValue = (0,external_wp_element_namespaceObject.useContext)(Tabs.Context);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area_default, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area, {
     className: "edit-widgets-sidebar",
     header: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.Context.Provider, {
       value: tabsContextValue,
@@ -3206,7 +3475,7 @@ function SidebarContent({
     closeLabel: (0,external_wp_i18n_namespaceObject.__)('Close Settings'),
     scope: "core/edit-widgets",
     identifier: currentArea,
-    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? drawer_left_default : drawer_right_default,
+    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? drawer_left : drawer_right,
     isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs.Context.Provider, {
       value: tabsContextValue,
@@ -3304,28 +3573,64 @@ function Sidebar() {
 }
 
 ;// ./packages/icons/build-module/library/plus.js
+/**
+ * WordPress dependencies
+ */
 
 
-var plus_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
-
+const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
+  })
+});
+/* harmony default export */ const library_plus = (plus);
 
 ;// ./packages/icons/build-module/library/list-view.js
+/**
+ * WordPress dependencies
+ */
 
 
-var list_view_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M3 6h11v1.5H3V6Zm3.5 5.5h11V13h-11v-1.5ZM21 17H10v1.5h11V17Z" }) });
-
+const listView = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M3 6h11v1.5H3V6Zm3.5 5.5h11V13h-11v-1.5ZM21 17H10v1.5h11V17Z"
+  })
+});
+/* harmony default export */ const list_view = (listView);
 
 ;// ./packages/icons/build-module/library/undo.js
+/**
+ * WordPress dependencies
+ */
 
 
-var undo_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M18.3 11.7c-.6-.6-1.4-.9-2.3-.9H6.7l2.9-3.3-1.1-1-4.5 5L8.5 16l1-1-2.7-2.7H16c.5 0 .9.2 1.3.5 1 1 1 3.4 1 4.5v.3h1.5v-.2c0-1.5 0-4.3-1.5-5.7z" }) });
-
+const undo = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M18.3 11.7c-.6-.6-1.4-.9-2.3-.9H6.7l2.9-3.3-1.1-1-4.5 5L8.5 16l1-1-2.7-2.7H16c.5 0 .9.2 1.3.5 1 1 1 3.4 1 4.5v.3h1.5v-.2c0-1.5 0-4.3-1.5-5.7z"
+  })
+});
+/* harmony default export */ const library_undo = (undo);
 
 ;// ./packages/icons/build-module/library/redo.js
+/**
+ * WordPress dependencies
+ */
 
 
-var redo_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M15.6 6.5l-1.1 1 2.9 3.3H8c-.9 0-1.7.3-2.3.9-1.4 1.5-1.4 4.2-1.4 5.6v.2h1.5v-.3c0-1.1 0-3.5 1-4.5.3-.3.7-.5 1.3-.5h9.2L14.5 15l1.1 1.1 4.6-4.6-4.6-5z" }) });
-
+const redo = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M15.6 6.5l-1.1 1 2.9 3.3H8c-.9 0-1.7.3-2.3.9-1.4 1.5-1.4 4.2-1.4 5.6v.2h1.5v-.3c0-1.1 0-3.5 1-4.5.3-.3.7-.5 1.3-.5h9.2L14.5 15l1.1 1.1 4.6-4.6-4.6-5z"
+  })
+});
+/* harmony default export */ const library_redo = (redo);
 
 ;// ./packages/edit-widgets/build-module/components/header/undo-redo/undo.js
 /**
@@ -3347,7 +3652,7 @@ function UndoButton(props, ref) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     ...props,
     ref: ref,
-    icon: !(0,external_wp_i18n_namespaceObject.isRTL)() ? undo_default : redo_default,
+    icon: !(0,external_wp_i18n_namespaceObject.isRTL)() ? library_undo : library_redo,
     label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
     shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('z')
     // If there are no undo levels we don't want to actually disable this
@@ -3359,7 +3664,7 @@ function UndoButton(props, ref) {
     size: "compact"
   });
 }
-/* harmony default export */ const undo = ((0,external_wp_element_namespaceObject.forwardRef)(UndoButton));
+/* harmony default export */ const undo_redo_undo = ((0,external_wp_element_namespaceObject.forwardRef)(UndoButton));
 
 ;// ./packages/edit-widgets/build-module/components/header/undo-redo/redo.js
 /**
@@ -3382,7 +3687,7 @@ function RedoButton(props, ref) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     ...props,
     ref: ref,
-    icon: !(0,external_wp_i18n_namespaceObject.isRTL)() ? redo_default : undo_default,
+    icon: !(0,external_wp_i18n_namespaceObject.isRTL)() ? library_redo : library_undo,
     label: (0,external_wp_i18n_namespaceObject.__)('Redo'),
     shortcut: shortcut
     // If there are no undo levels we don't want to actually disable this
@@ -3394,7 +3699,7 @@ function RedoButton(props, ref) {
     size: "compact"
   });
 }
-/* harmony default export */ const redo = ((0,external_wp_element_namespaceObject.forwardRef)(RedoButton));
+/* harmony default export */ const undo_redo_redo = ((0,external_wp_element_namespaceObject.forwardRef)(RedoButton));
 
 ;// ./packages/edit-widgets/build-module/components/header/document-tools/index.js
 /**
@@ -3457,20 +3762,20 @@ function DocumentTools() {
         event.preventDefault();
       },
       onClick: toggleInserterSidebar,
-      icon: plus_default
+      icon: library_plus
       /* translators: button label text should, if possible, be under 16
       	characters. */,
       label: (0,external_wp_i18n_namespaceObject._x)('Block Inserter', 'Generic label for block inserter button'),
       size: "compact"
     }), isMediumViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
-        as: undo
+        as: undo_redo_undo
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
-        as: redo
+        as: undo_redo_redo
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
         as: external_wp_components_namespaceObject.Button,
         className: "edit-widgets-header-toolbar__list-view-toggle",
-        icon: list_view_default,
+        icon: list_view,
         isPressed: isListViewOpen
         /* translators: button label text should, if possible, be under 16 characters. */,
         label: (0,external_wp_i18n_namespaceObject.__)('List View'),
@@ -3529,16 +3834,34 @@ function SaveButton() {
 /* harmony default export */ const save_button = (SaveButton);
 
 ;// ./packages/icons/build-module/library/more-vertical.js
+/**
+ * WordPress dependencies
+ */
 
 
-var more_vertical_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
-
+const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z"
+  })
+});
+/* harmony default export */ const more_vertical = (moreVertical);
 
 ;// ./packages/icons/build-module/library/external.js
+/**
+ * WordPress dependencies
+ */
 
 
-var external_default = /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, { d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z" }) });
-
+const external = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z"
+  })
+});
+/* harmony default export */ const library_external = (external);
 
 ;// ./packages/edit-widgets/build-module/components/keyboard-shortcut-help-modal/config.js
 /**
@@ -3869,7 +4192,7 @@ function MoreMenu() {
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-      icon: more_vertical_default,
+      icon: more_vertical,
       label: (0,external_wp_i18n_namespaceObject.__)('Options'),
       popoverProps: {
         placement: 'bottom-end',
@@ -3904,7 +4227,7 @@ function MoreMenu() {
             label: (0,external_wp_i18n_namespaceObject.__)('Welcome Guide')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuItem, {
             role: "menuitem",
-            icon: external_default,
+            icon: library_external,
             href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/block-based-widgets-editor/'),
             target: "_blank",
             rel: "noopener noreferrer",
@@ -4002,7 +4325,7 @@ function Header() {
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "edit-widgets-header__actions",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items_default.Slot, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
           scope: "core/edit-widgets"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(save_button, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
       })]
@@ -4258,7 +4581,7 @@ function ListViewSidebar() {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
           children: (0,external_wp_i18n_namespaceObject.__)('List View')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          icon: close_small_default,
+          icon: close_small,
           label: (0,external_wp_i18n_namespaceObject.__)('Close'),
           onClick: closeListView,
           size: "compact"
@@ -4379,14 +4702,14 @@ function Interface({
   }, [isInserterOpened, isListViewOpened, isHugeViewport]);
   const secondarySidebarLabel = isListViewOpened ? (0,external_wp_i18n_namespaceObject.__)('List View') : (0,external_wp_i18n_namespaceObject.__)('Block Library');
   const hasSecondarySidebar = isListViewOpened || isInserterOpened;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(interface_skeleton_default, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(interface_skeleton, {
     labels: {
       ...interfaceLabels,
       secondarySidebar: secondarySidebarLabel
     },
     header: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {}),
     secondarySidebar: hasSecondarySidebar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SecondarySidebar, {}),
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area_default.Slot, {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area.Slot, {
       scope: "core/edit-widgets"
     }),
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {

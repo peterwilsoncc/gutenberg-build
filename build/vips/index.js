@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 533:
+/***/ 1533:
 /***/ ((module) => {
 
 
@@ -338,7 +338,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./node_modules/wasm-vips/lib/vips.js
-var vips = __webpack_require__(533);
+var vips = __webpack_require__(1533);
 var vips_default = /*#__PURE__*/__webpack_require__.n(vips);
 ;// ./node_modules/wasm-vips/lib/vips.wasm
 const lib_vips_namespaceObject = "./build/vips/vips.wasm";

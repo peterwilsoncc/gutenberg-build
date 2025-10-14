@@ -61,9 +61,6 @@
 				"fontSize": true
 			}
 		},
-		"interactivity": {
-			"clientNavigation": true
-		},
 		"__experimentalBorder": {
 			"radius": true,
 			"color": true,
