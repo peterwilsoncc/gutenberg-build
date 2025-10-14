@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-is-shallow-equal'), 'version' => '1760470224417');
+<?php return array('dependencies' => array('wp-is-shallow-equal'), 'version' => '1760492530065');
