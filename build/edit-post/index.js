@@ -157,40 +157,28 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/admin-ui/build-module/navigable-region/index.js
-/**
- * External dependencies
- */
 
 
-/**
- * WordPress dependencies
- */
 
+const NavigableRegion = (0,external_wp_element_namespaceObject.forwardRef)(
+  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
+    return /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(
+      Tag,
+      {
+        ref,
+        className: dist_clsx("admin-ui-navigable-region", className),
+        "aria-label": ariaLabel,
+        role: "region",
+        tabIndex: "-1",
+        ...props,
+        children
+      }
+    );
+  }
+);
+NavigableRegion.displayName = "NavigableRegion";
+var navigable_region_default = NavigableRegion;
 
-/**
- * Type definitions
- */
-
-// This is a copy of the private `NavigableRegion` component from the '@wordpress/editor' private APIs.
-const NavigableRegion = (0,external_wp_element_namespaceObject.forwardRef)(({
-  children,
-  className,
-  ariaLabel,
-  as: Tag = 'div',
-  ...props
-}, ref) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tag, {
-    ref: ref,
-    className: dist_clsx('admin-ui-navigable-region', className),
-    "aria-label": ariaLabel,
-    role: "region",
-    tabIndex: "-1",
-    ...props,
-    children: children
-  });
-});
-NavigableRegion.displayName = 'NavigableRegion';
-/* harmony default export */ const navigable_region = (NavigableRegion);
 
 ;// external ["wp","blockEditor"]
 const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
@@ -3028,7 +3016,7 @@ function MetaBoxesMain({
     })]
   });
   const paneProps = /** @type {Parameters<typeof ResizableBox>[0]} */{
-    as: navigable_region,
+    as: navigable_region_default,
     ref: metaBoxesMainRef,
     className: 'edit-post-meta-boxes-main',
     defaultSize: {

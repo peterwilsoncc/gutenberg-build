@@ -74,10 +74,10 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/icons
-  var require_icons = __commonJS({
-    "wordpress-external:@wordpress/icons"(exports, module) {
-      module.exports = window.wp.icons;
+  // wordpress-external:@wordpress/primitives
+  var require_primitives = __commonJS({
+    "wordpress-external:@wordpress/primitives"(exports, module) {
+      module.exports = window.wp.primitives;
     }
   });
 
@@ -94,7 +94,7 @@ var wp;
   });
 
   // packages/plugins/build-module/components/plugin-area/index.js
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
 
   // node_modules/memize/dist/index.js
   function memize(fn, options) {
@@ -225,7 +225,13 @@ var wp;
 
   // packages/plugins/build-module/api/index.js
   var import_hooks = __toESM(require_hooks());
-  var import_icons = __toESM(require_icons());
+
+  // packages/icons/build-module/library/plugins.js
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_primitives = __toESM(require_primitives());
+  var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
+
+  // packages/plugins/build-module/api/index.js
   var plugins = {};
   function registerPlugin(name, settings) {
     if (typeof settings !== "object") {
@@ -271,7 +277,7 @@ var wp;
     }
     plugins[name] = {
       name,
-      icon: import_icons.plugins,
+      icon: plugins_default,
       ...settings
     };
     (0, import_hooks.doAction)("plugins.pluginRegistered", settings, name);
@@ -346,11 +352,11 @@ var wp;
       store.getValue,
       store.getValue
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { display: "none" }, children: plugins2.map(({ icon, name, render: Plugin }) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { display: "none" }, children: plugins2.map(({ icon, name, render: Plugin }) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
       PluginContextProvider,
       {
         value: getPluginContext(icon, name),
-        children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(PluginErrorBoundary, { name, onError, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Plugin, {}) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(PluginErrorBoundary, { name, onError, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Plugin, {}) })
       },
       name
     )) });

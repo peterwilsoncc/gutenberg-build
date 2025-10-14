@@ -87,10 +87,10 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/icons
-  var require_icons = __commonJS({
-    "wordpress-external:@wordpress/icons"(exports, module) {
-      module.exports = window.wp.icons;
+  // wordpress-external:@wordpress/primitives
+  var require_primitives = __commonJS({
+    "wordpress-external:@wordpress/primitives"(exports, module) {
+      module.exports = window.wp.primitives;
     }
   });
 
@@ -113,7 +113,7 @@ var wp;
   });
 
   // packages/commands/build-module/components/command-menu.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
 
   // packages/commands/node_modules/cmdk/dist/chunk-NZJY6EH4.mjs
   var U = 1;
@@ -2458,11 +2458,28 @@ var wp;
 
   // packages/commands/build-module/components/command-menu.js
   var import_data4 = __toESM(require_data());
-  var import_element = __toESM(require_element());
+  var import_element2 = __toESM(require_element());
   var import_i18n = __toESM(require_i18n());
   var import_components = __toESM(require_components());
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts());
-  var import_icons = __toESM(require_icons());
+
+  // packages/icons/build-module/icon/index.js
+  var import_element = __toESM(require_element());
+  var icon_default = (0, import_element.forwardRef)(
+    ({ icon, size = 24, ...props }, ref) => {
+      return (0, import_element.cloneElement)(icon, {
+        width: size,
+        height: size,
+        ...props,
+        ref
+      });
+    }
+  );
+
+  // packages/icons/build-module/library/search.js
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_primitives = __toESM(require_primitives());
+  var search_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
   // packages/commands/build-module/store/index.js
   var import_data3 = __toESM(require_data());
@@ -2641,20 +2658,20 @@ var wp;
   var inputLabel = (0, import_i18n.__)("Search commands and settings");
   function CommandMenuLoader({ name, search, hook, setLoader, close: close2 }) {
     const { isLoading, commands: commands2 = [] } = hook({ search }) ?? {};
-    (0, import_element.useEffect)(() => {
+    (0, import_element2.useEffect)(() => {
       setLoader(name, isLoading);
     }, [setLoader, name, isLoading]);
     if (!commands2.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, { children: commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       He.Item,
       {
         value: command.searchLabel ?? command.label,
         keywords: command.keywords,
         onSelect: () => command.callback({ close: close2 }),
         id: command.name,
-        children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
           import_components.__experimentalHStack,
           {
             alignment: "left",
@@ -2662,8 +2679,8 @@ var wp;
               "has-icon": command.icon
             }),
             children: [
-              command.icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_icons.Icon, { icon: command.icon }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              command.icon && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(icon_default, { icon: command.icon }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 import_components.TextHighlight,
                 {
                   text: command.label,
@@ -2678,15 +2695,15 @@ var wp;
     )) });
   }
   function CommandMenuLoaderWrapper({ hook, search, setLoader, close: close2 }) {
-    const currentLoaderRef = (0, import_element.useRef)(hook);
-    const [key, setKey] = (0, import_element.useState)(0);
-    (0, import_element.useEffect)(() => {
+    const currentLoaderRef = (0, import_element2.useRef)(hook);
+    const [key, setKey] = (0, import_element2.useState)(0);
+    (0, import_element2.useEffect)(() => {
       if (currentLoaderRef.current !== hook) {
         currentLoaderRef.current = hook;
         setKey((prevKey) => prevKey + 1);
       }
     }, [hook]);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       CommandMenuLoader,
       {
         hook: currentLoaderRef.current,
@@ -2711,15 +2728,15 @@ var wp;
     if (!commands2.length && !loaders.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(He.Group, { children: [
-      commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(He.Group, { children: [
+      commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
         He.Item,
         {
           value: command.searchLabel ?? command.label,
           keywords: command.keywords,
           onSelect: () => command.callback({ close: close2 }),
           id: command.name,
-          children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
             import_components.__experimentalHStack,
             {
               alignment: "left",
@@ -2727,8 +2744,8 @@ var wp;
                 "has-icon": command.icon
               }),
               children: [
-                command.icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_icons.Icon, { icon: command.icon }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                command.icon && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(icon_default, { icon: command.icon }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                   import_components.TextHighlight,
                   {
                     text: command.label,
@@ -2741,7 +2758,7 @@ var wp;
         },
         command.name
       )),
-      loaders.map((loader) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      loaders.map((loader) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
         CommandMenuLoaderWrapper,
         {
           hook: loader.hook,
@@ -2754,20 +2771,20 @@ var wp;
     ] });
   }
   function CommandInput({ isOpen: isOpen3, search, setSearch }) {
-    const commandMenuInput = (0, import_element.useRef)();
+    const commandMenuInput = (0, import_element2.useRef)();
     const _value = D2((state) => state.value);
-    const selectedItemId = (0, import_element.useMemo)(() => {
+    const selectedItemId = (0, import_element2.useMemo)(() => {
       const item = document.querySelector(
         `[cmdk-item=""][data-value="${_value}"]`
       );
       return item?.getAttribute("id");
     }, [_value]);
-    (0, import_element.useEffect)(() => {
+    (0, import_element2.useEffect)(() => {
       if (isOpen3) {
         commandMenuInput.current.focus();
       }
     }, [isOpen3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       He.Input,
       {
         ref: commandMenuInput,
@@ -2781,14 +2798,14 @@ var wp;
   }
   function CommandMenu() {
     const { registerShortcut } = (0, import_data4.useDispatch)(import_keyboard_shortcuts.store);
-    const [search, setSearch] = (0, import_element.useState)("");
+    const [search, setSearch] = (0, import_element2.useState)("");
     const isOpen3 = (0, import_data4.useSelect)(
       (select) => select(store).isOpen(),
       []
     );
     const { open: open2, close: close2 } = (0, import_data4.useDispatch)(store);
-    const [loaders, setLoaders] = (0, import_element.useState)({});
-    (0, import_element.useEffect)(() => {
+    const [loaders, setLoaders] = (0, import_element2.useState)({});
+    (0, import_element2.useEffect)(() => {
       registerShortcut({
         name: "core/commands",
         category: "global",
@@ -2817,7 +2834,7 @@ var wp;
         bindGlobal: true
       }
     );
-    const setLoader = (0, import_element.useCallback)(
+    const setLoader = (0, import_element2.useCallback)(
       (name, value) => setLoaders((current) => ({
         ...current,
         [name]: value
@@ -2843,7 +2860,7 @@ var wp;
       }
     };
     const isLoading = Object.values(loaders).some(Boolean);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       import_components.Modal,
       {
         className: "commands-command-menu",
@@ -2851,16 +2868,16 @@ var wp;
         onRequestClose: closeAndReset,
         __experimentalHideHeader: true,
         contentLabel: (0, import_i18n.__)("Command palette"),
-        children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "commands-command-menu__container", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(He, { label: inputLabel, onKeyDown, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "commands-command-menu__header", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-              import_icons.Icon,
+        children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "commands-command-menu__container", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(He, { label: inputLabel, onKeyDown, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "commands-command-menu__header", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+              icon_default,
               {
                 className: "commands-command-menu__header-search-icon",
-                icon: import_icons.search
+                icon: search_default
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
               CommandInput,
               {
                 search,
@@ -2869,9 +2886,9 @@ var wp;
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(He.List, { label: (0, import_i18n.__)("Command suggestions"), children: [
-            search && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(He.Empty, { children: (0, import_i18n.__)("No results found.") }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(He.List, { label: (0, import_i18n.__)("Command suggestions"), children: [
+            search && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(He.Empty, { children: (0, import_i18n.__)("No results found.") }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
               CommandMenuGroup,
               {
                 search,
@@ -2880,7 +2897,7 @@ var wp;
                 isContextual: true
               }
             ),
-            search && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            search && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
               CommandMenuGroup,
               {
                 search,
@@ -2895,16 +2912,16 @@ var wp;
   }
 
   // packages/commands/build-module/hooks/use-command-context.js
-  var import_element2 = __toESM(require_element());
+  var import_element3 = __toESM(require_element());
   var import_data5 = __toESM(require_data());
   function useCommandContext(context2) {
     const { getContext: getContext2 } = (0, import_data5.useSelect)(store);
-    const initialContext = (0, import_element2.useRef)(getContext2());
+    const initialContext = (0, import_element3.useRef)(getContext2());
     const { setContext: setContext2 } = unlock((0, import_data5.useDispatch)(store));
-    (0, import_element2.useEffect)(() => {
+    (0, import_element3.useEffect)(() => {
       setContext2(context2);
     }, [context2, setContext2]);
-    (0, import_element2.useEffect)(() => {
+    (0, import_element3.useEffect)(() => {
       const initialContextRef = initialContext.current;
       return () => setContext2(initialContextRef);
     }, [setContext2]);
@@ -2917,15 +2934,15 @@ var wp;
   });
 
   // packages/commands/build-module/hooks/use-command.js
-  var import_element3 = __toESM(require_element());
+  var import_element4 = __toESM(require_element());
   var import_data6 = __toESM(require_data());
   function useCommand(command) {
     const { registerCommand: registerCommand2, unregisterCommand: unregisterCommand2 } = (0, import_data6.useDispatch)(store);
-    const currentCallbackRef = (0, import_element3.useRef)(command.callback);
-    (0, import_element3.useEffect)(() => {
+    const currentCallbackRef = (0, import_element4.useRef)(command.callback);
+    (0, import_element4.useEffect)(() => {
       currentCallbackRef.current = command.callback;
     }, [command.callback]);
-    (0, import_element3.useEffect)(() => {
+    (0, import_element4.useEffect)(() => {
       if (command.disabled) {
         return;
       }
@@ -2955,8 +2972,8 @@ var wp;
   }
   function useCommands(commands2) {
     const { registerCommand: registerCommand2, unregisterCommand: unregisterCommand2 } = (0, import_data6.useDispatch)(store);
-    const currentCallbacksRef = (0, import_element3.useRef)({});
-    (0, import_element3.useEffect)(() => {
+    const currentCallbacksRef = (0, import_element4.useRef)({});
+    (0, import_element4.useEffect)(() => {
       if (!commands2) {
         return;
       }
@@ -2966,7 +2983,7 @@ var wp;
         }
       });
     }, [commands2]);
-    (0, import_element3.useEffect)(() => {
+    (0, import_element4.useEffect)(() => {
       if (!commands2) {
         return;
       }
@@ -2998,11 +3015,11 @@ var wp;
   }
 
   // packages/commands/build-module/hooks/use-command-loader.js
-  var import_element4 = __toESM(require_element());
+  var import_element5 = __toESM(require_element());
   var import_data7 = __toESM(require_data());
   function useCommandLoader(loader) {
     const { registerCommandLoader: registerCommandLoader2, unregisterCommandLoader: unregisterCommandLoader2 } = (0, import_data7.useDispatch)(store);
-    (0, import_element4.useEffect)(() => {
+    (0, import_element5.useEffect)(() => {
       if (loader.disabled) {
         return;
       }

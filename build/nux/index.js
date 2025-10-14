@@ -80,10 +80,10 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/icons
-  var require_icons = __commonJS({
-    "wordpress-external:@wordpress/icons"(exports, module) {
-      module.exports = window.wp.icons;
+  // wordpress-external:@wordpress/primitives
+  var require_primitives = __commonJS({
+    "wordpress-external:@wordpress/primitives"(exports, module) {
+      module.exports = window.wp.primitives;
     }
   });
 
@@ -220,13 +220,19 @@ var wp;
   });
 
   // packages/nux/build-module/components/dot-tip/index.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
   var import_compose = __toESM(require_compose());
   var import_components = __toESM(require_components());
   var import_i18n = __toESM(require_i18n());
   var import_data4 = __toESM(require_data());
   var import_element = __toESM(require_element());
-  var import_icons = __toESM(require_icons());
+
+  // packages/icons/build-module/library/close.js
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_primitives = __toESM(require_primitives());
+  var close_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
+
+  // packages/nux/build-module/components/dot-tip/index.js
   function onClick(event) {
     event.stopPropagation();
   }
@@ -254,7 +260,7 @@ var wp;
     if (!isVisible) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
       import_components.Popover,
       {
         className: "nux-dot-tip",
@@ -265,8 +271,8 @@ var wp;
         onClick,
         onFocusOutside: onFocusOutsideCallback,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
             import_components.Button,
             {
               __next40pxDefaultSize: true,
@@ -275,12 +281,12 @@ var wp;
               children: hasNextTip ? (0, import_i18n.__)("See next tip") : (0, import_i18n.__)("Got it")
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
             import_components.Button,
             {
               size: "small",
               className: "nux-dot-tip__disable",
-              icon: import_icons.close,
+              icon: close_default,
               label: (0, import_i18n.__)("Disable tips"),
               onClick: onDisable
             }

@@ -89,7 +89,7 @@ var wp;
           }
           var React37 = require_react();
           var ReactSharedInternals = React37.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-          function error3(format3) {
+          function error(format3) {
             {
               {
                 for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
@@ -126,7 +126,7 @@ var wp;
               if (!didWarnOld18Alpha) {
                 if (React37.startTransition !== void 0) {
                   didWarnOld18Alpha = true;
-                  error3("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
+                  error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
                 }
               }
             }
@@ -135,7 +135,7 @@ var wp;
               if (!didWarnUncachedGetSnapshot) {
                 var cachedValue = getSnapshot();
                 if (!objectIs(value, cachedValue)) {
-                  error3("The result of getSnapshot should be cached to avoid an infinite loop");
+                  error("The result of getSnapshot should be cached to avoid an infinite loop");
                   didWarnUncachedGetSnapshot = true;
                 }
               }
@@ -179,7 +179,7 @@ var wp;
             try {
               var nextValue = latestGetSnapshot();
               return !objectIs(prevValue, nextValue);
-            } catch (error4) {
+            } catch (error2) {
               return true;
             }
           }
@@ -675,13 +675,6 @@ var wp;
         }
         /* Z+1 */
       );
-    }
-  });
-
-  // wordpress-external:@wordpress/icons
-  var require_icons = __commonJS({
-    "wordpress-external:@wordpress/icons"(exports, module) {
-      module.exports = window.wp.icons;
     }
   });
 
@@ -1537,7 +1530,7 @@ var wp;
           hslaColor: /^hsla/i
         };
         var input = "";
-        function error3(msg) {
+        function error(msg) {
           var err = new Error(input + ": " + msg);
           err.source = input;
           throw err;
@@ -1545,7 +1538,7 @@ var wp;
         function getAST() {
           var ast = matchListDefinitions();
           if (input.length > 0) {
-            error3("Invalid input not EOF");
+            error("Invalid input not EOF");
           }
           return ast;
         }
@@ -1576,7 +1569,7 @@ var wp;
             var orientation = orientationMatcher();
             if (orientation) {
               if (!scan(tokens.comma)) {
-                error3("Missing comma before color stops");
+                error("Missing comma before color stops");
               }
             }
             return {
@@ -1590,11 +1583,11 @@ var wp;
           var captures = scan(pattern);
           if (captures) {
             if (!scan(tokens.startCall)) {
-              error3("Missing (");
+              error("Missing (");
             }
             var result = callback(captures);
             if (!scan(tokens.endCall)) {
-              error3("Missing )");
+              error("Missing )");
             }
             return result;
           }
@@ -1689,7 +1682,7 @@ var wp;
           if (match5("position", /^at/, 0)) {
             var positioning = matchPositioning();
             if (!positioning) {
-              error3("Missing positioning value");
+              error("Missing positioning value");
             }
             return positioning;
           }
@@ -1718,7 +1711,7 @@ var wp;
               if (captures) {
                 result.push(captures);
               } else {
-                error3("One extra comma");
+                error("One extra comma");
               }
             }
           }
@@ -1727,7 +1720,7 @@ var wp;
         function matchColorStop() {
           var color2 = matchColor();
           if (!color2) {
-            error3("Expected color definition");
+            error("Expected color definition");
           }
           color2.length = matchDistance();
           return color2;
@@ -1769,7 +1762,7 @@ var wp;
           return matchCall(tokens.hslColor, function() {
             var lookahead = scan(tokens.percentageValue);
             if (lookahead) {
-              error3("HSL hue value must be a number in degrees (0-360) or normalized (-360 to 360), not a percentage");
+              error("HSL hue value must be a number in degrees (0-360) or normalized (-360 to 360), not a percentage");
             }
             var hue = matchNumber();
             scan(tokens.comma);
@@ -1779,7 +1772,7 @@ var wp;
             captures = scan(tokens.percentageValue);
             var light = captures ? captures[1] : null;
             if (!sat || !light) {
-              error3("Expected percentage value for saturation and lightness in HSL");
+              error("Expected percentage value for saturation and lightness in HSL");
             }
             return {
               type: "hsl",
@@ -1799,7 +1792,7 @@ var wp;
             scan(tokens.comma);
             var alpha2 = matchNumber();
             if (!sat || !light) {
-              error3("Expected percentage value for saturation and lightness in HSLA");
+              error("Expected percentage value for saturation and lightness in HSLA");
             }
             return {
               type: "hsla",
@@ -1837,7 +1830,7 @@ var wp;
               i3++;
             }
             if (openParenCount > 0) {
-              error3("Missing closing parenthesis in calc() expression");
+              error("Missing closing parenthesis in calc() expression");
             }
             var calcContent = input.substring(0, i3 - 1);
             consume(i3 - 1);
@@ -2037,7 +2030,7 @@ var wp;
     Animate: () => animate_default,
     Autocomplete: () => Autocomplete,
     BaseControl: () => base_control_default,
-    BlockQuotation: () => import_primitives7.BlockQuotation,
+    BlockQuotation: () => import_primitives36.BlockQuotation,
     BorderBoxControl: () => component_default24,
     BorderControl: () => component_default21,
     BoxControl: () => box_control_default,
@@ -2050,7 +2043,7 @@ var wp;
     CardHeader: () => component_default33,
     CardMedia: () => component_default34,
     CheckboxControl: () => checkbox_control_default,
-    Circle: () => import_primitives7.Circle,
+    Circle: () => import_primitives36.Circle,
     ClipboardButton: () => ClipboardButton,
     ColorIndicator: () => color_indicator_default,
     ColorPalette: () => color_palette_default,
@@ -2082,21 +2075,21 @@ var wp;
     FormFileUpload: () => form_file_upload_default,
     FormToggle: () => form_toggle_default,
     FormTokenField: () => form_token_field_default,
-    G: () => import_primitives7.G,
+    G: () => import_primitives36.G,
     GradientPicker: () => gradient_picker_default,
     Guide: () => guide_default,
     GuidePage: () => GuidePage,
-    HorizontalRule: () => import_primitives7.HorizontalRule,
-    Icon: () => icon_default2,
+    HorizontalRule: () => import_primitives36.HorizontalRule,
+    Icon: () => icon_default3,
     IconButton: () => deprecated_default,
     IsolatedEventContainer: () => isolated_event_container_default,
     KeyboardShortcuts: () => keyboard_shortcuts_default,
-    Line: () => import_primitives7.Line,
+    Line: () => import_primitives36.Line,
     MenuGroup: () => menu_group_default,
     MenuItem: () => menu_item_default,
     MenuItemsChoice: () => menu_items_choice_default,
     Modal: () => modal_default,
-    NavigableMenu: () => menu_default,
+    NavigableMenu: () => menu_default2,
     Navigator: () => Navigator3,
     Notice: () => notice_default,
     NoticeList: () => list_default,
@@ -2104,18 +2097,18 @@ var wp;
     PanelBody: () => body_default,
     PanelHeader: () => header_default,
     PanelRow: () => row_default,
-    Path: () => import_primitives7.Path,
+    Path: () => import_primitives36.Path,
     Placeholder: () => placeholder_default,
-    Polygon: () => import_primitives7.Polygon,
+    Polygon: () => import_primitives36.Polygon,
     Popover: () => popover_default,
     ProgressBar: () => progress_bar_default,
     QueryControls: () => query_controls_default,
     RadioControl: () => radio_control_default,
     RangeControl: () => range_control_default,
-    Rect: () => import_primitives7.Rect,
+    Rect: () => import_primitives36.Rect,
     ResizableBox: () => resizable_box_default,
     ResponsiveWrapper: () => responsive_wrapper_default,
-    SVG: () => import_primitives7.SVG,
+    SVG: () => import_primitives36.SVG,
     SandBox: () => sandbox_default,
     ScrollLock: () => scroll_lock_default,
     SearchControl: () => search_control_default,
@@ -2131,7 +2124,7 @@ var wp;
     TextHighlight: () => text_highlight_default,
     TextareaControl: () => textarea_control_default,
     TimePicker: () => time_default,
-    Tip: () => tip_default,
+    Tip: () => tip_default2,
     ToggleControl: () => toggle_control_default,
     Toolbar: () => toolbar_default,
     ToolbarButton: () => toolbar_button_default,
@@ -2166,7 +2159,7 @@ var wp;
     __experimentalNavigationBackButton: () => back_button_default,
     __experimentalNavigationGroup: () => group_default,
     __experimentalNavigationItem: () => item_default2,
-    __experimentalNavigationMenu: () => menu_default2,
+    __experimentalNavigationMenu: () => menu_default3,
     __experimentalNavigatorBackButton: () => NavigatorBackButton2,
     __experimentalNavigatorButton: () => NavigatorButton2,
     __experimentalNavigatorProvider: () => NavigatorProvider,
@@ -2225,7 +2218,7 @@ var wp;
     withNotices: () => with_notices_default,
     withSpokenMessages: () => with_spoken_messages_default
   });
-  var import_primitives7 = __toESM(require_primitives());
+  var import_primitives36 = __toESM(require_primitives());
 
   // node_modules/clsx/dist/clsx.mjs
   function r(e3) {
@@ -2541,7 +2534,7 @@ var wp;
       const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
       const isTextArea = element.tagName === "TEXTAREA";
       return isTextInput || isTextArea || false;
-    } catch (error3) {
+    } catch (error) {
       return false;
     }
   }
@@ -7363,7 +7356,7 @@ If there's a particular need for this, please submit a feature request at https:
         x: nextX,
         y: nextY,
         data,
-        reset: reset2
+        reset
       } = await fn({
         x: x2,
         y: y3,
@@ -7387,18 +7380,18 @@ If there's a particular need for this, please submit a feature request at https:
           ...data
         }
       };
-      if (reset2 && resetCount <= 50) {
+      if (reset && resetCount <= 50) {
         resetCount++;
-        if (typeof reset2 === "object") {
-          if (reset2.placement) {
-            statefulPlacement = reset2.placement;
+        if (typeof reset === "object") {
+          if (reset.placement) {
+            statefulPlacement = reset.placement;
           }
-          if (reset2.rects) {
-            rects = reset2.rects === true ? await platform2.getElementRects({
+          if (reset.rects) {
+            rects = reset.rects === true ? await platform2.getElementRects({
               reference,
               floating,
               strategy
-            }) : reset2.rects;
+            }) : reset.rects;
           }
           ({
             x: x2,
@@ -9803,24 +9796,24 @@ If there's a particular need for this, please submit a feature request at https:
         {}
       )
     });
-    const menu3 = createStore(initialState, composite, hovercard, store);
+    const menu2 = createStore(initialState, composite, hovercard, store);
     setup(
-      menu3,
-      () => sync(menu3, ["mounted"], (state) => {
+      menu2,
+      () => sync(menu2, ["mounted"], (state) => {
         if (state.mounted) return;
-        menu3.setState("activeId", null);
+        menu2.setState("activeId", null);
       })
     );
     setup(
-      menu3,
+      menu2,
       () => sync(parent, ["orientation"], (state) => {
-        menu3.setState(
+        menu2.setState(
           "placement",
           state.orientation === "vertical" ? "right-start" : "bottom-start"
         );
       })
     );
-    return __spreadProps2(__spreadValues2(__spreadValues2(__spreadValues2({}, composite), hovercard), menu3), {
+    return __spreadProps2(__spreadValues2(__spreadValues2(__spreadValues2({}, composite), hovercard), menu2), {
       combobox,
       parent,
       menubar: menubar2,
@@ -9828,13 +9821,13 @@ If there's a particular need for this, please submit a feature request at https:
         hovercard.hide();
         parent == null ? void 0 : parent.hideAll();
       },
-      setInitialFocus: (value) => menu3.setState("initialFocus", value),
-      setValues: (values) => menu3.setState("values", values),
+      setInitialFocus: (value) => menu2.setState("initialFocus", value),
+      setValues: (values) => menu2.setState("values", values),
       setValue: (name, value) => {
         if (name === "__proto__") return;
         if (name === "constructor") return;
         if (Array.isArray(name)) return;
-        menu3.setState("values", (values) => {
+        menu2.setState("values", (values) => {
           const prevValue = values[name];
           const nextValue = applyState(value, prevValue);
           if (nextValue === prevValue) return values;
@@ -9889,9 +9882,9 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_react40.useEffect)(() => {
       const disclosure = disclosureElement;
       if (!disclosure) return;
-      const menu3 = contentElement;
-      if (!menu3) return;
-      const menuLabel = label || menu3.hasAttribute("aria-label");
+      const menu2 = contentElement;
+      if (!menu2) return;
+      const menuLabel = label || menu2.hasAttribute("aria-label");
       if (menuLabel) {
         setId(void 0);
       } else if (disclosure.id) {
@@ -13425,8 +13418,8 @@ If there's a particular need for this, please submit a feature request at https:
   function replace(value, pattern, replacement) {
     return value.replace(pattern, replacement);
   }
-  function indexof(value, search2) {
-    return value.indexOf(search2);
+  function indexof(value, search) {
+    return value.indexOf(search);
   }
   function charat(value, index2) {
     return value.charCodeAt(index2) | 0;
@@ -16517,13 +16510,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var warning = noop2;
   var invariant2 = noop2;
   if (true) {
-    warning = (check8, message3) => {
-      if (!check8 && typeof console !== "undefined") {
+    warning = (check, message3) => {
+      if (!check && typeof console !== "undefined") {
         console.warn(message3);
       }
     };
-    invariant2 = (check8, message3) => {
-      if (!check8) {
+    invariant2 = (check, message3) => {
+      if (!check) {
         throw new Error(message3);
       }
     };
@@ -19984,34 +19977,34 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       this.updatePoint = () => {
         if (!(this.lastMoveEvent && this.lastMoveEventInfo))
           return;
-        const info3 = getPanInfo(this.lastMoveEventInfo, this.history);
+        const info2 = getPanInfo(this.lastMoveEventInfo, this.history);
         const isPanStarted = this.startEvent !== null;
-        const isDistancePastThreshold = distance2D(info3.offset, { x: 0, y: 0 }) >= 3;
+        const isDistancePastThreshold = distance2D(info2.offset, { x: 0, y: 0 }) >= 3;
         if (!isPanStarted && !isDistancePastThreshold)
           return;
-        const { point: point2 } = info3;
+        const { point: point2 } = info2;
         const { timestamp: timestamp2 } = frameData;
         this.history.push({ ...point2, timestamp: timestamp2 });
         const { onStart, onMove } = this.handlers;
         if (!isPanStarted) {
-          onStart && onStart(this.lastMoveEvent, info3);
+          onStart && onStart(this.lastMoveEvent, info2);
           this.startEvent = this.lastMoveEvent;
         }
-        onMove && onMove(this.lastMoveEvent, info3);
+        onMove && onMove(this.lastMoveEvent, info2);
       };
-      this.handlePointerMove = (event2, info3) => {
+      this.handlePointerMove = (event2, info2) => {
         this.lastMoveEvent = event2;
-        this.lastMoveEventInfo = transformPoint(info3, this.transformPagePoint);
+        this.lastMoveEventInfo = transformPoint(info2, this.transformPagePoint);
         frame.update(this.updatePoint, true);
       };
-      this.handlePointerUp = (event2, info3) => {
+      this.handlePointerUp = (event2, info2) => {
         this.end();
         const { onEnd, onSessionEnd, resumeAnimation } = this.handlers;
         if (this.dragSnapToOrigin)
           resumeAnimation && resumeAnimation();
         if (!(this.lastMoveEvent && this.lastMoveEventInfo))
           return;
-        const panInfo = getPanInfo(event2.type === "pointercancel" ? this.lastMoveEventInfo : transformPoint(info3, this.transformPagePoint), this.history);
+        const panInfo = getPanInfo(event2.type === "pointercancel" ? this.lastMoveEventInfo : transformPoint(info2, this.transformPagePoint), this.history);
         if (this.startEvent && onEnd) {
           onEnd(event2, panInfo);
         }
@@ -20023,8 +20016,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       this.handlers = handlers;
       this.transformPagePoint = transformPagePoint;
       this.contextWindow = contextWindow || window;
-      const info2 = extractEventInfo(event);
-      const initialInfo = transformPoint(info2, this.transformPagePoint);
+      const info = extractEventInfo(event);
+      const initialInfo = transformPoint(info, this.transformPagePoint);
       const { point } = initialInfo;
       const { timestamp } = frameData;
       this.history = [{ ...point, timestamp }];
@@ -20040,8 +20033,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       cancelFrame(this.updatePoint);
     }
   };
-  function transformPoint(info2, transformPagePoint) {
-    return transformPagePoint ? { point: transformPagePoint(info2.point) } : info2;
+  function transformPoint(info, transformPagePoint) {
+    return transformPagePoint ? { point: transformPagePoint(info.point) } : info;
   }
   function subtractPoint(a3, b3) {
     return { x: a3.x - b3.x, y: a3.y - b3.y };
@@ -20399,7 +20392,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           this.snapToCursor(extractEventInfo(event).point);
         }
       };
-      const onStart = (event, info2) => {
+      const onStart = (event, info) => {
         const { drag: drag2, dragPropagation, onDragStart } = this.getProps();
         if (drag2 && !dragPropagation) {
           if (this.openDragLock)
@@ -20430,17 +20423,17 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           this.originPoint[axis] = current;
         });
         if (onDragStart) {
-          frame.postRender(() => onDragStart(event, info2));
+          frame.postRender(() => onDragStart(event, info));
         }
         addValueToWillChange(this.visualElement, "transform");
         const { animationState } = this.visualElement;
         animationState && animationState.setActive("whileDrag", true);
       };
-      const onMove = (event, info2) => {
+      const onMove = (event, info) => {
         const { dragPropagation, dragDirectionLock, onDirectionLock, onDrag } = this.getProps();
         if (!dragPropagation && !this.openDragLock)
           return;
-        const { offset: offset3 } = info2;
+        const { offset: offset3 } = info;
         if (dragDirectionLock && this.currentDirection === null) {
           this.currentDirection = getCurrentDirection(offset3);
           if (this.currentDirection !== null) {
@@ -20448,12 +20441,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
           }
           return;
         }
-        this.updateAxis("x", info2.point, offset3);
-        this.updateAxis("y", info2.point, offset3);
+        this.updateAxis("x", info.point, offset3);
+        this.updateAxis("y", info.point, offset3);
         this.visualElement.render();
-        onDrag && onDrag(event, info2);
+        onDrag && onDrag(event, info);
       };
-      const onSessionEnd = (event, info2) => this.stop(event, info2);
+      const onSessionEnd = (event, info) => this.stop(event, info);
       const resumeAnimation = () => eachAxis((axis) => {
         var _a;
         return this.getAnimationState(axis) === "paused" && ((_a = this.getAxisMotionValue(axis).animation) === null || _a === void 0 ? void 0 : _a.play());
@@ -20471,16 +20464,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         contextWindow: getContextWindow(this.visualElement)
       });
     }
-    stop(event, info2) {
+    stop(event, info) {
       const isDragging2 = this.isDragging;
       this.cancel();
       if (!isDragging2)
         return;
-      const { velocity } = info2;
+      const { velocity } = info;
       this.startAnimation(velocity);
       const { onDragEnd } = this.getProps();
       if (onDragEnd) {
-        frame.postRender(() => onDragEnd(event, info2));
+        frame.postRender(() => onDragEnd(event, info));
       }
     }
     cancel() {
@@ -20749,9 +20742,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // packages/components/node_modules/framer-motion/dist/es/gestures/pan/index.mjs
-  var asyncHandler = (handler) => (event, info2) => {
+  var asyncHandler = (handler) => (event, info) => {
     if (handler) {
-      frame.postRender(() => handler(event, info2));
+      frame.postRender(() => handler(event, info));
     }
   };
   var PanGesture = class extends Feature {
@@ -20771,10 +20764,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         onSessionStart: asyncHandler(onPanSessionStart),
         onStart: asyncHandler(onPanStart),
         onMove: onPan,
-        onEnd: (event, info2) => {
+        onEnd: (event, info) => {
           delete this.session;
           if (onPanEnd) {
-            frame.postRender(() => onPanEnd(event, info2));
+            frame.postRender(() => onPanEnd(event, info));
           }
         }
       };
@@ -24158,7 +24151,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   };
 
   // packages/components/build-module/angle-picker-control/index.js
-  var import_element36 = __toESM(require_element());
+  var import_element37 = __toESM(require_element());
   var import_i18n6 = __toESM(require_i18n());
 
   // packages/components/build-module/flex/flex/hook.js
@@ -24453,28 +24446,239 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var component_default6 = Spacer;
 
   // packages/components/build-module/number-control/index.js
-  var import_element34 = __toESM(require_element());
+  var import_element35 = __toESM(require_element());
   var import_i18n5 = __toESM(require_i18n());
-  var import_icons = __toESM(require_icons());
+
+  // packages/icons/build-module/icon/index.js
+  var import_element21 = __toESM(require_element());
+  var icon_default2 = (0, import_element21.forwardRef)(
+    ({ icon, size: size3 = 24, ...props }, ref) => {
+      return (0, import_element21.cloneElement)(icon, {
+        width: size3,
+        height: size3,
+        ...props,
+        ref
+      });
+    }
+  );
+
+  // packages/icons/build-module/library/arrow-left.js
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
+  var import_primitives2 = __toESM(require_primitives());
+  var arrow_left_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives2.Path, { d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z" }) });
+
+  // packages/icons/build-module/library/arrow-right.js
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
+  var import_primitives3 = __toESM(require_primitives());
+  var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives3.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
+
+  // packages/icons/build-module/library/caution.js
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
+  var import_primitives4 = __toESM(require_primitives());
+  var caution_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives4.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+    import_primitives4.Path,
+    {
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z"
+    }
+  ) });
+
+  // packages/icons/build-module/library/check.js
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+  var import_primitives5 = __toESM(require_primitives());
+  var check_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives5.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
+
+  // packages/icons/build-module/library/chevron-down.js
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
+  var import_primitives6 = __toESM(require_primitives());
+  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives6.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives6.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+
+  // packages/icons/build-module/library/chevron-left.js
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
+  var import_primitives7 = __toESM(require_primitives());
+  var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives7.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
+
+  // packages/icons/build-module/library/chevron-right-small.js
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
+  var import_primitives8 = __toESM(require_primitives());
+  var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives8.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
+
+  // packages/icons/build-module/library/chevron-right.js
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
+  var import_primitives9 = __toESM(require_primitives());
+  var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives9.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
+
+  // packages/icons/build-module/library/chevron-up.js
+  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
+  var import_primitives10 = __toESM(require_primitives());
+  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives10.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives10.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
+
+  // packages/icons/build-module/library/close-small.js
+  var import_jsx_runtime64 = __toESM(require_jsx_runtime());
+  var import_primitives11 = __toESM(require_primitives());
+  var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives11.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
+
+  // packages/icons/build-module/library/close.js
+  var import_jsx_runtime65 = __toESM(require_jsx_runtime());
+  var import_primitives12 = __toESM(require_primitives());
+  var close_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives12.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
+
+  // packages/icons/build-module/library/copy.js
+  var import_jsx_runtime66 = __toESM(require_jsx_runtime());
+  var import_primitives13 = __toESM(require_primitives());
+  var copy_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    import_primitives13.Path,
+    {
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      d: "M5 4.5h11a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5ZM3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm17 3v10.75c0 .69-.56 1.25-1.25 1.25H6v1.5h12.75a2.75 2.75 0 0 0 2.75-2.75V8H20Z"
+    }
+  ) });
+
+  // packages/icons/build-module/library/error.js
+  var import_jsx_runtime67 = __toESM(require_jsx_runtime());
+  var import_primitives14 = __toESM(require_primitives());
+  var error_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives14.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+    import_primitives14.Path,
+    {
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z"
+    }
+  ) });
+
+  // packages/icons/build-module/library/info.js
+  var import_jsx_runtime68 = __toESM(require_jsx_runtime());
+  var import_primitives15 = __toESM(require_primitives());
+  var info_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives15.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+    import_primitives15.Path,
+    {
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z"
+    }
+  ) });
+
+  // packages/icons/build-module/library/line-dashed.js
+  var import_jsx_runtime69 = __toESM(require_jsx_runtime());
+  var import_primitives16 = __toESM(require_primitives());
+  var line_dashed_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+    import_primitives16.Path,
+    {
+      fillRule: "evenodd",
+      d: "M5 11.25h3v1.5H5v-1.5zm5.5 0h3v1.5h-3v-1.5zm8.5 0h-3v1.5h3v-1.5z",
+      clipRule: "evenodd"
+    }
+  ) });
+
+  // packages/icons/build-module/library/line-dotted.js
+  var import_jsx_runtime70 = __toESM(require_jsx_runtime());
+  var import_primitives17 = __toESM(require_primitives());
+  var line_dotted_default = /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+    import_primitives17.Path,
+    {
+      fillRule: "evenodd",
+      d: "M5.25 11.25h1.5v1.5h-1.5v-1.5zm3 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5zm1.5 0h1.5v1.5h-1.5v-1.5zm4.5 0h-1.5v1.5h1.5v-1.5z",
+      clipRule: "evenodd"
+    }
+  ) });
+
+  // packages/icons/build-module/library/line-solid.js
+  var import_jsx_runtime71 = __toESM(require_jsx_runtime());
+  var import_primitives18 = __toESM(require_primitives());
+  var line_solid_default = /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(import_primitives18.Path, { d: "M5 11.25h14v1.5H5z" }) });
+
+  // packages/icons/build-module/library/link-off.js
+  var import_jsx_runtime72 = __toESM(require_jsx_runtime());
+  var import_primitives19 = __toESM(require_primitives());
+  var link_off_default = /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives19.Path, { d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z" }) });
+
+  // packages/icons/build-module/library/link.js
+  var import_jsx_runtime73 = __toESM(require_jsx_runtime());
+  var import_primitives20 = __toESM(require_primitives());
+  var link_default = /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives20.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
+
+  // packages/icons/build-module/library/menu.js
+  var import_jsx_runtime74 = __toESM(require_jsx_runtime());
+  var import_primitives21 = __toESM(require_primitives());
+  var menu_default = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_primitives21.Path, { d: "M5 5v1.5h14V5H5zm0 7.8h14v-1.5H5v1.5zM5 19h14v-1.5H5V19z" }) });
+
+  // packages/icons/build-module/library/more-vertical.js
+  var import_jsx_runtime75 = __toESM(require_jsx_runtime());
+  var import_primitives22 = __toESM(require_primitives());
+  var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives22.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
+
+  // packages/icons/build-module/library/plus.js
+  var import_jsx_runtime76 = __toESM(require_jsx_runtime());
+  var import_primitives23 = __toESM(require_primitives());
+  var plus_default = /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives23.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
+
+  // packages/icons/build-module/library/published.js
+  var import_jsx_runtime77 = __toESM(require_jsx_runtime());
+  var import_primitives24 = __toESM(require_primitives());
+  var published_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    import_primitives24.Path,
+    {
+      fillRule: "evenodd",
+      clipRule: "evenodd",
+      d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z"
+    }
+  ) });
+
+  // packages/icons/build-module/library/reset.js
+  var import_jsx_runtime78 = __toESM(require_jsx_runtime());
+  var import_primitives25 = __toESM(require_primitives());
+  var reset_default = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_primitives25.Path, { d: "M7 11.5h10V13H7z" }) });
+
+  // packages/icons/build-module/library/search.js
+  var import_jsx_runtime79 = __toESM(require_jsx_runtime());
+  var import_primitives26 = __toESM(require_primitives());
+  var search_default = /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_primitives26.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
+
+  // packages/icons/build-module/library/settings.js
+  var import_jsx_runtime80 = __toESM(require_jsx_runtime());
+  var import_primitives27 = __toESM(require_primitives());
+  var settings_default = /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives27.Path, { d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z" }),
+    /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives27.Path, { d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z" })
+  ] });
+
+  // packages/icons/build-module/library/swatch.js
+  var import_jsx_runtime81 = __toESM(require_jsx_runtime());
+  var import_primitives28 = __toESM(require_primitives());
+  var swatch_default = /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives28.Path, { d: "M7.1 5.7 8 6.9c.4-.3.9-.6 1.5-.8l-.6-1.4c-.7.3-1.3.6-1.8 1ZM4.6 8.9l1.4.6c.2-.5.5-1 .8-1.5l-1.2-.9c-.4.6-.8 1.2-1 1.8Zm14.8 0c-.3-.7-.6-1.3-1-1.8l-1.2.9c.3.4.6.9.8 1.5l1.4-.6ZM7.1 18.3c.6.4 1.2.8 1.8 1l.6-1.4c-.5-.2-1-.5-1.5-.8l-.9 1.2ZM5.5 12v-.9h-.7l-.7-.2v2l1.5-.2v-.9Zm-.7 3h-.2c.3.7.6 1.3 1 1.9l1.2-.9c-.3-.4-.6-.9-.8-1.5l-1.2.5Zm9.7 3 .5 1.2v.2c.7-.3 1.3-.6 1.9-1l-.9-1.2c-.4.3-.9.6-1.5.8Zm-2.5.5h-.9l-.2 1.3v.2h2l-.2-1.5h-.9Zm7.9-7.5-1.5.2V13h.7l.7.2v-2ZM18 14.5c-.2.5-.5 1-.8 1.5l1.2.9c.4-.6.8-1.2 1-1.8h-.2l-1.2-.6ZM11 4.1l.2 1.5H13V4.2h-1.9ZM14.5 6c.5.2 1 .5 1.5.8l.9-1.2c-.6-.4-1.2-.8-1.8-1L14.5 6Z" }) });
+
+  // packages/icons/build-module/library/tip.js
+  var import_jsx_runtime82 = __toESM(require_jsx_runtime());
+  var import_primitives29 = __toESM(require_primitives());
+  var tip_default = /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives29.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives29.Path, { d: "M12 15.8c-3.7 0-6.8-3-6.8-6.8s3-6.8 6.8-6.8c3.7 0 6.8 3 6.8 6.8s-3.1 6.8-6.8 6.8zm0-12C9.1 3.8 6.8 6.1 6.8 9s2.4 5.2 5.2 5.2c2.9 0 5.2-2.4 5.2-5.2S14.9 3.8 12 3.8zM8 17.5h8V19H8zM10 20.5h4V22h-4z" }) });
+
+  // packages/icons/build-module/library/upload.js
+  var import_jsx_runtime83 = __toESM(require_jsx_runtime());
+  var import_primitives30 = __toESM(require_primitives());
+  var upload_default = /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_primitives30.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_primitives30.Path, { d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z" }) });
+
+  // packages/components/build-module/number-control/index.js
   var import_compose7 = __toESM(require_compose());
   var import_deprecated6 = __toESM(require_deprecated());
 
   // packages/components/build-module/input-control/index.js
   var import_compose5 = __toESM(require_compose());
-  var import_element30 = __toESM(require_element());
+  var import_element31 = __toESM(require_element());
 
   // packages/components/build-module/input-control/input-base.js
   var import_compose3 = __toESM(require_compose());
-  var import_element25 = __toESM(require_element());
+  var import_element26 = __toESM(require_element());
 
   // packages/components/build-module/input-control/backdrop.js
-  var import_element24 = __toESM(require_element());
+  var import_element25 = __toESM(require_element());
 
   // packages/components/build-module/text/hook.js
-  var import_element23 = __toESM(require_element());
+  var import_element24 = __toESM(require_element());
 
   // packages/components/build-module/truncate/hook.js
-  var import_element21 = __toESM(require_element());
+  var import_element22 = __toESM(require_element());
 
   // packages/components/build-module/truncate/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__5() {
@@ -24577,7 +24781,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       numberOfLines
     }) : children;
     const shouldTruncate = !!childrenAsText && ellipsizeMode === TRUNCATE_TYPE.auto;
-    const classes = (0, import_element21.useMemo)(() => {
+    const classes = (0, import_element22.useMemo)(() => {
       const truncateLines = /* @__PURE__ */ css(numberOfLines === 1 ? "word-break: break-all;" : "", " -webkit-box-orient:vertical;-webkit-line-clamp:", numberOfLines, ";display:-webkit-box;overflow:hidden;" + (false ? "" : ";label:truncateLines;"), false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhvb2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBMEQyQiIsImZpbGUiOiJob29rLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG4vKipcbiAqIFdvcmRQcmVzcyBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgdXNlTWVtbyB9IGZyb20gJ0B3b3JkcHJlc3MvZWxlbWVudCc7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB0eXBlIHsgV29yZFByZXNzQ29tcG9uZW50UHJvcHMgfSBmcm9tICcuLi9jb250ZXh0JztcbmltcG9ydCB7IHVzZUNvbnRleHRTeXN0ZW0gfSBmcm9tICcuLi9jb250ZXh0JztcbmltcG9ydCAqIGFzIHN0eWxlcyBmcm9tICcuL3N0eWxlcyc7XG5pbXBvcnQgeyBUUlVOQ0FURV9FTExJUFNJUywgVFJVTkNBVEVfVFlQRSwgdHJ1bmNhdGVDb250ZW50IH0gZnJvbSAnLi91dGlscyc7XG5pbXBvcnQgeyB1c2VDeCB9IGZyb20gJy4uL3V0aWxzL2hvb2tzL3VzZS1jeCc7XG5pbXBvcnQgdHlwZSB7IFRydW5jYXRlUHJvcHMgfSBmcm9tICcuL3R5cGVzJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gdXNlVHJ1bmNhdGUoXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczwgVHJ1bmNhdGVQcm9wcywgJ3NwYW4nID5cbikge1xuXHRjb25zdCB7XG5cdFx0Y2xhc3NOYW1lLFxuXHRcdGNoaWxkcmVuLFxuXHRcdGVsbGlwc2lzID0gVFJVTkNBVEVfRUxMSVBTSVMsXG5cdFx0ZWxsaXBzaXplTW9kZSA9IFRSVU5DQVRFX1RZUEUuYXV0byxcblx0XHRsaW1pdCA9IDAsXG5cdFx0bnVtYmVyT2ZMaW5lcyA9IDAsXG5cdFx0Li4ub3RoZXJQcm9wc1xuXHR9ID0gdXNlQ29udGV4dFN5c3RlbSggcHJvcHMsICdUcnVuY2F0ZScgKTtcblxuXHRjb25zdCBjeCA9IHVzZUN4KCk7XG5cblx0bGV0IGNoaWxkcmVuQXNUZXh0O1xuXHRpZiAoIHR5cGVvZiBjaGlsZHJlbiA9PT0gJ3N0cmluZycgKSB7XG5cdFx0Y2hpbGRyZW5Bc1RleHQgPSBjaGlsZHJlbjtcblx0fSBlbHNlIGlmICggdHlwZW9mIGNoaWxkcmVuID09PSAnbnVtYmVyJyApIHtcblx0XHRjaGlsZHJlbkFzVGV4dCA9IGNoaWxkcmVuLnRvU3RyaW5nKCk7XG5cdH1cblxuXHRjb25zdCB0cnVuY2F0ZWRDb250ZW50ID0gY2hpbGRyZW5Bc1RleHRcblx0XHQ/IHRydW5jYXRlQ29udGVudCggY2hpbGRyZW5Bc1RleHQsIHtcblx0XHRcdFx0ZWxsaXBzaXMsXG5cdFx0XHRcdGVsbGlwc2l6ZU1vZGUsXG5cdFx0XHRcdGxpbWl0LFxuXHRcdFx0XHRudW1iZXJPZkxpbmVzLFxuXHRcdCAgfSApXG5cdFx0OiBjaGlsZHJlbjtcblxuXHRjb25zdCBzaG91bGRUcnVuY2F0ZSA9XG5cdFx0ISEgY2hpbGRyZW5Bc1RleHQgJiYgZWxsaXBzaXplTW9kZSA9PT0gVFJVTkNBVEVfVFlQRS5hdXRvO1xuXG5cdGNvbnN0IGNsYXNzZXMgPSB1c2VNZW1vKCAoKSA9PiB7XG5cdFx0Ly8gVGhlIGB3b3JkLWJyZWFrOiBicmVhay1hbGxgIHByb3BlcnR5IGZpcnN0IG1ha2VzIHN1cmUgYSB0ZXh0IGxpbmVcblx0XHQvLyBicmVha3MgZXZlbiB3aGVuIGl0IGNvbnRhaW5zICd1bmJyZWFrYWJsZScgY29udGVudCBzdWNoIGFzIGxvbmcgVVJMcy5cblx0XHQvLyBTZWUgaHR0cHM6Ly9naXRodWIuY29tL1dvcmRQcmVzcy9ndXRlbmJlcmcvaXNzdWVzLzYwODYwLlxuXHRcdGNvbnN0IHRydW5jYXRlTGluZXMgPSBjc3NgXG5cdFx0XHQkeyBudW1iZXJPZkxpbmVzID09PSAxID8gJ3dvcmQtYnJlYWs6IGJyZWFrLWFsbDsnIDogJycgfVxuXHRcdFx0LXdlYmtpdC1ib3gtb3JpZW50OiB2ZXJ0aWNhbDtcblx0XHRcdC13ZWJraXQtbGluZS1jbGFtcDogJHsgbnVtYmVyT2ZMaW5lcyB9O1xuXHRcdFx0ZGlzcGxheTogLXdlYmtpdC1ib3g7XG5cdFx0XHRvdmVyZmxvdzogaGlkZGVuO1xuXHRcdGA7XG5cblx0XHRyZXR1cm4gY3goXG5cdFx0XHRzaG91bGRUcnVuY2F0ZSAmJiAhIG51bWJlck9mTGluZXMgJiYgc3R5bGVzLlRydW5jYXRlLFxuXHRcdFx0c2hvdWxkVHJ1bmNhdGUgJiYgISEgbnVtYmVyT2ZMaW5lcyAmJiB0cnVuY2F0ZUxpbmVzLFxuXHRcdFx0Y2xhc3NOYW1lXG5cdFx0KTtcblx0fSwgWyBjbGFzc05hbWUsIGN4LCBudW1iZXJPZkxpbmVzLCBzaG91bGRUcnVuY2F0ZSBdICk7XG5cblx0cmV0dXJuIHsgLi4ub3RoZXJQcm9wcywgY2xhc3NOYW1lOiBjbGFzc2VzLCBjaGlsZHJlbjogdHJ1bmNhdGVkQ29udGVudCB9O1xufVxuIl19 */");
       return cx3(shouldTruncate && !numberOfLines && Truncate, shouldTruncate && !!numberOfLines && truncateLines, className);
     }, [className, cx3, numberOfLines, shouldTruncate]);
@@ -24589,10 +24793,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // packages/components/build-module/truncate/component.js
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime84 = __toESM(require_jsx_runtime());
   function UnconnectedTruncate(props, forwardedRef) {
     const truncateProps = useTruncate(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(component_default, {
       as: "span",
       ...truncateProps,
       ref: forwardedRef
@@ -24641,7 +24845,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // packages/components/build-module/text/utils.js
   var import_highlight_words_core = __toESM(require_dist());
-  var import_element22 = __toESM(require_element());
+  var import_element23 = __toESM(require_element());
   var lowercaseProps = (object) => {
     const mapped = {};
     for (const key in object) {
@@ -24712,9 +24916,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         if (typeof HighlightTag !== "string") {
           props.highlightIndex = highlightIndex;
         }
-        return (0, import_element22.createElement)(HighlightTag, props);
+        return (0, import_element23.createElement)(HighlightTag, props);
       }
-      return (0, import_element22.createElement)("span", {
+      return (0, import_element23.createElement)("span", {
         children: text,
         className: unhighlightClassName,
         key: index2,
@@ -24836,7 +25040,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       });
     }
     const cx3 = useCx();
-    const classes = (0, import_element23.useMemo)(() => {
+    const classes = (0, import_element24.useMemo)(() => {
       const sx = {};
       const lineHeight = getLineHeight(adjustLineHeightForInnerControls, lineHeightProp);
       sx.Base = /* @__PURE__ */ css({
@@ -24875,13 +25079,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     };
     const truncateProps = useTruncate(finalComponentProps);
     if (!truncate && Array.isArray(children)) {
-      content = import_element23.Children.map(children, (child) => {
+      content = import_element24.Children.map(children, (child) => {
         if (typeof child !== "object" || child === null || !("props" in child)) {
           return child;
         }
         const isLink = hasConnectNamespace(child, ["Link"]);
         if (isLink) {
-          return (0, import_element23.cloneElement)(child, {
+          return (0, import_element24.cloneElement)(child, {
             size: child.props.size || "inherit"
           });
         }
@@ -24895,10 +25099,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // packages/components/build-module/text/component.js
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime85 = __toESM(require_jsx_runtime());
   function UnconnectedText(props, forwardedRef) {
     const textProps = useText(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(component_default, {
       as: "span",
       ...textProps,
       ref: forwardedRef
@@ -24908,7 +25112,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var component_default8 = Text2;
 
   // packages/components/build-module/input-control/styles/input-control-styles.js
-  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime86 = __toESM(require_jsx_runtime());
   function _EMOTION_STRINGIFIED_CSS_ERROR__8() {
     return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
   }
@@ -25111,7 +25315,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     target: "em5sgkm2",
     label: "BaseLabel"
   })("&&&{", baseLabelTypography, ";box-sizing:border-box;display:block;padding-top:0;padding-bottom:0;max-width:100%;z-index:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlucHV0LWNvbnRyb2wtc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFrVHFFIiwiZmlsZSI6ImlucHV0LWNvbnRyb2wtc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB0eXBlIHsgU2VyaWFsaXplZFN0eWxlcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB0eXBlIHsgQ1NTUHJvcGVydGllcywgUmVhY3ROb2RlIH0gZnJvbSAncmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vLi4vY29udGV4dCc7XG5pbXBvcnQgeyBGbGV4LCBGbGV4SXRlbSB9IGZyb20gJy4uLy4uL2ZsZXgnO1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgYmFzZUxhYmVsVHlwb2dyYXBoeSwgQ09MT1JTLCBDT05GSUcsIHJ0bCB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB0eXBlIHsgTGFiZWxQb3NpdGlvbiwgU2l6ZSwgUHJlZml4U3VmZml4V3JhcHBlclByb3BzIH0gZnJvbSAnLi4vdHlwZXMnO1xuXG50eXBlIENvbnRhaW5lclByb3BzID0ge1xuXHRkaXNhYmxlZD86IGJvb2xlYW47XG5cdGhpZGVMYWJlbD86IGJvb2xlYW47XG5cdF9fdW5zdGFibGVJbnB1dFdpZHRoPzogQ1NTUHJvcGVydGllc1sgJ3dpZHRoJyBdO1xuXHRsYWJlbFBvc2l0aW9uPzogTGFiZWxQb3NpdGlvbjtcbn07XG5cbmV4cG9ydCBjb25zdCBQcmVmaXggPSBzdHlsZWQuc3BhbmBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogYmxvY2s7XG5gO1xuXG5leHBvcnQgY29uc3QgU3VmZml4ID0gc3R5bGVkLnNwYW5gXG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGFsaWduLXNlbGY6IHN0cmV0Y2g7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGRpc3BsYXk6IGZsZXg7XG5gO1xuXG50eXBlIEJhY2tkcm9wUHJvcHMgPSB7XG5cdGRpc2FibGVkPzogYm9vbGVhbjtcblx0aXNCb3JkZXJsZXNzPzogYm9vbGVhbjtcbn07XG5cbmNvbnN0IGJhY2tkcm9wQm9yZGVyQ29sb3IgPSAoIHtcblx0ZGlzYWJsZWQsXG5cdGlzQm9yZGVybGVzcyxcbn06IEJhY2tkcm9wUHJvcHMgKTogQ1NTUHJvcGVydGllc1sgJ2JvcmRlckNvbG9yJyBdID0+IHtcblx0aWYgKCBpc0JvcmRlcmxlc3MgKSB7XG5cdFx0cmV0dXJuICd0cmFuc3BhcmVudCc7XG5cdH1cblxuXHRpZiAoIGRpc2FibGVkICkge1xuXHRcdHJldHVybiBDT0xPUlMudWkuYm9yZGVyRGlzYWJsZWQ7XG5cdH1cblxuXHRyZXR1cm4gQ09MT1JTLnVpLmJvcmRlcjtcbn07XG5cbmV4cG9ydCBjb25zdCBCYWNrZHJvcFVJID0gc3R5bGVkLmRpdjwgQmFja2Ryb3BQcm9wcyA+YFxuXHQmJiYge1xuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0Ym9yZGVyLWNvbG9yOiAkeyBiYWNrZHJvcEJvcmRlckNvbG9yIH07XG5cdFx0Ym9yZGVyLXJhZGl1czogaW5oZXJpdDtcblx0XHRib3JkZXItc3R5bGU6IHNvbGlkO1xuXHRcdGJvcmRlci13aWR0aDogMXB4O1xuXHRcdGJvdHRvbTogMDtcblx0XHRsZWZ0OiAwO1xuXHRcdG1hcmdpbjogMDtcblx0XHRwYWRkaW5nOiAwO1xuXHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRyaWdodDogMDtcblx0XHR0b3A6IDA7XG5cblx0XHQkeyBydGwoIHsgcGFkZGluZ0xlZnQ6IDIgfSApIH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFJvb3QgPSBzdHlsZWQoIEZsZXggKWBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0cGFkZGluZy10b3A6IDA7XG5cblx0Ly8gRm9jdXMgd2l0aGluLCBleGNsdWRpbmcgY2FzZXMgd2hlcmUgYXV4aWxpYXJ5IGNvbnRyb2xzIGluIHByZWZpeCBvciBzdWZmaXggaGF2ZSBmb2N1cy5cblx0Jjpmb2N1cy13aXRoaW46bm90KCA6aGFzKCA6aXMoICR7IFByZWZpeCB9LCAkeyBTdWZmaXggfSApOmZvY3VzLXdpdGhpbiApICkge1xuXHRcdCR7IEJhY2tkcm9wVUkgfSB7XG5cdFx0XHRib3JkZXItY29sb3I6ICR7IENPTE9SUy51aS5ib3JkZXJGb2N1cyB9O1xuXHRcdFx0Ym94LXNoYWRvdzogJHsgQ09ORklHLmNvbnRyb2xCb3hTaGFkb3dGb2N1cyB9O1xuXHRcdFx0Ly8gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgd2lsbCBzaG93IHRoaXMgb3V0bGluZSwgYnV0IG5vdCB0aGUgYm94LXNoYWRvdy5cblx0XHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRcdG91dGxpbmUtb2Zmc2V0OiAtMnB4O1xuXHRcdH1cblx0fVxuYDtcblxuY29uc3QgY29udGFpbmVyRGlzYWJsZWRTdHlsZXMgPSAoIHsgZGlzYWJsZWQgfTogQ29udGFpbmVyUHJvcHMgKSA9PiB7XG5cdGNvbnN0IGJhY2tncm91bmRDb2xvciA9IGRpc2FibGVkXG5cdFx0PyBDT0xPUlMudWkuYmFja2dyb3VuZERpc2FibGVkXG5cdFx0OiBDT0xPUlMudWkuYmFja2dyb3VuZDtcblxuXHRyZXR1cm4gY3NzKCB7IGJhY2tncm91bmRDb2xvciB9ICk7XG59O1xuXG5jb25zdCBjb250YWluZXJXaWR0aFN0eWxlcyA9ICgge1xuXHRfX3Vuc3RhYmxlSW5wdXRXaWR0aCxcblx0bGFiZWxQb3NpdGlvbixcbn06IENvbnRhaW5lclByb3BzICkgPT4ge1xuXHRpZiAoICEgX191bnN0YWJsZUlucHV0V2lkdGggKSB7XG5cdFx0cmV0dXJuIGNzcyggeyB3aWR0aDogJzEwMCUnIH0gKTtcblx0fVxuXG5cdGlmICggbGFiZWxQb3NpdGlvbiA9PT0gJ3NpZGUnICkge1xuXHRcdHJldHVybiAnJztcblx0fVxuXG5cdGlmICggbGFiZWxQb3NpdGlvbiA9PT0gJ2VkZ2UnICkge1xuXHRcdHJldHVybiBjc3MoIHtcblx0XHRcdGZsZXg6IGAwIDAgJHsgX191bnN0YWJsZUlucHV0V2lkdGggfWAsXG5cdFx0fSApO1xuXHR9XG5cblx0cmV0dXJuIGNzcyggeyB3aWR0aDogX191bnN0YWJsZUlucHV0V2lkdGggfSApO1xufTtcblxuZXhwb3J0IGNvbnN0IENvbnRhaW5lciA9IHN0eWxlZC5kaXY8IENvbnRhaW5lclByb3BzID5gXG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGJvcmRlci1yYWRpdXM6IGluaGVyaXQ7XG5cdGRpc3BsYXk6IGZsZXg7XG5cdGZsZXg6IDE7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblxuXHQkeyBjb250YWluZXJEaXNhYmxlZFN0eWxlcyB9XG5cdCR7IGNvbnRhaW5lcldpZHRoU3R5bGVzIH1cbmA7XG5cbnR5cGUgSW5wdXRQcm9wcyA9IHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplPzogYm9vbGVhbjtcblx0ZGlzYWJsZWQ/OiBib29sZWFuO1xuXHRpbnB1dFNpemU/OiBTaXplO1xuXHRpc0RyYWdnaW5nPzogYm9vbGVhbjtcblx0ZHJhZ0N1cnNvcj86IENTU1Byb3BlcnRpZXNbICdjdXJzb3InIF07XG5cdHBhZGRpbmdJbmxpbmVTdGFydD86IENTU1Byb3BlcnRpZXNbICdwYWRkaW5nSW5saW5lU3RhcnQnIF07XG5cdHBhZGRpbmdJbmxpbmVFbmQ/OiBDU1NQcm9wZXJ0aWVzWyAncGFkZGluZ0lubGluZUVuZCcgXTtcbn07XG5cbmNvbnN0IGRpc2FibGVkU3R5bGVzID0gKCB7IGRpc2FibGVkIH06IElucHV0UHJvcHMgKSA9PiB7XG5cdGlmICggISBkaXNhYmxlZCApIHtcblx0XHRyZXR1cm4gJyc7XG5cdH1cblxuXHRyZXR1cm4gY3NzKCB7XG5cdFx0Y29sb3I6IENPTE9SUy51aS50ZXh0RGlzYWJsZWQsXG5cdH0gKTtcbn07XG5cbmV4cG9ydCBjb25zdCBmb250U2l6ZVN0eWxlcyA9ICggeyBpbnB1dFNpemU6IHNpemUgfTogSW5wdXRQcm9wcyApID0+IHtcblx0Y29uc3Qgc2l6ZXMgPSB7XG5cdFx0ZGVmYXVsdDogJzEzcHgnLFxuXHRcdHNtYWxsOiAnMTFweCcsXG5cdFx0Y29tcGFjdDogJzEzcHgnLFxuXHRcdCdfX3Vuc3RhYmxlLWxhcmdlJzogJzEzcHgnLFxuXHR9O1xuXG5cdGNvbnN0IGZvbnRTaXplID0gc2l6ZXNbIHNpemUgYXMgU2l6ZSBdIHx8IHNpemVzLmRlZmF1bHQ7XG5cdGNvbnN0IGZvbnRTaXplTW9iaWxlID0gJzE2cHgnO1xuXG5cdGlmICggISBmb250U2l6ZSApIHtcblx0XHRyZXR1cm4gJyc7XG5cdH1cblxuXHRyZXR1cm4gY3NzYFxuXHRcdGZvbnQtc2l6ZTogJHsgZm9udFNpemVNb2JpbGUgfTtcblxuXHRcdEBtZWRpYSAoIG1pbi13aWR0aDogNjAwcHggKSB7XG5cdFx0XHRmb250LXNpemU6ICR7IGZvbnRTaXplIH07XG5cdFx0fVxuXHRgO1xufTtcblxuZXhwb3J0IGNvbnN0IGdldFNpemVDb25maWcgPSAoIHtcblx0aW5wdXRTaXplOiBzaXplLFxuXHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG59OiBJbnB1dFByb3BzICkgPT4ge1xuXHQvLyBQYWRkaW5ncyBtYXkgYmUgb3ZlcnJpZGRlbiBieSB0aGUgY3VzdG9tIHBhZGRpbmdzIHByb3BzLlxuXHRjb25zdCBzaXplcyA9IHtcblx0XHRkZWZhdWx0OiB7XG5cdFx0XHRoZWlnaHQ6IDQwLFxuXHRcdFx0bGluZUhlaWdodDogMSxcblx0XHRcdG1pbkhlaWdodDogNDAsXG5cdFx0XHRwYWRkaW5nTGVmdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWCxcblx0XHRcdHBhZGRpbmdSaWdodDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWCxcblx0XHR9LFxuXHRcdHNtYWxsOiB7XG5cdFx0XHRoZWlnaHQ6IDI0LFxuXHRcdFx0bGluZUhlaWdodDogMSxcblx0XHRcdG1pbkhlaWdodDogMjQsXG5cdFx0XHRwYWRkaW5nTGVmdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdFx0cGFkZGluZ1JpZ2h0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYU21hbGwsXG5cdFx0fSxcblx0XHRjb21wYWN0OiB7XG5cdFx0XHRoZWlnaHQ6IDMyLFxuXHRcdFx0bGluZUhlaWdodDogMSxcblx0XHRcdG1pbkhlaWdodDogMzIsXG5cdFx0XHRwYWRkaW5nTGVmdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdFx0cGFkZGluZ1JpZ2h0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYU21hbGwsXG5cdFx0fSxcblx0XHQnX191bnN0YWJsZS1sYXJnZSc6IHtcblx0XHRcdGhlaWdodDogNDAsXG5cdFx0XHRsaW5lSGVpZ2h0OiAxLFxuXHRcdFx0bWluSGVpZ2h0OiA0MCxcblx0XHRcdHBhZGRpbmdMZWZ0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYLFxuXHRcdFx0cGFkZGluZ1JpZ2h0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYLFxuXHRcdH0sXG5cdH07XG5cblx0aWYgKCAhIF9fbmV4dDQwcHhEZWZhdWx0U2l6ZSApIHtcblx0XHRzaXplcy5kZWZhdWx0ID0gc2l6ZXMuY29tcGFjdDtcblx0fVxuXG5cdHJldHVybiBzaXplc1sgc2l6ZSBhcyBTaXplIF0gfHwgc2l6ZXMuZGVmYXVsdDtcbn07XG5cbmNvbnN0IHNpemVTdHlsZXMgPSAoIHByb3BzOiBJbnB1dFByb3BzICkgPT4ge1xuXHRyZXR1cm4gY3NzKCBnZXRTaXplQ29uZmlnKCBwcm9wcyApICk7XG59O1xuXG5jb25zdCBjdXN0b21QYWRkaW5ncyA9ICgge1xuXHRwYWRkaW5nSW5saW5lU3RhcnQsXG5cdHBhZGRpbmdJbmxpbmVFbmQsXG59OiBJbnB1dFByb3BzICkgPT4ge1xuXHRyZXR1cm4gY3NzKCB7IHBhZGRpbmdJbmxpbmVTdGFydCwgcGFkZGluZ0lubGluZUVuZCB9ICk7XG59O1xuXG5jb25zdCBkcmFnU3R5bGVzID0gKCB7IGlzRHJhZ2dpbmcsIGRyYWdDdXJzb3IgfTogSW5wdXRQcm9wcyApID0+IHtcblx0bGV0IGRlZmF1bHRBcnJvd1N0eWxlczogU2VyaWFsaXplZFN0eWxlcyB8IHVuZGVmaW5lZDtcblx0bGV0IGFjdGl2ZURyYWdDdXJzb3JTdHlsZXM6IFNlcmlhbGl6ZWRTdHlsZXMgfCB1bmRlZmluZWQ7XG5cblx0aWYgKCBpc0RyYWdnaW5nICkge1xuXHRcdGRlZmF1bHRBcnJvd1N0eWxlcyA9IGNzc2Bcblx0XHRcdGN1cnNvcjogJHsgZHJhZ0N1cnNvciB9O1xuXHRcdFx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cblx0XHRcdCY6Oi13ZWJraXQtb3V0ZXItc3Bpbi1idXR0b24sXG5cdFx0XHQmOjotd2Via2l0LWlubmVyLXNwaW4tYnV0dG9uIHtcblx0XHRcdFx0LXdlYmtpdC1hcHBlYXJhbmNlOiBub25lICFpbXBvcnRhbnQ7XG5cdFx0XHRcdG1hcmdpbjogMCAhaW1wb3J0YW50O1xuXHRcdFx0fVxuXHRcdGA7XG5cdH1cblxuXHRpZiAoIGlzRHJhZ2dpbmcgJiYgZHJhZ0N1cnNvciApIHtcblx0XHRhY3RpdmVEcmFnQ3Vyc29yU3R5bGVzID0gY3NzYFxuXHRcdFx0JjphY3RpdmUge1xuXHRcdFx0XHRjdXJzb3I6ICR7IGRyYWdDdXJzb3IgfTtcblx0XHRcdH1cblx0XHRgO1xuXHR9XG5cblx0cmV0dXJuIGNzc2Bcblx0XHQkeyBkZWZhdWx0QXJyb3dTdHlsZXMgfVxuXHRcdCR7IGFjdGl2ZURyYWdDdXJzb3JTdHlsZXMgfVxuXHRgO1xufTtcblxuLy8gVE9ETzogUmVzb2x2ZSBuZWVkIHRvIHVzZSAmJiYgdG8gaW5jcmVhc2Ugc3BlY2lmaWNpdHlcbi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9Xb3JkUHJlc3MvZ3V0ZW5iZXJnL2lzc3Vlcy8xODQ4M1xuXG5leHBvcnQgY29uc3QgSW5wdXQgPSBzdHlsZWQuaW5wdXQ8IElucHV0UHJvcHMgPmBcblx0JiYmIHtcblx0XHRiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcblx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdGJvcmRlcjogbm9uZTtcblx0XHRib3gtc2hhZG93OiBub25lICFpbXBvcnRhbnQ7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0Zm9udC1mYW1pbHk6IGluaGVyaXQ7XG5cdFx0bWFyZ2luOiAwO1xuXHRcdG91dGxpbmU6IG5vbmU7XG5cdFx0d2lkdGg6IDEwMCU7XG5cblx0XHQkeyBkcmFnU3R5bGVzIH1cblx0XHQkeyBkaXNhYmxlZFN0eWxlcyB9XG5cdFx0JHsgZm9udFNpemVTdHlsZXMgfVxuXHRcdCR7IHNpemVTdHlsZXMgfVxuXHRcdCR7IGN1c3RvbVBhZGRpbmdzIH1cblxuXHRcdCY6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy51aS5kYXJrR3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXG5cdFx0Jjo6LW1vei1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmW3R5cGU9J2VtYWlsJ10sXG5cdFx0Jlt0eXBlPSd1cmwnXSB7XG5cdFx0XHQvKiBydGw6aWdub3JlICovXG5cdFx0XHRkaXJlY3Rpb246IGx0cjtcblx0XHR9XG5cdH1cbmA7XG5cbmNvbnN0IEJhc2VMYWJlbCA9IHN0eWxlZCggVGV4dCApPCB7IGxhYmVsUG9zaXRpb24/OiBMYWJlbFBvc2l0aW9uIH0gPmBcblx0JiYmIHtcblx0XHQkeyBiYXNlTGFiZWxUeXBvZ3JhcGh5IH07XG5cblx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdGRpc3BsYXk6IGJsb2NrO1xuXHRcdHBhZGRpbmctdG9wOiAwO1xuXHRcdHBhZGRpbmctYm90dG9tOiAwO1xuXHRcdG1heC13aWR0aDogMTAwJTtcblx0XHR6LWluZGV4OiAxO1xuXG5cdFx0b3ZlcmZsb3c6IGhpZGRlbjtcblx0XHR0ZXh0LW92ZXJmbG93OiBlbGxpcHNpcztcblx0XHR3aGl0ZS1zcGFjZTogbm93cmFwO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTGFiZWwgPSAoXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczxcblx0XHR7IGxhYmVsUG9zaXRpb24/OiBMYWJlbFBvc2l0aW9uOyBjaGlsZHJlbjogUmVhY3ROb2RlIH0sXG5cdFx0J2xhYmVsJyxcblx0XHRmYWxzZVxuXHQ+XG4pID0+IDxCYXNlTGFiZWwgeyAuLi5wcm9wcyB9IGFzPVwibGFiZWxcIiAvPjtcblxuZXhwb3J0IGNvbnN0IExhYmVsV3JhcHBlciA9IHN0eWxlZCggRmxleEl0ZW0gKWBcblx0bWF4LXdpZHRoOiBjYWxjKCAxMDAlIC0gMTBweCApO1xuYDtcblxuY29uc3QgcHJlZml4U3VmZml4V3JhcHBlclN0eWxlcyA9ICgge1xuXHR2YXJpYW50ID0gJ2RlZmF1bHQnLFxuXHRzaXplLFxuXHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG5cdGlzUHJlZml4LFxufTogUHJlZml4U3VmZml4V3JhcHBlclByb3BzICYgeyBpc1ByZWZpeD86IGJvb2xlYW4gfSApID0+IHtcblx0Y29uc3QgeyBwYWRkaW5nTGVmdDogcGFkZGluZyB9ID0gZ2V0U2l6ZUNvbmZpZygge1xuXHRcdGlucHV0U2l6ZTogc2l6ZSxcblx0XHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG5cdH0gKTtcblxuXHRjb25zdCBwYWRkaW5nUHJvcGVydHkgPSBpc1ByZWZpeFxuXHRcdD8gJ3BhZGRpbmdJbmxpbmVTdGFydCdcblx0XHQ6ICdwYWRkaW5nSW5saW5lRW5kJztcblxuXHRpZiAoIHZhcmlhbnQgPT09ICdkZWZhdWx0JyApIHtcblx0XHRyZXR1cm4gY3NzKCB7XG5cdFx0XHRbIHBhZGRpbmdQcm9wZXJ0eSBdOiBwYWRkaW5nLFxuXHRcdH0gKTtcblx0fVxuXG5cdC8vIElmIHZhcmlhbnQgaXMgJ2ljb24nIG9yICdjb250cm9sJ1xuXHRyZXR1cm4gY3NzKCB7XG5cdFx0ZGlzcGxheTogJ2ZsZXgnLFxuXHRcdFsgcGFkZGluZ1Byb3BlcnR5IF06IHBhZGRpbmcgLSA0LFxuXHR9ICk7XG59O1xuXG5leHBvcnQgY29uc3QgUHJlZml4U3VmZml4V3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdCR7IHByZWZpeFN1ZmZpeFdyYXBwZXJTdHlsZXMgfVxuYDtcbiJdfQ== */"));
-  var Label = (props) => /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(BaseLabel, {
+  var Label = (props) => /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(BaseLabel, {
     ...props,
     as: "label"
   });
@@ -25160,23 +25364,23 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   })(prefixSuffixWrapperStyles, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlucHV0LWNvbnRyb2wtc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEyVzZDIiwiZmlsZSI6ImlucHV0LWNvbnRyb2wtc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB0eXBlIHsgU2VyaWFsaXplZFN0eWxlcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB0eXBlIHsgQ1NTUHJvcGVydGllcywgUmVhY3ROb2RlIH0gZnJvbSAncmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vLi4vY29udGV4dCc7XG5pbXBvcnQgeyBGbGV4LCBGbGV4SXRlbSB9IGZyb20gJy4uLy4uL2ZsZXgnO1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgYmFzZUxhYmVsVHlwb2dyYXBoeSwgQ09MT1JTLCBDT05GSUcsIHJ0bCB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB0eXBlIHsgTGFiZWxQb3NpdGlvbiwgU2l6ZSwgUHJlZml4U3VmZml4V3JhcHBlclByb3BzIH0gZnJvbSAnLi4vdHlwZXMnO1xuXG50eXBlIENvbnRhaW5lclByb3BzID0ge1xuXHRkaXNhYmxlZD86IGJvb2xlYW47XG5cdGhpZGVMYWJlbD86IGJvb2xlYW47XG5cdF9fdW5zdGFibGVJbnB1dFdpZHRoPzogQ1NTUHJvcGVydGllc1sgJ3dpZHRoJyBdO1xuXHRsYWJlbFBvc2l0aW9uPzogTGFiZWxQb3NpdGlvbjtcbn07XG5cbmV4cG9ydCBjb25zdCBQcmVmaXggPSBzdHlsZWQuc3BhbmBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogYmxvY2s7XG5gO1xuXG5leHBvcnQgY29uc3QgU3VmZml4ID0gc3R5bGVkLnNwYW5gXG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGFsaWduLXNlbGY6IHN0cmV0Y2g7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGRpc3BsYXk6IGZsZXg7XG5gO1xuXG50eXBlIEJhY2tkcm9wUHJvcHMgPSB7XG5cdGRpc2FibGVkPzogYm9vbGVhbjtcblx0aXNCb3JkZXJsZXNzPzogYm9vbGVhbjtcbn07XG5cbmNvbnN0IGJhY2tkcm9wQm9yZGVyQ29sb3IgPSAoIHtcblx0ZGlzYWJsZWQsXG5cdGlzQm9yZGVybGVzcyxcbn06IEJhY2tkcm9wUHJvcHMgKTogQ1NTUHJvcGVydGllc1sgJ2JvcmRlckNvbG9yJyBdID0+IHtcblx0aWYgKCBpc0JvcmRlcmxlc3MgKSB7XG5cdFx0cmV0dXJuICd0cmFuc3BhcmVudCc7XG5cdH1cblxuXHRpZiAoIGRpc2FibGVkICkge1xuXHRcdHJldHVybiBDT0xPUlMudWkuYm9yZGVyRGlzYWJsZWQ7XG5cdH1cblxuXHRyZXR1cm4gQ09MT1JTLnVpLmJvcmRlcjtcbn07XG5cbmV4cG9ydCBjb25zdCBCYWNrZHJvcFVJID0gc3R5bGVkLmRpdjwgQmFja2Ryb3BQcm9wcyA+YFxuXHQmJiYge1xuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0Ym9yZGVyLWNvbG9yOiAkeyBiYWNrZHJvcEJvcmRlckNvbG9yIH07XG5cdFx0Ym9yZGVyLXJhZGl1czogaW5oZXJpdDtcblx0XHRib3JkZXItc3R5bGU6IHNvbGlkO1xuXHRcdGJvcmRlci13aWR0aDogMXB4O1xuXHRcdGJvdHRvbTogMDtcblx0XHRsZWZ0OiAwO1xuXHRcdG1hcmdpbjogMDtcblx0XHRwYWRkaW5nOiAwO1xuXHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRyaWdodDogMDtcblx0XHR0b3A6IDA7XG5cblx0XHQkeyBydGwoIHsgcGFkZGluZ0xlZnQ6IDIgfSApIH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFJvb3QgPSBzdHlsZWQoIEZsZXggKWBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0cGFkZGluZy10b3A6IDA7XG5cblx0Ly8gRm9jdXMgd2l0aGluLCBleGNsdWRpbmcgY2FzZXMgd2hlcmUgYXV4aWxpYXJ5IGNvbnRyb2xzIGluIHByZWZpeCBvciBzdWZmaXggaGF2ZSBmb2N1cy5cblx0Jjpmb2N1cy13aXRoaW46bm90KCA6aGFzKCA6aXMoICR7IFByZWZpeCB9LCAkeyBTdWZmaXggfSApOmZvY3VzLXdpdGhpbiApICkge1xuXHRcdCR7IEJhY2tkcm9wVUkgfSB7XG5cdFx0XHRib3JkZXItY29sb3I6ICR7IENPTE9SUy51aS5ib3JkZXJGb2N1cyB9O1xuXHRcdFx0Ym94LXNoYWRvdzogJHsgQ09ORklHLmNvbnRyb2xCb3hTaGFkb3dGb2N1cyB9O1xuXHRcdFx0Ly8gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgd2lsbCBzaG93IHRoaXMgb3V0bGluZSwgYnV0IG5vdCB0aGUgYm94LXNoYWRvdy5cblx0XHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRcdG91dGxpbmUtb2Zmc2V0OiAtMnB4O1xuXHRcdH1cblx0fVxuYDtcblxuY29uc3QgY29udGFpbmVyRGlzYWJsZWRTdHlsZXMgPSAoIHsgZGlzYWJsZWQgfTogQ29udGFpbmVyUHJvcHMgKSA9PiB7XG5cdGNvbnN0IGJhY2tncm91bmRDb2xvciA9IGRpc2FibGVkXG5cdFx0PyBDT0xPUlMudWkuYmFja2dyb3VuZERpc2FibGVkXG5cdFx0OiBDT0xPUlMudWkuYmFja2dyb3VuZDtcblxuXHRyZXR1cm4gY3NzKCB7IGJhY2tncm91bmRDb2xvciB9ICk7XG59O1xuXG5jb25zdCBjb250YWluZXJXaWR0aFN0eWxlcyA9ICgge1xuXHRfX3Vuc3RhYmxlSW5wdXRXaWR0aCxcblx0bGFiZWxQb3NpdGlvbixcbn06IENvbnRhaW5lclByb3BzICkgPT4ge1xuXHRpZiAoICEgX191bnN0YWJsZUlucHV0V2lkdGggKSB7XG5cdFx0cmV0dXJuIGNzcyggeyB3aWR0aDogJzEwMCUnIH0gKTtcblx0fVxuXG5cdGlmICggbGFiZWxQb3NpdGlvbiA9PT0gJ3NpZGUnICkge1xuXHRcdHJldHVybiAnJztcblx0fVxuXG5cdGlmICggbGFiZWxQb3NpdGlvbiA9PT0gJ2VkZ2UnICkge1xuXHRcdHJldHVybiBjc3MoIHtcblx0XHRcdGZsZXg6IGAwIDAgJHsgX191bnN0YWJsZUlucHV0V2lkdGggfWAsXG5cdFx0fSApO1xuXHR9XG5cblx0cmV0dXJuIGNzcyggeyB3aWR0aDogX191bnN0YWJsZUlucHV0V2lkdGggfSApO1xufTtcblxuZXhwb3J0IGNvbnN0IENvbnRhaW5lciA9IHN0eWxlZC5kaXY8IENvbnRhaW5lclByb3BzID5gXG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGJvcmRlci1yYWRpdXM6IGluaGVyaXQ7XG5cdGRpc3BsYXk6IGZsZXg7XG5cdGZsZXg6IDE7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblxuXHQkeyBjb250YWluZXJEaXNhYmxlZFN0eWxlcyB9XG5cdCR7IGNvbnRhaW5lcldpZHRoU3R5bGVzIH1cbmA7XG5cbnR5cGUgSW5wdXRQcm9wcyA9IHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplPzogYm9vbGVhbjtcblx0ZGlzYWJsZWQ/OiBib29sZWFuO1xuXHRpbnB1dFNpemU/OiBTaXplO1xuXHRpc0RyYWdnaW5nPzogYm9vbGVhbjtcblx0ZHJhZ0N1cnNvcj86IENTU1Byb3BlcnRpZXNbICdjdXJzb3InIF07XG5cdHBhZGRpbmdJbmxpbmVTdGFydD86IENTU1Byb3BlcnRpZXNbICdwYWRkaW5nSW5saW5lU3RhcnQnIF07XG5cdHBhZGRpbmdJbmxpbmVFbmQ/OiBDU1NQcm9wZXJ0aWVzWyAncGFkZGluZ0lubGluZUVuZCcgXTtcbn07XG5cbmNvbnN0IGRpc2FibGVkU3R5bGVzID0gKCB7IGRpc2FibGVkIH06IElucHV0UHJvcHMgKSA9PiB7XG5cdGlmICggISBkaXNhYmxlZCApIHtcblx0XHRyZXR1cm4gJyc7XG5cdH1cblxuXHRyZXR1cm4gY3NzKCB7XG5cdFx0Y29sb3I6IENPTE9SUy51aS50ZXh0RGlzYWJsZWQsXG5cdH0gKTtcbn07XG5cbmV4cG9ydCBjb25zdCBmb250U2l6ZVN0eWxlcyA9ICggeyBpbnB1dFNpemU6IHNpemUgfTogSW5wdXRQcm9wcyApID0+IHtcblx0Y29uc3Qgc2l6ZXMgPSB7XG5cdFx0ZGVmYXVsdDogJzEzcHgnLFxuXHRcdHNtYWxsOiAnMTFweCcsXG5cdFx0Y29tcGFjdDogJzEzcHgnLFxuXHRcdCdfX3Vuc3RhYmxlLWxhcmdlJzogJzEzcHgnLFxuXHR9O1xuXG5cdGNvbnN0IGZvbnRTaXplID0gc2l6ZXNbIHNpemUgYXMgU2l6ZSBdIHx8IHNpemVzLmRlZmF1bHQ7XG5cdGNvbnN0IGZvbnRTaXplTW9iaWxlID0gJzE2cHgnO1xuXG5cdGlmICggISBmb250U2l6ZSApIHtcblx0XHRyZXR1cm4gJyc7XG5cdH1cblxuXHRyZXR1cm4gY3NzYFxuXHRcdGZvbnQtc2l6ZTogJHsgZm9udFNpemVNb2JpbGUgfTtcblxuXHRcdEBtZWRpYSAoIG1pbi13aWR0aDogNjAwcHggKSB7XG5cdFx0XHRmb250LXNpemU6ICR7IGZvbnRTaXplIH07XG5cdFx0fVxuXHRgO1xufTtcblxuZXhwb3J0IGNvbnN0IGdldFNpemVDb25maWcgPSAoIHtcblx0aW5wdXRTaXplOiBzaXplLFxuXHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG59OiBJbnB1dFByb3BzICkgPT4ge1xuXHQvLyBQYWRkaW5ncyBtYXkgYmUgb3ZlcnJpZGRlbiBieSB0aGUgY3VzdG9tIHBhZGRpbmdzIHByb3BzLlxuXHRjb25zdCBzaXplcyA9IHtcblx0XHRkZWZhdWx0OiB7XG5cdFx0XHRoZWlnaHQ6IDQwLFxuXHRcdFx0bGluZUhlaWdodDogMSxcblx0XHRcdG1pbkhlaWdodDogNDAsXG5cdFx0XHRwYWRkaW5nTGVmdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWCxcblx0XHRcdHBhZGRpbmdSaWdodDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWCxcblx0XHR9LFxuXHRcdHNtYWxsOiB7XG5cdFx0XHRoZWlnaHQ6IDI0LFxuXHRcdFx0bGluZUhlaWdodDogMSxcblx0XHRcdG1pbkhlaWdodDogMjQsXG5cdFx0XHRwYWRkaW5nTGVmdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdFx0cGFkZGluZ1JpZ2h0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYU21hbGwsXG5cdFx0fSxcblx0XHRjb21wYWN0OiB7XG5cdFx0XHRoZWlnaHQ6IDMyLFxuXHRcdFx0bGluZUhlaWdodDogMSxcblx0XHRcdG1pbkhlaWdodDogMzIsXG5cdFx0XHRwYWRkaW5nTGVmdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdFx0cGFkZGluZ1JpZ2h0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYU21hbGwsXG5cdFx0fSxcblx0XHQnX191bnN0YWJsZS1sYXJnZSc6IHtcblx0XHRcdGhlaWdodDogNDAsXG5cdFx0XHRsaW5lSGVpZ2h0OiAxLFxuXHRcdFx0bWluSGVpZ2h0OiA0MCxcblx0XHRcdHBhZGRpbmdMZWZ0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYLFxuXHRcdFx0cGFkZGluZ1JpZ2h0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYLFxuXHRcdH0sXG5cdH07XG5cblx0aWYgKCAhIF9fbmV4dDQwcHhEZWZhdWx0U2l6ZSApIHtcblx0XHRzaXplcy5kZWZhdWx0ID0gc2l6ZXMuY29tcGFjdDtcblx0fVxuXG5cdHJldHVybiBzaXplc1sgc2l6ZSBhcyBTaXplIF0gfHwgc2l6ZXMuZGVmYXVsdDtcbn07XG5cbmNvbnN0IHNpemVTdHlsZXMgPSAoIHByb3BzOiBJbnB1dFByb3BzICkgPT4ge1xuXHRyZXR1cm4gY3NzKCBnZXRTaXplQ29uZmlnKCBwcm9wcyApICk7XG59O1xuXG5jb25zdCBjdXN0b21QYWRkaW5ncyA9ICgge1xuXHRwYWRkaW5nSW5saW5lU3RhcnQsXG5cdHBhZGRpbmdJbmxpbmVFbmQsXG59OiBJbnB1dFByb3BzICkgPT4ge1xuXHRyZXR1cm4gY3NzKCB7IHBhZGRpbmdJbmxpbmVTdGFydCwgcGFkZGluZ0lubGluZUVuZCB9ICk7XG59O1xuXG5jb25zdCBkcmFnU3R5bGVzID0gKCB7IGlzRHJhZ2dpbmcsIGRyYWdDdXJzb3IgfTogSW5wdXRQcm9wcyApID0+IHtcblx0bGV0IGRlZmF1bHRBcnJvd1N0eWxlczogU2VyaWFsaXplZFN0eWxlcyB8IHVuZGVmaW5lZDtcblx0bGV0IGFjdGl2ZURyYWdDdXJzb3JTdHlsZXM6IFNlcmlhbGl6ZWRTdHlsZXMgfCB1bmRlZmluZWQ7XG5cblx0aWYgKCBpc0RyYWdnaW5nICkge1xuXHRcdGRlZmF1bHRBcnJvd1N0eWxlcyA9IGNzc2Bcblx0XHRcdGN1cnNvcjogJHsgZHJhZ0N1cnNvciB9O1xuXHRcdFx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cblx0XHRcdCY6Oi13ZWJraXQtb3V0ZXItc3Bpbi1idXR0b24sXG5cdFx0XHQmOjotd2Via2l0LWlubmVyLXNwaW4tYnV0dG9uIHtcblx0XHRcdFx0LXdlYmtpdC1hcHBlYXJhbmNlOiBub25lICFpbXBvcnRhbnQ7XG5cdFx0XHRcdG1hcmdpbjogMCAhaW1wb3J0YW50O1xuXHRcdFx0fVxuXHRcdGA7XG5cdH1cblxuXHRpZiAoIGlzRHJhZ2dpbmcgJiYgZHJhZ0N1cnNvciApIHtcblx0XHRhY3RpdmVEcmFnQ3Vyc29yU3R5bGVzID0gY3NzYFxuXHRcdFx0JjphY3RpdmUge1xuXHRcdFx0XHRjdXJzb3I6ICR7IGRyYWdDdXJzb3IgfTtcblx0XHRcdH1cblx0XHRgO1xuXHR9XG5cblx0cmV0dXJuIGNzc2Bcblx0XHQkeyBkZWZhdWx0QXJyb3dTdHlsZXMgfVxuXHRcdCR7IGFjdGl2ZURyYWdDdXJzb3JTdHlsZXMgfVxuXHRgO1xufTtcblxuLy8gVE9ETzogUmVzb2x2ZSBuZWVkIHRvIHVzZSAmJiYgdG8gaW5jcmVhc2Ugc3BlY2lmaWNpdHlcbi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9Xb3JkUHJlc3MvZ3V0ZW5iZXJnL2lzc3Vlcy8xODQ4M1xuXG5leHBvcnQgY29uc3QgSW5wdXQgPSBzdHlsZWQuaW5wdXQ8IElucHV0UHJvcHMgPmBcblx0JiYmIHtcblx0XHRiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcblx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdGJvcmRlcjogbm9uZTtcblx0XHRib3gtc2hhZG93OiBub25lICFpbXBvcnRhbnQ7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0Zm9udC1mYW1pbHk6IGluaGVyaXQ7XG5cdFx0bWFyZ2luOiAwO1xuXHRcdG91dGxpbmU6IG5vbmU7XG5cdFx0d2lkdGg6IDEwMCU7XG5cblx0XHQkeyBkcmFnU3R5bGVzIH1cblx0XHQkeyBkaXNhYmxlZFN0eWxlcyB9XG5cdFx0JHsgZm9udFNpemVTdHlsZXMgfVxuXHRcdCR7IHNpemVTdHlsZXMgfVxuXHRcdCR7IGN1c3RvbVBhZGRpbmdzIH1cblxuXHRcdCY6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy51aS5kYXJrR3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXG5cdFx0Jjo6LW1vei1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmW3R5cGU9J2VtYWlsJ10sXG5cdFx0Jlt0eXBlPSd1cmwnXSB7XG5cdFx0XHQvKiBydGw6aWdub3JlICovXG5cdFx0XHRkaXJlY3Rpb246IGx0cjtcblx0XHR9XG5cdH1cbmA7XG5cbmNvbnN0IEJhc2VMYWJlbCA9IHN0eWxlZCggVGV4dCApPCB7IGxhYmVsUG9zaXRpb24/OiBMYWJlbFBvc2l0aW9uIH0gPmBcblx0JiYmIHtcblx0XHQkeyBiYXNlTGFiZWxUeXBvZ3JhcGh5IH07XG5cblx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdGRpc3BsYXk6IGJsb2NrO1xuXHRcdHBhZGRpbmctdG9wOiAwO1xuXHRcdHBhZGRpbmctYm90dG9tOiAwO1xuXHRcdG1heC13aWR0aDogMTAwJTtcblx0XHR6LWluZGV4OiAxO1xuXG5cdFx0b3ZlcmZsb3c6IGhpZGRlbjtcblx0XHR0ZXh0LW92ZXJmbG93OiBlbGxpcHNpcztcblx0XHR3aGl0ZS1zcGFjZTogbm93cmFwO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTGFiZWwgPSAoXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczxcblx0XHR7IGxhYmVsUG9zaXRpb24/OiBMYWJlbFBvc2l0aW9uOyBjaGlsZHJlbjogUmVhY3ROb2RlIH0sXG5cdFx0J2xhYmVsJyxcblx0XHRmYWxzZVxuXHQ+XG4pID0+IDxCYXNlTGFiZWwgeyAuLi5wcm9wcyB9IGFzPVwibGFiZWxcIiAvPjtcblxuZXhwb3J0IGNvbnN0IExhYmVsV3JhcHBlciA9IHN0eWxlZCggRmxleEl0ZW0gKWBcblx0bWF4LXdpZHRoOiBjYWxjKCAxMDAlIC0gMTBweCApO1xuYDtcblxuY29uc3QgcHJlZml4U3VmZml4V3JhcHBlclN0eWxlcyA9ICgge1xuXHR2YXJpYW50ID0gJ2RlZmF1bHQnLFxuXHRzaXplLFxuXHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG5cdGlzUHJlZml4LFxufTogUHJlZml4U3VmZml4V3JhcHBlclByb3BzICYgeyBpc1ByZWZpeD86IGJvb2xlYW4gfSApID0+IHtcblx0Y29uc3QgeyBwYWRkaW5nTGVmdDogcGFkZGluZyB9ID0gZ2V0U2l6ZUNvbmZpZygge1xuXHRcdGlucHV0U2l6ZTogc2l6ZSxcblx0XHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG5cdH0gKTtcblxuXHRjb25zdCBwYWRkaW5nUHJvcGVydHkgPSBpc1ByZWZpeFxuXHRcdD8gJ3BhZGRpbmdJbmxpbmVTdGFydCdcblx0XHQ6ICdwYWRkaW5nSW5saW5lRW5kJztcblxuXHRpZiAoIHZhcmlhbnQgPT09ICdkZWZhdWx0JyApIHtcblx0XHRyZXR1cm4gY3NzKCB7XG5cdFx0XHRbIHBhZGRpbmdQcm9wZXJ0eSBdOiBwYWRkaW5nLFxuXHRcdH0gKTtcblx0fVxuXG5cdC8vIElmIHZhcmlhbnQgaXMgJ2ljb24nIG9yICdjb250cm9sJ1xuXHRyZXR1cm4gY3NzKCB7XG5cdFx0ZGlzcGxheTogJ2ZsZXgnLFxuXHRcdFsgcGFkZGluZ1Byb3BlcnR5IF06IHBhZGRpbmcgLSA0LFxuXHR9ICk7XG59O1xuXG5leHBvcnQgY29uc3QgUHJlZml4U3VmZml4V3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdCR7IHByZWZpeFN1ZmZpeFdyYXBwZXJTdHlsZXMgfVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/input-control/backdrop.js
-  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime87 = __toESM(require_jsx_runtime());
   function Backdrop({
     disabled = false,
     isBorderless = false
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(BackdropUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(BackdropUI, {
       "aria-hidden": "true",
       className: "components-input-control__backdrop",
       disabled,
       isBorderless
     });
   }
-  var MemoizedBackdrop = (0, import_element24.memo)(Backdrop);
+  var MemoizedBackdrop = (0, import_element25.memo)(Backdrop);
   var backdrop_default = MemoizedBackdrop;
 
   // packages/components/build-module/input-control/label.js
-  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime88 = __toESM(require_jsx_runtime());
   function Label2({
     children,
     hideLabelFromVision,
@@ -25187,14 +25391,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       return null;
     }
     if (hideLabelFromVision) {
-      return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(component_default2, {
+      return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(component_default2, {
         as: "label",
         htmlFor,
         children
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(LabelWrapper, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Label, {
+    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(LabelWrapper, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Label, {
         htmlFor,
         ...props,
         children
@@ -25216,7 +25420,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   }
 
   // packages/components/build-module/input-control/input-base.js
-  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime89 = __toESM(require_jsx_runtime());
   function useUniqueId(idProp) {
     const instanceId = (0, import_compose3.useInstanceId)(InputBase);
     const id3 = `input-base-control-${instanceId}`;
@@ -25260,7 +25464,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = useDeprecated36pxDefaultSizeProp(useContextSystem(props, "InputBase"));
     const id3 = useUniqueId(idProp);
     const hideLabel = hideLabelFromVision || !label;
-    const prefixSuffixContextValue = (0, import_element25.useMemo)(() => {
+    const prefixSuffixContextValue = (0, import_element26.useMemo)(() => {
       return {
         InputControlPrefixWrapper: {
           __next40pxDefaultSize,
@@ -25274,34 +25478,34 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     }, [__next40pxDefaultSize, size3]);
     return (
       // @ts-expect-error The `direction` prop from Flex (FlexDirection) conflicts with legacy SVGAttributes `direction` (string) that come from React intrinsic prop definitions.
-      /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(Root, {
+      /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(Root, {
         ...restProps,
         ...getUIFlexProps(labelPosition),
         className,
         gap: 2,
         ref,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Label2, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Label2, {
           className: "components-input-control__label",
           hideLabelFromVision,
           labelPosition,
           htmlFor: id3,
           children: label
-        }), /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(Container, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(Container, {
           __unstableInputWidth,
           className: "components-input-control__container",
           disabled,
           hideLabel,
           labelPosition,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(ContextSystemProvider, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(ContextSystemProvider, {
             value: prefixSuffixContextValue,
-            children: [prefix2 && /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Prefix, {
+            children: [prefix2 && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Prefix, {
               className: "components-input-control__prefix",
               children: prefix2
-            }), children, suffix && /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Suffix, {
+            }), children, suffix && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Suffix, {
               className: "components-input-control__suffix",
               children: suffix
             })]
-          }), /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(backdrop_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(backdrop_default, {
             disabled,
             isBorderless
           })]
@@ -26653,10 +26857,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/input-control/input-field.js
-  var import_element28 = __toESM(require_element());
+  var import_element29 = __toESM(require_element());
 
   // packages/components/build-module/input-control/utils.js
-  var import_element26 = __toESM(require_element());
+  var import_element27 = __toESM(require_element());
   function getDragCursor(dragDirection) {
     let dragCursor = "ns-resize";
     switch (dragDirection) {
@@ -26673,7 +26877,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   function useDragCursor(isDragging2, dragDirection) {
     const dragCursor = getDragCursor(dragDirection);
-    (0, import_element26.useEffect)(() => {
+    (0, import_element27.useEffect)(() => {
       if (isDragging2) {
         document.documentElement.style.cursor = dragCursor;
       } else {
@@ -26683,10 +26887,10 @@ This message will only show in development mode. It won't appear in production. 
     return dragCursor;
   }
   function useDraft(props) {
-    const previousValueRef = (0, import_element26.useRef)(props.value);
-    const [draft, setDraft] = (0, import_element26.useState)({});
+    const previousValueRef = (0, import_element27.useRef)(props.value);
+    const [draft, setDraft] = (0, import_element27.useState)({});
     const value = draft.value !== void 0 ? draft.value : props.value;
-    (0, import_element26.useLayoutEffect)(() => {
+    (0, import_element27.useLayoutEffect)(() => {
       const {
         current: previousValue
       } = previousValueRef;
@@ -26719,7 +26923,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/input-control/reducer/reducer.js
-  var import_element27 = __toESM(require_element());
+  var import_element28 = __toESM(require_element());
 
   // packages/components/build-module/input-control/reducer/state.js
   var initialStateReducer = (state) => state;
@@ -26820,7 +27024,7 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
   function useInputControlStateReducer(stateReducer = initialStateReducer, initialState = initialInputControlState, onChangeHandler) {
-    const [state, dispatch] = (0, import_element27.useReducer)(inputControlStateReducer(stateReducer), mergeInitialState(initialState));
+    const [state, dispatch] = (0, import_element28.useReducer)(inputControlStateReducer(stateReducer), mergeInitialState(initialState));
     const createChangeEvent = (type) => (nextValue, event) => {
       dispatch({
         type,
@@ -26845,14 +27049,14 @@ This message will only show in development mode. It won't appear in production. 
       });
     };
     const change = createChangeEvent(CHANGE);
-    const invalidate = (error3, event) => dispatch({
+    const invalidate = (error, event) => dispatch({
       type: INVALIDATE,
       payload: {
-        error: error3,
+        error,
         event
       }
     });
-    const reset2 = createChangeEvent(RESET);
+    const reset = createChangeEvent(RESET);
     const commit = createChangeEvent(COMMIT);
     const dragStart = createDragEvent(DRAG_START);
     const drag2 = createDragEvent(DRAG);
@@ -26860,19 +27064,19 @@ This message will only show in development mode. It won't appear in production. 
     const pressUp = createKeyEvent(PRESS_UP);
     const pressDown = createKeyEvent(PRESS_DOWN);
     const pressEnter = createKeyEvent(PRESS_ENTER);
-    const currentStateRef = (0, import_element27.useRef)(state);
-    const refPropsRef = (0, import_element27.useRef)({
+    const currentStateRef = (0, import_element28.useRef)(state);
+    const refPropsRef = (0, import_element28.useRef)({
       value: initialState.value,
       onChangeHandler
     });
-    (0, import_element27.useLayoutEffect)(() => {
+    (0, import_element28.useLayoutEffect)(() => {
       currentStateRef.current = state;
       refPropsRef.current = {
         value: initialState.value,
         onChangeHandler
       };
     });
-    (0, import_element27.useLayoutEffect)(() => {
+    (0, import_element28.useLayoutEffect)(() => {
       if (currentStateRef.current._event !== void 0 && state.value !== refPropsRef.current.value && !state.isDirty) {
         var _state$value;
         refPropsRef.current.onChangeHandler((_state$value = state.value) !== null && _state$value !== void 0 ? _state$value : "", {
@@ -26880,7 +27084,7 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     }, [state.value, state.isDirty]);
-    (0, import_element27.useLayoutEffect)(() => {
+    (0, import_element28.useLayoutEffect)(() => {
       if (initialState.value !== currentStateRef.current.value && !currentStateRef.current.isDirty) {
         var _initialState$value;
         dispatch({
@@ -26902,7 +27106,7 @@ This message will only show in development mode. It won't appear in production. 
       pressDown,
       pressEnter,
       pressUp,
-      reset: reset2,
+      reset,
       state
     };
   }
@@ -26924,7 +27128,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/input-control/input-field.js
-  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime90 = __toESM(require_jsx_runtime());
   var noop4 = () => {
   };
   function InputField({
@@ -26960,7 +27164,7 @@ This message will only show in development mode. It won't appear in production. 
       pressDown,
       pressEnter,
       pressUp,
-      reset: reset2
+      reset
     } = useInputControlStateReducer(stateReducer, {
       isDragEnabled,
       value: valueProp,
@@ -26971,7 +27175,7 @@ This message will only show in development mode. It won't appear in production. 
       isDragging: isDragging2,
       isDirty
     } = state;
-    const wasDirtyOnBlur = (0, import_element28.useRef)(false);
+    const wasDirtyOnBlur = (0, import_element29.useRef)(false);
     const dragCursor = useDragCursor(isDragging2, dragDirection);
     const handleOnBlur = (event) => {
       onBlur(event);
@@ -27015,7 +27219,7 @@ This message will only show in development mode. It won't appear in production. 
         case "Escape":
           if (isPressEnterToChange && isDirty) {
             event.preventDefault();
-            reset2(valueProp, event);
+            reset(valueProp, event);
           }
           break;
       }
@@ -27055,7 +27259,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     });
     const dragProps = isDragEnabled ? dragGestureProps() : {};
-    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Input, {
+    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(Input, {
       ...props,
       ...dragProps,
       className: "components-input-control__input",
@@ -27072,12 +27276,12 @@ This message will only show in development mode. It won't appear in production. 
       type
     });
   }
-  var ForwardedComponent = (0, import_element28.forwardRef)(InputField);
+  var ForwardedComponent = (0, import_element29.forwardRef)(InputField);
   var input_field_default = ForwardedComponent;
 
   // packages/components/build-module/base-control/index.js
   var import_deprecated3 = __toESM(require_deprecated());
-  var import_element29 = __toESM(require_element());
+  var import_element30 = __toESM(require_element());
 
   // packages/components/build-module/base-control/styles/base-control-styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__9() {
@@ -27135,7 +27339,7 @@ This message will only show in development mode. It won't appear in production. 
   })(labelStyles, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJhc2UtY29udHJvbC1zdHlsZXMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBdUU0QyIsImZpbGUiOiJiYXNlLWNvbnRyb2wtc3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBiYXNlTGFiZWxUeXBvZ3JhcGh5LCBib3hTaXppbmdSZXNldCwgZm9udCwgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi8uLi91dGlscy9zcGFjZSc7XG5cbmV4cG9ydCBjb25zdCBXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0Zm9udC1mYW1pbHk6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRGYW1pbHknICkgfTtcblx0Zm9udC1zaXplOiAkeyBmb250KCAnZGVmYXVsdC5mb250U2l6ZScgKSB9O1xuXG5cdCR7IGJveFNpemluZ1Jlc2V0IH1cbmA7XG5cbmNvbnN0IGRlcHJlY2F0ZWRNYXJnaW5GaWVsZCA9ICggeyBfX25leHRIYXNOb01hcmdpbkJvdHRvbSA9IGZhbHNlIH0gKSA9PiB7XG5cdHJldHVybiAoXG5cdFx0ISBfX25leHRIYXNOb01hcmdpbkJvdHRvbSAmJlxuXHRcdGNzc2Bcblx0XHRcdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0XHRgXG5cdCk7XG59O1xuXG5leHBvcnQgY29uc3QgU3R5bGVkRmllbGQgPSBzdHlsZWQuZGl2YFxuXHQkeyBkZXByZWNhdGVkTWFyZ2luRmllbGQgfVxuXG5cdC5jb21wb25lbnRzLXBhbmVsX19yb3cgJiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogaW5oZXJpdDtcblx0fVxuYDtcblxuY29uc3QgbGFiZWxTdHlsZXMgPSBjc3NgXG5cdCR7IGJhc2VMYWJlbFR5cG9ncmFwaHkgfTtcblxuXHRkaXNwbGF5OiBibG9jaztcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDIgKSB9O1xuXHQvKipcblx0ICogUmVtb3ZlcyBDaHJvbWUvU2FmYXJpL0ZpcmVmb3ggdXNlciBhZ2VudCBzdHlsZXNoZWV0IHBhZGRpbmcgZnJvbVxuXHQgKiBTdHlsZWRMYWJlbCB3aGVuIGl0IGlzIHJlbmRlcmVkIGFzIGEgbGVnZW5kLlxuXHQgKi9cblx0cGFkZGluZzogMDtcbmA7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRMYWJlbCA9IHN0eWxlZC5sYWJlbGBcblx0JHsgbGFiZWxTdHlsZXMgfVxuYDtcblxuY29uc3QgZGVwcmVjYXRlZE1hcmdpbkhlbHAgPSAoIHsgX19uZXh0SGFzTm9NYXJnaW5Cb3R0b20gPSBmYWxzZSB9ICkgPT4ge1xuXHRyZXR1cm4gKFxuXHRcdCEgX19uZXh0SGFzTm9NYXJnaW5Cb3R0b20gJiZcblx0XHRjc3NgXG5cdFx0XHRtYXJnaW4tYm90dG9tOiByZXZlcnQ7XG5cdFx0YFxuXHQpO1xufTtcblxuZXhwb3J0IGNvbnN0IFN0eWxlZEhlbHAgPSBzdHlsZWQucGBcblx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDIgKSB9O1xuXHRtYXJnaW4tYm90dG9tOiAwO1xuXHRmb250LXNpemU6ICR7IGZvbnQoICdoZWxwVGV4dC5mb250U2l6ZScgKSB9O1xuXHRmb250LXN0eWxlOiBub3JtYWw7XG5cdGNvbG9yOiAkeyBDT0xPUlMuZ3JheVsgNzAwIF0gfTtcblxuXHQkeyBkZXByZWNhdGVkTWFyZ2luSGVscCB9XG5gO1xuXG5leHBvcnQgY29uc3QgU3R5bGVkVmlzdWFsTGFiZWwgPSBzdHlsZWQuc3BhbmBcblx0JHsgbGFiZWxTdHlsZXMgfVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/base-control/index.js
-  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime91 = __toESM(require_jsx_runtime());
 
   // packages/components/build-module/base-control/hooks.js
   var import_compose4 = __toESM(require_compose());
@@ -27180,26 +27384,26 @@ This message will only show in development mode. It won't appear in production. 
         hint: "Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version."
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(Wrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(Wrapper, {
       className,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(StyledField, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(StyledField, {
         className: "components-base-control__field",
         __nextHasNoMarginBottom,
-        children: [label && id3 && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(component_default2, {
+        children: [label && id3 && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(component_default2, {
           as: "label",
           htmlFor: id3,
           children: label
-        }) : /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(StyledLabel, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(StyledLabel, {
           className: "components-base-control__label",
           htmlFor: id3,
           children: label
-        })), label && !id3 && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(component_default2, {
+        })), label && !id3 && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(component_default2, {
           as: "label",
           children: label
-        }) : /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(VisualLabel, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(VisualLabel, {
           children: label
         })), children]
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(StyledHelp, {
         id: id3 ? id3 + "__help" : void 0,
         className: "components-base-control__help",
         __nextHasNoMarginBottom,
@@ -27213,14 +27417,14 @@ This message will only show in development mode. It won't appear in production. 
       children,
       ...restProps
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(StyledVisualLabel, {
+    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(StyledVisualLabel, {
       ref,
       ...restProps,
       className: clsx_default("components-base-control__label", className),
       children
     });
   };
-  var VisualLabel = (0, import_element29.forwardRef)(UnforwardedVisualLabel);
+  var VisualLabel = (0, import_element30.forwardRef)(UnforwardedVisualLabel);
   var BaseControl = Object.assign(contextConnectWithoutRef(UnconnectedBaseControl, "BaseControl"), {
     /**
      * `BaseControl.VisualLabel` is used to render a purely visual label inside a `BaseControl` component.
@@ -27266,7 +27470,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/input-control/index.js
-  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime92 = __toESM(require_jsx_runtime());
   var noop5 = () => {
   };
   function useUniqueId2(idProp) {
@@ -27314,12 +27518,12 @@ This message will only show in development mode. It won't appear in production. 
       size: size3,
       __shouldNotWarnDeprecated36pxSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(base_control_default, {
       className: classes,
       help,
       id: id3,
       __nextHasNoMarginBottom: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(input_base_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(input_base_default, {
         __next40pxDefaultSize,
         __unstableInputWidth,
         disabled,
@@ -27333,7 +27537,7 @@ This message will only show in development mode. It won't appear in production. 
         size: size3,
         style: style2,
         suffix,
-        children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(input_field_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(input_field_default, {
           ...restProps,
           ...helpProp,
           __next40pxDefaultSize,
@@ -27353,20 +27557,20 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   }
-  var InputControl = (0, import_element30.forwardRef)(UnforwardedInputControl);
+  var InputControl = (0, import_element31.forwardRef)(UnforwardedInputControl);
   var input_control_default = InputControl;
 
   // packages/components/build-module/button/index.js
   var import_deprecated5 = __toESM(require_deprecated());
-  var import_element32 = __toESM(require_element());
+  var import_element33 = __toESM(require_element());
   var import_compose6 = __toESM(require_compose());
 
   // packages/components/build-module/icon/index.js
-  var import_element31 = __toESM(require_element());
-  var import_primitives2 = __toESM(require_primitives());
+  var import_element32 = __toESM(require_element());
+  var import_primitives31 = __toESM(require_primitives());
 
   // packages/components/build-module/dashicon/index.js
-  var import_jsx_runtime64 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime93 = __toESM(require_jsx_runtime());
   function Dashicon({
     icon,
     className,
@@ -27388,7 +27592,7 @@ This message will only show in development mode. It won't appear in production. 
       ...sizeStyles3,
       ...style2
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("span", {
       className: iconClass,
       style: styles3,
       ...extraProps
@@ -27397,43 +27601,43 @@ This message will only show in development mode. It won't appear in production. 
   var dashicon_default = Dashicon;
 
   // packages/components/build-module/icon/index.js
-  var import_jsx_runtime65 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime94 = __toESM(require_jsx_runtime());
   function Icon({
     icon = null,
     size: size3 = "string" === typeof icon ? 20 : 24,
     ...additionalProps
   }) {
     if ("string" === typeof icon) {
-      return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(dashicon_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(dashicon_default, {
         icon,
         size: size3,
         ...additionalProps
       });
     }
-    if ((0, import_element31.isValidElement)(icon) && dashicon_default === icon.type) {
-      return (0, import_element31.cloneElement)(icon, {
+    if ((0, import_element32.isValidElement)(icon) && dashicon_default === icon.type) {
+      return (0, import_element32.cloneElement)(icon, {
         ...additionalProps
       });
     }
     if ("function" === typeof icon) {
-      return (0, import_element31.createElement)(icon, {
+      return (0, import_element32.createElement)(icon, {
         size: size3,
         ...additionalProps
       });
     }
-    if (icon && (icon.type === "svg" || icon.type === import_primitives2.SVG)) {
+    if (icon && (icon.type === "svg" || icon.type === import_primitives31.SVG)) {
       const appliedProps = {
         ...icon.props,
         width: size3,
         height: size3,
         ...additionalProps
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives2.SVG, {
+      return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_primitives31.SVG, {
         ...appliedProps
       });
     }
-    if ((0, import_element31.isValidElement)(icon)) {
-      return (0, import_element31.cloneElement)(icon, {
+    if ((0, import_element32.isValidElement)(icon)) {
+      return (0, import_element32.cloneElement)(icon, {
         // @ts-ignore Just forwarding the size prop along
         size: size3,
         width: size3,
@@ -27443,10 +27647,10 @@ This message will only show in development mode. It won't appear in production. 
     }
     return icon;
   }
-  var icon_default2 = Icon;
+  var icon_default3 = Icon;
 
   // packages/components/build-module/button/index.js
-  var import_jsx_runtime66 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime95 = __toESM(require_jsx_runtime());
   var disabledEventsOnDisabledButton = ["onMouseDown", "onClick"];
   function useDeprecatedProps2({
     __experimentalIsFocusable,
@@ -27599,24 +27803,24 @@ This message will only show in development mode. It won't appear in production. 
       "aria-describedby": describedById,
       ref
     };
-    const elementChildren = /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_jsx_runtime66.Fragment, {
-      children: [icon && iconPosition === "left" && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(icon_default2, {
+    const elementChildren = /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(import_jsx_runtime95.Fragment, {
+      children: [icon && iconPosition === "left" && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(icon_default3, {
         icon,
         size: iconSize
-      }), text && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_jsx_runtime66.Fragment, {
+      }), text && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_jsx_runtime95.Fragment, {
         children: text
-      }), children, icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(icon_default2, {
+      }), children, icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(icon_default3, {
         icon,
         size: iconSize
       })]
     });
-    const element = Tag === "a" ? /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("a", {
+    const element = Tag === "a" ? /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("a", {
       ...anchorProps,
       ...additionalProps,
       ...disableEventProps,
       ...commonProps,
       children: elementChildren
-    }) : /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("button", {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("button", {
       ...buttonProps,
       ...additionalProps,
       ...disableEventProps,
@@ -27629,19 +27833,19 @@ This message will only show in development mode. It won't appear in production. 
       placement: tooltipPosition && // Convert legacy `position` values to be used with the new `placement` prop
       positionToPlacement(tooltipPosition)
     } : {};
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_jsx_runtime66.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime66.jsx)(tooltip_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(import_jsx_runtime95.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime95.jsx)(tooltip_default, {
         ...tooltipProps,
         children: element
-      }), description && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(component_default2, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("span", {
+      }), description && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(component_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", {
           id: descriptionId,
           children: description
         })
       })]
     });
   }
-  var Button3 = (0, import_element32.forwardRef)(UnforwardedButton);
+  var Button3 = (0, import_element33.forwardRef)(UnforwardedButton);
   var button_default = Button3;
 
   // packages/components/build-module/number-control/styles/number-control-styles.js
@@ -27827,16 +28031,16 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/utils/get-valid-children.js
-  var import_element33 = __toESM(require_element());
+  var import_element34 = __toESM(require_element());
   function getValidChildren(children) {
     if (typeof children === "string") {
       return [children];
     }
-    return import_element33.Children.toArray(children).filter((child) => (0, import_element33.isValidElement)(child));
+    return import_element34.Children.toArray(children).filter((child) => (0, import_element34.isValidElement)(child));
   }
 
   // packages/components/build-module/h-stack/hook.js
-  var import_jsx_runtime67 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime96 = __toESM(require_jsx_runtime());
   function useHStack(props) {
     const {
       alignment = "edge",
@@ -27852,7 +28056,7 @@ This message will only show in development mode. It won't appear in production. 
       if (_isSpacer) {
         const childElement = child;
         const _key = childElement.key || `hstack-${index2}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(component_default4, {
+        return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(component_default4, {
           isBlock: true,
           ...childElement.props
         }, _key);
@@ -27875,10 +28079,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/h-stack/component.js
-  var import_jsx_runtime68 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime97 = __toESM(require_jsx_runtime());
   function UnconnectedHStack(props, forwardedRef) {
     const hStackProps = useHStack(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(component_default, {
       ...hStackProps,
       ref: forwardedRef
     });
@@ -27887,7 +28091,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default9 = HStack;
 
   // packages/components/build-module/number-control/index.js
-  var import_jsx_runtime69 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime98 = __toESM(require_jsx_runtime());
   var noop6 = () => {
   };
   function UnforwardedNumberControl(props, forwardedRef) {
@@ -27927,7 +28131,7 @@ This message will only show in development mode. It won't appear in production. 
         version: "6.3"
       });
     }
-    const inputRef = (0, import_element34.useRef)();
+    const inputRef = (0, import_element35.useRef)();
     const mergedRef = (0, import_compose7.useMergeRefs)([inputRef, forwardedRef]);
     const isStepAny = step === "any";
     const baseStep = isStepAny ? 1 : ensureNumber(step);
@@ -28019,7 +28223,7 @@ This message will only show in development mode. It won't appear in production. 
         target: inputRef.current
       }
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(Input2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(Input2, {
       autoComplete,
       inputMode: "numeric",
       ...restProps,
@@ -28042,21 +28246,21 @@ This message will only show in development mode. It won't appear in production. 
       },
       size: size3,
       __shouldNotWarnDeprecated36pxSize: true,
-      suffix: spinControls === "custom" ? /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(import_jsx_runtime69.Fragment, {
-        children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(component_default6, {
+      suffix: spinControls === "custom" ? /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_jsx_runtime98.Fragment, {
+        children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(component_default6, {
           marginBottom: 0,
           marginRight: 2,
-          children: /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(component_default9, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(component_default9, {
             spacing: 1,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime69.jsx)(SpinButton, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime98.jsx)(SpinButton, {
               className: spinButtonClasses,
-              icon: import_icons.plus,
+              icon: plus_default,
               size: "small",
               label: (0, import_i18n5.__)("Increment"),
               onClick: buildSpinButtonClickHandler("up")
-            }), /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(SpinButton, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(SpinButton, {
               className: spinButtonClasses,
-              icon: import_icons.reset,
+              icon: reset_default,
               size: "small",
               label: (0, import_i18n5.__)("Decrement"),
               onClick: buildSpinButtonClickHandler("down")
@@ -28067,11 +28271,11 @@ This message will only show in development mode. It won't appear in production. 
       onChange
     });
   }
-  var NumberControl = (0, import_element34.forwardRef)(UnforwardedNumberControl);
+  var NumberControl = (0, import_element35.forwardRef)(UnforwardedNumberControl);
   var number_control_default = NumberControl;
 
   // packages/components/build-module/angle-picker-control/angle-circle.js
-  var import_element35 = __toESM(require_element());
+  var import_element36 = __toESM(require_element());
   var import_compose8 = __toESM(require_compose());
 
   // packages/components/build-module/angle-picker-control/styles/angle-picker-control-styles.js
@@ -28114,15 +28318,15 @@ This message will only show in development mode. It won't appear in production. 
   })("color:", COLORS.theme.accent, ";margin-right:", space(3), ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFuZ2xlLXBpY2tlci1jb250cm9sLXN0eWxlcy50c3giXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBc0RzQyIsImZpbGUiOiJhbmdsZS1waWNrZXItY29udHJvbC1zdHlsZXMudHN4Iiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMgfSBmcm9tICcuLi8uLi91dGlscyc7XG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uLy4uL3V0aWxzL3NwYWNlJztcbmltcG9ydCB7IFRleHQgfSBmcm9tICcuLi8uLi90ZXh0JztcbmltcG9ydCBDT05GSUcgZnJvbSAnLi4vLi4vdXRpbHMvY29uZmlnLXZhbHVlcyc7XG5cbmNvbnN0IENJUkNMRV9TSVpFID0gMzI7XG5jb25zdCBJTk5FUl9DSVJDTEVfU0laRSA9IDY7XG5cbmV4cG9ydCBjb25zdCBDaXJjbGVSb290ID0gc3R5bGVkLmRpdmBcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1JvdW5kIH07XG5cdGJvcmRlcjogJHsgQ09ORklHLmJvcmRlcldpZHRoIH0gc29saWQgJHsgQ09MT1JTLnVpLmJvcmRlciB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRjdXJzb3I6IGdyYWI7XG5cdGhlaWdodDogJHsgQ0lSQ0xFX1NJWkUgfXB4O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogJHsgQ0lSQ0xFX1NJWkUgfXB4O1xuXG5cdDphY3RpdmUge1xuXHRcdGN1cnNvcjogZ3JhYmJpbmc7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBDaXJjbGVJbmRpY2F0b3JXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHR3aWR0aDogMTAwJTtcblx0aGVpZ2h0OiAxMDAlO1xuXG5cdDpmb2N1cy12aXNpYmxlIHtcblx0XHRvdXRsaW5lOiBub25lO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgQ2lyY2xlSW5kaWNhdG9yID0gc3R5bGVkLmRpdmBcblx0YmFja2dyb3VuZDogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzUm91bmQgfTtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogYmxvY2s7XG5cdGxlZnQ6IDUwJTtcblx0dG9wOiA0cHg7XG5cdHRyYW5zZm9ybTogdHJhbnNsYXRlWCggLTUwJSApO1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHdpZHRoOiAkeyBJTk5FUl9DSVJDTEVfU0laRSB9cHg7XG5cdGhlaWdodDogJHsgSU5ORVJfQ0lSQ0xFX1NJWkUgfXB4O1xuYDtcblxuZXhwb3J0IGNvbnN0IFVuaXRUZXh0ID0gc3R5bGVkKCBUZXh0IClgXG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdG1hcmdpbi1yaWdodDogJHsgc3BhY2UoIDMgKSB9O1xuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/angle-picker-control/angle-circle.js
-  var import_jsx_runtime70 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime99 = __toESM(require_jsx_runtime());
   function AngleCircle({
     value,
     onChange,
     ...props
   }) {
-    const angleCircleRef = (0, import_element35.useRef)(null);
-    const angleCircleCenterRef = (0, import_element35.useRef)();
-    const previousCursorValueRef = (0, import_element35.useRef)();
+    const angleCircleRef = (0, import_element36.useRef)(null);
+    const angleCircleCenterRef = (0, import_element36.useRef)();
+    const previousCursorValueRef = (0, import_element36.useRef)();
     const setAngleCircleCenter = () => {
       if (angleCircleRef.current === null) {
         return;
@@ -28158,7 +28362,7 @@ This message will only show in development mode. It won't appear in production. 
       onDragMove: changeAngleToPosition,
       onDragEnd: changeAngleToPosition
     });
-    (0, import_element35.useEffect)(() => {
+    (0, import_element36.useEffect)(() => {
       if (isDragging2) {
         if (previousCursorValueRef.current === void 0) {
           previousCursorValueRef.current = document.body.style.cursor;
@@ -28169,18 +28373,18 @@ This message will only show in development mode. It won't appear in production. 
         previousCursorValueRef.current = void 0;
       }
     }, [isDragging2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(CircleRoot, {
+    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(CircleRoot, {
       ref: angleCircleRef,
       onMouseDown: startDrag,
       className: "components-angle-picker-control__angle-circle",
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(CircleIndicatorWrapper, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(CircleIndicatorWrapper, {
         style: value ? {
           transform: `rotate(${value}deg)`
         } : void 0,
         className: "components-angle-picker-control__angle-circle-indicator-wrapper",
         tabIndex: -1,
-        children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(CircleIndicator, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(CircleIndicator, {
           className: "components-angle-picker-control__angle-circle-indicator"
         })
       })
@@ -28199,7 +28403,7 @@ This message will only show in development mode. It won't appear in production. 
   var angle_circle_default = AngleCircle;
 
   // packages/components/build-module/angle-picker-control/index.js
-  var import_jsx_runtime71 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime100 = __toESM(require_jsx_runtime());
   function UnforwardedAnglePickerControl(props, ref) {
     const {
       className,
@@ -28216,17 +28420,17 @@ This message will only show in development mode. It won't appear in production. 
       onChange(inputValue);
     };
     const classes = clsx_default("components-angle-picker-control", className);
-    const unitText = /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(UnitText, {
+    const unitText = /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(UnitText, {
       children: "\xB0"
     });
     const [prefixedUnitText, suffixedUnitText] = (0, import_i18n6.isRTL)() ? [unitText, null] : [null, unitText];
-    return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(component_default3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(component_default3, {
       ...restProps,
       ref,
       className: classes,
       gap: 2,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime71.jsx)(component_default5, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(number_control_default, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime100.jsx)(component_default5, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(number_control_default, {
           __next40pxDefaultSize: true,
           label,
           className: "components-angle-picker-control__input-field",
@@ -28239,10 +28443,10 @@ This message will only show in development mode. It won't appear in production. 
           prefix: prefixedUnitText,
           suffix: suffixedUnitText
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(component_default6, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(component_default6, {
         marginBottom: "1",
         marginTop: "auto",
-        children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(angle_circle_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(angle_circle_default, {
           "aria-hidden": "true",
           value,
           onChange
@@ -28250,19 +28454,19 @@ This message will only show in development mode. It won't appear in production. 
       })]
     });
   }
-  var AnglePickerControl = (0, import_element36.forwardRef)(UnforwardedAnglePickerControl);
+  var AnglePickerControl = (0, import_element37.forwardRef)(UnforwardedAnglePickerControl);
   var angle_picker_control_default = AnglePickerControl;
 
   // packages/components/build-module/autocomplete/index.js
   var import_remove_accents3 = __toESM(require_remove_accents());
-  var import_element52 = __toESM(require_element());
+  var import_element53 = __toESM(require_element());
   var import_compose21 = __toESM(require_compose());
   var import_rich_text2 = __toESM(require_rich_text());
   var import_a11y2 = __toESM(require_a11y());
   var import_keycodes = __toESM(require_keycodes());
 
   // packages/components/build-module/autocomplete/autocompleter-ui.js
-  var import_element51 = __toESM(require_element());
+  var import_element52 = __toESM(require_element());
   var import_rich_text = __toESM(require_rich_text());
   var import_compose20 = __toESM(require_compose());
   var import_a11y = __toESM(require_a11y());
@@ -28271,7 +28475,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/autocomplete/get-default-use-items.js
   var import_remove_accents2 = __toESM(require_remove_accents());
   var import_compose9 = __toESM(require_compose());
-  var import_element37 = __toESM(require_element());
+  var import_element38 = __toESM(require_element());
 
   // packages/components/build-module/utils/strings.js
   var import_remove_accents = __toESM(require_remove_accents());
@@ -28301,7 +28505,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/autocomplete/get-default-use-items.js
-  function filterOptions(search2, options2 = [], maxResults = 10) {
+  function filterOptions(search, options2 = [], maxResults = 10) {
     const filtered = [];
     for (let i3 = 0; i3 < options2.length; i3++) {
       const option = options2[i3];
@@ -28311,7 +28515,7 @@ This message will only show in development mode. It won't appear in production. 
       if ("string" === typeof option.label) {
         keywords = [...keywords, option.label];
       }
-      const isMatch = keywords.some((keyword) => search2.test((0, import_remove_accents2.default)(keyword)));
+      const isMatch = keywords.some((keyword) => search.test((0, import_remove_accents2.default)(keyword)));
       if (!isMatch) {
         continue;
       }
@@ -28324,8 +28528,8 @@ This message will only show in development mode. It won't appear in production. 
   }
   function getDefaultUseItems(autocompleter) {
     return (filterValue) => {
-      const [items, setItems] = (0, import_element37.useState)([]);
-      (0, import_element37.useLayoutEffect)(() => {
+      const [items, setItems] = (0, import_element38.useState)([]);
+      (0, import_element38.useLayoutEffect)(() => {
         const {
           options: options2,
           isDebounced
@@ -28342,8 +28546,8 @@ This message will only show in development mode. It won't appear in production. 
               keywords: autocompleter.getOptionKeywords ? autocompleter.getOptionKeywords(optionData) : [],
               isDisabled: autocompleter.isOptionDisabled ? autocompleter.isOptionDisabled(optionData) : false
             }));
-            const search2 = new RegExp("(?:\\b|\\s|^)" + escapeRegExp(filterValue), "i");
-            setItems(filterOptions(search2, keyedOptions));
+            const search = new RegExp("(?:\\b|\\s|^)" + escapeRegExp(filterValue), "i");
+            setItems(filterOptions(search, keyedOptions));
           });
           return promise2;
         }, isDebounced ? 250 : 0);
@@ -28608,15 +28812,14 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/popover/index.js
-  var import_element50 = __toESM(require_element());
+  var import_element51 = __toESM(require_element());
   var import_compose19 = __toESM(require_compose());
-  var import_icons2 = __toESM(require_icons());
   var import_deprecated7 = __toESM(require_deprecated());
-  var import_primitives3 = __toESM(require_primitives());
+  var import_primitives32 = __toESM(require_primitives());
   var import_i18n7 = __toESM(require_i18n());
 
   // packages/components/build-module/scroll-lock/index.js
-  var import_element38 = __toESM(require_element());
+  var import_element39 = __toESM(require_element());
   var previousScrollTop = 0;
   function setLocked(locked) {
     const scrollingElement = document.scrollingElement || document.body;
@@ -28632,7 +28835,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   var lockCounter = 0;
   function ScrollLock() {
-    (0, import_element38.useEffect)(() => {
+    (0, import_element39.useEffect)(() => {
       if (lockCounter === 0) {
         setLocked(true);
       }
@@ -28649,14 +28852,14 @@ This message will only show in development mode. It won't appear in production. 
   var scroll_lock_default = ScrollLock;
 
   // packages/components/build-module/slot-fill/index.js
-  var import_element49 = __toESM(require_element());
+  var import_element50 = __toESM(require_element());
 
   // packages/components/build-module/slot-fill/fill.js
-  var import_element40 = __toESM(require_element());
+  var import_element41 = __toESM(require_element());
 
   // packages/components/build-module/slot-fill/context.js
   var import_compose10 = __toESM(require_compose());
-  var import_element39 = __toESM(require_element());
+  var import_element40 = __toESM(require_element());
   var initialValue = {
     slots: (0, import_compose10.observableMap)(),
     fills: (0, import_compose10.observableMap)(),
@@ -28671,7 +28874,7 @@ This message will only show in development mode. It won't appear in production. 
     updateFill: () => {
     }
   };
-  var SlotFillContext = (0, import_element39.createContext)(initialValue);
+  var SlotFillContext = (0, import_element40.createContext)(initialValue);
   SlotFillContext.displayName = "SlotFillContext";
   var context_default = SlotFillContext;
 
@@ -28680,18 +28883,18 @@ This message will only show in development mode. It won't appear in production. 
     name,
     children
   }) {
-    const registry = (0, import_element40.useContext)(context_default);
-    const instanceRef = (0, import_element40.useRef)({});
-    const childrenRef = (0, import_element40.useRef)(children);
-    (0, import_element40.useLayoutEffect)(() => {
+    const registry = (0, import_element41.useContext)(context_default);
+    const instanceRef = (0, import_element41.useRef)({});
+    const childrenRef = (0, import_element41.useRef)(children);
+    (0, import_element41.useLayoutEffect)(() => {
       childrenRef.current = children;
     }, [children]);
-    (0, import_element40.useLayoutEffect)(() => {
+    (0, import_element41.useLayoutEffect)(() => {
       const instance = instanceRef.current;
       registry.registerFill(name, instance, childrenRef.current);
       return () => registry.unregisterFill(name, instance);
     }, [registry, name]);
-    (0, import_element40.useLayoutEffect)(() => {
+    (0, import_element41.useLayoutEffect)(() => {
       registry.updateFill(name, instanceRef.current, childrenRef.current);
     });
     return null;
@@ -28699,13 +28902,13 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/slot-fill/slot.js
   var import_compose11 = __toESM(require_compose());
-  var import_element41 = __toESM(require_element());
-  var import_jsx_runtime72 = __toESM(require_jsx_runtime());
+  var import_element42 = __toESM(require_element());
+  var import_jsx_runtime101 = __toESM(require_jsx_runtime());
   function isFunction(maybeFunc) {
     return typeof maybeFunc === "function";
   }
   function addKeysToChildren(children) {
-    return import_element41.Children.map(children, (child, childIndex) => {
+    return import_element42.Children.map(children, (child, childIndex) => {
       if (!child || typeof child === "string") {
         return child;
       }
@@ -28713,21 +28916,21 @@ This message will only show in development mode. It won't appear in production. 
       if (typeof child === "object" && "key" in child && child?.key) {
         childKey = child.key;
       }
-      return (0, import_element41.cloneElement)(child, {
+      return (0, import_element42.cloneElement)(child, {
         key: childKey
       });
     });
   }
   function Slot(props) {
     var _useObservableValue;
-    const registry = (0, import_element41.useContext)(context_default);
-    const instanceRef = (0, import_element41.useRef)({});
+    const registry = (0, import_element42.useContext)(context_default);
+    const instanceRef = (0, import_element42.useRef)({});
     const {
       name,
       children,
       fillProps = {}
     } = props;
-    (0, import_element41.useLayoutEffect)(() => {
+    (0, import_element42.useLayoutEffect)(() => {
       const instance = instanceRef.current;
       registry.registerSlot(name, instance);
       return () => registry.unregisterSlot(name, instance);
@@ -28744,9 +28947,9 @@ This message will only show in development mode. It won't appear in production. 
       // In some cases fills are rendered only when some conditions apply.
       // This ensures that we only use non-empty fills when rendering, i.e.,
       // it allows us to render wrappers only when the fills are actually present.
-      (element) => !(0, import_element41.isEmptyElement)(element)
+      (element) => !(0, import_element42.isEmptyElement)(element)
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_jsx_runtime72.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_jsx_runtime101.Fragment, {
       children: isFunction(children) ? children(renderedFills) : renderedFills
     });
   }
@@ -28754,10 +28957,10 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/slot-fill/bubbles-virtually/fill.js
   var import_compose13 = __toESM(require_compose());
-  var import_element43 = __toESM(require_element());
+  var import_element44 = __toESM(require_element());
 
   // packages/components/build-module/slot-fill/bubbles-virtually/slot-fill-context.js
-  var import_element42 = __toESM(require_element());
+  var import_element43 = __toESM(require_element());
   var import_warning4 = __toESM(require_warning());
   var import_compose12 = __toESM(require_compose());
   var initialContextValue = {
@@ -28777,7 +28980,7 @@ This message will only show in development mode. It won't appear in production. 
     // This helps the provider know if it's using the default context value or not.
     isDefault: true
   };
-  var SlotFillContext2 = (0, import_element42.createContext)(initialContextValue);
+  var SlotFillContext2 = (0, import_element43.createContext)(initialContextValue);
   SlotFillContext2.displayName = "SlotFillContext";
   var slot_fill_context_default = SlotFillContext2;
 
@@ -28830,7 +29033,7 @@ This message will only show in development mode. It won't appear in production. 
   var v4_default = v4;
 
   // packages/components/build-module/style-provider/index.js
-  var import_jsx_runtime73 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime102 = __toESM(require_jsx_runtime());
   var uuidCache = /* @__PURE__ */ new Set();
   var containerCacheMap = /* @__PURE__ */ new WeakMap();
   var memoizedCreateCacheWithContainer = (container) => {
@@ -28858,7 +29061,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     const cache2 = memoizedCreateCacheWithContainer(document2.head);
-    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(CacheProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(CacheProvider, {
       value: cache2,
       children
     });
@@ -28866,16 +29069,16 @@ This message will only show in development mode. It won't appear in production. 
   var style_provider_default = StyleProvider;
 
   // packages/components/build-module/slot-fill/bubbles-virtually/fill.js
-  var import_jsx_runtime74 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime103 = __toESM(require_jsx_runtime());
   function Fill2({
     name,
     children
   }) {
     var _slot$fillProps;
-    const registry = (0, import_element43.useContext)(slot_fill_context_default);
+    const registry = (0, import_element44.useContext)(slot_fill_context_default);
     const slot = (0, import_compose13.useObservableValue)(registry.slots, name);
-    const instanceRef = (0, import_element43.useRef)({});
-    (0, import_element43.useEffect)(() => {
+    const instanceRef = (0, import_element44.useRef)({});
+    (0, import_element44.useEffect)(() => {
       const instance = instanceRef.current;
       registry.registerFill(name, instance);
       return () => registry.unregisterFill(name, instance);
@@ -28883,17 +29086,17 @@ This message will only show in development mode. It won't appear in production. 
     if (!slot || !slot.ref.current) {
       return null;
     }
-    const wrappedChildren = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(style_provider_default, {
+    const wrappedChildren = /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(style_provider_default, {
       document: slot.ref.current.ownerDocument,
       children: typeof children === "function" ? children((_slot$fillProps = slot.fillProps) !== null && _slot$fillProps !== void 0 ? _slot$fillProps : {}) : children
     });
-    return (0, import_element43.createPortal)(wrappedChildren, slot.ref.current);
+    return (0, import_element44.createPortal)(wrappedChildren, slot.ref.current);
   }
 
   // packages/components/build-module/slot-fill/bubbles-virtually/slot.js
-  var import_element44 = __toESM(require_element());
+  var import_element45 = __toESM(require_element());
   var import_compose14 = __toESM(require_compose());
-  var import_jsx_runtime75 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime104 = __toESM(require_jsx_runtime());
   function Slot2(props, forwardedRef) {
     const {
       name,
@@ -28904,32 +29107,32 @@ This message will only show in development mode. It won't appear in production. 
       children,
       ...restProps
     } = props;
-    const registry = (0, import_element44.useContext)(slot_fill_context_default);
-    const ref = (0, import_element44.useRef)(null);
-    const fillPropsRef = (0, import_element44.useRef)(fillProps);
-    (0, import_element44.useLayoutEffect)(() => {
+    const registry = (0, import_element45.useContext)(slot_fill_context_default);
+    const ref = (0, import_element45.useRef)(null);
+    const fillPropsRef = (0, import_element45.useRef)(fillProps);
+    (0, import_element45.useLayoutEffect)(() => {
       fillPropsRef.current = fillProps;
     }, [fillProps]);
-    (0, import_element44.useLayoutEffect)(() => {
+    (0, import_element45.useLayoutEffect)(() => {
       registry.registerSlot(name, ref, fillPropsRef.current);
       return () => registry.unregisterSlot(name, ref);
     }, [registry, name]);
-    (0, import_element44.useLayoutEffect)(() => {
+    (0, import_element45.useLayoutEffect)(() => {
       registry.updateSlot(name, ref, fillPropsRef.current);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(component_default, {
       as,
       ref: (0, import_compose14.useMergeRefs)([forwardedRef, ref]),
       ...restProps
     });
   }
-  var slot_default2 = (0, import_element44.forwardRef)(Slot2);
+  var slot_default2 = (0, import_element45.forwardRef)(Slot2);
 
   // packages/components/build-module/slot-fill/bubbles-virtually/slot-fill-provider.js
-  var import_element45 = __toESM(require_element());
+  var import_element46 = __toESM(require_element());
   var import_is_shallow_equal = __toESM(require_is_shallow_equal());
   var import_compose15 = __toESM(require_compose());
-  var import_jsx_runtime76 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime105 = __toESM(require_jsx_runtime());
   function createSlotRegistry() {
     const slots = (0, import_compose15.observableMap)();
     const fills = (0, import_compose15.observableMap)();
@@ -28988,17 +29191,17 @@ This message will only show in development mode. It won't appear in production. 
   function SlotFillProvider({
     children
   }) {
-    const [registry] = (0, import_element45.useState)(createSlotRegistry);
-    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(slot_fill_context_default.Provider, {
+    const [registry] = (0, import_element46.useState)(createSlotRegistry);
+    return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(slot_fill_context_default.Provider, {
       value: registry,
       children
     });
   }
 
   // packages/components/build-module/slot-fill/provider.js
-  var import_element46 = __toESM(require_element());
+  var import_element47 = __toESM(require_element());
   var import_compose16 = __toESM(require_compose());
-  var import_jsx_runtime77 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime106 = __toESM(require_jsx_runtime());
   function createSlotRegistry2() {
     const slots = (0, import_compose16.observableMap)();
     const fills = (0, import_compose16.observableMap)();
@@ -29059,8 +29262,8 @@ This message will only show in development mode. It won't appear in production. 
   function SlotFillProvider2({
     children
   }) {
-    const [contextValue] = (0, import_element46.useState)(createSlotRegistry2);
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(context_default.Provider, {
+    const [contextValue] = (0, import_element47.useState)(createSlotRegistry2);
+    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(context_default.Provider, {
       value: contextValue,
       children
     });
@@ -29068,13 +29271,13 @@ This message will only show in development mode. It won't appear in production. 
   var provider_default = SlotFillProvider2;
 
   // packages/components/build-module/slot-fill/index.js
-  var import_jsx_runtime78 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime107 = __toESM(require_jsx_runtime());
 
   // packages/components/build-module/slot-fill/bubbles-virtually/use-slot.js
-  var import_element47 = __toESM(require_element());
+  var import_element48 = __toESM(require_element());
   var import_compose17 = __toESM(require_compose());
   function useSlot(name) {
-    const registry = (0, import_element47.useContext)(slot_fill_context_default);
+    const registry = (0, import_element48.useContext)(slot_fill_context_default);
     const slot = (0, import_compose17.useObservableValue)(registry.slots, name);
     return {
       ...slot
@@ -29082,19 +29285,19 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/slot-fill/bubbles-virtually/use-slot-fills.js
-  var import_element48 = __toESM(require_element());
+  var import_element49 = __toESM(require_element());
   var import_compose18 = __toESM(require_compose());
   function useSlotFills(name) {
-    const registry = (0, import_element48.useContext)(slot_fill_context_default);
+    const registry = (0, import_element49.useContext)(slot_fill_context_default);
     return (0, import_compose18.useObservableValue)(registry.fills, name);
   }
 
   // packages/components/build-module/slot-fill/index.js
   function Fill3(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(import_jsx_runtime78.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Fill, {
+    return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(import_jsx_runtime107.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime107.jsx)(Fill, {
         ...props
-      }), /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Fill2, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(Fill2, {
         ...props
       })]
     });
@@ -29105,28 +29308,28 @@ This message will only show in development mode. It won't appear in production. 
       ...restProps
     } = props;
     if (bubblesVirtually) {
-      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(slot_default2, {
+      return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(slot_default2, {
         ...restProps,
         ref
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(slot_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(slot_default, {
       ...restProps
     });
   }
-  var Slot3 = (0, import_element49.forwardRef)(UnforwardedSlot);
+  var Slot3 = (0, import_element50.forwardRef)(UnforwardedSlot);
   function Provider({
     children,
     passthrough = false
   }) {
-    const parent = (0, import_element49.useContext)(slot_fill_context_default);
+    const parent = (0, import_element50.useContext)(slot_fill_context_default);
     if (!parent.isDefault && passthrough) {
-      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_jsx_runtime78.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_jsx_runtime107.Fragment, {
         children
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(provider_default, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(SlotFillProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(provider_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(SlotFillProvider, {
         children
       })
     });
@@ -29134,12 +29337,12 @@ This message will only show in development mode. It won't appear in production. 
   Provider.displayName = "SlotFillProvider";
   function createSlotFill(key) {
     const baseName = typeof key === "symbol" ? key.description : key;
-    const FillComponent = (props) => /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Fill3, {
+    const FillComponent = (props) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(Fill3, {
       name: key,
       ...props
     });
     FillComponent.displayName = `${baseName}Fill`;
-    const SlotComponent = (props) => /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Slot3, {
+    const SlotComponent = (props) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(Slot3, {
       name: key,
       ...props
     });
@@ -29182,24 +29385,24 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/popover/index.js
-  var import_jsx_runtime79 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime108 = __toESM(require_jsx_runtime());
   var SLOT_NAME = "Popover";
   var OVERFLOW_PADDING = 8;
-  var ArrowTriangle = () => /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(import_primitives3.SVG, {
+  var ArrowTriangle = () => /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(import_primitives32.SVG, {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 100 100",
     className: "components-popover__triangle",
     role: "presentation",
-    children: [/* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_primitives3.Path, {
+    children: [/* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_primitives32.Path, {
       className: "components-popover__triangle-bg",
       d: "M 0 0 L 50 50 L 100 0"
-    }), /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_primitives3.Path, {
+    }), /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_primitives32.Path, {
       className: "components-popover__triangle-border",
       d: "M 0 0 L 50 50 L 100 0",
       vectorEffect: "non-scaling-stroke"
     })]
   });
-  var slotNameContext = (0, import_element50.createContext)(void 0);
+  var slotNameContext = (0, import_element51.createContext)(void 0);
   slotNameContext.displayName = "__unstableSlotNameContext";
   var fallbackContainerClassname = "components-popover__fallback-container";
   var getPopoverFallbackContainer = () => {
@@ -29279,9 +29482,9 @@ This message will only show in development mode. It won't appear in production. 
         alternative: "`variant` prop with the `'toolbar'` value"
       });
     }
-    const arrowRef = (0, import_element50.useRef)(null);
-    const [fallbackReferenceElement, setFallbackReferenceElement] = (0, import_element50.useState)(null);
-    const anchorRefFallback = (0, import_element50.useCallback)((node2) => {
+    const arrowRef = (0, import_element51.useRef)(null);
+    const [fallbackReferenceElement, setFallbackReferenceElement] = (0, import_element51.useState)(null);
+    const anchorRefFallback = (0, import_element51.useCallback)((node2) => {
       setFallbackReferenceElement(node2);
     }, []);
     const isMobileViewport = (0, import_compose19.useViewportMatch)("medium", "<");
@@ -29311,7 +29514,7 @@ This message will only show in development mode. It won't appear in production. 
     }), arrow3({
       element: arrowRef
     })];
-    const slotName = (0, import_element50.useContext)(slotNameContext) || __unstableSlotName;
+    const slotName = (0, import_element51.useContext)(slotNameContext) || __unstableSlotName;
     const slot = useSlot(slotName);
     let onDialogClose;
     if (onClose || onFocusOutside) {
@@ -29351,7 +29554,7 @@ This message will only show in development mode. It won't appear in production. 
         animationFrame: true
       })
     });
-    const arrowCallbackRef = (0, import_element50.useCallback)((node2) => {
+    const arrowCallbackRef = (0, import_element51.useCallback)((node2) => {
       arrowRef.current = node2;
       update();
     }, [update]);
@@ -29359,7 +29562,7 @@ This message will only show in development mode. It won't appear in production. 
     const anchorRefBottom = anchorRef?.bottom;
     const anchorRefStartContainer = anchorRef?.startContainer;
     const anchorRefCurrent = anchorRef?.current;
-    (0, import_element50.useLayoutEffect)(() => {
+    (0, import_element51.useLayoutEffect)(() => {
       const resultingReferenceElement = getReferenceElement({
         anchor,
         anchorRef,
@@ -29384,11 +29587,11 @@ This message will only show in development mode. It won't appear in production. 
     };
     const shouldReduceMotion = (0, import_compose19.useReducedMotion)();
     const shouldAnimate = animate && !isExpanded && !shouldReduceMotion;
-    const [animationFinished, setAnimationFinished] = (0, import_element50.useState)(false);
+    const [animationFinished, setAnimationFinished] = (0, import_element51.useState)(false);
     const {
       style: motionInlineStyles,
       ...otherMotionProps
-    } = (0, import_element50.useMemo)(() => placementToMotionAnimationProps(computedPlacement), [computedPlacement]);
+    } = (0, import_element51.useMemo)(() => placementToMotionAnimationProps(computedPlacement), [computedPlacement]);
     const animationProps = shouldAnimate ? {
       style: {
         ...contentStyle,
@@ -29405,7 +29608,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     };
     const isPositioned = (!shouldAnimate || animationFinished) && x2 !== null && y3 !== null;
-    let content = /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(motion.div, {
+    let content = /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(motion.div, {
       className: clsx_default(className, {
         "is-expanded": isExpanded,
         "is-positioned": isPositioned,
@@ -29417,40 +29620,40 @@ This message will only show in development mode. It won't appear in production. 
       ref: mergedFloatingRef,
       ...dialogProps,
       tabIndex: -1,
-      children: [isExpanded && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(scroll_lock_default, {}), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)("div", {
+      children: [isExpanded && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(scroll_lock_default, {}), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)("div", {
         className: "components-popover__header",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime108.jsx)("span", {
           className: "components-popover__header-title",
           children: headerTitle
-        }), /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(button_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(button_default, {
           className: "components-popover__close",
           size: "small",
-          icon: import_icons2.close,
+          icon: close_default,
           onClick: onClose,
           label: (0, import_i18n7.__)("Close")
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", {
         className: "components-popover__content",
         children
-      }), hasArrow && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("div", {
+      }), hasArrow && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", {
         ref: arrowCallbackRef,
         className: ["components-popover__arrow", `is-${computedPlacement.split("-")[0]}`].join(" "),
         style: {
           left: typeof arrowData?.x !== "undefined" && Number.isFinite(arrowData.x) ? `${arrowData.x}px` : "",
           top: typeof arrowData?.y !== "undefined" && Number.isFinite(arrowData.y) ? `${arrowData.y}px` : ""
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(ArrowTriangle, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(ArrowTriangle, {})
       })]
     });
     const shouldRenderWithinSlot = slot.ref && !inline3;
     const hasAnchor = anchorRef || anchorRect || anchor;
     if (shouldRenderWithinSlot) {
-      content = /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(Fill3, {
+      content = /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Fill3, {
         name: slotName,
         children: content
       });
     } else if (!inline3) {
-      content = (0, import_element50.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime79.jsx)(StyleProvider, {
+      content = (0, import_element51.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime108.jsx)(StyleProvider, {
         document,
         children: content
       }), getPopoverFallbackContainer());
@@ -29458,16 +29661,16 @@ This message will only show in development mode. It won't appear in production. 
     if (hasAnchor) {
       return content;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(import_jsx_runtime79.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(import_jsx_runtime108.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime108.jsx)("span", {
         ref: anchorRefFallback
       }), content]
     });
   };
-  var PopoverSlot = (0, import_element50.forwardRef)(({
+  var PopoverSlot = (0, import_element51.forwardRef)(({
     name = SLOT_NAME
   }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(Slot3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Slot3, {
       bubblesVirtually: true,
       name,
       className: "popover-slot",
@@ -29494,7 +29697,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/autocomplete/autocompleter-ui.js
   var import_react_dom6 = __toESM(require_react_dom());
-  var import_jsx_runtime80 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime109 = __toESM(require_jsx_runtime());
   function ListBox({
     items,
     onSelect,
@@ -29504,11 +29707,11 @@ This message will only show in development mode. It won't appear in production. 
     className,
     Component: Component9 = "div"
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(Component9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(Component9, {
       id: listBoxId,
       role: "listbox",
       className: "components-autocomplete__results",
-      children: items.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(button_default, {
+      children: items.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(button_default, {
         id: `components-autocomplete-item-${instanceId}-${option.key}`,
         role: "option",
         __next40pxDefaultSize: true,
@@ -29537,22 +29740,22 @@ This message will only show in development mode. It won't appear in production. 
       onChangeOptions,
       onSelect,
       onReset,
-      reset: reset2,
+      reset,
       contentRef
     }) {
       const [items] = useItems(filterValue);
       const popoverAnchor = (0, import_rich_text.useAnchor)({
         editableContentElement: contentRef.current
       });
-      const [needsA11yCompat, setNeedsA11yCompat] = (0, import_element51.useState)(false);
-      const popoverRef = (0, import_element51.useRef)(null);
+      const [needsA11yCompat, setNeedsA11yCompat] = (0, import_element52.useState)(false);
+      const popoverRef = (0, import_element52.useRef)(null);
       const popoverRefs = (0, import_compose20.useMergeRefs)([popoverRef, (0, import_compose20.useRefEffect)((node2) => {
         if (!contentRef.current) {
           return;
         }
         setNeedsA11yCompat(node2.ownerDocument !== contentRef.current.ownerDocument);
       }, [contentRef])]);
-      useOnClickOutside(popoverRef, reset2);
+      useOnClickOutside(popoverRef, reset);
       const debouncedSpeak = (0, import_compose20.useDebounce)(import_a11y.speak, 500);
       function announce(options2) {
         if (!debouncedSpeak) {
@@ -29576,22 +29779,22 @@ This message will only show in development mode. It won't appear in production. 
           debouncedSpeak((0, import_i18n8.__)("No results."), "assertive");
         }
       }
-      (0, import_element51.useLayoutEffect)(() => {
+      (0, import_element52.useLayoutEffect)(() => {
         onChangeOptions(items);
         announce(items);
       }, [items]);
       if (items.length === 0) {
         return null;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_jsx_runtime80.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime80.jsx)(popover_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(import_jsx_runtime109.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime109.jsx)(popover_default, {
           focusOnMount: false,
           onClose: onReset,
           placement: "top-start",
           className: "components-autocomplete__popover",
           anchor: popoverAnchor,
           ref: popoverRefs,
-          children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(ListBox, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ListBox, {
             items,
             onSelect,
             selectedIndex,
@@ -29599,7 +29802,7 @@ This message will only show in development mode. It won't appear in production. 
             listBoxId,
             className
           })
-        }), contentRef.current && needsA11yCompat && (0, import_react_dom6.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime80.jsx)(ListBox, {
+        }), contentRef.current && needsA11yCompat && (0, import_react_dom6.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ListBox, {
           items,
           onSelect,
           selectedIndex,
@@ -29613,7 +29816,7 @@ This message will only show in development mode. It won't appear in production. 
     return AutocompleterUI;
   }
   function useOnClickOutside(ref, handler) {
-    (0, import_element51.useEffect)(() => {
+    (0, import_element52.useEffect)(() => {
       const listener = (event) => {
         if (!ref.current || ref.current.contains(event.target)) {
           return;
@@ -29654,7 +29857,7 @@ This message will only show in development mode. It won't appear in production. 
   var get_node_text_default = getNodeText;
 
   // packages/components/build-module/autocomplete/index.js
-  var import_jsx_runtime81 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime110 = __toESM(require_jsx_runtime());
   var EMPTY_FILTERED_OPTIONS = [];
   var AUTOCOMPLETE_HOOK_REFERENCE = {};
   function useAutocomplete({
@@ -29665,12 +29868,12 @@ This message will only show in development mode. It won't appear in production. 
     contentRef
   }) {
     const instanceId = (0, import_compose21.useInstanceId)(AUTOCOMPLETE_HOOK_REFERENCE);
-    const [selectedIndex, setSelectedIndex] = (0, import_element52.useState)(0);
-    const [filteredOptions, setFilteredOptions] = (0, import_element52.useState)(EMPTY_FILTERED_OPTIONS);
-    const [filterValue, setFilterValue] = (0, import_element52.useState)("");
-    const [autocompleter, setAutocompleter] = (0, import_element52.useState)(null);
-    const [AutocompleterUI, setAutocompleterUI] = (0, import_element52.useState)(null);
-    const backspacingRef = (0, import_element52.useRef)(false);
+    const [selectedIndex, setSelectedIndex] = (0, import_element53.useState)(0);
+    const [filteredOptions, setFilteredOptions] = (0, import_element53.useState)(EMPTY_FILTERED_OPTIONS);
+    const [filterValue, setFilterValue] = (0, import_element53.useState)("");
+    const [autocompleter, setAutocompleter] = (0, import_element53.useState)(null);
+    const [AutocompleterUI, setAutocompleterUI] = (0, import_element53.useState)(null);
+    const backspacingRef = (0, import_element53.useRef)(false);
     function insertCompletion(replacement) {
       if (autocompleter === null) {
         return;
@@ -29678,7 +29881,7 @@ This message will only show in development mode. It won't appear in production. 
       const end = record.start;
       const start = end - autocompleter.triggerPrefix.length - filterValue.length;
       const toInsert = (0, import_rich_text2.create)({
-        html: (0, import_element52.renderToString)(replacement)
+        html: (0, import_element53.renderToString)(replacement)
       });
       onChange((0, import_rich_text2.insert)(record, toInsert, start, end));
     }
@@ -29705,10 +29908,10 @@ This message will only show in development mode. It won't appear in production. 
           insertCompletion(completionObject.value);
         }
       }
-      reset2();
+      reset();
       contentRef.current?.focus();
     }
-    function reset2() {
+    function reset() {
       setSelectedIndex(0);
       setFilteredOptions(EMPTY_FILTERED_OPTIONS);
       setFilterValue("");
@@ -29757,23 +29960,23 @@ This message will only show in development mode. It won't appear in production. 
           break;
         case "ArrowLeft":
         case "ArrowRight":
-          reset2();
+          reset();
           return;
         default:
           return;
       }
       event.preventDefault();
     }
-    const textContent = (0, import_element52.useMemo)(() => {
+    const textContent = (0, import_element53.useMemo)(() => {
       if ((0, import_rich_text2.isCollapsed)(record)) {
         return (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, 0));
       }
       return "";
     }, [record]);
-    (0, import_element52.useEffect)(() => {
+    (0, import_element53.useEffect)(() => {
       if (!textContent) {
         if (autocompleter) {
-          reset2();
+          reset();
         }
         return;
       }
@@ -29784,7 +29987,7 @@ This message will only show in development mode. It won't appear in production. 
       }, null);
       if (!completer) {
         if (autocompleter) {
-          reset2();
+          reset();
         }
         return;
       }
@@ -29804,26 +30007,26 @@ This message will only show in development mode. It won't appear in production. 
       const matchingWhileBackspacing = backspacingRef.current && wordsFromTrigger.length <= 3;
       if (mismatch && !(matchingWhileBackspacing || hasOneTriggerWord)) {
         if (autocompleter) {
-          reset2();
+          reset();
         }
         return;
       }
       const textAfterSelection = (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, void 0, (0, import_rich_text2.getTextContent)(record).length));
       if (allowContext && !allowContext(textContent.slice(0, triggerIndex), textAfterSelection)) {
         if (autocompleter) {
-          reset2();
+          reset();
         }
         return;
       }
       if (/^\s/.test(textWithoutTrigger) || /\s\s+$/.test(textWithoutTrigger)) {
         if (autocompleter) {
-          reset2();
+          reset();
         }
         return;
       }
       if (!/[\u0000-\uFFFF]*$/.test(textWithoutTrigger)) {
         if (autocompleter) {
-          reset2();
+          reset();
         }
         return;
       }
@@ -29850,7 +30053,7 @@ This message will only show in development mode. It won't appear in production. 
       listBoxId,
       activeId,
       onKeyDown: withIgnoreIMEEvents(handleKeyDown),
-      popover: showPopover && /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(AutocompleterUI, {
+      popover: showPopover && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(AutocompleterUI, {
         className,
         filterValue,
         instanceId,
@@ -29860,12 +30063,12 @@ This message will only show in development mode. It won't appear in production. 
         onSelect: select,
         value: record,
         contentRef,
-        reset: reset2
+        reset
       })
     };
   }
   function useLastDifferentValue(value) {
-    const history = (0, import_element52.useRef)(/* @__PURE__ */ new Set());
+    const history = (0, import_element53.useRef)(/* @__PURE__ */ new Set());
     history.current.add(value);
     if (history.current.size > 2) {
       history.current.delete(Array.from(history.current)[0]);
@@ -29873,8 +30076,8 @@ This message will only show in development mode. It won't appear in production. 
     return Array.from(history.current)[0];
   }
   function useAutocompleteProps(options2) {
-    const ref = (0, import_element52.useRef)(null);
-    const onKeyDownRef = (0, import_element52.useRef)();
+    const ref = (0, import_element53.useRef)(null);
+    const onKeyDownRef = (0, import_element53.useRef)();
     const {
       record
     } = options2;
@@ -29921,22 +30124,21 @@ This message will only show in development mode. It won't appear in production. 
       popover,
       ...props
     } = useAutocomplete(options2);
-    return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_jsx_runtime81.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_jsx_runtime110.Fragment, {
       children: [children(props), isSelected2 && popover]
     });
   }
 
   // packages/components/build-module/border-box-control/border-box-control/component.js
   var import_i18n26 = __toESM(require_i18n());
-  var import_element91 = __toESM(require_element());
+  var import_element92 = __toESM(require_element());
   var import_compose39 = __toESM(require_compose());
 
   // packages/components/build-module/border-box-control/border-box-control-linked-button/component.js
-  var import_icons3 = __toESM(require_icons());
   var import_i18n9 = __toESM(require_i18n());
 
   // packages/components/build-module/border-box-control/border-box-control-linked-button/hook.js
-  var import_element53 = __toESM(require_element());
+  var import_element54 = __toESM(require_element());
 
   // packages/components/build-module/border-box-control/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__12() {
@@ -30000,7 +30202,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "BorderBoxControlLinkedButton");
     const cx3 = useCx();
-    const classes = (0, import_element53.useMemo)(() => {
+    const classes = (0, import_element54.useMemo)(() => {
       return cx3(borderBoxControlLinkedButton(size3), className);
     }, [className, cx3, size3]);
     return {
@@ -30010,7 +30212,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/border-box-control/border-box-control-linked-button/component.js
-  var import_jsx_runtime82 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime111 = __toESM(require_jsx_runtime());
   var BorderBoxControlLinkedButton = (props, forwardedRef) => {
     const {
       className,
@@ -30018,10 +30220,10 @@ This message will only show in development mode. It won't appear in production. 
       ...buttonProps
     } = useBorderBoxControlLinkedButton(props);
     const label = isLinked ? (0, import_i18n9.__)("Unlink sides") : (0, import_i18n9.__)("Link sides");
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(button_default, {
       ...buttonProps,
       size: "small",
-      icon: isLinked ? import_icons3.link : import_icons3.linkOff,
+      icon: isLinked ? link_default : link_off_default,
       iconSize: 24,
       label,
       ref: forwardedRef,
@@ -30033,11 +30235,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/border-box-control/border-box-control-split-controls/component.js
   var import_i18n25 = __toESM(require_i18n());
-  var import_element89 = __toESM(require_element());
+  var import_element90 = __toESM(require_element());
   var import_compose38 = __toESM(require_compose());
 
   // packages/components/build-module/border-box-control/border-box-control-visualizer/hook.js
-  var import_element54 = __toESM(require_element());
+  var import_element55 = __toESM(require_element());
   function useBorderBoxControlVisualizer(props) {
     const {
       className,
@@ -30046,7 +30248,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "BorderBoxControlVisualizer");
     const cx3 = useCx();
-    const classes = (0, import_element54.useMemo)(() => {
+    const classes = (0, import_element55.useMemo)(() => {
       return cx3(borderBoxControlVisualizer(value, size3), className);
     }, [cx3, className, value, size3]);
     return {
@@ -30057,13 +30259,13 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/border-box-control/border-box-control-visualizer/component.js
-  var import_jsx_runtime83 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime112 = __toESM(require_jsx_runtime());
   var BorderBoxControlVisualizer = (props, forwardedRef) => {
     const {
       value,
       ...otherProps
     } = useBorderBoxControlVisualizer(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(component_default, {
       ...otherProps,
       ref: forwardedRef
     });
@@ -30078,11 +30280,10 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n22 = __toESM(require_i18n());
 
   // packages/components/build-module/border-control/border-control-style-picker/component.js
-  var import_icons4 = __toESM(require_icons());
   var import_i18n11 = __toESM(require_i18n());
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/component.js
-  var import_element62 = __toESM(require_element());
+  var import_element63 = __toESM(require_element());
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__13() {
@@ -30148,30 +30349,30 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/as-radio-group.js
   var import_compose23 = __toESM(require_compose());
-  var import_element57 = __toESM(require_element());
+  var import_element58 = __toESM(require_element());
   var import_i18n10 = __toESM(require_i18n());
 
   // packages/components/build-module/toggle-group-control/context.js
-  var import_element55 = __toESM(require_element());
-  var ToggleGroupControlContext = (0, import_element55.createContext)({});
+  var import_element56 = __toESM(require_element());
+  var ToggleGroupControlContext = (0, import_element56.createContext)({});
   ToggleGroupControlContext.displayName = "ToggleGroupControlContext";
-  var useToggleGroupControlContext = () => (0, import_element55.useContext)(ToggleGroupControlContext);
+  var useToggleGroupControlContext = () => (0, import_element56.useContext)(ToggleGroupControlContext);
   var context_default2 = ToggleGroupControlContext;
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/utils.js
   var import_compose22 = __toESM(require_compose());
-  var import_element56 = __toESM(require_element());
+  var import_element57 = __toESM(require_element());
   function useComputeControlledOrUncontrolledValue(valueProp) {
-    const isInitialRenderRef = (0, import_element56.useRef)(true);
+    const isInitialRenderRef = (0, import_element57.useRef)(true);
     const prevValueProp = (0, import_compose22.usePrevious)(valueProp);
-    const prevIsControlledRef = (0, import_element56.useRef)(false);
-    (0, import_element56.useEffect)(() => {
+    const prevIsControlledRef = (0, import_element57.useRef)(false);
+    (0, import_element57.useEffect)(() => {
       if (isInitialRenderRef.current) {
         isInitialRenderRef.current = false;
       }
     }, []);
     const isControlled = prevIsControlledRef.current || !isInitialRenderRef.current && prevValueProp !== valueProp;
-    (0, import_element56.useEffect)(() => {
+    (0, import_element57.useEffect)(() => {
       prevIsControlledRef.current = isControlled;
     }, [isControlled]);
     if (isControlled) {
@@ -30187,7 +30388,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/as-radio-group.js
-  var import_jsx_runtime84 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime113 = __toESM(require_jsx_runtime());
   function UnforwardedToggleGroupControlAsRadioGroup({
     children,
     isAdaptiveWidth,
@@ -30216,12 +30417,12 @@ This message will only show in development mode. It won't appear in production. 
     });
     const selectedValue = useStoreState(radio, "value");
     const setValue = radio.setValue;
-    (0, import_element57.useEffect)(() => {
+    (0, import_element58.useEffect)(() => {
       if (selectedValue === "") {
         radio.setActiveId(void 0);
       }
     }, [radio, selectedValue]);
-    const groupContextValue = (0, import_element57.useMemo)(() => ({
+    const groupContextValue = (0, import_element58.useMemo)(() => ({
       activeItemIsNotFirstItem: () => radio.getState().activeId !== radio.first(),
       baseId,
       isBlock: !isAdaptiveWidth,
@@ -30232,12 +30433,12 @@ This message will only show in development mode. It won't appear in production. 
       setValue,
       setSelectedElement
     }), [baseId, isAdaptiveWidth, radio, selectedValue, setSelectedElement, setValue, size3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(context_default2.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(context_default2.Provider, {
       value: groupContextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(RadioGroup, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(RadioGroup, {
         store: radio,
         "aria-label": label,
-        render: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(component_default, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(component_default, {}),
         ...otherProps,
         id: baseId,
         ref: forwardedRef,
@@ -30245,12 +30446,12 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   }
-  var ToggleGroupControlAsRadioGroup = (0, import_element57.forwardRef)(UnforwardedToggleGroupControlAsRadioGroup);
+  var ToggleGroupControlAsRadioGroup = (0, import_element58.forwardRef)(UnforwardedToggleGroupControlAsRadioGroup);
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/as-button-group.js
   var import_compose24 = __toESM(require_compose());
-  var import_element58 = __toESM(require_element());
-  var import_jsx_runtime85 = __toESM(require_jsx_runtime());
+  var import_element59 = __toESM(require_element());
+  var import_jsx_runtime114 = __toESM(require_jsx_runtime());
   function UnforwardedToggleGroupControlAsButtonGroup({
     children,
     isAdaptiveWidth,
@@ -30273,7 +30474,7 @@ This message will only show in development mode. It won't appear in production. 
       value,
       onChange
     });
-    const groupContextValue = (0, import_element58.useMemo)(() => ({
+    const groupContextValue = (0, import_element59.useMemo)(() => ({
       baseId,
       value: selectedValue,
       setValue: setSelectedValue,
@@ -30282,9 +30483,9 @@ This message will only show in development mode. It won't appear in production. 
       size: size3,
       setSelectedElement
     }), [baseId, selectedValue, setSelectedValue, isAdaptiveWidth, size3, setSelectedElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(context_default2.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(context_default2.Provider, {
       value: groupContextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(component_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(component_default, {
         "aria-label": label,
         ...otherProps,
         ref: forwardedRef,
@@ -30293,10 +30494,10 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   }
-  var ToggleGroupControlAsButtonGroup = (0, import_element58.forwardRef)(UnforwardedToggleGroupControlAsButtonGroup);
+  var ToggleGroupControlAsButtonGroup = (0, import_element59.forwardRef)(UnforwardedToggleGroupControlAsButtonGroup);
 
   // packages/components/build-module/utils/element-rect.js
-  var import_element59 = __toESM(require_element());
+  var import_element60 = __toESM(require_element());
   var import_compose25 = __toESM(require_compose());
   var NULL_ELEMENT_OFFSET_RECT = {
     element: void 0,
@@ -30338,8 +30539,8 @@ This message will only show in development mode. It won't appear in production. 
   }
   var POLL_RATE = 100;
   function useTrackElementOffsetRect(targetElement, deps = []) {
-    const [indicatorPosition, setIndicatorPosition] = (0, import_element59.useState)(NULL_ELEMENT_OFFSET_RECT);
-    const intervalRef = (0, import_element59.useRef)();
+    const [indicatorPosition, setIndicatorPosition] = (0, import_element60.useState)(NULL_ELEMENT_OFFSET_RECT);
+    const intervalRef = (0, import_element60.useRef)();
     const measure = (0, import_compose25.useEvent)(() => {
       if (targetElement && targetElement.isConnected) {
         const elementOffsetRect = getElementOffsetRect(targetElement);
@@ -30362,13 +30563,13 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     });
-    (0, import_element59.useLayoutEffect)(() => {
+    (0, import_element60.useLayoutEffect)(() => {
       setElement(targetElement);
       if (!targetElement) {
         setIndicatorPosition(NULL_ELEMENT_OFFSET_RECT);
       }
     }, [setElement, targetElement]);
-    (0, import_element59.useLayoutEffect)(() => {
+    (0, import_element60.useLayoutEffect)(() => {
       measure();
     }, deps);
     return indicatorPosition;
@@ -30379,15 +30580,15 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/utils/hooks/use-animated-offset-rect.js
   var import_compose27 = __toESM(require_compose());
-  var import_element61 = __toESM(require_element());
+  var import_element62 = __toESM(require_element());
 
   // packages/components/build-module/utils/hooks/use-on-value-update.js
   var import_compose26 = __toESM(require_compose());
-  var import_element60 = __toESM(require_element());
+  var import_element61 = __toESM(require_element());
   function useOnValueUpdate(value, onUpdate) {
-    const previousValueRef = (0, import_element60.useRef)(value);
+    const previousValueRef = (0, import_element61.useRef)(value);
     const updateCallbackEvent = (0, import_compose26.useEvent)(onUpdate);
-    (0, import_element60.useLayoutEffect)(() => {
+    (0, import_element61.useLayoutEffect)(() => {
       if (previousValueRef.current !== value) {
         updateCallbackEvent({
           previousValue: previousValueRef.current
@@ -30407,7 +30608,7 @@ This message will only show in development mode. It won't appear in production. 
     const setProperties = (0, import_compose27.useEvent)(() => {
       Object.keys(rect).forEach((property) => property !== "element" && container?.style.setProperty(`--${prefix2}-${property}`, String(roundRect ? Math.floor(rect[property]) : rect[property])));
     });
-    (0, import_element61.useLayoutEffect)(() => {
+    (0, import_element62.useLayoutEffect)(() => {
       setProperties();
     }, [rect, setProperties]);
     useOnValueUpdate(rect.element, ({
@@ -30417,7 +30618,7 @@ This message will only show in development mode. It won't appear in production. 
         container?.setAttribute(`data-${dataAttribute}`, "");
       }
     });
-    (0, import_element61.useLayoutEffect)(() => {
+    (0, import_element62.useLayoutEffect)(() => {
       function onTransitionEnd(event) {
         if (transitionEndFilter(event)) {
           container?.removeAttribute(`data-${dataAttribute}`);
@@ -30429,7 +30630,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/component.js
-  var import_jsx_runtime86 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime115 = __toESM(require_jsx_runtime());
   function UnconnectedToggleGroupControl(props, forwardedRef) {
     const {
       __nextHasNoMarginBottom = false,
@@ -30449,8 +30650,8 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "ToggleGroupControl");
     const normalizedSize = __next40pxDefaultSize && size3 === "default" ? "__unstable-large" : size3;
-    const [selectedElement, setSelectedElement] = (0, import_element62.useState)();
-    const [controlElement, setControlElement] = (0, import_element62.useState)();
+    const [selectedElement, setSelectedElement] = (0, import_element63.useState)();
+    const [controlElement, setControlElement] = (0, import_element63.useState)();
     const refs = (0, import_compose28.useMergeRefs)([setControlElement, forwardedRef]);
     const selectedRect = useTrackElementOffsetRect(value !== null && value !== void 0 ? selectedElement : void 0);
     useAnimatedOffsetRect(controlElement, selectedRect, {
@@ -30460,7 +30661,7 @@ This message will only show in development mode. It won't appear in production. 
       roundRect: true
     });
     const cx3 = useCx();
-    const classes = (0, import_element62.useMemo)(() => cx3(toggleGroupControl({
+    const classes = (0, import_element63.useMemo)(() => cx3(toggleGroupControl({
       isBlock,
       isDeselectable,
       size: normalizedSize
@@ -30472,15 +30673,15 @@ This message will only show in development mode. It won't appear in production. 
       __next40pxDefaultSize,
       __shouldNotWarnDeprecated36pxSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(base_control_default, {
       help,
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "ToggleGroupControl",
-      children: [!hideLabelFromVision && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(VisualLabelWrapper, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(base_control_default.VisualLabel, {
+      children: [!hideLabelFromVision && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(VisualLabelWrapper, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(base_control_default.VisualLabel, {
           children: label
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(MainControl, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(MainControl, {
         ...otherProps,
         setSelectedElement,
         className: classes,
@@ -30498,11 +30699,11 @@ This message will only show in development mode. It won't appear in production. 
   var component_default12 = ToggleGroupControl;
 
   // packages/components/build-module/toggle-group-control/toggle-group-control-option/component.js
-  var import_element64 = __toESM(require_element());
+  var import_element65 = __toESM(require_element());
 
   // packages/components/build-module/toggle-group-control/toggle-group-control-option-base/component.js
   var import_compose29 = __toESM(require_compose());
-  var import_element63 = __toESM(require_element());
+  var import_element64 = __toESM(require_element());
 
   // packages/components/build-module/toggle-group-control/toggle-group-control-option-base/styles.js
   var styles_exports6 = {};
@@ -30565,7 +30766,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/toggle-group-control/toggle-group-control-option-base/component.js
-  var import_jsx_runtime87 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime116 = __toESM(require_jsx_runtime());
   var {
     ButtonContentView: ButtonContentView2,
     LabelView: LabelView2
@@ -30576,13 +30777,13 @@ This message will only show in development mode. It won't appear in production. 
     children
   }) => {
     if (showTooltip && text) {
-      return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(tooltip_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(tooltip_default, {
         text,
         placement: "top",
         children
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_jsx_runtime87.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_jsx_runtime116.Fragment, {
       children
     });
   };
@@ -30609,8 +30810,8 @@ This message will only show in development mode. It won't appear in production. 
     } = buttonProps;
     const isPressed = toggleGroupControlContext.value === value;
     const cx3 = useCx();
-    const labelViewClasses = (0, import_element63.useMemo)(() => cx3(isBlock && labelBlock), [cx3, isBlock]);
-    const itemClasses = (0, import_element63.useMemo)(() => cx3(buttonView({
+    const labelViewClasses = (0, import_element64.useMemo)(() => cx3(isBlock && labelBlock), [cx3, isBlock]);
+    const itemClasses = (0, import_element64.useMemo)(() => cx3(buttonView({
       isDeselectable,
       isIcon,
       isPressed,
@@ -30629,28 +30830,28 @@ This message will only show in development mode. It won't appear in production. 
       "data-value": value,
       ref: forwardedRef
     };
-    const labelRef = (0, import_element63.useRef)(null);
-    (0, import_element63.useLayoutEffect)(() => {
+    const labelRef = (0, import_element64.useRef)(null);
+    (0, import_element64.useLayoutEffect)(() => {
       if (isPressed && labelRef.current) {
         toggleGroupControlContext.setSelectedElement(labelRef.current);
       }
     }, [isPressed, toggleGroupControlContext]);
-    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(LabelView2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(LabelView2, {
       ref: labelRef,
       className: labelViewClasses,
-      children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(WithToolTip, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(WithToolTip, {
         showTooltip,
         text: otherButtonProps["aria-label"],
-        children: isDeselectable ? /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("button", {
+        children: isDeselectable ? /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("button", {
           ...commonProps,
           disabled,
           "aria-pressed": isPressed,
           type: "button",
           onClick: buttonOnClick,
-          children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(ButtonContentView2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(ButtonContentView2, {
             children
           })
-        }) : /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(Radio, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(Radio, {
           disabled,
           onFocusVisible: () => {
             const selectedValueIsEmpty = toggleGroupControlContext.value === null || toggleGroupControlContext.value === "";
@@ -30658,12 +30859,12 @@ This message will only show in development mode. It won't appear in production. 
               toggleGroupControlContext.setValue(value);
             }
           },
-          render: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("button", {
+          render: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("button", {
             type: "button",
             ...commonProps
           }),
           value,
-          children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(ButtonContentView2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(ButtonContentView2, {
             children
           })
         })
@@ -30674,66 +30875,66 @@ This message will only show in development mode. It won't appear in production. 
   var component_default13 = ConnectedToggleGroupControlOptionBase;
 
   // packages/components/build-module/toggle-group-control/toggle-group-control-option/component.js
-  var import_jsx_runtime88 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime117 = __toESM(require_jsx_runtime());
   function UnforwardedToggleGroupControlOption(props, ref) {
     const {
       label,
       ...restProps
     } = props;
     const optionLabel = restProps["aria-label"] || label;
-    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(component_default13, {
+    return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(component_default13, {
       ...restProps,
       "aria-label": optionLabel,
       ref,
       children: label
     });
   }
-  var ToggleGroupControlOption = (0, import_element64.forwardRef)(UnforwardedToggleGroupControlOption);
+  var ToggleGroupControlOption = (0, import_element65.forwardRef)(UnforwardedToggleGroupControlOption);
   var component_default14 = ToggleGroupControlOption;
 
   // packages/components/build-module/toggle-group-control/toggle-group-control-option-icon/component.js
-  var import_element65 = __toESM(require_element());
-  var import_jsx_runtime89 = __toESM(require_jsx_runtime());
+  var import_element66 = __toESM(require_element());
+  var import_jsx_runtime118 = __toESM(require_jsx_runtime());
   function UnforwardedToggleGroupControlOptionIcon(props, ref) {
     const {
       icon,
       label,
       ...restProps
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(component_default13, {
+    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(component_default13, {
       ...restProps,
       isIcon: true,
       "aria-label": label,
       showTooltip: true,
       ref,
-      children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(icon_default2, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(icon_default3, {
         icon
       })
     });
   }
-  var ToggleGroupControlOptionIcon = (0, import_element65.forwardRef)(UnforwardedToggleGroupControlOptionIcon);
+  var ToggleGroupControlOptionIcon = (0, import_element66.forwardRef)(UnforwardedToggleGroupControlOptionIcon);
   var component_default15 = ToggleGroupControlOptionIcon;
 
   // packages/components/build-module/border-control/border-control-style-picker/component.js
-  var import_jsx_runtime90 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime119 = __toESM(require_jsx_runtime());
   var BORDER_STYLES = [{
     label: (0, import_i18n11.__)("Solid"),
-    icon: import_icons4.lineSolid,
+    icon: line_solid_default,
     value: "solid"
   }, {
     label: (0, import_i18n11.__)("Dashed"),
-    icon: import_icons4.lineDashed,
+    icon: line_dashed_default,
     value: "dashed"
   }, {
     label: (0, import_i18n11.__)("Dotted"),
-    icon: import_icons4.lineDotted,
+    icon: line_dotted_default,
     value: "dotted"
   }];
   function UnconnectedBorderControlStylePicker({
     onChange,
     ...restProps
   }, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(component_default12, {
+    return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(component_default12, {
       __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: true,
       ref: forwardedRef,
@@ -30742,7 +30943,7 @@ This message will only show in development mode. It won't appear in production. 
         onChange?.(value);
       },
       ...restProps,
-      children: BORDER_STYLES.map((borderStyle) => /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(component_default15, {
+      children: BORDER_STYLES.map((borderStyle) => /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(component_default15, {
         value: borderStyle.value,
         icon: borderStyle.icon,
         label: borderStyle.label
@@ -30753,15 +30954,15 @@ This message will only show in development mode. It won't appear in production. 
   var component_default16 = BorderControlStylePicker;
 
   // packages/components/build-module/color-indicator/index.js
-  var import_element66 = __toESM(require_element());
-  var import_jsx_runtime91 = __toESM(require_jsx_runtime());
+  var import_element67 = __toESM(require_element());
+  var import_jsx_runtime120 = __toESM(require_jsx_runtime());
   function UnforwardedColorIndicator(props, forwardedRef) {
     const {
       className,
       colorValue,
       ...additionalProps
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("span", {
       className: clsx_default("component-color-indicator", className),
       style: {
         background: colorValue
@@ -30770,7 +30971,7 @@ This message will only show in development mode. It won't appear in production. 
       ...additionalProps
     });
   }
-  var ColorIndicator = (0, import_element66.forwardRef)(UnforwardedColorIndicator);
+  var ColorIndicator = (0, import_element67.forwardRef)(UnforwardedColorIndicator);
   var color_indicator_default = ColorIndicator;
 
   // node_modules/colord/plugins/a11y.mjs
@@ -30798,13 +30999,13 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/color-palette/index.js
   var import_compose37 = __toESM(require_compose());
   var import_i18n20 = __toESM(require_i18n());
-  var import_element81 = __toESM(require_element());
+  var import_element82 = __toESM(require_element());
 
   // packages/components/build-module/dropdown/index.js
-  var import_element67 = __toESM(require_element());
+  var import_element68 = __toESM(require_element());
   var import_compose30 = __toESM(require_compose());
   var import_deprecated8 = __toESM(require_deprecated());
-  var import_jsx_runtime92 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime121 = __toESM(require_jsx_runtime());
   var UnconnectedDropdown = (props, forwardedRef) => {
     const {
       renderContent,
@@ -30832,8 +31033,8 @@ This message will only show in development mode. It won't appear in production. 
         hint: "Note that the `position` prop will override any values passed through the `popoverProps.placement` prop."
       });
     }
-    const [fallbackPopoverAnchor, setFallbackPopoverAnchor] = (0, import_element67.useState)(null);
-    const containerRef = (0, import_element67.useRef)();
+    const [fallbackPopoverAnchor, setFallbackPopoverAnchor] = (0, import_element68.useState)(null);
+    const containerRef = (0, import_element68.useRef)();
     const [isOpen, setIsOpen] = useControlledValue({
       defaultValue: defaultOpen,
       value: open,
@@ -30848,29 +31049,29 @@ This message will only show in development mode. It won't appear in production. 
       } = containerRef.current;
       const dialog = ownerDocument?.activeElement?.closest('[role="dialog"]');
       if (!containerRef.current.contains(ownerDocument.activeElement) && (!dialog || dialog.contains(containerRef.current))) {
-        close4();
+        close();
       }
     }
-    function close4() {
+    function close() {
       onClose?.();
       setIsOpen(false);
     }
     const args = {
       isOpen: !!isOpen,
       onToggle: () => setIsOpen(!isOpen),
-      onClose: close4
+      onClose: close
     };
     const popoverPropsHaveAnchor = !!popoverProps?.anchor || // Note: `anchorRef`, `getAnchorRect` and `anchorRect` are deprecated and
     // be removed from `Popover` from WordPress 6.3
     !!popoverProps?.anchorRef || !!popoverProps?.getAnchorRect || !!popoverProps?.anchorRect;
-    return /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)("div", {
       className,
       ref: (0, import_compose30.useMergeRefs)([containerRef, forwardedRef, setFallbackPopoverAnchor]),
       tabIndex: -1,
       style: style2,
-      children: [renderToggle(args), isOpen && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(popover_default, {
+      children: [renderToggle(args), isOpen && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(popover_default, {
         position: position2,
-        onClose: close4,
+        onClose: close,
         onFocusOutside: closeIfFocusOutside,
         expandOnMobile,
         headerTitle,
@@ -30888,19 +31089,19 @@ This message will only show in development mode. It won't appear in production. 
   var dropdown_default = Dropdown;
 
   // packages/components/build-module/color-picker/component.js
-  var import_element76 = __toESM(require_element());
+  var import_element77 = __toESM(require_element());
   var import_compose34 = __toESM(require_compose());
   var import_i18n16 = __toESM(require_i18n());
 
   // packages/components/build-module/select-control/index.js
   var import_compose31 = __toESM(require_compose());
-  var import_element68 = __toESM(require_element());
+  var import_element69 = __toESM(require_element());
 
   // packages/components/build-module/input-control/input-suffix-wrapper.js
-  var import_jsx_runtime93 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime122 = __toESM(require_jsx_runtime());
   function UnconnectedInputControlSuffixWrapper(props, forwardedRef) {
     const derivedProps = useContextSystem(props, "InputControlSuffixWrapper");
-    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(PrefixSuffixWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(PrefixSuffixWrapper, {
       ...derivedProps,
       ref: forwardedRef
     });
@@ -31054,22 +31255,21 @@ This message will only show in development mode. It won't appear in production. 
   }), ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNlbGVjdC1jb250cm9sLXN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE2TEMiLCJmaWxlIjoic2VsZWN0LWNvbnRyb2wtc3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIHJ0bCwgQ09ORklHIH0gZnJvbSAnLi4vLi4vdXRpbHMnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi8uLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgdHlwZSB7IFNlbGVjdENvbnRyb2xQcm9wcyB9IGZyb20gJy4uL3R5cGVzJztcbmltcG9ydCBJbnB1dENvbnRyb2xTdWZmaXhXcmFwcGVyIGZyb20gJy4uLy4uL2lucHV0LWNvbnRyb2wvaW5wdXQtc3VmZml4LXdyYXBwZXInO1xuaW1wb3J0IHsgZm9udFNpemVTdHlsZXMgfSBmcm9tICcuLi8uLi9pbnB1dC1jb250cm9sL3N0eWxlcy9pbnB1dC1jb250cm9sLXN0eWxlcyc7XG5pbXBvcnQgSW5wdXRCYXNlIGZyb20gJy4uLy4uL2lucHV0LWNvbnRyb2wvaW5wdXQtYmFzZSc7XG5cbmludGVyZmFjZSBTZWxlY3RQcm9wc1xuXHRleHRlbmRzIFBpY2s8XG5cdFx0U2VsZWN0Q29udHJvbFByb3BzLFxuXHRcdCdfX25leHQ0MHB4RGVmYXVsdFNpemUnIHwgJ2Rpc2FibGVkJyB8ICdtdWx0aXBsZScgfCAndmFyaWFudCdcblx0PiB7XG5cdC8vIFVzaW5nIGBzZWxlY3RTaXplYCBpbnN0ZWFkIG9mIGBzaXplYCB0byBhdm9pZCBhIHR5cGUgY29uZmxpY3Qgd2l0aCB0aGVcblx0Ly8gYHNpemVgIEhUTUwgYXR0cmlidXRlIG9mIHRoZSBgc2VsZWN0YCBlbGVtZW50LlxuXHRzZWxlY3RTaXplPzogU2VsZWN0Q29udHJvbFByb3BzWyAnc2l6ZScgXTtcbn1cblxuY29uc3QgZGlzYWJsZWRTdHlsZXMgPSAoIHsgZGlzYWJsZWQgfTogU2VsZWN0UHJvcHMgKSA9PiB7XG5cdGlmICggISBkaXNhYmxlZCApIHtcblx0XHRyZXR1cm4gJyc7XG5cdH1cblxuXHRyZXR1cm4gY3NzYFxuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkudGV4dERpc2FibGVkIH07XG5cdFx0Y3Vyc29yOiBkZWZhdWx0O1xuXHRgO1xufTtcblxuY29uc3QgaW5wdXRCYXNlVmFyaWFudFN0eWxlcyA9ICggeyB2YXJpYW50IH06IFNlbGVjdFByb3BzICkgPT4ge1xuXHRpZiAoIHZhcmlhbnQgPT09ICdtaW5pbWFsJyApIHtcblx0XHRyZXR1cm4gY3NzYFxuXHRcdFx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdFx0YDtcblx0fVxuXG5cdHJldHVybiAnJztcbn07XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRJbnB1dEJhc2UgPSBzdHlsZWQoIElucHV0QmFzZSApYFxuXHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0Y3Vyc29yOiBwb2ludGVyO1xuXG5cdCR7IGRpc2FibGVkU3R5bGVzIH1cblx0JHsgaW5wdXRCYXNlVmFyaWFudFN0eWxlcyB9XG5gO1xuXG5jb25zdCBzaXplU3R5bGVzID0gKCB7XG5cdF9fbmV4dDQwcHhEZWZhdWx0U2l6ZSxcblx0bXVsdGlwbGUsXG5cdHNlbGVjdFNpemUgPSAnZGVmYXVsdCcsXG59OiBTZWxlY3RQcm9wcyApID0+IHtcblx0aWYgKCBtdWx0aXBsZSApIHtcblx0XHQvLyBXaGVuIGBtdWx0aXBsZWAsIGp1c3QgdXNlIHRoZSBuYXRpdmUgYnJvd3NlciBzdHlsZXNcblx0XHQvLyB3aXRob3V0IHNldHRpbmcgZXhwbGljaXQgaGVpZ2h0LlxuXHRcdHJldHVybjtcblx0fVxuXG5cdGNvbnN0IHNpemVzID0ge1xuXHRcdGRlZmF1bHQ6IHtcblx0XHRcdGhlaWdodDogNDAsXG5cdFx0XHRtaW5IZWlnaHQ6IDQwLFxuXHRcdFx0cGFkZGluZ1RvcDogMCxcblx0XHRcdHBhZGRpbmdCb3R0b206IDAsXG5cdFx0fSxcblx0XHRzbWFsbDoge1xuXHRcdFx0aGVpZ2h0OiAyNCxcblx0XHRcdG1pbkhlaWdodDogMjQsXG5cdFx0XHRwYWRkaW5nVG9wOiAwLFxuXHRcdFx0cGFkZGluZ0JvdHRvbTogMCxcblx0XHR9LFxuXHRcdGNvbXBhY3Q6IHtcblx0XHRcdGhlaWdodDogMzIsXG5cdFx0XHRtaW5IZWlnaHQ6IDMyLFxuXHRcdFx0cGFkZGluZ1RvcDogMCxcblx0XHRcdHBhZGRpbmdCb3R0b206IDAsXG5cdFx0fSxcblx0XHQnX191bnN0YWJsZS1sYXJnZSc6IHtcblx0XHRcdGhlaWdodDogNDAsXG5cdFx0XHRtaW5IZWlnaHQ6IDQwLFxuXHRcdFx0cGFkZGluZ1RvcDogMCxcblx0XHRcdHBhZGRpbmdCb3R0b206IDAsXG5cdFx0fSxcblx0fTtcblxuXHRpZiAoICEgX19uZXh0NDBweERlZmF1bHRTaXplICkge1xuXHRcdHNpemVzLmRlZmF1bHQgPSBzaXplcy5jb21wYWN0O1xuXHR9XG5cblx0Y29uc3Qgc3R5bGUgPSBzaXplc1sgc2VsZWN0U2l6ZSBdIHx8IHNpemVzLmRlZmF1bHQ7XG5cblx0cmV0dXJuIGNzcyggc3R5bGUgKTtcbn07XG5cbmV4cG9ydCBjb25zdCBjaGV2cm9uSWNvblNpemUgPSAxODtcblxuY29uc3Qgc2l6ZVBhZGRpbmdzID0gKCB7XG5cdF9fbmV4dDQwcHhEZWZhdWx0U2l6ZSxcblx0bXVsdGlwbGUsXG5cdHNlbGVjdFNpemUgPSAnZGVmYXVsdCcsXG59OiBTZWxlY3RQcm9wcyApID0+IHtcblx0Y29uc3QgcGFkZGluZyA9IHtcblx0XHRkZWZhdWx0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYLFxuXHRcdHNtYWxsOiBDT05GSUcuY29udHJvbFBhZGRpbmdYU21hbGwsXG5cdFx0Y29tcGFjdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdCdfX3Vuc3RhYmxlLWxhcmdlJzogQ09ORklHLmNvbnRyb2xQYWRkaW5nWCxcblx0fTtcblxuXHRpZiAoICEgX19uZXh0NDBweERlZmF1bHRTaXplICkge1xuXHRcdHBhZGRpbmcuZGVmYXVsdCA9IHBhZGRpbmcuY29tcGFjdDtcblx0fVxuXG5cdGNvbnN0IHNlbGVjdGVkUGFkZGluZyA9IHBhZGRpbmdbIHNlbGVjdFNpemUgXSB8fCBwYWRkaW5nLmRlZmF1bHQ7XG5cblx0cmV0dXJuIHJ0bCgge1xuXHRcdHBhZGRpbmdMZWZ0OiBzZWxlY3RlZFBhZGRpbmcsXG5cdFx0cGFkZGluZ1JpZ2h0OiBzZWxlY3RlZFBhZGRpbmcgKyBjaGV2cm9uSWNvblNpemUsXG5cdFx0Li4uKCBtdWx0aXBsZVxuXHRcdFx0PyB7XG5cdFx0XHRcdFx0cGFkZGluZ1RvcDogc2VsZWN0ZWRQYWRkaW5nLFxuXHRcdFx0XHRcdHBhZGRpbmdCb3R0b206IHNlbGVjdGVkUGFkZGluZyxcblx0XHRcdCAgfVxuXHRcdFx0OiB7fSApLFxuXHR9ICk7XG59O1xuXG5jb25zdCBvdmVyZmxvd1N0eWxlcyA9ICggeyBtdWx0aXBsZSB9OiBTZWxlY3RQcm9wcyApID0+IHtcblx0cmV0dXJuIHtcblx0XHRvdmVyZmxvdzogbXVsdGlwbGUgPyAnYXV0bycgOiAnaGlkZGVuJyxcblx0fTtcbn07XG5cbmNvbnN0IHZhcmlhbnRTdHlsZXMgPSAoIHsgdmFyaWFudCB9OiBTZWxlY3RQcm9wcyApID0+IHtcblx0aWYgKCB2YXJpYW50ID09PSAnbWluaW1hbCcgKSB7XG5cdFx0cmV0dXJuIGNzcygge1xuXHRcdFx0ZmllbGRTaXppbmc6ICdjb250ZW50Jyxcblx0XHR9ICk7XG5cdH1cblxuXHRyZXR1cm4gJyc7XG59O1xuXG4vLyBUT0RPOiBSZXNvbHZlIG5lZWQgdG8gdXNlICYmJiB0byBpbmNyZWFzZSBzcGVjaWZpY2l0eVxuLy8gaHR0cHM6Ly9naXRodWIuY29tL1dvcmRQcmVzcy9ndXRlbmJlcmcvaXNzdWVzLzE4NDgzXG5cbmV4cG9ydCBjb25zdCBTZWxlY3QgPSBzdHlsZWQuc2VsZWN0PCBTZWxlY3RQcm9wcyA+YFxuXHQmJiYge1xuXHRcdGFwcGVhcmFuY2U6IG5vbmU7XG5cdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0XHRib3JkZXI6IG5vbmU7XG5cdFx0Ym94LXNoYWRvdzogbm9uZSAhaW1wb3J0YW50O1xuXHRcdGNvbG9yOiBjdXJyZW50Q29sb3I7IC8vIE92ZXJyaWRlcyBob3Zlci9mb2N1cyBzdHlsZXMgaW4gZm9ybXMuY3NzXG5cdFx0Y3Vyc29yOiBpbmhlcml0O1xuXHRcdGRpc3BsYXk6IGJsb2NrO1xuXHRcdGZvbnQtZmFtaWx5OiBpbmhlcml0O1xuXHRcdG1hcmdpbjogMDtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRtYXgtd2lkdGg6IG5vbmU7XG5cdFx0d2hpdGUtc3BhY2U6IG5vd3JhcDtcblx0XHR0ZXh0LW92ZXJmbG93OiBlbGxpcHNpcztcblxuXHRcdCR7IGZvbnRTaXplU3R5bGVzIH07XG5cdFx0JHsgc2l6ZVN0eWxlcyB9O1xuXHRcdCR7IHNpemVQYWRkaW5ncyB9O1xuXHRcdCR7IG92ZXJmbG93U3R5bGVzIH1cblx0XHQkeyB2YXJpYW50U3R5bGVzIH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IERvd25BcnJvd1dyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHRtYXJnaW4taW5saW5lLWVuZDogJHsgc3BhY2UoIC0xICkgfTsgLy8gb3B0aWNhbGx5IGFkanVzdCB0aGUgaWNvblxuXHRsaW5lLWhlaWdodDogMDtcblxuXHRwYXRoIHtcblx0XHRmaWxsOiBjdXJyZW50Q29sb3I7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJbnB1dENvbnRyb2xTdWZmaXhXcmFwcGVyV2l0aENsaWNrVGhyb3VnaCA9IHN0eWxlZChcblx0SW5wdXRDb250cm9sU3VmZml4V3JhcHBlclxuKWBcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblxuXHQkeyBydGwoIHsgcmlnaHQ6IDAgfSApIH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/select-control/chevron-down.js
-  var import_icons5 = __toESM(require_icons());
-  var import_jsx_runtime94 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime123 = __toESM(require_jsx_runtime());
   var SelectControlChevronDown = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(InputControlSuffixWrapperWithClickThrough, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(DownArrowWrapper, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_icons5.Icon, {
-          icon: import_icons5.chevronDown,
+    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(InputControlSuffixWrapperWithClickThrough, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(DownArrowWrapper, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(icon_default2, {
+          icon: chevron_down_default,
           size: chevronIconSize
         })
       })
     });
   };
-  var chevron_down_default = SelectControlChevronDown;
+  var chevron_down_default2 = SelectControlChevronDown;
 
   // packages/components/build-module/select-control/index.js
-  var import_jsx_runtime95 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime124 = __toESM(require_jsx_runtime());
   function useUniqueId3(idProp) {
     const instanceId = (0, import_compose31.useInstanceId)(SelectControl);
     const id3 = `inspector-select-control-${instanceId}`;
@@ -31085,7 +31285,7 @@ This message will only show in development mode. It won't appear in production. 
       ...optionProps
     }, index2) => {
       const key = id3 || `${label}-${value}-${index2}`;
-      return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("option", {
+      return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("option", {
         value,
         ...optionProps,
         children: label
@@ -31144,26 +31344,26 @@ This message will only show in development mode. It won't appear in production. 
       size: size3,
       __shouldNotWarnDeprecated36pxSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(base_control_default, {
       help,
       id: id3,
       className: classes,
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "SelectControl",
-      children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(StyledInputBase, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(StyledInputBase, {
         disabled,
         hideLabelFromVision,
         id: id3,
         isBorderless: variant === "minimal",
         label,
         size: size3,
-        suffix: suffix || !multiple && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(chevron_down_default, {}),
+        suffix: suffix || !multiple && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(chevron_down_default2, {}),
         prefix: prefix2,
         labelPosition,
         __unstableInputWidth: variant === "minimal" ? "auto" : void 0,
         variant,
         __next40pxDefaultSize,
-        children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(Select3, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Select3, {
           ...restProps,
           __next40pxDefaultSize,
           "aria-describedby": helpId,
@@ -31176,41 +31376,41 @@ This message will only show in development mode. It won't appear in production. 
           selectSize: size3,
           value: valueProp,
           variant,
-          children: children || /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(SelectOptions, {
+          children: children || /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(SelectOptions, {
             options: options2
           })
         })
       })
     });
   }
-  var SelectControl = (0, import_element68.forwardRef)(UnforwardedSelectControl);
+  var SelectControl = (0, import_element69.forwardRef)(UnforwardedSelectControl);
   var select_control_default = SelectControl;
 
   // packages/components/build-module/range-control/index.js
   var import_i18n13 = __toESM(require_i18n());
-  var import_element72 = __toESM(require_element());
+  var import_element73 = __toESM(require_element());
   var import_compose32 = __toESM(require_compose());
 
   // packages/components/build-module/range-control/utils.js
-  var import_element69 = __toESM(require_element());
+  var import_element70 = __toESM(require_element());
   function floatClamp(value, min3, max3) {
     if (typeof value !== "number") {
       return null;
     }
     return parseFloat(`${clamp4(value, min3, max3)}`);
   }
-  function useControlledRangeValue(settings3) {
+  function useControlledRangeValue(settings) {
     const {
       min: min3,
       max: max3,
       value: valueProp,
       initial
-    } = settings3;
+    } = settings;
     const [state, setInternalState] = use_controlled_state_default(floatClamp(valueProp, min3, max3), {
       initial: floatClamp(initial !== null && initial !== void 0 ? initial : null, min3, max3),
       fallback: null
     });
-    const setState = (0, import_element69.useCallback)((nextValue) => {
+    const setState = (0, import_element70.useCallback)((nextValue) => {
       if (nextValue === null) {
         setInternalState(null);
       } else {
@@ -31221,7 +31421,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/range-control/input-range.js
-  var import_element70 = __toESM(require_element());
+  var import_element71 = __toESM(require_element());
 
   // packages/components/build-module/range-control/styles/range-control-styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__16() {
@@ -31452,7 +31652,7 @@ This message will only show in development mode. It won't appear in production. 
   }), ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJhbmdlLWNvbnRyb2wtc3R5bGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQStVNkMiLCJmaWxlIjoicmFuZ2UtY29udHJvbC1zdHlsZXMudHMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEV4dGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBjc3MgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgc3R5bGVkIGZyb20gJ0BlbW90aW9uL3N0eWxlZCc7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBOdW1iZXJDb250cm9sIGZyb20gJy4uLy4uL251bWJlci1jb250cm9sJztcbmltcG9ydCB7IENPTE9SUywgcnRsLCBDT05GSUcgfSBmcm9tICcuLi8uLi91dGlscyc7XG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uLy4uL3V0aWxzL3NwYWNlJztcblxuaW1wb3J0IHR5cGUge1xuXHRSYW5nZU1hcmtQcm9wcyxcblx0UmFpbFByb3BzLFxuXHRUaHVtYlByb3BzLFxuXHRUb29sdGlwUHJvcHMsXG5cdFRyYWNrUHJvcHMsXG5cdFdyYXBwZXJQcm9wcyxcblx0UmFuZ2VDb250cm9sUHJvcHMsXG59IGZyb20gJy4uL3R5cGVzJztcblxuY29uc3QgcmFuZ2VIZWlnaHRWYWx1ZSA9IDMwO1xuY29uc3QgcmFpbEhlaWdodCA9IDQ7XG5jb25zdCByYW5nZUhlaWdodCA9ICgpID0+XG5cdGNzcyggeyBoZWlnaHQ6IHJhbmdlSGVpZ2h0VmFsdWUsIG1pbkhlaWdodDogcmFuZ2VIZWlnaHRWYWx1ZSB9ICk7XG5jb25zdCB0aHVtYlNpemUgPSAxMjtcblxuY29uc3QgZGVwcmVjYXRlZEhlaWdodCA9ICgge1xuXHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG59OiBQaWNrPCBSYW5nZUNvbnRyb2xQcm9wcywgJ19fbmV4dDQwcHhEZWZhdWx0U2l6ZScgPiApID0+XG5cdCEgX19uZXh0NDBweERlZmF1bHRTaXplICYmIGNzcyggeyBtaW5IZWlnaHQ6IHJhbmdlSGVpZ2h0VmFsdWUgfSApO1xuXG50eXBlIFJvb3RQcm9wcyA9IFBpY2s8IFJhbmdlQ29udHJvbFByb3BzLCAnX19uZXh0NDBweERlZmF1bHRTaXplJyA+O1xuZXhwb3J0IGNvbnN0IFJvb3QgPSBzdHlsZWQuZGl2PCBSb290UHJvcHMgPmBcblx0LXdlYmtpdC10YXAtaGlnaGxpZ2h0LWNvbG9yOiB0cmFuc3BhcmVudDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0ZGlzcGxheTogZmxleDtcblx0anVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0O1xuXHRwYWRkaW5nOiAwO1xuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdHRvdWNoLWFjdGlvbjogbm9uZTtcblx0d2lkdGg6IDEwMCU7XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdC8qIFRPRE86IHJlbW92ZSBhZnRlciByZW1vdmluZyB0aGUgX19uZXh0NDBweERlZmF1bHRTaXplIHByb3AgKi9cblx0JHsgZGVwcmVjYXRlZEhlaWdodCB9O1xuYDtcblxuY29uc3Qgd3JhcHBlckNvbG9yID0gKCB7IGNvbG9yID0gQ09MT1JTLnVpLmJvcmRlckZvY3VzIH06IFdyYXBwZXJQcm9wcyApID0+XG5cdGNzcyggeyBjb2xvciB9ICk7XG5cbmNvbnN0IHdyYXBwZXJNYXJnaW4gPSAoIHsgbWFya3MsIF9fbmV4dEhhc05vTWFyZ2luQm90dG9tIH06IFdyYXBwZXJQcm9wcyApID0+IHtcblx0aWYgKCAhIF9fbmV4dEhhc05vTWFyZ2luQm90dG9tICkge1xuXHRcdHJldHVybiBjc3MoIHsgbWFyZ2luQm90dG9tOiBtYXJrcyA/IDE2IDogdW5kZWZpbmVkIH0gKTtcblx0fVxuXHRyZXR1cm4gJyc7XG59O1xuXG5leHBvcnQgY29uc3QgV3JhcHBlciA9IHN0eWxlZCggJ2RpdicsIHtcblx0c2hvdWxkRm9yd2FyZFByb3A6ICggcHJvcDogc3RyaW5nICkgPT5cblx0XHQhIFsgJ2NvbG9yJywgJ19fbmV4dEhhc05vTWFyZ2luQm90dG9tJywgJ21hcmtzJyBdLmluY2x1ZGVzKCBwcm9wICksXG59ICk8IFdyYXBwZXJQcm9wcyA+YFxuXHRkaXNwbGF5OiBibG9jaztcblx0ZmxleDogMTtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHR3aWR0aDogMTAwJTtcblxuXHQkeyB3cmFwcGVyQ29sb3IgfTtcblx0JHsgcmFuZ2VIZWlnaHQgfTtcblx0JHsgd3JhcHBlck1hcmdpbiB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IEJlZm9yZUljb25XcmFwcGVyID0gc3R5bGVkLnNwYW5gXG5cdGRpc3BsYXk6IGZsZXg7IC8vIGVuc3VyZXMgdGhlIGhlaWdodCBpc24ndCBhZmZlY3RlZCBieSBsaW5lLWhlaWdodFxuXHRtYXJnaW4tdG9wOiAkeyByYWlsSGVpZ2h0IH1weDtcblxuXHQkeyBydGwoIHsgbWFyZ2luUmlnaHQ6IDYgfSApIH1cbmA7XG5cbmV4cG9ydCBjb25zdCBBZnRlckljb25XcmFwcGVyID0gc3R5bGVkLnNwYW5gXG5cdGRpc3BsYXk6IGZsZXg7IC8vIGVuc3VyZXMgdGhlIGhlaWdodCBpc24ndCBhZmZlY3RlZCBieSBsaW5lLWhlaWdodFxuXHRtYXJnaW4tdG9wOiAkeyByYWlsSGVpZ2h0IH1weDtcblxuXHQkeyBydGwoIHsgbWFyZ2luTGVmdDogNiB9ICkgfVxuYDtcblxuY29uc3QgcmFpbEJhY2tncm91bmRDb2xvciA9ICggeyBkaXNhYmxlZCwgcmFpbENvbG9yIH06IFJhaWxQcm9wcyApID0+IHtcblx0bGV0IGJhY2tncm91bmQgPSByYWlsQ29sb3IgfHwgJyc7XG5cblx0aWYgKCBkaXNhYmxlZCApIHtcblx0XHRiYWNrZ3JvdW5kID0gQ09MT1JTLnVpLmJhY2tncm91bmREaXNhYmxlZDtcblx0fVxuXG5cdHJldHVybiBjc3MoIHsgYmFja2dyb3VuZCB9ICk7XG59O1xuXG5leHBvcnQgY29uc3QgUmFpbCA9IHN0eWxlZC5zcGFuYFxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMuZ3JheVsgMzAwIF0gfTtcblx0bGVmdDogMDtcblx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdHJpZ2h0OiAwO1xuXHRkaXNwbGF5OiBibG9jaztcblx0aGVpZ2h0OiAkeyByYWlsSGVpZ2h0IH1weDtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRtYXJnaW4tdG9wOiAkeyAoIHJhbmdlSGVpZ2h0VmFsdWUgLSByYWlsSGVpZ2h0ICkgLyAyIH1weDtcblx0dG9wOiAwO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzRnVsbCB9O1xuXG5cdCR7IHJhaWxCYWNrZ3JvdW5kQ29sb3IgfTtcbmA7XG5cbmNvbnN0IHRyYWNrQmFja2dyb3VuZENvbG9yID0gKCB7IGRpc2FibGVkLCB0cmFja0NvbG9yIH06IFRyYWNrUHJvcHMgKSA9PiB7XG5cdGxldCBiYWNrZ3JvdW5kID0gdHJhY2tDb2xvciB8fCAnY3VycmVudENvbG9yJztcblxuXHRpZiAoIGRpc2FibGVkICkge1xuXHRcdGJhY2tncm91bmQgPSBDT0xPUlMuZ3JheVsgNDAwIF07XG5cdH1cblxuXHRyZXR1cm4gY3NzKCB7IGJhY2tncm91bmQgfSApO1xufTtcblxuZXhwb3J0IGNvbnN0IFRyYWNrID0gc3R5bGVkLnNwYW5gXG5cdGJhY2tncm91bmQtY29sb3I6IGN1cnJlbnRDb2xvcjtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c0Z1bGwgfTtcblx0aGVpZ2h0OiAkeyByYWlsSGVpZ2h0IH1weDtcblx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdGRpc3BsYXk6IGJsb2NrO1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdG1hcmdpbi10b3A6ICR7ICggcmFuZ2VIZWlnaHRWYWx1ZSAtIHJhaWxIZWlnaHQgKSAvIDIgfXB4O1xuXHR0b3A6IDA7XG5cblx0LmlzLW1hcmtlZCAmIHtcblx0XHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRcdHRyYW5zaXRpb246IHdpZHRoIGVhc2UgMC4xcztcblx0XHR9XG5cdH1cblxuXHQkeyB0cmFja0JhY2tncm91bmRDb2xvciB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IE1hcmtzV3JhcHBlciA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBibG9jaztcblx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0d2lkdGg6IDEwMCU7XG5cdHVzZXItc2VsZWN0OiBub25lO1xuXHRtYXJnaW4tdG9wOiAxN3B4O1xuYDtcblxuZXhwb3J0IGNvbnN0IE1hcmsgPSBzdHlsZWQuc3BhbmBcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRsZWZ0OiAwO1xuXHR0b3A6IC00cHg7XG5cdGhlaWdodDogNHB4O1xuXHR3aWR0aDogMnB4O1xuXHR0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoIC01MCUgKTtcblx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnVpLmJhY2tncm91bmQgfTtcblx0ei1pbmRleDogMTtcbmA7XG5cbmNvbnN0IG1hcmtMYWJlbEZpbGwgPSAoIHsgaXNGaWxsZWQgfTogUmFuZ2VNYXJrUHJvcHMgKSA9PiB7XG5cdHJldHVybiBjc3MoIHtcblx0XHRjb2xvcjogaXNGaWxsZWQgPyBDT0xPUlMuZ3JheVsgNzAwIF0gOiBDT0xPUlMuZ3JheVsgMzAwIF0sXG5cdH0gKTtcbn07XG5cbmV4cG9ydCBjb25zdCBNYXJrTGFiZWwgPSBzdHlsZWQuc3BhbmBcblx0Y29sb3I6ICR7IENPTE9SUy5ncmF5WyAzMDAgXSB9O1xuXHRmb250LXNpemU6IDExcHg7XG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0dG9wOiA4cHg7XG5cdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5cblx0JHsgcnRsKCB7IGxlZnQ6IDAgfSApIH07XG5cdCR7IHJ0bChcblx0XHR7IHRyYW5zZm9ybTogJ3RyYW5zbGF0ZVgoIC01MCUgKScgfSxcblx0XHR7IHRyYW5zZm9ybTogJ3RyYW5zbGF0ZVgoIDUwJSApJyB9XG5cdCkgfTtcblxuXHQkeyBtYXJrTGFiZWxGaWxsIH07XG5gO1xuXG5jb25zdCB0aHVtYkNvbG9yID0gKCB7IGRpc2FibGVkIH06IFRodW1iUHJvcHMgKSA9PlxuXHRkaXNhYmxlZFxuXHRcdD8gY3NzYFxuXHRcdFx0XHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMuZ3JheVsgNDAwIF0gfTtcblx0XHQgIGBcblx0XHQ6IGNzc2Bcblx0XHRcdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdCAgYDtcblxuZXhwb3J0IGNvbnN0IFRodW1iV3JhcHBlciA9IHN0eWxlZC5zcGFuYFxuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRoZWlnaHQ6ICR7IHRodW1iU2l6ZSB9cHg7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXHRtYXJnaW4tdG9wOiAkeyAoIHJhbmdlSGVpZ2h0VmFsdWUgLSB0aHVtYlNpemUgKSAvIDIgfXB4O1xuXHRvdXRsaW5lOiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHR0b3A6IDA7XG5cdHVzZXItc2VsZWN0OiBub25lO1xuXHR3aWR0aDogJHsgdGh1bWJTaXplIH1weDtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1JvdW5kIH07XG5cdHotaW5kZXg6IDM7XG5cblx0LmlzLW1hcmtlZCAmIHtcblx0XHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRcdHRyYW5zaXRpb246IGxlZnQgZWFzZSAwLjFzO1xuXHRcdH1cblx0fVxuXG5cdCR7IHRodW1iQ29sb3IgfTtcblx0JHsgcnRsKCB7IG1hcmdpbkxlZnQ6IC0xMCB9ICkgfTtcblx0JHsgcnRsKFxuXHRcdHsgdHJhbnNmb3JtOiAndHJhbnNsYXRlWCggNC41cHggKScgfSxcblx0XHR7IHRyYW5zZm9ybTogJ3RyYW5zbGF0ZVgoIC00LjVweCApJyB9XG5cdCkgfTtcbmA7XG5cbmNvbnN0IHRodW1iRm9jdXMgPSAoIHsgaXNGb2N1c2VkIH06IFRodW1iUHJvcHMgKSA9PiB7XG5cdHJldHVybiBpc0ZvY3VzZWRcblx0XHQ/IGNzc2Bcblx0XHRcdFx0Jjo6YmVmb3JlIHtcblx0XHRcdFx0XHRjb250ZW50OiAnICc7XG5cdFx0XHRcdFx0cG9zaXRpb246IGFic29sdXRlO1xuXHRcdFx0XHRcdGJhY2tncm91bmQtY29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdFx0XHRvcGFjaXR5OiAwLjQ7XG5cdFx0XHRcdFx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1JvdW5kIH07XG5cdFx0XHRcdFx0aGVpZ2h0OiAkeyB0aHVtYlNpemUgKyA4IH1weDtcblx0XHRcdFx0XHR3aWR0aDogJHsgdGh1bWJTaXplICsgOCB9cHg7XG5cdFx0XHRcdFx0dG9wOiAtNHB4O1xuXHRcdFx0XHRcdGxlZnQ6IC00cHg7XG5cdFx0XHRcdH1cblx0XHQgIGBcblx0XHQ6ICcnO1xufTtcblxuZXhwb3J0IGNvbnN0IFRodW1iID0gc3R5bGVkLnNwYW48IFRodW1iUHJvcHMgPmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1JvdW5kIH07XG5cdGhlaWdodDogMTAwJTtcblx0b3V0bGluZTogMDtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHR1c2VyLXNlbGVjdDogbm9uZTtcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaGFkb3c6ICR7IENPTkZJRy5lbGV2YXRpb25YU21hbGwgfTtcblxuXHQkeyB0aHVtYkNvbG9yIH07XG5cdCR7IHRodW1iRm9jdXMgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJbnB1dFJhbmdlID0gc3R5bGVkLmlucHV0YFxuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRjdXJzb3I6IHBvaW50ZXI7XG5cdGRpc3BsYXk6IGJsb2NrO1xuXHRoZWlnaHQ6IDEwMCU7XG5cdGxlZnQ6IDA7XG5cdG1hcmdpbjogMCAtJHsgdGh1bWJTaXplIC8gMiB9cHg7XG5cdG9wYWNpdHk6IDA7XG5cdG91dGxpbmU6IG5vbmU7XG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0cmlnaHQ6IDA7XG5cdHRvcDogMDtcblx0d2lkdGg6IGNhbGMoIDEwMCUgKyAkeyB0aHVtYlNpemUgfXB4ICk7XG5gO1xuXG5jb25zdCB0b29sdGlwU2hvdyA9ICggeyBzaG93IH06IFRvb2x0aXBQcm9wcyApID0+IHtcblx0cmV0dXJuIGNzc2Bcblx0XHRkaXNwbGF5OiAkeyBzaG93ID8gJ2lubGluZS1ibG9jaycgOiAnbm9uZScgfTtcblx0XHRvcGFjaXR5OiAkeyBzaG93ID8gMSA6IDAgfTtcblxuXHRcdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFx0dHJhbnNpdGlvbjpcblx0XHRcdFx0b3BhY2l0eSAxMjBtcyBlYXNlLFxuXHRcdFx0XHRkaXNwbGF5IDEyMG1zIGVhc2UgYWxsb3ctZGlzY3JldGU7XG5cdFx0fVxuXG5cdFx0QHN0YXJ0aW5nLXN0eWxlIHtcblx0XHRcdG9wYWNpdHk6IDA7XG5cdFx0fVxuXHRgO1xufTtcblxuY29uc3QgdG9vbHRpcFBsYWNlbWVudCA9ICggeyBwbGFjZW1lbnQgfTogVG9vbHRpcFByb3BzICkgPT4ge1xuXHRjb25zdCBpc0JvdHRvbSA9IHBsYWNlbWVudCA9PT0gJ2JvdHRvbSc7XG5cblx0aWYgKCBpc0JvdHRvbSApIHtcblx0XHRyZXR1cm4gY3NzYFxuXHRcdFx0Ym90dG9tOiAtODAlO1xuXHRcdGA7XG5cdH1cblxuXHRyZXR1cm4gY3NzYFxuXHRcdHRvcDogLTgwJTtcblx0YDtcbn07XG5cbmV4cG9ydCBjb25zdCBUb29sdGlwID0gc3R5bGVkLnNwYW48IFRvb2x0aXBQcm9wcyA+YFxuXHRiYWNrZ3JvdW5kOiByZ2JhKCAwLCAwLCAwLCAwLjggKTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH07XG5cdGNvbG9yOiB3aGl0ZTtcblx0Zm9udC1zaXplOiAxMnB4O1xuXHRtaW4td2lkdGg6IDMycHg7XG5cdHBhZGRpbmc6IDRweCA4cHg7XG5cdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHRleHQtYWxpZ246IGNlbnRlcjtcblx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cdGxpbmUtaGVpZ2h0OiAxLjQ7XG5cblx0JHsgdG9vbHRpcFNob3cgfTtcblxuXHQkeyB0b29sdGlwUGxhY2VtZW50IH07XG5cdCR7IHJ0bChcblx0XHR7IHRyYW5zZm9ybTogJ3RyYW5zbGF0ZVgoLTUwJSknIH0sXG5cdFx0eyB0cmFuc2Zvcm06ICd0cmFuc2xhdGVYKDUwJSknIH1cblx0KSB9XG5gO1xuXG4vLyBAdG9kbyBSZWZhY3RvciBSYW5nZUNvbnRyb2wgd2l0aCBsYXRlc3QgSFN0YWNrIGNvbmZpZ3VyYXRpb25cbi8vIEBzZWU6IHBhY2thZ2VzL2NvbXBvbmVudHMvc3JjL2gtc3RhY2tcbmV4cG9ydCBjb25zdCBJbnB1dE51bWJlciA9IHN0eWxlZCggTnVtYmVyQ29udHJvbCApYFxuXHRkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG5cdGZvbnQtc2l6ZTogMTNweDtcblx0bWFyZ2luLXRvcDogMDtcblxuXHRpbnB1dFt0eXBlPSdudW1iZXInXSYge1xuXHRcdCR7IHJhbmdlSGVpZ2h0IH07XG5cdH1cblxuXHQkeyBydGwoIHsgbWFyZ2luTGVmdDogYCR7IHNwYWNlKCA0ICkgfSAhaW1wb3J0YW50YCB9ICkgfVxuYDtcblxuZXhwb3J0IGNvbnN0IEFjdGlvblJpZ2h0V3JhcHBlciA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBibG9jaztcblx0bWFyZ2luLXRvcDogMDtcblxuXHRidXR0b24sXG5cdGJ1dHRvbi5pcy1zbWFsbCB7XG5cdFx0bWFyZ2luLWxlZnQ6IDA7XG5cdFx0JHsgcmFuZ2VIZWlnaHQgfTtcblx0fVxuXG5cdCR7IHJ0bCggeyBtYXJnaW5MZWZ0OiA4IH0gKSB9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/range-control/input-range.js
-  var import_jsx_runtime96 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime125 = __toESM(require_jsx_runtime());
   function InputRange2(props, ref) {
     const {
       describedBy,
@@ -31460,7 +31660,7 @@ This message will only show in development mode. It won't appear in production. 
       value,
       ...otherProps
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(InputRange, {
+    return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(InputRange, {
       ...otherProps,
       "aria-describedby": describedBy,
       "aria-label": label,
@@ -31471,14 +31671,14 @@ This message will only show in development mode. It won't appear in production. 
       value
     });
   }
-  var ForwardedComponent2 = (0, import_element70.forwardRef)(InputRange2);
+  var ForwardedComponent2 = (0, import_element71.forwardRef)(InputRange2);
   var input_range_default = ForwardedComponent2;
 
   // packages/components/build-module/range-control/rail.js
   var import_i18n12 = __toESM(require_i18n());
 
   // packages/components/build-module/range-control/mark.js
-  var import_jsx_runtime97 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime126 = __toESM(require_jsx_runtime());
   function RangeMark(props) {
     const {
       className,
@@ -31489,13 +31689,13 @@ This message will only show in development mode. It won't appear in production. 
     } = props;
     const classes = clsx_default("components-range-control__mark", isFilled && "is-filled", className);
     const labelClasses = clsx_default("components-range-control__mark-label", isFilled && "is-filled");
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Mark, {
+    return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_jsx_runtime126.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Mark, {
         ...otherProps,
         "aria-hidden": "true",
         className: classes,
         style: style2
-      }), label && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(MarkLabel, {
+      }), label && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(MarkLabel, {
         "aria-hidden": "true",
         className: labelClasses,
         isFilled,
@@ -31506,7 +31706,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/range-control/rail.js
-  var import_jsx_runtime98 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime127 = __toESM(require_jsx_runtime());
   var import_react105 = __toESM(require_react());
   function RangeRail(props) {
     const {
@@ -31518,11 +31718,11 @@ This message will only show in development mode. It won't appear in production. 
       value = 0,
       ...restProps
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_jsx_runtime98.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime98.jsx)(Rail, {
+    return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(import_jsx_runtime127.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime127.jsx)(Rail, {
         disabled,
         ...restProps
-      }), marks && /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(Marks, {
+      }), marks && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(Marks, {
         disabled,
         marks,
         min: min3,
@@ -31549,7 +31749,7 @@ This message will only show in development mode. It won't appear in production. 
       step,
       value
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(MarksWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(MarksWrapper, {
       "aria-hidden": "true",
       className: "components-range-control__marks",
       children: marksData.map((mark) => /* @__PURE__ */ (0, import_react105.createElement)(RangeMark, {
@@ -31601,8 +31801,8 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/range-control/tooltip.js
-  var import_element71 = __toESM(require_element());
-  var import_jsx_runtime99 = __toESM(require_jsx_runtime());
+  var import_element72 = __toESM(require_element());
+  var import_jsx_runtime128 = __toESM(require_jsx_runtime());
   function SimpleTooltip(props) {
     const {
       className,
@@ -31624,7 +31824,7 @@ This message will only show in development mode. It won't appear in production. 
       ...style2,
       zIndex
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(Tooltip4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(Tooltip4, {
       ...restProps,
       "aria-hidden": "false",
       className: classes,
@@ -31639,16 +31839,16 @@ This message will only show in development mode. It won't appear in production. 
     inputRef,
     tooltipPlacement: tooltipPlacement2
   }) {
-    const [placement, setPlacement] = (0, import_element71.useState)();
-    const setTooltipPlacement = (0, import_element71.useCallback)(() => {
+    const [placement, setPlacement] = (0, import_element72.useState)();
+    const setTooltipPlacement = (0, import_element72.useCallback)(() => {
       if (inputRef && inputRef.current) {
         setPlacement(tooltipPlacement2);
       }
     }, [tooltipPlacement2, inputRef]);
-    (0, import_element71.useEffect)(() => {
+    (0, import_element72.useEffect)(() => {
       setTooltipPlacement();
     }, [setTooltipPlacement]);
-    (0, import_element71.useEffect)(() => {
+    (0, import_element72.useEffect)(() => {
       window.addEventListener("resize", setTooltipPlacement);
       return () => {
         window.removeEventListener("resize", setTooltipPlacement);
@@ -31658,7 +31858,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/range-control/index.js
-  var import_jsx_runtime100 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime129 = __toESM(require_jsx_runtime());
   var noop7 = () => {
   };
   function computeResetValue({
@@ -31715,16 +31915,16 @@ This message will only show in development mode. It won't appear in production. 
       value: valueProp !== null && valueProp !== void 0 ? valueProp : null,
       initial: initialPosition
     });
-    const isResetPendent = (0, import_element72.useRef)(false);
+    const isResetPendent = (0, import_element73.useRef)(false);
     let hasTooltip = showTooltipProp;
     let hasInputField = withInputField;
     if (step === "any") {
       hasTooltip = false;
       hasInputField = false;
     }
-    const [showTooltip, setShowTooltip] = (0, import_element72.useState)(hasTooltip);
-    const [isFocused, setIsFocused] = (0, import_element72.useState)(false);
-    const inputRef = (0, import_element72.useRef)();
+    const [showTooltip, setShowTooltip] = (0, import_element73.useState)(hasTooltip);
+    const [isFocused, setIsFocused] = (0, import_element73.useState)(false);
+    const inputRef = (0, import_element73.useRef)();
     const isCurrentlyFocused = inputRef.current?.matches(":focus");
     const isThumbFocused = !disabled && isFocused;
     const isValueReset = value === null;
@@ -31788,7 +31988,7 @@ This message will only show in development mode. It won't appear in production. 
       size: void 0,
       __shouldNotWarnDeprecated36pxSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(base_control_default, {
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "RangeControl",
       className: classes,
@@ -31796,19 +31996,19 @@ This message will only show in development mode. It won't appear in production. 
       hideLabelFromVision,
       id: `${id3}`,
       help,
-      children: /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(Root2, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(Root2, {
         className: "components-range-control__root",
         __next40pxDefaultSize,
-        children: [beforeIcon && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(BeforeIconWrapper, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(icon_default2, {
+        children: [beforeIcon && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(BeforeIconWrapper, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(icon_default3, {
             icon: beforeIcon
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(Wrapper2, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(Wrapper2, {
           __nextHasNoMarginBottom,
           className: wrapperClasses,
           color: colorProp,
           marks: !!marks,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime100.jsx)(input_range_default, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime129.jsx)(input_range_default, {
             ...otherProps,
             className: "components-range-control__slider",
             describedBy,
@@ -31825,7 +32025,7 @@ This message will only show in development mode. It won't appear in production. 
             ref: (0, import_compose32.useMergeRefs)([inputRef, forwardedRef]),
             step,
             value: inputSliderValue !== null && inputSliderValue !== void 0 ? inputSliderValue : void 0
-          }), /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(RangeRail, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(RangeRail, {
             "aria-hidden": true,
             disabled,
             marks,
@@ -31834,7 +32034,7 @@ This message will only show in development mode. It won't appear in production. 
             railColor,
             step,
             value: rangeFillValue
-          }), /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(Track, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Track, {
             "aria-hidden": true,
             className: "components-range-control__track",
             disabled,
@@ -31842,16 +32042,16 @@ This message will only show in development mode. It won't appear in production. 
               width: fillValueOffset
             },
             trackColor
-          }), /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(ThumbWrapper, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(ThumbWrapper, {
             className: "components-range-control__thumb-wrapper",
             style: offsetStyle,
             disabled,
-            children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(Thumb, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Thumb, {
               "aria-hidden": true,
               isFocused: isThumbFocused,
               disabled
             })
-          }), enableTooltip && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(SimpleTooltip, {
+          }), enableTooltip && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(SimpleTooltip, {
             className: "components-range-control__tooltip",
             inputRef,
             tooltipPlacement: "bottom",
@@ -31860,11 +32060,11 @@ This message will only show in development mode. It won't appear in production. 
             style: offsetStyle,
             value
           })]
-        }), afterIcon && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(AfterIconWrapper, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(icon_default2, {
+        }), afterIcon && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(AfterIconWrapper, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(icon_default3, {
             icon: afterIcon
           })
-        }), hasInputField && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(InputNumber, {
+        }), hasInputField && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(InputNumber, {
           "aria-label": label,
           className: "components-range-control__number",
           disabled,
@@ -31880,8 +32080,8 @@ This message will only show in development mode. It won't appear in production. 
           step,
           value: inputSliderValue,
           __shouldNotWarnDeprecated36pxSize: true
-        }), allowReset && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(ActionRightWrapper, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(button_default, {
+        }), allowReset && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(ActionRightWrapper, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(button_default, {
             className: "components-range-control__reset",
             accessibleWhenDisabled: !disabled,
             disabled: disabled || value === computeResetValue({
@@ -31897,7 +32097,7 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   }
-  var RangeControl = (0, import_element72.forwardRef)(UnforwardedRangeControl);
+  var RangeControl = (0, import_element73.forwardRef)(UnforwardedRangeControl);
   var range_control_default = RangeControl;
 
   // packages/components/build-module/color-picker/styles.js
@@ -31951,17 +32151,16 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/color-picker/color-copy-button.js
   var import_compose33 = __toESM(require_compose());
-  var import_element73 = __toESM(require_element());
-  var import_icons6 = __toESM(require_icons());
+  var import_element74 = __toESM(require_element());
   var import_i18n14 = __toESM(require_i18n());
-  var import_jsx_runtime101 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime130 = __toESM(require_jsx_runtime());
   var ColorCopyButton = (props) => {
     const {
       color: color2,
       colorType
     } = props;
-    const [copiedColor, setCopiedColor] = (0, import_element73.useState)(null);
-    const copyTimerRef = (0, import_element73.useRef)();
+    const [copiedColor, setCopiedColor] = (0, import_element74.useState)(null);
+    const copyTimerRef = (0, import_element74.useRef)();
     const copyRef = (0, import_compose33.useCopyToClipboard)(() => {
       switch (colorType) {
         case "hsl": {
@@ -31985,7 +32184,7 @@ This message will only show in development mode. It won't appear in production. 
         copyTimerRef.current = void 0;
       }, 3e3);
     });
-    (0, import_element73.useEffect)(() => {
+    (0, import_element74.useEffect)(() => {
       return () => {
         if (copyTimerRef.current) {
           clearTimeout(copyTimerRef.current);
@@ -31994,25 +32193,25 @@ This message will only show in development mode. It won't appear in production. 
     }, []);
     const isCopied = copiedColor === color2.toHex();
     const label = isCopied ? (0, import_i18n14.__)("Copied!") : (0, import_i18n14.__)("Copy");
-    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(tooltip_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(tooltip_default, {
       delay: 0,
       hideOnClick: false,
       text: label,
-      children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Button3, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(Button3, {
         size: "compact",
         "aria-label": label,
         ref: copyRef,
-        icon: isCopied ? import_icons6.check : import_icons6.copy,
+        icon: isCopied ? check_default : copy_default,
         showTooltip: false
       })
     });
   };
 
   // packages/components/build-module/input-control/input-prefix-wrapper.js
-  var import_jsx_runtime102 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime131 = __toESM(require_jsx_runtime());
   function UnconnectedInputControlPrefixWrapper(props, forwardedRef) {
     const derivedProps = useContextSystem(props, "InputControlPrefixWrapper");
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(PrefixSuffixWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(PrefixSuffixWrapper, {
       ...derivedProps,
       isPrefix: true,
       ref: forwardedRef
@@ -32022,7 +32221,7 @@ This message will only show in development mode. It won't appear in production. 
   var input_prefix_wrapper_default = InputControlPrefixWrapper;
 
   // packages/components/build-module/color-picker/input-with-slider.js
-  var import_jsx_runtime103 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime132 = __toESM(require_jsx_runtime());
   var InputWithSlider = ({
     min: min3,
     max: max3,
@@ -32042,9 +32241,9 @@ This message will only show in development mode. It won't appear in production. 
       }
       onChange(newValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(component_default9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(component_default9, {
       spacing: 4,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime103.jsx)(NumberControlWrapper, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime132.jsx)(NumberControlWrapper, {
         __next40pxDefaultSize: true,
         min: min3,
         max: max3,
@@ -32052,15 +32251,15 @@ This message will only show in development mode. It won't appear in production. 
         hideLabelFromVision: true,
         value,
         onChange: onNumberControlChange,
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(input_prefix_wrapper_default, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(component_default8, {
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(input_prefix_wrapper_default, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(component_default8, {
             color: COLORS.theme.accent,
             lineHeight: 1,
             children: abbreviation
           })
         }),
         spinControls: "none"
-      }), /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(RangeControl2, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(RangeControl2, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label,
@@ -32075,7 +32274,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-picker/rgb-input.js
-  var import_jsx_runtime104 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime133 = __toESM(require_jsx_runtime());
   var RgbInput = ({
     color: color2,
     onChange,
@@ -32087,8 +32286,8 @@ This message will only show in development mode. It won't appear in production. 
       b: b3,
       a: a3
     } = color2.toRgb();
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(import_jsx_runtime104.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime104.jsx)(InputWithSlider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(import_jsx_runtime133.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 255,
         label: "Red",
@@ -32100,7 +32299,7 @@ This message will only show in development mode. It won't appear in production. 
           b: b3,
           a: a3
         }))
-      }), /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(InputWithSlider, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 255,
         label: "Green",
@@ -32112,7 +32311,7 @@ This message will only show in development mode. It won't appear in production. 
           b: b3,
           a: a3
         }))
-      }), /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(InputWithSlider, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 255,
         label: "Blue",
@@ -32124,7 +32323,7 @@ This message will only show in development mode. It won't appear in production. 
           b: nextB,
           a: a3
         }))
-      }), enableAlpha && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(InputWithSlider, {
+      }), enableAlpha && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
         label: "Alpha",
@@ -32141,19 +32340,19 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-picker/hsl-input.js
-  var import_element74 = __toESM(require_element());
-  var import_jsx_runtime105 = __toESM(require_jsx_runtime());
+  var import_element75 = __toESM(require_element());
+  var import_jsx_runtime134 = __toESM(require_jsx_runtime());
   var HslInput = ({
     color: color2,
     onChange,
     enableAlpha
   }) => {
-    const colorPropHSLA = (0, import_element74.useMemo)(() => color2.toHsl(), [color2]);
-    const [internalHSLA, setInternalHSLA] = (0, import_element74.useState)({
+    const colorPropHSLA = (0, import_element75.useMemo)(() => color2.toHsl(), [color2]);
+    const [internalHSLA, setInternalHSLA] = (0, import_element75.useState)({
       ...colorPropHSLA
     });
     const isInternalColorSameAsReceivedColor = color2.isEqual(w(internalHSLA));
-    (0, import_element74.useEffect)(() => {
+    (0, import_element75.useEffect)(() => {
       if (!isInternalColorSameAsReceivedColor) {
         setInternalHSLA(colorPropHSLA);
       }
@@ -32173,8 +32372,8 @@ This message will only show in development mode. It won't appear in production. 
         }));
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime105.jsxs)(import_jsx_runtime105.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime105.jsx)(InputWithSlider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(import_jsx_runtime134.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 359,
         label: "Hue",
@@ -32185,7 +32384,7 @@ This message will only show in development mode. It won't appear in production. 
             h: nextH
           });
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(InputWithSlider, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
         label: "Saturation",
@@ -32196,7 +32395,7 @@ This message will only show in development mode. It won't appear in production. 
             s: nextS
           });
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(InputWithSlider, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
         label: "Lightness",
@@ -32207,7 +32406,7 @@ This message will only show in development mode. It won't appear in production. 
             l: nextL
           });
         }
-      }), enableAlpha && /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(InputWithSlider, {
+      }), enableAlpha && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(InputWithSlider, {
         min: 0,
         max: 100,
         label: "Alpha",
@@ -32224,7 +32423,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/color-picker/hex-input.js
   var import_i18n15 = __toESM(require_i18n());
-  var import_jsx_runtime106 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime135 = __toESM(require_jsx_runtime());
   var HexInput = ({
     color: color2,
     onChange,
@@ -32250,9 +32449,9 @@ This message will only show in development mode. It won't appear in production. 
         value
       };
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(InputControl, {
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(input_prefix_wrapper_default, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(component_default8, {
+    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(InputControl, {
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(input_prefix_wrapper_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(component_default8, {
           color: COLORS.theme.accent,
           lineHeight: 1,
           children: "#"
@@ -32270,7 +32469,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-picker/color-input.js
-  var import_jsx_runtime107 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime136 = __toESM(require_jsx_runtime());
   var ColorInput = ({
     colorType,
     color: color2,
@@ -32284,16 +32483,16 @@ This message will only show in development mode. It won't appear in production. 
     };
     switch (colorType) {
       case "hsl":
-        return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(HslInput, {
+        return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(HslInput, {
           ...props
         });
       case "rgb":
-        return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(RgbInput, {
+        return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(RgbInput, {
           ...props
         });
       default:
       case "hex":
-        return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(HexInput, {
+        return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(HexInput, {
           ...props
         });
     }
@@ -32493,16 +32692,16 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-picker/picker.js
-  var import_element75 = __toESM(require_element());
-  var import_jsx_runtime108 = __toESM(require_jsx_runtime());
+  var import_element76 = __toESM(require_element());
+  var import_jsx_runtime137 = __toESM(require_jsx_runtime());
   var Picker = ({
     color: color2,
     enableAlpha,
     onChange
   }) => {
     const Component9 = enableAlpha ? ge : Ce;
-    const rgbColor = (0, import_element75.useMemo)(() => color2.toRgbString(), [color2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Component9, {
+    const rgbColor = (0, import_element76.useMemo)(() => color2.toRgbString(), [color2]);
+    return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(Component9, {
       color: rgbColor,
       onChange: (nextColor) => {
         onChange(w(nextColor));
@@ -32523,7 +32722,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-picker/component.js
-  var import_jsx_runtime109 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime138 = __toESM(require_jsx_runtime());
   k([names_default]);
   var options = [{
     label: "RGB",
@@ -32549,25 +32748,25 @@ This message will only show in development mode. It won't appear in production. 
       value: colorProp,
       defaultValue: defaultValue2
     });
-    const safeColordColor = (0, import_element76.useMemo)(() => {
+    const safeColordColor = (0, import_element77.useMemo)(() => {
       return w(color2 || "");
     }, [color2]);
     const debouncedSetColor = (0, import_compose34.useDebounce)(setColor);
-    const handleChange = (0, import_element76.useCallback)((nextValue) => {
+    const handleChange = (0, import_element77.useCallback)((nextValue) => {
       debouncedSetColor(nextValue.toHex());
     }, [debouncedSetColor]);
-    const [colorType, setColorType] = (0, import_element76.useState)(copyFormat || "hex");
-    return /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(ColorfulWrapper, {
+    const [colorType, setColorType] = (0, import_element77.useState)(copyFormat || "hex");
+    return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(ColorfulWrapper, {
       ref: forwardedRef,
       ...divProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime109.jsx)(Picker, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime138.jsx)(Picker, {
         onChange: handleChange,
         color: safeColordColor,
         enableAlpha
-      }), /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(AuxiliaryColorArtefactWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(AuxiliaryColorArtefactHStackHeader, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(AuxiliaryColorArtefactWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(AuxiliaryColorArtefactHStackHeader, {
           justify: "space-between",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime109.jsx)(SelectControl2, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime138.jsx)(SelectControl2, {
             __nextHasNoMarginBottom: true,
             size: "compact",
             options,
@@ -32576,14 +32775,14 @@ This message will only show in development mode. It won't appear in production. 
             label: (0, import_i18n16.__)("Color format"),
             hideLabelFromVision: true,
             variant: "minimal"
-          }), /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ColorCopyButton, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(ColorCopyButton, {
             color: safeColordColor,
             colorType: copyFormat || colorType
           })]
-        }), /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ColorInputWrapper, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(ColorInputWrapper, {
           direction: "column",
           gap: 2,
-          children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ColorInput, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(ColorInput, {
             colorType,
             color: safeColordColor,
             onChange: handleChange,
@@ -32597,7 +32796,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default17 = ColorPicker;
 
   // packages/components/build-module/color-picker/use-deprecated-props.js
-  var import_element77 = __toESM(require_element());
+  var import_element78 = __toESM(require_element());
   function isLegacyProps(props) {
     return typeof props.onChangeComplete !== "undefined" || typeof props.disableAlpha !== "undefined" || typeof props.color?.hex === "string";
   }
@@ -32632,7 +32831,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       onChangeComplete
     } = props;
-    const legacyChangeHandler = (0, import_element77.useCallback)((color2) => {
+    const legacyChangeHandler = (0, import_element78.useCallback)((color2) => {
       onChangeComplete(transformColorStringToLegacyColor(color2));
     }, [onChangeComplete]);
     if (isLegacyProps(props)) {
@@ -32651,9 +32850,9 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/color-picker/legacy-adapter.js
-  var import_jsx_runtime110 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime139 = __toESM(require_jsx_runtime());
   var LegacyAdapter = (props) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(component_default17, {
+    return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(component_default17, {
       ...useDeprecatedProps3(props)
     });
   };
@@ -32661,32 +32860,31 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/circular-option-picker/circular-option-picker.js
   var import_compose36 = __toESM(require_compose());
   var import_i18n17 = __toESM(require_i18n());
-  var import_element80 = __toESM(require_element());
+  var import_element81 = __toESM(require_element());
 
   // packages/components/build-module/circular-option-picker/circular-option-picker-context.js
-  var import_element78 = __toESM(require_element());
-  var CircularOptionPickerContext = (0, import_element78.createContext)({});
+  var import_element79 = __toESM(require_element());
+  var CircularOptionPickerContext = (0, import_element79.createContext)({});
   CircularOptionPickerContext.displayName = "CircularOptionPickerContext";
 
   // packages/components/build-module/circular-option-picker/circular-option-picker-option.js
   var import_compose35 = __toESM(require_compose());
-  var import_element79 = __toESM(require_element());
-  var import_icons7 = __toESM(require_icons());
-  var import_jsx_runtime111 = __toESM(require_jsx_runtime());
+  var import_element80 = __toESM(require_element());
+  var import_jsx_runtime140 = __toESM(require_jsx_runtime());
   function UnforwardedOptionAsButton(props, forwardedRef) {
     const {
       isPressed,
       label,
       ...additionalProps
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(button_default, {
       ...additionalProps,
       "aria-pressed": isPressed,
       ref: forwardedRef,
       label
     });
   }
-  var OptionAsButton = (0, import_element79.forwardRef)(UnforwardedOptionAsButton);
+  var OptionAsButton = (0, import_element80.forwardRef)(UnforwardedOptionAsButton);
   function UnforwardedOptionAsOption(props, forwardedRef) {
     const {
       id: id3,
@@ -32697,14 +32895,14 @@ This message will only show in development mode. It won't appear in production. 
     const {
       setActiveId,
       activeId
-    } = (0, import_element79.useContext)(CircularOptionPickerContext);
-    (0, import_element79.useEffect)(() => {
+    } = (0, import_element80.useContext)(CircularOptionPickerContext);
+    (0, import_element80.useEffect)(() => {
       if (isSelected2 && !activeId) {
         window.setTimeout(() => setActiveId?.(id3), 0);
       }
     }, [isSelected2, setActiveId, activeId, id3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(Composite3.Item, {
-      render: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(Composite3.Item, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(button_default, {
         ...additionalProps,
         role: "option",
         "aria-selected": !!isSelected2,
@@ -32714,7 +32912,7 @@ This message will only show in development mode. It won't appear in production. 
       id: id3
     });
   }
-  var OptionAsOption = (0, import_element79.forwardRef)(UnforwardedOptionAsOption);
+  var OptionAsOption = (0, import_element80.forwardRef)(UnforwardedOptionAsOption);
   function Option({
     className,
     isSelected: isSelected2,
@@ -32725,7 +32923,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       baseId,
       setActiveId
-    } = (0, import_element79.useContext)(CircularOptionPickerContext);
+    } = (0, import_element80.useContext)(CircularOptionPickerContext);
     const id3 = (0, import_compose35.useInstanceId)(Option, baseId || "components-circular-option-picker__option");
     const commonProps = {
       id: id3,
@@ -32734,33 +32932,33 @@ This message will only show in development mode. It won't appear in production. 
       ...additionalProps
     };
     const isListbox = setActiveId !== void 0;
-    const optionControl = isListbox ? /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(OptionAsOption, {
+    const optionControl = isListbox ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(OptionAsOption, {
       ...commonProps,
       label: tooltipText,
       isSelected: isSelected2
-    }) : /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(OptionAsButton, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(OptionAsButton, {
       ...commonProps,
       label: tooltipText,
       isPressed: isSelected2
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)("div", {
       className: clsx_default(className, "components-circular-option-picker__option-wrapper"),
-      children: [optionControl, isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_icons7.Icon, {
-        icon: import_icons7.check,
+      children: [optionControl, isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(icon_default2, {
+        icon: check_default,
         ...selectedIconProps
       })]
     });
   }
 
   // packages/components/build-module/circular-option-picker/circular-option-picker-option-group.js
-  var import_jsx_runtime112 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime141 = __toESM(require_jsx_runtime());
   function OptionGroup({
     className,
     options: options2,
     ...additionalProps
   }) {
     const role = "aria-label" in additionalProps || "aria-labelledby" in additionalProps ? "group" : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", {
       ...additionalProps,
       role,
       className: clsx_default("components-circular-option-picker__option-group", "components-circular-option-picker__swatches", className),
@@ -32769,19 +32967,19 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/circular-option-picker/circular-option-picker-actions.js
-  var import_jsx_runtime113 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime142 = __toESM(require_jsx_runtime());
   function DropdownLinkAction({
     buttonProps,
     className,
     dropdownProps,
     linkText
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(dropdown_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(dropdown_default, {
       className: clsx_default("components-circular-option-picker__dropdown-link-action", className),
       renderToggle: ({
         isOpen,
         onToggle
-      }) => /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(button_default, {
+      }) => /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(button_default, {
         "aria-expanded": isOpen,
         "aria-haspopup": "true",
         onClick: onToggle,
@@ -32797,7 +32995,7 @@ This message will only show in development mode. It won't appear in production. 
     children,
     ...additionalProps
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(button_default, {
       __next40pxDefaultSize: true,
       className: clsx_default("components-circular-option-picker__clear", className),
       variant: "tertiary",
@@ -32807,7 +33005,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/circular-option-picker/circular-option-picker.js
-  var import_jsx_runtime114 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime143 = __toESM(require_jsx_runtime());
   function ListboxCircularOptionPicker(props) {
     const {
       actions,
@@ -32818,17 +33016,17 @@ This message will only show in development mode. It won't appear in production. 
       children,
       ...additionalProps
     } = props;
-    const [activeId, setActiveId] = (0, import_element80.useState)(void 0);
-    const contextValue = (0, import_element80.useMemo)(() => ({
+    const [activeId, setActiveId] = (0, import_element81.useState)(void 0);
+    const contextValue = (0, import_element81.useMemo)(() => ({
       baseId,
       activeId,
       setActiveId
     }), [baseId, activeId, setActiveId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
       className,
-      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(CircularOptionPickerContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(CircularOptionPickerContext.Provider, {
         value: contextValue,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime114.jsx)(Composite3, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime143.jsx)(Composite3, {
           ...additionalProps,
           id: baseId,
           focusLoop: loop,
@@ -32849,14 +33047,14 @@ This message will only show in development mode. It won't appear in production. 
       baseId,
       ...additionalProps
     } = props;
-    const contextValue = (0, import_element80.useMemo)(() => ({
+    const contextValue = (0, import_element81.useMemo)(() => ({
       baseId
     }), [baseId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
       ...additionalProps,
       role: "group",
       id: baseId,
-      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(CircularOptionPickerContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(CircularOptionPickerContext.Provider, {
         value: contextValue,
         children: [options2, children, actions]
       })
@@ -32873,15 +33071,15 @@ This message will only show in development mode. It won't appear in production. 
     } = props;
     const baseId = (0, import_compose36.useInstanceId)(CircularOptionPicker, "components-circular-option-picker", additionalProps.id);
     const OptionPickerImplementation = asButtons ? ButtonsCircularOptionPicker : ListboxCircularOptionPicker;
-    const actions = actionsProp ? /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", {
+    const actions = actionsProp ? /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
       className: "components-circular-option-picker__custom-clear-wrapper",
       children: actionsProp
     }) : void 0;
-    const options2 = /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", {
+    const options2 = /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
       className: "components-circular-option-picker__swatches",
       children: optionsProp
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(OptionPickerImplementation, {
+    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(OptionPickerImplementation, {
       ...additionalProps,
       baseId,
       className: clsx_default("components-circular-option-picker", className),
@@ -32935,10 +33133,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/v-stack/component.js
-  var import_jsx_runtime115 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime144 = __toESM(require_jsx_runtime());
   function UnconnectedVStack(props, forwardedRef) {
     const vStackProps = useVStack(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(component_default, {
       ...vStackProps,
       ref: forwardedRef
     });
@@ -32977,10 +33175,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/heading/component.js
-  var import_jsx_runtime116 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime145 = __toESM(require_jsx_runtime());
   function UnconnectedHeading(props, forwardedRef) {
     const headerProps = useHeading(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(component_default, {
       ...headerProps,
       ref: forwardedRef
     });
@@ -33028,13 +33226,13 @@ This message will only show in development mode. It won't appear in production. 
   })("margin-left:", space(-2), ";margin-right:", space(-2), ";&:first-of-type{margin-top:", space(-2), ";}&:last-of-type{margin-bottom:", space(-2), ";}", padding, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEyQmtGIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgdHlwZSB7IERyb3Bkb3duQ29udGVudFdyYXBwZXJQcm9wcyB9IGZyb20gJy4vdHlwZXMnO1xuXG5jb25zdCBwYWRkaW5nID0gKCB7IHBhZGRpbmdTaXplID0gJ3NtYWxsJyB9OiBEcm9wZG93bkNvbnRlbnRXcmFwcGVyUHJvcHMgKSA9PiB7XG5cdGlmICggcGFkZGluZ1NpemUgPT09ICdub25lJyApIHtcblx0XHRyZXR1cm47XG5cdH1cblxuXHRjb25zdCBwYWRkaW5nVmFsdWVzID0ge1xuXHRcdHNtYWxsOiBzcGFjZSggMiApLFxuXHRcdG1lZGl1bTogc3BhY2UoIDQgKSxcblx0fTtcblxuXHRyZXR1cm4gY3NzYFxuXHRcdHBhZGRpbmc6ICR7IHBhZGRpbmdWYWx1ZXNbIHBhZGRpbmdTaXplIF0gfHwgcGFkZGluZ1ZhbHVlcy5zbWFsbCB9O1xuXHRgO1xufTtcblxuZXhwb3J0IGNvbnN0IERyb3Bkb3duQ29udGVudFdyYXBwZXJEaXYgPSBzdHlsZWQuZGl2PCBEcm9wZG93bkNvbnRlbnRXcmFwcGVyUHJvcHMgPmBcblx0Ly8gTmVnYXRpdmUgbWFyZ2luIHRvIHJlc2V0IChvZmZzZXQpIHRoZSBkZWZhdWx0IHBhZGRpbmcgb24gLmNvbXBvbmVudHMtcG9wb3Zlcl9fY29udGVudFxuXHRtYXJnaW4tbGVmdDogJHsgc3BhY2UoIC0yICkgfTtcblx0bWFyZ2luLXJpZ2h0OiAkeyBzcGFjZSggLTIgKSB9O1xuXHQmOmZpcnN0LW9mLXR5cGUge1xuXHRcdG1hcmdpbi10b3A6ICR7IHNwYWNlKCAtMiApIH07XG5cdH1cblx0JjpsYXN0LW9mLXR5cGUge1xuXHRcdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAtMiApIH07XG5cdH1cblxuXHQkeyBwYWRkaW5nIH07XG5gO1xuIl19 */"));
 
   // packages/components/build-module/dropdown/dropdown-content-wrapper.js
-  var import_jsx_runtime117 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime146 = __toESM(require_jsx_runtime());
   function UnconnectedDropdownContentWrapper(props, forwardedRef) {
     const {
       paddingSize = "small",
       ...derivedProps
     } = useContextSystem(props, "DropdownContentWrapper");
-    return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(DropdownContentWrapperDiv, {
+    return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(DropdownContentWrapperDiv, {
       ...derivedProps,
       paddingSize,
       ref: forwardedRef
@@ -33094,7 +33292,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/color-palette/index.js
-  var import_jsx_runtime118 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime147 = __toESM(require_jsx_runtime());
   k([names_default, a11y_default]);
   function SinglePalette({
     className,
@@ -33104,14 +33302,14 @@ This message will only show in development mode. It won't appear in production. 
     value,
     ...additionalProps
   }) {
-    const colorOptions = (0, import_element81.useMemo)(() => {
+    const colorOptions = (0, import_element82.useMemo)(() => {
       return colors.map(({
         color: color2,
         name
       }, index2) => {
         const colordColor = w(color2);
         const isSelected2 = value === color2;
-        return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(circular_option_picker_default2.Option, {
+        return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(circular_option_picker_default2.Option, {
           isSelected: isSelected2,
           selectedIconProps: isSelected2 ? {
             fill: colordColor.contrast() > colordColor.contrast("#000") ? "#fff" : "#000"
@@ -33126,7 +33324,7 @@ This message will only show in development mode. It won't appear in production. 
         }, `${color2}-${index2}`);
       });
     }, [colors, value, onChange, clearColor]);
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(circular_option_picker_default2.OptionGroup, {
+    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(circular_option_picker_default2.OptionGroup, {
       className,
       options: colorOptions,
       ...additionalProps
@@ -33144,7 +33342,7 @@ This message will only show in development mode. It won't appear in production. 
     if (colors.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(component_default18, {
       spacing: 3,
       className,
       children: colors.map(({
@@ -33152,13 +33350,13 @@ This message will only show in development mode. It won't appear in production. 
         colors: colorPalette
       }, index2) => {
         const id3 = `${instanceId}-${index2}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(component_default18, {
+        return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(component_default18, {
           spacing: 2,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime118.jsx)(ColorHeading, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime147.jsx)(ColorHeading, {
             id: id3,
             level: headingLevel,
             children: name
-          }), /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(SinglePalette, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(SinglePalette, {
             clearColor,
             colors: colorPalette,
             onChange: (newColor) => onChange(newColor, index2),
@@ -33174,7 +33372,7 @@ This message will only show in development mode. It won't appear in production. 
     popoverProps: receivedPopoverProps,
     ...props
   }) {
-    const popoverProps = (0, import_element81.useMemo)(() => ({
+    const popoverProps = (0, import_element82.useMemo)(() => ({
       shift: true,
       // Disabling resize as it would otherwise cause the popover to show
       // scrollbars while dragging the color picker's handle close to the
@@ -33192,7 +33390,7 @@ This message will only show in development mode. It won't appear in production. 
       },
       ...receivedPopoverProps
     }), [isRenderedInSidebar, receivedPopoverProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(dropdown_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dropdown_default, {
       contentClassName: "components-color-palette__custom-color-dropdown-content",
       popoverProps,
       ...props
@@ -33214,16 +33412,16 @@ This message will only show in development mode. It won't appear in production. 
       "aria-labelledby": ariaLabelledby,
       ...additionalProps
     } = props;
-    const [normalizedColorValue, setNormalizedColorValue] = (0, import_element81.useState)(value);
-    const clearColor = (0, import_element81.useCallback)(() => onChange(void 0), [onChange]);
-    const customColorPaletteCallbackRef = (0, import_element81.useCallback)((node2) => {
+    const [normalizedColorValue, setNormalizedColorValue] = (0, import_element82.useState)(value);
+    const clearColor = (0, import_element82.useCallback)(() => onChange(void 0), [onChange]);
+    const customColorPaletteCallbackRef = (0, import_element82.useCallback)((node2) => {
       setNormalizedColorValue(normalizeColorValue(value, node2));
     }, [value]);
     const hasMultipleColorOrigins = isMultiplePaletteArray(colors);
-    const buttonLabelName = (0, import_element81.useMemo)(() => extractColorNameFromCurrentValue(value, colors, hasMultipleColorOrigins), [value, colors, hasMultipleColorOrigins]);
-    const renderCustomColorPicker = () => /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(dropdown_content_wrapper_default, {
+    const buttonLabelName = (0, import_element82.useMemo)(() => extractColorNameFromCurrentValue(value, colors, hasMultipleColorOrigins), [value, colors, hasMultipleColorOrigins]);
+    const renderCustomColorPicker = () => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dropdown_content_wrapper_default, {
       paddingSize: "none",
-      children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(LegacyAdapter, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(LegacyAdapter, {
         color: normalizedColorValue,
         onChange: (color2) => onChange(color2),
         enableAlpha
@@ -33242,7 +33440,7 @@ This message will only show in development mode. It won't appear in production. 
       onChange,
       value
     };
-    const actions = !!clearable && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(circular_option_picker_default2.ButtonAction, {
+    const actions = !!clearable && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(circular_option_picker_default2.ButtonAction, {
       onClick: clearColor,
       accessibleWhenDisabled: true,
       disabled: !value,
@@ -33252,20 +33450,20 @@ This message will only show in development mode. It won't appear in production. 
       metaProps,
       labelProps
     } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(component_default18, {
       spacing: 3,
       ref: forwardedRef,
       ...additionalProps,
-      children: [!disableCustomColors && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(CustomColorPickerDropdown, {
+      children: [!disableCustomColors && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(CustomColorPickerDropdown, {
         isRenderedInSidebar: __experimentalIsRenderedInSidebar,
         renderContent: renderCustomColorPicker,
         renderToggle: ({
           isOpen,
           onToggle
-        }) => /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(component_default18, {
+        }) => /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(component_default18, {
           className: "components-color-palette__custom-color-wrapper",
           spacing: 0,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime118.jsx)("button", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime147.jsx)("button", {
             ref: customColorPaletteCallbackRef,
             className: "components-color-palette__custom-color-button",
             "aria-expanded": isOpen,
@@ -33276,13 +33474,13 @@ This message will only show in development mode. It won't appear in production. 
               background: value
             },
             type: "button"
-          }), /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(component_default18, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(component_default18, {
             className: "components-color-palette__custom-color-text-wrapper",
             spacing: 0.5,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime118.jsx)(component_default7, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime147.jsx)(component_default7, {
               className: "components-color-palette__custom-color-name",
               children: value ? buttonLabelName : (0, import_i18n20.__)("No color selected")
-            }), /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(component_default7, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(component_default7, {
               className: clsx_default("components-color-palette__custom-color-value", {
                 "components-color-palette__custom-color-value--is-hex": isHex
               }),
@@ -33290,16 +33488,16 @@ This message will only show in development mode. It won't appear in production. 
             })]
           })]
         })
-      }), (colors.length > 0 || actions) && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(circular_option_picker_default2, {
+      }), (colors.length > 0 || actions) && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(circular_option_picker_default2, {
         ...metaProps,
         ...labelProps,
         actions,
-        options: hasMultipleColorOrigins ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(MultiplePalettes, {
+        options: hasMultipleColorOrigins ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MultiplePalettes, {
           ...paletteCommonProps,
           headingLevel,
           colors,
           value
-        }) : /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(SinglePalette, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(SinglePalette, {
           ...paletteCommonProps,
           colors,
           value
@@ -33307,11 +33505,11 @@ This message will only show in development mode. It won't appear in production. 
       })]
     });
   }
-  var ColorPalette = (0, import_element81.forwardRef)(UnforwardedColorPalette);
+  var ColorPalette = (0, import_element82.forwardRef)(UnforwardedColorPalette);
   var color_palette_default = ColorPalette;
 
   // packages/components/build-module/border-control/border-control-dropdown/hook.js
-  var import_element83 = __toESM(require_element());
+  var import_element84 = __toESM(require_element());
 
   // packages/components/build-module/unit-control/styles/unit-control-styles.js
   var ValueInput = /* @__PURE__ */ emotion_styled_base_browser_esm_default(number_control_default, false ? {
@@ -33404,8 +33602,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/unit-control/utils.js
   var import_i18n21 = __toESM(require_i18n());
-  var import_element82 = __toESM(require_element());
-  var isWeb = import_element82.Platform.OS === "web";
+  var import_element83 = __toESM(require_element());
+  var isWeb = import_element83.Platform.OS === "web";
   var allUnits = {
     px: {
       value: "px",
@@ -33716,22 +33914,22 @@ This message will only show in development mode. It won't appear in production. 
       });
     };
     const cx3 = useCx();
-    const classes = (0, import_element83.useMemo)(() => {
+    const classes = (0, import_element84.useMemo)(() => {
       return cx3(borderControlDropdown, className);
     }, [className, cx3]);
-    const indicatorClassName = (0, import_element83.useMemo)(() => {
+    const indicatorClassName = (0, import_element84.useMemo)(() => {
       return cx3(borderColorIndicator);
     }, [cx3]);
-    const indicatorWrapperClassName = (0, import_element83.useMemo)(() => {
+    const indicatorWrapperClassName = (0, import_element84.useMemo)(() => {
       return cx3(colorIndicatorWrapper(border, size3));
     }, [border, cx3, size3]);
-    const popoverControlsClassName = (0, import_element83.useMemo)(() => {
+    const popoverControlsClassName = (0, import_element84.useMemo)(() => {
       return cx3(borderControlPopoverControls);
     }, [cx3]);
-    const popoverContentClassName = (0, import_element83.useMemo)(() => {
+    const popoverContentClassName = (0, import_element84.useMemo)(() => {
       return cx3(borderControlPopoverContent);
     }, [cx3]);
-    const resetButtonWrapperClassName = (0, import_element83.useMemo)(() => {
+    const resetButtonWrapperClassName = (0, import_element84.useMemo)(() => {
       return cx3(resetButtonWrapper);
     }, [cx3]);
     return {
@@ -33755,7 +33953,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/border-control/border-control-dropdown/component.js
-  var import_jsx_runtime119 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime148 = __toESM(require_jsx_runtime());
   var getAriaLabelColorValue = (colorValue) => {
     return colorValue.replace(/^var\((.+)\)$/, "$1");
   };
@@ -33856,7 +34054,7 @@ This message will only show in development mode. It won't appear in production. 
     const dropdownPosition = __experimentalIsRenderedInSidebar ? "bottom left" : void 0;
     const renderToggle = ({
       onToggle
-    }) => /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(button_default, {
+    }) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(button_default, {
       onClick: onToggle,
       variant: "tertiary",
       "aria-label": toggleAriaLabel,
@@ -33864,21 +34062,21 @@ This message will only show in development mode. It won't appear in production. 
       label: (0, import_i18n22.__)("Border color and style picker"),
       showTooltip: true,
       __next40pxDefaultSize: size3 === "__unstable-large",
-      children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("span", {
         className: indicatorWrapperClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(color_indicator_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(color_indicator_default, {
           className: indicatorClassName,
           colorValue: color2
         })
       })
     });
-    const renderContent = () => /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_jsx_runtime119.Fragment, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(dropdown_content_wrapper_default, {
+    const renderContent = () => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_jsx_runtime148.Fragment, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(dropdown_content_wrapper_default, {
         paddingSize: "medium",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(component_default18, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(component_default18, {
           className: popoverControlsClassName,
           spacing: 6,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime119.jsx)(color_palette_default, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime148.jsx)(color_palette_default, {
             className: popoverContentClassName,
             value: color2,
             onChange: onColorChange,
@@ -33887,14 +34085,14 @@ This message will only show in development mode. It won't appear in production. 
             __experimentalIsRenderedInSidebar,
             clearable: false,
             enableAlpha
-          }), enableStyle && isStyleSettable && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(component_default16, {
+          }), enableStyle && isStyleSettable && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(component_default16, {
             label: (0, import_i18n22.__)("Style"),
             value: style2,
             onChange: onStyleChange
           })]
-        }), /* @__PURE__ */ (0, import_jsx_runtime119.jsx)("div", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("div", {
           className: resetButtonWrapperClassName,
-          children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(button_default, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(button_default, {
             variant: "tertiary",
             onClick: () => {
               onReset();
@@ -33907,7 +34105,7 @@ This message will only show in development mode. It won't appear in production. 
         })]
       })
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(dropdown_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(dropdown_default, {
       renderToggle,
       renderContent,
       popoverProps: {
@@ -33922,12 +34120,12 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/unit-control/index.js
   var import_deprecated9 = __toESM(require_deprecated());
-  var import_element85 = __toESM(require_element());
+  var import_element86 = __toESM(require_element());
   var import_i18n23 = __toESM(require_i18n());
 
   // packages/components/build-module/unit-control/unit-select-control.js
-  var import_element84 = __toESM(require_element());
-  var import_jsx_runtime120 = __toESM(require_jsx_runtime());
+  var import_element85 = __toESM(require_element());
+  var import_jsx_runtime149 = __toESM(require_jsx_runtime());
   function UnitSelectControl({
     className,
     isUnitSelectTabbable: isTabbable2 = true,
@@ -33938,7 +34136,7 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }, ref) {
     if (!hasUnits(units) || units?.length === 1) {
-      return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(UnitLabel, {
+      return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(UnitLabel, {
         className: "components-unit-control__unit-label",
         selectSize: size3,
         children: unit
@@ -33955,7 +34153,7 @@ This message will only show in development mode. It won't appear in production. 
       });
     };
     const classes = clsx_default("components-unit-control__select", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(UnitSelect, {
+    return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(UnitSelect, {
       ref,
       className: classes,
       onChange: handleOnChange,
@@ -33963,16 +34161,16 @@ This message will only show in development mode. It won't appear in production. 
       tabIndex: isTabbable2 ? void 0 : -1,
       value: unit,
       ...props,
-      children: units.map((option) => /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("option", {
+      children: units.map((option) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("option", {
         value: option.value,
         children: option.label
       }, option.value))
     });
   }
-  var unit_select_control_default = (0, import_element84.forwardRef)(UnitSelectControl);
+  var unit_select_control_default = (0, import_element85.forwardRef)(UnitSelectControl);
 
   // packages/components/build-module/unit-control/index.js
-  var import_jsx_runtime121 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime150 = __toESM(require_jsx_runtime());
   function UnforwardedUnitControl(unitControlProps, forwardedRef) {
     const {
       __unstableStateReducer,
@@ -34010,7 +34208,7 @@ This message will only show in development mode. It won't appear in production. 
       });
     }
     const nonNullValueProp = valueProp !== null && valueProp !== void 0 ? valueProp : void 0;
-    const [units, reFirstCharacterOfUnits] = (0, import_element85.useMemo)(() => {
+    const [units, reFirstCharacterOfUnits] = (0, import_element86.useMemo)(() => {
       const list = getUnitsWithCurrentUnit(nonNullValueProp, unitProp, unitsProp);
       const [{
         value: firstUnitValue = ""
@@ -34028,7 +34226,7 @@ This message will only show in development mode. It won't appear in production. 
       initial: parsedUnit,
       fallback: ""
     });
-    (0, import_element85.useEffect)(() => {
+    (0, import_element86.useEffect)(() => {
       if (parsedUnit !== void 0) {
         setUnit(parsedUnit);
       }
@@ -34069,8 +34267,8 @@ This message will only show in development mode. It won't appear in production. 
         }
       };
     }
-    const refInputSuffix = (0, import_element85.useRef)(null);
-    const inputSuffix = !disableUnits ? /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(unit_select_control_default, {
+    const refInputSuffix = (0, import_element86.useRef)(null);
+    const inputSuffix = !disableUnits ? /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(unit_select_control_default, {
       ref: refInputSuffix,
       "aria-label": (0, import_i18n23.__)("Select unit"),
       disabled,
@@ -34088,7 +34286,7 @@ This message will only show in development mode. It won't appear in production. 
       const activeUnit = units.find((option) => option.value === unit);
       step = (_activeUnit$step = activeUnit?.step) !== null && _activeUnit$step !== void 0 ? _activeUnit$step : 1;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(ValueInput, {
+    return /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ValueInput, {
       ...props,
       __shouldNotWarnDeprecated36pxSize: true,
       autoComplete,
@@ -34109,11 +34307,11 @@ This message will only show in development mode. It won't appear in production. 
       __unstableStateReducer
     });
   }
-  var UnitControl = (0, import_element85.forwardRef)(UnforwardedUnitControl);
+  var UnitControl = (0, import_element86.forwardRef)(UnforwardedUnitControl);
   var unit_control_default = UnitControl;
 
   // packages/components/build-module/border-control/border-control/hook.js
-  var import_element86 = __toESM(require_element());
+  var import_element87 = __toESM(require_element());
   var isValidBorder = (border) => {
     const hasWidth = border?.width !== void 0 && border.width !== "";
     const hasColor = border?.color !== void 0;
@@ -34146,17 +34344,17 @@ This message will only show in development mode. It won't appear in production. 
     const [widthValue, originalWidthUnit] = parseQuantityAndUnitFromRawValue(border?.width);
     const widthUnit = originalWidthUnit || "px";
     const hadPreviousZeroWidth = widthValue === 0;
-    const [colorSelection, setColorSelection] = (0, import_element86.useState)();
-    const [styleSelection, setStyleSelection] = (0, import_element86.useState)();
+    const [colorSelection, setColorSelection] = (0, import_element87.useState)();
+    const [styleSelection, setStyleSelection] = (0, import_element87.useState)();
     const isStyleSettable = shouldSanitizeBorder ? isValidBorder(border) : true;
-    const onBorderChange = (0, import_element86.useCallback)((newBorder) => {
+    const onBorderChange = (0, import_element87.useCallback)((newBorder) => {
       if (shouldSanitizeBorder && !isValidBorder(newBorder)) {
         onChange(void 0);
         return;
       }
       onChange(newBorder);
     }, [onChange, shouldSanitizeBorder]);
-    const onWidthChange = (0, import_element86.useCallback)((newWidth) => {
+    const onWidthChange = (0, import_element87.useCallback)((newWidth) => {
       const newWidthValue = newWidth === "" ? void 0 : newWidth;
       const [parsedValue] = parseQuantityAndUnitFromRawValue(newWidth);
       const hasZeroWidth = parsedValue === 0;
@@ -34180,23 +34378,23 @@ This message will only show in development mode. It won't appear in production. 
       }
       onBorderChange(updatedBorder);
     }, [border, hadPreviousZeroWidth, colorSelection, styleSelection, onBorderChange]);
-    const onSliderChange = (0, import_element86.useCallback)((value) => {
+    const onSliderChange = (0, import_element87.useCallback)((value) => {
       onWidthChange(`${value}${widthUnit}`);
     }, [onWidthChange, widthUnit]);
     const cx3 = useCx();
-    const classes = (0, import_element86.useMemo)(() => {
+    const classes = (0, import_element87.useMemo)(() => {
       return cx3(borderControl, className);
     }, [className, cx3]);
     let wrapperWidth2 = width;
     if (isCompact) {
       wrapperWidth2 = size3 === "__unstable-large" ? "116px" : "90px";
     }
-    const innerWrapperClassName = (0, import_element86.useMemo)(() => {
+    const innerWrapperClassName = (0, import_element87.useMemo)(() => {
       const widthStyle = !!wrapperWidth2 && wrapperWidth;
       const heightStyle = wrapperHeight(computedSize);
       return cx3(innerWrapper(), widthStyle, heightStyle);
     }, [wrapperWidth2, cx3, computedSize]);
-    const sliderClassName = (0, import_element86.useMemo)(() => {
+    const sliderClassName = (0, import_element87.useMemo)(() => {
       return cx3(borderSlider());
     }, [cx3]);
     return {
@@ -34223,7 +34421,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/border-control/border-control/component.js
-  var import_jsx_runtime122 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime151 = __toESM(require_jsx_runtime());
   var BorderLabel = (props) => {
     const {
       label,
@@ -34232,10 +34430,10 @@ This message will only show in development mode. It won't appear in production. 
     if (!label) {
       return null;
     }
-    return hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(component_default2, {
+    return hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(component_default2, {
       as: "legend",
       children: label
-    }) : /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(StyledLabel, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(StyledLabel, {
       as: "legend",
       children: label
     });
@@ -34269,23 +34467,23 @@ This message will only show in development mode. It won't appear in production. 
       __experimentalIsRenderedInSidebar,
       ...otherProps
     } = useBorderControl(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(component_default, {
       as: "fieldset",
       ...otherProps,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime122.jsx)(BorderLabel, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime151.jsx)(BorderLabel, {
         label,
         hideLabelFromVision
-      }), /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(component_default9, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(component_default9, {
         spacing: 4,
         className: innerWrapperClassName,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime122.jsx)(unit_control_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime151.jsx)(unit_control_default, {
           __next40pxDefaultSize,
           __shouldNotWarnDeprecated36pxSize: true,
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(component_default6, {
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(component_default6, {
             marginRight: 1,
             marginBottom: 0,
-            children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(component_default20, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(component_default20, {
               border,
               colors,
               __unstablePopoverProps,
@@ -34308,7 +34506,7 @@ This message will only show in development mode. It won't appear in production. 
           disableUnits,
           __unstableInputWidth: inputWidth,
           size: size3
-        }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(range_control_default, {
+        }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(range_control_default, {
           __nextHasNoMarginBottom: true,
           label: (0, import_i18n24.__)("Border width"),
           hideLabelFromVision: true,
@@ -34330,7 +34528,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default21 = BorderControl;
 
   // packages/components/build-module/grid/hook.js
-  var import_element87 = __toESM(require_element());
+  var import_element88 = __toESM(require_element());
 
   // packages/components/build-module/grid/utils.js
   var ALIGNMENTS2 = {
@@ -34407,7 +34605,7 @@ This message will only show in development mode. It won't appear in production. 
     const gridTemplateColumns = templateColumns || !!columns && `repeat( ${column2}, 1fr )`;
     const gridTemplateRows = templateRows || !!rows && `repeat( ${row}, 1fr )`;
     const cx3 = useCx();
-    const classes = (0, import_element87.useMemo)(() => {
+    const classes = (0, import_element88.useMemo)(() => {
       const alignmentProps = getAlignmentProps2(alignment);
       const gridClasses = /* @__PURE__ */ css({
         alignItems: align,
@@ -34430,10 +34628,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/grid/component.js
-  var import_jsx_runtime123 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime152 = __toESM(require_jsx_runtime());
   function UnconnectedGrid(props, forwardedRef) {
     const gridProps = useGrid(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(component_default, {
       ...gridProps,
       ref: forwardedRef
     });
@@ -34442,7 +34640,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default22 = Grid;
 
   // packages/components/build-module/border-box-control/border-box-control-split-controls/hook.js
-  var import_element88 = __toESM(require_element());
+  var import_element89 = __toESM(require_element());
   function useBorderBoxControlSplitControls(props) {
     const {
       className,
@@ -34454,13 +34652,13 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "BorderBoxControlSplitControls");
     const cx3 = useCx();
-    const classes = (0, import_element88.useMemo)(() => {
+    const classes = (0, import_element89.useMemo)(() => {
       return cx3(borderBoxControlSplitControls(size3), className);
     }, [cx3, className, size3]);
-    const centeredClassName = (0, import_element88.useMemo)(() => {
+    const centeredClassName = (0, import_element89.useMemo)(() => {
       return cx3(centeredBorderControl, className);
     }, [cx3, className]);
-    const rightAlignedClassName = (0, import_element88.useMemo)(() => {
+    const rightAlignedClassName = (0, import_element89.useMemo)(() => {
       return cx3(rightBorderControl(), className);
     }, [cx3, className]);
     return {
@@ -34477,7 +34675,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/border-box-control/border-box-control-split-controls/component.js
-  var import_jsx_runtime124 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime153 = __toESM(require_jsx_runtime());
   var BorderBoxControlSplitControls = (props, forwardedRef) => {
     const {
       centeredClassName,
@@ -34494,8 +34692,8 @@ This message will only show in development mode. It won't appear in production. 
       __experimentalIsRenderedInSidebar,
       ...otherProps
     } = useBorderBoxControlSplitControls(props);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element89.useState)(null);
-    const popoverProps = (0, import_element89.useMemo)(() => popoverPlacement ? {
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element90.useState)(null);
+    const popoverProps = (0, import_element90.useMemo)(() => popoverPlacement ? {
       placement: popoverPlacement,
       offset: popoverOffset,
       anchor: popoverAnchor,
@@ -34512,14 +34710,14 @@ This message will only show in development mode. It won't appear in production. 
       __shouldNotWarnDeprecated36pxSize: true
     };
     const mergedRef = (0, import_compose38.useMergeRefs)([setPopoverAnchor, forwardedRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(component_default22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(component_default22, {
       ...otherProps,
       ref: mergedRef,
       gap: 3,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime124.jsx)(component_default11, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default11, {
         value,
         size: size3
-      }), /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(component_default21, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         className: centeredClassName,
         hideLabelFromVision: true,
         label: (0, import_i18n25.__)("Top border"),
@@ -34527,14 +34725,14 @@ This message will only show in development mode. It won't appear in production. 
         __unstablePopoverProps: popoverProps,
         value: value?.top,
         ...sharedBorderControlProps
-      }), /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(component_default21, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         hideLabelFromVision: true,
         label: (0, import_i18n25.__)("Left border"),
         onChange: (newBorder) => onChange(newBorder, "left"),
         __unstablePopoverProps: popoverProps,
         value: value?.left,
         ...sharedBorderControlProps
-      }), /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(component_default21, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         className: rightAlignedClassName,
         hideLabelFromVision: true,
         label: (0, import_i18n25.__)("Right border"),
@@ -34542,7 +34740,7 @@ This message will only show in development mode. It won't appear in production. 
         __unstablePopoverProps: popoverProps,
         value: value?.right,
         ...sharedBorderControlProps
-      }), /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(component_default21, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default21, {
         className: centeredClassName,
         hideLabelFromVision: true,
         label: (0, import_i18n25.__)("Bottom border"),
@@ -34557,7 +34755,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default23 = ConnectedBorderBoxControlSplitControls;
 
   // packages/components/build-module/border-box-control/border-box-control/hook.js
-  var import_element90 = __toESM(require_element());
+  var import_element91 = __toESM(require_element());
 
   // packages/components/build-module/utils/unit-values.js
   var UNITED_VALUE_REGEX = /^([\d.\-+]*)\s*(fr|cm|mm|Q|in|pc|pt|px|em|ex|ch|rem|lh|vw|vh|vmin|vmax|%|cap|ic|rlh|vi|vb|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|svw|lvw|dvw|svh|lvh|dvh|svi|lvi|dvi|svb|lvb|dvb|svmin|lvmin|dvmin|svmax|lvmax|dvmax)?$/;
@@ -34718,7 +34916,7 @@ This message will only show in development mode. It won't appear in production. 
     const linkedValue = splitBorders ? getCommonBorder(value) : value;
     const splitValue = splitBorders ? value : getSplitBorders(value);
     const hasWidthValue = !isNaN(parseFloat(`${linkedValue?.width}`));
-    const [isLinked, setIsLinked] = (0, import_element90.useState)(!mixedBorders);
+    const [isLinked, setIsLinked] = (0, import_element91.useState)(!mixedBorders);
     const toggleLinked = () => setIsLinked(!isLinked);
     const onLinkedChange = (newBorder) => {
       if (!newBorder) {
@@ -34764,13 +34962,13 @@ This message will only show in development mode. It won't appear in production. 
       }
     };
     const cx3 = useCx();
-    const classes = (0, import_element90.useMemo)(() => {
+    const classes = (0, import_element91.useMemo)(() => {
       return cx3(borderBoxControl, className);
     }, [cx3, className]);
-    const linkedControlClassName = (0, import_element90.useMemo)(() => {
+    const linkedControlClassName = (0, import_element91.useMemo)(() => {
       return cx3(linkedBorderControl());
     }, [cx3]);
-    const wrapperClassName = (0, import_element90.useMemo)(() => {
+    const wrapperClassName = (0, import_element91.useMemo)(() => {
       return cx3(wrapper);
     }, [cx3]);
     return {
@@ -34795,7 +34993,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/border-box-control/border-box-control/component.js
-  var import_jsx_runtime125 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime154 = __toESM(require_jsx_runtime());
   var BorderLabel2 = (props) => {
     const {
       label,
@@ -34804,10 +35002,10 @@ This message will only show in development mode. It won't appear in production. 
     if (!label) {
       return null;
     }
-    return hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(component_default2, {
+    return hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default2, {
       as: "label",
       children: label
-    }) : /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(StyledLabel, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(StyledLabel, {
       children: label
     });
   };
@@ -34836,24 +35034,24 @@ This message will only show in development mode. It won't appear in production. 
       __experimentalIsRenderedInSidebar,
       ...otherProps
     } = useBorderBoxControl(props);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element91.useState)(null);
-    const popoverProps = (0, import_element91.useMemo)(() => popoverPlacement ? {
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element92.useState)(null);
+    const popoverProps = (0, import_element92.useMemo)(() => popoverPlacement ? {
       placement: popoverPlacement,
       offset: popoverOffset,
       anchor: popoverAnchor,
       shift: true
     } : void 0, [popoverPlacement, popoverOffset, popoverAnchor]);
     const mergedRef = (0, import_compose39.useMergeRefs)([setPopoverAnchor, forwardedRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(component_default, {
       className,
       ...otherProps,
       ref: mergedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime125.jsx)(BorderLabel2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime154.jsx)(BorderLabel2, {
         label,
         hideLabelFromVision
-      }), /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(component_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(component_default, {
         className: wrapperClassName,
-        children: [isLinked ? /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(component_default21, {
+        children: [isLinked ? /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default21, {
           className: linkedControlClassName,
           colors,
           disableUnits,
@@ -34870,7 +35068,7 @@ This message will only show in development mode. It won't appear in production. 
           __experimentalIsRenderedInSidebar,
           __shouldNotWarnDeprecated36pxSize: true,
           size: size3
-        }) : /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(component_default23, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default23, {
           colors,
           disableCustomColors,
           enableAlpha,
@@ -34881,7 +35079,7 @@ This message will only show in development mode. It won't appear in production. 
           value: splitValue,
           __experimentalIsRenderedInSidebar,
           size: size3
-        }), /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(component_default10, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default10, {
           onClick: toggleLinked,
           isLinked,
           size: size3
@@ -34894,15 +35092,14 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/box-control/index.js
   var import_compose41 = __toESM(require_compose());
-  var import_element93 = __toESM(require_element());
+  var import_element94 = __toESM(require_element());
   var import_i18n30 = __toESM(require_i18n());
   var import_warning5 = __toESM(require_warning());
 
   // packages/components/build-module/box-control/input-control.js
   var import_compose40 = __toESM(require_compose());
   var import_i18n28 = __toESM(require_i18n());
-  var import_element92 = __toESM(require_element());
-  var import_icons8 = __toESM(require_icons());
+  var import_element93 = __toESM(require_element());
 
   // packages/components/build-module/box-control/utils.js
   var import_i18n27 = __toESM(require_i18n());
@@ -35272,7 +35469,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/box-control/icon.js
-  var import_jsx_runtime126 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime155 = __toESM(require_jsx_runtime());
   var BASE_ICON_SIZE = 24;
   function BoxControlIcon({
     size: size3 = 24,
@@ -35292,19 +35489,19 @@ This message will only show in development mode. It won't appear in production. 
     const bottom = hasSide("bottom") || hasSide("vertical");
     const left = hasSide("left") || hasSide("horizontal");
     const scale2 = size3 / BASE_ICON_SIZE;
-    return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Root3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Root3, {
       style: {
         transform: `scale(${scale2})`
       },
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(Viewbox, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime126.jsx)(TopStroke, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(Viewbox, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime155.jsx)(TopStroke, {
           isFocused: top
-        }), /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(RightStroke, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(RightStroke, {
           isFocused: right
-        }), /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(BottomStroke, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(BottomStroke, {
           isFocused: bottom
-        }), /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(LeftStroke, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(LeftStroke, {
           isFocused: left
         })]
       })
@@ -35393,7 +35590,7 @@ This message will only show in development mode. It won't appear in production. 
   })("width:100%;margin-inline-end:", space(2), ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJveC1jb250cm9sLXN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFvQ3dEIiwiZmlsZSI6ImJveC1jb250cm9sLXN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBCb3hDb250cm9sSWNvbiBmcm9tICcuLi9pY29uJztcbmltcG9ydCBCdXR0b24gZnJvbSAnLi4vLi4vYnV0dG9uJztcbmltcG9ydCB7IEhTdGFjayB9IGZyb20gJy4uLy4uL2gtc3RhY2snO1xuaW1wb3J0IFJhbmdlQ29udHJvbCBmcm9tICcuLi8uLi9yYW5nZS1jb250cm9sJztcbmltcG9ydCBVbml0Q29udHJvbCBmcm9tICcuLi8uLi91bml0LWNvbnRyb2wnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi8uLi91dGlscy9zcGFjZSc7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRVbml0Q29udHJvbCA9IHN0eWxlZCggVW5pdENvbnRyb2wgKWBcblx0bWF4LXdpZHRoOiA5MHB4O1xuYDtcblxuZXhwb3J0IGNvbnN0IElucHV0V3JhcHBlciA9IHN0eWxlZCggSFN0YWNrIClgXG5cdGdyaWQtY29sdW1uOiAxIC8gc3BhbiAzO1xuYDtcblxuZXhwb3J0IGNvbnN0IFJlc2V0QnV0dG9uID0gc3R5bGVkKCBCdXR0b24gKWBcblx0Z3JpZC1hcmVhOiAxIC8gMjtcblx0anVzdGlmeS1zZWxmOiBlbmQ7XG5gO1xuXG5leHBvcnQgY29uc3QgTGlua2VkQnV0dG9uV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdGdyaWQtYXJlYTogMSAvIDM7XG5cdGp1c3RpZnktc2VsZjogZW5kO1xuYDtcblxuZXhwb3J0IGNvbnN0IEZsZXhlZEJveENvbnRyb2xJY29uID0gc3R5bGVkKCBCb3hDb250cm9sSWNvbiApYFxuXHRmbGV4OiAwIDAgYXV0bztcbmA7XG5cbmV4cG9ydCBjb25zdCBGbGV4ZWRSYW5nZUNvbnRyb2wgPSBzdHlsZWQoIFJhbmdlQ29udHJvbCApYFxuXHR3aWR0aDogMTAwJTtcblx0bWFyZ2luLWlubGluZS1lbmQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG4iXX0= */"));
 
   // packages/components/build-module/box-control/input-control.js
-  var import_jsx_runtime127 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime156 = __toESM(require_jsx_runtime());
   var noop8 = () => {
   };
   function getSidesToModify(side, sides3, isAlt) {
@@ -35507,7 +35704,7 @@ This message will only show in development mode. It won't appear in production. 
     const mixedPlaceholder = isMixed || isMixedUnit ? (0, import_i18n28.__)("Mixed") : void 0;
     const hasPresets = presets && presets.length > 0 && presetKey;
     const hasPresetValue = hasPresets && mergedValue !== void 0 && !isMixed && isValuePreset(mergedValue, presetKey);
-    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element92.useState)(!hasPresets || !hasPresetValue && !isMixed && mergedValue !== void 0);
+    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element93.useState)(!hasPresets || !hasPresetValue && !isMixed && mergedValue !== void 0);
     const presetIndex = hasPresetValue ? getPresetIndexFromValue(mergedValue, presetKey, presets) : void 0;
     const marks = hasPresets ? [{
       value: 0,
@@ -35521,16 +35718,16 @@ This message will only show in development mode. It won't appear in production. 
         tooltip: (_preset$name = preset.name) !== null && _preset$name !== void 0 ? _preset$name : preset.slug
       };
     })] : [];
-    return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(InputWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(InputWrapper, {
       expanded: true,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime127.jsx)(FlexedBoxControlIcon, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime156.jsx)(FlexedBoxControlIcon, {
         side,
         sides: sides3
-      }), showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(import_jsx_runtime127.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime127.jsx)(tooltip_default, {
+      }), showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(import_jsx_runtime156.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime156.jsx)(tooltip_default, {
           placement: "top-end",
           text: LABELS[side],
-          children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(StyledUnitControl, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(StyledUnitControl, {
             ...props,
             min: min3,
             __shouldNotWarnDeprecated36pxSize: true,
@@ -35547,7 +35744,7 @@ This message will only show in development mode. It won't appear in production. 
             placeholder: mixedPlaceholder,
             hideLabelFromVision: true
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(FlexedRangeControl, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(FlexedRangeControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize,
           __shouldNotWarnDeprecated36pxSize: true,
@@ -35563,7 +35760,7 @@ This message will only show in development mode. It won't appear in production. 
           value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
           withInputField: false
         })]
-      }), hasPresets && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(FlexedRangeControl, {
+      }), hasPresets && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(FlexedRangeControl, {
         __next40pxDefaultSize: true,
         className: "spacing-sizes-control__range-control",
         value: presetIndex !== void 0 ? presetIndex + 1 : 0,
@@ -35581,9 +35778,9 @@ This message will only show in development mode. It won't appear in production. 
         label: LABELS[side],
         hideLabelFromVision: true,
         __nextHasNoMarginBottom: true
-      }), hasPresets && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(button_default, {
+      }), hasPresets && /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(button_default, {
         label: showCustomValueControl ? (0, import_i18n28.__)("Use size preset") : (0, import_i18n28.__)("Set custom size"),
-        icon: import_icons8.settings,
+        icon: settings_default,
         onClick: () => {
           setShowCustomValueControl(!showCustomValueControl);
         },
@@ -35595,26 +35792,25 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/box-control/linked-button.js
-  var import_icons9 = __toESM(require_icons());
   var import_i18n29 = __toESM(require_i18n());
-  var import_jsx_runtime128 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime157 = __toESM(require_jsx_runtime());
   function LinkedButton({
     isLinked,
     ...props
   }) {
     const label = isLinked ? (0, import_i18n29.__)("Unlink sides") : (0, import_i18n29.__)("Link sides");
-    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(button_default, {
       ...props,
       className: "component-box-control__linked-button",
       size: "small",
-      icon: isLinked ? import_icons9.link : import_icons9.linkOff,
+      icon: isLinked ? link_default : link_off_default,
       iconSize: 24,
       label
     });
   }
 
   // packages/components/build-module/box-control/index.js
-  var import_jsx_runtime129 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime158 = __toESM(require_jsx_runtime());
   var defaultInputProps = {
     min: 0
   };
@@ -35647,10 +35843,10 @@ This message will only show in development mode. It won't appear in production. 
     const inputValues = values || DEFAULT_VALUES;
     const hasInitialValue = isValuesDefined(valuesProp);
     const hasOneSide = sides3?.length === 1;
-    const [isDirty, setIsDirty] = (0, import_element93.useState)(hasInitialValue);
-    const [isLinked, setIsLinked] = (0, import_element93.useState)(!hasInitialValue || !isValueMixed(inputValues) || hasOneSide);
-    const [side, setSide] = (0, import_element93.useState)(getInitialSide(isLinked, splitOnAxis));
-    const [selectedUnits, setSelectedUnits] = (0, import_element93.useState)({
+    const [isDirty, setIsDirty] = (0, import_element94.useState)(hasInitialValue);
+    const [isLinked, setIsLinked] = (0, import_element94.useState)(!hasInitialValue || !isValueMixed(inputValues) || hasOneSide);
+    const [side, setSide] = (0, import_element94.useState)(getInitialSide(isLinked, splitOnAxis));
+    const [selectedUnits, setSelectedUnits] = (0, import_element94.useState)({
       top: parseQuantityAndUnitFromRawValue(valuesProp?.top)[1],
       right: parseQuantityAndUnitFromRawValue(valuesProp?.right)[1],
       bottom: parseQuantityAndUnitFromRawValue(valuesProp?.bottom)[1],
@@ -35705,32 +35901,32 @@ This message will only show in development mode. It won't appear in production. 
       const missingProp = presets ? "presetKey" : "presets";
       false ? (0, import_warning5.default)(`wp.components.BoxControl: the '${missingProp}' prop is required when the '${definedProp}' prop is defined.`) : void 0;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(component_default22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(component_default22, {
       id: id3,
       columns: 3,
       templateColumns: "1fr min-content min-content",
       role: "group",
       "aria-labelledby": headingId,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime129.jsx)(BaseControl.VisualLabel, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BaseControl.VisualLabel, {
         id: headingId,
         children: label
-      }), isLinked && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(InputWrapper, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(BoxInputControl, {
+      }), isLinked && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(InputWrapper, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BoxInputControl, {
           side: "all",
           ...inputControlProps
         })
-      }), !hasOneSide && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(LinkedButtonWrapper, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(LinkedButton, {
+      }), !hasOneSide && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(LinkedButtonWrapper, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(LinkedButton, {
           onClick: toggleLinked,
           isLinked
         })
-      }), !isLinked && splitOnAxis && ["vertical", "horizontal"].map((axis) => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(BoxInputControl, {
+      }), !isLinked && splitOnAxis && ["vertical", "horizontal"].map((axis) => /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BoxInputControl, {
         side: axis,
         ...inputControlProps
-      }, axis)), !isLinked && !splitOnAxis && Array.from(sidesToRender).map((axis) => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(BoxInputControl, {
+      }, axis)), !isLinked && !splitOnAxis && Array.from(sidesToRender).map((axis) => /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BoxInputControl, {
         side: axis,
         ...inputControlProps
-      }, axis)), allowReset && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(ResetButton, {
+      }, axis)), allowReset && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(ResetButton, {
         className: "component-box-control__reset-button",
         variant: "secondary",
         size: "small",
@@ -35743,9 +35939,9 @@ This message will only show in development mode. It won't appear in production. 
   var box_control_default = BoxControl;
 
   // packages/components/build-module/button-group/index.js
-  var import_element94 = __toESM(require_element());
+  var import_element95 = __toESM(require_element());
   var import_deprecated11 = __toESM(require_deprecated());
-  var import_jsx_runtime130 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime159 = __toESM(require_jsx_runtime());
   function UnforwardedButtonGroup(props, ref) {
     const {
       className,
@@ -35759,21 +35955,21 @@ This message will only show in development mode. It won't appear in production. 
         alternative: "wp.components.__experimentalToggleGroupControl"
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("div", {
       ref,
       role: "group",
       className: classes,
       ...restProps
     });
   }
-  var ButtonGroup = (0, import_element94.forwardRef)(UnforwardedButtonGroup);
+  var ButtonGroup = (0, import_element95.forwardRef)(UnforwardedButtonGroup);
   var button_group_default = ButtonGroup;
 
   // packages/components/build-module/card/card/component.js
-  var import_element98 = __toESM(require_element());
+  var import_element99 = __toESM(require_element());
 
   // packages/components/build-module/elevation/hook.js
-  var import_element95 = __toESM(require_element());
+  var import_element96 = __toESM(require_element());
 
   // packages/components/build-module/elevation/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__21() {
@@ -35809,7 +36005,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "Elevation");
     const cx3 = useCx();
-    const classes = (0, import_element95.useMemo)(() => {
+    const classes = (0, import_element96.useMemo)(() => {
       let hoverValue = isValueDefined(hover2) ? hover2 : value * 2;
       let activeValue = isValueDefined(active) ? active : value / 2;
       if (!isInteractive) {
@@ -35846,10 +36042,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/elevation/component.js
-  var import_jsx_runtime131 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime160 = __toESM(require_jsx_runtime());
   function UnconnectedElevation(props, forwardedRef) {
     const elevationProps = useElevation(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(component_default, {
       ...elevationProps,
       ref: forwardedRef
     });
@@ -35952,10 +36148,10 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/card/card/hook.js
   var import_deprecated12 = __toESM(require_deprecated());
-  var import_element97 = __toESM(require_element());
+  var import_element98 = __toESM(require_element());
 
   // packages/components/build-module/surface/hook.js
-  var import_element96 = __toESM(require_element());
+  var import_element97 = __toESM(require_element());
 
   // packages/components/build-module/surface/styles.js
   var Surface = /* @__PURE__ */ css("background-color:", config_values_default.surfaceColor, ";color:", COLORS.gray[900], ";position:relative;" + (false ? "" : ";label:Surface;"), false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFXMEIiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT05GSUcsIENPTE9SUyB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB0eXBlIHsgU3VyZmFjZVZhcmlhbnQsIFN1cmZhY2VQcm9wcyB9IGZyb20gJy4vdHlwZXMnO1xuXG5leHBvcnQgY29uc3QgU3VyZmFjZSA9IGNzc2Bcblx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09ORklHLnN1cmZhY2VDb2xvciB9O1xuXHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDkwMCBdIH07XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcbmA7XG5cbmV4cG9ydCBjb25zdCBiYWNrZ3JvdW5kID0gY3NzYFxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT05GSUcuc3VyZmFjZUJhY2tncm91bmRDb2xvciB9O1xuYDtcblxuZXhwb3J0IGZ1bmN0aW9uIGdldEJvcmRlcnMoIHtcblx0Ym9yZGVyQm90dG9tLFxuXHRib3JkZXJMZWZ0LFxuXHRib3JkZXJSaWdodCxcblx0Ym9yZGVyVG9wLFxufTogUGljazxcblx0U3VyZmFjZVByb3BzLFxuXHQnYm9yZGVyQm90dG9tJyB8ICdib3JkZXJMZWZ0JyB8ICdib3JkZXJSaWdodCcgfCAnYm9yZGVyVG9wJ1xuPiApIHtcblx0Y29uc3QgYm9yZGVyU3R5bGUgPSBgMXB4IHNvbGlkICR7IENPTkZJRy5zdXJmYWNlQm9yZGVyQ29sb3IgfWA7XG5cblx0cmV0dXJuIGNzcygge1xuXHRcdGJvcmRlckJvdHRvbTogYm9yZGVyQm90dG9tID8gYm9yZGVyU3R5bGUgOiB1bmRlZmluZWQsXG5cdFx0Ym9yZGVyTGVmdDogYm9yZGVyTGVmdCA/IGJvcmRlclN0eWxlIDogdW5kZWZpbmVkLFxuXHRcdGJvcmRlclJpZ2h0OiBib3JkZXJSaWdodCA/IGJvcmRlclN0eWxlIDogdW5kZWZpbmVkLFxuXHRcdGJvcmRlclRvcDogYm9yZGVyVG9wID8gYm9yZGVyU3R5bGUgOiB1bmRlZmluZWQsXG5cdH0gKTtcbn1cblxuZXhwb3J0IGNvbnN0IHByaW1hcnkgPSBjc3NgYDtcblxuZXhwb3J0IGNvbnN0IHNlY29uZGFyeSA9IGNzc2Bcblx0YmFja2dyb3VuZDogJHsgQ09ORklHLnN1cmZhY2VCYWNrZ3JvdW5kVGludENvbG9yIH07XG5gO1xuXG5leHBvcnQgY29uc3QgdGVydGlhcnkgPSBjc3NgXG5cdGJhY2tncm91bmQ6ICR7IENPTkZJRy5zdXJmYWNlQmFja2dyb3VuZFRlcnRpYXJ5Q29sb3IgfTtcbmA7XG5cbmNvbnN0IGN1c3RvbUJhY2tncm91bmRTaXplID0gKCBzdXJmYWNlQmFja2dyb3VuZFNpemU6IHN0cmluZyApID0+XG5cdFsgc3VyZmFjZUJhY2tncm91bmRTaXplLCBzdXJmYWNlQmFja2dyb3VuZFNpemUgXS5qb2luKCAnICcgKTtcblxuY29uc3QgZG90dGVkQmFja2dyb3VuZDEgPSAoIHN1cmZhY2VCYWNrZ3JvdW5kU2l6ZURvdHRlZDogc3RyaW5nICkgPT5cblx0W1xuXHRcdCc5MGRlZycsXG5cdFx0WyBDT05GSUcuc3VyZmFjZUJhY2tncm91bmRDb2xvciwgc3VyZmFjZUJhY2tncm91bmRTaXplRG90dGVkIF0uam9pbihcblx0XHRcdCcgJ1xuXHRcdCksXG5cdFx0J3RyYW5zcGFyZW50IDElJyxcblx0XS5qb2luKCAnLCcgKTtcblxuY29uc3QgZG90dGVkQmFja2dyb3VuZDIgPSAoIHN1cmZhY2VCYWNrZ3JvdW5kU2l6ZURvdHRlZDogc3RyaW5nICkgPT5cblx0W1xuXHRcdFsgQ09ORklHLnN1cmZhY2VCYWNrZ3JvdW5kQ29sb3IsIHN1cmZhY2VCYWNrZ3JvdW5kU2l6ZURvdHRlZCBdLmpvaW4oXG5cdFx0XHQnICdcblx0XHQpLFxuXHRcdCd0cmFuc3BhcmVudCAxJScsXG5cdF0uam9pbiggJywnICk7XG5cbmNvbnN0IGRvdHRlZEJhY2tncm91bmRDb21iaW5lZCA9ICggc3VyZmFjZUJhY2tncm91bmRTaXplRG90dGVkOiBzdHJpbmcgKSA9PlxuXHRbXG5cdFx0YGxpbmVhci1ncmFkaWVudCggJHsgZG90dGVkQmFja2dyb3VuZDEoXG5cdFx0XHRzdXJmYWNlQmFja2dyb3VuZFNpemVEb3R0ZWRcblx0XHQpIH0gKSBjZW50ZXJgLFxuXHRcdGBsaW5lYXItZ3JhZGllbnQoICR7IGRvdHRlZEJhY2tncm91bmQyKFxuXHRcdFx0c3VyZmFjZUJhY2tncm91bmRTaXplRG90dGVkXG5cdFx0KSB9ICkgY2VudGVyYCxcblx0XHRDT05GSUcuc3VyZmFjZUJvcmRlckJvbGRDb2xvcixcblx0XS5qb2luKCAnLCcgKTtcblxuZXhwb3J0IGNvbnN0IGdldERvdHRlZCA9IChcblx0c3VyZmFjZUJhY2tncm91bmRTaXplOiBzdHJpbmcsXG5cdHN1cmZhY2VCYWNrZ3JvdW5kU2l6ZURvdHRlZDogc3RyaW5nXG4pID0+IGNzc2Bcblx0YmFja2dyb3VuZDogJHsgZG90dGVkQmFja2dyb3VuZENvbWJpbmVkKCBzdXJmYWNlQmFja2dyb3VuZFNpemVEb3R0ZWQgKSB9O1xuXHRiYWNrZ3JvdW5kLXNpemU6ICR7IGN1c3RvbUJhY2tncm91bmRTaXplKCBzdXJmYWNlQmFja2dyb3VuZFNpemUgKSB9O1xuYDtcblxuY29uc3QgZ3JpZEJhY2tncm91bmQxID0gW1xuXHRgJHsgQ09ORklHLnN1cmZhY2VCb3JkZXJTdWJ0bGVDb2xvciB9IDFweGAsXG5cdCd0cmFuc3BhcmVudCAxcHgnLFxuXS5qb2luKCAnLCcgKTtcblxuY29uc3QgZ3JpZEJhY2tncm91bmQyID0gW1xuXHQnOTBkZWcnLFxuXHRgJHsgQ09ORklHLnN1cmZhY2VCb3JkZXJTdWJ0bGVDb2xvciB9IDFweGAsXG5cdCd0cmFuc3BhcmVudCAxcHgnLFxuXS5qb2luKCAnLCcgKTtcblxuY29uc3QgZ3JpZEJhY2tncm91bmRDb21iaW5lZCA9IFtcblx0YGxpbmVhci1ncmFkaWVudCggJHsgZ3JpZEJhY2tncm91bmQxIH0gKWAsXG5cdGBsaW5lYXItZ3JhZGllbnQoICR7IGdyaWRCYWNrZ3JvdW5kMiB9IClgLFxuXS5qb2luKCAnLCcgKTtcblxuZXhwb3J0IGNvbnN0IGdldEdyaWQgPSAoIHN1cmZhY2VCYWNrZ3JvdW5kU2l6ZTogc3RyaW5nICkgPT4ge1xuXHRyZXR1cm4gY3NzYFxuXHRcdGJhY2tncm91bmQ6ICR7IENPTkZJRy5zdXJmYWNlQmFja2dyb3VuZENvbG9yIH07XG5cdFx0YmFja2dyb3VuZC1pbWFnZTogJHsgZ3JpZEJhY2tncm91bmRDb21iaW5lZCB9O1xuXHRcdGJhY2tncm91bmQtc2l6ZTogJHsgY3VzdG9tQmFja2dyb3VuZFNpemUoIHN1cmZhY2VCYWNrZ3JvdW5kU2l6ZSApIH07XG5cdGA7XG59O1xuXG5leHBvcnQgY29uc3QgZ2V0VmFyaWFudCA9IChcblx0dmFyaWFudDogU3VyZmFjZVZhcmlhbnQsXG5cdHN1cmZhY2VCYWNrZ3JvdW5kU2l6ZTogc3RyaW5nLFxuXHRzdXJmYWNlQmFja2dyb3VuZFNpemVEb3R0ZWQ6IHN0cmluZ1xuKSA9PiB7XG5cdHN3aXRjaCAoIHZhcmlhbnQgKSB7XG5cdFx0Y2FzZSAnZG90dGVkJzoge1xuXHRcdFx0cmV0dXJuIGdldERvdHRlZChcblx0XHRcdFx0c3VyZmFjZUJhY2tncm91bmRTaXplLFxuXHRcdFx0XHRzdXJmYWNlQmFja2dyb3VuZFNpemVEb3R0ZWRcblx0XHRcdCk7XG5cdFx0fVxuXHRcdGNhc2UgJ2dyaWQnOiB7XG5cdFx0XHRyZXR1cm4gZ2V0R3JpZCggc3VyZmFjZUJhY2tncm91bmRTaXplICk7XG5cdFx0fVxuXHRcdGNhc2UgJ3ByaW1hcnknOiB7XG5cdFx0XHRyZXR1cm4gcHJpbWFyeTtcblx0XHR9XG5cdFx0Y2FzZSAnc2Vjb25kYXJ5Jzoge1xuXHRcdFx0cmV0dXJuIHNlY29uZGFyeTtcblx0XHR9XG5cdFx0Y2FzZSAndGVydGlhcnknOiB7XG5cdFx0XHRyZXR1cm4gdGVydGlhcnk7XG5cdFx0fVxuXHR9XG59O1xuIl19 */");
@@ -36021,7 +36217,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "Surface");
     const cx3 = useCx();
-    const classes = (0, import_element96.useMemo)(() => {
+    const classes = (0, import_element97.useMemo)(() => {
       const sx = {
         borders: getBorders({
           borderBottom,
@@ -36039,10 +36235,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/surface/component.js
-  var import_jsx_runtime132 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime161 = __toESM(require_jsx_runtime());
   function UnconnectedSurface(props, forwardedRef) {
     const surfaceProps = useSurface(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(component_default, {
       ...surfaceProps,
       ref: forwardedRef
     });
@@ -36083,7 +36279,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(useDeprecatedProps4(props), "Card");
     const cx3 = useCx();
-    const classes = (0, import_element97.useMemo)(() => {
+    const classes = (0, import_element98.useMemo)(() => {
       return cx3(Card, isBorderless && boxShadowless, isRounded && rounded, className);
     }, [className, cx3, isBorderless, isRounded]);
     const surfaceProps = useSurface({
@@ -36100,7 +36296,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/card/card/component.js
-  var import_jsx_runtime133 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime162 = __toESM(require_jsx_runtime());
   function UnconnectedCard(props, forwardedRef) {
     const {
       children,
@@ -36112,10 +36308,10 @@ This message will only show in development mode. It won't appear in production. 
     } = useCard(props);
     const elevationBorderRadius = isRounded ? config_values_default.radiusLarge : 0;
     const cx3 = useCx();
-    const elevationClassName = (0, import_element98.useMemo)(() => cx3(/* @__PURE__ */ css({
+    const elevationClassName = (0, import_element99.useMemo)(() => cx3(/* @__PURE__ */ css({
       borderRadius: elevationBorderRadius
     }, false ? "" : ";label:elevationClassName;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudC50c3giXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBeUNZIiwiZmlsZSI6ImNvbXBvbmVudC50c3giLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEV4dGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBjc3MgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgdHlwZSB7IEZvcndhcmRlZFJlZiB9IGZyb20gJ3JlYWN0JztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IHVzZU1lbW8gfSBmcm9tICdAd29yZHByZXNzL2VsZW1lbnQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vLi4vY29udGV4dCc7XG5pbXBvcnQgeyBjb250ZXh0Q29ubmVjdCwgQ29udGV4dFN5c3RlbVByb3ZpZGVyIH0gZnJvbSAnLi4vLi4vY29udGV4dCc7XG5pbXBvcnQgeyBFbGV2YXRpb24gfSBmcm9tICcuLi8uLi9lbGV2YXRpb24nO1xuaW1wb3J0IHsgVmlldyB9IGZyb20gJy4uLy4uL3ZpZXcnO1xuaW1wb3J0ICogYXMgc3R5bGVzIGZyb20gJy4uL3N0eWxlcyc7XG5pbXBvcnQgeyB1c2VDYXJkIH0gZnJvbSAnLi9ob29rJztcbmltcG9ydCBDT05GSUcgZnJvbSAnLi4vLi4vdXRpbHMvY29uZmlnLXZhbHVlcyc7XG5pbXBvcnQgeyB1c2VDeCB9IGZyb20gJy4uLy4uL3V0aWxzL2hvb2tzL3VzZS1jeCc7XG5pbXBvcnQgdHlwZSB7IFByb3BzIH0gZnJvbSAnLi4vdHlwZXMnO1xuXG5mdW5jdGlvbiBVbmNvbm5lY3RlZENhcmQoXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczwgUHJvcHMsICdkaXYnID4sXG5cdGZvcndhcmRlZFJlZjogRm9yd2FyZGVkUmVmPCBhbnkgPlxuKSB7XG5cdGNvbnN0IHtcblx0XHRjaGlsZHJlbixcblx0XHRlbGV2YXRpb24sXG5cdFx0aXNCb3JkZXJsZXNzLFxuXHRcdGlzUm91bmRlZCxcblx0XHRzaXplLFxuXHRcdC4uLm90aGVyUHJvcHNcblx0fSA9IHVzZUNhcmQoIHByb3BzICk7XG5cdGNvbnN0IGVsZXZhdGlvbkJvcmRlclJhZGl1cyA9IGlzUm91bmRlZCA/IENPTkZJRy5yYWRpdXNMYXJnZSA6IDA7XG5cblx0Y29uc3QgY3ggPSB1c2VDeCgpO1xuXG5cdGNvbnN0IGVsZXZhdGlvbkNsYXNzTmFtZSA9IHVzZU1lbW8oXG5cdFx0KCkgPT4gY3goIGNzcyggeyBib3JkZXJSYWRpdXM6IGVsZXZhdGlvbkJvcmRlclJhZGl1cyB9ICkgKSxcblx0XHRbIGN4LCBlbGV2YXRpb25Cb3JkZXJSYWRpdXMgXVxuXHQpO1xuXG5cdGNvbnN0IGNvbnRleHRQcm92aWRlclZhbHVlID0gdXNlTWVtbyggKCkgPT4ge1xuXHRcdGNvbnN0IGNvbnRleHRQcm9wcyA9IHtcblx0XHRcdHNpemUsXG5cdFx0XHRpc0JvcmRlcmxlc3MsXG5cdFx0fTtcblx0XHRyZXR1cm4ge1xuXHRcdFx0Q2FyZEJvZHk6IGNvbnRleHRQcm9wcyxcblx0XHRcdENhcmRIZWFkZXI6IGNvbnRleHRQcm9wcyxcblx0XHRcdENhcmRGb290ZXI6IGNvbnRleHRQcm9wcyxcblx0XHR9O1xuXHR9LCBbIGlzQm9yZGVybGVzcywgc2l6ZSBdICk7XG5cblx0cmV0dXJuIChcblx0XHQ8Q29udGV4dFN5c3RlbVByb3ZpZGVyIHZhbHVlPXsgY29udGV4dFByb3ZpZGVyVmFsdWUgfT5cblx0XHRcdDxWaWV3IHsgLi4ub3RoZXJQcm9wcyB9IHJlZj17IGZvcndhcmRlZFJlZiB9PlxuXHRcdFx0XHQ8VmlldyBjbGFzc05hbWU9eyBjeCggc3R5bGVzLkNvbnRlbnQgKSB9PnsgY2hpbGRyZW4gfTwvVmlldz5cblx0XHRcdFx0PEVsZXZhdGlvblxuXHRcdFx0XHRcdGNsYXNzTmFtZT17IGVsZXZhdGlvbkNsYXNzTmFtZSB9XG5cdFx0XHRcdFx0aXNJbnRlcmFjdGl2ZT17IGZhbHNlIH1cblx0XHRcdFx0XHR2YWx1ZT17IGVsZXZhdGlvbiA/IDEgOiAwIH1cblx0XHRcdFx0Lz5cblx0XHRcdFx0PEVsZXZhdGlvblxuXHRcdFx0XHRcdGNsYXNzTmFtZT17IGVsZXZhdGlvbkNsYXNzTmFtZSB9XG5cdFx0XHRcdFx0aXNJbnRlcmFjdGl2ZT17IGZhbHNlIH1cblx0XHRcdFx0XHR2YWx1ZT17IGVsZXZhdGlvbiB9XG5cdFx0XHRcdC8+XG5cdFx0XHQ8L1ZpZXc+XG5cdFx0PC9Db250ZXh0U3lzdGVtUHJvdmlkZXI+XG5cdCk7XG59XG5cbi8qKlxuICogYENhcmRgIHByb3ZpZGVzIGEgZmxleGlibGUgYW5kIGV4dGVuc2libGUgY29udGVudCBjb250YWluZXIuXG4gKiBgQ2FyZGAgYWxzbyBwcm92aWRlcyBhIGNvbnZlbmllbnQgc2V0IG9mIHN1Yi1jb21wb25lbnRzIHN1Y2ggYXMgYENhcmRCb2R5YCxcbiAqIGBDYXJkSGVhZGVyYCwgYENhcmRGb290ZXJgLCBhbmQgbW9yZS5cbiAqXG4gKiBgYGBqc3hcbiAqIGltcG9ydCB7XG4gKiAgIENhcmQsXG4gKiAgIENhcmRIZWFkZXIsXG4gKiAgIENhcmRCb2R5LFxuICogICBDYXJkRm9vdGVyLFxuICogICBfX2V4cGVyaW1lbnRhbFRleHQgYXMgVGV4dCxcbiAqICAgX19leHBlcmltZW50YWxIZWFkaW5nIGFzIEhlYWRpbmcsXG4gKiB9IGZyb20gYEB3b3JkcHJlc3MvY29tcG9uZW50c2A7XG4gKlxuICogZnVuY3Rpb24gRXhhbXBsZSgpIHtcbiAqICAgcmV0dXJuIChcbiAqICAgICA8Q2FyZD5cbiAqICAgICAgIDxDYXJkSGVhZGVyPlxuICogICAgICAgICA8SGVhZGluZyBsZXZlbD17IDQgfT5DYXJkIFRpdGxlPC9IZWFkaW5nPlxuICogICAgICAgPC9DYXJkSGVhZGVyPlxuICogICAgICAgPENhcmRCb2R5PlxuICogICAgICAgICA8VGV4dD5DYXJkIENvbnRlbnQ8L1RleHQ+XG4gKiAgICAgICA8L0NhcmRCb2R5PlxuICogICAgICAgPENhcmRGb290ZXI+XG4gKiAgICAgICAgIDxUZXh0PkNhcmQgRm9vdGVyPC9UZXh0PlxuICogICAgICAgPC9DYXJkRm9vdGVyPlxuICogICAgIDwvQ2FyZD5cbiAqICAgKTtcbiAqIH1cbiAqIGBgYFxuICovXG5leHBvcnQgY29uc3QgQ2FyZCA9IGNvbnRleHRDb25uZWN0KCBVbmNvbm5lY3RlZENhcmQsICdDYXJkJyApO1xuXG5leHBvcnQgZGVmYXVsdCBDYXJkO1xuIl19 */")), [cx3, elevationBorderRadius]);
-    const contextProviderValue = (0, import_element98.useMemo)(() => {
+    const contextProviderValue = (0, import_element99.useMemo)(() => {
       const contextProps = {
         size: size3,
         isBorderless
@@ -36126,19 +36322,19 @@ This message will only show in development mode. It won't appear in production. 
         CardFooter: contextProps
       };
     }, [isBorderless, size3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(ContextSystemProvider, {
       value: contextProviderValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(component_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(component_default, {
         ...otherProps,
         ref: forwardedRef,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime133.jsx)(component_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime162.jsx)(component_default, {
           className: cx3(Content),
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(component_default25, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(component_default25, {
           className: elevationClassName,
           isInteractive: false,
           value: elevation ? 1 : 0
-        }), /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(component_default25, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(component_default25, {
           className: elevationClassName,
           isInteractive: false,
           value: elevation
@@ -36150,7 +36346,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default27 = Card2;
 
   // packages/components/build-module/scrollable/hook.js
-  var import_element99 = __toESM(require_element());
+  var import_element100 = __toESM(require_element());
 
   // packages/components/build-module/scrollable/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__23() {
@@ -36212,7 +36408,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "Scrollable");
     const cx3 = useCx();
-    const classes = (0, import_element99.useMemo)(() => cx3(Scrollable, scrollableScrollbar, smoothScroll2 && smoothScroll, scrollDirection === "x" && scrollX, scrollDirection === "y" && scrollY, scrollDirection === "auto" && scrollAuto, className), [className, cx3, scrollDirection, smoothScroll2]);
+    const classes = (0, import_element100.useMemo)(() => cx3(Scrollable, scrollableScrollbar, smoothScroll2 && smoothScroll, scrollDirection === "x" && scrollX, scrollDirection === "y" && scrollY, scrollDirection === "auto" && scrollAuto, className), [className, cx3, scrollDirection, smoothScroll2]);
     return {
       ...otherProps,
       className: classes
@@ -36220,10 +36416,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/scrollable/component.js
-  var import_jsx_runtime134 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime163 = __toESM(require_jsx_runtime());
   function UnconnectedScrollable(props, forwardedRef) {
     const scrollableProps = useScrollable(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(component_default, {
       ...scrollableProps,
       ref: forwardedRef
     });
@@ -36232,7 +36428,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default28 = Scrollable2;
 
   // packages/components/build-module/card/card-body/hook.js
-  var import_element100 = __toESM(require_element());
+  var import_element101 = __toESM(require_element());
   function useCardBody(props) {
     const {
       className,
@@ -36242,7 +36438,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "CardBody");
     const cx3 = useCx();
-    const classes = (0, import_element100.useMemo)(() => cx3(
+    const classes = (0, import_element101.useMemo)(() => cx3(
       Body,
       borderRadius,
       cardPaddings[size3],
@@ -36259,19 +36455,19 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/card/card-body/component.js
-  var import_jsx_runtime135 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime164 = __toESM(require_jsx_runtime());
   function UnconnectedCardBody(props, forwardedRef) {
     const {
       isScrollable,
       ...otherProps
     } = useCardBody(props);
     if (isScrollable) {
-      return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(component_default28, {
+      return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(component_default28, {
         ...otherProps,
         ref: forwardedRef
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(component_default, {
       ...otherProps,
       ref: forwardedRef
     });
@@ -36337,11 +36533,11 @@ This message will only show in development mode. It won't appear in production. 
   })("border:0;margin:0;", renderDisplay, " ", renderBorder, " ", renderSize, " ", renderMargin, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF3RW9EIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgeyBydGwgfSBmcm9tICcuLi91dGlscyc7XG5pbXBvcnQgdHlwZSB7IERpdmlkZXJQcm9wcyB9IGZyb20gJy4vdHlwZXMnO1xuXG5jb25zdCBNQVJHSU5fRElSRUNUSU9OUzogUmVjb3JkPFxuXHROb25OdWxsYWJsZTwgRGl2aWRlclByb3BzWyAnb3JpZW50YXRpb24nIF0gPixcblx0UmVjb3JkPCAnc3RhcnQnIHwgJ2VuZCcsIHN0cmluZyA+XG4+ID0ge1xuXHR2ZXJ0aWNhbDoge1xuXHRcdHN0YXJ0OiAnbWFyZ2luTGVmdCcsXG5cdFx0ZW5kOiAnbWFyZ2luUmlnaHQnLFxuXHR9LFxuXHRob3Jpem9udGFsOiB7XG5cdFx0c3RhcnQ6ICdtYXJnaW5Ub3AnLFxuXHRcdGVuZDogJ21hcmdpbkJvdHRvbScsXG5cdH0sXG59O1xuXG4vLyBSZW5kZXJzIHRoZSBjb3JyZWN0IG1hcmdpbnMgZ2l2ZW4gdGhlIERpdmlkZXIncyBgb3JpZW50YXRpb25gIGFuZCB0aGUgd3JpdGluZyBkaXJlY3Rpb24uXG4vLyBXaGVuIGJvdGggdGhlIGdlbmVyaWMgYG1hcmdpbmAgYW5kIHRoZSBzcGVjaWZpYyBgbWFyZ2luU3RhcnR8bWFyZ2luRW5kYCBwcm9wcyBhcmUgZGVmaW5lZCxcbi8vIHRoZSBsYXR0ZXIgd2lsbCB0YWtlIHByaW9yaXR5LlxuY29uc3QgcmVuZGVyTWFyZ2luID0gKCB7XG5cdCdhcmlhLW9yaWVudGF0aW9uJzogb3JpZW50YXRpb24gPSAnaG9yaXpvbnRhbCcsXG5cdG1hcmdpbixcblx0bWFyZ2luU3RhcnQsXG5cdG1hcmdpbkVuZCxcbn06IERpdmlkZXJQcm9wcyApID0+XG5cdGNzcyhcblx0XHRydGwoIHtcblx0XHRcdFsgTUFSR0lOX0RJUkVDVElPTlNbIG9yaWVudGF0aW9uIF0uc3RhcnQgXTogc3BhY2UoXG5cdFx0XHRcdG1hcmdpblN0YXJ0ID8/IG1hcmdpblxuXHRcdFx0KSxcblx0XHRcdFsgTUFSR0lOX0RJUkVDVElPTlNbIG9yaWVudGF0aW9uIF0uZW5kIF06IHNwYWNlKFxuXHRcdFx0XHRtYXJnaW5FbmQgPz8gbWFyZ2luXG5cdFx0XHQpLFxuXHRcdH0gKSgpXG5cdCk7XG5cbmNvbnN0IHJlbmRlckRpc3BsYXkgPSAoIHtcblx0J2FyaWEtb3JpZW50YXRpb24nOiBvcmllbnRhdGlvbiA9ICdob3Jpem9udGFsJyxcbn06IERpdmlkZXJQcm9wcyApID0+IHtcblx0cmV0dXJuIG9yaWVudGF0aW9uID09PSAndmVydGljYWwnXG5cdFx0PyBjc3MoIHsgZGlzcGxheTogJ2lubGluZScgfSApXG5cdFx0OiB1bmRlZmluZWQ7XG59O1xuXG5jb25zdCByZW5kZXJCb3JkZXIgPSAoIHtcblx0J2FyaWEtb3JpZW50YXRpb24nOiBvcmllbnRhdGlvbiA9ICdob3Jpem9udGFsJyxcbn06IERpdmlkZXJQcm9wcyApID0+IHtcblx0cmV0dXJuIGNzcygge1xuXHRcdFsgb3JpZW50YXRpb24gPT09ICd2ZXJ0aWNhbCcgPyAnYm9yZGVyUmlnaHQnIDogJ2JvcmRlckJvdHRvbScgXTpcblx0XHRcdCcxcHggc29saWQgY3VycmVudENvbG9yJyxcblx0fSApO1xufTtcblxuY29uc3QgcmVuZGVyU2l6ZSA9ICgge1xuXHQnYXJpYS1vcmllbnRhdGlvbic6IG9yaWVudGF0aW9uID0gJ2hvcml6b250YWwnLFxufTogRGl2aWRlclByb3BzICkgPT5cblx0Y3NzKCB7XG5cdFx0aGVpZ2h0OiBvcmllbnRhdGlvbiA9PT0gJ3ZlcnRpY2FsJyA/ICdhdXRvJyA6IDAsXG5cdFx0d2lkdGg6IG9yaWVudGF0aW9uID09PSAndmVydGljYWwnID8gMCA6ICdhdXRvJyxcblx0fSApO1xuXG5leHBvcnQgY29uc3QgRGl2aWRlclZpZXcgPSBzdHlsZWQuaHI8IERpdmlkZXJQcm9wcyA+YFxuXHRib3JkZXI6IDA7XG5cdG1hcmdpbjogMDtcblxuXHQkeyByZW5kZXJEaXNwbGF5IH1cblx0JHsgcmVuZGVyQm9yZGVyIH1cblx0JHsgcmVuZGVyU2l6ZSB9XG5cdCR7IHJlbmRlck1hcmdpbiB9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/divider/component.js
-  var import_jsx_runtime136 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime165 = __toESM(require_jsx_runtime());
   function UnconnectedDivider(props, forwardedRef) {
     const contextProps = useContextSystem(props, "Divider");
-    return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Separator, {
-      render: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(DividerView, {}),
+    return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(Separator, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(DividerView, {}),
       ...contextProps,
       ref: forwardedRef
     });
@@ -36350,14 +36546,14 @@ This message will only show in development mode. It won't appear in production. 
   var component_default30 = Divider2;
 
   // packages/components/build-module/card/card-divider/hook.js
-  var import_element101 = __toESM(require_element());
+  var import_element102 = __toESM(require_element());
   function useCardDivider(props) {
     const {
       className,
       ...otherProps
     } = useContextSystem(props, "CardDivider");
     const cx3 = useCx();
-    const classes = (0, import_element101.useMemo)(() => cx3(
+    const classes = (0, import_element102.useMemo)(() => cx3(
       Divider,
       borderColor,
       // This classname is added for legacy compatibility reasons.
@@ -36371,10 +36567,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/card/card-divider/component.js
-  var import_jsx_runtime137 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime166 = __toESM(require_jsx_runtime());
   function UnconnectedCardDivider(props, forwardedRef) {
     const dividerProps = useCardDivider(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(component_default30, {
+    return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(component_default30, {
       ...dividerProps,
       ref: forwardedRef
     });
@@ -36383,7 +36579,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default31 = CardDivider;
 
   // packages/components/build-module/card/card-footer/hook.js
-  var import_element102 = __toESM(require_element());
+  var import_element103 = __toESM(require_element());
   function useCardFooter(props) {
     const {
       className,
@@ -36394,7 +36590,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "CardFooter");
     const cx3 = useCx();
-    const classes = (0, import_element102.useMemo)(() => cx3(
+    const classes = (0, import_element103.useMemo)(() => cx3(
       Footer,
       borderRadius,
       borderColor,
@@ -36413,10 +36609,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/card/card-footer/component.js
-  var import_jsx_runtime138 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime167 = __toESM(require_jsx_runtime());
   function UnconnectedCardFooter(props, forwardedRef) {
     const footerProps = useCardFooter(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(component_default3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(component_default3, {
       ...footerProps,
       ref: forwardedRef
     });
@@ -36425,7 +36621,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default32 = CardFooter;
 
   // packages/components/build-module/card/card-header/hook.js
-  var import_element103 = __toESM(require_element());
+  var import_element104 = __toESM(require_element());
   function useCardHeader(props) {
     const {
       className,
@@ -36435,7 +36631,7 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "CardHeader");
     const cx3 = useCx();
-    const classes = (0, import_element103.useMemo)(() => cx3(
+    const classes = (0, import_element104.useMemo)(() => cx3(
       Header,
       borderRadius,
       borderColor,
@@ -36453,10 +36649,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/card/card-header/component.js
-  var import_jsx_runtime139 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime168 = __toESM(require_jsx_runtime());
   function UnconnectedCardHeader(props, forwardedRef) {
     const headerProps = useCardHeader(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(component_default3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(component_default3, {
       ...headerProps,
       ref: forwardedRef
     });
@@ -36465,14 +36661,14 @@ This message will only show in development mode. It won't appear in production. 
   var component_default33 = CardHeader;
 
   // packages/components/build-module/card/card-media/hook.js
-  var import_element104 = __toESM(require_element());
+  var import_element105 = __toESM(require_element());
   function useCardMedia(props) {
     const {
       className,
       ...otherProps
     } = useContextSystem(props, "CardMedia");
     const cx3 = useCx();
-    const classes = (0, import_element104.useMemo)(() => cx3(
+    const classes = (0, import_element105.useMemo)(() => cx3(
       Media,
       borderRadius,
       // This classname is added for legacy compatibility reasons.
@@ -36486,10 +36682,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/card/card-media/component.js
-  var import_jsx_runtime140 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime169 = __toESM(require_jsx_runtime());
   function UnconnectedCardMedia(props, forwardedRef) {
     const cardMediaProps = useCardMedia(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(component_default, {
       ...cardMediaProps,
       ref: forwardedRef
     });
@@ -36498,11 +36694,10 @@ This message will only show in development mode. It won't appear in production. 
   var component_default34 = CardMedia;
 
   // packages/components/build-module/checkbox-control/index.js
-  var import_element105 = __toESM(require_element());
+  var import_element106 = __toESM(require_element());
   var import_compose42 = __toESM(require_compose());
   var import_deprecated13 = __toESM(require_deprecated());
-  var import_icons10 = __toESM(require_icons());
-  var import_jsx_runtime141 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime170 = __toESM(require_jsx_runtime());
   function CheckboxControl(props) {
     const {
       __nextHasNoMarginBottom,
@@ -36523,8 +36718,8 @@ This message will only show in development mode. It won't appear in production. 
         since: "5.8"
       });
     }
-    const [showCheckedIcon, setShowCheckedIcon] = (0, import_element105.useState)(false);
-    const [showIndeterminateIcon, setShowIndeterminateIcon] = (0, import_element105.useState)(false);
+    const [showCheckedIcon, setShowCheckedIcon] = (0, import_element106.useState)(false);
+    const [showIndeterminateIcon, setShowIndeterminateIcon] = (0, import_element106.useState)(false);
     const ref = (0, import_compose42.useRefEffect)((node2) => {
       if (!node2) {
         return;
@@ -36535,23 +36730,23 @@ This message will only show in development mode. It won't appear in production. 
     }, [checked, indeterminate]);
     const id3 = (0, import_compose42.useInstanceId)(CheckboxControl, "inspector-checkbox-control", idProp);
     const onChangeValue = (event) => onChange(event.target.checked);
-    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(base_control_default, {
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "CheckboxControl",
       label: heading,
       id: id3,
-      help: help && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", {
+      help: help && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("span", {
         className: "components-checkbox-control__help",
         children: help
       }),
       className: clsx_default("components-checkbox-control", className),
-      children: /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(component_default9, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)(component_default9, {
         spacing: 0,
         justify: "start",
         alignment: "top",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime170.jsxs)("span", {
           className: "components-checkbox-control__input-container",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime141.jsx)("input", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime170.jsx)("input", {
             ref,
             id: id3,
             className: "components-checkbox-control__input",
@@ -36565,16 +36760,16 @@ This message will only show in development mode. It won't appear in production. 
               onClick?.(event);
             },
             ...additionalProps
-          }), showIndeterminateIcon ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_icons10.Icon, {
-            icon: import_icons10.reset,
+          }), showIndeterminateIcon ? /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(icon_default2, {
+            icon: reset_default,
             className: "components-checkbox-control__indeterminate",
             role: "presentation"
-          }) : null, showCheckedIcon ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_icons10.Icon, {
-            icon: import_icons10.check,
+          }) : null, showCheckedIcon ? /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(icon_default2, {
+            icon: check_default,
             className: "components-checkbox-control__checked",
             role: "presentation"
           }) : null]
-        }), label && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("label", {
+        }), label && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("label", {
           className: "components-checkbox-control__label",
           htmlFor: id3,
           children: label
@@ -36585,10 +36780,10 @@ This message will only show in development mode. It won't appear in production. 
   var checkbox_control_default = CheckboxControl;
 
   // packages/components/build-module/clipboard-button/index.js
-  var import_element106 = __toESM(require_element());
+  var import_element107 = __toESM(require_element());
   var import_compose43 = __toESM(require_compose());
   var import_deprecated14 = __toESM(require_deprecated());
-  var import_jsx_runtime142 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime171 = __toESM(require_jsx_runtime());
   var TIMEOUT = 4e3;
   function ClipboardButton({
     className,
@@ -36602,7 +36797,7 @@ This message will only show in development mode. It won't appear in production. 
       since: "5.8",
       alternative: "wp.compose.useCopyToClipboard"
     });
-    const timeoutIdRef = (0, import_element106.useRef)();
+    const timeoutIdRef = (0, import_element107.useRef)();
     const ref = (0, import_compose43.useCopyToClipboard)(text, () => {
       onCopy();
       if (timeoutIdRef.current) {
@@ -36612,7 +36807,7 @@ This message will only show in development mode. It won't appear in production. 
         timeoutIdRef.current = setTimeout(() => onFinishCopy(), TIMEOUT);
       }
     });
-    (0, import_element106.useEffect)(() => {
+    (0, import_element107.useEffect)(() => {
       return () => {
         if (timeoutIdRef.current) {
           clearTimeout(timeoutIdRef.current);
@@ -36623,7 +36818,7 @@ This message will only show in development mode. It won't appear in production. 
     const focusOnCopyEventTarget = (event) => {
       event.target.focus();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(button_default, {
       ...buttonProps,
       className: classes,
       ref,
@@ -36633,13 +36828,12 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/palette-edit/index.js
-  var import_element115 = __toESM(require_element());
+  var import_element116 = __toESM(require_element());
   var import_i18n35 = __toESM(require_i18n());
-  var import_icons13 = __toESM(require_icons());
   var import_compose46 = __toESM(require_compose());
 
   // packages/components/build-module/item-group/item/hook.js
-  var import_element108 = __toESM(require_element());
+  var import_element109 = __toESM(require_element());
 
   // packages/components/build-module/item-group/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__25() {
@@ -36682,12 +36876,12 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/item-group/context.js
-  var import_element107 = __toESM(require_element());
-  var ItemGroupContext = (0, import_element107.createContext)({
+  var import_element108 = __toESM(require_element());
+  var ItemGroupContext = (0, import_element108.createContext)({
     size: "medium"
   });
   ItemGroupContext.displayName = "ItemGroupContext";
-  var useItemGroupContext = () => (0, import_element107.useContext)(ItemGroupContext);
+  var useItemGroupContext = () => (0, import_element108.useContext)(ItemGroupContext);
 
   // packages/components/build-module/item-group/item/hook.js
   function useItem(props) {
@@ -36706,7 +36900,7 @@ This message will only show in development mode. It won't appear in production. 
     const size3 = sizeProp || contextSize;
     const as = asProp || (typeof onClick !== "undefined" ? "button" : "div");
     const cx3 = useCx();
-    const classes = (0, import_element108.useMemo)(() => cx3((as === "button" || as === "a") && unstyledButton(as), itemSizes[size3] || itemSizes.medium, item, spacedAround2 && spacedAround, className), [as, className, cx3, size3, spacedAround2]);
+    const classes = (0, import_element109.useMemo)(() => cx3((as === "button" || as === "a") && unstyledButton(as), itemSizes[size3] || itemSizes.medium, item, spacedAround2 && spacedAround, className), [as, className, cx3, size3, spacedAround2]);
     const wrapperClassName = cx3(itemWrapper);
     return {
       as,
@@ -36719,17 +36913,17 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/item-group/item/component.js
-  var import_jsx_runtime143 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime172 = __toESM(require_jsx_runtime());
   function UnconnectedItem(props, forwardedRef) {
     const {
       role,
       wrapperClassName,
       ...otherProps
     } = useItem(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)("div", {
       role,
       className: wrapperClassName,
-      children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(component_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(component_default, {
         ...otherProps,
         ref: forwardedRef
       })
@@ -36760,7 +36954,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/item-group/item-group/component.js
-  var import_jsx_runtime144 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime173 = __toESM(require_jsx_runtime());
   function UnconnectedItemGroup(props, forwardedRef) {
     const {
       isBordered,
@@ -36777,9 +36971,9 @@ This message will only show in development mode. It won't appear in production. 
       spacedAround: spacedAround2,
       size: size3
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(ItemGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(ItemGroupContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(component_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(component_default, {
         ...otherProps,
         ref: forwardedRef
       })
@@ -36791,19 +36985,18 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/gradient-picker/index.js
   var import_i18n34 = __toESM(require_i18n());
   var import_compose45 = __toESM(require_compose());
-  var import_element111 = __toESM(require_element());
+  var import_element112 = __toESM(require_element());
 
   // packages/components/build-module/custom-gradient-picker/index.js
   var import_i18n33 = __toESM(require_i18n());
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/index.js
-  var import_element110 = __toESM(require_element());
+  var import_element111 = __toESM(require_element());
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/control-points.js
   var import_compose44 = __toESM(require_compose());
-  var import_element109 = __toESM(require_element());
+  var import_element110 = __toESM(require_element());
   var import_i18n31 = __toESM(require_i18n());
-  var import_icons11 = __toESM(require_icons());
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/constants.js
   var GRADIENT_MARKERS_WIDTH = 16;
@@ -36882,7 +37075,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/control-points.js
-  var import_jsx_runtime145 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime174 = __toESM(require_jsx_runtime());
   function ControlPointButton({
     isOpen,
     position: position2,
@@ -36891,8 +37084,8 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const instanceId = (0, import_compose44.useInstanceId)(ControlPointButton);
     const descriptionId = `components-custom-gradient-picker__control-point-button-description-${instanceId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(import_jsx_runtime145.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime145.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime174.jsxs)(import_jsx_runtime174.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime174.jsx)(button_default, {
         "aria-label": (0, import_i18n31.sprintf)(
           // translators: 1: gradient position e.g: 70. 2: gradient color code e.g: rgb(52,121,151).
           (0, import_i18n31.__)("Gradient control point at position %1$d%% with color code %2$s."),
@@ -36907,7 +37100,7 @@ This message will only show in development mode. It won't appear in production. 
           "is-active": isOpen
         }),
         ...additionalProps
-      }), /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(component_default2, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(component_default2, {
         id: descriptionId,
         children: (0, import_i18n31.__)("Use your left or right arrow keys or drag and drop with the mouse to change the gradient position. Press the button to change the color or remove the control point.")
       })]
@@ -36918,7 +37111,7 @@ This message will only show in development mode. It won't appear in production. 
     className,
     ...props
   }) {
-    const popoverProps = (0, import_element109.useMemo)(() => ({
+    const popoverProps = (0, import_element110.useMemo)(() => ({
       placement: "bottom",
       offset: 8,
       // Disabling resize as it would otherwise cause the popover to show
@@ -36927,7 +37120,7 @@ This message will only show in development mode. It won't appear in production. 
       resize: false
     }), []);
     const mergedClassName = clsx_default("components-custom-gradient-picker__control-point-dropdown", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(CustomColorPickerDropdown, {
+    return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(CustomColorPickerDropdown, {
       isRenderedInSidebar,
       popoverProps,
       className: mergedClassName,
@@ -36945,7 +37138,7 @@ This message will only show in development mode. It won't appear in production. 
     onStopControlPointChange,
     __experimentalIsRenderedInSidebar
   }) {
-    const controlPointMoveStateRef = (0, import_element109.useRef)();
+    const controlPointMoveStateRef = (0, import_element110.useRef)();
     const onMouseMove = (event) => {
       if (controlPointMoveStateRef.current === void 0 || gradientPickerDomRef.current === null) {
         return;
@@ -36969,23 +37162,23 @@ This message will only show in development mode. It won't appear in production. 
         controlPointMoveStateRef.current.listenersActivated = false;
       }
     };
-    const cleanEventListenersRef = (0, import_element109.useRef)();
+    const cleanEventListenersRef = (0, import_element110.useRef)();
     cleanEventListenersRef.current = cleanEventListeners;
-    (0, import_element109.useEffect)(() => {
+    (0, import_element110.useEffect)(() => {
       return () => {
         cleanEventListenersRef.current?.();
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(import_jsx_runtime145.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_jsx_runtime174.Fragment, {
       children: controlPoints.map((point, index2) => {
         const initialPosition = point?.position;
-        return ignoreMarkerPosition !== initialPosition && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(GradientColorPickerDropdown, {
+        return ignoreMarkerPosition !== initialPosition && /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(GradientColorPickerDropdown, {
           isRenderedInSidebar: __experimentalIsRenderedInSidebar,
           onClose: onStopControlPointChange,
           renderToggle: ({
             isOpen,
             onToggle
-          }) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(ControlPointButton, {
+          }) => /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(ControlPointButton, {
             onClick: () => {
               if (controlPointMoveStateRef.current && controlPointMoveStateRef.current.significantMoveHappened) {
                 return;
@@ -37025,18 +37218,18 @@ This message will only show in development mode. It won't appear in production. 
           }, index2),
           renderContent: ({
             onClose
-          }) => /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(dropdown_content_wrapper_default, {
+          }) => /* @__PURE__ */ (0, import_jsx_runtime174.jsxs)(dropdown_content_wrapper_default, {
             paddingSize: "none",
-            children: [/* @__PURE__ */ (0, import_jsx_runtime145.jsx)(LegacyAdapter, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime174.jsx)(LegacyAdapter, {
               enableAlpha: !disableAlpha,
               color: point.color,
               onChange: (color2) => {
                 onChange(updateControlPointColor(controlPoints, index2, w(color2).toRgbString()));
               }
-            }), !disableRemove && controlPoints.length > 2 && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(component_default9, {
+            }), !disableRemove && controlPoints.length > 2 && /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(component_default9, {
               className: "components-custom-gradient-picker__remove-control-point-wrapper",
               alignment: "center",
-              children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(button_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(button_default, {
                 onClick: () => {
                   onChange(removeControlPoint(controlPoints, index2));
                   onClose();
@@ -37063,8 +37256,8 @@ This message will only show in development mode. It won't appear in production. 
     disableAlpha,
     __experimentalIsRenderedInSidebar
   }) {
-    const [alreadyInsertedPoint, setAlreadyInsertedPoint] = (0, import_element109.useState)(false);
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(GradientColorPickerDropdown, {
+    const [alreadyInsertedPoint, setAlreadyInsertedPoint] = (0, import_element110.useState)(false);
+    return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(GradientColorPickerDropdown, {
       isRenderedInSidebar: __experimentalIsRenderedInSidebar,
       className: "components-custom-gradient-picker__inserter",
       onClose: () => {
@@ -37073,7 +37266,7 @@ This message will only show in development mode. It won't appear in production. 
       renderToggle: ({
         isOpen,
         onToggle
-      }) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(button_default, {
+      }) => /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(button_default, {
         __next40pxDefaultSize: true,
         "aria-expanded": isOpen,
         "aria-haspopup": "true",
@@ -37087,11 +37280,11 @@ This message will only show in development mode. It won't appear in production. 
           onToggle();
         },
         className: "components-custom-gradient-picker__insert-point-dropdown",
-        icon: import_icons11.plus
+        icon: plus_default
       }),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(dropdown_content_wrapper_default, {
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(dropdown_content_wrapper_default, {
         paddingSize: "none",
-        children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(LegacyAdapter, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(LegacyAdapter, {
           enableAlpha: !disableAlpha,
           onChange: (color2) => {
             if (!alreadyInsertedPoint) {
@@ -37113,7 +37306,7 @@ This message will only show in development mode. It won't appear in production. 
   var control_points_default = ControlPoints;
 
   // packages/components/build-module/custom-gradient-picker/gradient-bar/index.js
-  var import_jsx_runtime146 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime175 = __toESM(require_jsx_runtime());
   var customGradientBarReducer = (state, action) => {
     switch (action.type) {
       case "MOVE_INSERTER":
@@ -37175,8 +37368,8 @@ This message will only show in development mode. It won't appear in production. 
     disableAlpha = false,
     __experimentalIsRenderedInSidebar = false
   }) {
-    const gradientMarkersContainerDomRef = (0, import_element110.useRef)(null);
-    const [gradientBarState, gradientBarStateDispatch] = (0, import_element110.useReducer)(customGradientBarReducer, customGradientBarReducerInitialState);
+    const gradientMarkersContainerDomRef = (0, import_element111.useRef)(null);
+    const [gradientBarState, gradientBarStateDispatch] = (0, import_element111.useReducer)(customGradientBarReducer, customGradientBarReducerInitialState);
     const onMouseEnterAndMove = (event) => {
       if (!gradientMarkersContainerDomRef.current) {
         return;
@@ -37206,23 +37399,23 @@ This message will only show in development mode. It won't appear in production. 
     };
     const isMovingInserter = gradientBarState.id === "MOVING_INSERTER";
     const isInsertingControlPoint = gradientBarState.id === "INSERTING_CONTROL_POINT";
-    return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)("div", {
       className: clsx_default("components-custom-gradient-picker__gradient-bar", {
         "has-gradient": hasGradient
       }),
       onMouseEnter: onMouseEnterAndMove,
       onMouseMove: onMouseEnterAndMove,
       onMouseLeave,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime175.jsx)("div", {
         className: "components-custom-gradient-picker__gradient-bar-background",
         style: {
           background: background2,
           opacity: hasGradient ? 1 : 0.4
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)("div", {
         ref: gradientMarkersContainerDomRef,
         className: "components-custom-gradient-picker__markers-container",
-        children: [!disableInserter && (isMovingInserter || isInsertingControlPoint) && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(control_points_default.InsertPoint, {
+        children: [!disableInserter && (isMovingInserter || isInsertingControlPoint) && /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(control_points_default.InsertPoint, {
           __experimentalIsRenderedInSidebar,
           disableAlpha,
           insertPosition: gradientBarState.insertPosition,
@@ -37238,7 +37431,7 @@ This message will only show in development mode. It won't appear in production. 
               type: "CLOSE_INSERTER"
             });
           }
-        }), /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(control_points_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(control_points_default, {
           __experimentalIsRenderedInSidebar,
           disableAlpha,
           disableRemove: disableInserter,
@@ -37380,8 +37573,8 @@ This message will only show in development mode. It won't appear in production. 
     const valueToParse = value !== null && value !== void 0 ? value : DEFAULT_GRADIENT;
     try {
       gradientAST = import_gradient_parser.default.parse(valueToParse)[0];
-    } catch (error3) {
-      console.warn("wp.components.CustomGradientPicker failed to parse the gradient with error", error3);
+    } catch (error) {
+      console.warn("wp.components.CustomGradientPicker failed to parse the gradient with error", error);
       gradientAST = import_gradient_parser.default.parse(DEFAULT_GRADIENT)[0];
       hasGradient = false;
     }
@@ -37490,7 +37683,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/custom-gradient-picker/index.js
-  var import_jsx_runtime147 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime176 = __toESM(require_jsx_runtime());
   var GradientAnglePicker = ({
     gradientAST,
     hasGradient,
@@ -37507,7 +37700,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }));
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(angle_picker_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(angle_picker_control_default, {
       onChange: onAngleChange,
       value: hasGradient ? angle : ""
     });
@@ -37545,7 +37738,7 @@ This message will only show in development mode. It won't appear in production. 
         onSetRadialGradient();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(select_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(select_control_default, {
       __nextHasNoMarginBottom: true,
       className: "components-custom-gradient-picker__type-picker",
       label: (0, import_i18n33.__)("Type"),
@@ -37576,10 +37769,10 @@ This message will only show in development mode. It won't appear in production. 
         position: parseInt(colorStop.length.value)
       };
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(component_default18, {
       spacing: 4,
       className: "components-custom-gradient-picker",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime147.jsx)(CustomGradientBar, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime176.jsx)(CustomGradientBar, {
         __experimentalIsRenderedInSidebar,
         disableAlpha: !enableAlpha,
         background: background2,
@@ -37588,17 +37781,17 @@ This message will only show in development mode. It won't appear in production. 
         onChange: (newControlPoints) => {
           onChange(serializeGradient(getGradientAstWithControlPoints(gradientAST, newControlPoints)));
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(component_default3, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(component_default3, {
         gap: 3,
         className: "components-custom-gradient-picker__ui-line",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime147.jsx)(SelectWrapper, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(GradientTypePicker, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime176.jsx)(SelectWrapper, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(GradientTypePicker, {
             gradientAST,
             hasGradient,
             onChange
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(AccessoryWrapper, {
-          children: gradientAST.type === "linear-gradient" && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(GradientAnglePicker, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(AccessoryWrapper, {
+          children: gradientAST.type === "linear-gradient" && /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(GradientAnglePicker, {
             gradientAST,
             hasGradient,
             onChange
@@ -37610,7 +37803,7 @@ This message will only show in development mode. It won't appear in production. 
   var custom_gradient_picker_default = CustomGradientPicker;
 
   // packages/components/build-module/gradient-picker/index.js
-  var import_jsx_runtime148 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime177 = __toESM(require_jsx_runtime());
   var isMultipleOriginObject = (obj) => Array.isArray(obj.gradients) && !("gradient" in obj);
   var isMultipleOriginArray = (arr) => {
     return arr.length > 0 && arr.every((gradientObj) => isMultipleOriginObject(gradientObj));
@@ -37623,12 +37816,12 @@ This message will only show in development mode. It won't appear in production. 
     value,
     ...additionalProps
   }) {
-    const gradientOptions = (0, import_element111.useMemo)(() => {
+    const gradientOptions = (0, import_element112.useMemo)(() => {
       return gradients.map(({
         gradient,
         name,
         slug
-      }, index2) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(circular_option_picker_default2.Option, {
+      }, index2) => /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.Option, {
         value: gradient,
         isSelected: value === gradient,
         tooltipText: name || // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
@@ -37647,7 +37840,7 @@ This message will only show in development mode. It won't appear in production. 
         )
       }, slug));
     }, [gradients, value, onChange, clearGradient]);
-    return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(circular_option_picker_default2.OptionGroup, {
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.OptionGroup, {
       className,
       options: gradientOptions,
       ...additionalProps
@@ -37662,7 +37855,7 @@ This message will only show in development mode. It won't appear in production. 
     headingLevel
   }) {
     const instanceId = (0, import_compose45.useInstanceId)(MultipleOrigin);
-    return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(component_default18, {
       spacing: 3,
       className,
       children: gradients.map(({
@@ -37670,13 +37863,13 @@ This message will only show in development mode. It won't appear in production. 
         gradients: gradientSet
       }, index2) => {
         const id3 = `color-palette-${instanceId}-${index2}`;
-        return /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(component_default18, {
+        return /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(component_default18, {
           spacing: 2,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime148.jsx)(ColorHeading, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime177.jsx)(ColorHeading, {
             level: headingLevel,
             id: id3,
             children: name
-          }), /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(SingleOrigin, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(SingleOrigin, {
             clearGradient,
             gradients: gradientSet,
             onChange: (gradient) => onChange(gradient, index2),
@@ -37697,17 +37890,17 @@ This message will only show in development mode. It won't appear in production. 
       "aria-labelledby": ariaLabelledby,
       ...additionalProps
     } = props;
-    const options2 = isMultipleOriginArray(props.gradients) ? /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(MultipleOrigin, {
+    const options2 = isMultipleOriginArray(props.gradients) ? /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(MultipleOrigin, {
       headingLevel,
       ...additionalProps
-    }) : /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(SingleOrigin, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(SingleOrigin, {
       ...additionalProps
     });
     const {
       metaProps,
       labelProps
     } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
-    return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(circular_option_picker_default2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2, {
       ...metaProps,
       ...labelProps,
       actions,
@@ -37726,22 +37919,22 @@ This message will only show in development mode. It won't appear in production. 
     headingLevel = 2,
     ...additionalProps
   }) {
-    const clearGradient = (0, import_element111.useCallback)(() => onChange(void 0), [onChange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(component_default18, {
+    const clearGradient = (0, import_element112.useCallback)(() => onChange(void 0), [onChange]);
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(component_default18, {
       spacing: gradients.length ? 4 : 0,
-      children: [!disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(custom_gradient_picker_default, {
+      children: [!disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(custom_gradient_picker_default, {
         __experimentalIsRenderedInSidebar,
         enableAlpha,
         value,
         onChange
-      }), (gradients.length > 0 || clearable) && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(Component3, {
+      }), (gradients.length > 0 || clearable) && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(Component3, {
         ...additionalProps,
         className,
         clearGradient,
         gradients,
         onChange,
         value,
-        actions: clearable && !disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(circular_option_picker_default2.ButtonAction, {
+        actions: clearable && !disableCustomGradients && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.ButtonAction, {
           onClick: clearGradient,
           accessibleWhenDisabled: true,
           disabled: !value,
@@ -37753,16 +37946,13 @@ This message will only show in development mode. It won't appear in production. 
   }
   var gradient_picker_default = GradientPicker;
 
-  // packages/components/build-module/dropdown-menu/index.js
-  var import_icons12 = __toESM(require_icons());
-
   // packages/components/build-module/navigable-container/menu.js
-  var import_element113 = __toESM(require_element());
+  var import_element114 = __toESM(require_element());
 
   // packages/components/build-module/navigable-container/container.js
-  var import_element112 = __toESM(require_element());
+  var import_element113 = __toESM(require_element());
   var import_dom29 = __toESM(require_dom());
-  var import_jsx_runtime149 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime178 = __toESM(require_jsx_runtime());
   var noop10 = () => {
   };
   var MENU_ITEM_ROLES = ["menuitem", "menuitemradio", "menuitemcheckbox"];
@@ -37775,7 +37965,7 @@ This message will only show in development mode. It won't appear in production. 
     }
     return nextValue;
   }
-  var NavigableContainer = class extends import_element112.Component {
+  var NavigableContainer = class extends import_element113.Component {
     constructor(args) {
       super(args);
       this.onKeyDown = this.onKeyDown.bind(this);
@@ -37886,7 +38076,7 @@ This message will only show in development mode. It won't appear in production. 
         forwardedRef,
         ...restProps
       } = this.props;
-      return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("div", {
+      return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)("div", {
         ref: this.bindContainer,
         ...restProps,
         children
@@ -37894,16 +38084,16 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
   var forwardedNavigableContainer = (props, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(NavigableContainer, {
+    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(NavigableContainer, {
       ...props,
       forwardedRef: ref
     });
   };
   forwardedNavigableContainer.displayName = "NavigableContainer";
-  var container_default = (0, import_element112.forwardRef)(forwardedNavigableContainer);
+  var container_default = (0, import_element113.forwardRef)(forwardedNavigableContainer);
 
   // packages/components/build-module/navigable-container/menu.js
-  var import_jsx_runtime150 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime179 = __toESM(require_jsx_runtime());
   function UnforwardedNavigableMenu({
     role = "menu",
     orientation = "vertical",
@@ -37932,7 +38122,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return void 0;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(container_default, {
       ref,
       stopNavigationEvents: true,
       onlyBrowserTabstops: false,
@@ -37942,12 +38132,12 @@ This message will only show in development mode. It won't appear in production. 
       ...rest
     });
   }
-  var NavigableMenu = (0, import_element113.forwardRef)(UnforwardedNavigableMenu);
-  var menu_default = NavigableMenu;
+  var NavigableMenu = (0, import_element114.forwardRef)(UnforwardedNavigableMenu);
+  var menu_default2 = NavigableMenu;
 
   // packages/components/build-module/navigable-container/tabbable.js
-  var import_element114 = __toESM(require_element());
-  var import_jsx_runtime151 = __toESM(require_jsx_runtime());
+  var import_element115 = __toESM(require_element());
+  var import_jsx_runtime180 = __toESM(require_jsx_runtime());
   function UnforwardedTabbableContainer({
     eventToOffset,
     ...props
@@ -37965,7 +38155,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return void 0;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(container_default, {
       ref,
       stopNavigationEvents: true,
       onlyBrowserTabstops: true,
@@ -37973,11 +38163,11 @@ This message will only show in development mode. It won't appear in production. 
       ...props
     });
   }
-  var TabbableContainer = (0, import_element114.forwardRef)(UnforwardedTabbableContainer);
+  var TabbableContainer = (0, import_element115.forwardRef)(UnforwardedTabbableContainer);
   var tabbable_default = TabbableContainer;
 
   // packages/components/build-module/dropdown-menu/index.js
-  var import_jsx_runtime152 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime181 = __toESM(require_jsx_runtime());
   function mergeProps2(defaultProps = {}, props = {}) {
     const mergedProps = {
       ...defaultProps,
@@ -37996,7 +38186,7 @@ This message will only show in development mode. It won't appear in production. 
       children,
       className,
       controls,
-      icon = import_icons12.menu,
+      icon = menu_default,
       label,
       popoverProps,
       toggleProps,
@@ -38024,7 +38214,7 @@ This message will only show in development mode. It won't appear in production. 
       className: "components-dropdown-menu__popover",
       variant
     }, popoverProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(dropdown_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(dropdown_default, {
       className,
       popoverProps: mergedPopoverProps,
       renderToggle: ({
@@ -38050,7 +38240,7 @@ This message will only show in development mode. It won't appear in production. 
             "is-opened": isOpen
           })
         }, restToggleProps);
-        return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Toggle, {
+        return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(Toggle, {
           ...mergedToggleProps,
           icon,
           onClick: (event) => {
@@ -38080,10 +38270,10 @@ This message will only show in development mode. It won't appear in production. 
             "no-icons": noIcons
           })
         }, menuProps);
-        return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(menu_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(menu_default2, {
           ...mergedMenuProps,
           role: "menu",
-          children: [isFunction2(children) ? children(props) : null, controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(button_default, {
+          children: [isFunction2(children) ? children(props) : null, controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(button_default, {
             __next40pxDefaultSize: true,
             onClick: (event) => {
               event.stopPropagation();
@@ -38183,14 +38373,14 @@ This message will only show in development mode. It won't appear in production. 
   })("&&{margin-top:", space(1), ";}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFxRjRDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IEJ1dHRvbiBmcm9tICcuLi9idXR0b24nO1xuaW1wb3J0IHsgSGVhZGluZyB9IGZyb20gJy4uL2hlYWRpbmcnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRyB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IFZpZXcgfSBmcm9tICcuLi92aWV3JztcbmltcG9ydCBJbnB1dENvbnRyb2wgZnJvbSAnLi4vaW5wdXQtY29udHJvbCc7XG5pbXBvcnQge1xuXHRDb250YWluZXIgYXMgSW5wdXRDb250cm9sQ29udGFpbmVyLFxuXHRJbnB1dCxcblx0QmFja2Ryb3BVSSBhcyBJbnB1dEJhY2tkcm9wVUksXG59IGZyb20gJy4uL2lucHV0LWNvbnRyb2wvc3R5bGVzL2lucHV0LWNvbnRyb2wtc3R5bGVzJztcbmltcG9ydCBDb2xvckluZGljYXRvciBmcm9tICcuLi9jb2xvci1pbmRpY2F0b3InO1xuXG5leHBvcnQgY29uc3QgSW5kaWNhdG9yU3R5bGVkID0gc3R5bGVkKCBDb2xvckluZGljYXRvciApYFxuXHQmJiB7XG5cdFx0ZmxleC1zaHJpbms6IDA7XG5cdFx0d2lkdGg6ICR7IHNwYWNlKCA2ICkgfTtcblx0XHRoZWlnaHQ6ICR7IHNwYWNlKCA2ICkgfTtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IE5hbWVJbnB1dENvbnRyb2wgPSBzdHlsZWQoIElucHV0Q29udHJvbCApYFxuXHQkeyBJbnB1dENvbnRyb2xDb250YWluZXIgfSB7XG5cdFx0YmFja2dyb3VuZDogJHsgQ09MT1JTLmdyYXlbIDEwMCBdIH07XG5cdFx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1hTbWFsbCB9O1xuXHRcdCR7IElucHV0IH0keyBJbnB1dCB9JHsgSW5wdXQgfSR7IElucHV0IH0ge1xuXHRcdFx0aGVpZ2h0OiAkeyBzcGFjZSggOCApIH07XG5cdFx0fVxuXHRcdCR7IElucHV0QmFja2Ryb3BVSSB9JHsgSW5wdXRCYWNrZHJvcFVJIH0keyBJbnB1dEJhY2tkcm9wVUkgfSB7XG5cdFx0XHRib3JkZXItY29sb3I6IHRyYW5zcGFyZW50O1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHR9XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBOYW1lQ29udGFpbmVyID0gc3R5bGVkLmRpdmBcblx0bGluZS1oZWlnaHQ6ICR7IHNwYWNlKCA4ICkgfTtcblx0bWFyZ2luLWxlZnQ6ICR7IHNwYWNlKCAyICkgfTtcblx0bWFyZ2luLXJpZ2h0OiAkeyBzcGFjZSggMiApIH07XG5cdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5cdG92ZXJmbG93OiBoaWRkZW47XG5gO1xuXG5leHBvcnQgY29uc3QgUGFsZXR0ZUhlYWRpbmcgPSBzdHlsZWQoIEhlYWRpbmcgKWBcblx0dGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcblx0bGluZS1oZWlnaHQ6ICR7IHNwYWNlKCA2ICkgfTtcblx0Zm9udC13ZWlnaHQ6IDUwMDtcblx0JiYmIHtcblx0XHRmb250LXNpemU6IDExcHg7XG5cdFx0bWFyZ2luLWJvdHRvbTogMDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFBhbGV0dGVBY3Rpb25zQ29udGFpbmVyID0gc3R5bGVkKCBWaWV3IClgXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuYDtcblxuZXhwb3J0IGNvbnN0IFBhbGV0dGVFZGl0Q29udGVudHMgPSBzdHlsZWQoIFZpZXcgKWBcblx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDIgKSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFBhbGV0dGVFZGl0U3R5bGVzID0gc3R5bGVkKCBWaWV3IClgXG5cdCYmJiB7XG5cdFx0LmNvbXBvbmVudHMtYnV0dG9uLmhhcy1pY29uIHtcblx0XHRcdG1pbi13aWR0aDogMDtcblx0XHRcdHBhZGRpbmc6IDA7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgRG9uZUJ1dHRvbiA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYmIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgUmVtb3ZlQnV0dG9uID0gc3R5bGVkKCBCdXR0b24gKWBcblx0JiYge1xuXHRcdG1hcmdpbi10b3A6ICR7IHNwYWNlKCAxICkgfTtcblx0fVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/palette-edit/index.js
-  var import_jsx_runtime153 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime182 = __toESM(require_jsx_runtime());
   var DEFAULT_COLOR = "#000";
   function NameInput({
     value,
     onChange,
     label
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(NameInputControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(NameInputControl, {
       size: "compact",
       label,
       hideLabelFromVision: true,
@@ -38247,7 +38437,7 @@ This message will only show in development mode. It won't appear in production. 
     onClose = () => {
     }
   }) {
-    const popoverProps = (0, import_element115.useMemo)(() => ({
+    const popoverProps = (0, import_element116.useMemo)(() => ({
       shift: true,
       offset: 20,
       // Disabling resize as it would otherwise cause the popover to show
@@ -38258,10 +38448,10 @@ This message will only show in development mode. It won't appear in production. 
       ...receivedPopoverProps,
       className: clsx_default("components-palette-edit__popover", receivedPopoverProps?.className)
     }), [receivedPopoverProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(popover_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(popover_default, {
       ...popoverProps,
       onClose,
-      children: [!isGradient && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(LegacyAdapter, {
+      children: [!isGradient && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(LegacyAdapter, {
         color: element.color,
         enableAlpha: true,
         onChange: (newColor) => {
@@ -38270,9 +38460,9 @@ This message will only show in development mode. It won't appear in production. 
             color: newColor
           });
         }
-      }), isGradient && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("div", {
+      }), isGradient && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", {
         className: "components-palette-edit__popover-gradient-picker",
-        children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(custom_gradient_picker_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(custom_gradient_picker_default, {
           __experimentalIsRenderedInSidebar: true,
           value: element.gradient,
           onChange: (newGradient) => {
@@ -38295,19 +38485,19 @@ This message will only show in development mode. It won't appear in production. 
     isGradient
   }) {
     const value = isGradient ? element.gradient : element.color;
-    const [isEditingColor, setIsEditingColor] = (0, import_element115.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element115.useState)(null);
-    const popoverProps = (0, import_element115.useMemo)(() => ({
+    const [isEditingColor, setIsEditingColor] = (0, import_element116.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element116.useState)(null);
+    const popoverProps = (0, import_element116.useMemo)(() => ({
       ...receivedPopoverProps,
       // Use the custom palette color item as the popover anchor.
       anchor: popoverAnchor
     }), [popoverAnchor, receivedPopoverProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(component_default35, {
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(component_default35, {
       ref: setPopoverAnchor,
       size: "small",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(component_default9, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(component_default9, {
         justify: "flex-start",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime153.jsx)(button_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime182.jsx)(button_default, {
           size: "small",
           onClick: () => {
             setIsEditingColor(true);
@@ -38320,11 +38510,11 @@ This message will only show in development mode. It won't appear in production. 
           style: {
             padding: 0
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(IndicatorStyled, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(IndicatorStyled, {
             colorValue: value
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default5, {
-          children: !canOnlyChangeValues ? /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(NameInput, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(component_default5, {
+          children: !canOnlyChangeValues ? /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(NameInput, {
             label: isGradient ? (0, import_i18n35.__)("Gradient name") : (0, import_i18n35.__)("Color name"),
             value: element.name,
             onChange: (nextName) => onChange({
@@ -38332,16 +38522,16 @@ This message will only show in development mode. It won't appear in production. 
               name: nextName,
               slug: slugPrefix + kebabCase(nextName !== null && nextName !== void 0 ? nextName : "")
             })
-          }) : /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(NameContainer, {
+          }) : /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(NameContainer, {
             children: element.name.trim().length ? element.name : (
               /* Fall back to non-breaking space to maintain height */
               "\xA0"
             )
           })
-        }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default4, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(RemoveButton, {
+        }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(component_default4, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(RemoveButton, {
             size: "small",
-            icon: import_icons13.lineSolid,
+            icon: line_solid_default,
             label: (0, import_i18n35.sprintf)(
               // translators: %s is a color or gradient name, e.g. "Red".
               (0, import_i18n35.__)("Remove color: %s"),
@@ -38350,7 +38540,7 @@ This message will only show in development mode. It won't appear in production. 
             onClick: onRemove
           })
         })]
-      }), isEditingColor && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(ColorPickerPopover, {
+      }), isEditingColor && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(ColorPickerPopover, {
         isGradient,
         onChange,
         element,
@@ -38368,18 +38558,18 @@ This message will only show in development mode. It won't appear in production. 
     popoverProps,
     addColorRef
   }) {
-    const elementsReferenceRef = (0, import_element115.useRef)();
-    (0, import_element115.useEffect)(() => {
+    const elementsReferenceRef = (0, import_element116.useRef)();
+    (0, import_element116.useEffect)(() => {
       elementsReferenceRef.current = elements2;
     }, [elements2]);
     const debounceOnChange = (0, import_compose46.useDebounce)((updatedElements) => onChange(deduplicateElementSlugs(updatedElements)), 100);
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(component_default18, {
       spacing: 3,
-      children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(component_default36, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(component_default36, {
         isRounded: true,
         isBordered: true,
         isSeparated: true,
-        children: elements2.map((element, index2) => /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(Option2, {
+        children: elements2.map((element, index2) => /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(Option2, {
           isGradient,
           canOnlyChangeValues,
           element,
@@ -38422,13 +38612,13 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const isGradient = !!gradients;
     const elements2 = isGradient ? gradients : colors;
-    const [isEditing, setIsEditing] = (0, import_element115.useState)(false);
-    const [editingElement, setEditingElement] = (0, import_element115.useState)(null);
+    const [isEditing, setIsEditing] = (0, import_element116.useState)(false);
+    const [editingElement, setEditingElement] = (0, import_element116.useState)(null);
     const isAdding = isEditing && !!editingElement && elements2[editingElement] && !elements2[editingElement].slug;
     const elementsLength = elements2.length;
     const hasElements = elementsLength > 0;
     const debounceOnChange = (0, import_compose46.useDebounce)(onChange, 100);
-    const onSelectPaletteItem = (0, import_element115.useCallback)((value, newEditingElementIndex) => {
+    const onSelectPaletteItem = (0, import_element116.useCallback)((value, newEditingElementIndex) => {
       const selectedElement = newEditingElementIndex === void 0 ? void 0 : elements2[newEditingElementIndex];
       const key = isGradient ? "gradient" : "color";
       if (!!selectedElement && selectedElement[key] === value) {
@@ -38437,25 +38627,25 @@ This message will only show in development mode. It won't appear in production. 
         setIsEditing(true);
       }
     }, [isGradient, elements2]);
-    const addColorRef = (0, import_element115.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(PaletteEditStyles, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(component_default9, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime153.jsx)(PaletteHeading, {
+    const addColorRef = (0, import_element116.useRef)(null);
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(PaletteEditStyles, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(component_default9, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime182.jsx)(PaletteHeading, {
           level: paletteLabelHeadingLevel,
           children: paletteLabel
-        }), /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(PaletteActionsContainer, {
-          children: [hasElements && isEditing && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(DoneButton, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(PaletteActionsContainer, {
+          children: [hasElements && isEditing && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(DoneButton, {
             size: "small",
             onClick: () => {
               setIsEditing(false);
               setEditingElement(null);
             },
             children: (0, import_i18n35.__)("Done")
-          }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(button_default, {
+          }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(button_default, {
             ref: addColorRef,
             size: "small",
             isPressed: isAdding,
-            icon: import_icons13.plus,
+            icon: plus_default,
             label: isGradient ? (0, import_i18n35.__)("Add gradient") : (0, import_i18n35.__)("Add color"),
             onClick: () => {
               const {
@@ -38478,18 +38668,18 @@ This message will only show in development mode. It won't appear in production. 
               setIsEditing(true);
               setEditingElement(elements2.length);
             }
-          }), hasElements && (!isEditing || !canOnlyChangeValues || canReset) && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(dropdown_menu_default, {
-            icon: import_icons13.moreVertical,
+          }), hasElements && (!isEditing || !canOnlyChangeValues || canReset) && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(dropdown_menu_default, {
+            icon: more_vertical_default,
             label: isGradient ? (0, import_i18n35.__)("Gradient options") : (0, import_i18n35.__)("Color options"),
             toggleProps: {
               size: "small"
             },
             children: ({
               onClose
-            }) => /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(import_jsx_runtime153.Fragment, {
-              children: /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(menu_default, {
+            }) => /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(import_jsx_runtime182.Fragment, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(menu_default2, {
                 role: "menu",
-                children: [!isEditing && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(button_default, {
+                children: [!isEditing && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(button_default, {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
                   onClick: () => {
@@ -38498,7 +38688,7 @@ This message will only show in development mode. It won't appear in production. 
                   },
                   className: "components-palette-edit__menu-button",
                   children: (0, import_i18n35.__)("Show details")
-                }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(button_default, {
+                }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(button_default, {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
                   onClick: () => {
@@ -38509,7 +38699,7 @@ This message will only show in development mode. It won't appear in production. 
                   },
                   className: "components-palette-edit__menu-button",
                   children: isGradient ? (0, import_i18n35.__)("Remove all gradients") : (0, import_i18n35.__)("Remove all colors")
-                }), canReset && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(button_default, {
+                }), canReset && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(button_default, {
                   __next40pxDefaultSize: true,
                   className: "components-palette-edit__menu-button",
                   variant: "tertiary",
@@ -38524,8 +38714,8 @@ This message will only show in development mode. It won't appear in production. 
             })
           })]
         })]
-      }), hasElements && /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(PaletteEditContents, {
-        children: [isEditing && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(PaletteEditListView, {
+      }), hasElements && /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(PaletteEditContents, {
+        children: [isEditing && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(PaletteEditListView, {
           canOnlyChangeValues,
           elements: elements2,
           onChange,
@@ -38533,7 +38723,7 @@ This message will only show in development mode. It won't appear in production. 
           isGradient,
           popoverProps,
           addColorRef
-        }), !isEditing && editingElement !== null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(ColorPickerPopover, {
+        }), !isEditing && editingElement !== null && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(ColorPickerPopover, {
           isGradient,
           onClose: () => setEditingElement(null),
           onChange: (newElement) => {
@@ -38549,18 +38739,18 @@ This message will only show in development mode. It won't appear in production. 
           },
           element: elements2[editingElement !== null && editingElement !== void 0 ? editingElement : -1],
           popoverProps
-        }), !isEditing && (isGradient ? /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(gradient_picker_default, {
+        }), !isEditing && (isGradient ? /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(gradient_picker_default, {
           gradients,
           onChange: onSelectPaletteItem,
           clearable: false,
           disableCustomGradients: true
-        }) : /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(color_palette_default, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(color_palette_default, {
           colors,
           onChange: onSelectPaletteItem,
           clearable: false,
           disableCustomColors: true
         }))]
-      }), !hasElements && emptyMessage && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(PaletteEditContents, {
+      }), !hasElements && emptyMessage && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(PaletteEditContents, {
         children: emptyMessage
       })]
     });
@@ -38569,10 +38759,9 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/combobox-control/index.js
   var import_i18n37 = __toESM(require_i18n());
-  var import_element119 = __toESM(require_element());
+  var import_element120 = __toESM(require_element());
   var import_compose49 = __toESM(require_compose());
   var import_a11y5 = __toESM(require_a11y());
-  var import_icons14 = __toESM(require_icons());
 
   // packages/components/build-module/combobox-control/styles.js
   var deprecatedDefaultSize = ({
@@ -38586,8 +38775,8 @@ This message will only show in development mode. It won't appear in production. 
   })("height:38px;padding-left:", space(2), ";padding-right:", space(2), ";", deprecatedDefaultSize, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF1QjhDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgRmxleCB9IGZyb20gJy4uL2ZsZXgnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgdHlwZSB7IENvbWJvYm94Q29udHJvbFByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5cbmNvbnN0IGRlcHJlY2F0ZWREZWZhdWx0U2l6ZSA9ICgge1xuXHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG59OiBQaWNrPCBDb21ib2JveENvbnRyb2xQcm9wcywgJ19fbmV4dDQwcHhEZWZhdWx0U2l6ZScgPiApID0+XG5cdCEgX19uZXh0NDBweERlZmF1bHRTaXplICYmXG5cdGNzc2Bcblx0XHRoZWlnaHQ6IDI4cHg7IC8vIDMwcHggLSAycHggdmVydGljYWwgYm9yZGVycyBvbiBwYXJlbnQgY29udGFpbmVyXG5cdFx0cGFkZGluZy1sZWZ0OiAkeyBzcGFjZSggMSApIH07XG5cdFx0cGFkZGluZy1yaWdodDogJHsgc3BhY2UoIDEgKSB9O1xuXHRgO1xuXG5leHBvcnQgY29uc3QgSW5wdXRXcmFwcGVyRmxleCA9IHN0eWxlZCggRmxleCApYFxuXHRoZWlnaHQ6IDM4cHg7IC8vIDQwcHggLSAycHggdmVydGljYWwgYm9yZGVycyBvbiBwYXJlbnQgY29udGFpbmVyXG5cdHBhZGRpbmctbGVmdDogJHsgc3BhY2UoIDIgKSB9O1xuXHRwYWRkaW5nLXJpZ2h0OiAkeyBzcGFjZSggMiApIH07XG5cblx0JHsgZGVwcmVjYXRlZERlZmF1bHRTaXplIH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/form-token-field/token-input.js
-  var import_element116 = __toESM(require_element());
-  var import_jsx_runtime154 = __toESM(require_jsx_runtime());
+  var import_element117 = __toESM(require_element());
+  var import_jsx_runtime183 = __toESM(require_jsx_runtime());
   function UnForwardedTokenInput(props, ref) {
     const {
       value,
@@ -38600,7 +38789,7 @@ This message will only show in development mode. It won't appear in production. 
       onBlur,
       ...restProps
     } = props;
-    const [hasFocus2, setHasFocus] = (0, import_element116.useState)(false);
+    const [hasFocus2, setHasFocus] = (0, import_element117.useState)(false);
     const size3 = value ? value.length + 1 : 0;
     const onChangeHandler = (event) => {
       if (onChange) {
@@ -38617,7 +38806,7 @@ This message will only show in development mode. It won't appear in production. 
       setHasFocus(false);
       onBlur?.(e3);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("input", {
+    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("input", {
       ref,
       id: `components-form-token-input-${instanceId}`,
       type: "text",
@@ -38643,13 +38832,13 @@ This message will only show in development mode. It won't appear in production. 
       "aria-describedby": `components-form-token-suggestions-howto-${instanceId}`
     });
   }
-  var TokenInput = (0, import_element116.forwardRef)(UnForwardedTokenInput);
+  var TokenInput = (0, import_element117.forwardRef)(UnForwardedTokenInput);
   var token_input_default = TokenInput;
 
   // packages/components/build-module/form-token-field/suggestions-list.js
   var import_compose47 = __toESM(require_compose());
   var import_i18n36 = __toESM(require_i18n());
-  var import_jsx_runtime155 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime184 = __toESM(require_jsx_runtime());
   var handleMouseDown = (e3) => {
     e3.preventDefault();
   };
@@ -38696,7 +38885,7 @@ This message will only show in development mode. It won't appear in production. 
         suggestionAfterMatch: transformedSuggestion.substring(indexOfMatch + matchText.length)
       };
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)("ul", {
+    return /* @__PURE__ */ (0, import_jsx_runtime184.jsxs)("ul", {
       ref: listRef,
       className: "components-form-token-field__suggestions-list",
       id: `components-form-token-suggestions-${instanceId}`,
@@ -38715,9 +38904,9 @@ This message will only show in development mode. It won't appear in production. 
             item: suggestion
           });
         } else if (matchText) {
-          output = /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)("span", {
+          output = /* @__PURE__ */ (0, import_jsx_runtime184.jsxs)("span", {
             "aria-label": displayTransform(suggestion),
-            children: [matchText.suggestionBeforeMatch, /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("strong", {
+            children: [matchText.suggestionBeforeMatch, /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("strong", {
               className: "components-form-token-field__suggestion-match",
               children: matchText.suggestionMatch
             }), matchText.suggestionAfterMatch]
@@ -38725,7 +38914,7 @@ This message will only show in development mode. It won't appear in production. 
         } else {
           output = displayTransform(suggestion);
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("li", {
+        return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("li", {
           id: `components-form-token-suggestions-${instanceId}-${index2}`,
           role: "option",
           className,
@@ -38736,7 +38925,7 @@ This message will only show in development mode. It won't appear in production. 
           "aria-disabled": isDisabled,
           children: output
         }, key);
-      }), suggestions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("li", {
+      }), suggestions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("li", {
         className: "components-form-token-field__suggestion is-empty",
         children: (0, import_i18n36.__)("No items found")
       })]
@@ -38745,15 +38934,15 @@ This message will only show in development mode. It won't appear in production. 
   var suggestions_list_default = SuggestionsList;
 
   // packages/components/build-module/higher-order/with-focus-outside/index.js
-  var import_element117 = __toESM(require_element());
+  var import_element118 = __toESM(require_element());
   var import_compose48 = __toESM(require_compose());
-  var import_jsx_runtime156 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime185 = __toESM(require_jsx_runtime());
   var with_focus_outside_default = (0, import_compose48.createHigherOrderComponent)((WrappedComponent) => (props) => {
-    const [handleFocusOutside, setHandleFocusOutside] = (0, import_element117.useState)(void 0);
-    const bindFocusOutsideHandler = (0, import_element117.useCallback)((node2) => setHandleFocusOutside(() => node2?.handleFocusOutside ? node2.handleFocusOutside.bind(node2) : void 0), []);
-    return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)("div", {
+    const [handleFocusOutside, setHandleFocusOutside] = (0, import_element118.useState)(void 0);
+    const bindFocusOutsideHandler = (0, import_element118.useCallback)((node2) => setHandleFocusOutside(() => node2?.handleFocusOutside ? node2.handleFocusOutside.bind(node2) : void 0), []);
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)("div", {
       ...(0, import_compose48.__experimentalUseFocusOutside)(handleFocusOutside),
-      children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(WrappedComponent, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(WrappedComponent, {
         ref: bindFocusOutsideHandler,
         ...props
       })
@@ -38801,13 +38990,13 @@ This message will only show in development mode. It won't appear in production. 
   })(commonPathProps, ";stroke:currentColor;stroke-linecap:round;transform-origin:50% 50%;animation:1.4s linear infinite both ", spinAnimation, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEwQzJDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcywga2V5ZnJhbWVzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRyB9IGZyb20gJy4uL3V0aWxzJztcblxuY29uc3Qgc3BpbkFuaW1hdGlvbiA9IGtleWZyYW1lc2Bcblx0ZnJvbSB7XG5cdFx0dHJhbnNmb3JtOiByb3RhdGUoMGRlZyk7XG5cdH1cblx0dG8ge1xuXHRcdHRyYW5zZm9ybTogcm90YXRlKDM2MGRlZyk7XG5cdH1cbiBgO1xuXG5leHBvcnQgY29uc3QgU3R5bGVkU3Bpbm5lciA9IHN0eWxlZC5zdmdgXG5cdHdpZHRoOiAkeyBDT05GSUcuc3Bpbm5lclNpemUgfXB4O1xuXHRoZWlnaHQ6ICR7IENPTkZJRy5zcGlubmVyU2l6ZSB9cHg7XG5cdGRpc3BsYXk6IGlubGluZS1ibG9jaztcblx0bWFyZ2luOiA1cHggMTFweCAwO1xuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdG92ZXJmbG93OiB2aXNpYmxlO1xuXHRvcGFjaXR5OiAxO1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcbmA7XG5cbmNvbnN0IGNvbW1vblBhdGhQcm9wcyA9IGNzc2Bcblx0ZmlsbDogdHJhbnNwYXJlbnQ7XG5cdHN0cm9rZS13aWR0aDogMS41cHg7XG5gO1xuXG5leHBvcnQgY29uc3QgU3Bpbm5lclRyYWNrID0gc3R5bGVkLmNpcmNsZWBcblx0JHsgY29tbW9uUGF0aFByb3BzIH07XG5cdHN0cm9rZTogJHsgQ09MT1JTLmdyYXlbIDMwMCBdIH07XG5gO1xuXG5leHBvcnQgY29uc3QgU3Bpbm5lckluZGljYXRvciA9IHN0eWxlZC5wYXRoYFxuXHQkeyBjb21tb25QYXRoUHJvcHMgfTtcblx0c3Ryb2tlOiBjdXJyZW50Q29sb3I7XG5cdHN0cm9rZS1saW5lY2FwOiByb3VuZDtcblx0dHJhbnNmb3JtLW9yaWdpbjogNTAlIDUwJTtcblx0YW5pbWF0aW9uOiAxLjRzIGxpbmVhciBpbmZpbml0ZSBib3RoICR7IHNwaW5BbmltYXRpb24gfTtcbmA7XG4iXX0= */"));
 
   // packages/components/build-module/spinner/index.js
-  var import_element118 = __toESM(require_element());
-  var import_jsx_runtime157 = __toESM(require_jsx_runtime());
+  var import_element119 = __toESM(require_element());
+  var import_jsx_runtime186 = __toESM(require_jsx_runtime());
   function UnforwardedSpinner({
     className,
     ...props
   }, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime157.jsxs)(StyledSpinner, {
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)(StyledSpinner, {
       className: clsx_default("components-spinner", className),
       viewBox: "0 0 100 100",
       width: "16",
@@ -38817,25 +39006,25 @@ This message will only show in development mode. It won't appear in production. 
       focusable: "false",
       ...props,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime157.jsx)(SpinnerTrack, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime186.jsx)(SpinnerTrack, {
         cx: "50",
         cy: "50",
         r: "50",
         vectorEffect: "non-scaling-stroke"
-      }), /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(SpinnerIndicator, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(SpinnerIndicator, {
         d: "m 50 0 a 50 50 0 0 1 50 50",
         vectorEffect: "non-scaling-stroke"
       })]
     });
   }
-  var Spinner = (0, import_element118.forwardRef)(UnforwardedSpinner);
+  var Spinner = (0, import_element119.forwardRef)(UnforwardedSpinner);
   var spinner_default = Spinner;
 
   // packages/components/build-module/combobox-control/index.js
-  var import_jsx_runtime158 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime187 = __toESM(require_jsx_runtime());
   var noop11 = () => {
   };
-  var DetectOutside = with_focus_outside_default(class extends import_element119.Component {
+  var DetectOutside = with_focus_outside_default(class extends import_element120.Component {
     handleFocusOutside(event) {
       this.props.onFocusOutside(event);
     }
@@ -38873,12 +39062,12 @@ This message will only show in development mode. It won't appear in production. 
     const currentOption = options2.find((option) => option.value === value);
     const currentLabel = (_currentOption$label = currentOption?.label) !== null && _currentOption$label !== void 0 ? _currentOption$label : "";
     const instanceId = (0, import_compose49.useInstanceId)(ComboboxControl, "combobox-control");
-    const [selectedSuggestion, setSelectedSuggestion] = (0, import_element119.useState)(currentOption || null);
-    const [isExpanded, setIsExpanded] = (0, import_element119.useState)(false);
-    const [inputHasFocus, setInputHasFocus] = (0, import_element119.useState)(false);
-    const [inputValue, setInputValue] = (0, import_element119.useState)("");
-    const inputContainer = (0, import_element119.useRef)(null);
-    const matchingSuggestions = (0, import_element119.useMemo)(() => {
+    const [selectedSuggestion, setSelectedSuggestion] = (0, import_element120.useState)(currentOption || null);
+    const [isExpanded, setIsExpanded] = (0, import_element120.useState)(false);
+    const [inputHasFocus, setInputHasFocus] = (0, import_element120.useState)(false);
+    const [inputValue, setInputValue] = (0, import_element120.useState)("");
+    const inputContainer = (0, import_element120.useRef)(null);
+    const matchingSuggestions = (0, import_element120.useMemo)(() => {
       const startsWithMatch = [];
       const containsMatch = [];
       const match5 = normalizeTextString(inputValue);
@@ -38977,14 +39166,14 @@ This message will only show in development mode. It won't appear in production. 
     const handleResetStopPropagation = (event) => {
       event.stopPropagation();
     };
-    (0, import_element119.useEffect)(() => {
+    (0, import_element120.useEffect)(() => {
       const hasMatchingSuggestions = matchingSuggestions.length > 0;
       const hasSelectedMatchingSuggestions = getIndexOfMatchingSuggestion(selectedSuggestion, matchingSuggestions) > 0;
       if (hasMatchingSuggestions && !hasSelectedMatchingSuggestions) {
         setSelectedSuggestion(matchingSuggestions[0]);
       }
     }, [matchingSuggestions, selectedSuggestion]);
-    (0, import_element119.useEffect)(() => {
+    (0, import_element120.useEffect)(() => {
       const hasMatchingSuggestions = matchingSuggestions.length > 0;
       if (isExpanded) {
         const message3 = hasMatchingSuggestions ? (0, import_i18n37.sprintf)(
@@ -39000,9 +39189,9 @@ This message will only show in development mode. It won't appear in production. 
       __next40pxDefaultSize,
       size: void 0
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(DetectOutside, {
+    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(DetectOutside, {
       onFocusOutside,
-      children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(base_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(base_control_default, {
         __nextHasNoMarginBottom,
         __associatedWPComponentName: "ComboboxControl",
         className: clsx_default(className, "components-combobox-control"),
@@ -39010,14 +39199,14 @@ This message will only show in development mode. It won't appear in production. 
         id: `components-form-token-input-${instanceId}`,
         hideLabelFromVision,
         help,
-        children: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)("div", {
           className: "components-combobox-control__suggestions-container",
           tabIndex: -1,
           onKeyDown,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(InputWrapperFlex, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(InputWrapperFlex, {
             __next40pxDefaultSize,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime158.jsx)(component_default5, {
-              children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(token_input_default, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime187.jsx)(component_default5, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(token_input_default, {
                 className: "components-combobox-control__input",
                 instanceId,
                 ref: inputContainer,
@@ -39030,15 +39219,15 @@ This message will only show in development mode. It won't appear in production. 
                 selectedSuggestionIndex: getIndexOfMatchingSuggestion(selectedSuggestion, matchingSuggestions),
                 onChange: onInputChange
               })
-            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(spinner_default, {}), allowReset && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(button_default, {
+            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(spinner_default, {}), allowReset && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(button_default, {
               size: "small",
-              icon: import_icons14.closeSmall,
+              icon: close_small_default,
               disabled: !value,
               onClick: handleOnReset,
               onKeyDown: handleResetStopPropagation,
               label: (0, import_i18n37.__)("Reset")
             })]
-          }), isExpanded && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(suggestions_list_default, {
+          }), isExpanded && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(suggestions_list_default, {
             instanceId,
             match: {
               label: inputValue,
@@ -39059,10 +39248,10 @@ This message will only show in development mode. It won't appear in production. 
   var combobox_control_default = ComboboxControl;
 
   // packages/components/build-module/composite/legacy/index.js
-  var import_element120 = __toESM(require_element());
+  var import_element121 = __toESM(require_element());
   var import_compose50 = __toESM(require_compose());
   var import_deprecated15 = __toESM(require_deprecated());
-  var import_jsx_runtime159 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime188 = __toESM(require_jsx_runtime());
   function mapLegacyStatePropsToComponentProps(legacyProps) {
     if (legacyProps.state) {
       const {
@@ -39113,7 +39302,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       });
       delete props.baseId;
-      return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(ProxiedComponent, {
+      return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(ProxiedComponent, {
         ...props,
         store
       });
@@ -39121,12 +39310,12 @@ This message will only show in development mode. It won't appear in production. 
     Component9.displayName = displayName;
     return Component9;
   }
-  var UnproxiedCompositeGroup = (0, import_element120.forwardRef)(({
+  var UnproxiedCompositeGroup = (0, import_element121.forwardRef)(({
     role,
     ...props
   }, ref) => {
     const Component9 = role === "row" ? Composite3.Row : Composite3.Group;
-    return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(Component9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(Component9, {
       ref,
       role,
       ...props
@@ -39177,13 +39366,12 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/confirm-dialog/component.js
   var import_i18n39 = __toESM(require_i18n());
-  var import_element123 = __toESM(require_element());
+  var import_element124 = __toESM(require_element());
 
   // packages/components/build-module/modal/index.js
-  var import_element122 = __toESM(require_element());
+  var import_element123 = __toESM(require_element());
   var import_compose52 = __toESM(require_compose());
   var import_i18n38 = __toESM(require_i18n());
-  var import_icons15 = __toESM(require_icons());
   var import_dom30 = __toESM(require_dom());
 
   // packages/components/build-module/modal/aria-helper.js
@@ -39219,16 +39407,16 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/modal/use-modal-exit-animation.js
   var import_compose51 = __toESM(require_compose());
-  var import_element121 = __toESM(require_element());
+  var import_element122 = __toESM(require_element());
   var import_warning6 = __toESM(require_warning());
   var FRAME_ANIMATION_DURATION = config_values_default.transitionDuration;
   var FRAME_ANIMATION_DURATION_NUMBER = Number.parseInt(config_values_default.transitionDuration);
   var EXIT_ANIMATION_NAME = "components-modal__disappear-animation";
   function useModalExitAnimation() {
-    const frameRef = (0, import_element121.useRef)();
-    const [isAnimatingOut, setIsAnimatingOut] = (0, import_element121.useState)(false);
+    const frameRef = (0, import_element122.useRef)();
+    const [isAnimatingOut, setIsAnimatingOut] = (0, import_element122.useState)(false);
     const isReducedMotion = (0, import_compose51.useReducedMotion)();
-    const closeModal = (0, import_element121.useCallback)(() => new Promise((closeModalResolve) => {
+    const closeModal = (0, import_element122.useCallback)(() => new Promise((closeModalResolve) => {
       const frameEl = frameRef.current;
       if (isReducedMotion) {
         closeModalResolve();
@@ -39277,8 +39465,8 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/modal/index.js
-  var import_jsx_runtime160 = __toESM(require_jsx_runtime());
-  var ModalContext = (0, import_element122.createContext)(/* @__PURE__ */ new Set());
+  var import_jsx_runtime189 = __toESM(require_jsx_runtime());
+  var ModalContext = (0, import_element123.createContext)(/* @__PURE__ */ new Set());
   ModalContext.displayName = "ModalContext";
   var bodyOpenClasses = /* @__PURE__ */ new Map();
   function UnforwardedModal(props, forwardedRef) {
@@ -39309,23 +39497,23 @@ This message will only show in development mode. It won't appear in production. 
       headerActions = null,
       __experimentalHideHeader = false
     } = props;
-    const ref = (0, import_element122.useRef)();
+    const ref = (0, import_element123.useRef)();
     const instanceId = (0, import_compose52.useInstanceId)(Modal);
     const headingId = title ? `components-modal-header-${instanceId}` : aria.labelledby;
     const focusOnMountRef = (0, import_compose52.useFocusOnMount)(focusOnMount === "firstContentElement" ? "firstElement" : focusOnMount);
     const constrainedTabbingRef = (0, import_compose52.useConstrainedTabbing)();
     const focusReturnRef = (0, import_compose52.useFocusReturn)();
-    const contentRef = (0, import_element122.useRef)(null);
-    const childrenContainerRef = (0, import_element122.useRef)(null);
-    const [hasScrolledContent, setHasScrolledContent] = (0, import_element122.useState)(false);
-    const [hasScrollableContent, setHasScrollableContent] = (0, import_element122.useState)(false);
+    const contentRef = (0, import_element123.useRef)(null);
+    const childrenContainerRef = (0, import_element123.useRef)(null);
+    const [hasScrolledContent, setHasScrolledContent] = (0, import_element123.useState)(false);
+    const [hasScrollableContent, setHasScrollableContent] = (0, import_element123.useState)(false);
     let sizeClass;
     if (isFullScreen || size3 === "fill") {
       sizeClass = "is-full-screen";
     } else if (size3) {
       sizeClass = `has-size-${size3}`;
     }
-    const isContentScrollable = (0, import_element122.useCallback)(() => {
+    const isContentScrollable = (0, import_element123.useCallback)(() => {
       if (!contentRef.current) {
         return;
       }
@@ -39336,17 +39524,17 @@ This message will only show in development mode. It won't appear in production. 
         setHasScrollableContent(false);
       }
     }, [contentRef]);
-    (0, import_element122.useEffect)(() => {
+    (0, import_element123.useEffect)(() => {
       modalize(ref.current);
       return () => unmodalize();
     }, []);
-    const onRequestCloseRef = (0, import_element122.useRef)();
-    (0, import_element122.useEffect)(() => {
+    const onRequestCloseRef = (0, import_element123.useRef)();
+    (0, import_element123.useEffect)(() => {
       onRequestCloseRef.current = onRequestClose;
     }, [onRequestClose]);
-    const dismissers = (0, import_element122.useContext)(ModalContext);
-    const [nestedDismissers] = (0, import_element122.useState)(() => /* @__PURE__ */ new Set());
-    (0, import_element122.useEffect)(() => {
+    const dismissers = (0, import_element123.useContext)(ModalContext);
+    const [nestedDismissers] = (0, import_element123.useState)(() => /* @__PURE__ */ new Set());
+    (0, import_element123.useEffect)(() => {
       dismissers.add(onRequestCloseRef);
       for (const dismisser of dismissers) {
         if (dismisser !== onRequestCloseRef) {
@@ -39360,7 +39548,7 @@ This message will only show in development mode. It won't appear in production. 
         dismissers.delete(onRequestCloseRef);
       };
     }, [dismissers, nestedDismissers]);
-    (0, import_element122.useEffect)(() => {
+    (0, import_element123.useEffect)(() => {
       var _bodyOpenClasses$get;
       const theClass = bodyOpenClassName;
       const oneMore = 1 + ((_bodyOpenClasses$get = bodyOpenClasses.get(theClass)) !== null && _bodyOpenClasses$get !== void 0 ? _bodyOpenClasses$get : 0);
@@ -39382,7 +39570,7 @@ This message will only show in development mode. It won't appear in production. 
       frameStyle,
       overlayClassname
     } = useModalExitAnimation();
-    (0, import_element122.useLayoutEffect)(() => {
+    (0, import_element123.useLayoutEffect)(() => {
       if (!window.ResizeObserver || !childrenContainerRef.current) {
         return;
       }
@@ -39399,7 +39587,7 @@ This message will only show in development mode. It won't appear in production. 
         closeModal().then(() => onRequestClose(event));
       }
     }
-    const onContentContainerScroll = (0, import_element122.useCallback)((e3) => {
+    const onContentContainerScroll = (0, import_element123.useCallback)((e3) => {
       var _e$currentTarget$scro;
       const scrollY2 = (_e$currentTarget$scro = e3?.currentTarget?.scrollTop) !== null && _e$currentTarget$scro !== void 0 ? _e$currentTarget$scro : -1;
       if (!hasScrolledContent && scrollY2 > 0) {
@@ -39435,14 +39623,14 @@ This message will only show in development mode. It won't appear in production. 
     };
     const modal = (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", {
+      /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", {
         ref: (0, import_compose52.useMergeRefs)([ref, forwardedRef]),
         className: clsx_default("components-modal__screen-overlay", overlayClassname, overlayClassnameProp),
         onKeyDown: withIgnoreIMEEvents(handleEscapeKeyDown),
         ...shouldCloseOnClickOutside ? overlayPressHandlers : {},
-        children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(style_provider_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(style_provider_default, {
           document,
-          children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", {
             className: clsx_default("components-modal__frame", sizeClass, className),
             style: {
               ...frameStyle,
@@ -39455,7 +39643,7 @@ This message will only show in development mode. It won't appear in production. 
             "aria-describedby": aria.describedby,
             tabIndex: -1,
             onKeyDown,
-            children: /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)("div", {
+            children: /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)("div", {
               className: clsx_default("components-modal__content", {
                 "hide-header": __experimentalHideHeader,
                 "is-scrollable": hasScrollableContent,
@@ -39466,31 +39654,31 @@ This message will only show in development mode. It won't appear in production. 
               ref: contentRef,
               "aria-label": hasScrollableContent ? (0, import_i18n38.__)("Scrollable section") : void 0,
               tabIndex: hasScrollableContent ? 0 : void 0,
-              children: [!__experimentalHideHeader && /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)("div", {
+              children: [!__experimentalHideHeader && /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)("div", {
                 className: "components-modal__header",
-                children: [/* @__PURE__ */ (0, import_jsx_runtime160.jsxs)("div", {
+                children: [/* @__PURE__ */ (0, import_jsx_runtime189.jsxs)("div", {
                   className: "components-modal__header-heading-container",
-                  children: [icon && /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("span", {
+                  children: [icon && /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("span", {
                     className: "components-modal__icon-container",
                     "aria-hidden": true,
                     children: icon
-                  }), title && /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("h1", {
+                  }), title && /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("h1", {
                     id: headingId,
                     className: "components-modal__header-heading",
                     children: title
                   })]
-                }), headerActions, isDismissible && /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(import_jsx_runtime160.Fragment, {
-                  children: [/* @__PURE__ */ (0, import_jsx_runtime160.jsx)(component_default6, {
+                }), headerActions, isDismissible && /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(import_jsx_runtime189.Fragment, {
+                  children: [/* @__PURE__ */ (0, import_jsx_runtime189.jsx)(component_default6, {
                     marginBottom: 0,
                     marginLeft: 2
-                  }), /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(button_default, {
+                  }), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(button_default, {
                     size: "compact",
                     onClick: (event) => closeModal().then(() => onRequestClose(event)),
-                    icon: import_icons15.close,
+                    icon: close_default,
                     label: closeButtonLabel || (0, import_i18n38.__)("Close")
                   })]
                 })]
-              }), /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", {
+              }), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", {
                 ref: (0, import_compose52.useMergeRefs)([childrenContainerRef, focusOnMount === "firstContentElement" ? focusOnMountRef : null]),
                 children
               })]
@@ -39499,12 +39687,12 @@ This message will only show in development mode. It won't appear in production. 
         })
       })
     );
-    return (0, import_element122.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime160.jsx)(ModalContext.Provider, {
+    return (0, import_element123.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime189.jsx)(ModalContext.Provider, {
       value: nestedDismissers,
       children: modal
     }), document.body);
   }
-  var Modal = (0, import_element122.forwardRef)(UnforwardedModal);
+  var Modal = (0, import_element123.forwardRef)(UnforwardedModal);
   var modal_default = Modal;
 
   // packages/components/build-module/confirm-dialog/styles.js
@@ -39522,7 +39710,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/confirm-dialog/component.js
-  var import_jsx_runtime161 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime190 = __toESM(require_jsx_runtime());
   var UnconnectedConfirmDialog = (props, forwardedRef) => {
     const {
       isOpen: isOpenProp,
@@ -39535,22 +39723,22 @@ This message will only show in development mode. It won't appear in production. 
     } = useContextSystem(props, "ConfirmDialog");
     const cx3 = useCx();
     const wrapperClassName = cx3(wrapper2);
-    const cancelButtonRef = (0, import_element123.useRef)();
-    const confirmButtonRef = (0, import_element123.useRef)();
-    const [isOpen, setIsOpen] = (0, import_element123.useState)();
-    const [shouldSelfClose, setShouldSelfClose] = (0, import_element123.useState)();
-    (0, import_element123.useEffect)(() => {
+    const cancelButtonRef = (0, import_element124.useRef)();
+    const confirmButtonRef = (0, import_element124.useRef)();
+    const [isOpen, setIsOpen] = (0, import_element124.useState)();
+    const [shouldSelfClose, setShouldSelfClose] = (0, import_element124.useState)();
+    (0, import_element124.useEffect)(() => {
       const isIsOpenSet = typeof isOpenProp !== "undefined";
       setIsOpen(isIsOpenSet ? isOpenProp : true);
       setShouldSelfClose(!isIsOpenSet);
     }, [isOpenProp]);
-    const handleEvent = (0, import_element123.useCallback)((callback) => (event) => {
+    const handleEvent = (0, import_element124.useCallback)((callback) => (event) => {
       callback?.(event);
       if (shouldSelfClose) {
         setIsOpen(false);
       }
     }, [shouldSelfClose, setIsOpen]);
-    const handleEnter = (0, import_element123.useCallback)((event) => {
+    const handleEnter = (0, import_element124.useCallback)((event) => {
       const isConfirmOrCancelButton = event.target === cancelButtonRef.current || event.target === confirmButtonRef.current;
       if (!isConfirmOrCancelButton && event.key === "Enter") {
         handleEvent(onConfirm)(event);
@@ -39558,8 +39746,8 @@ This message will only show in development mode. It won't appear in production. 
     }, [handleEvent, onConfirm]);
     const cancelLabel = cancelButtonText !== null && cancelButtonText !== void 0 ? cancelButtonText : (0, import_i18n39.__)("Cancel");
     const confirmLabel = confirmButtonText !== null && confirmButtonText !== void 0 ? confirmButtonText : (0, import_i18n39.__)("OK");
-    return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(import_jsx_runtime161.Fragment, {
-      children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(modal_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(import_jsx_runtime190.Fragment, {
+      children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(modal_default, {
         onRequestClose: handleEvent(onCancel),
         onKeyDown: handleEnter,
         closeButtonLabel: cancelLabel,
@@ -39568,20 +39756,20 @@ This message will only show in development mode. It won't appear in production. 
         overlayClassName: wrapperClassName,
         __experimentalHideHeader: true,
         ...otherProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(component_default18, {
           spacing: 8,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime161.jsx)(component_default8, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)(component_default8, {
             children
-          }), /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)(component_default3, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(component_default3, {
             direction: "row",
             justify: "flex-end",
-            children: [/* @__PURE__ */ (0, import_jsx_runtime161.jsx)(button_default, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)(button_default, {
               __next40pxDefaultSize: true,
               ref: cancelButtonRef,
               variant: "tertiary",
               onClick: handleEvent(onCancel),
               children: cancelLabel
-            }), /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(button_default, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(button_default, {
               __next40pxDefaultSize: true,
               ref: confirmButtonRef,
               variant: "primary",
@@ -39601,7 +39789,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n41 = __toESM(require_i18n());
 
   // packages/components/build-module/custom-select-control-v2/custom-select.js
-  var import_element124 = __toESM(require_element());
+  var import_element125 = __toESM(require_element());
   var import_i18n40 = __toESM(require_i18n());
 
   // packages/components/build-module/custom-select-control-v2/styles.js
@@ -39736,8 +39924,8 @@ This message will only show in development mode. It won't appear in production. 
   })("display:flex;align-items:center;margin-inline-start:", space(2), ";fill:currentColor;align-self:start;margin-block-start:2px;font-size:0;", WithHintItemWrapper, "~&,&:not(:empty){font-size:24px;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFtTmtFIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgY3NzLCBrZXlmcmFtZXMgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgc3R5bGVkIGZyb20gJ0BlbW90aW9uL3N0eWxlZCc7XG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRyB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IHsgY2hldnJvbkljb25TaXplIH0gZnJvbSAnLi4vc2VsZWN0LWNvbnRyb2wvc3R5bGVzL3NlbGVjdC1jb250cm9sLXN0eWxlcyc7XG5pbXBvcnQgeyBmb250U2l6ZVN0eWxlcyB9IGZyb20gJy4uL2lucHV0LWNvbnRyb2wvc3R5bGVzL2lucHV0LWNvbnRyb2wtc3R5bGVzJztcbmltcG9ydCB0eXBlIHsgQ3VzdG9tU2VsZWN0QnV0dG9uU2l6ZSB9IGZyb20gJy4vdHlwZXMnO1xuXG4vLyBUT0RPOiBleHRyYWN0IHRvIGNvbW1vbiB1dGlscyBhbmQgYXBwbHkgdG8gcmVsZXZhbnQgY29tcG9uZW50c1xuY29uc3QgQU5JTUFUSU9OX1BBUkFNUyA9IHtcblx0U0xJREVfQU1PVU5UOiAnMnB4Jyxcblx0RFVSQVRJT046ICc0MDBtcycsXG5cdEVBU0lORzogJ2N1YmljLWJlemllciggMC4xNiwgMSwgMC4zLCAxICknLFxufTtcblxuY29uc3QgSU5MSU5FX1BBRERJTkcgPSB7XG5cdGNvbXBhY3Q6IENPTkZJRy5jb250cm9sUGFkZGluZ1hTbWFsbCxcblx0c21hbGw6IENPTkZJRy5jb250cm9sUGFkZGluZ1hTbWFsbCxcblx0ZGVmYXVsdDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWCxcbn07XG5cbmNvbnN0IGdldFNlbGVjdFNpemUgPSAoXG5cdHNpemU6IE5vbk51bGxhYmxlPCBDdXN0b21TZWxlY3RCdXR0b25TaXplWyAnc2l6ZScgXSA+LFxuXHRoZWlnaHRQcm9wZXJ0eTogJ21pbkhlaWdodCcgfCAnaGVpZ2h0J1xuKSA9PiB7XG5cdGNvbnN0IHNpemVzID0ge1xuXHRcdGNvbXBhY3Q6IHtcblx0XHRcdFsgaGVpZ2h0UHJvcGVydHkgXTogMzIsXG5cdFx0XHRwYWRkaW5nSW5saW5lU3RhcnQ6IElOTElORV9QQURESU5HLmNvbXBhY3QsXG5cdFx0XHRwYWRkaW5nSW5saW5lRW5kOiBJTkxJTkVfUEFERElORy5jb21wYWN0ICsgY2hldnJvbkljb25TaXplLFxuXHRcdH0sXG5cdFx0ZGVmYXVsdDoge1xuXHRcdFx0WyBoZWlnaHRQcm9wZXJ0eSBdOiA0MCxcblx0XHRcdHBhZGRpbmdJbmxpbmVTdGFydDogSU5MSU5FX1BBRERJTkcuZGVmYXVsdCxcblx0XHRcdHBhZGRpbmdJbmxpbmVFbmQ6IElOTElORV9QQURESU5HLmRlZmF1bHQgKyBjaGV2cm9uSWNvblNpemUsXG5cdFx0fSxcblx0XHRzbWFsbDoge1xuXHRcdFx0WyBoZWlnaHRQcm9wZXJ0eSBdOiAyNCxcblx0XHRcdHBhZGRpbmdJbmxpbmVTdGFydDogSU5MSU5FX1BBRERJTkcuc21hbGwsXG5cdFx0XHRwYWRkaW5nSW5saW5lRW5kOiBJTkxJTkVfUEFERElORy5zbWFsbCArIGNoZXZyb25JY29uU2l6ZSxcblx0XHR9LFxuXHR9O1xuXG5cdHJldHVybiBzaXplc1sgc2l6ZSBdIHx8IHNpemVzLmRlZmF1bHQ7XG59O1xuXG5jb25zdCBnZXRTZWxlY3RJdGVtU2l6ZSA9IChcblx0c2l6ZTogTm9uTnVsbGFibGU8IEN1c3RvbVNlbGVjdEJ1dHRvblNpemVbICdzaXplJyBdID5cbikgPT4ge1xuXHQvLyBVc2VkIHRvIHZpc3VhbGx5IGFsaWduIHRoZSBjaGVja21hcmsgd2l0aCB0aGUgY2hldnJvblxuXHRjb25zdCBjaGVja21hcmtDb3JyZWN0aW9uID0gNjtcblx0Y29uc3Qgc2l6ZXMgPSB7XG5cdFx0Y29tcGFjdDoge1xuXHRcdFx0cGFkZGluZ0lubGluZVN0YXJ0OiBJTkxJTkVfUEFERElORy5jb21wYWN0LFxuXHRcdFx0cGFkZGluZ0lubGluZUVuZDogSU5MSU5FX1BBRERJTkcuY29tcGFjdCAtIGNoZWNrbWFya0NvcnJlY3Rpb24sXG5cdFx0fSxcblx0XHRkZWZhdWx0OiB7XG5cdFx0XHRwYWRkaW5nSW5saW5lU3RhcnQ6IElOTElORV9QQURESU5HLmRlZmF1bHQsXG5cdFx0XHRwYWRkaW5nSW5saW5lRW5kOiBJTkxJTkVfUEFERElORy5kZWZhdWx0IC0gY2hlY2ttYXJrQ29ycmVjdGlvbixcblx0XHR9LFxuXHRcdHNtYWxsOiB7XG5cdFx0XHRwYWRkaW5nSW5saW5lU3RhcnQ6IElOTElORV9QQURESU5HLnNtYWxsLFxuXHRcdFx0cGFkZGluZ0lubGluZUVuZDogSU5MSU5FX1BBRERJTkcuc21hbGwgLSBjaGVja21hcmtDb3JyZWN0aW9uLFxuXHRcdH0sXG5cdH07XG5cblx0cmV0dXJuIHNpemVzWyBzaXplIF0gfHwgc2l6ZXMuZGVmYXVsdDtcbn07XG5cbmV4cG9ydCBjb25zdCBTZWxlY3QgPSBzdHlsZWQoIEFyaWFraXQuU2VsZWN0LCB7XG5cdC8vIERvIG5vdCBmb3J3YXJkIGBoYXNDdXN0b21SZW5kZXJQcm9wYCB0byB0aGUgdW5kZXJseWluZyBBcmlha2l0LlNlbGVjdCBjb21wb25lbnRcblx0c2hvdWxkRm9yd2FyZFByb3A6ICggcHJvcCApID0+IHByb3AgIT09ICdoYXNDdXN0b21SZW5kZXJQcm9wJyxcbn0gKShcblx0KCB7XG5cdFx0c2l6ZSxcblx0XHRoYXNDdXN0b21SZW5kZXJQcm9wLFxuXHR9OiB7XG5cdFx0c2l6ZTogTm9uTnVsbGFibGU8IEN1c3RvbVNlbGVjdEJ1dHRvblNpemVbICdzaXplJyBdID47XG5cdFx0aGFzQ3VzdG9tUmVuZGVyUHJvcDogYm9vbGVhbjtcblx0fSApID0+IGNzc2Bcblx0XHRkaXNwbGF5OiBibG9jaztcblx0XHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYmFja2dyb3VuZCB9O1xuXHRcdGJvcmRlcjogbm9uZTtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0XHRjdXJzb3I6IHBvaW50ZXI7XG5cdFx0Zm9udC1mYW1pbHk6IGluaGVyaXQ7XG5cdFx0dGV4dC1hbGlnbjogc3RhcnQ7XG5cdFx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cdFx0d2lkdGg6IDEwMCU7XG5cblx0XHQmW2RhdGEtZm9jdXMtdmlzaWJsZV0ge1xuXHRcdFx0b3V0bGluZTogbm9uZTsgLy8gaGFuZGxlZCBieSBJbnB1dEJhc2UgY29tcG9uZW50XG5cdFx0fVxuXG5cdFx0JHsgZ2V0U2VsZWN0U2l6ZSggc2l6ZSwgaGFzQ3VzdG9tUmVuZGVyUHJvcCA/ICdtaW5IZWlnaHQnIDogJ2hlaWdodCcgKSB9XG5cdFx0JHsgISBoYXNDdXN0b21SZW5kZXJQcm9wICYmIHRydW5jYXRlU3R5bGVzIH1cblx0XHQkeyBmb250U2l6ZVN0eWxlcyggeyBpbnB1dFNpemU6IHNpemUgfSApIH1cblx0YFxuKTtcblxuY29uc3Qgc2xpZGVEb3duQW5kRmFkZSA9IGtleWZyYW1lcygge1xuXHQnMCUnOiB7XG5cdFx0b3BhY2l0eTogMCxcblx0XHR0cmFuc2Zvcm06IGB0cmFuc2xhdGVZKC0keyBBTklNQVRJT05fUEFSQU1TLlNMSURFX0FNT1VOVCB9KWAsXG5cdH0sXG5cdCcxMDAlJzogeyBvcGFjaXR5OiAxLCB0cmFuc2Zvcm06ICd0cmFuc2xhdGVZKDApJyB9LFxufSApO1xuXG5leHBvcnQgY29uc3QgU2VsZWN0UG9wb3ZlciA9IHN0eWxlZCggQXJpYWtpdC5TZWxlY3RQb3BvdmVyIClgXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG5cblx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmJhY2tncm91bmQgfTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH07XG5cdGJvcmRlcjogMXB4IHNvbGlkICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJveC1zaGFkb3c6ICR7IENPTkZJRy5lbGV2YXRpb25NZWRpdW0gfTtcblxuXHQvKiB6LWluZGV4KFwiLmNvbXBvbmVudHMtcG9wb3ZlclwiKSAqL1xuXHR6LWluZGV4OiAxMDAwMDAwO1xuXG5cdG1heC1oZWlnaHQ6IG1pbiggdmFyKCAtLXBvcG92ZXItYXZhaWxhYmxlLWhlaWdodCwgNDAwcHggKSwgNDAwcHggKTtcblx0b3ZlcmZsb3c6IGF1dG87XG5cdG92ZXJzY3JvbGwtYmVoYXZpb3I6IGNvbnRhaW47XG5cblx0LyogVGhlIHNtYWxsZXN0IHNpemUgd2l0aG91dCBvdmVyZmxvd2luZyB0aGUgY29udGFpbmVyLiAqL1xuXHRtaW4td2lkdGg6IG1pbi1jb250ZW50O1xuXG5cdC8qIEFuaW1hdGlvbiAqL1xuXHQmW2RhdGEtb3Blbl0ge1xuXHRcdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFx0YW5pbWF0aW9uLWR1cmF0aW9uOiAkeyBBTklNQVRJT05fUEFSQU1TLkRVUkFUSU9OIH07XG5cdFx0XHRhbmltYXRpb24tdGltaW5nLWZ1bmN0aW9uOiAkeyBBTklNQVRJT05fUEFSQU1TLkVBU0lORyB9O1xuXHRcdFx0YW5pbWF0aW9uLW5hbWU6ICR7IHNsaWRlRG93bkFuZEZhZGUgfTtcblx0XHRcdHdpbGwtY2hhbmdlOiB0cmFuc2Zvcm0sIG9wYWNpdHk7XG5cdFx0fVxuXHR9XG5cblx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHQvKiBUaGUgb3V0bGluZSB3aWxsIGJlIG9uIHRoZSB0cmlnZ2VyLCByYXRoZXIgdGhhbiB0aGUgcG9wb3Zlci4gKi9cblx0XHRvdXRsaW5lOiBub25lO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgU2VsZWN0SXRlbSA9IHN0eWxlZCggQXJpYWtpdC5TZWxlY3RJdGVtICkoXG5cdCgge1xuXHRcdHNpemUsXG5cdH06IHtcblx0XHRzaXplOiBOb25OdWxsYWJsZTwgQ3VzdG9tU2VsZWN0QnV0dG9uU2l6ZVsgJ3NpemUnIF0gPjtcblx0fSApID0+IGNzc2Bcblx0XHRjdXJzb3I6IGRlZmF1bHQ7XG5cdFx0ZGlzcGxheTogZmxleDtcblx0XHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRcdGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2Vlbjtcblx0XHRmb250LXNpemU6ICR7IENPTkZJRy5mb250U2l6ZSB9O1xuXHRcdC8vIFRPRE86IHJlYXNzZXNzIGxpbmUtaGVpZ2h0IGZvciBub24tbGVnYWN5IHYyXG5cdFx0bGluZS1oZWlnaHQ6IDI4cHg7XG5cdFx0cGFkZGluZy1ibG9jazogJHsgc3BhY2UoIDIgKSB9O1xuXHRcdHNjcm9sbC1tYXJnaW46ICR7IHNwYWNlKCAxICkgfTtcblx0XHR1c2VyLXNlbGVjdDogbm9uZTtcblxuXHRcdCZbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddIHtcblx0XHRcdGN1cnNvcjogbm90LWFsbG93ZWQ7XG5cdFx0fVxuXG5cdFx0JltkYXRhLWFjdGl2ZS1pdGVtXSB7XG5cdFx0XHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZ3JheVsgMzAwIF0gfTtcblx0XHR9XG5cblx0XHQkeyBnZXRTZWxlY3RJdGVtU2l6ZSggc2l6ZSApIH1cblx0YFxuKTtcblxuY29uc3QgdHJ1bmNhdGVTdHlsZXMgPSBjc3NgXG5cdG92ZXJmbG93OiBoaWRkZW47XG5cdHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xuXHR3aGl0ZS1zcGFjZTogbm93cmFwO1xuYDtcblxuZXhwb3J0IGNvbnN0IFNlbGVjdGVkRXhwZXJpbWVudGFsSGludFdyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHQkeyB0cnVuY2F0ZVN0eWxlcyB9XG5gO1xuXG5leHBvcnQgY29uc3QgU2VsZWN0ZWRFeHBlcmltZW50YWxIaW50SXRlbSA9IHN0eWxlZC5zcGFuYFxuXHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmdyYXlbIDYwMCBdIH07XG5cdG1hcmdpbi1pbmxpbmUtc3RhcnQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBXaXRoSGludEl0ZW1XcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0ZGlzcGxheTogZmxleDtcblx0anVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRmbGV4LXdyYXA6IHdyYXA7XG5cdGZsZXg6IDE7XG5cdGNvbHVtbi1nYXA6ICR7IHNwYWNlKCA0ICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBXaXRoSGludEl0ZW1IaW50ID0gc3R5bGVkLnNwYW5gXG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZ3JheVsgNjAwIF0gfTtcblx0dGV4dC1hbGlnbjogaW5pdGlhbDtcblx0bGluZS1oZWlnaHQ6ICR7IENPTkZJRy5mb250TGluZUhlaWdodEJhc2UgfTtcblx0cGFkZGluZy1pbmxpbmUtZW5kOiAkeyBzcGFjZSggMSApIH07XG5cdG1hcmdpbi1ibG9jazogJHsgc3BhY2UoIDEgKSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFNlbGVjdGVkSXRlbUNoZWNrID0gc3R5bGVkKCBBcmlha2l0LlNlbGVjdEl0ZW1DaGVjayApYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRtYXJnaW4taW5saW5lLXN0YXJ0OiAkeyBzcGFjZSggMiApIH07XG5cdGZpbGw6IGN1cnJlbnRDb2xvcjtcblxuXHQvLyBLZWVwIHRoZSBjaGVja21hcmsgdmVydGljYWxseSBhbGlnbmVkIGF0IHRoZSB0b3AuIFNpbmNlIHRoZSBpdGVtIHRleHQgaGFzIGFcblx0Ly8gMjhweCBsaW5lIGhlaWdodCBhbmQgdGhlIGNoZWNrbWFyayBpcyAyNHB4IHRhbGwsIGEgKDI4LTI0KS8yID0gMnB4IG1hcmdpblxuXHQvLyBpcyBhcHBsaWVkIHRvIGtlZXAgdGhlIGNvcnJlY3QgYWxpZ25tZW50IGJldHdlZW4gdGhlIHRleHQgYW5kIHRoZSBjaGVja21hcmsuXG5cdGFsaWduLXNlbGY6IHN0YXJ0O1xuXHRtYXJnaW4tYmxvY2stc3RhcnQ6IDJweDtcblxuXHQvLyBTaW5jZSB0aGUgY2hlY2ttYXJrJ3MgZGltZW5zaW9ucyBhcmUgYXBwbGllZCB3aXRoICdlbScgdW5pdHMsIHNldHRpbmcgYVxuXHQvLyBmb250IHNpemUgb2YgMCBhbGxvd3MgdGhlIHNwYWNlIHJlc2VydmVkIGZvciB0aGUgY2hlY2ttYXJrIHRvIGNvbGxhcHNlIGZvclxuXHQvLyBpdGVtcyB0aGF0IGFyZSBub3Qgc2VsZWN0ZWQgb3IgdGhhdCBkb24ndCBoYXZlIGFuIGFzc29jaWF0ZWQgaXRlbSBoaW50LlxuXHRmb250LXNpemU6IDA7XG5cdCR7IFdpdGhIaW50SXRlbVdyYXBwZXIgfSB+ICYsXG5cdCY6bm90KDplbXB0eSkge1xuXHRcdGZvbnQtc2l6ZTogMjRweDsgLy8gU2l6ZSBvZiBjaGVja21hcmsgaWNvblxuXHR9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/custom-select-control-v2/custom-select.js
-  var import_jsx_runtime162 = __toESM(require_jsx_runtime());
-  var CustomSelectContext = (0, import_element124.createContext)(void 0);
+  var import_jsx_runtime191 = __toESM(require_jsx_runtime());
+  var CustomSelectContext = (0, import_element125.createContext)(void 0);
   CustomSelectContext.displayName = "CustomSelectContext";
   function defaultRenderSelectedValue(value) {
     const isValueEmpty2 = Array.isArray(value) ? value.length === 0 : value === void 0 || value === null;
@@ -39762,8 +39950,8 @@ This message will only show in development mode. It won't appear in production. 
     const {
       value: currentValue
     } = useStoreState(store);
-    const computedRenderSelectedValue = (0, import_element124.useMemo)(() => renderSelectedValue !== null && renderSelectedValue !== void 0 ? renderSelectedValue : defaultRenderSelectedValue, [renderSelectedValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(Select4, {
+    const computedRenderSelectedValue = (0, import_element125.useMemo)(() => renderSelectedValue !== null && renderSelectedValue !== void 0 ? renderSelectedValue : defaultRenderSelectedValue, [renderSelectedValue]);
+    return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(Select4, {
       ...restProps,
       size: size3,
       hasCustomRenderProp: !!renderSelectedValue,
@@ -39782,48 +39970,48 @@ This message will only show in development mode. It won't appear in production. 
       isLegacy = false,
       ...restProps
     } = props;
-    const onSelectPopoverKeyDown = (0, import_element124.useCallback)((e3) => {
+    const onSelectPopoverKeyDown = (0, import_element125.useCallback)((e3) => {
       if (isLegacy) {
         e3.stopPropagation();
       }
     }, [isLegacy]);
-    const contextValue = (0, import_element124.useMemo)(() => ({
+    const contextValue = (0, import_element125.useMemo)(() => ({
       store,
       size: size3
     }), [store, size3]);
     return (
       // Where should `restProps` be forwarded to?
-      /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)("div", {
+      /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)("div", {
         className,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime162.jsx)(SelectLabel, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime191.jsx)(SelectLabel, {
           store,
           render: hideLabelFromVision ? (
             // @ts-expect-error `children` are passed via the render prop
-            /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(component_default2, {})
+            /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(component_default2, {})
           ) : (
             // @ts-expect-error `children` are passed via the render prop
-            /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(base_control_default.VisualLabel, {
+            /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(base_control_default.VisualLabel, {
               as: "div"
             })
           ),
           children: label
-        }), /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(input_base_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(input_base_default, {
           __next40pxDefaultSize: true,
           size: size3,
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(chevron_down_default, {}),
-          children: [/* @__PURE__ */ (0, import_jsx_runtime162.jsx)(CustomSelectButton, {
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(chevron_down_default2, {}),
+          children: [/* @__PURE__ */ (0, import_jsx_runtime191.jsx)(CustomSelectButton, {
             ...restProps,
             size: size3,
             store,
             showOnKeyDown: !isLegacy
-          }), /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(SelectPopover3, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(SelectPopover3, {
             gutter: 12,
             store,
             sameWidth: true,
             slide: false,
             onKeyDown: onSelectPopoverKeyDown,
             flip: !isLegacy,
-            children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(CustomSelectContext.Provider, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(CustomSelectContext.Provider, {
               value: contextValue,
               children
             })
@@ -39835,22 +40023,21 @@ This message will only show in development mode. It won't appear in production. 
   var custom_select_default = _CustomSelect;
 
   // packages/components/build-module/custom-select-control-v2/item.js
-  var import_element125 = __toESM(require_element());
-  var import_icons16 = __toESM(require_icons());
-  var import_jsx_runtime163 = __toESM(require_jsx_runtime());
+  var import_element126 = __toESM(require_element());
+  var import_jsx_runtime192 = __toESM(require_jsx_runtime());
   function CustomSelectItem({
     children,
     ...props
   }) {
     var _customSelectContext$;
-    const customSelectContext = (0, import_element125.useContext)(CustomSelectContext);
-    return /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(SelectItem3, {
+    const customSelectContext = (0, import_element126.useContext)(CustomSelectContext);
+    return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(SelectItem3, {
       store: customSelectContext?.store,
       size: (_customSelectContext$ = customSelectContext?.size) !== null && _customSelectContext$ !== void 0 ? _customSelectContext$ : "default",
       ...props,
-      children: [children !== null && children !== void 0 ? children : props.value, /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(SelectedItemCheck, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(import_icons16.Icon, {
-          icon: import_icons16.check
+      children: [children !== null && children !== void 0 ? children : props.value, /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(SelectedItemCheck, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(icon_default2, {
+          icon: check_default
         })
       })]
     });
@@ -39859,7 +40046,7 @@ This message will only show in development mode. It won't appear in production. 
   var item_default = CustomSelectItem;
 
   // packages/components/build-module/custom-select-control/index.js
-  var import_jsx_runtime164 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime193 = __toESM(require_jsx_runtime());
   function useDeprecatedProps5({
     __experimentalShowSelectedHint,
     ...otherProps
@@ -39935,16 +40122,16 @@ This message will only show in development mode. It won't appear in production. 
       style: style2,
       className
     }) => {
-      const withHint = /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(WithHintItemWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime164.jsx)("span", {
+      const withHint = /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(WithHintItemWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsx)("span", {
           children: name
-        }), /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(WithHintItemHint, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(WithHintItemHint, {
           // Keeping the classname for legacy reasons
           className: "components-custom-select-control__item-hint",
           children: hint
         })]
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(item_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(item_default, {
         value: name,
         children: hint ? withHint : name,
         style: style2,
@@ -39963,8 +40150,8 @@ This message will only show in development mode. It won't appear in production. 
       const selectedOptionHint = options2?.map(applyOptionDeprecations)?.find(({
         name
       }) => currentValue === name)?.hint;
-      return /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(SelectedExperimentalHintWrapper, {
-        children: [currentValue, selectedOptionHint && /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(SelectedExperimentalHintItem, {
+      return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(SelectedExperimentalHintWrapper, {
+        children: [currentValue, selectedOptionHint && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(SelectedExperimentalHintItem, {
           // Keeping the classname for legacy reasons
           className: "components-custom-select-control__hint",
           children: selectedOptionHint
@@ -39980,8 +40167,8 @@ This message will only show in development mode. It won't appear in production. 
       }
       return size3;
     })();
-    return /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(import_jsx_runtime164.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime164.jsx)(custom_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(import_jsx_runtime193.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsx)(custom_select_default, {
         "aria-describedby": descriptionId,
         renderSelectedValue: showSelectedHint ? renderSelectedValueHint : void 0,
         size: translatedSize,
@@ -39994,8 +40181,8 @@ This message will only show in development mode. It won't appear in production. 
         isLegacy: true,
         ...restProps,
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(component_default2, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(component_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)("span", {
           id: descriptionId,
           children: getDescribedBy(currentValue, describedBy)
         })
@@ -41846,12 +42033,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/date-time/date/index.js
   var import_i18n42 = __toESM(require_i18n());
-  var import_icons17 = __toESM(require_icons());
   var import_date = __toESM(require_date());
-  var import_element127 = __toESM(require_element());
+  var import_element128 = __toESM(require_element());
 
   // packages/components/build-module/date-time/date/use-lilius/index.js
-  var import_element126 = __toESM(require_element());
+  var import_element127 = __toESM(require_element());
   var Day = /* @__PURE__ */ (function(Day22) {
     Day22[Day22["SUNDAY"] = 0] = "SUNDAY";
     Day22[Day22["MONDAY"] = 1] = "MONDAY";
@@ -41875,27 +42061,27 @@ This message will only show in development mode. It won't appear in production. 
     selected: initialSelected = [],
     numberOfMonths = 1
   } = {}) => {
-    const [viewing, setViewing] = (0, import_element126.useState)(initialViewing);
-    const viewToday = (0, import_element126.useCallback)(() => setViewing(startOfToday()), [setViewing]);
-    const viewMonth = (0, import_element126.useCallback)((month) => setViewing((v3) => setMonth(v3, month)), []);
-    const viewPreviousMonth = (0, import_element126.useCallback)(() => setViewing((v3) => subMonths(v3, 1)), []);
-    const viewNextMonth = (0, import_element126.useCallback)(() => setViewing((v3) => addMonths(v3, 1)), []);
-    const viewYear = (0, import_element126.useCallback)((year) => setViewing((v3) => setYear(v3, year)), []);
-    const viewPreviousYear = (0, import_element126.useCallback)(() => setViewing((v3) => subYears(v3, 1)), []);
-    const viewNextYear = (0, import_element126.useCallback)(() => setViewing((v3) => addYears(v3, 1)), []);
-    const [selected, setSelected] = (0, import_element126.useState)(initialSelected.map(clearTime2));
+    const [viewing, setViewing] = (0, import_element127.useState)(initialViewing);
+    const viewToday = (0, import_element127.useCallback)(() => setViewing(startOfToday()), [setViewing]);
+    const viewMonth = (0, import_element127.useCallback)((month) => setViewing((v3) => setMonth(v3, month)), []);
+    const viewPreviousMonth = (0, import_element127.useCallback)(() => setViewing((v3) => subMonths(v3, 1)), []);
+    const viewNextMonth = (0, import_element127.useCallback)(() => setViewing((v3) => addMonths(v3, 1)), []);
+    const viewYear = (0, import_element127.useCallback)((year) => setViewing((v3) => setYear(v3, year)), []);
+    const viewPreviousYear = (0, import_element127.useCallback)(() => setViewing((v3) => subYears(v3, 1)), []);
+    const viewNextYear = (0, import_element127.useCallback)(() => setViewing((v3) => addYears(v3, 1)), []);
+    const [selected, setSelected] = (0, import_element127.useState)(initialSelected.map(clearTime2));
     const clearSelected = () => setSelected([]);
-    const isSelected2 = (0, import_element126.useCallback)((date) => selected.findIndex((s3) => isEqual(s3, date)) > -1, [selected]);
-    const select = (0, import_element126.useCallback)((date, replaceExisting) => {
+    const isSelected2 = (0, import_element127.useCallback)((date) => selected.findIndex((s3) => isEqual(s3, date)) > -1, [selected]);
+    const select = (0, import_element127.useCallback)((date, replaceExisting) => {
       if (replaceExisting) {
         setSelected(Array.isArray(date) ? date : [date]);
       } else {
         setSelected((selectedItems) => selectedItems.concat(Array.isArray(date) ? date : [date]));
       }
     }, []);
-    const deselect = (0, import_element126.useCallback)((date) => setSelected((selectedItems) => Array.isArray(date) ? selectedItems.filter((s3) => !date.map((d3) => d3.getTime()).includes(s3.getTime())) : selectedItems.filter((s3) => !isEqual(s3, date))), []);
-    const toggle = (0, import_element126.useCallback)((date, replaceExisting) => isSelected2(date) ? deselect(date) : select(date, replaceExisting), [deselect, isSelected2, select]);
-    const selectRange = (0, import_element126.useCallback)((start, end, replaceExisting) => {
+    const deselect = (0, import_element127.useCallback)((date) => setSelected((selectedItems) => Array.isArray(date) ? selectedItems.filter((s3) => !date.map((d3) => d3.getTime()).includes(s3.getTime())) : selectedItems.filter((s3) => !isEqual(s3, date))), []);
+    const toggle = (0, import_element127.useCallback)((date, replaceExisting) => isSelected2(date) ? deselect(date) : select(date, replaceExisting), [deselect, isSelected2, select]);
+    const selectRange = (0, import_element127.useCallback)((start, end, replaceExisting) => {
       if (replaceExisting) {
         setSelected(eachDayOfInterval({
           start,
@@ -41908,13 +42094,13 @@ This message will only show in development mode. It won't appear in production. 
         })));
       }
     }, []);
-    const deselectRange = (0, import_element126.useCallback)((start, end) => {
+    const deselectRange = (0, import_element127.useCallback)((start, end) => {
       setSelected((selectedItems) => selectedItems.filter((s3) => !eachDayOfInterval({
         start,
         end
       }).map((d3) => d3.getTime()).includes(s3.getTime())));
     }, []);
-    const calendar = (0, import_element126.useMemo)(() => eachMonthOfInterval({
+    const calendar = (0, import_element127.useMemo)(() => eachMonthOfInterval({
       start: startOfMonth(viewing),
       end: endOfMonth(addMonths(viewing, numberOfMonths - 1))
     }).map((month) => eachWeekOfInterval({
@@ -42100,7 +42286,7 @@ This message will only show in development mode. It won't appear in production. 
   var TIMEZONELESS_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
   // packages/components/build-module/date-time/date/index.js
-  var import_jsx_runtime165 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime194 = __toESM(require_jsx_runtime());
   function DatePicker({
     currentDate,
     onChange,
@@ -42123,22 +42309,22 @@ This message will only show in development mode. It won't appear in production. 
       viewing: startOfDay(date),
       weekStartsOn
     });
-    const [focusable, setFocusable] = (0, import_element127.useState)(startOfDay(date));
-    const [isFocusWithinCalendar, setIsFocusWithinCalendar] = (0, import_element127.useState)(false);
-    const [prevCurrentDate, setPrevCurrentDate] = (0, import_element127.useState)(currentDate);
+    const [focusable, setFocusable] = (0, import_element128.useState)(startOfDay(date));
+    const [isFocusWithinCalendar, setIsFocusWithinCalendar] = (0, import_element128.useState)(false);
+    const [prevCurrentDate, setPrevCurrentDate] = (0, import_element128.useState)(currentDate);
     if (currentDate !== prevCurrentDate) {
       setPrevCurrentDate(currentDate);
       setSelected([startOfDay(date)]);
       setViewing(startOfDay(date));
       setFocusable(startOfDay(date));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(Wrapper3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(Wrapper3, {
       className: "components-datetime__date",
       role: "application",
       "aria-label": (0, import_i18n42.__)("Calendar"),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(Navigator, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime165.jsx)(ViewPreviousMonthButton, {
-          icon: (0, import_i18n42.isRTL)() ? import_icons17.arrowRight : import_icons17.arrowLeft,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(Navigator, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime194.jsx)(ViewPreviousMonthButton, {
+          icon: (0, import_i18n42.isRTL)() ? arrow_right_default : arrow_left_default,
           variant: "tertiary",
           "aria-label": (0, import_i18n42.__)("View previous month"),
           onClick: () => {
@@ -42147,13 +42333,13 @@ This message will only show in development mode. It won't appear in production. 
             onMonthPreviewed?.(format(subMonths(viewing, 1), TIMEZONELESS_FORMAT));
           },
           size: "compact"
-        }), /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(NavigatorHeading, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(NavigatorHeading, {
           level: 3,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime165.jsx)("strong", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime194.jsx)("strong", {
             children: (0, import_date.dateI18n)("F", viewing, -viewing.getTimezoneOffset())
           }), " ", (0, import_date.dateI18n)("Y", viewing, -viewing.getTimezoneOffset())]
-        }), /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(ViewNextMonthButton, {
-          icon: (0, import_i18n42.isRTL)() ? import_icons17.arrowLeft : import_icons17.arrowRight,
+        }), /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(ViewNextMonthButton, {
+          icon: (0, import_i18n42.isRTL)() ? arrow_left_default : arrow_right_default,
           variant: "tertiary",
           "aria-label": (0, import_i18n42.__)("View next month"),
           onClick: () => {
@@ -42163,16 +42349,16 @@ This message will only show in development mode. It won't appear in production. 
           },
           size: "compact"
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime165.jsxs)(Calendar, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(Calendar, {
         onFocus: () => setIsFocusWithinCalendar(true),
         onBlur: () => setIsFocusWithinCalendar(false),
-        children: [calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(DayOfWeek, {
+        children: [calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(DayOfWeek, {
           children: (0, import_date.dateI18n)("D", day, -day.getTimezoneOffset())
         }, day.toString())), calendar[0].map((week) => week.map((day, index2) => {
           if (!isSameMonth(day, viewing)) {
             return null;
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(Day2, {
+          return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(Day2, {
             day,
             column: index2 + 1,
             isSelected: isSelected2(day),
@@ -42242,13 +42428,13 @@ This message will only show in development mode. It won't appear in production. 
     onClick,
     onKeyDown
   }) {
-    const ref = (0, import_element127.useRef)();
-    (0, import_element127.useEffect)(() => {
+    const ref = (0, import_element128.useRef)();
+    (0, import_element128.useEffect)(() => {
       if (ref.current && isFocusable2 && isFocusAllowed) {
         ref.current.focus();
       }
     }, [isFocusable2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(DayButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(DayButton, {
       __next40pxDefaultSize: true,
       ref,
       className: "components-datetime__date__day",
@@ -42295,7 +42481,7 @@ This message will only show in development mode. It won't appear in production. 
   var date_default = DatePicker;
 
   // packages/components/build-module/date-time/time/index.js
-  var import_element129 = __toESM(require_element());
+  var import_element130 = __toESM(require_element());
   var import_i18n45 = __toESM(require_i18n());
 
   // packages/components/build-module/date-time/time/timezone.js
@@ -42393,7 +42579,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/date-time/time/timezone.js
-  var import_jsx_runtime166 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime195 = __toESM(require_jsx_runtime());
   var TimeZone2 = () => {
     const {
       timezone
@@ -42407,13 +42593,13 @@ This message will only show in development mode. It won't appear in production. 
     const prettyTimezoneString = timezone.string.replace("_", " ");
     const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n43.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
     const hasNoAdditionalTimezoneDetail = prettyTimezoneString.trim().length === 0;
-    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(TimeZone, {
+    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(TimeZone, {
       className: "components-datetime__timezone",
       children: zoneAbbr
-    }) : /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(tooltip_default, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(tooltip_default, {
       placement: "top",
       text: timezoneDetail,
-      children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(TimeZone, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(TimeZone, {
         className: "components-datetime__timezone",
         children: zoneAbbr
       })
@@ -42423,8 +42609,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/date-time/time/time-input/index.js
   var import_i18n44 = __toESM(require_i18n());
-  var import_element128 = __toESM(require_element());
-  var import_jsx_runtime167 = __toESM(require_jsx_runtime());
+  var import_element129 = __toESM(require_element());
+  var import_jsx_runtime196 = __toESM(require_jsx_runtime());
   function TimeInput({
     value: valueProp,
     defaultValue: defaultValue2,
@@ -42471,17 +42657,17 @@ This message will only show in development mode. It won't appear in production. 
     function parseDayPeriod(_hours) {
       return _hours < 12 ? "AM" : "PM";
     }
-    const Wrapper7 = label ? Fieldset : import_element128.Fragment;
-    return /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(Wrapper7, {
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(base_control_default.VisualLabel, {
+    const Wrapper7 = label ? Fieldset : import_element129.Fragment;
+    return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(Wrapper7, {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(base_control_default.VisualLabel, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(component_default9, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(component_default9, {
         alignment: "left",
         expanded: false,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(TimeWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(TimeWrapper, {
           className: "components-datetime__time-field components-datetime__time-field-time",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime167.jsx)(HoursInput, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime196.jsx)(HoursInput, {
             className: "components-datetime__time-field-hours-input",
             label: (0, import_i18n44.__)("Hours"),
             hideLabelFromVision: true,
@@ -42497,11 +42683,11 @@ This message will only show in development mode. It won't appear in production. 
             isShiftStepEnabled: false,
             onChange: buildNumberControlChangeCallback("hours"),
             __unstableStateReducer: buildPadInputStateReducer(2)
-          }), /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(TimeSeparator, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(TimeSeparator, {
             className: "components-datetime__time-separator",
             "aria-hidden": "true",
             children: ":"
-          }), /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(MinutesInput, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(MinutesInput, {
             className: clsx_default(
               "components-datetime__time-field-minutes-input",
               // Unused, for backwards compatibility.
@@ -42526,7 +42712,7 @@ This message will only show in development mode. It won't appear in production. 
             __unstableStateReducer: buildPadInputStateReducer(2),
             ...minutesProps
           })]
-        }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(component_default12, {
+        }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(component_default12, {
           __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
           isBlock: true,
@@ -42536,10 +42722,10 @@ This message will only show in development mode. It won't appear in production. 
           onChange: (newValue) => {
             buildAmPmChangeCallback(newValue)();
           },
-          children: [/* @__PURE__ */ (0, import_jsx_runtime167.jsx)(component_default14, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime196.jsx)(component_default14, {
             value: "AM",
             label: (0, import_i18n44.__)("AM")
-          }), /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(component_default14, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(component_default14, {
             value: "PM",
             label: (0, import_i18n44.__)("PM")
           })]
@@ -42549,7 +42735,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/date-time/time/index.js
-  var import_jsx_runtime168 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime197 = __toESM(require_jsx_runtime());
   var VALID_DATE_ORDERS = ["dmy", "mdy", "ymd"];
   function TimePicker({
     is12Hour,
@@ -42558,11 +42744,11 @@ This message will only show in development mode. It won't appear in production. 
     dateOrder: dateOrderProp,
     hideLabelFromVision = false
   }) {
-    const [date, setDate] = (0, import_element129.useState)(() => (
+    const [date, setDate] = (0, import_element130.useState)(() => (
       // Truncate the date at the minutes, see: #15495.
       currentTime ? startOfMinute(inputToDate(currentTime)) : /* @__PURE__ */ new Date()
     ));
-    (0, import_element129.useEffect)(() => {
+    (0, import_element130.useEffect)(() => {
       setDate(currentTime ? startOfMinute(inputToDate(currentTime)) : /* @__PURE__ */ new Date());
     }, [currentTime]);
     const monthOptions = [{
@@ -42608,7 +42794,7 @@ This message will only show in development mode. It won't appear in production. 
       year,
       minutes,
       hours
-    } = (0, import_element129.useMemo)(() => ({
+    } = (0, import_element130.useMemo)(() => ({
       day: format(date, "dd"),
       month: format(date, "MM"),
       year: format(date, "yyyy"),
@@ -42643,7 +42829,7 @@ This message will only show in development mode. It won't appear in production. 
       setDate(newDate);
       onChange?.(format(newDate, TIMEZONELESS_FORMAT));
     };
-    const dayField = /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(DayInput, {
+    const dayField = /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(DayInput, {
       className: "components-datetime__time-field components-datetime__time-field-day",
       label: (0, import_i18n45.__)("Day"),
       hideLabelFromVision: true,
@@ -42659,8 +42845,8 @@ This message will only show in development mode. It won't appear in production. 
       isShiftStepEnabled: false,
       onChange: buildNumberControlChangeCallback("date")
     }, "day");
-    const monthField = /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(MonthSelectWrapper, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(select_control_default, {
+    const monthField = /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(MonthSelectWrapper, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(select_control_default, {
         className: "components-datetime__time-field components-datetime__time-field-month",
         label: (0, import_i18n45.__)("Month"),
         hideLabelFromVision: true,
@@ -42675,7 +42861,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       })
     }, "month");
-    const yearField = /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(YearInput, {
+    const yearField = /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(YearInput, {
       className: "components-datetime__time-field components-datetime__time-field-year",
       label: (0, import_i18n45.__)("Year"),
       hideLabelFromVision: true,
@@ -42706,36 +42892,36 @@ This message will only show in development mode. It won't appear in production. 
           return null;
       }
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(Wrapper4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Wrapper4, {
       className: "components-datetime__time",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(Fieldset, {
-        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(component_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Fieldset, {
+        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(component_default2, {
           as: "legend",
           children: (0, import_i18n45.__)("Time")
-        }) : /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(base_control_default.VisualLabel, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
           children: (0, import_i18n45.__)("Time")
-        }), /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(component_default9, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(component_default9, {
           className: "components-datetime__time-wrapper",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime168.jsx)(TimeInput, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime197.jsx)(TimeInput, {
             value: {
               hours: Number(hours),
               minutes: Number(minutes)
             },
             is12Hour,
             onChange: onTimeInputChangeCallback
-          }), /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(component_default6, {}), /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(timezone_default, {})]
+          }), /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(component_default6, {}), /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(timezone_default, {})]
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(Fieldset, {
-        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(component_default2, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Fieldset, {
+        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(component_default2, {
           as: "legend",
           children: (0, import_i18n45.__)("Date")
-        }) : /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(base_control_default.VisualLabel, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
           children: (0, import_i18n45.__)("Date")
-        }), /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(component_default9, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(component_default9, {
           className: "components-datetime__time-wrapper",
           children: fields
         })]
@@ -42749,7 +42935,7 @@ This message will only show in development mode. It won't appear in production. 
   var time_default = TimePicker;
 
   // packages/components/build-module/date-time/date-time/index.js
-  var import_element130 = __toESM(require_element());
+  var import_element131 = __toESM(require_element());
 
   // packages/components/build-module/date-time/date-time/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__33() {
@@ -42771,7 +42957,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/date-time/date-time/index.js
-  var import_jsx_runtime169 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime198 = __toESM(require_jsx_runtime());
   var noop12 = () => {
   };
   function UnforwardedDateTimePicker({
@@ -42784,17 +42970,17 @@ This message will only show in development mode. It won't appear in production. 
     events,
     startOfWeek: startOfWeek3
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(Wrapper5, {
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(Wrapper5, {
       ref,
       className: "components-datetime",
       spacing: 4,
-      children: /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(import_jsx_runtime169.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime169.jsx)(time_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime198.jsx)(time_default, {
           currentTime: currentDate,
           onChange,
           is12Hour,
           dateOrder
-        }), /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(date_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(date_default, {
           currentDate,
           onChange,
           isInvalidDate,
@@ -42805,7 +42991,7 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   }
-  var DateTimePicker = (0, import_element130.forwardRef)(UnforwardedDateTimePicker);
+  var DateTimePicker = (0, import_element131.forwardRef)(UnforwardedDateTimePicker);
   var date_time_default = DateTimePicker;
 
   // packages/components/build-module/date-time/index.js
@@ -42836,7 +43022,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/dimension-control/index.js
   var import_deprecated16 = __toESM(require_deprecated());
-  var import_jsx_runtime170 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime199 = __toESM(require_jsx_runtime());
   var CONTEXT_VALUE2 = {
     BaseControl: {
       // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
@@ -42887,14 +43073,14 @@ This message will only show in development mode. It won't appear in production. 
         value: ""
       }, ...options2];
     };
-    const selectLabel = /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)(import_jsx_runtime170.Fragment, {
-      children: [icon && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(icon_default2, {
+    const selectLabel = /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(import_jsx_runtime199.Fragment, {
+      children: [icon && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(icon_default3, {
         icon
       }), label]
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(ContextSystemProvider, {
       value: CONTEXT_VALUE2,
-      children: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(select_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(select_control_default, {
         __next40pxDefaultSize,
         __shouldNotWarnDeprecated36pxSize: true,
         __nextHasNoMarginBottom,
@@ -42910,7 +43096,7 @@ This message will only show in development mode. It won't appear in production. 
   var dimension_control_default = DimensionControl;
 
   // packages/components/build-module/disabled/index.js
-  var import_element131 = __toESM(require_element());
+  var import_element132 = __toESM(require_element());
 
   // packages/components/build-module/disabled/styles/disabled-styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__34() {
@@ -42927,8 +43113,8 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/disabled/index.js
-  var import_jsx_runtime171 = __toESM(require_jsx_runtime());
-  var Context = (0, import_element131.createContext)(false);
+  var import_jsx_runtime200 = __toESM(require_jsx_runtime());
+  var Context = (0, import_element132.createContext)(false);
   Context.displayName = "DisabledContext";
   var {
     Consumer,
@@ -42941,9 +43127,9 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     const cx3 = useCx();
-    return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(Provider2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(Provider2, {
       value: isDisabled,
-      children: /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", {
         // @ts-ignore Reason: inert is a recent HTML attribute
         inert: isDisabled ? "true" : void 0,
         className: isDisabled ? cx3(disabledStyles3, className, "components-disabled") : void 0,
@@ -42957,8 +43143,8 @@ This message will only show in development mode. It won't appear in production. 
   var disabled_default = Disabled;
 
   // packages/components/build-module/disclosure/index.js
-  var import_element132 = __toESM(require_element());
-  var import_jsx_runtime172 = __toESM(require_jsx_runtime());
+  var import_element133 = __toESM(require_element());
+  var import_jsx_runtime201 = __toESM(require_jsx_runtime());
   var UnforwardedDisclosureContent = ({
     visible,
     children,
@@ -42967,19 +43153,19 @@ This message will only show in development mode. It won't appear in production. 
     const disclosure = useDisclosureStore({
       open: visible
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(DisclosureContent, {
+    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(DisclosureContent, {
       store: disclosure,
       ref,
       ...props,
       children
     });
   };
-  var DisclosureContent3 = (0, import_element132.forwardRef)(UnforwardedDisclosureContent);
+  var DisclosureContent3 = (0, import_element133.forwardRef)(UnforwardedDisclosureContent);
 
   // packages/components/build-module/draggable/index.js
   var import_compose54 = __toESM(require_compose());
-  var import_element133 = __toESM(require_element());
-  var import_jsx_runtime173 = __toESM(require_jsx_runtime());
+  var import_element134 = __toESM(require_element());
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime());
   var dragImageClass = "components-draggable__invisible-drag-image";
   var cloneWrapperClass = "components-draggable__clone";
   var clonePadding = 0;
@@ -42996,8 +43182,8 @@ This message will only show in development mode. It won't appear in production. 
     __experimentalTransferDataType: transferDataType = "text",
     __experimentalDragComponent: dragComponent
   }) {
-    const dragComponentRef = (0, import_element133.useRef)(null);
-    const cleanupRef = (0, import_element133.useRef)(() => {
+    const dragComponentRef = (0, import_element134.useRef)(null);
+    const cleanupRef = (0, import_element134.useRef)(() => {
     });
     function end(event) {
       event.preventDefault();
@@ -43088,14 +43274,14 @@ This message will only show in development mode. It won't appear in production. 
         ownerDocument.removeEventListener("dragover", throttledDragOver);
       };
     }
-    (0, import_element133.useEffect)(() => () => {
+    (0, import_element134.useEffect)(() => () => {
       cleanupRef.current();
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(import_jsx_runtime173.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(import_jsx_runtime202.Fragment, {
       children: [children({
         onDraggableStart: start,
         onDraggableEnd: end
-      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime173.jsx)("div", {
+      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
         className: "components-draggable-drag-component-root",
         style: {
           display: "none"
@@ -43109,14 +43295,13 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/drop-zone/index.js
   var import_i18n48 = __toESM(require_i18n());
-  var import_element134 = __toESM(require_element());
-  var import_icons18 = __toESM(require_icons());
+  var import_element135 = __toESM(require_element());
   var import_dom31 = __toESM(require_dom());
   var import_compose55 = __toESM(require_compose());
-  var import_jsx_runtime174 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime());
   function DropZoneComponent({
     className,
-    icon = import_icons18.upload,
+    icon = upload_default,
     label,
     onFilesDrop,
     onHTMLDrop,
@@ -43124,9 +43309,9 @@ This message will only show in development mode. It won't appear in production. 
     isEligible = () => true,
     ...restProps
   }) {
-    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element134.useState)();
-    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element134.useState)();
-    const [isActive, setIsActive] = (0, import_element134.useState)();
+    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element135.useState)();
+    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element135.useState)();
+    const [isActive, setIsActive] = (0, import_element135.useState)();
     const ref = (0, import_compose55.__experimentalUseDropZone)({
       onDrop(event) {
         if (!event.dataTransfer) {
@@ -43176,18 +43361,18 @@ This message will only show in development mode. It won't appear in production. 
       "is-dragging-over-document": isDraggingOverDocument,
       "is-dragging-over-element": isDraggingOverElement
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", {
       ...restProps,
       ref,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", {
         className: "components-drop-zone__content",
-        children: /* @__PURE__ */ (0, import_jsx_runtime174.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)("div", {
           className: "components-drop-zone__content-inner",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_icons18.Icon, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime203.jsx)(icon_default2, {
             icon,
             className: "components-drop-zone__content-icon"
-          }), /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("span", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("span", {
             className: "components-drop-zone__content-text",
             children: label ? label : (0, import_i18n48.__)("Drop files to upload")
           })]
@@ -43211,15 +43396,14 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/duotone-picker/duotone-picker.js
   var import_es62 = __toESM(require_es6());
-  var import_element136 = __toESM(require_element());
+  var import_element137 = __toESM(require_element());
   var import_i18n50 = __toESM(require_i18n());
 
   // packages/components/build-module/duotone-picker/color-list-picker/index.js
-  var import_element135 = __toESM(require_element());
-  var import_icons19 = __toESM(require_icons());
+  var import_element136 = __toESM(require_element());
   var import_i18n49 = __toESM(require_i18n());
   var import_compose56 = __toESM(require_compose());
-  var import_jsx_runtime175 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime204 = __toESM(require_jsx_runtime());
   function ColorOption({
     label,
     value,
@@ -43228,31 +43412,31 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha,
     onChange
   }) {
-    const [isOpen, setIsOpen] = (0, import_element135.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element136.useState)(false);
     const idRoot = (0, import_compose56.useInstanceId)(ColorOption, "color-list-picker-option");
     const labelId = `${idRoot}__label`;
     const contentId = `${idRoot}__content`;
-    return /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)(import_jsx_runtime175.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime175.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(import_jsx_runtime204.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime204.jsx)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-color-list-picker__swatch-button",
         id: labelId,
         onClick: () => setIsOpen((prev2) => !prev2),
         "aria-expanded": isOpen,
         "aria-controls": contentId,
-        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(color_indicator_default, {
+        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(color_indicator_default, {
           colorValue: value,
           className: "components-color-list-picker__swatch-color"
-        }) : /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(icon_default2, {
-          icon: import_icons19.swatch
+        }) : /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(icon_default3, {
+          icon: swatch_default
         }),
         text: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime175.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", {
         role: "group",
         id: contentId,
         "aria-labelledby": labelId,
         "aria-hidden": !isOpen,
-        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(color_palette_default, {
+        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(color_palette_default, {
           "aria-label": (0, import_i18n49.__)("Color options"),
           className: "components-color-list-picker__color-picker",
           colors,
@@ -43273,9 +43457,9 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha,
     onChange
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", {
       className: "components-color-list-picker",
-      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(ColorOption, {
+      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(ColorOption, {
         label,
         value: value[index2],
         colors,
@@ -43332,7 +43516,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/custom-duotone-bar.js
-  var import_jsx_runtime176 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime205 = __toESM(require_jsx_runtime());
   var PLACEHOLDER_VALUES = ["#333", "#CCC"];
   function CustomDuotoneBar({
     value,
@@ -43342,7 +43526,7 @@ This message will only show in development mode. It won't appear in production. 
     const values = hasGradient ? value : PLACEHOLDER_VALUES;
     const background2 = getGradientFromCSSColors(values);
     const controlPoints = getColorStopsFromColors(values);
-    return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(CustomGradientBar, {
+    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(CustomGradientBar, {
       disableInserter: true,
       background: background2,
       hasGradient,
@@ -43355,7 +43539,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/duotone-picker.js
-  var import_jsx_runtime177 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime());
   function DuotonePicker({
     asButtons,
     loop,
@@ -43371,10 +43555,10 @@ This message will only show in development mode. It won't appear in production. 
     "aria-labelledby": ariaLabelledby,
     ...otherProps
   }) {
-    const [defaultDark, defaultLight] = (0, import_element136.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
+    const [defaultDark, defaultLight] = (0, import_element137.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
     const isUnset = value === "unset";
     const unsetOptionLabel = (0, import_i18n50.__)("Unset");
-    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.Option, {
+    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2.Option, {
       value: "unset",
       isSelected: isUnset,
       tooltipText: unsetOptionLabel,
@@ -43404,7 +43588,7 @@ This message will only show in development mode. It won't appear in production. 
         name
       ) : tooltipText;
       const isSelected2 = (0, import_es62.default)(colors, value);
-      return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.Option, {
+      return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2.Option, {
         value: colors,
         isSelected: isSelected2,
         "aria-label": label,
@@ -43420,25 +43604,25 @@ This message will only show in development mode. It won't appear in production. 
       labelProps
     } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
     const options2 = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
-    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2, {
       ...otherProps,
       ...metaProps,
       ...labelProps,
       options: options2,
-      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.ButtonAction, {
+      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2.ButtonAction, {
         onClick: () => onChange(void 0),
         accessibleWhenDisabled: true,
         disabled: !value,
         children: (0, import_i18n50.__)("Clear")
       }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(component_default6, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(component_default6, {
         paddingTop: options2.length === 0 ? 0 : 4,
-        children: /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(component_default18, {
           spacing: 3,
-          children: [!disableCustomColors && !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(CustomDuotoneBar, {
+          children: [!disableCustomColors && !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(CustomDuotoneBar, {
             value: isUnset ? void 0 : value,
             onChange
-          }), !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(color_list_picker_default, {
+          }), !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(color_list_picker_default, {
             labels: [(0, import_i18n50.__)("Shadows"), (0, import_i18n50.__)("Highlights")],
             colors: colorPalette,
             value: isUnset ? void 0 : value,
@@ -43462,23 +43646,22 @@ This message will only show in development mode. It won't appear in production. 
   var duotone_picker_default = DuotonePicker;
 
   // packages/components/build-module/duotone-picker/duotone-swatch.js
-  var import_icons20 = __toESM(require_icons());
-  var import_jsx_runtime178 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime());
   function DuotoneSwatch({
     values
   }) {
-    return values ? /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(color_indicator_default, {
+    return values ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(color_indicator_default, {
       colorValue: getGradientFromCSSColors(values, "135deg")
-    }) : /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(icon_default2, {
-      icon: import_icons20.swatch
+    }) : /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(icon_default3, {
+      icon: swatch_default
     });
   }
   var duotone_swatch_default = DuotoneSwatch;
 
   // packages/components/build-module/external-link/index.js
   var import_i18n51 = __toESM(require_i18n());
-  var import_element137 = __toESM(require_element());
-  var import_jsx_runtime179 = __toESM(require_jsx_runtime());
+  var import_element138 = __toESM(require_element());
+  var import_jsx_runtime208 = __toESM(require_jsx_runtime());
   function UnforwardedExternalLink(props, ref) {
     const {
       href,
@@ -43500,7 +43683,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     return (
       /* eslint-disable react/jsx-no-target-blank */
-      /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)("a", {
+      /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)("a", {
         ...additionalProps,
         className: classes,
         href,
@@ -43508,10 +43691,10 @@ This message will only show in development mode. It won't appear in production. 
         target: "_blank",
         rel: optimizedRel,
         ref,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime179.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime208.jsx)("span", {
           className: "components-external-link__contents",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime208.jsx)("span", {
           className: "components-external-link__icon",
           "aria-label": (
             /* translators: accessibility text */
@@ -43522,12 +43705,12 @@ This message will only show in development mode. It won't appear in production. 
       })
     );
   }
-  var ExternalLink = (0, import_element137.forwardRef)(UnforwardedExternalLink);
+  var ExternalLink = (0, import_element138.forwardRef)(UnforwardedExternalLink);
   var external_link_default = ExternalLink;
 
   // packages/components/build-module/focal-point-picker/index.js
   var import_i18n53 = __toESM(require_i18n());
-  var import_element138 = __toESM(require_element());
+  var import_element139 = __toESM(require_element());
   var import_compose57 = __toESM(require_compose());
 
   // packages/components/build-module/focal-point-picker/controls.js
@@ -43683,7 +43866,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/focal-point-picker/controls.js
-  var import_jsx_runtime180 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime209 = __toESM(require_jsx_runtime());
   var TEXTCONTROL_MIN = 0;
   var TEXTCONTROL_MAX = 100;
   var noop13 = () => {
@@ -43711,18 +43894,18 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime180.jsxs)(ControlWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(ControlWrapper, {
       className: "focal-point-picker__controls",
       __nextHasNoMarginBottom,
       hasHelpText,
       gap: 4,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime180.jsx)(FocalPointUnitControl, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime209.jsx)(FocalPointUnitControl, {
         label: (0, import_i18n52.__)("Left"),
         "aria-label": (0, import_i18n52.__)("Focal point left position"),
         value: [valueX, "%"].join(""),
         onChange: (next2) => handleChange(next2, "x"),
         dragDirection: "e"
-      }), /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(FocalPointUnitControl, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(FocalPointUnitControl, {
         label: (0, import_i18n52.__)("Top"),
         "aria-label": (0, import_i18n52.__)("Focal point top position"),
         value: [valueY, "%"].join(""),
@@ -43732,7 +43915,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function FocalPointUnitControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(StyledUnitControl2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(StyledUnitControl2, {
       __next40pxDefaultSize: true,
       className: "focal-point-picker__controls-position-unit-control",
       labelPosition: "top",
@@ -43761,7 +43944,7 @@ This message will only show in development mode. It won't appear in production. 
 			`, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZvY2FsLXBvaW50LXN0eWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQVV1QyIsImZpbGUiOiJmb2NhbC1wb2ludC1zdHlsZS50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09ORklHIH0gZnJvbSAnLi4vLi4vdXRpbHMnO1xuXG5leHBvcnQgY29uc3QgUG9pbnRlckNpcmNsZSA9IHN0eWxlZC5kaXZgXG5cdGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xuXHRjdXJzb3I6IGdyYWI7XG5cdGhlaWdodDogNDBweDtcblx0bWFyZ2luOiAtMjBweCAwIDAgLTIwcHg7XG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cdHdpZHRoOiA0MHB4O1xuXHR3aWxsLWNoYW5nZTogdHJhbnNmb3JtO1xuXHR6LWluZGV4OiAxMDAwMDtcblx0YmFja2dyb3VuZDogcmdiYSggMjU1LCAyNTUsIDI1NSwgMC40ICk7XG5cdGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoIDI1NSwgMjU1LCAyNTUsIDAuNCApO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzUm91bmQgfTtcblx0YmFja2Ryb3AtZmlsdGVyOiBibHVyKCAxNnB4ICkgc2F0dXJhdGUoIDE4MCUgKTtcblx0Ym94LXNoYWRvdzogcmdiKCAwIDAgMCAvIDEwJSApIDBweCAwcHggOHB4O1xuXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdHRyYW5zaXRpb246IHRyYW5zZm9ybSAxMDBtcyBsaW5lYXI7XG5cdH1cblxuXHQkeyAoIHsgaXNEcmFnZ2luZyB9OiB7IGlzRHJhZ2dpbmc6IGJvb2xlYW4gfSApID0+XG5cdFx0aXNEcmFnZ2luZyAmJlxuXHRcdGBcblx0XHRcdGJveC1zaGFkb3c6IHJnYiggMCAwIDAgLyAxMiUgKSAwcHggMHB4IDEwcHg7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlKCAxLjEgKTtcblx0XHRcdGN1cnNvcjogZ3JhYmJpbmc7XG5cdFx0XHRgIH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/focal-point-picker/focal-point.js
-  var import_jsx_runtime181 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime210 = __toESM(require_jsx_runtime());
   function FocalPoint({
     left = "50%",
     top = "50%",
@@ -43771,7 +43954,7 @@ This message will only show in development mode. It won't appear in production. 
       left,
       top
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(PointerCircle, {
+    return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(PointerCircle, {
       ...props,
       className: "components-focal-point-picker__icon_container",
       style: style2
@@ -43779,31 +43962,31 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/grid.js
-  var import_jsx_runtime182 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime211 = __toESM(require_jsx_runtime());
   function FocalPointPickerGrid({
     bounds,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(GridView, {
+    return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(GridView, {
       ...props,
       className: "components-focal-point-picker__grid",
       style: {
         width: bounds.width,
         height: bounds.height
       },
-      children: [/* @__PURE__ */ (0, import_jsx_runtime182.jsx)(GridLineX, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineX, {
         style: {
           top: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(GridLineX, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineX, {
         style: {
           top: "66%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineY, {
         style: {
           left: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineY, {
         style: {
           left: "66%"
         }
@@ -43812,7 +43995,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/media.js
-  var import_jsx_runtime183 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime212 = __toESM(require_jsx_runtime());
   function Media2({
     alt,
     autoPlay,
@@ -43825,14 +44008,14 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     if (!src) {
-      return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(MediaPlaceholder, {
+      return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(MediaPlaceholder, {
         className: "components-focal-point-picker__media components-focal-point-picker__media--placeholder",
         ref: mediaRef,
         ...props
       });
     }
     const isVideo = isVideoType(src);
-    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("video", {
+    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("video", {
       ...props,
       autoPlay,
       className: "components-focal-point-picker__media components-focal-point-picker__media--video",
@@ -43841,7 +44024,7 @@ This message will only show in development mode. It won't appear in production. 
       onLoadedData: onLoad,
       ref: mediaRef,
       src
-    }) : /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("img", {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("img", {
       ...props,
       alt,
       className: "components-focal-point-picker__media components-focal-point-picker__media--image",
@@ -43852,7 +44035,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/index.js
-  var import_jsx_runtime184 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime213 = __toESM(require_jsx_runtime());
   var GRID_OVERLAY_TIMEOUT = 600;
   function FocalPointPicker({
     __nextHasNoMarginBottom,
@@ -43872,8 +44055,8 @@ This message will only show in development mode. It won't appear in production. 
     },
     ...restProps
   }) {
-    const [point, setPoint] = (0, import_element138.useState)(valueProp);
-    const [showGridOverlay, setShowGridOverlay] = (0, import_element138.useState)(false);
+    const [point, setPoint] = (0, import_element139.useState)(valueProp);
+    const [showGridOverlay, setShowGridOverlay] = (0, import_element139.useState)(false);
     const {
       startDrag,
       endDrag,
@@ -43906,9 +44089,9 @@ This message will only show in development mode. It won't appear in production. 
       x: x2,
       y: y3
     } = isDragging2 ? point : valueProp;
-    const dragAreaRef = (0, import_element138.useRef)(null);
-    const [bounds, setBounds] = (0, import_element138.useState)(INITIAL_BOUNDS);
-    const refUpdateBounds = (0, import_element138.useRef)(() => {
+    const dragAreaRef = (0, import_element139.useRef)(null);
+    const [bounds, setBounds] = (0, import_element139.useState)(INITIAL_BOUNDS);
+    const refUpdateBounds = (0, import_element139.useRef)(() => {
       if (!dragAreaRef.current) {
         return;
       }
@@ -43923,7 +44106,7 @@ This message will only show in development mode. It won't appear in production. 
         ...INITIAL_BOUNDS
       });
     });
-    (0, import_element138.useEffect)(() => {
+    (0, import_element139.useEffect)(() => {
       const updateBounds = refUpdateBounds.current;
       if (!dragAreaRef.current) {
         return;
@@ -44002,7 +44185,7 @@ This message will only show in development mode. It won't appear in production. 
       }, GRID_OVERLAY_TIMEOUT);
       return () => window.clearTimeout(timeout);
     }, [x2, y3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime184.jsxs)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(base_control_default, {
       ...restProps,
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "FocalPointPicker",
@@ -44010,9 +44193,9 @@ This message will only show in development mode. It won't appear in production. 
       id: id3,
       help,
       className: classes,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime184.jsx)(MediaWrapper, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime213.jsx)(MediaWrapper, {
         className: "components-focal-point-picker-wrapper",
-        children: /* @__PURE__ */ (0, import_jsx_runtime184.jsxs)(MediaContainer, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(MediaContainer, {
           className: "components-focal-point-picker",
           onKeyDown: arrowKeyStep,
           onMouseDown: startDrag,
@@ -44024,20 +44207,20 @@ This message will only show in development mode. It won't appear in production. 
           ref: dragAreaRef,
           role: "button",
           tabIndex: -1,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime184.jsx)(FocalPointPickerGrid, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime213.jsx)(FocalPointPickerGrid, {
             bounds,
             showOverlay: showGridOverlay
-          }), /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(Media2, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Media2, {
             alt: (0, import_i18n53.__)("Media preview"),
             autoPlay,
             onLoad: refUpdateBounds.current,
             src: url
-          }), /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(FocalPoint, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(FocalPoint, {
             ...focalPointPosition,
             isDragging: isDragging2
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(FocalPointPickerControls, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(FocalPointPickerControls, {
         __nextHasNoMarginBottom,
         hasHelpText: !!help,
         point: {
@@ -44055,7 +44238,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/focusable-iframe/index.js
   var import_compose58 = __toESM(require_compose());
   var import_deprecated18 = __toESM(require_deprecated());
-  var import_jsx_runtime185 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime214 = __toESM(require_jsx_runtime());
   function FocusableIframe({
     iframeRef,
     ...props
@@ -44065,7 +44248,7 @@ This message will only show in development mode. It won't appear in production. 
       since: "5.9",
       alternative: "wp.compose.useFocusableIframe"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("iframe", {
       ref,
       ...props
     });
@@ -44073,8 +44256,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/index.js
   var import_i18n57 = __toESM(require_i18n());
-  var import_icons21 = __toESM(require_icons());
-  var import_element139 = __toESM(require_element());
+  var import_element140 = __toESM(require_element());
   var import_compose59 = __toESM(require_compose());
 
   // packages/components/build-module/font-size-picker/styles.js
@@ -44124,7 +44306,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.js
-  var import_jsx_runtime186 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime215 = __toESM(require_jsx_runtime());
   var DEFAULT_OPTION = {
     key: "default",
     name: (0, import_i18n54.__)("Default"),
@@ -44152,7 +44334,7 @@ This message will only show in development mode. It won't appear in production. 
       };
     })];
     const selectedOption = (_options$find = options2.find((option) => option.value === value)) !== null && _options$find !== void 0 ? _options$find : DEFAULT_OPTION;
-    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(custom_select_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(custom_select_control_default, {
       __next40pxDefaultSize,
       __shouldNotWarnDeprecated36pxSize: true,
       className: "components-font-size-picker__select",
@@ -44196,7 +44378,7 @@ This message will only show in development mode. It won't appear in production. 
   var T_SHIRT_NAMES = [(0, import_i18n55.__)("Small"), (0, import_i18n55.__)("Medium"), (0, import_i18n55.__)("Large"), (0, import_i18n55.__)("Extra Large"), (0, import_i18n55.__)("Extra Extra Large")];
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.js
-  var import_jsx_runtime187 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime216 = __toESM(require_jsx_runtime());
   var FontSizePickerToggleGroup = (props) => {
     const {
       fontSizes,
@@ -44205,7 +44387,7 @@ This message will only show in development mode. It won't appear in production. 
       size: size3,
       onChange
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(component_default12, {
+    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default12, {
       __nextHasNoMarginBottom: true,
       __next40pxDefaultSize,
       __shouldNotWarnDeprecated36pxSize: true,
@@ -44215,7 +44397,7 @@ This message will only show in development mode. It won't appear in production. 
       onChange,
       isBlock: true,
       size: size3,
-      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(component_default14, {
+      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default14, {
         value: fontSize.size,
         label: T_SHIRT_ABBREVIATIONS[index2],
         "aria-label": fontSize.name || T_SHIRT_NAMES[index2],
@@ -44226,7 +44408,7 @@ This message will only show in development mode. It won't appear in production. 
   var font_size_picker_toggle_group_default = FontSizePickerToggleGroup;
 
   // packages/components/build-module/font-size-picker/index.js
-  var import_jsx_runtime188 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime217 = __toESM(require_jsx_runtime());
   var DEFAULT_UNITS = ["px", "em", "rem", "vw", "vh"];
   var MAX_TOGGLE_GROUP_SIZES = 5;
   var UnforwardedFontSizePicker = (props, ref) => {
@@ -44248,7 +44430,7 @@ This message will only show in development mode. It won't appear in production. 
     });
     const selectedFontSize = fontSizes.find((fontSize) => fontSize.size === value);
     const isCustomValue2 = !!value && !selectedFontSize;
-    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element139.useState)(isCustomValue2);
+    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element140.useState)(isCustomValue2);
     let currentPickerType;
     if (!disableCustomFontSizes && userRequestedCustom) {
       currentPickerType = "custom";
@@ -44267,26 +44449,26 @@ This message will only show in development mode. It won't appear in production. 
       __next40pxDefaultSize,
       size: size3
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(Container2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(Container2, {
       ref,
       className: "components-font-size-picker",
       "aria-labelledby": labelId,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime188.jsx)(component_default6, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(Header2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default6, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(Header2, {
           className: "components-font-size-picker__header",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime188.jsx)(HeaderLabel, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)(HeaderLabel, {
             id: labelId,
             children: (0, import_i18n57.__)("Font size")
-          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(HeaderToggle, {
+          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(HeaderToggle, {
             label: currentPickerType === "custom" ? (0, import_i18n57.__)("Use size preset") : (0, import_i18n57.__)("Set custom size"),
-            icon: import_icons21.settings,
+            icon: settings_default,
             onClick: () => setUserRequestedCustom(!userRequestedCustom),
             isPressed: currentPickerType === "custom",
             size: "small"
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)("div", {
-        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(font_size_picker_select_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("div", {
+        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(font_size_picker_select_default, {
           __next40pxDefaultSize,
           fontSizes,
           value,
@@ -44300,7 +44482,7 @@ This message will only show in development mode. It won't appear in production. 
             }
           },
           onSelectCustom: () => setUserRequestedCustom(true)
-        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(font_size_picker_toggle_group_default, {
+        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(font_size_picker_toggle_group_default, {
           fontSizes,
           value,
           __next40pxDefaultSize,
@@ -44312,11 +44494,11 @@ This message will only show in development mode. It won't appear in production. 
               onChange?.(hasUnits2 ? newValue : Number(newValue), fontSizes.find((fontSize) => fontSize.size === newValue));
             }
           }
-        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(component_default3, {
+        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(component_default3, {
           className: "components-font-size-picker__custom-size-control",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime188.jsx)(component_default4, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(unit_control_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(unit_control_default, {
               __next40pxDefaultSize,
               __shouldNotWarnDeprecated36pxSize: true,
               label: (0, import_i18n57.__)("Font size"),
@@ -44335,12 +44517,12 @@ This message will only show in development mode. It won't appear in production. 
               units: hasUnits2 ? units : [],
               min: 0
             })
-          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(component_default4, {
+          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(component_default6, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default6, {
               marginX: 2,
               marginBottom: 0,
-              children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(range_control_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(range_control_default, {
                 __nextHasNoMarginBottom: true,
                 __next40pxDefaultSize,
                 __shouldNotWarnDeprecated36pxSize: true,
@@ -44365,8 +44547,8 @@ This message will only show in development mode. It won't appear in production. 
                 step: isValueUnitRelative ? 0.1 : 1
               })
             })
-          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(component_default4, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(Button3, {
+          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default4, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(Button3, {
               disabled: isDisabled,
               accessibleWhenDisabled: true,
               onClick: () => {
@@ -44382,12 +44564,12 @@ This message will only show in development mode. It won't appear in production. 
       })]
     });
   };
-  var FontSizePicker = (0, import_element139.forwardRef)(UnforwardedFontSizePicker);
+  var FontSizePicker = (0, import_element140.forwardRef)(UnforwardedFontSizePicker);
   var font_size_picker_default = FontSizePicker;
 
   // packages/components/build-module/form-file-upload/index.js
-  var import_element140 = __toESM(require_element());
-  var import_jsx_runtime189 = __toESM(require_jsx_runtime());
+  var import_element141 = __toESM(require_element());
+  var import_jsx_runtime218 = __toESM(require_jsx_runtime());
   function FormFileUpload({
     accept,
     children,
@@ -44397,7 +44579,7 @@ This message will only show in development mode. It won't appear in production. 
     render,
     ...props
   }) {
-    const ref = (0, import_element140.useRef)(null);
+    const ref = (0, import_element141.useRef)(null);
     const openFileDialog = () => {
       ref.current?.click();
     };
@@ -44411,15 +44593,15 @@ This message will only show in development mode. It won't appear in production. 
     }
     const ui = render ? render({
       openFileDialog
-    }) : /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(button_default, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(button_default, {
       onClick: openFileDialog,
       ...props,
       children
     });
     const compatAccept = accept?.includes("audio/*") ? `${accept}, audio/mp3, audio/x-m4a, audio/x-m4b, audio/x-m4p, audio/x-wav, audio/webm` : accept;
-    return /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)("div", {
       className: "components-form-file-upload",
-      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("input", {
+      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("input", {
         type: "file",
         ref,
         multiple,
@@ -44436,8 +44618,8 @@ This message will only show in development mode. It won't appear in production. 
   var form_file_upload_default = FormFileUpload;
 
   // packages/components/build-module/form-toggle/index.js
-  var import_element141 = __toESM(require_element());
-  var import_jsx_runtime190 = __toESM(require_jsx_runtime());
+  var import_element142 = __toESM(require_element());
+  var import_jsx_runtime219 = __toESM(require_jsx_runtime());
   var noop14 = () => {
   };
   function UnforwardedFormToggle(props, ref) {
@@ -44454,9 +44636,9 @@ This message will only show in development mode. It won't appear in production. 
       "is-checked": checked,
       "is-disabled": disabled
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("span", {
       className: wrapperClasses,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)("input", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)("input", {
         className: "components-form-toggle__input",
         id: id3,
         type: "checkbox",
@@ -44469,18 +44651,18 @@ This message will only show in development mode. It won't appear in production. 
         },
         ...additionalProps,
         ref
-      }), /* @__PURE__ */ (0, import_jsx_runtime190.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("span", {
         className: "components-form-toggle__track"
-      }), /* @__PURE__ */ (0, import_jsx_runtime190.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("span", {
         className: "components-form-toggle__thumb"
       })]
     });
   }
-  var FormToggle = (0, import_element141.forwardRef)(UnforwardedFormToggle);
+  var FormToggle = (0, import_element142.forwardRef)(UnforwardedFormToggle);
   var form_toggle_default = FormToggle;
 
   // packages/components/build-module/form-token-field/index.js
-  var import_element142 = __toESM(require_element());
+  var import_element143 = __toESM(require_element());
   var import_i18n59 = __toESM(require_i18n());
   var import_compose61 = __toESM(require_compose());
   var import_a11y6 = __toESM(require_a11y());
@@ -44490,8 +44672,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/form-token-field/token.js
   var import_compose60 = __toESM(require_compose());
   var import_i18n58 = __toESM(require_i18n());
-  var import_icons22 = __toESM(require_icons());
-  var import_jsx_runtime191 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime220 = __toESM(require_jsx_runtime());
   var noop15 = () => {
   };
   function Token({
@@ -44527,25 +44708,25 @@ This message will only show in development mode. It won't appear in production. 
       termPosition,
       termsCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("span", {
       className: tokenClasses,
       onMouseEnter,
       onMouseLeave,
       title,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime191.jsxs)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("span", {
         className: "components-form-token-field__token-text",
         id: `components-form-token-field__token-text-${instanceId}`,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime191.jsx)(component_default2, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime220.jsx)(component_default2, {
           as: "span",
           children: termPositionAndCount
-        }), /* @__PURE__ */ (0, import_jsx_runtime191.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("span", {
           "aria-hidden": "true",
           children: transformedValue
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(button_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(button_default, {
         className: "components-form-token-field__remove-token",
         size: "small",
-        icon: import_icons22.closeSmall,
+        icon: close_small_default,
         onClick: !disabled ? onClick : void 0,
         disabled,
         label: messages.remove,
@@ -44567,7 +44748,7 @@ This message will only show in development mode. It won't appear in production. 
   })("padding:7px;", boxSizingReset, " ", deprecatedPaddings, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE0QnVEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgRmxleCB9IGZyb20gJy4uL2ZsZXgnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgeyBib3hTaXppbmdSZXNldCB9IGZyb20gJy4uL3V0aWxzJztcblxudHlwZSBUb2tlbnNBbmRJbnB1dFdyYXBwZXJQcm9wcyA9IHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplOiBib29sZWFuO1xuXHRoYXNUb2tlbnM6IGJvb2xlYW47XG59O1xuXG5jb25zdCBkZXByZWNhdGVkUGFkZGluZ3MgPSAoIHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplLFxuXHRoYXNUb2tlbnMsXG59OiBUb2tlbnNBbmRJbnB1dFdyYXBwZXJQcm9wcyApID0+XG5cdCEgX19uZXh0NDBweERlZmF1bHRTaXplICYmXG5cdGNzc2Bcblx0XHRwYWRkaW5nLXRvcDogJHsgc3BhY2UoIGhhc1Rva2VucyA/IDEgOiAwLjUgKSB9O1xuXHRcdHBhZGRpbmctYm90dG9tOiAkeyBzcGFjZSggaGFzVG9rZW5zID8gMSA6IDAuNSApIH07XG5cdGA7XG5cbmV4cG9ydCBjb25zdCBUb2tlbnNBbmRJbnB1dFdyYXBwZXJGbGV4ID0gc3R5bGVkKCBGbGV4IClgXG5cdHBhZGRpbmc6IDdweDtcblx0JHsgYm94U2l6aW5nUmVzZXQgfVxuXG5cdCR7IGRlcHJlY2F0ZWRQYWRkaW5ncyB9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/form-token-field/index.js
-  var import_jsx_runtime192 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime221 = __toESM(require_jsx_runtime());
   var identity3 = (value) => value;
   function FormTokenField(props) {
     const {
@@ -44618,32 +44799,32 @@ This message will only show in development mode. It won't appear in production. 
       __next40pxDefaultSize
     });
     const instanceId = (0, import_compose61.useInstanceId)(FormTokenField);
-    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element142.useState)("");
-    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element142.useState)(0);
-    const [isActive, setIsActive] = (0, import_element142.useState)(false);
-    const [isExpanded, setIsExpanded] = (0, import_element142.useState)(false);
-    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element142.useState)(-1);
-    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element142.useState)(false);
+    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element143.useState)("");
+    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element143.useState)(0);
+    const [isActive, setIsActive] = (0, import_element143.useState)(false);
+    const [isExpanded, setIsExpanded] = (0, import_element143.useState)(false);
+    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element143.useState)(-1);
+    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element143.useState)(false);
     const prevSuggestions = (0, import_compose61.usePrevious)(suggestions);
     const prevValue = (0, import_compose61.usePrevious)(value);
-    const input = (0, import_element142.useRef)(null);
-    const tokensAndInput = (0, import_element142.useRef)(null);
+    const input = (0, import_element143.useRef)(null);
+    const tokensAndInput = (0, import_element143.useRef)(null);
     const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y6.speak, 500);
-    (0, import_element142.useEffect)(() => {
+    (0, import_element143.useEffect)(() => {
       if (isActive && !hasFocus2()) {
         focus4();
       }
     }, [isActive]);
-    (0, import_element142.useEffect)(() => {
+    (0, import_element143.useEffect)(() => {
       const suggestionsDidUpdate = !(0, import_is_shallow_equal2.default)(suggestions, prevSuggestions || []);
       if (suggestionsDidUpdate || value !== prevValue) {
         updateSuggestions(suggestionsDidUpdate);
       }
     }, [suggestions, prevSuggestions, value, prevValue]);
-    (0, import_element142.useEffect)(() => {
+    (0, import_element143.useEffect)(() => {
       updateSuggestions();
     }, [incompleteTokenValue]);
-    (0, import_element142.useEffect)(() => {
+    (0, import_element143.useEffect)(() => {
       updateSuggestions();
     }, [__experimentalAutoSelectFirstMatch]);
     if (disabled && isActive) {
@@ -44991,8 +45172,8 @@ This message will only show in development mode. It won't appear in production. 
       const status = typeof token2 !== "string" ? token2.status : void 0;
       const termPosition = index2 + 1;
       const termsCount = tokens.length;
-      return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(component_default4, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(Token, {
+      return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(component_default4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Token, {
           value: _value,
           status,
           title: typeof token2 !== "string" ? token2.title : void 0,
@@ -45020,7 +45201,7 @@ This message will only show in development mode. It won't appear in production. 
         isExpanded,
         selectedSuggestionIndex
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(token_input_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(token_input_default, {
         ...inputProps,
         onChange: !(maxLength && value.length >= maxLength) ? onInputChangeHandler : void 0,
         ref: input
@@ -45042,19 +45223,19 @@ This message will only show in development mode. It won't appear in production. 
         onFocus: onFocusHandler
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)("div", {
       ...tokenFieldProps,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(StyledLabel, {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(StyledLabel, {
         htmlFor: `components-form-token-input-${instanceId}`,
         className: "components-form-token-field__label",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)("div", {
         ref: tokensAndInput,
         className: classes,
         tabIndex: -1,
         onMouseDown: onContainerTouched,
         onTouchStart: onContainerTouched,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsx)(TokensAndInputWrapperFlex, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime221.jsx)(TokensAndInputWrapperFlex, {
           justify: "flex-start",
           align: "center",
           gap: 1,
@@ -45062,7 +45243,7 @@ This message will only show in development mode. It won't appear in production. 
           __next40pxDefaultSize,
           hasTokens: !!value.length,
           children: renderTokensAndInput()
-        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(suggestions_list_default, {
+        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(suggestions_list_default, {
           instanceId,
           match: saveTransform(incompleteTokenValue),
           displayTransform,
@@ -45073,9 +45254,9 @@ This message will only show in development mode. It won't appear in production. 
           onSelect: onSuggestionSelected,
           __experimentalRenderItem
         })]
-      }), !__nextHasNoMarginBottom && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(component_default6, {
+      }), !__nextHasNoMarginBottom && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(component_default6, {
         marginBottom: 2
-      }), __experimentalShowHowTo && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(StyledHelp, {
+      }), __experimentalShowHowTo && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(StyledHelp, {
         id: `components-form-token-suggestions-howto-${instanceId}`,
         className: "components-form-token-field__help",
         __nextHasNoMarginBottom,
@@ -45086,7 +45267,7 @@ This message will only show in development mode. It won't appear in production. 
   var form_token_field_default = FormTokenField;
 
   // packages/components/build-module/guide/index.js
-  var import_element143 = __toESM(require_element());
+  var import_element144 = __toESM(require_element());
   var import_deprecated20 = __toESM(require_deprecated());
   var import_i18n61 = __toESM(require_i18n());
 
@@ -45094,14 +45275,14 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n60 = __toESM(require_i18n());
 
   // packages/components/build-module/guide/icons.js
-  var import_primitives4 = __toESM(require_primitives());
-  var import_jsx_runtime193 = __toESM(require_jsx_runtime());
-  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(import_primitives4.SVG, {
+  var import_primitives33 = __toESM(require_primitives());
+  var import_jsx_runtime222 = __toESM(require_jsx_runtime());
+  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_primitives33.SVG, {
     width: "8",
     height: "8",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
-    children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(import_primitives4.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_primitives33.Circle, {
       cx: "4",
       cy: "4",
       r: "4"
@@ -45109,23 +45290,23 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/guide/page-control.js
-  var import_jsx_runtime194 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime223 = __toESM(require_jsx_runtime());
   function PageControl({
     currentPage,
     numberOfPages,
     setCurrentPage
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)("ul", {
+    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("ul", {
       className: "components-guide__page-control",
       "aria-label": (0, import_i18n60.__)("Guide controls"),
       children: Array.from({
         length: numberOfPages
-      }).map((_, page) => /* @__PURE__ */ (0, import_jsx_runtime194.jsx)("li", {
+      }).map((_, page) => /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("li", {
         // Set aria-current="step" on the active page, see https://www.w3.org/TR/wai-aria-1.1/#aria-current
         "aria-current": page === currentPage ? "step" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(button_default, {
           size: "small",
-          icon: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(PageControlIcon, {}),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(PageControlIcon, {}),
           "aria-label": (0, import_i18n60.sprintf)(
             /* translators: 1: current page number 2: total number of pages */
             (0, import_i18n60.__)("Page %1$d of %2$d"),
@@ -45139,7 +45320,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/guide/index.js
-  var import_jsx_runtime195 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime224 = __toESM(require_jsx_runtime());
   function Guide({
     children,
     className,
@@ -45150,25 +45331,25 @@ This message will only show in development mode. It won't appear in production. 
     onFinish,
     pages = []
   }) {
-    const ref = (0, import_element143.useRef)(null);
-    const [currentPage, setCurrentPage] = (0, import_element143.useState)(0);
-    (0, import_element143.useEffect)(() => {
+    const ref = (0, import_element144.useRef)(null);
+    const [currentPage, setCurrentPage] = (0, import_element144.useState)(0);
+    (0, import_element144.useEffect)(() => {
       const frame2 = ref.current?.querySelector(".components-guide");
       if (frame2 instanceof HTMLElement) {
         frame2.focus();
       }
     }, [currentPage]);
-    (0, import_element143.useEffect)(() => {
-      if (import_element143.Children.count(children)) {
+    (0, import_element144.useEffect)(() => {
+      if (import_element144.Children.count(children)) {
         (0, import_deprecated20.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
       }
     }, [children]);
-    if (import_element143.Children.count(children)) {
+    if (import_element144.Children.count(children)) {
       var _Children$map;
-      pages = (_Children$map = import_element143.Children.map(children, (child) => ({
+      pages = (_Children$map = import_element144.Children.map(children, (child) => ({
         content: child
       }))) !== null && _Children$map !== void 0 ? _Children$map : [];
     }
@@ -45187,7 +45368,7 @@ This message will only show in development mode. It won't appear in production. 
     if (pages.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(modal_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(modal_default, {
       className: clsx_default("components-guide", className),
       contentLabel,
       isDismissible: pages.length > 1,
@@ -45202,30 +45383,30 @@ This message will only show in development mode. It won't appear in production. 
         }
       },
       ref,
-      children: /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)("div", {
         className: "components-guide__container",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime195.jsxs)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsxs)("div", {
           className: "components-guide__page",
-          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(PageControl, {
+          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(PageControl, {
             currentPage,
             numberOfPages: pages.length,
             setCurrentPage
           }), pages[currentPage].content]
-        }), /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)("div", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)("div", {
           className: "components-guide__footer",
-          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(button_default, {
+          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
             className: "components-guide__back-button",
             variant: "tertiary",
             onClick: goBack,
             __next40pxDefaultSize: true,
             children: previousButtonText
-          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(button_default, {
+          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
             className: "components-guide__forward-button",
             variant: "primary",
             onClick: goForward,
             __next40pxDefaultSize: true,
             children: nextButtonText
-          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(button_default, {
+          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
             className: "components-guide__finish-button",
             variant: "primary",
             onClick: onFinish,
@@ -45239,25 +45420,25 @@ This message will only show in development mode. It won't appear in production. 
   var guide_default = Guide;
 
   // packages/components/build-module/guide/page.js
-  var import_element144 = __toESM(require_element());
+  var import_element145 = __toESM(require_element());
   var import_deprecated21 = __toESM(require_deprecated());
-  var import_jsx_runtime196 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime225 = __toESM(require_jsx_runtime());
   function GuidePage(props) {
-    (0, import_element144.useEffect)(() => {
+    (0, import_element145.useEffect)(() => {
       (0, import_deprecated21.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
       });
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", {
       ...props
     });
   }
 
   // packages/components/build-module/button/deprecated.js
   var import_deprecated22 = __toESM(require_deprecated());
-  var import_element145 = __toESM(require_element());
-  var import_jsx_runtime197 = __toESM(require_jsx_runtime());
+  var import_element146 = __toESM(require_element());
+  var import_jsx_runtime226 = __toESM(require_jsx_runtime());
   function UnforwardedIconButton({
     label,
     labelPosition,
@@ -45270,7 +45451,7 @@ This message will only show in development mode. It won't appear in production. 
       alternative: "wp.components.Button",
       version: "6.2"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(button_default, {
       ...props,
       ref,
       tooltipPosition: labelPosition,
@@ -45279,12 +45460,12 @@ This message will only show in development mode. It won't appear in production. 
       label: tooltip || label
     });
   }
-  var deprecated_default = (0, import_element145.forwardRef)(UnforwardedIconButton);
+  var deprecated_default = (0, import_element146.forwardRef)(UnforwardedIconButton);
 
   // packages/components/build-module/keyboard-shortcuts/index.js
-  var import_element146 = __toESM(require_element());
+  var import_element147 = __toESM(require_element());
   var import_compose62 = __toESM(require_compose());
-  var import_jsx_runtime198 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime227 = __toESM(require_jsx_runtime());
   function KeyboardShortcut({
     target,
     callback,
@@ -45305,20 +45486,20 @@ This message will only show in development mode. It won't appear in production. 
     bindGlobal,
     eventName
   }) {
-    const target = (0, import_element146.useRef)(null);
-    const element = Object.entries(shortcuts !== null && shortcuts !== void 0 ? shortcuts : {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(KeyboardShortcut, {
+    const target = (0, import_element147.useRef)(null);
+    const element = Object.entries(shortcuts !== null && shortcuts !== void 0 ? shortcuts : {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(KeyboardShortcut, {
       shortcut,
       callback,
       bindGlobal,
       eventName,
       target
     }, shortcut));
-    if (!import_element146.Children.count(children)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_jsx_runtime198.Fragment, {
+    if (!import_element147.Children.count(children)) {
+      return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(import_jsx_runtime227.Fragment, {
         children: element
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)("div", {
       ref: target,
       children: [element, children]
     });
@@ -45326,9 +45507,9 @@ This message will only show in development mode. It won't appear in production. 
   var keyboard_shortcuts_default = KeyboardShortcuts;
 
   // packages/components/build-module/menu-group/index.js
-  var import_element147 = __toESM(require_element());
+  var import_element148 = __toESM(require_element());
   var import_compose63 = __toESM(require_compose());
-  var import_jsx_runtime199 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime228 = __toESM(require_jsx_runtime());
   function MenuGroup3(props) {
     const {
       children,
@@ -45337,21 +45518,21 @@ This message will only show in development mode. It won't appear in production. 
       hideSeparator
     } = props;
     const instanceId = (0, import_compose63.useInstanceId)(MenuGroup3);
-    if (!import_element147.Children.count(children)) {
+    if (!import_element148.Children.count(children)) {
       return null;
     }
     const labelId = `components-menu-group-label-${instanceId}`;
     const classNames = clsx_default(className, "components-menu-group", {
       "has-hidden-separator": hideSeparator
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)("div", {
       className: classNames,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", {
         className: "components-menu-group__label",
         id: labelId,
         "aria-hidden": "true",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", {
         role: "group",
         "aria-labelledby": label ? labelId : void 0,
         children
@@ -45361,12 +45542,12 @@ This message will only show in development mode. It won't appear in production. 
   var menu_group_default = MenuGroup3;
 
   // packages/components/build-module/menu-item/index.js
-  var import_element148 = __toESM(require_element());
-  var import_jsx_runtime200 = __toESM(require_jsx_runtime());
+  var import_element149 = __toESM(require_element());
+  var import_jsx_runtime229 = __toESM(require_jsx_runtime());
   function UnforwardedMenuItem(props, ref) {
     let {
       children,
-      info: info2,
+      info,
       className,
       icon,
       iconPosition = "right",
@@ -45377,26 +45558,26 @@ This message will only show in development mode. It won't appear in production. 
       ...buttonProps
     } = props;
     className = clsx_default("components-menu-item__button", className);
-    if (info2) {
-      children = /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)("span", {
+    if (info) {
+      children = /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)("span", {
         className: "components-menu-item__info-wrapper",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime200.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime229.jsx)("span", {
           className: "components-menu-item__item",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("span", {
           className: "components-menu-item__info",
-          children: info2
+          children: info
         })]
       });
     }
     if (icon && typeof icon !== "string") {
-      icon = (0, import_element148.cloneElement)(icon, {
+      icon = (0, import_element149.cloneElement)(icon, {
         className: clsx_default("components-menu-items__item-icon", {
           "has-icon-right": iconPosition === "right"
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(button_default, {
       __next40pxDefaultSize: true,
       ref,
       "aria-checked": role === "menuitemcheckbox" || role === "menuitemradio" ? isSelected2 : void 0,
@@ -45405,23 +45586,22 @@ This message will only show in development mode. It won't appear in production. 
       className,
       accessibleWhenDisabled: true,
       ...buttonProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime200.jsx)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime229.jsx)("span", {
         className: "components-menu-item__item",
         children
-      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(shortcut_default, {
+      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(shortcut_default, {
         className: "components-menu-item__shortcut",
         shortcut
-      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(icon_default2, {
+      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(icon_default3, {
         icon
       }), suffix]
     });
   }
-  var MenuItem3 = (0, import_element148.forwardRef)(UnforwardedMenuItem);
+  var MenuItem3 = (0, import_element149.forwardRef)(UnforwardedMenuItem);
   var menu_item_default = MenuItem3;
 
   // packages/components/build-module/menu-items-choice/index.js
-  var import_icons24 = __toESM(require_icons());
-  var import_jsx_runtime201 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime230 = __toESM(require_jsx_runtime());
   var noop16 = () => {
   };
   function MenuItemsChoice({
@@ -45430,13 +45610,13 @@ This message will only show in development mode. It won't appear in production. 
     onSelect,
     value
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(import_jsx_runtime201.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_jsx_runtime230.Fragment, {
       children: choices.map((item2) => {
         const isSelected2 = value === item2.value;
-        return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(menu_item_default, {
           role: "menuitemradio",
           disabled: item2.disabled,
-          icon: isSelected2 ? import_icons24.check : null,
+          icon: isSelected2 ? check_default : null,
           info: item2.info,
           isSelected: isSelected2,
           shortcut: item2.shortcut,
@@ -45458,7 +45638,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigation/index.js
   var import_deprecated23 = __toESM(require_deprecated());
-  var import_element152 = __toESM(require_element());
+  var import_element153 = __toESM(require_element());
   var import_i18n63 = __toESM(require_i18n());
 
   // packages/components/build-module/navigation/constants.js
@@ -45466,12 +45646,12 @@ This message will only show in development mode. It won't appear in production. 
   var SEARCH_FOCUS_DELAY = 100;
 
   // packages/components/build-module/navigation/context.js
-  var import_element149 = __toESM(require_element());
+  var import_element150 = __toESM(require_element());
   var noop17 = () => {
   };
   var defaultIsEmpty = () => false;
   var defaultGetter = () => void 0;
-  var NavigationContext = (0, import_element149.createContext)({
+  var NavigationContext = (0, import_element150.createContext)({
     activeItem: void 0,
     activeMenu: ROOT_MENU,
     setActiveMenu: noop17,
@@ -45490,7 +45670,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   });
   NavigationContext.displayName = "NavigationContext";
-  var useNavigationContext = () => (0, import_element149.useContext)(NavigationContext);
+  var useNavigationContext = () => (0, import_element150.useContext)(NavigationContext);
 
   // packages/components/build-module/navigation/styles/navigation-styles.js
   var import_i18n62 = __toESM(require_i18n());
@@ -45599,12 +45779,12 @@ This message will only show in development mode. It won't appear in production. 
   })(() => (0, import_i18n62.isRTL)() ? "margin-left: auto;" : "margin-right: auto;", " font-size:14px;line-height:20px;color:inherit;" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUErTHlDIiwiZmlsZSI6Im5hdmlnYXRpb24tc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGlzUlRMIH0gZnJvbSAnQHdvcmRwcmVzcy9pMThuJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBIZWFkaW5nIH0gZnJvbSAnLi4vLi4vaGVhZGluZyc7XG5pbXBvcnQgeyBydGwsIENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgTmF2aWdhdGlvblVJID0gc3R5bGVkLmRpdmBcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdHBhZGRpbmc6IDAgJHsgc3BhY2UoIDQgKSB9O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVVSSA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCA2ICkgfTtcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR1bCB7XG5cdFx0cGFkZGluZzogMDtcblx0XHRtYXJnaW46IDA7XG5cdFx0bGlzdC1zdHlsZTogbm9uZTtcblx0fVxuXHQuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19iYWNrLWJ1dHRvbiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0LmNvbXBvbmVudHMtbmF2aWdhdGlvbl9fZ3JvdXAgKyAuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19ncm91cCB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudUJhY2tCdXR0b25VSSA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYuaXMtdGVydGlhcnkge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblxuXHRcdCY6aG92ZXI6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdH1cblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlVUkgPSBzdHlsZWQuZGl2YFxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogMTAwJTtcbmA7XG5cbmV4cG9ydCBjb25zdCBNZW51VGl0bGVTZWFyY2hDb250cm9sV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbjogMTFweCAwOyAvLyBub24taWRlYWwgaGFyZGNvZGluZyB0byBtYWludGFpbiBzYW1lIGhlaWdodCBhcyBIZWFkaW5nLCBjb3VsZCBiZSBpbXByb3ZlZFxuXHRwYWRkaW5nOiAxcHg7IC8vIHNvIHRoZSBmb2N1cyBib3JkZXIgZG9lc24ndCBnZXQgY3V0IG9mZiBieSB0aGUgb3ZlcmZsb3cgaGlkZGVuIG9uIE1lbnVUaXRsZVVJXG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlQWN0aW9uc1VJID0gc3R5bGVkLnNwYW5gXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9OyAvLyAyNHB4LCBzYW1lIGhlaWdodCBhcyB0aGUgYnV0dG9ucyBpbnNpZGVcblxuXHQuY29tcG9uZW50cy1idXR0b24uaXMtc21hbGwge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblx0XHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAxICkgfTsgLy8gQXZvaWQgaGlkaW5nIHRoZSBmb2N1cyBvdXRsaW5lXG5cdFx0cGFkZGluZzogMDtcblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogbm9uZTtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHR9XG5cdFx0Jjpob3Zlcjpub3QoIDpkaXNhYmxlZCApIHtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBUaXRsZVVJID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMiApIH07XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZzogJHsgKCkgPT5cblx0XHRpc1JUTCgpXG5cdFx0XHQ/IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDQgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZSggMiApIH1gXG5cdFx0XHQ6IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZShcblx0XHRcdFx0XHQ0XG5cdFx0XHQgICkgfWAgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFzZVVJID0gc3R5bGVkLmxpYFxuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Y29sb3I6IGluaGVyaXQ7XG5cdG1hcmdpbi1ib3R0b206IDA7XG5cblx0PiBidXR0b24sXG5cdD4gYS5jb21wb25lbnRzLWJ1dHRvbixcblx0PiBhIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHRvcGFjaXR5OiAwLjc7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCA0ICkgfTsgLyogOHB4IDE2cHggKi9cblx0XHQkeyBydGwoIHsgdGV4dEFsaWduOiAnbGVmdCcgfSwgeyB0ZXh0QWxpZ246ICdyaWdodCcgfSApIH1cblxuXHRcdCY6aG92ZXIsXG5cdFx0Jjpmb2N1czpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTphY3RpdmUsXG5cdFx0JjphY3RpdmU6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6YWN0aXZlIHtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQmLmlzLWFjdGl2ZSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblxuXHRcdD4gYnV0dG9uLFxuXHRcdC5jb21wb25lbnRzLWJ1dHRvbjpob3Zlcixcblx0XHQ+IGEge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQ+IHN2ZyBwYXRoIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDYwMCBdIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVUkgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRoZWlnaHQ6IGF1dG87XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogMDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDEuNSApIH0gJHsgc3BhY2UoIDQgKSB9O1xuXHRmb250LXdlaWdodDogNDAwO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0d2lkdGg6IDEwMCU7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRvcGFjaXR5OiAwLjc7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUljb25VSSA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFkZ2VVSSA9IHN0eWxlZC5zcGFuYFxuXHRtYXJnaW4tbGVmdDogJHsgKCkgPT4gKCBpc1JUTCgpID8gJzAnIDogc3BhY2UoIDIgKSApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgKCkgPT4gKCBpc1JUTCgpID8gc3BhY2UoIDIgKSA6ICcwJyApIH07XG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRwYWRkaW5nOiAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDMgKSB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRAa2V5ZnJhbWVzIGZhZGUtaW4ge1xuXHRcdGZyb20ge1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHR9XG5cdFx0dG8ge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRhbmltYXRpb246IGZhZGUtaW4gMjUwbXMgZWFzZS1vdXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVGl0bGVVSSA9IHN0eWxlZCggVGV4dCApYFxuXHQkeyAoKSA9PiAoIGlzUlRMKCkgPyAnbWFyZ2luLWxlZnQ6IGF1dG87JyA6ICdtYXJnaW4tcmlnaHQ6IGF1dG87JyApIH1cblx0Zm9udC1zaXplOiAxNHB4O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuIl19 */"));
 
   // packages/components/build-module/navigation/use-create-navigation-tree.js
-  var import_element151 = __toESM(require_element());
+  var import_element152 = __toESM(require_element());
 
   // packages/components/build-module/navigation/use-navigation-tree-nodes.js
-  var import_element150 = __toESM(require_element());
+  var import_element151 = __toESM(require_element());
   function useNavigationTreeNodes() {
-    const [nodes, setNodes] = (0, import_element150.useState)({});
+    const [nodes, setNodes] = (0, import_element151.useState)({});
     const getNode = (key) => nodes[key];
     const addNode = (key, value) => {
       const {
@@ -45647,8 +45827,8 @@ This message will only show in development mode. It won't appear in production. 
       addNode: addMenu,
       removeNode: removeMenu
     } = useNavigationTreeNodes();
-    const [childMenu, setChildMenu] = (0, import_element151.useState)({});
-    const getChildMenu = (menu3) => childMenu[menu3] || [];
+    const [childMenu, setChildMenu] = (0, import_element152.useState)({});
+    const getChildMenu = (menu2) => childMenu[menu2] || [];
     const traverseMenu = (startMenu, callback) => {
       const visited = [];
       let queue = [startMenu];
@@ -45707,7 +45887,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigation/index.js
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime231 = __toESM(require_jsx_runtime());
   var noop18 = () => {
   };
   function Navigation({
@@ -45717,8 +45897,8 @@ This message will only show in development mode. It won't appear in production. 
     className,
     onActivateMenu = noop18
   }) {
-    const [menu3, setMenu] = (0, import_element152.useState)(activeMenu);
-    const [slideOrigin, setSlideOrigin] = (0, import_element152.useState)();
+    const [menu2, setMenu] = (0, import_element153.useState)(activeMenu);
+    const [slideOrigin, setSlideOrigin] = (0, import_element153.useState)();
     const navigationTree = useCreateNavigationTree();
     const defaultSlideOrigin = (0, import_i18n63.isRTL)() ? "right" : "left";
     (0, import_deprecated23.default)("wp.components.Navigation (and all subcomponents)", {
@@ -45734,20 +45914,20 @@ This message will only show in development mode. It won't appear in production. 
       setMenu(menuId);
       onActivateMenu(menuId);
     };
-    const isMountedRef = (0, import_element152.useRef)(false);
-    (0, import_element152.useEffect)(() => {
+    const isMountedRef = (0, import_element153.useRef)(false);
+    (0, import_element153.useEffect)(() => {
       if (!isMountedRef.current) {
         isMountedRef.current = true;
       }
     }, []);
-    (0, import_element152.useEffect)(() => {
-      if (activeMenu !== menu3) {
+    (0, import_element153.useEffect)(() => {
+      if (activeMenu !== menu2) {
         setActiveMenu(activeMenu);
       }
     }, [activeMenu]);
     const context = {
       activeItem,
-      activeMenu: menu3,
+      activeMenu: menu2,
       setActiveMenu,
       navigationTree
     };
@@ -45756,26 +45936,25 @@ This message will only show in development mode. It won't appear in production. 
       type: "slide-in",
       origin: slideOrigin
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(NavigationUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(NavigationUI, {
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
         className: animateClassName ? clsx_default({
           [animateClassName]: isMountedRef.current && slideOrigin
         }) : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(NavigationContext.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(NavigationContext.Provider, {
           value: context,
           children
         })
-      }, menu3)
+      }, menu2)
     });
   }
   var navigation_default = Navigation;
 
   // packages/components/build-module/navigation/back-button/index.js
-  var import_element153 = __toESM(require_element());
+  var import_element154 = __toESM(require_element());
   var import_i18n64 = __toESM(require_i18n());
-  var import_icons25 = __toESM(require_icons());
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime232 = __toESM(require_jsx_runtime());
   function UnforwardedNavigationBackButton({
     backButtonLabel,
     className,
@@ -45798,42 +45977,42 @@ This message will only show in development mode. It won't appear in production. 
         setActiveMenu(parentMenu, animationDirection);
       }
     };
-    const icon = (0, import_i18n64.isRTL)() ? import_icons25.chevronRight : import_icons25.chevronLeft;
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(MenuBackButtonUI, {
+    const icon = (0, import_i18n64.isRTL)() ? chevron_right_default : chevron_left_default;
+    return /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(MenuBackButtonUI, {
       __next40pxDefaultSize: true,
       className: classes,
       href,
       variant: "tertiary",
       ref,
       onClick: handleOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime203.jsx)(import_icons25.Icon, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime232.jsx)(icon_default2, {
         icon
       }), backButtonLabel || parentMenuTitle || (0, import_i18n64.__)("Back")]
     });
   }
-  var NavigationBackButton = (0, import_element153.forwardRef)(UnforwardedNavigationBackButton);
+  var NavigationBackButton = (0, import_element154.forwardRef)(UnforwardedNavigationBackButton);
   var back_button_default = NavigationBackButton;
 
   // packages/components/build-module/navigation/group/index.js
-  var import_element155 = __toESM(require_element());
+  var import_element156 = __toESM(require_element());
 
   // packages/components/build-module/navigation/group/context.js
-  var import_element154 = __toESM(require_element());
-  var NavigationGroupContext = (0, import_element154.createContext)({
+  var import_element155 = __toESM(require_element());
+  var NavigationGroupContext = (0, import_element155.createContext)({
     group: void 0
   });
   NavigationGroupContext.displayName = "NavigationGroupContext";
-  var useNavigationGroupContext = () => (0, import_element154.useContext)(NavigationGroupContext);
+  var useNavigationGroupContext = () => (0, import_element155.useContext)(NavigationGroupContext);
 
   // packages/components/build-module/navigation/group/index.js
-  var import_jsx_runtime204 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime233 = __toESM(require_jsx_runtime());
   var uniqueId = 0;
   function NavigationGroup({
     children,
     className,
     title
   }) {
-    const [groupId] = (0, import_element155.useState)(`group-${++uniqueId}`);
+    const [groupId] = (0, import_element156.useState)(`group-${++uniqueId}`);
     const {
       navigationTree: {
         items
@@ -45843,23 +46022,23 @@ This message will only show in development mode. It won't appear in production. 
       group: groupId
     };
     if (!Object.values(items).some((item2) => item2.group === groupId && item2._isVisible)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(NavigationGroupContext.Provider, {
+      return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NavigationGroupContext.Provider, {
         value: context,
         children
       });
     }
     const groupTitleId = `components-navigation__group-title-${groupId}`;
     const classes = clsx_default("components-navigation__group", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(NavigationGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NavigationGroupContext.Provider, {
       value: context,
-      children: /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)("li", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)("li", {
         className: classes,
-        children: [title && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(GroupTitleUI, {
+        children: [title && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(GroupTitleUI, {
           className: "components-navigation__group-title",
           id: groupTitleId,
           level: 3,
           children: title
-        }), /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("ul", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime233.jsx)("ul", {
           "aria-labelledby": groupTitleId,
           role: "group",
           children
@@ -45870,22 +46049,21 @@ This message will only show in development mode. It won't appear in production. 
   var group_default = NavigationGroup;
 
   // packages/components/build-module/navigation/item/index.js
-  var import_icons26 = __toESM(require_icons());
   var import_i18n65 = __toESM(require_i18n());
 
   // packages/components/build-module/navigation/item/base-content.js
-  var import_jsx_runtime205 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime234 = __toESM(require_jsx_runtime());
   function NavigationItemBaseContent(props) {
     const {
       badge,
       title
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(import_jsx_runtime205.Fragment, {
-      children: [title && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(ItemTitleUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_jsx_runtime234.Fragment, {
+      children: [title && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(ItemTitleUI, {
         className: "components-navigation__item-title",
         as: "span",
         children: title
-      }), badge && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(ItemBadgeUI, {
+      }), badge && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(ItemBadgeUI, {
         className: "components-navigation__item-badge",
         children: badge
       })]
@@ -45893,24 +46071,24 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigation/item/base.js
-  var import_element158 = __toESM(require_element());
+  var import_element159 = __toESM(require_element());
 
   // packages/components/build-module/navigation/item/use-navigation-tree-item.js
-  var import_element157 = __toESM(require_element());
+  var import_element158 = __toESM(require_element());
 
   // packages/components/build-module/navigation/menu/context.js
-  var import_element156 = __toESM(require_element());
-  var NavigationMenuContext = (0, import_element156.createContext)({
+  var import_element157 = __toESM(require_element());
+  var NavigationMenuContext = (0, import_element157.createContext)({
     menu: void 0,
     search: ""
   });
   NavigationMenuContext.displayName = "NavigationMenuContext";
-  var useNavigationMenuContext = () => (0, import_element156.useContext)(NavigationMenuContext);
+  var useNavigationMenuContext = () => (0, import_element157.useContext)(NavigationMenuContext);
 
   // packages/components/build-module/navigation/utils.js
   var import_remove_accents4 = __toESM(require_remove_accents());
   var normalizeInput = (input) => (0, import_remove_accents4.default)(input).replace(/^\//, "").toLowerCase();
-  var normalizedSearch = (title, search2) => -1 !== normalizeInput(title).indexOf(normalizeInput(search2));
+  var normalizedSearch = (title, search) => -1 !== normalizeInput(title).indexOf(normalizeInput(search));
 
   // packages/components/build-module/navigation/item/use-navigation-tree-item.js
   var useNavigationTreeItem = (itemId, props) => {
@@ -45925,26 +46103,26 @@ This message will only show in development mode. It won't appear in production. 
       group
     } = useNavigationGroupContext();
     const {
-      menu: menu3,
-      search: search2
+      menu: menu2,
+      search
     } = useNavigationMenuContext();
-    (0, import_element157.useEffect)(() => {
-      const isMenuActive = activeMenu === menu3;
-      const isItemVisible = !search2 || props.title !== void 0 && normalizedSearch(props.title, search2);
+    (0, import_element158.useEffect)(() => {
+      const isMenuActive = activeMenu === menu2;
+      const isItemVisible = !search || props.title !== void 0 && normalizedSearch(props.title, search);
       addItem(itemId, {
         ...props,
         group,
-        menu: menu3,
+        menu: menu2,
         _isVisible: isMenuActive && isItemVisible
       });
       return () => {
         removeItem2(itemId);
       };
-    }, [activeMenu, search2]);
+    }, [activeMenu, search]);
   };
 
   // packages/components/build-module/navigation/item/base.js
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime235 = __toESM(require_jsx_runtime());
   var uniqueId2 = 0;
   function NavigationItemBase(props) {
     const {
@@ -45954,7 +46132,7 @@ This message will only show in development mode. It won't appear in production. 
       href,
       ...restProps
     } = props;
-    const [itemId] = (0, import_element158.useState)(`item-${++uniqueId2}`);
+    const [itemId] = (0, import_element159.useState)(`item-${++uniqueId2}`);
     useNavigationTreeItem(itemId, props);
     const {
       navigationTree
@@ -45963,7 +46141,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     const classes = clsx_default("components-navigation__item", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(ItemBaseUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(ItemBaseUI, {
       className: classes,
       ...restProps,
       children
@@ -45971,7 +46149,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigation/item/index.js
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime236 = __toESM(require_jsx_runtime());
   var noop19 = () => {
   };
   function NavigationItem(props) {
@@ -46009,7 +46187,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       onClick(event);
     };
-    const navigationIcon = (0, import_i18n65.isRTL)() ? import_icons26.chevronLeft : import_icons26.chevronRight;
+    const navigationIcon = (0, import_i18n65.isRTL)() ? chevron_left_default : chevron_right_default;
     const baseProps = children ? props : {
       ...props,
       onClick: void 0
@@ -46022,19 +46200,19 @@ This message will only show in development mode. It won't appear in production. 
       "aria-current": isActive ? "page" : void 0,
       ...restProps
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(NavigationItemBase, {
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(NavigationItemBase, {
       ...baseProps,
       className: classes,
-      children: children || /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(ItemUI, {
+      children: children || /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(ItemUI, {
         ...itemProps,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(ItemIconUI, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(import_icons26.Icon, {
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(ItemIconUI, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(icon_default2, {
             icon
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(NavigationItemBaseContent, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(NavigationItemBaseContent, {
           title,
           badge
-        }), navigateToMenu && /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(import_icons26.Icon, {
+        }), navigateToMenu && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(icon_default2, {
           icon: navigationIcon
         })]
       })
@@ -46043,10 +46221,10 @@ This message will only show in development mode. It won't appear in production. 
   var item_default2 = NavigationItem;
 
   // packages/components/build-module/navigation/menu/index.js
-  var import_element163 = __toESM(require_element());
+  var import_element164 = __toESM(require_element());
 
   // packages/components/build-module/navigation/menu/use-navigation-tree-menu.js
-  var import_element159 = __toESM(require_element());
+  var import_element160 = __toESM(require_element());
   var useNavigationTreeMenu = (props) => {
     const {
       navigationTree: {
@@ -46055,7 +46233,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     } = useNavigationContext();
     const key = props.menu || ROOT_MENU;
-    (0, import_element159.useEffect)(() => {
+    (0, import_element160.useEffect)(() => {
       addMenu(key, {
         ...props,
         menu: key
@@ -46067,19 +46245,18 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigation/menu/menu-title.js
-  var import_element162 = __toESM(require_element());
+  var import_element163 = __toESM(require_element());
   var import_i18n68 = __toESM(require_i18n());
-  var import_icons28 = __toESM(require_icons());
 
   // packages/components/build-module/navigation/menu/menu-title-search.js
-  var import_element161 = __toESM(require_element());
+  var import_element162 = __toESM(require_element());
   var import_i18n67 = __toESM(require_i18n());
 
   // packages/components/build-module/higher-order/with-spoken-messages/index.js
   var import_compose64 = __toESM(require_compose());
   var import_a11y7 = __toESM(require_a11y());
-  var import_jsx_runtime208 = __toESM(require_jsx_runtime());
-  var with_spoken_messages_default = (0, import_compose64.createHigherOrderComponent)((Component9) => (props) => /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(Component9, {
+  var import_jsx_runtime237 = __toESM(require_jsx_runtime());
+  var with_spoken_messages_default = (0, import_compose64.createHigherOrderComponent)((Component9) => (props) => /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(Component9, {
     ...props,
     speak: import_a11y7.speak,
     debouncedSpeak: (0, import_compose64.useDebounce)(import_a11y7.speak, 500)
@@ -46088,8 +46265,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/search-control/index.js
   var import_compose65 = __toESM(require_compose());
   var import_i18n66 = __toESM(require_i18n());
-  var import_icons27 = __toESM(require_icons());
-  var import_element160 = __toESM(require_element());
+  var import_element161 = __toESM(require_element());
   var import_deprecated24 = __toESM(require_deprecated());
 
   // packages/components/build-module/search-control/styles.js
@@ -46110,7 +46286,7 @@ This message will only show in development mode. It won't appear in production. 
     map: "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFXd0QiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgSW5wdXRDb250cm9sIGZyb20gJy4uL2lucHV0LWNvbnRyb2wnO1xuaW1wb3J0IEljb24gZnJvbSAnLi4vaWNvbic7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRJbnB1dENvbnRyb2wgPSBzdHlsZWQoIElucHV0Q29udHJvbCApYFxuXHRpbnB1dFt0eXBlPSdzZWFyY2gnXSB7XG5cdFx0Jjo6LXdlYmtpdC1zZWFyY2gtZGVjb3JhdGlvbixcblx0XHQmOjotd2Via2l0LXNlYXJjaC1jYW5jZWwtYnV0dG9uLFxuXHRcdCY6Oi13ZWJraXQtc2VhcmNoLXJlc3VsdHMtYnV0dG9uLFxuXHRcdCY6Oi13ZWJraXQtc2VhcmNoLXJlc3VsdHMtZGVjb3JhdGlvbiB7XG5cdFx0XHQtd2Via2l0LWFwcGVhcmFuY2U6IG5vbmU7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgU3R5bGVkSWNvbiA9IHN0eWxlZCggSWNvbiApYFxuXHQmOmRpciggbHRyICkge1xuXHRcdHRyYW5zZm9ybTogc2NhbGVYKCAtMSApO1xuXHR9XG5gO1xuIl19 */",
     toString: _EMOTION_STRINGIFIED_CSS_ERROR__38
   });
-  var StyledIcon = /* @__PURE__ */ emotion_styled_base_browser_esm_default(icon_default2, false ? {
+  var StyledIcon = /* @__PURE__ */ emotion_styled_base_browser_esm_default(icon_default3, false ? {
     target: "effl84m0"
   } : {
     target: "effl84m0",
@@ -46126,7 +46302,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/search-control/index.js
-  var import_jsx_runtime209 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime238 = __toESM(require_jsx_runtime());
   function SuffixItem({
     searchRef,
     value,
@@ -46145,11 +46321,11 @@ This message will only show in development mode. It won't appear in production. 
       onChange("");
       searchRef.current?.focus();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(InputControlSuffixWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(InputControlSuffixWrapper, {
       variant: "control",
-      children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(button_default, {
         size: "small",
-        icon: import_icons27.closeSmall,
+        icon: close_small_default,
         label: onClose ? (0, import_i18n66.__)("Close search") : (0, import_i18n66.__)("Reset search"),
         onClick: onClose !== null && onClose !== void 0 ? onClose : onReset
       })
@@ -46171,9 +46347,9 @@ This message will only show in development mode. It won't appear in production. 
       disabled,
       ...filteredRestProps
     } = restProps;
-    const searchRef = (0, import_element160.useRef)(null);
+    const searchRef = (0, import_element161.useRef)(null);
     const instanceId = (0, import_compose65.useInstanceId)(SearchControl, "components-search-control");
-    const contextValue = (0, import_element160.useMemo)(() => ({
+    const contextValue = (0, import_element161.useMemo)(() => ({
       BaseControl: {
         // Overrides the underlying BaseControl `__nextHasNoMarginBottom` via the context system
         // to provide backwards compatible margin for SearchControl.
@@ -46184,9 +46360,9 @@ This message will only show in development mode. It won't appear in production. 
         __associatedWPComponentName: "SearchControl"
       }
     }), [__nextHasNoMarginBottom]);
-    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(ContextSystemProvider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(StyledInputControl, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(StyledInputControl, {
         __next40pxDefaultSize: true,
         id: instanceId,
         hideLabelFromVision,
@@ -46199,14 +46375,14 @@ This message will only show in development mode. It won't appear in production. 
         autoComplete: "off",
         placeholder,
         value: value !== null && value !== void 0 ? value : "",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(InputControlPrefixWrapper, {
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(InputControlPrefixWrapper, {
           variant: "icon",
-          children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(StyledIcon, {
-            icon: import_icons27.search,
+          children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(StyledIcon, {
+            icon: search_default,
             fill: "currentColor"
           })
         }),
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(SuffixItem, {
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(SuffixItem, {
           searchRef,
           value,
           onChange,
@@ -46216,16 +46392,16 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   }
-  var SearchControl = (0, import_element160.forwardRef)(UnforwardedSearchControl);
+  var SearchControl = (0, import_element161.forwardRef)(UnforwardedSearchControl);
   var search_control_default = SearchControl;
 
   // packages/components/build-module/navigation/menu/menu-title-search.js
-  var import_jsx_runtime210 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime239 = __toESM(require_jsx_runtime());
   function MenuTitleSearch({
     debouncedSpeak,
     onCloseSearch,
     onSearch,
-    search: search2,
+    search,
     title
   }) {
     const {
@@ -46234,10 +46410,10 @@ This message will only show in development mode. It won't appear in production. 
       }
     } = useNavigationContext();
     const {
-      menu: menu3
+      menu: menu2
     } = useNavigationMenuContext();
-    const inputRef = (0, import_element161.useRef)(null);
-    (0, import_element161.useEffect)(() => {
+    const inputRef = (0, import_element162.useRef)(null);
+    (0, import_element162.useEffect)(() => {
       const delayedFocus = setTimeout(() => {
         inputRef.current?.focus();
       }, SEARCH_FOCUS_DELAY);
@@ -46245,8 +46421,8 @@ This message will only show in development mode. It won't appear in production. 
         clearTimeout(delayedFocus);
       };
     }, []);
-    (0, import_element161.useEffect)(() => {
-      if (!search2) {
+    (0, import_element162.useEffect)(() => {
+      if (!search) {
         return;
       }
       const count = Object.values(items).filter((item2) => item2._isVisible).length;
@@ -46256,7 +46432,7 @@ This message will only show in development mode. It won't appear in production. 
         count
       );
       debouncedSpeak(resultsFoundMessage);
-    }, [items, search2]);
+    }, [items, search]);
     const onClose = () => {
       onSearch?.("");
       onCloseSearch();
@@ -46267,14 +46443,14 @@ This message will only show in development mode. It won't appear in production. 
         onClose();
       }
     };
-    const inputId = `components-navigation__menu-title-search-${menu3}`;
+    const inputId = `components-navigation__menu-title-search-${menu2}`;
     const placeholder = (0, import_i18n67.sprintf)(
       /* translators: placeholder for menu search box. %s: menu title */
       (0, import_i18n67.__)("Search %s"),
       title?.toLowerCase() || ""
     ).trim();
-    return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(MenuTitleSearchControlWrapper, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(search_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(MenuTitleSearchControlWrapper, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(search_control_default, {
         __nextHasNoMarginBottom: true,
         className: "components-navigation__menu-search-input",
         id: inputId,
@@ -46283,26 +46459,26 @@ This message will only show in development mode. It won't appear in production. 
         placeholder,
         onClose,
         ref: inputRef,
-        value: search2
+        value: search
       })
     });
   }
   var menu_title_search_default = with_spoken_messages_default(MenuTitleSearch);
 
   // packages/components/build-module/navigation/menu/menu-title.js
-  var import_jsx_runtime211 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime240 = __toESM(require_jsx_runtime());
   function NavigationMenuTitle({
     hasSearch,
     onSearch,
-    search: search2,
+    search,
     title,
     titleAction
   }) {
-    const [isSearching, setIsSearching] = (0, import_element162.useState)(false);
+    const [isSearching, setIsSearching] = (0, import_element163.useState)(false);
     const {
-      menu: menu3
+      menu: menu2
     } = useNavigationMenuContext();
-    const searchButtonRef = (0, import_element162.useRef)(null);
+    const searchButtonRef = (0, import_element163.useRef)(null);
     if (!title) {
       return null;
     }
@@ -46312,38 +46488,38 @@ This message will only show in development mode. It won't appear in production. 
         searchButtonRef.current?.focus();
       }, SEARCH_FOCUS_DELAY);
     };
-    const menuTitleId = `components-navigation__menu-title-${menu3}`;
+    const menuTitleId = `components-navigation__menu-title-${menu2}`;
     const searchButtonLabel = (0, import_i18n68.sprintf)((0, import_i18n68.__)("Search in %s"), title);
-    return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(MenuTitleUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(MenuTitleUI, {
       className: "components-navigation__menu-title",
-      children: [!isSearching && /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(GroupTitleUI, {
+      children: [!isSearching && /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(GroupTitleUI, {
         as: "h2",
         className: "components-navigation__menu-title-heading",
         level: 3,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime211.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime240.jsx)("span", {
           id: menuTitleId,
           children: title
-        }), (hasSearch || titleAction) && /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(MenuTitleActionsUI, {
-          children: [titleAction, hasSearch && /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(button_default, {
+        }), (hasSearch || titleAction) && /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(MenuTitleActionsUI, {
+          children: [titleAction, hasSearch && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(button_default, {
             size: "small",
             variant: "tertiary",
             label: searchButtonLabel,
             onClick: () => setIsSearching(true),
             ref: searchButtonRef,
-            children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(import_icons28.Icon, {
-              icon: import_icons28.search
+            children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(icon_default2, {
+              icon: search_default
             })
           })]
         })]
-      }), isSearching && /* @__PURE__ */ (0, import_jsx_runtime211.jsx)("div", {
+      }), isSearching && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", {
         className: getAnimateClassName({
           type: "slide-in",
           origin: "left"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(menu_title_search_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(menu_title_search_default, {
           onCloseSearch,
           onSearch,
-          search: search2,
+          search,
           title
         })
       })]
@@ -46352,9 +46528,9 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigation/menu/search-no-results-found.js
   var import_i18n69 = __toESM(require_i18n());
-  var import_jsx_runtime212 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime241 = __toESM(require_jsx_runtime());
   function NavigationSearchNoResultsFound({
-    search: search2
+    search
   }) {
     const {
       navigationTree: {
@@ -46362,25 +46538,25 @@ This message will only show in development mode. It won't appear in production. 
       }
     } = useNavigationContext();
     const resultsCount = Object.values(items).filter((item2) => item2._isVisible).length;
-    if (!search2 || !!resultsCount) {
+    if (!search || !!resultsCount) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(ItemBaseUI, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(ItemUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(ItemBaseUI, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(ItemUI, {
         children: [(0, import_i18n69.__)("No results found."), " "]
       })
     });
   }
 
   // packages/components/build-module/navigation/menu/index.js
-  var import_jsx_runtime213 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime242 = __toESM(require_jsx_runtime());
   function NavigationMenu(props) {
     const {
       backButtonLabel,
       children,
       className,
       hasSearch,
-      menu: menu3 = ROOT_MENU,
+      menu: menu2 = ROOT_MENU,
       onBackButtonClick,
       onSearch: setControlledSearch,
       parentMenu,
@@ -46389,55 +46565,55 @@ This message will only show in development mode. It won't appear in production. 
       title,
       titleAction
     } = props;
-    const [uncontrolledSearch, setUncontrolledSearch] = (0, import_element163.useState)("");
+    const [uncontrolledSearch, setUncontrolledSearch] = (0, import_element164.useState)("");
     useNavigationTreeMenu(props);
     const {
       activeMenu
     } = useNavigationContext();
     const context = {
-      menu: menu3,
+      menu: menu2,
       search: uncontrolledSearch
     };
-    if (activeMenu !== menu3) {
-      return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(NavigationMenuContext.Provider, {
+    if (activeMenu !== menu2) {
+      return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationMenuContext.Provider, {
         value: context,
         children
       });
     }
     const isControlledSearch = !!setControlledSearch;
-    const search2 = isControlledSearch ? controlledSearch : uncontrolledSearch;
+    const search = isControlledSearch ? controlledSearch : uncontrolledSearch;
     const onSearch = isControlledSearch ? setControlledSearch : setUncontrolledSearch;
-    const menuTitleId = `components-navigation__menu-title-${menu3}`;
+    const menuTitleId = `components-navigation__menu-title-${menu2}`;
     const classes = clsx_default("components-navigation__menu", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(NavigationMenuContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationMenuContext.Provider, {
       value: context,
-      children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(MenuUI, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(MenuUI, {
         className: classes,
-        children: [(parentMenu || onBackButtonClick) && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(back_button_default, {
+        children: [(parentMenu || onBackButtonClick) && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(back_button_default, {
           backButtonLabel,
           parentMenu,
           onClick: onBackButtonClick
-        }), title && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(NavigationMenuTitle, {
+        }), title && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationMenuTitle, {
           hasSearch,
           onSearch,
-          search: search2,
+          search,
           title,
           titleAction
-        }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(menu_default, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)("ul", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(menu_default2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)("ul", {
             "aria-labelledby": menuTitleId,
-            children: [children, search2 && !isSearchDebouncing && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(NavigationSearchNoResultsFound, {
-              search: search2
+            children: [children, search && !isSearchDebouncing && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationSearchNoResultsFound, {
+              search
             })]
           })
         })]
       })
     });
   }
-  var menu_default2 = NavigationMenu;
+  var menu_default3 = NavigationMenu;
 
   // packages/components/build-module/navigator/navigator/component.js
-  var import_element165 = __toESM(require_element());
+  var import_element166 = __toESM(require_element());
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal());
   var import_warning7 = __toESM(require_warning());
 
@@ -46794,7 +46970,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigator/context.js
-  var import_element164 = __toESM(require_element());
+  var import_element165 = __toESM(require_element());
   var initialContextValue2 = {
     location: {},
     goTo: () => {
@@ -46809,7 +46985,7 @@ This message will only show in development mode. It won't appear in production. 
     },
     params: {}
   };
-  var NavigatorContext = (0, import_element164.createContext)(initialContextValue2);
+  var NavigatorContext = (0, import_element165.createContext)(initialContextValue2);
   NavigatorContext.displayName = "NavigatorContext";
 
   // packages/components/build-module/navigator/styles.js
@@ -46904,7 +47080,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigator/navigator/component.js
   var import_deprecated25 = __toESM(require_deprecated());
-  var import_jsx_runtime214 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime243 = __toESM(require_jsx_runtime());
   function addScreen({
     screens
   }, screen) {
@@ -47051,7 +47227,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       className,
       ...otherProps
     } = useContextSystem(props, "Navigator");
-    const [routerState, dispatch] = (0, import_element165.useReducer)(routerReducer, initialPathProp, (path) => ({
+    const [routerState, dispatch] = (0, import_element166.useReducer)(routerReducer, initialPathProp, (path) => ({
       screens: [],
       currentLocation: {
         path,
@@ -47061,7 +47237,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       focusSelectors: /* @__PURE__ */ new Map(),
       initialPath: initialPathProp
     }));
-    const methods = (0, import_element165.useMemo)(() => ({
+    const methods = (0, import_element166.useMemo)(() => ({
       // Note: calling goBack calls `goToParent` internally, as it was established
       // that `goBack` should behave like `goToParent`, and `goToParent` should
       // be marked as deprecated.
@@ -47097,7 +47273,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       currentLocation,
       matchedPath
     } = routerState;
-    const navigatorContextValue = (0, import_element165.useMemo)(() => {
+    const navigatorContextValue = (0, import_element166.useMemo)(() => {
       var _matchedPath$params;
       return {
         location: currentLocation,
@@ -47107,12 +47283,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [currentLocation, matchedPath, methods]);
     const cx3 = useCx();
-    const classes = (0, import_element165.useMemo)(() => cx3(navigatorWrapper, className), [className, cx3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(component_default, {
+    const classes = (0, import_element166.useMemo)(() => cx3(navigatorWrapper, className), [className, cx3]);
+    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(component_default, {
       ref: forwardedRef,
       className: classes,
       ...otherProps,
-      children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(NavigatorContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(NavigatorContext.Provider, {
         value: navigatorContextValue,
         children
       })
@@ -47122,13 +47298,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/navigator/navigator-screen/component.js
   var import_dom32 = __toESM(require_dom());
-  var import_element167 = __toESM(require_element());
+  var import_element168 = __toESM(require_element());
   var import_compose67 = __toESM(require_compose());
   var import_escape_html = __toESM(require_escape_html());
   var import_warning8 = __toESM(require_warning());
 
   // packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.js
-  var import_element166 = __toESM(require_element());
+  var import_element167 = __toESM(require_element());
   var import_compose66 = __toESM(require_compose());
   var import_i18n70 = __toESM(require_i18n());
   var ANIMATION_TIMEOUT_MARGIN = 1.2;
@@ -47142,10 +47318,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const isRTL22 = (0, import_i18n70.isRTL)();
     const prefersReducedMotion2 = (0, import_compose66.useReducedMotion)();
-    const [animationStatus, setAnimationStatus] = (0, import_element166.useState)("INITIAL");
+    const [animationStatus, setAnimationStatus] = (0, import_element167.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
     const becameUnselected = animationStatus !== "ANIMATING_OUT" && animationStatus !== "OUT" && !isMatch;
-    (0, import_element166.useLayoutEffect)(() => {
+    (0, import_element167.useLayoutEffect)(() => {
       if (becameSelected) {
         setAnimationStatus(skipAnimation || prefersReducedMotion2 ? "IN" : "ANIMATING_IN");
       } else if (becameUnselected) {
@@ -47161,7 +47337,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (isAnimatingOut) {
       animationType = "out";
     }
-    const onScreenAnimationEnd = (0, import_element166.useCallback)((e3) => {
+    const onScreenAnimationEnd = (0, import_element167.useCallback)((e3) => {
       onAnimationEnd?.(e3);
       if (isExitAnimation(animationDirection, animationStatus, e3.animationName)) {
         setAnimationStatus("OUT");
@@ -47169,7 +47345,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setAnimationStatus("IN");
       }
     }, [onAnimationEnd, animationStatus, animationDirection]);
-    (0, import_element166.useEffect)(() => {
+    (0, import_element167.useEffect)(() => {
       let animationTimeout;
       if (isAnimatingOut) {
         animationTimeout = window.setTimeout(() => {
@@ -47204,12 +47380,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-screen/component.js
-  var import_jsx_runtime215 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime244 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
       false ? (0, import_warning8.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
     }
-    const screenId = (0, import_element167.useId)();
+    const screenId = (0, import_element168.useId)();
     const {
       children,
       className,
@@ -47222,7 +47398,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       match: match5,
       addScreen: addScreen2,
       removeScreen: removeScreen2
-    } = (0, import_element167.useContext)(NavigatorContext);
+    } = (0, import_element168.useContext)(NavigatorContext);
     const {
       isInitial,
       isBack,
@@ -47230,9 +47406,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       skipFocus
     } = location;
     const isMatch = match5 === screenId;
-    const wrapperRef = (0, import_element167.useRef)(null);
+    const wrapperRef = (0, import_element168.useRef)(null);
     const skipAnimationAndFocusRestoration = !!isInitial && !isBack;
-    (0, import_element167.useEffect)(() => {
+    (0, import_element168.useEffect)(() => {
       const screen = {
         id: screenId,
         path: (0, import_escape_html.escapeAttribute)(path)
@@ -47251,12 +47427,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       skipAnimation: skipAnimationAndFocusRestoration
     });
     const cx3 = useCx();
-    const classes = (0, import_element167.useMemo)(() => cx3(navigatorScreen, animationStyles, className), [className, cx3, animationStyles]);
-    const locationRef = (0, import_element167.useRef)(location);
-    (0, import_element167.useEffect)(() => {
+    const classes = (0, import_element168.useMemo)(() => cx3(navigatorScreen, animationStyles, className), [className, cx3, animationStyles]);
+    const locationRef = (0, import_element168.useRef)(location);
+    (0, import_element168.useEffect)(() => {
       locationRef.current = location;
     }, [location]);
-    (0, import_element167.useEffect)(() => {
+    (0, import_element168.useEffect)(() => {
       const wrapperEl = wrapperRef.current;
       if (skipAnimationAndFocusRestoration || !isMatch || !wrapperEl || locationRef.current.hasRestoredFocus || skipFocus) {
         return;
@@ -47277,7 +47453,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       elementToFocus.focus();
     }, [skipAnimationAndFocusRestoration, isMatch, isBack, focusTargetSelector, skipFocus]);
     const mergedWrapperRef = (0, import_compose67.useMergeRefs)([forwardedRef, wrapperRef]);
-    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default, {
+    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(component_default, {
       ref: mergedWrapperRef,
       className: classes,
       ...screenProps,
@@ -47288,11 +47464,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorScreen = contextConnect(UnconnectedNavigatorScreen, "Navigator.Screen");
 
   // packages/components/build-module/navigator/navigator-button/hook.js
-  var import_element169 = __toESM(require_element());
+  var import_element170 = __toESM(require_element());
   var import_escape_html2 = __toESM(require_escape_html());
 
   // packages/components/build-module/navigator/use-navigator.js
-  var import_element168 = __toESM(require_element());
+  var import_element169 = __toESM(require_element());
   function useNavigator() {
     const {
       location,
@@ -47300,7 +47476,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       goTo: goTo2,
       goBack,
       goToParent: goToParent2
-    } = (0, import_element168.useContext)(NavigatorContext);
+    } = (0, import_element169.useContext)(NavigatorContext);
     return {
       location,
       goTo: goTo2,
@@ -47324,7 +47500,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goTo: goTo2
     } = useNavigator();
-    const handleClick = (0, import_element169.useCallback)((e3) => {
+    const handleClick = (0, import_element170.useCallback)((e3) => {
       e3.preventDefault();
       goTo2(escapedPath, {
         focusTargetSelector: cssSelectorForAttribute(attributeName, escapedPath)
@@ -47340,10 +47516,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-button/component.js
-  var import_jsx_runtime216 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime245 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorButton(props, forwardedRef) {
     const navigatorButtonProps = useNavigatorButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorButtonProps
     });
@@ -47351,7 +47527,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorButton = contextConnect(UnconnectedNavigatorButton, "Navigator.Button");
 
   // packages/components/build-module/navigator/navigator-back-button/hook.js
-  var import_element170 = __toESM(require_element());
+  var import_element171 = __toESM(require_element());
   function useNavigatorBackButton(props) {
     const {
       onClick,
@@ -47361,7 +47537,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goBack
     } = useNavigator();
-    const handleClick = (0, import_element170.useCallback)((e3) => {
+    const handleClick = (0, import_element171.useCallback)((e3) => {
       e3.preventDefault();
       goBack();
       onClick?.(e3);
@@ -47374,10 +47550,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-back-button/component.js
-  var import_jsx_runtime217 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorBackButton(props, forwardedRef) {
     const navigatorBackButtonProps = useNavigatorBackButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorBackButtonProps
     });
@@ -47386,13 +47562,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.js
   var import_deprecated26 = __toESM(require_deprecated());
-  var import_jsx_runtime218 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime247 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
     (0, import_deprecated26.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(NavigatorBackButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(NavigatorBackButton, {
       ref: forwardedRef,
       ...props
     });
@@ -47515,15 +47691,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/notice/index.js
   var import_i18n71 = __toESM(require_i18n());
-  var import_element171 = __toESM(require_element());
+  var import_element172 = __toESM(require_element());
   var import_a11y8 = __toESM(require_a11y());
-  var import_icons29 = __toESM(require_icons());
-  var import_jsx_runtime219 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime248 = __toESM(require_jsx_runtime());
   var noop20 = () => {
   };
   function useSpokenMessage(message3, politeness) {
-    const spokenMessage = typeof message3 === "string" ? message3 : (0, import_element171.renderToString)(message3);
-    (0, import_element171.useEffect)(() => {
+    const spokenMessage = typeof message3 === "string" ? message3 : (0, import_element172.renderToString)(message3);
+    (0, import_element172.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y8.speak)(spokenMessage, politeness);
       }
@@ -47573,7 +47748,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       "is-dismissible": isDismissible
     });
     if (__unstableHTML && typeof children === "string") {
-      children = /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(import_element171.RawHTML, {
+      children = /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(import_element172.RawHTML, {
         children
       });
     }
@@ -47581,13 +47756,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onDismiss();
       onRemove();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
       className: classes,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime248.jsx)(component_default2, {
         children: getStatusLabel(status)
-      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
         className: "components-notice__content",
-        children: [children, /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("div", {
+        children: [children, /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
           className: "components-notice__actions",
           children: actions.map(({
             className: buttonCustomClasses,
@@ -47605,7 +47780,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             if (typeof computedVariant === "undefined" && isPrimary) {
               computedVariant = "primary";
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(button_default, {
+            return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(button_default, {
               __next40pxDefaultSize: true,
               href: url,
               variant: computedVariant,
@@ -47615,10 +47790,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             }, index2);
           })
         })]
-      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(button_default, {
+      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(button_default, {
         size: "small",
         className: "components-notice__dismiss",
-        icon: import_icons29.close,
+        icon: close_default,
         label: (0, import_i18n71.__)("Close"),
         onClick: onDismissNotice
       })]
@@ -47628,7 +47803,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/notice/list.js
   var import_react125 = __toESM(require_react());
-  var import_jsx_runtime220 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime249 = __toESM(require_jsx_runtime());
   var noop21 = () => {
   };
   function NoticeList({
@@ -47639,7 +47814,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const removeNotice = (id3) => () => onRemove(id3);
     className = clsx_default("components-notice-list", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)("div", {
       className,
       children: [children, [...notices].reverse().map((notice) => {
         const {
@@ -47657,17 +47832,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var list_default = NoticeList;
 
   // packages/components/build-module/panel/index.js
-  var import_element172 = __toESM(require_element());
+  var import_element173 = __toESM(require_element());
 
   // packages/components/build-module/panel/header.js
-  var import_jsx_runtime221 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime250 = __toESM(require_jsx_runtime());
   function PanelHeader({
     label,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)("div", {
       className: "components-panel__header",
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)("h2", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("h2", {
         children: label
       }), children]
     });
@@ -47675,29 +47850,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var header_default = PanelHeader;
 
   // packages/components/build-module/panel/index.js
-  var import_jsx_runtime222 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime251 = __toESM(require_jsx_runtime());
   function UnforwardedPanel({
     header,
     className,
     children
   }, ref) {
     const classNames = clsx_default(className, "components-panel");
-    return /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)("div", {
       className: classNames,
       ref,
-      children: [header && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(header_default, {
+      children: [header && /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(header_default, {
         label: header
       }), children]
     });
   }
-  var Panel = (0, import_element172.forwardRef)(UnforwardedPanel);
+  var Panel = (0, import_element173.forwardRef)(UnforwardedPanel);
   var panel_default = Panel;
 
   // packages/components/build-module/panel/body.js
   var import_compose68 = __toESM(require_compose());
-  var import_element173 = __toESM(require_element());
-  var import_icons30 = __toESM(require_icons());
-  var import_jsx_runtime223 = __toESM(require_jsx_runtime());
+  var import_element174 = __toESM(require_element());
+  var import_jsx_runtime252 = __toESM(require_jsx_runtime());
   var noop22 = () => {
   };
   function UnforwardedPanelBody(props, ref) {
@@ -47716,7 +47890,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       initial: initialOpen === void 0 ? true : initialOpen,
       fallback: false
     });
-    const nodeRef = (0, import_element173.useRef)(null);
+    const nodeRef = (0, import_element174.useRef)(null);
     const scrollBehavior = (0, import_compose68.useReducedMotion)() ? "auto" : "smooth";
     const handleOnToggle = (event) => {
       event.preventDefault();
@@ -47724,7 +47898,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setIsOpened(next2);
       onToggle(next2);
     };
-    const scrollAfterOpenRef = (0, import_element173.useRef)();
+    const scrollAfterOpenRef = (0, import_element174.useRef)();
     scrollAfterOpenRef.current = scrollAfterOpen;
     use_update_effect_default(() => {
       if (isOpened && scrollAfterOpenRef.current && nodeRef.current?.scrollIntoView) {
@@ -47738,10 +47912,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const classes = clsx_default("components-panel__body", className, {
       "is-opened": isOpened
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("div", {
       className: classes,
       ref: (0, import_compose68.useMergeRefs)([nodeRef, ref]),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime223.jsx)(PanelBodyTitle, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)(PanelBodyTitle, {
         icon,
         isOpened: Boolean(isOpened),
         onClick: handleOnToggle,
@@ -47752,7 +47926,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }) : isOpened && children]
     });
   }
-  var PanelBodyTitle = (0, import_element173.forwardRef)(({
+  var PanelBodyTitle = (0, import_element174.forwardRef)(({
     isOpened,
     icon,
     title,
@@ -47761,21 +47935,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!title) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("h2", {
+    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("h2", {
       className: "components-panel__body-title",
-      children: /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-panel__body-toggle",
         "aria-expanded": isOpened,
         ref,
         ...props,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime223.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", {
           "aria-hidden": "true",
-          children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(icon_default2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(icon_default3, {
             className: "components-panel__arrow",
-            icon: isOpened ? import_icons30.chevronUp : import_icons30.chevronDown
+            icon: isOpened ? chevron_up_default : chevron_down_default
           })
-        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(icon_default2, {
+        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(icon_default3, {
           icon,
           className: "components-panel__icon",
           size: 20
@@ -47783,38 +47957,38 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   });
-  var PanelBody = (0, import_element173.forwardRef)(UnforwardedPanelBody);
+  var PanelBody = (0, import_element174.forwardRef)(UnforwardedPanelBody);
   var body_default = PanelBody;
 
   // packages/components/build-module/panel/row.js
-  var import_element174 = __toESM(require_element());
-  var import_jsx_runtime224 = __toESM(require_jsx_runtime());
+  var import_element175 = __toESM(require_element());
+  var import_jsx_runtime253 = __toESM(require_jsx_runtime());
   function UnforwardedPanelRow({
     className,
     children
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
       className: clsx_default("components-panel__row", className),
       ref,
       children
     });
   }
-  var PanelRow = (0, import_element174.forwardRef)(UnforwardedPanelRow);
+  var PanelRow = (0, import_element175.forwardRef)(UnforwardedPanelRow);
   var row_default = PanelRow;
 
   // packages/components/build-module/placeholder/index.js
   var import_compose69 = __toESM(require_compose());
-  var import_primitives5 = __toESM(require_primitives());
-  var import_element175 = __toESM(require_element());
+  var import_primitives34 = __toESM(require_primitives());
+  var import_element176 = __toESM(require_element());
   var import_a11y9 = __toESM(require_a11y());
-  var import_jsx_runtime225 = __toESM(require_jsx_runtime());
-  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(import_primitives5.SVG, {
+  var import_jsx_runtime254 = __toESM(require_jsx_runtime());
+  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_primitives34.SVG, {
     className: "components-placeholder__illustration",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 60 60",
     preserveAspectRatio: "none",
-    children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(import_primitives5.Path, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_primitives34.Path, {
       vectorEffect: "non-scaling-stroke",
       d: "M60 60 0 0"
     })
@@ -47847,26 +48021,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const fieldsetClasses = clsx_default("components-placeholder__fieldset", {
       "is-column-layout": isColumnLayout
     });
-    (0, import_element175.useEffect)(() => {
+    (0, import_element176.useEffect)(() => {
       if (instructions) {
         (0, import_a11y9.speak)(instructions);
       }
     }, [instructions]);
-    return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)("div", {
       ...additionalProps,
       className: classes,
-      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", {
+      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
         className: "components-placeholder__preview",
         children: preview
-      }), /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)("div", {
         className: "components-placeholder__label",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime225.jsx)(icon_default2, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime254.jsx)(icon_default3, {
           icon
         }), label]
-      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", {
+      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
         className: "components-placeholder__instructions",
         children: instructions
-      }), /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
         className: fieldsetClasses,
         children
       })]
@@ -47876,7 +48050,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/progress-bar/index.js
   var import_i18n73 = __toESM(require_i18n());
-  var import_element176 = __toESM(require_element());
+  var import_element177 = __toESM(require_element());
 
   // packages/components/build-module/progress-bar/styles.js
   var import_i18n72 = __toESM(require_i18n());
@@ -47940,7 +48114,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/progress-bar/index.js
-  var import_jsx_runtime226 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime255 = __toESM(require_jsx_runtime());
   function UnforwardedProgressBar(props, ref) {
     const {
       className,
@@ -47948,14 +48122,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...progressProps
     } = props;
     const isIndeterminate = !Number.isFinite(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(Track2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(Track2, {
       className,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Indicator, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime255.jsx)(Indicator, {
         style: {
           "--indicator-width": !isIndeterminate ? `${value}%` : void 0
         },
         isIndeterminate
-      }), /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(ProgressElement, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(ProgressElement, {
         max: 100,
         value,
         "aria-label": (0, import_i18n73.__)("Loading \u2026"),
@@ -47964,7 +48138,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ProgressBar = (0, import_element176.forwardRef)(UnforwardedProgressBar);
+  var ProgressBar = (0, import_element177.forwardRef)(UnforwardedProgressBar);
   var progress_bar_default = ProgressBar;
 
   // packages/components/build-module/query-controls/index.js
@@ -48007,9 +48181,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tree-select/index.js
-  var import_element177 = __toESM(require_element());
+  var import_element178 = __toESM(require_element());
   var import_html_entities = __toESM(require_html_entities());
-  var import_jsx_runtime227 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime256 = __toESM(require_jsx_runtime());
   var CONTEXT_VALUE3 = {
     BaseControl: {
       // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
@@ -48034,7 +48208,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       tree = [],
       ...restProps
     } = useDeprecated36pxDefaultSizeProp(props);
-    const options2 = (0, import_element177.useMemo)(() => {
+    const options2 = (0, import_element178.useMemo)(() => {
       return [noOptionLabel && {
         value: "",
         label: noOptionLabel
@@ -48045,9 +48219,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: restProps.size,
       __next40pxDefaultSize: restProps.__next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(ContextSystemProvider, {
       value: CONTEXT_VALUE3,
-      children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(SelectControl, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(SelectControl, {
         __shouldNotWarnDeprecated36pxSize: true,
         label,
         options: options2,
@@ -48060,7 +48234,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var tree_select_default = TreeSelect;
 
   // packages/components/build-module/query-controls/author-select.js
-  var import_jsx_runtime228 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime257 = __toESM(require_jsx_runtime());
   function AuthorSelect({
     __next40pxDefaultSize,
     label,
@@ -48073,7 +48247,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const termsTree = buildTermsTree(authorList);
-    return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -48085,8 +48259,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/query-controls/category-select.js
-  var import_element178 = __toESM(require_element());
-  var import_jsx_runtime229 = __toESM(require_jsx_runtime());
+  var import_element179 = __toESM(require_element());
+  var import_jsx_runtime258 = __toESM(require_jsx_runtime());
   function CategorySelect({
     __next40pxDefaultSize,
     label,
@@ -48096,10 +48270,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onChange: onChangeProp,
     ...props
   }) {
-    const termsTree = (0, import_element178.useMemo)(() => {
+    const termsTree = (0, import_element179.useMemo)(() => {
       return buildTermsTree(categoriesList);
     }, [categoriesList]);
-    return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -48112,7 +48286,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/query-controls/index.js
-  var import_jsx_runtime230 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime259 = __toESM(require_jsx_runtime());
   var DEFAULT_MIN_ITEMS = 1;
   var DEFAULT_MAX_ITEMS = 100;
   var MAX_CATEGORIES_SUGGESTIONS = 20;
@@ -48154,10 +48328,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     // but instead are destructured inline where necessary.
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(component_default18, {
       spacing: "4",
       className: "components-query-controls",
-      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(select_control_default, {
+      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(select_control_default, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n74.__)("Order by"),
@@ -48175,14 +48349,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             onOrderByChange(newOrderBy);
           }
         }
-      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(CategorySelect, {
+      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(CategorySelect, {
         __next40pxDefaultSize: true,
         categoriesList: props.categoriesList,
         label: (0, import_i18n74.__)("Category"),
         noOptionLabel: (0, import_i18n74._x)("All", "categories"),
         selectedCategoryId: props.selectedCategoryId,
         onChange: props.onCategoryChange
-      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(form_token_field_default, {
+      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(form_token_field_default, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0, import_i18n74.__)("Categories"),
@@ -48197,14 +48371,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         suggestions: Object.keys(props.categorySuggestions),
         onChange: props.onCategoryChange,
         maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
-      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(AuthorSelect, {
+      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(AuthorSelect, {
         __next40pxDefaultSize: true,
         authorList,
         label: (0, import_i18n74.__)("Author"),
         noOptionLabel: (0, import_i18n74._x)("All", "authors"),
         selectedAuthorId,
         onChange: onAuthorChange
-      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(range_control_default, {
+      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(range_control_default, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n74.__)("Number of items"),
@@ -48219,18 +48393,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var query_controls_default = QueryControls;
 
   // packages/components/build-module/radio-group/radio.js
-  var import_element180 = __toESM(require_element());
+  var import_element181 = __toESM(require_element());
 
   // packages/components/build-module/radio-group/context.js
-  var import_element179 = __toESM(require_element());
-  var RadioGroupContext = (0, import_element179.createContext)({
+  var import_element180 = __toESM(require_element());
+  var RadioGroupContext = (0, import_element180.createContext)({
     store: void 0,
     disabled: void 0
   });
   RadioGroupContext.displayName = "RadioGroupContext";
 
   // packages/components/build-module/radio-group/radio.js
-  var import_jsx_runtime231 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime260 = __toESM(require_jsx_runtime());
   function UnforwardedRadio({
     value,
     children,
@@ -48239,7 +48413,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       store,
       disabled
-    } = (0, import_element180.useContext)(RadioGroupContext);
+    } = (0, import_element181.useContext)(RadioGroupContext);
     const selectedValue = useStoreState(store, "value");
     const isChecked = selectedValue !== void 0 && selectedValue === value;
     maybeWarnDeprecated36pxSize({
@@ -48247,26 +48421,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: void 0,
       __next40pxDefaultSize: props.__next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(Radio, {
+    return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(Radio, {
       disabled,
       store,
       ref,
       value,
-      render: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(button_default, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(button_default, {
         variant: isChecked ? "primary" : "secondary",
         ...props
       }),
       children: children || value
     });
   }
-  var Radio3 = (0, import_element180.forwardRef)(UnforwardedRadio);
+  var Radio3 = (0, import_element181.forwardRef)(UnforwardedRadio);
   var radio_default = Radio3;
 
   // packages/components/build-module/radio-group/index.js
   var import_deprecated27 = __toESM(require_deprecated());
-  var import_element181 = __toESM(require_element());
+  var import_element182 = __toESM(require_element());
   var import_i18n75 = __toESM(require_i18n());
-  var import_jsx_runtime232 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime261 = __toESM(require_jsx_runtime());
   function UnforwardedRadioGroup({
     label,
     checked,
@@ -48284,7 +48458,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       rtl: (0, import_i18n75.isRTL)()
     });
-    const contextValue = (0, import_element181.useMemo)(() => ({
+    const contextValue = (0, import_element182.useMemo)(() => ({
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
@@ -48292,11 +48466,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(RadioGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(RadioGroupContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(RadioGroup, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(RadioGroup, {
         store: radioStore,
-        render: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(button_group_default, {
+        render: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(button_group_default, {
           __shouldNotWarnDeprecated: true,
           children
         }),
@@ -48306,12 +48480,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var RadioGroup3 = (0, import_element181.forwardRef)(UnforwardedRadioGroup);
+  var RadioGroup3 = (0, import_element182.forwardRef)(UnforwardedRadioGroup);
   var radio_group_default = RadioGroup3;
 
   // packages/components/build-module/radio-control/index.js
   var import_compose70 = __toESM(require_compose());
-  var import_jsx_runtime233 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime262 = __toESM(require_jsx_runtime());
   function generateOptionDescriptionId(radioGroupId, index2) {
     return `${radioGroupId}-${index2}-option-description`;
   }
@@ -48339,24 +48513,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!options2?.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)("fieldset", {
+    return /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("fieldset", {
       id: id3,
       className: clsx_default(className, "components-radio-control"),
       "aria-describedby": !!help ? generateHelpId(id3) : void 0,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(component_default2, {
         as: "legend",
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(base_control_default.VisualLabel, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(component_default18, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(component_default18, {
         spacing: 3,
         className: clsx_default("components-radio-control__group-wrapper", {
           "has-help": !!help
         }),
-        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)("div", {
+        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("div", {
           className: "components-radio-control__option",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime233.jsx)("input", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime262.jsx)("input", {
             id: generateOptionId(id3, index2),
             className: "components-radio-control__input",
             type: "radio",
@@ -48370,18 +48544,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
               onClick?.(event);
             },
             ...additionalProps
-          }), /* @__PURE__ */ (0, import_jsx_runtime233.jsx)("label", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime262.jsx)("label", {
             className: "components-radio-control__label",
             htmlFor: generateOptionId(id3, index2),
             children: option.label
-          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(StyledHelp, {
+          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(StyledHelp, {
             __nextHasNoMarginBottom: true,
             id: generateOptionDescriptionId(id3, index2),
             className: "components-radio-control__option-description",
             children: option.description
           }) : null]
         }, generateOptionId(id3, index2)))
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(StyledHelp, {
         __nextHasNoMarginBottom: true,
         id: generateHelpId(id3),
         className: "components-base-control__help",
@@ -48392,7 +48566,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_control_default = RadioControl;
 
   // packages/components/build-module/resizable-box/index.js
-  var import_element185 = __toESM(require_element());
+  var import_element186 = __toESM(require_element());
 
   // node_modules/re-resizable/lib/index.js
   var React9 = __toESM(require_react());
@@ -49233,14 +49407,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.js
-  var import_element184 = __toESM(require_element());
+  var import_element185 = __toESM(require_element());
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.js
-  var import_element183 = __toESM(require_element());
+  var import_element184 = __toESM(require_element());
   var import_i18n76 = __toESM(require_i18n());
 
   // packages/components/build-module/resizable-box/resize-tooltip/utils.js
-  var import_element182 = __toESM(require_element());
+  var import_element183 = __toESM(require_element());
   var import_compose71 = __toESM(require_compose());
   var noop23 = () => {
   };
@@ -49257,16 +49431,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const [resizeListener, sizes] = (0, import_compose71.useResizeObserver)();
     const isAxisControlled = !!axis;
-    const [moveX, setMoveX] = (0, import_element182.useState)(false);
-    const [moveY, setMoveY] = (0, import_element182.useState)(false);
+    const [moveX, setMoveX] = (0, import_element183.useState)(false);
+    const [moveY, setMoveY] = (0, import_element183.useState)(false);
     const {
       width,
       height
     } = sizes;
-    const heightRef = (0, import_element182.useRef)(height);
-    const widthRef = (0, import_element182.useRef)(width);
-    const moveTimeoutRef = (0, import_element182.useRef)();
-    const debounceUnsetMoveXY = (0, import_element182.useCallback)(() => {
+    const heightRef = (0, import_element183.useRef)(height);
+    const widthRef = (0, import_element183.useRef)(width);
+    const moveTimeoutRef = (0, import_element183.useRef)();
+    const debounceUnsetMoveXY = (0, import_element183.useCallback)(() => {
       const unsetMoveXY = () => {
         if (isAxisControlled) {
           return;
@@ -49279,7 +49453,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       moveTimeoutRef.current = window.setTimeout(unsetMoveXY, fadeTimeout);
     }, [fadeTimeout, isAxisControlled]);
-    (0, import_element182.useEffect)(() => {
+    (0, import_element183.useEffect)(() => {
       const isRendered = width !== null || height !== null;
       if (!isRendered) {
         return;
@@ -49404,7 +49578,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("&&&{color:", COLORS.theme.foregroundInverted, ";display:block;font-size:13px;line-height:1.4;white-space:nowrap;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE2Q3VDIiwiZmlsZSI6InJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgZm9udCwgQ09MT1JTLCBDT05GSUcgfSBmcm9tICcuLi8uLi8uLi91dGlscyc7XG5cbmV4cG9ydCBjb25zdCBSb290ID0gc3R5bGVkLmRpdmBcblx0Ym90dG9tOiAwO1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRsZWZ0OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRyaWdodDogMDtcblx0dG9wOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IFRvb2x0aXBXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXHRvcGFjaXR5OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0dHJhbnNpdGlvbjogb3BhY2l0eSAxMjBtcyBsaW5lYXI7XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHRpcCA9IHN0eWxlZC5kaXZgXG5cdGJhY2tncm91bmQ6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRmb250LWZhbWlseTogJHsgZm9udCggJ2RlZmF1bHQuZm9udEZhbWlseScgKSB9O1xuXHRmb250LXNpemU6IDEycHg7XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdHBhZGRpbmc6IDRweCA4cHg7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcbmA7XG5cbi8vIFRPRE86IFJlc29sdmUgbmVlZCB0byB1c2UgJiYmIHRvIGluY3JlYXNlIHNwZWNpZmljaXR5XG4vLyBodHRwczovL2dpdGh1Yi5jb20vV29yZFByZXNzL2d1dGVuYmVyZy9pc3N1ZXMvMTg0ODNcblxuZXhwb3J0IGNvbnN0IExhYmVsVGV4dCA9IHN0eWxlZCggVGV4dCApYFxuXHQmJiYge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0Zm9udC1zaXplOiAxM3B4O1xuXHRcdGxpbmUtaGVpZ2h0OiAxLjQ7XG5cdFx0d2hpdGUtc3BhY2U6IG5vd3JhcDtcblx0fVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.js
-  var import_jsx_runtime234 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime263 = __toESM(require_jsx_runtime());
   var CORNER_OFFSET = 4;
   var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
   function Label3({
@@ -49445,27 +49619,27 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         left: (0, import_i18n76.isRTL)() ? CORNER_OFFSET : void 0
       };
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(TooltipWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(TooltipWrapper, {
       "aria-hidden": "true",
       className: "components-resizable-tooltip__tooltip-wrapper",
       ref,
       style: style2,
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Tooltip5, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(Tooltip5, {
         className: "components-resizable-tooltip__tooltip",
         style: labelStyle,
-        children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(LabelText, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(LabelText, {
           as: "span",
           children: label
         })
       })
     });
   }
-  var ForwardedComponent3 = (0, import_element183.forwardRef)(Label3);
+  var ForwardedComponent3 = (0, import_element184.forwardRef)(Label3);
   var label_default = ForwardedComponent3;
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.js
-  var import_jsx_runtime235 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime264 = __toESM(require_jsx_runtime());
   var noop24 = () => {
   };
   function ResizeTooltip({
@@ -49494,12 +49668,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const classes = clsx_default("components-resize-tooltip", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(Root4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(Root4, {
       "aria-hidden": "true",
       className: classes,
       ref,
       ...props,
-      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(label_default, {
+      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(label_default, {
         "aria-hidden": props["aria-hidden"],
         label,
         position: position2,
@@ -49508,11 +49682,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ForwardedComponent4 = (0, import_element184.forwardRef)(ResizeTooltip);
+  var ForwardedComponent4 = (0, import_element185.forwardRef)(ResizeTooltip);
   var resize_tooltip_default = ForwardedComponent4;
 
   // packages/components/build-module/resizable-box/index.js
-  var import_jsx_runtime236 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime265 = __toESM(require_jsx_runtime());
   var HANDLE_CLASS_NAME = "components-resizable-box__handle";
   var SIDE_HANDLE_CLASS_NAME = "components-resizable-box__side-handle";
   var CORNER_HANDLE_CLASS_NAME = "components-resizable-box__corner-handle";
@@ -49552,33 +49726,33 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     __experimentalTooltipProps: tooltipProps = {},
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(Resizable, {
+    return /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)(Resizable, {
       className: clsx_default("components-resizable-box__container", showHandle && "has-show-handle", className),
-      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime236.jsx)("div", {
+      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("div", {
         tabIndex: -1
       }, key)])),
       handleClasses: HANDLE_CLASSES,
       handleStyles: HANDLE_STYLES,
       ref,
       ...props,
-      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(resize_tooltip_default, {
+      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(resize_tooltip_default, {
         ...tooltipProps
       })]
     });
   }
-  var ResizableBox = (0, import_element185.forwardRef)(UnforwardedResizableBox);
+  var ResizableBox = (0, import_element186.forwardRef)(UnforwardedResizableBox);
   var resizable_box_default = ResizableBox;
 
   // packages/components/build-module/responsive-wrapper/index.js
-  var import_element186 = __toESM(require_element());
-  var import_jsx_runtime237 = __toESM(require_jsx_runtime());
+  var import_element187 = __toESM(require_element());
+  var import_jsx_runtime266 = __toESM(require_jsx_runtime());
   function ResponsiveWrapper({
     naturalWidth,
     naturalHeight,
     children,
     isInline = false
   }) {
-    if (import_element186.Children.count(children) !== 1) {
+    if (import_element187.Children.count(children) !== 1) {
       return null;
     }
     const TagName59 = isInline ? "span" : "div";
@@ -49586,10 +49760,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (naturalWidth && naturalHeight) {
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(TagName59, {
+    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(TagName59, {
       className: "components-responsive-wrapper",
-      children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)("div", {
-        children: (0, import_element186.cloneElement)(children, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", {
+        children: (0, import_element187.cloneElement)(children, {
           className: clsx_default("components-responsive-wrapper__content", children.props.className),
           style: {
             ...children.props.style,
@@ -49602,9 +49776,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var responsive_wrapper_default = ResponsiveWrapper;
 
   // packages/components/build-module/sandbox/index.js
-  var import_element187 = __toESM(require_element());
+  var import_element188 = __toESM(require_element());
   var import_compose72 = __toESM(require_compose());
-  var import_jsx_runtime238 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime267 = __toESM(require_jsx_runtime());
   var observeAndResizeJS = function() {
     const {
       MutationObserver: MutationObserver2
@@ -49680,9 +49854,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onFocus,
     tabIndex
   }) {
-    const ref = (0, import_element187.useRef)();
-    const [width, setWidth] = (0, import_element187.useState)(0);
-    const [height, setHeight] = (0, import_element187.useState)(0);
+    const ref = (0, import_element188.useRef)();
+    const [width, setWidth] = (0, import_element188.useState)(0);
+    const [height, setHeight] = (0, import_element188.useState)(0);
     function isFrameAccessible() {
       try {
         return !!ref.current?.contentDocument?.body;
@@ -49701,43 +49875,43 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       if (!forceRerender && null !== contentDocument?.body.getAttribute("data-resizable-iframe-connected")) {
         return;
       }
-      const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)("html", {
+      const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("html", {
         lang: ownerDocument.documentElement.lang,
         className: type,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsxs)("head", {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)("title", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("head", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsx)("title", {
             children: title
-          }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("style", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("style", {
             dangerouslySetInnerHTML: {
               __html: style
             }
-          }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("style", {
+          }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("style", {
             dangerouslySetInnerHTML: {
               __html: rules
             }
           }, i3))]
-        }), /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)("body", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("body", {
           "data-resizable-iframe-connected": "data-resizable-iframe-connected",
           className: type,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)("div", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsx)("div", {
             dangerouslySetInnerHTML: {
               __html: html
             }
-          }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("script", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("script", {
             type: "text/javascript",
             dangerouslySetInnerHTML: {
               __html: `(${observeAndResizeJS.toString()})();`
             }
-          }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("script", {
+          }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("script", {
             src
           }, src))]
         })]
       });
       contentDocument.open();
-      contentDocument.write("<!DOCTYPE html>" + (0, import_element187.renderToString)(htmlDoc));
+      contentDocument.write("<!DOCTYPE html>" + (0, import_element188.renderToString)(htmlDoc));
       contentDocument.close();
     }
-    (0, import_element187.useEffect)(() => {
+    (0, import_element188.useEffect)(() => {
       trySandBox();
       function tryNoForceSandBox() {
         trySandBox(false);
@@ -49769,13 +49943,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         defaultView?.removeEventListener("message", checkMessageForResize);
       };
     }, []);
-    (0, import_element187.useEffect)(() => {
+    (0, import_element188.useEffect)(() => {
       trySandBox();
     }, [title, styles3, scripts]);
-    (0, import_element187.useEffect)(() => {
+    (0, import_element188.useEffect)(() => {
       trySandBox(true);
     }, [html, type]);
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("iframe", {
       ref: (0, import_compose72.useMergeRefs)([ref, (0, import_compose72.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -49790,14 +49964,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/snackbar/index.js
   var import_a11y10 = __toESM(require_a11y());
-  var import_element188 = __toESM(require_element());
+  var import_element189 = __toESM(require_element());
   var import_i18n77 = __toESM(require_i18n());
   var import_warning9 = __toESM(require_warning());
-  var import_jsx_runtime239 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime268 = __toESM(require_jsx_runtime());
   var NOTICE_TIMEOUT = 1e4;
   function useSpokenMessage2(message3, politeness) {
-    const spokenMessage = typeof message3 === "string" ? message3 : (0, import_element188.renderToString)(message3);
-    (0, import_element188.useEffect)(() => {
+    const spokenMessage = typeof message3 === "string" ? message3 : (0, import_element189.renderToString)(message3);
+    (0, import_element189.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y10.speak)(spokenMessage, politeness);
       }
@@ -49834,17 +50008,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     }
     useSpokenMessage2(spokenMessage, politeness);
-    const callbacksRef = (0, import_element188.useRef)({
+    const callbacksRef = (0, import_element189.useRef)({
       onDismiss,
       onRemove
     });
-    (0, import_element188.useLayoutEffect)(() => {
+    (0, import_element189.useLayoutEffect)(() => {
       callbacksRef.current = {
         onDismiss,
         onRemove
       };
     });
-    (0, import_element188.useEffect)(() => {
+    (0, import_element189.useEffect)(() => {
       const timeoutHandle = setTimeout(() => {
         if (!explicitDismiss) {
           callbacksRef.current.onDismiss?.();
@@ -49863,7 +50037,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const snackbarContentClassnames = clsx_default("components-snackbar__content", {
       "components-snackbar__content-with-icon": !!icon
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("div", {
       ref,
       className: classes,
       onClick: !explicitDismiss ? dismissMe : void 0,
@@ -49872,9 +50046,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onKeyPress: !explicitDismiss ? dismissMe : void 0,
       "aria-label": !explicitDismiss ? (0, import_i18n77.__)("Dismiss this notice") : void 0,
       "data-testid": "snackbar",
-      children: /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)("div", {
         className: snackbarContentClassnames,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", {
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("div", {
           className: "components-snackbar__icon",
           children: icon
         }), children, actions.map(({
@@ -49882,19 +50056,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           onClick,
           url,
           openInNewTab = false
-        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(external_link_default, {
+        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(external_link_default, {
           href: url,
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(button_default, {
+        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(button_default, {
           __next40pxDefaultSize: true,
           href: url,
           variant: "link",
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("span", {
+        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("span", {
           role: "button",
           "aria-label": (0, import_i18n77.__)("Dismiss this notice"),
           tabIndex: 0,
@@ -49906,13 +50080,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var Snackbar = (0, import_element188.forwardRef)(UnforwardedSnackbar);
+  var Snackbar = (0, import_element189.forwardRef)(UnforwardedSnackbar);
   var snackbar_default = Snackbar;
 
   // packages/components/build-module/snackbar/list.js
   var import_compose73 = __toESM(require_compose());
-  var import_element189 = __toESM(require_element());
-  var import_jsx_runtime240 = __toESM(require_jsx_runtime());
+  var import_element190 = __toESM(require_element());
+  var import_jsx_runtime269 = __toESM(require_jsx_runtime());
   var SNACKBAR_VARIANTS = {
     init: {
       height: 0,
@@ -49950,30 +50124,30 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     children,
     onRemove
   }) {
-    const listRef = (0, import_element189.useRef)(null);
+    const listRef = (0, import_element190.useRef)(null);
     const isReducedMotion = (0, import_compose73.useReducedMotion)();
     className = clsx_default("components-snackbar-list", className);
     const removeNotice = (notice) => () => onRemove?.(notice.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)("div", {
       className,
       tabIndex: -1,
       ref: listRef,
       "data-testid": "snackbar-list",
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(AnimatePresence, {
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(AnimatePresence, {
         children: notices.map((notice) => {
           const {
             content,
             ...restNotice
           } = notice;
-          return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(motion.div, {
+          return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(motion.div, {
             layout: !isReducedMotion,
             initial: "init",
             animate: "open",
             exit: "exit",
             variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
-            children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", {
+            children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", {
               className: "components-snackbar-list__notice-container",
-              children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(snackbar_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(snackbar_default, {
                 ...restNotice,
                 onRemove: removeNotice(notice),
                 listRef,
@@ -49988,10 +50162,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var list_default2 = SnackbarList;
 
   // packages/components/build-module/tab-panel/index.js
-  var import_element190 = __toESM(require_element());
+  var import_element191 = __toESM(require_element());
   var import_compose74 = __toESM(require_compose());
   var import_i18n78 = __toESM(require_i18n());
-  var import_jsx_runtime241 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime270 = __toESM(require_jsx_runtime());
   var extractTabName = (id3) => {
     if (typeof id3 === "undefined" || id3 === null) {
       return;
@@ -50009,7 +50183,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onSelect
   }, ref) => {
     const instanceId = (0, import_compose74.useInstanceId)(TabPanel3, "tab-panel");
-    const prependInstanceId = (0, import_element190.useCallback)((tabName) => {
+    const prependInstanceId = (0, import_element191.useCallback)((tabName) => {
       if (typeof tabName === "undefined") {
         return;
       }
@@ -50036,19 +50210,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       rtl: (0, import_i18n78.isRTL)()
     });
     const selectedTabName = extractTabName(useStoreState(tabStore, "selectedId"));
-    const setTabStoreSelectedId = (0, import_element190.useCallback)((tabName) => {
+    const setTabStoreSelectedId = (0, import_element191.useCallback)((tabName) => {
       tabStore.setState("selectedId", prependInstanceId(tabName));
     }, [prependInstanceId, tabStore]);
     const selectedTab = tabs.find(({
       name
     }) => name === selectedTabName);
     const previousSelectedTabName = (0, import_compose74.usePrevious)(selectedTabName);
-    (0, import_element190.useEffect)(() => {
+    (0, import_element191.useEffect)(() => {
       if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
         onSelect?.(selectedTabName);
       }
     }, [selectedTabName, initialTabName, onSelect, previousSelectedTabName]);
-    (0, import_element190.useLayoutEffect)(() => {
+    (0, import_element191.useLayoutEffect)(() => {
       if (selectedTab) {
         return;
       }
@@ -50065,7 +50239,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     }, [tabs, selectedTab, initialTabName, instanceId, setTabStoreSelectedId]);
-    (0, import_element190.useEffect)(() => {
+    (0, import_element191.useEffect)(() => {
       if (!selectedTab?.disabled) {
         return;
       }
@@ -50074,21 +50248,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setTabStoreSelectedId(firstEnabledTab.name);
       }
     }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)("div", {
       className,
       ref,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsx)(TabList, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime270.jsx)(TabList, {
         store: tabStore,
         className: "components-tab-panel__tabs",
         children: tabs.map((tab) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(Tab, {
+          return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(Tab, {
             id: prependInstanceId(tab.name),
             className: clsx_default("components-tab-panel__tabs-item", tab.className, {
               [activeClass]: tab.name === selectedTabName
             }),
             disabled: tab.disabled,
             "aria-controls": `${prependInstanceId(tab.name)}-view`,
-            render: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(button_default, {
+            render: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(button_default, {
               __next40pxDefaultSize: true,
               icon: tab.icon,
               label: tab.icon && tab.title,
@@ -50097,7 +50271,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: !tab.icon && tab.title
           }, tab.name);
         })
-      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(TabPanel, {
+      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(TabPanel, {
         id: `${prependInstanceId(selectedTab.name)}-view`,
         store: tabStore,
         tabId: prependInstanceId(selectedTab.name),
@@ -50106,13 +50280,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var TabPanel3 = (0, import_element190.forwardRef)(UnforwardedTabPanel);
+  var TabPanel3 = (0, import_element191.forwardRef)(UnforwardedTabPanel);
   var tab_panel_default = TabPanel3;
 
   // packages/components/build-module/text-control/index.js
   var import_compose75 = __toESM(require_compose());
-  var import_element191 = __toESM(require_element());
-  var import_jsx_runtime242 = __toESM(require_jsx_runtime());
+  var import_element192 = __toESM(require_element());
+  var import_jsx_runtime271 = __toESM(require_jsx_runtime());
   function UnforwardedTextControl(props, ref) {
     const {
       __nextHasNoMarginBottom,
@@ -50134,7 +50308,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: void 0,
       __next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(base_control_default, {
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "TextControl",
       label,
@@ -50142,7 +50316,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       id: id3,
       help,
       className,
-      children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("input", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("input", {
         className: clsx_default("components-text-control__input", {
           "is-next-40px-default-size": __next40pxDefaultSize
         }),
@@ -50156,12 +50330,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var TextControl = (0, import_element191.forwardRef)(UnforwardedTextControl);
+  var TextControl = (0, import_element192.forwardRef)(UnforwardedTextControl);
   var text_control_default = TextControl;
 
   // packages/components/build-module/textarea-control/index.js
   var import_compose76 = __toESM(require_compose());
-  var import_element192 = __toESM(require_element());
+  var import_element193 = __toESM(require_element());
 
   // packages/components/build-module/textarea-control/styles/textarea-control-styles.js
   var inputStyleNeutral = /* @__PURE__ */ css("box-shadow:0 0 0 transparent;border-radius:", config_values_default.radiusSmall, ";border:", config_values_default.borderWidth, " solid ", COLORS.ui.border, ";@media not ( prefers-reduced-motion ){transition:box-shadow 0.1s linear;}" + (false ? "" : ";label:inputStyleNeutral;"), false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRleHRhcmVhLWNvbnRyb2wtc3R5bGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQWM2QiIsImZpbGUiOiJ0ZXh0YXJlYS1jb250cm9sLXN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgZm9udCB9IGZyb20gJy4uLy4uL3V0aWxzL2ZvbnQnO1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgeyBDT05GSUcgfSBmcm9tICcuLi8uLi91dGlscyc7XG5pbXBvcnQgeyBicmVha3BvaW50IH0gZnJvbSAnLi4vLi4vdXRpbHMvYnJlYWtwb2ludCc7XG5cbmNvbnN0IGlucHV0U3R5bGVOZXV0cmFsID0gY3NzYFxuXHRib3gtc2hhZG93OiAwIDAgMCB0cmFuc3BhcmVudDtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH07XG5cdGJvcmRlcjogJHsgQ09ORklHLmJvcmRlcldpZHRoIH0gc29saWQgJHsgQ09MT1JTLnVpLmJvcmRlciB9O1xuXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdHRyYW5zaXRpb246IGJveC1zaGFkb3cgMC4xcyBsaW5lYXI7XG5cdH1cbmA7XG5cbmNvbnN0IGlucHV0U3R5bGVGb2N1cyA9IGNzc2Bcblx0Ym9yZGVyLWNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdGJveC1zaGFkb3c6IDAgMCAwXG5cdFx0Y2FsYyggJHsgQ09ORklHLmJvcmRlcldpZHRoRm9jdXMgfSAtICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9IClcblx0XHQkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cblx0Ly8gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgd2lsbCBzaG93IHRoaXMgb3V0bGluZSwgYnV0IG5vdCB0aGUgYm94LXNoYWRvdy5cblx0b3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50O1xuYDtcblxuZXhwb3J0IGNvbnN0IFN0eWxlZFRleHRhcmVhID0gc3R5bGVkLnRleHRhcmVhYFxuXHR3aWR0aDogMTAwJTtcblx0ZGlzcGxheTogYmxvY2s7XG5cdGZvbnQtZmFtaWx5OiAkeyBmb250KCAnZGVmYXVsdC5mb250RmFtaWx5JyApIH07XG5cdGxpbmUtaGVpZ2h0OiAyMHB4O1xuXHRiYWNrZ3JvdW5kOiAkeyBDT0xPUlMudGhlbWUuYmFja2dyb3VuZCB9O1xuXHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0cmVzaXplOiB2ZXJ0aWNhbDtcblxuXHQvLyBWZXJ0aWNhbCBwYWRkaW5nIGlzIHRvIG1hdGNoIHRoZSBzdGFuZGFyZCA0MHB4IGNvbnRyb2wgaGVpZ2h0IHdoZW4gcm93cz0xLFxuXHQvLyBpbiBjb25qdW5jdGlvbiB3aXRoIHRoZSAyMHB4IGxpbmUtaGVpZ2h0LlxuXHQvLyBcIlN0YW5kYXJkXCIgbWV0cmljcyBhcmUgMTBweCAxMnB4LCBidXQgc3VidHJhY3RzIDFweCBlYWNoIHRvIGFjY291bnQgZm9yIHRoZSBib3JkZXIgd2lkdGguXG5cdHBhZGRpbmc6IDlweCAxMXB4O1xuXG5cdCR7IGlucHV0U3R5bGVOZXV0cmFsIH07XG5cblx0LyogRm9udHMgc21hbGxlciB0aGFuIDE2cHggY2F1c2VzIG1vYmlsZSBzYWZhcmkgdG8gem9vbS4gKi9cblx0Zm9udC1zaXplOiAkeyBmb250KCAnbW9iaWxlVGV4dE1pbkZvbnRTaXplJyApIH07XG5cblx0JHsgYnJlYWtwb2ludCggJ3NtYWxsJyApIH0ge1xuXHRcdGZvbnQtc2l6ZTogJHsgZm9udCggJ2RlZmF1bHQuZm9udFNpemUnICkgfTtcblx0fVxuXG5cdCY6Zm9jdXMge1xuXHRcdCR7IGlucHV0U3R5bGVGb2N1cyB9XG5cdH1cblxuXHQvLyBVc2Ugb3BhY2l0eSB0byB3b3JrIGluIHZhcmlvdXMgZWRpdG9yIHN0eWxlcy5cblx0Jjo6LXdlYmtpdC1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS5kYXJrR3JheVBsYWNlaG9sZGVyIH07XG5cdH1cblxuXHQmOjotbW96LXBsYWNlaG9sZGVyIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0fVxuXG5cdCY6LW1zLWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0fVxuXG5cdC5pcy1kYXJrLXRoZW1lICYge1xuXHRcdCY6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy51aS5saWdodEdyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblxuXHRcdCY6Oi1tb3otcGxhY2Vob2xkZXIge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy51aS5saWdodEdyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblxuXHRcdCY6LW1zLWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkubGlnaHRHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cdH1cbmA7XG4iXX0= */");
@@ -50174,7 +50348,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("width:100%;display:block;font-family:", font("default.fontFamily"), ";line-height:20px;background:", COLORS.theme.background, ";color:", COLORS.theme.foreground, ";resize:vertical;padding:9px 11px;", inputStyleNeutral, ";font-size:", font("mobileTextMinFontSize"), ";", breakpoint("small"), "{font-size:", font("default.fontSize"), ";}&:focus{", inputStyleFocus, ";}&::-webkit-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}.is-dark-theme &{&::-webkit-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRleHRhcmVhLWNvbnRyb2wtc3R5bGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQWtDNkMiLCJmaWxlIjoidGV4dGFyZWEtY29udHJvbC1zdHlsZXMudHMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEV4dGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgc3R5bGVkIGZyb20gJ0BlbW90aW9uL3N0eWxlZCc7XG5pbXBvcnQgeyBjc3MgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGZvbnQgfSBmcm9tICcuLi8uLi91dGlscy9mb250JztcbmltcG9ydCB7IENPTE9SUyB9IGZyb20gJy4uLy4uL3V0aWxzL2NvbG9ycy12YWx1ZXMnO1xuaW1wb3J0IHsgQ09ORklHIH0gZnJvbSAnLi4vLi4vdXRpbHMnO1xuaW1wb3J0IHsgYnJlYWtwb2ludCB9IGZyb20gJy4uLy4uL3V0aWxzL2JyZWFrcG9pbnQnO1xuXG5jb25zdCBpbnB1dFN0eWxlTmV1dHJhbCA9IGNzc2Bcblx0Ym94LXNoYWRvdzogMCAwIDAgdHJhbnNwYXJlbnQ7XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXHRib3JkZXI6ICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9IHNvbGlkICR7IENPTE9SUy51aS5ib3JkZXIgfTtcblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uOiBib3gtc2hhZG93IDAuMXMgbGluZWFyO1xuXHR9XG5gO1xuXG5jb25zdCBpbnB1dFN0eWxlRm9jdXMgPSBjc3NgXG5cdGJvcmRlci1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRib3gtc2hhZG93OiAwIDAgMFxuXHRcdGNhbGMoICR7IENPTkZJRy5ib3JkZXJXaWR0aEZvY3VzIH0gLSAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSApXG5cdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXG5cdC8vIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlIHdpbGwgc2hvdyB0aGlzIG91dGxpbmUsIGJ1dCBub3QgdGhlIGJveC1zaGFkb3cuXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcbmA7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRUZXh0YXJlYSA9IHN0eWxlZC50ZXh0YXJlYWBcblx0d2lkdGg6IDEwMCU7XG5cdGRpc3BsYXk6IGJsb2NrO1xuXHRmb250LWZhbWlseTogJHsgZm9udCggJ2RlZmF1bHQuZm9udEZhbWlseScgKSB9O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0YmFja2dyb3VuZDogJHsgQ09MT1JTLnRoZW1lLmJhY2tncm91bmQgfTtcblx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdHJlc2l6ZTogdmVydGljYWw7XG5cblx0Ly8gVmVydGljYWwgcGFkZGluZyBpcyB0byBtYXRjaCB0aGUgc3RhbmRhcmQgNDBweCBjb250cm9sIGhlaWdodCB3aGVuIHJvd3M9MSxcblx0Ly8gaW4gY29uanVuY3Rpb24gd2l0aCB0aGUgMjBweCBsaW5lLWhlaWdodC5cblx0Ly8gXCJTdGFuZGFyZFwiIG1ldHJpY3MgYXJlIDEwcHggMTJweCwgYnV0IHN1YnRyYWN0cyAxcHggZWFjaCB0byBhY2NvdW50IGZvciB0aGUgYm9yZGVyIHdpZHRoLlxuXHRwYWRkaW5nOiA5cHggMTFweDtcblxuXHQkeyBpbnB1dFN0eWxlTmV1dHJhbCB9O1xuXG5cdC8qIEZvbnRzIHNtYWxsZXIgdGhhbiAxNnB4IGNhdXNlcyBtb2JpbGUgc2FmYXJpIHRvIHpvb20uICovXG5cdGZvbnQtc2l6ZTogJHsgZm9udCggJ21vYmlsZVRleHRNaW5Gb250U2l6ZScgKSB9O1xuXG5cdCR7IGJyZWFrcG9pbnQoICdzbWFsbCcgKSB9IHtcblx0XHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdH1cblxuXHQmOmZvY3VzIHtcblx0XHQkeyBpbnB1dFN0eWxlRm9jdXMgfVxuXHR9XG5cblx0Ly8gVXNlIG9wYWNpdHkgdG8gd29yayBpbiB2YXJpb3VzIGVkaXRvciBzdHlsZXMuXG5cdCY6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHR9XG5cblx0Jjo6LW1vei1wbGFjZWhvbGRlciB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS5kYXJrR3JheVBsYWNlaG9sZGVyIH07XG5cdH1cblxuXHQmOi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS5kYXJrR3JheVBsYWNlaG9sZGVyIH07XG5cdH1cblxuXHQuaXMtZGFyay10aGVtZSAmIHtcblx0XHQmOjotd2Via2l0LWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkubGlnaHRHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOjotbW96LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkubGlnaHRHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmxpZ2h0R3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXHR9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/textarea-control/index.js
-  var import_jsx_runtime243 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime272 = __toESM(require_jsx_runtime());
   function UnforwardedTextareaControl(props, ref) {
     const {
       __nextHasNoMarginBottom,
@@ -50191,7 +50365,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const id3 = `inspector-textarea-control-${instanceId}`;
     const onChangeValue = (event) => onChange(event.target.value);
     const classes = clsx_default("components-textarea-control", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(base_control_default, {
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "TextareaControl",
       label,
@@ -50199,7 +50373,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       id: id3,
       help,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(StyledTextarea, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(StyledTextarea, {
         className: "components-textarea-control__input",
         id: id3,
         rows,
@@ -50211,12 +50385,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var TextareaControl = (0, import_element192.forwardRef)(UnforwardedTextareaControl);
+  var TextareaControl = (0, import_element193.forwardRef)(UnforwardedTextareaControl);
   var textarea_control_default = TextareaControl;
 
   // packages/components/build-module/text-highlight/index.js
-  var import_element193 = __toESM(require_element());
-  var import_jsx_runtime244 = __toESM(require_jsx_runtime());
+  var import_element194 = __toESM(require_element());
+  var import_jsx_runtime273 = __toESM(require_jsx_runtime());
   var TextHighlight = (props) => {
     const {
       text = "",
@@ -50224,40 +50398,39 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const trimmedHighlightText = highlight.trim();
     if (!trimmedHighlightText) {
-      return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_jsx_runtime244.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_jsx_runtime273.Fragment, {
         children: text
       });
     }
     const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
-    return (0, import_element193.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
-      mark: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("mark", {})
+    return (0, import_element194.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
+      mark: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)("mark", {})
     });
   };
   var text_highlight_default = TextHighlight;
 
   // packages/components/build-module/tip/index.js
-  var import_icons31 = __toESM(require_icons());
-  var import_jsx_runtime245 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime274 = __toESM(require_jsx_runtime());
   function Tip(props) {
     const {
       children
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)("div", {
       className: "components-tip",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime245.jsx)(import_icons31.Icon, {
-        icon: import_icons31.tip
-      }), /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("p", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime274.jsx)(icon_default2, {
+        icon: tip_default
+      }), /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("p", {
         children
       })]
     });
   }
-  var tip_default = Tip;
+  var tip_default2 = Tip;
 
   // packages/components/build-module/toggle-control/index.js
-  var import_element194 = __toESM(require_element());
+  var import_element195 = __toESM(require_element());
   var import_compose77 = __toESM(require_compose());
   var import_deprecated28 = __toESM(require_deprecated());
-  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime275 = __toESM(require_jsx_runtime());
   function UnforwardedToggleControl({
     __nextHasNoMarginBottom,
     label,
@@ -50296,25 +50469,25 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         describedBy = id3 + "__help";
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(base_control_default, {
       id: id3,
-      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("span", {
+      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)("span", {
         className: "components-toggle-control__help",
         children: helpLabel
       }),
       className: classes,
       __nextHasNoMarginBottom: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(component_default9, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)(component_default9, {
         justify: "flex-start",
         spacing: 2,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime246.jsx)(form_toggle_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime275.jsx)(form_toggle_default, {
           id: id3,
           checked,
           onChange: onChangeToggle,
           "aria-describedby": describedBy,
           disabled,
           ref
-        }), /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(component_default5, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default5, {
           as: "label",
           htmlFor: id3,
           className: clsx_default("components-toggle-control__label", {
@@ -50325,37 +50498,37 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var ToggleControl = (0, import_element194.forwardRef)(UnforwardedToggleControl);
+  var ToggleControl = (0, import_element195.forwardRef)(UnforwardedToggleControl);
   var toggle_control_default = ToggleControl;
 
   // packages/components/build-module/toolbar/toolbar/index.js
-  var import_element201 = __toESM(require_element());
+  var import_element202 = __toESM(require_element());
   var import_deprecated29 = __toESM(require_deprecated());
 
   // packages/components/build-module/toolbar/toolbar-group/index.js
-  var import_element199 = __toESM(require_element());
+  var import_element200 = __toESM(require_element());
 
   // packages/components/build-module/toolbar/toolbar-button/index.js
-  var import_element197 = __toESM(require_element());
+  var import_element198 = __toESM(require_element());
 
   // packages/components/build-module/toolbar/toolbar-item/index.js
-  var import_element196 = __toESM(require_element());
+  var import_element197 = __toESM(require_element());
   var import_warning10 = __toESM(require_warning());
 
   // packages/components/build-module/toolbar/toolbar-context/index.js
-  var import_element195 = __toESM(require_element());
-  var ToolbarContext = (0, import_element195.createContext)(void 0);
+  var import_element196 = __toESM(require_element());
+  var ToolbarContext = (0, import_element196.createContext)(void 0);
   ToolbarContext.displayName = "ToolbarContext";
   var toolbar_context_default = ToolbarContext;
 
   // packages/components/build-module/toolbar/toolbar-item/index.js
-  var import_jsx_runtime247 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime276 = __toESM(require_jsx_runtime());
   function UnforwardedToolbarItem({
     children,
     as: Component9,
     ...props
   }, ref) {
-    const accessibleToolbarStore = (0, import_element196.useContext)(toolbar_context_default);
+    const accessibleToolbarStore = (0, import_element197.useContext)(toolbar_context_default);
     const isRenderProp = typeof children === "function";
     if (!isRenderProp && !Component9) {
       false ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
@@ -50368,7 +50541,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     if (!accessibleToolbarStore) {
       if (Component9) {
-        return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(Component9, {
+        return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(Component9, {
           ...allProps,
           children
         });
@@ -50378,32 +50551,32 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       return children(allProps);
     }
-    const render = isRenderProp ? children : Component9 && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(Component9, {
+    const render = isRenderProp ? children : Component9 && /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(Component9, {
       children
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(ToolbarItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(ToolbarItem, {
       accessibleWhenDisabled: true,
       ...allProps,
       store: accessibleToolbarStore,
       render
     });
   }
-  var ToolbarItem3 = (0, import_element196.forwardRef)(UnforwardedToolbarItem);
+  var ToolbarItem3 = (0, import_element197.forwardRef)(UnforwardedToolbarItem);
   var toolbar_item_default = ToolbarItem3;
 
   // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.js
-  var import_jsx_runtime248 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime277 = __toESM(require_jsx_runtime());
   var ToolbarButtonContainer = ({
     children,
     className
-  }) => /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("div", {
     className,
     children
   });
   var toolbar_button_container_default = ToolbarButtonContainer;
 
   // packages/components/build-module/toolbar/toolbar-button/index.js
-  var import_jsx_runtime249 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime278 = __toESM(require_jsx_runtime());
   function useDeprecatedProps6({
     isDisabled,
     ...otherProps
@@ -50423,11 +50596,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       title,
       ...restProps
     } = useDeprecatedProps6(props);
-    const accessibleToolbarState = (0, import_element197.useContext)(toolbar_context_default);
+    const accessibleToolbarState = (0, import_element198.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(toolbar_button_container_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(toolbar_button_container_default, {
         className: containerClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(button_default, {
           ref,
           icon: restProps.icon,
           size: "compact",
@@ -50450,12 +50623,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(toolbar_item_default, {
       className: clsx_default("components-toolbar-button", className),
       ...extraProps,
       ...restProps,
       ref,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(button_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(button_default, {
         size: "compact",
         label: title,
         isPressed: isActive,
@@ -50464,16 +50637,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var ToolbarButton = (0, import_element197.forwardRef)(UnforwardedToolbarButton);
+  var ToolbarButton = (0, import_element198.forwardRef)(UnforwardedToolbarButton);
   var toolbar_button_default = ToolbarButton;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.js
-  var import_jsx_runtime250 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime279 = __toESM(require_jsx_runtime());
   var ToolbarGroupContainer = ({
     className,
     children,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("div", {
     className,
     ...props,
     children
@@ -50481,15 +50654,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_group_container_default = ToolbarGroupContainer;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.js
-  var import_element198 = __toESM(require_element());
-  var import_jsx_runtime251 = __toESM(require_jsx_runtime());
+  var import_element199 = __toESM(require_element());
+  var import_jsx_runtime280 = __toESM(require_jsx_runtime());
   function ToolbarGroupCollapsed({
     controls = [],
     toggleProps,
     ...props
   }) {
-    const accessibleToolbarState = (0, import_element198.useContext)(toolbar_context_default);
-    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(dropdown_menu_default, {
+    const accessibleToolbarState = (0, import_element199.useContext)(toolbar_context_default);
+    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(dropdown_menu_default, {
       controls,
       toggleProps: {
         ...internalToggleProps,
@@ -50498,7 +50671,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...props
     });
     if (accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(toolbar_item_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(toolbar_item_default, {
         ...toggleProps,
         children: renderDropdownMenu
       });
@@ -50508,7 +50681,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
 
   // packages/components/build-module/toolbar/toolbar-group/index.js
-  var import_jsx_runtime252 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime281 = __toESM(require_jsx_runtime());
   function isNestedArray(arr) {
     return Array.isArray(arr) && Array.isArray(arr[0]);
   }
@@ -50520,7 +50693,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     title,
     ...props
   }) {
-    const accessibleToolbarState = (0, import_element199.useContext)(toolbar_context_default);
+    const accessibleToolbarState = (0, import_element200.useContext)(toolbar_context_default);
     if ((!controls || !controls.length) && !children) {
       return null;
     }
@@ -50537,7 +50710,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       controlSets = [controls];
     }
     if (isCollapsed2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(toolbar_group_collapsed_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(toolbar_group_collapsed_default, {
         label: title,
         controls: controlSets,
         className: finalClassName,
@@ -50545,10 +50718,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(toolbar_group_container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(toolbar_group_container_default, {
       className: finalClassName,
       ...props,
-      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(toolbar_button_default, {
+      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(toolbar_button_default, {
         containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
         ...control
       }, [indexOfSet, indexOfControl].join()))), children]
@@ -50557,9 +50730,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_group_default = ToolbarGroup;
 
   // packages/components/build-module/toolbar/toolbar/toolbar-container.js
-  var import_element200 = __toESM(require_element());
+  var import_element201 = __toESM(require_element());
   var import_i18n79 = __toESM(require_i18n());
-  var import_jsx_runtime253 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime282 = __toESM(require_jsx_runtime());
   function UnforwardedToolbarContainer({
     label,
     ...props
@@ -50570,9 +50743,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     return (
       // This will provide state for `ToolbarButton`'s
-      /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(toolbar_context_default.Provider, {
+      /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(toolbar_context_default.Provider, {
         value: toolbarStore,
-        children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Toolbar, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Toolbar, {
           ref,
           "aria-label": label,
           store: toolbarStore,
@@ -50581,11 +50754,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     );
   }
-  var ToolbarContainer2 = (0, import_element200.forwardRef)(UnforwardedToolbarContainer);
+  var ToolbarContainer2 = (0, import_element201.forwardRef)(UnforwardedToolbarContainer);
   var toolbar_container_default = ToolbarContainer2;
 
   // packages/components/build-module/toolbar/toolbar/index.js
-  var import_jsx_runtime254 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime283 = __toESM(require_jsx_runtime());
   function UnforwardedToolbar({
     className,
     label,
@@ -50593,7 +50766,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...props
   }, ref) {
     const isVariantDefined = variant !== void 0;
-    const contextSystemValue = (0, import_element201.useMemo)(() => {
+    const contextSystemValue = (0, import_element202.useMemo)(() => {
       if (isVariantDefined) {
         return {};
       }
@@ -50619,16 +50792,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         title: _title,
         ...restProps
       } = props;
-      return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(toolbar_group_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(toolbar_group_default, {
         isCollapsed: false,
         ...restProps,
         className
       });
     }
     const finalClassName = clsx_default("components-accessible-toolbar", className, variant && `is-${variant}`);
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(ContextSystemProvider, {
       value: contextSystemValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(toolbar_container_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(toolbar_container_default, {
         className: finalClassName,
         label,
         ref,
@@ -50636,23 +50809,23 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var Toolbar3 = (0, import_element201.forwardRef)(UnforwardedToolbar);
+  var Toolbar3 = (0, import_element202.forwardRef)(UnforwardedToolbar);
   var toolbar_default = Toolbar3;
 
   // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.js
-  var import_element202 = __toESM(require_element());
-  var import_jsx_runtime255 = __toESM(require_jsx_runtime());
+  var import_element203 = __toESM(require_element());
+  var import_jsx_runtime284 = __toESM(require_jsx_runtime());
   function UnforwardedToolbarDropdownMenu(props, ref) {
-    const accessibleToolbarState = (0, import_element202.useContext)(toolbar_context_default);
+    const accessibleToolbarState = (0, import_element203.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(dropdown_menu_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(dropdown_menu_default, {
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(toolbar_item_default, {
       ref,
       ...props.toggleProps,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(dropdown_menu_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(dropdown_menu_default, {
         ...props,
         popoverProps: {
           ...props.popoverProps
@@ -50661,16 +50834,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var ToolbarDropdownMenu = (0, import_element202.forwardRef)(UnforwardedToolbarDropdownMenu);
+  var ToolbarDropdownMenu = (0, import_element203.forwardRef)(UnforwardedToolbarDropdownMenu);
   var toolbar_dropdown_menu_default = ToolbarDropdownMenu;
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.js
   var import_a11y11 = __toESM(require_a11y());
-  var import_icons32 = __toESM(require_icons());
   var import_i18n80 = __toESM(require_i18n());
 
   // packages/components/build-module/tools-panel/tools-panel-header/hook.js
-  var import_element204 = __toESM(require_element());
+  var import_element205 = __toESM(require_element());
 
   // packages/components/build-module/tools-panel/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__42() {
@@ -50744,9 +50916,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var DefaultControlsItem = /* @__PURE__ */ css("color:", COLORS.gray[900], ";&&[aria-disabled='true']{color:", COLORS.gray[700], ";opacity:1;&:hover{color:", COLORS.gray[700], ";}", ResetLabel, "{opacity:0.3;}}" + (false ? "" : ";label:DefaultControlsItem;"), false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE4SnNDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHtcblx0U3R5bGVkRmllbGQgYXMgQmFzZUNvbnRyb2xGaWVsZCxcblx0U3R5bGVkSGVscCBhcyBCYXNlQ29udHJvbEhlbHAsXG5cdFdyYXBwZXIgYXMgQmFzZUNvbnRyb2xXcmFwcGVyLFxufSBmcm9tICcuLi9iYXNlLWNvbnRyb2wvc3R5bGVzL2Jhc2UtY29udHJvbC1zdHlsZXMnO1xuaW1wb3J0IHsgTGFiZWxXcmFwcGVyIH0gZnJvbSAnLi4vaW5wdXQtY29udHJvbC9zdHlsZXMvaW5wdXQtY29udHJvbC1zdHlsZXMnO1xuaW1wb3J0IHsgQ09MT1JTLCBDT05GSUcsIHJ0bCB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuXG5jb25zdCB0b29sc1BhbmVsR3JpZCA9IHtcblx0Y29sdW1uczogKCBjb2x1bW5zOiBudW1iZXIgKSA9PiBjc3NgXG5cdFx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAkeyBgcmVwZWF0KCAkeyBjb2x1bW5zIH0sIG1pbm1heCgwLCAxZnIpIClgIH07XG5cdGAsXG5cdHNwYWNpbmc6IGNzc2Bcblx0XHRjb2x1bW4tZ2FwOiAkeyBzcGFjZSggNCApIH07XG5cdFx0cm93LWdhcDogJHsgc3BhY2UoIDQgKSB9O1xuXHRgLFxuXHRpdGVtOiB7XG5cdFx0ZnVsbFdpZHRoOiBjc3NgXG5cdFx0XHRncmlkLWNvbHVtbjogMSAvIC0xO1xuXHRcdGAsXG5cdH0sXG59O1xuXG5leHBvcnQgY29uc3QgVG9vbHNQYW5lbCA9ICggY29sdW1uczogbnVtYmVyICkgPT4gY3NzYFxuXHQkeyB0b29sc1BhbmVsR3JpZC5jb2x1bW5zKCBjb2x1bW5zICkgfVxuXHQkeyB0b29sc1BhbmVsR3JpZC5zcGFjaW5nIH1cblxuXHRib3JkZXItdG9wOiAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSBzb2xpZCAkeyBDT0xPUlMuZ3JheVsgMzAwIF0gfTtcblx0bWFyZ2luLXRvcDogLTFweDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDQgKSB9O1xuYDtcblxuLyoqXG4gKiBJdGVtcyBpbmplY3RlZCBpbnRvIGEgVG9vbHNQYW5lbCB2aWEgYSB2aXJ0dWFsIGJ1YmJsaW5nIHNsb3Qgd2lsbCByZXF1aXJlXG4gKiBhbiBpbm5lciBkb20gZWxlbWVudCB0byBiZSBpbmplY3RlZC4gVGhlIGZvbGxvd2luZyBydWxlIGFsbG93cyBmb3IgdGhlXG4gKiBDU1MgZ3JpZCBkaXNwbGF5IHRvIGJlIHJlLWVzdGFibGlzaGVkLlxuICovXG5cbmV4cG9ydCBjb25zdCBUb29sc1BhbmVsV2l0aElubmVyV3JhcHBlciA9ICggY29sdW1uczogbnVtYmVyICkgPT4ge1xuXHRyZXR1cm4gY3NzYFxuXHRcdD4gZGl2Om5vdCggOmZpcnN0LW9mLXR5cGUgKSB7XG5cdFx0XHRkaXNwbGF5OiBncmlkO1xuXHRcdFx0JHsgdG9vbHNQYW5lbEdyaWQuY29sdW1ucyggY29sdW1ucyApIH1cblx0XHRcdCR7IHRvb2xzUGFuZWxHcmlkLnNwYWNpbmcgfVxuXHRcdFx0JHsgdG9vbHNQYW5lbEdyaWQuaXRlbS5mdWxsV2lkdGggfVxuXHRcdH1cblx0YDtcbn07XG5cbmV4cG9ydCBjb25zdCBUb29sc1BhbmVsSGlkZGVuSW5uZXJXcmFwcGVyID0gY3NzYFxuXHQ+IGRpdjpub3QoIDpmaXJzdC1vZi10eXBlICkge1xuXHRcdGRpc3BsYXk6IG5vbmU7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBUb29sc1BhbmVsSGVhZGVyID0gY3NzYFxuXHQkeyB0b29sc1BhbmVsR3JpZC5pdGVtLmZ1bGxXaWR0aCB9XG5cdGdhcDogJHsgc3BhY2UoIDIgKSB9O1xuXG5cdC8qKlxuXHQgKiBUaGUgdGFyZ2V0aW5nIG9mIGRyb3Bkb3duIG1lbnUgY29tcG9uZW50IGNsYXNzZXMgaGVyZSBpcyBhIHRlbXBvcmFyeVxuXHQgKiBtZWFzdXJlIG9ubHkuXG5cdCAqXG5cdCAqIFRoZSBmb2xsb3dpbmcgc3R5bGVzIHNob3VsZCBiZSByZXBsYWNlZCBvbmNlIHRoZSBEcm9wZG93bk1lbnUgaGFzIGJlZW5cblx0ICogcmVmYWN0b3JlZCBhbmQgY2FuIGJlIHRhcmdldGVkIHZpYSBjb21wb25lbnQgaW50ZXJwb2xhdGlvbi5cblx0ICovXG5cdC5jb21wb25lbnRzLWRyb3Bkb3duLW1lbnUge1xuXHRcdG1hcmdpbjogJHsgc3BhY2UoIC0xICkgfSAwO1xuXHRcdGxpbmUtaGVpZ2h0OiAwO1xuXHR9XG5cdCYmJiYgLmNvbXBvbmVudHMtZHJvcGRvd24tbWVudV9fdG9nZ2xlIHtcblx0XHRwYWRkaW5nOiAwO1xuXHRcdG1pbi13aWR0aDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHNQYW5lbEhlYWRpbmcgPSBjc3NgXG5cdGZvbnQtc2l6ZTogaW5oZXJpdDtcblx0Zm9udC13ZWlnaHQ6IDUwMDtcblx0bGluZS1oZWlnaHQ6IG5vcm1hbDtcblxuXHQvKiBSZXF1aXJlZCB0byBtZWV0IHNwZWNpZmljaXR5IHJlcXVpcmVtZW50cyB0byBlbnN1cmUgemVybyBtYXJnaW4gKi9cblx0JiYge1xuXHRcdG1hcmdpbjogMDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRvb2xzUGFuZWxJdGVtID0gY3NzYFxuXHQkeyB0b29sc1BhbmVsR3JpZC5pdGVtLmZ1bGxXaWR0aCB9XG5cblx0LyogQ2xlYXIgc3BhY2luZyBpbiBhbmQgYXJvdW5kIGNvbnRyb2xzIGFkZGVkIGFzIHBhbmVsIGl0ZW1zLiAqL1xuXHQvKiBSZW1vdmUgd2hlbiB0aGV5IGNhbiBiZSBhZGRyZXNzZWQgdmlhIGNvbnRleHQgc3lzdGVtLiAqL1xuXHQmID4gZGl2LFxuXHQmID4gZmllbGRzZXQge1xuXHRcdHBhZGRpbmctYm90dG9tOiAwO1xuXHRcdG1hcmdpbi1ib3R0b206IDA7XG5cdFx0bWF4LXdpZHRoOiAxMDAlO1xuXHR9XG5cblx0LyogUmVtb3ZlIEJhc2VDb250cm9sIGNvbXBvbmVudHMgbWFyZ2lucyBhbmQgbGVhdmUgc3BhY2luZyB0byBncmlkIGxheW91dCAqL1xuXHQmJiAkeyBCYXNlQ29udHJvbFdyYXBwZXIgfSB7XG5cdFx0bWFyZ2luLWJvdHRvbTogMDtcblxuXHRcdC8qKlxuXHRcdCAqIFRvIG1haW50YWluIHByb3BlciBzcGFjaW5nIHdpdGhpbiBhIGJhc2UgY29udHJvbCwgdGhlIGZpZWxkJ3MgYm90dG9tXG5cdFx0ICogbWFyZ2luIHNob3VsZCBvbmx5IGJlIHJlbW92ZWQgd2hlbiB0aGVyZSBpcyBubyBoZWxwIHRleHQgaW5jbHVkZWQgYW5kXG5cdFx0ICogaXQgaXMgdGhlcmVmb3JlIHRoZSBsYXN0LWNoaWxkLlxuXHRcdCAqL1xuXHRcdCR7IEJhc2VDb250cm9sRmllbGQgfTpsYXN0LWNoaWxkIHtcblx0XHRcdG1hcmdpbi1ib3R0b206IDA7XG5cdFx0fVxuXHR9XG5cblx0JHsgQmFzZUNvbnRyb2xIZWxwIH0ge1xuXHRcdG1hcmdpbi1ib3R0b206IDA7XG5cdH1cblxuXHQvKipcblx0ICogU3RhbmRhcmRpemUgSW5wdXRDb250cm9sIGFuZCBCYXNlQ29udHJvbCBsYWJlbHMgd2l0aCBvdGhlciBsYWJlbHMgd2hlblxuXHQgKiBpbnNpZGUgVG9vbHNQYW5lbC5cblx0ICpcblx0ICogVGhpcyBpcyBhIHRlbXBvcmFyeSBmaXggdW50aWwgdGhlIGRpZmZlcmVudCBjb250cm9sIGNvbXBvbmVudHMgaGF2ZSB0aGVpclxuXHQgKiBsYWJlbHMgbm9ybWFsaXplZC5cblx0ICovXG5cdCYmICR7IExhYmVsV3JhcHBlciB9IHtcblx0XHRsYWJlbCB7XG5cdFx0XHRsaW5lLWhlaWdodDogMS40ZW07XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHNQYW5lbEl0ZW1QbGFjZWhvbGRlciA9IGNzc2Bcblx0ZGlzcGxheTogbm9uZTtcbmA7XG5cbmV4cG9ydCBjb25zdCBEcm9wZG93bk1lbnUgPSBjc3NgXG5cdG1pbi13aWR0aDogMjAwcHg7XG5gO1xuXG5leHBvcnQgY29uc3QgUmVzZXRMYWJlbCA9IHN0eWxlZC5zcGFuYFxuXHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudERhcmtlcjEwIH07XG5cdGZvbnQtc2l6ZTogMTFweDtcblx0Zm9udC13ZWlnaHQ6IDUwMDtcblx0bGluZS1oZWlnaHQ6IDEuNDtcblx0JHsgcnRsKCB7IG1hcmdpbkxlZnQ6IHNwYWNlKCAzICkgfSApIH1cblx0dGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbmA7XG5cbmV4cG9ydCBjb25zdCBEZWZhdWx0Q29udHJvbHNJdGVtID0gY3NzYFxuXHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDkwMCBdIH07XG5cblx0JiZbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDcwMCBdIH07XG5cdFx0b3BhY2l0eTogMTtcblxuXHRcdCY6aG92ZXIge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy5ncmF5WyA3MDAgXSB9O1xuXHRcdH1cblxuXHRcdCR7IFJlc2V0TGFiZWwgfSB7XG5cdFx0XHRvcGFjaXR5OiAwLjM7XG5cdFx0fVxuXHR9XG5gO1xuIl19 */");
 
   // packages/components/build-module/tools-panel/context.js
-  var import_element203 = __toESM(require_element());
+  var import_element204 = __toESM(require_element());
   var noop25 = () => void 0;
-  var ToolsPanelContext = (0, import_element203.createContext)({
+  var ToolsPanelContext = (0, import_element204.createContext)({
     menuItems: {
       default: {},
       optional: {}
@@ -50762,7 +50934,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     areAllOptionalControlsHidden: true
   });
   ToolsPanelContext.displayName = "ToolsPanelContext";
-  var useToolsPanelContext = () => (0, import_element203.useContext)(ToolsPanelContext);
+  var useToolsPanelContext = () => (0, import_element204.useContext)(ToolsPanelContext);
 
   // packages/components/build-module/tools-panel/tools-panel-header/hook.js
   function useToolsPanelHeader(props) {
@@ -50772,16 +50944,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...otherProps
     } = useContextSystem(props, "ToolsPanelHeader");
     const cx3 = useCx();
-    const classes = (0, import_element204.useMemo)(() => {
+    const classes = (0, import_element205.useMemo)(() => {
       return cx3(ToolsPanelHeader, className);
     }, [className, cx3]);
-    const dropdownMenuClassName = (0, import_element204.useMemo)(() => {
+    const dropdownMenuClassName = (0, import_element205.useMemo)(() => {
       return cx3(DropdownMenu2);
     }, [cx3]);
-    const headingClassName = (0, import_element204.useMemo)(() => {
+    const headingClassName = (0, import_element205.useMemo)(() => {
       return cx3(ToolsPanelHeading);
     }, [cx3]);
-    const defaultControlsItemClassName = (0, import_element204.useMemo)(() => {
+    const defaultControlsItemClassName = (0, import_element205.useMemo)(() => {
       return cx3(DefaultControlsItem);
     }, [cx3]);
     const {
@@ -50803,7 +50975,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.js
-  var import_jsx_runtime256 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime285 = __toESM(require_jsx_runtime());
   var DefaultControlsGroup = ({
     itemClassName,
     items,
@@ -50812,14 +50984,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(ResetLabel, {
+    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(ResetLabel, {
       "aria-hidden": true,
       children: (0, import_i18n80.__)("Reset")
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(import_jsx_runtime256.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_jsx_runtime285.Fragment, {
       children: items.map(([label, hasValue]) => {
         if (hasValue) {
-          return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(menu_item_default, {
+          return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
             className: itemClassName,
             role: "menuitem",
             label: (0, import_i18n80.sprintf)(
@@ -50839,8 +51011,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: label
           }, label);
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(menu_item_default, {
-          icon: import_icons32.check,
+        return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
+          icon: check_default,
           className: itemClassName,
           role: "menuitemcheckbox",
           isSelected: true,
@@ -50857,7 +51029,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(import_jsx_runtime256.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_jsx_runtime285.Fragment, {
       children: items.map(([label, isSelected2]) => {
         const itemLabel = isSelected2 ? (0, import_i18n80.sprintf)(
           // translators: %s: The name of the control being hidden and reset e.g. "Padding".
@@ -50868,8 +51040,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           (0, import_i18n80._x)("Show %s", "input control"),
           label
         );
-        return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(menu_item_default, {
-          icon: isSelected2 ? import_icons32.check : null,
+        return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
+          icon: isSelected2 ? check_default : null,
           isSelected: isSelected2,
           label: itemLabel,
           onClick: () => {
@@ -50914,7 +51086,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     const defaultItems = Object.entries(menuItems?.default || {});
     const optionalItems = Object.entries(menuItems?.optional || {});
-    const dropDownMenuIcon = areAllOptionalControlsHidden ? import_icons32.plus : import_icons32.moreVertical;
+    const dropDownMenuIcon = areAllOptionalControlsHidden ? plus_default : more_vertical_default;
     const dropDownMenuLabelText = (0, import_i18n80.sprintf)(
       // translators: %s: The name of the tool e.g. "Color" or "Typography".
       (0, import_i18n80._x)("%s options", "Button label to reveal tool panel options"),
@@ -50922,14 +51094,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     );
     const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n80.__)("All options are currently hidden") : void 0;
     const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected2]) => isSelected2);
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(component_default9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(component_default9, {
       ...headerProps,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime256.jsx)(component_default19, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime285.jsx)(component_default19, {
         level: headingLevel,
         className: headingClassName,
         children: labelText
-      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(dropdown_menu_default, {
+      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(dropdown_menu_default, {
         ...dropdownMenuProps,
         icon: dropDownMenuIcon,
         label: dropDownMenuLabelText,
@@ -50940,19 +51112,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           size: "small",
           description: dropdownMenuDescriptionText
         },
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(import_jsx_runtime256.Fragment, {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(menu_group_default, {
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(import_jsx_runtime285.Fragment, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(menu_group_default, {
             label: labelText,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime256.jsx)(DefaultControlsGroup, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime285.jsx)(DefaultControlsGroup, {
               items: defaultItems,
               toggleItem,
               itemClassName: defaultControlsItemClassName
-            }), /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(OptionalControlsGroup, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(OptionalControlsGroup, {
               items: optionalItems,
               toggleItem
             })]
-          }), /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(menu_group_default, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(menu_item_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_group_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
               "aria-disabled": !canResetAll,
               variant: "tertiary",
               onClick: () => {
@@ -50972,7 +51144,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default38 = ConnectedToolsPanelHeader;
 
   // packages/components/build-module/tools-panel/tools-panel/hook.js
-  var import_element205 = __toESM(require_element());
+  var import_element206 = __toESM(require_element());
   var DEFAULT_COLUMNS = 2;
   function emptyMenuItems() {
     return {
@@ -51146,9 +51318,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalLastVisibleItemClass,
       ...otherProps
     } = useContextSystem(props, "ToolsPanel");
-    const isResettingRef = (0, import_element205.useRef)(false);
+    const isResettingRef = (0, import_element206.useRef)(false);
     const wasResetting = isResettingRef.current;
-    (0, import_element205.useEffect)(() => {
+    (0, import_element206.useEffect)(() => {
       if (wasResetting) {
         isResettingRef.current = false;
       }
@@ -51156,33 +51328,33 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const [{
       panelItems,
       menuItems
-    }, panelDispatch] = (0, import_element205.useReducer)(panelReducer, void 0, emptyState);
-    const [resetAllFilters, dispatchResetAllFilters] = (0, import_element205.useReducer)(resetAllFiltersReducer, []);
-    const registerPanelItem = (0, import_element205.useCallback)((item2) => {
+    }, panelDispatch] = (0, import_element206.useReducer)(panelReducer, void 0, emptyState);
+    const [resetAllFilters, dispatchResetAllFilters] = (0, import_element206.useReducer)(resetAllFiltersReducer, []);
+    const registerPanelItem = (0, import_element206.useCallback)((item2) => {
       panelDispatch({
         type: "REGISTER_PANEL",
         item: item2
       });
     }, []);
-    const deregisterPanelItem = (0, import_element205.useCallback)((label) => {
+    const deregisterPanelItem = (0, import_element206.useCallback)((label) => {
       panelDispatch({
         type: "UNREGISTER_PANEL",
         label
       });
     }, []);
-    const registerResetAllFilter = (0, import_element205.useCallback)((filter2) => {
+    const registerResetAllFilter = (0, import_element206.useCallback)((filter2) => {
       dispatchResetAllFilters({
         type: "REGISTER",
         filter: filter2
       });
     }, []);
-    const deregisterResetAllFilter = (0, import_element205.useCallback)((filter2) => {
+    const deregisterResetAllFilter = (0, import_element206.useCallback)((filter2) => {
       dispatchResetAllFilters({
         type: "UNREGISTER",
         filter: filter2
       });
     }, []);
-    const flagItemCustomization = (0, import_element205.useCallback)((value, label, group = "default") => {
+    const flagItemCustomization = (0, import_element206.useCallback)((value, label, group = "default") => {
       panelDispatch({
         type: "UPDATE_VALUE",
         group,
@@ -51190,22 +51362,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         value
       });
     }, []);
-    const areAllOptionalControlsHidden = (0, import_element205.useMemo)(() => {
+    const areAllOptionalControlsHidden = (0, import_element206.useMemo)(() => {
       return isMenuItemTypeEmpty(menuItems.default) && !isMenuItemTypeEmpty(menuItems.optional) && Object.values(menuItems.optional).every((isSelected2) => !isSelected2);
     }, [menuItems]);
     const cx3 = useCx();
-    const classes = (0, import_element205.useMemo)(() => {
+    const classes = (0, import_element206.useMemo)(() => {
       const wrapperStyle = hasInnerWrapper && ToolsPanelWithInnerWrapper(DEFAULT_COLUMNS);
       const emptyStyle = areAllOptionalControlsHidden && ToolsPanelHiddenInnerWrapper;
       return cx3(ToolsPanel(DEFAULT_COLUMNS), wrapperStyle, emptyStyle, className);
     }, [areAllOptionalControlsHidden, className, cx3, hasInnerWrapper]);
-    const toggleItem = (0, import_element205.useCallback)((label) => {
+    const toggleItem = (0, import_element206.useCallback)((label) => {
       panelDispatch({
         type: "TOGGLE_VALUE",
         label
       });
     }, []);
-    const resetAllItems = (0, import_element205.useCallback)(() => {
+    const resetAllItems = (0, import_element206.useCallback)(() => {
       if (typeof resetAll === "function") {
         isResettingRef.current = true;
         resetAll(resetAllFilters);
@@ -51222,7 +51394,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const firstDisplayedItem = getFirstVisibleItemLabel(panelItems);
     const lastDisplayedItem = getFirstVisibleItemLabel([...panelItems].reverse());
     const hasMenuItems = panelItems.length > 0;
-    const panelContext = (0, import_element205.useMemo)(() => ({
+    const panelContext = (0, import_element206.useMemo)(() => ({
       areAllOptionalControlsHidden,
       deregisterPanelItem,
       deregisterResetAllFilter,
@@ -51250,7 +51422,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel/component.js
-  var import_jsx_runtime257 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime286 = __toESM(require_jsx_runtime());
   var UnconnectedToolsPanel = (props, forwardedRef) => {
     const {
       children,
@@ -51262,13 +51434,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       dropdownMenuProps,
       ...toolsPanelProps
     } = useToolsPanel(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(component_default22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(component_default22, {
       ...toolsPanelProps,
       columns: 2,
       ref: forwardedRef,
-      children: /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)(ToolsPanelContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(ToolsPanelContext.Provider, {
         value: panelContext,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime257.jsx)(component_default38, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime286.jsx)(component_default38, {
           label,
           resetAll: resetAllItems,
           toggleItem,
@@ -51283,7 +51455,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tools-panel/tools-panel-item/hook.js
   var import_compose78 = __toESM(require_compose());
-  var import_element206 = __toESM(require_element());
+  var import_element207 = __toESM(require_element());
   var noop26 = () => {
   };
   function useToolsPanelItem(props) {
@@ -51313,11 +51485,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalFirstVisibleItemClass,
       __experimentalLastVisibleItemClass
     } = useToolsPanelContext();
-    const hasValueCallback = (0, import_element206.useCallback)(hasValue, [panelId]);
-    const resetAllFilterCallback = (0, import_element206.useCallback)(resetAllFilter, [panelId]);
+    const hasValueCallback = (0, import_element207.useCallback)(hasValue, [panelId]);
+    const resetAllFilterCallback = (0, import_element207.useCallback)(resetAllFilter, [panelId]);
     const previousPanelId = (0, import_compose78.usePrevious)(currentPanelId);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
-    (0, import_element206.useLayoutEffect)(() => {
+    (0, import_element207.useLayoutEffect)(() => {
       if (hasMatchingPanel && previousPanelId !== null) {
         registerPanelItem({
           hasValue: hasValueCallback,
@@ -51332,7 +51504,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       };
     }, [currentPanelId, hasMatchingPanel, isShownByDefault, label, hasValueCallback, panelId, previousPanelId, registerPanelItem, deregisterPanelItem]);
-    (0, import_element206.useEffect)(() => {
+    (0, import_element207.useEffect)(() => {
       if (hasMatchingPanel) {
         registerResetAllFilter(resetAllFilterCallback);
       }
@@ -51347,13 +51519,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const wasMenuItemChecked = (0, import_compose78.usePrevious)(isMenuItemChecked);
     const isRegistered = menuItems?.[menuGroup]?.[label] !== void 0;
     const isValueSet = hasValue();
-    (0, import_element206.useEffect)(() => {
+    (0, import_element207.useEffect)(() => {
       if (!isShownByDefault && !isValueSet) {
         return;
       }
       flagItemCustomization(isValueSet, label, menuGroup);
     }, [isValueSet, menuGroup, label, flagItemCustomization, isShownByDefault]);
-    (0, import_element206.useEffect)(() => {
+    (0, import_element207.useEffect)(() => {
       if (!isRegistered || isResetting || !hasMatchingPanel) {
         return;
       }
@@ -51366,7 +51538,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [hasMatchingPanel, isMenuItemChecked, isRegistered, isResetting, isValueSet, wasMenuItemChecked, onSelect, onDeselect]);
     const isShown = isShownByDefault ? menuItems?.[menuGroup]?.[label] !== void 0 : isMenuItemChecked;
     const cx3 = useCx();
-    const classes = (0, import_element206.useMemo)(() => {
+    const classes = (0, import_element207.useMemo)(() => {
       const shouldApplyPlaceholderStyles = shouldRenderPlaceholder && !isShown;
       const firstItemStyle = firstDisplayedItem === label && __experimentalFirstVisibleItemClass;
       const lastItemStyle = lastDisplayedItem === label && __experimentalLastVisibleItemClass;
@@ -51381,7 +51553,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-item/component.js
-  var import_jsx_runtime258 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime287 = __toESM(require_jsx_runtime());
   var UnconnectedToolsPanelItem = (props, forwardedRef) => {
     const {
       children,
@@ -51390,12 +51562,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...toolsPanelItemProps
     } = useToolsPanelItem(props);
     if (!isShown) {
-      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default, {
+      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(component_default, {
         ...toolsPanelItemProps,
         ref: forwardedRef
       }) : null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(component_default, {
       ...toolsPanelItemProps,
       ref: forwardedRef,
       children
@@ -51406,41 +51578,41 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tree-grid/index.js
   var import_dom33 = __toESM(require_dom());
-  var import_element213 = __toESM(require_element());
+  var import_element214 = __toESM(require_element());
   var import_keycodes2 = __toESM(require_keycodes());
 
   // packages/components/build-module/tree-grid/roving-tab-index.js
-  var import_element208 = __toESM(require_element());
+  var import_element209 = __toESM(require_element());
 
   // packages/components/build-module/tree-grid/roving-tab-index-context.js
-  var import_element207 = __toESM(require_element());
-  var RovingTabIndexContext = (0, import_element207.createContext)(void 0);
+  var import_element208 = __toESM(require_element());
+  var RovingTabIndexContext = (0, import_element208.createContext)(void 0);
   RovingTabIndexContext.displayName = "RovingTabIndexContext";
-  var useRovingTabIndexContext = () => (0, import_element207.useContext)(RovingTabIndexContext);
+  var useRovingTabIndexContext = () => (0, import_element208.useContext)(RovingTabIndexContext);
   var RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
   // packages/components/build-module/tree-grid/roving-tab-index.js
-  var import_jsx_runtime259 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime288 = __toESM(require_jsx_runtime());
   function RovingTabIndex({
     children
   }) {
-    const [lastFocusedElement, setLastFocusedElement] = (0, import_element208.useState)();
-    const providerValue = (0, import_element208.useMemo)(() => ({
+    const [lastFocusedElement, setLastFocusedElement] = (0, import_element209.useState)();
+    const providerValue = (0, import_element209.useMemo)(() => ({
       lastFocusedElement,
       setLastFocusedElement
     }), [lastFocusedElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(RovingTabIndexProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(RovingTabIndexProvider, {
       value: providerValue,
       children
     });
   }
 
   // packages/components/build-module/tree-grid/index.js
-  var import_jsx_runtime264 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
 
   // packages/components/build-module/tree-grid/row.js
-  var import_element209 = __toESM(require_element());
-  var import_jsx_runtime260 = __toESM(require_jsx_runtime());
+  var import_element210 = __toESM(require_element());
+  var import_jsx_runtime289 = __toESM(require_jsx_runtime());
   function UnforwardedTreeGridRow({
     children,
     level,
@@ -51449,7 +51621,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     isExpanded,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("tr", {
+    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)("tr", {
       ...props,
       ref,
       role: "row",
@@ -51460,24 +51632,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children
     });
   }
-  var TreeGridRow = (0, import_element209.forwardRef)(UnforwardedTreeGridRow);
+  var TreeGridRow = (0, import_element210.forwardRef)(UnforwardedTreeGridRow);
   var row_default2 = TreeGridRow;
 
   // packages/components/build-module/tree-grid/cell.js
-  var import_element212 = __toESM(require_element());
+  var import_element213 = __toESM(require_element());
 
   // packages/components/build-module/tree-grid/item.js
-  var import_element211 = __toESM(require_element());
+  var import_element212 = __toESM(require_element());
 
   // packages/components/build-module/tree-grid/roving-tab-index-item.js
-  var import_element210 = __toESM(require_element());
-  var import_jsx_runtime261 = __toESM(require_jsx_runtime());
-  var RovingTabIndexItem = (0, import_element210.forwardRef)(function UnforwardedRovingTabIndexItem({
+  var import_element211 = __toESM(require_element());
+  var import_jsx_runtime290 = __toESM(require_jsx_runtime());
+  var RovingTabIndexItem = (0, import_element211.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
     as: Component9,
     ...props
   }, forwardedRef) {
-    const localRef = (0, import_element210.useRef)();
+    const localRef = (0, import_element211.useRef)();
     const ref = forwardedRef || localRef;
     const {
       lastFocusedElement,
@@ -51504,7 +51676,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!Component9) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Component9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(Component9, {
       ...allProps,
       children
     });
@@ -51512,42 +51684,42 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var roving_tab_index_item_default = RovingTabIndexItem;
 
   // packages/components/build-module/tree-grid/item.js
-  var import_jsx_runtime262 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime291 = __toESM(require_jsx_runtime());
   function UnforwardedTreeGridItem({
     children,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(roving_tab_index_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(roving_tab_index_item_default, {
       ref,
       ...props,
       children
     });
   }
-  var TreeGridItem = (0, import_element211.forwardRef)(UnforwardedTreeGridItem);
+  var TreeGridItem = (0, import_element212.forwardRef)(UnforwardedTreeGridItem);
   var item_default3 = TreeGridItem;
 
   // packages/components/build-module/tree-grid/cell.js
-  var import_jsx_runtime263 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
   function UnforwardedTreeGridCell({
     children,
     withoutGridItem = false,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("td", {
       ...props,
       role: "gridcell",
-      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_jsx_runtime263.Fragment, {
+      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_jsx_runtime292.Fragment, {
         children: typeof children === "function" ? children({
           ...props,
           ref
         }) : children
-      }) : /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(item_default3, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(item_default3, {
         ref,
         children
       })
     });
   }
-  var TreeGridCell = (0, import_element212.forwardRef)(UnforwardedTreeGridCell);
+  var TreeGridCell = (0, import_element213.forwardRef)(UnforwardedTreeGridCell);
   var cell_default = TreeGridCell;
 
   // packages/components/build-module/tree-grid/index.js
@@ -51570,7 +51742,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     applicationAriaLabel,
     ...props
   }, ref) {
-    const onKeyDown = (0, import_element213.useCallback)((event) => {
+    const onKeyDown = (0, import_element214.useCallback)((event) => {
       const {
         keyCode,
         metaKey,
@@ -51692,37 +51864,37 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         event.preventDefault();
       }
     }, [onExpandRow, onCollapseRow, onFocusRow]);
-    return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(RovingTabIndex, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(RovingTabIndex, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("div", {
         role: "application",
         "aria-label": applicationAriaLabel,
-        children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("table", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("table", {
           ...props,
           role: "treegrid",
           onKeyDown,
           ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("tbody", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("tbody", {
             children
           })
         })
       })
     });
   }
-  var TreeGrid = (0, import_element213.forwardRef)(UnforwardedTreeGrid);
+  var TreeGrid = (0, import_element214.forwardRef)(UnforwardedTreeGrid);
   var tree_grid_default = TreeGrid;
 
   // packages/components/build-module/isolated-event-container/index.js
-  var import_element214 = __toESM(require_element());
+  var import_element215 = __toESM(require_element());
   var import_deprecated30 = __toESM(require_deprecated());
-  var import_jsx_runtime265 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime294 = __toESM(require_jsx_runtime());
   function stopPropagation(event) {
     event.stopPropagation();
   }
-  var IsolatedEventContainer = (0, import_element214.forwardRef)((props, ref) => {
+  var IsolatedEventContainer = (0, import_element215.forwardRef)((props, ref) => {
     (0, import_deprecated30.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
       ...props,
       ref,
       onMouseDown: stopPropagation
@@ -51731,7 +51903,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var isolated_event_container_default = IsolatedEventContainer;
 
   // packages/components/build-module/z-stack/component.js
-  var import_element215 = __toESM(require_element());
+  var import_element216 = __toESM(require_element());
 
   // packages/components/build-module/z-stack/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__43() {
@@ -51773,7 +51945,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   ) : void 0, ";}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFzQkciLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG5leHBvcnQgY29uc3QgWlN0YWNrQ2hpbGRWaWV3ID0gc3R5bGVkLmRpdjwge1xuXHRvZmZzZXRBbW91bnQ6IG51bWJlcjtcblx0ekluZGV4OiBudW1iZXI7XG59ID5gXG5cdCY6bm90KCA6Zmlyc3Qtb2YtdHlwZSApIHtcblx0XHQkeyAoIHsgb2Zmc2V0QW1vdW50IH0gKSA9PlxuXHRcdFx0Y3NzKCB7XG5cdFx0XHRcdG1hcmdpbklubGluZVN0YXJ0OiBvZmZzZXRBbW91bnQsXG5cdFx0XHR9ICkgfTtcblx0fVxuXG5cdCR7ICggeyB6SW5kZXggfSApID0+IGNzcyggeyB6SW5kZXggfSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgWlN0YWNrVmlldyA9IHN0eWxlZC5kaXY8IHtcblx0aXNMYXllcmVkOiBib29sZWFuO1xufSA+YFxuXHRkaXNwbGF5OiBpbmxpbmUtZ3JpZDtcblx0Z3JpZC1hdXRvLWZsb3c6IGNvbHVtbjtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXG5cdCYgPiAkeyBaU3RhY2tDaGlsZFZpZXcgfSB7XG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdGp1c3RpZnktc2VsZjogc3RhcnQ7XG5cblx0XHQkeyAoIHsgaXNMYXllcmVkIH0gKSA9PlxuXHRcdFx0aXNMYXllcmVkXG5cdFx0XHRcdD8gLy8gV2hlbiBgaXNMYXllcmVkYCBpcyB0cnVlLCBhbGwgaXRlbXMgb3ZlcmxhcCBpbiB0aGUgc2FtZSBncmlkIGNlbGxcblx0XHRcdFx0ICBjc3MoIHsgZ3JpZFJvd1N0YXJ0OiAxLCBncmlkQ29sdW1uU3RhcnQ6IDEgfSApXG5cdFx0XHRcdDogdW5kZWZpbmVkIH07XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/z-stack/component.js
-  var import_jsx_runtime266 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime295 = __toESM(require_jsx_runtime());
   function UnconnectedZStack(props, forwardedRef) {
     const {
       children,
@@ -51788,14 +51960,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const clonedChildren = validChildren.map((child, index2) => {
       const zIndex = isReversed ? childrenLastIndex - index2 : index2;
       const offsetAmount = isLayered ? offset3 * index2 : offset3;
-      const key = (0, import_element215.isValidElement)(child) ? child.key : index2;
-      return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(ZStackChildView, {
+      const key = (0, import_element216.isValidElement)(child) ? child.key : index2;
+      return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ZStackChildView, {
         offsetAmount,
         zIndex,
         children: child
       }, key);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(ZStackView, {
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ZStackView, {
       ...otherProps,
       className,
       isLayered,
@@ -51807,10 +51979,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default41 = ZStack;
 
   // packages/components/build-module/higher-order/navigate-regions/index.js
-  var import_element216 = __toESM(require_element());
+  var import_element217 = __toESM(require_element());
   var import_compose79 = __toESM(require_compose());
   var import_keycodes3 = __toESM(require_keycodes());
-  var import_jsx_runtime267 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime296 = __toESM(require_jsx_runtime());
   var defaultShortcuts = {
     previous: [{
       modifier: "ctrlShift",
@@ -51831,8 +52003,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }]
   };
   function useNavigateRegions(shortcuts = defaultShortcuts) {
-    const ref = (0, import_element216.useRef)(null);
-    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element216.useState)(false);
+    const ref = (0, import_element217.useRef)(null);
+    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element217.useState)(false);
     function focusRegion(offset3) {
       var _ref$current$querySel;
       const regions = Array.from((_ref$current$querySel = ref.current?.querySelectorAll('[role="region"][tabindex="-1"]')) !== null && _ref$current$querySel !== void 0 ? _ref$current$querySel : []);
@@ -51885,22 +52057,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var navigate_regions_default = (0, import_compose79.createHigherOrderComponent)((Component9) => ({
     shortcuts,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("div", {
     ...useNavigateRegions(shortcuts),
-    children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(Component9, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(Component9, {
       ...props
     })
   }), "navigateRegions");
 
   // packages/components/build-module/higher-order/with-constrained-tabbing/index.js
   var import_compose80 = __toESM(require_compose());
-  var import_jsx_runtime268 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime297 = __toESM(require_jsx_runtime());
   var withConstrainedTabbing = (0, import_compose80.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
     const ref = (0, import_compose80.useConstrainedTabbing)();
-    return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)("div", {
       ref,
       tabIndex: -1,
-      children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(WrappedComponent, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(WrappedComponent, {
         ...props
       })
     });
@@ -51909,11 +52081,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-fallback-styles/index.js
   var import_es63 = __toESM(require_es6());
-  var import_element217 = __toESM(require_element());
+  var import_element218 = __toESM(require_element());
   var import_compose81 = __toESM(require_compose());
-  var import_jsx_runtime269 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime298 = __toESM(require_jsx_runtime());
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose81.createHigherOrderComponent)((WrappedComponent) => {
-    return class extends import_element217.Component {
+    return class extends import_element218.Component {
       constructor(props) {
         super(props);
         this.nodeRef = this.props.node;
@@ -51951,11 +52123,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
       render() {
-        const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(WrappedComponent, {
+        const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(WrappedComponent, {
           ...this.props,
           ...this.state.fallbackStyles
         });
-        return this.props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)("div", {
+        return this.props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("div", {
           ref: this.bindRef,
           children: [" ", wrappedComponent, " "]
         });
@@ -51964,10 +52136,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withFallbackStyles");
 
   // packages/components/build-module/higher-order/with-filters/index.js
-  var import_element218 = __toESM(require_element());
+  var import_element219 = __toESM(require_element());
   var import_hooks11 = __toESM(require_hooks());
   var import_compose82 = __toESM(require_compose());
-  var import_jsx_runtime270 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime299 = __toESM(require_jsx_runtime());
   var ANIMATION_FRAME_PERIOD = 16;
   function withFilters(hookName) {
     return (0, import_compose82.createHigherOrderComponent)((OriginalComponent) => {
@@ -51978,7 +52150,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           FilteredComponent = (0, import_hooks11.applyFilters)(hookName, OriginalComponent);
         }
       }
-      class FilteredComponentRenderer extends import_element218.Component {
+      class FilteredComponentRenderer extends import_element219.Component {
         constructor(props) {
           super(props);
           ensureFilteredComponent();
@@ -51998,7 +52170,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
         render() {
-          return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(FilteredComponent, {
+          return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(FilteredComponent, {
             ...this.props
           });
         }
@@ -52020,12 +52192,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/higher-order/with-focus-return/index.js
-  var import_element219 = __toESM(require_element());
+  var import_element220 = __toESM(require_element());
   var import_compose83 = __toESM(require_compose());
   var import_deprecated31 = __toESM(require_deprecated());
-  var import_jsx_runtime271 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime300 = __toESM(require_jsx_runtime());
   function isComponentLike(object) {
-    return object instanceof import_element219.Component || typeof object === "function";
+    return object instanceof import_element220.Component || typeof object === "function";
   }
   var with_focus_return_default = (0, import_compose83.createHigherOrderComponent)(
     // @ts-expect-error TODO: Reconcile with intended `createHigherOrderComponent` types
@@ -52035,9 +52207,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       } = {}) => (WrappedComponent) => {
         const WithFocusReturn = (props) => {
           const ref = (0, import_compose83.useFocusReturn)(onFocusReturn);
-          return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("div", {
+          return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
             ref,
-            children: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(WrappedComponent, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(WrappedComponent, {
               ...props
             })
           });
@@ -52063,13 +52235,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/higher-order/with-notices/index.js
-  var import_element220 = __toESM(require_element());
+  var import_element221 = __toESM(require_element());
   var import_compose84 = __toESM(require_compose());
-  var import_jsx_runtime272 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime301 = __toESM(require_jsx_runtime());
   var with_notices_default = (0, import_compose84.createHigherOrderComponent)((OriginalComponent) => {
     function Component9(props, ref) {
-      const [noticeList, setNoticeList] = (0, import_element220.useState)([]);
-      const noticeOperations = (0, import_element220.useMemo)(() => {
+      const [noticeList, setNoticeList] = (0, import_element221.useState)([]);
+      const noticeOperations = (0, import_element221.useMemo)(() => {
         const createNotice = (notice) => {
           const noticeToAdd = notice.id ? notice : {
             ...notice,
@@ -52097,16 +52269,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props,
         noticeList,
         noticeOperations,
-        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(list_default, {
+        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(list_default, {
           className: "components-with-notices-ui",
           notices: noticeList,
           onRemove: noticeOperations.removeNotice
         })
       };
-      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(OriginalComponent, {
+      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(OriginalComponent, {
         ...propsOut,
         ref
-      }) : /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(OriginalComponent, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(OriginalComponent, {
         ...propsOut
       });
     }
@@ -52116,22 +52288,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = OriginalComponent;
     if (typeof render === "function") {
       isForwardRef = true;
-      return (0, import_element220.forwardRef)(Component9);
+      return (0, import_element221.forwardRef)(Component9);
     }
     return Component9;
   }, "withNotices");
 
   // packages/components/build-module/menu/index.js
-  var import_element233 = __toESM(require_element());
+  var import_element234 = __toESM(require_element());
   var import_i18n81 = __toESM(require_i18n());
 
   // packages/components/build-module/menu/context.js
-  var import_element221 = __toESM(require_element());
-  var Context2 = (0, import_element221.createContext)(void 0);
+  var import_element222 = __toESM(require_element());
+  var Context2 = (0, import_element222.createContext)(void 0);
   Context2.displayName = "MenuContext";
 
   // packages/components/build-module/menu/item.js
-  var import_element222 = __toESM(require_element());
+  var import_element223 = __toESM(require_element());
 
   // packages/components/build-module/menu/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__44() {
@@ -52238,7 +52410,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     target: "e1wg7tti3",
     label: "Separator"
   })("grid-column:1/-1;border:none;height:", config_values_default.borderWidth, ";background-color:", (props) => props.variant === "toolbar" ? TOOLBAR_VARIANT_BORDER_COLOR : DIVIDER_COLOR, ";margin-block:", space(2), ";margin-inline:", ITEM_PADDING_INLINE, ";outline:2px solid transparent;" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFzVkMiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0ICogYXMgQXJpYWtpdCBmcm9tICdAYXJpYWtpdC9yZWFjdCc7XG5pbXBvcnQgeyBjc3MgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgc3R5bGVkIGZyb20gJ0BlbW90aW9uL3N0eWxlZCc7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IENPTE9SUywgZm9udCwgcnRsLCBDT05GSUcgfSBmcm9tICcuLi91dGlscyc7XG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uL3V0aWxzL3NwYWNlJztcbmltcG9ydCBJY29uIGZyb20gJy4uL2ljb24nO1xuaW1wb3J0IHsgVHJ1bmNhdGUgfSBmcm9tICcuLi90cnVuY2F0ZSc7XG5pbXBvcnQgdHlwZSB7IENvbnRleHRQcm9wcyB9IGZyb20gJy4vdHlwZXMnO1xuXG5jb25zdCBBTklNQVRJT05fUEFSQU1TID0ge1xuXHRTQ0FMRV9BTU9VTlRfT1VURVI6IDAuODIsXG5cdFNDQUxFX0FNT1VOVF9DT05URU5UOiAwLjksXG5cdERVUkFUSU9OOiB7XG5cdFx0SU46ICc0MDBtcycsXG5cdFx0T1VUOiAnMjAwbXMnLFxuXHR9LFxuXHRFQVNJTkc6ICdjdWJpYy1iZXppZXIoMC4zMywgMCwgMCwgMSknLFxufTtcblxuY29uc3QgQ09OVEVOVF9XUkFQUEVSX1BBRERJTkcgPSBzcGFjZSggMSApO1xuY29uc3QgSVRFTV9QQURESU5HX0JMT0NLID0gc3BhY2UoIDIgKTtcbmNvbnN0IElURU1fUEFERElOR19JTkxJTkUgPSBzcGFjZSggMyApO1xuXG4vLyBUT0RPOlxuLy8gLSBib3JkZXIgY29sb3IgYW5kIGRpdmlkZXIgY29sb3IgYXJlIGRpZmZlcmVudCBmcm9tIENPTE9SUy50aGVtZSB2YXJpYWJsZXNcbi8vIC0gbGlnaHRlciB0ZXh0IGNvbG9yIGlzIG5vdCBkZWZpbmVkIGluIENPTE9SUy50aGVtZSwgc2hvdWxkIGl0IGJlP1xuLy8gLSBsaWdodGVyIGJhY2tncm91bmQgY29sb3IgaXMgbm90IGRlZmluZWQgaW4gQ09MT1JTLnRoZW1lLCBzaG91bGQgaXQgYmU/XG5jb25zdCBERUZBVUxUX0JPUkRFUl9DT0xPUiA9IENPTE9SUy50aGVtZS5ncmF5WyAzMDAgXTtcbmNvbnN0IERJVklERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgMjAwIF07XG5jb25zdCBMSUdIVEVSX1RFWFRfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgNzAwIF07XG5jb25zdCBMSUdIVF9CQUNLR1JPVU5EX0NPTE9SID0gQ09MT1JTLnRoZW1lLmdyYXlbIDEwMCBdO1xuY29uc3QgVE9PTEJBUl9WQVJJQU5UX0JPUkRFUl9DT0xPUiA9IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kO1xuY29uc3QgREVGQVVMVF9CT1hfU0hBRE9XID0gYDAgMCAwICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9ICR7IERFRkFVTFRfQk9SREVSX0NPTE9SIH0sICR7IENPTkZJRy5lbGV2YXRpb25NZWRpdW0gfWA7XG5jb25zdCBUT09MQkFSX1ZBUklBTlRfQk9YX1NIQURPVyA9IGAwIDAgMCAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSAkeyBUT09MQkFSX1ZBUklBTlRfQk9SREVSX0NPTE9SIH1gO1xuXG5jb25zdCBHUklEX1RFTVBMQVRFX0NPTFMgPSAnbWlubWF4KCAwLCBtYXgtY29udGVudCApIDFmcic7XG5cbmV4cG9ydCBjb25zdCBQb3BvdmVyT3V0ZXJXcmFwcGVyID0gc3R5bGVkLmRpdjxcblx0UGljazwgQ29udGV4dFByb3BzLCAndmFyaWFudCcgPlxuPmBcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXG5cdGJhY2tncm91bmQtY29sb3I6ICR7IENPTE9SUy51aS5iYWNrZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNNZWRpdW0gfTtcblx0JHsgKCBwcm9wcyApID0+IGNzc2Bcblx0XHRib3gtc2hhZG93OiAkeyBwcm9wcy52YXJpYW50ID09PSAndG9vbGJhcidcblx0XHRcdD8gVE9PTEJBUl9WQVJJQU5UX0JPWF9TSEFET1dcblx0XHRcdDogREVGQVVMVF9CT1hfU0hBRE9XIH07XG5cdGAgfVxuXG5cdG92ZXJmbG93OiBoaWRkZW47XG5cblx0LyogT3Blbi9jbG9zZSBhbmltYXRpb24gKG91dGVyIHdyYXBwZXIpICovXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdHRyYW5zaXRpb24tcHJvcGVydHk6IHRyYW5zZm9ybSwgb3BhY2l0eTtcblx0XHR0cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogJHsgQU5JTUFUSU9OX1BBUkFNUy5FQVNJTkcgfTtcblx0XHR0cmFuc2l0aW9uLWR1cmF0aW9uOiAkeyBBTklNQVRJT05fUEFSQU1TLkRVUkFUSU9OLklOIH07XG5cdFx0d2lsbC1jaGFuZ2U6IHRyYW5zZm9ybSwgb3BhY2l0eTtcblxuXHRcdC8qIFJlZ2FyZGxlc3Mgb2YgdGhlIHNpZGUsIGZhZGUgaW4gYW5kIG91dC4gKi9cblx0XHRvcGFjaXR5OiAwO1xuXHRcdCY6aGFzKCBbZGF0YS1lbnRlcl0gKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdH1cblxuXHRcdCY6aGFzKCBbZGF0YS1sZWF2ZV0gKSB7XG5cdFx0XHR0cmFuc2l0aW9uLWR1cmF0aW9uOiAkeyBBTklNQVRJT05fUEFSQU1TLkRVUkFUSU9OLk9VVCB9O1xuXHRcdH1cblxuXHRcdC8qIEZvciBtZW51cyBvcGVuaW5nIG9uIHRvcCBhbmQgYm90dG9tIHNpZGUsIGFuaW1hdGUgdGhlIHNjYWxlIFkgdG9vLiAqL1xuXHRcdCY6aGFzKCBbZGF0YS1zaWRlPSdib3R0b20nXSApLFxuXHRcdCY6aGFzKCBbZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdHRyYW5zZm9ybTogc2NhbGVZKCAkeyBBTklNQVRJT05fUEFSQU1TLlNDQUxFX0FNT1VOVF9PVVRFUiB9ICk7XG5cdFx0fVxuXHRcdCY6aGFzKCBbZGF0YS1zaWRlPSdib3R0b20nXSApIHtcblx0XHRcdHRyYW5zZm9ybS1vcmlnaW46IHRvcDtcblx0XHR9XG5cdFx0JjpoYXMoIFtkYXRhLXNpZGU9J3RvcCddICkge1xuXHRcdFx0dHJhbnNmb3JtLW9yaWdpbjogYm90dG9tO1xuXHRcdH1cblx0XHQmOmhhcyggW2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0nYm90dG9tJ10gKSxcblx0XHQmOmhhcyggW2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0ndG9wJ10gKSxcblx0XHQvKiBEbyBub3QgYW5pbWF0ZSB0aGUgc2NhbGVZIHdoZW4gY2xvc2luZyB0aGUgbWVudSAqL1xuXHRcdCY6aGFzKCBbZGF0YS1sZWF2ZV1bZGF0YS1zaWRlPSdib3R0b20nXSApLFxuXHRcdCY6aGFzKCBbZGF0YS1sZWF2ZV1bZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdHRyYW5zZm9ybTogc2NhbGVZKCAxICk7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgUG9wb3ZlcklubmVyV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0LyogU2FtZSBhcyBwb3BvdmVyIGNvbXBvbmVudCAqL1xuXHQvKiBUT0RPOiBpcyB0aGVyZSBhIHdheSB0byByZWFkIHRoZSBzYXNzIHZhcmlhYmxlPyAqL1xuXHR6LWluZGV4OiAxMDAwMDAwO1xuXG5cdGRpc3BsYXk6IGdyaWQ7XG5cdGdyaWQtdGVtcGxhdGUtY29sdW1uczogJHsgR1JJRF9URU1QTEFURV9DT0xTIH07XG5cdGdyaWQtdGVtcGxhdGUtcm93czogYXV0bztcblxuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRtaW4td2lkdGg6IDE2MHB4O1xuXHRtYXgtd2lkdGg6IDMyMHB4O1xuXHRtYXgtaGVpZ2h0OiB2YXIoIC0tcG9wb3Zlci1hdmFpbGFibGUtaGVpZ2h0ICk7XG5cblx0cGFkZGluZzogJHsgQ09OVEVOVF9XUkFQUEVSX1BBRERJTkcgfTtcblxuXHRvdmVyc2Nyb2xsLWJlaGF2aW9yOiBjb250YWluO1xuXHRvdmVyZmxvdzogYXV0bztcblxuXHQvKiBPbmx5IHZpc2libGUgaW4gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgKi9cblx0b3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50ICFpbXBvcnRhbnQ7XG5cblx0LyogT3Blbi9jbG9zZSBhbmltYXRpb24gKGlubmVyIGNvbnRlbnQgd3JhcHBlcikgKi9cblx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0dHJhbnNpdGlvbjogaW5oZXJpdDtcblx0XHR0cmFuc2Zvcm0tb3JpZ2luOiBpbmhlcml0O1xuXG5cdFx0Lypcblx0XHQgKiBGb3IgbWVudXMgb3BlbmluZyBvbiB0b3AgYW5kIGJvdHRvbSBzaWRlLCBhbmltYXRlIHRoZSBzY2FsZSBZIHRvby5cblx0XHQgKiBUaGUgY29udGVudCBzY2FsZXMgYXQgYSBkaWZmZXJlbnQgcmF0ZSB0aGFuIHRoZSBvdXRlciBjb250YWluZXI6XG5cdFx0ICogLSBmaXJzdCwgY291bnRlciB0aGUgb3V0ZXIgc2NhbGUgZmFjdG9yIGJ5IGRvaW5nIFwiMSAvIHNjYWxlQW1vdW50T3V0ZXJcIlxuXHRcdCAqIC0gdGhlbiwgYXBwbHkgdGhlIGNvbnRlbnQgc2NhbGUgZmFjdG9yLlxuXHRcdCAqL1xuXHRcdCZbZGF0YS1zaWRlPSdib3R0b20nXSxcblx0XHQmW2RhdGEtc2lkZT0ndG9wJ10ge1xuXHRcdFx0dHJhbnNmb3JtOiBzY2FsZVkoXG5cdFx0XHRcdGNhbGMoXG5cdFx0XHRcdFx0MSAvICR7IEFOSU1BVElPTl9QQVJBTVMuU0NBTEVfQU1PVU5UX09VVEVSIH0gKlxuXHRcdFx0XHRcdFx0JHsgQU5JTUFUSU9OX1BBUkFNUy5TQ0FMRV9BTU9VTlRfQ09OVEVOVCB9XG5cdFx0XHRcdClcblx0XHRcdCk7XG5cdFx0fVxuXHRcdCZbZGF0YS1lbnRlcl1bZGF0YS1zaWRlPSdib3R0b20nXSxcblx0XHQmW2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0ndG9wJ10sXG5cdFx0LyogRG8gbm90IGFuaW1hdGUgdGhlIHNjYWxlWSB3aGVuIGNsb3NpbmcgdGhlIG1lbnUgKi9cblx0XHQmW2RhdGEtbGVhdmVdW2RhdGEtc2lkZT0nYm90dG9tJ10sXG5cdFx0JltkYXRhLWxlYXZlXVtkYXRhLXNpZGU9J3RvcCddIHtcblx0XHRcdHRyYW5zZm9ybTogc2NhbGVZKCAxICk7XG5cdFx0fVxuXHR9XG5gO1xuXG5jb25zdCBiYXNlSXRlbSA9IGNzc2Bcblx0YWxsOiB1bnNldDtcblxuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMCApIH07XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cblx0LyogT2NjdXB5IHRoZSB3aWR0aCBvZiBhbGwgZ3JpZCBjb2x1bW5zIChpZS4gZnVsbCB3aWR0aCkgKi9cblx0Z3JpZC1jb2x1bW46IDEgLyAtMTtcblxuXHRkaXNwbGF5OiBncmlkO1xuXHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6ICR7IEdSSURfVEVNUExBVEVfQ09MUyB9O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXG5cdEBzdXBwb3J0cyAoIGdyaWQtdGVtcGxhdGUtY29sdW1uczogc3ViZ3JpZCApIHtcblx0XHQvKlxuXHRcdCAqIERlZmluZSBhIGdyaWQgbGF5b3V0IHdoaWNoIGluaGVyaXRzIHRoZSBzYW1lIGNvbHVtbnMgY29uZmlndXJhdGlvblxuXHRcdCAqIGZyb20gdGhlIHBhcmVudCBsYXlvdXQgKGllLiBzdWJncmlkKS4gVGhpcyBhbGxvd3MgdGhlIG1lbnVcblx0XHQgKiB0byBzeW5jaHJvbml6ZSB0aGUgaW5kZW50YXRpb24gb2YgYWxsIGl0cyBpdGVtcy5cblx0XHQgKi9cblx0XHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHN1YmdyaWQ7XG5cdH1cblxuXHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdGZvbnQtZmFtaWx5OiBpbmhlcml0O1xuXHRmb250LXdlaWdodDogbm9ybWFsO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblxuXHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH07XG5cblx0cGFkZGluZy1ibG9jazogJHsgSVRFTV9QQURESU5HX0JMT0NLIH07XG5cdHBhZGRpbmctaW5saW5lOiAkeyBJVEVNX1BBRERJTkdfSU5MSU5FIH07XG5cblx0Lypcblx0ICogTWFrZSBzdXJlIHRoYXQsIHdoZW4gYW4gaXRlbSBpcyBzY3JvbGxlZCBpbnRvIHZpZXcgKGVnLiB3aGlsZSB1c2luZyB0aGVcblx0ICoga2V5Ym9hcmQgdG8gbW92ZSBmb2N1cyksIHRoZSB3aG9sZSBpdGVtIGNvbWVzIGludG8gdmlld1xuXHQgKi9cblx0c2Nyb2xsLW1hcmdpbjogJHsgQ09OVEVOVF9XUkFQUEVSX1BBRERJTkcgfTtcblxuXHR1c2VyLXNlbGVjdDogbm9uZTtcblx0b3V0bGluZTogbm9uZTtcblxuXHQmW2FyaWEtZGlzYWJsZWQ9J3RydWUnXSB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS50ZXh0RGlzYWJsZWQgfTtcblx0XHRjdXJzb3I6IG5vdC1hbGxvd2VkO1xuXHR9XG5cblx0LyogQWN0aXZlIGl0ZW0gKGluY2x1ZGluZyBob3ZlcikgKi9cblx0JltkYXRhLWFjdGl2ZS1pdGVtXTpub3QoIFtkYXRhLWZvY3VzLXZpc2libGVdICk6bm90KFxuXHRcdFx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXVxuXHRcdCkge1xuXHRcdGJhY2tncm91bmQtY29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudEludmVydGVkIH07XG5cdH1cblxuXHQvKiBLZXlib2FyZCBmb2N1cyAoZm9jdXMtdmlzaWJsZSkgKi9cblx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHRib3gtc2hhZG93OiAwIDAgMCAxLjVweCAkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cblx0XHQvKiBPbmx5IHZpc2libGUgaW4gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgKi9cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdH1cblxuXHQvKiBBY3RpdmUgKGllLiBwcmVzc2VkLCBtb3VzZSBkb3duKSAqL1xuXHQmOmFjdGl2ZSxcblx0JltkYXRhLWFjdGl2ZV0ge1xuXHRcdC8qIFRPRE86IHNob3VsZCB0aGVyZSBiZSBhIHZpc3VhbCBhY3RpdmUgc3RhdGU/ICovXG5cdH1cblxuXHQvKiBXaGVuIHRoZSBpdGVtIGlzIHRoZSB0cmlnZ2VyIG9mIGFuIG9wZW4gc3VibWVudSAqL1xuXHQkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH06bm90KDpmb2N1cykgJjpub3QoOmZvY3VzKVthcmlhLWV4cGFuZGVkPVwidHJ1ZVwiXSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgTElHSFRfQkFDS0dST1VORF9DT0xPUiB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9O1xuXHR9XG5cblx0c3ZnIHtcblx0XHRmaWxsOiBjdXJyZW50Q29sb3I7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVJdGVtIClgXG5cdCR7IGJhc2VJdGVtIH07XG5gO1xuXG5leHBvcnQgY29uc3QgQ2hlY2tib3hJdGVtID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVJdGVtQ2hlY2tib3ggKWBcblx0JHsgYmFzZUl0ZW0gfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBSYWRpb0l0ZW0gPSBzdHlsZWQoIEFyaWFraXQuTWVudUl0ZW1SYWRpbyApYFxuXHQkeyBiYXNlSXRlbSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1QcmVmaXhXcmFwcGVyID0gc3R5bGVkLnNwYW5gXG5cdC8qIEFsd2F5cyBvY2N1cHkgdGhlIGZpcnN0IGNvbHVtbiwgZXZlbiB3aGVuIGF1dG8tY29sbGFwc2luZyAqL1xuXHRncmlkLWNvbHVtbjogMTtcblxuXHQvKlxuXHQgKiBFdmVuIHdoZW4gdGhlIGl0ZW0gaXMgbm90IGNoZWNrZWQsIG9jY3VweSB0aGUgc2FtZSBzY3JlZW4gc3BhY2UgdG8gYXZvaWRcblx0ICogdGhlIHNwYWNlIGNvbGxhcHNpZGUgd2hlbiBubyBpdGVtcyBhcmUgY2hlY2tlZC5cblx0ICovXG5cdCR7IENoZWNrYm94SXRlbSB9ID4gJixcblx0JHsgUmFkaW9JdGVtIH0gPiAmIHtcblx0XHQvKiBTYW1lIHdpZHRoIGFzIHRoZSBjaGVjayBpY29ucyAqL1xuXHRcdG1pbi13aWR0aDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0JHsgQ2hlY2tib3hJdGVtIH0gPiAmLFxuXHQkeyBSYWRpb0l0ZW0gfSA+ICYsXG5cdCY6bm90KCA6ZW1wdHkgKSB7XG5cdFx0bWFyZ2luLWlubGluZS1lbmQ6ICR7IHNwYWNlKCAyICkgfTtcblx0fVxuXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXG5cdGNvbG9yOiAkeyBMSUdIVEVSX1RFWFRfQ09MT1IgfTtcblxuXHQvKlxuXHQqIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgYWN0aXZlLCBleGNlcHQgd2hlbiBpdCdzIGEgbm9uLWZvY3VzZWQvaG92ZXJlZFxuXHQqIHN1Ym1lbnUgdHJpZ2dlciAoaW4gdGhhdCBjYXNlLCBjb2xvciBzaG91bGQgbm90IGJlIGluaGVyaXRlZClcblx0Ki9cblx0W2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSA+ICYsXG5cdC8qIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgZGlzYWJsZWQgKi9cblx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXSA+ICYge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUNvbnRlbnRXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0Lypcblx0ICogQWx3YXlzIG9jY3VweSB0aGUgc2Vjb25kIGNvbHVtbiwgc2luY2UgdGhlIGZpcnN0IGNvbHVtblxuXHQgKiBpcyB0YWtlbiBieSB0aGUgcHJlZml4IHdyYXBwZXIgKHdoZW4gZGlzcGxheWVkKS5cblx0ICovXG5cdGdyaWQtY29sdW1uOiAyO1xuXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2Vlbjtcblx0Z2FwOiAkeyBzcGFjZSggMyApIH07XG5cblx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUNoaWxkcmVuV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdGZsZXg6IDE7XG5cblx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG5cdGdhcDogJHsgc3BhY2UoIDEgKSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1TdWZmaXhXcmFwcGVyID0gc3R5bGVkLnNwYW5gXG5cdGZsZXg6IDAgMSBmaXQtY29udGVudDtcblx0bWluLXdpZHRoOiAwO1xuXHR3aWR0aDogZml0LWNvbnRlbnQ7XG5cblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cdGdhcDogJHsgc3BhY2UoIDMgKSB9O1xuXG5cdGNvbG9yOiAkeyBMSUdIVEVSX1RFWFRfQ09MT1IgfTtcblxuXHQvKlxuXHQgKiBXaGVuIHRoZSBwYXJlbnQgbWVudSBpdGVtIGlzIGFjdGl2ZSwgZXhjZXB0IHdoZW4gaXQncyBhIG5vbi1mb2N1c2VkL2hvdmVyZWRcblx0ICogc3VibWVudSB0cmlnZ2VyIChpbiB0aGF0IGNhc2UsIGNvbG9yIHNob3VsZCBub3QgYmUgaW5oZXJpdGVkKVxuXHQgKi9cblx0W2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSAqOm5vdCgkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH0pICYsXG5cdC8qIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgZGlzYWJsZWQgKi9cblx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXSAqOm5vdCgkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH0pICYge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXAgPSBzdHlsZWQoIEFyaWFraXQuTWVudUdyb3VwIClgXG5cdC8qIElnbm9yZSB0aGlzIGVsZW1lbnQgd2hlbiBjYWxjdWxhdGluZyB0aGUgbGF5b3V0LiBVc2VmdWwgZm9yIHN1YmdyaWQgKi9cblx0ZGlzcGxheTogY29udGVudHM7XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBMYWJlbCA9IHN0eWxlZCggQXJpYWtpdC5NZW51R3JvdXBMYWJlbCApYFxuXHQvKiBPY2N1cHkgdGhlIHdpZHRoIG9mIGFsbCBncmlkIGNvbHVtbnMgKGllLiBmdWxsIHdpZHRoKSAqL1xuXHRncmlkLWNvbHVtbjogMSAvIC0xO1xuXG5cdHBhZGRpbmctYmxvY2stc3RhcnQ6ICR7IHNwYWNlKCAzICkgfTtcblx0cGFkZGluZy1ibG9jay1lbmQ6ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZy1pbmxpbmU6ICR7IElURU1fUEFERElOR19JTkxJTkUgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBTZXBhcmF0b3IgPSBzdHlsZWQoIEFyaWFraXQuTWVudVNlcGFyYXRvciApPFxuXHRQaWNrPCBDb250ZXh0UHJvcHMsICd2YXJpYW50JyA+XG4+YFxuXHQvKiBPY2N1cHkgdGhlIHdpZHRoIG9mIGFsbCBncmlkIGNvbHVtbnMgKGllLiBmdWxsIHdpZHRoKSAqL1xuXHRncmlkLWNvbHVtbjogMSAvIC0xO1xuXG5cdGJvcmRlcjogbm9uZTtcblx0aGVpZ2h0OiAkeyBDT05GSUcuYm9yZGVyV2lkdGggfTtcblx0YmFja2dyb3VuZC1jb2xvcjogJHsgKCBwcm9wcyApID0+XG5cdFx0cHJvcHMudmFyaWFudCA9PT0gJ3Rvb2xiYXInXG5cdFx0XHQ/IFRPT0xCQVJfVkFSSUFOVF9CT1JERVJfQ09MT1Jcblx0XHRcdDogRElWSURFUl9DT0xPUiB9O1xuXHQvKiBBbGlnbiB3aXRoIG1lbnUgaXRlbXMnIGNvbnRlbnQgKi9cblx0bWFyZ2luLWJsb2NrOiAkeyBzcGFjZSggMiApIH07XG5cdG1hcmdpbi1pbmxpbmU6ICR7IElURU1fUEFERElOR19JTkxJTkUgfTtcblxuXHQvKiBPbmx5IHZpc2libGUgaW4gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgKi9cblx0b3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50O1xuYDtcblxuZXhwb3J0IGNvbnN0IFN1Ym1lbnVDaGV2cm9uSWNvbiA9IHN0eWxlZCggSWNvbiApYFxuXHR3aWR0aDogJHsgc3BhY2UoIDEuNSApIH07XG5cdCR7IHJ0bChcblx0XHR7XG5cdFx0XHR0cmFuc2Zvcm06IGBzY2FsZVgoMSlgLFxuXHRcdH0sXG5cdFx0e1xuXHRcdFx0dHJhbnNmb3JtOiBgc2NhbGVYKC0xKWAsXG5cdFx0fVxuXHQpIH07XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUxhYmVsID0gc3R5bGVkKCBUcnVuY2F0ZSApYFxuXHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdGxpbmUtaGVpZ2h0OiAyMHB4O1xuXHRjb2xvcjogaW5oZXJpdDtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtSGVscFRleHQgPSBzdHlsZWQoIFRydW5jYXRlIClgXG5cdGZvbnQtc2l6ZTogJHsgZm9udCggJ2hlbHBUZXh0LmZvbnRTaXplJyApIH07XG5cdGxpbmUtaGVpZ2h0OiAxNnB4O1xuXHRjb2xvcjogJHsgTElHSFRFUl9URVhUX0NPTE9SIH07XG5cdG92ZXJmbG93LXdyYXA6IGFueXdoZXJlO1xuXG5cdFtkYXRhLWFjdGl2ZS1pdGVtXTpub3QoIFtkYXRhLWZvY3VzLXZpc2libGVdIClcblx0XHQqOm5vdCggJHsgUG9wb3ZlcklubmVyV3JhcHBlciB9IClcblx0XHQmLFxuXHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICo6bm90KCAkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH0gKSAmIHtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0fVxuYDtcbiJdfQ== */"));
-  var SubmenuChevronIcon = /* @__PURE__ */ emotion_styled_base_browser_esm_default(icon_default2, false ? {
+  var SubmenuChevronIcon = /* @__PURE__ */ emotion_styled_base_browser_esm_default(icon_default3, false ? {
     target: "e1wg7tti2"
   } : {
     target: "e1wg7tti2",
@@ -52262,8 +52434,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("font-size:", font("helpText.fontSize"), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";overflow-wrap:anywhere;[data-active-item]:not( [data-focus-visible] ) *:not( ", PopoverInnerWrapper, " ) &,[aria-disabled='true'] *:not( ", PopoverInnerWrapper, " ) &{color:inherit;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEwWDhDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIGZvbnQsIHJ0bCwgQ09ORklHIH0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgSWNvbiBmcm9tICcuLi9pY29uJztcbmltcG9ydCB7IFRydW5jYXRlIH0gZnJvbSAnLi4vdHJ1bmNhdGUnO1xuaW1wb3J0IHR5cGUgeyBDb250ZXh0UHJvcHMgfSBmcm9tICcuL3R5cGVzJztcblxuY29uc3QgQU5JTUFUSU9OX1BBUkFNUyA9IHtcblx0U0NBTEVfQU1PVU5UX09VVEVSOiAwLjgyLFxuXHRTQ0FMRV9BTU9VTlRfQ09OVEVOVDogMC45LFxuXHREVVJBVElPTjoge1xuXHRcdElOOiAnNDAwbXMnLFxuXHRcdE9VVDogJzIwMG1zJyxcblx0fSxcblx0RUFTSU5HOiAnY3ViaWMtYmV6aWVyKDAuMzMsIDAsIDAsIDEpJyxcbn07XG5cbmNvbnN0IENPTlRFTlRfV1JBUFBFUl9QQURESU5HID0gc3BhY2UoIDEgKTtcbmNvbnN0IElURU1fUEFERElOR19CTE9DSyA9IHNwYWNlKCAyICk7XG5jb25zdCBJVEVNX1BBRERJTkdfSU5MSU5FID0gc3BhY2UoIDMgKTtcblxuLy8gVE9ETzpcbi8vIC0gYm9yZGVyIGNvbG9yIGFuZCBkaXZpZGVyIGNvbG9yIGFyZSBkaWZmZXJlbnQgZnJvbSBDT0xPUlMudGhlbWUgdmFyaWFibGVzXG4vLyAtIGxpZ2h0ZXIgdGV4dCBjb2xvciBpcyBub3QgZGVmaW5lZCBpbiBDT0xPUlMudGhlbWUsIHNob3VsZCBpdCBiZT9cbi8vIC0gbGlnaHRlciBiYWNrZ3JvdW5kIGNvbG9yIGlzIG5vdCBkZWZpbmVkIGluIENPTE9SUy50aGVtZSwgc2hvdWxkIGl0IGJlP1xuY29uc3QgREVGQVVMVF9CT1JERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgMzAwIF07XG5jb25zdCBESVZJREVSX0NPTE9SID0gQ09MT1JTLnRoZW1lLmdyYXlbIDIwMCBdO1xuY29uc3QgTElHSFRFUl9URVhUX0NPTE9SID0gQ09MT1JTLnRoZW1lLmdyYXlbIDcwMCBdO1xuY29uc3QgTElHSFRfQkFDS0dST1VORF9DT0xPUiA9IENPTE9SUy50aGVtZS5ncmF5WyAxMDAgXTtcbmNvbnN0IFRPT0xCQVJfVkFSSUFOVF9CT1JERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZDtcbmNvbnN0IERFRkFVTFRfQk9YX1NIQURPVyA9IGAwIDAgMCAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSAkeyBERUZBVUxUX0JPUkRFUl9DT0xPUiB9LCAkeyBDT05GSUcuZWxldmF0aW9uTWVkaXVtIH1gO1xuY29uc3QgVE9PTEJBUl9WQVJJQU5UX0JPWF9TSEFET1cgPSBgMCAwIDAgJHsgQ09ORklHLmJvcmRlcldpZHRoIH0gJHsgVE9PTEJBUl9WQVJJQU5UX0JPUkRFUl9DT0xPUiB9YDtcblxuY29uc3QgR1JJRF9URU1QTEFURV9DT0xTID0gJ21pbm1heCggMCwgbWF4LWNvbnRlbnQgKSAxZnInO1xuXG5leHBvcnQgY29uc3QgUG9wb3Zlck91dGVyV3JhcHBlciA9IHN0eWxlZC5kaXY8XG5cdFBpY2s8IENvbnRleHRQcm9wcywgJ3ZhcmlhbnQnID5cbj5gXG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMudWkuYmFja2dyb3VuZCB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzTWVkaXVtIH07XG5cdCR7ICggcHJvcHMgKSA9PiBjc3NgXG5cdFx0Ym94LXNoYWRvdzogJHsgcHJvcHMudmFyaWFudCA9PT0gJ3Rvb2xiYXInXG5cdFx0XHQ/IFRPT0xCQVJfVkFSSUFOVF9CT1hfU0hBRE9XXG5cdFx0XHQ6IERFRkFVTFRfQk9YX1NIQURPVyB9O1xuXHRgIH1cblxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXG5cdC8qIE9wZW4vY2xvc2UgYW5pbWF0aW9uIChvdXRlciB3cmFwcGVyKSAqL1xuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIG9wYWNpdHk7XG5cdFx0dHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246ICR7IEFOSU1BVElPTl9QQVJBTVMuRUFTSU5HIH07XG5cdFx0dHJhbnNpdGlvbi1kdXJhdGlvbjogJHsgQU5JTUFUSU9OX1BBUkFNUy5EVVJBVElPTi5JTiB9O1xuXHRcdHdpbGwtY2hhbmdlOiB0cmFuc2Zvcm0sIG9wYWNpdHk7XG5cblx0XHQvKiBSZWdhcmRsZXNzIG9mIHRoZSBzaWRlLCBmYWRlIGluIGFuZCBvdXQuICovXG5cdFx0b3BhY2l0eTogMDtcblx0XHQmOmhhcyggW2RhdGEtZW50ZXJdICkge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cblx0XHQmOmhhcyggW2RhdGEtbGVhdmVdICkge1xuXHRcdFx0dHJhbnNpdGlvbi1kdXJhdGlvbjogJHsgQU5JTUFUSU9OX1BBUkFNUy5EVVJBVElPTi5PVVQgfTtcblx0XHR9XG5cblx0XHQvKiBGb3IgbWVudXMgb3BlbmluZyBvbiB0b3AgYW5kIGJvdHRvbSBzaWRlLCBhbmltYXRlIHRoZSBzY2FsZSBZIHRvby4gKi9cblx0XHQmOmhhcyggW2RhdGEtc2lkZT0nYm90dG9tJ10gKSxcblx0XHQmOmhhcyggW2RhdGEtc2lkZT0ndG9wJ10gKSB7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlWSggJHsgQU5JTUFUSU9OX1BBUkFNUy5TQ0FMRV9BTU9VTlRfT1VURVIgfSApO1xuXHRcdH1cblx0XHQmOmhhcyggW2RhdGEtc2lkZT0nYm90dG9tJ10gKSB7XG5cdFx0XHR0cmFuc2Zvcm0tb3JpZ2luOiB0b3A7XG5cdFx0fVxuXHRcdCY6aGFzKCBbZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdHRyYW5zZm9ybS1vcmlnaW46IGJvdHRvbTtcblx0XHR9XG5cdFx0JjpoYXMoIFtkYXRhLWVudGVyXVtkYXRhLXNpZGU9J2JvdHRvbSddICksXG5cdFx0JjpoYXMoIFtkYXRhLWVudGVyXVtkYXRhLXNpZGU9J3RvcCddICksXG5cdFx0LyogRG8gbm90IGFuaW1hdGUgdGhlIHNjYWxlWSB3aGVuIGNsb3NpbmcgdGhlIG1lbnUgKi9cblx0XHQmOmhhcyggW2RhdGEtbGVhdmVdW2RhdGEtc2lkZT0nYm90dG9tJ10gKSxcblx0XHQmOmhhcyggW2RhdGEtbGVhdmVdW2RhdGEtc2lkZT0ndG9wJ10gKSB7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlWSggMSApO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFBvcG92ZXJJbm5lcldyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdC8qIFNhbWUgYXMgcG9wb3ZlciBjb21wb25lbnQgKi9cblx0LyogVE9ETzogaXMgdGhlcmUgYSB3YXkgdG8gcmVhZCB0aGUgc2FzcyB2YXJpYWJsZT8gKi9cblx0ei1pbmRleDogMTAwMDAwMDtcblxuXHRkaXNwbGF5OiBncmlkO1xuXHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6ICR7IEdSSURfVEVNUExBVEVfQ09MUyB9O1xuXHRncmlkLXRlbXBsYXRlLXJvd3M6IGF1dG87XG5cblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0bWluLXdpZHRoOiAxNjBweDtcblx0bWF4LXdpZHRoOiAzMjBweDtcblx0bWF4LWhlaWdodDogdmFyKCAtLXBvcG92ZXItYXZhaWxhYmxlLWhlaWdodCApO1xuXG5cdHBhZGRpbmc6ICR7IENPTlRFTlRfV1JBUFBFUl9QQURESU5HIH07XG5cblx0b3ZlcnNjcm9sbC1iZWhhdmlvcjogY29udGFpbjtcblx0b3ZlcmZsb3c6IGF1dG87XG5cblx0LyogT25seSB2aXNpYmxlIGluIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlICovXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudCAhaW1wb3J0YW50O1xuXG5cdC8qIE9wZW4vY2xvc2UgYW5pbWF0aW9uIChpbm5lciBjb250ZW50IHdyYXBwZXIpICovXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdHRyYW5zaXRpb246IGluaGVyaXQ7XG5cdFx0dHJhbnNmb3JtLW9yaWdpbjogaW5oZXJpdDtcblxuXHRcdC8qXG5cdFx0ICogRm9yIG1lbnVzIG9wZW5pbmcgb24gdG9wIGFuZCBib3R0b20gc2lkZSwgYW5pbWF0ZSB0aGUgc2NhbGUgWSB0b28uXG5cdFx0ICogVGhlIGNvbnRlbnQgc2NhbGVzIGF0IGEgZGlmZmVyZW50IHJhdGUgdGhhbiB0aGUgb3V0ZXIgY29udGFpbmVyOlxuXHRcdCAqIC0gZmlyc3QsIGNvdW50ZXIgdGhlIG91dGVyIHNjYWxlIGZhY3RvciBieSBkb2luZyBcIjEgLyBzY2FsZUFtb3VudE91dGVyXCJcblx0XHQgKiAtIHRoZW4sIGFwcGx5IHRoZSBjb250ZW50IHNjYWxlIGZhY3Rvci5cblx0XHQgKi9cblx0XHQmW2RhdGEtc2lkZT0nYm90dG9tJ10sXG5cdFx0JltkYXRhLXNpZGU9J3RvcCddIHtcblx0XHRcdHRyYW5zZm9ybTogc2NhbGVZKFxuXHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdDEgLyAkeyBBTklNQVRJT05fUEFSQU1TLlNDQUxFX0FNT1VOVF9PVVRFUiB9ICpcblx0XHRcdFx0XHRcdCR7IEFOSU1BVElPTl9QQVJBTVMuU0NBTEVfQU1PVU5UX0NPTlRFTlQgfVxuXHRcdFx0XHQpXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmW2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0nYm90dG9tJ10sXG5cdFx0JltkYXRhLWVudGVyXVtkYXRhLXNpZGU9J3RvcCddLFxuXHRcdC8qIERvIG5vdCBhbmltYXRlIHRoZSBzY2FsZVkgd2hlbiBjbG9zaW5nIHRoZSBtZW51ICovXG5cdFx0JltkYXRhLWxlYXZlXVtkYXRhLXNpZGU9J2JvdHRvbSddLFxuXHRcdCZbZGF0YS1sZWF2ZV1bZGF0YS1zaWRlPSd0b3AnXSB7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlWSggMSApO1xuXHRcdH1cblx0fVxuYDtcblxuY29uc3QgYmFzZUl0ZW0gPSBjc3NgXG5cdGFsbDogdW5zZXQ7XG5cblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRtaW4taGVpZ2h0OiAkeyBzcGFjZSggMTAgKSB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXG5cdC8qIE9jY3VweSB0aGUgd2lkdGggb2YgYWxsIGdyaWQgY29sdW1ucyAoaWUuIGZ1bGwgd2lkdGgpICovXG5cdGdyaWQtY29sdW1uOiAxIC8gLTE7XG5cblx0ZGlzcGxheTogZ3JpZDtcblx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAkeyBHUklEX1RFTVBMQVRFX0NPTFMgfTtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblxuXHRAc3VwcG9ydHMgKCBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHN1YmdyaWQgKSB7XG5cdFx0Lypcblx0XHQgKiBEZWZpbmUgYSBncmlkIGxheW91dCB3aGljaCBpbmhlcml0cyB0aGUgc2FtZSBjb2x1bW5zIGNvbmZpZ3VyYXRpb25cblx0XHQgKiBmcm9tIHRoZSBwYXJlbnQgbGF5b3V0IChpZS4gc3ViZ3JpZCkuIFRoaXMgYWxsb3dzIHRoZSBtZW51XG5cdFx0ICogdG8gc3luY2hyb25pemUgdGhlIGluZGVudGF0aW9uIG9mIGFsbCBpdHMgaXRlbXMuXG5cdFx0ICovXG5cdFx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiBzdWJncmlkO1xuXHR9XG5cblx0Zm9udC1zaXplOiAkeyBmb250KCAnZGVmYXVsdC5mb250U2l6ZScgKSB9O1xuXHRmb250LWZhbWlseTogaW5oZXJpdDtcblx0Zm9udC13ZWlnaHQ6IG5vcm1hbDtcblx0bGluZS1oZWlnaHQ6IDIwcHg7XG5cblx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdHBhZGRpbmctYmxvY2s6ICR7IElURU1fUEFERElOR19CTE9DSyB9O1xuXHRwYWRkaW5nLWlubGluZTogJHsgSVRFTV9QQURESU5HX0lOTElORSB9O1xuXG5cdC8qXG5cdCAqIE1ha2Ugc3VyZSB0aGF0LCB3aGVuIGFuIGl0ZW0gaXMgc2Nyb2xsZWQgaW50byB2aWV3IChlZy4gd2hpbGUgdXNpbmcgdGhlXG5cdCAqIGtleWJvYXJkIHRvIG1vdmUgZm9jdXMpLCB0aGUgd2hvbGUgaXRlbSBjb21lcyBpbnRvIHZpZXdcblx0ICovXG5cdHNjcm9sbC1tYXJnaW46ICR7IENPTlRFTlRfV1JBUFBFUl9QQURESU5HIH07XG5cblx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cdG91dGxpbmU6IG5vbmU7XG5cblx0JlthcmlhLWRpc2FibGVkPSd0cnVlJ10ge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkudGV4dERpc2FibGVkIH07XG5cdFx0Y3Vyc29yOiBub3QtYWxsb3dlZDtcblx0fVxuXG5cdC8qIEFjdGl2ZSBpdGVtIChpbmNsdWRpbmcgaG92ZXIpICovXG5cdCZbZGF0YS1hY3RpdmUtaXRlbV06bm90KCBbZGF0YS1mb2N1cy12aXNpYmxlXSApOm5vdChcblx0XHRcdFthcmlhLWRpc2FibGVkPSd0cnVlJ11cblx0XHQpIHtcblx0XHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHR9XG5cblx0LyogS2V5Ym9hcmQgZm9jdXMgKGZvY3VzLXZpc2libGUpICovXG5cdCZbZGF0YS1mb2N1cy12aXNpYmxlXSB7XG5cdFx0Ym94LXNoYWRvdzogMCAwIDAgMS41cHggJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXG5cdFx0LyogT25seSB2aXNpYmxlIGluIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlICovXG5cdFx0b3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50O1xuXHR9XG5cblx0LyogQWN0aXZlIChpZS4gcHJlc3NlZCwgbW91c2UgZG93bikgKi9cblx0JjphY3RpdmUsXG5cdCZbZGF0YS1hY3RpdmVdIHtcblx0XHQvKiBUT0RPOiBzaG91bGQgdGhlcmUgYmUgYSB2aXN1YWwgYWN0aXZlIHN0YXRlPyAqL1xuXHR9XG5cblx0LyogV2hlbiB0aGUgaXRlbSBpcyB0aGUgdHJpZ2dlciBvZiBhbiBvcGVuIHN1Ym1lbnUgKi9cblx0JHsgUG9wb3ZlcklubmVyV3JhcHBlciB9Om5vdCg6Zm9jdXMpICY6bm90KDpmb2N1cylbYXJpYS1leHBhbmRlZD1cInRydWVcIl0ge1xuXHRcdGJhY2tncm91bmQtY29sb3I6ICR7IExJR0hUX0JBQ0tHUk9VTkRfQ09MT1IgfTtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0fVxuXG5cdHN2ZyB7XG5cdFx0ZmlsbDogY3VycmVudENvbG9yO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbSA9IHN0eWxlZCggQXJpYWtpdC5NZW51SXRlbSApYFxuXHQkeyBiYXNlSXRlbSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IENoZWNrYm94SXRlbSA9IHN0eWxlZCggQXJpYWtpdC5NZW51SXRlbUNoZWNrYm94IClgXG5cdCR7IGJhc2VJdGVtIH07XG5gO1xuXG5leHBvcnQgY29uc3QgUmFkaW9JdGVtID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVJdGVtUmFkaW8gKWBcblx0JHsgYmFzZUl0ZW0gfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtUHJlZml4V3JhcHBlciA9IHN0eWxlZC5zcGFuYFxuXHQvKiBBbHdheXMgb2NjdXB5IHRoZSBmaXJzdCBjb2x1bW4sIGV2ZW4gd2hlbiBhdXRvLWNvbGxhcHNpbmcgKi9cblx0Z3JpZC1jb2x1bW46IDE7XG5cblx0Lypcblx0ICogRXZlbiB3aGVuIHRoZSBpdGVtIGlzIG5vdCBjaGVja2VkLCBvY2N1cHkgdGhlIHNhbWUgc2NyZWVuIHNwYWNlIHRvIGF2b2lkXG5cdCAqIHRoZSBzcGFjZSBjb2xsYXBzaWRlIHdoZW4gbm8gaXRlbXMgYXJlIGNoZWNrZWQuXG5cdCAqL1xuXHQkeyBDaGVja2JveEl0ZW0gfSA+ICYsXG5cdCR7IFJhZGlvSXRlbSB9ID4gJiB7XG5cdFx0LyogU2FtZSB3aWR0aCBhcyB0aGUgY2hlY2sgaWNvbnMgKi9cblx0XHRtaW4td2lkdGg6ICR7IHNwYWNlKCA2ICkgfTtcblx0fVxuXG5cdCR7IENoZWNrYm94SXRlbSB9ID4gJixcblx0JHsgUmFkaW9JdGVtIH0gPiAmLFxuXHQmOm5vdCggOmVtcHR5ICkge1xuXHRcdG1hcmdpbi1pbmxpbmUtZW5kOiAkeyBzcGFjZSggMiApIH07XG5cdH1cblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcblxuXHRjb2xvcjogJHsgTElHSFRFUl9URVhUX0NPTE9SIH07XG5cblx0Lypcblx0KiBXaGVuIHRoZSBwYXJlbnQgbWVudSBpdGVtIGlzIGFjdGl2ZSwgZXhjZXB0IHdoZW4gaXQncyBhIG5vbi1mb2N1c2VkL2hvdmVyZWRcblx0KiBzdWJtZW51IHRyaWdnZXIgKGluIHRoYXQgY2FzZSwgY29sb3Igc2hvdWxkIG5vdCBiZSBpbmhlcml0ZWQpXG5cdCovXG5cdFtkYXRhLWFjdGl2ZS1pdGVtXTpub3QoIFtkYXRhLWZvY3VzLXZpc2libGVdICkgPiAmLFxuXHQvKiBXaGVuIHRoZSBwYXJlbnQgbWVudSBpdGVtIGlzIGRpc2FibGVkICovXG5cdFthcmlhLWRpc2FibGVkPSd0cnVlJ10gPiAmIHtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1Db250ZW50V3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdC8qXG5cdCAqIEFsd2F5cyBvY2N1cHkgdGhlIHNlY29uZCBjb2x1bW4sIHNpbmNlIHRoZSBmaXJzdCBjb2x1bW5cblx0ICogaXMgdGFrZW4gYnkgdGhlIHByZWZpeCB3cmFwcGVyICh3aGVuIGRpc3BsYXllZCkuXG5cdCAqL1xuXHRncmlkLWNvbHVtbjogMjtcblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdGdhcDogJHsgc3BhY2UoIDMgKSB9O1xuXG5cdHBvaW50ZXItZXZlbnRzOiBub25lO1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1DaGlsZHJlbldyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHRmbGV4OiAxO1xuXG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHRnYXA6ICR7IHNwYWNlKCAxICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtU3VmZml4V3JhcHBlciA9IHN0eWxlZC5zcGFuYFxuXHRmbGV4OiAwIDEgZml0LWNvbnRlbnQ7XG5cdG1pbi13aWR0aDogMDtcblx0d2lkdGg6IGZpdC1jb250ZW50O1xuXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXHRnYXA6ICR7IHNwYWNlKCAzICkgfTtcblxuXHRjb2xvcjogJHsgTElHSFRFUl9URVhUX0NPTE9SIH07XG5cblx0Lypcblx0ICogV2hlbiB0aGUgcGFyZW50IG1lbnUgaXRlbSBpcyBhY3RpdmUsIGV4Y2VwdCB3aGVuIGl0J3MgYSBub24tZm9jdXNlZC9ob3ZlcmVkXG5cdCAqIHN1Ym1lbnUgdHJpZ2dlciAoaW4gdGhhdCBjYXNlLCBjb2xvciBzaG91bGQgbm90IGJlIGluaGVyaXRlZClcblx0ICovXG5cdFtkYXRhLWFjdGl2ZS1pdGVtXTpub3QoIFtkYXRhLWZvY3VzLXZpc2libGVdICkgKjpub3QoJHsgUG9wb3ZlcklubmVyV3JhcHBlciB9KSAmLFxuXHQvKiBXaGVuIHRoZSBwYXJlbnQgbWVudSBpdGVtIGlzIGRpc2FibGVkICovXG5cdFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKjpub3QoJHsgUG9wb3ZlcklubmVyV3JhcHBlciB9KSAmIHtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEdyb3VwID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVHcm91cCApYFxuXHQvKiBJZ25vcmUgdGhpcyBlbGVtZW50IHdoZW4gY2FsY3VsYXRpbmcgdGhlIGxheW91dC4gVXNlZnVsIGZvciBzdWJncmlkICovXG5cdGRpc3BsYXk6IGNvbnRlbnRzO1xuYDtcblxuZXhwb3J0IGNvbnN0IEdyb3VwTGFiZWwgPSBzdHlsZWQoIEFyaWFraXQuTWVudUdyb3VwTGFiZWwgKWBcblx0LyogT2NjdXB5IHRoZSB3aWR0aCBvZiBhbGwgZ3JpZCBjb2x1bW5zIChpZS4gZnVsbCB3aWR0aCkgKi9cblx0Z3JpZC1jb2x1bW46IDEgLyAtMTtcblxuXHRwYWRkaW5nLWJsb2NrLXN0YXJ0OiAkeyBzcGFjZSggMyApIH07XG5cdHBhZGRpbmctYmxvY2stZW5kOiAkeyBzcGFjZSggMiApIH07XG5cdHBhZGRpbmctaW5saW5lOiAkeyBJVEVNX1BBRERJTkdfSU5MSU5FIH07XG5gO1xuXG5leHBvcnQgY29uc3QgU2VwYXJhdG9yID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVTZXBhcmF0b3IgKTxcblx0UGljazwgQ29udGV4dFByb3BzLCAndmFyaWFudCcgPlxuPmBcblx0LyogT2NjdXB5IHRoZSB3aWR0aCBvZiBhbGwgZ3JpZCBjb2x1bW5zIChpZS4gZnVsbCB3aWR0aCkgKi9cblx0Z3JpZC1jb2x1bW46IDEgLyAtMTtcblxuXHRib3JkZXI6IG5vbmU7XG5cdGhlaWdodDogJHsgQ09ORklHLmJvcmRlcldpZHRoIH07XG5cdGJhY2tncm91bmQtY29sb3I6ICR7ICggcHJvcHMgKSA9PlxuXHRcdHByb3BzLnZhcmlhbnQgPT09ICd0b29sYmFyJ1xuXHRcdFx0PyBUT09MQkFSX1ZBUklBTlRfQk9SREVSX0NPTE9SXG5cdFx0XHQ6IERJVklERVJfQ09MT1IgfTtcblx0LyogQWxpZ24gd2l0aCBtZW51IGl0ZW1zJyBjb250ZW50ICovXG5cdG1hcmdpbi1ibG9jazogJHsgc3BhY2UoIDIgKSB9O1xuXHRtYXJnaW4taW5saW5lOiAkeyBJVEVNX1BBRERJTkdfSU5MSU5FIH07XG5cblx0LyogT25seSB2aXNpYmxlIGluIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlICovXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcbmA7XG5cbmV4cG9ydCBjb25zdCBTdWJtZW51Q2hldnJvbkljb24gPSBzdHlsZWQoIEljb24gKWBcblx0d2lkdGg6ICR7IHNwYWNlKCAxLjUgKSB9O1xuXHQkeyBydGwoXG5cdFx0e1xuXHRcdFx0dHJhbnNmb3JtOiBgc2NhbGVYKDEpYCxcblx0XHR9LFxuXHRcdHtcblx0XHRcdHRyYW5zZm9ybTogYHNjYWxlWCgtMSlgLFxuXHRcdH1cblx0KSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1MYWJlbCA9IHN0eWxlZCggVHJ1bmNhdGUgKWBcblx0Zm9udC1zaXplOiAkeyBmb250KCAnZGVmYXVsdC5mb250U2l6ZScgKSB9O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUhlbHBUZXh0ID0gc3R5bGVkKCBUcnVuY2F0ZSApYFxuXHRmb250LXNpemU6ICR7IGZvbnQoICdoZWxwVGV4dC5mb250U2l6ZScgKSB9O1xuXHRsaW5lLWhlaWdodDogMTZweDtcblx0Y29sb3I6ICR7IExJR0hURVJfVEVYVF9DT0xPUiB9O1xuXHRvdmVyZmxvdy13cmFwOiBhbnl3aGVyZTtcblxuXHRbZGF0YS1hY3RpdmUtaXRlbV06bm90KCBbZGF0YS1mb2N1cy12aXNpYmxlXSApXG5cdFx0Kjpub3QoICR7IFBvcG92ZXJJbm5lcldyYXBwZXIgfSApXG5cdFx0Jixcblx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXSAqOm5vdCggJHsgUG9wb3ZlcklubmVyV3JhcHBlciB9ICkgJiB7XG5cdFx0Y29sb3I6IGluaGVyaXQ7XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/menu/item.js
-  var import_jsx_runtime273 = __toESM(require_jsx_runtime());
-  var Item4 = (0, import_element222.forwardRef)(function Item22({
+  var import_jsx_runtime302 = __toESM(require_jsx_runtime());
+  var Item4 = (0, import_element223.forwardRef)(function Item22({
     prefix: prefix2,
     suffix,
     children,
@@ -52272,24 +52444,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     store,
     ...props
   }, ref) {
-    const menuContext = (0, import_element222.useContext)(Context2);
+    const menuContext = (0, import_element223.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Item can only be rendered inside a Menu component");
     }
     const computedStore = store !== null && store !== void 0 ? store : menuContext.store;
-    return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(Item3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(Item3, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       hideOnClick,
       store: computedStore,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime273.jsx)(ItemPrefixWrapper, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemPrefixWrapper, {
         children: prefix2
-      }), /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime273.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -52297,63 +52469,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/checkbox-item.js
-  var import_element223 = __toESM(require_element());
-  var import_icons33 = __toESM(require_icons());
-  var import_jsx_runtime274 = __toESM(require_jsx_runtime());
-  var CheckboxItem2 = (0, import_element223.forwardRef)(function CheckboxItem22({
-    suffix,
-    children,
-    disabled = false,
-    hideOnClick = false,
-    ...props
-  }, ref) {
-    const menuContext = (0, import_element223.useContext)(Context2);
-    if (!menuContext?.store) {
-      throw new Error("Menu.CheckboxItem can only be rendered inside a Menu component");
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(CheckboxItem, {
-      ref,
-      ...props,
-      accessibleWhenDisabled: true,
-      disabled,
-      hideOnClick,
-      store: menuContext.store,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime274.jsx)(MenuItemCheck, {
-        store: menuContext.store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(ItemPrefixWrapper, {}),
-        style: {
-          width: "auto",
-          height: "auto"
-        },
-        children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_icons33.Icon, {
-          icon: import_icons33.check,
-          size: 24
-        })
-      }), /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime274.jsx)(ItemChildrenWrapper, {
-          children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(ItemSuffixWrapper, {
-          children: suffix
-        })]
-      })]
-    });
-  });
-
-  // packages/components/build-module/menu/radio-item.js
   var import_element224 = __toESM(require_element());
-  var import_icons34 = __toESM(require_icons());
-  var import_primitives6 = __toESM(require_primitives());
-  var import_jsx_runtime275 = __toESM(require_jsx_runtime());
-  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_primitives6.SVG, {
-    xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_primitives6.Circle, {
-      cx: 12,
-      cy: 12,
-      r: 3
-    })
-  });
-  var RadioItem2 = (0, import_element224.forwardRef)(function RadioItem22({
+  var import_jsx_runtime303 = __toESM(require_jsx_runtime());
+  var CheckboxItem2 = (0, import_element224.forwardRef)(function CheckboxItem22({
     suffix,
     children,
     disabled = false,
@@ -52362,30 +52480,82 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, ref) {
     const menuContext = (0, import_element224.useContext)(Context2);
     if (!menuContext?.store) {
-      throw new Error("Menu.RadioItem can only be rendered inside a Menu component");
+      throw new Error("Menu.CheckboxItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)(RadioItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(CheckboxItem, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       hideOnClick,
       store: menuContext.store,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime275.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime303.jsx)(MenuItemCheck, {
         store: menuContext.store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_icons34.Icon, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(icon_default2, {
+          icon: check_default,
+          size: 24
+        })
+      }), /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemChildrenWrapper, {
+          children
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemSuffixWrapper, {
+          children: suffix
+        })]
+      })]
+    });
+  });
+
+  // packages/components/build-module/menu/radio-item.js
+  var import_element225 = __toESM(require_element());
+  var import_primitives35 = __toESM(require_primitives());
+  var import_jsx_runtime304 = __toESM(require_jsx_runtime());
+  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_primitives35.SVG, {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_primitives35.Circle, {
+      cx: 12,
+      cy: 12,
+      r: 3
+    })
+  });
+  var RadioItem2 = (0, import_element225.forwardRef)(function RadioItem22({
+    suffix,
+    children,
+    disabled = false,
+    hideOnClick = false,
+    ...props
+  }, ref) {
+    const menuContext = (0, import_element225.useContext)(Context2);
+    if (!menuContext?.store) {
+      throw new Error("Menu.RadioItem can only be rendered inside a Menu component");
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsxs)(RadioItem, {
+      ref,
+      ...props,
+      accessibleWhenDisabled: true,
+      disabled,
+      hideOnClick,
+      store: menuContext.store,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime304.jsx)(MenuItemCheck, {
+        store: menuContext.store,
+        render: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(ItemPrefixWrapper, {}),
+        style: {
+          width: "auto",
+          height: "auto"
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(icon_default2, {
           icon: radioCheck,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime275.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime304.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime304.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -52393,14 +52563,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/group.js
-  var import_element225 = __toESM(require_element());
-  var import_jsx_runtime276 = __toESM(require_jsx_runtime());
-  var Group4 = (0, import_element225.forwardRef)(function Group22(props, ref) {
-    const menuContext = (0, import_element225.useContext)(Context2);
+  var import_element226 = __toESM(require_element());
+  var import_jsx_runtime305 = __toESM(require_jsx_runtime());
+  var Group4 = (0, import_element226.forwardRef)(function Group22(props, ref) {
+    const menuContext = (0, import_element226.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Group can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(Group3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(Group3, {
       ref,
       ...props,
       store: menuContext.store
@@ -52408,18 +52578,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/group-label.js
-  var import_element226 = __toESM(require_element());
-  var import_jsx_runtime277 = __toESM(require_jsx_runtime());
-  var GroupLabel4 = (0, import_element226.forwardRef)(function Group5(props, ref) {
-    const menuContext = (0, import_element226.useContext)(Context2);
+  var import_element227 = __toESM(require_element());
+  var import_jsx_runtime306 = __toESM(require_jsx_runtime());
+  var GroupLabel4 = (0, import_element227.forwardRef)(function Group5(props, ref) {
+    const menuContext = (0, import_element227.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.GroupLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(GroupLabel3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(GroupLabel3, {
       ref,
       render: (
         // @ts-expect-error The `children` prop is passed
-        /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(component_default8, {
+        /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(component_default8, {
           upperCase: true,
           variant: "muted",
           size: "11px",
@@ -52433,14 +52603,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/separator.js
-  var import_element227 = __toESM(require_element());
-  var import_jsx_runtime278 = __toESM(require_jsx_runtime());
-  var Separator4 = (0, import_element227.forwardRef)(function Separator22(props, ref) {
-    const menuContext = (0, import_element227.useContext)(Context2);
+  var import_element228 = __toESM(require_element());
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime());
+  var Separator4 = (0, import_element228.forwardRef)(function Separator22(props, ref) {
+    const menuContext = (0, import_element228.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Separator can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(Separator3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(Separator3, {
       ref,
       ...props,
       store: menuContext.store,
@@ -52449,14 +52619,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/item-label.js
-  var import_element228 = __toESM(require_element());
-  var import_jsx_runtime279 = __toESM(require_jsx_runtime());
-  var ItemLabel2 = (0, import_element228.forwardRef)(function ItemLabel22(props, ref) {
-    const menuContext = (0, import_element228.useContext)(Context2);
+  var import_element229 = __toESM(require_element());
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime());
+  var ItemLabel2 = (0, import_element229.forwardRef)(function ItemLabel22(props, ref) {
+    const menuContext = (0, import_element229.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(ItemLabel, {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ItemLabel, {
       numberOfLines: 1,
       ref,
       ...props
@@ -52464,14 +52634,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/item-help-text.js
-  var import_element229 = __toESM(require_element());
-  var import_jsx_runtime280 = __toESM(require_jsx_runtime());
-  var ItemHelpText2 = (0, import_element229.forwardRef)(function ItemHelpText22(props, ref) {
-    const menuContext = (0, import_element229.useContext)(Context2);
+  var import_element230 = __toESM(require_element());
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime());
+  var ItemHelpText2 = (0, import_element230.forwardRef)(function ItemHelpText22(props, ref) {
+    const menuContext = (0, import_element230.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemHelpText can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ItemHelpText, {
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(ItemHelpText, {
       numberOfLines: 2,
       ref,
       ...props
@@ -52479,21 +52649,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/trigger-button.js
-  var import_element230 = __toESM(require_element());
-  var import_jsx_runtime281 = __toESM(require_jsx_runtime());
-  var TriggerButton = (0, import_element230.forwardRef)(function TriggerButton2({
+  var import_element231 = __toESM(require_element());
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime());
+  var TriggerButton = (0, import_element231.forwardRef)(function TriggerButton2({
     children,
     disabled = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element230.useContext)(Context2);
+    const menuContext = (0, import_element231.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.TriggerButton can only be rendered inside a Menu component");
     }
     if (menuContext.store.parent) {
       throw new Error("Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead.");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(MenuButton, {
       ref,
       ...props,
       disabled,
@@ -52503,32 +52673,31 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/submenu-trigger-item.js
-  var import_element231 = __toESM(require_element());
-  var import_icons35 = __toESM(require_icons());
-  var import_jsx_runtime282 = __toESM(require_jsx_runtime());
-  var SubmenuTriggerItem = (0, import_element231.forwardRef)(function SubmenuTriggerItem2({
+  var import_element232 = __toESM(require_element());
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime());
+  var SubmenuTriggerItem = (0, import_element232.forwardRef)(function SubmenuTriggerItem2({
     suffix,
     ...otherProps
   }, ref) {
-    const menuContext = (0, import_element231.useContext)(Context2);
+    const menuContext = (0, import_element232.useContext)(Context2);
     if (!menuContext?.store.parent) {
       throw new Error("Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(MenuButton, {
       ref,
       accessibleWhenDisabled: true,
       store: menuContext.store,
-      render: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Item4, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(Item4, {
         ...otherProps,
         // The menu item needs to register and be part of the parent menu.
         // Without specifying the store explicitly, the `Item` component
         // would otherwise read the store via context and pick up the one from
         // the sub-menu `Menu` component.
         store: menuContext.store.parent,
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(import_jsx_runtime282.Fragment, {
-          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(SubmenuChevronIcon, {
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(import_jsx_runtime311.Fragment, {
+          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(SubmenuChevronIcon, {
             "aria-hidden": "true",
-            icon: import_icons35.chevronRightSmall,
+            icon: chevron_right_small_default,
             size: 24,
             preserveAspectRatio: "xMidYMid slice"
           })]
@@ -52538,23 +52707,23 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/popover.js
-  var import_element232 = __toESM(require_element());
-  var import_jsx_runtime283 = __toESM(require_jsx_runtime());
-  var Popover4 = (0, import_element232.forwardRef)(function Popover22({
+  var import_element233 = __toESM(require_element());
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime());
+  var Popover4 = (0, import_element233.forwardRef)(function Popover22({
     gutter,
     children,
     shift: shift3,
     modal = true,
     ...otherProps
   }, ref) {
-    const menuContext = (0, import_element232.useContext)(Context2);
+    const menuContext = (0, import_element233.useContext)(Context2);
     const appliedPlacementSide = useStoreState(menuContext?.store, "currentPlacement")?.split("-")[0];
-    const hideOnEscape = (0, import_element232.useCallback)((event) => {
+    const hideOnEscape = (0, import_element233.useCallback)((event) => {
       event.preventDefault();
       return true;
     }, []);
     const computedDirection = useStoreState(menuContext?.store, "rtl") ? "rtl" : "ltr";
-    const wrapperProps = (0, import_element232.useMemo)(() => ({
+    const wrapperProps = (0, import_element233.useMemo)(() => ({
       dir: computedDirection,
       style: {
         direction: computedDirection
@@ -52563,7 +52732,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.Popover can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(Menu, {
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(Menu, {
       ...otherProps,
       ref,
       modal,
@@ -52580,9 +52749,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         // container scales with a different factor than its contents.
         // The {...renderProps} are passed to the inner wrapper, so that the
         // menu element is the direct parent of the menu item elements.
-        /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(PopoverOuterWrapper, {
+        /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(PopoverOuterWrapper, {
           variant: menuContext.variant,
-          children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(PopoverInnerWrapper, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(PopoverInnerWrapper, {
             ...renderProps
           })
         })
@@ -52592,7 +52761,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/index.js
-  var import_jsx_runtime284 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime());
   var UnconnectedMenu = (props) => {
     const {
       children,
@@ -52603,7 +52772,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       // From internal components context
       variant
     } = useContextSystem(props, "Menu");
-    const parentContext = (0, import_element233.useContext)(Context2);
+    const parentContext = (0, import_element234.useContext)(Context2);
     const rtl2 = (0, import_i18n81.isRTL)();
     let computedPlacement = placement !== null && placement !== void 0 ? placement : parentContext?.store ? "right-start" : "bottom-start";
     if (rtl2) {
@@ -52624,11 +52793,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       rtl: rtl2
     });
-    const contextValue = (0, import_element233.useMemo)(() => ({
+    const contextValue = (0, import_element234.useMemo)(() => ({
       store: menuStore,
       variant
     }), [menuStore, variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(Context2.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(Context2.Provider, {
       value: contextValue,
       children
     });
@@ -52735,7 +52904,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/theme/index.js
-  var import_element234 = __toESM(require_element());
+  var import_element235 = __toESM(require_element());
 
   // packages/components/build-module/theme/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__45() {
@@ -52795,9 +52964,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
   }
   function warnContrastIssues(issues) {
-    for (const error3 of Object.values(issues)) {
-      if (error3) {
-        false ? (0, import_warning11.default)("wp.components.Theme: " + error3) : void 0;
+    for (const error of Object.values(issues)) {
+      if (error) {
+        false ? (0, import_warning11.default)("wp.components.Theme: " + error) : void 0;
       }
     }
   }
@@ -52848,7 +53017,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/theme/index.js
-  var import_jsx_runtime285 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime());
   function Theme({
     accent,
     background: background2,
@@ -52856,11 +53025,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...props
   }) {
     const cx3 = useCx();
-    const classes = (0, import_element234.useMemo)(() => cx3(...colorVariables(generateThemeVariables({
+    const classes = (0, import_element235.useMemo)(() => cx3(...colorVariables(generateThemeVariables({
       accent,
       background: background2
     })), className), [accent, background2, className, cx3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(Wrapper6, {
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(Wrapper6, {
       className: classes,
       ...props
     });
@@ -52869,17 +53038,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tabs/index.js
   var import_compose87 = __toESM(require_compose());
-  var import_element240 = __toESM(require_element());
+  var import_element241 = __toESM(require_element());
   var import_i18n82 = __toESM(require_i18n());
 
   // packages/components/build-module/tabs/context.js
-  var import_element235 = __toESM(require_element());
-  var TabsContext = (0, import_element235.createContext)(void 0);
+  var import_element236 = __toESM(require_element());
+  var TabsContext = (0, import_element236.createContext)(void 0);
   TabsContext.displayName = "TabsContext";
-  var useTabsContext = () => (0, import_element235.useContext)(TabsContext);
+  var useTabsContext = () => (0, import_element236.useContext)(TabsContext);
 
   // packages/components/build-module/tabs/tab.js
-  var import_element236 = __toESM(require_element());
+  var import_element237 = __toESM(require_element());
   var import_warning12 = __toESM(require_warning());
 
   // packages/components/build-module/tabs/styles.js
@@ -52912,7 +53081,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     map: "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF5T3NDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRywgZm9udCB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IEljb24gZnJvbSAnLi4vaWNvbic7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRUYWJMaXN0ID0gc3R5bGVkKCBBcmlha2l0LlRhYkxpc3QgKWBcblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IHN0cmV0Y2g7XG5cdG92ZXJmbG93LXg6IGF1dG87XG5cblx0JlthcmlhLW9yaWVudGF0aW9uPSd2ZXJ0aWNhbCddIHtcblx0XHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR9XG5cblx0OndoZXJlKCBbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICkge1xuXHRcdHdpZHRoOiBmaXQtY29udGVudDtcblx0fVxuXG5cdC0tZGlyZWN0aW9uLWZhY3RvcjogMTtcblx0LS1kaXJlY3Rpb24tc3RhcnQ6IGxlZnQ7XG5cdC0tZGlyZWN0aW9uLWVuZDogcmlnaHQ7XG5cdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1sZWZ0LCAwICk7XG5cdCY6ZGlyKCBydGwgKSB7XG5cdFx0LS1kaXJlY3Rpb24tZmFjdG9yOiAtMTtcblx0XHQtLWRpcmVjdGlvbi1zdGFydDogcmlnaHQ7XG5cdFx0LS1kaXJlY3Rpb24tZW5kOiBsZWZ0O1xuXHRcdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1yaWdodCwgMCApO1xuXHR9XG5cblx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0JltkYXRhLWluZGljYXRvci1hbmltYXRlZF06OmJlZm9yZSB7XG5cdFx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIGJvcmRlci1yYWRpdXMsIGJvcmRlci1ibG9jaztcblx0XHRcdHRyYW5zaXRpb24tZHVyYXRpb246IDAuMnM7XG5cdFx0XHR0cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogZWFzZS1vdXQ7XG5cdFx0fVxuXHR9XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0Jjo6YmVmb3JlIHtcblx0XHRjb250ZW50OiAnJztcblx0XHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdFx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdFx0dHJhbnNmb3JtLW9yaWdpbjogdmFyKCAtLWRpcmVjdGlvbi1zdGFydCApIHRvcDtcblxuXHRcdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRvdXRsaW5lLW9mZnNldDogLTFweDtcblx0fVxuXG5cdC8qIFVzaW5nIGEgbGFyZ2UgdmFsdWUgdG8gYXZvaWQgYW50aWFsaWFzaW5nIHJvdW5kaW5nIGlzc3Vlc1xuXHRcdFx0d2hlbiBzY2FsaW5nIGluIHRoZSB0cmFuc2Zvcm0sIHNlZTogaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzUyMTU5MTIzICovXG5cdC0tYW50aWFsaWFzaW5nLWZhY3RvcjogMTAwO1xuXHQmW2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSB7XG5cdFx0LS1mYWRlLXdpZHRoOiA0cmVtO1xuXHRcdC0tZmFkZS1ncmFkaWVudC1iYXNlOiB0cmFuc3BhcmVudCAwJSwgYmxhY2sgdmFyKCAtLWZhZGUtd2lkdGggKTtcblx0XHQtLWZhZGUtZ3JhZGllbnQtY29tcG9zZWQ6IHZhciggLS1mYWRlLWdyYWRpZW50LWJhc2UgKSwgYmxhY2sgNjAlLFxuXHRcdFx0dHJhbnNwYXJlbnQgNTAlO1xuXHRcdCYuaXMtb3ZlcmZsb3dpbmctZmlyc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHR0byB2YXIoIC0tZGlyZWN0aW9uLWVuZCApLFxuXHRcdFx0XHR2YXIoIC0tZmFkZS1ncmFkaWVudC1iYXNlIClcblx0XHRcdCk7XG5cdFx0fVxuXHRcdCYuaXMtb3ZlcmZsb3dpbmctbGFzdCB7XG5cdFx0XHRtYXNrLWltYWdlOiBsaW5lYXItZ3JhZGllbnQoXG5cdFx0XHRcdHRvIHZhciggLS1kaXJlY3Rpb24tc3RhcnQgKSxcblx0XHRcdFx0dmFyKCAtLWZhZGUtZ3JhZGllbnQtYmFzZSApXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmLmlzLW92ZXJmbG93aW5nLWZpcnN0LmlzLW92ZXJmbG93aW5nLWxhc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHRcdHRvIHJpZ2h0LFxuXHRcdFx0XHRcdHZhciggLS1mYWRlLWdyYWRpZW50LWNvbXBvc2VkIClcblx0XHRcdFx0KSxcblx0XHRcdFx0bGluZWFyLWdyYWRpZW50KCB0byBsZWZ0LCB2YXIoIC0tZmFkZS1ncmFkaWVudC1jb21wb3NlZCApICk7XG5cdFx0fVxuXG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdGJvdHRvbTogMDtcblx0XHRcdGhlaWdodDogMDtcblx0XHRcdHdpZHRoOiBjYWxjKCB2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApICogMXB4ICk7XG5cdFx0XHR0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1zdGFydCApICogdmFyKCAtLWRpcmVjdGlvbi1mYWN0b3IgKSAqXG5cdFx0XHRcdFx0XHRcdDFweFxuXHRcdFx0XHRcdClcblx0XHRcdFx0KVxuXHRcdFx0XHRzY2FsZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC13aWR0aCwgMCApIC9cblx0XHRcdFx0XHRcdFx0dmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKVxuXHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdGJvcmRlci1ib3R0b206IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKSBzb2xpZFxuXHRcdFx0XHQkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdFx0fVxuXHR9XG5cdCZbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSB7XG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdC8qIEFkanVzdGluZyB0aGUgYm9yZGVyIHJhZGl1cyB0byBtYXRjaCB0aGUgc2NhbGluZyBpbiB0aGUgeSBheGlzLiAqL1xuXHRcdFx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH0gL1xuXHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdCR7IENPTkZJRy5yYWRpdXNTbWFsbCB9IC9cblx0XHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdFx0dmFyKCAtLXNlbGVjdGVkLWhlaWdodCwgMCApIC9cblx0XHRcdFx0XHRcdFx0XHR2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApXG5cdFx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHR0b3A6IDA7XG5cdFx0XHRsZWZ0OiAwO1xuXHRcdFx0d2lkdGg6IDEwMCU7XG5cdFx0XHRoZWlnaHQ6IGNhbGMoIHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yICkgKiAxcHggKTtcblx0XHRcdHRyYW5zZm9ybTogdHJhbnNsYXRlWSggY2FsYyggdmFyKCAtLXNlbGVjdGVkLXRvcCwgMCApICogMXB4ICkgKVxuXHRcdFx0XHRzY2FsZVkoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHRiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoXG5cdFx0XHRcdGluIHNyZ2IsXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfSxcblx0XHRcdFx0dHJhbnNwYXJlbnQgOTYlXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmW2RhdGEtc2VsZWN0LW9uLW1vdmU9J3RydWUnXTpoYXMoXG5cdFx0XHRcdDppcyggOmZvY3VzLXZpc2libGUsIFtkYXRhLWZvY3VzLXZpc2libGVdIClcblx0XHRcdCk6OmJlZm9yZSB7XG5cdFx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdFx0Ym9yZGVyOiB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzICkgc29saWRcblx0XHRcdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdFx0LyogQWRqdXN0aW5nIHRoZSBib3JkZXIgd2lkdGggdG8gbWF0Y2ggdGhlIHNjYWxpbmcgaW4gdGhlIHkgYXhpcy4gKi9cblx0XHRcdGJvcmRlci1ibG9jay13aWR0aDogY2FsYyhcblx0XHRcdFx0dmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cywgMXB4ICkgL1xuXHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHQpO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYiA9IHN0eWxlZCggQXJpYWtpdC5UYWIgKWBcblx0JiB7XG5cdFx0LyogUmVzZXRzICovXG5cdFx0Ym9yZGVyLXJhZGl1czogMDtcblx0XHRiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcblx0XHRib3JkZXI6IG5vbmU7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblxuXHRcdGZsZXg6IDEgMCBhdXRvO1xuXHRcdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5cdFx0ZGlzcGxheTogZmxleDtcblx0XHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRcdGN1cnNvcjogcG9pbnRlcjtcblx0XHRsaW5lLWhlaWdodDogMS4yOyAvLyBDaGFyYWN0ZXJzIGluIHNvbWUgbGFuZ3VhZ2VzIChlLmcuIEphcGFuZXNlKSBtYXkgaGF2ZSBhIG5hdGl2ZSBoaWdoZXIgbGluZS1oZWlnaHQuXG5cdFx0Zm9udC13ZWlnaHQ6IDQwMDtcblx0XHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cblx0XHQmW2FyaWEtZGlzYWJsZWQ9J3RydWUnXSB7XG5cdFx0XHRjdXJzb3I6IGRlZmF1bHQ7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLnRleHREaXNhYmxlZCB9O1xuXHRcdH1cblxuXHRcdCY6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6aXMoIDpob3ZlciwgW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdH1cblxuXHRcdCY6Zm9jdXM6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRib3gtc2hhZG93OiBub25lO1xuXHRcdFx0b3V0bGluZTogbm9uZTtcblx0XHR9XG5cblx0XHQvLyBGb2N1cyBpbmRpY2F0b3IuXG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdCY6OmFmdGVyIHtcblx0XHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXG5cdFx0XHQvLyBEcmF3IHRoZSBpbmRpY2F0b3IuXG5cdFx0XHQvLyBPdXRsaW5lIHdvcmtzIGZvciBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZSBhcyB3ZWxsLlxuXHRcdFx0b3V0bGluZTogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApIHNvbGlkXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdFx0XHQvLyBBbmltYXRpb25cblx0XHRcdG9wYWNpdHk6IDA7XG5cblx0XHRcdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFx0XHR0cmFuc2l0aW9uOiBvcGFjaXR5IDAuMXMgbGluZWFyO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdCZbZGF0YS1mb2N1cy12aXNpYmxlXTo6YWZ0ZXIge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdHBhZGRpbmctaW5saW5lOiAkeyBzcGFjZSggNCApIH07XG5cdFx0aGVpZ2h0OiAkeyBzcGFjZSggMTIgKSB9O1xuXHRcdHNjcm9sbC1tYXJnaW46IDI0cHg7XG5cblx0XHQmOjphZnRlciB7XG5cdFx0XHRjb250ZW50OiAnJztcblx0XHRcdGluc2V0OiAkeyBzcGFjZSggMyApIH07XG5cdFx0fVxuXHR9XG5cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAzICkgfTtcblx0XHRtaW4taGVpZ2h0OiAkeyBzcGFjZSggMTAgKSB9O1xuXG5cdFx0JlthcmlhLXNlbGVjdGVkPSd0cnVlJ10ge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGZpbGw6IGN1cnJlbnRDb2xvcjtcblx0XHR9XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ11bZGF0YS1zZWxlY3Qtb24tbW92ZT0nZmFsc2UnXSAmOjphZnRlciB7XG5cdFx0Y29udGVudDogJyc7XG5cdFx0aW5zZXQ6IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKTtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoaWxkcmVuID0gc3R5bGVkLnNwYW5gXG5cdGZsZXgtZ3JvdzogMTtcblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXG5cdFthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBzdGFydDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoZXZyb24gPSBzdHlsZWQoIEljb24gKWBcblx0ZmxleC1zaHJpbms6IDA7XG5cdG1hcmdpbi1pbmxpbmUtZW5kOiAkeyBzcGFjZSggLTEgKSB9O1xuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdGRpc3BsYXk6IG5vbmU7XG5cdH1cblx0b3BhY2l0eTogMDtcblx0W3JvbGU9J3RhYiddOmlzKCBbYXJpYS1zZWxlY3RlZD0ndHJ1ZSddLCBbZGF0YS1mb2N1cy12aXNpYmxlXSwgOmhvdmVyICkgJiB7XG5cdFx0b3BhY2l0eTogMTtcblx0fVxuXHQvLyBUaGUgY2hldnJvbiBpcyB0cmFuc2l0aW9uZWQgaW50byBleGlzdGVuY2Ugd2hlbiBzZWxlY3RPbk1vdmUgaXMgZW5hYmxlZCxcblx0Ly8gYmVjYXVzZSBvdGhlcndpc2UgaXQgbG9va3MgamFycmluZywgYXMgaXQgc2hvd3MgdXAgb3V0c2lkZSBvZiB0aGUgZm9jdXNcblx0Ly8gaW5kaWNhdG9yIHRoYXQncyBiZWluZyBhbmltYXRlZCBhdCB0aGUgc2FtZSB0aW1lLlxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRbZGF0YS1zZWxlY3Qtb24tbW92ZT0ndHJ1ZSddXG5cdFx0XHRbcm9sZT0ndGFiJ106aXMoIFthcmlhLXNlbGVjdGVkPSd0cnVlJ10sICApXG5cdFx0XHQmIHtcblx0XHRcdHRyYW5zaXRpb246IG9wYWNpdHkgMC4xNXMgMC4xNXMgbGluZWFyO1xuXHRcdH1cblx0fVxuXHQmOmRpciggcnRsICkge1xuXHRcdHJvdGF0ZTogMTgwZGVnO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiUGFuZWwgPSBzdHlsZWQoIEFyaWFraXQuVGFiUGFuZWwgKWBcblx0Jjpmb2N1cyB7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRvdXRsaW5lOiBub25lO1xuXHR9XG5cblx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHRib3gtc2hhZG93OiAwIDAgMCB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzIClcblx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdFx0b3V0bGluZS1vZmZzZXQ6IDA7XG5cdH1cbmA7XG4iXX0= */",
     toString: _EMOTION_STRINGIFIED_CSS_ERROR__46
   });
-  var TabChevron = /* @__PURE__ */ emotion_styled_base_browser_esm_default(icon_default2, false ? {
+  var TabChevron = /* @__PURE__ */ emotion_styled_base_browser_esm_default(icon_default3, false ? {
     target: "enfox0g1"
   } : {
     target: "enfox0g1",
@@ -52926,9 +53095,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("&:focus{box-shadow:none;outline:none;}&[data-focus-visible]{box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFnUmtEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRywgZm9udCB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IEljb24gZnJvbSAnLi4vaWNvbic7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRUYWJMaXN0ID0gc3R5bGVkKCBBcmlha2l0LlRhYkxpc3QgKWBcblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IHN0cmV0Y2g7XG5cdG92ZXJmbG93LXg6IGF1dG87XG5cblx0JlthcmlhLW9yaWVudGF0aW9uPSd2ZXJ0aWNhbCddIHtcblx0XHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR9XG5cblx0OndoZXJlKCBbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICkge1xuXHRcdHdpZHRoOiBmaXQtY29udGVudDtcblx0fVxuXG5cdC0tZGlyZWN0aW9uLWZhY3RvcjogMTtcblx0LS1kaXJlY3Rpb24tc3RhcnQ6IGxlZnQ7XG5cdC0tZGlyZWN0aW9uLWVuZDogcmlnaHQ7XG5cdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1sZWZ0LCAwICk7XG5cdCY6ZGlyKCBydGwgKSB7XG5cdFx0LS1kaXJlY3Rpb24tZmFjdG9yOiAtMTtcblx0XHQtLWRpcmVjdGlvbi1zdGFydDogcmlnaHQ7XG5cdFx0LS1kaXJlY3Rpb24tZW5kOiBsZWZ0O1xuXHRcdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1yaWdodCwgMCApO1xuXHR9XG5cblx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0JltkYXRhLWluZGljYXRvci1hbmltYXRlZF06OmJlZm9yZSB7XG5cdFx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIGJvcmRlci1yYWRpdXMsIGJvcmRlci1ibG9jaztcblx0XHRcdHRyYW5zaXRpb24tZHVyYXRpb246IDAuMnM7XG5cdFx0XHR0cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogZWFzZS1vdXQ7XG5cdFx0fVxuXHR9XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0Jjo6YmVmb3JlIHtcblx0XHRjb250ZW50OiAnJztcblx0XHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdFx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdFx0dHJhbnNmb3JtLW9yaWdpbjogdmFyKCAtLWRpcmVjdGlvbi1zdGFydCApIHRvcDtcblxuXHRcdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRvdXRsaW5lLW9mZnNldDogLTFweDtcblx0fVxuXG5cdC8qIFVzaW5nIGEgbGFyZ2UgdmFsdWUgdG8gYXZvaWQgYW50aWFsaWFzaW5nIHJvdW5kaW5nIGlzc3Vlc1xuXHRcdFx0d2hlbiBzY2FsaW5nIGluIHRoZSB0cmFuc2Zvcm0sIHNlZTogaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzUyMTU5MTIzICovXG5cdC0tYW50aWFsaWFzaW5nLWZhY3RvcjogMTAwO1xuXHQmW2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSB7XG5cdFx0LS1mYWRlLXdpZHRoOiA0cmVtO1xuXHRcdC0tZmFkZS1ncmFkaWVudC1iYXNlOiB0cmFuc3BhcmVudCAwJSwgYmxhY2sgdmFyKCAtLWZhZGUtd2lkdGggKTtcblx0XHQtLWZhZGUtZ3JhZGllbnQtY29tcG9zZWQ6IHZhciggLS1mYWRlLWdyYWRpZW50LWJhc2UgKSwgYmxhY2sgNjAlLFxuXHRcdFx0dHJhbnNwYXJlbnQgNTAlO1xuXHRcdCYuaXMtb3ZlcmZsb3dpbmctZmlyc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHR0byB2YXIoIC0tZGlyZWN0aW9uLWVuZCApLFxuXHRcdFx0XHR2YXIoIC0tZmFkZS1ncmFkaWVudC1iYXNlIClcblx0XHRcdCk7XG5cdFx0fVxuXHRcdCYuaXMtb3ZlcmZsb3dpbmctbGFzdCB7XG5cdFx0XHRtYXNrLWltYWdlOiBsaW5lYXItZ3JhZGllbnQoXG5cdFx0XHRcdHRvIHZhciggLS1kaXJlY3Rpb24tc3RhcnQgKSxcblx0XHRcdFx0dmFyKCAtLWZhZGUtZ3JhZGllbnQtYmFzZSApXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmLmlzLW92ZXJmbG93aW5nLWZpcnN0LmlzLW92ZXJmbG93aW5nLWxhc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHRcdHRvIHJpZ2h0LFxuXHRcdFx0XHRcdHZhciggLS1mYWRlLWdyYWRpZW50LWNvbXBvc2VkIClcblx0XHRcdFx0KSxcblx0XHRcdFx0bGluZWFyLWdyYWRpZW50KCB0byBsZWZ0LCB2YXIoIC0tZmFkZS1ncmFkaWVudC1jb21wb3NlZCApICk7XG5cdFx0fVxuXG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdGJvdHRvbTogMDtcblx0XHRcdGhlaWdodDogMDtcblx0XHRcdHdpZHRoOiBjYWxjKCB2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApICogMXB4ICk7XG5cdFx0XHR0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1zdGFydCApICogdmFyKCAtLWRpcmVjdGlvbi1mYWN0b3IgKSAqXG5cdFx0XHRcdFx0XHRcdDFweFxuXHRcdFx0XHRcdClcblx0XHRcdFx0KVxuXHRcdFx0XHRzY2FsZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC13aWR0aCwgMCApIC9cblx0XHRcdFx0XHRcdFx0dmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKVxuXHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdGJvcmRlci1ib3R0b206IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKSBzb2xpZFxuXHRcdFx0XHQkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdFx0fVxuXHR9XG5cdCZbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSB7XG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdC8qIEFkanVzdGluZyB0aGUgYm9yZGVyIHJhZGl1cyB0byBtYXRjaCB0aGUgc2NhbGluZyBpbiB0aGUgeSBheGlzLiAqL1xuXHRcdFx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH0gL1xuXHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdCR7IENPTkZJRy5yYWRpdXNTbWFsbCB9IC9cblx0XHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdFx0dmFyKCAtLXNlbGVjdGVkLWhlaWdodCwgMCApIC9cblx0XHRcdFx0XHRcdFx0XHR2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApXG5cdFx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHR0b3A6IDA7XG5cdFx0XHRsZWZ0OiAwO1xuXHRcdFx0d2lkdGg6IDEwMCU7XG5cdFx0XHRoZWlnaHQ6IGNhbGMoIHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yICkgKiAxcHggKTtcblx0XHRcdHRyYW5zZm9ybTogdHJhbnNsYXRlWSggY2FsYyggdmFyKCAtLXNlbGVjdGVkLXRvcCwgMCApICogMXB4ICkgKVxuXHRcdFx0XHRzY2FsZVkoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHRiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoXG5cdFx0XHRcdGluIHNyZ2IsXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfSxcblx0XHRcdFx0dHJhbnNwYXJlbnQgOTYlXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmW2RhdGEtc2VsZWN0LW9uLW1vdmU9J3RydWUnXTpoYXMoXG5cdFx0XHRcdDppcyggOmZvY3VzLXZpc2libGUsIFtkYXRhLWZvY3VzLXZpc2libGVdIClcblx0XHRcdCk6OmJlZm9yZSB7XG5cdFx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdFx0Ym9yZGVyOiB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzICkgc29saWRcblx0XHRcdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdFx0LyogQWRqdXN0aW5nIHRoZSBib3JkZXIgd2lkdGggdG8gbWF0Y2ggdGhlIHNjYWxpbmcgaW4gdGhlIHkgYXhpcy4gKi9cblx0XHRcdGJvcmRlci1ibG9jay13aWR0aDogY2FsYyhcblx0XHRcdFx0dmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cywgMXB4ICkgL1xuXHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHQpO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYiA9IHN0eWxlZCggQXJpYWtpdC5UYWIgKWBcblx0JiB7XG5cdFx0LyogUmVzZXRzICovXG5cdFx0Ym9yZGVyLXJhZGl1czogMDtcblx0XHRiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcblx0XHRib3JkZXI6IG5vbmU7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblxuXHRcdGZsZXg6IDEgMCBhdXRvO1xuXHRcdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5cdFx0ZGlzcGxheTogZmxleDtcblx0XHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRcdGN1cnNvcjogcG9pbnRlcjtcblx0XHRsaW5lLWhlaWdodDogMS4yOyAvLyBDaGFyYWN0ZXJzIGluIHNvbWUgbGFuZ3VhZ2VzIChlLmcuIEphcGFuZXNlKSBtYXkgaGF2ZSBhIG5hdGl2ZSBoaWdoZXIgbGluZS1oZWlnaHQuXG5cdFx0Zm9udC13ZWlnaHQ6IDQwMDtcblx0XHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cblx0XHQmW2FyaWEtZGlzYWJsZWQ9J3RydWUnXSB7XG5cdFx0XHRjdXJzb3I6IGRlZmF1bHQ7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLnRleHREaXNhYmxlZCB9O1xuXHRcdH1cblxuXHRcdCY6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6aXMoIDpob3ZlciwgW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdH1cblxuXHRcdCY6Zm9jdXM6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRib3gtc2hhZG93OiBub25lO1xuXHRcdFx0b3V0bGluZTogbm9uZTtcblx0XHR9XG5cblx0XHQvLyBGb2N1cyBpbmRpY2F0b3IuXG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdCY6OmFmdGVyIHtcblx0XHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXG5cdFx0XHQvLyBEcmF3IHRoZSBpbmRpY2F0b3IuXG5cdFx0XHQvLyBPdXRsaW5lIHdvcmtzIGZvciBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZSBhcyB3ZWxsLlxuXHRcdFx0b3V0bGluZTogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApIHNvbGlkXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdFx0XHQvLyBBbmltYXRpb25cblx0XHRcdG9wYWNpdHk6IDA7XG5cblx0XHRcdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFx0XHR0cmFuc2l0aW9uOiBvcGFjaXR5IDAuMXMgbGluZWFyO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdCZbZGF0YS1mb2N1cy12aXNpYmxlXTo6YWZ0ZXIge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdHBhZGRpbmctaW5saW5lOiAkeyBzcGFjZSggNCApIH07XG5cdFx0aGVpZ2h0OiAkeyBzcGFjZSggMTIgKSB9O1xuXHRcdHNjcm9sbC1tYXJnaW46IDI0cHg7XG5cblx0XHQmOjphZnRlciB7XG5cdFx0XHRjb250ZW50OiAnJztcblx0XHRcdGluc2V0OiAkeyBzcGFjZSggMyApIH07XG5cdFx0fVxuXHR9XG5cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAzICkgfTtcblx0XHRtaW4taGVpZ2h0OiAkeyBzcGFjZSggMTAgKSB9O1xuXG5cdFx0JlthcmlhLXNlbGVjdGVkPSd0cnVlJ10ge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGZpbGw6IGN1cnJlbnRDb2xvcjtcblx0XHR9XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ11bZGF0YS1zZWxlY3Qtb24tbW92ZT0nZmFsc2UnXSAmOjphZnRlciB7XG5cdFx0Y29udGVudDogJyc7XG5cdFx0aW5zZXQ6IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKTtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoaWxkcmVuID0gc3R5bGVkLnNwYW5gXG5cdGZsZXgtZ3JvdzogMTtcblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXG5cdFthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBzdGFydDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoZXZyb24gPSBzdHlsZWQoIEljb24gKWBcblx0ZmxleC1zaHJpbms6IDA7XG5cdG1hcmdpbi1pbmxpbmUtZW5kOiAkeyBzcGFjZSggLTEgKSB9O1xuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdGRpc3BsYXk6IG5vbmU7XG5cdH1cblx0b3BhY2l0eTogMDtcblx0W3JvbGU9J3RhYiddOmlzKCBbYXJpYS1zZWxlY3RlZD0ndHJ1ZSddLCBbZGF0YS1mb2N1cy12aXNpYmxlXSwgOmhvdmVyICkgJiB7XG5cdFx0b3BhY2l0eTogMTtcblx0fVxuXHQvLyBUaGUgY2hldnJvbiBpcyB0cmFuc2l0aW9uZWQgaW50byBleGlzdGVuY2Ugd2hlbiBzZWxlY3RPbk1vdmUgaXMgZW5hYmxlZCxcblx0Ly8gYmVjYXVzZSBvdGhlcndpc2UgaXQgbG9va3MgamFycmluZywgYXMgaXQgc2hvd3MgdXAgb3V0c2lkZSBvZiB0aGUgZm9jdXNcblx0Ly8gaW5kaWNhdG9yIHRoYXQncyBiZWluZyBhbmltYXRlZCBhdCB0aGUgc2FtZSB0aW1lLlxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRbZGF0YS1zZWxlY3Qtb24tbW92ZT0ndHJ1ZSddXG5cdFx0XHRbcm9sZT0ndGFiJ106aXMoIFthcmlhLXNlbGVjdGVkPSd0cnVlJ10sICApXG5cdFx0XHQmIHtcblx0XHRcdHRyYW5zaXRpb246IG9wYWNpdHkgMC4xNXMgMC4xNXMgbGluZWFyO1xuXHRcdH1cblx0fVxuXHQmOmRpciggcnRsICkge1xuXHRcdHJvdGF0ZTogMTgwZGVnO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiUGFuZWwgPSBzdHlsZWQoIEFyaWFraXQuVGFiUGFuZWwgKWBcblx0Jjpmb2N1cyB7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRvdXRsaW5lOiBub25lO1xuXHR9XG5cblx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHRib3gtc2hhZG93OiAwIDAgMCB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzIClcblx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdFx0b3V0bGluZS1vZmZzZXQ6IDA7XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/tabs/tab.js
-  var import_icons36 = __toESM(require_icons());
-  var import_jsx_runtime286 = __toESM(require_jsx_runtime());
-  var Tab4 = (0, import_element236.forwardRef)(function Tab22({
+  var import_jsx_runtime315 = __toESM(require_jsx_runtime());
+  var Tab4 = (0, import_element237.forwardRef)(function Tab22({
     children,
     tabId,
     disabled,
@@ -52945,33 +53113,33 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(Tab3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(Tab3, {
       ref,
       store,
       id: instancedTabId,
       disabled,
       render,
       ...otherProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime286.jsx)(TabChildren, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsx)(TabChildren, {
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(TabChevron, {
-        icon: import_icons36.chevronRight
+      }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(TabChevron, {
+        icon: chevron_right_default
       })]
     });
   });
 
   // packages/components/build-module/tabs/tablist.js
   var import_warning13 = __toESM(require_warning());
-  var import_element238 = __toESM(require_element());
+  var import_element239 = __toESM(require_element());
   var import_compose86 = __toESM(require_compose());
 
   // packages/components/build-module/tabs/use-track-overflow.js
-  var import_element237 = __toESM(require_element());
+  var import_element238 = __toESM(require_element());
   var import_compose85 = __toESM(require_compose());
   function useTrackOverflow(parent, children) {
-    const [first, setFirst] = (0, import_element237.useState)(false);
-    const [last3, setLast] = (0, import_element237.useState)(false);
-    const [observer, setObserver] = (0, import_element237.useState)();
+    const [first, setFirst] = (0, import_element238.useState)(false);
+    const [last3, setLast] = (0, import_element238.useState)(false);
+    const [observer, setObserver] = (0, import_element238.useState)();
     const callback = (0, import_compose85.useEvent)((entries) => {
       for (const entry of entries) {
         if (entry.target === children.first) {
@@ -52982,7 +53150,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     });
-    (0, import_element237.useEffect)(() => {
+    (0, import_element238.useEffect)(() => {
       if (!parent || !window.IntersectionObserver) {
         return;
       }
@@ -52993,7 +53161,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setObserver(newObserver);
       return () => newObserver.disconnect();
     }, [callback, parent]);
-    (0, import_element237.useEffect)(() => {
+    (0, import_element238.useEffect)(() => {
       if (!observer) {
         return;
       }
@@ -53019,12 +53187,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tabs/tablist.js
-  var import_jsx_runtime287 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime());
   var DEFAULT_SCROLL_MARGIN = 24;
   function useScrollRectIntoView(parent, rect, {
     margin = DEFAULT_SCROLL_MARGIN
   } = {}) {
-    (0, import_element238.useLayoutEffect)(() => {
+    (0, import_element239.useLayoutEffect)(() => {
       if (!parent || !rect) {
         return;
       }
@@ -53053,7 +53221,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     }, [margin, parent, rect]);
   }
-  var TabList3 = (0, import_element238.forwardRef)(function TabList22({
+  var TabList3 = (0, import_element239.forwardRef)(function TabList22({
     children,
     ...otherProps
   }, ref) {
@@ -53065,7 +53233,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const activeId = useStoreState(store, "activeId");
     const selectOnMove = useStoreState(store, "selectOnMove");
     const items = useStoreState(store, "items");
-    const [parent, setParent] = (0, import_element238.useState)();
+    const [parent, setParent] = (0, import_element239.useState)();
     const refs = (0, import_compose86.useMergeRefs)([ref, setParent]);
     const selectedItem = store?.item(selectedId);
     const renderedItems = useStoreState(store, "renderedItems");
@@ -53094,12 +53262,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       false ? (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(StyledTabList, {
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(StyledTabList, {
       ref: refs,
       store,
       render: (props) => {
         var _props$tabIndex;
-        return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("div", {
+        return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("div", {
           ...props,
           // Fallback to -1 to prevent browsers from making the tablist
           // tabbable when it is a scrolling container.
@@ -53115,10 +53283,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/tabpanel.js
-  var import_element239 = __toESM(require_element());
+  var import_element240 = __toESM(require_element());
   var import_warning14 = __toESM(require_warning());
-  var import_jsx_runtime288 = __toESM(require_jsx_runtime());
-  var TabPanel5 = (0, import_element239.forwardRef)(function TabPanel22({
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime());
+  var TabPanel5 = (0, import_element240.forwardRef)(function TabPanel22({
     children,
     tabId,
     focusable = true,
@@ -53135,7 +53303,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = context;
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(TabPanel4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(TabPanel4, {
       ref,
       store,
       id: `${instancedTabId}-view`,
@@ -53147,7 +53315,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/index.js
-  var import_jsx_runtime289 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime());
   function externalToInternalTabId(externalId, instanceId) {
     return externalId && `${instanceId}-${externalId}`;
   }
@@ -53188,7 +53356,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       setActiveId
     } = store;
-    (0, import_element240.useEffect)(() => {
+    (0, import_element241.useEffect)(() => {
       requestAnimationFrame(() => {
         const focusedElement = items?.[0]?.element?.ownerDocument.activeElement;
         if (!focusedElement || !items.some((item2) => focusedElement === item2.element)) {
@@ -53199,11 +53367,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       });
     }, [activeId, items, setActiveId]);
-    const contextValue = (0, import_element240.useMemo)(() => ({
+    const contextValue = (0, import_element241.useMemo)(() => ({
       store,
       instanceId
     }), [store, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(TabsContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(TabsContext.Provider, {
       value: contextValue,
       children
     });
@@ -53244,18 +53412,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/components");
 
   // packages/components/build-module/badge/index.js
-  var import_icons37 = __toESM(require_icons());
-  var import_jsx_runtime290 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime());
   function contextBasedIcon(intent = "default") {
     switch (intent) {
       case "info":
-        return import_icons37.info;
+        return info_default;
       case "success":
-        return import_icons37.published;
+        return published_default;
       case "warning":
-        return import_icons37.caution;
+        return caution_default;
       case "error":
-        return import_icons37.error;
+        return error_default;
       default:
         return null;
     }
@@ -53268,20 +53435,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", {
       className: clsx_default("components-badge", className, {
         [`is-${intent}`]: intent,
         "has-icon": hasIcon
       }),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("span", {
         className: "components-badge__flex-wrapper",
-        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(icon_default2, {
+        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(icon_default3, {
           icon,
           size: 16,
           fill: "currentColor",
           className: "components-badge__icon"
-        }), /* @__PURE__ */ (0, import_jsx_runtime290.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", {
           className: "components-badge__content",
           children
         })]
@@ -57300,12 +57467,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/calendar/date-calendar/index.js
-  var import_element242 = __toESM(require_element());
+  var import_element243 = __toESM(require_element());
 
   // packages/components/build-module/calendar/utils/day-cell.js
-  var import_jsx_runtime291 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime());
   var PreviewDashStartAndEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57313,13 +57480,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.7677",
       strokeDashoffset: "3.2",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
         d: "M29.5,0.5 h-27 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h27 a2,2 0 0 0 2,-2 v-27 a2,2 0 0 0 -2,-2"
       })
     });
   };
   var PreviewDashStart = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57327,13 +57494,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
         d: "M32,0.5 h-29.5 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h30"
       })
     });
   };
   var PreviewDashMiddle = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57341,12 +57508,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.9 4",
       strokeDashoffset: "2",
       strokeWidth: "1",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime291.jsx)("line", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime320.jsx)("line", {
         x1: "0",
         y1: "0.5",
         x2: "100",
         y2: "0.5"
-      }), /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("line", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("line", {
         x1: "0",
         y1: "31.5",
         x2: "100",
@@ -57355,7 +57522,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
   };
   var PreviewDashEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57363,7 +57530,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
         d: "M0,0.5 h29.5 a2,2 0 0 1 2,2 v27 a2,2 0 0 1 -2,2 h-29.5"
       })
     });
@@ -57385,9 +57552,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (modifiers.preview) {
       PreviewDash = PreviewDashMiddle;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("td", {
       ...tdProps,
-      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(PreviewDash, {}), children]
+      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(PreviewDash, {}), children]
     });
   }
 
@@ -57456,7 +57623,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/calendar/utils/use-localization-props.js
   var import_i18n83 = __toESM(require_i18n());
-  var import_element241 = __toESM(require_element());
+  var import_element242 = __toESM(require_element());
   function isLocaleRTL(localeCode) {
     const localeObj = new Intl.Locale(localeCode);
     if ("getTextInfo" in localeObj) {
@@ -57488,7 +57655,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     timeZone,
     mode: mode2
   }) => {
-    return (0, import_element241.useMemo)(() => {
+    return (0, import_element242.useMemo)(() => {
       const monthNameFormatter = new Intl.DateTimeFormat(locale.code, {
         year: "numeric",
         month: "long",
@@ -57584,7 +57751,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/calendar/date-calendar/index.js
-  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime321 = __toESM(require_jsx_runtime());
   var DateCalendar = ({
     defaultSelected,
     selected: selectedProp,
@@ -57599,7 +57766,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       timeZone,
       mode: "single"
     });
-    const onChange = (0, import_element242.useCallback)((selected2, triggerDate, modifiers, e3) => {
+    const onChange = (0, import_element243.useCallback)((selected2, triggerDate, modifiers, e3) => {
       onSelect?.(selected2 !== null && selected2 !== void 0 ? selected2 : void 0, triggerDate, modifiers, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
@@ -57607,7 +57774,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: selectedProp,
       onChange
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -57619,8 +57786,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/calendar/date-range-calendar/index.js
-  var import_element243 = __toESM(require_element());
-  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
+  var import_element244 = __toESM(require_element());
+  var import_jsx_runtime322 = __toESM(require_jsx_runtime());
   function usePreviewRange({
     selected,
     hoveredDate,
@@ -57629,7 +57796,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     max: max3,
     disabled
   }) {
-    return (0, import_element243.useMemo)(() => {
+    return (0, import_element244.useMemo)(() => {
       if (!hoveredDate || !selected?.from) {
         return;
       }
@@ -57704,7 +57871,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       timeZone,
       mode: "range"
     });
-    const onChange = (0, import_element243.useCallback)((selected2, triggerDate, modifiers2, e3) => {
+    const onChange = (0, import_element244.useCallback)((selected2, triggerDate, modifiers2, e3) => {
       onSelect?.(selected2 !== null && selected2 !== void 0 ? selected2 : void 0, triggerDate, modifiers2, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
@@ -57712,7 +57879,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: selectedProp,
       onChange
     });
-    const [hoveredDate, setHoveredDate] = (0, import_element243.useState)(void 0);
+    const [hoveredDate, setHoveredDate] = (0, import_element244.useState)(void 0);
     const previewRange = usePreviewRange({
       selected,
       hoveredDate,
@@ -57721,14 +57888,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       max: max3,
       disabled
     });
-    const modifiers = (0, import_element243.useMemo)(() => {
+    const modifiers = (0, import_element244.useMemo)(() => {
       return {
         preview: previewRange,
         preview_start: previewRange?.from,
         preview_end: previewRange?.to
       };
     }, [previewRange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -57749,29 +57916,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.js
   var import_compose89 = __toESM(require_compose());
-  var import_element245 = __toESM(require_element());
+  var import_element246 = __toESM(require_element());
 
   // packages/components/build-module/validated-form-controls/control-with-error.js
   var import_compose88 = __toESM(require_compose());
   var import_i18n84 = __toESM(require_i18n());
-  var import_element244 = __toESM(require_element());
+  var import_element245 = __toESM(require_element());
 
   // packages/components/build-module/validated-form-controls/validity-indicator.js
-  var import_icons38 = __toESM(require_icons());
-  var import_jsx_runtime294 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime());
   function ValidityIndicator({
     type,
     message: message3
   }) {
     const ICON = {
-      valid: import_icons38.published,
-      invalid: import_icons38.error
+      valid: published_default,
+      invalid: error_default
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)("p", {
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("p", {
       className: clsx_default("components-validated-control__indicator", `is-${type}`),
-      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(spinner_default, {
+      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(spinner_default, {
         className: "components-validated-control__indicator-spinner"
-      }) : /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(icon_default2, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(icon_default3, {
         className: "components-validated-control__indicator-icon",
         icon: ICON[type],
         size: 16,
@@ -57781,15 +57947,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/validated-form-controls/control-with-error.js
-  var import_jsx_runtime295 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime324 = __toESM(require_jsx_runtime());
   function appendRequiredIndicator(label, required, markWhenOptional) {
     if (required && !markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, {
         children: [label, " ", `(${(0, import_i18n84.__)("Required")})`]
       });
     }
     if (!required && markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, {
         children: [label, " ", `(${(0, import_i18n84.__)("Optional")})`]
       });
     }
@@ -57803,11 +57969,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     getValidityTarget,
     children
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element244.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element244.useState)();
-    const [isTouched, setIsTouched] = (0, import_element244.useState)(false);
+    const [errorMessage, setErrorMessage] = (0, import_element245.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element245.useState)();
+    const [isTouched, setIsTouched] = (0, import_element245.useState)(false);
     const previousCustomValidityType = (0, import_compose88.usePrevious)(customValidity?.type);
-    (0, import_element244.useEffect)(() => {
+    (0, import_element245.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const showValidationMessage = () => setErrorMessage(validityTarget?.validationMessage);
       validityTarget?.addEventListener("invalid", showValidationMessage);
@@ -57815,7 +57981,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         validityTarget?.removeEventListener("invalid", showValidationMessage);
       };
     });
-    (0, import_element244.useEffect)(() => {
+    (0, import_element245.useEffect)(() => {
       if (!isTouched) {
         return;
       }
@@ -57882,21 +58048,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return (
       // Disable reason: Just listening to a bubbled event, not for interaction.
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)("div", {
+      /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
         className: "components-validated-control",
         ref: forwardedRef,
         onBlur,
         onKeyDown: withIgnoreIMEEvents(onKeyDown),
-        children: [(0, import_element244.cloneElement)(children, {
+        children: [(0, import_element245.cloneElement)(children, {
           label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
           onChange,
           required
-        }), /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)("div", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
           "aria-live": "polite",
-          children: [errorMessage && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ValidityIndicator, {
+          children: [errorMessage && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
             type: "invalid",
             message: errorMessage
-          }), !errorMessage && statusMessage && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ValidityIndicator, {
+          }), !errorMessage && statusMessage && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
             type: statusMessage.type,
             message: statusMessage.message
           })]
@@ -57904,10 +58070,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     );
   }
-  var ControlWithError = (0, import_element244.forwardRef)(UnforwardedControlWithError);
+  var ControlWithError = (0, import_element245.forwardRef)(UnforwardedControlWithError);
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.js
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime325 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedCheckboxControl = ({
     required,
     onValidate,
@@ -57916,10 +58082,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element245.useRef)(null);
+    const validityTargetRef = (0, import_element246.useRef)(null);
     const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element245.useRef)(restProps.checked);
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(ControlWithError, {
+    const valueRef = (0, import_element246.useRef)(restProps.checked);
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
@@ -57928,7 +58094,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(checkbox_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(checkbox_control_default, {
         __nextHasNoMarginBottom: true,
         onChange: (value) => {
           valueRef.current = value;
@@ -57938,11 +58104,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedCheckboxControl = (0, import_element245.forwardRef)(UnforwardedValidatedCheckboxControl);
+  var ValidatedCheckboxControl = (0, import_element246.forwardRef)(UnforwardedValidatedCheckboxControl);
 
   // packages/components/build-module/validated-form-controls/components/form-token-field.js
-  var import_element246 = __toESM(require_element());
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime());
+  var import_element247 = __toESM(require_element());
+  var import_jsx_runtime326 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedFormTokenField = ({
     required,
     onValidate,
@@ -57951,12 +58117,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element246.useRef)(null);
-    const valueRef = (0, import_element246.useRef)(restProps.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)("div", {
+    const validityTargetRef = (0, import_element247.useRef)(null);
+    const valueRef = (0, import_element247.useRef)(restProps.value);
+    return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime297.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         onValidate: () => {
@@ -57964,7 +58130,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         },
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(FormTokenField, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(FormTokenField, {
           __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
           ...restProps,
@@ -57973,7 +58139,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             onChange?.(value, ...args);
           }
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime297.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -57988,12 +58154,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedFormTokenField = (0, import_element246.forwardRef)(UnforwardedValidatedFormTokenField);
+  var ValidatedFormTokenField = (0, import_element247.forwardRef)(UnforwardedValidatedFormTokenField);
 
   // packages/components/build-module/validated-form-controls/components/input-control.js
-  var import_element247 = __toESM(require_element());
+  var import_element248 = __toESM(require_element());
   var import_compose90 = __toESM(require_compose());
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime327 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedInputControl = ({
     required,
     onValidate,
@@ -58002,10 +58168,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element247.useRef)(null);
+    const validityTargetRef = (0, import_element248.useRef)(null);
     const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element247.useRef)(restProps.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(ControlWithError, {
+    const valueRef = (0, import_element248.useRef)(restProps.value);
+    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       onValidate: () => {
@@ -58013,7 +58179,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(input_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         onChange: (value, ...args) => {
@@ -58024,12 +58190,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedInputControl = (0, import_element247.forwardRef)(UnforwardedValidatedInputControl);
+  var ValidatedInputControl = (0, import_element248.forwardRef)(UnforwardedValidatedInputControl);
 
   // packages/components/build-module/validated-form-controls/components/number-control.js
-  var import_element248 = __toESM(require_element());
+  var import_element249 = __toESM(require_element());
   var import_compose91 = __toESM(require_compose());
-  var import_jsx_runtime299 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime328 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedNumberControl = ({
     required,
     onValidate,
@@ -58038,10 +58204,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element248.useRef)(null);
+    const validityTargetRef = (0, import_element249.useRef)(null);
     const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element248.useRef)(restProps.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(ControlWithError, {
+    const valueRef = (0, import_element249.useRef)(restProps.value);
+    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       onValidate: () => {
@@ -58049,7 +58215,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(number_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(number_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         onChange: (value, ...args) => {
@@ -58060,12 +58226,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedNumberControl = (0, import_element248.forwardRef)(UnforwardedValidatedNumberControl);
+  var ValidatedNumberControl = (0, import_element249.forwardRef)(UnforwardedValidatedNumberControl);
 
   // packages/components/build-module/validated-form-controls/components/radio-control.js
   var import_compose92 = __toESM(require_compose());
-  var import_element249 = __toESM(require_element());
-  var import_jsx_runtime300 = __toESM(require_jsx_runtime());
+  var import_element250 = __toESM(require_element());
+  var import_jsx_runtime329 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedRadioControl = ({
     required,
     onValidate,
@@ -58074,10 +58240,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element249.useRef)(null);
+    const validityTargetRef = (0, import_element250.useRef)(null);
     const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element249.useRef)(restProps.selected);
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(ControlWithError, {
+    const valueRef = (0, import_element250.useRef)(restProps.selected);
+    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
@@ -58086,7 +58252,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="radio"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(radio_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(radio_control_default, {
         onChange: (value) => {
           valueRef.current = value;
           onChange?.(value);
@@ -58095,12 +58261,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedRadioControl = (0, import_element249.forwardRef)(UnforwardedValidatedRadioControl);
+  var ValidatedRadioControl = (0, import_element250.forwardRef)(UnforwardedValidatedRadioControl);
 
   // packages/components/build-module/validated-form-controls/components/select-control.js
-  var import_element250 = __toESM(require_element());
+  var import_element251 = __toESM(require_element());
   var import_compose93 = __toESM(require_compose());
-  var import_jsx_runtime301 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime330 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedSelectControl = ({
     required,
     onValidate,
@@ -58109,10 +58275,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element250.useRef)(null);
+    const validityTargetRef = (0, import_element251.useRef)(null);
     const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element250.useRef)(restProps.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ControlWithError, {
+    const valueRef = (0, import_element251.useRef)(restProps.value);
+    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       onValidate: () => {
@@ -58120,7 +58286,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(select_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(select_control_default, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         ref: mergedRefs,
@@ -58132,12 +58298,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedSelectControl = (0, import_element250.forwardRef)(UnforwardedValidatedSelectControl);
+  var ValidatedSelectControl = (0, import_element251.forwardRef)(UnforwardedValidatedSelectControl);
 
   // packages/components/build-module/validated-form-controls/components/text-control.js
   var import_compose94 = __toESM(require_compose());
-  var import_element251 = __toESM(require_element());
-  var import_jsx_runtime302 = __toESM(require_jsx_runtime());
+  var import_element252 = __toESM(require_element());
+  var import_jsx_runtime331 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedTextControl = ({
     required,
     onValidate,
@@ -58146,10 +58312,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element251.useRef)(null);
+    const validityTargetRef = (0, import_element252.useRef)(null);
     const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element251.useRef)(restProps.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ControlWithError, {
+    const valueRef = (0, import_element252.useRef)(restProps.value);
+    return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       onValidate: () => {
@@ -58157,7 +58323,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(text_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(text_control_default, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
@@ -58169,12 +58335,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedTextControl = (0, import_element251.forwardRef)(UnforwardedValidatedTextControl);
+  var ValidatedTextControl = (0, import_element252.forwardRef)(UnforwardedValidatedTextControl);
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.js
-  var import_element252 = __toESM(require_element());
+  var import_element253 = __toESM(require_element());
   var import_compose95 = __toESM(require_compose());
-  var import_jsx_runtime303 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime332 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedTextareaControl = ({
     required,
     onValidate,
@@ -58183,10 +58349,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element252.useRef)(null);
+    const validityTargetRef = (0, import_element253.useRef)(null);
     const mergedRefs = (0, import_compose95.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element252.useRef)(restProps.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ControlWithError, {
+    const valueRef = (0, import_element253.useRef)(restProps.value);
+    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       onValidate: () => {
@@ -58194,7 +58360,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(textarea_control_default, {
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
         onChange: (value) => {
@@ -58205,12 +58371,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedTextareaControl = (0, import_element252.forwardRef)(UnforwardedValidatedTextareaControl);
+  var ValidatedTextareaControl = (0, import_element253.forwardRef)(UnforwardedValidatedTextareaControl);
 
   // packages/components/build-module/validated-form-controls/components/toggle-control.js
-  var import_element253 = __toESM(require_element());
+  var import_element254 = __toESM(require_element());
   var import_compose96 = __toESM(require_compose());
-  var import_jsx_runtime304 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime333 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedToggleControl = ({
     required,
     onValidate,
@@ -58219,15 +58385,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element253.useRef)(null);
+    const validityTargetRef = (0, import_element254.useRef)(null);
     const mergedRefs = (0, import_compose96.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element253.useRef)(restProps.checked);
-    (0, import_element253.useEffect)(() => {
+    const valueRef = (0, import_element254.useRef)(restProps.checked);
+    (0, import_element254.useEffect)(() => {
       if (validityTargetRef.current) {
         validityTargetRef.current.required = required !== null && required !== void 0 ? required : false;
       }
     }, [required]);
-    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       onValidate: () => {
@@ -58235,7 +58401,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(toggle_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(toggle_control_default, {
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
         onChange: (value) => {
@@ -58246,11 +58412,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedToggleControl = (0, import_element253.forwardRef)(UnforwardedValidatedToggleControl);
+  var ValidatedToggleControl = (0, import_element254.forwardRef)(UnforwardedValidatedToggleControl);
 
   // packages/components/build-module/validated-form-controls/components/toggle-group-control.js
-  var import_element254 = __toESM(require_element());
-  var import_jsx_runtime305 = __toESM(require_jsx_runtime());
+  var import_element255 = __toESM(require_element());
+  var import_jsx_runtime334 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedToggleGroupControl = ({
     required,
     onValidate,
@@ -58259,12 +58425,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element254.useRef)(null);
-    const valueRef = (0, import_element254.useRef)(restProps.value);
-    const nameAttr = (0, import_element254.useId)();
-    return /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)("div", {
+    const validityTargetRef = (0, import_element255.useRef)(null);
+    const valueRef = (0, import_element255.useRef)(restProps.value);
+    const nameAttr = (0, import_element255.useId)();
+    return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime305.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         onValidate: () => {
@@ -58272,7 +58438,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         },
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(component_default12, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(component_default12, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           ref: forwardedRef,
@@ -58282,7 +58448,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           },
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime305.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime334.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "radio",
         ref: validityTargetRef,
@@ -58298,7 +58464,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedToggleGroupControl = (0, import_element254.forwardRef)(UnforwardedValidatedToggleGroupControl);
+  var ValidatedToggleGroupControl = (0, import_element255.forwardRef)(UnforwardedValidatedToggleGroupControl);
 
   // packages/components/build-module/private-apis.js
   var privateApis = {};
