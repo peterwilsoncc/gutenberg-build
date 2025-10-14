@@ -35596,6 +35596,11 @@ function sanitizeCommentString(str) {
 }
 
 /**
+ * A no-operation function that does nothing.
+ */
+function utils_noop() {}
+
+/**
  * These colors are picked from the WordPress.org design library.
  * @see https://www.figma.com/design/HOJTpCFfa3tR0EccUlu0CM/WordPress.org-Design-Library?node-id=1-2193&t=M6WdRvTpt0mh8n6T-1
  */
@@ -35830,26 +35835,13 @@ function CommentAuthorInfo({
  */
 
 
-/**
- * EditComment component.
- *
- * @param {Object}   props                  - The component props.
- * @param {Function} props.onSubmit         - The function to call when updating the comment.
- * @param {Function} props.onCancel         - The function to call when canceling the comment update.
- * @param {Object}   props.thread           - The comment thread object.
- * @param {string}   props.submitButtonText - The text to display on the submit button.
- * @param {string?}  props.labelText        - The label text for the comment input.
- * @param {Function} props.reflowComments   - The function to call when the comment is updated.
- * @return {React.ReactNode} The CommentForm component.
- */
-
 function CommentForm({
   onSubmit,
   onCancel,
   thread,
   submitButtonText,
   labelText,
-  reflowComments
+  reflowComments = utils_noop
 }) {
   var _thread$content$raw;
   const [inputComment, setInputComment] = (0,external_wp_element_namespaceObject.useState)((_thread$content$raw = thread?.content?.raw) !== null && _thread$content$raw !== void 0 ? _thread$content$raw : '');
@@ -38326,14 +38318,12 @@ function useFloating(options) {
 
 
 
+
 const {
   useBlockElementRef
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function useBlockComments(postId) {
-  const [commentLastUpdated, setCommentLastUpdated] = (0,external_wp_element_namespaceObject.useState)(null);
-  const reflowComments = () => {
-    setCommentLastUpdated(Date.now());
-  };
+  const [commentLastUpdated, reflowComments] = (0,external_wp_element_namespaceObject.useReducer)(() => Date.now(), 0);
   const queryArgs = {
     post: postId,
     type: 'note',
@@ -38429,7 +38419,7 @@ function useBlockComments(postId) {
     commentLastUpdated
   };
 }
-function useBlockCommentsActions(reflowComments) {
+function useBlockCommentsActions(reflowComments = utils_noop) {
   const {
     createNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
