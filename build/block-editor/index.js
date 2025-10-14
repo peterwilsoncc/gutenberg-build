@@ -63032,6 +63032,10 @@ var wp;
   var import_compose98 = __toESM(require_compose());
   var { Menu } = unlock(import_components231.privateApis);
   var EMPTY_OBJECT4 = {};
+  var getAttributeType = (blockName, attribute) => {
+    const _attributeType = (0, import_blocks113.getBlockType)(blockName).attributes?.[attribute]?.type;
+    return _attributeType === "rich-text" ? "string" : _attributeType;
+  };
   var useToolsPanelDropdownMenuProps2 = () => {
     const isMobile = (0, import_compose98.useViewportMatch)("medium", "<");
     return !isMobile ? {
@@ -63055,9 +63059,8 @@ var wp;
     const { attributeType, select: select2 } = (0, import_data181.useSelect)(
       (_select) => {
         const { name: blockName } = _select(store).getBlock(clientId);
-        const _attributeType = (0, import_blocks113.getBlockType)(blockName).attributes?.[attribute]?.type;
         return {
-          attributeType: _attributeType === "rich-text" ? "string" : _attributeType,
+          attributeType: getAttributeType(blockName, attribute),
           select: _select
         };
       },
@@ -63068,14 +63071,17 @@ var wp;
         (item) => item?.type === attributeType
       );
       const noItemsAvailable = !sourceDataItems || sourceDataItems.length === 0;
+      if (noItemsAvailable) {
+        return null;
+      }
       if (source.mode === "dropdown") {
         return /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(
           Menu,
           {
             placement: isMobile ? "bottom-start" : "left-start",
             children: [
-              noItemsAvailable ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.Item, { disabled: true, children: source.label }) : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.ItemLabel, { children: source.label }) }),
-              !noItemsAvailable && /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.Popover, { gutter: 8, children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.Group, { children: sourceDataItems.map((item) => {
+              /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.ItemLabel, { children: source.label }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.Popover, { gutter: 8, children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.Group, { children: sourceDataItems.map((item) => {
                 const itemBindings = {
                   source: sourceKey,
                   args: item?.args || {
@@ -63099,17 +63105,13 @@ var wp;
                       ) ?? // Deprecate key dependency in 7.0.
                       item.key === binding?.args?.key;
                       if (isCurrentlySelected) {
-                        updateBlockBindings(
-                          {
-                            [attribute]: void 0
-                          }
-                        );
+                        updateBlockBindings({
+                          [attribute]: void 0
+                        });
                       } else {
-                        updateBlockBindings(
-                          {
-                            [attribute]: itemBindings
-                          }
-                        );
+                        updateBlockBindings({
+                          [attribute]: itemBindings
+                        });
                       }
                     },
                     name: attribute + "-binding",
@@ -63147,39 +63149,68 @@ var wp;
       return null;
     }) });
   }
-  function BlockBindingsAttribute({ attribute, binding, source }) {
+  function BlockBindingsAttribute({ attribute, binding, sources, blockName }) {
     const { source: sourceName, args } = binding || {};
-    const isSourceInvalid = !source;
+    const source = sources?.[sourceName];
+    let displayText;
+    let isValid = true;
+    const isNotBound = binding === void 0;
+    if (isNotBound) {
+      const attributeType = getAttributeType(blockName, attribute);
+      const hasCompatibleSources = Object.values(sources).some(
+        (src) => src.data?.some((item) => item?.type === attributeType)
+      );
+      if (!hasCompatibleSources) {
+        displayText = (0, import_i18n208.__)("No sources available");
+      } else {
+        displayText = (0, import_i18n208.__)("Not connected");
+      }
+      isValid = true;
+    } else if (!source) {
+      isValid = false;
+      displayText = (0, import_i18n208.__)("Source not registered");
+      if (Object.keys(sources).length === 0) {
+        displayText = (0, import_i18n208.__)("No sources available");
+      }
+    } else {
+      displayText = source.data?.find((item) => (0, import_es66.default)(item.args, args))?.label || source.label || sourceName;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(import_components231.__experimentalVStack, { className: "block-editor-bindings__item", spacing: 0, children: [
       /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components231.__experimentalText, { truncate: true, children: attribute }),
-      !!binding && /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
         import_components231.__experimentalText,
         {
           truncate: true,
-          variant: !isSourceInvalid && "muted",
-          isDestructive: isSourceInvalid,
-          children: isSourceInvalid ? (0, import_i18n208.__)("Invalid source") : source?.data?.find(
-            (item) => (0, import_es66.default)(item.args, args)
-          )?.label || source?.label || sourceName
+          variant: isValid ? "muted" : void 0,
+          isDestructive: !isValid,
+          children: displayText
         }
       )
     ] });
   }
-  function ReadOnlyBlockBindingsPanelItem({ attribute, binding, source }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components231.__experimentalToolsPanelItem, { hasValue: () => !!binding, label: attribute, children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components231.__experimentalItem, { children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+  function ReadOnlyBlockBindingsPanelItem({
+    attribute,
+    binding,
+    sources,
+    blockName
+  }) {
+    const isMobile = (0, import_compose98.useViewportMatch)("medium", "<");
+    return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components231.__experimentalToolsPanelItem, { hasValue: () => !!binding, label: attribute, children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu, { placement: isMobile ? "bottom-start" : "left-start", children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.TriggerButton, { render: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components231.__experimentalItem, {}), disabled: true, children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
       BlockBindingsAttribute,
       {
         attribute,
         binding,
-        source
+        sources,
+        blockName
       }
-    ) }) });
+    ) }) }) });
   }
   function EditableBlockBindingsPanelItem({
     attribute,
     binding,
     sources,
-    setModalState
+    setModalState,
+    blockName
   }) {
     const { updateBlockBindings } = useBlockBindingsUtils();
     const isMobile = (0, import_compose98.useViewportMatch)("medium", "<");
@@ -63202,7 +63233,8 @@ var wp;
             {
               attribute,
               binding,
-              source: sources?.[binding?.source]
+              sources,
+              blockName
             }
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(Menu.Popover, { gutter: isMobile ? 8 : 36, children: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
@@ -63240,40 +63272,23 @@ var wp;
             sourceName,
             { editorUI, getFieldsList, usesContext, label, getValues }
           ]) => {
-            if (editorUI) {
-              const context = {};
-              if (usesContext?.length) {
-                for (const key of usesContext) {
-                  context[key] = blockContext[key];
-                }
+            const context = {};
+            if (usesContext?.length) {
+              for (const key of usesContext) {
+                context[key] = blockContext[key];
               }
+            }
+            if (editorUI) {
               const editorUIResult = editorUI({
                 select: select2,
                 context
               });
-              const hasCompatibleData = _bindableAttributes.some(
-                (attribute) => {
-                  const _attributeType = (0, import_blocks113.getBlockType)(blockName).attributes?.[attribute]?.type;
-                  const attributeType = _attributeType === "rich-text" ? "string" : _attributeType;
-                  return editorUIResult.data?.some(
-                    (item) => item?.type === attributeType
-                  );
-                }
-              );
-              if (hasCompatibleData) {
-                _sources[sourceName] = {
-                  ...editorUIResult,
-                  label,
-                  getValues
-                };
-              }
+              _sources[sourceName] = {
+                ...editorUIResult,
+                label,
+                getValues
+              };
             } else if (getFieldsList) {
-              const context = {};
-              if (usesContext?.length) {
-                for (const key of usesContext) {
-                  context[key] = blockContext[key];
-                }
-              }
               const fieldsListResult = getFieldsList({
                 select: select2,
                 context
@@ -63286,27 +63301,17 @@ var wp;
                     args: { key }
                   })
                 );
-                const hasCompatibleData = _bindableAttributes.some(
-                  (attribute) => {
-                    const _attributeType = (0, import_blocks113.getBlockType)(blockName).attributes?.[attribute]?.type;
-                    const attributeType = _attributeType === "rich-text" ? "string" : _attributeType;
-                    return data.some(
-                      (item) => item?.type === attributeType
-                    );
-                  }
-                );
-                if (hasCompatibleData) {
-                  _sources[sourceName] = {
-                    mode: "dropdown",
-                    // Default mode for backward compatibility
-                    data,
-                    label,
-                    getValues
-                  };
-                }
+                _sources[sourceName] = {
+                  mode: "dropdown",
+                  // Default mode for backward compatibility.
+                  data,
+                  label,
+                  getValues
+                };
               }
             } else {
               _sources[sourceName] = {
+                data: [],
                 label,
                 getValues
               };
@@ -63325,17 +63330,14 @@ var wp;
       return null;
     }
     const { bindings } = metadata || {};
-    const filteredBindings = { ...bindings };
-    Object.keys(filteredBindings).forEach((key) => {
-      if (!bindableAttributes.includes(key)) {
-        delete filteredBindings[key];
-      }
-    });
-    const readOnly = !canUpdateBlockBindings || !Object.keys(sources).length;
-    if (readOnly && Object.keys(filteredBindings).length === 0) {
+    const hasCompatibleData = Object.values(sources).some(
+      (source) => source.data && source.data.length > 0
+    );
+    const readOnly = !canUpdateBlockBindings || !hasCompatibleData;
+    const RenderModalContent = sources[modalState?.sourceKey]?.renderModalContent;
+    if (bindings === void 0 && !hasCompatibleData) {
       return null;
     }
-    const RenderModalContent = sources[modalState?.sourceKey]?.renderModalContent;
     return /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(inspector_controls_default, { group: "bindings", children: [
       /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(
         import_components231.__experimentalToolsPanel,
@@ -63348,16 +63350,26 @@ var wp;
           className: "block-editor-bindings__panel",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components231.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => {
-              const binding = filteredBindings[attribute];
-              const hasCompatibleData = Object.values(sources).some(
-                (source) => source.data
+              const binding = bindings?.[attribute];
+              const attributeType = getAttributeType(
+                blockName,
+                attribute
               );
-              return readOnly || !hasCompatibleData ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+              const hasCompatibleDataForAttribute = Object.values(
+                sources
+              ).some(
+                (source) => source.data?.some(
+                  (item) => item?.type === attributeType
+                )
+              );
+              const isAttributeReadOnly = readOnly || !hasCompatibleDataForAttribute;
+              return isAttributeReadOnly ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
                 ReadOnlyBlockBindingsPanelItem,
                 {
                   attribute,
                   binding,
-                  source: sources?.[binding?.source]
+                  sources,
+                  blockName
                 },
                 attribute
               ) : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
@@ -63366,7 +63378,8 @@ var wp;
                   attribute,
                   binding,
                   sources,
-                  setModalState
+                  setModalState,
+                  blockName
                 },
                 attribute
               );
