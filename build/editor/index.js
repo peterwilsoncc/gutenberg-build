@@ -5786,16 +5786,11 @@ const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 var email_default = {
   sort,
   isValid: {
+    elements: true,
     custom: (item, field) => {
       const value = field.getValue({ item });
       if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
         return (0,external_wp_i18n_namespaceObject.__)("Value must be a valid email address.");
-      }
-      if (field.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
       }
       return null;
     }
@@ -5833,16 +5828,11 @@ function integer_sort(a, b, direction) {
 var integer_default = {
   sort: integer_sort,
   isValid: {
+    elements: true,
     custom: (item, field) => {
       const value = field.getValue({ item });
       if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
         return (0,external_wp_i18n_namespaceObject.__)("Value must be an integer.");
-      }
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(Number(value))) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
       }
       return null;
     }
@@ -5893,18 +5883,11 @@ function isEmpty(value) {
 var number_default = {
   sort: number_sort,
   isValid: {
+    elements: true,
     custom: (item, field) => {
       const value = field.getValue({ item });
       if (!isEmpty(value) && !Number.isFinite(value)) {
         return (0,external_wp_i18n_namespaceObject.__)("Value must be a number.");
-      }
-      if (field?.elements) {
-        const isMember = field.elements.some(
-          (element) => element.value === Number(value)
-        );
-        if (!isMember) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
       }
       return null;
     }
@@ -5956,23 +5939,14 @@ var number_default = {
 ;// ./packages/dataviews/build-module/field-types/text.js
 
 
-
 function text_sort(valueA, valueB, direction) {
   return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
 }
 var text_default = {
   sort: text_sort,
   isValid: {
-    custom: (item, field) => {
-      const value = field.getValue({ item });
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
-      }
-      return null;
-    }
+    elements: true,
+    custom: () => null
   },
   Edit: "text",
   render: ({ item, field }) => {
@@ -6001,7 +5975,6 @@ var text_default = {
 ;// ./packages/dataviews/build-module/field-types/datetime.js
 
 
-
 function datetime_sort(a, b, direction) {
   const timeA = new Date(a).getTime();
   const timeB = new Date(b).getTime();
@@ -6010,16 +5983,8 @@ function datetime_sort(a, b, direction) {
 var datetime_default = {
   sort: datetime_sort,
   isValid: {
-    custom: (item, field) => {
-      const value = field.getValue({ item });
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
-      }
-      return null;
-    }
+    elements: true,
+    custom: () => null
   },
   Edit: "datetime",
   render: ({ item, field }) => {
@@ -6055,7 +6020,6 @@ var datetime_default = {
 
 
 
-
 const getFormattedDate = (dateToDisplay) => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.date, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
 function date_sort(a, b, direction) {
   const timeA = new Date(a).getTime();
@@ -6066,16 +6030,8 @@ var date_default = {
   sort: date_sort,
   Edit: "date",
   isValid: {
-    custom: (item, field) => {
-      const value = field.getValue({ item });
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
-      }
-      return null;
-    }
+    elements: true,
+    custom: () => null
   },
   render: ({ item, field }) => {
     if (field.elements) {
@@ -6133,6 +6089,7 @@ function boolean_sort(a, b, direction) {
 var boolean_default = {
   sort: boolean_sort,
   isValid: {
+    elements: true,
     custom: (item, field) => {
       const value = field.getValue({ item });
       if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
@@ -6163,23 +6120,14 @@ var boolean_default = {
 
 
 ;// ./packages/dataviews/build-module/field-types/media.js
-
 function media_sort() {
   return 0;
 }
 var media_default = {
   sort: media_sort,
   isValid: {
-    custom: (item, field) => {
-      const value = field.getValue({ item });
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
-      }
-      return null;
-    }
+    elements: true,
+    custom: () => null
   },
   Edit: null,
   render: () => null,
@@ -6208,6 +6156,7 @@ function render({ item, field }) {
 const arrayFieldType = {
   sort: array_sort,
   isValid: {
+    elements: true,
     custom: (item, field) => {
       const value = field.getValue({ item });
       if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
@@ -6238,23 +6187,14 @@ var array_default = arrayFieldType;
 
 ;// ./packages/dataviews/build-module/field-types/password.js
 
-
 function password_sort(valueA, valueB, direction) {
   return 0;
 }
 var password_default = {
   sort: password_sort,
   isValid: {
-    custom: (item, field) => {
-      const value = field.getValue({ item });
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
-      }
-      return null;
-    }
+    elements: true,
+    custom: () => null
   },
   Edit: "password",
   render: ({ item, field }) => {
@@ -6268,23 +6208,14 @@ var password_default = {
 ;// ./packages/dataviews/build-module/field-types/telephone.js
 
 
-
 function telephone_sort(valueA, valueB, direction) {
   return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
 }
 var telephone_default = {
   sort: telephone_sort,
   isValid: {
-    custom: (item, field) => {
-      const value = field.getValue({ item });
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
-      }
-      return null;
-    }
+    elements: true,
+    custom: () => null
   },
   Edit: "telephone",
   render: ({ item, field }) => {
@@ -6343,16 +6274,11 @@ function color_sort(valueA, valueB, direction) {
 var color_default = {
   sort: color_sort,
   isValid: {
+    elements: true,
     custom: (item, field) => {
       const value = field.getValue({ item });
       if (![void 0, "", null].includes(value) && !w(value).isValid()) {
         return (0,external_wp_i18n_namespaceObject.__)("Value must be a valid color.");
-      }
-      if (field.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
       }
       return null;
     }
@@ -6400,23 +6326,14 @@ var color_default = {
 ;// ./packages/dataviews/build-module/field-types/url.js
 
 
-
 function url_sort(valueA, valueB, direction) {
   return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
 }
 var url_default = {
   sort: url_sort,
   isValid: {
-    custom: (item, field) => {
-      const value = field.getValue({ item });
-      if (field?.elements) {
-        const validValues = field.elements.map((f) => f.value);
-        if (!validValues.includes(value)) {
-          return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-        }
-      }
-      return null;
-    }
+    elements: true,
+    custom: () => null
   },
   Edit: "url",
   render: ({ item, field }) => {
@@ -6442,7 +6359,6 @@ var url_default = {
 
 
 ;// ./packages/dataviews/build-module/field-types/index.js
-
 
 
 
@@ -6506,18 +6422,8 @@ function getFieldTypeDefinition(type) {
       return direction === "asc" ? a.localeCompare(b) : b.localeCompare(a);
     },
     isValid: {
-      custom: (item, field) => {
-        if (field?.elements) {
-          const value = field.getValue({ item });
-          const validValues = field?.elements?.map(
-            (f) => f.value
-          );
-          if (!validValues.includes(value)) {
-            return (0,external_wp_i18n_namespaceObject.__)("Value must be one of the elements.");
-          }
-        }
-        return null;
-      }
+      elements: true,
+      custom: () => null
     },
     Edit: null,
     render: ({ item, field }) => {
