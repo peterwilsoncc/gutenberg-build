@@ -30534,7 +30534,6 @@ var wp;
   var zoom_out_toggle_default = ZoomOutToggle;
 
   // packages/editor/build-module/components/header/index.js
-  var isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
   var toolbarVariations = {
     distractionFreeDisabled: { y: "-50px" },
     distractionFreeHover: { y: 0 },
@@ -30677,7 +30676,7 @@ var wp;
                 setEntitiesSavedStatesCallback
               }
             ),
-            isBlockCommentExperimentEnabled && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(CollabSidebar, {}) }),
+            /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(CollabSidebar, {}) }),
             customSaveButton,
             /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(MoreMenu, {})
           ]

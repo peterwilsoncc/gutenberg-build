@@ -7447,7 +7447,7 @@ function getTransformedMetadata(metadata, newBlockName, bindingsCallback) {
   // Fixed until an opt-in mechanism is implemented.
   const BLOCK_BINDINGS_SUPPORTED_BLOCKS = ['core/paragraph', 'core/heading', 'core/image', 'core/button'];
   // The metadata properties that should be preserved after the transform.
-  const transformSupportedProps = [];
+  const transformSupportedProps = ['commentId'];
   // If it support bindings, and there is a transform bindings callback, add the `id` and `bindings` properties.
   if (BLOCK_BINDINGS_SUPPORTED_BLOCKS.includes(newBlockName) && bindingsCallback) {
     transformSupportedProps.push('id', 'bindings');
@@ -7459,9 +7459,6 @@ function getTransformedMetadata(metadata, newBlockName, bindingsCallback) {
   // If it supports block visibility (true by default), add the `blockVisibility` property.
   if (supports.blockVisibility !== false) {
     transformSupportedProps.push('blockVisibility');
-  }
-  if (window?.__experimentalEnableBlockComment) {
-    transformSupportedProps.push('commentId');
   }
 
   // Return early if no supported properties.
