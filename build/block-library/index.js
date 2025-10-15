@@ -59294,6 +59294,7 @@ ${url}
   var import_i18n224 = __toESM(require_i18n());
   var import_block_editor240 = __toESM(require_block_editor());
   var import_components146 = __toESM(require_components());
+  var import_html_entities15 = __toESM(require_html_entities());
 
   // packages/block-library/build-module/term-name/use-term-name.js
   var import_core_data84 = __toESM(require_core_data());
@@ -59369,7 +59370,7 @@ ${url}
   }) {
     const { textAlign, level = 0, isLink } = attributes3;
     const { term } = useTermName(termId, taxonomy);
-    const termName2 = term?.name || (0, import_i18n224.__)("Term Name");
+    const termName2 = term?.name ? (0, import_html_entities15.decodeEntities)(term.name) : (0, import_i18n224.__)("Term Name");
     const blockProps = (0, import_block_editor240.useBlockProps)({
       className: clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
