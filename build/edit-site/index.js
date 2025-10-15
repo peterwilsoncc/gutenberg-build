@@ -43515,16 +43515,38 @@ If there's a particular need for this, please submit a feature request at https:
   var FORM_FIELD_LAYOUTS = [
     {
       type: "regular",
-      component: FormRegularField
+      component: FormRegularField,
+      wrapper: ({
+        children,
+        layout
+      }) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+        import_components148.__experimentalVStack,
+        {
+          className: "dataforms-layouts__wrapper",
+          spacing: layout?.spacing ?? 4,
+          children
+        }
+      )
     },
     {
       type: "panel",
       component: FormPanelField,
-      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components148.__experimentalVStack, { spacing: 2, children })
+      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components148.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 2, children })
     },
     {
       type: "card",
-      component: FormCardField
+      component: FormCardField,
+      wrapper: ({
+        children,
+        layout
+      }) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+        import_components148.__experimentalVStack,
+        {
+          className: "dataforms-layouts__wrapper",
+          spacing: layout?.spacing ?? 6,
+          children
+        }
+      )
     },
     {
       type: "row",
@@ -43532,7 +43554,7 @@ If there's a particular need for this, please submit a feature request at https:
       wrapper: ({
         children,
         layout
-      }) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components148.__experimentalVStack, { spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+      }) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components148.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
         import_components148.__experimentalHStack,
         {
           spacing: 4,
@@ -43547,7 +43569,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
-  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(import_components149.__experimentalVStack, { spacing: 4, children });
+  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(import_components149.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children });
   function DataFormLayout({
     data,
     form,

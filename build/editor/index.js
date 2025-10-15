@@ -12666,16 +12666,38 @@ var wp;
   var FORM_FIELD_LAYOUTS = [
     {
       type: "regular",
-      component: FormRegularField
+      component: FormRegularField,
+      wrapper: ({
+        children,
+        layout
+      }) => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+        import_components36.__experimentalVStack,
+        {
+          className: "dataforms-layouts__wrapper",
+          spacing: layout?.spacing ?? 4,
+          children
+        }
+      )
     },
     {
       type: "panel",
       component: FormPanelField,
-      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components36.__experimentalVStack, { spacing: 2, children })
+      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components36.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 2, children })
     },
     {
       type: "card",
-      component: FormCardField
+      component: FormCardField,
+      wrapper: ({
+        children,
+        layout
+      }) => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+        import_components36.__experimentalVStack,
+        {
+          className: "dataforms-layouts__wrapper",
+          spacing: layout?.spacing ?? 6,
+          children
+        }
+      )
     },
     {
       type: "row",
@@ -12683,7 +12705,7 @@ var wp;
       wrapper: ({
         children,
         layout
-      }) => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components36.__experimentalVStack, { spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+      }) => /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components36.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
         import_components36.__experimentalHStack,
         {
           spacing: 4,
@@ -12698,7 +12720,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
-  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components37.__experimentalVStack, { spacing: 4, children });
+  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components37.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children });
   function DataFormLayout({
     data,
     form,
