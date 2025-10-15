@@ -22801,8 +22801,7 @@ var wp;
         getCurrentPostType: getCurrentPostType2,
         getCurrentPostId: getCurrentPostId2,
         getEditedPostAttribute: getEditedPostAttribute2,
-        isEditorPanelEnabled: isEditorPanelEnabled2,
-        __experimentalGetDefaultTemplateType: __experimentalGetDefaultTemplateType2
+        isEditorPanelEnabled: isEditorPanelEnabled2
       } = select4(store);
       const postType2 = getCurrentPostType2();
       const isTemplateOrTemplatePart2 = [
@@ -22812,15 +22811,19 @@ var wp;
       const isPattern = postType2 === "wp_block";
       const _shouldBeUsedAsDescription = isTemplateOrTemplatePart2 || isPattern;
       const _usedAttribute = isTemplateOrTemplatePart2 ? "description" : "excerpt";
+      const _excerpt = getEditedPostAttribute2(_usedAttribute);
       const template2 = isTemplateOrTemplatePart2 && select4(import_core_data59.store).getEntityRecord(
         "postType",
         postType2,
         getCurrentPostId2()
       );
-      const fallback = isTemplateOrTemplatePart2 ? __experimentalGetDefaultTemplateType2(template2.slug).description : void 0;
+      const fallback = !_excerpt && isTemplateOrTemplatePart2 ? getTemplateInfo({
+        template: template2,
+        templateTypes: select4(import_core_data59.store).getCurrentTheme()?.default_template_types
+      })?.description : void 0;
       const _shouldRender = isEditorPanelEnabled2(PANEL_NAME3) || _shouldBeUsedAsDescription;
       return {
-        excerpt: getEditedPostAttribute2(_usedAttribute) ?? fallback,
+        excerpt: _excerpt ?? fallback,
         shouldRender: _shouldRender,
         shouldBeUsedAsDescription: _shouldBeUsedAsDescription,
         // If we should render, allow editing for all post types that are not used as description.
