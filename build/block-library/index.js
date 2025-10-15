@@ -781,9 +781,9 @@ var wp;
     privateApis: () => privateApis3,
     registerCoreBlocks: () => registerCoreBlocks
   });
-  var import_jsx_runtime492 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime493 = __toESM(require_jsx_runtime());
   var import_blocks100 = __toESM(require_blocks());
-  var import_data139 = __toESM(require_data());
+  var import_data140 = __toESM(require_data());
   var import_block_editor261 = __toESM(require_block_editor());
   var import_server_side_render7 = __toESM(require_server_side_render());
   var import_i18n242 = __toESM(require_i18n());
@@ -59481,8 +59481,8 @@ ${url}
           taxonomy: "category",
           order: "asc",
           orderBy: "name",
+          include: [],
           hideEmpty: true,
-          parent: false,
           showNested: false,
           inherit: false
         }
@@ -59505,19 +59505,19 @@ ${url}
   };
 
   // packages/block-library/build-module/terms-query/edit/index.js
-  var import_jsx_runtime474 = __toESM(require_jsx_runtime());
-  var import_data133 = __toESM(require_data());
+  var import_jsx_runtime475 = __toESM(require_jsx_runtime());
+  var import_data134 = __toESM(require_data());
   var import_block_editor245 = __toESM(require_block_editor());
 
   // packages/block-library/build-module/terms-query/edit/terms-query-content.js
-  var import_jsx_runtime472 = __toESM(require_jsx_runtime());
-  var import_element119 = __toESM(require_element());
+  var import_jsx_runtime473 = __toESM(require_jsx_runtime());
+  var import_element120 = __toESM(require_element());
   var import_block_editor243 = __toESM(require_block_editor());
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/index.js
-  var import_jsx_runtime471 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime472 = __toESM(require_jsx_runtime());
   var import_i18n229 = __toESM(require_i18n());
-  var import_components153 = __toESM(require_components());
+  var import_components154 = __toESM(require_components());
   var import_block_editor242 = __toESM(require_block_editor());
 
   // packages/block-library/build-module/terms-query/utils.js
@@ -59711,6 +59711,138 @@ ${url}
     ) });
   }
 
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/include-control.js
+  var import_jsx_runtime471 = __toESM(require_jsx_runtime());
+  var import_components153 = __toESM(require_components());
+  var import_data132 = __toESM(require_data());
+  var import_core_data86 = __toESM(require_core_data());
+  var import_element119 = __toESM(require_element());
+  var import_compose52 = __toESM(require_compose());
+  var import_html_entities16 = __toESM(require_html_entities());
+  var EMPTY_ARRAY6 = [];
+  var BASE_QUERY3 = {
+    order: "asc",
+    _fields: "id,name",
+    context: "view"
+  };
+  function IncludeControl({
+    value: include,
+    taxonomy,
+    onChange,
+    ...props
+  }) {
+    const [search, setSearch] = (0, import_element119.useState)("");
+    const [value, setValue] = (0, import_element119.useState)(EMPTY_ARRAY6);
+    const [suggestions, setSuggestions] = (0, import_element119.useState)(EMPTY_ARRAY6);
+    const debouncedSearch = (0, import_compose52.useDebounce)(setSearch, 250);
+    const { searchResults, searchHasResolved } = (0, import_data132.useSelect)(
+      (select8) => {
+        if (!search) {
+          return { searchResults: EMPTY_ARRAY6, searchHasResolved: true };
+        }
+        const { getEntityRecords, hasFinishedResolution } = select8(import_core_data86.store);
+        const selectorArgs = [
+          "taxonomy",
+          taxonomy,
+          {
+            ...BASE_QUERY3,
+            search,
+            orderby: "name",
+            exclude: include,
+            per_page: 20
+          }
+        ];
+        return {
+          searchResults: getEntityRecords(...selectorArgs),
+          searchHasResolved: hasFinishedResolution(
+            "getEntityRecords",
+            selectorArgs
+          )
+        };
+      },
+      [search, taxonomy, include]
+    );
+    const currentTerms = (0, import_data132.useSelect)(
+      (select8) => {
+        if (!include?.length) {
+          return EMPTY_ARRAY6;
+        }
+        const { getEntityRecords } = select8(import_core_data86.store);
+        return getEntityRecords("taxonomy", taxonomy, {
+          ...BASE_QUERY3,
+          include,
+          per_page: include.length
+        });
+      },
+      [include, taxonomy]
+    );
+    (0, import_element119.useEffect)(() => {
+      if (!include?.length) {
+        setValue(EMPTY_ARRAY6);
+      }
+      if (!currentTerms?.length) {
+        return;
+      }
+      const sanitizedValue = include.reduce((accumulator, id) => {
+        const entity = currentTerms.find((term) => term.id === id);
+        if (entity) {
+          accumulator.push({
+            id,
+            value: (0, import_html_entities16.decodeEntities)(entity.name)
+          });
+        }
+        return accumulator;
+      }, []);
+      setValue(sanitizedValue);
+    }, [include, currentTerms]);
+    const entitiesInfo = (0, import_element119.useMemo)(() => {
+      if (!searchResults?.length) {
+        return { names: EMPTY_ARRAY6, mapByName: {} };
+      }
+      const names = [];
+      const mapByName = {};
+      searchResults.forEach((result) => {
+        const decodedName = (0, import_html_entities16.decodeEntities)(result.name);
+        names.push(decodedName);
+        mapByName[decodedName] = result;
+      });
+      return { names, mapByName };
+    }, [searchResults]);
+    (0, import_element119.useEffect)(() => {
+      if (!searchHasResolved) {
+        return;
+      }
+      setSuggestions(entitiesInfo.names);
+    }, [entitiesInfo.names, searchHasResolved]);
+    const getIdByValue = (entitiesMappedByName, entity) => entity?.id || entitiesMappedByName?.[entity]?.id;
+    const onTermChange = (newValue) => {
+      const ids = Array.from(
+        newValue.reduce((accumulator, entity) => {
+          const id = getIdByValue(entitiesInfo.mapByName, entity);
+          if (id) {
+            accumulator.add(id);
+          }
+          return accumulator;
+        }, /* @__PURE__ */ new Set())
+      );
+      setSuggestions(EMPTY_ARRAY6);
+      onChange(ids);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+      import_components153.FormTokenField,
+      {
+        __next40pxDefaultSize: true,
+        value,
+        onInputChange: debouncedSearch,
+        suggestions,
+        onChange: onTermChange,
+        __experimentalShowHowTo: false,
+        __nextHasNoMarginBottom: true,
+        ...props
+      }
+    );
+  }
+
   // packages/block-library/build-module/terms-query/edit/inspector-controls/index.js
   function TermsQueryInspectorControls({
     attributes: attributes3,
@@ -59727,25 +59859,28 @@ ${url}
       hideEmpty,
       inherit,
       showNested,
-      perPage
+      perPage,
+      include
     } = termQuery;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const taxonomies = usePublicTaxonomies();
     const isTaxonomyHierarchical = taxonomies.find(
       (_taxonomy) => _taxonomy.slug === taxonomy
     )?.hierarchical;
+    const inheritQuery = !!inherit;
     const displayInheritControl = ["taxonomy", "category", "tag", "archive"].includes(templateSlug) || templateSlug?.startsWith("taxonomy-") || templateSlug?.startsWith("category-") || templateSlug?.startsWith("tag-");
-    const displayShowNestedControl = isTaxonomyHierarchical && !termQuery.inherit;
-    const displayTaxonomyControl = !termQuery.inherit;
+    const displayShowNestedControl = isTaxonomyHierarchical && !inheritQuery;
+    const hasIncludeFilter = !!include?.length;
     const queryTypeControlLabel = (0, import_i18n229.__)("Query type");
     const taxonomyControlLabel = (0, import_i18n229.__)("Taxonomy");
     const orderByControlLabel = (0, import_i18n229.__)("Order by");
     const emptyTermsControlLabel = (0, import_i18n229.__)("Show empty terms");
     const nestedTermsControlLabel = (0, import_i18n229.__)("Show nested terms");
     const maxTermsControlLabel = (0, import_i18n229.__)("Max terms");
-    return /* @__PURE__ */ (0, import_jsx_runtime471.jsxs)(import_jsx_runtime471.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(import_block_editor242.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime471.jsxs)(
-        import_components153.__experimentalToolsPanel,
+    const includeControlLabel = (0, import_i18n229.__)("Selected terms");
+    return /* @__PURE__ */ (0, import_jsx_runtime472.jsxs)(import_jsx_runtime472.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(import_block_editor242.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime472.jsxs)(
+        import_components154.__experimentalToolsPanel,
         {
           label: (0, import_i18n229.__)("Settings"),
           resetAll: () => {
@@ -59754,24 +59889,24 @@ ${url}
                 taxonomy: "category",
                 order: "asc",
                 orderBy: "name",
+                include: [],
                 hideEmpty: true,
                 showNested: false,
                 inherit: false,
-                parent: false,
                 perPage: 10
               }
             });
           },
           dropdownMenuProps,
           children: [
-            displayInheritControl && /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
-              import_components153.__experimentalToolsPanelItem,
+            displayInheritControl && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+              import_components154.__experimentalToolsPanelItem,
               {
                 hasValue: () => inherit !== false,
                 label: queryTypeControlLabel,
                 onDeselect: () => setQuery({ inherit: false }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                   InheritControl,
                   {
                     label: queryTypeControlLabel,
@@ -59781,8 +59916,8 @@ ${url}
                 )
               }
             ),
-            displayTaxonomyControl && /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
-              import_components153.__experimentalToolsPanelItem,
+            !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+              import_components154.__experimentalToolsPanelItem,
               {
                 hasValue: () => taxonomy !== "category",
                 label: taxonomyControlLabel,
@@ -59790,24 +59925,27 @@ ${url}
                   setQuery({ taxonomy: "category" });
                 },
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                   TaxonomyControl,
                   {
                     label: taxonomyControlLabel,
                     value: taxonomy,
-                    onChange: (value) => setQuery({ taxonomy: value })
+                    onChange: (value) => (
+                      // We also need to reset the include filter when changing taxonomy.
+                      setQuery({ taxonomy: value, include: [] })
+                    )
                   }
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
-              import_components153.__experimentalToolsPanelItem,
+            /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+              import_components154.__experimentalToolsPanelItem,
               {
                 hasValue: () => orderBy !== "name" || order !== "asc",
                 label: orderByControlLabel,
                 onDeselect: () => setQuery({ orderBy: "name", order: "asc" }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                   OrderControl2,
                   {
                     label: orderByControlLabel,
@@ -59817,19 +59955,45 @@ ${url}
                         orderBy: newOrderBy,
                         order: newOrder
                       });
-                    }
+                    },
+                    disabled: hasIncludeFilter,
+                    help: hasIncludeFilter ? (0, import_i18n229.__)(
+                      "When specific terms are selected, the order is based on their selection order."
+                    ) : void 0
                   }
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
-              import_components153.__experimentalToolsPanelItem,
+            !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+              import_components154.__experimentalToolsPanelItem,
+              {
+                hasValue: () => !!include?.length,
+                label: includeControlLabel,
+                onDeselect: () => setQuery({
+                  include: [],
+                  orderBy: "name",
+                  order: "asc"
+                }),
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+                  IncludeControl,
+                  {
+                    label: includeControlLabel,
+                    taxonomy,
+                    value: include,
+                    onChange: (value) => setQuery({ include: value })
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+              import_components154.__experimentalToolsPanelItem,
               {
                 hasValue: () => hideEmpty !== true,
                 label: emptyTermsControlLabel,
                 onDeselect: () => setQuery({ hideEmpty: true }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                   EmptyTermsControl,
                   {
                     label: emptyTermsControlLabel,
@@ -59839,31 +60003,35 @@ ${url}
                 )
               }
             ),
-            displayShowNestedControl && /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
-              import_components153.__experimentalToolsPanelItem,
+            displayShowNestedControl && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+              import_components154.__experimentalToolsPanelItem,
               {
                 hasValue: () => showNested !== false,
                 label: nestedTermsControlLabel,
                 onDeselect: () => setQuery({ showNested: false }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                   NestedTermsControl,
                   {
                     label: nestedTermsControlLabel,
                     value: showNested,
-                    onChange: (value) => setQuery({ showNested: value })
+                    onChange: (value) => setQuery({ showNested: value }),
+                    disabled: hasIncludeFilter,
+                    help: hasIncludeFilter ? (0, import_i18n229.__)(
+                      "When specific terms are selected, only those are displayed."
+                    ) : void 0
                   }
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
-              import_components153.__experimentalToolsPanelItem,
+            /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+              import_components154.__experimentalToolsPanelItem,
               {
                 hasValue: () => perPage !== 10,
                 label: maxTermsControlLabel,
                 onDeselect: () => setQuery({ perPage: 10 }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                   MaxTermsControl,
                   {
                     label: maxTermsControlLabel,
@@ -59876,7 +60044,7 @@ ${url}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
         AdvancedControls,
         {
           TagName: TagName2,
@@ -59900,14 +60068,14 @@ ${url}
     const innerBlocksProps = (0, import_block_editor243.useInnerBlocksProps)(blockProps, {
       template: TEMPLATE16
     });
-    const setQuery = (0, import_element119.useCallback)(
+    const setQuery = (0, import_element120.useCallback)(
       (newQuery) => setAttributes((prevAttributes) => ({
         termQuery: { ...prevAttributes.termQuery, ...newQuery }
       })),
       [setAttributes]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime472.jsxs)(import_jsx_runtime472.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime473.jsxs)(import_jsx_runtime473.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
         TermsQueryInspectorControls,
         {
           attributes: attributes3,
@@ -59917,13 +60085,13 @@ ${url}
           templateSlug: context?.templateSlug
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(TagName2, { ...innerBlocksProps })
+      /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(TagName2, { ...innerBlocksProps })
     ] });
   }
 
   // packages/block-library/build-module/terms-query/edit/terms-query-placeholder.js
-  var import_jsx_runtime473 = __toESM(require_jsx_runtime());
-  var import_data132 = __toESM(require_data());
+  var import_jsx_runtime474 = __toESM(require_jsx_runtime());
+  var import_data133 = __toESM(require_data());
   var import_blocks93 = __toESM(require_blocks());
   var import_block_editor244 = __toESM(require_block_editor());
   function TermsQueryPlaceholder({
@@ -59931,7 +60099,7 @@ ${url}
     clientId,
     name: name113
   }) {
-    const { blockType, activeBlockVariation, scopeVariations } = (0, import_data132.useSelect)(
+    const { blockType, activeBlockVariation, scopeVariations } = (0, import_data133.useSelect)(
       (select8) => {
         const {
           getActiveBlockVariation,
@@ -59951,9 +60119,9 @@ ${url}
     );
     const icon = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
     const label = activeBlockVariation?.title || blockType?.title;
-    const { replaceInnerBlocks } = (0, import_data132.useDispatch)(import_block_editor244.store);
+    const { replaceInnerBlocks } = (0, import_data133.useDispatch)(import_block_editor244.store);
     const blockProps = (0, import_block_editor244.useBlockProps)();
-    return /* @__PURE__ */ (0, import_jsx_runtime473.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(
       import_block_editor244.__experimentalBlockVariationPicker,
       {
         icon,
@@ -59976,30 +60144,30 @@ ${url}
 
   // packages/block-library/build-module/terms-query/edit/index.js
   var TermsQueryEdit = (props) => {
-    const hasInnerBlocks = (0, import_data133.useSelect)(
+    const hasInnerBlocks = (0, import_data134.useSelect)(
       (select8) => !!select8(import_block_editor245.store).getBlocks(props.clientId).length,
       [props.clientId]
     );
     const Component = hasInnerBlocks ? TermsQueryContent : TermsQueryPlaceholder;
-    return /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(Component, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(Component, { ...props });
   };
   var edit_default34 = TermsQueryEdit;
 
   // packages/block-library/build-module/terms-query/save.js
-  var import_jsx_runtime475 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime476 = __toESM(require_jsx_runtime());
   var import_block_editor246 = __toESM(require_block_editor());
   function save49({ attributes: { tagName: Tag = "div" } }) {
     const blockProps = import_block_editor246.useBlockProps.save();
     const innerBlocksProps = import_block_editor246.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(Tag, { ...innerBlocksProps });
+    return /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(Tag, { ...innerBlocksProps });
   }
 
   // packages/block-library/build-module/terms-query/variations.js
-  var import_jsx_runtime476 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime477 = __toESM(require_jsx_runtime());
   var import_i18n230 = __toESM(require_i18n());
-  var import_components154 = __toESM(require_components());
-  var titleDate2 = /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(import_components154.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(import_components154.Path, { d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z" }) });
-  var titleExcerpt2 = /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(import_components154.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(import_components154.Path, { d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z" }) });
+  var import_components155 = __toESM(require_components());
+  var titleDate2 = /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(import_components155.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(import_components155.Path, { d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z" }) });
+  var titleExcerpt2 = /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(import_components155.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(import_components155.Path, { d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z" }) });
   var termName = [
     "core/term-name",
     {
@@ -60127,20 +60295,20 @@ ${url}
   };
 
   // packages/block-library/build-module/term-template/edit.js
-  var import_jsx_runtime477 = __toESM(require_jsx_runtime());
-  var import_components155 = __toESM(require_components());
-  var import_element120 = __toESM(require_element());
-  var import_data134 = __toESM(require_data());
+  var import_jsx_runtime478 = __toESM(require_jsx_runtime());
+  var import_components156 = __toESM(require_components());
+  var import_element121 = __toESM(require_element());
+  var import_data135 = __toESM(require_data());
   var import_i18n231 = __toESM(require_i18n());
   var import_block_editor247 = __toESM(require_block_editor());
-  var import_core_data86 = __toESM(require_core_data());
+  var import_core_data87 = __toESM(require_core_data());
   var TEMPLATE17 = [["core/term-name"]];
   function TermTemplateInnerBlocks({ classList }) {
     const innerBlocksProps = (0, import_block_editor247.useInnerBlocksProps)(
       { className: clsx_default("wp-block-term", classList) },
       { template: TEMPLATE17, __unstableDisableLayoutClassNames: true }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime477.jsx)("li", { ...innerBlocksProps });
+    return /* @__PURE__ */ (0, import_jsx_runtime478.jsx)("li", { ...innerBlocksProps });
   }
   function TermTemplateBlockPreview({
     blocks,
@@ -60161,7 +60329,7 @@ ${url}
     const style2 = {
       display: isHidden ? "none" : void 0
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
       "li",
       {
         ...blockPreviewProps,
@@ -60173,7 +60341,7 @@ ${url}
       }
     );
   }
-  var MemoizedTermTemplateBlockPreview = (0, import_element120.memo)(TermTemplateBlockPreview);
+  var MemoizedTermTemplateBlockPreview = (0, import_element121.memo)(TermTemplateBlockPreview);
   function TermTemplateEdit({
     clientId,
     attributes: { layout },
@@ -60185,36 +60353,41 @@ ${url}
         orderBy,
         hideEmpty,
         showNested = false,
-        parent = 0,
-        perPage
+        perPage,
+        include
       } = {}
     },
     __unstableLayoutClassNames
   }) {
     const { type: layoutType, columnCount = 3 } = layout || {};
-    const [activeBlockContextId, setActiveBlockContextId] = (0, import_element120.useState)();
+    const [activeBlockContextId, setActiveBlockContextId] = (0, import_element121.useState)();
     const queryArgs = {
       hide_empty: hideEmpty,
       order,
       orderby: orderBy,
       per_page: perPage
     };
-    if (parent || !showNested) {
-      queryArgs.parent = parent || 0;
+    if (!showNested && !include?.length) {
+      queryArgs.parent = 0;
     }
-    const { records: terms } = (0, import_core_data86.useEntityRecords)(
+    if (include?.length) {
+      queryArgs.include = include;
+      queryArgs.orderby = "include";
+      queryArgs.order = "asc";
+    }
+    const { records: terms } = (0, import_core_data87.useEntityRecords)(
       "taxonomy",
       taxonomy,
       queryArgs
     );
-    const blocks = (0, import_data134.useSelect)(
+    const blocks = (0, import_data135.useSelect)(
       (select8) => select8(import_block_editor247.store).getBlocks(clientId),
       [clientId]
     );
     const blockProps = (0, import_block_editor247.useBlockProps)({
       className: __unstableLayoutClassNames
     });
-    const blockContexts = (0, import_element120.useMemo)(
+    const blockContexts = (0, import_element121.useMemo)(
       () => terms?.map((term) => ({
         taxonomy,
         termId: term.id,
@@ -60224,10 +60397,10 @@ ${url}
       [terms, taxonomy]
     );
     if (!terms) {
-      return /* @__PURE__ */ (0, import_jsx_runtime477.jsx)("ul", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime477.jsx)("li", { className: "wp-block-term term-loading", children: /* @__PURE__ */ (0, import_jsx_runtime477.jsx)("div", { className: "term-loading-placeholder" }) }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime478.jsx)("ul", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime478.jsx)("li", { className: "wp-block-term term-loading", children: /* @__PURE__ */ (0, import_jsx_runtime478.jsx)("div", { className: "term-loading-placeholder" }) }) });
     }
     if (!terms.length) {
-      return /* @__PURE__ */ (0, import_jsx_runtime477.jsxs)("p", { ...blockProps, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime478.jsxs)("p", { ...blockProps, children: [
         " ",
         (0, import_i18n231.__)("No terms found.")
       ] });
@@ -60235,9 +60408,9 @@ ${url}
     const setDisplayLayout = (newDisplayLayout) => setAttributes((prevAttributes) => ({
       layout: { ...prevAttributes.layout, ...newDisplayLayout }
     }));
-    return /* @__PURE__ */ (0, import_jsx_runtime477.jsxs)(import_jsx_runtime477.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(import_block_editor247.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
-        import_components155.ToolbarGroup,
+    return /* @__PURE__ */ (0, import_jsx_runtime478.jsxs)(import_jsx_runtime478.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(import_block_editor247.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
+        import_components156.ToolbarGroup,
         {
           controls: [
             {
@@ -60264,18 +60437,18 @@ ${url}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime477.jsx)("ul", { ...blockProps, children: blockContexts?.map((blockContext) => /* @__PURE__ */ (0, import_jsx_runtime477.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime478.jsx)("ul", { ...blockProps, children: blockContexts?.map((blockContext) => /* @__PURE__ */ (0, import_jsx_runtime478.jsxs)(
         import_block_editor247.BlockContextProvider,
         {
           value: blockContext,
           children: [
-            blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
+            blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
               TermTemplateInnerBlocks,
               {
                 classList: blockContext.classList
               }
             ) : null,
-            /* @__PURE__ */ (0, import_jsx_runtime477.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
               MemoizedTermTemplateBlockPreview,
               {
                 blocks,
@@ -60293,10 +60466,10 @@ ${url}
   }
 
   // packages/block-library/build-module/term-template/save.js
-  var import_jsx_runtime478 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime479 = __toESM(require_jsx_runtime());
   var import_block_editor248 = __toESM(require_block_editor());
   function TermTemplateSave() {
-    return /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(import_block_editor248.InnerBlocks.Content, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_block_editor248.InnerBlocks.Content, {});
   }
 
   // packages/block-library/build-module/term-template/index.js
@@ -60319,9 +60492,9 @@ ${url}
   });
 
   // packages/block-library/build-module/text-columns/edit.js
-  var import_jsx_runtime479 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime480 = __toESM(require_jsx_runtime());
   var import_i18n232 = __toESM(require_i18n());
-  var import_components156 = __toESM(require_components());
+  var import_components157 = __toESM(require_components());
   var import_block_editor249 = __toESM(require_block_editor());
   var import_deprecated42 = __toESM(require_deprecated());
   function TextColumnsEdit({ attributes: attributes3, setAttributes }) {
@@ -60330,8 +60503,8 @@ ${url}
       since: "5.3",
       alternative: "the Columns block"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime479.jsxs)(import_jsx_runtime479.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_block_editor249.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(import_jsx_runtime480.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_block_editor249.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
         import_block_editor249.BlockAlignmentToolbar,
         {
           value: width,
@@ -60339,8 +60512,8 @@ ${url}
           controls: ["center", "wide", "full"]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_block_editor249.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_components156.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
-        import_components156.RangeControl,
+      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_block_editor249.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_components157.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+        import_components157.RangeControl,
         {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
@@ -60352,18 +60525,18 @@ ${url}
           required: true
         }
       ) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
         "div",
         {
           ...(0, import_block_editor249.useBlockProps)({
             className: `align${width} columns-${columns}`
           }),
           children: Array.from({ length: columns }).map((_, index) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
               "div",
               {
                 className: "wp-block-column",
-                children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
                   import_block_editor249.RichText,
                   {
                     tagName: "p",
@@ -60436,17 +60609,17 @@ ${url}
   };
 
   // packages/block-library/build-module/text-columns/save.js
-  var import_jsx_runtime480 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime481 = __toESM(require_jsx_runtime());
   var import_block_editor250 = __toESM(require_block_editor());
   function save50({ attributes: attributes3 }) {
     const { width, content, columns } = attributes3;
-    return /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(
       "div",
       {
         ...import_block_editor250.useBlockProps.save({
           className: `align${width} columns-${columns}`
         }),
-        children: Array.from({ length: columns }).map((_, index) => /* @__PURE__ */ (0, import_jsx_runtime480.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+        children: Array.from({ length: columns }).map((_, index) => /* @__PURE__ */ (0, import_jsx_runtime481.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(
           import_block_editor250.RichText.Content,
           {
             tagName: "p",
@@ -60510,7 +60683,7 @@ ${url}
   var import_i18n234 = __toESM(require_i18n());
 
   // packages/block-library/build-module/verse/deprecated.js
-  var import_jsx_runtime481 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime482 = __toESM(require_jsx_runtime());
   var import_block_editor251 = __toESM(require_block_editor());
   var v129 = {
     attributes: {
@@ -60526,7 +60699,7 @@ ${url}
     },
     save({ attributes: attributes3 }) {
       const { textAlign, content } = attributes3;
-      return /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
         import_block_editor251.RichText.Content,
         {
           tagName: "pre",
@@ -60569,7 +60742,7 @@ ${url}
       const className = clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime481.jsx)("pre", { ...import_block_editor251.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(import_block_editor251.RichText.Content, { value: content }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime482.jsx)("pre", { ...import_block_editor251.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(import_block_editor251.RichText.Content, { value: content }) });
     },
     migrate: migrate_font_family_default,
     isEligible({ style: style2 }) {
@@ -60579,7 +60752,7 @@ ${url}
   var deprecated_default39 = [v216, v129];
 
   // packages/block-library/build-module/verse/edit.js
-  var import_jsx_runtime482 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime483 = __toESM(require_jsx_runtime());
   var import_i18n233 = __toESM(require_i18n());
   var import_block_editor252 = __toESM(require_block_editor());
   var import_blocks95 = __toESM(require_blocks());
@@ -60598,8 +60771,8 @@ ${url}
       }),
       style: style2
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime482.jsxs)(import_jsx_runtime482.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(import_block_editor252.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime483.jsxs)(import_jsx_runtime483.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(import_block_editor252.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
         import_block_editor252.AlignmentToolbar,
         {
           value: textAlign,
@@ -60608,7 +60781,7 @@ ${url}
           }
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
         import_block_editor252.RichText,
         {
           tagName: "pre",
@@ -60715,14 +60888,14 @@ ${url}
   };
 
   // packages/block-library/build-module/verse/save.js
-  var import_jsx_runtime483 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime484 = __toESM(require_jsx_runtime());
   var import_block_editor253 = __toESM(require_block_editor());
   function save51({ attributes: attributes3 }) {
     const { textAlign, content } = attributes3;
     const className = clsx_default({
       [`has-text-align-${textAlign}`]: textAlign
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime483.jsx)("pre", { ...import_block_editor253.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(import_block_editor253.RichText.Content, { value: content }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("pre", { ...import_block_editor253.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_block_editor253.RichText.Content, { value: content }) });
   }
 
   // packages/block-library/build-module/verse/transforms.js
@@ -60782,7 +60955,7 @@ ${url}
   var import_i18n238 = __toESM(require_i18n());
 
   // packages/block-library/build-module/video/deprecated.js
-  var import_jsx_runtime485 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime486 = __toESM(require_jsx_runtime());
   var import_block_editor254 = __toESM(require_block_editor());
 
   // packages/block-library/build-module/video/block.json
@@ -60890,11 +61063,11 @@ ${url}
   };
 
   // packages/block-library/build-module/video/tracks.js
-  var import_jsx_runtime484 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime485 = __toESM(require_jsx_runtime());
   function Tracks({ tracks = [] }) {
     return tracks.map((track) => {
       const { id, ...trackAttrs } = track;
-      return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("track", { ...trackAttrs }, id ?? trackAttrs.src);
+      return /* @__PURE__ */ (0, import_jsx_runtime485.jsx)("track", { ...trackAttrs }, id ?? trackAttrs.src);
     });
   }
 
@@ -60915,8 +61088,8 @@ ${url}
         playsInline,
         tracks
       } = attributes3;
-      return /* @__PURE__ */ (0, import_jsx_runtime485.jsxs)("figure", { ...import_block_editor254.useBlockProps.save(), children: [
-        src && /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime486.jsxs)("figure", { ...import_block_editor254.useBlockProps.save(), children: [
+        src && /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
           "video",
           {
             autoPlay: autoplay,
@@ -60927,10 +61100,10 @@ ${url}
             preload: preload !== "metadata" ? preload : void 0,
             src,
             playsInline,
-            children: /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(Tracks, { tracks })
+            children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(Tracks, { tracks })
           }
         ),
-        !import_block_editor254.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(import_block_editor254.RichText.Content, { tagName: "figcaption", value: caption })
+        !import_block_editor254.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(import_block_editor254.RichText.Content, { tagName: "figcaption", value: caption })
       ] });
     }
   };
@@ -60938,20 +61111,20 @@ ${url}
   var deprecated_default40 = deprecated18;
 
   // packages/block-library/build-module/video/edit.js
-  var import_jsx_runtime488 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime489 = __toESM(require_jsx_runtime());
   var import_blob18 = __toESM(require_blob());
-  var import_components159 = __toESM(require_components());
+  var import_components160 = __toESM(require_components());
   var import_block_editor256 = __toESM(require_block_editor());
-  var import_element123 = __toESM(require_element());
+  var import_element124 = __toESM(require_element());
   var import_i18n237 = __toESM(require_i18n());
-  var import_data136 = __toESM(require_data());
+  var import_data137 = __toESM(require_data());
   var import_notices18 = __toESM(require_notices());
 
   // packages/block-library/build-module/video/edit-common-settings.js
-  var import_jsx_runtime486 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime487 = __toESM(require_jsx_runtime());
   var import_i18n235 = __toESM(require_i18n());
-  var import_components157 = __toESM(require_components());
-  var import_element121 = __toESM(require_element());
+  var import_components158 = __toESM(require_components());
+  var import_element122 = __toESM(require_element());
   var options = [
     { value: "auto", label: (0, import_i18n235.__)("Auto") },
     { value: "metadata", label: (0, import_i18n235.__)("Metadata") },
@@ -60962,13 +61135,13 @@ ${url}
     const autoPlayHelpText = (0, import_i18n235.__)(
       "Autoplay may cause usability issues for some users."
     );
-    const getAutoplayHelp = import_element121.Platform.select({
-      web: (0, import_element121.useCallback)((checked) => {
+    const getAutoplayHelp = import_element122.Platform.select({
+      web: (0, import_element122.useCallback)((checked) => {
         return checked ? autoPlayHelpText : null;
       }, []),
       native: autoPlayHelpText
     });
-    const toggleFactory = (0, import_element121.useMemo)(() => {
+    const toggleFactory = (0, import_element122.useMemo)(() => {
       const toggleAttribute = (attribute) => {
         return (newValue) => {
           setAttributes({
@@ -60990,12 +61163,12 @@ ${url}
         playsInline: toggleAttribute("playsInline")
       };
     }, []);
-    const onChangePreload = (0, import_element121.useCallback)((value) => {
+    const onChangePreload = (0, import_element122.useCallback)((value) => {
       setAttributes({ preload: value });
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime486.jsxs)(import_jsx_runtime486.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-        import_components157.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_jsx_runtime487.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+        import_components158.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n235.__)("Autoplay"),
           isShownByDefault: true,
@@ -61003,8 +61176,8 @@ ${url}
           onDeselect: () => {
             setAttributes({ autoplay: false, muted: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-            import_components157.ToggleControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            import_components158.ToggleControl,
             {
               __nextHasNoMarginBottom: true,
               label: (0, import_i18n235.__)("Autoplay"),
@@ -61015,8 +61188,8 @@ ${url}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-        import_components157.__experimentalToolsPanelItem,
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+        import_components158.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n235.__)("Loop"),
           isShownByDefault: true,
@@ -61024,8 +61197,8 @@ ${url}
           onDeselect: () => {
             setAttributes({ loop: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-            import_components157.ToggleControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            import_components158.ToggleControl,
             {
               __nextHasNoMarginBottom: true,
               label: (0, import_i18n235.__)("Loop"),
@@ -61035,8 +61208,8 @@ ${url}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-        import_components157.__experimentalToolsPanelItem,
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+        import_components158.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n235.__)("Muted"),
           isShownByDefault: true,
@@ -61044,8 +61217,8 @@ ${url}
           onDeselect: () => {
             setAttributes({ muted: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-            import_components157.ToggleControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            import_components158.ToggleControl,
             {
               __nextHasNoMarginBottom: true,
               label: (0, import_i18n235.__)("Muted"),
@@ -61057,8 +61230,8 @@ ${url}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-        import_components157.__experimentalToolsPanelItem,
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+        import_components158.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n235.__)("Playback controls"),
           isShownByDefault: true,
@@ -61066,8 +61239,8 @@ ${url}
           onDeselect: () => {
             setAttributes({ controls: true });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-            import_components157.ToggleControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            import_components158.ToggleControl,
             {
               __nextHasNoMarginBottom: true,
               label: (0, import_i18n235.__)("Playback controls"),
@@ -61077,8 +61250,8 @@ ${url}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-        import_components157.__experimentalToolsPanelItem,
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+        import_components158.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n235.__)("Play inline"),
           isShownByDefault: true,
@@ -61086,8 +61259,8 @@ ${url}
           onDeselect: () => {
             setAttributes({ playsInline: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-            import_components157.ToggleControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            import_components158.ToggleControl,
             {
               __nextHasNoMarginBottom: true,
               label: (0, import_i18n235.__)("Play inline"),
@@ -61101,8 +61274,8 @@ ${url}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-        import_components157.__experimentalToolsPanelItem,
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+        import_components158.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n235.__)("Preload"),
           isShownByDefault: true,
@@ -61110,8 +61283,8 @@ ${url}
           onDeselect: () => {
             setAttributes({ preload: "metadata" });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
-            import_components157.SelectControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            import_components158.SelectControl,
             {
               __next40pxDefaultSize: true,
               __nextHasNoMarginBottom: true,
@@ -61129,14 +61302,14 @@ ${url}
   var edit_common_settings_default = VideoSettings;
 
   // packages/block-library/build-module/video/tracks-editor.js
-  var import_jsx_runtime487 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime488 = __toESM(require_jsx_runtime());
   var import_i18n236 = __toESM(require_i18n());
-  var import_components158 = __toESM(require_components());
+  var import_components159 = __toESM(require_components());
   var import_block_editor255 = __toESM(require_block_editor());
-  var import_data135 = __toESM(require_data());
-  var import_element122 = __toESM(require_element());
+  var import_data136 = __toESM(require_data());
+  var import_element123 = __toESM(require_element());
   var import_url19 = __toESM(require_url());
-  var { Badge } = unlock(import_components158.privateApis);
+  var { Badge } = unlock(import_components159.privateApis);
   var ALLOWED_TYPES = ["text/vtt"];
   var DEFAULT_KIND = "subtitles";
   var KIND_OPTIONS = [
@@ -61155,16 +61328,16 @@ ${url}
   };
   function TrackList({ tracks, onEditPress }) {
     const content = tracks.map((track, index) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(
-        import_components158.__experimentalHStack,
+      return /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(
+        import_components159.__experimentalHStack,
         {
           className: "block-library-video-tracks-editor__track-list-track",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("span", { children: track.label }),
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components158.__experimentalHStack, { justify: "flex-end", children: [
-              track.default && /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(Badge, { children: (0, import_i18n236.__)("Default") }),
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-                import_components158.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)("span", { children: track.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_components159.__experimentalHStack, { justify: "flex-end", children: [
+              track.default && /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(Badge, { children: (0, import_i18n236.__)("Default") }),
+              /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+                import_components159.Button,
                 {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
@@ -61183,8 +61356,8 @@ ${url}
         track.id ?? track.src
       );
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-      import_components158.MenuGroup,
+    return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+      import_components159.MenuGroup,
       {
         label: (0, import_i18n236.__)("Text tracks"),
         className: "block-library-video-tracks-editor__track-list",
@@ -61199,27 +61372,27 @@ ${url}
     onRemove,
     allowSettingDefault
   }) {
-    const [trackState, setTrackState] = (0, import_element122.useState)({
+    const [trackState, setTrackState] = (0, import_element123.useState)({
       ...DEFAULT_TRACK,
       ...track
     });
     const { src, label, srcLang, kind, default: isDefaultTrack } = trackState;
     const fileName = src.startsWith("blob:") ? "" : (0, import_url19.getFilename)(src) || "";
-    return /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(
-      import_components158.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(
+      import_components159.__experimentalVStack,
       {
         className: "block-library-video-tracks-editor__single-track-editor",
         spacing: "4",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("span", { className: "block-library-video-tracks-editor__single-track-editor-edit-track-label", children: (0, import_i18n236.__)("Edit track") }),
-          /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime488.jsx)("span", { className: "block-library-video-tracks-editor__single-track-editor-edit-track-label", children: (0, import_i18n236.__)("Edit track") }),
+          /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)("span", { children: [
             (0, import_i18n236.__)("File"),
             ": ",
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("b", { children: fileName })
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)("b", { children: fileName })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components158.__experimentalGrid, { columns: 2, gap: 4, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-              import_components158.TextControl,
+          /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_components159.__experimentalGrid, { columns: 2, gap: 4, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+              import_components159.TextControl,
               {
                 __next40pxDefaultSize: true,
                 __nextHasNoMarginBottom: true,
@@ -61232,8 +61405,8 @@ ${url}
                 help: (0, import_i18n236.__)("Title of track")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-              import_components158.TextControl,
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+              import_components159.TextControl,
               {
                 __next40pxDefaultSize: true,
                 __nextHasNoMarginBottom: true,
@@ -61247,9 +61420,9 @@ ${url}
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components158.__experimentalVStack, { spacing: "4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-              import_components158.SelectControl,
+          /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_components159.__experimentalVStack, { spacing: "4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+              import_components159.SelectControl,
               {
                 __next40pxDefaultSize: true,
                 __nextHasNoMarginBottom: true,
@@ -61263,8 +61436,8 @@ ${url}
                 }))
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-              import_components158.ToggleControl,
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+              import_components159.ToggleControl,
               {
                 __next40pxDefaultSize: true,
                 __nextHasNoMarginBottom: true,
@@ -61277,9 +61450,9 @@ ${url}
                 }))
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components158.__experimentalHStack, { className: "block-library-video-tracks-editor__single-track-editor-buttons-container", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-                import_components158.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_components159.__experimentalHStack, { className: "block-library-video-tracks-editor__single-track-editor-buttons-container", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+                import_components159.Button,
                 {
                   __next40pxDefaultSize: true,
                   isDestructive: true,
@@ -61288,8 +61461,8 @@ ${url}
                   children: (0, import_i18n236.__)("Remove track")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-                import_components158.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+                import_components159.Button,
                 {
                   __next40pxDefaultSize: true,
                   variant: "primary",
@@ -61307,11 +61480,11 @@ ${url}
     );
   }
   function TracksEditor({ tracks = [], onChange }) {
-    const mediaUpload = (0, import_data135.useSelect)((select8) => {
+    const mediaUpload = (0, import_data136.useSelect)((select8) => {
       return select8(import_block_editor255.store).getSettings().mediaUpload;
     }, []);
-    const [trackBeingEdited, setTrackBeingEdited] = (0, import_element122.useState)(null);
-    const dropdownPopoverRef = (0, import_element122.useRef)();
+    const [trackBeingEdited, setTrackBeingEdited] = (0, import_element123.useState)(null);
+    const dropdownPopoverRef = (0, import_element123.useRef)();
     const handleTrackSelect = (selectedTracks = [], appendTracks = false) => {
       const existingTracksMap = new Map(
         tracks.map((track) => [track.id, track])
@@ -61351,14 +61524,14 @@ ${url}
         }
       });
     }
-    (0, import_element122.useEffect)(() => {
+    (0, import_element123.useEffect)(() => {
       dropdownPopoverRef.current?.focus();
     }, [trackBeingEdited]);
     if (!mediaUpload) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-      import_components158.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+      import_components159.Dropdown,
       {
         contentClassName: "block-library-video-tracks-editor",
         focusOnMount: true,
@@ -61372,8 +61545,8 @@ ${url}
             }
             onToggle();
           };
-          return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components158.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-            import_components158.ToolbarButton,
+          return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components159.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+            import_components159.ToolbarButton,
             {
               "aria-expanded": isOpen,
               "aria-haspopup": "true",
@@ -61384,7 +61557,7 @@ ${url}
         },
         renderContent: () => {
           if (trackBeingEdited !== null) {
-            return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
               SingleTrackEditor,
               {
                 track: tracks[trackBeingEdited],
@@ -61406,36 +61579,36 @@ ${url}
               }
             );
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_jsx_runtime487.Fragment, { children: [
-            tracks.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)("div", { className: "block-library-video-tracks-editor__tracks-informative-message", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("h2", { className: "block-library-video-tracks-editor__tracks-informative-message-title", children: (0, import_i18n236.__)("Text tracks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("p", { className: "block-library-video-tracks-editor__tracks-informative-message-description", children: (0, import_i18n236.__)(
+          return /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_jsx_runtime488.Fragment, { children: [
+            tracks.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)("div", { className: "block-library-video-tracks-editor__tracks-informative-message", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime488.jsx)("h2", { className: "block-library-video-tracks-editor__tracks-informative-message-title", children: (0, import_i18n236.__)("Text tracks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime488.jsx)("p", { className: "block-library-video-tracks-editor__tracks-informative-message-description", children: (0, import_i18n236.__)(
                 "Tracks can be subtitles, captions, chapters, or descriptions. They help make your content more accessible to a wider range of users."
               ) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components158.NavigableMenu, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_components159.NavigableMenu, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
                 TrackList,
                 {
                   tracks,
                   onEditPress: setTrackBeingEdited
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-                import_components158.MenuGroup,
+              /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+                import_components159.MenuGroup,
                 {
                   className: "block-library-video-tracks-editor__add-tracks-container",
                   label: (0, import_i18n236.__)("Add tracks"),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_block_editor255.MediaUploadCheck, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_block_editor255.MediaUploadCheck, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
                       import_block_editor255.MediaUpload,
                       {
                         onSelect: handleTrackSelect,
                         allowedTypes: ALLOWED_TYPES,
                         value: tracks.map(({ id }) => id),
                         multiple: true,
-                        render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-                          import_components158.MenuItem,
+                        render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+                          import_components159.MenuItem,
                           {
                             icon: media_default,
                             onClick: open,
@@ -61444,15 +61617,15 @@ ${url}
                         )
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-                      import_components158.FormFileUpload,
+                    /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+                      import_components159.FormFileUpload,
                       {
                         onChange: uploadFiles,
                         accept: ".vtt,text/vtt",
                         multiple: true,
                         render: ({ openFileDialog }) => {
-                          return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-                            import_components158.MenuItem,
+                          return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+                            import_components159.MenuItem,
                             {
                               icon: upload_default,
                               onClick: openFileDialog,
@@ -61482,9 +61655,9 @@ ${url}
     insertBlocksAfter,
     onReplace
   }) {
-    const videoPlayer = (0, import_element123.useRef)();
+    const videoPlayer = (0, import_element124.useRef)();
     const { id, controls, poster, src, tracks } = attributes3;
-    const [temporaryURL, setTemporaryURL] = (0, import_element123.useState)(attributes3.blob);
+    const [temporaryURL, setTemporaryURL] = (0, import_element124.useState)(attributes3.blob);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor256.useBlockEditingMode)();
     const hasNonContentControls = blockEditingMode === "default";
@@ -61494,7 +61667,7 @@ ${url}
       onChange: onSelectVideo,
       onError: onUploadError
     });
-    (0, import_element123.useEffect)(() => {
+    (0, import_element124.useEffect)(() => {
       if (videoPlayer.current) {
         videoPlayer.current.load();
       }
@@ -61542,13 +61715,13 @@ ${url}
         setTemporaryURL();
       }
     }
-    const { createErrorNotice } = (0, import_data136.useDispatch)(import_notices18.store);
+    const { createErrorNotice } = (0, import_data137.useDispatch)(import_notices18.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
     const placeholder2 = (content) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
-        import_components159.Placeholder,
+      return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
+        import_components160.Placeholder,
         {
           className: "block-editor-media-placeholder",
           withIllustration: !isSingleSelected,
@@ -61568,10 +61741,10 @@ ${url}
       className: classes
     });
     if (!src && !temporaryURL) {
-      return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
         import_block_editor256.MediaPlaceholder,
         {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_block_editor256.BlockIcon, { icon: video_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_block_editor256.BlockIcon, { icon: video_default }),
           onSelect: onSelectVideo,
           onSelectURL,
           accept: "video/*",
@@ -61582,9 +61755,9 @@ ${url}
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_jsx_runtime488.Fragment, { children: [
-      isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_jsx_runtime488.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_block_editor256.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)(import_jsx_runtime489.Fragment, { children: [
+      isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)(import_jsx_runtime489.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_block_editor256.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
           TracksEditor,
           {
             tracks,
@@ -61593,7 +61766,7 @@ ${url}
             }
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_block_editor256.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_block_editor256.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
           import_block_editor256.MediaReplaceFlow,
           {
             mediaId: id,
@@ -61607,8 +61780,8 @@ ${url}
           }
         ) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_block_editor256.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(
-        import_components159.__experimentalToolsPanel,
+      /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_block_editor256.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)(
+        import_components160.__experimentalToolsPanel,
         {
           label: (0, import_i18n237.__)("Settings"),
           resetAll: () => {
@@ -61624,14 +61797,14 @@ ${url}
           },
           dropdownMenuProps,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
               edit_common_settings_default,
               {
                 setAttributes,
                 attributes: attributes3
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
               poster_image_default,
               {
                 poster,
@@ -61643,19 +61816,19 @@ ${url}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)("figure", { ...blockProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components159.Disabled, { isDisabled: !isSingleSelected, children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)("figure", { ...blockProps, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_components160.Disabled, { isDisabled: !isSingleSelected, children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
           "video",
           {
             controls,
             poster,
             src: src || temporaryURL,
             ref: videoPlayer,
-            children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(Tracks, { tracks })
+            children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(Tracks, { tracks })
           }
         ) }),
-        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components159.Spinner, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(import_components160.Spinner, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
           Caption,
           {
             attributes: attributes3,
@@ -61672,7 +61845,7 @@ ${url}
   var edit_default35 = VideoEdit;
 
   // packages/block-library/build-module/video/save.js
-  var import_jsx_runtime489 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime490 = __toESM(require_jsx_runtime());
   var import_block_editor257 = __toESM(require_block_editor());
   function save52({ attributes: attributes3 }) {
     const {
@@ -61687,8 +61860,8 @@ ${url}
       playsInline,
       tracks
     } = attributes3;
-    return /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)("figure", { ...import_block_editor257.useBlockProps.save(), children: [
-      src && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime490.jsxs)("figure", { ...import_block_editor257.useBlockProps.save(), children: [
+      src && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
         "video",
         {
           autoPlay: autoplay,
@@ -61699,10 +61872,10 @@ ${url}
           preload: preload !== "metadata" ? preload : void 0,
           src,
           playsInline,
-          children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(Tracks, { tracks })
+          children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(Tracks, { tracks })
         }
       ),
-      !import_block_editor257.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
+      !import_block_editor257.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
         import_block_editor257.RichText.Content,
         {
           className: (0, import_block_editor257.__experimentalGetElementClassName)("caption"),
@@ -61824,13 +61997,13 @@ ${url}
   var import_rich_text7 = __toESM(require_rich_text());
 
   // packages/block-library/build-module/footnotes/edit.js
-  var import_jsx_runtime490 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime491 = __toESM(require_jsx_runtime());
   var import_block_editor258 = __toESM(require_block_editor());
-  var import_core_data87 = __toESM(require_core_data());
+  var import_core_data88 = __toESM(require_core_data());
   var import_i18n239 = __toESM(require_i18n());
-  var import_components160 = __toESM(require_components());
+  var import_components161 = __toESM(require_components());
   function FootnotesEdit({ context: { postType, postId } }) {
-    const [meta, updateMeta] = (0, import_core_data87.useEntityProp)(
+    const [meta, updateMeta] = (0, import_core_data88.useEntityProp)(
       "postType",
       postType,
       "meta",
@@ -61840,10 +62013,10 @@ ${url}
     const footnotes = meta?.footnotes ? JSON.parse(meta.footnotes) : [];
     const blockProps = (0, import_block_editor258.useBlockProps)();
     if (!footnotesSupported) {
-      return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
-        import_components160.Placeholder,
+      return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+        import_components161.Placeholder,
         {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor258.BlockIcon, { icon: format_list_numbered_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor258.BlockIcon, { icon: format_list_numbered_default }),
           label: (0, import_i18n239.__)("Footnotes"),
           instructions: (0, import_i18n239.__)(
             "Footnotes are not supported here. Add this block to post or page content."
@@ -61852,10 +62025,10 @@ ${url}
       ) });
     }
     if (!footnotes.length) {
-      return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
-        import_components160.Placeholder,
+      return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+        import_components161.Placeholder,
         {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor258.BlockIcon, { icon: format_list_numbered_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor258.BlockIcon, { icon: format_list_numbered_default }),
           label: (0, import_i18n239.__)("Footnotes"),
           instructions: (0, import_i18n239.__)(
             "Footnotes found in blocks within this document will be displayed here."
@@ -61863,9 +62036,9 @@ ${url}
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)("ol", { ...blockProps, children: footnotes.map(({ id, content }) => (
+    return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)("ol", { ...blockProps, children: footnotes.map(({ id, content }) => (
       /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
-      /* @__PURE__ */ (0, import_jsx_runtime490.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(
         "li",
         {
           onMouseDown: (event) => {
@@ -61875,7 +62048,7 @@ ${url}
             }
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
               import_block_editor258.RichText,
               {
                 id,
@@ -61903,7 +62076,7 @@ ${url}
               }
             ),
             " ",
-            /* @__PURE__ */ (0, import_jsx_runtime490.jsx)("a", { href: `#${id}-link`, children: "\u21A9\uFE0E" })
+            /* @__PURE__ */ (0, import_jsx_runtime491.jsx)("a", { href: `#${id}-link`, children: "\u21A9\uFE0E" })
           ]
         },
         id
@@ -61978,7 +62151,7 @@ ${url}
   };
 
   // packages/block-library/build-module/footnotes/format.js
-  var import_jsx_runtime491 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime492 = __toESM(require_jsx_runtime());
 
   // node_modules/uuid/dist/esm-browser/rng.js
   var getRandomValues;
@@ -62032,8 +62205,8 @@ ${url}
   var import_i18n240 = __toESM(require_i18n());
   var import_rich_text6 = __toESM(require_rich_text());
   var import_block_editor259 = __toESM(require_block_editor());
-  var import_data137 = __toESM(require_data());
-  var import_core_data88 = __toESM(require_core_data());
+  var import_data138 = __toESM(require_data());
+  var import_core_data89 = __toESM(require_core_data());
   var import_blocks98 = __toESM(require_blocks());
   var { usesContextKey } = unlock(import_block_editor259.privateApis);
   var formatName = "core/footnote";
@@ -62055,7 +62228,7 @@ ${url}
       isObjectActive,
       context: { postType, postId }
     }) {
-      const registry = (0, import_data137.useRegistry)();
+      const registry = (0, import_data138.useRegistry)();
       const {
         getSelectedBlockClientId,
         getBlocks,
@@ -62063,7 +62236,7 @@ ${url}
         getBlockName,
         getBlockParentsByBlockName
       } = registry.select(import_block_editor259.store);
-      const isFootnotesSupported = (0, import_data137.useSelect)(
+      const isFootnotesSupported = (0, import_data138.useSelect)(
         (select8) => {
           if (!select8(import_blocks98.store).getBlockType("core/footnotes")) {
             return false;
@@ -62072,7 +62245,7 @@ ${url}
           if (allowedBlocks === false || Array.isArray(allowedBlocks) && !allowedBlocks.includes("core/footnotes")) {
             return false;
           }
-          const entityRecord = select8(import_core_data88.store).getEntityRecord(
+          const entityRecord = select8(import_core_data89.store).getEntityRecord(
             "postType",
             postType,
             postId
@@ -62092,7 +62265,7 @@ ${url}
         },
         [postType, postId]
       );
-      const { selectionChange, insertBlock } = (0, import_data137.useDispatch)(import_block_editor259.store);
+      const { selectionChange, insertBlock } = (0, import_data138.useDispatch)(import_block_editor259.store);
       if (!isFootnotesSupported) {
         return null;
       }
@@ -62148,7 +62321,7 @@ ${url}
           selectionChange(fnBlock.clientId, id, 0, 0);
         });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
         import_block_editor259.RichTextToolbarButton,
         {
           icon: format_list_numbered_default,
@@ -62186,16 +62359,16 @@ ${url}
   var is_block_metadata_experimental_default = require_is_block_metadata_experimental();
 
   // packages/block-library/build-module/block-keyboard-shortcuts/index.js
-  var import_element124 = __toESM(require_element());
-  var import_data138 = __toESM(require_data());
+  var import_element125 = __toESM(require_element());
+  var import_data139 = __toESM(require_data());
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts());
   var import_i18n241 = __toESM(require_i18n());
   var import_blocks99 = __toESM(require_blocks());
   var import_block_editor260 = __toESM(require_block_editor());
   function BlockKeyboardShortcuts() {
-    const { registerShortcut } = (0, import_data138.useDispatch)(import_keyboard_shortcuts.store);
-    const { replaceBlocks } = (0, import_data138.useDispatch)(import_block_editor260.store);
-    const { getBlockName, getSelectedBlockClientId, getBlockAttributes: getBlockAttributes4 } = (0, import_data138.useSelect)(import_block_editor260.store);
+    const { registerShortcut } = (0, import_data139.useDispatch)(import_keyboard_shortcuts.store);
+    const { replaceBlocks } = (0, import_data139.useDispatch)(import_block_editor260.store);
+    const { getBlockName, getSelectedBlockClientId, getBlockAttributes: getBlockAttributes4 } = (0, import_data139.useSelect)(import_block_editor260.store);
     const handleTransformHeadingAndParagraph = (event, level) => {
       event.preventDefault();
       const currentClientId = getSelectedBlockClientId();
@@ -62224,7 +62397,7 @@ ${url}
         })
       );
     };
-    (0, import_element124.useEffect)(() => {
+    (0, import_element125.useEffect)(() => {
       registerShortcut({
         name: "core/block-editor/transform-heading-to-paragraph",
         category: "block-library",
@@ -62427,7 +62600,7 @@ ${url}
     if (window.__unstableAutoRegisterBlocks) {
       window.__unstableAutoRegisterBlocks.forEach((blockName) => {
         const bootstrappedBlockType = unlock(
-          (0, import_data139.select)(import_blocks100.store)
+          (0, import_data140.select)(import_blocks100.store)
         ).getBootstrappedBlockType(blockName);
         const bootstrappedApiVersion = bootstrappedBlockType.apiVersion;
         (0, import_blocks100.registerBlockType)(blockName, {
@@ -62440,16 +62613,16 @@ ${url}
               attributes: attributes3
             });
             if (status === "loading") {
-              return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)("div", { ...blockProps, children: (0, import_i18n242.__)("Loading\u2026") });
+              return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("div", { ...blockProps, children: (0, import_i18n242.__)("Loading\u2026") });
             }
             if (status === "error") {
-              return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)("div", { ...blockProps, children: (0, import_i18n242.sprintf)(
+              return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("div", { ...blockProps, children: (0, import_i18n242.sprintf)(
                 /* translators: %s: error message describing the problem */
                 (0, import_i18n242.__)("Error loading block: %s"),
                 error
               ) });
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
               "div",
               {
                 ...blockProps,
