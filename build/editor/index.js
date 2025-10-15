@@ -29592,7 +29592,9 @@ var wp;
         style: styles,
         role: "list",
         spacing: "3",
-        ref: commentSidebarRef,
+        ref: (node) => {
+          commentSidebarRef.current = node;
+        },
         children: [
           !isFloating && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             AddComment,
