@@ -9784,7 +9784,7 @@ var wp;
   var import_i18n42 = __toESM(require_i18n());
   var import_date6 = __toESM(require_date());
 
-  // packages/dataviews/build-module/dataform-controls/relative-date-control.js
+  // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
   var import_jsx_runtime78 = __toESM(require_jsx_runtime());
   var import_components13 = __toESM(require_components());
   var import_element12 = __toESM(require_element());
@@ -9804,22 +9804,34 @@ var wp;
     ]
   };
   function RelativeDateControl({
-    id,
-    value,
+    className,
+    data,
+    field,
     onChange,
-    label,
     hideLabelFromVision,
-    options,
-    className
+    operator
   }) {
-    const { value: relValue = "", unit = options[0].value } = value;
+    const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
+    const { id, label, getValue, setValue } = field;
+    const fieldValue = getValue({ item: data });
+    const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
     const onChangeValue = (0, import_element12.useCallback)(
-      (newValue) => onChange({ value: Number(newValue), unit }),
-      [onChange, unit]
+      (newValue) => onChange(
+        setValue({
+          item: data,
+          value: { value: Number(newValue), unit }
+        })
+      ),
+      [onChange, setValue, data, unit]
     );
     const onChangeUnit = (0, import_element12.useCallback)(
-      (newUnit) => onChange({ value: relValue, unit: newUnit }),
-      [onChange, relValue]
+      (newUnit) => onChange(
+        setValue({
+          item: data,
+          value: { value: relValue, unit: newUnit }
+        })
+      ),
+      [onChange, setValue, data, relValue]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
       import_components13.BaseControl,
@@ -10038,23 +10050,16 @@ var wp;
     hideLabelFromVision,
     operator
   }) {
-    const { id, label, getValue, setValue } = field;
-    const value = getValue({ item: data });
-    const onChangeRelativeDateControl = (0, import_element13.useCallback)(
-      (newValue) => onChange(setValue({ item: data, value: newValue })),
-      [data, onChange, setValue]
-    );
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
       return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__datetime",
-          id,
-          value: value && typeof value === "object" ? value : {},
-          onChange: onChangeRelativeDateControl,
-          label,
+          data,
+          field,
+          onChange,
           hideLabelFromVision,
-          options: TIME_UNITS_OPTIONS[operator]
+          operator
         }
       );
     }
@@ -10588,25 +10593,16 @@ var wp;
     hideLabelFromVision,
     operator
   }) {
-    const { id, label, getValue, setValue } = field;
-    const value = getValue({ item: data });
-    const onChangeRelativeDateControl = (0, import_element14.useCallback)(
-      (newValue) => {
-        onChange(setValue({ item: data, value: newValue }));
-      },
-      [data, onChange, setValue]
-    );
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
       return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__date",
-          id,
-          value: value && typeof value === "object" ? value : {},
-          onChange: onChangeRelativeDateControl,
-          label,
+          data,
+          field,
+          onChange,
           hideLabelFromVision,
-          options: TIME_UNITS_OPTIONS[operator]
+          operator
         }
       );
     }
