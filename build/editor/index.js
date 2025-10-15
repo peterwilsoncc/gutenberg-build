@@ -28884,6 +28884,11 @@ var wp;
       const nextThread = threads[currentIndex + 1];
       const prevThread = threads[currentIndex - 1];
       await onCommentDelete(comment);
+      if (comment.parent !== 0) {
+        setSelectedThread(comment.parent);
+        focusCommentThread(comment.parent, commentSidebarRef.current);
+        return;
+      }
       if (nextThread) {
         setSelectedThread(nextThread.id);
         focusCommentThread(nextThread.id, commentSidebarRef.current);
