@@ -14114,7 +14114,7 @@ var wp;
         )) {
           const { source: sourceName, args: sourceArgs } = binding;
           const source = registeredSources[sourceName];
-          if (!source || !bindableAttributes.includes(attributeName)) {
+          if (!source || !bindableAttributes?.includes(attributeName)) {
             continue;
           }
           blockBindingsBySource.set(source, {
@@ -14177,7 +14177,7 @@ var wp;
           for (const [attributeName, newValue] of Object.entries(
             keptAttributes
           )) {
-            if (!blockBindings[attributeName] || !bindableAttributes.includes(attributeName)) {
+            if (!blockBindings[attributeName] || !bindableAttributes?.includes(attributeName)) {
               continue;
             }
             const binding = blockBindings[attributeName];
