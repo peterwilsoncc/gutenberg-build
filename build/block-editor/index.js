@@ -7290,7 +7290,7 @@ var wp;
   var import_blocks7 = __toESM(require_blocks());
   var import_components2 = __toESM(require_components());
   var import_data6 = __toESM(require_data());
-  var import_element6 = __toESM(require_element());
+  var import_element7 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/block-context/index.js
   var import_jsx_runtime = __toESM(require_jsx_runtime());
@@ -14041,6 +14041,11 @@ var wp;
     return { updateBlockBindings, removeAllBlockBindings };
   }
 
+  // packages/block-editor/build-module/components/block-list/private-block-context.js
+  var import_element6 = __toESM(require_element());
+  var PrivateBlockContext = (0, import_element6.createContext)({});
+  PrivateBlockContext.displayName = "PrivateBlockContext";
+
   // packages/block-editor/build-module/components/block-edit/edit.js
   var DEFAULT_BLOCK_CONTEXT = {};
   var Edit = (props) => {
@@ -14053,24 +14058,17 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(Component7, { ...props });
   };
   var EditWithFilters = (0, import_components2.withFilters)("editor.BlockEdit")(Edit);
-  var EMPTY_ARRAY3 = [];
   var EditWithGeneratedProps = (props) => {
     const { name, clientId, attributes, setAttributes } = props;
     const registry = (0, import_data6.useRegistry)();
     const blockType = (0, import_blocks7.getBlockType)(name);
-    const blockContext = (0, import_element6.useContext)(block_context_default);
+    const blockContext = (0, import_element7.useContext)(block_context_default);
     const registeredSources = (0, import_data6.useSelect)(
       (select2) => unlock(select2(import_blocks7.store)).getAllBlockBindingsSources(),
       []
     );
-    const bindableAttributes = (0, import_data6.useSelect)(
-      (select2) => {
-        const { __experimentalBlockBindingsSupportedAttributes } = select2(store).getSettings();
-        return __experimentalBlockBindingsSupportedAttributes?.[name] || EMPTY_ARRAY3;
-      },
-      [name]
-    );
-    const { blockBindings, context, hasPatternOverrides } = (0, import_element6.useMemo)(() => {
+    const { bindableAttributes } = (0, import_element7.useContext)(PrivateBlockContext);
+    const { blockBindings, context, hasPatternOverrides } = (0, import_element7.useMemo)(() => {
       const computedContext = blockType?.usesContext ? Object.fromEntries(
         Object.entries(blockContext).filter(
           ([key]) => blockType.usesContext.includes(key)
@@ -14167,7 +14165,7 @@ var wp;
         registeredSources
       ]
     );
-    const setBoundAttributes = (0, import_element6.useCallback)(
+    const setBoundAttributes = (0, import_element7.useCallback)(
       (nextAttributes) => {
         if (!blockBindings) {
           setAttributes(nextAttributes);
@@ -14363,11 +14361,6 @@ var wp;
       }
     );
   }
-
-  // packages/block-editor/build-module/components/block-list/private-block-context.js
-  var import_element7 = __toESM(require_element());
-  var PrivateBlockContext = (0, import_element7.createContext)({});
-  PrivateBlockContext.displayName = "PrivateBlockContext";
 
   // packages/block-editor/build-module/components/block-edit/index.js
   function BlockEdit({
@@ -15522,8 +15515,8 @@ var wp;
   var link_default2 = createLinkCompleter();
 
   // packages/block-editor/build-module/components/autocomplete/index.js
-  var EMPTY_ARRAY4 = [];
-  function useCompleters({ completers = EMPTY_ARRAY4 }) {
+  var EMPTY_ARRAY3 = [];
+  function useCompleters({ completers = EMPTY_ARRAY3 }) {
     const { name } = useBlockEditContext();
     return (0, import_element15.useMemo)(() => {
       let filteredCompleters = [...completers, link_default2];
@@ -17001,7 +16994,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-alignment-control/use-available-alignments.js
-  var EMPTY_ARRAY5 = [];
+  var EMPTY_ARRAY4 = [];
   var DEFAULT_CONTROLS = ["none", "left", "center", "right", "wide", "full"];
   var WIDE_CONTROLS = ["wide", "full"];
   function useAvailableAlignments(controls = DEFAULT_CONTROLS) {
@@ -17025,7 +17018,7 @@ var wp;
     );
     const layout = useLayout();
     if (isNoneOnly) {
-      return EMPTY_ARRAY5;
+      return EMPTY_ARRAY4;
     }
     const layoutType = getLayoutType(layout?.type);
     if (themeSupportsLayout) {
@@ -17037,12 +17030,12 @@ var wp;
         (alignment) => controls.includes(alignment.name)
       );
       if (alignments2.length === 1 && alignments2[0].name === "none") {
-        return EMPTY_ARRAY5;
+        return EMPTY_ARRAY4;
       }
       return alignments2;
     }
     if (layoutType.name !== "default" && layoutType.name !== "constrained") {
-      return EMPTY_ARRAY5;
+      return EMPTY_ARRAY4;
     }
     const alignments = controls.filter((control) => {
       if (layout.alignments) {
@@ -17054,7 +17047,7 @@ var wp;
       return DEFAULT_CONTROLS.includes(control);
     }).map((name) => ({ name }));
     if (alignments.length === 1 && alignments[0].name === "none") {
-      return EMPTY_ARRAY5;
+      return EMPTY_ARRAY4;
     }
     return alignments;
   }
@@ -21845,7 +21838,12 @@ var wp;
         const attributes2 = getBlockAttributes3(clientId);
         const { name: blockName, isValid: isValid2 } = blockWithoutAttributes2;
         const blockType = (0, import_blocks18.getBlockType)(blockName);
-        const { supportsLayout, isPreviewMode: isPreviewMode2 } = getSettings4();
+        const {
+          supportsLayout,
+          isPreviewMode: isPreviewMode2,
+          __experimentalBlockBindingsSupportedAttributes
+        } = getSettings4();
+        const bindableAttributes2 = __experimentalBlockBindingsSupportedAttributes?.[blockName];
         const hasLightBlockWrapper = blockType?.apiVersion > 1;
         const previewContext = {
           isPreviewMode: isPreviewMode2,
@@ -21913,7 +21911,8 @@ var wp;
           isEditingDisabled: blockEditingMode2 === "disabled",
           hasEditableOutline: blockEditingMode2 !== "disabled" && getBlockEditingMode2(rootClientId) === "disabled",
           originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
-          isBlockHidden: _isBlockHidden(clientId)
+          isBlockHidden: _isBlockHidden(clientId),
+          bindableAttributes: bindableAttributes2
         };
       },
       [clientId, rootClientId]
@@ -21955,7 +21954,8 @@ var wp;
       className,
       defaultClassName,
       originalBlockClientId,
-      isBlockHidden: isBlockHidden2
+      isBlockHidden: isBlockHidden2,
+      bindableAttributes
     } = selectedProps;
     const block = (0, import_element29.useMemo)(
       () => ({ ...blockWithoutAttributes, attributes }),
@@ -21994,7 +21994,8 @@ var wp;
       originalBlockClientId,
       themeSupportsLayout,
       canMove,
-      isBlockHidden: isBlockHidden2
+      isBlockHidden: isBlockHidden2,
+      bindableAttributes
     };
     if (isBlockHidden2 && !isSelected && !isMultiSelected && !hasChildSelected) {
       return null;
@@ -26463,7 +26464,7 @@ var wp;
   // packages/block-editor/build-module/components/inserter/block-types-tab.js
   var getBlockNamespace = (item) => item.name.split("/")[0];
   var MAX_SUGGESTED_ITEMS = 6;
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY5 = [];
   function BlockTypesTabPanel({
     items,
     collections,
@@ -26501,7 +26502,7 @@ var wp;
       return Object.entries(collections);
     }, [collections]);
     const currentlyRenderedCollections = (0, import_compose33.useAsyncList)(
-      didRenderAllCategories ? collectionEntries : EMPTY_ARRAY6
+      didRenderAllCategories ? collectionEntries : EMPTY_ARRAY5
     );
     return /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)("div", { className, children: [
       showMostUsedBlocks && // Only show the most used blocks if the total amount of block
@@ -28672,7 +28673,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/search-results.js
   var INITIAL_INSERTER_RESULTS = 9;
-  var EMPTY_ARRAY7 = [];
+  var EMPTY_ARRAY6 = [];
   function InserterSearchResults({
     filterValue,
     onSelect,
@@ -28696,7 +28697,7 @@ var wp;
       (select2) => {
         const blockListSettings2 = select2(store).getBlockListSettings(rootClientId);
         return {
-          prioritizedBlocks: blockListSettings2?.prioritizedInserterBlocks || EMPTY_ARRAY7
+          prioritizedBlocks: blockListSettings2?.prioritizedInserterBlocks || EMPTY_ARRAY6
         };
       },
       [rootClientId]
@@ -32023,7 +32024,7 @@ var wp;
   function BlockList(settings2) {
     return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Provider, { value: DEFAULT_BLOCK_EDIT_CONTEXT, children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Root, { ...settings2 }) });
   }
-  var EMPTY_ARRAY8 = [];
+  var EMPTY_ARRAY7 = [];
   var EMPTY_SET2 = /* @__PURE__ */ new Set();
   function Items({
     placeholder,
@@ -32059,7 +32060,7 @@ var wp;
         if (getSettings4().isPreviewMode) {
           return {
             order: _order,
-            selectedBlocks: EMPTY_ARRAY8,
+            selectedBlocks: EMPTY_ARRAY7,
             visibleBlocks: EMPTY_SET2
           };
         }
@@ -37509,7 +37510,7 @@ var wp;
   var import_blocks65 = __toESM(require_blocks());
   var import_element116 = __toESM(require_element());
   var import_data106 = __toESM(require_data());
-  var EMPTY_ARRAY9 = [];
+  var EMPTY_ARRAY8 = [];
   var MAX_PATTERNS_TO_SHOW = 6;
   var POPOVER_PROPS5 = {
     placement: "bottom-start"
@@ -37523,9 +37524,9 @@ var wp;
           __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2
         } = select2(store);
         const attributes = getBlockAttributes3(clientId);
-        const _categories = attributes?.metadata?.categories || EMPTY_ARRAY9;
+        const _categories = attributes?.metadata?.categories || EMPTY_ARRAY8;
         const rootBlock = getBlockRootClientId2(clientId);
-        const _patterns = _categories.length > 0 ? __experimentalGetAllowedPatterns2(rootBlock) : EMPTY_ARRAY9;
+        const _patterns = _categories.length > 0 ? __experimentalGetAllowedPatterns2(rootBlock) : EMPTY_ARRAY8;
         return {
           categories: _categories,
           currentPatternName: attributes?.metadata?.patternName,
@@ -37537,7 +37538,7 @@ var wp;
     const { replaceBlocks: replaceBlocks2 } = (0, import_data106.useDispatch)(store);
     const sameCategoryPatternsWithSingleWrapper = (0, import_element116.useMemo)(() => {
       if (categories.length === 0 || !patterns || patterns.length === 0) {
-        return EMPTY_ARRAY9;
+        return EMPTY_ARRAY8;
       }
       return patterns.filter((pattern) => {
         const isCorePattern = pattern.source === "core" || pattern.source?.startsWith("pattern-directory") && pattern.source !== "pattern-directory/theme";
@@ -42540,7 +42541,7 @@ var wp;
   // packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.js
   var import_element134 = __toESM(require_element());
   var import_i18n120 = __toESM(require_i18n());
-  var EMPTY_ARRAY10 = [];
+  var EMPTY_ARRAY9 = [];
   var compare = new Intl.Collator("und", { numeric: true }).compare;
   function useSpacingSizes() {
     const [
@@ -42554,9 +42555,9 @@ var wp;
       "spacing.spacingSizes.default",
       "spacing.defaultSpacingSizes"
     );
-    const customSizes = customSpacingSizes ?? EMPTY_ARRAY10;
-    const themeSizes = themeSpacingSizes ?? EMPTY_ARRAY10;
-    const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : EMPTY_ARRAY10;
+    const customSizes = customSpacingSizes ?? EMPTY_ARRAY9;
+    const themeSizes = themeSpacingSizes ?? EMPTY_ARRAY9;
+    const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : EMPTY_ARRAY9;
     return (0, import_element134.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n120.__)("None"), slug: "0", size: 0 },
@@ -44410,7 +44411,7 @@ var wp;
     bottomRight: void 0
   };
   var RANGE_CONTROL_MAX_SIZE2 = 8;
-  var EMPTY_ARRAY11 = [];
+  var EMPTY_ARRAY10 = [];
   var CORNERS = {
     all: (0, import_i18n129.__)("Border radius"),
     topLeft: (0, import_i18n129.__)("Top left"),
@@ -44641,9 +44642,9 @@ var wp;
 
   // packages/block-editor/build-module/components/border-radius-control/index.js
   function useBorderRadiusSizes(presets) {
-    const defaultSizes = presets?.default ?? EMPTY_ARRAY11;
-    const customSizes = presets?.custom ?? EMPTY_ARRAY11;
-    const themeSizes = presets?.theme ?? EMPTY_ARRAY11;
+    const defaultSizes = presets?.default ?? EMPTY_ARRAY10;
+    const customSizes = presets?.custom ?? EMPTY_ARRAY10;
+    const themeSizes = presets?.theme ?? EMPTY_ARRAY10;
     return (0, import_element141.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n131.__)("None"), slug: "0", size: 0 },
@@ -45088,7 +45089,7 @@ var wp;
   var import_i18n134 = __toESM(require_i18n());
   var import_components139 = __toESM(require_components());
   var import_element144 = __toESM(require_element());
-  var EMPTY_ARRAY12 = [];
+  var EMPTY_ARRAY11 = [];
   function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings2 }) {
     const shadows = useShadowPresets(settings2);
     return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)("div", { className: "block-editor-global-styles__shadow-popover-container", children: /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(import_components139.__experimentalVStack, { spacing: 4, children: [
@@ -45239,7 +45240,7 @@ var wp;
   function useShadowPresets(settings2) {
     return (0, import_element144.useMemo)(() => {
       if (!settings2?.shadow) {
-        return EMPTY_ARRAY12;
+        return EMPTY_ARRAY11;
       }
       const defaultPresetsEnabled = settings2?.shadow?.defaultPresets;
       const {
@@ -45253,9 +45254,9 @@ var wp;
         shadow: "none"
       };
       const shadowPresets = [
-        ...defaultPresetsEnabled && defaultShadows || EMPTY_ARRAY12,
-        ...themeShadows || EMPTY_ARRAY12,
-        ...customShadows || EMPTY_ARRAY12
+        ...defaultPresetsEnabled && defaultShadows || EMPTY_ARRAY11,
+        ...themeShadows || EMPTY_ARRAY11,
+        ...customShadows || EMPTY_ARRAY11
       ];
       if (shadowPresets.length) {
         shadowPresets.unshift(unsetShadow);
@@ -46291,17 +46292,17 @@ var wp;
   var import_components143 = __toESM(require_components());
   var import_i18n138 = __toESM(require_i18n());
   var import_element147 = __toESM(require_element());
-  var EMPTY_ARRAY13 = [];
+  var EMPTY_ARRAY12 = [];
   function useMultiOriginColorPresets(settings2, { presetSetting, defaultSetting }) {
     const disableDefault = !settings2?.color?.[defaultSetting];
-    const userPresets = settings2?.color?.[presetSetting]?.custom || EMPTY_ARRAY13;
-    const themePresets = settings2?.color?.[presetSetting]?.theme || EMPTY_ARRAY13;
-    const defaultPresets = settings2?.color?.[presetSetting]?.default || EMPTY_ARRAY13;
+    const userPresets = settings2?.color?.[presetSetting]?.custom || EMPTY_ARRAY12;
+    const themePresets = settings2?.color?.[presetSetting]?.theme || EMPTY_ARRAY12;
+    const defaultPresets = settings2?.color?.[presetSetting]?.default || EMPTY_ARRAY12;
     return (0, import_element147.useMemo)(
       () => [
         ...userPresets,
         ...themePresets,
-        ...disableDefault ? EMPTY_ARRAY13 : defaultPresets
+        ...disableDefault ? EMPTY_ARRAY12 : defaultPresets
       ],
       [disableDefault, userPresets, themePresets, defaultPresets]
     );
@@ -46659,7 +46660,7 @@ var wp;
   var import_i18n141 = __toESM(require_i18n());
   var import_blocks70 = __toESM(require_blocks());
   var globalStylesChangesCache = /* @__PURE__ */ new Map();
-  var EMPTY_ARRAY14 = [];
+  var EMPTY_ARRAY13 = [];
   var translationMap = {
     caption: (0, import_i18n141.__)("Caption"),
     link: (0, import_i18n141.__)("Link"),
@@ -46755,8 +46756,8 @@ var wp;
       }
     );
     if (!changedValueTree.length) {
-      globalStylesChangesCache.set(cacheKey2, EMPTY_ARRAY14);
-      return EMPTY_ARRAY14;
+      globalStylesChangesCache.set(cacheKey2, EMPTY_ARRAY13);
+      return EMPTY_ARRAY13;
     }
     const result = [...new Set(changedValueTree)].reduce((acc, curr) => {
       const translation = getTranslation(curr);
@@ -46830,7 +46831,7 @@ var wp;
         }
       });
     }
-    return EMPTY_ARRAY14;
+    return EMPTY_ARRAY13;
   }
 
   // packages/block-editor/build-module/hooks/block-style-variation.js
@@ -57451,7 +57452,7 @@ var wp;
   // packages/block-editor/build-module/components/inspector-controls-tabs/use-inspector-controls-tabs.js
   var import_components204 = __toESM(require_components());
   var import_data159 = __toESM(require_data());
-  var EMPTY_ARRAY15 = [];
+  var EMPTY_ARRAY14 = [];
   function getShowTabs(blockName, tabSettings = {}) {
     if (tabSettings[blockName] !== void 0) {
       return tabSettings[blockName];
@@ -57513,7 +57514,7 @@ var wp;
       return select2(store).getSettings().blockInspectorTabs;
     }, []);
     const showTabs = getShowTabs(blockName, tabSettings);
-    return showTabs ? tabs : EMPTY_ARRAY15;
+    return showTabs ? tabs : EMPTY_ARRAY14;
   }
 
   // packages/block-editor/build-module/components/block-inspector/useBlockInspectorAnimationSettings.js
@@ -61098,7 +61099,7 @@ var wp;
   var import_compose92 = __toESM(require_compose());
   var import_hooks29 = __toESM(require_hooks());
   var import_element223 = __toESM(require_element());
-  var EMPTY_ARRAY16 = [];
+  var EMPTY_ARRAY15 = [];
   var isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
   k([names_default]);
   function useMultiOriginPresets({ presetSetting, defaultSetting }) {
@@ -61110,9 +61111,9 @@ var wp;
     );
     return (0, import_element223.useMemo)(
       () => [
-        ...userPresets || EMPTY_ARRAY16,
-        ...themePresets || EMPTY_ARRAY16,
-        ...enableDefault && defaultPresets || EMPTY_ARRAY16
+        ...userPresets || EMPTY_ARRAY15,
+        ...themePresets || EMPTY_ARRAY15,
+        ...enableDefault && defaultPresets || EMPTY_ARRAY15
       ],
       [enableDefault, userPresets, themePresets, defaultPresets]
     );
