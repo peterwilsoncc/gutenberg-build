@@ -59460,7 +59460,6 @@ ${url}
   var block_default106 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
-    __experimental: true,
     name: "core/terms-query",
     title: "Terms Query",
     category: "theme",
@@ -60228,7 +60227,6 @@ ${url}
   var block_default107 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
-    __experimental: true,
     name: "core/term-template",
     title: "Term Template",
     category: "theme",
@@ -62566,13 +62564,11 @@ ${url}
       term_count_exports,
       term_description_exports,
       term_name_exports,
+      terms_query_exports,
+      term_template_exports,
       query_title_exports,
       post_author_biography_exports
     ];
-    if (window?.__experimentalEnableBlockExperiments) {
-      blocks.push(terms_query_exports);
-      blocks.push(term_template_exports);
-    }
     if (window?.__experimentalEnableFormBlocks) {
       blocks.push(form_exports);
       blocks.push(form_input_exports);
