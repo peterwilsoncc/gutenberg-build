@@ -28563,7 +28563,9 @@ var wp;
   var import_block_editor51 = __toESM(require_block_editor());
   var import_notices25 = __toESM(require_notices());
   var import_html_entities25 = __toESM(require_html_entities());
-  var { useBlockElementRef } = unlock(import_block_editor51.privateApis);
+  var { useBlockElementRef, cleanEmptyObject: cleanEmptyObject2 } = unlock(
+    import_block_editor51.privateApis
+  );
   function useBlockComments(postId2) {
     const [commentLastUpdated, reflowComments] = (0, import_element123.useReducer)(
       () => Date.now(),
@@ -28774,10 +28776,10 @@ var wp;
           const clientId = getSelectedBlockClientId2();
           const metadata = getBlockAttributes2(clientId)?.metadata;
           updateBlockAttributes2(clientId, {
-            metadata: {
+            metadata: cleanEmptyObject2({
               ...metadata,
               commentId: void 0
-            }
+            })
           });
         }
         createNotice("snackbar", (0, import_i18n152.__)("Note deleted successfully."), {
