@@ -2961,7 +2961,7 @@ function MetaBoxesMain({
   const contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     // The class name 'edit-post-layout__metaboxes' is retained because some plugins use it.
     className: "edit-post-layout__metaboxes edit-post-meta-boxes-main__liner",
-    hidden: !isOpen,
+    hidden: !isLegacy && !isOpen,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
       location: "normal"
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
