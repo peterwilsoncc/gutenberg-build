@@ -4451,6 +4451,7 @@ var wp;
     apiVersion: 3,
     name: "core/breadcrumbs",
     title: "Breadcrumbs",
+    __experimental: true,
     category: "theme",
     description: "Display a breadcrumb trail only for Pages, or for hierarchical post types. The block is useful to insert in the Pages template.",
     textdomain: "default",
@@ -62474,7 +62475,6 @@ ${url}
       accordion_panel_exports,
       archives_exports,
       audio_exports,
-      breadcrumbs_exports,
       button_exports,
       buttons_exports,
       calendar_exports,
@@ -62569,6 +62569,9 @@ ${url}
       query_title_exports,
       post_author_biography_exports
     ];
+    if (window?.__experimentalEnableBlockExperiments) {
+      blocks.push(breadcrumbs_exports);
+    }
     if (window?.__experimentalEnableFormBlocks) {
       blocks.push(form_exports);
       blocks.push(form_input_exports);
