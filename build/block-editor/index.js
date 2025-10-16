@@ -36568,10 +36568,10 @@ var wp;
       );
       (0, import_a11y11.speak)(message, "assertive");
       updateBlockAttributes2([clientId], {
-        metadata: {
+        metadata: cleanEmptyObject({
           ...metadata,
           name: newName
-        }
+        })
       });
       onClose();
     };
