@@ -29775,7 +29775,8 @@ var wp;
             }
           )
         }
-      )
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(PluginMoreMenuItem, { icon: comment_default, onClick: openTheSidebar, children: (0, import_i18n157.__)("Notes") })
     ] });
   }
 
