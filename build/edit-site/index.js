@@ -29162,10 +29162,11 @@ var wp;
     closeModal
   }) {
     const label = typeof action.label === "string" ? action.label : action.label(items);
+    const modalHeader = typeof action.modalHeader === "function" ? action.modalHeader(items) : action.modalHeader;
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
       import_components100.Modal,
       {
-        title: action.modalHeader || label,
+        title: modalHeader || label,
         __experimentalHideHeader: !!action.hideModalHeader,
         onRequestClose: closeModal,
         focusOnMount: action.modalFocusOnMount ?? true,
