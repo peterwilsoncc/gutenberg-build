@@ -29219,9 +29219,9 @@ var wp;
                   rows: "approved" === thread.status ? 2 : 4,
                   labelText: (0, import_i18n153.sprintf)(
                     // translators: %1$s: note identifier, %2$s: author name
-                    (0, import_i18n153.__)("Reply to Note %1$s by %2$s"),
+                    (0, import_i18n153.__)("Reply to note %1$s by %2$s"),
                     thread.id,
-                    thread?.author_name || "Unknown"
+                    thread.author_name
                   ),
                   reflowComments
                 }
@@ -29378,7 +29378,7 @@ var wp;
             // translators: %1$s: note identifier, %2$s: author name.
             (0, import_i18n153.__)("Edit note %1$s by %2$s"),
             thread.id,
-            thread?.author_name || "Unknown"
+            thread.author_name
           ),
           reflowComments
         }
@@ -29469,7 +29469,7 @@ var wp;
                 setShowCommentBoard(false);
                 blockElement?.focus();
               },
-              submitButtonText: (0, import_i18n154._x)("Note", "Add note button"),
+              submitButtonText: (0, import_i18n154.__)("Add note"),
               labelText: (0, import_i18n154.__)("New Note")
             }
           )
@@ -29494,7 +29494,7 @@ var wp;
           onClose();
         },
         "aria-haspopup": "dialog",
-        children: (0, import_i18n155.__)("Note")
+        children: (0, import_i18n155.__)("Add note")
       }
     ) });
   };
