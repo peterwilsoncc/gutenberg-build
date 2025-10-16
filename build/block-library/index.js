@@ -6622,14 +6622,8 @@ var wp;
       return;
     }
     const { supports: supports3 } = (0, import_blocks7.getBlockType)(newBlockName);
-    const BLOCK_BINDINGS_SUPPORTED_BLOCKS = [
-      "core/paragraph",
-      "core/heading",
-      "core/image",
-      "core/button"
-    ];
     const transformSupportedProps = ["commentId"];
-    if (BLOCK_BINDINGS_SUPPORTED_BLOCKS.includes(newBlockName) && bindingsCallback) {
+    if (bindingsCallback) {
       transformSupportedProps.push("id", "bindings");
     }
     if (supports3.renaming !== false) {
