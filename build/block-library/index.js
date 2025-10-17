@@ -60428,7 +60428,10 @@ ${url}
       hide_empty: hideEmpty,
       order,
       orderby: orderBy,
-      per_page: perPage
+      // There is a mismatch between `WP_Term_Query` and the REST API parameter default
+      // values to fetch all items. In `WP_Term_Query`, the default is `''|0` and in
+      // the REST API is `-1`.
+      per_page: perPage || -1
     };
     if (!showNested && !include?.length) {
       queryArgs.parent = 0;
