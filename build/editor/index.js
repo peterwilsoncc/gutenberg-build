@@ -28719,7 +28719,7 @@ var wp;
         }
         createNotice(
           "snackbar",
-          parent ? (0, import_i18n152.__)("Reply added successfully.") : (0, import_i18n152.__)("Note added successfully."),
+          parent ? (0, import_i18n152.__)("Reply added.") : (0, import_i18n152.__)("Note added."),
           {
             type: "snackbar",
             isDismissible: true
@@ -28811,7 +28811,7 @@ var wp;
             })
           });
         }
-        createNotice("snackbar", (0, import_i18n152.__)("Note deleted successfully."), {
+        createNotice("snackbar", (0, import_i18n152.__)("Note deleted."), {
           type: "snackbar",
           isDismissible: true
         });
