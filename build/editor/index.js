@@ -29463,7 +29463,6 @@ var wp;
   var import_data157 = __toESM(require_data());
   var import_components135 = __toESM(require_components());
   var import_block_editor53 = __toESM(require_block_editor());
-  var import_blocks19 = __toESM(require_blocks());
   var { useBlockElement: useBlockElement2 } = unlock(import_block_editor53.privateApis);
   function AddComment({
     onSubmit,
@@ -29471,20 +29470,16 @@ var wp;
     setShowCommentBoard,
     commentSidebarRef
   }) {
-    const { clientId, blockCommentId, isEmptyDefaultBlock } = (0, import_data157.useSelect)(
-      (select4) => {
-        const { getSelectedBlock: getSelectedBlock2 } = select4(import_block_editor53.store);
-        const selectedBlock = getSelectedBlock2();
-        return {
-          clientId: selectedBlock?.clientId,
-          blockCommentId: selectedBlock?.attributes?.metadata?.noteId,
-          isEmptyDefaultBlock: selectedBlock ? (0, import_blocks19.isUnmodifiedDefaultBlock)(selectedBlock) : false
-        };
-      },
-      []
-    );
+    const { clientId, blockCommentId } = (0, import_data157.useSelect)((select4) => {
+      const { getSelectedBlock: getSelectedBlock2 } = select4(import_block_editor53.store);
+      const selectedBlock = getSelectedBlock2();
+      return {
+        clientId: selectedBlock?.clientId,
+        blockCommentId: selectedBlock?.attributes?.metadata?.noteId
+      };
+    }, []);
     const blockElement = useBlockElement2(clientId);
-    if (!showCommentBoard || !clientId || void 0 !== blockCommentId || isEmptyDefaultBlock) {
+    if (!showCommentBoard || !clientId || void 0 !== blockCommentId) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(
@@ -29502,6 +29497,7 @@ var wp;
               onSubmit: async (inputComment) => {
                 const { id } = await onSubmit({ content: inputComment });
                 focusCommentThread(id, commentSidebarRef.current);
+                setShowCommentBoard(false);
               },
               onCancel: () => {
                 setShowCommentBoard(false);
@@ -29992,7 +29988,7 @@ var wp;
   var import_compose40 = __toESM(require_compose());
   var import_notices26 = __toESM(require_notices());
   var import_core_data86 = __toESM(require_core_data());
-  var import_blocks20 = __toESM(require_blocks());
+  var import_blocks19 = __toESM(require_blocks());
   function CopyContentMenuItem() {
     const { createNotice } = (0, import_data161.useDispatch)(import_notices26.store);
     const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = (0, import_data161.useSelect)(store);
@@ -30009,7 +30005,7 @@ var wp;
       if (typeof record.content === "function") {
         return record.content(record);
       } else if (record.blocks) {
-        return (0, import_blocks20.__unstableSerializeAndClean)(record.blocks);
+        return (0, import_blocks19.__unstableSerializeAndClean)(record.blocks);
       } else if (record.content) {
         return record.content;
       }
@@ -31094,7 +31090,7 @@ var wp;
   var import_block_editor66 = __toESM(require_block_editor());
   var import_element139 = __toESM(require_element());
   var import_data176 = __toESM(require_data());
-  var import_blocks21 = __toESM(require_blocks());
+  var import_blocks20 = __toESM(require_blocks());
   var import_core_data90 = __toESM(require_core_data());
   var import_compose48 = __toESM(require_compose());
 
@@ -31532,7 +31528,7 @@ var wp;
         return getPostContentAttributes(editedPostTemplate?.blocks);
       }
       const parseableContent = typeof editedPostTemplate?.content === "string" ? editedPostTemplate?.content : "";
-      return getPostContentAttributes((0, import_blocks21.parse)(parseableContent)) || {};
+      return getPostContentAttributes((0, import_blocks20.parse)(parseableContent)) || {};
     }, [
       editedPostTemplate?.content,
       editedPostTemplate?.blocks,
@@ -31546,7 +31542,7 @@ var wp;
         return checkForPostContentAtRootLevel(editedPostTemplate?.blocks);
       }
       const parseableContent = typeof editedPostTemplate?.content === "string" ? editedPostTemplate?.content : "";
-      return checkForPostContentAtRootLevel((0, import_blocks21.parse)(parseableContent)) || false;
+      return checkForPostContentAtRootLevel((0, import_blocks20.parse)(parseableContent)) || false;
     }, [editedPostTemplate?.content, editedPostTemplate?.blocks]);
     const { layout = {}, align = "" } = newestPostContentAttributes || {};
     const postContentLayoutClasses = useLayoutClasses(
@@ -33054,13 +33050,13 @@ var wp;
   var import_components168 = __toESM(require_components());
   var import_i18n183 = __toESM(require_i18n());
   var import_block_editor72 = __toESM(require_block_editor());
-  var import_blocks23 = __toESM(require_blocks());
+  var import_blocks22 = __toESM(require_blocks());
 
   // packages/editor/build-module/components/post-transform-panel/hooks.js
   var import_data191 = __toESM(require_data());
   var import_element151 = __toESM(require_element());
   var import_core_data100 = __toESM(require_core_data());
-  var import_blocks22 = __toESM(require_blocks());
+  var import_blocks21 = __toESM(require_blocks());
   var import_patterns10 = __toESM(require_patterns());
   var { EXCLUDED_PATTERN_SOURCES, PATTERN_TYPES: PATTERN_TYPES5 } = unlock(import_patterns10.privateApis);
   function injectThemeAttributeInBlockTemplateContent(block, currentThemeStylesheet) {
@@ -33088,7 +33084,7 @@ var wp;
       ...pattern,
       keywords: pattern.keywords || [],
       type: PATTERN_TYPES5.theme,
-      blocks: (0, import_blocks22.parse)(pattern.content, {
+      blocks: (0, import_blocks21.parse)(pattern.content, {
         __unstableSkipMigrationLogs: true
       }).map(
         (block) => injectThemeAttributeInBlockTemplateContent(
@@ -33164,7 +33160,7 @@ var wp;
     const onTemplateSelect = async (selectedTemplate) => {
       await editEntityRecord("postType", postType2, postId2, {
         blocks: selectedTemplate.blocks,
-        content: (0, import_blocks23.serialize)(selectedTemplate.blocks)
+        content: (0, import_blocks22.serialize)(selectedTemplate.blocks)
       });
     };
     if (!availablePatterns?.length) {
@@ -33304,14 +33300,14 @@ var wp;
   var import_jsx_runtime286 = __toESM(require_jsx_runtime());
   var import_data195 = __toESM(require_data());
   var import_element154 = __toESM(require_element());
-  var import_blocks24 = __toESM(require_blocks());
+  var import_blocks23 = __toESM(require_blocks());
   var import_block_editor74 = __toESM(require_block_editor());
   var import_components171 = __toESM(require_components());
   var import_i18n186 = __toESM(require_i18n());
   var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor74.privateApis);
   function TemplatePartContentPanelInner() {
     const blockTypes = (0, import_data195.useSelect)((select4) => {
-      const { getBlockTypes } = select4(import_blocks24.store);
+      const { getBlockTypes } = select4(import_blocks23.store);
       return getBlockTypes();
     }, []);
     const themeBlockNames = (0, import_element154.useMemo)(() => {
@@ -33611,7 +33607,7 @@ var wp;
   var import_jsx_runtime290 = __toESM(require_jsx_runtime());
   var import_data200 = __toESM(require_data());
   var import_preferences24 = __toESM(require_preferences());
-  var import_blocks25 = __toESM(require_blocks());
+  var import_blocks24 = __toESM(require_blocks());
   var import_element157 = __toESM(require_element());
   var import_components174 = __toESM(require_components());
   var import_i18n189 = __toESM(require_i18n());
@@ -33628,7 +33624,7 @@ var wp;
       hiddenBlockTypes: _hiddenBlockTypes
     } = (0, import_data200.useSelect)((select4) => {
       return {
-        blockTypes: select4(import_blocks25.store).getBlockTypes(),
+        blockTypes: select4(import_blocks24.store).getBlockTypes(),
         allowedBlockTypes: select4(store).getEditorSettings().allowedBlockTypes,
         hiddenBlockTypes: select4(import_preferences24.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY5
       };
@@ -33642,7 +33638,7 @@ var wp;
       });
     }, [_allowedBlockTypes, blockTypes]);
     const filteredBlockTypes = allowedBlockTypes.filter(
-      (blockType) => (0, import_blocks25.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
+      (blockType) => (0, import_blocks24.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
     );
     const hiddenBlockTypes = _hiddenBlockTypes.filter((hiddenBlock) => {
       return filteredBlockTypes.some(
@@ -34106,7 +34102,7 @@ var wp;
   var post_fields_default = usePostFields;
 
   // packages/editor/build-module/bindings/api.js
-  var import_blocks26 = __toESM(require_blocks());
+  var import_blocks25 = __toESM(require_blocks());
 
   // packages/editor/build-module/bindings/pattern-overrides.js
   var import_block_editor78 = __toESM(require_block_editor());
@@ -34568,10 +34564,10 @@ var wp;
 
   // packages/editor/build-module/bindings/api.js
   function registerCoreBlockBindingsSources() {
-    (0, import_blocks26.registerBlockBindingsSource)(pattern_overrides_default);
-    (0, import_blocks26.registerBlockBindingsSource)(post_data_default);
-    (0, import_blocks26.registerBlockBindingsSource)(post_meta_default);
-    (0, import_blocks26.registerBlockBindingsSource)(term_data_default);
+    (0, import_blocks25.registerBlockBindingsSource)(pattern_overrides_default);
+    (0, import_blocks25.registerBlockBindingsSource)(post_data_default);
+    (0, import_blocks25.registerBlockBindingsSource)(post_meta_default);
+    (0, import_blocks25.registerBlockBindingsSource)(term_data_default);
   }
 
   // packages/editor/build-module/private-apis.js
