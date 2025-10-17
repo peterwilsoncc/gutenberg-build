@@ -29010,41 +29010,32 @@ var wp;
     }, [heights, blockRefs, isFloating, threads, selectedThread]);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads) {
-      return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
-        import_components134.__experimentalVStack,
-        {
-          alignment: "left",
-          className: "editor-collab-sidebar-panel__thread",
-          justify: "flex-start",
-          spacing: "3",
-          children: (0, import_i18n153.__)("No notes available.")
-        }
-      );
+      return /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(import_components134.__experimentalVStack, { alignment: "left", justify: "flex-start", spacing: "2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components134.__experimentalText, { as: "p", children: (0, import_i18n153.__)("No notes available.") }),
+        /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components134.__experimentalText, { as: "p", variant: "muted", children: (0, import_i18n153.__)("Only logged in users can see Notes.") })
+      ] });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(import_components134.__experimentalVStack, { spacing: "3", children: [
-      !isFloating && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components134.__experimentalText, { as: "p", variant: "muted", children: (0, import_i18n153.__)("Only logged in users can see Notes") }),
-      threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
-        Thread,
-        {
-          thread,
-          onAddReply,
-          onCommentDelete: handleDelete,
-          onEditComment,
-          isSelected: selectedThread === thread.id,
-          setSelectedThread,
-          setShowCommentBoard,
-          commentSidebarRef,
-          reflowComments,
-          isFloating,
-          calculatedOffset: boardOffsets[thread.id] ?? 0,
-          setHeights,
-          setBlockRef,
-          selectedThread,
-          commentLastUpdated
-        },
-        thread.id
-      ))
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components134.__experimentalVStack, { spacing: "3", children: threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+      Thread,
+      {
+        thread,
+        onAddReply,
+        onCommentDelete: handleDelete,
+        onEditComment,
+        isSelected: selectedThread === thread.id,
+        setSelectedThread,
+        setShowCommentBoard,
+        commentSidebarRef,
+        reflowComments,
+        isFloating,
+        calculatedOffset: boardOffsets[thread.id] ?? 0,
+        setHeights,
+        setBlockRef,
+        selectedThread,
+        commentLastUpdated
+      },
+      thread.id
+    )) });
   }
   function Thread({
     thread,
