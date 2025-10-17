@@ -34238,6 +34238,27 @@ ${url}
   // packages/block-library/build-module/navigation-link/shared/use-entity-binding.js
   var import_element64 = __toESM(require_element());
   var import_block_editor139 = __toESM(require_block_editor());
+  function buildNavigationLinkEntityBinding(kind) {
+    if (kind === void 0) {
+      throw new Error(
+        'buildNavigationLinkEntityBinding requires a kind parameter. Only "post-type" and "taxonomy" are supported.'
+      );
+    }
+    if (kind !== "post-type" && kind !== "taxonomy") {
+      throw new Error(
+        `Invalid kind "${kind}" provided to buildNavigationLinkEntityBinding. Only 'post-type' and 'taxonomy' are supported.`
+      );
+    }
+    const source = kind === "taxonomy" ? "core/term-data" : "core/post-data";
+    return {
+      url: {
+        source,
+        args: {
+          key: "link"
+        }
+      }
+    };
+  }
   function useEntityBinding({ clientId, attributes: attributes3 }) {
     const { updateBlockBindings } = (0, import_block_editor139.useBlockBindingsUtils)(clientId);
     const { metadata, id, kind } = attributes3;
@@ -34255,15 +34276,15 @@ ${url}
         if (!kindToUse) {
           return;
         }
-        const source = kindToUse === "taxonomy" ? "core/term-data" : "core/post-data";
-        updateBlockBindings({
-          url: {
-            source,
-            args: {
-              key: "link"
-            }
-          }
-        });
+        try {
+          const binding = buildNavigationLinkEntityBinding(kindToUse);
+          updateBlockBindings(binding);
+        } catch (error) {
+          console.warn(
+            "Failed to create entity binding:",
+            error.message
+          );
+        }
       },
       [updateBlockBindings, kind, id]
     );
@@ -38148,6 +38169,7 @@ ${url}
   var import_data76 = __toESM(require_data());
   var import_block_editor154 = __toESM(require_block_editor());
   function createNavigationLinks(pages = []) {
+    const POST_TYPE_KIND = "post-type";
     const linkMap = {};
     const navigationLinks = [];
     pages.forEach(({ id, title, link: url, type, parent }) => {
@@ -38159,7 +38181,10 @@ ${url}
           label: title.rendered,
           url,
           type,
-          kind: "post-type"
+          kind: POST_TYPE_KIND,
+          metadata: {
+            bindings: buildNavigationLinkEntityBinding(POST_TYPE_KIND)
+          }
         },
         innerBlocks
       );
