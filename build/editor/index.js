@@ -34409,7 +34409,7 @@ var wp;
       const dataFields = getPostDataFields(select4, context, clientId);
       const newValues = {};
       for (const [attributeName, source] of Object.entries(bindings)) {
-        const fieldKey = source.args.key;
+        const fieldKey = true ? source.args.field || source.args.key : source.args.field;
         const { value: fieldValue, label: fieldLabel } = dataFields?.[fieldKey] || {};
         newValues[attributeName] = fieldValue ?? fieldLabel ?? fieldKey;
       }
@@ -34423,7 +34423,7 @@ var wp;
       }
       const newData = {};
       Object.values(bindings).forEach(({ args, newValue }) => {
-        newData[args.key] = newValue;
+        newData[args.field] = newValue;
       });
       dispatch5(import_core_data104.store).editEntityRecord(
         "postType",
@@ -34445,7 +34445,7 @@ var wp;
       if (!context?.postType) {
         return false;
       }
-      const fieldValue = getPostDataFields(select4, context, void 0)?.[args.key]?.value;
+      const fieldValue = getPostDataFields(select4, context, void 0)?.[args.field]?.value;
       if (fieldValue === void 0) {
         return false;
       }
@@ -34476,7 +34476,7 @@ var wp;
       ).map(([key, field]) => ({
         label: field.label,
         args: {
-          key
+          field: key
         },
         type: field.type
       }));
@@ -34681,7 +34681,7 @@ var wp;
       const dataFields = getTermDataFields(select4, context, clientId);
       const newValues = {};
       for (const [attributeName, source] of Object.entries(bindings)) {
-        const fieldKey = source.args.key;
+        const fieldKey = source.args.field;
         const { value: fieldValue, label: fieldLabel } = dataFields?.[fieldKey] || {};
         newValues[attributeName] = fieldValue ?? fieldLabel ?? fieldKey;
       }
@@ -34704,7 +34704,7 @@ var wp;
       if (!context?.taxonomy || !context?.termId) {
         return false;
       }
-      const fieldValue = getTermDataFields(select4, context, void 0)?.[args.key]?.value;
+      const fieldValue = getTermDataFields(select4, context, void 0)?.[args.field]?.value;
       if (fieldValue === void 0) {
         return false;
       }
@@ -34724,7 +34724,7 @@ var wp;
         label: field.label,
         type: field.type,
         args: {
-          key
+          field: key
         }
       }));
       return {

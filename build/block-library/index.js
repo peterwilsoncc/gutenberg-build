@@ -34431,7 +34431,7 @@ ${url}
       url: {
         source,
         args: {
-          key: "link"
+          field: "link"
         }
       }
     };
@@ -41468,7 +41468,7 @@ ${url}
     context: { postType: postTypeSlug, queryId },
     setAttributes
   }) {
-    const displayType = metadata?.bindings?.datetime?.source === "core/post-data" && metadata?.bindings?.datetime?.args?.key;
+    const displayType = metadata?.bindings?.datetime?.source === "core/post-data" && (metadata?.bindings?.datetime?.args?.field || metadata?.bindings?.datetime?.args?.key);
     const blockProps = (0, import_block_editor172.useBlockProps)({
       className: clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
@@ -41719,7 +41719,7 @@ ${url}
             bindings: {
               datetime: {
                 source: "core/post-data",
-                args: { key: displayType }
+                args: { field: displayType }
               }
             }
           }
@@ -41781,13 +41781,16 @@ ${url}
           bindings: {
             datetime: {
               source: "core/post-data",
-              args: { key: "date" }
+              args: { field: "date" }
             }
           }
         }
       },
       scope: ["block", "inserter", "transform"],
-      isActive: (blockAttributes8) => blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && blockAttributes8?.metadata?.bindings?.datetime?.args?.key === "date",
+      isActive: (blockAttributes8) => {
+        const fieldValue = blockAttributes8?.metadata?.bindings?.datetime?.args?.field || blockAttributes8?.metadata?.bindings?.datetime?.args?.key;
+        return blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && fieldValue === "date";
+      },
       icon: post_date_default
     },
     {
@@ -41799,14 +41802,17 @@ ${url}
           bindings: {
             datetime: {
               source: "core/post-data",
-              args: { key: "modified" }
+              args: { field: "modified" }
             }
           }
         },
         className: "wp-block-post-date__modified-date"
       },
       scope: ["block", "inserter", "transform"],
-      isActive: (blockAttributes8) => blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && blockAttributes8?.metadata?.bindings?.datetime?.args?.key === "modified",
+      isActive: (blockAttributes8) => {
+        const fieldValue = blockAttributes8?.metadata?.bindings?.datetime?.args?.field || blockAttributes8?.metadata?.bindings?.datetime?.args?.key;
+        return blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && fieldValue === "modified";
+      },
       icon: post_date_default
     }
   ];
