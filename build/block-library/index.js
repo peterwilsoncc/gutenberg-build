@@ -4453,9 +4453,14 @@ var wp;
     title: "Breadcrumbs",
     __experimental: true,
     category: "theme",
-    description: "Display a breadcrumb trail only for Pages, or for hierarchical post types. The block is useful to insert in the Pages template.",
+    description: "Display a breadcrumb trail for hierarchical post types or based on taxonomy terms.",
     textdomain: "default",
     attributes: {
+      type: {
+        type: "string",
+        default: "auto",
+        enum: ["auto", "postWithTerms", "postWithAncestors"]
+      },
       separator: {
         type: "string",
         default: "/"
@@ -4465,7 +4470,7 @@ var wp;
         default: true
       }
     },
-    usesContext: ["postId", "postType"],
+    usesContext: ["postId", "postType", "templateSlug"],
     supports: {
       html: false,
       spacing: {
@@ -4522,35 +4527,99 @@ var wp;
   var import_element9 = __toESM(require_element());
   var import_server_side_render2 = __toESM(require_server_side_render());
   var separatorDefaultValue = "/";
+  var typeDefaultValue = "auto";
+  var BREADCRUMB_TYPES = {
+    auto: {
+      help: (0, import_i18n11.__)(
+        "Try to automatically determine the best type of breadcrumb for the template."
+      )
+    },
+    postWithAncestors: {
+      help: (0, import_i18n11.__)(
+        "Shows breadcrumbs based on post hierarchy. Only works for hierarchical post types."
+      ),
+      placeholderItems: [(0, import_i18n11.__)("Ancestor"), (0, import_i18n11.__)("Parent")]
+    },
+    postWithTerms: {
+      help: (0, import_i18n11.__)(
+        "Shows breadcrumbs based on taxonomy terms. Chooses the first taxonomy with assigned terms and includes ancestors if the taxonomy is hierarchical."
+      ),
+      placeholderItems: [(0, import_i18n11.__)("Category")]
+    }
+  };
   function BreadcrumbEdit({
     attributes: attributes3,
     setAttributes,
-    context: { postId, postType }
+    context: { postId, postType, templateSlug }
   }) {
-    const { separator, showHomeLink } = attributes3;
-    const isPostTypeHierarchical = (0, import_data7.useSelect)(
+    const { separator, showHomeLink, type } = attributes3;
+    const { post, isPostTypeHierarchical, hasTermsAssigned, isLoading } = (0, import_data7.useSelect)(
       (select8) => {
         if (!postType) {
-          return null;
+          return {};
         }
-        return select8(import_core_data4.store).getPostType(postType)?.hierarchical;
+        const _post = select8(import_core_data4.store).getEntityRecord(
+          "postType",
+          postType,
+          postId
+        );
+        const postTypeObject = select8(import_core_data4.store).getPostType(postType);
+        const postTypeHasTaxonomies = postTypeObject && postTypeObject.taxonomies.length;
+        let taxonomies;
+        if (postTypeHasTaxonomies) {
+          taxonomies = select8(import_core_data4.store).getTaxonomies({
+            type: postType,
+            per_page: -1
+          });
+        }
+        return {
+          post: _post,
+          isPostTypeHierarchical: postTypeObject?.hierarchical,
+          hasTermsAssigned: _post && (taxonomies || []).filter(
+            ({ visibility }) => visibility?.publicly_queryable
+          ).some((taxonomy) => {
+            return !!_post[taxonomy.rest_base]?.length;
+          }),
+          isLoading: !_post || !postTypeObject || postTypeHasTaxonomies && !taxonomies
+        };
       },
-      [postType]
+      [postType, postId]
     );
+    const [invalidationKey, setInvalidationKey] = (0, import_element9.useState)(0);
+    (0, import_element9.useEffect)(() => {
+      setInvalidationKey((c2) => c2 + 1);
+    }, [post]);
     const blockProps = (0, import_block_editor17.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { content } = (0, import_server_side_render2.useServerSideRender)({
       attributes: attributes3,
       skipBlockSupportAttributes: true,
       block: "core/breadcrumbs",
-      urlQueryArgs: { post_id: postId }
+      urlQueryArgs: { post_id: postId, invalidationKey }
     });
+    if (isLoading) {
+      return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components9.Spinner, {}) });
+    }
+    let breadcrumbsType;
+    const isSpecificSupportedTypeSet = [
+      "postWithAncestors",
+      "postWithTerms"
+    ].includes(type);
+    if (isSpecificSupportedTypeSet) {
+      breadcrumbsType = type;
+    } else {
+      breadcrumbsType = isPostTypeHierarchical ? "postWithAncestors" : "postWithTerms";
+    }
     let placeholder2 = null;
-    if (!postId || !postType || !isPostTypeHierarchical) {
+    const showPlaceholder = !postId || !postType || // When `templateSlug` is set only show placeholder if the post type is not.
+    // This is needed because when we are showing the template in post editor we
+    // want to show the real breadcrumbs if we have the post type.
+    templateSlug && !postType || breadcrumbsType === "postWithAncestors" && !isPostTypeHierarchical || breadcrumbsType === "postWithTerms" && !hasTermsAssigned;
+    if (showPlaceholder) {
       const placeholderItems = [
         showHomeLink && (0, import_i18n11.__)("Home"),
-        (0, import_i18n11.__)("Ancestor"),
-        (0, import_i18n11.__)("Parent")
+        // For now if we are adding this in a template show a generic placeholder.
+        ...templateSlug && !isSpecificSupportedTypeSet ? [(0, import_i18n11.__)("Page")] : BREADCRUMB_TYPES[breadcrumbsType].placeholderItems
       ].filter(Boolean);
       placeholder2 = /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
         "nav",
@@ -4574,11 +4643,48 @@ var wp;
           resetAll: () => {
             setAttributes({
               separator: separatorDefaultValue,
-              showHomeLink: true
+              showHomeLink: true,
+              type: typeDefaultValue
             });
           },
           dropdownMenuProps,
           children: [
+            /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+              import_components9.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n11.__)("Type"),
+                isShownByDefault: true,
+                hasValue: () => type !== typeDefaultValue,
+                onDeselect: () => setAttributes({
+                  type: typeDefaultValue
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+                  import_components9.SelectControl,
+                  {
+                    __nextHasNoMarginBottom: true,
+                    __next40pxDefaultSize: true,
+                    label: (0, import_i18n11.__)("Type"),
+                    value: type,
+                    onChange: (value) => setAttributes({ type: value }),
+                    options: [
+                      {
+                        label: (0, import_i18n11.__)("Auto"),
+                        value: "auto"
+                      },
+                      {
+                        label: (0, import_i18n11.__)("Post with ancestors"),
+                        value: "postWithAncestors"
+                      },
+                      {
+                        label: (0, import_i18n11.__)("Post with terms"),
+                        value: "postWithTerms"
+                      }
+                    ],
+                    help: BREADCRUMB_TYPES[type].help
+                  }
+                )
+              }
+            ),
             /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
               import_components9.__experimentalToolsPanelItem,
               {
@@ -4631,7 +4737,7 @@ var wp;
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: placeholder2 || /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_element9.RawHTML, { inert: "true", children: content }) })
+      /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: showPlaceholder ? placeholder2 : /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_element9.RawHTML, { inert: "true", children: content }) })
     ] });
   }
 
