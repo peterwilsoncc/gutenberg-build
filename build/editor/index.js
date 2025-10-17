@@ -28120,6 +28120,7 @@ var wp;
   // packages/editor/build-module/components/collab-sidebar/constants.js
   var collabHistorySidebarName = "edit-post/collab-history-sidebar";
   var collabSidebarName = "edit-post/collab-sidebar";
+  var SIDEBARS = [collabHistorySidebarName, collabSidebarName];
 
   // packages/editor/build-module/components/collab-sidebar/comments.js
   var import_jsx_runtime242 = __toESM(require_jsx_runtime());
@@ -29644,11 +29645,12 @@ var wp;
         style: styles,
         role: "list",
         spacing: "3",
+        justify: "flex-start",
         ref: (node) => {
           commentSidebarRef.current = node;
         },
         children: [
-          !isFloating && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             AddComment,
             {
               onSubmit: onCreate,
@@ -29709,19 +29711,22 @@ var wp;
       return null;
     }
     async function openTheSidebar() {
-      enableComplementaryArea2("core", collabHistorySidebarName);
-      const activeArea = await getActiveComplementaryArea2("core");
-      if ([collabHistorySidebarName, collabSidebarName].includes(
-        activeArea
-      )) {
-        setShowCommentBoard(!blockCommentId);
-        focusCommentThread(
-          blockCommentId,
-          commentSidebarRef.current,
-          // Focus a comment thread when there's a selected block with a comment.
-          !blockCommentId ? "textarea" : void 0
-        );
+      const prevArea = await getActiveComplementaryArea2("core");
+      const activeNotesArea = SIDEBARS.find((name) => name === prevArea);
+      if (!activeNotesArea) {
+        enableComplementaryArea2("core", collabSidebarName);
       }
+      const currentArea = await getActiveComplementaryArea2("core");
+      if (!SIDEBARS.includes(currentArea)) {
+        return;
+      }
+      setShowCommentBoard(!blockCommentId);
+      focusCommentThread(
+        blockCommentId,
+        commentSidebarRef.current,
+        // Focus a comment thread when there's a selected block with a comment.
+        !blockCommentId ? "textarea" : void 0
+      );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_jsx_runtime246.Fragment, { children: [
       blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
@@ -29753,7 +29758,7 @@ var wp;
           )
         }
       ),
-      isLargeViewport && unresolvedSortedThreads.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+      isLargeViewport && (unresolvedSortedThreads.length > 0 || showCommentBoard) && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
         PluginSidebar,
         {
           isPinnable: false,
@@ -29779,7 +29784,14 @@ var wp;
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(PluginMoreMenuItem, { icon: comment_default, onClick: openTheSidebar, children: (0, import_i18n157.__)("Notes") })
+      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+        PluginMoreMenuItem,
+        {
+          icon: comment_default,
+          onClick: () => enableComplementaryArea2("core", collabHistorySidebarName),
+          children: (0, import_i18n157.__)("Notes")
+        }
+      )
     ] });
   }
 
