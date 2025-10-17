@@ -8087,11 +8087,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   // packages/blocks/build-module/api/validation/logger.js
   function createLogger() {
     function createLogHandler(logger) {
-      let log2 = (message, ...args) => logger("Block validation: " + message, ...args);
-      if (false) {
-        log2 = (...args) => logger(null.format(...args));
-      }
-      return log2;
+      return (message, ...args) => logger("Block validation: " + message, ...args);
     }
     return {
       // eslint-disable-next-line no-console
