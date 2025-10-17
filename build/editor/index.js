@@ -2278,7 +2278,7 @@ var wp;
     registerEntityField: () => registerEntityField2,
     store: () => store,
     storeConfig: () => storeConfig,
-    transformStyles: () => import_block_editor79.transformStyles,
+    transformStyles: () => import_block_editor81.transformStyles,
     unregisterEntityAction: () => unregisterEntityAction2,
     unregisterEntityField: () => unregisterEntityField2,
     useEntitiesSavedStatesIsDirty: () => useIsDirty,
@@ -34186,14 +34186,31 @@ var wp;
   // packages/editor/build-module/bindings/post-data.js
   var import_i18n191 = __toESM(require_i18n());
   var import_core_data104 = __toESM(require_core_data());
-  function getPostDataFields(select4, context) {
+  var import_block_editor79 = __toESM(require_block_editor());
+  var NAVIGATION_BLOCK_TYPES = [
+    "core/navigation-link",
+    "core/navigation-submenu"
+  ];
+  function getPostDataFields(select4, context, clientId) {
     const { getEditedEntityRecord } = select4(import_core_data104.store);
+    const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select4(import_block_editor79.store);
     let entityDataValues, dataFields;
-    if (context?.postType && context?.postId) {
+    const blockName = getBlockName2?.(clientId);
+    const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
+    let postId2, postType2;
+    if (isNavigationBlock) {
+      const blockAttributes = getBlockAttributes2?.(clientId);
+      postId2 = blockAttributes?.id;
+      postType2 = blockAttributes?.type;
+    } else {
+      postId2 = context?.postId;
+      postType2 = context?.postType;
+    }
+    if (postType2 && postId2) {
       entityDataValues = getEditedEntityRecord(
         "postType",
-        context?.postType,
-        context?.postId
+        postType2,
+        postId2
       );
       dataFields = {
         date: {
@@ -34205,6 +34222,11 @@ var wp;
           label: (0, import_i18n191.__)("Post Modified Date"),
           value: entityDataValues?.modified,
           type: "string"
+        },
+        link: {
+          label: (0, import_i18n191.__)("Post Link"),
+          value: entityDataValues?.link,
+          type: "string"
         }
       };
     }
@@ -34215,8 +34237,8 @@ var wp;
   }
   var post_data_default = {
     name: "core/post-data",
-    getValues({ select: select4, context, bindings }) {
-      const dataFields = getPostDataFields(select4, context);
+    getValues({ select: select4, context, bindings, clientId }) {
+      const dataFields = getPostDataFields(select4, context, clientId);
       const newValues = {};
       for (const [attributeName, source] of Object.entries(bindings)) {
         const fieldKey = source.args.key;
@@ -34225,7 +34247,12 @@ var wp;
       }
       return newValues;
     },
-    setValues({ dispatch: dispatch5, context, bindings }) {
+    setValues({ dispatch: dispatch5, context, bindings, clientId, select: select4 }) {
+      const { getBlockName: getBlockName2 } = select4(import_block_editor79.store);
+      const blockName = getBlockName2?.(clientId);
+      if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
+        return false;
+      }
       const newData = {};
       Object.values(bindings).forEach(({ args, newValue }) => {
         newData[args.key] = newValue;
@@ -34238,13 +34265,19 @@ var wp;
       );
     },
     canUserEditValue({ select: select4, context, args }) {
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor79.store);
+      const clientId = getSelectedBlockClientId2();
+      const blockName = getBlockName2?.(clientId);
+      if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
+        return false;
+      }
       if (context?.query || context?.queryId) {
         return false;
       }
       if (!context?.postType) {
         return false;
       }
-      const fieldValue = getPostDataFields(select4, context)?.[args.key]?.value;
+      const fieldValue = getPostDataFields(select4, context, void 0)?.[args.key]?.value;
       if (fieldValue === void 0) {
         return false;
       }
@@ -34259,11 +34292,15 @@ var wp;
       return true;
     },
     getFieldsList({ select: select4, context }) {
-      return getPostDataFields(select4, context);
+      const clientId = select4(import_block_editor79.store).getSelectedBlockClientId();
+      return getPostDataFields(select4, context, clientId);
     },
     editorUI({ select: select4, context }) {
-      const selectedBlock = select4("core/block-editor").getSelectedBlock();
+      const selectedBlock = select4(import_block_editor79.store).getSelectedBlock();
       if (selectedBlock?.name !== "core/post-date") {
+        return {};
+      }
+      if (NAVIGATION_BLOCK_TYPES.includes(selectedBlock?.name)) {
         return {};
       }
       const postDataFields = Object.entries(
@@ -34386,59 +34423,146 @@ var wp;
     }
   };
 
-  // packages/editor/build-module/bindings/entity.js
+  // packages/editor/build-module/bindings/term-data.js
   var import_i18n192 = __toESM(require_i18n());
   var import_core_data106 = __toESM(require_core_data());
-  var entity_default = {
-    name: "core/entity",
-    label: (0, import_i18n192.__)("Entity"),
-    getValues({ select: select4, clientId, bindings }) {
-      const { getBlockAttributes: getBlockAttributes2 } = select4("core/block-editor");
-      const blockAttributes = getBlockAttributes2(clientId);
-      const entityId = blockAttributes?.id;
-      if (!entityId) {
-        return {};
+  var import_block_editor80 = __toESM(require_block_editor());
+  var NAVIGATION_BLOCK_TYPES2 = [
+    "core/navigation-link",
+    "core/navigation-submenu"
+  ];
+  function createDataFields(termDataValues, idValue) {
+    return {
+      id: {
+        label: (0, import_i18n192.__)("Term ID"),
+        value: idValue,
+        type: "string"
+      },
+      name: {
+        label: (0, import_i18n192.__)("Name"),
+        value: termDataValues?.name,
+        type: "string"
+      },
+      slug: {
+        label: (0, import_i18n192.__)("Slug"),
+        value: termDataValues?.slug,
+        type: "string"
+      },
+      link: {
+        label: (0, import_i18n192.__)("Link"),
+        value: termDataValues?.link,
+        type: "string"
+      },
+      description: {
+        label: (0, import_i18n192.__)("Description"),
+        value: termDataValues?.description,
+        type: "string"
+      },
+      parent: {
+        label: (0, import_i18n192.__)("Parent ID"),
+        value: termDataValues?.parent,
+        type: "string"
+      },
+      count: {
+        label: (0, import_i18n192.__)("Count"),
+        value: `(${termDataValues?.count ?? 0})`,
+        type: "string"
       }
-      const urlBinding = bindings.url;
-      if (!urlBinding?.args?.key) {
-        return {};
+    };
+  }
+  function getTermDataFields(select4, context, clientId) {
+    const { getEntityRecord } = select4(import_core_data106.store);
+    const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select4(import_block_editor80.store);
+    let termDataValues, dataFields;
+    const blockName = getBlockName2?.(clientId);
+    const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
+    let termId, taxonomy;
+    if (isNavigationBlock) {
+      const blockAttributes = getBlockAttributes2?.(clientId);
+      termId = blockAttributes?.id;
+      const typeFromAttributes = blockAttributes?.type;
+      taxonomy = typeFromAttributes === "tag" ? "post_tag" : typeFromAttributes;
+    } else {
+      termId = context?.termId;
+      taxonomy = context?.taxonomy;
+    }
+    if (taxonomy && termId) {
+      termDataValues = getEntityRecord("taxonomy", taxonomy, termId);
+      if (!termDataValues && context?.termData) {
+        termDataValues = context.termData;
       }
-      const key = urlBinding.args.key;
-      if (key !== "url") {
-        return {};
+      if (termDataValues) {
+        dataFields = createDataFields(termDataValues, termId);
       }
-      const { type, kind } = blockAttributes || {};
-      if (!type || !kind) {
-        return {};
+    } else if (context?.termData) {
+      termDataValues = context.termData;
+      dataFields = createDataFields(
+        termDataValues,
+        termDataValues?.term_id
+      );
+    }
+    if (!dataFields || !Object.keys(dataFields).length) {
+      return null;
+    }
+    return dataFields;
+  }
+  var term_data_default = {
+    name: "core/term-data",
+    usesContext: ["taxonomy", "termId", "termData"],
+    getValues({ select: select4, context, bindings, clientId }) {
+      const dataFields = getTermDataFields(select4, context, clientId);
+      const newValues = {};
+      for (const [attributeName, source] of Object.entries(bindings)) {
+        const fieldKey = source.args.key;
+        const { value: fieldValue, label: fieldLabel } = dataFields?.[fieldKey] || {};
+        newValues[attributeName] = fieldValue ?? fieldLabel ?? fieldKey;
       }
-      if (kind !== "post-type" && kind !== "taxonomy") {
-        return {};
-      }
-      const { getEntityRecord } = select4(import_core_data106.store);
-      let value = "";
-      if (kind === "post-type") {
-        const post = getEntityRecord("postType", type, entityId);
-        if (!post) {
-          return {};
-        }
-        value = post.link || "";
-      } else if (kind === "taxonomy") {
-        const taxonomySlug = type === "tag" ? "post_tag" : type;
-        const term = getEntityRecord("taxonomy", taxonomySlug, entityId);
-        if (!term) {
-          return {};
-        }
-        value = term.link || "";
-      }
-      if (!value) {
-        return {};
-      }
-      return {
-        url: value
-      };
+      return newValues;
     },
-    canUserEditValue() {
+    // eslint-disable-next-line no-unused-vars
+    setValues({ dispatch: dispatch5, context, bindings }) {
       return false;
+    },
+    canUserEditValue({ select: select4, context, args }) {
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor80.store);
+      const clientId = getSelectedBlockClientId2();
+      const blockName = getBlockName2?.(clientId);
+      if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
+        return false;
+      }
+      if (context?.termQuery) {
+        return false;
+      }
+      if (!context?.taxonomy || !context?.termId) {
+        return false;
+      }
+      const fieldValue = getTermDataFields(select4, context, void 0)?.[args.key]?.value;
+      if (fieldValue === void 0) {
+        return false;
+      }
+      return false;
+    },
+    getFieldsList({ select: select4, context }) {
+      return getTermDataFields(select4, context);
+    },
+    editorUI({ select: select4, context }) {
+      const selectedBlock = select4(import_block_editor80.store).getSelectedBlock();
+      if (NAVIGATION_BLOCK_TYPES2.includes(selectedBlock?.name)) {
+        return {};
+      }
+      const termDataFields = Object.entries(
+        getTermDataFields(select4, context) || {}
+      ).map(([key, field]) => ({
+        label: field.label,
+        type: field.type,
+        args: {
+          key
+        }
+      }));
+      return {
+        mode: "dropdown",
+        data: termDataFields
+      };
     }
   };
 
@@ -34447,7 +34571,7 @@ var wp;
     (0, import_blocks26.registerBlockBindingsSource)(pattern_overrides_default);
     (0, import_blocks26.registerBlockBindingsSource)(post_data_default);
     (0, import_blocks26.registerBlockBindingsSource)(post_meta_default);
-    (0, import_blocks26.registerBlockBindingsSource)(entity_default);
+    (0, import_blocks26.registerBlockBindingsSource)(term_data_default);
   }
 
   // packages/editor/build-module/private-apis.js
@@ -34514,7 +34638,7 @@ var wp;
   }
 
   // packages/editor/build-module/index.js
-  var import_block_editor79 = __toESM(require_block_editor());
+  var import_block_editor81 = __toESM(require_block_editor());
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
