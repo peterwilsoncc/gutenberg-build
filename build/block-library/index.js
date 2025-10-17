@@ -6717,37 +6717,60 @@ var wp;
   var import_blocks8 = __toESM(require_blocks());
   var import_rich_text = __toESM(require_rich_text());
 
-  // packages/block-library/build-module/utils/get-transformed-metadata.js
+  // packages/block-library/build-module/utils/get-transformed-attributes.js
   var import_blocks7 = __toESM(require_blocks());
-  function getTransformedMetadata(metadata, newBlockName, bindingsCallback) {
-    if (!metadata) {
-      return;
+  function getTransformedAttributes(attributes3, newBlockName, bindingsCallback = null) {
+    if (!attributes3) {
+      return void 0;
     }
-    const { supports: supports3 } = (0, import_blocks7.getBlockType)(newBlockName);
-    const transformSupportedProps = ["noteId"];
-    if (bindingsCallback) {
-      transformSupportedProps.push("id", "bindings");
+    const newBlockType = (0, import_blocks7.getBlockType)(newBlockName);
+    if (!newBlockType) {
+      return void 0;
     }
-    if (supports3.renaming !== false) {
-      transformSupportedProps.push("name");
+    const transformedAttributes = {};
+    if ((0, import_blocks7.hasBlockSupport)(newBlockType, "allowedBlocks") && attributes3.allowedBlocks) {
+      transformedAttributes.allowedBlocks = attributes3.allowedBlocks;
     }
-    if (supports3.blockVisibility !== false) {
-      transformSupportedProps.push("blockVisibility");
+    if ((0, import_blocks7.hasBlockSupport)(newBlockType, "anchor") && attributes3.anchor) {
+      transformedAttributes.anchor = attributes3.anchor;
     }
-    if (!transformSupportedProps.length) {
-      return;
+    if ((0, import_blocks7.hasBlockSupport)(newBlockType, "ariaLabel") && attributes3.ariaLabel) {
+      transformedAttributes.ariaLabel = attributes3.ariaLabel;
     }
-    const newMetadata = Object.entries(metadata).reduce(
-      (obj, [prop, value]) => {
-        if (!transformSupportedProps.includes(prop)) {
-          return obj;
+    if ((0, import_blocks7.hasBlockSupport)(newBlockType, "className") && attributes3.className) {
+      transformedAttributes.className = attributes3.className;
+    }
+    if (attributes3.metadata) {
+      const transformedMetadata = ["noteId"];
+      if (bindingsCallback) {
+        transformedMetadata.push("id", "bindings");
+      }
+      if ((0, import_blocks7.hasBlockSupport)(newBlockType, "renaming", true)) {
+        transformedMetadata.push("name");
+      }
+      if ((0, import_blocks7.hasBlockSupport)(newBlockType, "blockVisibility", true)) {
+        transformedMetadata.push("blockVisibility");
+      }
+      if (transformedMetadata.length > 0) {
+        const newMetadata = Object.entries(attributes3.metadata).reduce(
+          (obj, [prop, value]) => {
+            if (!transformedMetadata.includes(prop)) {
+              return obj;
+            }
+            obj[prop] = prop === "bindings" ? bindingsCallback(value) : value;
+            return obj;
+          },
+          {}
+        );
+        if (Object.keys(newMetadata).length > 0) {
+          transformedAttributes.metadata = newMetadata;
         }
-        obj[prop] = prop === "bindings" ? bindingsCallback(value) : value;
-        return obj;
-      },
-      {}
-    );
-    return Object.keys(newMetadata).length ? newMetadata : void 0;
+      }
+    }
+    if (Object.keys(transformedAttributes).length === 0) {
+      return void 0;
+    }
+    return transformedAttributes;
   }
 
   // packages/block-library/build-module/buttons/transforms.js
@@ -6783,21 +6806,21 @@ var wp;
             {},
             // Loop the selected buttons.
             buttons.map((attributes3) => {
-              const { content, metadata } = attributes3;
+              const { content } = attributes3;
               const element = (0, import_rich_text.__unstableCreateElement)(document, content);
               const text = element.innerText || "";
               const link = element.querySelector("a");
               const url = link?.getAttribute("href");
               return (0, import_blocks8.createBlock)("core/button", {
-                text,
-                url,
-                metadata: getTransformedMetadata(
-                  metadata,
+                ...getTransformedAttributes(
+                  attributes3,
                   "core/button",
                   ({ content: contentBinding }) => ({
                     text: contentBinding
                   })
-                )
+                ),
+                text,
+                url
               });
             })
           )
@@ -8141,20 +8164,24 @@ var wp;
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: ({ content, metadata }) => (0, import_blocks13.createBlock)("core/code", {
-          content,
-          metadata: getTransformedMetadata(metadata, "core/code")
-        })
+        transform: (attributes3) => {
+          const { content } = attributes3;
+          return (0, import_blocks13.createBlock)("core/code", {
+            ...getTransformedAttributes(attributes3, "core/code"),
+            content
+          });
+        }
       },
       {
         type: "block",
         blocks: ["core/html"],
-        transform: ({ content: text, metadata }) => {
+        transform: (attributes3) => {
+          const { content: text } = attributes3;
           return (0, import_blocks13.createBlock)("core/code", {
+            ...getTransformedAttributes(attributes3, "core/code"),
             // The HTML is plain text (with plain line breaks), so
             // convert it to rich text.
-            content: (0, import_rich_text2.toHTMLString)({ value: (0, import_rich_text2.create)({ text }) }),
-            metadata: getTransformedMetadata(metadata, "core/code")
+            content: (0, import_rich_text2.toHTMLString)({ value: (0, import_rich_text2.create)({ text }) })
           });
         }
       },
@@ -8178,13 +8205,13 @@ var wp;
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: ({ content, metadata }) => (0, import_blocks13.createBlock)("core/paragraph", {
-          content,
-          metadata: getTransformedMetadata(
-            metadata,
-            "core/paragraph"
-          )
-        })
+        transform: (attributes3) => {
+          const { content } = attributes3;
+          return (0, import_blocks13.createBlock)("core/paragraph", {
+            ...getTransformedAttributes(attributes3, "core/paragraph"),
+            content
+          });
+        }
       }
     ]
   };
@@ -24013,20 +24040,21 @@ ${url}
         type: "block",
         isMultiBlock: true,
         blocks: ["core/paragraph"],
-        transform: (attributes3) => attributes3.map(
-          ({ content, anchor, align: textAlign, metadata }) => (0, import_blocks27.createBlock)("core/heading", {
-            content,
-            anchor,
-            textAlign,
-            metadata: getTransformedMetadata(
-              metadata,
+        transform: (attributes3) => attributes3.map((_attributes) => {
+          const { content, anchor, align: textAlign } = _attributes;
+          return (0, import_blocks27.createBlock)("core/heading", {
+            ...getTransformedAttributes(
+              _attributes,
               "core/heading",
               ({ content: contentBinding }) => ({
                 content: contentBinding
               })
-            )
-          })
-        )
+            ),
+            content,
+            anchor,
+            textAlign
+          });
+        })
       },
       {
         type: "raw",
@@ -24079,19 +24107,20 @@ ${url}
         type: "block",
         isMultiBlock: true,
         blocks: ["core/paragraph"],
-        transform: (attributes3) => attributes3.map(
-          ({ content, textAlign: align, metadata }) => (0, import_blocks27.createBlock)("core/paragraph", {
-            content,
-            align,
-            metadata: getTransformedMetadata(
-              metadata,
+        transform: (attributes3) => attributes3.map((_attributes) => {
+          const { content, textAlign: align } = _attributes;
+          return (0, import_blocks27.createBlock)("core/paragraph", {
+            ...getTransformedAttributes(
+              _attributes,
               "core/paragraph",
               ({ content: contentBinding }) => ({
                 content: contentBinding
               })
-            )
-          })
-        )
+            ),
+            content,
+            align
+          });
+        })
       }
     ]
   };
