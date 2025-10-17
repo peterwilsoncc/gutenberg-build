@@ -4327,13 +4327,10 @@ var wp;
           {
             label: (0, import_i18n2.__)("Activate"),
             onClick: async () => {
-              await registry.dispatch(import_notices.store).removeNotice("template-activate-notice");
               await registry.dispatch(import_notices.store).createNotice(
                 "info",
                 (0, import_i18n2.__)("Activating template\u2026"),
-                {
-                  id: "template-activating-notice"
-                }
+                { id: "template-activate-notice" }
               );
               try {
                 const currentSite = await registry.select(import_core_data2.store).getEntityRecord("root", "site");
@@ -4348,14 +4345,14 @@ var wp;
                   },
                   { throwOnError: true }
                 );
-                await registry.dispatch(import_notices.store).removeNotice("template-activating-notice");
                 await registry.dispatch(import_notices.store).createSuccessNotice(
-                  (0, import_i18n2.__)("Template activated.")
+                  (0, import_i18n2.__)("Template activated."),
+                  { id: "template-activate-notice" }
                 );
               } catch (error) {
-                await registry.dispatch(import_notices.store).removeNotice("template-activating-notice");
                 await registry.dispatch(import_notices.store).createErrorNotice(
-                  (0, import_i18n2.__)("Template activation failed.")
+                  (0, import_i18n2.__)("Template activation failed."),
+                  { id: "template-activate-notice" }
                 );
                 throw error;
               }
@@ -18584,7 +18581,7 @@ var wp;
         setEditedPost: setEditedPost2,
         setRenderingMode: setRenderingMode2
       } = unlock((0, import_data47.useDispatch)(store));
-      const { createWarningNotice } = (0, import_data47.useDispatch)(import_notices15.store);
+      const { createWarningNotice, removeNotice } = (0, import_data47.useDispatch)(import_notices15.store);
       (0, import_element63.useLayoutEffect)(() => {
         if (recovery) {
           return;
@@ -18610,7 +18607,8 @@ var wp;
       }, []);
       (0, import_element63.useEffect)(() => {
         setEditedPost2(post.type, post.id);
-      }, [post.type, post.id, setEditedPost2]);
+        removeNotice("template-activate-notice");
+      }, [post.type, post.id, setEditedPost2, removeNotice]);
       (0, import_element63.useEffect)(() => {
         updateEditorSettings2(settings);
       }, [settings, updateEditorSettings2]);
