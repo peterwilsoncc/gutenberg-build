@@ -28635,15 +28635,22 @@ var wp;
       const threadIdMap = new Map(
         updatedResult.map((thread) => [String(thread.id), thread])
       );
+      const mappedIds = new Set(
+        Object.values(blocksWithComments).map((id) => String(id))
+      );
       const unresolvedSortedComments = Object.values(blocksWithComments).map((commentId) => threadIdMap.get(String(commentId))).filter(
         (thread) => thread !== void 0 && thread.status === "hold"
       );
       const resolvedSortedComments = Object.values(blocksWithComments).map((commentId) => threadIdMap.get(String(commentId))).filter(
         (thread) => thread !== void 0 && thread.status === "approved"
       );
+      const orphanedComments = updatedResult.filter(
+        (thread) => !mappedIds.has(String(thread.id))
+      );
       const allSortedComments = [
         ...unresolvedSortedComments,
-        ...resolvedSortedComments
+        ...resolvedSortedComments,
+        ...orphanedComments
       ];
       return {
         resultComments: allSortedComments,
