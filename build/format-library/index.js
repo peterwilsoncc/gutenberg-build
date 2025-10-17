@@ -117,11 +117,18 @@ var wp;
     }
   });
 
+  // wordpress-external:@wordpress/latex-to-mathml
+  var require_latex_to_mathml = __commonJS({
+    "wordpress-external:@wordpress/latex-to-mathml"(exports, module) {
+      module.exports = window.wp.latexToMathml;
+    }
+  });
+
   // packages/format-library/build-module/index.js
-  var import_rich_text17 = __toESM(require_rich_text());
+  var import_rich_text18 = __toESM(require_rich_text());
 
   // packages/format-library/build-module/bold/index.js
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
   var import_i18n = __toESM(require_i18n());
   var import_rich_text = __toESM(require_rich_text());
   var import_block_editor = __toESM(require_block_editor());
@@ -184,20 +191,25 @@ var wp;
   var import_primitives9 = __toESM(require_primitives());
   var link_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
 
-  // packages/icons/build-module/library/subscript.js
+  // packages/icons/build-module/library/math.js
   var import_jsx_runtime10 = __toESM(require_jsx_runtime());
   var import_primitives10 = __toESM(require_primitives());
-  var subscript_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { d: "M16.9 18.3l.8-1.2c.4-.6.7-1.2.9-1.6.2-.4.3-.8.3-1.2 0-.3-.1-.7-.2-1-.1-.3-.4-.5-.6-.7-.3-.2-.6-.3-1-.3s-.8.1-1.1.2c-.3.1-.7.3-1 .6l.2 1.3c.3-.3.5-.5.8-.6s.6-.2.9-.2c.3 0 .5.1.7.2.2.2.2.4.2.7 0 .3-.1.5-.2.8-.1.3-.4.7-.8 1.3L15 19.4h4.3v-1.2h-2.4zM14.1 7.2h-2L9.5 11 6.9 7.2h-2l3.6 5.3L4.7 18h2l2.7-4 2.7 4h2l-3.8-5.5 3.8-5.3z" }) });
+  var math_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { d: "M11.2 6.8c-.7 0-1.4.5-1.6 1.1l-2.8 7.5-1.2-1.8c-.1-.2-.4-.3-.6-.3H3v1.5h1.6l1.2 1.8c.6.9 1.9.7 2.2-.3l2.9-7.9s.1-.2.2-.2h7.8V6.7h-7.8Zm5.3 3.4-1.9 1.9-1.9-1.9-1.1 1.1 1.9 1.9-1.9 1.9 1.1 1.1 1.9-1.9 1.9 1.9 1.1-1.1-1.9-1.9 1.9-1.9-1.1-1.1Z" }) });
 
-  // packages/icons/build-module/library/superscript.js
+  // packages/icons/build-module/library/subscript.js
   var import_jsx_runtime11 = __toESM(require_jsx_runtime());
   var import_primitives11 = __toESM(require_primitives());
-  var superscript_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { d: "M16.9 10.3l.8-1.3c.4-.6.7-1.2.9-1.6.2-.4.3-.8.3-1.2 0-.3-.1-.7-.2-1-.2-.2-.4-.4-.7-.6-.3-.2-.6-.3-1-.3s-.8.1-1.1.2c-.3.1-.7.3-1 .6l.1 1.3c.3-.3.5-.5.8-.6s.6-.2.9-.2c.3 0 .5.1.7.2.2.2.2.4.2.7 0 .3-.1.5-.2.8-.1.3-.4.7-.8 1.3l-1.8 2.8h4.3v-1.2h-2.2zm-2.8-3.1h-2L9.5 11 6.9 7.2h-2l3.6 5.3L4.7 18h2l2.7-4 2.7 4h2l-3.8-5.5 3.8-5.3z" }) });
+  var subscript_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { d: "M16.9 18.3l.8-1.2c.4-.6.7-1.2.9-1.6.2-.4.3-.8.3-1.2 0-.3-.1-.7-.2-1-.1-.3-.4-.5-.6-.7-.3-.2-.6-.3-1-.3s-.8.1-1.1.2c-.3.1-.7.3-1 .6l.2 1.3c.3-.3.5-.5.8-.6s.6-.2.9-.2c.3 0 .5.1.7.2.2.2.2.4.2.7 0 .3-.1.5-.2.8-.1.3-.4.7-.8 1.3L15 19.4h4.3v-1.2h-2.4zM14.1 7.2h-2L9.5 11 6.9 7.2h-2l3.6 5.3L4.7 18h2l2.7-4 2.7 4h2l-3.8-5.5 3.8-5.3z" }) });
 
-  // packages/icons/build-module/library/text-color.js
+  // packages/icons/build-module/library/superscript.js
   var import_jsx_runtime12 = __toESM(require_jsx_runtime());
   var import_primitives12 = __toESM(require_primitives());
-  var text_color_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.Path, { d: "M12.9 6h-2l-4 11h1.9l1.1-3h4.2l1.1 3h1.9L12.9 6zm-2.5 6.5l1.5-4.9 1.7 4.9h-3.2z" }) });
+  var superscript_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.Path, { d: "M16.9 10.3l.8-1.3c.4-.6.7-1.2.9-1.6.2-.4.3-.8.3-1.2 0-.3-.1-.7-.2-1-.2-.2-.4-.4-.7-.6-.3-.2-.6-.3-1-.3s-.8.1-1.1.2c-.3.1-.7.3-1 .6l.1 1.3c.3-.3.5-.5.8-.6s.6-.2.9-.2c.3 0 .5.1.7.2.2.2.2.4.2.7 0 .3-.1.5-.2.8-.1.3-.4.7-.8 1.3l-1.8 2.8h4.3v-1.2h-2.2zm-2.8-3.1h-2L9.5 11 6.9 7.2h-2l3.6 5.3L4.7 18h2l2.7-4 2.7 4h2l-3.8-5.5 3.8-5.3z" }) });
+
+  // packages/icons/build-module/library/text-color.js
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
+  var import_primitives13 = __toESM(require_primitives());
+  var text_color_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.Path, { d: "M12.9 6h-2l-4 11h1.9l1.1-3h4.2l1.1 3h1.9L12.9 6zm-2.5 6.5l1.5-4.9 1.7 4.9h-3.2z" }) });
 
   // packages/format-library/build-module/lock-unlock.js
   var import_private_apis = __toESM(require_private_apis());
@@ -224,8 +236,8 @@ var wp;
         onChange((0, import_rich_text.toggleFormat)(value, { type: name }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
           import_block_editor.RichTextShortcut,
           {
             type: "primary",
@@ -233,7 +245,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
           import_block_editor.RichTextToolbarButton,
           {
             name: "bold",
@@ -245,7 +257,7 @@ var wp;
             shortcutCharacter: "b"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
           import_block_editor.__unstableRichTextInputEvent,
           {
             inputType: "formatBold",
@@ -257,7 +269,7 @@ var wp;
   };
 
   // packages/format-library/build-module/code/index.js
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
   var import_i18n2 = __toESM(require_i18n());
   var import_rich_text2 = __toESM(require_rich_text());
   var import_block_editor2 = __toESM(require_block_editor());
@@ -297,8 +309,8 @@ var wp;
         onChange((0, import_rich_text2.toggleFormat)(value, { type: name2, title: title2 }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
           import_block_editor2.RichTextShortcut,
           {
             type: "access",
@@ -306,7 +318,7 @@ var wp;
             onUse: onClick
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
           import_block_editor2.RichTextToolbarButton,
           {
             icon: code_default,
@@ -321,7 +333,7 @@ var wp;
   };
 
   // packages/format-library/build-module/image/index.js
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
   var import_components = __toESM(require_components());
   var import_i18n3 = __toESM(require_i18n());
   var import_element2 = __toESM(require_element());
@@ -362,14 +374,14 @@ var wp;
       editableContentElement: contentRef.current,
       settings: image
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       import_components.Popover,
       {
         placement: "bottom",
         focusOnMount: false,
         anchor: popoverAnchor,
         className: "block-editor-format-toolbar__image-popover",
-        children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
           "form",
           {
             className: "block-editor-format-toolbar__image-container-content",
@@ -389,8 +401,8 @@ var wp;
               });
               event.preventDefault();
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_components.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_components.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                 import_components.__experimentalNumberControl,
                 {
                   __next40pxDefaultSize: true,
@@ -402,7 +414,7 @@ var wp;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                 import_components.TextareaControl,
                 {
                   label: (0, import_i18n3.__)("Alternative text"),
@@ -411,8 +423,8 @@ var wp;
                   onChange: (newAlt) => {
                     setEditedAlt(newAlt);
                   },
-                  help: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+                  help: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                       import_components.ExternalLink,
                       {
                         href: (
@@ -426,12 +438,12 @@ var wp;
                         )
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("br", {}),
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("br", {}),
                     (0, import_i18n3.__)("Leave empty if decorative.")
                   ] })
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_components.__experimentalHStack, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_components.__experimentalHStack, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                 import_components.Button,
                 {
                   disabled: !hasChanged,
@@ -456,8 +468,8 @@ var wp;
     activeObjectAttributes,
     contentRef
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_block_editor3.MediaUploadCheck, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_block_editor3.MediaUploadCheck, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
         import_block_editor3.MediaUpload,
         {
           allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -479,15 +491,15 @@ var wp;
             );
             onFocus();
           },
-          render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+          render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
             import_block_editor3.RichTextToolbarButton,
             {
-              icon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+              icon: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                 import_components.SVG,
                 {
                   xmlns: "http://www.w3.org/2000/svg",
                   viewBox: "0 0 24 24",
-                  children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_components.Path, { d: "M4 18.5h16V17H4v1.5zM16 13v1.5h4V13h-4zM5.1 15h7.8c.6 0 1.1-.5 1.1-1.1V6.1c0-.6-.5-1.1-1.1-1.1H5.1C4.5 5 4 5.5 4 6.1v7.8c0 .6.5 1.1 1.1 1.1zm.4-8.5h7V10l-1-1c-.3-.3-.8-.3-1 0l-1.6 1.5-1.2-.7c-.3-.2-.6-.2-.9 0l-1.3 1V6.5zm0 6.1l1.8-1.3 1.3.8c.3.2.7.2.9-.1l1.5-1.4 1.5 1.4v1.5h-7v-.9z" })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_components.Path, { d: "M4 18.5h16V17H4v1.5zM16 13v1.5h4V13h-4zM5.1 15h7.8c.6 0 1.1-.5 1.1-1.1V6.1c0-.6-.5-1.1-1.1-1.1H5.1C4.5 5 4 5.5 4 6.1v7.8c0 .6.5 1.1 1.1 1.1zm.4-8.5h7V10l-1-1c-.3-.3-.8-.3-1 0l-1.6 1.5-1.2-.7c-.3-.2-.6-.2-.9 0l-1.3 1V6.5zm0 6.1l1.8-1.3 1.3.8c.3.2.7.2.9-.1l1.5-1.4 1.5 1.4v1.5h-7v-.9z" })
                 }
               ),
               title: isObjectActive ? (0, import_i18n3.__)("Replace image") : title3,
@@ -497,7 +509,7 @@ var wp;
           )
         }
       ),
-      isObjectActive && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      isObjectActive && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
         InlineUI,
         {
           value,
@@ -510,7 +522,7 @@ var wp;
   }
 
   // packages/format-library/build-module/italic/index.js
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
   var import_i18n4 = __toESM(require_i18n());
   var import_rich_text4 = __toESM(require_rich_text());
   var import_block_editor4 = __toESM(require_block_editor());
@@ -531,8 +543,8 @@ var wp;
         onChange((0, import_rich_text4.toggleFormat)(value, { type: name4 }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_jsx_runtime17.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           import_block_editor4.RichTextShortcut,
           {
             type: "primary",
@@ -540,7 +552,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           import_block_editor4.RichTextToolbarButton,
           {
             name: "italic",
@@ -552,7 +564,7 @@ var wp;
             shortcutCharacter: "i"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           import_block_editor4.__unstableRichTextInputEvent,
           {
             inputType: "formatItalic",
@@ -564,7 +576,7 @@ var wp;
   };
 
   // packages/format-library/build-module/link/index.js
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
   var import_i18n7 = __toESM(require_i18n());
   var import_element5 = __toESM(require_element());
   var import_rich_text6 = __toESM(require_rich_text());
@@ -574,7 +586,7 @@ var wp;
   var import_a11y2 = __toESM(require_a11y());
 
   // packages/format-library/build-module/link/inline.js
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
   var import_element4 = __toESM(require_element());
   var import_i18n6 = __toESM(require_i18n());
   var import_a11y = __toESM(require_a11y());
@@ -719,7 +731,7 @@ var wp;
   var walkToEnd = partialRight(walkToBoundary, "forwards");
 
   // packages/format-library/build-module/link/css-classes-setting.js
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
   var import_element3 = __toESM(require_element());
   var import_compose = __toESM(require_compose());
   var import_i18n5 = __toESM(require_i18n());
@@ -746,10 +758,10 @@ var wp;
         setIsSettingActive(true);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("fieldset", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_components2.VisuallyHidden, { as: "legend", children: setting.title }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_components2.__experimentalVStack, { spacing: 3, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("fieldset", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_components2.VisuallyHidden, { as: "legend", children: setting.title }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_components2.__experimentalVStack, { spacing: 3, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
           import_components2.CheckboxControl,
           {
             __nextHasNoMarginBottom: true,
@@ -760,7 +772,7 @@ var wp;
             "aria-controls": isSettingActive ? controlledRegionId : void 0
           }
         ),
-        isSettingActive && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { id: controlledRegionId, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+        isSettingActive && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { id: controlledRegionId, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
           import_components2.__experimentalInputControl,
           {
             label: (0, import_i18n5.__)("CSS classes"),
@@ -789,7 +801,7 @@ var wp;
       id: "cssClasses",
       title: (0, import_i18n6.__)("Additional CSS class(es)"),
       render: (setting, value, onChange) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           css_classes_setting_default,
           {
             setting,
@@ -945,10 +957,10 @@ var wp;
           (0, import_i18n6.__)("Create page: <mark>%s</mark>"),
           searchTerm
         ),
-        { mark: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("mark", {}) }
+        { mark: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("mark", {}) }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
       import_components3.Popover,
       {
         anchor: popoverAnchor,
@@ -960,7 +972,7 @@ var wp;
         shift: true,
         focusOnMount,
         constrainTabbing: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           import_block_editor5.LinkControl,
           {
             value: linkValue,
@@ -1094,8 +1106,8 @@ var wp;
     }
     const shouldAutoFocus = !(openedBy?.el?.tagName === "A" && openedBy?.action === "click");
     const hasSelection = !(0, import_rich_text6.isCollapsed)(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
-      hasSelection && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+      hasSelection && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         import_block_editor6.RichTextShortcut,
         {
           type: "primary",
@@ -1103,7 +1115,7 @@ var wp;
           onUse: addLink
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         import_block_editor6.RichTextShortcut,
         {
           type: "primaryShift",
@@ -1111,7 +1123,7 @@ var wp;
           onUse: onRemoveFormat
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         import_block_editor6.RichTextToolbarButton,
         {
           name: "link",
@@ -1127,7 +1139,7 @@ var wp;
           "aria-expanded": addingLink
         }
       ),
-      addingLink && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      addingLink && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         inline_default,
         {
           stopAddingLink,
@@ -1186,7 +1198,7 @@ var wp;
   };
 
   // packages/format-library/build-module/strikethrough/index.js
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
   var import_i18n8 = __toESM(require_i18n());
   var import_rich_text7 = __toESM(require_rich_text());
   var import_block_editor7 = __toESM(require_block_editor());
@@ -1202,8 +1214,8 @@ var wp;
         onChange((0, import_rich_text7.toggleFormat)(value, { type: name6, title: title6 }));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
           import_block_editor7.RichTextShortcut,
           {
             type: "access",
@@ -1211,7 +1223,7 @@ var wp;
             onUse: onClick
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
           import_block_editor7.RichTextToolbarButton,
           {
             icon: format_strikethrough_default,
@@ -1226,7 +1238,7 @@ var wp;
   };
 
   // packages/format-library/build-module/underline/index.js
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
   var import_i18n9 = __toESM(require_i18n());
   var import_rich_text8 = __toESM(require_rich_text());
   var import_block_editor8 = __toESM(require_block_editor());
@@ -1252,8 +1264,8 @@ var wp;
           })
         );
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
           import_block_editor8.RichTextShortcut,
           {
             type: "primary",
@@ -1261,7 +1273,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
           import_block_editor8.__unstableRichTextInputEvent,
           {
             inputType: "formatUnderline",
@@ -1273,14 +1285,14 @@ var wp;
   };
 
   // packages/format-library/build-module/text-color/index.js
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
   var import_i18n11 = __toESM(require_i18n());
   var import_element7 = __toESM(require_element());
   var import_block_editor10 = __toESM(require_block_editor());
   var import_rich_text10 = __toESM(require_rich_text());
 
   // packages/format-library/build-module/text-color/inline.js
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
   var import_element6 = __toESM(require_element());
   var import_data2 = __toESM(require_data());
   var import_rich_text9 = __toESM(require_rich_text());
@@ -1307,9 +1319,9 @@ var wp;
     }, {});
   }
   function parseClassName(className = "", colorSettings) {
-    return className.split(" ").reduce((accumulator, name15) => {
-      if (name15.startsWith("has-") && name15.endsWith("-color")) {
-        const colorSlug = name15.replace(/^has-/, "").replace(/-color$/, "");
+    return className.split(" ").reduce((accumulator, name16) => {
+      if (name16.startsWith("has-") && name16.endsWith("-color")) {
+        const colorSlug = name16.replace(/^has-/, "").replace(/-color$/, "");
         const colorObject = (0, import_block_editor9.getColorObjectByAttributeValues)(
           colorSettings,
           colorSlug
@@ -1319,8 +1331,8 @@ var wp;
       return accumulator;
     }, {});
   }
-  function getActiveColors(value, name15, colorSettings) {
-    const activeColorFormat = (0, import_rich_text9.getActiveFormat)(value, name15);
+  function getActiveColors(value, name16, colorSettings) {
+    const activeColorFormat = (0, import_rich_text9.getActiveFormat)(value, name16);
     if (!activeColorFormat) {
       return {};
     }
@@ -1329,13 +1341,13 @@ var wp;
       ...parseClassName(activeColorFormat.attributes.class, colorSettings)
     };
   }
-  function setColors(value, name15, colorSettings, colors) {
+  function setColors(value, name16, colorSettings, colors) {
     const { color, backgroundColor } = {
-      ...getActiveColors(value, name15, colorSettings),
+      ...getActiveColors(value, name16, colorSettings),
       ...colors
     };
     if (!color && !backgroundColor) {
-      return (0, import_rich_text9.removeFormat)(value, name15);
+      return (0, import_rich_text9.removeFormat)(value, name16);
     }
     const styles = [];
     const classNames = [];
@@ -1359,24 +1371,24 @@ var wp;
     if (classNames.length) {
       attributes.class = classNames.join(" ");
     }
-    return (0, import_rich_text9.applyFormat)(value, { type: name15, attributes });
+    return (0, import_rich_text9.applyFormat)(value, { type: name16, attributes });
   }
-  function ColorPicker({ name: name15, property, value, onChange }) {
+  function ColorPicker({ name: name16, property, value, onChange }) {
     const colors = (0, import_data2.useSelect)((select) => {
       const { getSettings } = select(import_block_editor9.store);
       return getSettings().colors ?? [];
     }, []);
     const activeColors = (0, import_element6.useMemo)(
-      () => getActiveColors(value, name15, colors),
-      [name15, value, colors]
+      () => getActiveColors(value, name16, colors),
+      [name16, value, colors]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       import_block_editor9.ColorPalette,
       {
         value: activeColors[property],
         onChange: (color) => {
           onChange(
-            setColors(value, name15, colors, { [property]: color })
+            setColors(value, name16, colors, { [property]: color })
           );
         },
         enableAlpha: true,
@@ -1385,7 +1397,7 @@ var wp;
     );
   }
   function InlineColorUI({
-    name: name15,
+    name: name16,
     value,
     onChange,
     onClose,
@@ -1396,23 +1408,23 @@ var wp;
       editableContentElement: contentRef.current,
       settings: { ...textColor, isActive }
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       import_components4.Popover,
       {
         onClose,
         className: "format-library__inline-color-popover",
         anchor: popoverAnchor,
-        children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(Tabs, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Tabs.TabList, { children: TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Tabs.Tab, { tabId: tab.name, children: tab.title }, tab.name)) }),
-          TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(Tabs, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Tabs.TabList, { children: TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Tabs.Tab, { tabId: tab.name, children: tab.title }, tab.name)) }),
+          TABS.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             Tabs.TabPanel,
             {
               tabId: tab.name,
               focusable: false,
-              children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
                 ColorPicker,
                 {
-                  name: name15,
+                  name: name16,
                   property: tab.name,
                   value,
                   onChange
@@ -1473,13 +1485,13 @@ var wp;
     if (!hasColorsToChoose && !isActive) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(import_jsx_runtime24.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         import_block_editor10.RichTextToolbarButton,
         {
           className: "format-library-text-color-button",
           isActive,
-          icon: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+          icon: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
             icon_default,
             {
               icon: Object.keys(activeAttributes).length ? text_color_default : color_default,
@@ -1491,7 +1503,7 @@ var wp;
           role: "menuitemcheckbox"
         }
       ),
-      isAddingColor && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+      isAddingColor && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         InlineColorUI,
         {
           name: name8,
@@ -1518,7 +1530,7 @@ var wp;
   };
 
   // packages/format-library/build-module/subscript/index.js
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
   var import_i18n12 = __toESM(require_i18n());
   var import_rich_text11 = __toESM(require_rich_text());
   var import_block_editor11 = __toESM(require_block_editor());
@@ -1537,7 +1549,7 @@ var wp;
         onToggle();
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
         import_block_editor11.RichTextToolbarButton,
         {
           icon: subscript_default,
@@ -1551,7 +1563,7 @@ var wp;
   };
 
   // packages/format-library/build-module/superscript/index.js
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
   var import_i18n13 = __toESM(require_i18n());
   var import_rich_text12 = __toESM(require_rich_text());
   var import_block_editor12 = __toESM(require_block_editor());
@@ -1570,7 +1582,7 @@ var wp;
         onToggle();
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
         import_block_editor12.RichTextToolbarButton,
         {
           icon: superscript_default,
@@ -1584,7 +1596,7 @@ var wp;
   };
 
   // packages/format-library/build-module/keyboard/index.js
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
   var import_i18n14 = __toESM(require_i18n());
   var import_rich_text13 = __toESM(require_rich_text());
   var import_block_editor13 = __toESM(require_block_editor());
@@ -1603,7 +1615,7 @@ var wp;
         onToggle();
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
         import_block_editor13.RichTextToolbarButton,
         {
           icon: button_default,
@@ -1617,7 +1629,7 @@ var wp;
   };
 
   // packages/format-library/build-module/unknown/index.js
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
   var import_i18n15 = __toESM(require_i18n());
   var import_rich_text14 = __toESM(require_rich_text());
   var import_block_editor14 = __toESM(require_block_editor());
@@ -1645,7 +1657,7 @@ var wp;
         onChange((0, import_rich_text14.removeFormat)(value, name12));
         onFocus();
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
         import_block_editor14.RichTextToolbarButton,
         {
           name: "unknown",
@@ -1659,7 +1671,7 @@ var wp;
   };
 
   // packages/format-library/build-module/language/index.js
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
   var import_i18n16 = __toESM(require_i18n());
   var import_block_editor15 = __toESM(require_block_editor());
   var import_components5 = __toESM(require_components());
@@ -1679,8 +1691,8 @@ var wp;
     const togglePopover = () => {
       setIsPopoverVisible((state) => !state);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(import_jsx_runtime28.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(import_jsx_runtime29.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
         import_block_editor15.RichTextToolbarButton,
         {
           icon: language_default,
@@ -1697,7 +1709,7 @@ var wp;
           role: "menuitemcheckbox"
         }
       ),
-      isPopoverVisible && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      isPopoverVisible && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
         InlineLanguageUI,
         {
           value,
@@ -1715,13 +1727,13 @@ var wp;
     });
     const [lang, setLang] = (0, import_element8.useState)("");
     const [dir, setDir] = (0, import_element8.useState)("ltr");
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
       import_components5.Popover,
       {
         className: "block-editor-format-toolbar__language-popover",
         anchor: popoverAnchor,
         onClose,
-        children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
           import_components5.__experimentalVStack,
           {
             as: "form",
@@ -1741,7 +1753,7 @@ var wp;
               onClose();
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
                 import_components5.TextControl,
                 {
                   __next40pxDefaultSize: true,
@@ -1754,7 +1766,7 @@ var wp;
                   )
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
                 import_components5.SelectControl,
                 {
                   __next40pxDefaultSize: true,
@@ -1774,7 +1786,7 @@ var wp;
                   onChange: (val) => setDir(val)
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_components5.__experimentalHStack, { alignment: "right", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_components5.__experimentalHStack, { alignment: "right", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
                 import_components5.Button,
                 {
                   __next40pxDefaultSize: true,
@@ -1790,24 +1802,168 @@ var wp;
     );
   }
 
-  // packages/format-library/build-module/non-breaking-space/index.js
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+  // packages/format-library/build-module/math/index.js
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
   var import_i18n17 = __toESM(require_i18n());
+  var import_element9 = __toESM(require_element());
   var import_rich_text16 = __toESM(require_rich_text());
   var import_block_editor16 = __toESM(require_block_editor());
-  var name14 = "core/non-breaking-space";
-  var title14 = (0, import_i18n17.__)("Non breaking space");
-  var nonBreakingSpace = {
+  var import_components6 = __toESM(require_components());
+  var { Badge } = unlock(import_components6.privateApis);
+  var name14 = "core/math";
+  var title14 = (0, import_i18n17.__)("Math");
+  function InlineUI2({
+    value,
+    onChange,
+    activeAttributes,
+    contentRef,
+    latexToMathML
+  }) {
+    const [latex, setLatex] = (0, import_element9.useState)(
+      activeAttributes?.["data-latex"] || ""
+    );
+    const [error, setError] = (0, import_element9.useState)(null);
+    const popoverAnchor = (0, import_rich_text16.useAnchor)({
+      editableContentElement: contentRef.current,
+      settings: math
+    });
+    const handleLatexChange = (newLatex) => {
+      let mathML;
+      setLatex(newLatex);
+      try {
+        mathML = latexToMathML(newLatex, { displayMode: false });
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        return;
+      }
+      const newReplacements = value.replacements.slice();
+      newReplacements[value.start] = {
+        type: name14,
+        attributes: {
+          "data-latex": newLatex
+        },
+        innerHTML: mathML
+      };
+      onChange({
+        ...value,
+        replacements: newReplacements
+      });
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      import_components6.Popover,
+      {
+        placement: "bottom-start",
+        offset: 8,
+        focusOnMount: false,
+        anchor: popoverAnchor,
+        className: "block-editor-format-toolbar__math-popover",
+        children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { style: { minWidth: "300px", padding: "4px" }, children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_components6.__experimentalVStack, { spacing: 1, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+            import_components6.TextControl,
+            {
+              __nextHasNoMarginBottom: true,
+              __next40pxDefaultSize: true,
+              hideLabelFromVision: true,
+              label: (0, import_i18n17.__)("LaTeX math syntax"),
+              value: latex,
+              onChange: handleLatexChange,
+              placeholder: (0, import_i18n17.__)("e.g., x^2, \\frac{a}{b}"),
+              autoComplete: "off"
+            }
+          ),
+          error && /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_jsx_runtime30.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+              Badge,
+              {
+                intent: "error",
+                className: "wp-block-math__error",
+                children: error
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("style", { children: ".wp-block-math__error .components-badge__content{white-space:normal}" })
+          ] })
+        ] }) })
+      }
+    );
+  }
+  function Edit4({
+    value,
+    onChange,
+    onFocus,
+    isObjectActive,
+    activeObjectAttributes,
+    contentRef
+  }) {
+    const [latexToMathML, setLatexToMathML] = (0, import_element9.useState)();
+    (0, import_element9.useEffect)(() => {
+      Promise.resolve().then(() => __toESM(require_latex_to_mathml())).then((module) => {
+        setLatexToMathML(() => module.default);
+      });
+    }, []);
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_jsx_runtime30.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+        import_block_editor16.RichTextToolbarButton,
+        {
+          icon: math_default,
+          title: title14,
+          onClick: () => {
+            const newValue = (0, import_rich_text16.insertObject)(value, {
+              type: name14,
+              attributes: {
+                "data-latex": ""
+              },
+              innerHTML: ""
+            });
+            newValue.start = newValue.end - 1;
+            onChange(newValue);
+            onFocus();
+          },
+          isActive: isObjectActive
+        }
+      ),
+      isObjectActive && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+        InlineUI2,
+        {
+          value,
+          onChange,
+          activeAttributes: activeObjectAttributes,
+          contentRef,
+          latexToMathML
+        }
+      )
+    ] });
+  }
+  var math = {
     name: name14,
     title: title14,
+    tagName: "math",
+    className: null,
+    attributes: {
+      "data-latex": "data-latex"
+    },
+    contentEditable: false,
+    edit: Edit4
+  };
+
+  // packages/format-library/build-module/non-breaking-space/index.js
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var import_i18n18 = __toESM(require_i18n());
+  var import_rich_text17 = __toESM(require_rich_text());
+  var import_block_editor17 = __toESM(require_block_editor());
+  var name15 = "core/non-breaking-space";
+  var title15 = (0, import_i18n18.__)("Non breaking space");
+  var nonBreakingSpace = {
+    name: name15,
+    title: title15,
     tagName: "nbsp",
     className: null,
     edit({ value, onChange }) {
       function addNonBreakingSpace() {
-        onChange((0, import_rich_text16.insert)(value, "\xA0"));
+        onChange((0, import_rich_text17.insert)(value, "\xA0"));
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
-        import_block_editor16.RichTextShortcut,
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+        import_block_editor17.RichTextShortcut,
         {
           type: "primaryShift",
           character: " ",
@@ -1832,12 +1988,13 @@ var wp;
     keyboard,
     unknown,
     language,
+    math,
     nonBreakingSpace
   ];
 
   // packages/format-library/build-module/index.js
   default_formats_default.forEach(
-    ({ name: name15, ...settings }) => (0, import_rich_text17.registerFormatType)(name15, settings)
+    ({ name: name16, ...settings }) => (0, import_rich_text18.registerFormatType)(name16, settings)
   );
 })();
 //# sourceMappingURL=index.js.map

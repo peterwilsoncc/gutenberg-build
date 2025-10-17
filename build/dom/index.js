@@ -888,6 +888,10 @@ var wp;
         "width",
         "height"
       ]
+    },
+    math: {
+      attributes: ["display", "xmlns"],
+      children: "*"
     }
   };
   var phrasingContentSchema = {

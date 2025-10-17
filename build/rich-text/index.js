@@ -464,9 +464,6 @@ var wp;
         elementAttributes.class = formatType.className;
       }
     }
-    if (isEditableTree && formatType.contentEditable === false) {
-      elementAttributes.contenteditable = "false";
-    }
     return {
       type: tagName || formatType.tagName,
       object: formatType.object,
@@ -585,12 +582,28 @@ var wp;
             )
           });
         } else if (formatType?.contentEditable === false) {
+          pointer = getParent3(pointer);
+          if (isEditableTree) {
+            const attrs = {
+              contenteditable: "false",
+              "data-rich-text-bogus": true
+            };
+            if (start === i2 && end === i2 + 1) {
+              attrs["data-rich-text-format-boundary"] = true;
+            }
+            pointer = append3(pointer, {
+              type: "span",
+              attributes: attrs
+            });
+            if (isEditableTree && i2 + 1 === text.length) {
+              append3(getParent3(pointer), ZWNBSP);
+            }
+          }
           pointer = append3(
-            getParent3(pointer),
+            pointer,
             fromFormat({
               ...replacement,
-              isEditableTree,
-              boundaryClass: start === i2 && end === i2 + 1
+              isEditableTree
             })
           );
           if (innerHTML) {
@@ -963,7 +976,7 @@ var wp;
         }
         node.nodeValue = newNodeValue;
       } else if (node.nodeType === node.ELEMENT_NODE) {
-        collapseWhiteSpace(node, false);
+        node.replaceWith(collapseWhiteSpace(node, false));
       }
     });
     return clone;
@@ -1077,7 +1090,7 @@ var wp;
         isEditableTree
       });
       accumulateSelection(accumulator, node, range, value);
-      if (!format || node.getAttribute("data-rich-text-placeholder")) {
+      if (!format || node.getAttribute("data-rich-text-placeholder") || node.getAttribute("data-rich-text-bogus")) {
         mergePair(accumulator, value);
       } else if (value.text.length === 0) {
         if (format.attributes) {
@@ -1449,6 +1462,7 @@ var wp;
   }
 
   // packages/rich-text/build-module/to-dom.js
+  var MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
   function createPathToNode(node, rootNode, path) {
     const parentNode = node.parentNode;
     let i2 = 0;
@@ -1485,7 +1499,24 @@ var wp;
           attributes["data-rich-text-comment"]
         );
       } else {
-        child = element.ownerDocument.createElement(type);
+        const parentNamespace = element.namespaceURI;
+        if (type === "math") {
+          child = element.ownerDocument.createElementNS(
+            MATHML_NAMESPACE,
+            type
+          );
+        } else if (parentNamespace === MATHML_NAMESPACE) {
+          if (element.tagName === "MTEXT") {
+            child = element.ownerDocument.createElement(type);
+          } else {
+            child = element.ownerDocument.createElementNS(
+              MATHML_NAMESPACE,
+              type
+            );
+          }
+        } else {
+          child = element.ownerDocument.createElement(type);
+        }
         for (const key in attributes) {
           child.setAttribute(key, attributes[key]);
         }

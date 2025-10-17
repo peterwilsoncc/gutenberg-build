@@ -10078,6 +10078,39 @@ ${p3}`
     parentNode.removeChild(node);
   }
 
+  // packages/blocks/build-module/api/raw-handling/latex-to-math.js
+  function isLatexMathMode(text2) {
+    const lettersRegex = /[\p{L}\s]+/gu;
+    let match;
+    while (match = lettersRegex.exec(text2)) {
+      if (text2[match.index - 1] === "{") {
+        continue;
+      }
+      let sequence = match[0];
+      if (text2[match.index - 1] === "\\") {
+        sequence = sequence.replace(/^[a-zA-Z]+/, "");
+      }
+      if (sequence.length < 6) {
+        continue;
+      }
+      return false;
+    }
+    if (/\\[a-zA-Z]+\s*\{/g.test(text2)) {
+      return true;
+    }
+    const softClues = [
+      (t3) => t3.includes("^") && !t3.startsWith("^"),
+      (t3) => ["=", "+", "-", "/", "*"].some(
+        (operator) => t3.includes(operator)
+      ),
+      (t3) => /\\[a-zA-Z]+/g.test(t3)
+    ];
+    if (softClues.filter((clue) => clue(text2)).length >= 2) {
+      return true;
+    }
+    return false;
+  }
+
   // packages/blocks/build-module/api/raw-handling/paste-handler.js
   var log = (...args) => window?.console?.log?.(...args);
   function filterInlineHTML(HTML) {
@@ -10125,6 +10158,9 @@ ${p3}`
     }
     HTML = deepFilterHTML(HTML, [slackParagraphCorrector]);
     const isPlainText = plainText && (!HTML || isPlain(HTML));
+    if (isPlainText && isLatexMathMode(plainText)) {
+      return [createBlock("core/math", { latex: plainText })];
+    }
     if (isPlainText) {
       HTML = plainText;
       if (!/^\s+$/.test(plainText)) {
