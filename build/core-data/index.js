@@ -15296,9 +15296,6 @@ var wp;
     }
     return state;
   }
-  function templateAutoDraftId(state = {}, action) {
-    return action.type === "RECEIVE_TEMPLATE_AUTO_DRAFT_ID" ? { ...state, [action.target]: action.id } : state;
-  }
   var reducer_default2 = (0, import_data3.combineReducers)({
     users,
     currentTheme,
@@ -15318,8 +15315,7 @@ var wp;
     userPatternCategories,
     navigationFallbackId,
     defaultTemplates,
-    registeredPostMeta,
-    templateAutoDraftId
+    registeredPostMeta
   });
 
   // packages/core-data/build-module/selectors.js
@@ -15939,7 +15935,6 @@ var wp;
     getNavigationFallbackId: () => getNavigationFallbackId,
     getPostsPageId: () => getPostsPageId,
     getRegisteredPostMeta: () => getRegisteredPostMeta,
-    getTemplateAutoDraftId: () => getTemplateAutoDraftId,
     getTemplateId: () => getTemplateId,
     getUndoManager: () => getUndoManager
   });
@@ -16123,9 +16118,6 @@ var wp;
       });
     }
   );
-  function getTemplateAutoDraftId(state, staticTemplateId) {
-    return state.templateAutoDraftId[staticTemplateId];
-  }
 
   // packages/core-data/build-module/actions.js
   var actions_exports = {};
@@ -16365,11 +16357,6 @@ var wp;
     };
   }
   function receiveEntityRecords(kind, name, records, query, invalidateCache = false, edits, meta) {
-    if (kind === "postType" && name === "wp_template") {
-      records = (Array.isArray(records) ? records : [records]).map(
-        (record) => record.status === "auto-draft" ? { ...record, status: "publish" } : record
-      );
-    }
     if (kind === "postType") {
       records = (Array.isArray(records) ? records : [records]).map(
         (record) => record.status === "auto-draft" ? { ...record, title: "" } : record
@@ -16728,9 +16715,6 @@ var wp;
               )
             };
           }
-          if (name === "wp_template" && persistedRecord) {
-            edits.status = "publish";
-          }
           updatedRecord = await __unstableFetch({
             path,
             method: recordId ? "PUT" : "POST",
@@ -16918,8 +16902,7 @@ var wp;
   var private_actions_exports = {};
   __export(private_actions_exports, {
     editMediaEntity: () => editMediaEntity,
-    receiveRegisteredPostMeta: () => receiveRegisteredPostMeta,
-    receiveTemplateAutoDraftId: () => receiveTemplateAutoDraftId
+    receiveRegisteredPostMeta: () => receiveRegisteredPostMeta
   });
   var import_api_fetch4 = __toESM(require_api_fetch());
   function receiveRegisteredPostMeta(postType, registeredPostMeta2) {
@@ -16997,9 +16980,6 @@ var wp;
       dispatch.__unstableReleaseStoreLock(lock2);
     }
   };
-  function receiveTemplateAutoDraftId(target, id2) {
-    return { type: "RECEIVE_TEMPLATE_AUTO_DRAFT_ID", target, id: id2 };
-  }
 
   // packages/core-data/build-module/resolvers.js
   var resolvers_exports = {};
@@ -17030,7 +17010,6 @@ var wp;
     getRegisteredPostMeta: () => getRegisteredPostMeta2,
     getRevision: () => getRevision2,
     getRevisions: () => getRevisions2,
-    getTemplateAutoDraftId: () => getTemplateAutoDraftId2,
     getThemeSupports: () => getThemeSupports2,
     getUserPatternCategories: () => getUserPatternCategories2
   });
@@ -17369,27 +17348,6 @@ var wp;
     // knowing whether it's an update or fetch. Only an update would
     // have persistedEdits.
     action.persistedEdits && action.persistedEdits.status !== "auto-draft" || action.type === "REMOVE_ITEMS") && action.kind === "postType" && action.name === "wp_template";
-  };
-  var getTemplateAutoDraftId2 = (staticTemplateId) => async ({ resolveSelect, dispatch }) => {
-    const record = await resolveSelect.getEntityRecord(
-      "postType",
-      "wp_registered_template",
-      staticTemplateId
-    );
-    const autoDraft = await dispatch.saveEntityRecord(
-      "postType",
-      "wp_template",
-      {
-        ...record,
-        id: void 0,
-        type: "wp_template",
-        status: "auto-draft"
-      }
-    );
-    await dispatch.receiveTemplateAutoDraftId(
-      staticTemplateId,
-      autoDraft.id
-    );
   };
   var getRawEntityRecord2 = forward_resolver_default("getEntityRecord");
   var getEditedEntityRecord2 = forward_resolver_default("getEntityRecord");

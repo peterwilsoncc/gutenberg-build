@@ -4310,12 +4310,16 @@ var wp;
     if (site.active_templates[slug] === id) {
       return;
     }
+    const currentTheme = await registry.resolveSelect(import_core_data2.store).getCurrentTheme();
+    const templateType = currentTheme?.default_template_types.find(
+      (type) => type.slug === slug
+    );
     await registry.dispatch(import_notices.store).createNotice(
       "info",
       (0, import_i18n2.sprintf)(
-        // translators: %s: template slug
-        (0, import_i18n2.__)('This is a "%s" template. Do you want to activate it?'),
-        slug
+        // translators: %s: The name (or slug) of the type of template.
+        (0, import_i18n2.__)('Do you want to activate this "%s" template?'),
+        templateType?.title ?? slug
       ),
       {
         id: "template-activate-notice",
@@ -13045,6 +13049,9 @@ var wp;
         }
       }
       return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("form", { onSubmit: createPage, children: /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_components39.__experimentalVStack, { spacing: 3, children: [
+        item.type === "wp_registered_template" && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("div", { children: (0, import_i18n51.__)(
+          "You are about to duplicate a bundled template. Changes will not be live until you activate the new template."
+        ) }),
         /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
           DataForm,
           {
@@ -21237,7 +21244,8 @@ var wp;
       const newTemplate = await createTemplate2({
         slug: paramCase(title || DEFAULT_TITLE) || "wp-custom-template",
         content: newTemplateContent,
-        title: title || DEFAULT_TITLE
+        title: title || DEFAULT_TITLE,
+        status: "publish"
       });
       setIsBusy(false);
       onNavigateToEntityRecord({

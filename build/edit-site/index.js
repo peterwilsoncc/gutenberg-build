@@ -26828,8 +26828,7 @@ var wp;
     TEMPLATE_POST_TYPE,
     TEMPLATE_PART_POST_TYPE,
     NAVIGATION_POST_TYPE,
-    PATTERN_TYPES.user,
-    "wp_registered_template"
+    PATTERN_TYPES.user
   ];
   var authorizedPostTypes = ["page", "post"];
   function getPostType(name2) {
@@ -26844,8 +26843,6 @@ var wp;
       postType2 = TEMPLATE_POST_TYPE;
     } else if (name2 === "template-item") {
       postType2 = TEMPLATE_POST_TYPE;
-    } else if (name2 === "static-template-item") {
-      postType2 = "wp_registered_template";
     } else if (name2 === "page-item" || name2 === "pages") {
       postType2 = "page";
     } else if (name2 === "post-item" || name2 === "posts") {
@@ -26855,26 +26852,12 @@ var wp;
   }
   function useResolveEditedEntity() {
     const { name: name2, params = {}, query } = useLocation16();
-    const { postId: _postId = query?.postId } = params;
-    const _postType = getPostType(name2, _postId) ?? query?.postType;
+    const { postId = query?.postId } = params;
+    const postType2 = getPostType(name2, postId) ?? query?.postType;
     const homePage = (0, import_data56.useSelect)((select2) => {
       const { getHomePage } = unlock(select2(import_core_data34.store));
       return getHomePage();
     }, []);
-    const [postType2, postId] = (0, import_data56.useSelect)(
-      (select2) => {
-        if (_postType !== "wp_registered_template") {
-          return [_postType, _postId];
-        }
-        return [
-          TEMPLATE_POST_TYPE,
-          unlock(select2(import_core_data34.store)).getTemplateAutoDraftId(
-            _postId
-          )
-        ];
-      },
-      [_postType, _postId]
-    );
     const resolvedTemplateId = (0, import_data56.useSelect)(
       (select2) => {
         if (postTypesWithoutParentTemplate.includes(postType2) && postId) {
@@ -45074,7 +45057,11 @@ If there's a particular need for this, please submit a feature request at https:
           to: (0, import_url15.addQueryArgs)("/template", { activeView: "user" }),
           icon: layout_default,
           "aria-current": activeView === "user",
-          children: (0, import_i18n139.__)("Custom templates")
+          // Let's avoid calling them "custom templates" to avoid
+          // confusion. "Created" is closest to meaning database
+          // templates, created by users.
+          // https://developer.wordpress.org/themes/classic-themes/templates/page-template-files/#creating-custom-page-templates-for-global-use
+          children: (0, import_i18n139.__)("Created templates")
         }
       ),
       firstItemPerAuthorText.map((template) => {
@@ -45108,6 +45095,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-templates/index.js
   var import_jsx_runtime284 = __toESM(require_jsx_runtime());
   var import_i18n146 = __toESM(require_i18n());
+  var import_html_entities14 = __toESM(require_html_entities());
   var import_element138 = __toESM(require_element());
   var import_core_data56 = __toESM(require_core_data());
   var import_router34 = __toESM(require_router());
@@ -45116,6 +45104,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data84 = __toESM(require_data());
   var import_compose26 = __toESM(require_compose());
   var import_components161 = __toESM(require_components());
+  var import_notices9 = __toESM(require_notices());
 
   // packages/edit-site/build-module/components/add-new-template/index.js
   var import_jsx_runtime282 = __toESM(require_jsx_runtime());
@@ -46601,6 +46590,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { path, query } = useLocation27();
     const { activeView = "active", postId } = query;
     const [selection, setSelection] = (0, import_element138.useState)([postId]);
+    const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element138.useState)(false);
     const defaultView = (0, import_element138.useMemo)(() => {
       return getDefaultView(activeView);
     }, [activeView]);
@@ -46746,13 +46736,49 @@ If there's a particular need for this, please submit a feature request at https:
         elements: elements2
       });
       return _fields;
-    }, [users, activeView]);
+    }, [users, activeView, themeField]);
     const { data, paginationInfo } = (0, import_element138.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields);
     }, [records, view, fields]);
+    const { createSuccessNotice } = (0, import_data84.useDispatch)(import_notices9.store);
+    const onActionPerformed = (0, import_element138.useCallback)(
+      (actionId, items) => {
+        switch (actionId) {
+          case "duplicate-post":
+            {
+              const newItem = items[0];
+              const _title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
+              createSuccessNotice(
+                (0, import_i18n146.sprintf)(
+                  // translators: %s: Title of the created post or template, e.g: "Hello world".
+                  (0, import_i18n146.__)('"%s" successfully created.'),
+                  (0, import_html_entities14.decodeEntities)(_title) || (0, import_i18n146.__)("(no title)")
+                ),
+                {
+                  type: "snackbar",
+                  id: "duplicate-post-action",
+                  actions: [
+                    {
+                      label: (0, import_i18n146.__)("Edit"),
+                      onClick: () => {
+                        history.navigate(
+                          `/${newItem.type}/${newItem.id}?canvas=edit`
+                        );
+                      }
+                    }
+                  ]
+                }
+              );
+            }
+            break;
+        }
+      },
+      [history, createSuccessNotice]
+    );
     const postTypeActions = usePostActions2({
       postType: TEMPLATE_POST_TYPE,
-      context: "list"
+      context: "list",
+      onActionPerformed
     });
     const editAction = useEditPostAction();
     const setActiveTemplateAction = useSetActiveTemplateAction();
@@ -46766,7 +46792,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
       updateView(newView);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+    const duplicateAction = actions.find(
+      (action) => action.id === "duplicate-post"
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(
       page_default,
       {
         className: "edit-site-page-templates",
@@ -46785,28 +46814,54 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(add_new_template_default, {})
         ] }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-          dataviews_default,
-          {
-            paginationInfo,
-            fields,
-            actions,
-            data,
-            isLoading: isLoadingData,
-            view,
-            onChangeView,
-            onChangeSelection,
-            isItemClickable: () => true,
-            onClickItem: (item) => {
-              history.navigate(
-                `/${item.type}/${item.id}?canvas=edit`
-              );
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+            dataviews_default,
+            {
+              paginationInfo,
+              fields,
+              actions,
+              data,
+              isLoading: isLoadingData,
+              view,
+              onChangeView,
+              onChangeSelection,
+              isItemClickable: () => true,
+              onClickItem: (item) => {
+                if (item.type === "wp_registered_template") {
+                  setSelectedRegisteredTemplate(item);
+                } else {
+                  history.navigate(
+                    `/${item.type}/${item.id}?canvas=edit`
+                  );
+                }
+              },
+              selection,
+              defaultLayouts: defaultLayouts2
             },
-            selection,
-            defaultLayouts: defaultLayouts2
-          },
-          activeView
-        )
+            activeView
+          ),
+          selectedRegisteredTemplate && duplicateAction && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+            import_components161.Modal,
+            {
+              title: (0, import_i18n146.__)("Duplicate"),
+              onRequestClose: () => setSelectedRegisteredTemplate(),
+              size: "small",
+              children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+                duplicateAction.RenderModal,
+                {
+                  items: [selectedRegisteredTemplate],
+                  closeModal: () => setSelectedRegisteredTemplate(),
+                  onActionPerformed: ([item]) => {
+                    history.navigate(
+                      `/${item.type}/${item.id}?canvas=edit`
+                    );
+                  }
+                }
+              )
+            }
+          )
+        ]
       }
     );
   }
@@ -46874,11 +46929,6 @@ If there's a particular need for this, please submit a feature request at https:
   var templateItemRoute = {
     name: "template-item",
     path: "/wp_template/*postId",
-    areas
-  };
-  var staticTemplateItemRoute = {
-    name: "static-template-item",
-    path: "/wp_registered_template/*postId",
     areas
   };
 
@@ -47130,8 +47180,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data86 = __toESM(require_data());
   var import_element140 = __toESM(require_element());
   var import_core_data58 = __toESM(require_core_data());
-  var import_notices9 = __toESM(require_notices());
-  var import_html_entities14 = __toESM(require_html_entities());
+  var import_notices10 = __toESM(require_notices());
+  var import_html_entities15 = __toESM(require_html_entities());
   var import_blocks17 = __toESM(require_blocks());
   function AddNewPostModal({ postType: postType2, onSave, onClose }) {
     const labels = (0, import_data86.useSelect)(
@@ -47141,7 +47191,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [isCreatingPost, setIsCreatingPost] = (0, import_element140.useState)(false);
     const [title, setTitle] = (0, import_element140.useState)("");
     const { saveEntityRecord } = (0, import_data86.useDispatch)(import_core_data58.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data86.useDispatch)(import_notices9.store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data86.useDispatch)(import_notices10.store);
     const { resolveSelect: resolveSelect3 } = (0, import_data86.useRegistry)();
     async function createPost(event) {
       event.preventDefault();
@@ -47172,7 +47222,7 @@ If there's a particular need for this, please submit a feature request at https:
           (0, import_i18n148.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
             (0, import_i18n148.__)('"%s" successfully created.'),
-            (0, import_html_entities14.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n148.__)("(no title)")
+            (0, import_html_entities15.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n148.__)("(no title)")
           ),
           { type: "snackbar" }
         );
@@ -47779,7 +47829,6 @@ If there's a particular need for this, please submit a feature request at https:
     pageItemRoute,
     pagesRoute,
     templateItemRoute,
-    staticTemplateItemRoute,
     templatesRoute,
     templatePartItemRoute,
     patternItemRoute,

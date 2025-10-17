@@ -288,7 +288,6 @@ var wp;
     post: post_default,
     page: page_default,
     wp_template: layout_default,
-    wp_registered_template: layout_default,
     wp_template_part: symbol_filled_default
   };
   function useDebouncedValue(value) {
@@ -405,7 +404,7 @@ var wp;
       (select) => {
         return {
           isBlockBasedTheme: select(import_core_data2.store).getCurrentTheme()?.is_block_theme,
-          canCreateTemplate: select(import_core_data2.store).canUser("read", {
+          canCreateTemplate: select(import_core_data2.store).canUser("create", {
             kind: "postType",
             name: templateType
           })
@@ -661,10 +660,6 @@ var wp;
     (0, import_commands2.useCommandLoader)({
       name: "core/edit-site/navigate-templates",
       hook: getNavigationCommandLoaderPerTemplate("wp_template")
-    });
-    (0, import_commands2.useCommandLoader)({
-      name: "core/edit-site/navigate-templates",
-      hook: getNavigationCommandLoaderPerTemplate("wp_registered_template")
     });
     (0, import_commands2.useCommandLoader)({
       name: "core/edit-site/navigate-template-parts",

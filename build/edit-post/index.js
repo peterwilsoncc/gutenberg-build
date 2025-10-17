@@ -2370,17 +2370,6 @@ var wp;
       ]
     );
     useMetaBoxInitialization(hasActiveMetaboxes && hasResolvedMode);
-    const editableResolvedTemplateId = (0, import_data25.useSelect)(
-      (select2) => {
-        if (typeof templateId !== "string") {
-          return templateId;
-        }
-        return unlock(select2(import_core_data6.store)).getTemplateAutoDraftId(
-          templateId
-        );
-      },
-      [templateId]
-    );
     const [paddingAppenderRef, paddingStyle] = usePaddingAppender(
       enablePaddingAppender
     );
@@ -2484,7 +2473,7 @@ var wp;
               initialEdits,
               postType: currentPostType,
               postId: currentPostId,
-              templateId: editableResolvedTemplateId,
+              templateId,
               className,
               styles,
               forceIsDirty: hasActiveMetaboxes,
