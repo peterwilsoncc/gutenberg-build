@@ -28892,22 +28892,14 @@ var wp;
     const [selectedThread, setSelectedThread] = (0, import_element125.useState)(null);
     const [boardOffsets, setBoardOffsets] = (0, import_element125.useState)({});
     const [blockRefs, setBlockRefs] = (0, import_element125.useState)({});
-    const { blockCommentId, selectedBlockClientId, blockIds } = (0, import_data156.useSelect)(
-      (select4) => {
-        const {
-          getBlockAttributes: getBlockAttributes2,
-          getSelectedBlockClientId: getSelectedBlockClientId2,
-          getBlockOrder: getBlockOrder2
-        } = select4(import_block_editor52.store);
-        const clientId = getSelectedBlockClientId2();
-        return {
-          blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
-          selectedBlockClientId: clientId,
-          blockIds: getBlockOrder2()
-        };
-      },
-      []
-    );
+    const { blockCommentId, selectedBlockClientId } = (0, import_data156.useSelect)((select4) => {
+      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor52.store);
+      const clientId = getSelectedBlockClientId2();
+      return {
+        blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
+        selectedBlockClientId: clientId
+      };
+    }, []);
     const relatedBlockElement = useBlockElement(selectedBlockClientId);
     const handleDelete = async (comment) => {
       const currentIndex = threads.findIndex((t3) => t3.id === comment.id);
@@ -28940,36 +28932,75 @@ var wp;
     (0, import_element125.useEffect)(() => {
       const calculateAllOffsets = () => {
         const offsets = {};
-        let previousThreadData = null;
         if (!isFloating) {
-          return;
+          return offsets;
         }
-        threads.forEach((thread) => {
+        const selectedThreadIndex = threads.findIndex(
+          (t3) => t3.id === selectedThread
+        );
+        const breakIndex = selectedThreadIndex === -1 ? 0 : selectedThreadIndex;
+        const selectedThreadData = threads[breakIndex];
+        if (!selectedThreadData || !blockRefs[selectedThreadData.id]) {
+          return offsets;
+        }
+        let blockElement = blockRefs[selectedThreadData.id];
+        let blockRect = blockElement?.getBoundingClientRect();
+        const selectedThreadTop = blockRect?.top || 0;
+        const selectedThreadHeight = heights[selectedThreadData.id] || 0;
+        offsets[selectedThreadData.id] = -16;
+        let previousThreadData = {
+          threadTop: selectedThreadTop - 16,
+          threadHeight: selectedThreadHeight
+        };
+        for (let i3 = breakIndex + 1; i3 < threads.length; i3++) {
+          const thread = threads[i3];
           if (!blockRefs[thread.id]) {
-            return;
+            continue;
           }
-          const blockElement = blockRefs[thread.id];
-          const blockRect = blockElement?.getBoundingClientRect();
+          blockElement = blockRefs[thread.id];
+          blockRect = blockElement?.getBoundingClientRect();
           const threadTop = blockRect?.top || 0;
           const threadHeight = heights[thread.id] || 0;
           let additionalOffset = -16;
-          if (previousThreadData) {
-            const previousBottom = previousThreadData.threadTop + previousThreadData.threadHeight;
-            if (threadTop < previousBottom) {
-              additionalOffset = previousBottom - threadTop + 20;
-            }
+          const previousBottom = previousThreadData.threadTop + previousThreadData.threadHeight;
+          if (threadTop < previousBottom + 16) {
+            additionalOffset = previousBottom - threadTop + 20;
           }
+          offsets[thread.id] = additionalOffset;
           previousThreadData = {
             threadTop: threadTop + additionalOffset,
             threadHeight
           };
+        }
+        let nextThreadData = {
+          threadTop: selectedThreadTop - 16
+        };
+        for (let i3 = selectedThreadIndex - 1; i3 >= 0; i3--) {
+          const thread = threads[i3];
+          if (!blockRefs[thread.id]) {
+            continue;
+          }
+          blockElement = blockRefs[thread.id];
+          blockRect = blockElement?.getBoundingClientRect();
+          const threadTop = blockRect?.top || 0;
+          const threadHeight = heights[thread.id] || 0;
+          let additionalOffset = -16;
+          const threadBottom = threadTop + threadHeight;
+          if (threadBottom > nextThreadData.threadTop) {
+            additionalOffset = nextThreadData.threadTop - threadTop - threadHeight - 20;
+          }
           offsets[thread.id] = additionalOffset;
-        });
+          nextThreadData = {
+            threadTop: threadTop + additionalOffset
+          };
+        }
         return offsets;
       };
       const newOffsets = calculateAllOffsets();
-      setBoardOffsets(newOffsets);
-    }, [heights, blockIds, blockRefs, isFloating, threads]);
+      if (Object.keys(newOffsets).length > 0) {
+        setBoardOffsets(newOffsets);
+      }
+    }, [heights, blockRefs, isFloating, threads, selectedThread]);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads) {
       return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
@@ -28998,7 +29029,7 @@ var wp;
           commentSidebarRef,
           reflowComments,
           isFloating,
-          calculatedOffset: boardOffsets ? boardOffsets[thread.id] : 0,
+          calculatedOffset: boardOffsets[thread.id] ?? 0,
           setHeights,
           setBlockRef,
           selectedThread,

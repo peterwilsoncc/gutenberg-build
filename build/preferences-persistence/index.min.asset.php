@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-api-fetch'), 'version' => '1760691332498');
+<?php return array('dependencies' => array('wp-api-fetch'), 'version' => '1760691817676');
