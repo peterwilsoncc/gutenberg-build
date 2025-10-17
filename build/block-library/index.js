@@ -34446,7 +34446,7 @@ ${url}
       if (hasUrlBinding) {
         updateBlockBindings({ url: void 0 });
       }
-    }, [updateBlockBindings, hasUrlBinding, metadata, id]);
+    }, [updateBlockBindings, hasUrlBinding]);
     const createBinding = (0, import_element65.useCallback)(
       (updatedAttributes) => {
         const kindToUse = updatedAttributes?.kind ?? kind;
@@ -35199,7 +35199,7 @@ ${url}
           if (isEntityLink) {
             createBinding(updatedAttributes);
           } else {
-            clearBinding(updatedAttributes);
+            clearBinding();
           }
           setInsertedBlock(null);
         }
@@ -37202,7 +37202,7 @@ ${url}
                 if (isEntityLink) {
                   createBinding(updatedAttributes);
                 } else {
-                  clearBinding(updatedAttributes);
+                  clearBinding();
                 }
               }
             }
@@ -37859,7 +37859,7 @@ ${url}
                 if (isEntityLink) {
                   createBinding(updatedAttributes);
                 } else {
-                  clearBinding(updatedAttributes);
+                  clearBinding();
                 }
               }
             }
