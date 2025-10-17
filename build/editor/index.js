@@ -28621,7 +28621,7 @@ var wp;
     }, []);
     const { resultComments, unresolvedSortedThreads } = (0, import_element124.useMemo)(() => {
       const blocksWithComments = clientIds.reduce((results, clientId) => {
-        const commentId = getBlockAttributes2(clientId)?.metadata?.commentId;
+        const commentId = getBlockAttributes2(clientId)?.metadata?.noteId;
         if (commentId) {
           results[clientId] = commentId;
         }
@@ -28713,7 +28713,7 @@ var wp;
           updateBlockAttributes2(clientId, {
             metadata: {
               ...metadata,
-              commentId: savedRecord.id
+              noteId: savedRecord.id
             }
           });
         }
@@ -28807,7 +28807,7 @@ var wp;
           updateBlockAttributes2(clientId, {
             metadata: cleanEmptyObject2({
               ...metadata,
-              commentId: void 0
+              noteId: void 0
             })
           });
         }
@@ -28923,7 +28923,7 @@ var wp;
         } = select4(import_block_editor52.store);
         const clientId = getSelectedBlockClientId2();
         return {
-          blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.commentId : null,
+          blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
           selectedBlockClientId: clientId,
           blockIds: getBlockOrder2()
         };
@@ -29468,7 +29468,7 @@ var wp;
         const selectedBlock = getSelectedBlock2();
         return {
           clientId: selectedBlock?.clientId,
-          blockCommentId: selectedBlock?.attributes?.metadata?.commentId,
+          blockCommentId: selectedBlock?.attributes?.metadata?.noteId,
           isEmptyDefaultBlock: selectedBlock ? (0, import_blocks19.isUnmodifiedDefaultBlock)(selectedBlock) : false
         };
       },
@@ -29688,7 +29688,7 @@ var wp;
     const blockCommentId = (0, import_data159.useSelect)((select4) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor56.store);
       const clientId = getSelectedBlockClientId2();
-      return clientId ? getBlockAttributes2(clientId)?.metadata?.commentId : null;
+      return clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null;
     }, []);
     const {
       resultComments,

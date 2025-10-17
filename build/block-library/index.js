@@ -6623,7 +6623,7 @@ var wp;
       return;
     }
     const { supports: supports3 } = (0, import_blocks7.getBlockType)(newBlockName);
-    const transformSupportedProps = ["commentId"];
+    const transformSupportedProps = ["noteId"];
     if (bindingsCallback) {
       transformSupportedProps.push("id", "bindings");
     }
