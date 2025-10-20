@@ -34407,7 +34407,7 @@ var wp;
       const dataFields = getPostDataFields(select4, context, clientId);
       const newValues = {};
       for (const [attributeName, source] of Object.entries(bindings)) {
-        const fieldKey = true ? source.args.field || source.args.key : source.args.field;
+        const fieldKey = source.args.field;
         const { value: fieldValue, label: fieldLabel } = dataFields?.[fieldKey] || {};
         newValues[attributeName] = fieldValue ?? fieldLabel ?? fieldKey;
       }
