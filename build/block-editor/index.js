@@ -57353,6 +57353,7 @@ var wp;
       import_components201.Button,
       {
         __next40pxDefaultSize: true,
+        className: "block-editor-block-quick-navigation__item",
         isPressed: isSelected,
         onClick: async () => {
           await selectBlock2(clientId);
