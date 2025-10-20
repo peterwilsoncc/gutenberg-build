@@ -14,7 +14,7 @@
 
 ### BEGIN AUTO-GENERATED DEFINES
 define( 'GUTENBERG_VERSION', '21.9.0' );
-define( 'GUTENBERG_GIT_COMMIT', '8b865d54a8fd21b27204fb0d46ec404d12456839' );
+define( 'GUTENBERG_GIT_COMMIT', '1fb8a63b5ad4432b066c03aaba7882bb0ed6df0c' );
 ### END AUTO-GENERATED DEFINES
 defined( 'GUTENBERG_MINIMUM_WP_VERSION' ) or define( 'GUTENBERG_MINIMUM_WP_VERSION', '6.7' );
 
@@ -56,7 +56,7 @@ function gutenberg_build_files_notice() {
  */
 function gutenberg_pre_init() {
 	global $wp_version;
-	if ( defined( 'GUTENBERG_DEVELOPMENT_MODE' ) && GUTENBERG_DEVELOPMENT_MODE && ! file_exists( __DIR__ . '/build/blocks' ) ) {
+	if ( defined( 'GUTENBERG_DEVELOPMENT_MODE' ) && GUTENBERG_DEVELOPMENT_MODE && ! file_exists( __DIR__ . '/build/scripts/blocks' ) ) {
 		add_action( 'admin_notices', 'gutenberg_build_files_notice' );
 		return;
 	}
