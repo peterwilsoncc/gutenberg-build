@@ -29192,7 +29192,7 @@ var wp;
       }
     }, [heights, blockRefs, isFloating, threads, selectedThread]);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
-    if (!hasThreads) {
+    if (!hasThreads && !isFloating) {
       return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_components134.__experimentalVStack, { alignment: "left", justify: "flex-start", spacing: "2", children: [
         /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components134.__experimentalText, { as: "p", children: (0, import_i18n153.__)("No notes available.") }),
         /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components134.__experimentalText, { as: "p", variant: "muted", children: (0, import_i18n153.__)("Only logged in users can see Notes.") })
