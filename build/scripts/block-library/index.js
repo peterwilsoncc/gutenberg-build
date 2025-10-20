@@ -41751,7 +41751,7 @@ ${url}
       };
     },
     isEligible(attributes3) {
-      return !!attributes3?.metadata?.bindings?.datetime?.args?.key;
+      return attributes3?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes3?.metadata?.bindings?.datetime?.args?.key;
     }
   };
   var v210 = {
