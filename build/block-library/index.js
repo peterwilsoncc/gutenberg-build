@@ -41480,7 +41480,7 @@ ${url}
     context: { postType: postTypeSlug, queryId },
     setAttributes
   }) {
-    const displayType = metadata?.bindings?.datetime?.source === "core/post-data" && (metadata?.bindings?.datetime?.args?.field || metadata?.bindings?.datetime?.args?.key);
+    const displayType = metadata?.bindings?.datetime?.source === "core/post-data" && metadata?.bindings?.datetime?.args?.field;
     const blockProps = (0, import_block_editor172.useBlockProps)({
       className: clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
@@ -41650,6 +41650,102 @@ ${url}
   }
 
   // packages/block-library/build-module/post-date/deprecated.js
+  var v38 = {
+    attributes: {
+      datetime: {
+        type: "string",
+        role: "content"
+      },
+      textAlign: {
+        type: "string"
+      },
+      format: {
+        type: "string"
+      },
+      isLink: {
+        type: "boolean",
+        default: false,
+        role: "content"
+      }
+    },
+    supports: {
+      html: false,
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    save() {
+      return null;
+    },
+    migrate({
+      metadata: {
+        bindings: {
+          datetime: {
+            source,
+            args: { key, ...otherArgs }
+          },
+          ...otherBindings
+        },
+        ...otherMetadata
+      },
+      ...otherAttributes
+    }) {
+      return {
+        metadata: {
+          bindings: {
+            datetime: {
+              source,
+              args: { field: key, ...otherArgs }
+            },
+            ...otherBindings
+          },
+          ...otherMetadata
+        },
+        ...otherAttributes
+      };
+    },
+    isEligible(attributes3) {
+      return !!attributes3?.metadata?.bindings?.datetime?.args?.key;
+    }
+  };
   var v210 = {
     attributes: {
       textAlign: {
@@ -41779,7 +41875,7 @@ ${url}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default25 = [v210, v117];
+  var deprecated_default25 = [v38, v210, v117];
 
   // packages/block-library/build-module/post-date/variations.js
   var import_i18n145 = __toESM(require_i18n());
@@ -41799,10 +41895,7 @@ ${url}
         }
       },
       scope: ["block", "inserter", "transform"],
-      isActive: (blockAttributes8) => {
-        const fieldValue = blockAttributes8?.metadata?.bindings?.datetime?.args?.field || blockAttributes8?.metadata?.bindings?.datetime?.args?.key;
-        return blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && fieldValue === "date";
-      },
+      isActive: (blockAttributes8) => blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && blockAttributes8?.metadata?.bindings?.datetime?.args?.field === "date",
       icon: post_date_default
     },
     {
@@ -41821,10 +41914,7 @@ ${url}
         className: "wp-block-post-date__modified-date"
       },
       scope: ["block", "inserter", "transform"],
-      isActive: (blockAttributes8) => {
-        const fieldValue = blockAttributes8?.metadata?.bindings?.datetime?.args?.field || blockAttributes8?.metadata?.bindings?.datetime?.args?.key;
-        return blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && fieldValue === "modified";
-      },
+      isActive: (blockAttributes8) => blockAttributes8?.metadata?.bindings?.datetime?.source === "core/post-data" && blockAttributes8?.metadata?.bindings?.datetime?.args?.field === "modified",
       icon: post_date_default
     }
   ];
@@ -45041,7 +45131,7 @@ ${url}
       };
     }
   };
-  var v38 = {
+  var v39 = {
     attributes: {
       ...blockAttributes6,
       // figureStyle is an attribute that never existed.
@@ -45308,7 +45398,7 @@ ${url}
       };
     }
   };
-  var deprecated_default27 = [v57, v47, v38, v211, v119, v02];
+  var deprecated_default27 = [v57, v47, v39, v211, v119, v02];
 
   // packages/block-library/build-module/pullquote/edit.js
   var import_jsx_runtime341 = __toESM(require_jsx_runtime());
@@ -47867,7 +47957,7 @@ ${url}
       return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(Tag, { ...innerBlocksProps });
     }
   };
-  var v39 = {
+  var v310 = {
     attributes: {
       queryId: {
         type: "number"
@@ -48055,7 +48145,7 @@ ${url}
     },
     migrate: migrateDisplayLayout
   };
-  var deprecated12 = [v58, v48, v39, v212, v120];
+  var deprecated12 = [v58, v48, v310, v212, v120];
   var deprecated_default28 = deprecated12;
 
   // packages/block-library/build-module/query/index.js
@@ -49641,7 +49731,7 @@ ${url}
     },
     migrate: migrateTextAlign2
   };
-  var v310 = {
+  var v311 = {
     attributes: {
       value: {
         type: "string",
@@ -49814,7 +49904,7 @@ ${url}
       );
     }
   };
-  var deprecated_default31 = [v49, v310, v213, v123, v03];
+  var deprecated_default31 = [v49, v311, v213, v123, v03];
 
   // packages/block-library/build-module/quote/edit.js
   var import_jsx_runtime377 = __toESM(require_jsx_runtime());
@@ -55473,7 +55563,7 @@ ${url}
       attribute: "data-align"
     }
   };
-  var v311 = {
+  var v312 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -55889,7 +55979,7 @@ ${url}
       ] });
     }
   };
-  var deprecated_default38 = [v410, v311, v215, v128];
+  var deprecated_default38 = [v410, v312, v215, v128];
 
   // packages/block-library/build-module/table/edit.js
   var import_jsx_runtime449 = __toESM(require_jsx_runtime());
