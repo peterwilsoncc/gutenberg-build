@@ -11710,13 +11710,19 @@ var wp;
       name: postType2
     });
     const currentTheme = await registry.resolveSelect(import_core_data31.store).getCurrentTheme();
+    let canDuplicate = !["wp_block", "wp_template_part"].includes(
+      postTypeConfig.slug
+    ) && canCreate && duplicate_post_default;
+    if (false) {
+      if ("wp_template" !== postTypeConfig.slug) {
+        canDuplicate = void 0;
+      }
+    }
     const actions2 = [
       postTypeConfig.viewable ? view_post_default : void 0,
       !!postTypeConfig.supports?.revisions ? view_post_revisions_default : void 0,
       // @ts-ignore
-      true ? !["wp_block", "wp_template_part"].includes(
-        postTypeConfig.slug
-      ) && canCreate && duplicate_post_default : void 0,
+      canDuplicate,
       postTypeConfig.slug === "wp_template_part" && canCreate && currentTheme?.is_block_theme ? duplicate_template_part_default : void 0,
       canCreate && postTypeConfig.slug === "wp_block" ? duplicate_pattern_default : void 0,
       postTypeConfig.supports?.title ? rename_post_default : void 0,
