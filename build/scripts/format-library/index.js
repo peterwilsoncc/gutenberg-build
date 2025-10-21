@@ -377,7 +377,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       import_components.Popover,
       {
-        placement: "bottom",
         focusOnMount: false,
         anchor: popoverAnchor,
         className: "block-editor-format-toolbar__image-popover",
