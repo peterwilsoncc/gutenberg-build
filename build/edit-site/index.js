@@ -29422,12 +29422,10 @@ var wp;
       {
         disabled: isBusy,
         accessibleWhenDisabled: true,
-        label,
-        icon: action.icon,
         size: "compact",
         onClick,
         isBusy,
-        tooltipPosition: "top"
+        children: label
       }
     );
   }
@@ -29574,7 +29572,7 @@ var wp;
     }, [selection, data, getItemId2, selectableItems]);
     const actionsToShow = (0, import_element72.useMemo)(
       () => actions.filter((action) => {
-        return action.supportsBulk && action.icon && selectedItems.some(
+        return action.supportsBulk && selectedItems.some(
           (item) => !action.isEligible || action.isEligible(item)
         );
       }),
