@@ -29122,12 +29122,11 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
       import_components100.Button,
       {
-        label,
-        icon: action.icon,
         disabled: !!action.disabled,
         accessibleWhenDisabled: true,
         size: "compact",
-        onClick
+        onClick,
+        children: label
       }
     );
   }
@@ -29194,7 +29193,7 @@ var wp;
         (action) => !action.isEligible || action.isEligible(item)
       );
       const _primaryActions = _eligibleActions.filter(
-        (action) => action.isPrimary && !!action.icon
+        (action) => action.isPrimary
       );
       return {
         primaryActions: _primaryActions,
@@ -29215,7 +29214,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(
       import_components100.__experimentalHStack,
       {
-        spacing: 1,
+        spacing: 0,
         justify: "flex-end",
         className: "dataviews-item-actions",
         style: {
@@ -30847,12 +30846,12 @@ var wp;
         render: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
           import_components106.Button,
           {
-            label,
             disabled: !!primaryAction.disabled,
             accessibleWhenDisabled: true,
-            icon: primaryAction.icon,
             size: "small",
-            onClick: () => setIsModalOpen(true)
+            onClick: () => setIsModalOpen(true),
+            variant: "link",
+            children: label
           }
         ),
         children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
@@ -30871,14 +30870,14 @@ var wp;
         render: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
           import_components106.Button,
           {
-            label,
             disabled: !!primaryAction.disabled,
             accessibleWhenDisabled: true,
-            icon: primaryAction.icon,
             size: "small",
             onClick: () => {
               primaryAction.callback([item], { registry });
-            }
+            },
+            variant: "link",
+            children: label
           }
         )
       }
@@ -30931,7 +30930,7 @@ var wp;
         (action) => !action.isEligible || action.isEligible(item)
       );
       const _primaryActions = _eligibleActions.filter(
-        (action) => action.isPrimary && !!action.icon
+        (action) => action.isPrimary
       );
       return {
         primaryAction: _primaryActions[0],
