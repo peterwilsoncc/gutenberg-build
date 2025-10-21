@@ -23339,8 +23339,10 @@ var wp;
     const handleCommentSelect = () => {
       setShowCommentBoard(false);
       setSelectedThread(thread.id);
-      selectBlock2(thread.blockClientId, null);
-      toggleBlockSpotlight(thread.blockClientId, true);
+      if (!!thread.blockClientId) {
+        selectBlock2(thread.blockClientId, null);
+        toggleBlockSpotlight(thread.blockClientId, true);
+      }
     };
     const unselectThread = () => {
       setSelectedThread(null);
@@ -23354,7 +23356,7 @@ var wp;
       (0, import_dom6.__unstableStripHTML)(thread.content.rendered),
       10
     );
-    const ariaLabel = relatedBlockElement ? (0, import_i18n136.sprintf)(
+    const ariaLabel = !!thread.blockClientId ? (0, import_i18n136.sprintf)(
       // translators: %s: note excerpt
       (0, import_i18n136.__)("Note: %s"),
       commentExcerpt
@@ -23416,7 +23418,7 @@ var wp;
                 children: (0, import_i18n136.__)("Add new note")
               }
             ),
-            !relatedBlockElement && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_components108.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n136.__)("Original block deleted.") }),
+            !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_components108.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n136.__)("Original block deleted.") }),
             /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
               CommentBoard,
               {
@@ -23523,7 +23525,7 @@ var wp;
                 }
               ) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+            !!thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
               import_components108.Button,
               {
                 className: "editor-collab-sidebar-panel__skip-to-block",
