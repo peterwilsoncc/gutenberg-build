@@ -23814,7 +23814,7 @@ var wp;
       commentLastUpdated
     } = useBlockComments(postId2);
     useEnableFloatingSidebar(
-      unresolvedSortedThreads.length > 0 || showCommentBoard
+      isLargeViewport && (unresolvedSortedThreads.length > 0 || showCommentBoard)
     );
     const hasMoreComments = totalPages && totalPages > 1;
     const { merged: GlobalStyles } = useGlobalStylesContext();
@@ -23827,7 +23827,10 @@ var wp;
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name) => name === prevArea);
       if (!activeNotesArea) {
-        enableComplementaryArea2("core", collabSidebarName);
+        enableComplementaryArea2(
+          "core",
+          isLargeViewport ? collabSidebarName : collabHistorySidebarName
+        );
       }
       const currentArea = await getActiveComplementaryArea2("core");
       if (!SIDEBARS.includes(currentArea)) {
