@@ -3037,8 +3037,8 @@ var wp;
                       meta_block_remaining_len -= len;
                       if (copy_dst >= ringbuffer_end) {
                         output.write(ringbuffer, ringbuffer_size);
-                        for (var _x23 = 0; _x23 < copy_dst - ringbuffer_end; _x23++)
-                          ringbuffer[_x23] = ringbuffer[ringbuffer_end + _x23];
+                        for (var _x24 = 0; _x24 < copy_dst - ringbuffer_end; _x24++)
+                          ringbuffer[_x24] = ringbuffer[ringbuffer_end + _x24];
                       }
                     } else {
                       throw new Error("Invalid backward reference. pos: " + pos + " distance: " + distance + " len: " + copy_length + " bytes left: " + meta_block_remaining_len);
@@ -44696,7 +44696,7 @@ If there's a particular need for this, please submit a feature request at https:
         isPrimary: true,
         icon: pencil_default,
         isEligible(item) {
-          return !(item.slug === "index" && item.source === "theme") && item.theme === activeTheme.stylesheet;
+          return !item._isCustom && !(item.slug === "index" && item.source === "theme") && item.theme === activeTheme.stylesheet;
         },
         async callback(items) {
           const deactivate = items.some((item) => item._isActive);
@@ -46684,6 +46684,18 @@ If there's a particular need for this, please submit a feature request at https:
     id: "active",
     getValue: ({ item }) => item._isActive,
     render: function Render({ item }) {
+      if (item._isCustom) {
+        return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+          Badge3,
+          {
+            intent: "info",
+            title: (0, import_i18n145.__)(
+              "Custom templates cannot be active nor inactive."
+            ),
+            children: (0, import_i18n145.__)("N/A")
+          }
+        );
+      }
       const isActive = item._isActive;
       return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Badge3, { intent: isActive ? "success" : "default", children: isActive ? (0, import_i18n145.__)("Active") : (0, import_i18n145.__)("Inactive") });
     }
@@ -46713,8 +46725,7 @@ If there's a particular need for this, please submit a feature request at https:
       const defaultTemplateType = defaultTemplateTypes.find(
         (type) => type.slug === item.slug
       );
-      return defaultTemplateType?.title || // translators: %s is the slug of a custom template.
-      (0, import_i18n145.__)("Custom");
+      return defaultTemplateType?.title || (0, import_i18n145._x)("Custom", "template type");
     }
   };
 
@@ -46788,11 +46799,12 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const { activeTemplatesOption, activeTheme } = (0, import_data84.useSelect)((select2) => {
+    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data84.useSelect)((select2) => {
       const { getEntityRecord, getCurrentTheme } = select2(import_core_data56.store);
       return {
         activeTemplatesOption: getEntityRecord("root", "site")?.active_templates,
-        activeTheme: getCurrentTheme()
+        activeTheme: getCurrentTheme(),
+        defaultTemplateTypes: select2(import_core_data56.store).getCurrentTheme()?.default_template_types
       };
     });
     const { records: userRecords, isResolving: isLoadingUserRecords } = useEntityRecordsWithPermissions2("postType", TEMPLATE_POST_TYPE, {
@@ -46852,9 +46864,12 @@ If there's a particular need for this, please submit a feature request at https:
         ...record,
         _isActive: activeTemplates.find(
           (template) => template.id === record.id
+        ),
+        _isCustom: record.is_custom || !record.meta?.is_wp_suggestion && !defaultTemplateTypes.find(
+          (type) => type.slug === record.slug
         )
       }));
-    }, [_records, activeTemplates]);
+    }, [_records, activeTemplates, defaultTemplateTypes]);
     const users = (0, import_data84.useSelect)(
       (select2) => {
         const { getUser } = select2(import_core_data56.store);
