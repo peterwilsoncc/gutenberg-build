@@ -22915,12 +22915,19 @@ var wp;
       if (!enabled) {
         return;
       }
-      return registry.subscribe(() => {
-        const activeSidebar = registry.select(store2).getActiveComplementaryArea("core");
-        if (!activeSidebar) {
-          registry.dispatch(store2).enableComplementaryArea("core", collabSidebarName);
+      const { getActiveComplementaryArea: getActiveComplementaryArea2 } = registry.select(store2);
+      const { disableComplementaryArea: disableComplementaryArea2, enableComplementaryArea: enableComplementaryArea2 } = registry.dispatch(store2);
+      const unsubscribe = registry.subscribe(() => {
+        if (getActiveComplementaryArea2("core") === null) {
+          enableComplementaryArea2("core", collabSidebarName);
         }
       });
+      return () => {
+        unsubscribe();
+        if (getActiveComplementaryArea2("core") === collabSidebarName) {
+          disableComplementaryArea2("core", collabSidebarName);
+        }
+      };
     }, [enabled, registry]);
   }
   function useFloatingThread({
@@ -23747,7 +23754,9 @@ var wp;
         spacing: "3",
         justify: "flex-start",
         ref: (node) => {
-          commentSidebarRef.current = node;
+          if (node) {
+            commentSidebarRef.current = node;
+          }
         },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
@@ -23802,7 +23811,9 @@ var wp;
       reflowComments,
       commentLastUpdated
     } = useBlockComments(postId2);
-    useEnableFloatingSidebar(resultComments.length > 0);
+    useEnableFloatingSidebar(
+      unresolvedSortedThreads.length > 0 || showCommentBoard
+    );
     const hasMoreComments = totalPages && totalPages > 1;
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
@@ -23858,7 +23869,7 @@ var wp;
           )
         }
       ),
-      isLargeViewport && (unresolvedSortedThreads.length > 0 || showCommentBoard) && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+      isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
         PluginSidebar,
         {
           isPinnable: false,
