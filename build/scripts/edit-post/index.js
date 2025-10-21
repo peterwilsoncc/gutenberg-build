@@ -108,10 +108,10 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/plugins
-  var require_plugins = __commonJS({
-    "wordpress-external:@wordpress/plugins"(exports, module) {
-      module.exports = window.wp.plugins;
+  // wordpress-external:@wordpress/style-engine
+  var require_style_engine = __commonJS({
+    "wordpress-external:@wordpress/style-engine"(exports, module) {
+      module.exports = window.wp.styleEngine;
     }
   });
 
@@ -119,6 +119,13 @@ var wp;
   var require_i18n = __commonJS({
     "wordpress-external:@wordpress/i18n"(exports, module) {
       module.exports = window.wp.i18n;
+    }
+  });
+
+  // wordpress-external:@wordpress/plugins
+  var require_plugins = __commonJS({
+    "wordpress-external:@wordpress/plugins"(exports, module) {
+      module.exports = window.wp.plugins;
     }
   });
 
@@ -225,11 +232,11 @@ var wp;
     store: () => store
   });
   var import_jsx_runtime25 = __toESM(require_jsx_runtime());
-  var import_blocks3 = __toESM(require_blocks());
+  var import_blocks4 = __toESM(require_blocks());
   var import_block_library2 = __toESM(require_block_library());
   var import_deprecated4 = __toESM(require_deprecated());
   var import_element13 = __toESM(require_element());
-  var import_data26 = __toESM(require_data());
+  var import_data27 = __toESM(require_data());
   var import_preferences11 = __toESM(require_preferences());
   var import_widgets = __toESM(require_widgets());
   var import_editor20 = __toESM(require_editor());
@@ -277,8 +284,314 @@ var wp;
 
   // packages/edit-post/build-module/components/layout/index.js
   var import_editor18 = __toESM(require_editor());
-  var import_data25 = __toESM(require_data());
+  var import_data26 = __toESM(require_data());
   var import_block_editor3 = __toESM(require_block_editor());
+
+  // packages/global-styles-engine/build-module/utils/common.js
+  var import_style_engine = __toESM(require_style_engine());
+  var ROOT_BLOCK_SELECTOR = "body";
+  var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
+
+  // packages/global-styles-engine/build-module/core/render.js
+  var import_blocks = __toESM(require_blocks());
+  var import_style_engine2 = __toESM(require_style_engine());
+  var import_data = __toESM(require_data());
+
+  // packages/global-styles-engine/build-module/utils/spacing.js
+  function getSpacingPresetCssVar(value) {
+    if (!value) {
+      return;
+    }
+    const slug = value.match(/var:preset\|spacing\|(.+)/);
+    if (!slug) {
+      return value;
+    }
+    return `var(--wp--preset--spacing--${slug[1]})`;
+  }
+
+  // packages/global-styles-engine/build-module/utils/gap.js
+  function getGapBoxControlValueFromStyle(blockGapValue) {
+    if (!blockGapValue) {
+      return null;
+    }
+    const isValueString = typeof blockGapValue === "string";
+    return {
+      top: isValueString ? blockGapValue : blockGapValue?.top,
+      left: isValueString ? blockGapValue : blockGapValue?.left
+    };
+  }
+  function getGapCSSValue(blockGapValue, defaultValue = "0") {
+    const blockGapBoxControlValue = getGapBoxControlValueFromStyle(blockGapValue);
+    if (!blockGapBoxControlValue) {
+      return null;
+    }
+    const row = getSpacingPresetCssVar(blockGapBoxControlValue?.top) || defaultValue;
+    const column = getSpacingPresetCssVar(blockGapBoxControlValue?.left) || defaultValue;
+    return row === column ? row : `${row} ${column}`;
+  }
+
+  // packages/global-styles-engine/build-module/utils/layout.js
+  var LAYOUT_DEFINITIONS = {
+    default: {
+      name: "default",
+      slug: "flow",
+      className: "is-layout-flow",
+      baseStyles: [
+        {
+          selector: " > .alignleft",
+          rules: {
+            float: "left",
+            "margin-inline-start": "0",
+            "margin-inline-end": "2em"
+          }
+        },
+        {
+          selector: " > .alignright",
+          rules: {
+            float: "right",
+            "margin-inline-start": "2em",
+            "margin-inline-end": "0"
+          }
+        },
+        {
+          selector: " > .aligncenter",
+          rules: {
+            "margin-left": "auto !important",
+            "margin-right": "auto !important"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: " > :first-child",
+          rules: {
+            "margin-block-start": "0"
+          }
+        },
+        {
+          selector: " > :last-child",
+          rules: {
+            "margin-block-end": "0"
+          }
+        },
+        {
+          selector: " > *",
+          rules: {
+            "margin-block-start": null,
+            "margin-block-end": "0"
+          }
+        }
+      ]
+    },
+    constrained: {
+      name: "constrained",
+      slug: "constrained",
+      className: "is-layout-constrained",
+      baseStyles: [
+        {
+          selector: " > .alignleft",
+          rules: {
+            float: "left",
+            "margin-inline-start": "0",
+            "margin-inline-end": "2em"
+          }
+        },
+        {
+          selector: " > .alignright",
+          rules: {
+            float: "right",
+            "margin-inline-start": "2em",
+            "margin-inline-end": "0"
+          }
+        },
+        {
+          selector: " > .aligncenter",
+          rules: {
+            "margin-left": "auto !important",
+            "margin-right": "auto !important"
+          }
+        },
+        {
+          selector: " > :where(:not(.alignleft):not(.alignright):not(.alignfull))",
+          rules: {
+            "max-width": "var(--wp--style--global--content-size)",
+            "margin-left": "auto !important",
+            "margin-right": "auto !important"
+          }
+        },
+        {
+          selector: " > .alignwide",
+          rules: {
+            "max-width": "var(--wp--style--global--wide-size)"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: " > :first-child",
+          rules: {
+            "margin-block-start": "0"
+          }
+        },
+        {
+          selector: " > :last-child",
+          rules: {
+            "margin-block-end": "0"
+          }
+        },
+        {
+          selector: " > *",
+          rules: {
+            "margin-block-start": null,
+            "margin-block-end": "0"
+          }
+        }
+      ]
+    },
+    flex: {
+      name: "flex",
+      slug: "flex",
+      className: "is-layout-flex",
+      displayMode: "flex",
+      baseStyles: [
+        {
+          selector: "",
+          rules: {
+            "flex-wrap": "wrap",
+            "align-items": "center"
+          }
+        },
+        {
+          selector: " > :is(*, div)",
+          // :is(*, div) instead of just * increases the specificity by 001.
+          rules: {
+            margin: "0"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: "",
+          rules: {
+            gap: null
+          }
+        }
+      ]
+    },
+    grid: {
+      name: "grid",
+      slug: "grid",
+      className: "is-layout-grid",
+      displayMode: "grid",
+      baseStyles: [
+        {
+          selector: " > :is(*, div)",
+          // :is(*, div) instead of just * increases the specificity by 001.
+          rules: {
+            margin: "0"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: "",
+          rules: {
+            gap: null
+          }
+        }
+      ]
+    }
+  };
+
+  // packages/global-styles-engine/build-module/core/render.js
+  function getLayoutStyles({
+    layoutDefinitions = LAYOUT_DEFINITIONS,
+    style,
+    selector,
+    hasBlockGapSupport,
+    hasFallbackGapSupport,
+    fallbackGapValue
+  }) {
+    let ruleset = "";
+    let gapValue = hasBlockGapSupport ? getGapCSSValue(style?.spacing?.blockGap) : "";
+    if (hasFallbackGapSupport) {
+      if (selector === ROOT_BLOCK_SELECTOR) {
+        gapValue = !gapValue ? "0.5em" : gapValue;
+      } else if (!hasBlockGapSupport && fallbackGapValue) {
+        gapValue = fallbackGapValue;
+      }
+    }
+    if (gapValue && layoutDefinitions) {
+      Object.values(layoutDefinitions).forEach(
+        ({ className, name, spacingStyles }) => {
+          if (!hasBlockGapSupport && "flex" !== name && "grid" !== name) {
+            return;
+          }
+          if (spacingStyles?.length) {
+            spacingStyles.forEach((spacingStyle) => {
+              const declarations = [];
+              if (spacingStyle.rules) {
+                Object.entries(spacingStyle.rules).forEach(
+                  ([cssProperty, cssValue]) => {
+                    declarations.push(
+                      `${cssProperty}: ${cssValue ? cssValue : gapValue}`
+                    );
+                  }
+                );
+              }
+              if (declarations.length) {
+                let combinedSelector = "";
+                if (!hasBlockGapSupport) {
+                  combinedSelector = selector === ROOT_BLOCK_SELECTOR ? `:where(.${className}${spacingStyle?.selector || ""})` : `:where(${selector}.${className}${spacingStyle?.selector || ""})`;
+                } else {
+                  combinedSelector = selector === ROOT_BLOCK_SELECTOR ? `:root :where(.${className})${spacingStyle?.selector || ""}` : `:root :where(${selector}-${className})${spacingStyle?.selector || ""}`;
+                }
+                ruleset += `${combinedSelector} { ${declarations.join(
+                  "; "
+                )}; }`;
+              }
+            });
+          }
+        }
+      );
+      if (selector === ROOT_BLOCK_SELECTOR && hasBlockGapSupport) {
+        ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} { --wp--style--block-gap: ${gapValue}; }`;
+      }
+    }
+    if (selector === ROOT_BLOCK_SELECTOR && layoutDefinitions) {
+      const validDisplayModes = ["block", "flex", "grid"];
+      Object.values(layoutDefinitions).forEach(
+        ({ className, displayMode, baseStyles }) => {
+          if (displayMode && validDisplayModes.includes(displayMode)) {
+            ruleset += `${selector} .${className} { display:${displayMode}; }`;
+          }
+          if (baseStyles?.length) {
+            baseStyles.forEach((baseStyle) => {
+              const declarations = [];
+              if (baseStyle.rules) {
+                Object.entries(baseStyle.rules).forEach(
+                  ([cssProperty, cssValue]) => {
+                    declarations.push(
+                      `${cssProperty}: ${cssValue}`
+                    );
+                  }
+                );
+              }
+              if (declarations.length) {
+                const combinedSelector = `.${className}${baseStyle?.selector || ""}`;
+                ruleset += `${combinedSelector} { ${declarations.join(
+                  "; "
+                )}; }`;
+              }
+            });
+          }
+        }
+      );
+    }
+    return ruleset;
+  }
+
+  // packages/edit-post/build-module/components/layout/index.js
   var import_plugins = __toESM(require_plugins());
   var import_i18n14 = __toESM(require_i18n());
   var import_element12 = __toESM(require_element());
@@ -326,7 +639,7 @@ var wp;
 
   // packages/edit-post/build-module/components/back-button/fullscreen-mode-close.js
   var import_jsx_runtime7 = __toESM(require_jsx_runtime());
-  var import_data = __toESM(require_data());
+  var import_data2 = __toESM(require_data());
   var import_components = __toESM(require_components());
   var import_i18n = __toESM(require_i18n());
   var import_url = __toESM(require_url());
@@ -356,10 +669,10 @@ var wp;
     }
   };
   function FullscreenModeClose({ showTooltip, icon, href, initialPost }) {
-    const { isRequestingSiteIcon, postType, siteIconUrl } = (0, import_data.useSelect)(
-      (select2) => {
-        const { getCurrentPostType } = select2(import_editor.store);
-        const { getEntityRecord, getPostType, isResolving } = select2(import_core_data.store);
+    const { isRequestingSiteIcon, postType, siteIconUrl } = (0, import_data2.useSelect)(
+      (select3) => {
+        const { getCurrentPostType } = select3(import_editor.store);
+        const { getEntityRecord, getPostType, isResolving } = select3(import_core_data.store);
         const siteData = getEntityRecord("root", "__unstableBase", void 0) || {};
         const _postType = initialPost?.type || getCurrentPostType();
         return {
@@ -485,7 +798,7 @@ var wp;
   var back_button_default = BackButton;
 
   // packages/edit-post/build-module/components/editor-initialization/listener-hooks.js
-  var import_data2 = __toESM(require_data());
+  var import_data3 = __toESM(require_data());
   var import_element2 = __toESM(require_element());
   var import_editor3 = __toESM(require_editor());
   var import_core_data2 = __toESM(require_core_data());
@@ -497,9 +810,9 @@ var wp;
 
   // packages/edit-post/build-module/components/editor-initialization/listener-hooks.js
   var useUpdatePostLinkListener = () => {
-    const { isViewable, newPermalink } = (0, import_data2.useSelect)((select2) => {
-      const { getPostType } = select2(import_core_data2.store);
-      const { getCurrentPost, getEditedPostAttribute } = select2(import_editor3.store);
+    const { isViewable, newPermalink } = (0, import_data3.useSelect)((select3) => {
+      const { getPostType } = select3(import_core_data2.store);
+      const { getCurrentPost, getEditedPostAttribute } = select3(import_editor3.store);
       const postType = getPostType(getEditedPostAttribute("type"));
       return {
         isViewable: postType?.viewable,
@@ -531,15 +844,15 @@ var wp;
 
   // packages/edit-post/build-module/components/keyboard-shortcuts/index.js
   var import_element3 = __toESM(require_element());
-  var import_data6 = __toESM(require_data());
+  var import_data7 = __toESM(require_data());
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts());
   var import_i18n3 = __toESM(require_i18n());
 
   // packages/edit-post/build-module/store/index.js
-  var import_data5 = __toESM(require_data());
+  var import_data6 = __toESM(require_data());
 
   // packages/edit-post/build-module/store/reducer.js
-  var import_data3 = __toESM(require_data());
+  var import_data4 = __toESM(require_data());
   function isSavingMetaBoxes(state = false, action) {
     switch (action.type) {
       case "REQUEST_META_BOX_UPDATES":
@@ -589,12 +902,12 @@ var wp;
     }
     return state;
   }
-  var metaBoxes = (0, import_data3.combineReducers)({
+  var metaBoxes = (0, import_data4.combineReducers)({
     isSaving: isSavingMetaBoxes,
     locations: metaBoxLocations,
     initialized: metaBoxesInitialized
   });
-  var reducer_default = (0, import_data3.combineReducers)({
+  var reducer_default = (0, import_data4.combineReducers)({
     metaBoxes
   });
 
@@ -743,7 +1056,7 @@ var wp;
       metaBoxesPerLocation
     };
   }
-  var requestMetaBoxUpdates = () => async ({ registry, select: select2, dispatch: dispatch2 }) => {
+  var requestMetaBoxUpdates = () => async ({ registry, select: select3, dispatch: dispatch2 }) => {
     dispatch2({
       type: "REQUEST_META_BOX_UPDATES"
     });
@@ -762,7 +1075,7 @@ var wp;
       post.sticky ? ["sticky", post.sticky] : false,
       post.author ? ["post_author", post.author] : false
     ].filter(Boolean);
-    const activeMetaBoxLocations = select2.getActiveMetaBoxLocations();
+    const activeMetaBoxLocations = select3.getActiveMetaBoxLocations();
     const formDataToMerge = [
       baseFormData,
       ...activeMetaBoxLocations.map(
@@ -839,7 +1152,7 @@ var wp;
     return { type: "NOTHING" };
   }
   var metaBoxesInitialized2 = false;
-  var initializeMetaBoxes = () => ({ registry, select: select2, dispatch: dispatch2 }) => {
+  var initializeMetaBoxes = () => ({ registry, select: select3, dispatch: dispatch2 }) => {
     const isEditorReady = registry.select(import_editor4.store).__unstableIsEditorReady();
     if (!isEditorReady) {
       return;
@@ -856,7 +1169,7 @@ var wp;
       "editor.savePost",
       "core/edit-post/save-metaboxes",
       async (post, options) => {
-        if (!options.isAutosave && select2.hasMetaBoxes()) {
+        if (!options.isAutosave && select3.hasMetaBoxes()) {
           await dispatch2.requestMetaBoxUpdates();
         }
       }
@@ -927,7 +1240,7 @@ var wp;
     isPublishSidebarOpened: () => isPublishSidebarOpened,
     isSavingMetaBoxes: () => isSavingMetaBoxes2
   });
-  var import_data4 = __toESM(require_data());
+  var import_data5 = __toESM(require_data());
   var import_preferences2 = __toESM(require_preferences());
   var import_core_data4 = __toESM(require_core_data());
   var import_editor5 = __toESM(require_editor());
@@ -935,28 +1248,28 @@ var wp;
   var { interfaceStore: interfaceStore2 } = unlock(import_editor5.privateApis);
   var EMPTY_ARRAY = [];
   var EMPTY_OBJECT = {};
-  var getEditorMode = (0, import_data4.createRegistrySelector)(
-    (select2) => () => select2(import_preferences2.store).get("core", "editorMode") ?? "visual"
+  var getEditorMode = (0, import_data5.createRegistrySelector)(
+    (select3) => () => select3(import_preferences2.store).get("core", "editorMode") ?? "visual"
   );
-  var isEditorSidebarOpened = (0, import_data4.createRegistrySelector)(
-    (select2) => () => {
-      const activeGeneralSidebar = select2(interfaceStore2).getActiveComplementaryArea("core");
+  var isEditorSidebarOpened = (0, import_data5.createRegistrySelector)(
+    (select3) => () => {
+      const activeGeneralSidebar = select3(interfaceStore2).getActiveComplementaryArea("core");
       return ["edit-post/document", "edit-post/block"].includes(
         activeGeneralSidebar
       );
     }
   );
-  var isPluginSidebarOpened = (0, import_data4.createRegistrySelector)(
-    (select2) => () => {
-      const activeGeneralSidebar = select2(interfaceStore2).getActiveComplementaryArea("core");
+  var isPluginSidebarOpened = (0, import_data5.createRegistrySelector)(
+    (select3) => () => {
+      const activeGeneralSidebar = select3(interfaceStore2).getActiveComplementaryArea("core");
       return !!activeGeneralSidebar && !["edit-post/document", "edit-post/block"].includes(
         activeGeneralSidebar
       );
     }
   );
-  var getActiveGeneralSidebarName = (0, import_data4.createRegistrySelector)(
-    (select2) => () => {
-      return select2(interfaceStore2).getActiveComplementaryArea("core");
+  var getActiveGeneralSidebarName = (0, import_data5.createRegistrySelector)(
+    (select3) => () => {
+      return select3(interfaceStore2).getActiveComplementaryArea("core");
     }
   );
   function convertPanelsToOldFormat(inactivePanels, openPanels) {
@@ -981,14 +1294,14 @@ var wp;
     }, panelsWithEnabledState ?? {});
     return panels ?? panelsWithEnabledState ?? EMPTY_OBJECT;
   }
-  var getPreferences = (0, import_data4.createRegistrySelector)((select2) => () => {
+  var getPreferences = (0, import_data5.createRegistrySelector)((select3) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-post' ).getPreferences`, {
       since: "6.0",
       alternative: `select( 'core/preferences' ).get`
     });
     const corePreferences = ["editorMode", "hiddenBlockTypes"].reduce(
       (accumulatedPrefs, preferenceKey) => {
-        const value = select2(import_preferences2.store).get(
+        const value = select3(import_preferences2.store).get(
           "core",
           preferenceKey
         );
@@ -999,11 +1312,11 @@ var wp;
       },
       {}
     );
-    const inactivePanels = select2(import_preferences2.store).get(
+    const inactivePanels = select3(import_preferences2.store).get(
       "core",
       "inactivePanels"
     );
-    const openPanels = select2(import_preferences2.store).get("core", "openPanels");
+    const openPanels = select3(import_preferences2.store).get("core", "openPanels");
     const panels = convertPanelsToOldFormat(inactivePanels, openPanels);
     return {
       ...corePreferences,
@@ -1019,65 +1332,65 @@ var wp;
     const value = preferences[preferenceKey];
     return value === void 0 ? defaultValue : value;
   }
-  var getHiddenBlockTypes = (0, import_data4.createRegistrySelector)((select2) => () => {
-    return select2(import_preferences2.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY;
+  var getHiddenBlockTypes = (0, import_data5.createRegistrySelector)((select3) => () => {
+    return select3(import_preferences2.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY;
   });
-  var isPublishSidebarOpened = (0, import_data4.createRegistrySelector)(
-    (select2) => () => {
+  var isPublishSidebarOpened = (0, import_data5.createRegistrySelector)(
+    (select3) => () => {
       (0, import_deprecated2.default)(`select( 'core/edit-post' ).isPublishSidebarOpened`, {
         since: "6.6",
         alternative: `select( 'core/editor' ).isPublishSidebarOpened`
       });
-      return select2(import_editor5.store).isPublishSidebarOpened();
+      return select3(import_editor5.store).isPublishSidebarOpened();
     }
   );
-  var isEditorPanelRemoved = (0, import_data4.createRegistrySelector)(
-    (select2) => (state, panelName) => {
+  var isEditorPanelRemoved = (0, import_data5.createRegistrySelector)(
+    (select3) => (state, panelName) => {
       (0, import_deprecated2.default)(`select( 'core/edit-post' ).isEditorPanelRemoved`, {
         since: "6.5",
         alternative: `select( 'core/editor' ).isEditorPanelRemoved`
       });
-      return select2(import_editor5.store).isEditorPanelRemoved(panelName);
+      return select3(import_editor5.store).isEditorPanelRemoved(panelName);
     }
   );
-  var isEditorPanelEnabled = (0, import_data4.createRegistrySelector)(
-    (select2) => (state, panelName) => {
+  var isEditorPanelEnabled = (0, import_data5.createRegistrySelector)(
+    (select3) => (state, panelName) => {
       (0, import_deprecated2.default)(`select( 'core/edit-post' ).isEditorPanelEnabled`, {
         since: "6.5",
         alternative: `select( 'core/editor' ).isEditorPanelEnabled`
       });
-      return select2(import_editor5.store).isEditorPanelEnabled(panelName);
+      return select3(import_editor5.store).isEditorPanelEnabled(panelName);
     }
   );
-  var isEditorPanelOpened = (0, import_data4.createRegistrySelector)(
-    (select2) => (state, panelName) => {
+  var isEditorPanelOpened = (0, import_data5.createRegistrySelector)(
+    (select3) => (state, panelName) => {
       (0, import_deprecated2.default)(`select( 'core/edit-post' ).isEditorPanelOpened`, {
         since: "6.5",
         alternative: `select( 'core/editor' ).isEditorPanelOpened`
       });
-      return select2(import_editor5.store).isEditorPanelOpened(panelName);
+      return select3(import_editor5.store).isEditorPanelOpened(panelName);
     }
   );
-  var isModalActive = (0, import_data4.createRegistrySelector)(
-    (select2) => (state, modalName) => {
+  var isModalActive = (0, import_data5.createRegistrySelector)(
+    (select3) => (state, modalName) => {
       (0, import_deprecated2.default)(`select( 'core/edit-post' ).isModalActive`, {
         since: "6.3",
         alternative: `select( 'core/interface' ).isModalActive`
       });
-      return !!select2(interfaceStore2).isModalActive(modalName);
+      return !!select3(interfaceStore2).isModalActive(modalName);
     }
   );
-  var isFeatureActive = (0, import_data4.createRegistrySelector)(
-    (select2) => (state, feature) => {
-      return !!select2(import_preferences2.store).get("core/edit-post", feature);
+  var isFeatureActive = (0, import_data5.createRegistrySelector)(
+    (select3) => (state, feature) => {
+      return !!select3(import_preferences2.store).get("core/edit-post", feature);
     }
   );
-  var isPluginItemPinned = (0, import_data4.createRegistrySelector)(
-    (select2) => (state, pluginName) => {
-      return select2(interfaceStore2).isItemPinned("core", pluginName);
+  var isPluginItemPinned = (0, import_data5.createRegistrySelector)(
+    (select3) => (state, pluginName) => {
+      return select3(interfaceStore2).isItemPinned("core", pluginName);
     }
   );
-  var getActiveMetaBoxLocations = (0, import_data4.createSelector)(
+  var getActiveMetaBoxLocations = (0, import_data5.createSelector)(
     (state) => {
       return Object.keys(state.metaBoxes.locations).filter(
         (location) => isMetaBoxLocationActive(state, location)
@@ -1085,10 +1398,10 @@ var wp;
     },
     (state) => [state.metaBoxes.locations]
   );
-  var isMetaBoxLocationVisible = (0, import_data4.createRegistrySelector)(
-    (select2) => (state, location) => {
+  var isMetaBoxLocationVisible = (0, import_data5.createRegistrySelector)(
+    (select3) => (state, location) => {
       return isMetaBoxLocationActive(state, location) && getMetaBoxesPerLocation(state, location)?.some(({ id }) => {
-        return select2(import_editor5.store).isEditorPanelEnabled(
+        return select3(import_editor5.store).isEditorPanelEnabled(
           `meta-box-${id}`
         );
       });
@@ -1101,7 +1414,7 @@ var wp;
   function getMetaBoxesPerLocation(state, location) {
     return state.metaBoxes.locations[location];
   }
-  var getAllMetaBoxes = (0, import_data4.createSelector)(
+  var getAllMetaBoxes = (0, import_data5.createSelector)(
     (state) => {
       return Object.values(state.metaBoxes.locations).flat();
     },
@@ -1113,8 +1426,8 @@ var wp;
   function isSavingMetaBoxes2(state) {
     return state.metaBoxes.isSaving;
   }
-  var __experimentalGetPreviewDeviceType = (0, import_data4.createRegistrySelector)(
-    (select2) => () => {
+  var __experimentalGetPreviewDeviceType = (0, import_data5.createRegistrySelector)(
+    (select3) => () => {
       (0, import_deprecated2.default)(
         `select( 'core/edit-site' ).__experimentalGetPreviewDeviceType`,
         {
@@ -1123,18 +1436,18 @@ var wp;
           alternative: `select( 'core/editor' ).getDeviceType`
         }
       );
-      return select2(import_editor5.store).getDeviceType();
+      return select3(import_editor5.store).getDeviceType();
     }
   );
-  var isInserterOpened = (0, import_data4.createRegistrySelector)((select2) => () => {
+  var isInserterOpened = (0, import_data5.createRegistrySelector)((select3) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-post' ).isInserterOpened`, {
       since: "6.5",
       alternative: `select( 'core/editor' ).isInserterOpened`
     });
-    return select2(import_editor5.store).isInserterOpened();
+    return select3(import_editor5.store).isInserterOpened();
   });
-  var __experimentalGetInsertionPoint = (0, import_data4.createRegistrySelector)(
-    (select2) => () => {
+  var __experimentalGetInsertionPoint = (0, import_data5.createRegistrySelector)(
+    (select3) => () => {
       (0, import_deprecated2.default)(
         `select( 'core/edit-post' ).__experimentalGetInsertionPoint`,
         {
@@ -1142,37 +1455,37 @@ var wp;
           version: "6.7"
         }
       );
-      return unlock(select2(import_editor5.store)).getInserter();
+      return unlock(select3(import_editor5.store)).getInserter();
     }
   );
-  var isListViewOpened = (0, import_data4.createRegistrySelector)((select2) => () => {
+  var isListViewOpened = (0, import_data5.createRegistrySelector)((select3) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-post' ).isListViewOpened`, {
       since: "6.5",
       alternative: `select( 'core/editor' ).isListViewOpened`
     });
-    return select2(import_editor5.store).isListViewOpened();
+    return select3(import_editor5.store).isListViewOpened();
   });
-  var isEditingTemplate = (0, import_data4.createRegistrySelector)((select2) => () => {
+  var isEditingTemplate = (0, import_data5.createRegistrySelector)((select3) => () => {
     (0, import_deprecated2.default)(`select( 'core/edit-post' ).isEditingTemplate`, {
       since: "6.5",
       alternative: `select( 'core/editor' ).getRenderingMode`
     });
-    return select2(import_editor5.store).getCurrentPostType() === "wp_template";
+    return select3(import_editor5.store).getCurrentPostType() === "wp_template";
   });
   function areMetaBoxesInitialized(state) {
     return state.metaBoxes.initialized;
   }
-  var getEditedPostTemplate = (0, import_data4.createRegistrySelector)(
-    (select2) => () => {
-      const { id: postId, type: postType } = select2(import_editor5.store).getCurrentPost();
-      const templateId = unlock(select2(import_core_data4.store)).getTemplateId(
+  var getEditedPostTemplate = (0, import_data5.createRegistrySelector)(
+    (select3) => () => {
+      const { id: postId, type: postType } = select3(import_editor5.store).getCurrentPost();
+      const templateId = unlock(select3(import_core_data4.store)).getTemplateId(
         postType,
         postId
       );
       if (!templateId) {
         return void 0;
       }
-      return select2(import_core_data4.store).getEditedEntityRecord(
+      return select3(import_core_data4.store).getEditedEntityRecord(
         "postType",
         "wp_template",
         templateId
@@ -1181,17 +1494,17 @@ var wp;
   );
 
   // packages/edit-post/build-module/store/index.js
-  var store = (0, import_data5.createReduxStore)(STORE_NAME, {
+  var store = (0, import_data6.createReduxStore)(STORE_NAME, {
     reducer: reducer_default,
     actions: actions_exports,
     selectors: selectors_exports
   });
-  (0, import_data5.register)(store);
+  (0, import_data6.register)(store);
 
   // packages/edit-post/build-module/components/keyboard-shortcuts/index.js
   function KeyboardShortcuts() {
-    const { toggleFullscreenMode: toggleFullscreenMode2 } = (0, import_data6.useDispatch)(store);
-    const { registerShortcut } = (0, import_data6.useDispatch)(import_keyboard_shortcuts.store);
+    const { toggleFullscreenMode: toggleFullscreenMode2 } = (0, import_data7.useDispatch)(store);
+    const { registerShortcut } = (0, import_data7.useDispatch)(import_keyboard_shortcuts.store);
     (0, import_element3.useEffect)(() => {
       registerShortcut({
         name: "core/edit-post/toggle-fullscreen",
@@ -1212,17 +1525,17 @@ var wp;
 
   // packages/edit-post/build-module/components/init-pattern-modal/index.js
   var import_jsx_runtime9 = __toESM(require_jsx_runtime());
-  var import_data7 = __toESM(require_data());
+  var import_data8 = __toESM(require_data());
   var import_i18n4 = __toESM(require_i18n());
   var import_components3 = __toESM(require_components());
   var import_element4 = __toESM(require_element());
   var import_editor6 = __toESM(require_editor());
   function InitPatternModal() {
-    const { editPost } = (0, import_data7.useDispatch)(import_editor6.store);
+    const { editPost } = (0, import_data8.useDispatch)(import_editor6.store);
     const [syncType, setSyncType] = (0, import_element4.useState)(void 0);
     const [title, setTitle] = (0, import_element4.useState)("");
-    const { postType, isNewPost } = (0, import_data7.useSelect)((select2) => {
-      const { getEditedPostAttribute, isCleanNewPost } = select2(import_editor6.store);
+    const { postType, isNewPost } = (0, import_data8.useSelect)((select3) => {
+      const { getEditedPostAttribute, isCleanNewPost } = select3(import_editor6.store);
       return {
         postType: getEditedPostAttribute("type"),
         isNewPost: isCleanNewPost()
@@ -1304,7 +1617,7 @@ var wp;
 
   // packages/edit-post/build-module/components/browser-url/index.js
   var import_element5 = __toESM(require_element());
-  var import_data8 = __toESM(require_data());
+  var import_data9 = __toESM(require_data());
   var import_url2 = __toESM(require_url());
   var import_editor7 = __toESM(require_editor());
   function getPostEditURL(postId) {
@@ -1312,8 +1625,8 @@ var wp;
   }
   function BrowserURL() {
     const [historyId, setHistoryId] = (0, import_element5.useState)(null);
-    const { postId, postStatus } = (0, import_data8.useSelect)((select2) => {
-      const { getCurrentPost } = select2(import_editor7.store);
+    const { postId, postStatus } = (0, import_data9.useSelect)((select3) => {
+      const { getCurrentPost } = select3(import_editor7.store);
       const post = getCurrentPost();
       let { id, status, type } = post;
       const isTemplate = ["wp_template", "wp_template_part"].includes(
@@ -1342,13 +1655,13 @@ var wp;
 
   // packages/edit-post/build-module/components/meta-boxes/index.js
   var import_jsx_runtime11 = __toESM(require_jsx_runtime());
-  var import_data11 = __toESM(require_data());
+  var import_data12 = __toESM(require_data());
 
   // packages/edit-post/build-module/components/meta-boxes/meta-boxes-area/index.js
   var import_jsx_runtime10 = __toESM(require_jsx_runtime());
   var import_element6 = __toESM(require_element());
   var import_components4 = __toESM(require_components());
-  var import_data9 = __toESM(require_data());
+  var import_data10 = __toESM(require_data());
   function MetaBoxesArea({ location }) {
     const container = (0, import_element6.useRef)(null);
     const formRef = (0, import_element6.useRef)(null);
@@ -1365,8 +1678,8 @@ var wp;
         }
       };
     }, [location]);
-    const isSaving = (0, import_data9.useSelect)((select2) => {
-      return select2(store).isSavingMetaBoxes();
+    const isSaving = (0, import_data10.useSelect)((select3) => {
+      return select3(store).isSavingMetaBoxes();
     }, []);
     const classes = clsx_default("edit-post-meta-boxes-area", `is-${location}`, {
       "is-loading": isSaving
@@ -1387,12 +1700,12 @@ var wp;
 
   // packages/edit-post/build-module/components/meta-boxes/meta-box-visibility.js
   var import_element7 = __toESM(require_element());
-  var import_data10 = __toESM(require_data());
+  var import_data11 = __toESM(require_data());
   var import_editor8 = __toESM(require_editor());
   function MetaBoxVisibility({ id }) {
-    const isVisible = (0, import_data10.useSelect)(
-      (select2) => {
-        return select2(import_editor8.store).isEditorPanelEnabled(
+    const isVisible = (0, import_data11.useSelect)(
+      (select3) => {
+        return select3(import_editor8.store).isEditorPanelEnabled(
           `meta-box-${id}`
         );
       },
@@ -1414,8 +1727,8 @@ var wp;
 
   // packages/edit-post/build-module/components/meta-boxes/index.js
   function MetaBoxes({ location }) {
-    const metaBoxes2 = (0, import_data11.useSelect)(
-      (select2) => select2(store).getMetaBoxesPerLocation(location),
+    const metaBoxes2 = (0, import_data12.useSelect)(
+      (select3) => select3(store).getMetaBoxesPerLocation(location),
       [location]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
@@ -1436,12 +1749,12 @@ var wp;
   var import_jsx_runtime12 = __toESM(require_jsx_runtime());
   var import_components5 = __toESM(require_components());
   var import_core_data5 = __toESM(require_core_data());
-  var import_data12 = __toESM(require_data());
+  var import_data13 = __toESM(require_data());
   var import_i18n5 = __toESM(require_i18n());
   var import_url3 = __toESM(require_url());
   function ManagePatternsMenuItem() {
-    const url = (0, import_data12.useSelect)((select2) => {
-      const { canUser } = select2(import_core_data5.store);
+    const url = (0, import_data13.useSelect)((select3) => {
+      const { canUser } = select3(import_core_data5.store);
       const defaultUrl = (0, import_url3.addQueryArgs)("edit.php", {
         post_type: "wp_block"
       });
@@ -1459,13 +1772,13 @@ var wp;
 
   // packages/edit-post/build-module/components/more-menu/welcome-guide-menu-item.js
   var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-  var import_data13 = __toESM(require_data());
+  var import_data14 = __toESM(require_data());
   var import_preferences3 = __toESM(require_preferences());
   var import_i18n6 = __toESM(require_i18n());
   var import_editor9 = __toESM(require_editor());
   function WelcomeGuideMenuItem() {
-    const isEditingTemplate2 = (0, import_data13.useSelect)(
-      (select2) => select2(import_editor9.store).getCurrentPostType() === "wp_template",
+    const isEditingTemplate2 = (0, import_data14.useSelect)(
+      (select3) => select3(import_editor9.store).getCurrentPostType() === "wp_template",
       []
     );
     return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
@@ -1487,7 +1800,7 @@ var wp;
   // packages/edit-post/build-module/components/preferences-modal/meta-boxes-section.js
   var import_jsx_runtime16 = __toESM(require_jsx_runtime());
   var import_i18n8 = __toESM(require_i18n());
-  var import_data16 = __toESM(require_data());
+  var import_data17 = __toESM(require_data());
   var import_editor12 = __toESM(require_editor());
   var import_preferences6 = __toESM(require_preferences());
 
@@ -1496,7 +1809,7 @@ var wp;
   var import_element8 = __toESM(require_element());
   var import_i18n7 = __toESM(require_i18n());
   var import_components6 = __toESM(require_components());
-  var import_data14 = __toESM(require_data());
+  var import_data15 = __toESM(require_data());
   var import_editor10 = __toESM(require_editor());
   var import_preferences4 = __toESM(require_preferences());
   var import_url4 = __toESM(require_url());
@@ -1532,8 +1845,8 @@ var wp;
     ] });
   }
   function EnableCustomFieldsOption({ label }) {
-    const areCustomFieldsEnabled = (0, import_data14.useSelect)((select2) => {
-      return !!select2(import_editor10.store).getEditorSettings().enableCustomFields;
+    const areCustomFieldsEnabled = (0, import_data15.useSelect)((select3) => {
+      return !!select3(import_editor10.store).getEditorSettings().enableCustomFields;
     }, []);
     const [isChecked, setIsChecked] = (0, import_element8.useState)(areCustomFieldsEnabled);
     return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
@@ -1549,15 +1862,15 @@ var wp;
 
   // packages/edit-post/build-module/components/preferences-modal/enable-panel.js
   var import_jsx_runtime15 = __toESM(require_jsx_runtime());
-  var import_data15 = __toESM(require_data());
+  var import_data16 = __toESM(require_data());
   var import_editor11 = __toESM(require_editor());
   var import_preferences5 = __toESM(require_preferences());
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences5.privateApis);
   function EnablePanelOption(props) {
-    const { toggleEditorPanelEnabled: toggleEditorPanelEnabled2 } = (0, import_data15.useDispatch)(import_editor11.store);
-    const { isChecked, isRemoved } = (0, import_data15.useSelect)(
-      (select2) => {
-        const { isEditorPanelEnabled: isEditorPanelEnabled2, isEditorPanelRemoved: isEditorPanelRemoved2 } = select2(import_editor11.store);
+    const { toggleEditorPanelEnabled: toggleEditorPanelEnabled2 } = (0, import_data16.useDispatch)(import_editor11.store);
+    const { isChecked, isRemoved } = (0, import_data16.useSelect)(
+      (select3) => {
+        const { isEditorPanelEnabled: isEditorPanelEnabled2, isEditorPanelRemoved: isEditorPanelRemoved2 } = select3(import_editor11.store);
         return {
           isChecked: isEditorPanelEnabled2(props.panelName),
           isRemoved: isEditorPanelRemoved2(props.panelName)
@@ -1603,9 +1916,9 @@ var wp;
       ))
     ] });
   }
-  var meta_boxes_section_default = (0, import_data16.withSelect)((select2) => {
-    const { getEditorSettings } = select2(import_editor12.store);
-    const { getAllMetaBoxes: getAllMetaBoxes2 } = select2(store);
+  var meta_boxes_section_default = (0, import_data17.withSelect)((select3) => {
+    const { getEditorSettings } = select3(import_editor12.store);
+    const { getAllMetaBoxes: getAllMetaBoxes2 } = select3(store);
     return {
       // This setting should not live in the block editor's store.
       areCustomFieldsRegistered: getEditorSettings().enableCustomFields !== void 0,
@@ -1662,11 +1975,11 @@ var wp;
 
   // packages/edit-post/build-module/components/welcome-guide/index.js
   var import_jsx_runtime22 = __toESM(require_jsx_runtime());
-  var import_data19 = __toESM(require_data());
+  var import_data20 = __toESM(require_data());
 
   // packages/edit-post/build-module/components/welcome-guide/default.js
   var import_jsx_runtime20 = __toESM(require_jsx_runtime());
-  var import_data17 = __toESM(require_data());
+  var import_data18 = __toESM(require_data());
   var import_components7 = __toESM(require_components());
   var import_i18n11 = __toESM(require_i18n());
   var import_element9 = __toESM(require_element());
@@ -1688,7 +2001,7 @@ var wp;
 
   // packages/edit-post/build-module/components/welcome-guide/default.js
   function WelcomeGuideDefault() {
-    const { toggleFeature: toggleFeature2 } = (0, import_data17.useDispatch)(store);
+    const { toggleFeature: toggleFeature2 } = (0, import_data18.useDispatch)(store);
     return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
       import_components7.Guide,
       {
@@ -1787,11 +2100,11 @@ var wp;
 
   // packages/edit-post/build-module/components/welcome-guide/template.js
   var import_jsx_runtime21 = __toESM(require_jsx_runtime());
-  var import_data18 = __toESM(require_data());
+  var import_data19 = __toESM(require_data());
   var import_components8 = __toESM(require_components());
   var import_i18n12 = __toESM(require_i18n());
   function WelcomeGuideTemplate() {
-    const { toggleFeature: toggleFeature2 } = (0, import_data18.useDispatch)(store);
+    const { toggleFeature: toggleFeature2 } = (0, import_data19.useDispatch)(store);
     return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
       import_components8.Guide,
       {
@@ -1822,9 +2135,9 @@ var wp;
 
   // packages/edit-post/build-module/components/welcome-guide/index.js
   function WelcomeGuide({ postType }) {
-    const { isActive, isEditingTemplate: isEditingTemplate2 } = (0, import_data19.useSelect)(
-      (select2) => {
-        const { isFeatureActive: isFeatureActive2 } = select2(store);
+    const { isActive, isEditingTemplate: isEditingTemplate2 } = (0, import_data20.useSelect)(
+      (select3) => {
+        const { isFeatureActive: isFeatureActive2 } = select3(store);
         const _isEditingTemplate = postType === "wp_template";
         const feature = _isEditingTemplate ? "welcomeGuideTemplate" : "welcomeGuide";
         return {
@@ -1841,20 +2154,20 @@ var wp;
   }
 
   // packages/edit-post/build-module/commands/use-commands.js
-  var import_data20 = __toESM(require_data());
+  var import_data21 = __toESM(require_data());
   var import_i18n13 = __toESM(require_i18n());
   var import_commands = __toESM(require_commands());
   var import_preferences9 = __toESM(require_preferences());
   var import_notices2 = __toESM(require_notices());
   function useCommands() {
-    const { isFullscreen } = (0, import_data20.useSelect)((select2) => {
-      const { get } = select2(import_preferences9.store);
+    const { isFullscreen } = (0, import_data21.useSelect)((select3) => {
+      const { get } = select3(import_preferences9.store);
       return {
         isFullscreen: get("core/edit-post", "fullscreenMode")
       };
     }, []);
-    const { toggle } = (0, import_data20.useDispatch)(import_preferences9.store);
-    const { createInfoNotice } = (0, import_data20.useDispatch)(import_notices2.store);
+    const { toggle } = (0, import_data21.useDispatch)(import_preferences9.store);
+    const { createInfoNotice } = (0, import_data21.useDispatch)(import_notices2.store);
     (0, import_commands.useCommand)({
       name: "core/toggle-fullscreen-mode",
       label: isFullscreen ? (0, import_i18n13.__)("Exit fullscreen") : (0, import_i18n13.__)("Enter fullscreen"),
@@ -1882,13 +2195,13 @@ var wp;
   }
 
   // packages/edit-post/build-module/components/layout/use-padding-appender.js
-  var import_data21 = __toESM(require_data());
+  var import_data22 = __toESM(require_data());
   var import_compose3 = __toESM(require_compose());
   var import_block_editor = __toESM(require_block_editor());
-  var import_blocks = __toESM(require_blocks());
+  var import_blocks2 = __toESM(require_blocks());
   var CSS = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
   function usePaddingAppender(enabled) {
-    const registry = (0, import_data21.useRegistry)();
+    const registry = (0, import_data22.useRegistry)();
     const effect = (0, import_compose3.useRefEffect)(
       (node) => {
         function onMouseDown(event) {
@@ -1911,7 +2224,7 @@ var wp;
           const lastBlockClientId = blockOrder[blockOrder.length - 1];
           const lastBlock = registry.select(import_block_editor.store).getBlock(lastBlockClientId);
           const { selectBlock, insertDefaultBlock } = registry.dispatch(import_block_editor.store);
-          if (lastBlock && (0, import_blocks.isUnmodifiedDefaultBlock)(lastBlock)) {
+          if (lastBlock && (0, import_blocks2.isUnmodifiedDefaultBlock)(lastBlock)) {
             selectBlock(lastBlockClientId);
           } else {
             insertDefaultBlock();
@@ -1930,13 +2243,13 @@ var wp;
 
   // packages/edit-post/build-module/components/layout/use-should-iframe.js
   var import_editor15 = __toESM(require_editor());
-  var import_data22 = __toESM(require_data());
-  var import_blocks2 = __toESM(require_blocks());
+  var import_data23 = __toESM(require_data());
+  var import_blocks3 = __toESM(require_blocks());
   var import_block_editor2 = __toESM(require_block_editor());
   var isGutenbergPlugin = true ? true : false;
   function useShouldIframe() {
-    return (0, import_data22.useSelect)((select2) => {
-      const { getEditorSettings, getCurrentPostType, getDeviceType } = select2(import_editor15.store);
+    return (0, import_data23.useSelect)((select3) => {
+      const { getEditorSettings, getCurrentPostType, getDeviceType } = select3(import_editor15.store);
       return (
         // If the theme is block based and the Gutenberg plugin is active,
         // we ALWAYS use the iframe for consistency across the post and site
@@ -1944,16 +2257,16 @@ var wp;
         isGutenbergPlugin && getEditorSettings().__unstableIsBlockBasedTheme || // We also still want to iframe all the special
         // editor features and modes such as device previews, zoom out, and
         // template/pattern editing.
-        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock(select2(import_block_editor2.store)).isZoomOut() || // Finally, still iframe the editor if all blocks are v3 (which means
+        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock(select3(import_block_editor2.store)).isZoomOut() || // Finally, still iframe the editor if all blocks are v3 (which means
         // they are marked as iframe-compatible).
-        select2(import_blocks2.store).getBlockTypes().every((type) => type.apiVersion >= 3)
+        select3(import_blocks3.store).getBlockTypes().every((type) => type.apiVersion >= 3)
       );
     }, []);
   }
 
   // packages/edit-post/build-module/hooks/use-navigate-to-entity-record.js
   var import_element10 = __toESM(require_element());
-  var import_data23 = __toESM(require_data());
+  var import_data24 = __toESM(require_data());
   var import_editor16 = __toESM(require_editor());
   function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRenderingMode) {
     const [postHistory, dispatch2] = (0, import_element10.useReducer)(
@@ -1975,8 +2288,8 @@ var wp;
       ]
     );
     const { post, previousRenderingMode } = postHistory[postHistory.length - 1];
-    const { getRenderingMode } = (0, import_data23.useSelect)(import_editor16.store);
-    const { setRenderingMode } = (0, import_data23.useDispatch)(import_editor16.store);
+    const { getRenderingMode } = (0, import_data24.useSelect)(import_editor16.store);
+    const { setRenderingMode } = (0, import_data24.useDispatch)(import_editor16.store);
     const onNavigateToEntityRecord = (0, import_element10.useCallback)(
       (params) => {
         dispatch2({
@@ -2003,15 +2316,15 @@ var wp;
   }
 
   // packages/edit-post/build-module/components/meta-boxes/use-meta-box-initialization.js
-  var import_data24 = __toESM(require_data());
+  var import_data25 = __toESM(require_data());
   var import_editor17 = __toESM(require_editor());
   var import_element11 = __toESM(require_element());
   var useMetaBoxInitialization = (enabled) => {
-    const isEnabledAndEditorReady = (0, import_data24.useSelect)(
-      (select2) => enabled && select2(import_editor17.store).__unstableIsEditorReady(),
+    const isEnabledAndEditorReady = (0, import_data25.useSelect)(
+      (select3) => enabled && select3(import_editor17.store).__unstableIsEditorReady(),
       [enabled]
     );
-    const { initializeMetaBoxes: initializeMetaBoxes2 } = (0, import_data24.useDispatch)(store);
+    const { initializeMetaBoxes: initializeMetaBoxes2 } = (0, import_data25.useDispatch)(store);
     (0, import_element11.useEffect)(() => {
       if (isEnabledAndEditorReady) {
         initializeMetaBoxes2();
@@ -2020,7 +2333,6 @@ var wp;
   };
 
   // packages/edit-post/build-module/components/layout/index.js
-  var { getLayoutStyles } = unlock(import_block_editor3.privateApis);
   var { useCommandContext } = unlock(import_commands2.privateApis);
   var { Editor, FullscreenMode } = unlock(import_editor18.privateApis);
   var { BlockKeyboardShortcuts } = unlock(import_block_library.privateApis);
@@ -2032,10 +2344,10 @@ var wp;
     "wp_registered_template"
   ];
   function useEditorStyles(...additionalStyles) {
-    const { hasThemeStyleSupport, editorSettings } = (0, import_data25.useSelect)((select2) => {
+    const { hasThemeStyleSupport, editorSettings } = (0, import_data26.useSelect)((select3) => {
       return {
-        hasThemeStyleSupport: select2(store).isFeatureActive("themeStyles"),
-        editorSettings: select2(import_editor18.store).getEditorSettings()
+        hasThemeStyleSupport: select3(store).isFeatureActive("themeStyles"),
+        editorSettings: select3(import_editor18.store).getEditorSettings()
       };
     }, []);
     const addedStyles = additionalStyles.join("\n");
@@ -2073,16 +2385,16 @@ var wp;
     ]);
   }
   function MetaBoxesMain({ isLegacy }) {
-    const [isOpen, openHeight, hasAnyVisible] = (0, import_data25.useSelect)((select2) => {
-      const { get } = select2(import_preferences10.store);
-      const { isMetaBoxLocationVisible: isMetaBoxLocationVisible2 } = select2(store);
+    const [isOpen, openHeight, hasAnyVisible] = (0, import_data26.useSelect)((select3) => {
+      const { get } = select3(import_preferences10.store);
+      const { isMetaBoxLocationVisible: isMetaBoxLocationVisible2 } = select3(store);
       return [
         !!get("core/edit-post", "metaBoxesMainIsOpen"),
         get("core/edit-post", "metaBoxesMainOpenHeight"),
         isMetaBoxLocationVisible2("normal") || isMetaBoxLocationVisible2("advanced") || isMetaBoxLocationVisible2("side")
       ];
     }, []);
-    const { set: setPreference } = (0, import_data25.useDispatch)(import_preferences10.store);
+    const { set: setPreference } = (0, import_data26.useDispatch)(import_preferences10.store);
     const metaBoxesMainRef = (0, import_element12.useRef)();
     const isShort = (0, import_compose4.useMediaQuery)("(max-height: 549px)");
     const [{ min, max }, setHeightConstraints] = (0, import_element12.useState)(() => ({}));
@@ -2295,7 +2607,7 @@ var wp;
   }) {
     useCommands();
     const shouldIframe = useShouldIframe();
-    const { createErrorNotice } = (0, import_data25.useDispatch)(import_notices3.store);
+    const { createErrorNotice } = (0, import_data26.useDispatch)(import_notices3.store);
     const {
       currentPost: { postId: currentPostId, postType: currentPostType },
       onNavigateToEntityRecord,
@@ -2319,12 +2631,12 @@ var wp;
       templateId,
       enablePaddingAppender,
       isDevicePreview
-    } = (0, import_data25.useSelect)(
-      (select2) => {
-        const { get } = select2(import_preferences10.store);
-        const { isFeatureActive: isFeatureActive2, hasMetaBoxes: hasMetaBoxes2 } = select2(store);
+    } = (0, import_data26.useSelect)(
+      (select3) => {
+        const { get } = select3(import_preferences10.store);
+        const { isFeatureActive: isFeatureActive2, hasMetaBoxes: hasMetaBoxes2 } = select3(store);
         const { canUser, getPostType, getTemplateId } = unlock(
-          select2(import_core_data6.store)
+          select3(import_core_data6.store)
         );
         const supportsTemplateMode = settings.supportsTemplateMode;
         const isViewable = getPostType(currentPostType)?.viewable ?? false;
@@ -2333,14 +2645,14 @@ var wp;
           name: "wp_template"
         });
         const { getBlockSelectionStart, isZoomOut } = unlock(
-          select2(import_block_editor3.store)
+          select3(import_block_editor3.store)
         );
         const {
           getEditorMode: getEditorMode2,
           getRenderingMode,
           getDefaultRenderingMode,
           getDeviceType
-        } = unlock(select2(import_editor18.store));
+        } = unlock(select3(import_editor18.store));
         const isRenderingPostOnly = getRenderingMode() === "post-only";
         const isNotDesignPostType = !DESIGN_POST_TYPES.includes(currentPostType);
         const isDirectlyEditingPattern = currentPostType === "wp_block" && !onNavigateToPreviousEntityRecord;
@@ -2405,7 +2717,7 @@ var wp;
         )
       );
     }
-    const { createSuccessNotice } = (0, import_data25.useDispatch)(import_notices3.store);
+    const { createSuccessNotice } = (0, import_data26.useDispatch)(import_notices3.store);
     const onActionPerformed = (0, import_element12.useCallback)(
       (actionId, items) => {
         switch (actionId) {
@@ -2605,13 +2917,13 @@ var wp;
     const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
     const target = document.getElementById(id);
     const root = (0, import_element13.createRoot)(target);
-    (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core/edit-post", {
+    (0, import_data27.dispatch)(import_preferences11.store).setDefaults("core/edit-post", {
       fullscreenMode: true,
       themeStyles: true,
       welcomeGuide: true,
       welcomeGuideTemplate: true
     });
-    (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core", {
+    (0, import_data27.dispatch)(import_preferences11.store).setDefaults("core", {
       allowRightClickOverrides: true,
       editorMode: "visual",
       editorTool: "edit",
@@ -2626,14 +2938,14 @@ var wp;
       isPublishSidebarEnabled: true
     });
     if (window.__experimentalMediaProcessing) {
-      (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core/media", {
+      (0, import_data27.dispatch)(import_preferences11.store).setDefaults("core/media", {
         requireApproval: true,
         optimizeOnUpload: true
       });
     }
-    (0, import_data26.dispatch)(import_blocks3.store).reapplyBlockTypeFilters();
-    if (isMediumOrBigger && (0, import_data26.select)(import_preferences11.store).get("core", "showListViewByDefault") && !(0, import_data26.select)(import_preferences11.store).get("core", "distractionFree")) {
-      (0, import_data26.dispatch)(import_editor20.store).setIsListViewOpened(true);
+    (0, import_data27.dispatch)(import_blocks4.store).reapplyBlockTypeFilters();
+    if (isMediumOrBigger && (0, import_data27.select)(import_preferences11.store).get("core", "showListViewByDefault") && !(0, import_data27.select)(import_preferences11.store).get("core", "distractionFree")) {
+      (0, import_data27.dispatch)(import_editor20.store).setIsListViewOpened(true);
     }
     (0, import_block_library2.registerCoreBlocks)();
     registerCoreBlockBindingsSources();
