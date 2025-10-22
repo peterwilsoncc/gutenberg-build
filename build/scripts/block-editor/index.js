@@ -60594,12 +60594,12 @@ var wp;
     const blockElement = useBlockElement(clientId);
     const blockAttributes = (0, import_data171.useSelect)(
       (select3) => {
-        if (!clientId) {
+        if (!clientId || !hasFitTextSupport2 || !fitText) {
           return;
         }
         return select3(store).getBlockAttributes(clientId);
       },
-      [clientId]
+      [clientId, hasFitTextSupport2, fitText]
     );
     const applyFitText = (0, import_element217.useCallback)(() => {
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
