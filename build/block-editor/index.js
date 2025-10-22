@@ -60313,9 +60313,10 @@ var wp;
   function generateCSSRule(elementSelector, fontSize) {
     return `${elementSelector} { font-size: ${fontSize}px !important; }`;
   }
-  function findOptimalFontSize(textElement, elementSelector, applyStylesFn, maxSize = 600) {
+  function findOptimalFontSize(textElement, elementSelector, applyStylesFn) {
     const alreadyHasScrollableHeight = textElement.scrollHeight > textElement.clientHeight;
     let minSize = 5;
+    let maxSize = 600;
     let bestSize = minSize;
     while (minSize <= maxSize) {
       const midSize = Math.floor((minSize + maxSize) / 2);
@@ -60331,7 +60332,7 @@ var wp;
     }
     return bestSize;
   }
-  function optimizeFitText(textElement, elementSelector, applyStylesFn, maxSize) {
+  function optimizeFitText(textElement, elementSelector, applyStylesFn) {
     if (!textElement) {
       return;
     }
@@ -60339,8 +60340,7 @@ var wp;
     const optimalSize = findOptimalFontSize(
       textElement,
       elementSelector,
-      applyStylesFn,
-      maxSize
+      applyStylesFn
     );
     const cssRule = generateCSSRule(elementSelector, optimalSize);
     applyStylesFn(cssRule);
@@ -60368,22 +60368,15 @@ var wp;
   function useFitText({ fitText, name, clientId }) {
     const hasFitTextSupport2 = (0, import_blocks104.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
-    const { blockAttributes, isSelected } = (0, import_data171.useSelect)(
+    const blockAttributes = (0, import_data171.useSelect)(
       (select2) => {
         if (!clientId) {
-          return { blockAttributes: void 0, isSelected: false };
+          return;
         }
-        return {
-          blockAttributes: select2(store).getBlockAttributes(clientId),
-          isSelected: select2(store).isBlockSelected(clientId)
-        };
+        return select2(store).getBlockAttributes(clientId);
       },
       [clientId]
     );
-    const isSelectedRef = (0, import_element218.useRef)();
-    (0, import_element218.useEffect)(() => {
-      isSelectedRef.current = isSelected;
-    }, [isSelected]);
     const applyFitText = (0, import_element218.useCallback)(() => {
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
         return;
@@ -60399,9 +60392,8 @@ var wp;
       const applyStylesFn = (css) => {
         styleElement.textContent = css;
       };
-      const maxSize = isSelectedRef.current ? 200 : void 0;
-      optimizeFitText(blockElement, blockSelector, applyStylesFn, maxSize);
-    }, [blockElement, clientId, hasFitTextSupport2, fitText, isSelectedRef]);
+      optimizeFitText(blockElement, blockSelector, applyStylesFn);
+    }, [blockElement, clientId, hasFitTextSupport2, fitText]);
     (0, import_element218.useEffect)(() => {
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2) {
         return;
@@ -60435,7 +60427,6 @@ var wp;
       }
     }, [
       blockAttributes,
-      isSelected,
       fitText,
       applyFitText,
       blockElement,
