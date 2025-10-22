@@ -193,7 +193,7 @@ var wp;
     "core/paragraph": ["content"],
     "core/heading": ["content"],
     "core/button": ["text", "url", "linkTarget", "rel"],
-    "core/image": ["id", "url", "title", "alt"]
+    "core/image": ["id", "url", "title", "alt", "caption"]
   };
   var PATTERN_OVERRIDES_BINDING_SOURCE = "core/pattern-overrides";
 
@@ -1389,9 +1389,9 @@ var wp;
     if (isConnectedToOtherSources) {
       return null;
     }
-    const hasUnsupportedImageAttributes = blockName === "core/image" && (!!attributes.caption?.length || !!attributes.href?.length);
+    const hasUnsupportedImageAttributes = blockName === "core/image" && !!attributes.href?.length;
     const helpText = !hasOverrides && hasUnsupportedImageAttributes ? (0, import_i18n10.__)(
-      `Overrides currently don't support image captions or links. Remove the caption or link first before enabling overrides.`
+      `Overrides currently don't support image links. Remove the link first before enabling overrides.`
     ) : (0, import_i18n10.__)(
       "Allow changes to this block throughout instances of this pattern."
     );
