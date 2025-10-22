@@ -41390,7 +41390,7 @@ ${url}
     name: "core/post-date",
     title: "Date",
     category: "theme",
-    description: "Display the publish date for an entry such as a post or page.",
+    description: "Display a custom date.",
     textdomain: "default",
     attributes: {
       datetime: {
