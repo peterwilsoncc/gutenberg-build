@@ -30651,7 +30651,7 @@ var wp;
   var import_jsx_runtime268 = __toESM(require_jsx_runtime());
   var import_components140 = __toESM(require_components());
   var import_element115 = __toESM(require_element());
-  var import_compose23 = __toESM(require_compose());
+  var import_compose24 = __toESM(require_compose());
 
   // packages/dataviews/build-module/components/dataviews-context/index.js
   var import_element71 = __toESM(require_element());
@@ -30917,6 +30917,7 @@ var wp;
   var import_i18n94 = __toESM(require_i18n());
   var import_element72 = __toESM(require_element());
   var import_data71 = __toESM(require_data());
+  var import_compose15 = __toESM(require_compose());
 
   // packages/dataviews/build-module/lock-unlock.js
   var import_private_apis2 = __toESM(require_private_apis());
@@ -31109,6 +31110,10 @@ var wp;
     registry
   }) {
     const [activeModalAction, setActiveModalAction] = (0, import_element72.useState)(null);
+    const isMobileViewport = (0, import_compose15.useViewportMatch)("medium", "<");
+    if (isMobileViewport) {
+      return null;
+    }
     if (!Array.isArray(actions) || actions.length === 0) {
       return null;
     }
@@ -31774,7 +31779,7 @@ var wp;
   var column_primary_default = ColumnPrimary;
 
   // packages/dataviews/build-module/dataviews-layouts/table/use-is-horizontal-scroll-end.js
-  var import_compose15 = __toESM(require_compose());
+  var import_compose16 = __toESM(require_compose());
   var import_element76 = __toESM(require_element());
   var import_i18n98 = __toESM(require_i18n());
   var isScrolledToEnd = (element) => {
@@ -31789,7 +31794,7 @@ var wp;
     enabled = false
   }) {
     const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element76.useState)(false);
-    const handleIsHorizontalScrollEnd = (0, import_compose15.useDebounce)(
+    const handleIsHorizontalScrollEnd = (0, import_compose16.useDebounce)(
       (0, import_element76.useCallback)(() => {
         const scrollContainer = scrollContainerRef.current;
         if (scrollContainer) {
@@ -32238,7 +32243,7 @@ var wp;
   var import_jsx_runtime207 = __toESM(require_jsx_runtime());
   var import_components105 = __toESM(require_components());
   var import_i18n100 = __toESM(require_i18n());
-  var import_compose16 = __toESM(require_compose());
+  var import_compose17 = __toESM(require_compose());
   var import_keycodes9 = __toESM(require_keycodes());
   var import_element79 = __toESM(require_element());
 
@@ -32288,7 +32293,7 @@ var wp;
     } = view;
     const hasBulkAction = useHasAPossibleBulkAction(actions, item);
     const id = getItemId2(item);
-    const instanceId = (0, import_compose16.useInstanceId)(GridItem);
+    const instanceId = (0, import_compose17.useInstanceId)(GridItem);
     const isSelected2 = selection.includes(id);
     const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
       mediaField.render,
@@ -32624,7 +32629,7 @@ var wp;
 
   // packages/dataviews/build-module/dataviews-layouts/list/index.js
   var import_jsx_runtime208 = __toESM(require_jsx_runtime());
-  var import_compose17 = __toESM(require_compose());
+  var import_compose18 = __toESM(require_compose());
   var import_components106 = __toESM(require_components());
   var import_element80 = __toESM(require_element());
   var import_i18n101 = __toESM(require_i18n());
@@ -32928,7 +32933,7 @@ var wp;
       className,
       empty
     } = props;
-    const baseId = (0, import_compose17.useInstanceId)(ViewList, "view-list");
+    const baseId = (0, import_compose18.useInstanceId)(ViewList, "view-list");
     const selectedItem = data?.findLast(
       (item) => selection.includes(getItemId2(item))
     );
@@ -32964,7 +32969,7 @@ var wp;
     const activeItemIndex = data.findIndex(
       (item) => isActiveCompositeItem(item, activeCompositeId ?? "")
     );
-    const previousActiveItemIndex = (0, import_compose17.usePrevious)(activeItemIndex);
+    const previousActiveItemIndex = (0, import_compose18.usePrevious)(activeItemIndex);
     const isActiveIdInList = activeItemIndex !== -1;
     const selectCompositeItem = (0, import_element80.useCallback)(
       (targetIndex, generateCompositeId) => {
@@ -33118,7 +33123,7 @@ var wp;
   var import_jsx_runtime211 = __toESM(require_jsx_runtime());
   var import_components109 = __toESM(require_components());
   var import_i18n104 = __toESM(require_i18n());
-  var import_compose18 = __toESM(require_compose());
+  var import_compose19 = __toESM(require_compose());
   var import_element83 = __toESM(require_element());
 
   // packages/dataviews/build-module/components/dataviews-picker/footer.js
@@ -33408,7 +33413,7 @@ var wp;
     groupField,
     children
   }) {
-    const headerId = (0, import_compose18.useInstanceId)(
+    const headerId = (0, import_compose19.useInstanceId)(
       GridGroup,
       "dataviews-view-picker-grid-group__header"
     );
@@ -37859,7 +37864,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.js
   var import_remove_accents = __toESM(require_remove_accents());
-  var import_compose19 = __toESM(require_compose());
+  var import_compose20 = __toESM(require_compose());
   var import_i18n108 = __toESM(require_i18n());
   var import_element87 = __toESM(require_element());
   var import_components112 = __toESM(require_components());
@@ -37960,7 +37965,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   function ListBox({ view, filter, onChangeView }) {
-    const baseId = (0, import_compose19.useInstanceId)(ListBox, "dataviews-filter-list-box");
+    const baseId = (0, import_compose20.useInstanceId)(ListBox, "dataviews-filter-list-box");
     const [activeCompositeId, setActiveCompositeId] = (0, import_element87.useState)(
       // When there are one or less operators, the first item is set as active
       // (by setting the initial `activeId` to `undefined`).
@@ -38211,7 +38216,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/input-widget.js
   var import_jsx_runtime223 = __toESM(require_jsx_runtime());
   var import_es6 = __toESM(require_es6());
-  var import_compose20 = __toESM(require_compose());
+  var import_compose21 = __toESM(require_compose());
   var import_element88 = __toESM(require_element());
   var import_components113 = __toESM(require_components());
   function InputWidget({
@@ -38252,7 +38257,7 @@ If there's a particular need for this, please submit a feature request at https:
         {}
       );
     }, [view.filters]);
-    const handleChange = (0, import_compose20.useEvent)((updatedData) => {
+    const handleChange = (0, import_compose21.useEvent)((updatedData) => {
       if (!field || !currentFilter) {
         return;
       }
@@ -39197,10 +39202,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n114 = __toESM(require_i18n());
   var import_element97 = __toESM(require_element());
   var import_components120 = __toESM(require_components());
-  var import_compose21 = __toESM(require_compose());
+  var import_compose22 = __toESM(require_compose());
   var DataViewsSearch = (0, import_element97.memo)(function Search({ label }) {
     const { view, onChangeView } = (0, import_element97.useContext)(dataviews_context_default);
-    const [search, setSearch, debouncedSearch] = (0, import_compose21.useDebouncedInput)(
+    const [search, setSearch, debouncedSearch] = (0, import_compose22.useDebouncedInput)(
       view.search
     );
     (0, import_element97.useEffect)(() => {
@@ -39243,7 +39248,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n116 = __toESM(require_i18n());
   var import_element99 = __toESM(require_element());
   var import_warning = __toESM(require_warning());
-  var import_compose22 = __toESM(require_compose());
+  var import_compose23 = __toESM(require_compose());
 
   // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.js
   var import_jsx_runtime233 = __toESM(require_jsx_runtime());
@@ -39886,7 +39891,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function DataviewsViewConfigDropdown() {
     const { view } = (0, import_element99.useContext)(dataviews_context_default);
-    const popoverId = (0, import_compose22.useInstanceId)(
+    const popoverId = (0, import_compose23.useInstanceId)(
       _DataViewsViewConfig,
       "dataviews-view-config-dropdown"
     );
@@ -44077,7 +44082,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { infiniteScrollHandler } = paginationInfo;
     const containerRef = (0, import_element115.useRef)(null);
     const [containerWidth, setContainerWidth] = (0, import_element115.useState)(0);
-    const resizeObserverRef = (0, import_compose23.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose24.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
           resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -44123,7 +44128,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
-      const handleScroll = (0, import_compose23.throttle)((event) => {
+      const handleScroll = (0, import_compose24.throttle)((event) => {
         const target = event.target;
         const scrollTop = target.scrollTop;
         const scrollHeight = target.scrollHeight;
@@ -47091,7 +47096,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_editor35 = __toESM(require_editor());
   var import_url18 = __toESM(require_url());
   var import_data86 = __toESM(require_data());
-  var import_compose26 = __toESM(require_compose());
+  var import_compose27 = __toESM(require_compose());
   var import_components161 = __toESM(require_components());
   var import_notices9 = __toESM(require_notices());
 
@@ -47102,7 +47107,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element138 = __toESM(require_element());
   var import_data84 = __toESM(require_data());
   var import_core_data54 = __toESM(require_core_data());
-  var import_compose25 = __toESM(require_compose());
+  var import_compose26 = __toESM(require_compose());
   var import_i18n144 = __toESM(require_i18n());
   var import_notices8 = __toESM(require_notices());
   var import_router33 = __toESM(require_router());
@@ -47115,7 +47120,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components157 = __toESM(require_components());
   var import_core_data53 = __toESM(require_core_data());
   var import_html_entities11 = __toESM(require_html_entities());
-  var import_compose24 = __toESM(require_compose());
+  var import_compose25 = __toESM(require_compose());
   var import_dom12 = __toESM(require_dom());
   var import_url17 = __toESM(require_url());
 
@@ -47714,7 +47719,7 @@ If there's a particular need for this, please submit a feature request at https:
     return suggestions;
   }
   function SuggestionList({ entityForSuggestions, onSelect }) {
-    const [search, setSearch, debouncedSearch] = (0, import_compose24.useDebouncedInput)();
+    const [search, setSearch, debouncedSearch] = (0, import_compose25.useDebouncedInput)();
     const suggestions = useSearchSuggestions(
       entityForSuggestions,
       debouncedSearch
@@ -48163,7 +48168,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { saveEntityRecord } = (0, import_data84.useDispatch)(import_core_data54.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data84.useDispatch)(import_notices8.store);
     const containerRef = (0, import_element138.useRef)(null);
-    const isMobile = (0, import_compose25.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose26.useViewportMatch)("medium", "<");
     const homeUrl = (0, import_data84.useSelect)((select3) => {
       return select3(import_core_data54.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
@@ -48790,7 +48795,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => activeView === "user" ? [setActiveTemplateAction, editAction, ...postTypeActions] : [setActiveTemplateAction, ...postTypeActions],
       [postTypeActions, setActiveTemplateAction, editAction, activeView]
     );
-    const onChangeView = (0, import_compose26.useEvent)((newView) => {
+    const onChangeView = (0, import_compose27.useEvent)((newView) => {
       if (newView.type !== view.type) {
         history.invalidate();
       }
@@ -49174,7 +49179,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data89 = __toESM(require_data());
   var import_editor38 = __toESM(require_editor());
   var import_i18n149 = __toESM(require_i18n());
-  var import_compose27 = __toESM(require_compose());
+  var import_compose28 = __toESM(require_compose());
   var import_url20 = __toESM(require_url());
 
   // packages/edit-site/build-module/components/add-new-post/index.js
@@ -49330,7 +49335,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       defaultView: getDefaultView2(postTypeObject, activeView)
     });
-    const onChangeView = (0, import_compose27.useEvent)((newView) => {
+    const onChangeView = (0, import_compose28.useEvent)((newView) => {
       if (newView.type !== view.type) {
         history.invalidate();
       }
@@ -49394,7 +49399,7 @@ If there's a particular need for this, please submit a feature request at https:
       return records;
     }, [records, fields, view?.sort]);
     const ids = data?.map((record) => getItemId(record)) ?? [];
-    const prevIds = (0, import_compose27.usePrevious)(ids) ?? [];
+    const prevIds = (0, import_compose28.usePrevious)(ids) ?? [];
     const deletedIds = prevIds.filter((id) => !ids.includes(id));
     const postIdWasDeleted = deletedIds.includes(postId);
     (0, import_element143.useEffect)(() => {
