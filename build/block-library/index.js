@@ -60038,13 +60038,11 @@ ${url}
         isBlock: true,
         onChange: (newValue) => {
           onChange({
-            inherit: newValue === "default",
-            // When enabling inherit, hierarchical is not supported.
-            ...newValue === "default" ? { showNested: false } : {}
+            inherit: newValue === "default"
           });
         },
         help: value ? (0, import_i18n225.__)(
-          "Display terms based on the current taxonomy archive. For hierarchical taxonomies, shows direct children of the current term. For non-hierarchical taxonomies, shows all terms."
+          "Display terms based on the current taxonomy archive. For hierarchical taxonomies, shows children of the current term. For non-hierarchical taxonomies, shows all terms."
         ) : (0, import_i18n225.__)("Display terms based on specific criteria."),
         value: value ? "default" : "custom",
         children: [
@@ -60267,7 +60265,7 @@ ${url}
     )?.hierarchical;
     const inheritQuery = !!inherit;
     const displayInheritControl = ["taxonomy", "category", "tag", "archive"].includes(templateSlug) || templateSlug?.startsWith("taxonomy-") || templateSlug?.startsWith("category-") || templateSlug?.startsWith("tag-");
-    const displayShowNestedControl = isTaxonomyHierarchical && !inheritQuery;
+    const displayShowNestedControl = isTaxonomyHierarchical;
     const hasIncludeFilter = !!include?.length;
     const queryTypeControlLabel = (0, import_i18n228.__)("Query type");
     const taxonomyControlLabel = (0, import_i18n228.__)("Taxonomy");
