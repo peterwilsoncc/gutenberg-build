@@ -2194,6 +2194,16 @@ var wp;
 
   // packages/data/build-module/components/use-select/index.js
   var renderQueue = (0, import_priority_queue.createQueue)();
+  function warnOnUnstableReference(a, b) {
+    if (!a || !b) {
+      return;
+    }
+    const keys = typeof a === "object" && typeof b === "object" ? Object.keys(a).filter((k) => a[k] !== b[k]) : [];
+    console.warn(
+      "The `useSelect` hook returns different values when called with the same state and parameters.\nThis can lead to unnecessary re-renders and performance issues if not fixed.\n\nNon-equal value keys: %s\n\n",
+      keys.join(", ")
+    );
+  }
   function Store(registry, suspense) {
     const select3 = suspense ? registry.suspendSelect : registry.select;
     const queueContext = {};
@@ -2269,7 +2279,7 @@ var wp;
           () => mapSelect(select3, registry),
           listeningStores
         );
-        if (false) {
+        if (true) {
           if (!didWarnUnstableReference) {
             const secondMapResult = mapSelect(select3, registry);
             if (!(0, import_is_shallow_equal.default)(mapResult, secondMapResult)) {

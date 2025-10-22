@@ -15643,7 +15643,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         (0, import_es6.default)(valueRef.current, value) && // But not the same reference.
         valueRef.current !== value
       ) {
-        false ? (0, import_warning.default)(`Please memoize your context: ${JSON.stringify(value)}`) : void 0;
+        true ? (0, import_warning.default)(`Please memoize your context: ${JSON.stringify(value)}`) : void 0;
       }
     }, [value]);
     const config = (0, import_element14.useMemo)(() => {
@@ -15753,7 +15753,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function _contextConnect(Component9, namespace, options2) {
     const WrappedComponent = options2?.forwardsRef ? (0, import_element15.forwardRef)(Component9) : Component9;
     if (typeof namespace === "undefined") {
-      false ? (0, import_warning2.default)("contextConnect: Please provide a namespace") : void 0;
+      true ? (0, import_warning2.default)("contextConnect: Please provide a namespace") : void 0;
     }
     let mergedNamespace = WrappedComponent[CONNECT_STATIC_NAMESPACE] || [namespace];
     if (Array.isArray(namespace)) {
@@ -15813,7 +15813,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   function useContextSystem(props, namespace) {
     const contextSystemProps = useComponentsContext();
     if (typeof namespace === "undefined") {
-      false ? (0, import_warning3.default)("useContextSystem: Please provide a namespace") : void 0;
+      true ? (0, import_warning3.default)("useContextSystem: Please provide a namespace") : void 0;
     }
     const contextProps = contextSystemProps?.[namespace] || {};
     const finalComponentProps = {
@@ -28958,7 +28958,7 @@ This message will only show in development mode. It won't appear in production. 
     slots: (0, import_compose12.observableMap)(),
     fills: (0, import_compose12.observableMap)(),
     registerSlot: () => {
-      false ? (0, import_warning4.default)("Components must be wrapped within `SlotFillProvider`. See https://developer.wordpress.org/block-editor/components/slot-fill/") : void 0;
+      true ? (0, import_warning4.default)("Components must be wrapped within `SlotFillProvider`. See https://developer.wordpress.org/block-editor/components/slot-fill/") : void 0;
     },
     updateSlot: () => {
     },
@@ -35890,7 +35890,7 @@ This message will only show in development mode. It won't appear in production. 
     if (presets && !presetKey || !presets && presetKey) {
       const definedProp = presets ? "presets" : "presetKey";
       const missingProp = presets ? "presetKey" : "presets";
-      false ? (0, import_warning5.default)(`wp.components.BoxControl: the '${missingProp}' prop is required when the '${definedProp}' prop is defined.`) : void 0;
+      true ? (0, import_warning5.default)(`wp.components.BoxControl: the '${missingProp}' prop is required when the '${definedProp}' prop is defined.`) : void 0;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(component_default22, {
       id: id3,
@@ -39414,7 +39414,7 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       if (!frameEl) {
-        false ? (0, import_warning6.default)("wp.components.Modal: the Modal component can't be closed with an exit animation because of a missing reference to the modal frame element.") : void 0;
+        true ? (0, import_warning6.default)("wp.components.Modal: the Modal component can't be closed with an exit animation because of a missing reference to the modal frame element.") : void 0;
         closeModalResolve();
         return;
       }
@@ -47076,7 +47076,7 @@ This message will only show in development mode. It won't appear in production. 
     screens
   }, screen) {
     if (screens.some((s3) => s3.path === screen.path)) {
-      false ? (0, import_warning7.default)(`Navigator: a screen with path ${screen.path} already exists.
+      true ? (0, import_warning7.default)(`Navigator: a screen with path ${screen.path} already exists.
 The screen with id ${screen.id} will not be added.`) : void 0;
       return screens;
     }
@@ -47374,7 +47374,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime244 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
-      false ? (0, import_warning8.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
+      true ? (0, import_warning8.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
     }
     const screenId = (0, import_element168.useId)();
     const {
@@ -50022,7 +50022,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       "components-snackbar-explicit-dismiss": !!explicitDismiss
     });
     if (actions && actions.length > 1) {
-      false ? (0, import_warning9.default)("Snackbar can only have one action. Use Notice if your message requires many actions.") : void 0;
+      true ? (0, import_warning9.default)("Snackbar can only have one action. Use Notice if your message requires many actions.") : void 0;
       actions = [actions[0]];
     }
     const snackbarContentClassnames = clsx_default("components-snackbar__content", {
@@ -50522,7 +50522,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const accessibleToolbarStore = (0, import_element197.useContext)(toolbar_context_default);
     const isRenderProp = typeof children === "function";
     if (!isRenderProp && !Component9) {
-      false ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
+      true ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
       return null;
     }
     const allProps = {
@@ -52931,7 +52931,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function validateInputs(inputs) {
     for (const [key, value] of Object.entries(inputs)) {
       if (typeof value !== "undefined" && !w(value).isValid()) {
-        false ? (0, import_warning11.default)(`wp.components.Theme: "${value}" is not a valid color value for the '${key}' prop.`) : void 0;
+        true ? (0, import_warning11.default)(`wp.components.Theme: "${value}" is not a valid color value for the '${key}' prop.`) : void 0;
       }
     }
   }
@@ -52949,7 +52949,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function warnContrastIssues(issues) {
     for (const error of Object.values(issues)) {
       if (error) {
-        false ? (0, import_warning11.default)("wp.components.Theme: " + error) : void 0;
+        true ? (0, import_warning11.default)("wp.components.Theme: " + error) : void 0;
       }
     }
   }
@@ -53092,7 +53092,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = (_useTabsContext = useTabsContext()) !== null && _useTabsContext !== void 0 ? _useTabsContext : {};
     if (!store) {
-      false ? (0, import_warning12.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.") : void 0;
+      true ? (0, import_warning12.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
     const instancedTabId = `${instanceId}-${tabId}`;
@@ -53242,7 +53242,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     };
     if (!store) {
-      false ? (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
+      true ? (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(StyledTabList, {
@@ -53278,7 +53278,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const context = useTabsContext();
     const selectedId = useStoreState(context?.store, "selectedId");
     if (!context) {
-      false ? (0, import_warning14.default)("`Tabs.TabPanel` must be wrapped in a `Tabs` component.") : void 0;
+      true ? (0, import_warning14.default)("`Tabs.TabPanel` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
     const {

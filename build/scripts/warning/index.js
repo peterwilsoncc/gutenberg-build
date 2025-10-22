@@ -30,7 +30,7 @@ var wp;
 
   // packages/warning/build-module/index.js
   function isDev() {
-    return false;
+    return true;
   }
   function warning(message) {
     if (!isDev()) {
