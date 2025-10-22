@@ -33524,12 +33524,74 @@ ${url}
   // packages/block-library/build-module/navigation/edit/use-convert-classic-menu-to-block-menu.js
   var import_data61 = __toESM(require_data());
   var import_core_data32 = __toESM(require_core_data());
-  var import_element61 = __toESM(require_element());
+  var import_element62 = __toESM(require_element());
   var import_i18n109 = __toESM(require_i18n());
 
   // packages/block-library/build-module/navigation/menu-items-to-blocks.js
   var import_blocks44 = __toESM(require_blocks());
   var import_hooks39 = __toESM(require_hooks());
+
+  // packages/block-library/build-module/navigation-link/shared/use-entity-binding.js
+  var import_element61 = __toESM(require_element());
+  var import_block_editor137 = __toESM(require_block_editor());
+  function buildNavigationLinkEntityBinding(kind) {
+    if (kind === void 0) {
+      throw new Error(
+        'buildNavigationLinkEntityBinding requires a kind parameter. Only "post-type" and "taxonomy" are supported.'
+      );
+    }
+    if (kind !== "post-type" && kind !== "taxonomy") {
+      throw new Error(
+        `Invalid kind "${kind}" provided to buildNavigationLinkEntityBinding. Only 'post-type' and 'taxonomy' are supported.`
+      );
+    }
+    const source = kind === "taxonomy" ? "core/term-data" : "core/post-data";
+    return {
+      url: {
+        source,
+        args: {
+          field: "link"
+        }
+      }
+    };
+  }
+  function useEntityBinding({ clientId, attributes: attributes3 }) {
+    const { updateBlockBindings } = (0, import_block_editor137.useBlockBindingsUtils)(clientId);
+    const { metadata, id, kind } = attributes3;
+    const hasUrlBinding = !!metadata?.bindings?.url && !!id;
+    const expectedSource = kind === "post-type" ? "core/post-data" : "core/term-data";
+    const hasCorrectBinding = hasUrlBinding && metadata?.bindings?.url?.source === expectedSource;
+    const clearBinding = (0, import_element61.useCallback)(() => {
+      if (hasUrlBinding) {
+        updateBlockBindings({ url: void 0 });
+      }
+    }, [updateBlockBindings, hasUrlBinding]);
+    const createBinding = (0, import_element61.useCallback)(
+      (updatedAttributes) => {
+        const kindToUse = updatedAttributes?.kind ?? kind;
+        if (!kindToUse) {
+          return;
+        }
+        try {
+          const binding = buildNavigationLinkEntityBinding(kindToUse);
+          updateBlockBindings(binding);
+        } catch (error) {
+          console.warn(
+            "Failed to create entity binding:",
+            error.message
+          );
+        }
+      },
+      [updateBlockBindings, kind, id]
+    );
+    return {
+      hasUrlBinding: hasCorrectBinding,
+      clearBinding,
+      createBinding
+    };
+  }
+
+  // packages/block-library/build-module/navigation/menu-items-to-blocks.js
   function menuItemsToBlocks(menuItems) {
     if (!menuItems) {
       return null;
@@ -33599,12 +33661,13 @@ ${url}
     if (object && object === "post_tag") {
       object = "tag";
     }
+    const inferredKind = menuItemTypeField?.replace("_", "-") || "custom";
     return {
       label: menuItemTitleField?.rendered || "",
       ...object?.length && {
         type: object
       },
-      kind: menuItemTypeField?.replace("_", "-") || "custom",
+      kind: inferredKind,
       url: url || "",
       ...xfn?.length && xfn.join(" ").trim() && {
         rel: xfn.join(" ").trim()
@@ -33616,8 +33679,11 @@ ${url}
       ...attr_title?.length && {
         title: attr_title
       },
-      ...object_id && "custom" !== object && {
-        id: object_id
+      ...object_id && (inferredKind === "post-type" || inferredKind === "taxonomy") && {
+        id: object_id,
+        metadata: {
+          bindings: buildNavigationLinkEntityBinding(inferredKind)
+        }
       },
       /* eslint-enable camelcase */
       ...description?.length && {
@@ -33664,9 +33730,9 @@ ${url}
   function useConvertClassicToBlockMenu(createNavigationMenu, { throwOnError = false } = {}) {
     const registry = (0, import_data61.useRegistry)();
     const { editEntityRecord } = (0, import_data61.useDispatch)(import_core_data32.store);
-    const [status, setStatus] = (0, import_element61.useState)(CLASSIC_MENU_CONVERSION_IDLE);
-    const [error, setError] = (0, import_element61.useState)(null);
-    const convertClassicMenuToBlockMenu = (0, import_element61.useCallback)(
+    const [status, setStatus] = (0, import_element62.useState)(CLASSIC_MENU_CONVERSION_IDLE);
+    const [error, setError] = (0, import_element62.useState)(null);
+    const convertClassicMenuToBlockMenu = (0, import_element62.useCallback)(
       async (menuId, menuName, postStatus = "publish") => {
         let navigationMenu;
         let classicMenuItems;
@@ -33729,7 +33795,7 @@ ${url}
       },
       [createNavigationMenu, editEntityRecord, registry]
     );
-    const convert = (0, import_element61.useCallback)(
+    const convert = (0, import_element62.useCallback)(
       async (menuId, menuName, postStatus) => {
         if (classicMenuBeingConvertedId === menuId) {
           return;
@@ -33782,17 +33848,17 @@ ${url}
   var import_blocks45 = __toESM(require_blocks());
   var import_core_data35 = __toESM(require_core_data());
   var import_data64 = __toESM(require_data());
-  var import_element63 = __toESM(require_element());
+  var import_element64 = __toESM(require_element());
 
   // packages/block-library/build-module/navigation/edit/use-generate-default-navigation-title.js
   var import_components67 = __toESM(require_components());
   var import_core_data34 = __toESM(require_core_data());
   var import_data63 = __toESM(require_data());
-  var import_element62 = __toESM(require_element());
+  var import_element63 = __toESM(require_element());
   var import_i18n110 = __toESM(require_i18n());
 
   // packages/block-library/build-module/navigation/use-template-part-area-label.js
-  var import_block_editor137 = __toESM(require_block_editor());
+  var import_block_editor138 = __toESM(require_block_editor());
   var import_core_data33 = __toESM(require_core_data());
   var import_data62 = __toESM(require_data());
 
@@ -33820,7 +33886,7 @@ ${url}
         if (!clientId) {
           return;
         }
-        const { getBlock, getBlockParentsByBlockName } = select8(import_block_editor137.store);
+        const { getBlock, getBlockParentsByBlockName } = select8(import_block_editor138.store);
         const withAscendingResults = true;
         const parentTemplatePartClientIds = getBlockParentsByBlockName(
           clientId,
@@ -33872,10 +33938,10 @@ ${url}
     { per_page: -1, status: "publish" }
   ];
   function useGenerateDefaultNavigationTitle(clientId) {
-    const isDisabled = (0, import_element62.useContext)(import_components67.Disabled.Context);
+    const isDisabled = (0, import_element63.useContext)(import_components67.Disabled.Context);
     const area = useTemplatePartAreaLabel(isDisabled ? void 0 : clientId);
     const registry = (0, import_data63.useRegistry)();
-    return (0, import_element62.useCallback)(async () => {
+    return (0, import_element63.useCallback)(async () => {
       if (isDisabled) {
         return "";
       }
@@ -33910,12 +33976,12 @@ ${url}
   var CREATE_NAVIGATION_MENU_PENDING = "pending";
   var CREATE_NAVIGATION_MENU_IDLE = "idle";
   function useCreateNavigationMenu(clientId) {
-    const [status, setStatus] = (0, import_element63.useState)(CREATE_NAVIGATION_MENU_IDLE);
-    const [value, setValue] = (0, import_element63.useState)(null);
-    const [error, setError] = (0, import_element63.useState)(null);
+    const [status, setStatus] = (0, import_element64.useState)(CREATE_NAVIGATION_MENU_IDLE);
+    const [value, setValue] = (0, import_element64.useState)(null);
+    const [error, setError] = (0, import_element64.useState)(null);
     const { saveEntityRecord, editEntityRecord } = (0, import_data64.useDispatch)(import_core_data35.store);
     const generateDefaultTitle = useGenerateDefaultNavigationTitle(clientId);
-    const create5 = (0, import_element63.useCallback)(
+    const create5 = (0, import_element64.useCallback)(
       async (title = null, blocks = [], postStatus) => {
         if (title && typeof title !== "string") {
           setError(
@@ -33982,12 +34048,12 @@ ${url}
 
   // packages/block-library/build-module/navigation/edit/use-inner-blocks.js
   var import_data65 = __toESM(require_data());
-  var import_block_editor138 = __toESM(require_block_editor());
+  var import_block_editor139 = __toESM(require_block_editor());
   var EMPTY_ARRAY2 = [];
   function useInnerBlocks(clientId) {
     return (0, import_data65.useSelect)(
       (select8) => {
-        const { getBlock, getBlocks, hasSelectedInnerBlock } = select8(import_block_editor138.store);
+        const { getBlock, getBlocks, hasSelectedInnerBlock } = select8(import_block_editor139.store);
         const _uncontrolledInnerBlocks = getBlock(clientId).innerBlocks;
         const _hasUncontrolledInnerBlocks = !!_uncontrolledInnerBlocks?.length;
         const _controlledInnerBlocks = _hasUncontrolledInnerBlocks ? EMPTY_ARRAY2 : getBlocks(clientId);
@@ -34110,17 +34176,17 @@ ${url}
 
   // packages/block-library/build-module/navigation/edit/deleted-navigation-warning.js
   var import_jsx_runtime288 = __toESM(require_jsx_runtime());
-  var import_block_editor139 = __toESM(require_block_editor());
+  var import_block_editor140 = __toESM(require_block_editor());
   var import_components69 = __toESM(require_components());
   var import_i18n112 = __toESM(require_i18n());
-  var import_element64 = __toESM(require_element());
+  var import_element65 = __toESM(require_element());
   function DeletedNavigationWarning({ onCreateNew, isNotice = false }) {
-    const [isButtonDisabled, setIsButtonDisabled] = (0, import_element64.useState)(false);
+    const [isButtonDisabled, setIsButtonDisabled] = (0, import_element65.useState)(false);
     const handleButtonClick = () => {
       setIsButtonDisabled(true);
       onCreateNew();
     };
-    const message = (0, import_element64.createInterpolateElement)(
+    const message = (0, import_element65.createInterpolateElement)(
       (0, import_i18n112.__)(
         "Navigation Menu has been deleted or is unavailable. <button>Create a new Menu?</button>"
       ),
@@ -34137,7 +34203,7 @@ ${url}
         )
       }
     );
-    return isNotice ? /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components69.Notice, { status: "warning", isDismissible: false, children: message }) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_block_editor139.Warning, { children: message });
+    return isNotice ? /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components69.Notice, { status: "warning", isDismissible: false, children: message }) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_block_editor140.Warning, { children: message });
   }
   var deleted_navigation_warning_default = DeletedNavigationWarning;
 
@@ -34147,7 +34213,7 @@ ${url}
   var import_components70 = __toESM(require_components());
   var import_data66 = __toESM(require_data());
   var import_i18n113 = __toESM(require_i18n());
-  var import_block_editor140 = __toESM(require_block_editor());
+  var import_block_editor141 = __toESM(require_block_editor());
   var POPOVER_PROPS = {
     className: "block-editor-block-settings-menu__popover",
     placement: "bottom-start"
@@ -34163,7 +34229,7 @@ ${url}
     expand,
     setInsertedBlock
   }) {
-    const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, import_data66.useDispatch)(import_block_editor140.store);
+    const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, import_data66.useDispatch)(import_block_editor141.store);
     const clientId = block.clientId;
     const isDisabled = !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(
       block.name
@@ -34212,15 +34278,15 @@ ${url}
   function LeafMoreMenu(props) {
     const { block } = props;
     const { clientId } = block;
-    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data66.useDispatch)(import_block_editor140.store);
+    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data66.useDispatch)(import_block_editor141.store);
     const removeLabel = (0, import_i18n113.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n113.__)("Remove %s"),
-      (0, import_block_editor140.BlockTitle)({ clientId, maximumLength: 25 })
+      (0, import_block_editor141.BlockTitle)({ clientId, maximumLength: 25 })
     );
     const rootClientId = (0, import_data66.useSelect)(
       (select8) => {
-        const { getBlockRootClientId } = select8(import_block_editor140.store);
+        const { getBlockRootClientId } = select8(import_block_editor141.store);
         return getBlockRootClientId(clientId);
       },
       [clientId]
@@ -34411,66 +34477,6 @@ ${url}
       // Return the computed attributes object
     };
   };
-
-  // packages/block-library/build-module/navigation-link/shared/use-entity-binding.js
-  var import_element65 = __toESM(require_element());
-  var import_block_editor141 = __toESM(require_block_editor());
-  function buildNavigationLinkEntityBinding(kind) {
-    if (kind === void 0) {
-      throw new Error(
-        'buildNavigationLinkEntityBinding requires a kind parameter. Only "post-type" and "taxonomy" are supported.'
-      );
-    }
-    if (kind !== "post-type" && kind !== "taxonomy") {
-      throw new Error(
-        `Invalid kind "${kind}" provided to buildNavigationLinkEntityBinding. Only 'post-type' and 'taxonomy' are supported.`
-      );
-    }
-    const source = kind === "taxonomy" ? "core/term-data" : "core/post-data";
-    return {
-      url: {
-        source,
-        args: {
-          field: "link"
-        }
-      }
-    };
-  }
-  function useEntityBinding({ clientId, attributes: attributes3 }) {
-    const { updateBlockBindings } = (0, import_block_editor141.useBlockBindingsUtils)(clientId);
-    const { metadata, id, kind } = attributes3;
-    const hasUrlBinding = !!metadata?.bindings?.url && !!id;
-    const expectedSource = kind === "post-type" ? "core/post-data" : "core/term-data";
-    const hasCorrectBinding = hasUrlBinding && metadata?.bindings?.url?.source === expectedSource;
-    const clearBinding = (0, import_element65.useCallback)(() => {
-      if (hasUrlBinding) {
-        updateBlockBindings({ url: void 0 });
-      }
-    }, [updateBlockBindings, hasUrlBinding]);
-    const createBinding = (0, import_element65.useCallback)(
-      (updatedAttributes) => {
-        const kindToUse = updatedAttributes?.kind ?? kind;
-        if (!kindToUse) {
-          return;
-        }
-        try {
-          const binding = buildNavigationLinkEntityBinding(kindToUse);
-          updateBlockBindings(binding);
-        } catch (error) {
-          console.warn(
-            "Failed to create entity binding:",
-            error.message
-          );
-        }
-      },
-      [updateBlockBindings, kind, id]
-    );
-    return {
-      hasUrlBinding: hasCorrectBinding,
-      clearBinding,
-      createBinding
-    };
-  }
 
   // packages/block-library/build-module/navigation-link/shared/controls.js
   function getEntityTypeName(type, kind) {
