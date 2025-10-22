@@ -60644,7 +60644,9 @@ var wp;
     clientId,
     fitText = false,
     setAttributes,
-    name
+    name,
+    fontSize,
+    style
   }) {
     if (!(0, import_blocks104.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return null;
@@ -60663,7 +60665,25 @@ var wp;
             __nextHasNoMarginBottom: true,
             label: (0, import_i18n203.__)("Fit text"),
             checked: fitText,
-            onChange: () => setAttributes({ fitText: !fitText || void 0 }),
+            onChange: () => {
+              const newFitText = !fitText || void 0;
+              const updates = { fitText: newFitText };
+              if (newFitText) {
+                if (fontSize) {
+                  updates.fontSize = void 0;
+                }
+                if (style?.typography?.fontSize) {
+                  updates.style = {
+                    ...style,
+                    typography: {
+                      ...style?.typography,
+                      fontSize: void 0
+                    }
+                  };
+                }
+              }
+              setAttributes(updates);
+            },
             help: fitText ? (0, import_i18n203.__)("Text will resize to fit its container.") : (0, import_i18n203.__)("Resize text to fit its container.")
           }
         )
@@ -60704,7 +60724,7 @@ var wp;
   var fit_text_default = {
     useBlockProps: useBlockProps11,
     addSaveProps: addSaveProps8,
-    attributeKeys: ["fitText"],
+    attributeKeys: ["fitText", "fontSize", "style"],
     hasSupport: hasFitTextSupport,
     edit: FitTextControl
   };
@@ -60788,17 +60808,24 @@ var wp;
   }
   function TypographyPanel2({ clientId, name, setAttributes, settings: settings2 }) {
     function selector3(select3) {
-      const { style: style2, fontFamily: fontFamily2, fontSize: fontSize2 } = select3(store).getBlockAttributes(clientId) || {};
-      return { style: style2, fontFamily: fontFamily2, fontSize: fontSize2 };
+      const { style: style2, fontFamily: fontFamily2, fontSize: fontSize2, fitText: fitText2 } = select3(store).getBlockAttributes(clientId) || {};
+      return { style: style2, fontFamily: fontFamily2, fontSize: fontSize2, fitText: fitText2 };
     }
-    const { style, fontFamily, fontSize } = (0, import_data172.useSelect)(selector3, [clientId]);
+    const { style, fontFamily, fontSize, fitText } = (0, import_data172.useSelect)(selector3, [
+      clientId
+    ]);
     const isEnabled = useHasTypographyPanel(settings2);
     const value = (0, import_element218.useMemo)(
       () => attributesToStyle3({ style, fontFamily, fontSize }),
       [style, fontSize, fontFamily]
     );
     const onChange = (newStyle) => {
-      setAttributes(styleToAttributes3(newStyle));
+      const newAttributes = styleToAttributes3(newStyle);
+      const hasFontSize = newAttributes.fontSize || newAttributes.style?.typography?.fontSize;
+      if (hasFontSize && fitText) {
+        newAttributes.fitText = void 0;
+      }
+      setAttributes(newAttributes);
     };
     if (!isEnabled) {
       return null;
