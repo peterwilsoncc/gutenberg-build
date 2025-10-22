@@ -26844,18 +26844,27 @@ var wp;
     if (!variation) {
       return examples;
     }
-    return examples.map((example) => ({
-      ...example,
-      variation,
-      blocks: {
-        ...example.blocks,
-        attributes: {
-          ...example.blocks.attributes,
-          style: void 0,
-          className: getVariationClassName(variation)
+    return examples.map((example) => {
+      return {
+        ...example,
+        variation,
+        blocks: Array.isArray(example.blocks) ? example.blocks.map((block) => ({
+          ...block,
+          attributes: {
+            ...block.attributes,
+            style: void 0,
+            className: getVariationClassName(variation)
+          }
+        })) : {
+          ...example.blocks,
+          attributes: {
+            ...example.blocks.attributes,
+            style: void 0,
+            className: getVariationClassName(variation)
+          }
         }
-      }
-    }));
+      };
+    });
   }
   function StyleBook({
     enableResizing = true,
