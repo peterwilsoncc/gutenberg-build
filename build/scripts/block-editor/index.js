@@ -56138,9 +56138,10 @@ var wp;
     const instanceId = (0, import_compose85.useInstanceId)(RichTextWrapper);
     const anchorRef = (0, import_element195.useRef)();
     const context = useBlockEditContext();
-    const { clientId, isSelected: isBlockSelected2, name: blockName } = context;
+    const { clientId, isSelected: isBlockSelected2 } = context;
     const blockBindings = context[blockBindingsKey];
     const blockContext = (0, import_element195.useContext)(block_context_default);
+    const { bindableAttributes } = (0, import_element195.useContext)(PrivateBlockContext);
     const registry = (0, import_data151.useRegistry)();
     const selector3 = (select3) => {
       if (!isBlockSelected2) {
@@ -56171,8 +56172,7 @@ var wp;
     ]);
     const { disableBoundBlock, bindingsPlaceholder, bindingsLabel } = (0, import_data151.useSelect)(
       (select3) => {
-        const { __experimentalBlockBindingsSupportedAttributes } = select3(store).getSettings();
-        if (!blockBindings?.[identifier2] || !(blockName in __experimentalBlockBindingsSupportedAttributes)) {
+        if (!blockBindings?.[identifier2] || !bindableAttributes) {
           return {};
         }
         const relatedBinding = blockBindings[identifier2];
@@ -56230,7 +56230,7 @@ var wp;
       [
         blockBindings,
         identifier2,
-        blockName,
+        bindableAttributes,
         adjustedValue,
         clientId,
         blockContext
