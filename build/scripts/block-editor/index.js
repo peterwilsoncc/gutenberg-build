@@ -60701,7 +60701,9 @@ var wp;
               }
               setAttributes(updates);
             },
-            help: fitText ? (0, import_i18n203.__)("Text will resize to fit its container.") : (0, import_i18n203.__)("Resize text to fit its container.")
+            help: fitText ? (0, import_i18n203.__)("Text will resize to fit its container.") : (0, import_i18n203.__)(
+              "The text will resize to fit its container, resetting other font size settings."
+            )
           }
         )
       }
