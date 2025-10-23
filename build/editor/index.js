@@ -7260,7 +7260,7 @@ var wp;
   var import_components17 = __toESM(require_components());
   var trashPost2 = {
     id: "move-to-trash",
-    label: (0, import_i18n42.__)("Move to trash"),
+    label: (0, import_i18n42.__)("Trash"),
     isPrimary: true,
     icon: trash_default,
     isEligible(item) {
