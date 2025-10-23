@@ -41539,14 +41539,14 @@ ${url}
       [name114, attributes3]
     );
     const blockEditingMode = (0, import_block_editor172.useBlockEditingMode)();
-    let postDate = /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("time", { dateTime: (0, import_date3.dateI18n)("c", datetime), ref: setPopoverAnchor, children: format3 === "human-diff" ? (0, import_date3.humanTimeDiff)(datetime) : (0, import_date3.dateI18n)(format3 || siteFormat, datetime) });
+    let postDate2 = /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("time", { dateTime: (0, import_date3.dateI18n)("c", datetime), ref: setPopoverAnchor, children: format3 === "human-diff" ? (0, import_date3.humanTimeDiff)(datetime) : (0, import_date3.dateI18n)(format3 || siteFormat, datetime) });
     if (isLink && datetime) {
-      postDate = /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
+      postDate2 = /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
         "a",
         {
           href: "#post-date-pseudo-link",
           onClick: (event) => event.preventDefault(),
-          children: postDate
+          children: postDate2
         }
       );
     }
@@ -41663,7 +41663,7 @@ ${url}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", { ...blockProps, children: postDate })
+      /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", { ...blockProps, children: postDate2 })
     ] });
   }
   function is12HourFormat(format3) {
@@ -43555,7 +43555,19 @@ ${url}
   var import_core_data54 = __toESM(require_core_data());
   var TEMPLATE11 = [
     ["core/post-title"],
-    ["core/post-date"],
+    [
+      "core/post-date",
+      {
+        metadata: {
+          bindings: {
+            datetime: {
+              source: "core/post-data",
+              args: { field: "date" }
+            }
+          }
+        }
+      }
+    ],
     ["core/post-excerpt"]
   ];
   function PostTemplateInnerBlocks({ classList }) {
@@ -47650,6 +47662,19 @@ ${url}
   var imageDateTitle = /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components114.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components114.Path, { d: "M7 9h34v6H7V9zm12 8H7v1h12v-1zm18 3H7v1h30v-1zm0 18H7v1h30v-1zM7 35h12v1H7v-1zm34-8H7v6h34v-6z" }) });
 
   // packages/block-library/build-module/query/variations.js
+  var postDate = [
+    "core/post-date",
+    {
+      metadata: {
+        bindings: {
+          datetime: {
+            source: "core/post-data",
+            args: { field: "date" }
+          }
+        }
+      }
+    }
+  ];
   var variations12 = [
     {
       name: "title-date",
@@ -47657,11 +47682,7 @@ ${url}
       icon: titleDate,
       attributes: {},
       innerBlocks: [
-        [
-          "core/post-template",
-          {},
-          [["core/post-title"], ["core/post-date"]]
-        ],
+        ["core/post-template", {}, [["core/post-title"], postDate]],
         ["core/query-pagination"],
         ["core/query-no-results"]
       ],
@@ -47692,11 +47713,7 @@ ${url}
         [
           "core/post-template",
           {},
-          [
-            ["core/post-title"],
-            ["core/post-date"],
-            ["core/post-excerpt"]
-          ]
+          [["core/post-title"], postDate, ["core/post-excerpt"]]
         ],
         ["core/query-pagination"],
         ["core/query-no-results"]
@@ -47714,7 +47731,7 @@ ${url}
           {},
           [
             ["core/post-featured-image"],
-            ["core/post-date"],
+            postDate,
             ["core/post-title"]
           ]
         ],
@@ -48203,7 +48220,17 @@ ${url}
               name: "core/post-title"
             },
             {
-              name: "core/post-date"
+              name: "core/post-date",
+              attributes: {
+                metadata: {
+                  bindings: {
+                    datetime: {
+                      source: "core/post-data",
+                      args: { field: "date" }
+                    }
+                  }
+                }
+              }
             },
             {
               name: "core/post-excerpt"
