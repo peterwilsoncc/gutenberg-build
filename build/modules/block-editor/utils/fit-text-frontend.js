@@ -2,9 +2,10 @@
 function generateCSSRule(elementSelector, fontSize) {
   return `${elementSelector} { font-size: ${fontSize}px !important; }`;
 }
-function findOptimalFontSize(textElement, elementSelector, applyStylesFn, maxSize = 600) {
+function findOptimalFontSize(textElement, elementSelector, applyStylesFn) {
   const alreadyHasScrollableHeight = textElement.scrollHeight > textElement.clientHeight;
   let minSize = 5;
+  let maxSize = 600;
   let bestSize = minSize;
   while (minSize <= maxSize) {
     const midSize = Math.floor((minSize + maxSize) / 2);
@@ -20,7 +21,7 @@ function findOptimalFontSize(textElement, elementSelector, applyStylesFn, maxSiz
   }
   return bestSize;
 }
-function optimizeFitText(textElement, elementSelector, applyStylesFn, maxSize) {
+function optimizeFitText(textElement, elementSelector, applyStylesFn) {
   if (!textElement) {
     return;
   }
@@ -28,8 +29,7 @@ function optimizeFitText(textElement, elementSelector, applyStylesFn, maxSize) {
   const optimalSize = findOptimalFontSize(
     textElement,
     elementSelector,
-    applyStylesFn,
-    maxSize
+    applyStylesFn
   );
   const cssRule = generateCSSRule(elementSelector, optimalSize);
   applyStylesFn(cssRule);
