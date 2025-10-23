@@ -1119,6 +1119,7 @@ var wp;
           target: name2,
           scope,
           icon,
+          identifier,
           children: title
         }
       ),
