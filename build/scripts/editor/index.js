@@ -9706,6 +9706,7 @@ var wp;
           target: name,
           scope,
           icon,
+          identifier,
           children: title
         }
       ),
