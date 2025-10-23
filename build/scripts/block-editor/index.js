@@ -10339,7 +10339,7 @@ var wp;
     isBlockHidden: () => isBlockHidden,
     isBlockInterfaceHidden: () => isBlockInterfaceHidden2,
     isBlockSubtreeDisabled: () => isBlockSubtreeDisabled,
-    isContainerInsertableToInWriteMode: () => isContainerInsertableToInWriteMode,
+    isContainerInsertableToInContentOnlyMode: () => isContainerInsertableToInContentOnlyMode,
     isDragging: () => isDragging2,
     isSectionBlock: () => isSectionBlock,
     isZoomOut: () => isZoomOut
@@ -10517,7 +10517,7 @@ var wp;
     };
     return getBlockOrder(state, clientId).every(isChildSubtreeDisabled);
   };
-  function isContainerInsertableToInWriteMode(state, blockName, rootClientId) {
+  function isContainerInsertableToInContentOnlyMode(state, blockName, rootClientId) {
     const isBlockContentBlock = isContentBlock2(blockName);
     const rootBlockName = getBlockName(state, rootClientId);
     const isContainerContentBlock = isContentBlock2(rootBlockName);
@@ -10971,7 +10971,8 @@ var wp;
       state.settings.allowedBlockTypes,
       state.settings.templateLock,
       getBlockEditingMode(state, rootClientId),
-      getSectionRootClientId(state)
+      getSectionRootClientId(state),
+      isSectionBlock(state, rootClientId)
     ];
   };
 
@@ -11693,13 +11694,7 @@ var wp;
     } else {
       blockType = (0, import_blocks5.getBlockType)(blockName);
     }
-    const isLocked = !!getTemplateLock(state, rootClientId);
-    if (isLocked) {
-      return false;
-    }
-    const isContentRoleBlock = isContentBlock3(blockName);
-    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
-    if (isParentSectionBlock && !isContentRoleBlock) {
+    if (getTemplateLock(state, rootClientId)) {
       return false;
     }
     const blockEditingMode = getBlockEditingMode(state, rootClientId ?? "");
@@ -11710,7 +11705,20 @@ var wp;
     if (rootClientId && parentBlockListSettings === void 0) {
       return false;
     }
-    if (blockEditingMode === "contentOnly" && !isContainerInsertableToInWriteMode(state, blockName, rootClientId)) {
+    const isContentRoleBlock = isContentBlock3(blockName);
+    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
+    const isBlockWithinSection = !!getParentSectionBlock(
+      state,
+      rootClientId
+    );
+    if ((isParentSectionBlock || isBlockWithinSection) && !isContentRoleBlock) {
+      return false;
+    }
+    if ((isParentSectionBlock || blockEditingMode === "contentOnly") && !isContainerInsertableToInContentOnlyMode(
+      state,
+      blockName,
+      rootClientId
+    )) {
       return false;
     }
     const parentName = getBlockName(state, rootClientId);
@@ -11800,15 +11808,16 @@ var wp;
     if (isBlockWithinSection && !isContentRoleBlock) {
       return false;
     }
-    const blockEditingMode = getBlockEditingMode(state, rootClientId);
-    if (blockEditingMode === "contentOnly" && !isContainerInsertableToInWriteMode(
+    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
+    const rootBlockEditingMode = getBlockEditingMode(state, rootClientId);
+    if ((isParentSectionBlock || rootBlockEditingMode === "contentOnly") && !isContainerInsertableToInContentOnlyMode(
       state,
-      getBlockName(state, rootClientId),
+      getBlockName(state, clientId),
       rootClientId
     )) {
       return false;
     }
-    return blockEditingMode !== "disabled";
+    return rootBlockEditingMode !== "disabled";
   }
   function canRemoveBlocks(state, clientIds) {
     return clientIds.every((clientId) => canRemoveBlock(state, clientId));
@@ -11822,7 +11831,24 @@ var wp;
       return !attributes.lock.move;
     }
     const rootClientId = getBlockRootClientId(state, clientId);
-    if (getTemplateLock(state, rootClientId) === "all") {
+    const templateLock = getTemplateLock(state, rootClientId);
+    if (templateLock === "all" || templateLock === "contentOnly") {
+      return false;
+    }
+    const isBlockWithinSection = !!getParentSectionBlock(state, clientId);
+    const isContentRoleBlock = isContentBlock3(
+      getBlockName(state, clientId)
+    );
+    if (isBlockWithinSection && !isContentRoleBlock) {
+      return false;
+    }
+    const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
+    const rootBlockEditingMode = getBlockEditingMode(state, rootClientId);
+    if ((isParentSectionBlock || rootBlockEditingMode === "contentOnly") && !isContainerInsertableToInContentOnlyMode(
+      state,
+      getBlockName(state, clientId),
+      rootClientId
+    )) {
       return false;
     }
     return getBlockEditingMode(state, rootClientId) !== "disabled";
@@ -32051,7 +32077,7 @@ var wp;
           getTemplateLock: getTemplateLock2,
           getBlockEditingMode: getBlockEditingMode2,
           isSectionBlock: isSectionBlock2,
-          isContainerInsertableToInWriteMode: isContainerInsertableToInWriteMode2,
+          isContainerInsertableToInContentOnlyMode: isContainerInsertableToInContentOnlyMode2,
           getBlockName: getBlockName2,
           isZoomOut: _isZoomOut,
           canInsertBlockType: canInsertBlockType2
@@ -32076,7 +32102,7 @@ var wp;
           selectedBlocks: selectedBlockClientIds,
           visibleBlocks: __unstableGetVisibleBlocks2(),
           isZoomOut: _isZoomOut(),
-          shouldRenderAppender: (!isSectionBlock2(rootClientId) || isContainerInsertableToInWriteMode2(
+          shouldRenderAppender: (!isSectionBlock2(rootClientId) || isContainerInsertableToInContentOnlyMode2(
             getBlockName2(selectedBlockClientId),
             rootClientId
           )) && getBlockEditingMode2(rootClientId) !== "disabled" && !getTemplateLock2(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || hasSelectedRoot || showRootAppender)

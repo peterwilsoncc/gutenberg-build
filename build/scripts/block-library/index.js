@@ -24203,7 +24203,8 @@ ${url}
     textdomain: "default",
     attributes: {
       label: {
-        type: "string"
+        type: "string",
+        role: "content"
       }
     },
     usesContext: [
