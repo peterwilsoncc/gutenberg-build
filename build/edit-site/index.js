@@ -46696,6 +46696,7 @@ If there's a particular need for this, please submit a feature request at https:
   var activeField = {
     label: (0, import_i18n145.__)("Status"),
     id: "active",
+    type: "boolean",
     getValue: ({ item }) => item._isActive,
     render: function Render({ item }) {
       if (item._isCustom) {
