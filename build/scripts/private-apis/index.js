@@ -51,7 +51,8 @@ var wp;
     "@wordpress/dataviews",
     "@wordpress/fields",
     "@wordpress/media-utils",
-    "@wordpress/upload-media"
+    "@wordpress/upload-media",
+    "@wordpress/global-styles-ui"
   ];
   var registeredPrivateApis = [];
   var requiredConsent = "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.";

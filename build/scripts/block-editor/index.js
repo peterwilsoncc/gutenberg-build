@@ -36963,9 +36963,6 @@ var wp;
     TypographyPanel: () => TypographyPanel,
     areGlobalStyleConfigsEqual: () => areGlobalStyleConfigsEqual,
     getGlobalStylesChanges: () => getGlobalStylesChanges,
-    useGlobalSetting: () => useGlobalSetting,
-    useGlobalStyle: () => useGlobalStyle,
-    useGlobalStylesReset: () => useGlobalStylesReset,
     useHasBackgroundPanel: () => useHasBackgroundPanel,
     useHasBorderPanel: () => useHasBorderPanel,
     useHasBorderPanelControls: () => useHasBorderPanelControls,
@@ -36978,11 +36975,241 @@ var wp;
   });
 
   // packages/block-editor/build-module/components/global-styles/hooks.js
-  var import_es64 = __toESM(require_es6());
-  var import_element118 = __toESM(require_element());
-  var import_data108 = __toESM(require_data());
-  var import_blocks67 = __toESM(require_blocks());
+  var import_element117 = __toESM(require_element());
+  var import_data107 = __toESM(require_data());
+  var import_blocks66 = __toESM(require_blocks());
   var import_i18n94 = __toESM(require_i18n());
+  function useSettingsForBlockElement(parentSettings, blockName, element) {
+    const { supportedStyles, supports } = (0, import_data107.useSelect)(
+      (select3) => {
+        return {
+          supportedStyles: unlock(
+            select3(import_blocks66.store)
+          ).getSupportedStyles(blockName, element),
+          supports: select3(import_blocks66.store).getBlockType(blockName)?.supports
+        };
+      },
+      [blockName, element]
+    );
+    return (0, import_element117.useMemo)(() => {
+      const updatedSettings = { ...parentSettings };
+      if (!supportedStyles.includes("fontSize")) {
+        updatedSettings.typography = {
+          ...updatedSettings.typography,
+          fontSizes: {},
+          customFontSize: false,
+          defaultFontSizes: false
+        };
+      }
+      if (!supportedStyles.includes("fontFamily")) {
+        updatedSettings.typography = {
+          ...updatedSettings.typography,
+          fontFamilies: {}
+        };
+      }
+      updatedSettings.color = {
+        ...updatedSettings.color,
+        text: updatedSettings.color?.text && supportedStyles.includes("color"),
+        background: updatedSettings.color?.background && (supportedStyles.includes("background") || supportedStyles.includes("backgroundColor")),
+        button: updatedSettings.color?.button && supportedStyles.includes("buttonColor"),
+        heading: updatedSettings.color?.heading && supportedStyles.includes("headingColor"),
+        link: updatedSettings.color?.link && supportedStyles.includes("linkColor"),
+        caption: updatedSettings.color?.caption && supportedStyles.includes("captionColor")
+      };
+      if (!supportedStyles.includes("background")) {
+        updatedSettings.color.gradients = [];
+        updatedSettings.color.customGradient = false;
+      }
+      if (!supportedStyles.includes("filter")) {
+        updatedSettings.color.defaultDuotone = false;
+        updatedSettings.color.customDuotone = false;
+      }
+      [
+        "lineHeight",
+        "fontStyle",
+        "fontWeight",
+        "letterSpacing",
+        "textAlign",
+        "textTransform",
+        "textDecoration",
+        "writingMode"
+      ].forEach((key) => {
+        if (!supportedStyles.includes(key)) {
+          updatedSettings.typography = {
+            ...updatedSettings.typography,
+            [key]: false
+          };
+        }
+      });
+      if (!supportedStyles.includes("columnCount")) {
+        updatedSettings.typography = {
+          ...updatedSettings.typography,
+          textColumns: false
+        };
+      }
+      ["contentSize", "wideSize"].forEach((key) => {
+        if (!supportedStyles.includes(key)) {
+          updatedSettings.layout = {
+            ...updatedSettings.layout,
+            [key]: false
+          };
+        }
+      });
+      ["padding", "margin", "blockGap"].forEach((key) => {
+        if (!supportedStyles.includes(key)) {
+          updatedSettings.spacing = {
+            ...updatedSettings.spacing,
+            [key]: false
+          };
+        }
+        const sides = Array.isArray(supports?.spacing?.[key]) ? supports?.spacing?.[key] : supports?.spacing?.[key]?.sides;
+        if (sides?.length && updatedSettings.spacing?.[key]) {
+          updatedSettings.spacing = {
+            ...updatedSettings.spacing,
+            [key]: {
+              ...updatedSettings.spacing?.[key],
+              sides
+            }
+          };
+        }
+      });
+      ["aspectRatio", "minHeight"].forEach((key) => {
+        if (!supportedStyles.includes(key)) {
+          updatedSettings.dimensions = {
+            ...updatedSettings.dimensions,
+            [key]: false
+          };
+        }
+      });
+      ["radius", "color", "style", "width"].forEach((key) => {
+        if (!supportedStyles.includes(
+          "border" + key.charAt(0).toUpperCase() + key.slice(1)
+        )) {
+          updatedSettings.border = {
+            ...updatedSettings.border,
+            [key]: false
+          };
+        }
+      });
+      ["backgroundImage", "backgroundSize"].forEach((key) => {
+        if (!supportedStyles.includes(key)) {
+          updatedSettings.background = {
+            ...updatedSettings.background,
+            [key]: false
+          };
+        }
+      });
+      updatedSettings.shadow = supportedStyles.includes("shadow") ? updatedSettings.shadow : false;
+      if (element) {
+        updatedSettings.typography.textAlign = false;
+      }
+      return updatedSettings;
+    }, [parentSettings, supportedStyles, supports, element]);
+  }
+  function useColorsPerOrigin(settings2) {
+    const customColors = settings2?.color?.palette?.custom;
+    const themeColors = settings2?.color?.palette?.theme;
+    const defaultColors = settings2?.color?.palette?.default;
+    const shouldDisplayDefaultColors = settings2?.color?.defaultPalette;
+    return (0, import_element117.useMemo)(() => {
+      const result = [];
+      if (themeColors && themeColors.length) {
+        result.push({
+          name: (0, import_i18n94._x)(
+            "Theme",
+            "Indicates this palette comes from the theme."
+          ),
+          colors: themeColors
+        });
+      }
+      if (shouldDisplayDefaultColors && defaultColors && defaultColors.length) {
+        result.push({
+          name: (0, import_i18n94._x)(
+            "Default",
+            "Indicates this palette comes from WordPress."
+          ),
+          colors: defaultColors
+        });
+      }
+      if (customColors && customColors.length) {
+        result.push({
+          name: (0, import_i18n94._x)(
+            "Custom",
+            "Indicates this palette is created by the user."
+          ),
+          colors: customColors
+        });
+      }
+      return result;
+    }, [
+      customColors,
+      themeColors,
+      defaultColors,
+      shouldDisplayDefaultColors
+    ]);
+  }
+  function useGradientsPerOrigin(settings2) {
+    const customGradients = settings2?.color?.gradients?.custom;
+    const themeGradients = settings2?.color?.gradients?.theme;
+    const defaultGradients = settings2?.color?.gradients?.default;
+    const shouldDisplayDefaultGradients = settings2?.color?.defaultGradients;
+    return (0, import_element117.useMemo)(() => {
+      const result = [];
+      if (themeGradients && themeGradients.length) {
+        result.push({
+          name: (0, import_i18n94._x)(
+            "Theme",
+            "Indicates this palette comes from the theme."
+          ),
+          gradients: themeGradients
+        });
+      }
+      if (shouldDisplayDefaultGradients && defaultGradients && defaultGradients.length) {
+        result.push({
+          name: (0, import_i18n94._x)(
+            "Default",
+            "Indicates this palette comes from WordPress."
+          ),
+          gradients: defaultGradients
+        });
+      }
+      if (customGradients && customGradients.length) {
+        result.push({
+          name: (0, import_i18n94._x)(
+            "Custom",
+            "Indicates this palette is created by the user."
+          ),
+          gradients: customGradients
+        });
+      }
+      return result;
+    }, [
+      customGradients,
+      themeGradients,
+      defaultGradients,
+      shouldDisplayDefaultGradients
+    ]);
+  }
+
+  // packages/block-editor/build-module/components/global-styles/context.js
+  var import_element118 = __toESM(require_element());
+  var DEFAULT_GLOBAL_STYLES_CONTEXT = {
+    user: {},
+    base: {},
+    merged: {},
+    setUserConfig: () => {
+    }
+  };
+  var GlobalStylesContext = (0, import_element118.createContext)(
+    DEFAULT_GLOBAL_STYLES_CONTEXT
+  );
+  GlobalStylesContext.displayName = "GlobalStylesContext";
+
+  // packages/block-editor/build-module/components/global-styles/typography-panel.js
+  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
+  var import_components114 = __toESM(require_components());
+  var import_i18n106 = __toESM(require_i18n());
+  var import_element121 = __toESM(require_element());
 
   // packages/global-styles-engine/build-module/utils/object.js
   function setImmutably2(object, path, value) {
@@ -37005,91 +37232,6 @@ var wp;
     });
     return value ?? defaultValue;
   };
-
-  // packages/global-styles-engine/build-module/settings/get-setting.js
-  var VALID_SETTINGS = [
-    "appearanceTools",
-    "useRootPaddingAwareAlignments",
-    "background.backgroundImage",
-    "background.backgroundRepeat",
-    "background.backgroundSize",
-    "background.backgroundPosition",
-    "border.color",
-    "border.radius",
-    "border.radiusSizes",
-    "border.style",
-    "border.width",
-    "shadow.presets",
-    "shadow.defaultPresets",
-    "color.background",
-    "color.button",
-    "color.caption",
-    "color.custom",
-    "color.customDuotone",
-    "color.customGradient",
-    "color.defaultDuotone",
-    "color.defaultGradients",
-    "color.defaultPalette",
-    "color.duotone",
-    "color.gradients",
-    "color.heading",
-    "color.link",
-    "color.palette",
-    "color.text",
-    "custom",
-    "dimensions.aspectRatio",
-    "dimensions.minHeight",
-    "layout.contentSize",
-    "layout.definitions",
-    "layout.wideSize",
-    "lightbox.enabled",
-    "lightbox.allowEditing",
-    "position.fixed",
-    "position.sticky",
-    "spacing.customSpacingSize",
-    "spacing.defaultSpacingSizes",
-    "spacing.spacingSizes",
-    "spacing.spacingScale",
-    "spacing.blockGap",
-    "spacing.margin",
-    "spacing.padding",
-    "spacing.units",
-    "typography.fluid",
-    "typography.customFontSize",
-    "typography.defaultFontSizes",
-    "typography.dropCap",
-    "typography.fontFamilies",
-    "typography.fontSizes",
-    "typography.fontStyle",
-    "typography.fontWeight",
-    "typography.letterSpacing",
-    "typography.lineHeight",
-    "typography.textAlign",
-    "typography.textColumns",
-    "typography.textDecoration",
-    "typography.textTransform",
-    "typography.writingMode"
-  ];
-  function getSetting(globalStyles, path, blockName) {
-    const appendedBlockPath = blockName ? ".blocks." + blockName : "";
-    const appendedPropertyPath = path ? "." + path : "";
-    const contextualPath = `settings${appendedBlockPath}${appendedPropertyPath}`;
-    const globalPath = `settings${appendedPropertyPath}`;
-    if (path) {
-      return getValueFromObjectPath2(globalStyles, contextualPath) ?? getValueFromObjectPath2(globalStyles, globalPath);
-    }
-    let result = {};
-    VALID_SETTINGS.forEach((setting) => {
-      const value = getValueFromObjectPath2(
-        globalStyles,
-        `settings${appendedBlockPath}.${setting}`
-      ) ?? getValueFromObjectPath2(globalStyles, `settings.${setting}`);
-      if (value !== void 0) {
-        result = setImmutably2(result, setting.split("."), value);
-      }
-    });
-    return result;
-  }
 
   // packages/global-styles-engine/build-module/utils/common.js
   var import_style_engine2 = __toESM(require_style_engine());
@@ -37353,53 +37495,6 @@ var wp;
       classes: []
     }
   ];
-  var STYLE_PATH_TO_CSS_VAR_INFIX = {
-    "color.background": "color",
-    "color.text": "color",
-    "filter.duotone": "duotone",
-    "elements.link.color.text": "color",
-    "elements.link.:hover.color.text": "color",
-    "elements.link.typography.fontFamily": "font-family",
-    "elements.link.typography.fontSize": "font-size",
-    "elements.button.color.text": "color",
-    "elements.button.color.background": "color",
-    "elements.caption.color.text": "color",
-    "elements.button.typography.fontFamily": "font-family",
-    "elements.button.typography.fontSize": "font-size",
-    "elements.heading.color": "color",
-    "elements.heading.color.background": "color",
-    "elements.heading.typography.fontFamily": "font-family",
-    "elements.heading.gradient": "gradient",
-    "elements.heading.color.gradient": "gradient",
-    "elements.h1.color": "color",
-    "elements.h1.color.background": "color",
-    "elements.h1.typography.fontFamily": "font-family",
-    "elements.h1.color.gradient": "gradient",
-    "elements.h2.color": "color",
-    "elements.h2.color.background": "color",
-    "elements.h2.typography.fontFamily": "font-family",
-    "elements.h2.color.gradient": "gradient",
-    "elements.h3.color": "color",
-    "elements.h3.color.background": "color",
-    "elements.h3.typography.fontFamily": "font-family",
-    "elements.h3.color.gradient": "gradient",
-    "elements.h4.color": "color",
-    "elements.h4.color.background": "color",
-    "elements.h4.typography.fontFamily": "font-family",
-    "elements.h4.color.gradient": "gradient",
-    "elements.h5.color": "color",
-    "elements.h5.color.background": "color",
-    "elements.h5.typography.fontFamily": "font-family",
-    "elements.h5.color.gradient": "gradient",
-    "elements.h6.color": "color",
-    "elements.h6.color.background": "color",
-    "elements.h6.typography.fontFamily": "font-family",
-    "elements.h6.color.gradient": "gradient",
-    "color.gradient": "gradient",
-    shadow: "shadow",
-    "typography.fontSize": "font-size",
-    "typography.fontFamily": "font-family"
-  };
   function scopeSelector2(scope, selector3) {
     if (!scope || !selector3) {
       return selector3;
@@ -37620,47 +37715,11 @@ var wp;
     }
     return variable;
   }
-  function getPresetVariableFromValue(features, blockName, variableStylePath, presetPropertyValue) {
-    if (!presetPropertyValue) {
-      return presetPropertyValue;
-    }
-    const cssVarInfix = STYLE_PATH_TO_CSS_VAR_INFIX[variableStylePath];
-    const metadata = PRESET_METADATA.find(
-      (data) => data.cssVarInfix === cssVarInfix
-    );
-    if (!metadata) {
-      return presetPropertyValue;
-    }
-    const { valueKey, path } = metadata;
-    const presetObject = findInPresetsBy(
-      features,
-      blockName,
-      path,
-      valueKey,
-      presetPropertyValue
-    );
-    if (!presetObject) {
-      return presetPropertyValue;
-    }
-    return `var:preset|${cssVarInfix}|${presetObject.slug}`;
-  }
-
-  // packages/global-styles-engine/build-module/settings/get-style.js
-  function getStyle(globalStyles, path, blockName, shouldDecodeEncode = true) {
-    const appendedPath = path ? "." + path : "";
-    const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
-    if (!globalStyles) {
-      return void 0;
-    }
-    const rawResult = getValueFromObjectPath2(globalStyles, finalPath);
-    const result = shouldDecodeEncode ? getValueFromVariable(globalStyles, blockName, rawResult) : rawResult;
-    return result;
-  }
 
   // packages/global-styles-engine/build-module/core/render.js
-  var import_blocks66 = __toESM(require_blocks());
+  var import_blocks67 = __toESM(require_blocks());
   var import_style_engine3 = __toESM(require_style_engine());
-  var import_data107 = __toESM(require_data());
+  var import_data108 = __toESM(require_data());
 
   // packages/global-styles-engine/build-module/core/selectors.js
   function getBlockSelector(blockType, target = "root", options = {}) {
@@ -38057,7 +38116,7 @@ var wp;
   function getStylesDeclarations(blockStyles = {}, selector3 = "", useRootPaddingAlign, tree = {}, disableRootPadding = false) {
     const isRoot = ROOT_BLOCK_SELECTOR === selector3;
     const output = Object.entries(
-      import_blocks66.__EXPERIMENTAL_STYLE_PROPERTY
+      import_blocks67.__EXPERIMENTAL_STYLE_PROPERTY
     ).reduce(
       (declarations, [key, { value, properties, useEngine, rootOnly }]) => {
         if (rootOnly && !isRoot) {
@@ -38262,7 +38321,7 @@ var wp;
         skipSelectorWrapper: true
       });
     }
-    Object.entries(import_blocks66.__EXPERIMENTAL_ELEMENTS).forEach(([name, selector3]) => {
+    Object.entries(import_blocks67.__EXPERIMENTAL_ELEMENTS).forEach(([name, selector3]) => {
       if (tree.styles?.elements?.[name]) {
         nodes.push({
           styles: tree.styles?.elements?.[name] ?? {},
@@ -38290,12 +38349,12 @@ var wp;
               Object.entries(
                 typedVariation?.elements ?? {}
               ).forEach(([element, elementStyles]) => {
-                if (elementStyles && import_blocks66.__EXPERIMENTAL_ELEMENTS[element]) {
+                if (elementStyles && import_blocks67.__EXPERIMENTAL_ELEMENTS[element]) {
                   nodes.push({
                     styles: elementStyles,
                     selector: scopeSelector2(
                       variationSelector,
-                      import_blocks66.__EXPERIMENTAL_ELEMENTS[element]
+                      import_blocks67.__EXPERIMENTAL_ELEMENTS[element]
                     )
                   });
                 }
@@ -38339,12 +38398,12 @@ var wp;
                       variationBlockElement,
                       variationBlockElementStyles
                     ]) => {
-                      if (variationBlockElementStyles && import_blocks66.__EXPERIMENTAL_ELEMENTS[variationBlockElement]) {
+                      if (variationBlockElementStyles && import_blocks67.__EXPERIMENTAL_ELEMENTS[variationBlockElement]) {
                         nodes.push({
                           styles: variationBlockElementStyles,
                           selector: scopeSelector2(
                             variationBlockSelector,
-                            import_blocks66.__EXPERIMENTAL_ELEMENTS[variationBlockElement]
+                            import_blocks67.__EXPERIMENTAL_ELEMENTS[variationBlockElement]
                           )
                         });
                       }
@@ -38369,11 +38428,11 @@ var wp;
         }
         Object.entries(typedNode?.elements ?? {}).forEach(
           ([elementName, value]) => {
-            if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks66.__EXPERIMENTAL_ELEMENTS[elementName]) {
+            if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks67.__EXPERIMENTAL_ELEMENTS[elementName]) {
               nodes.push({
                 styles: value,
                 selector: blockSelectors[blockName]?.selector.split(",").map((sel) => {
-                  const elementSelectors = import_blocks66.__EXPERIMENTAL_ELEMENTS[elementName].split(",");
+                  const elementSelectors = import_blocks67.__EXPERIMENTAL_ELEMENTS[elementName].split(",");
                   return elementSelectors.map(
                     (elementSelector) => sel + " " + elementSelector
                   );
@@ -38639,7 +38698,7 @@ var wp;
     return config2;
   };
   var getBlockSelectors = (blockTypes, variationInstanceId) => {
-    const { getBlockStyles: getBlockStyles2 } = (0, import_data107.select)(import_blocks66.store);
+    const { getBlockStyles: getBlockStyles2 } = (0, import_data108.select)(import_blocks67.store);
     const result = {};
     blockTypes.forEach((blockType) => {
       const name = blockType.name;
@@ -38650,7 +38709,7 @@ var wp;
       let duotoneSelector = getBlockSelector(blockType, "filter.duotone");
       if (!duotoneSelector) {
         const rootSelector = getBlockSelector(blockType);
-        const duotoneSupport = (0, import_blocks66.getBlockSupport)(
+        const duotoneSupport = (0, import_blocks67.getBlockSupport)(
           blockType,
           "color.__experimentalDuotone",
           false
@@ -38719,326 +38778,6 @@ var wp;
     });
     return processedCSS;
   }
-
-  // packages/block-editor/build-module/components/global-styles/context.js
-  var import_element117 = __toESM(require_element());
-  var DEFAULT_GLOBAL_STYLES_CONTEXT = {
-    user: {},
-    base: {},
-    merged: {},
-    setUserConfig: () => {
-    }
-  };
-  var GlobalStylesContext = (0, import_element117.createContext)(
-    DEFAULT_GLOBAL_STYLES_CONTEXT
-  );
-  GlobalStylesContext.displayName = "GlobalStylesContext";
-
-  // packages/block-editor/build-module/components/global-styles/hooks.js
-  var EMPTY_CONFIG = { settings: {}, styles: {} };
-  var useGlobalStylesReset = () => {
-    const { user, setUserConfig } = (0, import_element118.useContext)(GlobalStylesContext);
-    const config2 = {
-      settings: user.settings,
-      styles: user.styles
-    };
-    const canReset = !!config2 && !(0, import_es64.default)(config2, EMPTY_CONFIG);
-    return [
-      canReset,
-      (0, import_element118.useCallback)(() => setUserConfig(EMPTY_CONFIG), [setUserConfig])
-    ];
-  };
-  function useGlobalSetting(propertyPath, blockName, source = "all") {
-    const { setUserConfig, ...configs } = (0, import_element118.useContext)(GlobalStylesContext);
-    const appendedBlockPath = blockName ? ".blocks." + blockName : "";
-    const appendedPropertyPath = propertyPath ? "." + propertyPath : "";
-    const contextualPath = `settings${appendedBlockPath}${appendedPropertyPath}`;
-    const sourceKey = source === "all" ? "merged" : source;
-    const settingValue = (0, import_element118.useMemo)(() => {
-      const configToUse = configs[sourceKey];
-      if (!configToUse) {
-        throw "Unsupported source";
-      }
-      return getSetting(configToUse, propertyPath, blockName);
-    }, [configs, sourceKey, propertyPath, blockName]);
-    const setSetting = (newValue) => {
-      setUserConfig(
-        (currentConfig) => setImmutably(currentConfig, contextualPath.split("."), newValue)
-      );
-    };
-    return [settingValue, setSetting];
-  }
-  function useGlobalStyle(path, blockName, source = "all", { shouldDecodeEncode = true } = {}) {
-    const {
-      merged: mergedConfig,
-      base: baseConfig,
-      user: userConfig,
-      setUserConfig
-    } = (0, import_element118.useContext)(GlobalStylesContext);
-    const appendedPath = path ? "." + path : "";
-    const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
-    const setStyle = (newValue) => {
-      setUserConfig(
-        (currentConfig) => setImmutably(
-          currentConfig,
-          finalPath.split("."),
-          shouldDecodeEncode ? getPresetVariableFromValue(
-            mergedConfig.settings,
-            blockName,
-            path,
-            newValue
-          ) : newValue
-        )
-      );
-    };
-    let result;
-    switch (source) {
-      case "all":
-        result = getStyle(
-          mergedConfig,
-          path,
-          blockName,
-          shouldDecodeEncode
-        );
-        break;
-      case "user":
-        result = getStyle(
-          userConfig,
-          path,
-          blockName,
-          shouldDecodeEncode
-        );
-        break;
-      case "base":
-        result = getStyle(
-          baseConfig,
-          path,
-          blockName,
-          shouldDecodeEncode
-        );
-        break;
-      default:
-        throw "Unsupported source";
-    }
-    return [result, setStyle];
-  }
-  function useSettingsForBlockElement(parentSettings, blockName, element) {
-    const { supportedStyles, supports } = (0, import_data108.useSelect)(
-      (select3) => {
-        return {
-          supportedStyles: unlock(
-            select3(import_blocks67.store)
-          ).getSupportedStyles(blockName, element),
-          supports: select3(import_blocks67.store).getBlockType(blockName)?.supports
-        };
-      },
-      [blockName, element]
-    );
-    return (0, import_element118.useMemo)(() => {
-      const updatedSettings = { ...parentSettings };
-      if (!supportedStyles.includes("fontSize")) {
-        updatedSettings.typography = {
-          ...updatedSettings.typography,
-          fontSizes: {},
-          customFontSize: false,
-          defaultFontSizes: false
-        };
-      }
-      if (!supportedStyles.includes("fontFamily")) {
-        updatedSettings.typography = {
-          ...updatedSettings.typography,
-          fontFamilies: {}
-        };
-      }
-      updatedSettings.color = {
-        ...updatedSettings.color,
-        text: updatedSettings.color?.text && supportedStyles.includes("color"),
-        background: updatedSettings.color?.background && (supportedStyles.includes("background") || supportedStyles.includes("backgroundColor")),
-        button: updatedSettings.color?.button && supportedStyles.includes("buttonColor"),
-        heading: updatedSettings.color?.heading && supportedStyles.includes("headingColor"),
-        link: updatedSettings.color?.link && supportedStyles.includes("linkColor"),
-        caption: updatedSettings.color?.caption && supportedStyles.includes("captionColor")
-      };
-      if (!supportedStyles.includes("background")) {
-        updatedSettings.color.gradients = [];
-        updatedSettings.color.customGradient = false;
-      }
-      if (!supportedStyles.includes("filter")) {
-        updatedSettings.color.defaultDuotone = false;
-        updatedSettings.color.customDuotone = false;
-      }
-      [
-        "lineHeight",
-        "fontStyle",
-        "fontWeight",
-        "letterSpacing",
-        "textAlign",
-        "textTransform",
-        "textDecoration",
-        "writingMode"
-      ].forEach((key) => {
-        if (!supportedStyles.includes(key)) {
-          updatedSettings.typography = {
-            ...updatedSettings.typography,
-            [key]: false
-          };
-        }
-      });
-      if (!supportedStyles.includes("columnCount")) {
-        updatedSettings.typography = {
-          ...updatedSettings.typography,
-          textColumns: false
-        };
-      }
-      ["contentSize", "wideSize"].forEach((key) => {
-        if (!supportedStyles.includes(key)) {
-          updatedSettings.layout = {
-            ...updatedSettings.layout,
-            [key]: false
-          };
-        }
-      });
-      ["padding", "margin", "blockGap"].forEach((key) => {
-        if (!supportedStyles.includes(key)) {
-          updatedSettings.spacing = {
-            ...updatedSettings.spacing,
-            [key]: false
-          };
-        }
-        const sides = Array.isArray(supports?.spacing?.[key]) ? supports?.spacing?.[key] : supports?.spacing?.[key]?.sides;
-        if (sides?.length && updatedSettings.spacing?.[key]) {
-          updatedSettings.spacing = {
-            ...updatedSettings.spacing,
-            [key]: {
-              ...updatedSettings.spacing?.[key],
-              sides
-            }
-          };
-        }
-      });
-      ["aspectRatio", "minHeight"].forEach((key) => {
-        if (!supportedStyles.includes(key)) {
-          updatedSettings.dimensions = {
-            ...updatedSettings.dimensions,
-            [key]: false
-          };
-        }
-      });
-      ["radius", "color", "style", "width"].forEach((key) => {
-        if (!supportedStyles.includes(
-          "border" + key.charAt(0).toUpperCase() + key.slice(1)
-        )) {
-          updatedSettings.border = {
-            ...updatedSettings.border,
-            [key]: false
-          };
-        }
-      });
-      ["backgroundImage", "backgroundSize"].forEach((key) => {
-        if (!supportedStyles.includes(key)) {
-          updatedSettings.background = {
-            ...updatedSettings.background,
-            [key]: false
-          };
-        }
-      });
-      updatedSettings.shadow = supportedStyles.includes("shadow") ? updatedSettings.shadow : false;
-      if (element) {
-        updatedSettings.typography.textAlign = false;
-      }
-      return updatedSettings;
-    }, [parentSettings, supportedStyles, supports, element]);
-  }
-  function useColorsPerOrigin(settings2) {
-    const customColors = settings2?.color?.palette?.custom;
-    const themeColors = settings2?.color?.palette?.theme;
-    const defaultColors = settings2?.color?.palette?.default;
-    const shouldDisplayDefaultColors = settings2?.color?.defaultPalette;
-    return (0, import_element118.useMemo)(() => {
-      const result = [];
-      if (themeColors && themeColors.length) {
-        result.push({
-          name: (0, import_i18n94._x)(
-            "Theme",
-            "Indicates this palette comes from the theme."
-          ),
-          colors: themeColors
-        });
-      }
-      if (shouldDisplayDefaultColors && defaultColors && defaultColors.length) {
-        result.push({
-          name: (0, import_i18n94._x)(
-            "Default",
-            "Indicates this palette comes from WordPress."
-          ),
-          colors: defaultColors
-        });
-      }
-      if (customColors && customColors.length) {
-        result.push({
-          name: (0, import_i18n94._x)(
-            "Custom",
-            "Indicates this palette is created by the user."
-          ),
-          colors: customColors
-        });
-      }
-      return result;
-    }, [
-      customColors,
-      themeColors,
-      defaultColors,
-      shouldDisplayDefaultColors
-    ]);
-  }
-  function useGradientsPerOrigin(settings2) {
-    const customGradients = settings2?.color?.gradients?.custom;
-    const themeGradients = settings2?.color?.gradients?.theme;
-    const defaultGradients = settings2?.color?.gradients?.default;
-    const shouldDisplayDefaultGradients = settings2?.color?.defaultGradients;
-    return (0, import_element118.useMemo)(() => {
-      const result = [];
-      if (themeGradients && themeGradients.length) {
-        result.push({
-          name: (0, import_i18n94._x)(
-            "Theme",
-            "Indicates this palette comes from the theme."
-          ),
-          gradients: themeGradients
-        });
-      }
-      if (shouldDisplayDefaultGradients && defaultGradients && defaultGradients.length) {
-        result.push({
-          name: (0, import_i18n94._x)(
-            "Default",
-            "Indicates this palette comes from WordPress."
-          ),
-          gradients: defaultGradients
-        });
-      }
-      if (customGradients && customGradients.length) {
-        result.push({
-          name: (0, import_i18n94._x)(
-            "Custom",
-            "Indicates this palette is created by the user."
-          ),
-          gradients: customGradients
-        });
-      }
-      return result;
-    }, [
-      customGradients,
-      themeGradients,
-      defaultGradients,
-      shouldDisplayDefaultGradients
-    ]);
-  }
-
-  // packages/block-editor/build-module/components/global-styles/typography-panel.js
-  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
-  var import_components114 = __toESM(require_components());
-  var import_i18n106 = __toESM(require_i18n());
-  var import_element121 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/font-family/index.js
   var import_jsx_runtime238 = __toESM(require_jsx_runtime());
@@ -54960,7 +54699,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/index.js
   var import_jsx_runtime342 = __toESM(require_jsx_runtime());
-  var import_es65 = __toESM(require_es6());
+  var import_es64 = __toESM(require_es6());
   var import_element195 = __toESM(require_element());
   var import_data151 = __toESM(require_data());
   var import_compose85 = __toESM(require_compose());
@@ -56207,7 +55946,7 @@ var wp;
             context: blockBindingsContext
           });
           clientSideFieldLabel = editorUIResult.data?.find(
-            (item) => (0, import_es65.default)(item.args, relatedBinding?.args)
+            (item) => (0, import_es64.default)(item.args, relatedBinding?.args)
           )?.label;
         }
         const bindingKey = clientSideFieldLabel ?? blockBindingsSource?.label;
@@ -63412,7 +63151,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-bindings.js
   var import_jsx_runtime396 = __toESM(require_jsx_runtime());
-  var import_es66 = __toESM(require_es6());
+  var import_es65 = __toESM(require_es6());
   var import_i18n208 = __toESM(require_i18n());
   var import_blocks112 = __toESM(require_blocks());
   var import_components230 = __toESM(require_components());
@@ -63488,7 +63227,7 @@ var wp;
                   Menu.CheckboxItem,
                   {
                     onChange: () => {
-                      const isCurrentlySelected = (0, import_es66.default)(
+                      const isCurrentlySelected = (0, import_es65.default)(
                         binding?.args,
                         item.args
                       ) ?? // Deprecate key dependency in 7.0.
@@ -63505,7 +63244,7 @@ var wp;
                     },
                     name: attribute + "-binding",
                     value: values[attribute],
-                    checked: (0, import_es66.default)(
+                    checked: (0, import_es65.default)(
                       binding?.args,
                       item.args
                     ) ?? // Deprecate key dependency in 7.0.
@@ -63562,7 +63301,7 @@ var wp;
         displayText = (0, import_i18n208.__)("No sources available");
       }
     } else {
-      displayText = source.data?.find((item) => (0, import_es66.default)(item.args, args))?.label || source.label || sourceName;
+      displayText = source.data?.find((item) => (0, import_es65.default)(item.args, args))?.label || source.label || sourceName;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(import_components230.__experimentalVStack, { className: "block-editor-bindings__item", spacing: 0, children: [
       /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components230.__experimentalText, { truncate: true, children: attribute }),
