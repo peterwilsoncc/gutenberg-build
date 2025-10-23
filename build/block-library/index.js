@@ -6749,19 +6749,10 @@ var wp;
     if ((0, import_blocks7.hasBlockSupport)(newBlockType, "ariaLabel") && attributes3.ariaLabel) {
       transformedAttributes.ariaLabel = attributes3.ariaLabel;
     }
-    if ((0, import_blocks7.hasBlockSupport)(newBlockType, "className") && attributes3.className) {
-      transformedAttributes.className = attributes3.className;
-    }
     if (attributes3.metadata) {
-      const transformedMetadata = ["noteId"];
+      const transformedMetadata = [];
       if (bindingsCallback) {
         transformedMetadata.push("id", "bindings");
-      }
-      if ((0, import_blocks7.hasBlockSupport)(newBlockType, "renaming", true)) {
-        transformedMetadata.push("name");
-      }
-      if ((0, import_blocks7.hasBlockSupport)(newBlockType, "blockVisibility", true)) {
-        transformedMetadata.push("blockVisibility");
       }
       if (transformedMetadata.length > 0) {
         const newMetadata = Object.entries(attributes3.metadata).reduce(
@@ -6824,6 +6815,7 @@ var wp;
               const link = element.querySelector("a");
               const url = link?.getAttribute("href");
               return (0, import_blocks8.createBlock)("core/button", {
+                ...attributes3,
                 ...getTransformedAttributes(
                   attributes3,
                   "core/button",
@@ -8179,6 +8171,7 @@ var wp;
         transform: (attributes3) => {
           const { content } = attributes3;
           return (0, import_blocks13.createBlock)("core/code", {
+            ...attributes3,
             ...getTransformedAttributes(attributes3, "core/code"),
             content
           });
@@ -8190,6 +8183,7 @@ var wp;
         transform: (attributes3) => {
           const { content: text } = attributes3;
           return (0, import_blocks13.createBlock)("core/code", {
+            ...attributes3,
             ...getTransformedAttributes(attributes3, "core/code"),
             // The HTML is plain text (with plain line breaks), so
             // convert it to rich text.
