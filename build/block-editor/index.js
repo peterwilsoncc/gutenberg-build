@@ -42168,6 +42168,22 @@ var wp;
     const disableCustomFontSizes = !settings2?.typography?.customFontSize;
     const mergedFontSizes = getMergedFontSizes(settings2);
     const fontSize = decodeValue(inheritedValue?.typography?.fontSize);
+    const currentFontSizeSlug = (() => {
+      const rawValue = inheritedValue?.typography?.fontSize;
+      if (!rawValue || typeof rawValue !== "string") {
+        return void 0;
+      }
+      if (rawValue.startsWith("var:preset|font-size|")) {
+        return rawValue.replace("var:preset|font-size|", "");
+      }
+      const cssVarMatch = rawValue.match(
+        /^var\(--wp--preset--font-size--([^)]+)\)$/
+      );
+      if (cssVarMatch) {
+        return cssVarMatch[1];
+      }
+      return void 0;
+    })();
     const setFontSize = (newValue, metadata) => {
       const actualValue = !!metadata?.slug ? `var:preset|font-size|${metadata?.slug}` : newValue;
       onChange(
@@ -42367,7 +42383,8 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
                 import_components126.FontSizePicker,
                 {
-                  value: fontSize,
+                  value: currentFontSizeSlug || fontSize,
+                  valueMode: currentFontSizeSlug ? "slug" : "literal",
                   onChange: setFontSize,
                   fontSizes: mergedFontSizes,
                   disableCustomFontSizes,
