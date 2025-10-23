@@ -63518,13 +63518,20 @@ var wp;
           ]
         }
       ),
-      RenderModalContent && /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.Modal, { onRequestClose: handleCloseModal, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
-        RenderModalContent,
+      RenderModalContent && /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+        import_components231.Modal,
         {
-          attribute: modalState.attribute,
-          closeModal: handleCloseModal
+          onRequestClose: handleCloseModal,
+          title: sources[modalState.sourceKey]?.label,
+          children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+            RenderModalContent,
+            {
+              attribute: modalState.attribute,
+              closeModal: handleCloseModal
+            }
+          )
         }
-      ) })
+      )
     ] });
   };
   var block_bindings_default = {
