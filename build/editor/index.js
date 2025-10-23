@@ -27715,6 +27715,7 @@ var wp;
         PluginSidebar,
         {
           identifier: collabHistorySidebarName,
+          name: collabHistorySidebarName,
           title: (0, import_i18n170.__)("Notes"),
           icon: comment_default,
           closeLabel: (0, import_i18n170.__)("Close Notes"),
@@ -27755,14 +27756,6 @@ var wp;
               isFloating: true
             }
           )
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-        PluginMoreMenuItem,
-        {
-          icon: comment_default,
-          onClick: () => enableComplementaryArea2("core", collabHistorySidebarName),
-          children: (0, import_i18n170.__)("Notes")
         }
       )
     ] });
