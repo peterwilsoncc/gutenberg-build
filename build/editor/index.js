@@ -27655,12 +27655,13 @@ var wp;
       }
     );
   }
-  function NotesSidebar({ postId: postId2 }) {
+  function NotesSidebar({ postId: postId2, mode }) {
     const [showCommentBoard, setShowCommentBoard] = (0, import_element131.useState)(false);
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data198.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data198.useDispatch)(store2);
     const isLargeViewport = (0, import_compose50.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element131.useRef)(null);
+    const showFloatingSidebar = isLargeViewport && mode === "post-only";
     const blockCommentId = (0, import_data198.useSelect)((select4) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor76.store);
       const clientId = getSelectedBlockClientId2();
@@ -27674,7 +27675,7 @@ var wp;
       commentLastUpdated
     } = useBlockComments(postId2);
     useEnableFloatingSidebar(
-      isLargeViewport && (unresolvedSortedThreads.length > 0 || showCommentBoard)
+      showFloatingSidebar && (unresolvedSortedThreads.length > 0 || showCommentBoard)
     );
     const hasMoreComments = totalPages && totalPages > 1;
     const { merged: GlobalStyles } = useGlobalStylesContext();
@@ -27686,7 +27687,7 @@ var wp;
       if (!activeNotesArea) {
         enableComplementaryArea2(
           "core",
-          isLargeViewport ? collabSidebarName : collabHistorySidebarName
+          showFloatingSidebar ? collabSidebarName : collabHistorySidebarName
         );
       }
       const currentArea = await getActiveComplementaryArea2("core");
@@ -27732,7 +27733,7 @@ var wp;
           )
         }
       ),
-      isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+      showFloatingSidebar && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
         PluginSidebar,
         {
           isPinnable: false,
@@ -27761,14 +27762,17 @@ var wp;
     ] });
   }
   function NotesSidebarContainer() {
-    const postId2 = (0, import_data198.useSelect)((select4) => {
-      const { getCurrentPostId: getCurrentPostId2 } = select4(store);
-      return getCurrentPostId2();
+    const { postId: postId2, mode } = (0, import_data198.useSelect)((select4) => {
+      const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2 } = select4(store);
+      return {
+        postId: getCurrentPostId2(),
+        mode: getRenderingMode2()
+      };
     }, []);
     if (!postId2 || typeof postId2 !== "number") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(NotesSidebar, { postId: postId2 }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(NotesSidebar, { postId: postId2, mode }) });
   }
 
   // packages/editor/build-module/components/editor/index.js
