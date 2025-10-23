@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('react-jsx-runtime', 'wp-compose', 'wp-deprecated', 'wp-element', 'wp-is-shallow-equal', 'wp-priority-queue', 'wp-private-apis', 'wp-redux-routine'), 'version' => '1761229136242');
+<?php return array('dependencies' => array('react-jsx-runtime', 'wp-compose', 'wp-deprecated', 'wp-element', 'wp-is-shallow-equal', 'wp-priority-queue', 'wp-private-apis', 'wp-redux-routine'), 'version' => '1761231108506');
