@@ -21883,7 +21883,8 @@ var wp;
           className: hasLightBlockWrapper ? attributes2.className : void 0,
           defaultClassName: hasLightBlockWrapper ? (0, import_blocks18.getBlockDefaultClassName)(blockName) : void 0,
           blockTitle: blockType?.title,
-          isBlockHidden: attributes2?.metadata?.blockVisibility === false
+          isBlockHidden: attributes2?.metadata?.blockVisibility === false,
+          bindableAttributes: bindableAttributes2
         };
         if (isPreviewMode2) {
           return previewContext;
@@ -21937,8 +21938,7 @@ var wp;
           isEditingDisabled: blockEditingMode2 === "disabled",
           hasEditableOutline: blockEditingMode2 !== "disabled" && getBlockEditingMode2(rootClientId) === "disabled",
           originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
-          isBlockHidden: _isBlockHidden(clientId),
-          bindableAttributes: bindableAttributes2
+          isBlockHidden: _isBlockHidden(clientId)
         };
       },
       [clientId, rootClientId]
