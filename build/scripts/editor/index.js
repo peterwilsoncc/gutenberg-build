@@ -27007,6 +27007,9 @@ var wp;
           onFocus: onMouseEnter,
           onBlur: onMouseLeave,
           onKeyDown: (event) => {
+            if (event.defaultPrevented) {
+              return;
+            }
             if (event.key === "Enter" && event.currentTarget === event.target) {
               if (isSelected) {
                 unselectThread();
