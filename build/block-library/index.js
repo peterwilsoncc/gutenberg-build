@@ -29289,6 +29289,7 @@ ${url}
                 label: (0, import_i18n93.__)("LaTeX math syntax"),
                 hideLabelFromVision: true,
                 value: latex,
+                className: "wp-block-math__textarea-control",
                 onChange: (newLatex) => {
                   if (!latexToMathML) {
                     setAttributes({ latex: newLatex });
