@@ -49813,12 +49813,12 @@ If there's a particular need for this, please submit a feature request at https:
     const records = (0, import_element146.useMemo)(() => {
       return _records.map((record) => ({
         ...record,
-        _isActive: activeTemplates.find(
+        _isActive: !!activeTemplates.find(
           (template) => template.id === record.id
         ),
-        _isCustom: record.is_custom || !record.meta?.is_wp_suggestion && !defaultTemplateTypes.find(
+        _isCustom: record.is_custom ?? (!record.meta?.is_wp_suggestion && !defaultTemplateTypes.find(
           (type) => type.slug === record.slug
-        )
+        ))
       }));
     }, [_records, activeTemplates, defaultTemplateTypes]);
     const users = (0, import_data85.useSelect)(
