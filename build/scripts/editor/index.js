@@ -945,7 +945,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment53 = REACT_FRAGMENT_TYPE;
+          var Fragment54 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1004,7 +1004,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment53;
+          exports.Fragment = Fragment54;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -5069,6 +5069,31 @@ var wp;
   var import_media_utils = __toESM(require_media_utils());
   var import_core_data4 = __toESM(require_core_data());
   var import_i18n13 = __toESM(require_i18n());
+  var { MediaUploadModal } = unlock2(import_media_utils.privateApis);
+  function ConditionalMediaUpload({ render, ...props }) {
+    const [isModalOpen, setIsModalOpen] = (0, import_element5.useState)(false);
+    if (window.__experimentalDataViewsMediaModal) {
+      return /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
+        render && render({ open: () => setIsModalOpen(true) }),
+        /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+          MediaUploadModal,
+          {
+            ...props,
+            isOpen: isModalOpen,
+            onClose: () => {
+              setIsModalOpen(false);
+              props.onClose?.();
+            },
+            onSelect: (media) => {
+              setIsModalOpen(false);
+              props.onSelect?.(media);
+            }
+          }
+        )
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_media_utils.MediaUpload, { ...props, render });
+  }
   var FeaturedImageEdit = ({
     data,
     field,
@@ -5093,74 +5118,77 @@ var wp;
     const title = media?.title?.rendered;
     const ref = (0, import_element5.useRef)(null);
     return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("fieldset", { className: "fields-controls__featured-image", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("div", { className: "fields-controls__featured-image-container", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
-      import_media_utils.MediaUpload,
+      ConditionalMediaUpload,
       {
         onSelect: (selectedMedia) => {
           onChangeControl(selectedMedia.id);
         },
         allowedTypes: ["image"],
-        render: ({ open }) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
-            "div",
-            {
-              ref,
-              role: "button",
-              tabIndex: -1,
-              onClick: () => {
+        value,
+        title: (0, import_i18n13.__)("Select Featured Image"),
+        render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+          "div",
+          {
+            ref,
+            role: "button",
+            tabIndex: -1,
+            onClick: open,
+            onKeyDown: (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
                 open();
-              },
-              onKeyDown: open,
-              children: /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(
-                import_components5.__experimentalGrid,
-                {
-                  rowGap: 0,
-                  columnGap: 8,
-                  templateColumns: "24px 1fr 24px",
-                  children: [
-                    url && /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
-                        "img",
-                        {
-                          className: "fields-controls__featured-image-image",
-                          alt: "",
-                          width: 24,
-                          height: 24,
-                          src: url
-                        }
-                      ),
-                      /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { className: "fields-controls__featured-image-title", children: title })
-                    ] }),
-                    !url && /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
-                        "span",
-                        {
-                          className: "fields-controls__featured-image-placeholder",
-                          style: {
-                            width: "24px",
-                            height: "24px"
-                          }
-                        }
-                      ),
-                      /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { className: "fields-controls__featured-image-title", children: (0, import_i18n13.__)("Choose an image\u2026") })
-                    ] }),
-                    url && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_jsx_runtime59.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
-                      import_components5.Button,
+              }
+            },
+            children: /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(
+              import_components5.__experimentalGrid,
+              {
+                rowGap: 0,
+                columnGap: 8,
+                templateColumns: "24px 1fr 24px",
+                children: [
+                  url && /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+                      "img",
                       {
-                        size: "small",
-                        className: "fields-controls__featured-image-remove-button",
-                        icon: line_solid_default,
-                        onClick: (event) => {
-                          event.stopPropagation();
-                          onChangeControl(0);
+                        className: "fields-controls__featured-image-image",
+                        alt: "",
+                        width: 24,
+                        height: 24,
+                        src: url
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { className: "fields-controls__featured-image-title", children: title })
+                  ] }),
+                  !url && /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_jsx_runtime59.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+                      "span",
+                      {
+                        className: "fields-controls__featured-image-placeholder",
+                        style: {
+                          width: "24px",
+                          height: "24px"
                         }
                       }
-                    ) })
-                  ]
-                }
-              )
-            }
-          );
-        }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { className: "fields-controls__featured-image-title", children: (0, import_i18n13.__)("Choose an image\u2026") })
+                  ] }),
+                  url && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_jsx_runtime59.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+                    import_components5.Button,
+                    {
+                      size: "small",
+                      className: "fields-controls__featured-image-remove-button",
+                      icon: line_solid_default,
+                      onClick: (event) => {
+                        event.stopPropagation();
+                        onChangeControl(0);
+                      }
+                    }
+                  ) })
+                ]
+              }
+            )
+          }
+        )
       }
     ) }) });
   };
@@ -16055,12 +16083,42 @@ var wp;
   var check_default4 = PostFeaturedImageCheck;
 
   // packages/editor/build-module/components/post-featured-image/index.js
+  var { MediaUploadModal: MediaUploadModal2 } = unlock(import_block_editor35.privateApis);
   var ALLOWED_MEDIA_TYPES = ["image"];
   var DEFAULT_FEATURE_IMAGE_LABEL = (0, import_i18n91.__)("Featured image");
   var DEFAULT_SET_FEATURE_IMAGE_LABEL = (0, import_i18n91.__)("Add a featured image");
   var instructions = /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("p", { children: (0, import_i18n91.__)(
     "To edit the featured image, you need permission to upload media."
   ) });
+  function ConditionalMediaUpload2({ render, ...props }) {
+    const [isModalOpen, setIsModalOpen] = (0, import_element67.useState)(false);
+    const mediaUpload2 = (0, import_data96.useSelect)((select4) => {
+      const { getSettings: getSettings4 } = select4(import_block_editor35.store);
+      return getSettings4().mediaUpload;
+    }, []);
+    if (window.__experimentalDataViewsMediaModal) {
+      return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(import_jsx_runtime152.Fragment, { children: [
+        render && render({ open: () => setIsModalOpen(true) }),
+        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+          MediaUploadModal2,
+          {
+            ...props,
+            isOpen: isModalOpen,
+            onClose: () => {
+              setIsModalOpen(false);
+              props.onClose?.();
+            },
+            onSelect: (media) => {
+              setIsModalOpen(false);
+              props.onSelect?.(media);
+            },
+            onUpload: mediaUpload2
+          }
+        )
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_block_editor35.MediaUpload, { ...props, render });
+  }
   function getMediaDetails(media, postId2) {
     if (!media) {
       return {};
@@ -16168,7 +16226,7 @@ var wp;
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_block_editor35.MediaUploadCheck, { fallback: instructions, children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_block_editor35.MediaUpload,
+          ConditionalMediaUpload2,
           {
             title: postType2?.labels?.featured_image || DEFAULT_FEATURE_IMAGE_LABEL,
             onSelect: onUpdateImage,
@@ -20928,11 +20986,21 @@ var wp;
   // packages/editor/build-module/hooks/media-upload.js
   var import_hooks15 = __toESM(require_hooks());
   var import_media_utils4 = __toESM(require_media_utils());
-  (0, import_hooks15.addFilter)(
-    "editor.MediaUpload",
-    "core/editor/components/media-upload",
-    () => import_media_utils4.MediaUpload
+  var { MediaUploadModal: MediaUploadModalComponent } = unlock(
+    import_media_utils4.privateApis
   );
+  if (window.__experimentalDataViewsMediaModal) {
+    (0, import_hooks15.addFilter)(
+      "editor.MediaUploadModal",
+      "core/editor/components/media-upload-modal",
+      () => {
+        return MediaUploadModalComponent;
+      }
+    );
+  }
+  (0, import_hooks15.addFilter)("editor.MediaUpload", "core/editor/components/media-upload", () => {
+    return import_media_utils4.MediaUpload;
+  });
 
   // packages/editor/build-module/hooks/pattern-overrides.js
   var import_jsx_runtime194 = __toESM(require_jsx_runtime());
