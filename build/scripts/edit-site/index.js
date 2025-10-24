@@ -44955,16 +44955,15 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           validity,
           type: isVisible2 ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_components139.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
             import_components139.Button,
             {
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              variant: "tertiary",
-              "aria-label": isVisible2 ? (0, import_i18n126.__)("Hide password") : (0, import_i18n126.__)("Show password")
+              label: isVisible2 ? (0, import_i18n126.__)("Hide password") : (0, import_i18n126.__)("Show password")
             }
-          )
+          ) })
         }
       }
     );
