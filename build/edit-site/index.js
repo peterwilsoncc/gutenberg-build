@@ -43738,17 +43738,7 @@ If there's a particular need for this, please submit a feature request at https:
     {
       type: "regular",
       component: FormRegularField,
-      wrapper: ({
-        children,
-        layout
-      }) => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
-        import_components148.__experimentalVStack,
-        {
-          className: "dataforms-layouts__wrapper",
-          spacing: layout?.spacing ?? 4,
-          children
-        }
-      )
+      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_components148.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children })
     },
     {
       type: "panel",
@@ -43758,17 +43748,7 @@ If there's a particular need for this, please submit a feature request at https:
     {
       type: "card",
       component: FormCardField,
-      wrapper: ({
-        children,
-        layout
-      }) => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
-        import_components148.__experimentalVStack,
-        {
-          className: "dataforms-layouts__wrapper",
-          spacing: layout?.spacing ?? 6,
-          children
-        }
-      )
+      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(import_components148.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 6, children })
     },
     {
       type: "row",
