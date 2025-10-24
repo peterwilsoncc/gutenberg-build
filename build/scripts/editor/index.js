@@ -14454,46 +14454,15 @@ var wp;
     );
   }
   function useTemplates(postType2) {
-    const { defaultTemplateTypes, registeredTemplates, userTemplates } = (0, import_data75.useSelect)(
-      (select4) => {
-        return {
-          defaultTemplateTypes: select4(import_core_data47.store).getCurrentTheme()?.default_template_types,
-          registeredTemplates: select4(import_core_data47.store).getEntityRecords(
-            "postType",
-            "wp_registered_template",
-            {
-              per_page: -1,
-              post_type: postType2
-            }
-          ),
-          userTemplates: select4(import_core_data47.store).getEntityRecords(
-            "postType",
-            "wp_template",
-            { per_page: -1, combinedTemplates: false }
-          )
-        };
-      },
+    return (0, import_data75.useSelect)(
+      (select4) => select4(import_core_data47.store).getEntityRecords("postType", "wp_template", {
+        per_page: -1,
+        post_type: postType2
+        // We look at the combined templates for now (old endpoint)
+        // because posts only accept slugs for templates, not IDs.
+      }),
       [postType2]
     );
-    return (0, import_element56.useMemo)(() => {
-      if (!defaultTemplateTypes || !registeredTemplates || !userTemplates) {
-        return [];
-      }
-      return [
-        ...registeredTemplates,
-        ...userTemplates.filter(
-          (template2) => (
-            // Only give "custom" templates as an option, which
-            // means the is_wp_suggestion meta field is not set and
-            // the slug is not found in the default template types.
-            // https://github.com/WordPress/wordpress-develop/blob/97382397b2bd7c85aef6d4cd1c10bafd397957fc/src/wp-includes/block-template-utils.php#L858-L867
-            !template2.meta.is_wp_suggestion && !defaultTemplateTypes.find(
-              (type) => type.slug === template2.slug
-            )
-          )
-        )
-      ];
-    }, [registeredTemplates, userTemplates, defaultTemplateTypes]);
   }
   function useAvailableTemplates(postType2) {
     const currentTemplateSlug = useCurrentTemplateSlug();
