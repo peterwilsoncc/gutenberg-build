@@ -7386,10 +7386,14 @@ var wp;
       ];
     };
     const TagName2 = !!categories?.length && !displayAsDropdown && !isResolving ? "ul" : "div";
-    const classes = clsx_default(className, {
-      "wp-block-categories-list": !!categories?.length && !displayAsDropdown && !isResolving,
-      "wp-block-categories-dropdown": !!categories?.length && displayAsDropdown && !isResolving
-    });
+    const classes = clsx_default(
+      className,
+      `wp-block-categories-taxonomy-${taxonomySlug}`,
+      {
+        "wp-block-categories-list": !!categories?.length && !displayAsDropdown && !isResolving,
+        "wp-block-categories-dropdown": !!categories?.length && displayAsDropdown && !isResolving
+      }
+    );
     const blockProps = (0, import_block_editor26.useBlockProps)({
       className: classes
     });
