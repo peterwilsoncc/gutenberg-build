@@ -4446,7 +4446,7 @@ var wp;
     };
   }
   var setRenderingMode = (mode) => ({ dispatch: dispatch5, registry, select: select4 }) => {
-    if (select4.__unstableIsEditorReady()) {
+    if (select4.__unstableIsEditorReady() && !select4.getEditorSettings().isPreviewMode) {
       registry.dispatch(import_block_editor3.store).clearSelectedBlock();
       dispatch5.editPost({ selection: void 0 }, { undoIgnore: true });
     }
@@ -6215,7 +6215,7 @@ var wp;
         if (isCreatingPage) {
           return;
         }
-        const isTemplate = item.type === "wp_template" || item.type === "wp_registered_template";
+        const isTemplate = item.type === "wp_template";
         const newItemObject = {
           status: isTemplate ? "publish" : "draft",
           title: item.title,
@@ -6247,7 +6247,7 @@ var wp;
         try {
           const newItem = await saveEntityRecord(
             "postType",
-            item.type === "wp_registered_template" ? "wp_template" : item.type,
+            item.type,
             newItemObject,
             { throwOnError: true }
           );
@@ -6277,7 +6277,7 @@ var wp;
         }
       }
       return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("form", { onSubmit: createPage, children: /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components13.__experimentalVStack, { spacing: 3, children: [
-        item.type === "wp_registered_template" && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { children: (0, import_i18n34.__)(
+        typeof item.id === "string" && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { children: (0, import_i18n34.__)(
           "You are about to duplicate a bundled template. Changes will not be live until you activate the new template."
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
@@ -11587,7 +11587,7 @@ var wp;
       const rootLevelPost = shouldRenderTemplate ? template2 : post;
       const defaultBlockContext = (0, import_element37.useMemo)(() => {
         const postContext = {};
-        if (post.type === "wp_template" || post.type === "wp_registered_template") {
+        if (post.type === "wp_template") {
           if (post.slug === "page") {
             postContext.postType = "page";
           } else if (post.slug === "single") {

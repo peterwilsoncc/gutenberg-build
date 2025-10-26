@@ -45193,13 +45193,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       query: { activeView = "active" }
     } = useLocation26();
-    const { records } = (0, import_core_data51.useEntityRecords)(
-      "postType",
-      "wp_registered_template",
-      {
-        per_page: -1
-      }
-    );
+    const { records } = (0, import_core_data51.useEntityRecords)("root", "registeredTemplate");
     const firstItemPerAuthorText = (0, import_element133.useMemo)(() => {
       const firstItemPerAuthor = records?.reduce((acc, template) => {
         const author = template.author_text;
@@ -46590,9 +46584,8 @@ If there's a particular need for this, please submit a feature request at https:
   function useAllDefaultTemplateTypes() {
     const defaultTemplateTypes = useDefaultTemplateTypes();
     const { records: staticRecords } = useEntityRecordsWithPermissions(
-      "postType",
-      "wp_registered_template",
-      { per_page: -1 }
+      "root",
+      "registeredTemplate"
     );
     return [
       ...defaultTemplateTypes,
@@ -46806,9 +46799,7 @@ If there's a particular need for this, please submit a feature request at https:
       per_page: -1,
       combinedTemplates: false
     });
-    const { records: staticRecords, isResolving: isLoadingStaticData } = useEntityRecordsWithPermissions2("postType", "wp_registered_template", {
-      per_page: -1
-    });
+    const { records: staticRecords, isResolving: isLoadingStaticData } = useEntityRecordsWithPermissions2("root", "registeredTemplate");
     const activeTemplates = (0, import_element139.useMemo)(() => {
       const _active = [...staticRecords].filter(
         (record) => !record.is_custom
@@ -47013,7 +47004,7 @@ If there's a particular need for this, please submit a feature request at https:
               onChangeSelection,
               isItemClickable: () => true,
               onClickItem: (item) => {
-                if (item.type === "wp_registered_template") {
+                if (typeof item.id === "string") {
                   setSelectedRegisteredTemplate(item);
                 } else {
                   history.navigate(
