@@ -49536,7 +49536,7 @@ var wp;
           )
         }
       ),
-      showFloatingSidebar && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+      isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
         PluginSidebar,
         {
           isPinnable: false,
