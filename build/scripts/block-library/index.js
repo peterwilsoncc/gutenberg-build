@@ -34733,6 +34733,7 @@ ${url}
   var import_i18n116 = __toESM(require_i18n());
   var import_data68 = __toESM(require_data());
   var import_core_data36 = __toESM(require_core_data());
+  var import_notices12 = __toESM(require_notices());
   var import_html_entities4 = __toESM(require_html_entities());
   var import_element67 = __toESM(require_element());
 
@@ -34812,6 +34813,7 @@ ${url}
       [postType]
     );
     const { saveEntityRecord } = (0, import_data68.useDispatch)(import_core_data36.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data68.useDispatch)(import_notices12.store);
     async function createPage(event) {
       event.preventDefault();
       if (isSaving || !isTitleValid) {
@@ -34835,9 +34837,27 @@ ${url}
             url: savedRecord.link,
             kind: "post-type"
           };
+          createSuccessNotice(
+            (0, import_i18n116.sprintf)(
+              // translators: %s: the name of the new page being created.
+              (0, import_i18n116.__)("%s page created successfully."),
+              (0, import_html_entities4.decodeEntities)(savedRecord.title.rendered)
+            ),
+            {
+              type: "snackbar",
+              id: "page-created-success"
+            }
+          );
           onPageCreated(pageLink);
         }
       } catch (error) {
+        createErrorNotice(
+          (0, import_i18n116.__)("Failed to create page. Please try again."),
+          {
+            type: "snackbar",
+            id: "page-created-error"
+          }
+        );
       }
     }
     const isSubmitDisabled = isSaving || !isTitleValid;
@@ -42372,7 +42392,7 @@ ${url}
   var import_block_editor177 = __toESM(require_block_editor());
   var import_element84 = __toESM(require_element());
   var import_i18n149 = __toESM(require_i18n());
-  var import_notices12 = __toESM(require_notices());
+  var import_notices13 = __toESM(require_notices());
 
   // packages/block-library/build-module/post-featured-image/dimension-controls.js
   var import_jsx_runtime328 = __toESM(require_jsx_runtime());
@@ -42838,7 +42858,7 @@ ${url}
         setTemporaryURL();
       }
     }, [mediaUrl, temporaryURL]);
-    const { createErrorNotice } = (0, import_data88.useDispatch)(import_notices12.store);
+    const { createErrorNotice } = (0, import_data88.useDispatch)(import_notices13.store);
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
       setTemporaryURL();
@@ -52307,7 +52327,7 @@ ${url}
   var import_block_editor218 = __toESM(require_block_editor());
   var import_data112 = __toESM(require_data());
   var import_core_data70 = __toESM(require_core_data());
-  var import_notices13 = __toESM(require_notices());
+  var import_notices14 = __toESM(require_notices());
   var ALLOWED_MEDIA_TYPES7 = ["image"];
   var ACCEPT_MEDIA_STRING = "image/*";
   var SiteLogo = ({
@@ -52724,7 +52744,7 @@ ${url}
       setLogo(null);
       setAttributes({ width: void 0 });
     };
-    const { createErrorNotice } = (0, import_data112.useDispatch)(import_notices13.store);
+    const { createErrorNotice } = (0, import_data112.useDispatch)(import_notices14.store);
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
       setTemporaryURL();
@@ -57246,7 +57266,7 @@ ${url}
   var import_element111 = __toESM(require_element());
   var import_i18n211 = __toESM(require_i18n());
   var import_compose51 = __toESM(require_compose());
-  var import_notices14 = __toESM(require_notices());
+  var import_notices15 = __toESM(require_notices());
 
   // packages/block-library/build-module/table-of-contents/list.js
   var import_jsx_runtime451 = __toESM(require_jsx_runtime());
@@ -57435,7 +57455,7 @@ ${url}
       TableOfContentsEdit,
       "table-of-contents"
     );
-    const { createWarningNotice } = (0, import_data119.useDispatch)(import_notices14.store);
+    const { createWarningNotice } = (0, import_data119.useDispatch)(import_notices15.store);
     const showRedirectionPreventedNotice = (event) => {
       event.preventDefault();
       createWarningNotice((0, import_i18n211.__)("Links are disabled in the editor."), {
@@ -58134,7 +58154,7 @@ ${url}
   var import_i18n220 = __toESM(require_i18n());
   var import_core_data79 = __toESM(require_core_data());
   var import_element118 = __toESM(require_element());
-  var import_notices17 = __toESM(require_notices());
+  var import_notices18 = __toESM(require_notices());
 
   // packages/block-library/build-module/template-part/edit/placeholder.js
   var import_jsx_runtime456 = __toESM(require_jsx_runtime());
@@ -58390,7 +58410,7 @@ ${url}
   var import_jsx_runtime457 = __toESM(require_jsx_runtime());
   var import_element115 = __toESM(require_element());
   var import_i18n217 = __toESM(require_i18n());
-  var import_notices15 = __toESM(require_notices());
+  var import_notices16 = __toESM(require_notices());
   var import_data123 = __toESM(require_data());
   var import_block_editor237 = __toESM(require_block_editor());
   var import_components141 = __toESM(require_components());
@@ -58429,7 +58449,7 @@ ${url}
     const filteredBlockPatterns = (0, import_element115.useMemo)(() => {
       return searchPatterns(blockPatterns, searchValue);
     }, [blockPatterns, searchValue]);
-    const { createSuccessNotice } = (0, import_data123.useDispatch)(import_notices15.store);
+    const { createSuccessNotice } = (0, import_data123.useDispatch)(import_notices16.store);
     const onTemplatePartSelect = (templatePart) => {
       setAttributes({
         slug: templatePart.slug,
@@ -58492,7 +58512,7 @@ ${url}
   var import_data124 = __toESM(require_data());
   var import_components142 = __toESM(require_components());
   var import_core_data76 = __toESM(require_core_data());
-  var import_notices16 = __toESM(require_notices());
+  var import_notices17 = __toESM(require_notices());
 
   // packages/block-library/build-module/template-part/edit/utils/transformers.js
   var import_blocks91 = __toESM(require_blocks());
@@ -58587,7 +58607,7 @@ ${url}
         ])
       };
     }, []);
-    const { createErrorNotice } = (0, import_data124.useDispatch)(import_notices16.store);
+    const { createErrorNotice } = (0, import_data124.useDispatch)(import_notices17.store);
     const createFromBlocks = useCreateTemplatePartFromBlocks(
       area,
       setAttributes
@@ -58986,7 +59006,7 @@ ${url}
     setAttributes,
     clientId
   }) {
-    const { createSuccessNotice } = (0, import_data127.useDispatch)(import_notices17.store);
+    const { createSuccessNotice } = (0, import_data127.useDispatch)(import_notices18.store);
     const { editEntityRecord } = (0, import_data127.useDispatch)(import_core_data79.store);
     const currentTheme = (0, import_data127.useSelect)(
       (select8) => select8(import_core_data79.store).getCurrentTheme()?.stylesheet,
@@ -61566,7 +61586,7 @@ ${url}
   var import_element125 = __toESM(require_element());
   var import_i18n236 = __toESM(require_i18n());
   var import_data139 = __toESM(require_data());
-  var import_notices18 = __toESM(require_notices());
+  var import_notices19 = __toESM(require_notices());
 
   // packages/block-library/build-module/video/edit-common-settings.js
   var import_jsx_runtime489 = __toESM(require_jsx_runtime());
@@ -62163,7 +62183,7 @@ ${url}
         setTemporaryURL();
       }
     }
-    const { createErrorNotice } = (0, import_data139.useDispatch)(import_notices18.store);
+    const { createErrorNotice } = (0, import_data139.useDispatch)(import_notices19.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
