@@ -2340,8 +2340,7 @@ var wp;
     "wp_template",
     "wp_template_part",
     "wp_block",
-    "wp_navigation",
-    "wp_registered_template"
+    "wp_navigation"
   ];
   function useEditorStyles(...additionalStyles) {
     const { hasThemeStyleSupport, editorSettings } = (0, import_data26.useSelect)((select3) => {

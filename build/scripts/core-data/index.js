@@ -14614,6 +14614,13 @@ var wp;
       baseURLParams: { context: "edit" },
       plural: "statuses",
       key: "slug"
+    },
+    {
+      label: (0, import_i18n.__)("Registered Templates"),
+      name: "registeredTemplate",
+      kind: "root",
+      baseURL: "/wp/v2/wp_registered_template",
+      key: "id"
     }
   ];
   var deprecatedEntities = {
@@ -16097,33 +16104,11 @@ var wp;
       }
       const currentTemplateSlug = editedEntity.template;
       if (currentTemplateSlug) {
-        const userTemplates = select(STORE_NAME).getEntityRecords(
-          "postType",
-          "wp_template",
-          { per_page: -1 }
-        );
-        if (!userTemplates) {
-          return;
-        }
-        const userTemplateWithSlug = userTemplates.find(
-          ({ slug }) => slug === currentTemplateSlug
-        );
-        if (userTemplateWithSlug) {
-          return userTemplateWithSlug.id;
-        }
-        const registeredTemplates = select(STORE_NAME).getEntityRecords(
-          "postType",
-          "wp_registered_template",
-          { per_page: -1 }
-        );
-        if (!registeredTemplates) {
-          return;
-        }
-        const registeredTemplateWithSlug = registeredTemplates.find(
-          ({ slug }) => slug === currentTemplateSlug
-        );
-        if (registeredTemplateWithSlug) {
-          return registeredTemplateWithSlug.id;
+        const currentTemplate = select(STORE_NAME).getEntityRecords("postType", "wp_template", {
+          per_page: -1
+        })?.find(({ slug }) => slug === currentTemplateSlug);
+        if (currentTemplate) {
+          return currentTemplate.id;
         }
       }
       let slugToCheck;
@@ -17782,7 +17767,6 @@ var wp;
     const id2 = template?.wp_id || template?.id;
     if (id2) {
       template.id = id2;
-      template.type = typeof id2 === "string" ? "wp_registered_template" : "wp_template";
       registry.batch(() => {
         dispatch.receiveDefaultTemplateId(query, id2);
         dispatch.receiveEntityRecords("postType", template.type, [
