@@ -1728,6 +1728,14 @@ var stateHandlers = {
 var proxifyState = (namespace, obj) => {
   return createProxy(namespace, obj, stateHandlers);
 };
+var peek = (obj, key) => {
+  peeking = true;
+  try {
+    return obj[key];
+  } finally {
+    peeking = false;
+  }
+};
 var deepMergeRecursive = (target, source, override = true) => {
   if (!(isPlainObject(target) && isPlainObject(source))) {
     return;
@@ -1954,10 +1962,14 @@ var populateServerData = (data2) => {
           const pathParts = path.split(".");
           const prop = pathParts.splice(-1, 1)[0];
           const parent = pathParts.reduce(
-            (prev, key) => prev[key],
+            (prev, key) => peek(prev, key),
             st
           );
-          if (isPlainObject(parent[prop])) {
+          const desc = Object.getOwnPropertyDescriptor(
+            parent,
+            prop
+          );
+          if (isPlainObject(desc?.value)) {
             parent[prop] = PENDING_GETTER;
           }
         });
