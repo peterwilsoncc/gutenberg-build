@@ -248,6 +248,62 @@ var wp;
     }
   });
 
+  // node_modules/fast-deep-equal/es6/index.js
+  var require_es6 = __commonJS({
+    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
+      "use strict";
+      module.exports = function equal(a2, b2) {
+        if (a2 === b2) return true;
+        if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
+          if (a2.constructor !== b2.constructor) return false;
+          var length, i2, keys;
+          if (Array.isArray(a2)) {
+            length = a2.length;
+            if (length != b2.length) return false;
+            for (i2 = length; i2-- !== 0; )
+              if (!equal(a2[i2], b2[i2])) return false;
+            return true;
+          }
+          if (a2 instanceof Map && b2 instanceof Map) {
+            if (a2.size !== b2.size) return false;
+            for (i2 of a2.entries())
+              if (!b2.has(i2[0])) return false;
+            for (i2 of a2.entries())
+              if (!equal(i2[1], b2.get(i2[0]))) return false;
+            return true;
+          }
+          if (a2 instanceof Set && b2 instanceof Set) {
+            if (a2.size !== b2.size) return false;
+            for (i2 of a2.entries())
+              if (!b2.has(i2[0])) return false;
+            return true;
+          }
+          if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
+            length = a2.length;
+            if (length != b2.length) return false;
+            for (i2 = length; i2-- !== 0; )
+              if (a2[i2] !== b2[i2]) return false;
+            return true;
+          }
+          if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
+          if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
+          if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
+          keys = Object.keys(a2);
+          length = keys.length;
+          if (length !== Object.keys(b2).length) return false;
+          for (i2 = length; i2-- !== 0; )
+            if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
+          for (i2 = length; i2-- !== 0; ) {
+            var key = keys[i2];
+            if (!equal(a2[key], b2[key])) return false;
+          }
+          return true;
+        }
+        return a2 !== a2 && b2 !== b2;
+      };
+    }
+  });
+
   // node_modules/deepmerge/dist/cjs.js
   var require_cjs = __commonJS({
     "node_modules/deepmerge/dist/cjs.js"(exports, module) {
@@ -348,62 +404,6 @@ var wp;
       };
       var deepmerge_1 = deepmerge2;
       module.exports = deepmerge_1;
-    }
-  });
-
-  // node_modules/fast-deep-equal/es6/index.js
-  var require_es6 = __commonJS({
-    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
-      "use strict";
-      module.exports = function equal(a2, b2) {
-        if (a2 === b2) return true;
-        if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
-          if (a2.constructor !== b2.constructor) return false;
-          var length, i2, keys;
-          if (Array.isArray(a2)) {
-            length = a2.length;
-            if (length != b2.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (!equal(a2[i2], b2[i2])) return false;
-            return true;
-          }
-          if (a2 instanceof Map && b2 instanceof Map) {
-            if (a2.size !== b2.size) return false;
-            for (i2 of a2.entries())
-              if (!b2.has(i2[0])) return false;
-            for (i2 of a2.entries())
-              if (!equal(i2[1], b2.get(i2[0]))) return false;
-            return true;
-          }
-          if (a2 instanceof Set && b2 instanceof Set) {
-            if (a2.size !== b2.size) return false;
-            for (i2 of a2.entries())
-              if (!b2.has(i2[0])) return false;
-            return true;
-          }
-          if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-            length = a2.length;
-            if (length != b2.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (a2[i2] !== b2[i2]) return false;
-            return true;
-          }
-          if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
-          if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
-          if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
-          keys = Object.keys(a2);
-          length = keys.length;
-          if (length !== Object.keys(b2).length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-          for (i2 = length; i2-- !== 0; ) {
-            var key = keys[i2];
-            if (!equal(a2[key], b2[key])) return false;
-          }
-          return true;
-        }
-        return a2 !== a2 && b2 !== b2;
-      };
     }
   });
 
@@ -7385,6 +7385,15 @@ var wp;
     );
   }
 
+  // packages/global-styles-engine/build-module/core/equal.js
+  var import_es6 = __toESM(require_es6());
+  function areGlobalStylesEqual(original, variation) {
+    if (typeof original !== "object" || typeof variation !== "object") {
+      return original === variation;
+    }
+    return (0, import_es6.default)(original?.styles, variation?.styles) && (0, import_es6.default)(original?.settings, variation?.settings);
+  }
+
   // packages/global-styles-engine/build-module/core/merge.js
   var import_deepmerge = __toESM(require_cjs());
 
@@ -7711,7 +7720,6 @@ var wp;
   var import_i18n12 = __toESM(require_i18n());
 
   // packages/global-styles-ui/build-module/utils.js
-  var import_es6 = __toESM(require_es6());
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
       return object;
@@ -7748,18 +7756,12 @@ var wp;
     });
     return newObject;
   };
-  function areGlobalStyleConfigsEqual(original, variation) {
-    if (typeof original !== "object" || typeof variation !== "object") {
-      return original === variation;
-    }
-    return (0, import_es6.default)(original?.styles, variation?.styles) && (0, import_es6.default)(original?.settings, variation?.settings);
-  }
   function isVariationWithProperties(variation, properties) {
     const variationWithProperties = filterObjectByProperties(
       structuredClone(variation),
       properties
     );
-    return areGlobalStyleConfigsEqual(variationWithProperties, variation);
+    return areGlobalStylesEqual(variationWithProperties, variation);
   }
   function getFontFamilyFromSetting(fontFamilies, setting) {
     if (!Array.isArray(fontFamilies) || !setting) {
@@ -8629,7 +8631,7 @@ var wp;
       }
     };
     const isActive = (0, import_element24.useMemo)(
-      () => areGlobalStyleConfigsEqual(user, variation),
+      () => areGlobalStylesEqual(user, variation),
       [user, variation]
     );
     let label = variation?.title;

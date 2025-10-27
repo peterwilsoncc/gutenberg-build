@@ -688,6 +688,62 @@ var wp;
     }
   });
 
+  // node_modules/fast-deep-equal/es6/index.js
+  var require_es6 = __commonJS({
+    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
+      "use strict";
+      module.exports = function equal(a3, b3) {
+        if (a3 === b3) return true;
+        if (a3 && b3 && typeof a3 == "object" && typeof b3 == "object") {
+          if (a3.constructor !== b3.constructor) return false;
+          var length, i3, keys;
+          if (Array.isArray(a3)) {
+            length = a3.length;
+            if (length != b3.length) return false;
+            for (i3 = length; i3-- !== 0; )
+              if (!equal(a3[i3], b3[i3])) return false;
+            return true;
+          }
+          if (a3 instanceof Map && b3 instanceof Map) {
+            if (a3.size !== b3.size) return false;
+            for (i3 of a3.entries())
+              if (!b3.has(i3[0])) return false;
+            for (i3 of a3.entries())
+              if (!equal(i3[1], b3.get(i3[0]))) return false;
+            return true;
+          }
+          if (a3 instanceof Set && b3 instanceof Set) {
+            if (a3.size !== b3.size) return false;
+            for (i3 of a3.entries())
+              if (!b3.has(i3[0])) return false;
+            return true;
+          }
+          if (ArrayBuffer.isView(a3) && ArrayBuffer.isView(b3)) {
+            length = a3.length;
+            if (length != b3.length) return false;
+            for (i3 = length; i3-- !== 0; )
+              if (a3[i3] !== b3[i3]) return false;
+            return true;
+          }
+          if (a3.constructor === RegExp) return a3.source === b3.source && a3.flags === b3.flags;
+          if (a3.valueOf !== Object.prototype.valueOf) return a3.valueOf() === b3.valueOf();
+          if (a3.toString !== Object.prototype.toString) return a3.toString() === b3.toString();
+          keys = Object.keys(a3);
+          length = keys.length;
+          if (length !== Object.keys(b3).length) return false;
+          for (i3 = length; i3-- !== 0; )
+            if (!Object.prototype.hasOwnProperty.call(b3, keys[i3])) return false;
+          for (i3 = length; i3-- !== 0; ) {
+            var key = keys[i3];
+            if (!equal(a3[key], b3[key])) return false;
+          }
+          return true;
+        }
+        return a3 !== a3 && b3 !== b3;
+      };
+    }
+  });
+
   // node_modules/deepmerge/dist/cjs.js
   var require_cjs = __commonJS({
     "node_modules/deepmerge/dist/cjs.js"(exports, module) {
@@ -865,62 +921,6 @@ var wp;
   var require_dom = __commonJS({
     "wordpress-external:@wordpress/dom"(exports, module) {
       module.exports = window.wp.dom;
-    }
-  });
-
-  // node_modules/fast-deep-equal/es6/index.js
-  var require_es6 = __commonJS({
-    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
-      "use strict";
-      module.exports = function equal(a3, b3) {
-        if (a3 === b3) return true;
-        if (a3 && b3 && typeof a3 == "object" && typeof b3 == "object") {
-          if (a3.constructor !== b3.constructor) return false;
-          var length, i3, keys;
-          if (Array.isArray(a3)) {
-            length = a3.length;
-            if (length != b3.length) return false;
-            for (i3 = length; i3-- !== 0; )
-              if (!equal(a3[i3], b3[i3])) return false;
-            return true;
-          }
-          if (a3 instanceof Map && b3 instanceof Map) {
-            if (a3.size !== b3.size) return false;
-            for (i3 of a3.entries())
-              if (!b3.has(i3[0])) return false;
-            for (i3 of a3.entries())
-              if (!equal(i3[1], b3.get(i3[0]))) return false;
-            return true;
-          }
-          if (a3 instanceof Set && b3 instanceof Set) {
-            if (a3.size !== b3.size) return false;
-            for (i3 of a3.entries())
-              if (!b3.has(i3[0])) return false;
-            return true;
-          }
-          if (ArrayBuffer.isView(a3) && ArrayBuffer.isView(b3)) {
-            length = a3.length;
-            if (length != b3.length) return false;
-            for (i3 = length; i3-- !== 0; )
-              if (a3[i3] !== b3[i3]) return false;
-            return true;
-          }
-          if (a3.constructor === RegExp) return a3.source === b3.source && a3.flags === b3.flags;
-          if (a3.valueOf !== Object.prototype.valueOf) return a3.valueOf() === b3.valueOf();
-          if (a3.toString !== Object.prototype.toString) return a3.toString() === b3.toString();
-          keys = Object.keys(a3);
-          length = keys.length;
-          if (length !== Object.keys(b3).length) return false;
-          for (i3 = length; i3-- !== 0; )
-            if (!Object.prototype.hasOwnProperty.call(b3, keys[i3])) return false;
-          for (i3 = length; i3-- !== 0; ) {
-            var key = keys[i3];
-            if (!equal(a3[key], b3[key])) return false;
-          }
-          return true;
-        }
-        return a3 !== a3 && b3 !== b3;
-      };
     }
   });
 
@@ -9163,6 +9163,15 @@ var wp;
     );
   }
 
+  // packages/global-styles-engine/build-module/core/equal.js
+  var import_es6 = __toESM(require_es6());
+  function areGlobalStylesEqual(original, variation) {
+    if (typeof original !== "object" || typeof variation !== "object") {
+      return original === variation;
+    }
+    return (0, import_es6.default)(original?.styles, variation?.styles) && (0, import_es6.default)(original?.settings, variation?.settings);
+  }
+
   // packages/global-styles-engine/build-module/core/merge.js
   var import_deepmerge = __toESM(require_cjs());
 
@@ -15861,7 +15870,6 @@ var wp;
   var import_i18n66 = __toESM(require_i18n());
 
   // packages/global-styles-ui/build-module/utils.js
-  var import_es6 = __toESM(require_es6());
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
       return object;
@@ -15898,18 +15906,12 @@ var wp;
     });
     return newObject;
   };
-  function areGlobalStyleConfigsEqual(original, variation) {
-    if (typeof original !== "object" || typeof variation !== "object") {
-      return original === variation;
-    }
-    return (0, import_es6.default)(original?.styles, variation?.styles) && (0, import_es6.default)(original?.settings, variation?.settings);
-  }
   function isVariationWithProperties(variation, properties) {
     const variationWithProperties = filterObjectByProperties(
       structuredClone(variation),
       properties
     );
-    return areGlobalStyleConfigsEqual(variationWithProperties, variation);
+    return areGlobalStylesEqual(variationWithProperties, variation);
   }
   function getFontFamilyFromSetting(fontFamilies, setting) {
     if (!Array.isArray(fontFamilies) || !setting) {
@@ -17439,7 +17441,7 @@ var wp;
       }
     };
     const isActive = (0, import_element49.useMemo)(
-      () => areGlobalStyleConfigsEqual(user, variation),
+      () => areGlobalStylesEqual(user, variation),
       [user, variation]
     );
     let label = variation?.title;
@@ -32124,7 +32126,7 @@ var wp;
       );
       return revision || currentEditorGlobalStyles;
     }, [revisionId, revisions, currentEditorGlobalStyles]);
-    const selectedRevisionMatchesEditorStyles = areGlobalStyleConfigsEqual(
+    const selectedRevisionMatchesEditorStyles = areGlobalStylesEqual(
       currentlySelectedRevision,
       currentEditorGlobalStyles
     );
