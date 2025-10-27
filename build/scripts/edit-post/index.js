@@ -2342,24 +2342,23 @@ var wp;
     "wp_block",
     "wp_navigation"
   ];
-  function useEditorStyles(...additionalStyles) {
-    const { hasThemeStyleSupport, editorSettings } = (0, import_data26.useSelect)((select3) => {
+  function useEditorStyles(settings, ...additionalStyles) {
+    const { hasThemeStyleSupport } = (0, import_data26.useSelect)((select3) => {
       return {
-        hasThemeStyleSupport: select3(store).isFeatureActive("themeStyles"),
-        editorSettings: select3(import_editor18.store).getEditorSettings()
+        hasThemeStyleSupport: select3(store).isFeatureActive("themeStyles")
       };
     }, []);
     const addedStyles = additionalStyles.join("\n");
     return (0, import_element12.useMemo)(() => {
-      const presetStyles = editorSettings.styles?.filter(
+      const presetStyles = settings.styles?.filter(
         (style) => style.__unstableType && style.__unstableType !== "theme"
       ) ?? [];
       const defaultEditorStyles = [
-        ...editorSettings?.defaultEditorStyles ?? [],
+        ...settings?.defaultEditorStyles ?? [],
         ...presetStyles
       ];
-      const hasThemeStyles = hasThemeStyleSupport && presetStyles.length !== (editorSettings.styles?.length ?? 0);
-      if (!editorSettings.disableLayoutStyles && !hasThemeStyles) {
+      const hasThemeStyles = hasThemeStyleSupport && presetStyles.length !== (settings.styles?.length ?? 0);
+      if (!settings.disableLayoutStyles && !hasThemeStyles) {
         defaultEditorStyles.push({
           css: getLayoutStyles({
             style: {},
@@ -2370,15 +2369,15 @@ var wp;
           })
         });
       }
-      const baseStyles = hasThemeStyles ? editorSettings.styles ?? [] : defaultEditorStyles;
+      const baseStyles = hasThemeStyles ? settings.styles ?? [] : defaultEditorStyles;
       if (addedStyles) {
         return [...baseStyles, { css: addedStyles }];
       }
       return baseStyles;
     }, [
-      editorSettings.defaultEditorStyles,
-      editorSettings.disableLayoutStyles,
-      editorSettings.styles,
+      settings.defaultEditorStyles,
+      settings.disableLayoutStyles,
+      settings.styles,
       hasThemeStyleSupport,
       addedStyles
     ]);
@@ -2686,16 +2685,22 @@ var wp;
     );
     const commandContext = hasBlockSelected ? "block-selection-edit" : "entity-edit";
     useCommandContext(commandContext);
+    const styles = useEditorStyles(settings, paddingStyle);
     const editorSettings = (0, import_element12.useMemo)(
       () => ({
         ...settings,
+        styles,
         onNavigateToEntityRecord,
         onNavigateToPreviousEntityRecord,
         defaultRenderingMode: "post-only"
       }),
-      [settings, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]
+      [
+        settings,
+        styles,
+        onNavigateToEntityRecord,
+        onNavigateToPreviousEntityRecord
+      ]
     );
-    const styles = useEditorStyles(paddingStyle);
     if (showIconLabels) {
       document.body.classList.add("show-icon-labels");
     } else {
@@ -2786,7 +2791,6 @@ var wp;
               postId: currentPostId,
               templateId,
               className,
-              styles,
               forceIsDirty: hasActiveMetaboxes,
               contentRef: paddingAppenderRef,
               disableIframe: !shouldIframe,
