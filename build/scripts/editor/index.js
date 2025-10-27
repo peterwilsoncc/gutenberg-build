@@ -1014,7 +1014,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment83 = REACT_FRAGMENT_TYPE;
+          var Fragment84 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1073,7 +1073,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment83;
+          exports.Fragment = Fragment84;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -46879,14 +46879,14 @@ var wp;
   var SIDEBARS = [collabHistorySidebarName, collabSidebarName];
 
   // packages/editor/build-module/components/collab-sidebar/comments.js
-  var import_jsx_runtime330 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime331 = __toESM(require_jsx_runtime());
   var import_element169 = __toESM(require_element());
-  var import_components205 = __toESM(require_components());
+  var import_components206 = __toESM(require_components());
   var import_compose58 = __toESM(require_compose());
-  var import_i18n216 = __toESM(require_i18n());
-  var import_data217 = __toESM(require_data());
+  var import_i18n217 = __toESM(require_i18n());
+  var import_data218 = __toESM(require_data());
   var import_dom8 = __toESM(require_dom());
-  var import_block_editor89 = __toESM(require_block_editor());
+  var import_block_editor90 = __toESM(require_block_editor());
 
   // packages/editor/build-module/components/collab-sidebar/comment-author-info.js
   var import_jsx_runtime328 = __toESM(require_jsx_runtime());
@@ -48628,7 +48628,7 @@ var wp;
       if (blockRef.current) {
         refs.setReference(blockRef.current);
       }
-    }, [blockRef, refs]);
+    }, [blockRef, refs, commentLastUpdated]);
     (0, import_element168.useEffect)(() => {
       if (refs.floating?.current) {
         setBlockRef(thread.id, blockRef.current);
@@ -48653,14 +48653,92 @@ var wp;
     };
   }
 
-  // packages/editor/build-module/components/collab-sidebar/comments.js
+  // packages/editor/build-module/components/collab-sidebar/add-comment.js
+  var import_jsx_runtime330 = __toESM(require_jsx_runtime());
+  var import_i18n216 = __toESM(require_i18n());
+  var import_data217 = __toESM(require_data());
+  var import_components205 = __toESM(require_components());
+  var import_block_editor89 = __toESM(require_block_editor());
   var { useBlockElement } = unlock(import_block_editor89.privateApis);
-  var { Menu: Menu6 } = unlock(import_components205.privateApis);
+  function AddComment({
+    onSubmit,
+    showCommentBoard,
+    setShowCommentBoard,
+    commentSidebarRef,
+    reflowComments = noop6,
+    isFloating = false,
+    y: y3,
+    refs
+  }) {
+    const { clientId, blockCommentId } = (0, import_data217.useSelect)((select5) => {
+      const { getSelectedBlock: getSelectedBlock2 } = select5(import_block_editor89.store);
+      const selectedBlock = getSelectedBlock2();
+      return {
+        clientId: selectedBlock?.clientId,
+        blockCommentId: selectedBlock?.attributes?.metadata?.noteId
+      };
+    }, []);
+    const blockElement = useBlockElement(clientId);
+    if (!showCommentBoard || !clientId || void 0 !== blockCommentId) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(
+      import_components205.__experimentalVStack,
+      {
+        className: clsx_default(
+          "editor-collab-sidebar-panel__thread is-selected",
+          {
+            "is-floating": isFloating
+          }
+        ),
+        spacing: "3",
+        tabIndex: 0,
+        "aria-label": (0, import_i18n216.__)("New note"),
+        role: "listitem",
+        ref: isFloating ? refs.setFloating : void 0,
+        style: isFloating ? (
+          // Delay showing the floating note box until a Y position is known to prevent blink.
+          { top: y3, opacity: !y3 ? 0 : void 0 }
+        ) : void 0,
+        onBlur: (event) => {
+          if (event.currentTarget.contains(event.relatedTarget)) {
+            return;
+          }
+          setShowCommentBoard(false);
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalHStack, { alignment: "left", spacing: "3", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(comment_author_info_default, {}) }),
+          /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+            comment_form_default,
+            {
+              onSubmit: async (inputComment) => {
+                const { id } = await onSubmit({ content: inputComment });
+                focusCommentThread(id, commentSidebarRef.current);
+                setShowCommentBoard(false);
+              },
+              onCancel: () => {
+                setShowCommentBoard(false);
+                blockElement?.focus();
+              },
+              reflowComments,
+              submitButtonText: (0, import_i18n216.__)("Add note"),
+              labelText: (0, import_i18n216.__)("New note")
+            }
+          )
+        ]
+      }
+    );
+  }
+
+  // packages/editor/build-module/components/collab-sidebar/comments.js
+  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor90.privateApis);
+  var { Menu: Menu6 } = unlock(import_components206.privateApis);
   function Comments({
-    threads,
+    threads: noteThreads,
     onEditComment,
     onAddReply,
     onCommentDelete,
+    showCommentBoard,
     setShowCommentBoard,
     commentSidebarRef,
     reflowComments,
@@ -48671,15 +48749,48 @@ var wp;
     const [selectedThread, setSelectedThread] = (0, import_element169.useState)(null);
     const [boardOffsets, setBoardOffsets] = (0, import_element169.useState)({});
     const [blockRefs, setBlockRefs] = (0, import_element169.useState)({});
-    const { blockCommentId, selectedBlockClientId } = (0, import_data217.useSelect)((select5) => {
-      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor89.store);
+    const { blockCommentId, selectedBlockClientId, orderedBlockIds } = (0, import_data218.useSelect)((select5) => {
+      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor90.store);
       const clientId = getSelectedBlockClientId2();
       return {
         blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
-        selectedBlockClientId: clientId
+        selectedBlockClientId: clientId,
+        orderedBlockIds: select5(import_block_editor90.store).getBlockOrder()
       };
     }, []);
-    const relatedBlockElement = useBlockElement(selectedBlockClientId);
+    const relatedBlockElement = useBlockElement2(selectedBlockClientId);
+    const threads = (0, import_element169.useMemo)(() => {
+      const t4 = [...noteThreads];
+      const orderedThreads = [];
+      if (isFloating && showCommentBoard && void 0 === blockCommentId) {
+        const newNoteThread = {
+          id: "new-note-thread",
+          blockClientId: selectedBlockClientId,
+          content: { rendered: "" }
+        };
+        orderedBlockIds.forEach((blockId) => {
+          if (blockId === selectedBlockClientId) {
+            orderedThreads.push(newNoteThread);
+          } else {
+            const threadForBlock = t4.find(
+              (thread) => thread.blockClientId === blockId
+            );
+            if (threadForBlock) {
+              orderedThreads.push(threadForBlock);
+            }
+          }
+        });
+        return orderedThreads;
+      }
+      return t4;
+    }, [
+      noteThreads,
+      isFloating,
+      showCommentBoard,
+      blockCommentId,
+      selectedBlockClientId,
+      orderedBlockIds
+    ]);
     const handleDelete = async (comment) => {
       const currentIndex = threads.findIndex((t4) => t4.id === comment.id);
       const nextThread = threads[currentIndex + 1];
@@ -48782,32 +48893,53 @@ var wp;
     }, [heights, blockRefs, isFloating, threads, selectedThread]);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
-      return /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(import_components205.__experimentalVStack, { alignment: "left", justify: "flex-start", spacing: "2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalText, { as: "p", children: (0, import_i18n216.__)("No notes available.") }),
-        /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalText, { as: "p", variant: "muted", children: (0, import_i18n216.__)("Only logged in users can see Notes.") })
+      return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_jsx_runtime331.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+          AddComment,
+          {
+            onSubmit: onAddReply,
+            showCommentBoard,
+            setShowCommentBoard,
+            commentSidebarRef
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalText, { as: "p", children: (0, import_i18n217.__)("No notes available.") }),
+        /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalText, { as: "p", variant: "muted", children: (0, import_i18n217.__)("Only logged in users can see Notes.") })
       ] });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalVStack, { spacing: "3", children: threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-      Thread,
-      {
-        thread,
-        onAddReply,
-        onCommentDelete: handleDelete,
-        onEditComment,
-        isSelected: selectedThread === thread.id,
-        setSelectedThread,
-        setShowCommentBoard,
-        commentSidebarRef,
-        reflowComments,
-        isFloating,
-        calculatedOffset: boardOffsets[thread.id] ?? 0,
-        setHeights,
-        setBlockRef,
-        selectedThread,
-        commentLastUpdated
-      },
-      thread.id
-    )) });
+    return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_jsx_runtime331.Fragment, { children: [
+      !isFloating && showCommentBoard && void 0 === blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+        AddComment,
+        {
+          onSubmit: onAddReply,
+          showCommentBoard,
+          setShowCommentBoard,
+          commentSidebarRef
+        }
+      ),
+      threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+        Thread,
+        {
+          thread,
+          onAddReply,
+          onCommentDelete: handleDelete,
+          onEditComment,
+          isSelected: selectedThread === thread.id,
+          setSelectedThread,
+          setShowCommentBoard,
+          commentSidebarRef,
+          reflowComments,
+          isFloating,
+          calculatedOffset: boardOffsets[thread.id] ?? 0,
+          setHeights,
+          setBlockRef,
+          selectedThread,
+          commentLastUpdated,
+          showCommentBoard
+        },
+        thread.id
+      ))
+    ] });
   }
   function Thread({
     thread,
@@ -48824,12 +48956,13 @@ var wp;
     setBlockRef,
     setSelectedThread,
     selectedThread,
-    commentLastUpdated
+    commentLastUpdated,
+    showCommentBoard
   }) {
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
-      (0, import_data217.useDispatch)(import_block_editor89.store)
+      (0, import_data218.useDispatch)(import_block_editor90.store)
     );
-    const relatedBlockElement = useBlockElement(thread.blockClientId);
+    const relatedBlockElement = useBlockElement2(thread.blockClientId);
     const debouncedToggleBlockHighlight = (0, import_compose58.useDebounce)(
       toggleBlockHighlight,
       50
@@ -48865,23 +48998,38 @@ var wp;
     const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
     const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
     const commentExcerpt = getCommentExcerpt(
-      (0, import_dom8.__unstableStripHTML)(thread.content.rendered),
+      (0, import_dom8.__unstableStripHTML)(thread.content?.rendered),
       10
     );
-    const ariaLabel = !!thread.blockClientId ? (0, import_i18n216.sprintf)(
+    const ariaLabel = !!thread.blockClientId ? (0, import_i18n217.sprintf)(
       // translators: %s: note excerpt
-      (0, import_i18n216.__)("Note: %s"),
+      (0, import_i18n217.__)("Note: %s"),
       commentExcerpt
-    ) : (0, import_i18n216.sprintf)(
+    ) : (0, import_i18n217.sprintf)(
       // translators: %s: note excerpt
-      (0, import_i18n216.__)("Original block deleted. Note: %s"),
+      (0, import_i18n217.__)("Original block deleted. Note: %s"),
       commentExcerpt
     );
+    if ("new-note-thread" === thread.id && showCommentBoard && isFloating) {
+      return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+        AddComment,
+        {
+          onSubmit: onAddReply,
+          showCommentBoard,
+          setShowCommentBoard,
+          commentSidebarRef,
+          reflowComments,
+          isFloating,
+          y: y3,
+          refs
+        }
+      );
+    }
     return (
       // Disable reason: role="listitem" does in fact support aria-expanded.
       // eslint-disable-next-line jsx-a11y/role-supports-aria-props
-      /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(
-        import_components205.__experimentalVStack,
+      /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(
+        import_components206.__experimentalVStack,
         {
           className: clsx_default("editor-collab-sidebar-panel__thread", {
             "is-selected": isSelected,
@@ -48917,8 +49065,8 @@ var wp;
           ref: isFloating ? refs.setFloating : void 0,
           style: isFloating ? { top: y3 } : void 0,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-              import_components205.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+              import_components206.Button,
               {
                 className: "editor-collab-sidebar-panel__skip-to-comment",
                 variant: "secondary",
@@ -48930,11 +49078,11 @@ var wp;
                     "textarea"
                   );
                 },
-                children: (0, import_i18n216.__)("Add new note")
+                children: (0, import_i18n217.__)("Add new note")
               }
             ),
-            !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n216.__)("Original block deleted.") }),
-            /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+            !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n217.__)("Original block deleted.") }),
+            /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
               CommentBoard,
               {
                 thread,
@@ -48954,7 +49102,7 @@ var wp;
                 reflowComments
               }
             ),
-            isSelected && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+            isSelected && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
               CommentBoard,
               {
                 thread: reply,
@@ -48966,8 +49114,8 @@ var wp;
               },
               reply.id
             )),
-            !isSelected && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalHStack, { className: "editor-collab-sidebar-panel__more-reply-separator", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-              import_components205.Button,
+            !isSelected && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalHStack, { className: "editor-collab-sidebar-panel__more-reply-separator", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+              import_components206.Button,
               {
                 size: "compact",
                 variant: "tertiary",
@@ -48979,9 +49127,9 @@ var wp;
                     commentSidebarRef.current
                   );
                 },
-                children: (0, import_i18n216.sprintf)(
+                children: (0, import_i18n217.sprintf)(
                   // translators: %s: number of replies.
-                  (0, import_i18n216._n)(
+                  (0, import_i18n217._n)(
                     "%s more reply",
                     "%s more replies",
                     restReplies.length
@@ -48990,7 +49138,7 @@ var wp;
                 )
               }
             ) }),
-            !isSelected && lastReply && /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+            !isSelected && lastReply && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
               CommentBoard,
               {
                 thread: lastReply,
@@ -49001,9 +49149,9 @@ var wp;
                 reflowComments
               }
             ),
-            isSelected && /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(import_components205.__experimentalVStack, { spacing: "2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(comment_author_info_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components205.__experimentalVStack, { spacing: "2", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+            isSelected && /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalVStack, { spacing: "2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(comment_author_info_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalVStack, { spacing: "2", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
                 comment_form_default,
                 {
                   onSubmit: (inputComment) => {
@@ -49028,11 +49176,11 @@ var wp;
                       commentSidebarRef.current
                     );
                   },
-                  submitButtonText: "approved" === thread.status ? (0, import_i18n216.__)("Reopen & Reply") : (0, import_i18n216.__)("Reply"),
+                  submitButtonText: "approved" === thread.status ? (0, import_i18n217.__)("Reopen & Reply") : (0, import_i18n217.__)("Reply"),
                   rows: "approved" === thread.status ? 2 : 4,
-                  labelText: (0, import_i18n216.sprintf)(
+                  labelText: (0, import_i18n217.sprintf)(
                     // translators: %1$s: note identifier, %2$s: author name
-                    (0, import_i18n216.__)("Reply to note %1$s by %2$s"),
+                    (0, import_i18n217.__)("Reply to note %1$s by %2$s"),
                     thread.id,
                     thread.author_name
                   ),
@@ -49040,8 +49188,8 @@ var wp;
                 }
               ) })
             ] }),
-            !!thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-              import_components205.Button,
+            !!thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+              import_components206.Button,
               {
                 className: "editor-collab-sidebar-panel__skip-to-block",
                 variant: "secondary",
@@ -49050,7 +49198,7 @@ var wp;
                   event.stopPropagation();
                   relatedBlockElement?.focus();
                 },
-                children: (0, import_i18n216.__)("Back to block")
+                children: (0, import_i18n217.__)("Back to block")
               }
             )
           ]
@@ -49081,7 +49229,7 @@ var wp;
     const actions2 = [
       {
         id: "edit",
-        title: (0, import_i18n216.__)("Edit"),
+        title: (0, import_i18n217.__)("Edit"),
         isEligible: ({ status }) => status !== "approved",
         onClick: () => {
           setActionState("edit");
@@ -49089,7 +49237,7 @@ var wp;
       },
       {
         id: "reopen",
-        title: (0, import_i18n216._x)("Reopen", "Reopen note"),
+        title: (0, import_i18n217._x)("Reopen", "Reopen note"),
         isEligible: ({ status }) => status === "approved",
         onClick: () => {
           onEdit({ id: thread.id, status: "hold" });
@@ -49097,7 +49245,7 @@ var wp;
       },
       {
         id: "delete",
-        title: (0, import_i18n216.__)("Delete"),
+        title: (0, import_i18n217.__)("Delete"),
         isEligible: () => true,
         onClick: () => {
           setActionState("delete");
@@ -49107,9 +49255,9 @@ var wp;
     ];
     const canResolve = thread.parent === 0;
     const moreActions = parent?.status !== "approved" ? actions2.filter((item) => item.isEligible(thread)) : [];
-    return /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(import_components205.__experimentalVStack, { spacing: "2", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(import_components205.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalVStack, { spacing: "2", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
           comment_author_info_default,
           {
             avatar: thread?.author_avatar_urls?.[48],
@@ -49118,18 +49266,18 @@ var wp;
             userId: thread?.author
           }
         ),
-        isExpanded && /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-          import_components205.FlexItem,
+        isExpanded && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+          import_components206.FlexItem,
           {
             className: "editor-collab-sidebar-panel__comment-status",
             onClick: (event) => {
               event.stopPropagation();
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(import_components205.__experimentalHStack, { spacing: "0", children: [
-              canResolve && /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-                import_components205.Button,
+            children: /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalHStack, { spacing: "0", children: [
+              canResolve && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                import_components206.Button,
                 {
-                  label: (0, import_i18n216._x)(
+                  label: (0, import_i18n217._x)(
                     "Resolve",
                     "Mark note as resolved"
                   ),
@@ -49145,27 +49293,27 @@ var wp;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(Menu6, { placement: "bottom-end", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(Menu6, { placement: "bottom-end", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
                   Menu6.TriggerButton,
                   {
-                    render: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-                      import_components205.Button,
+                    render: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                      import_components206.Button,
                       {
                         size: "small",
                         icon: more_vertical_default,
-                        label: (0, import_i18n216.__)("Actions"),
+                        label: (0, import_i18n217.__)("Actions"),
                         disabled: !moreActions.length,
                         accessibleWhenDisabled: true
                       }
                     )
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(Menu6.Popover, { children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Menu6.Popover, { children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
                   Menu6.Item,
                   {
                     onClick: () => action.onClick(),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(Menu6.ItemLabel, { children: action.title })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Menu6.ItemLabel, { children: action.title })
                   },
                   action.id
                 )) })
@@ -49174,7 +49322,7 @@ var wp;
           }
         )
       ] }),
-      "edit" === actionState ? /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+      "edit" === actionState ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
         comment_form_default,
         {
           onSubmit: (value) => {
@@ -49186,16 +49334,16 @@ var wp;
           },
           onCancel: () => handleCancel(),
           thread,
-          submitButtonText: (0, import_i18n216._x)("Update", "verb"),
-          labelText: (0, import_i18n216.sprintf)(
+          submitButtonText: (0, import_i18n217._x)("Update", "verb"),
+          labelText: (0, import_i18n217.sprintf)(
             // translators: %1$s: note identifier, %2$s: author name.
-            (0, import_i18n216.__)("Edit note %1$s by %2$s"),
+            (0, import_i18n217.__)("Edit note %1$s by %2$s"),
             thread.id,
             thread.author_name
           ),
           reflowComments
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+      ) : /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
         import_element169.RawHTML,
         {
           className: clsx_default(
@@ -49205,12 +49353,12 @@ var wp;
             }
           ),
           children: isResolutionComment ? (() => {
-            const actionText = thread.meta._wp_note_status === "resolved" ? (0, import_i18n216.__)("Marked as resolved") : (0, import_i18n216.__)("Reopened");
+            const actionText = thread.meta._wp_note_status === "resolved" ? (0, import_i18n217.__)("Marked as resolved") : (0, import_i18n217.__)("Reopened");
             const content = thread?.content?.raw;
             if (content && typeof content === "string" && content.trim() !== "") {
-              return (0, import_i18n216.sprintf)(
+              return (0, import_i18n217.sprintf)(
                 // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: note text.
-                (0, import_i18n216.__)("%1$s: %2$s"),
+                (0, import_i18n217.__)("%1$s: %2$s"),
                 actionText,
                 content
               );
@@ -49219,73 +49367,18 @@ var wp;
           })() : thread?.content?.rendered
         }
       ),
-      "delete" === actionState && /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-        import_components205.__experimentalConfirmDialog,
+      "delete" === actionState && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+        import_components206.__experimentalConfirmDialog,
         {
           isOpen: showConfirmDialog,
           onConfirm: handleConfirmDelete,
           onCancel: handleCancel,
-          confirmButtonText: (0, import_i18n216.__)("Delete"),
-          children: (0, import_i18n216.__)("Are you sure you want to delete this note?")
+          confirmButtonText: (0, import_i18n217.__)("Delete"),
+          children: (0, import_i18n217.__)("Are you sure you want to delete this note?")
         }
       )
     ] });
   };
-
-  // packages/editor/build-module/components/collab-sidebar/add-comment.js
-  var import_jsx_runtime331 = __toESM(require_jsx_runtime());
-  var import_i18n217 = __toESM(require_i18n());
-  var import_data218 = __toESM(require_data());
-  var import_components206 = __toESM(require_components());
-  var import_block_editor90 = __toESM(require_block_editor());
-  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor90.privateApis);
-  function AddComment({
-    onSubmit,
-    showCommentBoard,
-    setShowCommentBoard,
-    commentSidebarRef
-  }) {
-    const { clientId, blockCommentId } = (0, import_data218.useSelect)((select5) => {
-      const { getSelectedBlock: getSelectedBlock2 } = select5(import_block_editor90.store);
-      const selectedBlock = getSelectedBlock2();
-      return {
-        clientId: selectedBlock?.clientId,
-        blockCommentId: selectedBlock?.attributes?.metadata?.noteId
-      };
-    }, []);
-    const blockElement = useBlockElement2(clientId);
-    if (!showCommentBoard || !clientId || void 0 !== blockCommentId) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(
-      import_components206.__experimentalVStack,
-      {
-        className: "editor-collab-sidebar-panel__thread is-selected",
-        spacing: "3",
-        tabIndex: 0,
-        role: "listitem",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalHStack, { alignment: "left", spacing: "3", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(comment_author_info_default, {}) }),
-          /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-            comment_form_default,
-            {
-              onSubmit: async (inputComment) => {
-                const { id } = await onSubmit({ content: inputComment });
-                focusCommentThread(id, commentSidebarRef.current);
-                setShowCommentBoard(false);
-              },
-              onCancel: () => {
-                setShowCommentBoard(false);
-                blockElement?.focus();
-              },
-              submitButtonText: (0, import_i18n217.__)("Add note"),
-              labelText: (0, import_i18n217.__)("New Note")
-            }
-          )
-        ]
-      }
-    );
-  }
 
   // packages/editor/build-module/components/collab-sidebar/comment-menu-item.js
   var import_jsx_runtime332 = __toESM(require_jsx_runtime());
@@ -49414,7 +49507,7 @@ var wp;
     isFloating = false
   }) {
     const { onCreate, onEdit, onDelete } = useBlockCommentsActions(reflowComments);
-    return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
       import_components209.__experimentalVStack,
       {
         className: "editor-collab-sidebar-panel",
@@ -49427,32 +49520,21 @@ var wp;
             commentSidebarRef.current = node;
           }
         },
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
-            AddComment,
-            {
-              onSubmit: onCreate,
-              showCommentBoard,
-              setShowCommentBoard,
-              commentSidebarRef
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
-            Comments,
-            {
-              threads: comments,
-              onEditComment: onEdit,
-              onAddReply: onCreate,
-              onCommentDelete: onDelete,
-              showCommentBoard,
-              setShowCommentBoard,
-              commentSidebarRef,
-              reflowComments,
-              commentLastUpdated,
-              isFloating
-            }
-          )
-        ]
+        children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+          Comments,
+          {
+            threads: comments,
+            onEditComment: onEdit,
+            onAddReply: onCreate,
+            onCommentDelete: onDelete,
+            showCommentBoard,
+            setShowCommentBoard,
+            commentSidebarRef,
+            reflowComments,
+            commentLastUpdated,
+            isFloating
+          }
+        )
       }
     );
   }
