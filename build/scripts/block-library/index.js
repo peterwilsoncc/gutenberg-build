@@ -4463,10 +4463,9 @@ var wp;
     description: "Display a breadcrumb trail for hierarchical post types or based on taxonomy terms.",
     textdomain: "default",
     attributes: {
-      type: {
-        type: "string",
-        default: "auto",
-        enum: ["auto", "postWithTerms", "postWithAncestors"]
+      prefersTaxonomy: {
+        type: "boolean",
+        default: false
       },
       separator: {
         type: "string",
@@ -4534,33 +4533,19 @@ var wp;
   var import_element9 = __toESM(require_element());
   var import_server_side_render2 = __toESM(require_server_side_render());
   var separatorDefaultValue = "/";
-  var typeDefaultValue = "auto";
-  var BREADCRUMB_TYPES = {
-    auto: {
-      help: (0, import_i18n11.__)(
-        "Try to automatically determine the best type of breadcrumb for the template."
-      )
-    },
-    postWithAncestors: {
-      help: (0, import_i18n11.__)(
-        "Shows breadcrumbs based on post hierarchy. Only works for hierarchical post types."
-      ),
-      placeholderItems: [(0, import_i18n11.__)("Ancestor"), (0, import_i18n11.__)("Parent")]
-    },
-    postWithTerms: {
-      help: (0, import_i18n11.__)(
-        "Shows breadcrumbs based on taxonomy terms. Chooses the first taxonomy with assigned terms and includes ancestors if the taxonomy is hierarchical."
-      ),
-      placeholderItems: [(0, import_i18n11.__)("Category")]
-    }
-  };
   function BreadcrumbEdit({
     attributes: attributes3,
     setAttributes,
     context: { postId, postType, templateSlug }
   }) {
-    const { separator, showHomeLink, type } = attributes3;
-    const { post, isPostTypeHierarchical, hasTermsAssigned, isLoading } = (0, import_data7.useSelect)(
+    const { separator, showHomeLink, prefersTaxonomy } = attributes3;
+    const {
+      post,
+      isPostTypeHierarchical,
+      postTypeHasTaxonomies,
+      hasTermsAssigned,
+      isLoading
+    } = (0, import_data7.useSelect)(
       (select8) => {
         if (!postType) {
           return {};
@@ -4571,9 +4556,9 @@ var wp;
           postId
         );
         const postTypeObject = select8(import_core_data4.store).getPostType(postType);
-        const postTypeHasTaxonomies = postTypeObject && postTypeObject.taxonomies.length;
+        const _postTypeHasTaxonomies = postTypeObject && postTypeObject.taxonomies.length;
         let taxonomies;
-        if (postTypeHasTaxonomies) {
+        if (_postTypeHasTaxonomies) {
           taxonomies = select8(import_core_data4.store).getTaxonomies({
             type: postType,
             per_page: -1
@@ -4582,12 +4567,13 @@ var wp;
         return {
           post: _post,
           isPostTypeHierarchical: postTypeObject?.hierarchical,
+          postTypeHasTaxonomies: _postTypeHasTaxonomies,
           hasTermsAssigned: _post && (taxonomies || []).filter(
             ({ visibility }) => visibility?.publicly_queryable
           ).some((taxonomy) => {
             return !!_post[taxonomy.rest_base]?.length;
           }),
-          isLoading: !_post || !postTypeObject || postTypeHasTaxonomies && !taxonomies
+          isLoading: postId && !_post || !postTypeObject || _postTypeHasTaxonomies && !taxonomies
         };
       },
       [postType, postId]
@@ -4607,27 +4593,31 @@ var wp;
     if (isLoading) {
       return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components9.Spinner, {}) });
     }
-    let breadcrumbsType;
-    const isSpecificSupportedTypeSet = [
-      "postWithAncestors",
-      "postWithTerms"
-    ].includes(type);
-    if (isSpecificSupportedTypeSet) {
-      breadcrumbsType = type;
+    let _showTerms;
+    if (!isPostTypeHierarchical) {
+      _showTerms = true;
+    } else if (!postTypeHasTaxonomies) {
+      _showTerms = false;
     } else {
-      breadcrumbsType = isPostTypeHierarchical ? "postWithAncestors" : "postWithTerms";
+      _showTerms = prefersTaxonomy;
     }
     let placeholder2 = null;
     const showPlaceholder = !postId || !postType || // When `templateSlug` is set only show placeholder if the post type is not.
     // This is needed because when we are showing the template in post editor we
     // want to show the real breadcrumbs if we have the post type.
-    templateSlug && !postType || breadcrumbsType === "postWithAncestors" && !isPostTypeHierarchical || breadcrumbsType === "postWithTerms" && !hasTermsAssigned;
+    templateSlug && !postType || !_showTerms && !isPostTypeHierarchical || _showTerms && !hasTermsAssigned;
     if (showPlaceholder) {
-      const placeholderItems = [
-        showHomeLink && (0, import_i18n11.__)("Home"),
-        // For now if we are adding this in a template show a generic placeholder.
-        ...templateSlug && !isSpecificSupportedTypeSet ? [(0, import_i18n11.__)("Page")] : BREADCRUMB_TYPES[breadcrumbsType].placeholderItems
-      ].filter(Boolean);
+      const placeholderItems = [];
+      if (showHomeLink) {
+        placeholderItems.push((0, import_i18n11.__)("Home"));
+      }
+      if (templateSlug && !postId) {
+        placeholderItems.push((0, import_i18n11.__)("Page"));
+      } else if (_showTerms) {
+        placeholderItems.push((0, import_i18n11.__)("Category"));
+      } else {
+        placeholderItems.push((0, import_i18n11.__)("Ancestor"), (0, import_i18n11.__)("Parent"));
+      }
       placeholder2 = /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
         "nav",
         {
@@ -4650,48 +4640,11 @@ var wp;
           resetAll: () => {
             setAttributes({
               separator: separatorDefaultValue,
-              showHomeLink: true,
-              type: typeDefaultValue
+              showHomeLink: true
             });
           },
           dropdownMenuProps,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
-              import_components9.__experimentalToolsPanelItem,
-              {
-                label: (0, import_i18n11.__)("Type"),
-                isShownByDefault: true,
-                hasValue: () => type !== typeDefaultValue,
-                onDeselect: () => setAttributes({
-                  type: typeDefaultValue
-                }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
-                  import_components9.SelectControl,
-                  {
-                    __nextHasNoMarginBottom: true,
-                    __next40pxDefaultSize: true,
-                    label: (0, import_i18n11.__)("Type"),
-                    value: type,
-                    onChange: (value) => setAttributes({ type: value }),
-                    options: [
-                      {
-                        label: (0, import_i18n11.__)("Auto"),
-                        value: "auto"
-                      },
-                      {
-                        label: (0, import_i18n11.__)("Post with ancestors"),
-                        value: "postWithAncestors"
-                      },
-                      {
-                        label: (0, import_i18n11.__)("Post with terms"),
-                        value: "postWithTerms"
-                      }
-                    ],
-                    help: BREADCRUMB_TYPES[type].help
-                  }
-                )
-              }
-            ),
             /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
               import_components9.__experimentalToolsPanelItem,
               {
@@ -4742,6 +4695,18 @@ var wp;
               }
             )
           ]
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_block_editor17.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+        import_components9.CheckboxControl,
+        {
+          __nextHasNoMarginBottom: true,
+          label: (0, import_i18n11.__)("Prefer taxonomy terms"),
+          checked: prefersTaxonomy,
+          onChange: (value) => setAttributes({ prefersTaxonomy: value }),
+          help: (0, import_i18n11.__)(
+            "The exact type of breadcrumbs shown will vary automatically depending on the page in which this block is displayed. In the specific case of a hierarchical post type with taxonomies, the breadcrumbs can either reflect its post hierarchy (default) or the hierarchy of its assigned taxonomy terms."
+          )
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: showPlaceholder ? placeholder2 : /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_element9.RawHTML, { inert: "true", children: content }) })
