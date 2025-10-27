@@ -14361,12 +14361,16 @@ var wp;
     "featured_media",
     "format",
     "ping_status",
+    "meta",
     "slug",
     "status",
     "sticky",
     "tags",
     "template",
     "title"
+  ]);
+  var disallowedPostMetaKeys = /* @__PURE__ */ new Set([
+    WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   ]);
   function defaultApplyChangesToCRDTDoc(ydoc, changes) {
     const ymap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
@@ -14386,7 +14390,7 @@ var wp;
       }
     });
   }
-  function applyPostChangesToCRDTDoc(ydoc, changes, postType) {
+  function applyPostChangesToCRDTDoc(ydoc, changes, _postType) {
     const ymap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
     Object.entries(changes).forEach(([key, newValue]) => {
       if (!allowedPostProperties.has(key)) {
@@ -14413,6 +14417,31 @@ var wp;
           const currentValue = ymap.get("excerpt");
           const rawNewValue = getRawValue(newValue);
           mergeValue(currentValue, rawNewValue, setValue);
+          break;
+        }
+        // "Meta" is overloaded term; here, it refers to post meta.
+        case "meta": {
+          let metaMap = ymap.get("meta");
+          if (!(metaMap instanceof yjs_exports.Map)) {
+            metaMap = new yjs_exports.Map();
+            setValue(metaMap);
+          }
+          Object.entries(newValue ?? {}).forEach(
+            ([metaKey, metaValue]) => {
+              if (disallowedPostMetaKeys.has(metaKey)) {
+                return;
+              }
+              mergeValue(
+                metaMap.get(metaKey),
+                // current value in CRDT
+                metaValue,
+                // new value from changes
+                (updatedMetaValue) => {
+                  metaMap.set(metaKey, updatedMetaValue);
+                }
+              );
+            }
+          );
           break;
         }
         case "slug": {
@@ -14446,9 +14475,10 @@ var wp;
   function defaultGetChangesFromCRDTDoc(crdtDoc) {
     return crdtDoc.getMap(CRDT_RECORD_MAP_KEY).toJSON();
   }
-  function getPostChangesFromCRDTDoc(ydoc, editedRecord, postType) {
+  function getPostChangesFromCRDTDoc(ydoc, editedRecord, _postType) {
     const ymap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
-    return Object.fromEntries(
+    let allowedMetaChanges = {};
+    const changes = Object.fromEntries(
       Object.entries(ymap.toJSON()).filter(([key, newValue]) => {
         if (!allowedPostProperties.has(key)) {
           return false;
@@ -14473,6 +14503,18 @@ var wp;
             }
             return haveValuesChanged(currentValue, newValue);
           }
+          case "meta": {
+            allowedMetaChanges = Object.fromEntries(
+              Object.entries(newValue ?? {}).filter(
+                ([metaKey]) => !disallowedPostMetaKeys.has(metaKey)
+              )
+            );
+            const mergedValue = {
+              ...currentValue,
+              ...allowedMetaChanges
+            };
+            return haveValuesChanged(currentValue, mergedValue);
+          }
           case "status": {
             if ("auto-draft" === newValue) {
               return false;
@@ -14493,6 +14535,13 @@ var wp;
         }
       })
     );
+    if ("object" === typeof changes.meta) {
+      changes.meta = {
+        ...editedRecord.meta,
+        ...allowedMetaChanges
+      };
+    }
+    return changes;
   }
   function getRawValue(value) {
     if ("string" === typeof value) {
