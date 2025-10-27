@@ -56125,12 +56125,12 @@ var wp;
         const { getBlockAttributes: getBlockAttributes3 } = select2(store);
         const blockAttributes = getBlockAttributes3(clientId);
         let clientSideFieldLabel = null;
-        if (blockBindingsSource?.editorUI) {
-          const editorUIResult = blockBindingsSource.editorUI({
+        if (blockBindingsSource?.getFieldsList) {
+          const fieldsItems = blockBindingsSource.getFieldsList({
             select: select2,
             context: blockBindingsContext
           });
-          clientSideFieldLabel = editorUIResult.data?.find(
+          clientSideFieldLabel = fieldsItems?.find(
             (item) => (0, import_es65.default)(item.args, relatedBinding?.args)
           )?.label;
         }
@@ -63218,12 +63218,7 @@ var wp;
       }
     } : {};
   };
-  function BlockBindingsPanelMenuContent({
-    attribute,
-    binding,
-    sources,
-    onOpenModal
-  }) {
+  function BlockBindingsPanelMenuContent({ attribute, binding, sources }) {
     const { clientId } = useBlockEditContext();
     const { updateBlockBindings } = useBlockBindingsUtils();
     const isMobile = (0, import_compose98.useViewportMatch)("medium", "<");
@@ -63246,79 +63241,66 @@ var wp;
       if (noItemsAvailable) {
         return null;
       }
-      if (source.mode === "dropdown") {
-        return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
-          Menu,
-          {
-            placement: isMobile ? "bottom-start" : "left-start",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemLabel, { children: source.label }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.Popover, { gutter: 8, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.Group, { children: sourceDataItems.map((item) => {
-                const itemBindings = {
-                  source: sourceKey,
-                  args: item?.args || {
-                    key: item.key
-                  }
-                };
-                const values = source.getValues({
-                  select: select2,
-                  context: blockContext,
-                  bindings: {
-                    [attribute]: itemBindings
-                  }
-                });
-                return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
-                  Menu.CheckboxItem,
-                  {
-                    onChange: () => {
-                      const isCurrentlySelected = (0, import_es66.default)(
-                        binding?.args,
-                        item.args
-                      ) ?? // Deprecate key dependency in 7.0.
-                      item.key === binding?.args?.key;
-                      if (isCurrentlySelected) {
-                        updateBlockBindings({
-                          [attribute]: void 0
-                        });
-                      } else {
-                        updateBlockBindings({
-                          [attribute]: itemBindings
-                        });
-                      }
-                    },
-                    name: attribute + "-binding",
-                    value: values[attribute],
-                    checked: (0, import_es66.default)(
+      return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
+        Menu,
+        {
+          placement: isMobile ? "bottom-start" : "left-start",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemLabel, { children: source.label }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.Popover, { gutter: 8, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.Group, { children: sourceDataItems.map((item) => {
+              const itemBindings = {
+                source: sourceKey,
+                args: item?.args || {
+                  key: item.key
+                }
+              };
+              const values = source.getValues({
+                select: select2,
+                context: blockContext,
+                bindings: {
+                  [attribute]: itemBindings
+                }
+              });
+              return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
+                Menu.CheckboxItem,
+                {
+                  onChange: () => {
+                    const isCurrentlySelected = (0, import_es66.default)(
                       binding?.args,
                       item.args
                     ) ?? // Deprecate key dependency in 7.0.
-                    item.key === binding?.args?.key,
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemLabel, { children: item?.label }),
-                      /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemHelpText, { children: values[attribute] })
-                    ]
+                    item.key === binding?.args?.key;
+                    if (isCurrentlySelected) {
+                      updateBlockBindings({
+                        [attribute]: void 0
+                      });
+                    } else {
+                      updateBlockBindings({
+                        [attribute]: itemBindings
+                      });
+                    }
                   },
-                  sourceKey + JSON.stringify(
+                  name: attribute + "-binding",
+                  value: values[attribute],
+                  checked: (0, import_es66.default)(
+                    binding?.args,
                     item.args
-                  ) || item.key
-                );
-              }) }) })
-            ]
-          },
-          sourceKey
-        );
-      }
-      if (source.mode === "modal") {
-        return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
-          Menu.Item,
-          {
-            onClick: () => onOpenModal({ sourceKey }),
-            children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemLabel, { children: source.label })
-          },
-          sourceKey
-        );
-      }
-      return null;
+                  ) ?? // Deprecate key dependency in 7.0.
+                  item.key === binding?.args?.key,
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemLabel, { children: item?.label }),
+                    /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemHelpText, { children: values[attribute] })
+                  ]
+                },
+                sourceKey + JSON.stringify(
+                  item.args
+                ) || item.key
+              );
+            }) }) })
+          ]
+        },
+        sourceKey
+      );
     }) });
   }
   function BlockBindingsAttribute({ attribute, binding, sources, blockName }) {
@@ -63381,14 +63363,10 @@ var wp;
     attribute,
     binding,
     sources,
-    setModalState,
     blockName
   }) {
     const { updateBlockBindings } = useBlockBindingsUtils();
     const isMobile = (0, import_compose98.useViewportMatch)("medium", "<");
-    const handleOpenModal = ({ sourceKey }) => {
-      setModalState({ attribute, sourceKey });
-    };
     return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
       import_components231.__experimentalToolsPanelItem,
       {
@@ -63414,8 +63392,7 @@ var wp;
             {
               attribute,
               binding,
-              sources,
-              onOpenModal: handleOpenModal
+              sources
             }
           ) })
         ] })
@@ -63426,10 +63403,6 @@ var wp;
     const blockContext = (0, import_element230.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
-    const [modalState, setModalState] = (0, import_element230.useState)(null);
-    const handleCloseModal = () => {
-      setModalState(null);
-    };
     const _sources = {};
     const { sources, canUpdateBlockBindings, bindableAttributes } = (0, import_data181.useSelect)(
       (select2) => {
@@ -63442,7 +63415,7 @@ var wp;
         Object.entries(registeredSources).forEach(
           ([
             sourceName,
-            { editorUI, getFieldsList, usesContext, label, getValues }
+            { getFieldsList, usesContext, label, getValues }
           ]) => {
             const context = {};
             if (usesContext?.length) {
@@ -63450,37 +63423,16 @@ var wp;
                 context[key] = blockContext[key];
               }
             }
-            if (editorUI) {
-              const editorUIResult = editorUI({
-                select: select2,
-                context
-              });
-              _sources[sourceName] = {
-                ...editorUIResult,
-                label,
-                getValues
-              };
-            } else if (getFieldsList) {
+            if (getFieldsList) {
               const fieldsListResult = getFieldsList({
                 select: select2,
                 context
               });
-              if (fieldsListResult) {
-                const data = Object.entries(fieldsListResult).map(
-                  ([key, field]) => ({
-                    label: field.label || key,
-                    type: field.type || "string",
-                    args: { key }
-                  })
-                );
-                _sources[sourceName] = {
-                  mode: "dropdown",
-                  // Default mode for backward compatibility.
-                  data,
-                  label,
-                  getValues
-                };
-              }
+              _sources[sourceName] = {
+                data: fieldsListResult || [],
+                label,
+                getValues
+              };
             } else {
               _sources[sourceName] = {
                 data: [],
@@ -63506,77 +63458,59 @@ var wp;
       (source) => source.data && source.data.length > 0
     );
     const readOnly = !canUpdateBlockBindings || !hasCompatibleData;
-    const RenderModalContent = sources[modalState?.sourceKey]?.renderModalContent;
     if (bindings === void 0 && !hasCompatibleData) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(inspector_controls_default, { group: "bindings", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
-        import_components231.__experimentalToolsPanel,
-        {
-          label: (0, import_i18n208.__)("Attributes"),
-          resetAll: () => {
-            removeAllBlockBindings();
-          },
-          dropdownMenuProps,
-          className: "block-editor-bindings__panel",
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => {
-              const binding = bindings?.[attribute];
-              const attributeType = getAttributeType(
-                blockName,
-                attribute
-              );
-              const hasCompatibleDataForAttribute = Object.values(
-                sources
-              ).some(
-                (source) => source.data?.some(
-                  (item) => item?.type === attributeType
-                )
-              );
-              const isAttributeReadOnly = readOnly || !hasCompatibleDataForAttribute;
-              return isAttributeReadOnly ? /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
-                ReadOnlyBlockBindingsPanelItem,
-                {
-                  attribute,
-                  binding,
-                  sources,
-                  blockName
-                },
-                attribute
-              ) : /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
-                EditableBlockBindingsPanelItem,
-                {
-                  attribute,
-                  binding,
-                  sources,
-                  setModalState,
-                  blockName
-                },
-                attribute
-              );
-            }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)("p", { children: (0, import_i18n208.__)(
-              "Attributes connected to custom fields or other dynamic data."
-            ) }) })
-          ]
-        }
-      ),
-      RenderModalContent && /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
-        import_components231.Modal,
-        {
-          onRequestClose: handleCloseModal,
-          title: sources[modalState.sourceKey]?.label,
-          children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
-            RenderModalContent,
-            {
-              attribute: modalState.attribute,
-              closeModal: handleCloseModal
-            }
-          )
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(inspector_controls_default, { group: "bindings", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
+      import_components231.__experimentalToolsPanel,
+      {
+        label: (0, import_i18n208.__)("Attributes"),
+        resetAll: () => {
+          removeAllBlockBindings();
+        },
+        dropdownMenuProps,
+        className: "block-editor-bindings__panel",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => {
+            const binding = bindings?.[attribute];
+            const attributeType = getAttributeType(
+              blockName,
+              attribute
+            );
+            const hasCompatibleDataForAttribute = Object.values(
+              sources
+            ).some(
+              (source) => source.data?.some(
+                (item) => item?.type === attributeType
+              )
+            );
+            const isAttributeReadOnly = readOnly || !hasCompatibleDataForAttribute;
+            return isAttributeReadOnly ? /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+              ReadOnlyBlockBindingsPanelItem,
+              {
+                attribute,
+                binding,
+                sources,
+                blockName
+              },
+              attribute
+            ) : /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+              EditableBlockBindingsPanelItem,
+              {
+                attribute,
+                binding,
+                sources,
+                blockName
+              },
+              attribute
+            );
+          }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)("p", { children: (0, import_i18n208.__)(
+            "Attributes connected to custom fields or other dynamic data."
+          ) }) })
+        ]
+      }
+    ) });
   };
   var block_bindings_default = {
     edit: BlockBindingsPanel,
