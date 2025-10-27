@@ -222,8 +222,11 @@ var { state, actions, callbacks } = store(
 				`;
       },
       setButtonStyles() {
-        const { imageId } = getContext();
         const { ref } = getElement();
+        if (!ref) {
+          return;
+        }
+        const { imageId } = getContext();
         state.metadata[imageId].imageRef = ref;
         state.metadata[imageId].currentSrc = ref.currentSrc;
         const {
