@@ -3459,11 +3459,8 @@ var wp;
 
   // packages/core-data/build-module/entities.js
   var import_api_fetch = __toESM(require_api_fetch());
-  var import_blocks2 = __toESM(require_blocks());
+  var import_blocks3 = __toESM(require_blocks());
   var import_i18n = __toESM(require_i18n());
-
-  // packages/core-data/build-module/utils/crdt.js
-  var import_es63 = __toESM(require_es6());
 
   // node_modules/yjs/dist/yjs.mjs
   var yjs_exports = {};
@@ -12166,11 +12163,57 @@ var wp;
 
   // packages/sync/build-module/config.js
   var CRDT_DOC_VERSION = 1;
+  var CRDT_DOC_META_PERSISTENCE_KEY = "fromPersistence";
   var CRDT_RECORD_MAP_KEY = "document";
   var CRDT_STATE_MAP_KEY = "state";
   var CRDT_STATE_VERSION_KEY = "version";
   var LOCAL_EDITOR_ORIGIN = "gutenberg";
   var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
+  var WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
+
+  // packages/sync/build-module/utils.js
+  function createYjsDoc(documentMeta) {
+    const metaMap = new Map(
+      Object.entries(documentMeta)
+    );
+    const ydoc = new Doc({ meta: metaMap });
+    const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
+    stateMap.set(CRDT_STATE_VERSION_KEY, CRDT_DOC_VERSION);
+    return ydoc;
+  }
+  function serializeCrdtDoc(crdtDoc) {
+    return JSON.stringify({
+      document: toBase64(encodeStateAsUpdateV2(crdtDoc))
+    });
+  }
+  function deserializeCrdtDoc(serializedCrdtDoc) {
+    try {
+      const { document: document2 } = JSON.parse(serializedCrdtDoc);
+      const docMetaMap = /* @__PURE__ */ new Map();
+      docMetaMap.set(CRDT_DOC_META_PERSISTENCE_KEY, true);
+      const ydoc = createYjsDoc({ meta: docMetaMap });
+      const yupdate = fromBase64(document2);
+      applyUpdateV2(ydoc, yupdate);
+      ydoc.clientID = Math.floor(Math.random() * 1e9);
+      return ydoc;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // packages/sync/build-module/persistence.js
+  function getPersistedCrdtDoc(record) {
+    const serializedCrdtDoc = record.meta?.[WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE];
+    if (serializedCrdtDoc) {
+      return deserializeCrdtDoc(serializedCrdtDoc);
+    }
+    return null;
+  }
+  function createPersistedCRDTDoc(ydoc) {
+    return {
+      [WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE]: serializeCrdtDoc(ydoc)
+    };
+  }
 
   // packages/sync/build-module/providers/index.js
   var import_hooks = __toESM(require_hooks());
@@ -13878,17 +13921,6 @@ var wp;
     return providerCreators;
   }
 
-  // packages/sync/build-module/utils.js
-  function createYjsDoc(documentMeta) {
-    const metaMap = new Map(
-      Object.entries(documentMeta)
-    );
-    const ydoc = new Doc({ meta: metaMap });
-    const stateMap = ydoc.getMap(CRDT_STATE_MAP_KEY);
-    stateMap.set(CRDT_STATE_VERSION_KEY, CRDT_DOC_VERSION);
-    return ydoc;
-  }
-
   // packages/sync/build-module/manager.js
   function createSyncManager() {
     const entityStates = /* @__PURE__ */ new Map();
@@ -13930,15 +13962,37 @@ var wp;
         )
       );
       recordMap.observeDeep(onRecordUpdate);
-      ydoc.transact(() => {
-        syncConfig.applyChangesToCRDTDoc(ydoc, record);
-      }, LOCAL_SYNC_MANAGER_ORIGIN);
+      const isInvalid = applyPersistedCrdtDoc(syncConfig, ydoc, record);
+      if (isInvalid) {
+        ydoc.transact(() => {
+          syncConfig.applyChangesToCRDTDoc(ydoc, record);
+        }, LOCAL_SYNC_MANAGER_ORIGIN);
+        const meta = createEntityMeta(objectType, objectId);
+        handlers.editRecord({ meta });
+        handlers.saveRecord();
+      }
     }
     function unloadEntity(objectType, objectId) {
       entityStates.get(getEntityId(objectType, objectId))?.unload();
     }
     function getEntityId(objectType, objectId) {
       return `${objectType}_${objectId}`;
+    }
+    function applyPersistedCrdtDoc(syncConfig, targetDoc, record) {
+      if (!syncConfig.supports?.crdtPersistence) {
+        return true;
+      }
+      const tempDoc = getPersistedCrdtDoc(record);
+      if (!tempDoc) {
+        return true;
+      }
+      const update = encodeStateAsUpdateV2(tempDoc);
+      targetDoc.transact(() => {
+        applyUpdateV2(targetDoc, update);
+      }, LOCAL_SYNC_MANAGER_ORIGIN);
+      const changes = syncConfig.getChangesFromCRDTDoc(tempDoc, record);
+      tempDoc.destroy();
+      return Object.keys(changes).length > 0;
     }
     function updateCRDTDoc(objectType, objectId, changes, origin) {
       const entityId = getEntityId(objectType, objectId);
@@ -13962,14 +14016,40 @@ var wp;
         ydoc,
         await handlers.getEditedRecord()
       );
+      if (0 === Object.keys(changes).length) {
+        return;
+      }
       handlers.editRecord(changes);
     }
+    function createEntityMeta(objectType, objectId) {
+      const entityId = getEntityId(objectType, objectId);
+      const entityState = entityStates.get(entityId);
+      if (!entityState?.syncConfig.supports?.crdtPersistence) {
+        return {};
+      }
+      return createPersistedCRDTDoc(entityState.ydoc);
+    }
     return {
+      createMeta: createEntityMeta,
       load: loadEntity,
       unload: unloadEntity,
       update: updateCRDTDoc
     };
   }
+
+  // packages/core-data/build-module/sync.js
+  var syncManager;
+  function getSyncManager() {
+    if (syncManager) {
+      return syncManager;
+    }
+    syncManager = createSyncManager();
+    return syncManager;
+  }
+
+  // packages/core-data/build-module/utils/crdt.js
+  var import_es63 = __toESM(require_es6());
+  var import_blocks2 = __toESM(require_blocks());
 
   // node_modules/uuid/dist/esm-browser/rng.js
   var getRandomValues2;
@@ -14270,16 +14350,6 @@ var wp;
     blockYText.insert(0, updatedValue);
   }
 
-  // packages/core-data/build-module/sync.js
-  var syncManager;
-  function getSyncManager() {
-    if (syncManager) {
-      return syncManager;
-    }
-    syncManager = createSyncManager();
-    return syncManager;
-  }
-
   // packages/core-data/build-module/utils/crdt.js
   var lastSelection = null;
   var allowedPostProperties = /* @__PURE__ */ new Set([
@@ -14386,6 +14456,12 @@ var wp;
         const currentValue = editedRecord[key];
         switch (key) {
           case "blocks": {
+            if (ydoc.meta?.get(CRDT_DOC_META_PERSISTENCE_KEY) && editedRecord.content) {
+              const blocks = ymap.get("blocks");
+              return (0, import_blocks2.__unstableSerializeAndClean)(
+                blocks.toJSON()
+              ).trim() !== editedRecord.content.raw.trim();
+            }
             return true;
           }
           case "date": {
@@ -14441,9 +14517,9 @@ var wp;
   var POST_RAW_ATTRIBUTES = ["title", "excerpt", "content"];
   var blocksTransientEdits = {
     blocks: {
-      read: (record) => (0, import_blocks2.parse)(record.content?.raw ?? ""),
+      read: (record) => (0, import_blocks3.parse)(record.content?.raw ?? ""),
       write: (record) => ({
-        content: (0, import_blocks2.__unstableSerializeAndClean)(record.blocks)
+        content: (0, import_blocks3.__unstableSerializeAndClean)(record.blocks)
       })
     }
   };
@@ -14645,14 +14721,25 @@ var wp;
       loadEntities: loadSiteEntity
     }
   ];
-  var prePersistPostType = (persistedRecord, edits) => {
+  var prePersistPostType = (persistedRecord, edits, name, isTemplate) => {
     const newEdits = {};
-    if (persistedRecord?.status === "auto-draft") {
+    if (!isTemplate && persistedRecord?.status === "auto-draft") {
       if (!edits.status && !newEdits.status) {
         newEdits.status = "draft";
       }
       if ((!edits.title || edits.title === "Auto Draft") && !newEdits.title && (!persistedRecord?.title || persistedRecord?.title === "Auto Draft")) {
         newEdits.title = "";
+      }
+    }
+    if (persistedRecord && window.__experimentalEnableSync) {
+      if (true) {
+        const objectType = `postType/${name}`;
+        const objectId = persistedRecord.id;
+        const meta = getSyncManager()?.createMeta(objectType, objectId);
+        newEdits.meta = {
+          ...edits.meta,
+          ...meta
+        };
       }
     }
     return newEdits;
@@ -14679,7 +14766,7 @@ var wp;
         mergedEdits: { meta: true },
         rawAttributes: POST_RAW_ATTRIBUTES,
         getTitle: (record) => record?.title?.rendered || record?.title || (isTemplate ? capitalCase(record.slug ?? "") : String(record.id)),
-        __unstablePrePersist: isTemplate ? void 0 : prePersistPostType,
+        __unstablePrePersist: (persistedRecord, edits) => prePersistPostType(persistedRecord, edits, name, isTemplate),
         __unstable_rest_base: postType.rest_base,
         supportsPagination: true,
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
@@ -14715,7 +14802,9 @@ var wp;
              *
              * @type {Record< string, boolean >}
              */
-            supports: {}
+            supports: {
+              crdtPersistence: true
+            }
           };
         }
       }
@@ -17332,7 +17421,15 @@ var wp;
                 kind,
                 name,
                 key
-              )
+              ),
+              // Save the current entity record's unsaved edits.
+              saveRecord: () => {
+                dispatch.saveEditedEntityRecord(
+                  kind,
+                  name,
+                  key
+                );
+              }
             }
           );
         }
@@ -18529,7 +18626,7 @@ var wp;
   // packages/core-data/build-module/hooks/use-entity-block-editor.js
   var import_element6 = __toESM(require_element());
   var import_data9 = __toESM(require_data());
-  var import_blocks3 = __toESM(require_blocks());
+  var import_blocks4 = __toESM(require_blocks());
 
   // packages/core-data/build-module/hooks/use-entity-id.js
   var import_element5 = __toESM(require_element());
@@ -18711,7 +18808,7 @@ var wp;
       const cackeKey = isUnedited ? getEntityRecord3(kind, name, id2) : edits;
       let _blocks = parsedBlocksCache.get(cackeKey);
       if (!_blocks) {
-        _blocks = (0, import_blocks3.parse)(content);
+        _blocks = (0, import_blocks4.parse)(content);
         parsedBlocksCache.set(cackeKey, _blocks);
       }
       return _blocks;
@@ -18733,7 +18830,7 @@ var wp;
         const { selection, ...rest } = options;
         const edits = {
           selection,
-          content: ({ blocks: blocksForSerialization = [] }) => (0, import_blocks3.__unstableSerializeAndClean)(blocksForSerialization),
+          content: ({ blocks: blocksForSerialization = [] }) => (0, import_blocks4.__unstableSerializeAndClean)(blocksForSerialization),
           ...updateFootnotesFromMeta(newBlocks, meta)
         };
         editEntityRecord2(kind, name, id2, edits, {
