@@ -48347,7 +48347,7 @@ var wp;
       post: postId2,
       type: "note",
       status: "all",
-      per_page: 100
+      per_page: -1
     };
     const { records: threads, totalPages } = (0, import_core_data114.useEntityRecords)(
       "root",
