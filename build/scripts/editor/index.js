@@ -50824,30 +50824,23 @@ var wp;
       return true;
     },
     getFieldsList({ select: select5, context }) {
-      const clientId = select5(import_block_editor96.store).getSelectedBlockClientId();
-      return getPostDataFields(select5, context, clientId);
-    },
-    editorUI({ select: select5, context }) {
       const selectedBlock = select5(import_block_editor96.store).getSelectedBlock();
       if (selectedBlock?.name !== "core/post-date") {
-        return {};
+        return [];
       }
       if (NAVIGATION_BLOCK_TYPES.includes(selectedBlock?.name)) {
-        return {};
+        return [];
       }
-      const postDataFields = Object.entries(
-        getPostDataFields(select5, context) || {}
-      ).map(([key, field]) => ({
+      const clientId = select5(import_block_editor96.store).getSelectedBlockClientId();
+      const postDataFields = getPostDataFields(select5, context, clientId);
+      if (!postDataFields) {
+        return [];
+      }
+      return Object.entries(postDataFields).map(([key, field]) => ({
         label: field.label,
-        args: {
-          field: key
-        },
-        type: field.type
+        type: field.type,
+        args: { field: key }
       }));
-      return {
-        mode: "dropdown",
-        data: postDataFields
-      };
     }
   };
 
@@ -50936,22 +50929,15 @@ var wp;
       return true;
     },
     getFieldsList({ select: select5, context }) {
-      return getPostMetaFields(select5, context);
-    },
-    editorUI({ select: select5, context }) {
-      const metaFields = Object.entries(
-        getPostMetaFields(select5, context) || {}
-      ).map(([key, field]) => ({
+      const metaFields = getPostMetaFields(select5, context);
+      if (!metaFields) {
+        return [];
+      }
+      return Object.entries(metaFields).map(([key, field]) => ({
         label: field.label,
-        args: {
-          key
-        },
-        type: field.type
+        type: field.type,
+        args: { key }
       }));
-      return {
-        mode: "dropdown",
-        data: metaFields
-      };
     }
   };
 
@@ -51075,26 +51061,16 @@ var wp;
       return false;
     },
     getFieldsList({ select: select5, context }) {
-      return getTermDataFields(select5, context);
-    },
-    editorUI({ select: select5, context }) {
-      const selectedBlock = select5(import_block_editor97.store).getSelectedBlock();
-      if (NAVIGATION_BLOCK_TYPES2.includes(selectedBlock?.name)) {
-        return {};
+      const clientId = select5(import_block_editor97.store).getSelectedBlockClientId();
+      const termDataFields = getTermDataFields(select5, context, clientId);
+      if (!termDataFields) {
+        return [];
       }
-      const termDataFields = Object.entries(
-        getTermDataFields(select5, context) || {}
-      ).map(([key, field]) => ({
+      return Object.entries(termDataFields).map(([key, field]) => ({
         label: field.label,
         type: field.type,
-        args: {
-          field: key
-        }
+        args: { field: key }
       }));
-      return {
-        mode: "dropdown",
-        data: termDataFields
-      };
     }
   };
 
