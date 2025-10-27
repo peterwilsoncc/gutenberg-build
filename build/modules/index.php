@@ -13,6 +13,11 @@ return array(
 		'asset' => 'interactivity/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/a11y',
+		'path' => 'a11y/index',
+		'asset' => 'a11y/index.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/latex-to-mathml',
 		'path' => 'latex-to-mathml/index',
 		'asset' => 'latex-to-mathml/index.min.asset.php',
@@ -31,16 +36,6 @@ return array(
 		'id' => '@wordpress/interactivity-router/full-page',
 		'path' => 'interactivity-router/full-page',
 		'asset' => 'interactivity-router/full-page.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/a11y',
-		'path' => 'a11y/index',
-		'asset' => 'a11y/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
-		'path' => 'block-editor/utils/fit-text-frontend',
-		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/block-library/accordion/view',
@@ -76,5 +71,10 @@ return array(
 		'id' => '@wordpress/block-library/search/view',
 		'path' => 'block-library/search/view',
 		'asset' => 'block-library/search/view.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
+		'path' => 'block-editor/utils/fit-text-frontend',
+		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 );
