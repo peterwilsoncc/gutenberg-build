@@ -14451,6 +14451,7 @@ var wp;
     {
       label: (0, import_i18n.__)("Base"),
       kind: "root",
+      key: false,
       name: "__unstableBase",
       baseURL: "/",
       baseURLParams: {
@@ -14743,6 +14744,7 @@ var wp;
       label: (0, import_i18n.__)("Site"),
       name: "site",
       kind: "root",
+      key: false,
       baseURL: "/wp/v2/settings",
       meta: {}
     };
@@ -16590,8 +16592,9 @@ var wp;
     if (!entityConfig) {
       return;
     }
-    const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
+    const entityIdKey = entityConfig.key ?? DEFAULT_ENTITY_KEY;
     const recordId = record[entityIdKey];
+    const isNewRecord = !!entityIdKey && !recordId;
     const lock2 = await dispatch.__unstableAcquireStoreLock(
       STORE_NAME,
       ["entities", "records", kind, name, recordId || v4_default()],
@@ -16631,11 +16634,7 @@ var wp;
       }
       try {
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
-        const persistedRecord = select.getRawEntityRecord(
-          kind,
-          name,
-          recordId
-        );
+        const persistedRecord = !isNewRecord ? select.getRawEntityRecord(kind, name, recordId) : {};
         if (isAutosave) {
           const currentUser2 = select.getCurrentUser();
           const currentUserId = currentUser2 ? currentUser2.id : void 0;
