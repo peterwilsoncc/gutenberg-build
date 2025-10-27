@@ -44696,7 +44696,7 @@ If there's a particular need for this, please submit a feature request at https:
           if (typeof item.id !== "number") {
             return item._isActive === false;
           }
-          return !item._isCustom;
+          return true;
         },
         async callback(items) {
           const deactivate = items.some((item) => item._isActive);
@@ -45195,7 +45195,12 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       query: { activeView = "active" }
     } = useLocation26();
-    const { records } = (0, import_core_data51.useEntityRecords)("root", "registeredTemplate");
+    const { records } = (0, import_core_data51.useEntityRecords)("root", "registeredTemplate", {
+      // This should not be needed, the endpoint returns all registered
+      // templates, but it's not possible right now to turn off pagination for
+      // entity configs.
+      per_page: -1
+    });
     const firstItemPerAuthorText = (0, import_element133.useMemo)(() => {
       const firstItemPerAuthor = records?.reduce((acc, template) => {
         const author = template.author_text;
@@ -46674,37 +46679,30 @@ If there's a particular need for this, please submit a feature request at https:
     type: "boolean",
     getValue: ({ item }) => item._isActive,
     render: function Render({ item }) {
-      if (item._isCustom) {
-        return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
-          Badge3,
-          {
-            intent: "info",
-            title: (0, import_i18n145.__)(
-              "Custom templates cannot be active nor inactive."
-            ),
-            children: (0, import_i18n145.__)("N/A")
-          }
-        );
-      }
+      const activeLabel = item._isCustom ? (0, import_i18n145.__)("Active when used") : (0, import_i18n145.__)("Active");
+      const activeIntent = item._isCustom ? "info" : "success";
       const isActive = item._isActive;
-      return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Badge3, { intent: isActive ? "success" : "default", children: isActive ? (0, import_i18n145.__)("Active") : (0, import_i18n145.__)("Inactive") });
+      return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Badge3, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n145.__)("Inactive") });
     }
   };
   var useThemeField = () => {
     const activeTheme = (0, import_data83.useSelect)(
       (select2) => select2(import_core_data55.store).getCurrentTheme()
     );
-    return {
-      label: (0, import_i18n145.__)("Compatible Theme"),
-      id: "theme",
-      getValue: ({ item }) => item.theme,
-      render: function Render3({ item }) {
-        if (item.theme === activeTheme.stylesheet) {
-          return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Badge3, { intent: "success", children: item.theme });
+    return (0, import_element138.useMemo)(
+      () => ({
+        label: (0, import_i18n145.__)("Compatible Theme"),
+        id: "theme",
+        getValue: ({ item }) => item.theme,
+        render: function Render3({ item }) {
+          if (item.theme === activeTheme.stylesheet) {
+            return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Badge3, { intent: "success", children: item.theme });
+          }
+          return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Badge3, { intent: "error", children: item.theme });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(Badge3, { intent: "error", children: item.theme });
-      }
-    };
+      }),
+      [activeTheme]
+    );
   };
   var slugField = {
     label: (0, import_i18n145.__)("Template Type"),
@@ -46801,11 +46799,14 @@ If there's a particular need for this, please submit a feature request at https:
       per_page: -1,
       combinedTemplates: false
     });
-    const { records: staticRecords, isResolving: isLoadingStaticData } = useEntityRecordsWithPermissions2("root", "registeredTemplate");
+    const { records: staticRecords, isResolving: isLoadingStaticData } = useEntityRecordsWithPermissions2("root", "registeredTemplate", {
+      // This should not be needed, the endpoint returns all registered
+      // templates, but it's not possible right now to turn off pagination
+      // for entity configs.
+      per_page: -1
+    });
     const activeTemplates = (0, import_element139.useMemo)(() => {
-      const _active = [...staticRecords].filter(
-        (record) => !record.is_custom
-      );
+      const _active = [...staticRecords];
       if (activeTemplatesOption) {
         for (const activeSlug in activeTemplatesOption) {
           const activeId = activeTemplatesOption[activeSlug];
@@ -46826,35 +46827,47 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return _active;
     }, [userRecords, staticRecords, activeTemplatesOption, activeTheme]);
-    let _records;
     let isLoadingData;
     if (activeView === "active") {
-      _records = activeTemplates;
       isLoadingData = isLoadingUserRecords || isLoadingStaticData;
     } else if (activeView === "user") {
-      _records = userRecords;
       isLoadingData = isLoadingUserRecords;
     } else {
-      _records = staticRecords;
       isLoadingData = isLoadingStaticData;
     }
     const records = (0, import_element139.useMemo)(() => {
+      function isCustom(record) {
+        return record.is_custom ?? // For user templates it's custom if the is_wp_suggestion meta
+        // field is not set and the slug is not found in the default
+        // template types.
+        (!record.meta?.is_wp_suggestion && !defaultTemplateTypes.some(
+          (type) => type.slug === record.slug
+        ));
+      }
+      let _records;
+      if (activeView === "active") {
+        _records = activeTemplates.filter(
+          (record) => !isCustom(record)
+        );
+      } else if (activeView === "user") {
+        _records = userRecords;
+      } else {
+        _records = staticRecords;
+      }
       return _records.map((record) => ({
         ...record,
-        _isActive: !!activeTemplates.find(
+        _isActive: activeTemplates.some(
           (template) => template.id === record.id
         ),
-        _isCustom: (
-          // For registered templates, the is_custom field is defined.
-          record.is_custom ?? // For user templates it's custom if the is_wp_suggestion meta
-          // field is not set and the slug is not found in the default
-          // template types.
-          (!record.meta?.is_wp_suggestion && !defaultTemplateTypes.find(
-            (type) => type.slug === record.slug
-          ))
-        )
+        _isCustom: isCustom(record)
       }));
-    }, [_records, activeTemplates, defaultTemplateTypes]);
+    }, [
+      activeTemplates,
+      defaultTemplateTypes,
+      userRecords,
+      staticRecords,
+      activeView
+    ]);
     const users = (0, import_data84.useSelect)(
       (select2) => {
         const { getUser } = select2(import_core_data56.store);
