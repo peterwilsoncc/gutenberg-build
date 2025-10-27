@@ -6858,7 +6858,7 @@ var wp;
   var import_components70 = __toESM(require_components());
   var import_blocks7 = __toESM(require_blocks());
   var import_data28 = __toESM(require_data());
-  var import_block_editor17 = __toESM(require_block_editor());
+  var import_block_editor16 = __toESM(require_block_editor());
   var import_element47 = __toESM(require_element());
   var import_compose8 = __toESM(require_compose());
 
@@ -19434,10 +19434,8 @@ var wp;
   var import_date = __toESM(require_date());
   var import_core_data22 = __toESM(require_core_data());
   var import_data27 = __toESM(require_data());
-  var import_block_editor15 = __toESM(require_block_editor());
   var import_keycodes4 = __toESM(require_keycodes());
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
-  var { getGlobalStylesChanges } = unlock2(import_block_editor15.privateApis);
 
   // packages/global-styles-ui/build-module/pagination/index.js
   var import_jsx_runtime140 = __toESM(require_jsx_runtime());
@@ -19466,7 +19464,7 @@ var wp;
 
   // packages/global-styles-ui/build-module/font-sizes/font-size-preview.js
   var import_jsx_runtime144 = __toESM(require_jsx_runtime());
-  var import_block_editor16 = __toESM(require_block_editor());
+  var import_block_editor15 = __toESM(require_block_editor());
   var import_i18n53 = __toESM(require_i18n());
 
   // packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.js
@@ -19738,7 +19736,7 @@ var wp;
   var import_notices3 = __toESM(require_notices());
   var import_router17 = __toESM(require_router());
   var import_html_entities4 = __toESM(require_html_entities());
-  var import_block_editor19 = __toESM(require_block_editor());
+  var import_block_editor18 = __toESM(require_block_editor());
   var import_url10 = __toESM(require_url());
 
   // packages/edit-site/build-module/components/welcome-guide/index.js
@@ -20321,12 +20319,12 @@ var wp;
 
   // packages/edit-site/build-module/components/editor/use-adapt-editor-to-canvas.js
   var import_data42 = __toESM(require_data());
-  var import_block_editor18 = __toESM(require_block_editor());
+  var import_block_editor17 = __toESM(require_block_editor());
   var import_editor17 = __toESM(require_editor());
   var import_element54 = __toESM(require_element());
   var import_preferences10 = __toESM(require_preferences());
   function useAdaptEditorToCanvas(canvas) {
-    const { clearSelectedBlock } = (0, import_data42.useDispatch)(import_block_editor18.store);
+    const { clearSelectedBlock } = (0, import_data42.useDispatch)(import_block_editor17.store);
     const {
       setDeviceType,
       closePublishSidebar,
@@ -20590,7 +20588,7 @@ var wp;
       "edit-site-editor__loading-progress"
     );
     const settings2 = useSpecificEditorSettings();
-    const { resetZoomLevel } = unlock((0, import_data45.useDispatch)(import_block_editor19.store));
+    const { resetZoomLevel } = unlock((0, import_data45.useDispatch)(import_block_editor18.store));
     const { createSuccessNotice } = (0, import_data45.useDispatch)(import_notices3.store);
     const history = useHistory11();
     const onActionPerformed = (0, import_element56.useCallback)(
@@ -21119,12 +21117,12 @@ var wp;
   var import_jsx_runtime175 = __toESM(require_jsx_runtime());
   var import_element62 = __toESM(require_element());
   var import_data48 = __toESM(require_data());
-  var import_block_editor22 = __toESM(require_block_editor());
+  var import_block_editor21 = __toESM(require_block_editor());
   var import_blocks9 = __toESM(require_blocks());
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.js
   var import_jsx_runtime174 = __toESM(require_jsx_runtime());
-  var import_block_editor21 = __toESM(require_block_editor());
+  var import_block_editor20 = __toESM(require_block_editor());
   var import_data47 = __toESM(require_data());
   var import_blocks8 = __toESM(require_blocks());
   var import_element61 = __toESM(require_element());
@@ -21136,7 +21134,7 @@ var wp;
   var import_data46 = __toESM(require_data());
   var import_element60 = __toESM(require_element());
   var import_i18n75 = __toESM(require_i18n());
-  var import_block_editor20 = __toESM(require_block_editor());
+  var import_block_editor19 = __toESM(require_block_editor());
   var import_router21 = __toESM(require_router());
   var POPOVER_PROPS2 = {
     className: "block-editor-block-settings-menu__popover",
@@ -21148,20 +21146,20 @@ var wp;
     const { path } = useLocation18();
     const { block } = props;
     const { clientId } = block;
-    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data46.useDispatch)(import_block_editor20.store);
+    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data46.useDispatch)(import_block_editor19.store);
     const removeLabel = (0, import_i18n75.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n75.__)("Remove %s"),
-      (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
+      (0, import_block_editor19.BlockTitle)({ clientId, maximumLength: 25 })
     );
     const goToLabel = (0, import_i18n75.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n75.__)("Go to %s"),
-      (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
+      (0, import_block_editor19.BlockTitle)({ clientId, maximumLength: 25 })
     );
     const rootClientId = (0, import_data46.useSelect)(
       (select2) => {
-        const { getBlockRootClientId } = select2(import_block_editor20.store);
+        const { getBlockRootClientId } = select2(import_block_editor19.store);
         return getBlockRootClientId(clientId);
       },
       [clientId]
@@ -21245,7 +21243,7 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.js
-  var { PrivateListView } = unlock(import_block_editor21.privateApis);
+  var { PrivateListView } = unlock(import_block_editor20.privateApis);
   var MAX_PAGE_COUNT = 100;
   var PAGES_QUERY = [
     "postType",
@@ -21268,7 +21266,7 @@ var wp;
           getBlockName,
           getBlockCount,
           getBlockOrder
-        } = select2(import_block_editor21.store);
+        } = select2(import_block_editor20.store);
         const { isResolving } = select2(import_core_data32.store);
         const blockClientIds = getBlockOrder(rootClientId);
         const hasOnlyPageListBlock = blockClientIds.length === 1 && getBlockName(blockClientIds[0]) === "core/page-list";
@@ -21286,7 +21284,7 @@ var wp;
       },
       [rootClientId]
     );
-    const { replaceBlock, __unstableMarkNextChangeAsNotPersistent } = (0, import_data47.useDispatch)(import_block_editor21.store);
+    const { replaceBlock, __unstableMarkNextChangeAsNotPersistent } = (0, import_data47.useDispatch)(import_block_editor20.store);
     const offCanvasOnselect = (0, import_element61.useCallback)(
       (block) => {
         if (block.name === "core/navigation-link" && !block.attributes.url) {
@@ -21310,7 +21308,7 @@ var wp;
           isExpanded: true
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("div", { className: "edit-site-sidebar-navigation-screen-navigation-menus__helper-block-editor", children: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_block_editor21.BlockList, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("div", { className: "edit-site-sidebar-navigation-screen-navigation-menus__helper-block-editor", children: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_block_editor20.BlockList, {}) })
     ] });
   }
 
@@ -21334,7 +21332,7 @@ var wp;
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
-      import_block_editor22.BlockEditorProvider,
+      import_block_editor21.BlockEditorProvider,
       {
         settings: storedSettings,
         value: blocks,
@@ -21898,9 +21896,9 @@ var wp;
   var import_element64 = __toESM(require_element());
 
   // packages/edit-site/build-module/components/page-patterns/search-items.js
-  var import_block_editor23 = __toESM(require_block_editor());
+  var import_block_editor22 = __toESM(require_block_editor());
   var { extractWords, getNormalizedSearchTerms, normalizeString } = unlock(
-    import_block_editor23.privateApis
+    import_block_editor22.privateApis
   );
   var defaultGetName = (item) => {
     if (item.type === PATTERN_TYPES.user) {
@@ -22455,7 +22453,7 @@ var wp;
   var import_jsx_runtime269 = __toESM(require_jsx_runtime());
   var import_i18n129 = __toESM(require_i18n());
   var import_element128 = __toESM(require_element());
-  var import_block_editor25 = __toESM(require_block_editor());
+  var import_block_editor24 = __toESM(require_block_editor());
 
   // packages/dataviews/build-module/components/dataviews/index.js
   var import_jsx_runtime252 = __toESM(require_jsx_runtime());
@@ -38366,7 +38364,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components145 = __toESM(require_components());
   var import_i18n128 = __toESM(require_i18n());
   var import_element127 = __toESM(require_element());
-  var import_block_editor24 = __toESM(require_block_editor());
+  var import_block_editor23 = __toESM(require_block_editor());
   var import_blocks11 = __toESM(require_blocks());
   var import_editor27 = __toESM(require_editor());
 
@@ -38456,8 +38454,8 @@ If there's a particular need for this, please submit a feature request at https:
         children: [
           isEmpty3 && isTemplatePart2 && (0, import_i18n128.__)("Empty template part"),
           isEmpty3 && !isTemplatePart2 && (0, import_i18n128.__)("Empty pattern"),
-          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_block_editor24.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
-            import_block_editor24.BlockPreview,
+          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_block_editor23.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
+            import_block_editor23.BlockPreview,
             {
               blocks,
               viewportWidth: item.viewportWidth
@@ -38545,7 +38543,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/index.js
   var import_url15 = __toESM(require_url());
   var import_components146 = __toESM(require_components());
-  var { ExperimentalBlockEditorProvider } = unlock(import_block_editor25.privateApis);
+  var { ExperimentalBlockEditorProvider } = unlock(import_block_editor24.privateApis);
   var { usePostActions, patternTitleField } = unlock(import_editor28.privateApis);
   var { useLocation: useLocation24, useHistory: useHistory20 } = unlock(import_router30.privateApis);
   var EMPTY_ARRAY10 = [];
@@ -40191,7 +40189,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element134 = __toESM(require_element());
   var import_html_entities13 = __toESM(require_html_entities());
   var import_blocks12 = __toESM(require_blocks());
-  var import_block_editor26 = __toESM(require_block_editor());
+  var import_block_editor25 = __toESM(require_block_editor());
   var import_editor31 = __toESM(require_editor());
   var import_core_data50 = __toESM(require_core_data());
   var import_data70 = __toESM(require_data());
@@ -40229,7 +40227,7 @@ If there's a particular need for this, please submit a feature request at https:
         style: { backgroundColor },
         children: [
           isEmpty3 && (0, import_i18n136.__)("Empty template"),
-          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor26.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor26.BlockPreview, { blocks }) })
+          !isEmpty3 && /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor25.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_block_editor25.BlockPreview, { blocks }) })
         ]
       }
     ) });
@@ -41314,7 +41312,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components157 = __toESM(require_components());
   var import_element139 = __toESM(require_element());
   var import_editor36 = __toESM(require_editor());
-  var import_block_editor27 = __toESM(require_block_editor());
+  var import_block_editor26 = __toESM(require_block_editor());
   var { usePostFields: usePostFields2, PostCardPanel } = unlock(import_editor36.privateApis);
   var fieldsWithBulkEditSupport = [
     "title",
@@ -41422,7 +41420,7 @@ If there's a particular need for this, please submit a feature request at https:
       setMultiEdits({});
     }, [ids]);
     const { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider2 } = unlock(
-      import_block_editor27.privateApis
+      import_block_editor26.privateApis
     );
     const settings2 = usePatternSettings();
     const fieldsWithDependency = (0, import_element139.useMemo)(() => {
