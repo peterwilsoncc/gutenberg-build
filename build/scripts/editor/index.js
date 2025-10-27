@@ -6573,7 +6573,7 @@ var wp;
     id: "reset-post",
     label: (0, import_i18n36.__)("Reset"),
     isEligible: (item) => {
-      return isTemplateOrTemplatePart(item) && item?.source === "custom" && (Boolean(item.type === "wp_template" && item?.plugin) || item?.has_theme_file);
+      return item.type === "wp_template_part" && item?.source === "custom" && item?.has_theme_file;
     },
     icon: backup_default,
     supportsBulk: true,
@@ -6611,20 +6611,11 @@ var wp;
             }
           );
         } catch (error) {
-          let fallbackErrorMessage;
-          if (items[0].type === "wp_template") {
-            fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
-              "An error occurred while reverting the template."
-            ) : (0, import_i18n36.__)(
-              "An error occurred while reverting the templates."
-            );
-          } else {
-            fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
-              "An error occurred while reverting the template part."
-            ) : (0, import_i18n36.__)(
-              "An error occurred while reverting the template parts."
-            );
-          }
+          const fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
+            "An error occurred while reverting the template part."
+          ) : (0, import_i18n36.__)(
+            "An error occurred while reverting the template parts."
+          );
           const typedError = error;
           const errorMessage = typedError.message && typedError.code !== "unknown_error" ? typedError.message : fallbackErrorMessage;
           createErrorNotice(errorMessage, { type: "snackbar" });
