@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-deprecated'), 'version' => '1761640060385');
+<?php return array('dependencies' => array('wp-deprecated'), 'version' => '1761640108772');
