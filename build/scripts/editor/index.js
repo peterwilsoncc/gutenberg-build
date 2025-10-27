@@ -49485,7 +49485,9 @@ var wp;
     async function openTheSidebar() {
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name2) => name2 === prevArea);
-      if (!activeNotesArea) {
+      if (currentThread?.status === "approved") {
+        enableComplementaryArea2("core", collabHistorySidebarName);
+      } else if (!activeNotesArea) {
         enableComplementaryArea2(
           "core",
           showFloatingSidebar ? collabSidebarName : collabHistorySidebarName
