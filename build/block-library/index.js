@@ -1088,7 +1088,7 @@ var wp;
     name: "core/accordion",
     title: "Accordion",
     category: "design",
-    description: "Displays a group of accordion headings and associated expandable content.",
+    description: "Displays a foldable layout that groups content in collapsible sections.",
     example: {},
     supports: {
       anchor: true,
@@ -1422,7 +1422,7 @@ var wp;
     name: "core/accordion-item",
     title: "Accordion Item",
     category: "design",
-    description: "Displays a section of content in an accordion, including a heading and expandable content.",
+    description: "Wraps the heading and panel in one unit.",
     parent: ["core/accordion"],
     allowedBlocks: ["core/accordion-heading", "core/accordion-panel"],
     supports: {
@@ -1663,7 +1663,7 @@ var wp;
     name: "core/accordion-heading",
     title: "Accordion Heading",
     category: "design",
-    description: "Displays an accordion heading.",
+    description: "Toggles the accordion panel.",
     parent: ["core/accordion-item"],
     usesContext: [
       "core/accordion-icon-position",
@@ -1936,7 +1936,7 @@ var wp;
     name: "core/accordion-panel",
     title: "Accordion Panel",
     category: "design",
-    description: "Displays an accordion panel.",
+    description: "Contains the hidden or revealed content beneath the heading.",
     parent: ["core/accordion-item"],
     supports: {
       html: false,
