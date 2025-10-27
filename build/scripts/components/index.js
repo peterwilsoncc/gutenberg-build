@@ -39210,10 +39210,9 @@ This message will only show in development mode. It won't appear in production. 
                 selectedSuggestionIndex: getIndexOfMatchingSuggestion(selectedSuggestion, matchingSuggestions),
                 onChange: onInputChange
               })
-            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(spinner_default, {}), allowReset && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(button_default, {
+            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(spinner_default, {}), allowReset && Boolean(value) && !isExpanded && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(button_default, {
               size: "small",
               icon: close_small_default,
-              disabled: !value,
               onClick: handleOnReset,
               onKeyDown: handleResetStopPropagation,
               label: (0, import_i18n37.__)("Reset")
