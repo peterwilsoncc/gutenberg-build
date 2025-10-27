@@ -14620,7 +14620,7 @@ var wp;
       label: (0, import_i18n.__)("Registered Templates"),
       name: "registeredTemplate",
       kind: "root",
-      baseURL: "/wp/v2/wp_registered_template",
+      baseURL: "/wp/v2/registered-templates",
       key: "id"
     }
   ];
