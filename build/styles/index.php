@@ -18,8 +18,8 @@ return array(
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-commands',
-		'path' => 'commands/style',
+		'handle' => 'wp-nux',
+		'path' => 'nux/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(
@@ -28,8 +28,8 @@ return array(
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-nux',
-		'path' => 'nux/style',
+		'handle' => 'wp-commands',
+		'path' => 'commands/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(
@@ -48,14 +48,14 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
-		'handle' => 'wp-format-library',
-		'path' => 'format-library/style',
-		'dependencies' => array('wp-block-editor', 'wp-components'),
-	),
-	array(
 		'handle' => 'wp-components',
 		'path' => 'components/style',
 		'dependencies' => array(),
+	),
+	array(
+		'handle' => 'wp-format-library',
+		'path' => 'format-library/style',
+		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
 		'handle' => 'wp-block-directory',
