@@ -179,6 +179,17 @@ function gutenberg_block_core_breadcrumbs_get_archive_breadcrumbs() {
 		$month = get_query_var( 'monthnum' );
 		$day   = get_query_var( 'day' );
 
+		// Fallback to 'm' query var for plain permalinks.
+		// Plain permalinks use ?m=YYYYMMDD format instead of separate query vars.
+		if ( ! $year ) {
+			$m = get_query_var( 'm' );
+			if ( $m ) {
+				$year  = substr( $m, 0, 4 );
+				$month = substr( $m, 4, 2 );
+				$day   = (int) substr( $m, 6, 2 );
+			}
+		}
+
 		if ( $year ) {
 			if ( $month ) {
 				// Year is linked if we have month.
