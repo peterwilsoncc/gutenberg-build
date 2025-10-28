@@ -49374,7 +49374,9 @@ var wp;
           onConfirm: handleConfirmDelete,
           onCancel: handleCancel,
           confirmButtonText: (0, import_i18n217.__)("Delete"),
-          children: (0, import_i18n217.__)("Are you sure you want to delete this note?")
+          children: (0, import_i18n217.__)(
+            "Are you sure you want to delete this note? This will also delete all of this note's replies."
+          )
         }
       )
     ] });
