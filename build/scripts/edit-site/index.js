@@ -36099,7 +36099,8 @@ If there's a particular need for this, please submit a feature request at https:
           type: "card",
           withHeader: false,
           isOpened: true,
-          summary: []
+          summary: [],
+          isCollapsible: false
         };
       } else {
         const summary = layout.summary ?? [];
@@ -36107,7 +36108,8 @@ If there's a particular need for this, please submit a feature request at https:
           type: "card",
           withHeader: true,
           isOpened: typeof layout.isOpened === "boolean" ? layout.isOpened : true,
-          summary: normalizeCardSummaryField(summary)
+          summary: normalizeCardSummaryField(summary),
+          isCollapsible: layout.isCollapsible === void 0 ? true : layout.isCollapsible
         };
       }
     } else if (layout?.type === "row") {
@@ -37095,8 +37097,26 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime259 = __toESM(require_jsx_runtime());
   var import_components137 = __toESM(require_components());
   var import_element117 = __toESM(require_element());
-  function useCollapsibleCard(initialIsOpen = true) {
-    const [isOpen, setIsOpen] = (0, import_element117.useState)(initialIsOpen);
+  var NonCollapsibleCardHeader = ({
+    children,
+    ...props
+  }) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_components137.CardHeader, { ...props, children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
+    "div",
+    {
+      style: {
+        height: "40px",
+        // This is to match the chevron's __next40pxDefaultSize
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+      },
+      children
+    }
+  ) });
+  function useCardHeader(layout) {
+    const { isOpened, isCollapsible } = layout;
+    const [isOpen, setIsOpen] = (0, import_element117.useState)(isOpened);
     const toggle = (0, import_element117.useCallback)(() => {
       setIsOpen((prev) => !prev);
     }, []);
@@ -37141,7 +37161,9 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [toggle, isOpen]
     );
-    return { isOpen, CollapsibleCardHeader };
+    const effectiveIsOpen = isCollapsible ? isOpen : true;
+    const CardHeaderComponent = isCollapsible ? CollapsibleCardHeader : NonCollapsibleCardHeader;
+    return { isOpen: effectiveIsOpen, CardHeader: CardHeaderComponent };
   }
   function isSummaryFieldVisible(summaryField, summaryConfig, isOpen) {
     if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
@@ -37187,9 +37209,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [field]
     );
-    const { isOpen, CollapsibleCardHeader } = useCollapsibleCard(
-      layout.isOpened
-    );
+    const { isOpen, CardHeader } = useCardHeader(layout);
     const summaryFields = getSummaryFields(layout.summary, fields);
     const visibleSummaryFields = summaryFields.filter(
       (summaryField) => isSummaryFieldVisible(summaryField, layout.summary, isOpen)
@@ -37197,7 +37217,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (isCombinedField(field)) {
       const withHeader2 = !!field.label && layout.withHeader;
       return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_components137.Card, { className: "dataforms-layouts-card__field", children: [
-        withHeader2 && /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(CollapsibleCardHeader, { className: "dataforms-layouts-card__field-header", children: [
+        withHeader2 && /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
           /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: field.label }),
           visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map(
             (summaryField) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
@@ -37238,7 +37258,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const withHeader = !!fieldDefinition.label && layout.withHeader;
     return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_components137.Card, { className: "dataforms-layouts-card__field", children: [
-      withHeader && /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(CollapsibleCardHeader, { className: "dataforms-layouts-card__field-header", children: [
+      withHeader && /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
         /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: fieldDefinition.label }),
         visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
           summaryField.render,
