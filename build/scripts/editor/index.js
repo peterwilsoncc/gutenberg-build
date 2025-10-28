@@ -48349,7 +48349,7 @@ var wp;
       status: "all",
       per_page: -1
     };
-    const { records: threads, totalPages } = (0, import_core_data114.useEntityRecords)(
+    const { records: threads } = (0, import_core_data114.useEntityRecords)(
       "root",
       "comment",
       queryArgs,
@@ -48425,7 +48425,6 @@ var wp;
     return {
       resultComments,
       unresolvedSortedThreads,
-      totalPages,
       reflowComments,
       commentLastUpdated
     };
@@ -49411,7 +49410,7 @@ var wp;
   var import_element170 = __toESM(require_element());
   var import_block_editor92 = __toESM(require_block_editor());
   var { CommentIconToolbarSlotFill } = unlock(import_block_editor92.privateApis);
-  var CommentAvatarIndicator = ({ onClick, thread, hasMoreComments }) => {
+  var CommentAvatarIndicator = ({ onClick, thread }) => {
     const threadParticipants = (0, import_element170.useMemo)(() => {
       if (!thread) {
         return [];
@@ -49421,13 +49420,11 @@ var wp;
       allComments.sort((a3, b3) => new Date(a3.date) - new Date(b3.date));
       allComments.forEach((comment) => {
         if (comment.author_name && comment.author_avatar_urls) {
-          const authorKey = `${comment.author}-${comment.author_name}`;
-          if (!participantsMap.has(authorKey)) {
-            participantsMap.set(authorKey, {
+          if (!participantsMap.has(comment.author)) {
+            participantsMap.set(comment.author, {
               name: comment.author_name,
               avatar: comment.author_avatar_urls?.["48"] || comment.author_avatar_urls?.["96"],
               id: comment.author,
-              isOriginalCommenter: comment.id === thread.id,
               date: comment.date
             });
           }
@@ -49435,14 +49432,13 @@ var wp;
       });
       return Array.from(participantsMap.values());
     }, [thread]);
-    const hasUnresolved = thread?.status !== "approved";
-    const threadHasMoreParticipants = hasMoreComments && thread?.reply && 1 + thread.reply.length >= 100;
     if (!threadParticipants.length) {
       return null;
     }
     const maxAvatars = 3;
     const visibleParticipants = threadParticipants.slice(0, maxAvatars);
     const overflowCount = Math.max(0, threadParticipants.length - maxAvatars);
+    const threadHasMoreParticipants = threadParticipants.length > 100;
     const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n219.__)("100+") : (0, import_i18n219.sprintf)(
       // translators: %s: Number of participants.
       (0, import_i18n219.__)("+%s"),
@@ -49460,9 +49456,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(CommentIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
       import_components208.ToolbarButton,
       {
-        className: clsx_default("comment-avatar-indicator", {
-          "has-unresolved": hasUnresolved
-        }),
+        className: "comment-avatar-indicator",
         label: (0, import_i18n219.__)("View notes"),
         onClick,
         showTooltip: true,
@@ -49480,7 +49474,7 @@ var wp;
                 )
               }
             },
-            participant.name + index2
+            participant.id
           )),
           overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
             "div",
@@ -49555,14 +49549,12 @@ var wp;
     const {
       resultComments,
       unresolvedSortedThreads,
-      totalPages,
       reflowComments,
       commentLastUpdated
     } = useBlockComments(postId2);
     useEnableFloatingSidebar(
       showFloatingSidebar && (unresolvedSortedThreads.length > 0 || showCommentBoard)
     );
-    const hasMoreComments = totalPages && totalPages > 1;
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
     const currentThread = blockCommentId ? resultComments.find((thread) => thread.id === blockCommentId) : null;
@@ -49594,7 +49586,6 @@ var wp;
         comment_indicator_toolbar_default,
         {
           thread: currentThread,
-          hasMoreComments,
           onClick: openTheSidebar
         }
       ),
