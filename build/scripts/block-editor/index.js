@@ -22110,8 +22110,6 @@ var wp;
   ];
   function Tips() {
     const [randomIndex] = (0, import_element30.useState)(
-      // Disable Reason: I'm not generating an HTML id.
-      // eslint-disable-next-line no-restricted-syntax
       Math.floor(Math.random() * globalTips.length)
     );
     return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components23.Tip, { children: globalTips[randomIndex] });
