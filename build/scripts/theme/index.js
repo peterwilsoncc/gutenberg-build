@@ -5419,8 +5419,8 @@ var wp;
     color = {}
   } = {}) {
     const { resolvedSettings: inheritedSettings } = (0, import_element2.useContext)(ThemeContext);
-    const primary = color.primary ?? inheritedSettings.color?.primary ?? DEFAULT_SEED_COLORS.bg;
-    const bg = color.bg ?? inheritedSettings.color?.bg ?? DEFAULT_SEED_COLORS.primary;
+    const primary = color.primary ?? inheritedSettings.color?.primary ?? DEFAULT_SEED_COLORS.primary;
+    const bg = color.bg ?? inheritedSettings.color?.bg ?? DEFAULT_SEED_COLORS.bg;
     const resolvedSettings = (0, import_element2.useMemo)(
       () => ({
         color: {
