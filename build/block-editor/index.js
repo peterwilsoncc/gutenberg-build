@@ -60387,12 +60387,12 @@ var wp;
     const blockElement = useBlockElement(clientId);
     const blockAttributes = (0, import_data171.useSelect)(
       (select2) => {
-        if (!clientId) {
+        if (!clientId || !hasFitTextSupport2 || !fitText) {
           return;
         }
         return select2(store).getBlockAttributes(clientId);
       },
-      [clientId]
+      [clientId, hasFitTextSupport2, fitText]
     );
     const applyFitText = (0, import_element218.useCallback)(() => {
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
