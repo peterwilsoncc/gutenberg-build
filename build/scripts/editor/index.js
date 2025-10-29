@@ -46975,26 +46975,38 @@ var wp;
 
   // packages/editor/build-module/components/collab-sidebar/comment-author-info.js
   function CommentAuthorInfo({ avatar, name: name2, date, userId }) {
+    const hasAvatar = !!avatar;
     const dateSettings = (0, import_date8.getSettings)();
     const {
       currentUserAvatar,
       currentUserName,
       currentUserId,
       dateFormat = dateSettings.formats.date
-    } = (0, import_data215.useSelect)((select5) => {
-      const { getCurrentUser, getEntityRecord } = select5(import_core_data113.store);
-      const { getSettings: getSettings5 } = select5(import_block_editor87.store);
-      const userData = getCurrentUser();
-      const { __experimentalDiscussionSettings } = getSettings5();
-      const defaultAvatar = __experimentalDiscussionSettings?.avatarURL;
-      const siteSettings = getEntityRecord("root", "site");
-      return {
-        currentUserAvatar: userData?.avatar_urls?.[48] ?? defaultAvatar,
-        currentUserName: userData?.name,
-        currentUserId: userData?.id,
-        dateFormat: siteSettings?.date_format
-      };
-    }, []);
+    } = (0, import_data215.useSelect)(
+      (select5) => {
+        const { canUser, getCurrentUser, getEntityRecord } = select5(import_core_data113.store);
+        const siteSettings = canUser("read", {
+          kind: "root",
+          name: "site"
+        }) ? getEntityRecord("root", "site") : void 0;
+        if (hasAvatar) {
+          return {
+            dateFormat: siteSettings?.date_format
+          };
+        }
+        const { getSettings: getSettings5 } = select5(import_block_editor87.store);
+        const { __experimentalDiscussionSettings } = getSettings5();
+        const defaultAvatar = __experimentalDiscussionSettings?.avatarURL;
+        const userData = getCurrentUser();
+        return {
+          currentUserAvatar: userData?.avatar_urls?.[48] ?? defaultAvatar,
+          currentUserName: userData?.name,
+          currentUserId: userData?.id,
+          dateFormat: siteSettings?.date_format
+        };
+      },
+      [hasAvatar]
+    );
     const commentDate = (0, import_date8.getDate)(date);
     const commentDateTime = (0, import_date8.dateI18n)("c", commentDate);
     const shouldShowHumanTimeDiff = Math.floor((/* @__PURE__ */ new Date() - commentDate) / (1e3 * 60 * 60 * 24)) < 30;
