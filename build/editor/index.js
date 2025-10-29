@@ -26537,6 +26537,9 @@ var wp;
       };
     }, []);
     const { resultComments, unresolvedSortedThreads } = (0, import_element128.useMemo)(() => {
+      if (!threads || threads.length === 0) {
+        return { resultComments: [], unresolvedSortedThreads: [] };
+      }
       const blocksWithComments = clientIds.reduce((results, clientId) => {
         const commentId = getBlockAttributes2(clientId)?.metadata?.noteId;
         if (commentId) {
@@ -26546,8 +26549,7 @@ var wp;
       }, {});
       const compare = {};
       const result = [];
-      const allComments = threads ?? [];
-      allComments.forEach((item) => {
+      threads.forEach((item) => {
         const itemBlock = Object.keys(blocksWithComments).find(
           (key) => blocksWithComments[key] === item.id
         );
@@ -26557,7 +26559,7 @@ var wp;
           blockClientId: item.parent === 0 ? itemBlock : null
         };
       });
-      allComments.forEach((item) => {
+      threads.forEach((item) => {
         if (item.parent === 0) {
           result.push(compare[item.id]);
         } else if (compare[item.parent]) {
