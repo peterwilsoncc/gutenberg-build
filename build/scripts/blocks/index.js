@@ -5742,40 +5742,19 @@ var wp;
       case "ADD_BOOTSTRAPPED_BLOCK_TYPE":
         const { name, blockType } = action;
         const serverDefinition = state[name];
-        let newDefinition;
         if (serverDefinition) {
-          if (serverDefinition.blockHooks === void 0 && blockType.blockHooks) {
-            newDefinition = {
-              ...serverDefinition,
-              ...newDefinition,
-              blockHooks: blockType.blockHooks
-            };
-          }
-          if (serverDefinition.allowedBlocks === void 0 && blockType.allowedBlocks) {
-            newDefinition = {
-              ...serverDefinition,
-              ...newDefinition,
-              allowedBlocks: blockType.allowedBlocks
-            };
-          }
-        } else {
-          newDefinition = Object.fromEntries(
-            Object.entries(blockType).filter(
-              ([, value]) => value !== null && value !== void 0
-            ).map(([key, value]) => [
-              camelCase(key),
-              value
-            ])
-          );
-          newDefinition.name = name;
+          return state;
         }
-        if (newDefinition) {
-          return {
-            ...state,
-            [name]: newDefinition
-          };
-        }
-        return state;
+        const newDefinition = Object.fromEntries(
+          Object.entries(blockType).filter(
+            ([, value]) => value !== null && value !== void 0
+          ).map(([key, value]) => [camelCase(key), value])
+        );
+        newDefinition.name = name;
+        return {
+          ...state,
+          [name]: newDefinition
+        };
       case "REMOVE_BLOCK_TYPES":
         return omit(state, action.names);
     }
