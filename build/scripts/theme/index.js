@@ -39,17 +39,17 @@ var wp;
     }
   });
 
-  // vendor-external:react/jsx-runtime
-  var require_jsx_runtime = __commonJS({
-    "vendor-external:react/jsx-runtime"(exports, module) {
-      module.exports = window.ReactJSXRuntime;
-    }
-  });
-
   // package-external:@wordpress/element
   var require_element = __commonJS({
     "package-external:@wordpress/element"(exports, module) {
       module.exports = window.wp.element;
+    }
+  });
+
+  // vendor-external:react/jsx-runtime
+  var require_jsx_runtime = __commonJS({
+    "vendor-external:react/jsx-runtime"(exports, module) {
+      module.exports = window.ReactJSXRuntime;
     }
   });
 
@@ -67,7 +67,6 @@ var wp;
   );
 
   // packages/theme/build-module/theme-provider.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
   var import_element3 = __toESM(require_element());
 
   // packages/theme/build-module/context.js
@@ -5462,17 +5461,16 @@ var wp;
     };
   }
 
-  // packages/theme/build-module/style.module.css
-  var css = `._root_th78q_1 {
+  // packages/theme/build-module/theme-provider.js
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var css = `.style-module__root__26kw6 {
 	display: contents;
 }
 `;
   document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
   var style_default = {
-    "root": "_root_th78q_1"
+    "root": "style-module__root__26kw6"
   };
-
-  // packages/theme/build-module/theme-provider.js
   function cssObjectToText(values) {
     return Object.entries(values).map(([key, value]) => `${key}: ${value};`).join("");
   }

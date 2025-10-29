@@ -60,13 +60,6 @@ var wp;
     }
   });
 
-  // vendor-external:react/jsx-runtime
-  var require_jsx_runtime = __commonJS({
-    "vendor-external:react/jsx-runtime"(exports, module) {
-      module.exports = window.ReactJSXRuntime;
-    }
-  });
-
   // package-external:@wordpress/core-data
   var require_core_data = __commonJS({
     "package-external:@wordpress/core-data"(exports, module) {
@@ -99,6 +92,13 @@ var wp;
   var require_primitives = __commonJS({
     "package-external:@wordpress/primitives"(exports, module) {
       module.exports = window.wp.primitives;
+    }
+  });
+
+  // vendor-external:react/jsx-runtime
+  var require_jsx_runtime = __commonJS({
+    "vendor-external:react/jsx-runtime"(exports, module) {
+      module.exports = window.ReactJSXRuntime;
     }
   });
 
@@ -1565,7 +1565,6 @@ var wp;
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/index.js
-  var import_jsx_runtime95 = __toESM(require_jsx_runtime());
   var import_element46 = __toESM(require_element());
   var import_i18n43 = __toESM(require_i18n());
   var import_core_data = __toESM(require_core_data());
@@ -1579,38 +1578,38 @@ var wp;
   var import_i18n7 = __toESM(require_i18n());
 
   // packages/icons/build-module/library/arrow-down.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
   var import_primitives = __toESM(require_primitives());
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
   var arrow_down_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z" }) });
 
   // packages/icons/build-module/library/arrow-left.js
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
   var import_primitives2 = __toESM(require_primitives());
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
   var arrow_left_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.Path, { d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z" }) });
 
   // packages/icons/build-module/library/arrow-right.js
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
   var import_primitives3 = __toESM(require_primitives());
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
   var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
 
   // packages/icons/build-module/library/arrow-up.js
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
   var import_primitives4 = __toESM(require_primitives());
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
   var arrow_up_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.Path, { d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z" }) });
 
   // packages/icons/build-module/library/at-symbol.js
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
   var import_primitives5 = __toESM(require_primitives());
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
   var at_symbol_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.Path, { d: "M12.5939 21C14.1472 21 16.1269 20.5701 17.0711 20.1975L16.6447 18.879C16.0964 19.051 14.3299 19.6242 12.6548 19.6242C7.4467 19.6242 4.67513 16.8726 4.67513 12C4.67513 7.21338 7.50762 4.34713 12.2893 4.34713C17.132 4.34713 19.4162 7.55732 19.4162 10.7675C19.4162 14.035 19.0508 15.4968 17.4975 15.4968C16.5838 15.4968 16.0964 14.7803 16.0964 13.9777V7.5H14.4822V8.30255H14.3909C14.1777 7.67198 12.9898 7.12739 11.467 7.2707C9.18274 7.5 7.4467 9.27707 7.4467 11.8567C7.4467 14.5796 8.81726 16.672 11.467 16.758C13.203 16.8153 14.1168 16.0127 14.4822 15.1815H14.5736C14.7563 16.414 16.401 16.8439 17.467 16.8439C20.6954 16.8439 21 13.5764 21 10.7962C21 6.86943 18.0761 3 12.3807 3C6.50254 3 3 6.3535 3 11.9427C3 17.7325 6.38071 21 12.5939 21ZM11.7107 15.2962C9.73096 15.2962 9.03046 13.6051 9.03046 11.7707C9.03046 10.1083 10.0355 8.67516 11.7716 8.67516C13.599 8.67516 14.5736 9.36306 14.5736 11.7707C14.5736 14.1497 13.7513 15.2962 11.7107 15.2962Z" }) });
 
   // packages/icons/build-module/library/block-table.js
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
   var import_primitives6 = __toESM(require_primitives());
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
   var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
 
   // packages/icons/build-module/library/category.js
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
   var import_primitives7 = __toESM(require_primitives());
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
   var category_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
     import_primitives7.Path,
     {
@@ -1621,28 +1620,28 @@ var wp;
   ) });
 
   // packages/icons/build-module/library/check.js
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
   var import_primitives8 = __toESM(require_primitives());
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
   var check_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
 
   // packages/icons/build-module/library/chevron-down.js
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
   var import_primitives9 = __toESM(require_primitives());
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
   var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
   // packages/icons/build-module/library/chevron-up.js
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
   var import_primitives10 = __toESM(require_primitives());
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
   var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
 
   // packages/icons/build-module/library/close-small.js
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime());
   var import_primitives11 = __toESM(require_primitives());
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime());
   var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
 
   // packages/icons/build-module/library/cog.js
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
   var import_primitives12 = __toESM(require_primitives());
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
   var cog_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
     import_primitives12.Path,
     {
@@ -1653,8 +1652,8 @@ var wp;
   ) });
 
   // packages/icons/build-module/library/error.js
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
   var import_primitives13 = __toESM(require_primitives());
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
   var error_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
     import_primitives13.Path,
     {
@@ -1665,63 +1664,63 @@ var wp;
   ) });
 
   // packages/icons/build-module/library/format-list-bullets-rtl.js
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
   var import_primitives14 = __toESM(require_primitives());
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
   var format_list_bullets_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
 
   // packages/icons/build-module/library/format-list-bullets.js
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
   var import_primitives15 = __toESM(require_primitives());
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
   var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
 
   // packages/icons/build-module/library/funnel.js
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
   var import_primitives16 = __toESM(require_primitives());
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
   var funnel_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.Path, { d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z" }) });
 
   // packages/icons/build-module/library/link.js
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
   var import_primitives17 = __toESM(require_primitives());
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
   var link_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
 
   // packages/icons/build-module/library/lock.js
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
   var import_primitives18 = __toESM(require_primitives());
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
   var lock_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.Path, { d: "M17 10h-1.2V7c0-2.1-1.7-3.8-3.8-3.8-2.1 0-3.8 1.7-3.8 3.8v3H7c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1h10c.6 0 1-.4 1-1v-8c0-.6-.4-1-1-1zm-2.8 0H9.8V7c0-1.2 1-2.2 2.2-2.2s2.2 1 2.2 2.2v3z" }) });
 
   // packages/icons/build-module/library/mobile.js
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
   var import_primitives19 = __toESM(require_primitives());
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
   var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives19.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
 
   // packages/icons/build-module/library/more-vertical.js
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
   var import_primitives20 = __toESM(require_primitives());
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
   var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives20.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
 
   // packages/icons/build-module/library/next.js
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
   var import_primitives21 = __toESM(require_primitives());
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
   var next_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives21.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
 
   // packages/icons/build-module/library/previous.js
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
   var import_primitives22 = __toESM(require_primitives());
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
   var previous_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives22.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
 
   // packages/icons/build-module/library/search.js
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
   var import_primitives23 = __toESM(require_primitives());
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
   var search_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives23.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
   // packages/icons/build-module/library/seen.js
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
   var import_primitives24 = __toESM(require_primitives());
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
   var seen_default = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives24.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives24.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
 
   // packages/icons/build-module/library/unseen.js
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
   var import_primitives25 = __toESM(require_primitives());
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
   var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives25.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives25.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
 
   // packages/dataviews/build-module/constants.js
@@ -1934,9 +1933,6 @@ var wp;
   // packages/dataviews/build-module/dataviews-layouts/index.js
   var import_i18n22 = __toESM(require_i18n());
 
-  // packages/dataviews/build-module/dataviews-layouts/table/index.js
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
-
   // node_modules/clsx/dist/clsx.mjs
   function r(e2) {
     var t2, f2, n2 = "";
@@ -1960,9 +1956,9 @@ var wp;
   var import_keycodes = __toESM(require_keycodes());
 
   // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.js
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
   var import_components = __toESM(require_components());
   var import_i18n8 = __toESM(require_i18n());
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
   function DataViewsSelectionCheckbox({
     selection,
     onChangeSelection,
@@ -1997,7 +1993,6 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-item-actions/index.js
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
   var import_components2 = __toESM(require_components());
   var import_i18n9 = __toESM(require_i18n());
   var import_element3 = __toESM(require_element());
@@ -2012,6 +2007,7 @@ var wp;
   );
 
   // packages/dataviews/build-module/components/dataviews-item-actions/index.js
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
   var { Menu, kebabCase } = unlock(import_components2.privateApis);
   function ButtonTrigger({
     action,
@@ -2230,12 +2226,12 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-bulk-actions/index.js
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
   var import_components3 = __toESM(require_components());
   var import_i18n10 = __toESM(require_i18n());
   var import_element4 = __toESM(require_element());
   var import_data2 = __toESM(require_data());
   var import_compose2 = __toESM(require_compose());
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
   function useHasAPossibleBulkAction(actions, item) {
     return (0, import_element4.useMemo)(() => {
       return actions.some((action) => {
@@ -2292,10 +2288,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataviews-layouts/table/column-header-menu.js
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
   var import_i18n11 = __toESM(require_i18n());
   var import_components4 = __toESM(require_components());
   var import_element5 = __toESM(require_element());
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
   var { Menu: Menu2 } = unlock(import_components4.privateApis);
   function WithMenuSeparators({ children }) {
     return import_element5.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(import_element5.Fragment, { children: [
@@ -2472,12 +2468,11 @@ var wp;
   var column_header_menu_default = ColumnHeaderMenu;
 
   // packages/dataviews/build-module/dataviews-layouts/table/column-primary.js
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
   var import_components5 = __toESM(require_components());
 
   // packages/dataviews/build-module/dataviews-layouts/utils/item-click-wrapper.js
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
   var import_element6 = __toESM(require_element());
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
   function getClickableItemProps({
     item,
     isItemClickable: isItemClickable2,
@@ -2550,6 +2545,7 @@ var wp;
 
   // packages/dataviews/build-module/dataviews-layouts/table/column-primary.js
   var import_i18n12 = __toESM(require_i18n());
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
   function ColumnPrimary({
     item,
     level,
@@ -2682,6 +2678,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataviews-layouts/table/index.js
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
   function TableColumnField({
     item,
     fields,
@@ -3084,7 +3081,6 @@ var wp;
   var table_default = ViewTable;
 
   // packages/dataviews/build-module/dataviews-layouts/grid/index.js
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
   var import_components7 = __toESM(require_components());
   var import_i18n15 = __toESM(require_i18n());
   var import_compose4 = __toESM(require_compose());
@@ -3092,8 +3088,8 @@ var wp;
   var import_element10 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataviews-layouts/utils/grid-items.js
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
   var import_element9 = __toESM(require_element());
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
   var GridItems = (0, import_element9.forwardRef)(({ className, previewSize, ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
       "div",
@@ -3109,6 +3105,7 @@ var wp;
   });
 
   // packages/dataviews/build-module/dataviews-layouts/grid/index.js
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
   var { Badge } = unlock(import_components7.privateApis);
   function GridItem({
     view,
@@ -3472,12 +3469,12 @@ var wp;
   var grid_default = ViewGrid;
 
   // packages/dataviews/build-module/dataviews-layouts/list/index.js
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
   var import_compose5 = __toESM(require_compose());
   var import_components8 = __toESM(require_components());
   var import_element11 = __toESM(require_element());
   var import_i18n16 = __toESM(require_i18n());
   var import_data3 = __toESM(require_data());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
   var { Menu: Menu3 } = unlock(import_components8.privateApis);
   function generateItemWrapperCompositeId(idPrefix) {
     return `${idPrefix}-item-wrapper`;
@@ -3964,24 +3961,22 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataviews-layouts/picker-grid/index.js
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
   var import_components11 = __toESM(require_components());
   var import_i18n19 = __toESM(require_i18n());
   var import_compose6 = __toESM(require_compose());
   var import_element14 = __toESM(require_element());
 
   // packages/dataviews/build-module/components/dataviews-picker/footer.js
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
   var import_components10 = __toESM(require_components());
   var import_data4 = __toESM(require_data());
   var import_element13 = __toESM(require_element());
   var import_i18n18 = __toESM(require_i18n());
 
   // packages/dataviews/build-module/components/dataviews-pagination/index.js
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
   var import_components9 = __toESM(require_components());
   var import_element12 = __toESM(require_element());
   var import_i18n17 = __toESM(require_i18n());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
   function DataViewsPagination() {
     const {
       view,
@@ -4093,6 +4088,7 @@ var wp;
   var dataviews_pagination_default = (0, import_element12.memo)(DataViewsPagination);
 
   // packages/dataviews/build-module/components/dataviews-picker/footer.js
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
   var EMPTY_ARRAY = [];
   function useIsMultiselectPicker(actions) {
     return (0, import_element13.useMemo)(() => {
@@ -4244,6 +4240,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataviews-layouts/picker-grid/index.js
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
   var { Badge: Badge2 } = unlock(import_components11.privateApis);
   function GridItem2({
     view,
@@ -4616,10 +4613,10 @@ var wp;
   var picker_grid_default = ViewPickerGrid;
 
   // packages/dataviews/build-module/dataviews-layouts/utils/preview-size-picker.js
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
   var import_components12 = __toESM(require_components());
   var import_i18n20 = __toESM(require_i18n());
   var import_element15 = __toESM(require_element());
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
   var imageSizes = [
     {
       value: 120,
@@ -4689,10 +4686,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataviews-layouts/table/density-picker.js
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
   var import_components13 = __toESM(require_components());
   var import_i18n21 = __toESM(require_i18n());
   var import_element16 = __toESM(require_element());
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
   function DensityPicker() {
     const context = (0, import_element16.useContext)(dataviews_context_default);
     const view = context.view;
@@ -4779,18 +4776,13 @@ var wp;
   ];
 
   // packages/dataviews/build-module/components/dataviews-filters/filters.js
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
   var import_element23 = __toESM(require_element());
   var import_components19 = __toESM(require_components());
 
   // packages/dataviews/build-module/components/dataviews-filters/filter.js
-  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
   var import_components16 = __toESM(require_components());
   var import_i18n24 = __toESM(require_i18n());
   var import_element20 = __toESM(require_element());
-
-  // packages/dataviews/build-module/components/dataviews-filters/search-widget.js
-  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
 
   // node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
   var __defProp2 = Object.defineProperty;
@@ -8914,6 +8906,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.js
+  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
   function normalizeSearchInput(input = "") {
     return (0, import_remove_accents.default)(input.trim().toLowerCase());
   }
@@ -9069,7 +9062,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function ComboboxList3({ view, filter, onChangeView }) {
+  function ComboboxList22({ view, filter, onChangeView }) {
     const [searchValue, setSearchValue] = (0, import_element18.useState)("");
     const deferredSearchValue = (0, import_element18.useDeferredValue)(searchValue);
     const currentFilter = view.filters?.find(
@@ -9197,16 +9190,16 @@ If there's a particular need for this, please submit a feature request at https:
     if (elements.length === 0) {
       return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: (0, import_i18n23.__)("No elements found") });
     }
-    const Widget = elements.length > 10 ? ComboboxList3 : ListBox;
+    const Widget = elements.length > 10 ? ComboboxList22 : ListBox;
     return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Widget, { ...props, filter: { ...props.filter, elements } });
   }
 
   // packages/dataviews/build-module/components/dataviews-filters/input-widget.js
-  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
   var import_es6 = __toESM(require_es6());
   var import_compose8 = __toESM(require_compose());
   var import_element19 = __toESM(require_element());
   var import_components15 = __toESM(require_components());
+  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
   function InputWidget({
     filter,
     view,
@@ -9294,6 +9287,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-filters/filter.js
+  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
   var ENTER = "Enter";
   var SPACE = " ";
   var FilterText = ({
@@ -9788,10 +9782,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-filters/add-filter.js
-  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
   var import_components17 = __toESM(require_components());
   var import_i18n25 = __toESM(require_i18n());
   var import_element21 = __toESM(require_element());
+  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
   var { Menu: Menu4 } = unlock(import_components17.privateApis);
   function AddFilterMenu({
     filters,
@@ -9858,9 +9852,9 @@ If there's a particular need for this, please submit a feature request at https:
   var add_filter_default = (0, import_element21.forwardRef)(AddFilter);
 
   // packages/dataviews/build-module/components/dataviews-filters/reset-filters.js
-  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
   var import_components18 = __toESM(require_components());
   var import_i18n26 = __toESM(require_i18n());
+  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
   function ResetFilter({
     filters,
     view,
@@ -9945,6 +9939,7 @@ If there's a particular need for this, please submit a feature request at https:
   var use_filters_default = useFilters;
 
   // packages/dataviews/build-module/components/dataviews-filters/filters.js
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
   function Filters({ className }) {
     const { fields, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element23.useContext)(dataviews_context_default);
     const addFilterRef = (0, import_element23.useRef)(null);
@@ -10006,10 +10001,10 @@ If there's a particular need for this, please submit a feature request at https:
   var filters_default = (0, import_element23.memo)(Filters);
 
   // packages/dataviews/build-module/components/dataviews-filters/toggle.js
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
   var import_element24 = __toESM(require_element());
   var import_components20 = __toESM(require_components());
   var import_i18n27 = __toESM(require_i18n());
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
   function FiltersToggle() {
     const {
       filters,
@@ -10095,8 +10090,8 @@ If there's a particular need for this, please submit a feature request at https:
   var toggle_default = FiltersToggle;
 
   // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.js
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
   var import_element25 = __toESM(require_element());
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
   function FiltersToggled(props) {
     const { isShowingFilter } = (0, import_element25.useContext)(dataviews_context_default);
     if (!isShowingFilter) {
@@ -10107,9 +10102,9 @@ If there's a particular need for this, please submit a feature request at https:
   var filters_toggled_default = FiltersToggled;
 
   // packages/dataviews/build-module/components/dataviews-layout/index.js
-  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
   var import_element26 = __toESM(require_element());
   var import_i18n28 = __toESM(require_i18n());
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
   function DataViewsLayout({ className }) {
     const {
       actions = [],
@@ -10156,11 +10151,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-search/index.js
-  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
   var import_i18n29 = __toESM(require_i18n());
   var import_element27 = __toESM(require_element());
   var import_components21 = __toESM(require_components());
   var import_compose9 = __toESM(require_compose());
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
   var DataViewsSearch = (0, import_element27.memo)(function Search({ label }) {
     const { view, onChangeView } = (0, import_element27.useContext)(dataviews_context_default);
     const [search, setSearch, debouncedSearch] = (0, import_compose9.useDebouncedInput)(
@@ -10201,7 +10196,6 @@ If there's a particular need for this, please submit a feature request at https:
   var dataviews_search_default = DataViewsSearch;
 
   // packages/dataviews/build-module/components/dataviews-view-config/index.js
-  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
   var import_components23 = __toESM(require_components());
   var import_i18n31 = __toESM(require_i18n());
   var import_element29 = __toESM(require_element());
@@ -10209,10 +10203,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose10 = __toESM(require_compose());
 
   // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.js
-  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
   var import_components22 = __toESM(require_components());
   var import_i18n30 = __toESM(require_i18n());
   var import_element28 = __toESM(require_element());
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
   function InfiniteScrollToggle() {
     const context = (0, import_element28.useContext)(dataviews_context_default);
     const { view, onChangeView } = context;
@@ -10240,6 +10234,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-view-config/index.js
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
   var { Menu: Menu5 } = unlock(import_components23.privateApis);
   var DATAVIEWS_CONFIG_POPOVER_PROPS = {
     className: "dataviews-config__popover",
@@ -10908,11 +10903,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DataViewsViewConfig = (0, import_element29.memo)(_DataViewsViewConfig);
   var dataviews_view_config_default = DataViewsViewConfig;
 
-  // packages/dataviews/build-module/field-types/index.js
-  var import_jsx_runtime72 = __toESM(require_jsx_runtime());
-
   // packages/dataviews/build-module/field-types/email.js
-  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
   var import_i18n32 = __toESM(require_i18n());
 
   // packages/dataviews/build-module/field-types/utils/render-from-elements.js
@@ -10935,6 +10926,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/field-types/email.js
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
   function sort(valueA, valueB, direction) {
     return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
   }
@@ -10974,8 +10966,8 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/integer.js
-  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
   var import_i18n33 = __toESM(require_i18n());
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
   function sort2(a2, b2, direction) {
     return direction === "asc" ? a2 - b2 : b2 - a2;
   }
@@ -11025,8 +11017,8 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/number.js
-  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
   var import_i18n34 = __toESM(require_i18n());
+  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
   function sort3(a2, b2, direction) {
     return direction === "asc" ? a2 - b2 : b2 - a2;
   }
@@ -11162,8 +11154,8 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/date.js
-  var import_jsx_runtime66 = __toESM(require_jsx_runtime());
   var import_date = __toESM(require_date());
+  var import_jsx_runtime66 = __toESM(require_jsx_runtime());
   var getFormattedDate = (dateToDisplay) => (0, import_date.dateI18n)((0, import_date.getSettings)().formats.date, (0, import_date.getDate)(dateToDisplay));
   function sort6(a2, b2, direction) {
     const timeA = new Date(a2).getTime();
@@ -11215,8 +11207,8 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/boolean.js
-  var import_jsx_runtime67 = __toESM(require_jsx_runtime());
   var import_i18n35 = __toESM(require_i18n());
+  var import_jsx_runtime67 = __toESM(require_jsx_runtime());
   function sort7(a2, b2, direction) {
     const boolA = Boolean(a2);
     const boolB = Boolean(b2);
@@ -11374,9 +11366,6 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     }
   };
-
-  // packages/dataviews/build-module/field-types/color.js
-  var import_jsx_runtime70 = __toESM(require_jsx_runtime());
 
   // node_modules/colord/index.mjs
   var r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
@@ -11538,6 +11527,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/field-types/color.js
   var import_i18n37 = __toESM(require_i18n());
+  var import_jsx_runtime70 = __toESM(require_jsx_runtime());
   function sort12(valueA, valueB, direction) {
     const colorA = w(valueA);
     const colorB = w(valueB);
@@ -11645,6 +11635,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/index.js
+  var import_jsx_runtime72 = __toESM(require_jsx_runtime());
   function getFieldTypeDefinition(type) {
     if ("email" === type) {
       return email_default;
@@ -11708,11 +11699,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/dataviews/build-module/dataform-controls/index.js
-  var import_jsx_runtime93 = __toESM(require_jsx_runtime());
-
   // packages/dataviews/build-module/dataform-controls/checkbox.js
-  var import_jsx_runtime73 = __toESM(require_jsx_runtime());
   var import_components24 = __toESM(require_components());
   var import_element30 = __toESM(require_element());
 
@@ -11730,6 +11717,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
+  var import_jsx_runtime73 = __toESM(require_jsx_runtime());
   var { ValidatedCheckboxControl } = unlock(import_components24.privateApis);
   function Checkbox({
     field,
@@ -11757,9 +11745,6 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-
-  // packages/dataviews/build-module/dataform-controls/datetime.js
-  var import_jsx_runtime75 = __toESM(require_jsx_runtime());
 
   // packages/dataviews/node_modules/date-fns/constants.js
   var daysInYear = 365.2425;
@@ -13397,10 +13382,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_date3 = __toESM(require_date());
 
   // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
-  var import_jsx_runtime74 = __toESM(require_jsx_runtime());
   var import_components25 = __toESM(require_components());
   var import_element31 = __toESM(require_element());
   var import_i18n38 = __toESM(require_i18n());
+  var import_jsx_runtime74 = __toESM(require_jsx_runtime());
   var TIME_UNITS_OPTIONS = {
     [OPERATOR_IN_THE_PAST]: [
       { value: "days", label: (0, import_i18n38.__)("Days") },
@@ -13485,6 +13470,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/datetime.js
+  var import_jsx_runtime75 = __toESM(require_jsx_runtime());
   var { DateCalendar, ValidatedInputControl } = unlock(import_components26.privateApis);
   var parseDateTime = (dateTimeString) => {
     if (!dateTimeString) {
@@ -13662,11 +13648,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/date.js
-  var import_jsx_runtime76 = __toESM(require_jsx_runtime());
   var import_components27 = __toESM(require_components());
   var import_element33 = __toESM(require_element());
   var import_i18n40 = __toESM(require_i18n());
   var import_date4 = __toESM(require_date());
+  var import_jsx_runtime76 = __toESM(require_jsx_runtime());
   var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock(import_components27.privateApis);
   var DATE_PRESETS = [
     {
@@ -14198,13 +14184,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/email.js
-  var import_jsx_runtime78 = __toESM(require_jsx_runtime());
   var import_components29 = __toESM(require_components());
 
   // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
-  var import_jsx_runtime77 = __toESM(require_jsx_runtime());
   var import_components28 = __toESM(require_components());
   var import_element34 = __toESM(require_element());
+  var import_jsx_runtime77 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl2 } = unlock(import_components28.privateApis);
   function ValidatedText({
     data,
@@ -14247,6 +14232,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/email.js
+  var import_jsx_runtime78 = __toESM(require_jsx_runtime());
   function Email({
     data,
     field,
@@ -14271,8 +14257,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/telephone.js
-  var import_jsx_runtime79 = __toESM(require_jsx_runtime());
   var import_components30 = __toESM(require_components());
+  var import_jsx_runtime79 = __toESM(require_jsx_runtime());
   function Telephone({
     data,
     field,
@@ -14297,8 +14283,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/url.js
-  var import_jsx_runtime80 = __toESM(require_jsx_runtime());
   var import_components31 = __toESM(require_components());
+  var import_jsx_runtime80 = __toESM(require_jsx_runtime());
   function Url({
     data,
     field,
@@ -14322,14 +14308,11 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/integer.js
-  var import_jsx_runtime82 = __toESM(require_jsx_runtime());
-
   // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
-  var import_jsx_runtime81 = __toESM(require_jsx_runtime());
   var import_components32 = __toESM(require_components());
   var import_element35 = __toESM(require_element());
   var import_i18n41 = __toESM(require_i18n());
+  var import_jsx_runtime81 = __toESM(require_jsx_runtime());
   var { ValidatedNumberControl } = unlock(import_components32.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
@@ -14458,6 +14441,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/integer.js
+  var import_jsx_runtime82 = __toESM(require_jsx_runtime());
   function Number2(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(ValidatedNumber, { ...props, decimals: 0 });
   }
@@ -14469,9 +14453,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/radio.js
-  var import_jsx_runtime84 = __toESM(require_jsx_runtime());
   var import_components33 = __toESM(require_components());
   var import_element36 = __toESM(require_element());
+  var import_jsx_runtime84 = __toESM(require_jsx_runtime());
   var { ValidatedRadioControl } = unlock(import_components33.privateApis);
   function Radio({
     data,
@@ -14509,9 +14493,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/select.js
-  var import_jsx_runtime85 = __toESM(require_jsx_runtime());
   var import_components34 = __toESM(require_components());
   var import_element37 = __toESM(require_element());
+  var import_jsx_runtime85 = __toESM(require_jsx_runtime());
   var { ValidatedSelectControl } = unlock(import_components34.privateApis);
   function Select({
     data,
@@ -14553,8 +14537,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/text.js
-  var import_jsx_runtime86 = __toESM(require_jsx_runtime());
   var import_element38 = __toESM(require_element());
+  var import_jsx_runtime86 = __toESM(require_jsx_runtime());
   function Text2({
     data,
     field,
@@ -14581,9 +14565,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/toggle.js
-  var import_jsx_runtime87 = __toESM(require_jsx_runtime());
   var import_components35 = __toESM(require_components());
   var import_element39 = __toESM(require_element());
+  var import_jsx_runtime87 = __toESM(require_jsx_runtime());
   var { ValidatedToggleControl } = unlock(import_components35.privateApis);
   function Toggle({
     field,
@@ -14614,9 +14598,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/textarea.js
-  var import_jsx_runtime88 = __toESM(require_jsx_runtime());
   var import_components36 = __toESM(require_components());
   var import_element40 = __toESM(require_element());
+  var import_jsx_runtime88 = __toESM(require_jsx_runtime());
   var { ValidatedTextareaControl } = unlock(import_components36.privateApis);
   function Textarea({
     data,
@@ -14652,9 +14636,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/toggle-group.js
-  var import_jsx_runtime89 = __toESM(require_jsx_runtime());
   var import_components37 = __toESM(require_components());
   var import_element41 = __toESM(require_element());
+  var import_jsx_runtime89 = __toESM(require_jsx_runtime());
   var { ValidatedToggleGroupControl } = unlock(import_components37.privateApis);
   function ToggleGroup({
     data,
@@ -14706,9 +14690,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/array.js
-  var import_jsx_runtime90 = __toESM(require_jsx_runtime());
   var import_components38 = __toESM(require_components());
   var import_element42 = __toESM(require_element());
+  var import_jsx_runtime90 = __toESM(require_jsx_runtime());
   var { ValidatedFormTokenField } = unlock(import_components38.privateApis);
   function ArrayControl({
     data,
@@ -14793,9 +14777,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/color.js
-  var import_jsx_runtime91 = __toESM(require_jsx_runtime());
   var import_components39 = __toESM(require_components());
   var import_element43 = __toESM(require_element());
+  var import_jsx_runtime91 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock(import_components39.privateApis);
   var ColorPicker = ({
     color,
@@ -14884,10 +14868,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/password.js
-  var import_jsx_runtime92 = __toESM(require_jsx_runtime());
   var import_components40 = __toESM(require_components());
   var import_element44 = __toESM(require_element());
   var import_i18n42 = __toESM(require_i18n());
+  var import_jsx_runtime92 = __toESM(require_jsx_runtime());
   function Password({
     data,
     field,
@@ -14929,6 +14913,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/index.js
+  var import_jsx_runtime93 = __toESM(require_jsx_runtime());
   var FORM_CONTROLS = {
     array: ArrayControl,
     checkbox: Checkbox,
@@ -15111,10 +15096,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-picker/index.js
-  var import_jsx_runtime94 = __toESM(require_jsx_runtime());
   var import_components41 = __toESM(require_components());
   var import_element45 = __toESM(require_element());
   var import_compose11 = __toESM(require_compose());
+  var import_jsx_runtime94 = __toESM(require_jsx_runtime());
   var isItemClickable = () => false;
   var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
     (viewLayout) => viewLayout.isPicker
@@ -15304,6 +15289,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-utils/build-module/components/media-upload-modal/index.js
+  var import_jsx_runtime95 = __toESM(require_jsx_runtime());
   var { useEntityRecordsWithPermissions } = unlock2(import_core_data.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   function MediaUploadModal({
