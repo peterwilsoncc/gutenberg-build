@@ -27610,21 +27610,16 @@ var wp;
       return null;
     }
     const maxAvatars = 3;
-    const visibleParticipants = threadParticipants.slice(0, maxAvatars);
-    const overflowCount = Math.max(0, threadParticipants.length - maxAvatars);
+    const isOverflow = threadParticipants.length > maxAvatars;
+    const visibleParticipants = isOverflow ? threadParticipants.slice(0, maxAvatars - 1) : threadParticipants;
+    const overflowCount = Math.max(
+      0,
+      threadParticipants.length - visibleParticipants.length
+    );
     const threadHasMoreParticipants = threadParticipants.length > 100;
     const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n169.__)("100+") : (0, import_i18n169.sprintf)(
       // translators: %s: Number of participants.
       (0, import_i18n169.__)("+%s"),
-      overflowCount
-    );
-    const overflowTitle = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n169.__)("100+ participants") : (0, import_i18n169.sprintf)(
-      // translators: %s: Number of participants.
-      (0, import_i18n169._n)(
-        "+%s more participant",
-        "+%s more participants",
-        overflowCount
-      ),
       overflowCount
     );
     return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(CommentIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
@@ -27634,15 +27629,14 @@ var wp;
         label: (0, import_i18n169.__)("View notes"),
         onClick,
         showTooltip: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)("div", { className: "comment-avatar-stack", children: [
-          visibleParticipants.map((participant, index2) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_components145.__experimentalHStack, { spacing: "1", children: [
+          visibleParticipants.map((participant) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             "img",
             {
               src: participant.avatar,
               alt: participant.name,
               className: "comment-avatar",
               style: {
-                zIndex: maxAvatars - index2,
                 borderColor: getAvatarBorderColor(
                   participant.id
                 )
@@ -27650,15 +27644,7 @@ var wp;
             },
             participant.id
           )),
-          overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-            "div",
-            {
-              className: "comment-avatar-overflow",
-              style: { zIndex: 0 },
-              title: overflowTitle,
-              children: overflowText
-            }
-          )
+          overflowCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_components145.__experimentalText, { weight: 500, children: overflowText })
         ] })
       }
     ) });
