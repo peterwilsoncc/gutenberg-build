@@ -1,3 +1,4 @@
+"use strict";
 var wp;
 (wp ||= {}).preferences = (() => {
   var __create = Object.create;
@@ -272,10 +273,12 @@ var wp;
     }
     return originalGet(state, scope, name);
   };
-  var get = withDeprecatedKeys((state, scope, name) => {
-    const value = state.preferences[scope]?.[name];
-    return value !== void 0 ? value : state.defaults[scope]?.[name];
-  });
+  var get = withDeprecatedKeys(
+    (state, scope, name) => {
+      const value = state.preferences[scope]?.[name];
+      return value !== void 0 ? value : state.defaults[scope]?.[name];
+    }
+  );
 
   // packages/preferences/build-module/store/constants.js
   var STORE_NAME = "core/preferences";
@@ -326,7 +329,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
       import_components.MenuItem,
       {
-        icon: isActive && check_default,
+        icon: isActive ? check_default : null,
         isSelected: isActive,
         onClick: () => {
           onToggle();
@@ -347,7 +350,13 @@ var wp;
   // packages/preferences/build-module/components/preference-base-option/index.js
   var import_jsx_runtime5 = __toESM(require_jsx_runtime());
   var import_components2 = __toESM(require_components());
-  function BaseOption({ help, label, isChecked, onChange, children }) {
+  function BaseOption({
+    help,
+    label,
+    isChecked,
+    onChange,
+    children
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "preference-base-option", children: [
       /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
         import_components2.ToggleControl,
@@ -387,9 +396,9 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       preference_base_option_default,
       {
+        ...remainingProps,
         onChange,
-        isChecked,
-        ...remainingProps
+        isChecked
       }
     );
   }
@@ -399,7 +408,10 @@ var wp;
   var import_jsx_runtime7 = __toESM(require_jsx_runtime());
   var import_components3 = __toESM(require_components());
   var import_i18n2 = __toESM(require_i18n());
-  function PreferencesModal({ closeModal, children }) {
+  function PreferencesModal({
+    closeModal,
+    children
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
       import_components3.Modal,
       {
@@ -439,7 +451,9 @@ var wp;
   // packages/preferences/build-module/components/preferences-modal-tabs/index.js
   var { Tabs } = unlock(import_components4.privateApis);
   var PREFERENCES_MENU = "preferences-menu";
-  function PreferencesModalTabs({ sections }) {
+  function PreferencesModalTabs({
+    sections
+  }) {
     const isLargeViewport = (0, import_compose.useViewportMatch)("medium");
     const [activeMenu, setActiveMenu] = (0, import_element2.useState)(PREFERENCES_MENU);
     const { tabs, sectionsContentMap } = (0, import_element2.useMemo)(() => {
@@ -493,23 +507,26 @@ var wp;
     } else {
       modalContent = /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_components4.Navigator, { initialPath: "/", className: "preferences__provider", children: [
         /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.Card, { isBorderless: true, size: "small", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.CardBody, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.__experimentalItemGroup, { children: tabs.map((tab) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-            import_components4.Navigator.Button,
-            {
-              path: `/${tab.name}`,
-              as: import_components4.__experimentalItem,
-              isAction: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_components4.__experimentalHStack, { justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.__experimentalTruncate, { children: tab.title }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-                  icon_default,
-                  {
-                    icon: (0, import_i18n3.isRTL)() ? chevron_left_default : chevron_right_default
-                  }
-                ) })
-              ] })
-            },
-            tab.name
+          return (
+            // @ts-expect-error: Navigator.Button is currently typed in a way that prevents Item from being passed in
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+              import_components4.Navigator.Button,
+              {
+                path: `/${tab.name}`,
+                as: import_components4.__experimentalItem,
+                isAction: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_components4.__experimentalHStack, { justify: "space-between", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.__experimentalTruncate, { children: tab.title }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                    icon_default,
+                    {
+                      icon: (0, import_i18n3.isRTL)() ? chevron_left_default : chevron_right_default
+                    }
+                  ) })
+                ] })
+              },
+              tab.name
+            )
           );
         }) }) }) }) }),
         sections.length && sections.map((section) => {
@@ -525,6 +542,7 @@ var wp;
                     justify: "left",
                     size: "small",
                     gap: "6",
+                    as: "div",
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
                         import_components4.Navigator.BackButton,
