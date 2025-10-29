@@ -30877,10 +30877,10 @@ var wp;
           {
             disabled: !!primaryAction.disabled,
             accessibleWhenDisabled: true,
+            text: label,
             size: "small",
             onClick: () => setIsModalOpen(true),
-            variant: "link",
-            children: label
+            variant: "link"
           }
         ),
         children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
