@@ -7,5 +7,5 @@
  */
 
 if ( ! defined( 'GUTENBERG_VERSION' ) ) {
-	define( 'GUTENBERG_VERSION', '21.9.0' );
+	define( 'GUTENBERG_VERSION', '22.0.0-rc.1' );
 }

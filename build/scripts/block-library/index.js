@@ -1663,7 +1663,7 @@ var wp;
     name: "core/accordion-heading",
     title: "Accordion Heading",
     category: "design",
-    description: "Toggles the accordion panel.",
+    description: "Displays a heading that toggles the accordion panel.",
     parent: ["core/accordion-item"],
     usesContext: [
       "core/accordion-icon-position",
