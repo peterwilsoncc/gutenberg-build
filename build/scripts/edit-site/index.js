@@ -40398,6 +40398,10 @@ If there's a particular need for this, please submit a feature request at https:
   function getDefaultView(activeView) {
     return {
       ...DEFAULT_VIEW2,
+      sort: activeView === "user" ? {
+        field: "date",
+        direction: "desc"
+      } : DEFAULT_VIEW2.sort,
       filters: !["active", "user"].includes(activeView) ? [
         {
           field: "author",
@@ -40409,7 +40413,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/page-templates/index.js
-  var { usePostActions: usePostActions2, templateTitleField } = unlock(import_editor32.privateApis);
+  var { usePostActions: usePostActions2, usePostFields, templateTitleField } = unlock(import_editor32.privateApis);
   var { useHistory: useHistory22, useLocation: useLocation26 } = unlock(import_router33.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock(import_core_data51.privateApis);
   function PageTemplates() {
@@ -40552,6 +40556,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [history, path, view?.type]
     );
+    const postTypeFields = usePostFields({
+      postType: TEMPLATE_POST_TYPE
+    });
+    const dateField = postTypeFields.find((field) => field.id === "date");
     const themeField = useThemeField();
     const fields = (0, import_element135.useMemo)(() => {
       const _fields = [
@@ -40563,6 +40571,9 @@ If there's a particular need for this, please submit a feature request at https:
       ];
       if (activeView === "user") {
         _fields.push(themeField);
+        if (dateField) {
+          _fields.push(dateField);
+        }
       }
       const elements2 = [];
       for (const author in users) {
@@ -40576,7 +40587,7 @@ If there's a particular need for this, please submit a feature request at https:
         elements: elements2
       });
       return _fields;
-    }, [users, activeView, themeField]);
+    }, [users, activeView, themeField, dateField]);
     const { data, paginationInfo } = (0, import_element135.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields);
     }, [records, view, fields]);
@@ -40588,6 +40599,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               const newItem = items[0];
               const _title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
+              history.navigate(`/template?activeView=user`);
               createSuccessNotice(
                 (0, import_i18n137.sprintf)(
                   // translators: %s: Title of the created post or template, e.g: "Hello world".
@@ -40691,12 +40703,7 @@ If there's a particular need for this, please submit a feature request at https:
                 duplicateAction.RenderModal,
                 {
                   items: [selectedRegisteredTemplate],
-                  closeModal: () => setSelectedRegisteredTemplate(),
-                  onActionPerformed: ([item]) => {
-                    history.navigate(
-                      `/${item.type}/${item.id}?canvas=edit`
-                    );
-                  }
+                  closeModal: () => setSelectedRegisteredTemplate()
                 }
               )
             }
@@ -41125,7 +41132,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/index.js
-  var { usePostActions: usePostActions3, usePostFields } = unlock(import_editor35.privateApis);
+  var { usePostActions: usePostActions3, usePostFields: usePostFields2 } = unlock(import_editor35.privateApis);
   var { useLocation: useLocation29, useHistory: useHistory23 } = unlock(import_router36.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock(import_core_data54.privateApis);
   var EMPTY_ARRAY13 = [];
@@ -41184,7 +41191,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [path, history]
     );
-    const fields = usePostFields({
+    const fields = usePostFields2({
       postType: postType2
     });
     const queryArgs = (0, import_element138.useMemo)(() => {
@@ -41365,7 +41372,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element139 = __toESM(require_element());
   var import_editor36 = __toESM(require_editor());
   var import_block_editor26 = __toESM(require_block_editor());
-  var { usePostFields: usePostFields2, PostCardPanel } = unlock(import_editor36.privateApis);
+  var { usePostFields: usePostFields3, PostCardPanel } = unlock(import_editor36.privateApis);
   var fieldsWithBulkEditSupport = [
     "title",
     "status",
@@ -41394,7 +41401,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const [multiEdits, setMultiEdits] = (0, import_element139.useState)({});
     const { editEntityRecord } = (0, import_data75.useDispatch)(import_core_data55.store);
-    const _fields = usePostFields2({ postType: postType2 });
+    const _fields = usePostFields3({ postType: postType2 });
     const fields = (0, import_element139.useMemo)(
       () => _fields?.map((field) => {
         if (field.id === "status") {
