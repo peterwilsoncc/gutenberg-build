@@ -5462,8 +5462,15 @@ var wp;
     };
   }
 
-  // packages/theme/build-module/style.module.css.js
-  var style_module_css_default = { "root": "_root_th78q_1" };
+  // packages/theme/build-module/style.module.css
+  var css = `._root_th78q_1 {
+	display: contents;
+}
+`;
+  document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
+  var style_default = {
+    "root": "_root_th78q_1"
+  };
 
   // packages/theme/build-module/theme-provider.js
   function cssObjectToText(values) {
@@ -5478,10 +5485,10 @@ var wp;
     const selectors = [];
     if (isRoot) {
       selectors.push(
-        `:root:has(.${style_module_css_default.root}${rootSel}${instanceIdSel})`
+        `:root:has(.${style_default.root}${rootSel}${instanceIdSel})`
       );
     }
-    selectors.push(`.${style_module_css_default.root}.${style_module_css_default.root}${instanceIdSel}`);
+    selectors.push(`.${style_default.root}.${style_default.root}${instanceIdSel}`);
     return selectors.join(",");
   }
   var ThemeProvider = ({
@@ -5509,7 +5516,7 @@ var wp;
         {
           "data-wpds-theme-provider-id": instanceId,
           "data-wpds-root-provider": isRoot,
-          className: style_module_css_default.root,
+          className: style_default.root,
           children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeContext.Provider, { value: contextValue, children })
         }
       )
