@@ -48823,8 +48823,9 @@ var wp;
       }
     };
     (0, import_element169.useEffect)(() => {
-      setSelectedThread(blockCommentId ?? void 0);
-    }, [blockCommentId]);
+      const fallback = showCommentBoard ? "new-note-thread" : null;
+      setSelectedThread(blockCommentId ?? fallback);
+    }, [blockCommentId, showCommentBoard]);
     const setBlockRef = (0, import_element169.useCallback)((id, blockRef) => {
       setBlockRefs((prev) => ({ ...prev, [id]: blockRef }));
     }, []);
