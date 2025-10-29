@@ -33,44 +33,44 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/element
+  // package-external:@wordpress/element
   var require_element = __commonJS({
-    "wordpress-external:@wordpress/element"(exports, module) {
+    "package-external:@wordpress/element"(exports, module) {
       module.exports = window.wp.element;
     }
   });
 
-  // wordpress-external:@wordpress/i18n
+  // package-external:@wordpress/i18n
   var require_i18n = __commonJS({
-    "wordpress-external:@wordpress/i18n"(exports, module) {
+    "package-external:@wordpress/i18n"(exports, module) {
       module.exports = window.wp.i18n;
     }
   });
 
-  // wordpress-external:@wordpress/api-fetch
+  // package-external:@wordpress/api-fetch
   var require_api_fetch = __commonJS({
-    "wordpress-external:@wordpress/api-fetch"(exports, module) {
+    "package-external:@wordpress/api-fetch"(exports, module) {
       module.exports = window.wp.apiFetch;
     }
   });
 
-  // wordpress-external:@wordpress/blob
+  // package-external:@wordpress/blob
   var require_blob = __commonJS({
-    "wordpress-external:@wordpress/blob"(exports, module) {
+    "package-external:@wordpress/blob"(exports, module) {
       module.exports = window.wp.blob;
     }
   });
 
-  // wordpress-external:@wordpress/compose
+  // package-external:@wordpress/compose
   var require_compose = __commonJS({
-    "wordpress-external:@wordpress/compose"(exports, module) {
+    "package-external:@wordpress/compose"(exports, module) {
       module.exports = window.wp.compose;
     }
   });
 
-  // wordpress-external:@wordpress/components
+  // package-external:@wordpress/components
   var require_components = __commonJS({
-    "wordpress-external:@wordpress/components"(exports, module) {
+    "package-external:@wordpress/components"(exports, module) {
       module.exports = window.wp.components;
     }
   });

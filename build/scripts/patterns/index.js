@@ -31,37 +31,37 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // wordpress-external:@wordpress/data
+  // package-external:@wordpress/data
   var require_data = __commonJS({
-    "wordpress-external:@wordpress/data"(exports, module) {
+    "package-external:@wordpress/data"(exports, module) {
       module.exports = window.wp.data;
     }
   });
 
-  // wordpress-external:@wordpress/blocks
+  // package-external:@wordpress/blocks
   var require_blocks = __commonJS({
-    "wordpress-external:@wordpress/blocks"(exports, module) {
+    "package-external:@wordpress/blocks"(exports, module) {
       module.exports = window.wp.blocks;
     }
   });
 
-  // wordpress-external:@wordpress/core-data
+  // package-external:@wordpress/core-data
   var require_core_data = __commonJS({
-    "wordpress-external:@wordpress/core-data"(exports, module) {
+    "package-external:@wordpress/core-data"(exports, module) {
       module.exports = window.wp.coreData;
     }
   });
 
-  // wordpress-external:@wordpress/block-editor
+  // package-external:@wordpress/block-editor
   var require_block_editor = __commonJS({
-    "wordpress-external:@wordpress/block-editor"(exports, module) {
+    "package-external:@wordpress/block-editor"(exports, module) {
       module.exports = window.wp.blockEditor;
     }
   });
 
-  // wordpress-external:@wordpress/private-apis
+  // package-external:@wordpress/private-apis
   var require_private_apis = __commonJS({
-    "wordpress-external:@wordpress/private-apis"(exports, module) {
+    "package-external:@wordpress/private-apis"(exports, module) {
       module.exports = window.wp.privateApis;
     }
   });
@@ -73,65 +73,65 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/components
+  // package-external:@wordpress/components
   var require_components = __commonJS({
-    "wordpress-external:@wordpress/components"(exports, module) {
+    "package-external:@wordpress/components"(exports, module) {
       module.exports = window.wp.components;
     }
   });
 
-  // wordpress-external:@wordpress/element
+  // package-external:@wordpress/element
   var require_element = __commonJS({
-    "wordpress-external:@wordpress/element"(exports, module) {
+    "package-external:@wordpress/element"(exports, module) {
       module.exports = window.wp.element;
     }
   });
 
-  // wordpress-external:@wordpress/i18n
+  // package-external:@wordpress/i18n
   var require_i18n = __commonJS({
-    "wordpress-external:@wordpress/i18n"(exports, module) {
+    "package-external:@wordpress/i18n"(exports, module) {
       module.exports = window.wp.i18n;
     }
   });
 
-  // wordpress-external:@wordpress/notices
+  // package-external:@wordpress/notices
   var require_notices = __commonJS({
-    "wordpress-external:@wordpress/notices"(exports, module) {
+    "package-external:@wordpress/notices"(exports, module) {
       module.exports = window.wp.notices;
     }
   });
 
-  // wordpress-external:@wordpress/compose
+  // package-external:@wordpress/compose
   var require_compose = __commonJS({
-    "wordpress-external:@wordpress/compose"(exports, module) {
+    "package-external:@wordpress/compose"(exports, module) {
       module.exports = window.wp.compose;
     }
   });
 
-  // wordpress-external:@wordpress/html-entities
+  // package-external:@wordpress/html-entities
   var require_html_entities = __commonJS({
-    "wordpress-external:@wordpress/html-entities"(exports, module) {
+    "package-external:@wordpress/html-entities"(exports, module) {
       module.exports = window.wp.htmlEntities;
     }
   });
 
-  // wordpress-external:@wordpress/primitives
+  // package-external:@wordpress/primitives
   var require_primitives = __commonJS({
-    "wordpress-external:@wordpress/primitives"(exports, module) {
+    "package-external:@wordpress/primitives"(exports, module) {
       module.exports = window.wp.primitives;
     }
   });
 
-  // wordpress-external:@wordpress/url
+  // package-external:@wordpress/url
   var require_url = __commonJS({
-    "wordpress-external:@wordpress/url"(exports, module) {
+    "package-external:@wordpress/url"(exports, module) {
       module.exports = window.wp.url;
     }
   });
 
-  // wordpress-external:@wordpress/a11y
+  // package-external:@wordpress/a11y
   var require_a11y = __commonJS({
-    "wordpress-external:@wordpress/a11y"(exports, module) {
+    "package-external:@wordpress/a11y"(exports, module) {
       module.exports = window.wp.a11y;
     }
   });

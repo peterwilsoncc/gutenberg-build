@@ -32,23 +32,23 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // wordpress-external:@wordpress/api-fetch
+  // package-external:@wordpress/api-fetch
   var require_api_fetch = __commonJS({
-    "wordpress-external:@wordpress/api-fetch"(exports, module) {
+    "package-external:@wordpress/api-fetch"(exports, module) {
       module.exports = window.wp.apiFetch;
     }
   });
 
-  // wordpress-external:@wordpress/data
+  // package-external:@wordpress/data
   var require_data = __commonJS({
-    "wordpress-external:@wordpress/data"(exports, module) {
+    "package-external:@wordpress/data"(exports, module) {
       module.exports = window.wp.data;
     }
   });
 
-  // wordpress-external:@wordpress/deprecated
+  // package-external:@wordpress/deprecated
   var require_deprecated = __commonJS({
-    "wordpress-external:@wordpress/deprecated"(exports, module) {
+    "package-external:@wordpress/deprecated"(exports, module) {
       module.exports = window.wp.deprecated;
     }
   });

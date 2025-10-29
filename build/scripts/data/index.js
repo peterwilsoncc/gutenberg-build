@@ -32,9 +32,9 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // wordpress-external:@wordpress/deprecated
+  // package-external:@wordpress/deprecated
   var require_deprecated = __commonJS({
-    "wordpress-external:@wordpress/deprecated"(exports, module) {
+    "package-external:@wordpress/deprecated"(exports, module) {
       module.exports = window.wp.deprecated;
     }
   });
@@ -252,23 +252,23 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/redux-routine
+  // package-external:@wordpress/redux-routine
   var require_redux_routine = __commonJS({
-    "wordpress-external:@wordpress/redux-routine"(exports, module) {
+    "package-external:@wordpress/redux-routine"(exports, module) {
       module.exports = window.wp.reduxRoutine;
     }
   });
 
-  // wordpress-external:@wordpress/compose
+  // package-external:@wordpress/compose
   var require_compose = __commonJS({
-    "wordpress-external:@wordpress/compose"(exports, module) {
+    "package-external:@wordpress/compose"(exports, module) {
       module.exports = window.wp.compose;
     }
   });
 
-  // wordpress-external:@wordpress/private-apis
+  // package-external:@wordpress/private-apis
   var require_private_apis = __commonJS({
-    "wordpress-external:@wordpress/private-apis"(exports, module) {
+    "package-external:@wordpress/private-apis"(exports, module) {
       module.exports = window.wp.privateApis;
     }
   });
@@ -383,23 +383,23 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/priority-queue
+  // package-external:@wordpress/priority-queue
   var require_priority_queue = __commonJS({
-    "wordpress-external:@wordpress/priority-queue"(exports, module) {
+    "package-external:@wordpress/priority-queue"(exports, module) {
       module.exports = window.wp.priorityQueue;
     }
   });
 
-  // wordpress-external:@wordpress/element
+  // package-external:@wordpress/element
   var require_element = __commonJS({
-    "wordpress-external:@wordpress/element"(exports, module) {
+    "package-external:@wordpress/element"(exports, module) {
       module.exports = window.wp.element;
     }
   });
 
-  // wordpress-external:@wordpress/is-shallow-equal
+  // package-external:@wordpress/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
-    "wordpress-external:@wordpress/is-shallow-equal"(exports, module) {
+    "package-external:@wordpress/is-shallow-equal"(exports, module) {
       module.exports = window.wp.isShallowEqual;
     }
   });

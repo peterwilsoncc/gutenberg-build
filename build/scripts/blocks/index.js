@@ -31,58 +31,58 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // wordpress-external:@wordpress/data
+  // package-external:@wordpress/data
   var require_data = __commonJS({
-    "wordpress-external:@wordpress/data"(exports, module) {
+    "package-external:@wordpress/data"(exports, module) {
       module.exports = window.wp.data;
     }
   });
 
-  // wordpress-external:@wordpress/i18n
+  // package-external:@wordpress/i18n
   var require_i18n = __commonJS({
-    "wordpress-external:@wordpress/i18n"(exports, module) {
+    "package-external:@wordpress/i18n"(exports, module) {
       module.exports = window.wp.i18n;
     }
   });
 
-  // wordpress-external:@wordpress/element
+  // package-external:@wordpress/element
   var require_element = __commonJS({
-    "wordpress-external:@wordpress/element"(exports, module) {
+    "package-external:@wordpress/element"(exports, module) {
       module.exports = window.wp.element;
     }
   });
 
-  // wordpress-external:@wordpress/dom
+  // package-external:@wordpress/dom
   var require_dom = __commonJS({
-    "wordpress-external:@wordpress/dom"(exports, module) {
+    "package-external:@wordpress/dom"(exports, module) {
       module.exports = window.wp.dom;
     }
   });
 
-  // wordpress-external:@wordpress/rich-text
+  // package-external:@wordpress/rich-text
   var require_rich_text = __commonJS({
-    "wordpress-external:@wordpress/rich-text"(exports, module) {
+    "package-external:@wordpress/rich-text"(exports, module) {
       module.exports = window.wp.richText;
     }
   });
 
-  // wordpress-external:@wordpress/deprecated
+  // package-external:@wordpress/deprecated
   var require_deprecated = __commonJS({
-    "wordpress-external:@wordpress/deprecated"(exports, module) {
+    "package-external:@wordpress/deprecated"(exports, module) {
       module.exports = window.wp.deprecated;
     }
   });
 
-  // wordpress-external:@wordpress/warning
+  // package-external:@wordpress/warning
   var require_warning = __commonJS({
-    "wordpress-external:@wordpress/warning"(exports, module) {
+    "package-external:@wordpress/warning"(exports, module) {
       module.exports = window.wp.warning;
     }
   });
 
-  // wordpress-external:@wordpress/private-apis
+  // package-external:@wordpress/private-apis
   var require_private_apis = __commonJS({
-    "wordpress-external:@wordpress/private-apis"(exports, module) {
+    "package-external:@wordpress/private-apis"(exports, module) {
       module.exports = window.wp.privateApis;
     }
   });
@@ -763,23 +763,23 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/hooks
+  // package-external:@wordpress/hooks
   var require_hooks = __commonJS({
-    "wordpress-external:@wordpress/hooks"(exports, module) {
+    "package-external:@wordpress/hooks"(exports, module) {
       module.exports = window.wp.hooks;
     }
   });
 
-  // wordpress-external:@wordpress/block-serialization-default-parser
+  // package-external:@wordpress/block-serialization-default-parser
   var require_block_serialization_default_parser = __commonJS({
-    "wordpress-external:@wordpress/block-serialization-default-parser"(exports, module) {
+    "package-external:@wordpress/block-serialization-default-parser"(exports, module) {
       module.exports = window.wp.blockSerializationDefaultParser;
     }
   });
 
-  // wordpress-external:@wordpress/autop
+  // package-external:@wordpress/autop
   var require_autop = __commonJS({
-    "wordpress-external:@wordpress/autop"(exports, module) {
+    "package-external:@wordpress/autop"(exports, module) {
       module.exports = window.wp.autop;
     }
   });
@@ -791,9 +791,9 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/is-shallow-equal
+  // package-external:@wordpress/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
-    "wordpress-external:@wordpress/is-shallow-equal"(exports, module) {
+    "package-external:@wordpress/is-shallow-equal"(exports, module) {
       module.exports = window.wp.isShallowEqual;
     }
   });
@@ -854,23 +854,23 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/html-entities
+  // package-external:@wordpress/html-entities
   var require_html_entities = __commonJS({
-    "wordpress-external:@wordpress/html-entities"(exports, module) {
+    "package-external:@wordpress/html-entities"(exports, module) {
       module.exports = window.wp.htmlEntities;
     }
   });
 
-  // wordpress-external:@wordpress/shortcode
+  // package-external:@wordpress/shortcode
   var require_shortcode = __commonJS({
-    "wordpress-external:@wordpress/shortcode"(exports, module) {
+    "package-external:@wordpress/shortcode"(exports, module) {
       module.exports = window.wp.shortcode;
     }
   });
 
-  // wordpress-external:@wordpress/blob
+  // package-external:@wordpress/blob
   var require_blob = __commonJS({
-    "wordpress-external:@wordpress/blob"(exports, module) {
+    "package-external:@wordpress/blob"(exports, module) {
       module.exports = window.wp.blob;
     }
   });

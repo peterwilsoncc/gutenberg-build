@@ -32,16 +32,16 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // wordpress-external:@wordpress/dom-ready
+  // package-external:@wordpress/dom-ready
   var require_dom_ready = __commonJS({
-    "wordpress-external:@wordpress/dom-ready"(exports, module) {
+    "package-external:@wordpress/dom-ready"(exports, module) {
       module.exports = window.wp.domReady;
     }
   });
 
-  // wordpress-external:@wordpress/i18n
+  // package-external:@wordpress/i18n
   var require_i18n = __commonJS({
-    "wordpress-external:@wordpress/i18n"(exports, module) {
+    "package-external:@wordpress/i18n"(exports, module) {
       module.exports = window.wp.i18n;
     }
   });

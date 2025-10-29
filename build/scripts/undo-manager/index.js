@@ -32,9 +32,9 @@ var wp;
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // wordpress-external:@wordpress/is-shallow-equal
+  // package-external:@wordpress/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
-    "wordpress-external:@wordpress/is-shallow-equal"(exports, module) {
+    "package-external:@wordpress/is-shallow-equal"(exports, module) {
       module.exports = window.wp.isShallowEqual;
     }
   });

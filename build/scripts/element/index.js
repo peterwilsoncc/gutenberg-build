@@ -77,9 +77,9 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/escape-html
+  // package-external:@wordpress/escape-html
   var require_escape_html = __commonJS({
-    "wordpress-external:@wordpress/escape-html"(exports, module) {
+    "package-external:@wordpress/escape-html"(exports, module) {
       module.exports = window.wp.escapeHtml;
     }
   });

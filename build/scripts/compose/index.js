@@ -39,30 +39,30 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/is-shallow-equal
+  // package-external:@wordpress/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
-    "wordpress-external:@wordpress/is-shallow-equal"(exports, module) {
+    "package-external:@wordpress/is-shallow-equal"(exports, module) {
       module.exports = window.wp.isShallowEqual;
     }
   });
 
-  // wordpress-external:@wordpress/element
+  // package-external:@wordpress/element
   var require_element = __commonJS({
-    "wordpress-external:@wordpress/element"(exports, module) {
+    "package-external:@wordpress/element"(exports, module) {
       module.exports = window.wp.element;
     }
   });
 
-  // wordpress-external:@wordpress/deprecated
+  // package-external:@wordpress/deprecated
   var require_deprecated = __commonJS({
-    "wordpress-external:@wordpress/deprecated"(exports, module) {
+    "package-external:@wordpress/deprecated"(exports, module) {
       module.exports = window.wp.deprecated;
     }
   });
 
-  // wordpress-external:@wordpress/dom
+  // package-external:@wordpress/dom
   var require_dom = __commonJS({
-    "wordpress-external:@wordpress/dom"(exports, module) {
+    "package-external:@wordpress/dom"(exports, module) {
       module.exports = window.wp.dom;
     }
   });
@@ -720,9 +720,9 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/keycodes
+  // package-external:@wordpress/keycodes
   var require_keycodes = __commonJS({
-    "wordpress-external:@wordpress/keycodes"(exports, module) {
+    "package-external:@wordpress/keycodes"(exports, module) {
       module.exports = window.wp.keycodes;
     }
   });
@@ -1182,16 +1182,16 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/undo-manager
+  // package-external:@wordpress/undo-manager
   var require_undo_manager = __commonJS({
-    "wordpress-external:@wordpress/undo-manager"(exports, module) {
+    "package-external:@wordpress/undo-manager"(exports, module) {
       module.exports = window.wp.undoManager;
     }
   });
 
-  // wordpress-external:@wordpress/priority-queue
+  // package-external:@wordpress/priority-queue
   var require_priority_queue = __commonJS({
-    "wordpress-external:@wordpress/priority-queue"(exports, module) {
+    "package-external:@wordpress/priority-queue"(exports, module) {
       module.exports = window.wp.priorityQueue;
     }
   });
