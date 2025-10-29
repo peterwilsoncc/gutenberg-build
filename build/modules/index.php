@@ -77,4 +77,9 @@ return array(
 		'path' => 'block-library/search/view',
 		'asset' => 'block-library/search/view.min.asset.php',
 	),
+	array(
+		'id' => '@wordpress/block-library/tabs/view',
+		'path' => 'block-library/tabs/view',
+		'asset' => 'block-library/tabs/view.min.asset.php',
+	),
 );
