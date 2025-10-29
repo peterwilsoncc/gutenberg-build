@@ -45233,7 +45233,7 @@ If there's a particular need for this, please submit a feature request at https:
         SidebarNavigationItem,
         {
           to: "/template",
-          icon: layout_default,
+          icon: published_default,
           "aria-current": activeView === "active",
           children: (0, import_i18n139.__)("Active templates")
         }
@@ -45242,7 +45242,7 @@ If there's a particular need for this, please submit a feature request at https:
         SidebarNavigationItem,
         {
           to: (0, import_url15.addQueryArgs)("/template", { activeView: "user" }),
-          icon: layout_default,
+          icon: comment_author_avatar_default,
           "aria-current": activeView === "user",
           // Let's avoid calling them "custom templates" to avoid
           // confusion. "Created" is closest to meaning database
