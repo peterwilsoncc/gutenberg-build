@@ -6338,6 +6338,9 @@ var wp;
       if (post.status === "trash") {
         return false;
       }
+      if (post.type === "wp_template" && typeof post.id === "string") {
+        return false;
+      }
       if (![
         "wp_template_part",
         ...Object.values(PATTERN_TYPES2)
@@ -7256,6 +7259,9 @@ var wp;
     icon: trash_default,
     isEligible(item) {
       if (item.type === "wp_template_part" || item.type === "wp_block") {
+        return false;
+      }
+      if (item.type === "wp_template" && typeof item.id === "string") {
         return false;
       }
       return !!item.status && !["auto-draft", "trash"].includes(item.status) && item.permissions?.delete;
