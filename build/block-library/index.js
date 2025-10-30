@@ -7987,9 +7987,13 @@ var wp;
       }
     },
     supports: {
+      html: false,
       className: false,
       customClassName: false,
-      reusable: false
+      lock: false,
+      reusable: false,
+      renaming: false,
+      blockVisibility: false
     },
     editorStyle: "wp-block-freeform-editor"
   };
