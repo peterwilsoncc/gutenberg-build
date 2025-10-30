@@ -4054,6 +4054,74 @@ var wp;
   Color.extend(interpolation);
   Color.extend(contrastMethods);
 
+  // node_modules/memize/dist/index.js
+  function memize(fn, options) {
+    var size = 0;
+    var head;
+    var tail;
+    options = options || {};
+    function memoized() {
+      var node = head, len = arguments.length, args, i;
+      searchCache: while (node) {
+        if (node.args.length !== arguments.length) {
+          node = node.next;
+          continue;
+        }
+        for (i = 0; i < len; i++) {
+          if (node.args[i] !== arguments[i]) {
+            node = node.next;
+            continue searchCache;
+          }
+        }
+        if (node !== head) {
+          if (node === tail) {
+            tail = node.prev;
+          }
+          node.prev.next = node.next;
+          if (node.next) {
+            node.next.prev = node.prev;
+          }
+          node.next = head;
+          node.prev = null;
+          head.prev = node;
+          head = node;
+        }
+        return node.val;
+      }
+      args = new Array(len);
+      for (i = 0; i < len; i++) {
+        args[i] = arguments[i];
+      }
+      node = {
+        args,
+        // Generate the result from original function
+        val: fn.apply(null, args)
+      };
+      if (head) {
+        head.prev = node;
+        node.next = head;
+      } else {
+        tail = node;
+      }
+      if (size === /** @type {MemizeOptions} */
+      options.maxSize) {
+        tail = /** @type {MemizeCacheNode} */
+        tail.prev;
+        tail.next = null;
+      } else {
+        size++;
+      }
+      head = node;
+      return node.val;
+    }
+    memoized.clear = function() {
+      head = null;
+      tail = null;
+      size = 0;
+    };
+    return memoized;
+  }
+
   // packages/theme/build-module/use-theme-provider-styles.js
   var import_element2 = __toESM(require_element());
 
@@ -4628,8 +4696,7 @@ var wp;
   function findColorMeetingRequirements(reference, seed, target, direction, {
     lightnessConstraint,
     taperChromaOptions,
-    strict = true,
-    debug = false
+    strict = true
   } = {}) {
     if (target <= 1) {
       return { color: seed.clone(), reached: true, achieved: 1 };
@@ -4648,13 +4715,6 @@ var wp;
         new Color("oklch", [newL, newC, seed.oklch.h])
       );
       const exactLContrast = getCachedContrast(reference, colorWithExactL);
-      if (debug) {
-        console.log(
-          `Succeeded with ${lightnessConstraint.type} lightness`,
-          lightnessConstraint.value,
-          colorWithExactL.oklch.l
-        );
-      }
       if (lightnessConstraint.type === "force" || exactLContrast >= target) {
         return {
           color: colorWithExactL,
@@ -4677,12 +4737,6 @@ var wp;
           )}:1 unreachable in ${direction} direction against ${mostContrastingColor.toString()}(boundary achieves ${highestPossibleContrast.toFixed(
             3
           )}:1).`
-        );
-      }
-      if (debug) {
-        console.log(
-          "Did not succeeded because it reached the limit",
-          mostContrastingL
         );
       }
       return {
@@ -4731,8 +4785,7 @@ var wp;
     config,
     mainDir,
     oppDir,
-    pinLightness,
-    debug = false
+    pinLightness
   }) {
     const rampResults = {};
     let SATISFIED_ALL_CONTRAST_REQUIREMENTS = true;
@@ -4812,8 +4865,7 @@ var wp;
         {
           strict: false,
           lightnessConstraint,
-          taperChromaOptions,
-          debug
+          taperChromaOptions
         }
       );
       if (!searchResults.reached && !contrast2.ignoreWhenAdjustingSeed) {
@@ -4841,7 +4893,6 @@ var wp;
   function buildRamp(seedArg, config, {
     mainDirection,
     pinLightness,
-    debug = false,
     rescaleToFitContrastTargets = true
   } = {}) {
     let seed;
@@ -4873,25 +4924,12 @@ var wp;
       config,
       mainDir,
       oppDir,
-      pinLightness,
-      debug
+      pinLightness
     });
     const toReturn = {
       ramp: rampResults,
       direction: mainDir
     };
-    if (debug) {
-      console.log(`First run`, {
-        SATISFIED_ALL_CONTRAST_REQUIREMENTS,
-        UNSATISFIED_DIRECTION,
-        seed: seed.toString(),
-        sortedSteps,
-        config,
-        mainDir,
-        oppDir,
-        pinLightness
-      });
-    }
     if (!SATISFIED_ALL_CONTRAST_REQUIREMENTS && rescaleToFitContrastTargets) {
       let worseSeedL = seed.oklch.l;
       let betterSeedL = UNSATISFIED_DIRECTION === "lighter" ? 0 : 1;
@@ -4901,21 +4939,13 @@ var wp;
             l: (worseSeedL + betterSeedL) / 2
           })
         );
-        if (debug) {
-          console.log(`Iteration ${i}`, {
-            worseSeedL,
-            newSeedL: (worseSeedL + betterSeedL) / 2,
-            betterSeedL
-          });
-        }
         const iterationResults = calculateRamp({
           seed: newSeed,
           sortedSteps,
           config,
           mainDir,
           oppDir,
-          pinLightness,
-          debug
+          pinLightness
         });
         if (iterationResults.SATISFIED_ALL_CONTRAST_REQUIREMENTS) {
           betterSeedL = newSeed.oklch.l;
@@ -4924,18 +4954,6 @@ var wp;
           betterSeedL = newSeed.oklch.l;
         } else {
           worseSeedL = newSeed.oklch.l;
-        }
-        if (debug) {
-          console.log(`Retry #${i}`, {
-            SATISFIED_ALL_CONTRAST_REQUIREMENTS,
-            UNSATISFIED_DIRECTION,
-            seed: newSeed.toString(),
-            sortedSteps,
-            config,
-            mainDir,
-            oppDir,
-            pinLightness
-          });
         }
       }
     }
@@ -5235,14 +5253,11 @@ var wp;
   };
 
   // packages/theme/build-module/color-ramps/index.js
-  function buildBgRamp({
-    seed,
-    debug
-  }) {
+  function buildBgRamp(seed) {
     if (typeof seed !== "string" || seed.trim() === "") {
       throw new Error("Seed color must be a non-empty string");
     }
-    return buildRamp(seed, BG_RAMP_CONFIG, { debug });
+    return buildRamp(seed, BG_RAMP_CONFIG);
   }
   var STEP_TO_PIN = "surface2";
   function getBgRampInfo(ramp) {
@@ -5257,22 +5272,17 @@ var wp;
       }
     };
   }
-  function buildAccentRamp({
-    seed,
-    bgRamp,
-    debug
-  }) {
+  function buildAccentRamp(seed, bgRamp) {
     if (typeof seed !== "string" || seed.trim() === "") {
       throw new Error("Seed color must be a non-empty string");
     }
     const bgRampInfo = bgRamp ? getBgRampInfo(bgRamp) : void 0;
-    return buildRamp(seed, ACCENT_RAMP_CONFIG, {
-      ...bgRampInfo,
-      debug
-    });
+    return buildRamp(seed, ACCENT_RAMP_CONFIG, bgRampInfo);
   }
 
   // packages/theme/build-module/use-theme-provider-styles.js
+  var getCachedBgRamp = memize(buildBgRamp, { maxSize: 10 });
+  var getCachedAccentRamp = memize(buildAccentRamp, { maxSize: 10 });
   var legacyWpComponentsOverridesCSS = [
     ["--wp-components-color-accent", "var(--wp-admin-theme-color)"],
     [
@@ -5436,17 +5446,14 @@ var wp;
         primary
       };
       const computedColorRamps = /* @__PURE__ */ new Map();
-      const bgRamp = buildBgRamp({ seed: seeds.bg });
+      const bgRamp = getCachedBgRamp(seeds.bg);
       Object.entries(seeds).forEach(([rampName, seed]) => {
         if (rampName === "bg") {
           computedColorRamps.set(rampName, bgRamp);
         } else {
           computedColorRamps.set(
             rampName,
-            buildAccentRamp({
-              seed,
-              bgRamp
-            })
+            getCachedAccentRamp(seed, bgRamp)
           );
         }
       });
