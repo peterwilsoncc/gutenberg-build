@@ -32310,7 +32310,10 @@ ${url}
       customClassName: false,
       inserter: false,
       html: false,
+      lock: false,
       reusable: false,
+      renaming: false,
+      blockVisibility: false,
       interactivity: {
         clientNavigation: true
       }
