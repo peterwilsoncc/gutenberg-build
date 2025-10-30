@@ -4173,6 +4173,12 @@ var wp;
     "--wpds-color-bg-surface-warning-weak": {
       ".": "var(--wpds-color-private-warning-surface2)"
     },
+    "--wpds-color-bg-surface-caution": {
+      ".": "var(--wpds-color-private-caution-surface4)"
+    },
+    "--wpds-color-bg-surface-caution-weak": {
+      ".": "var(--wpds-color-private-caution-surface2)"
+    },
     "--wpds-color-bg-surface-error": {
       ".": "var(--wpds-color-private-error-surface4)"
     },
@@ -4259,6 +4265,36 @@ var wp;
     },
     "--wpds-color-fg-content-neutral-weak": {
       ".": "var(--wpds-color-private-bg-fg-surface3)"
+    },
+    "--wpds-color-fg-content-success": {
+      ".": "var(--wpds-color-private-success-fg-surface4)"
+    },
+    "--wpds-color-fg-content-success-weak": {
+      ".": "var(--wpds-color-private-success-fg-surface3)"
+    },
+    "--wpds-color-fg-content-info": {
+      ".": "var(--wpds-color-private-info-fg-surface4)"
+    },
+    "--wpds-color-fg-content-info-weak": {
+      ".": "var(--wpds-color-private-info-fg-surface3)"
+    },
+    "--wpds-color-fg-content-warning": {
+      ".": "var(--wpds-color-private-warning-fg-surface4)"
+    },
+    "--wpds-color-fg-content-warning-weak": {
+      ".": "var(--wpds-color-private-warning-fg-surface3)"
+    },
+    "--wpds-color-fg-content-caution": {
+      ".": "var(--wpds-color-private-caution-fg-surface4)"
+    },
+    "--wpds-color-fg-content-caution-weak": {
+      ".": "var(--wpds-color-private-caution-fg-surface3)"
+    },
+    "--wpds-color-fg-content-error": {
+      ".": "var(--wpds-color-private-error-fg-surface4)"
+    },
+    "--wpds-color-fg-content-error-weak": {
+      ".": "var(--wpds-color-private-error-fg-surface3)"
     },
     "--wpds-color-fg-interactive-neutral": {
       ".": "var(--wpds-color-private-bg-fg-surface4)"
@@ -4496,6 +4532,7 @@ var wp;
     primary: "#3858e9",
     info: "#0090ff",
     success: "#4ab866",
+    caution: "#f0d149",
     warning: "#f0b849",
     error: "#cc1818"
   };
