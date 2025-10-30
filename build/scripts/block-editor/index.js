@@ -42915,6 +42915,7 @@ var wp;
   var import_data133 = __toESM(require_data());
   var import_element144 = __toESM(require_element());
   var import_jsx_runtime266 = __toESM(require_jsx_runtime());
+  var { Menu } = unlock(import_components125.privateApis);
   function VariationsButtons({
     className,
     onSelectVariation,
@@ -42949,35 +42950,35 @@ var wp;
     selectedValue,
     variations
   }) {
-    const selectOptions = variations.map(
-      ({ name, title, description }) => ({
-        value: name,
-        label: title,
-        info: description
-      })
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
-      import_components125.DropdownMenu,
-      {
-        className,
-        label: (0, import_i18n113.__)("Transform to variation"),
-        text: (0, import_i18n113.__)("Transform to variation"),
-        popoverProps: {
-          position: "bottom center",
-          className: `${className}__popover`
+    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(Menu, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+        Menu.TriggerButton,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+            import_components125.Button,
+            {
+              className: "block-editor-block-variation-transforms__button",
+              __next40pxDefaultSize: true,
+              variant: "secondary",
+              children: (0, import_i18n113.__)("Transform to variation")
+            }
+          )
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(Menu.Popover, { position: "bottom", children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(Menu.Group, { children: variations.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(
+        Menu.RadioItem,
+        {
+          value: variation.name,
+          checked: selectedValue === variation.name,
+          onChange: () => onSelectVariation(variation.name),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(Menu.ItemLabel, { children: variation.title }),
+            variation.description && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(Menu.ItemHelpText, { children: variation.description })
+          ]
         },
-        icon: chevron_down_default,
-        toggleProps: { iconPosition: "right" },
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_components125.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
-          import_components125.MenuItemsChoice,
-          {
-            choices: selectOptions,
-            value: selectedValue,
-            onSelect: onSelectVariation
-          }
-        ) })
-      }
-    );
+        variation.name
+      )) }) })
+    ] }) });
   }
   function VariationsToggleGroupControl({
     className,
@@ -63001,7 +63002,7 @@ var wp;
   var import_element228 = __toESM(require_element());
   var import_compose98 = __toESM(require_compose());
   var import_jsx_runtime396 = __toESM(require_jsx_runtime());
-  var { Menu } = unlock(import_components231.privateApis);
+  var { Menu: Menu2 } = unlock(import_components231.privateApis);
   var EMPTY_OBJECT4 = {};
   var getAttributeType = (blockName, attribute) => {
     const _attributeType = (0, import_blocks112.getBlockType)(blockName).attributes?.[attribute]?.type;
@@ -63032,7 +63033,7 @@ var wp;
       },
       [clientId, attribute]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu, { placement: isMobile ? "bottom-start" : "left-start", children: Object.entries(sources).map(([sourceKey, source]) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2, { placement: isMobile ? "bottom-start" : "left-start", children: Object.entries(sources).map(([sourceKey, source]) => {
       const sourceDataItems = source.data?.filter(
         (item) => item?.type === attributeType
       );
@@ -63041,12 +63042,12 @@ var wp;
         return null;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
-        Menu,
+        Menu2,
         {
           placement: isMobile ? "bottom-start" : "left-start",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemLabel, { children: source.label }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.Popover, { gutter: 8, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.Group, { children: sourceDataItems.map((item) => {
+            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.ItemLabel, { children: source.label }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.Popover, { gutter: 8, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.Group, { children: sourceDataItems.map((item) => {
               const itemBindings = {
                 source: sourceKey,
                 args: item?.args || {
@@ -63061,7 +63062,7 @@ var wp;
                 }
               });
               return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
-                Menu.CheckboxItem,
+                Menu2.CheckboxItem,
                 {
                   onChange: () => {
                     const isCurrentlySelected = (0, import_es64.default)(
@@ -63087,8 +63088,8 @@ var wp;
                   ) ?? // Deprecate key dependency in 7.0.
                   item.key === binding?.args?.key,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemLabel, { children: item?.label }),
-                    /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.ItemHelpText, { children: values[attribute] })
+                    /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.ItemLabel, { children: item?.label }),
+                    /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.ItemHelpText, { children: values[attribute] })
                   ]
                 },
                 sourceKey + JSON.stringify(
@@ -63148,7 +63149,7 @@ var wp;
     blockName
   }) {
     const isMobile = (0, import_compose98.useViewportMatch)("medium", "<");
-    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalToolsPanelItem, { hasValue: () => !!binding, label: attribute, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu, { placement: isMobile ? "bottom-start" : "left-start", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.TriggerButton, { render: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalItem, {}), disabled: true, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalToolsPanelItem, { hasValue: () => !!binding, label: attribute, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2, { placement: isMobile ? "bottom-start" : "left-start", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.TriggerButton, { render: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalItem, {}), disabled: true, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
       BlockBindingsAttribute,
       {
         attribute,
@@ -63176,8 +63177,8 @@ var wp;
             [attribute]: void 0
           });
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(Menu, { placement: isMobile ? "bottom-start" : "left-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.TriggerButton, { render: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalItem, {}), children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(Menu2, { placement: isMobile ? "bottom-start" : "left-start", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.TriggerButton, { render: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components231.__experimentalItem, {}), children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
             BlockBindingsAttribute,
             {
               attribute,
@@ -63186,7 +63187,7 @@ var wp;
               blockName
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu.Popover, { gutter: isMobile ? 8 : 36, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(Menu2.Popover, { gutter: isMobile ? 8 : 36, children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
             BlockBindingsPanelMenuContent,
             {
               attribute,
