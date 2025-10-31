@@ -43681,7 +43681,7 @@ var wp;
             action_item_default.Slot,
             {
               name: "core/plugin-more-menu",
-              label: (0, import_i18n187.__)("Plugins"),
+              label: (0, import_i18n187.__)("Panels"),
               fillProps: { onClick: onClose }
             }
           ),
