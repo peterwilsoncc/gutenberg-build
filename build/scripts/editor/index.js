@@ -49602,6 +49602,7 @@ var wp;
           identifier: collabHistorySidebarName,
           name: collabHistorySidebarName,
           title: (0, import_i18n220.__)("Notes"),
+          header: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)("h2", { className: "interface-complementary-area-header__title", children: (0, import_i18n220.__)("Notes") }),
           icon: comment_default,
           closeLabel: (0, import_i18n220.__)("Close Notes"),
           children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
