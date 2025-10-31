@@ -48695,6 +48695,12 @@ var wp;
       };
     }, []);
     const blockElement = useBlockElement(clientId);
+    const { toggleBlockSpotlight } = unlock((0, import_data217.useDispatch)(import_block_editor89.store));
+    const unselectThread = () => {
+      setShowCommentBoard(false);
+      blockElement?.focus();
+      toggleBlockSpotlight(clientId, false);
+    };
     if (!showCommentBoard || !clientId || void 0 !== blockCommentId) {
       return null;
     }
@@ -48720,6 +48726,7 @@ var wp;
           if (event.currentTarget.contains(event.relatedTarget)) {
             return;
           }
+          toggleBlockSpotlight(clientId, false);
           setShowCommentBoard(false);
         },
         children: [
@@ -48732,10 +48739,7 @@ var wp;
                 focusCommentThread(id, commentSidebarRef.current);
                 setShowCommentBoard(false);
               },
-              onCancel: () => {
-                setShowCommentBoard(false);
-                blockElement?.focus();
-              },
+              onCancel: unselectThread,
               reflowComments,
               submitButtonText: (0, import_i18n216.__)("Add note"),
               labelText: (0, import_i18n216.__)("New note")
@@ -49544,13 +49548,17 @@ var wp;
     const [showCommentBoard, setShowCommentBoard] = (0, import_element171.useState)(false);
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data219.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data219.useDispatch)(store2);
+    const { toggleBlockSpotlight } = unlock((0, import_data219.useDispatch)(import_block_editor93.store));
     const isLargeViewport = (0, import_compose59.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element171.useRef)(null);
     const showFloatingSidebar = isLargeViewport && mode === "post-only";
-    const blockCommentId = (0, import_data219.useSelect)((select5) => {
+    const { clientId, blockCommentId } = (0, import_data219.useSelect)((select5) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor93.store);
-      const clientId = getSelectedBlockClientId2();
-      return clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null;
+      const _clientId = getSelectedBlockClientId2();
+      return {
+        clientId: _clientId,
+        blockCommentId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null
+      };
     }, []);
     const {
       resultComments,
@@ -49586,6 +49594,7 @@ var wp;
         // Focus a comment thread when there's a selected block with a comment.
         !blockCommentId ? "textarea" : void 0
       );
+      toggleBlockSpotlight(clientId, true);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(import_jsx_runtime334.Fragment, { children: [
       blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
