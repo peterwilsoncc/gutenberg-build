@@ -2632,6 +2632,13 @@ var wp;
     }
     return state;
   }
+  function canvasMinHeight(state = 0, action) {
+    switch (action.type) {
+      case "SET_CANVAS_MIN_HEIGHT":
+        return action.minHeight;
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data2.combineReducers)({
     postId,
     postType,
@@ -2653,6 +2660,7 @@ var wp;
     publishSidebarActive,
     stylesPath,
     showStylebook,
+    canvasMinHeight,
     dataviews: reducer_default
   });
 
@@ -4848,6 +4856,7 @@ var wp;
     resetStylesNavigation: () => resetStylesNavigation,
     revertTemplate: () => revertTemplate2,
     saveDirtyEntities: () => saveDirtyEntities,
+    setCanvasMinHeight: () => setCanvasMinHeight,
     setCurrentTemplateId: () => setCurrentTemplateId,
     setDefaultRenderingMode: () => setDefaultRenderingMode,
     setIsReady: () => setIsReady,
@@ -14631,10 +14640,17 @@ var wp;
       type: "RESET_STYLES_NAVIGATION"
     };
   }
+  function setCanvasMinHeight(minHeight) {
+    return {
+      type: "SET_CANVAS_MIN_HEIGHT",
+      minHeight
+    };
+  }
 
   // packages/editor/build-module/store/private-selectors.js
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
+    getCanvasMinHeight: () => getCanvasMinHeight,
     getDefaultRenderingMode: () => getDefaultRenderingMode,
     getEntityActions: () => getEntityActions2,
     getEntityFields: () => getEntityFields2,
@@ -14821,6 +14837,9 @@ var wp;
   }
   function getShowStylebook(state) {
     return state.showStylebook ?? false;
+  }
+  function getCanvasMinHeight(state) {
+    return state.canvasMinHeight;
   }
 
   // packages/editor/build-module/store/index.js
@@ -44807,7 +44826,8 @@ var wp;
       isDesignPostType,
       postType: postType2,
       isPreview,
-      styles
+      styles,
+      canvasMinHeight: canvasMinHeight2
     } = (0, import_data193.useSelect)((select5) => {
       const {
         getCurrentPostId: getCurrentPostId2,
@@ -44815,8 +44835,9 @@ var wp;
         getCurrentTemplateId: getCurrentTemplateId2,
         getEditorSettings: getEditorSettings2,
         getRenderingMode: getRenderingMode2,
-        getDeviceType: getDeviceType2
-      } = select5(store);
+        getDeviceType: getDeviceType2,
+        getCanvasMinHeight: getCanvasMinHeight2
+      } = unlock(select5(store));
       const { getPostType, getEditedEntityRecord } = select5(import_core_data101.store);
       const postTypeSlug = getCurrentPostType2();
       const _renderingMode = getRenderingMode2();
@@ -44848,7 +44869,8 @@ var wp;
         isFocusedEntity: !!editorSettings2.onNavigateToPreviousEntityRecord,
         postType: postTypeSlug,
         isPreview: editorSettings2.isPreviewMode,
-        styles: editorSettings2.styles
+        styles: editorSettings2.styles,
+        canvasMinHeight: getCanvasMinHeight2()
       };
     }, []);
     const { isCleanNewPost: isCleanNewPost2 } = (0, import_data193.useSelect)(store);
@@ -44869,6 +44891,7 @@ var wp;
         isZoomedOut: _isZoomOut()
       };
     }, []);
+    const localRef = (0, import_element149.useRef)();
     const deviceStyles = (0, import_block_editor76.__experimentalUseResizeCanvas)(deviceType2);
     const [globalLayoutSettings] = (0, import_block_editor76.useSettings)("layout");
     const fallbackLayout = (0, import_element149.useMemo)(() => {
@@ -44957,23 +44980,30 @@ var wp;
     !isPreview && // Disable resizing in mobile viewport.
     !isMobileViewport && // Disable resizing in zoomed-out mode.
     !isZoomedOut;
+    const calculatedMinHeight = (0, import_element149.useMemo)(() => {
+      if (!localRef.current) {
+        return canvasMinHeight2;
+      }
+      const { ownerDocument } = localRef.current;
+      const scrollTop = ownerDocument.documentElement.scrollTop || ownerDocument.body.scrollTop;
+      return canvasMinHeight2 + scrollTop;
+    }, [canvasMinHeight2]);
     const iframeStyles = (0, import_element149.useMemo)(() => {
       return [
         ...styles ?? [],
         {
           // Ensures margins of children are contained so that the body background paints behind them.
-          // Otherwise, the background of html (when zoomed out) would show there and appear broken. It’s
+          // Otherwise, the background of html (when zoomed out) would show there and appear broken. It's
           // important mostly for post-only views yet conceivably an issue in templated views too.
-          css: `:where(.block-editor-iframe__body){display:flow-root;}.is-root-container{display:flow-root;${// Some themes will have `min-height: 100vh` for the root container,
+          css: `:where(.block-editor-iframe__body){display:flow-root;${calculatedMinHeight ? `min-height:${calculatedMinHeight}px;` : ""}}.is-root-container{display:flow-root;${// Some themes will have `min-height: 100vh` for the root container,
           // which isn't a requirement in auto resize mode.
           enableResizing ? "min-height:0!important;" : ""}}
-				${enableResizing ? ".block-editor-iframe__html{background:var(--wp-editor-canvas-background);display:flex;align-items:center;justify-content:center;min-height:100vh;}.block-editor-iframe__body{width:100%;}" : ""}`
+				${enableResizing ? `.block-editor-iframe__html{background:var(--wp-editor-canvas-background);display:flex;align-items:center;justify-content:center;min-height:100vh;}.block-editor-iframe__body{width:100%;}` : ""}`
           // The CSS above centers the body content vertically when resizing is enabled and applies a background
           // color to the iframe HTML element to match the background color of the editor canvas.
         }
       ];
-    }, [styles, enableResizing]);
-    const localRef = (0, import_element149.useRef)();
+    }, [styles, enableResizing, calculatedMinHeight]);
     const typewriterRef = (0, import_block_editor76.__unstableUseTypewriter)();
     contentRef = (0, import_compose54.useMergeRefs)([
       localRef,
@@ -48770,6 +48800,7 @@ var wp;
     const [selectedThread, setSelectedThread] = (0, import_element169.useState)(null);
     const [boardOffsets, setBoardOffsets] = (0, import_element169.useState)({});
     const [blockRefs, setBlockRefs] = (0, import_element169.useState)({});
+    const { setCanvasMinHeight: setCanvasMinHeight2 } = unlock((0, import_data218.useDispatch)(store));
     const { blockCommentId, selectedBlockClientId, orderedBlockIds } = (0, import_data218.useSelect)((select5) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor90.store);
       const clientId = getSelectedBlockClientId2();
@@ -48845,7 +48876,7 @@ var wp;
       const calculateAllOffsets = () => {
         const offsets = {};
         if (!isFloating) {
-          return offsets;
+          return { offsets, minHeight: 0 };
         }
         const selectedThreadIndex = threads.findIndex(
           (t4) => t4.id === selectedThread
@@ -48853,7 +48884,7 @@ var wp;
         const breakIndex = selectedThreadIndex === -1 ? 0 : selectedThreadIndex;
         const selectedThreadData = threads[breakIndex];
         if (!selectedThreadData || !blockRefs[selectedThreadData.id]) {
-          return offsets;
+          return { offsets, minHeight: 0 };
         }
         let blockElement = blockRefs[selectedThreadData.id];
         let blockRect = blockElement?.getBoundingClientRect();
@@ -48906,13 +48937,31 @@ var wp;
             threadTop: threadTop + additionalOffset
           };
         }
-        return offsets;
+        let editorMinHeight = 0;
+        const lastThread = threads[threads.length - 1];
+        if (blockRefs[lastThread.id]) {
+          const lastBlockElement = blockRefs[lastThread.id];
+          const lastBlockRect = lastBlockElement?.getBoundingClientRect();
+          const lastThreadTop = lastBlockRect?.top || 0;
+          const lastThreadHeight = heights[lastThread.id] || 0;
+          const lastThreadOffset = offsets[lastThread.id] || 0;
+          editorMinHeight = lastThreadTop + lastThreadHeight + lastThreadOffset + 32;
+        }
+        return { offsets, minHeight: editorMinHeight };
       };
-      const newOffsets = calculateAllOffsets();
+      const { offsets: newOffsets, minHeight } = calculateAllOffsets();
       if (Object.keys(newOffsets).length > 0) {
         setBoardOffsets(newOffsets);
       }
-    }, [heights, blockRefs, isFloating, threads, selectedThread]);
+      setCanvasMinHeight2(minHeight);
+    }, [
+      heights,
+      blockRefs,
+      isFloating,
+      threads,
+      selectedThread,
+      setCanvasMinHeight2
+    ]);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
       return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_jsx_runtime331.Fragment, { children: [
