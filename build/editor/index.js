@@ -27402,6 +27402,7 @@ var wp;
   }) => {
     const [actionState, setActionState] = (0, import_element129.useState)(false);
     const [showConfirmDialog, setShowConfirmDialog] = (0, import_element129.useState)(false);
+    const actionButtonRef = (0, import_element129.useRef)(null);
     const handleConfirmDelete = () => {
       onDelete(thread);
       setActionState(false);
@@ -27410,6 +27411,7 @@ var wp;
     const handleCancel = () => {
       setActionState(false);
       setShowConfirmDialog(false);
+      actionButtonRef.current?.focus();
     };
     const isResolutionComment = thread.type === "note" && thread.meta && (thread.meta._wp_note_status === "resolved" || thread.meta._wp_note_status === "reopen");
     const actions2 = [
@@ -27486,6 +27488,7 @@ var wp;
                     render: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
                       import_components143.Button,
                       {
+                        ref: actionButtonRef,
                         size: "small",
                         icon: more_vertical_default,
                         label: (0, import_i18n167.__)("Actions"),
@@ -27517,6 +27520,7 @@ var wp;
               content: value
             });
             setActionState(false);
+            actionButtonRef.current?.focus();
           },
           onCancel: () => handleCancel(),
           thread,
