@@ -47037,7 +47037,7 @@ var wp;
       ),
       /* @__PURE__ */ (0, import_jsx_runtime328.jsxs)(import_components203.__experimentalVStack, { spacing: "0", children: [
         /* @__PURE__ */ (0, import_jsx_runtime328.jsx)("span", { className: "editor-collab-sidebar-panel__user-name", children: name2 ?? currentUserName }),
-        date && /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(import_components203.Tooltip, { placement: "top", text: tooltipText, children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
+        date && /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(import_components203.Tooltip, { text: tooltipText, children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
           "time",
           {
             dateTime: commentDateTime,
