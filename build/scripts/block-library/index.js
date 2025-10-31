@@ -6702,9 +6702,6 @@ var wp;
       return void 0;
     }
     const transformedAttributes = {};
-    if ((0, import_blocks7.hasBlockSupport)(newBlockType, "allowedBlocks") && attributes3.allowedBlocks) {
-      transformedAttributes.allowedBlocks = attributes3.allowedBlocks;
-    }
     if ((0, import_blocks7.hasBlockSupport)(newBlockType, "anchor") && attributes3.anchor) {
       transformedAttributes.anchor = attributes3.anchor;
     }
