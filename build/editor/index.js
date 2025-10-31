@@ -27810,14 +27810,18 @@ var wp;
     ] });
   }
   function NotesSidebarContainer() {
-    const { postId: postId2, mode } = (0, import_data198.useSelect)((select4) => {
-      const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2 } = select4(store);
+    const { postId: postId2, mode, editorMode } = (0, import_data198.useSelect)((select4) => {
+      const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2, getEditorMode: getEditorMode2 } = select4(store);
       return {
         postId: getCurrentPostId2(),
-        mode: getRenderingMode2()
+        mode: getRenderingMode2(),
+        editorMode: getEditorMode2()
       };
     }, []);
     if (!postId2 || typeof postId2 !== "number") {
+      return null;
+    }
+    if (editorMode === "text") {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(NotesSidebar, { postId: postId2, mode }) });
