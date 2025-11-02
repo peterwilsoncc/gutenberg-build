@@ -1,4 +1,3 @@
-"use strict";
 var wp;
 (wp ||= {}).theme = (() => {
   var __create = Object.create;
@@ -3435,7 +3434,7 @@ var wp;
     const calculatedColors = /* @__PURE__ */ new Map();
     calculatedColors.set("seed", seed);
     for (const stepName of sortedSteps) {
-      let computeDirection2 = function(color, followDirection) {
+      let computeDirection = function(color, followDirection) {
         if (followDirection === "main") {
           return mainDir;
         }
@@ -3450,7 +3449,6 @@ var wp;
         }
         return followDirection;
       };
-      var computeDirection = computeDirection2;
       const {
         contrast,
         lightness: stepLightnessConstraint,
@@ -3481,7 +3479,7 @@ var wp;
           }
         }
       }
-      const computedDir = computeDirection2(
+      const computedDir = computeDirection(
         referenceColor,
         contrast.followDirection
       );
