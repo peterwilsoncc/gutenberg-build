@@ -25350,9 +25350,6 @@ var wp;
             }
           },
           children: iframeDocument && (0, import_element42.createPortal)(
-            // We want to prevent React events from bubbling through the iframe
-            // we bubble these manually.
-            /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
             /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(
               "body",
               {
@@ -40116,8 +40113,6 @@ var wp;
       //
       // We've mimicked this by adding an icon with aria-hidden set to true to hide this from the accessibility tree.
       // For the current tree grid implementation, please do not try to make this a button.
-      //
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
       /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
         "span",
         {
@@ -48515,8 +48510,7 @@ var wp;
             ),
             typeof children === "function" ? children({ onClose }) : children
           ] }),
-          onSelectURL && // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-          /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("form", { className: "block-editor-media-flow__url-input", children: [
+          onSelectURL && /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("form", { className: "block-editor-media-flow__url-input", children: [
             /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("span", { className: "block-editor-media-replace-flow__image-url-label", children: (0, import_i18n153.__)("Current media URL:") }),
             /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
               link_control_default,

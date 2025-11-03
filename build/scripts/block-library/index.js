@@ -20412,7 +20412,6 @@ ${url}
       case DEPRECATED_LINK_DESTINATION_MEDIA:
         return {
           href: image?.source_url || image?.url,
-          // eslint-disable-line camelcase
           linkDestination: LINK_DESTINATION_MEDIA
         };
       case DEPRECATED_LINK_DESTINATION_ATTACHMENT:
@@ -20423,7 +20422,6 @@ ${url}
       case LINK_DESTINATION_MEDIA:
         return {
           href: image?.source_url || image?.url,
-          // eslint-disable-line camelcase
           linkDestination: LINK_DESTINATION_MEDIA
         };
       case LINK_DESTINATION_ATTACHMENT:
@@ -21391,7 +21389,6 @@ ${url}
       case LINK_DESTINATION_MEDIA:
         return {
           href: image?.source_url || image?.url,
-          // eslint-disable-line camelcase
           linkDestination: LINK_DESTINATION_MEDIA2,
           lightbox: lightboxSetting?.enabled ? { ...attributes3?.lightbox, enabled: false } : void 0
         };
@@ -26247,37 +26244,32 @@ ${url}
           children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components47.Spinner, {})
         }
       )
-    ) : (
-      // Disable reason: Image itself is not meant to be interactive, but
-      // should direct focus to block.
-      /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
-      /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_jsx_runtime253.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
-          "img",
-          {
-            src: temporaryURL || url,
-            alt: defaultedAlt,
-            onError: onImageError,
-            onLoad: onImageLoad,
-            ref: setRefs,
-            className: borderProps.className,
-            width: naturalWidth,
-            height: naturalHeight,
-            style: {
-              aspectRatio,
-              ...resizeDelta ? {
-                width: pixelSize.width + resizeDelta.width,
-                height: pixelSize.height + resizeDelta.height
-              } : { width, height },
-              objectFit: scale,
-              ...borderProps.style,
-              ...shadowProps.style
-            }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_jsx_runtime253.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        "img",
+        {
+          src: temporaryURL || url,
+          alt: defaultedAlt,
+          onError: onImageError,
+          onLoad: onImageLoad,
+          ref: setRefs,
+          className: borderProps.className,
+          width: naturalWidth,
+          height: naturalHeight,
+          style: {
+            aspectRatio,
+            ...resizeDelta ? {
+              width: pixelSize.width + resizeDelta.width,
+              height: pixelSize.height + resizeDelta.height
+            } : { width, height },
+            objectFit: scale,
+            ...borderProps.style,
+            ...shadowProps.style
           }
-        ),
-        temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components47.Spinner, {})
-      ] })
-    );
+        }
+      ),
+      temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components47.Spinner, {})
+    ] });
     if (canEditImage && isEditingImage) {
       img = /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(ImageWrapper, { href, children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
         import_block_editor108.__experimentalImageEditor,
@@ -31395,8 +31387,7 @@ ${url}
         mediaType = media.type;
       }
       if (mediaType === "image") {
-        src = media.sizes?.large?.url || // eslint-disable-next-line camelcase
-        media.media_details?.sizes?.large?.source_url;
+        src = media.sizes?.large?.url || media.media_details?.sizes?.large?.source_url;
       }
       let newHref = href;
       if (linkDestination === LINK_DESTINATION_MEDIA3) {
@@ -52500,8 +52491,7 @@ ${url}
     ] });
     let imgWrapper = img;
     if (isLink) {
-      imgWrapper = /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
-      /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+      imgWrapper = /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
         "a",
         {
           href: siteUrl,

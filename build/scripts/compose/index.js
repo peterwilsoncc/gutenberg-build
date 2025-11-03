@@ -1616,7 +1616,6 @@ var wp;
           const handler = eventTypesToHandlers[
             /** @type {keyof GlobalEventHandlersEventMap} */
             event.type
-            /* eslint-enable jsdoc/no-undefined-types */
           ];
           if (typeof this.wrappedRef[handler] === "function") {
             this.wrappedRef[handler](event);
@@ -2321,10 +2320,7 @@ var wp;
         const bindFn = bindGlobal ? "bindGlobal" : "bind";
         mousetrap[bindFn](
           shortcut,
-          (...args) => (
-            /* eslint-enable jsdoc/valid-types */
-            currentCallbackRef.current(...args)
-          ),
+          (...args) => currentCallbackRef.current(...args),
           eventName
         );
       });

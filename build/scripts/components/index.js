@@ -39322,7 +39322,6 @@ This message will only show in development mode. It won't appear in production. 
       loop: focusLoop = false,
       wrap: focusWrap = false,
       shift: focusShift = false,
-      // eslint-disable-next-line camelcase
       unstable_virtual: virtualFocus
     } = legacyStateOptions;
     return {
