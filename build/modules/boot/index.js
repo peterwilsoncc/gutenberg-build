@@ -141,14 +141,14 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React12 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef8 = React12.useRef, useEffect6 = React12.useEffect, useMemo4 = React12.useMemo, useDebugValue = React12.useDebugValue;
+      var React12 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef8 = React12.useRef, useEffect6 = React12.useEffect, useMemo5 = React12.useMemo, useDebugValue = React12.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef8(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo4(
+        instRef = useMemo5(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -225,6 +225,13 @@ var require_i18n = __commonJS({
   }
 });
 
+// package-external:@wordpress/components
+var require_components = __commonJS({
+  "package-external:@wordpress/components"(exports, module) {
+    module.exports = window.wp.components;
+  }
+});
+
 // package-external:@wordpress/commands
 var require_commands = __commonJS({
   "package-external:@wordpress/commands"(exports, module) {
@@ -236,13 +243,6 @@ var require_commands = __commonJS({
 var require_theme = __commonJS({
   "package-external:@wordpress/theme"(exports, module) {
     module.exports = window.wp.theme;
-  }
-});
-
-// package-external:@wordpress/components
-var require_components = __commonJS({
-  "package-external:@wordpress/components"(exports, module) {
-    module.exports = window.wp.components;
   }
 });
 
@@ -296,7 +296,7 @@ var require_private_apis = __commonJS({
 });
 
 // packages/boot/build-module/components/app/index.js
-var import_element7 = __toESM(require_element());
+var import_element8 = __toESM(require_element());
 var import_data7 = __toESM(require_data());
 
 // node_modules/@tanstack/store/dist/esm/scheduler.js
@@ -617,13 +617,13 @@ function createBrowserHistory(opts) {
     if (!next) {
       return;
     }
-    history2._ignoreSubscribers = true;
+    history._ignoreSubscribers = true;
     (next.isPush ? win.history.pushState : win.history.replaceState)(
       next.state,
       "",
       next.href
     );
-    history2._ignoreSubscribers = false;
+    history._ignoreSubscribers = false;
     next = void 0;
     scheduled = void 0;
     rollbackLocation = void 0;
@@ -645,7 +645,7 @@ function createBrowserHistory(opts) {
   };
   const onPushPop = (type) => {
     currentLocation = parseLocation();
-    history2.notify({ type });
+    history.notify({ type });
   };
   const onPushPopEvent = async () => {
     if (ignoreNextPop) {
@@ -679,14 +679,14 @@ function createBrowserHistory(opts) {
           if (isBlocked) {
             ignoreNextPop = true;
             win.history.go(1);
-            history2.notify(notify);
+            history.notify(notify);
             return;
           }
         }
       }
     }
     currentLocation = parseLocation();
-    history2.notify(notify);
+    history.notify(notify);
   };
   const onBeforeUnload = (e) => {
     if (ignoreNextBeforeUnload) {
@@ -714,7 +714,7 @@ function createBrowserHistory(opts) {
     }
     return;
   };
-  const history2 = createHistory({
+  const history = createHistory({
     getLocation,
     getLength: () => win.history.length,
     pushState: (href, state) => queueHistoryAction("push", href, state),
@@ -756,15 +756,15 @@ function createBrowserHistory(opts) {
   win.addEventListener(popStateEvent, onPushPopEvent);
   win.history.pushState = function(...args) {
     const res = originalPushState.apply(win.history, args);
-    if (!history2._ignoreSubscribers) onPushPop("PUSH");
+    if (!history._ignoreSubscribers) onPushPop("PUSH");
     return res;
   };
   win.history.replaceState = function(...args) {
     const res = originalReplaceState.apply(win.history, args);
-    if (!history2._ignoreSubscribers) onPushPop("REPLACE");
+    if (!history._ignoreSubscribers) onPushPop("REPLACE");
     return res;
   };
-  return history2;
+  return history;
 }
 function parseHref(href, state) {
   const hashIndex = href.indexOf("#");
@@ -1633,7 +1633,7 @@ function sortRoutes(routes) {
   return flatRoutes;
 }
 function processRouteTree({
-  routeTree: routeTree2,
+  routeTree,
   initRoute
 }) {
   const routesById = {};
@@ -1659,7 +1659,7 @@ function processRouteTree({
       }
     });
   };
-  recurseRoutes([routeTree2]);
+  recurseRoutes([routeTree]);
   const flatRoutes = sortRoutes(Object.values(routesById));
   return { routesById, routesByPath, flatRoutes };
 }
@@ -1783,23 +1783,23 @@ function restoreScroll({
   }
   ignoreScroll = false;
 }
-function setupScrollRestoration(router2, force) {
-  if (!scrollRestorationCache && !router2.isServer) {
+function setupScrollRestoration(router, force) {
+  if (!scrollRestorationCache && !router.isServer) {
     return;
   }
-  const shouldScrollRestoration = force ?? router2.options.scrollRestoration ?? false;
+  const shouldScrollRestoration = force ?? router.options.scrollRestoration ?? false;
   if (shouldScrollRestoration) {
-    router2.isScrollRestoring = true;
+    router.isScrollRestoring = true;
   }
-  if (router2.isServer || router2.isScrollRestorationSetup || !scrollRestorationCache) {
+  if (router.isServer || router.isScrollRestorationSetup || !scrollRestorationCache) {
     return;
   }
-  router2.isScrollRestorationSetup = true;
+  router.isScrollRestorationSetup = true;
   ignoreScroll = false;
-  const getKey = router2.options.getScrollRestorationKey || defaultGetScrollRestorationKey;
+  const getKey = router.options.getScrollRestorationKey || defaultGetScrollRestorationKey;
   window.history.scrollRestoration = "manual";
   const onScroll = (event) => {
-    if (ignoreScroll || !router2.isScrollRestoring) {
+    if (ignoreScroll || !router.isScrollRestoring) {
       return;
     }
     let elementSelector = "";
@@ -1815,7 +1815,7 @@ function setupScrollRestoration(router2, force) {
         elementSelector = getCssSelector(event.target);
       }
     }
-    const restoreKey = getKey(router2.state.location);
+    const restoreKey = getKey(router.state.location);
     scrollRestorationCache.set((state) => {
       const keyEntry = state[restoreKey] ||= {};
       const elementEntry = keyEntry[elementSelector] ||= {};
@@ -1835,15 +1835,15 @@ function setupScrollRestoration(router2, force) {
   if (typeof document !== "undefined") {
     document.addEventListener("scroll", throttle(onScroll, 100), true);
   }
-  router2.subscribe("onRendered", (event) => {
+  router.subscribe("onRendered", (event) => {
     const cacheKey = getKey(event.toLocation);
-    if (!router2.resetNextScroll) {
-      router2.resetNextScroll = true;
+    if (!router.resetNextScroll) {
+      router.resetNextScroll = true;
       return;
     }
-    if (typeof router2.options.scrollRestoration === "function") {
-      const shouldRestore = router2.options.scrollRestoration({
-        location: router2.latestLocation
+    if (typeof router.options.scrollRestoration === "function") {
+      const shouldRestore = router.options.scrollRestoration({
+        location: router.latestLocation
       });
       if (!shouldRestore) {
         return;
@@ -1852,12 +1852,12 @@ function setupScrollRestoration(router2, force) {
     restoreScroll({
       storageKey,
       key: cacheKey,
-      behavior: router2.options.scrollRestorationBehavior,
-      shouldScrollRestoration: router2.isScrollRestoring,
-      scrollToTopSelectors: router2.options.scrollToTopSelectors,
-      location: router2.history.location
+      behavior: router.options.scrollRestorationBehavior,
+      shouldScrollRestoration: router.isScrollRestoring,
+      scrollToTopSelectors: router.options.scrollToTopSelectors,
+      location: router.history.location
     });
-    if (router2.isScrollRestoring) {
+    if (router.isScrollRestoring) {
       scrollRestorationCache.set((state) => {
         state[cacheKey] ||= {};
         return state;
@@ -1865,11 +1865,11 @@ function setupScrollRestoration(router2, force) {
     }
   });
 }
-function handleHashScroll(router2) {
+function handleHashScroll(router) {
   if (typeof document !== "undefined" && document.querySelector) {
-    const hashScrollIntoViewOptions = router2.state.location.state.__hashScrollIntoViewOptions ?? true;
-    if (hashScrollIntoViewOptions && router2.state.location.hash !== "") {
-      const el = document.getElementById(router2.state.location.hash);
+    const hashScrollIntoViewOptions = router.state.location.state.__hashScrollIntoViewOptions ?? true;
+    if (hashScrollIntoViewOptions && router.state.location.hash !== "") {
+      const el = document.getElementById(router.state.location.hash);
       if (el) {
         el.scrollIntoView(hashScrollIntoViewOptions);
       }
@@ -4365,11 +4365,11 @@ function useRouterState(opts) {
   const contextRouter = useRouter({
     warn: opts?.router === void 0
   });
-  const router2 = opts?.router || contextRouter;
+  const router = opts?.router || contextRouter;
   const previousResult = (0, import_react2.useRef)(void 0);
-  return useStore(router2.__store, (state) => {
+  return useStore(router.__store, (state) => {
     if (opts?.select) {
-      if (opts.structuralSharing ?? router2.options.defaultStructuralSharing) {
+      if (opts.structuralSharing ?? router.options.defaultStructuralSharing) {
         const newSlice = replaceEqualDeep(
           previousResult.current,
           opts.select(state)
@@ -4467,15 +4467,15 @@ function useSearch(opts) {
 // node_modules/@tanstack/react-router/dist/esm/useNavigate.js
 var React6 = __toESM(require_react(), 1);
 function useNavigate(_defaultOpts) {
-  const router2 = useRouter();
+  const router = useRouter();
   return React6.useCallback(
     (options) => {
-      return router2.navigate({
+      return router.navigate({
         ...options,
         from: options.from ?? _defaultOpts?.from
       });
     },
-    [_defaultOpts?.from, router2]
+    [_defaultOpts?.from, router]
   );
 }
 
@@ -4523,7 +4523,7 @@ function useForwardedRef(ref) {
 
 // node_modules/@tanstack/react-router/dist/esm/link.js
 function useLinkProps(options, forwardedRef) {
-  const router2 = useRouter();
+  const router = useRouter();
   const [isTransitioning, setIsTransitioning] = React8.useState(false);
   const hasRenderFetched = React8.useRef(false);
   const innerRef = useForwardedRef(forwardedRef);
@@ -4575,7 +4575,7 @@ function useLinkProps(options, forwardedRef) {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      router2,
+      router,
       currentSearch,
       from,
       options._fromLocation,
@@ -4589,8 +4589,8 @@ function useLinkProps(options, forwardedRef) {
     ]
   );
   const next = React8.useMemo(
-    () => router2.buildLocation({ ..._options }),
-    [router2, _options]
+    () => router.buildLocation({ ..._options }),
+    [router, _options]
   );
   const hrefOption = React8.useMemo(() => {
     if (disabled) {
@@ -4598,15 +4598,15 @@ function useLinkProps(options, forwardedRef) {
     }
     let href = next.maskedLocation ? next.maskedLocation.url : next.url;
     let external = false;
-    if (router2.origin) {
-      if (href.startsWith(router2.origin)) {
-        href = router2.history.createHref(href.replace(router2.origin, "")) || "/";
+    if (router.origin) {
+      if (href.startsWith(router.origin)) {
+        href = router.history.createHref(href.replace(router.origin, "")) || "/";
       } else {
         external = true;
       }
     }
     return { href, external };
-  }, [disabled, next.maskedLocation, next.url, router2.origin, router2.history]);
+  }, [disabled, next.maskedLocation, next.url, router.origin, router.history]);
   const externalLink = React8.useMemo(() => {
     if (hrefOption?.external) {
       return hrefOption.href;
@@ -4618,8 +4618,8 @@ function useLinkProps(options, forwardedRef) {
     }
     return void 0;
   }, [to, hrefOption]);
-  const preload = options.reloadDocument || externalLink ? false : userPreload ?? router2.options.defaultPreload;
-  const preloadDelay = userPreloadDelay ?? router2.options.defaultPreloadDelay ?? 0;
+  const preload = options.reloadDocument || externalLink ? false : userPreload ?? router.options.defaultPreload;
+  const preloadDelay = userPreloadDelay ?? router.options.defaultPreloadDelay ?? 0;
   const isActive = useRouterState({
     select: (s) => {
       if (externalLink) return false;
@@ -4627,7 +4627,7 @@ function useLinkProps(options, forwardedRef) {
         const testExact = exactPathTest(
           s.location.pathname,
           next.pathname,
-          router2.basepath
+          router.basepath
         );
         if (!testExact) {
           return false;
@@ -4635,11 +4635,11 @@ function useLinkProps(options, forwardedRef) {
       } else {
         const currentPathSplit = removeTrailingSlash(
           s.location.pathname,
-          router2.basepath
+          router.basepath
         );
         const nextPathSplit = removeTrailingSlash(
           next.pathname,
-          router2.basepath
+          router.basepath
         );
         const pathIsFuzzyEqual = currentPathSplit.startsWith(nextPathSplit) && (currentPathSplit.length === nextPathSplit.length || currentPathSplit[nextPathSplit.length] === "/");
         if (!pathIsFuzzyEqual) {
@@ -4662,11 +4662,11 @@ function useLinkProps(options, forwardedRef) {
     }
   });
   const doPreload = React8.useCallback(() => {
-    router2.preloadRoute({ ..._options }).catch((err) => {
+    router.preloadRoute({ ..._options }).catch((err) => {
       console.warn(err);
       console.warn(preloadWarning);
     });
-  }, [router2, _options]);
+  }, [router, _options]);
   const preloadViewportIoCallback = React8.useCallback(
     (entry) => {
       if (entry?.isIntersecting) {
@@ -4698,11 +4698,11 @@ function useLinkProps(options, forwardedRef) {
       (0, import_react_dom.flushSync)(() => {
         setIsTransitioning(true);
       });
-      const unsub = router2.subscribe("onResolved", () => {
+      const unsub = router.subscribe("onResolved", () => {
         unsub();
         setIsTransitioning(false);
       });
-      router2.navigate({
+      router.navigate({
         ..._options,
         replace,
         resetScroll,
@@ -5018,8 +5018,8 @@ var LazyRoute = class {
       return useLoaderData({ ...opts2, from: this.options.id });
     };
     this.useNavigate = () => {
-      const router2 = useRouter();
-      return useNavigate({ from: router2.routesById[this.options.id].fullPath });
+      const router = useRouter();
+      return useNavigate({ from: router.routesById[this.options.id].fullPath });
     };
     this.options = opts;
     this.$$typeof = Symbol.for("react.memo");
@@ -5039,8 +5039,8 @@ var React11 = __toESM(require_react(), 1);
 // node_modules/@tanstack/react-router/dist/esm/Transitioner.js
 var React9 = __toESM(require_react(), 1);
 function Transitioner() {
-  const router2 = useRouter();
-  const mountLoadForRouter = React9.useRef({ router: router2, mounted: false });
+  const router = useRouter();
+  const mountLoadForRouter = React9.useRef({ router, mounted: false });
   const [isTransitioning, setIsTransitioning] = React9.useState(false);
   const { hasPendingMatches, isLoading } = useRouterState({
     select: (s) => ({
@@ -5054,7 +5054,7 @@ function Transitioner() {
   const previousIsAnyPending = usePrevious(isAnyPending);
   const isPagePending = isLoading || hasPendingMatches;
   const previousIsPagePending = usePrevious(isPagePending);
-  router2.startTransition = (fn) => {
+  router.startTransition = (fn) => {
     setIsTransitioning(true);
     React9.startTransition(() => {
       fn();
@@ -5062,70 +5062,70 @@ function Transitioner() {
     });
   };
   React9.useEffect(() => {
-    const unsub = router2.history.subscribe(router2.load);
-    const nextLocation = router2.buildLocation({
-      to: router2.latestLocation.pathname,
+    const unsub = router.history.subscribe(router.load);
+    const nextLocation = router.buildLocation({
+      to: router.latestLocation.pathname,
       search: true,
       params: true,
       hash: true,
       state: true,
       _includeValidateSearch: true
     });
-    if (trimPathRight(router2.latestLocation.href) !== trimPathRight(nextLocation.href)) {
-      router2.commitLocation({ ...nextLocation, replace: true });
+    if (trimPathRight(router.latestLocation.href) !== trimPathRight(nextLocation.href)) {
+      router.commitLocation({ ...nextLocation, replace: true });
     }
     return () => {
       unsub();
     };
-  }, [router2, router2.history]);
+  }, [router, router.history]);
   useLayoutEffect2(() => {
     if (
       // if we are hydrating from SSR, loading is triggered in ssr-client
-      typeof window !== "undefined" && router2.ssr || mountLoadForRouter.current.router === router2 && mountLoadForRouter.current.mounted
+      typeof window !== "undefined" && router.ssr || mountLoadForRouter.current.router === router && mountLoadForRouter.current.mounted
     ) {
       return;
     }
-    mountLoadForRouter.current = { router: router2, mounted: true };
+    mountLoadForRouter.current = { router, mounted: true };
     const tryLoad = async () => {
       try {
-        await router2.load();
+        await router.load();
       } catch (err) {
         console.error(err);
       }
     };
     tryLoad();
-  }, [router2]);
+  }, [router]);
   useLayoutEffect2(() => {
     if (previousIsLoading && !isLoading) {
-      router2.emit({
+      router.emit({
         type: "onLoad",
         // When the new URL has committed, when the new matches have been loaded into state.matches
-        ...getLocationChangeInfo(router2.state)
+        ...getLocationChangeInfo(router.state)
       });
     }
-  }, [previousIsLoading, router2, isLoading]);
+  }, [previousIsLoading, router, isLoading]);
   useLayoutEffect2(() => {
     if (previousIsPagePending && !isPagePending) {
-      router2.emit({
+      router.emit({
         type: "onBeforeRouteMount",
-        ...getLocationChangeInfo(router2.state)
+        ...getLocationChangeInfo(router.state)
       });
     }
-  }, [isPagePending, previousIsPagePending, router2]);
+  }, [isPagePending, previousIsPagePending, router]);
   useLayoutEffect2(() => {
     if (previousIsAnyPending && !isAnyPending) {
-      router2.emit({
+      router.emit({
         type: "onResolved",
-        ...getLocationChangeInfo(router2.state)
+        ...getLocationChangeInfo(router.state)
       });
-      router2.__store.setState((s) => ({
+      router.__store.setState((s) => ({
         ...s,
         status: "idle",
         resolvedLocation: s.location
       }));
-      handleHashScroll(router2);
+      handleHashScroll(router);
     }
-  }, [isAnyPending, previousIsAnyPending, router2]);
+  }, [isAnyPending, previousIsAnyPending, router]);
   return null;
 }
 
@@ -5173,10 +5173,10 @@ function SafeFragment(props) {
 
 // node_modules/@tanstack/react-router/dist/esm/renderRouteNotFound.js
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
-function renderRouteNotFound(router2, route, data) {
+function renderRouteNotFound(router, route, data) {
   if (!route.options.notFoundComponent) {
-    if (router2.options.defaultNotFoundComponent) {
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(router2.options.defaultNotFoundComponent, { data });
+    if (router.options.defaultNotFoundComponent) {
+      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(router.options.defaultNotFoundComponent, { data });
     }
     if (true) {
       tiny_warning_esm_default(
@@ -5195,14 +5195,14 @@ var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 // node_modules/@tanstack/react-router/dist/esm/ScriptOnce.js
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 function ScriptOnce({ children }) {
-  const router2 = useRouter();
-  if (!router2.isServer) {
+  const router = useRouter();
+  if (!router.isServer) {
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
     "script",
     {
-      nonce: router2.options.ssr?.nonce,
+      nonce: router.options.ssr?.nonce,
       className: "$tsr",
       dangerouslySetInnerHTML: {
         __html: [children].filter(Boolean).join("\n") + ";$_TSR.c()"
@@ -5213,21 +5213,21 @@ function ScriptOnce({ children }) {
 
 // node_modules/@tanstack/react-router/dist/esm/scroll-restoration.js
 function ScrollRestoration() {
-  const router2 = useRouter();
-  if (!router2.isScrollRestoring || !router2.isServer) {
+  const router = useRouter();
+  if (!router.isScrollRestoring || !router.isServer) {
     return null;
   }
-  if (typeof router2.options.scrollRestoration === "function") {
-    const shouldRestore = router2.options.scrollRestoration({
-      location: router2.latestLocation
+  if (typeof router.options.scrollRestoration === "function") {
+    const shouldRestore = router.options.scrollRestoration({
+      location: router.latestLocation
     });
     if (!shouldRestore) {
       return null;
     }
   }
-  const getKey = router2.options.getScrollRestorationKey || defaultGetScrollRestorationKey;
-  const userKey = getKey(router2.latestLocation);
-  const resolvedKey = userKey !== defaultGetScrollRestorationKey(router2.latestLocation) ? userKey : void 0;
+  const getKey = router.options.getScrollRestorationKey || defaultGetScrollRestorationKey;
+  const userKey = getKey(router.latestLocation);
+  const resolvedKey = userKey !== defaultGetScrollRestorationKey(router.latestLocation) ? userKey : void 0;
   const restoreScrollOptions = {
     storageKey,
     shouldScrollRestoration: true
@@ -5247,7 +5247,7 @@ function ScrollRestoration() {
 var Match = React10.memo(function MatchImpl({
   matchId
 }) {
-  const router2 = useRouter();
+  const router = useRouter();
   const matchState = useRouterState({
     select: (s) => {
       const match = s.matches.find((d) => d.id === matchId);
@@ -5263,14 +5263,14 @@ var Match = React10.memo(function MatchImpl({
     },
     structuralSharing: true
   });
-  const route = router2.routesById[matchState.routeId];
-  const PendingComponent = route.options.pendingComponent ?? router2.options.defaultPendingComponent;
+  const route = router.routesById[matchState.routeId];
+  const PendingComponent = route.options.pendingComponent ?? router.options.defaultPendingComponent;
   const pendingElement = PendingComponent ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(PendingComponent, {}) : null;
-  const routeErrorComponent = route.options.errorComponent ?? router2.options.defaultErrorComponent;
-  const routeOnCatch = route.options.onCatch ?? router2.options.defaultOnCatch;
+  const routeErrorComponent = route.options.errorComponent ?? router.options.defaultErrorComponent;
+  const routeOnCatch = route.options.onCatch ?? router.options.defaultOnCatch;
   const routeNotFoundComponent = route.isRoot ? (
     // If it's the root route, use the globalNotFound option, with fallback to the notFoundRoute's component
-    route.options.notFoundComponent ?? router2.options.notFoundRoute?.options.component
+    route.options.notFoundComponent ?? router.options.notFoundRoute?.options.component
   ) : route.options.notFoundComponent;
   const resolvedNoSsr = matchState.ssr === false || matchState.ssr === "data-only";
   const ResolvedSuspenseBoundary = (
@@ -5313,14 +5313,14 @@ var Match = React10.memo(function MatchImpl({
         )
       }
     ) }) }),
-    parentRouteId === rootRouteId && router2.options.scrollRestoration ? /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
+    parentRouteId === rootRouteId && router.options.scrollRestoration ? /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(OnRendered, {}),
       /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ScrollRestoration, {})
     ] }) : null
   ] });
 });
 function OnRendered() {
-  const router2 = useRouter();
+  const router = useRouter();
   const prevLocationRef = React10.useRef(
     void 0
   );
@@ -5329,27 +5329,27 @@ function OnRendered() {
     {
       suppressHydrationWarning: true,
       ref: (el) => {
-        if (el && (prevLocationRef.current === void 0 || prevLocationRef.current.href !== router2.latestLocation.href)) {
-          router2.emit({
+        if (el && (prevLocationRef.current === void 0 || prevLocationRef.current.href !== router.latestLocation.href)) {
+          router.emit({
             type: "onRendered",
-            ...getLocationChangeInfo(router2.state)
+            ...getLocationChangeInfo(router.state)
           });
-          prevLocationRef.current = router2.latestLocation;
+          prevLocationRef.current = router.latestLocation;
         }
       }
     },
-    router2.latestLocation.state.__TSR_key
+    router.latestLocation.state.__TSR_key
   );
 }
 var MatchInner = React10.memo(function MatchInnerImpl({
   matchId
 }) {
-  const router2 = useRouter();
+  const router = useRouter();
   const { match, key, routeId } = useRouterState({
     select: (s) => {
       const match2 = s.matches.find((d) => d.id === matchId);
       const routeId2 = match2.routeId;
-      const remountFn = router2.routesById[routeId2].options.remountDeps ?? router2.options.defaultRemountDeps;
+      const remountFn = router.routesById[routeId2].options.remountDeps ?? router.options.defaultRemountDeps;
       const remountDeps = remountFn?.({
         routeId: routeId2,
         loaderDeps: match2.loaderDeps,
@@ -5371,26 +5371,26 @@ var MatchInner = React10.memo(function MatchInnerImpl({
     },
     structuralSharing: true
   });
-  const route = router2.routesById[routeId];
+  const route = router.routesById[routeId];
   const out = React10.useMemo(() => {
-    const Comp = route.options.component ?? router2.options.defaultComponent;
+    const Comp = route.options.component ?? router.options.defaultComponent;
     if (Comp) {
       return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Comp, {}, key);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Outlet, {});
-  }, [key, route.options.component, router2.options.defaultComponent]);
+  }, [key, route.options.component, router.options.defaultComponent]);
   if (match._displayPending) {
-    throw router2.getMatch(match.id)?._nonReactive.displayPendingPromise;
+    throw router.getMatch(match.id)?._nonReactive.displayPendingPromise;
   }
   if (match._forcePending) {
-    throw router2.getMatch(match.id)?._nonReactive.minPendingPromise;
+    throw router.getMatch(match.id)?._nonReactive.minPendingPromise;
   }
   if (match.status === "pending") {
-    const pendingMinMs = route.options.pendingMinMs ?? router2.options.defaultPendingMinMs;
+    const pendingMinMs = route.options.pendingMinMs ?? router.options.defaultPendingMinMs;
     if (pendingMinMs) {
-      const routerMatch = router2.getMatch(match.id);
+      const routerMatch = router.getMatch(match.id);
       if (routerMatch && !routerMatch._nonReactive.minPendingPromise) {
-        if (!router2.isServer) {
+        if (!router.isServer) {
           const minPendingPromise = createControlledPromise();
           routerMatch._nonReactive.minPendingPromise = minPendingPromise;
           setTimeout(() => {
@@ -5400,19 +5400,19 @@ var MatchInner = React10.memo(function MatchInnerImpl({
         }
       }
     }
-    throw router2.getMatch(match.id)?._nonReactive.loadPromise;
+    throw router.getMatch(match.id)?._nonReactive.loadPromise;
   }
   if (match.status === "notFound") {
     invariant(isNotFound(match.error), "Expected a notFound error");
-    return renderRouteNotFound(router2, route, match.error);
+    return renderRouteNotFound(router, route, match.error);
   }
   if (match.status === "redirected") {
     invariant(isRedirect(match.error), "Expected a redirect error");
-    throw router2.getMatch(match.id)?._nonReactive.loadPromise;
+    throw router.getMatch(match.id)?._nonReactive.loadPromise;
   }
   if (match.status === "error") {
-    if (router2.isServer) {
-      const RouteErrorComponent = (route.options.errorComponent ?? router2.options.defaultErrorComponent) || ErrorComponent;
+    if (router.isServer) {
+      const RouteErrorComponent = (route.options.errorComponent ?? router.options.defaultErrorComponent) || ErrorComponent;
       return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
         RouteErrorComponent,
         {
@@ -5429,12 +5429,12 @@ var MatchInner = React10.memo(function MatchInnerImpl({
   return out;
 });
 var Outlet = React10.memo(function OutletImpl() {
-  const router2 = useRouter();
+  const router = useRouter();
   const matchId = React10.useContext(matchContext);
   const routeId = useRouterState({
     select: (s) => s.matches.find((d) => d.id === matchId)?.routeId
   });
-  const route = router2.routesById[routeId];
+  const route = router.routesById[routeId];
   const parentGlobalNotFound = useRouterState({
     select: (s) => {
       const matches = s.matches;
@@ -5453,9 +5453,9 @@ var Outlet = React10.memo(function OutletImpl() {
       return matches[index + 1]?.id;
     }
   });
-  const pendingElement = router2.options.defaultPendingComponent ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(router2.options.defaultPendingComponent, {}) : null;
+  const pendingElement = router.options.defaultPendingComponent ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(router.options.defaultPendingComponent, {}) : null;
   if (parentGlobalNotFound) {
-    return renderRouteNotFound(router2, route, void 0);
+    return renderRouteNotFound(router, route, void 0);
   }
   if (!childMatchId) {
     return null;
@@ -5469,19 +5469,19 @@ var Outlet = React10.memo(function OutletImpl() {
 
 // node_modules/@tanstack/react-router/dist/esm/Matches.js
 function Matches() {
-  const router2 = useRouter();
-  const rootRoute2 = router2.routesById[rootRouteId];
-  const PendingComponent = rootRoute2.options.pendingComponent ?? router2.options.defaultPendingComponent;
+  const router = useRouter();
+  const rootRoute = router.routesById[rootRouteId];
+  const PendingComponent = rootRoute.options.pendingComponent ?? router.options.defaultPendingComponent;
   const pendingElement = PendingComponent ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(PendingComponent, {}) : null;
-  const ResolvedSuspense = router2.isServer || typeof document !== "undefined" && router2.ssr ? SafeFragment : React11.Suspense;
+  const ResolvedSuspense = router.isServer || typeof document !== "undefined" && router.ssr ? SafeFragment : React11.Suspense;
   const inner = /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(ResolvedSuspense, { fallback: pendingElement, children: [
-    !router2.isServer && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Transitioner, {}),
+    !router.isServer && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Transitioner, {}),
     /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(MatchesInner, {})
   ] });
-  return router2.options.InnerWrap ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(router2.options.InnerWrap, { children: inner }) : inner;
+  return router.options.InnerWrap ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(router.options.InnerWrap, { children: inner }) : inner;
 }
 function MatchesInner() {
-  const router2 = useRouter();
+  const router = useRouter();
   const matchId = useRouterState({
     select: (s) => {
       return s.matches[0]?.id;
@@ -5491,7 +5491,7 @@ function MatchesInner() {
     select: (s) => s.loadedAt
   });
   const matchComponent = matchId ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Match, { matchId }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(matchContext.Provider, { value: matchId, children: router2.options.disableGlobalCatchBoundary ? matchComponent : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(matchContext.Provider, { value: matchId, children: router.options.disableGlobalCatchBoundary ? matchComponent : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
     CatchBoundary,
     {
       getResetKey: () => resetKey,
@@ -5537,29 +5537,29 @@ if (typeof globalThis !== "undefined") {
 // node_modules/@tanstack/react-router/dist/esm/RouterProvider.js
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 function RouterContextProvider({
-  router: router2,
+  router,
   children,
   ...rest
 }) {
   if (Object.keys(rest).length > 0) {
-    router2.update({
-      ...router2.options,
+    router.update({
+      ...router.options,
       ...rest,
       context: {
-        ...router2.options.context,
+        ...router.options.context,
         ...rest.context
       }
     });
   }
   const routerContext2 = getRouterContext();
-  const provider = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(routerContext2.Provider, { value: router2, children });
-  if (router2.options.Wrap) {
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(router2.options.Wrap, { children: provider });
+  const provider = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(routerContext2.Provider, { value: router, children });
+  if (router.options.Wrap) {
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(router.options.Wrap, { children: provider });
   }
   return provider;
 }
-function RouterProvider({ router: router2, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(RouterContextProvider, { router: router2, ...rest, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Matches, {}) });
+function RouterProvider({ router, ...rest }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(RouterContextProvider, { router, ...rest, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Matches, {}) });
 }
 
 // node_modules/@tanstack/react-router/dist/esm/useCanGoBack.js
@@ -5569,70 +5569,7 @@ function useCanGoBack() {
 
 // packages/boot/build-module/components/app/router.js
 var import_i18n6 = __toESM(require_i18n());
-
-// packages/boot/build-module/components/root/index.js
-var import_commands2 = __toESM(require_commands());
-var import_theme = __toESM(require_theme());
-
-// packages/boot/build-module/components/site-hub/index.js
-var import_data2 = __toESM(require_data());
-var import_components = __toESM(require_components());
-var import_i18n2 = __toESM(require_i18n());
-var import_core_data2 = __toESM(require_core_data());
-var import_html_entities = __toESM(require_html_entities());
-
-// packages/icons/build-module/icon/index.js
-var import_element = __toESM(require_element());
-var icon_default = (0, import_element.forwardRef)(
-  ({ icon, size = 24, ...props }, ref) => {
-    return (0, import_element.cloneElement)(icon, {
-      width: size,
-      height: size,
-      ...props,
-      ref
-    });
-  }
-);
-
-// packages/icons/build-module/library/chevron-down-small.js
-var import_primitives = __toESM(require_primitives());
-var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-var chevron_down_small_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives.Path, { d: "m15.99 10.889-3.988 3.418-3.988-3.418.976-1.14 3.012 2.582 3.012-2.581.976 1.139Z" }) });
-
-// packages/icons/build-module/library/chevron-left-small.js
-var import_primitives2 = __toESM(require_primitives());
-var import_jsx_runtime14 = __toESM(require_jsx_runtime());
-var chevron_left_small_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives2.Path, { d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z" }) });
-
-// packages/icons/build-module/library/chevron-left.js
-var import_primitives3 = __toESM(require_primitives());
-var import_jsx_runtime15 = __toESM(require_jsx_runtime());
-var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives3.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
-
-// packages/icons/build-module/library/chevron-right-small.js
-var import_primitives4 = __toESM(require_primitives());
-var import_jsx_runtime16 = __toESM(require_jsx_runtime());
-var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives4.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
-
-// packages/icons/build-module/library/chevron-right.js
-var import_primitives5 = __toESM(require_primitives());
-var import_jsx_runtime17 = __toESM(require_jsx_runtime());
-var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives5.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
-
-// packages/icons/build-module/library/search.js
-var import_primitives6 = __toESM(require_primitives());
-var import_jsx_runtime18 = __toESM(require_jsx_runtime());
-var search_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives6.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
-
-// packages/icons/build-module/library/wordpress.js
-var import_primitives7 = __toESM(require_primitives());
-var import_jsx_runtime19 = __toESM(require_jsx_runtime());
-var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "-2 -2 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives7.Path, { d: "M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.1z" }) });
-
-// packages/boot/build-module/components/site-hub/index.js
-var import_keycodes = __toESM(require_keycodes());
-var import_commands = __toESM(require_commands());
-var import_url = __toESM(require_url());
+var import_element7 = __toESM(require_element());
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
@@ -5650,11 +5587,165 @@ function clsx() {
 }
 var clsx_default = clsx;
 
+// packages/admin-ui/build-module/navigable-region/index.js
+var import_element = __toESM(require_element());
+var import_jsx_runtime13 = __toESM(require_jsx_runtime());
+var NavigableRegion = (0, import_element.forwardRef)(
+  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      Tag,
+      {
+        ref,
+        className: clsx_default("admin-ui-navigable-region", className),
+        "aria-label": ariaLabel,
+        role: "region",
+        tabIndex: "-1",
+        ...props,
+        children
+      }
+    );
+  }
+);
+NavigableRegion.displayName = "NavigableRegion";
+var navigable_region_default = NavigableRegion;
+
+// packages/admin-ui/build-module/page/header.js
+var import_components = __toESM(require_components());
+var import_jsx_runtime14 = __toESM(require_jsx_runtime());
+function Header({
+  breadcrumbs,
+  badges,
+  title,
+  subTitle,
+  actions
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_components.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+      import_components.__experimentalHStack,
+      {
+        className: "admin-ui-page__header-title",
+        justify: "space-between",
+        spacing: 2,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_components.__experimentalHStack, { spacing: 2, children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_components.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
+            breadcrumbs,
+            badges
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+            import_components.__experimentalHStack,
+            {
+              style: { width: "auto", flexShrink: 0 },
+              spacing: 2,
+              className: "admin-ui-page__header-actions",
+              children: actions
+            }
+          )
+        ]
+      }
+    ),
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "admin-ui-page__header-subtitle", children: subTitle })
+  ] });
+}
+
+// packages/admin-ui/build-module/page/index.js
+var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+function Page({
+  breadcrumbs,
+  badges,
+  title,
+  subTitle,
+  children,
+  className,
+  actions,
+  hasPadding = false
+}) {
+  const classes = clsx_default("admin-ui-page", className);
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(navigable_region_default, { className: classes, ariaLabel: title, children: [
+    (title || breadcrumbs || badges) && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      Header,
+      {
+        breadcrumbs,
+        badges,
+        title,
+        subTitle,
+        actions
+      }
+    ),
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "admin-ui-page__content has-padding", children }) : children
+  ] });
+}
+var page_default = Page;
+
+// packages/boot/build-module/components/root/index.js
+var import_commands2 = __toESM(require_commands());
+var import_theme = __toESM(require_theme());
+
+// packages/boot/build-module/components/site-hub/index.js
+var import_data2 = __toESM(require_data());
+var import_components2 = __toESM(require_components());
+var import_i18n2 = __toESM(require_i18n());
+var import_core_data2 = __toESM(require_core_data());
+var import_html_entities = __toESM(require_html_entities());
+
+// packages/icons/build-module/icon/index.js
+var import_element2 = __toESM(require_element());
+var icon_default = (0, import_element2.forwardRef)(
+  ({ icon, size = 24, ...props }, ref) => {
+    return (0, import_element2.cloneElement)(icon, {
+      width: size,
+      height: size,
+      ...props,
+      ref
+    });
+  }
+);
+
+// packages/icons/build-module/library/chevron-down-small.js
+var import_primitives = __toESM(require_primitives());
+var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+var chevron_down_small_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives.Path, { d: "m15.99 10.889-3.988 3.418-3.988-3.418.976-1.14 3.012 2.582 3.012-2.581.976 1.139Z" }) });
+
+// packages/icons/build-module/library/chevron-left-small.js
+var import_primitives2 = __toESM(require_primitives());
+var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+var chevron_left_small_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives2.Path, { d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z" }) });
+
+// packages/icons/build-module/library/chevron-left.js
+var import_primitives3 = __toESM(require_primitives());
+var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives3.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
+
+// packages/icons/build-module/library/chevron-right-small.js
+var import_primitives4 = __toESM(require_primitives());
+var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives4.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
+
+// packages/icons/build-module/library/chevron-right.js
+var import_primitives5 = __toESM(require_primitives());
+var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives5.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
+
+// packages/icons/build-module/library/search.js
+var import_primitives6 = __toESM(require_primitives());
+var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+var search_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives6.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
+
+// packages/icons/build-module/library/wordpress.js
+var import_primitives7 = __toESM(require_primitives());
+var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "-2 -2 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives7.Path, { d: "M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.1z" }) });
+
+// packages/boot/build-module/components/site-hub/index.js
+var import_keycodes = __toESM(require_keycodes());
+var import_commands = __toESM(require_commands());
+var import_url = __toESM(require_url());
+
 // packages/boot/build-module/components/site-icon/index.js
 var import_data = __toESM(require_data());
 var import_i18n = __toESM(require_i18n());
 var import_core_data = __toESM(require_core_data());
-var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+var import_jsx_runtime23 = __toESM(require_jsx_runtime());
 var css = `/**
  * SCSS Variables.
  *
@@ -5734,16 +5825,16 @@ function SiteIcon({ className }) {
   }, []);
   let icon = null;
   if (isRequestingSite && !siteIconUrl) {
-    icon = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "boot-site-icon__image" });
+    icon = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "boot-site-icon__image" });
   } else {
-    icon = siteIconUrl ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    icon = siteIconUrl ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       "img",
       {
         className: "boot-site-icon__image",
         alt: (0, import_i18n.__)("Site Icon"),
         src: siteIconUrl
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       icon_default,
       {
         className: "boot-site-icon__icon",
@@ -5752,12 +5843,12 @@ function SiteIcon({ className }) {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: clsx_default(className, "boot-site-icon"), children: icon });
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: clsx_default(className, "boot-site-icon"), children: icon });
 }
 var site_icon_default = SiteIcon;
 
 // packages/boot/build-module/components/site-icon-link/index.js
-var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+var import_jsx_runtime24 = __toESM(require_jsx_runtime());
 var css2 = `/**
  * SCSS Variables.
  *
@@ -5828,9 +5919,9 @@ function SiteIconLink({
   isBackButton,
   ...props
 }) {
-  const router2 = useRouter();
+  const router = useRouter();
   const canGoBack = useCanGoBack();
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
     Link,
     {
       to,
@@ -5839,17 +5930,17 @@ function SiteIconLink({
       onClick: (event) => {
         if (canGoBack && isBackButton) {
           event.preventDefault();
-          router2.history.back();
+          router.history.back();
         }
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(site_icon_default, {})
+      children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(site_icon_default, {})
     }
   );
 }
 var site_icon_link_default = SiteIconLink;
 
 // packages/boot/build-module/components/site-hub/index.js
-var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+var import_jsx_runtime25 = __toESM(require_jsx_runtime());
 var css3 = `/**
  * SCSS Variables.
  *
@@ -5955,18 +6046,18 @@ function SiteHub() {
     };
   }, []);
   const { open: openCommandCenter } = (0, import_data2.useDispatch)(import_commands.store);
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "boot-site-hub", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(site_icon_link_default, { to: "/", "aria-label": (0, import_i18n2.__)("Go to the Dashboard") }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-      import_components.ExternalLink,
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "boot-site-hub", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(site_icon_link_default, { to: "/", "aria-label": (0, import_i18n2.__)("Go to the Dashboard") }),
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+      import_components2.ExternalLink,
       {
         href: homeUrl ?? "/",
         className: "boot-site-hub__title",
         children: siteTitle && (0, import_html_entities.decodeEntities)(siteTitle)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_components.__experimentalHStack, { className: "boot-site-hub__actions", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-      import_components.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_components2.__experimentalHStack, { className: "boot-site-hub__actions", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+      import_components2.Button,
       {
         variant: "tertiary",
         icon: search_default,
@@ -5981,7 +6072,7 @@ function SiteHub() {
 var site_hub_default = SiteHub;
 
 // packages/boot/build-module/components/navigation/index.js
-var import_element5 = __toESM(require_element());
+var import_element6 = __toESM(require_element());
 var import_data6 = __toESM(require_data());
 
 // packages/boot/build-module/store/index.js
@@ -5989,7 +6080,8 @@ var import_data3 = __toESM(require_data());
 
 // packages/boot/build-module/store/reducer.js
 var initialState = {
-  menuItems: {}
+  menuItems: {},
+  routes: []
 };
 function reducer(state = initialState, action) {
   switch (action.type) {
@@ -6001,6 +6093,11 @@ function reducer(state = initialState, action) {
           [action.id]: action.menuItem
         }
       };
+    case "REGISTER_ROUTE":
+      return {
+        ...state,
+        routes: [...state.routes, action.route]
+      };
   }
   return state;
 }
@@ -6008,7 +6105,8 @@ function reducer(state = initialState, action) {
 // packages/boot/build-module/store/actions.js
 var actions_exports = {};
 __export(actions_exports, {
-  registerMenuItem: () => registerMenuItem
+  registerMenuItem: () => registerMenuItem,
+  registerRoute: () => registerRoute
 });
 function registerMenuItem(id, menuItem) {
   return {
@@ -6017,14 +6115,24 @@ function registerMenuItem(id, menuItem) {
     menuItem
   };
 }
+function registerRoute(route) {
+  return {
+    type: "REGISTER_ROUTE",
+    route
+  };
+}
 
 // packages/boot/build-module/store/selectors.js
 var selectors_exports = {};
 __export(selectors_exports, {
-  getMenuItems: () => getMenuItems
+  getMenuItems: () => getMenuItems,
+  getRoutes: () => getRoutes
 });
 function getMenuItems(state) {
   return Object.values(state.menuItems);
+}
+function getRoutes(state) {
+  return state.routes;
 }
 
 // packages/boot/build-module/store/index.js
@@ -6037,37 +6145,37 @@ var store = (0, import_data3.createReduxStore)(STORE_NAME, {
 (0, import_data3.register)(store);
 
 // packages/boot/build-module/components/navigation/navigation-item/index.js
-var import_components4 = __toESM(require_components());
+var import_components5 = __toESM(require_components());
 
 // packages/boot/build-module/components/navigation/router-link-item.js
-var import_element2 = __toESM(require_element());
-var import_components2 = __toESM(require_components());
-var import_jsx_runtime23 = __toESM(require_jsx_runtime());
+var import_element3 = __toESM(require_element());
+var import_components3 = __toESM(require_components());
+var import_jsx_runtime26 = __toESM(require_jsx_runtime());
 function AnchorOnlyItem(props, forwardedRef) {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_components2.__experimentalItem, { as: "a", ref: forwardedRef, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_components3.__experimentalItem, { as: "a", ref: forwardedRef, ...props });
 }
-var RouterLinkItem = createLink((0, import_element2.forwardRef)(AnchorOnlyItem));
+var RouterLinkItem = createLink((0, import_element3.forwardRef)(AnchorOnlyItem));
 var router_link_item_default = RouterLinkItem;
 
 // packages/boot/build-module/components/navigation/items.js
-var import_element3 = __toESM(require_element());
-var import_components3 = __toESM(require_components());
+var import_element4 = __toESM(require_element());
+var import_components4 = __toESM(require_components());
 var import_primitives8 = __toESM(require_primitives());
-var import_jsx_runtime24 = __toESM(require_jsx_runtime());
+var import_jsx_runtime27 = __toESM(require_jsx_runtime());
 function isSvg(element) {
-  return (0, import_element3.isValidElement)(element) && (element.type === import_primitives8.SVG || element.type === "svg");
+  return (0, import_element4.isValidElement)(element) && (element.type === import_primitives8.SVG || element.type === "svg");
 }
 function wrapIcon(icon, shouldShowPlaceholder = true) {
   if (isSvg(icon)) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_components3.Icon, { icon });
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_components4.Icon, { icon });
   }
   if (typeof icon === "string" && icon.startsWith("dashicons-")) {
     const iconKey = icon.replace(
       /^dashicons-/,
       ""
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-      import_components3.Dashicon,
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+      import_components4.Dashicon,
       {
         style: { padding: "2px" },
         icon: iconKey,
@@ -6076,7 +6184,7 @@ function wrapIcon(icon, shouldShowPlaceholder = true) {
     );
   }
   if (typeof icon === "string" && icon.startsWith("data:")) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
       "img",
       {
         src: icon,
@@ -6095,7 +6203,7 @@ function wrapIcon(icon, shouldShowPlaceholder = true) {
     return icon;
   }
   if (shouldShowPlaceholder) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
       "div",
       {
         style: { width: "24px", height: "24px" },
@@ -6107,7 +6215,7 @@ function wrapIcon(icon, shouldShowPlaceholder = true) {
 }
 
 // packages/boot/build-module/components/navigation/navigation-item/index.js
-var import_jsx_runtime25 = __toESM(require_jsx_runtime());
+var import_jsx_runtime28 = __toESM(require_jsx_runtime());
 var css4 = `/**
  * SCSS Variables.
  *
@@ -6246,13 +6354,13 @@ function NavigationItem({
   const isExternal = !String(
     new URL(to, window.location.origin)
   ).startsWith(window.location.origin);
-  const content = /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_components4.__experimentalHStack, { justify: "flex-start", spacing: 2, style: { flexGrow: "1" }, children: [
+  const content = /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(import_components5.__experimentalHStack, { justify: "flex-start", spacing: 2, style: { flexGrow: "1" }, children: [
     wrapIcon(icon, shouldShowPlaceholder),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_components4.FlexBlock, { children })
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_components5.FlexBlock, { children })
   ] });
   if (isExternal) {
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-      import_components4.__experimentalItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      import_components5.__experimentalItem,
       {
         as: "a",
         href: to,
@@ -6261,7 +6369,7 @@ function NavigationItem({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
     router_link_item_default,
     {
       to,
@@ -6272,9 +6380,9 @@ function NavigationItem({
 }
 
 // packages/boot/build-module/components/navigation/drilldown-item/index.js
-var import_components5 = __toESM(require_components());
+var import_components6 = __toESM(require_components());
 var import_i18n3 = __toESM(require_i18n());
-var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+var import_jsx_runtime29 = __toESM(require_jsx_runtime());
 function DrilldownItem({
   className,
   id,
@@ -6287,21 +6395,21 @@ function DrilldownItem({
     e.preventDefault();
     onNavigate({ id, direction: "forward" });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-    import_components5.__experimentalItem,
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+    import_components6.__experimentalItem,
     {
       className: clsx_default("boot-navigation-item", className),
       onClick: handleClick,
-      children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
-        import_components5.__experimentalHStack,
+      children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+        import_components6.__experimentalHStack,
         {
           justify: "flex-start",
           spacing: 2,
           style: { flexGrow: "1" },
           children: [
             wrapIcon(icon, shouldShowPlaceholder),
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_components5.FlexBlock, { children }),
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_components5.Icon, { icon: (0, import_i18n3.isRTL)() ? chevron_left_small_default : chevron_right_small_default })
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_components6.FlexBlock, { children }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_components6.Icon, { icon: (0, import_i18n3.isRTL)() ? chevron_left_small_default : chevron_right_small_default })
           ]
         }
       )
@@ -6310,10 +6418,10 @@ function DrilldownItem({
 }
 
 // packages/boot/build-module/components/navigation/dropdown-item/index.js
-var import_components6 = __toESM(require_components());
+var import_components7 = __toESM(require_components());
 var import_compose = __toESM(require_compose());
 var import_data4 = __toESM(require_data());
-var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+var import_jsx_runtime30 = __toESM(require_jsx_runtime());
 var css5 = `/**
  * SCSS Variables.
  *
@@ -6392,9 +6500,9 @@ function DropdownItem({
   );
   const items = menuItems.filter((item) => item.parent === id);
   const disableMotion = (0, import_compose.useReducedMotion)();
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "boot-dropdown-item", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-      import_components6.__experimentalItem,
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "boot-dropdown-item", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      import_components7.__experimentalItem,
       {
         className: clsx_default("boot-navigation-item", className),
         onClick: (e) => {
@@ -6403,17 +6511,17 @@ function DropdownItem({
           onToggle();
         },
         onMouseDown: (e) => e.preventDefault(),
-        children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
-          import_components6.__experimentalHStack,
+        children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+          import_components7.__experimentalHStack,
           {
             justify: "flex-start",
             spacing: 2,
             style: { flexGrow: "1" },
             children: [
               wrapIcon(icon, false),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_components6.FlexBlock, { children }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-                import_components6.Icon,
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components7.FlexBlock, { children }),
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+                import_components7.Icon,
                 {
                   icon: chevron_down_small_default,
                   className: clsx_default("boot-dropdown-item__chevron", {
@@ -6426,8 +6534,8 @@ function DropdownItem({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_components6.__unstableAnimatePresence, { initial: false, children: isExpanded && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-      import_components6.__unstableMotion.div,
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components7.__unstableAnimatePresence, { initial: false, children: isExpanded && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      import_components7.__unstableMotion.div,
       {
         initial: { height: 0 },
         animate: { height: "auto" },
@@ -6438,7 +6546,7 @@ function DropdownItem({
           ease: "easeOut"
         },
         className: "boot-dropdown-item__children",
-        children: items.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        children: items.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
           NavigationItem,
           {
             to: item.to,
@@ -6453,10 +6561,10 @@ function DropdownItem({
 }
 
 // packages/boot/build-module/components/navigation/navigation-screen/index.js
-var import_components7 = __toESM(require_components());
+var import_components8 = __toESM(require_components());
 var import_i18n4 = __toESM(require_i18n());
 var import_compose2 = __toESM(require_compose());
-var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+var import_jsx_runtime31 = __toESM(require_jsx_runtime());
 var css6 = `/**
  * SCSS Variables.
  *
@@ -6564,7 +6672,7 @@ function NavigationScreen({
     e.preventDefault();
     onNavigate({ id: backMenuItem, direction: "backward" });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
     "div",
     {
       className: "boot-navigation-screen",
@@ -6575,8 +6683,8 @@ function NavigationScreen({
         gridTemplateColumns: "1fr",
         gridTemplateRows: "1fr"
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_components7.__unstableAnimatePresence, { initial: false, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
-        import_components7.__unstableMotion.div,
+      children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_components8.__unstableAnimatePresence, { initial: false, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
+        import_components8.__unstableMotion.div,
         {
           custom: animationDirection,
           variants: slideVariants,
@@ -6594,14 +6702,14 @@ function NavigationScreen({
             gridRow: "1"
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
-              import_components7.__experimentalHStack,
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
+              import_components8.__experimentalHStack,
               {
                 spacing: 2,
                 className: "boot-navigation-screen__title-icon",
                 children: [
-                  !isRoot && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-                    import_components7.Button,
+                  !isRoot && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+                    import_components8.Button,
                     {
                       ref: backButtonRef,
                       icon,
@@ -6611,8 +6719,8 @@ function NavigationScreen({
                       variant: "tertiary"
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-                    import_components7.__experimentalHeading,
+                  /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+                    import_components8.__experimentalHeading,
                     {
                       className: "boot-navigation-screen__title",
                       level: 1,
@@ -6620,11 +6728,11 @@ function NavigationScreen({
                       children: title
                     }
                   ),
-                  actions && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "boot-navigation-screen__actions", children: actions })
+                  actions && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-navigation-screen__actions", children: actions })
                 ]
               }
             ),
-            description && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "boot-navigation-screen__description", children: description }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-navigation-screen__description", children: description }),
             content
           ]
         },
@@ -6635,7 +6743,7 @@ function NavigationScreen({
 }
 
 // packages/boot/build-module/components/navigation/use-sidebar-parent.js
-var import_element4 = __toESM(require_element());
+var import_element5 = __toESM(require_element());
 var import_data5 = __toESM(require_data());
 
 // packages/boot/build-module/components/navigation/path-matching.js
@@ -6714,7 +6822,7 @@ var findDropdownParent = (id, menuItems) => {
 // packages/boot/build-module/components/navigation/use-sidebar-parent.js
 function useSidebarParent() {
   const matches = useMatches();
-  const router2 = useRouter();
+  const router = useRouter();
   const menuItems = (0, import_data5.useSelect)(
     (select) => (
       // @ts-ignore
@@ -6723,14 +6831,14 @@ function useSidebarParent() {
     []
   );
   const currentPath = matches[matches.length - 1].pathname.slice(
-    router2.options.basepath?.length ?? 0
+    router.options.basepath?.length ?? 0
   );
   const currentMenuItem = findClosestMenuItem(currentPath, menuItems);
-  const [parentId, setParentId] = (0, import_element4.useState)(
+  const [parentId, setParentId] = (0, import_element5.useState)(
     findDrilldownParent(currentMenuItem?.id, menuItems)
   );
-  const [parentDropdownId, setParentDropdownId] = (0, import_element4.useState)(findDropdownParent(currentMenuItem?.id, menuItems));
-  (0, import_element4.useEffect)(() => {
+  const [parentDropdownId, setParentDropdownId] = (0, import_element5.useState)(findDropdownParent(currentMenuItem?.id, menuItems));
+  (0, import_element5.useEffect)(() => {
     const matchedMenuItem = findClosestMenuItem(currentPath, menuItems);
     const updatedParentId = findDrilldownParent(
       matchedMenuItem?.id,
@@ -6752,10 +6860,10 @@ function useSidebarParent() {
 }
 
 // packages/boot/build-module/components/navigation/index.js
-var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+var import_jsx_runtime32 = __toESM(require_jsx_runtime());
 function Navigation() {
-  const backButtonRef = (0, import_element5.useRef)(null);
-  const [animationDirection, setAnimationDirection] = (0, import_element5.useState)(null);
+  const backButtonRef = (0, import_element6.useRef)(null);
+  const [animationDirection, setAnimationDirection] = (0, import_element6.useState)(null);
   const [parentId, setParentId, parentDropdownId, setParentDropdownId] = useSidebarParent();
   const menuItems = (0, import_data6.useSelect)(
     (select) => (
@@ -6764,7 +6872,7 @@ function Navigation() {
     ),
     []
   );
-  const parent = (0, import_element5.useMemo)(
+  const parent = (0, import_element6.useMemo)(
     () => menuItems.find((item) => item.id === parentId),
     [menuItems, parentId]
   );
@@ -6781,12 +6889,12 @@ function Navigation() {
       parentDropdownId === dropdownId ? void 0 : dropdownId
     );
   };
-  const items = (0, import_element5.useMemo)(
+  const items = (0, import_element6.useMemo)(
     () => menuItems.filter((item) => item.parent === parentId),
     [menuItems, parentId]
   );
   const hasRealIcons = items.some((item) => !!item.icon);
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
     NavigationScreen,
     {
       isRoot: !parent,
@@ -6796,9 +6904,9 @@ function Navigation() {
       animationDirection: animationDirection || void 0,
       navigationKey,
       onNavigate: handleNavigate,
-      content: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_jsx_runtime29.Fragment, { children: items.map((item) => {
+      content: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_jsx_runtime32.Fragment, { children: items.map((item) => {
         if (item.parent_type === "dropdown") {
-          return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
             DropdownItem,
             {
               id: item.id,
@@ -6813,7 +6921,7 @@ function Navigation() {
           );
         }
         if (item.parent_type === "drilldown") {
-          return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
             DrilldownItem,
             {
               id: item.id,
@@ -6825,7 +6933,7 @@ function Navigation() {
             item.id
           );
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
           NavigationItem,
           {
             to: item.to,
@@ -6842,7 +6950,7 @@ function Navigation() {
 var navigation_default = Navigation;
 
 // packages/boot/build-module/components/sidebar/index.js
-var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+var import_jsx_runtime33 = __toESM(require_jsx_runtime());
 var css7 = `/**
  * SCSS Variables.
  *
@@ -6904,9 +7012,9 @@ var css7 = `/**
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvcnVubmVyL3dvcmsvZ3V0ZW5iZXJnL2d1dGVuYmVyZy9wYWNrYWdlcy9ib290L3NyYy9jb21wb25lbnRzL3NpZGViYXIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL25vZGVfbW9kdWxlcy9Ad29yZHByZXNzL2Jhc2Utc3R5bGVzL192YXJpYWJsZXMuc2NzcyIsIi4uLy4uLy4uLy4uLy4uL25vZGVfbW9kdWxlcy9Ad29yZHByZXNzL2Jhc2Utc3R5bGVzL19jb2xvcnMuc2NzcyIsInN0eWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUNBQTtBQUFBO0FBQUE7QURVQTtBQUFBO0FBQUE7QUFPQTtBQUFBO0FBQUE7QUE2QkE7QUFBQTtBQUFBO0FBQUE7QUFpQkE7QUFBQTtBQUFBO0FBV0E7QUFBQTtBQUFBO0FBZ0JBO0FBQUE7QUFBQTtBQXdCQTtBQUFBO0FBQUE7QUFLQTtBQUFBO0FBQUE7QUFlQTtBQUFBO0FBQUE7QUFtQkE7QUFBQTtBQUFBO0FBU0E7QUFBQTtBQUFBO0FBQUE7QUVoS0E7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBOzs7QUFHRDtFQUNDO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogU0NTUyBWYXJpYWJsZXMuXG4gKlxuICogUGxlYXNlIHVzZSB2YXJpYWJsZXMgZnJvbSB0aGlzIHNoZWV0IHRvIGVuc3VyZSBjb25zaXN0ZW5jeSBhY3Jvc3MgdGhlIFVJLlxuICogRG9uJ3QgYWRkIHRvIHRoaXMgc2hlZXQgdW5sZXNzIHlvdSdyZSBwcmV0dHkgc3VyZSB0aGUgdmFsdWUgd2lsbCBiZSByZXVzZWQgaW4gbWFueSBwbGFjZXMuXG4gKiBGb3IgZXhhbXBsZSwgZG9uJ3QgYWRkIHJ1bGVzIHRvIHRoaXMgc2hlZXQgdGhhdCBhZmZlY3QgYmxvY2sgdmlzdWFscy4gSXQncyBwdXJlbHkgZm9yIFVJLlxuICovXG5cbkB1c2UgXCIuL2NvbG9yc1wiO1xuXG4vKipcbiAqIEZvbnRzICYgYmFzaWMgdmFyaWFibGVzLlxuICovXG5cbiRkZWZhdWx0LWZvbnQ6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCxcIlNlZ29lIFVJXCIsIFJvYm90bywgT3h5Z2VuLVNhbnMsIFVidW50dSwgQ2FudGFyZWxsLFwiSGVsdmV0aWNhIE5ldWVcIiwgc2Fucy1zZXJpZjsgLy8gVG9kbzogZGVwcmVjYXRlIGluIGZhdm9yIG9mICRmYW1pbHkgdmFyaWFibGVzXG4kZGVmYXVsdC1saW5lLWhlaWdodDogMS40OyAvLyBUb2RvOiBkZXByZWNhdGUgaW4gZmF2b3Igb2YgJGxpbmUtaGVpZ2h0IHRva2Vuc1xuXG4vKipcbiAqIFR5cG9ncmFwaHlcbiAqL1xuXG4vLyBTaXplc1xuJGZvbnQtc2l6ZS14LXNtYWxsOiAxMXB4O1xuJGZvbnQtc2l6ZS1zbWFsbDogMTJweDtcbiRmb250LXNpemUtbWVkaXVtOiAxM3B4O1xuJGZvbnQtc2l6ZS1sYXJnZTogMTVweDtcbiRmb250LXNpemUteC1sYXJnZTogMjBweDtcbiRmb250LXNpemUtMngtbGFyZ2U6IDMycHg7XG5cbi8vIExpbmUgaGVpZ2h0c1xuJGZvbnQtbGluZS1oZWlnaHQteC1zbWFsbDogMTZweDtcbiRmb250LWxpbmUtaGVpZ2h0LXNtYWxsOiAyMHB4O1xuJGZvbnQtbGluZS1oZWlnaHQtbWVkaXVtOiAyNHB4O1xuJGZvbnQtbGluZS1oZWlnaHQtbGFyZ2U6IDI4cHg7XG4kZm9udC1saW5lLWhlaWdodC14LWxhcmdlOiAzMnB4O1xuJGZvbnQtbGluZS1oZWlnaHQtMngtbGFyZ2U6IDQwcHg7XG5cbi8vIFdlaWdodHNcbiRmb250LXdlaWdodC1yZWd1bGFyOiA0MDA7XG4kZm9udC13ZWlnaHQtbWVkaXVtOiA0OTk7IC8vIGVuc3VyZXMgZmFsbGJhY2sgdG8gNDAwIChpbnN0ZWFkIG9mIDYwMClcblxuLy8gRmFtaWxpZXNcbiRmb250LWZhbWlseS1oZWFkaW5nczogLWFwcGxlLXN5c3RlbSwgXCJzeXN0ZW0tdWlcIiwgXCJTZWdvZSBVSVwiLCBSb2JvdG8sIE94eWdlbi1TYW5zLCBVYnVudHUsIENhbnRhcmVsbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmO1xuJGZvbnQtZmFtaWx5LWJvZHk6IC1hcHBsZS1zeXN0ZW0sIFwic3lzdGVtLXVpXCIsIFwiU2Vnb2UgVUlcIiwgUm9ib3RvLCBPeHlnZW4tU2FucywgVWJ1bnR1LCBDYW50YXJlbGwsIFwiSGVsdmV0aWNhIE5ldWVcIiwgc2Fucy1zZXJpZjtcbiRmb250LWZhbWlseS1tb25vOiBNZW5sbywgQ29uc29sYXMsIG1vbmFjbywgbW9ub3NwYWNlO1xuXG4vKipcbiAqIEdyaWQgU3lzdGVtLlxuICogaHR0cHM6Ly9tYWtlLndvcmRwcmVzcy5vcmcvZGVzaWduLzIwMTkvMTAvMzEvcHJvcG9zYWwtYS1jb25zaXN0ZW50LXNwYWNpbmctc3lzdGVtLWZvci13b3JkcHJlc3MvXG4gKi9cblxuJGdyaWQtdW5pdDogOHB4O1xuJGdyaWQtdW5pdC0wNTogMC41ICogJGdyaWQtdW5pdDtcdC8vIDRweFxuJGdyaWQtdW5pdC0xMDogMSAqICRncmlkLXVuaXQ7XHRcdC8vIDhweFxuJGdyaWQtdW5pdC0xNTogMS41ICogJGdyaWQtdW5pdDtcdC8vIDEycHhcbiRncmlkLXVuaXQtMjA6IDIgKiAkZ3JpZC11bml0O1x0XHQvLyAxNnB4XG4kZ3JpZC11bml0LTMwOiAzICogJGdyaWQtdW5pdDtcdFx0Ly8gMjRweFxuJGdyaWQtdW5pdC00MDogNCAqICRncmlkLXVuaXQ7XHRcdC8vIDMycHhcbiRncmlkLXVuaXQtNTA6IDUgKiAkZ3JpZC11bml0O1x0XHQvLyA0MHB4XG4kZ3JpZC11bml0LTYwOiA2ICogJGdyaWQtdW5pdDtcdFx0Ly8gNDhweFxuJGdyaWQtdW5pdC03MDogNyAqICRncmlkLXVuaXQ7XHRcdC8vIDU2cHhcbiRncmlkLXVuaXQtODA6IDggKiAkZ3JpZC11bml0O1x0XHQvLyA2NHB4XG5cbi8qKlxuICogUmFkaXVzIHNjYWxlLlxuICovXG5cbiRyYWRpdXMteC1zbWFsbDogMXB4OyAgIC8vIEFwcGxpZWQgdG8gZWxlbWVudHMgbGlrZSBidXR0b25zIG5lc3RlZCB3aXRoaW4gcHJpbWl0aXZlcyBsaWtlIGlucHV0cy5cbiRyYWRpdXMtc21hbGw6IDJweDsgICAgIC8vIEFwcGxpZWQgdG8gbW9zdCBwcmltaXRpdmVzLlxuJHJhZGl1cy1tZWRpdW06IDRweDsgICAgLy8gQXBwbGllZCB0byBjb250YWluZXJzIHdpdGggc21hbGxlciBwYWRkaW5nLlxuJHJhZGl1cy1sYXJnZTogOHB4OyAgICAgLy8gQXBwbGllZCB0byBjb250YWluZXJzIHdpdGggbGFyZ2VyIHBhZGRpbmcuXG4kcmFkaXVzLWZ1bGw6IDk5OTlweDsgICAvLyBGb3IgcGlsbHMuXG4kcmFkaXVzLXJvdW5kOiA1MCU7ICAgICAvLyBGb3IgY2lyY2xlcyBhbmQgb3ZhbHMuXG5cbi8qKlxuICogRWxldmF0aW9uIHNjYWxlLlxuICovXG5cbi8vIEZvciBzZWN0aW9ucyBhbmQgY29udGFpbmVycyB0aGF0IGdyb3VwIHJlbGF0ZWQgY29udGVudCBhbmQgY29udHJvbHMsIHdoaWNoIG1heSBvdmVybGFwIG90aGVyIGNvbnRlbnQuIEV4YW1wbGU6IFByZXZpZXcgRnJhbWUuXG4kZWxldmF0aW9uLXgtc21hbGw6IDAgMXB4IDFweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDMpLCAwIDFweCAycHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKSwgMCAzcHggM3B4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMiksIDAgNHB4IDRweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDEpO1xuXG4vLyBGb3IgY29tcG9uZW50cyB0aGF0IHByb3ZpZGUgY29udGV4dHVhbCBmZWVkYmFjayB3aXRob3V0IGJlaW5nIGludHJ1c2l2ZS4gR2VuZXJhbGx5IG5vbi1pbnRlcnJ1cHRpdmUuIEV4YW1wbGU6IFRvb2x0aXBzLCBTbmFja2Jhci5cbiRlbGV2YXRpb24tc21hbGw6IDAgMXB4IDJweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDUpLCAwIDJweCAzcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA0KSwgMCA2cHggNnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMyksIDAgOHB4IDhweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpO1xuXG4vLyBGb3IgY29tcG9uZW50cyB0aGF0IG9mZmVyIGFkZGl0aW9uYWwgYWN0aW9ucy4gRXhhbXBsZTogTWVudXMsIENvbW1hbmQgUGFsZXR0ZVxuJGVsZXZhdGlvbi1tZWRpdW06IDAgMnB4IDNweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDUpLCAwIDRweCA1cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA0KSwgMCAxMnB4IDEycHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAzKSwgMCAxNnB4IDE2cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKTtcblxuLy8gRm9yIGNvbXBvbmVudHMgdGhhdCBjb25maXJtIGRlY2lzaW9ucyBvciBoYW5kbGUgbmVjZXNzYXJ5IGludGVycnVwdGlvbnMuIEV4YW1wbGU6IE1vZGFscy5cbiRlbGV2YXRpb24tbGFyZ2U6IDAgNXB4IDE1cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA4KSwgMCAxNXB4IDI3cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA3KSwgMCAzMHB4IDM2cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA0KSwgMCA1MHB4IDQzcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKTtcblxuLyoqXG4gKiBEaW1lbnNpb25zLlxuICovXG5cbiRpY29uLXNpemU6IDI0cHg7XG4kYnV0dG9uLXNpemU6IDM2cHg7XG4kYnV0dG9uLXNpemUtbmV4dC1kZWZhdWx0LTQwcHg6IDQwcHg7IC8vIHRyYW5zaXRpb25hcnkgdmFyaWFibGUgZm9yIG5leHQgZGVmYXVsdCBidXR0b24gc2l6ZVxuJGJ1dHRvbi1zaXplLXNtYWxsOiAyNHB4O1xuJGJ1dHRvbi1zaXplLWNvbXBhY3Q6IDMycHg7XG4kaGVhZGVyLWhlaWdodDogNjRweDtcbiRwYW5lbC1oZWFkZXItaGVpZ2h0OiAkZ3JpZC11bml0LTYwO1xuJG5hdi1zaWRlYmFyLXdpZHRoOiAzMDBweDtcbiRhZG1pbi1iYXItaGVpZ2h0OiAzMnB4O1xuJGFkbWluLWJhci1oZWlnaHQtYmlnOiA0NnB4O1xuJGFkbWluLXNpZGViYXItd2lkdGg6IDE2MHB4O1xuJGFkbWluLXNpZGViYXItd2lkdGgtYmlnOiAxOTBweDtcbiRhZG1pbi1zaWRlYmFyLXdpZHRoLWNvbGxhcHNlZDogMzZweDtcbiRtb2RhbC1taW4td2lkdGg6IDM1MHB4O1xuJG1vZGFsLXdpZHRoLXNtYWxsOiAzODRweDtcbiRtb2RhbC13aWR0aC1tZWRpdW06IDUxMnB4O1xuJG1vZGFsLXdpZHRoLWxhcmdlOiA4NDBweDtcbiRzcGlubmVyLXNpemU6IDE2cHg7XG4kY2FudmFzLXBhZGRpbmc6ICRncmlkLXVuaXQtMjA7XG5cbi8qKlxuICogTW9iaWxlIHNwZWNpZmljIHN0eWxlc1xuICovXG4kbW9iaWxlLXRleHQtbWluLWZvbnQtc2l6ZTogMTZweDsgLy8gQW55IGZvbnQgc2l6ZSBiZWxvdyAxNnB4IHdpbGwgY2F1c2UgTW9iaWxlIFNhZmFyaSB0byBcInpvb20gaW5cIi5cblxuLyoqXG4gKiBFZGl0b3Igc3R5bGVzLlxuICovXG5cbiRzaWRlYmFyLXdpZHRoOiAyODBweDtcbiRjb250ZW50LXdpZHRoOiA4NDBweDtcbiR3aWRlLWNvbnRlbnQtd2lkdGg6IDExMDBweDtcbiR3aWRnZXQtYXJlYS13aWR0aDogNzAwcHg7XG4kc2Vjb25kYXJ5LXNpZGViYXItd2lkdGg6IDM1MHB4O1xuJGVkaXRvci1mb250LXNpemU6IDE2cHg7XG4kZGVmYXVsdC1ibG9jay1tYXJnaW46IDI4cHg7IC8vIFRoaXMgdmFsdWUgcHJvdmlkZXMgYSBjb25zaXN0ZW50LCBjb250aWd1b3VzIHNwYWNpbmcgYmV0d2VlbiBibG9ja3MuXG4kdGV4dC1lZGl0b3ItZm9udC1zaXplOiAxNXB4O1xuJGVkaXRvci1saW5lLWhlaWdodDogMS44O1xuJGVkaXRvci1odG1sLWZvbnQ6ICRmb250LWZhbWlseS1tb25vO1xuXG4vKipcbiAqIEJsb2NrICYgRWRpdG9yIFVJLlxuICovXG5cbiRibG9jay10b29sYmFyLWhlaWdodDogJGdyaWQtdW5pdC02MDtcbiRib3JkZXItd2lkdGg6IDFweDtcbiRib3JkZXItd2lkdGgtZm9jdXMtZmFsbGJhY2s6IDJweDsgLy8gVGhpcyBleGlzdHMgYXMgYSBmYWxsYmFjaywgYW5kIGlzIGlkZWFsbHkgb3ZlcnJpZGRlbiBieSB2YXIoLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMpIHVubGVzcyBpbiBzb21lIFNBU1MgbWF0aCBjYXNlcy5cbiRib3JkZXItd2lkdGgtdGFiOiAxLjVweDtcbiRoZWxwdGV4dC1mb250LXNpemU6IDEycHg7XG4kcmFkaW8taW5wdXQtc2l6ZTogMTZweDtcbiRyYWRpby1pbnB1dC1zaXplLXNtOiAyNHB4OyAvLyBXaWR0aCAmIGhlaWdodCBmb3Igc21hbGwgdmlld3BvcnRzLlxuXG4vLyBEZXByZWNhdGVkLCBwbGVhc2UgYXZvaWQgdXNpbmcgdGhlc2UuXG4kYmxvY2stcGFkZGluZzogMTRweDsgLy8gVXNlZCB0byBkZWZpbmUgc3BhY2UgYmV0d2VlbiBibG9jayBmb290cHJpbnQgYW5kIHN1cnJvdW5kaW5nIGJvcmRlcnMuXG4kcmFkaXVzLWJsb2NrLXVpOiAkcmFkaXVzLXNtYWxsO1xuJHNoYWRvdy1wb3BvdmVyOiAkZWxldmF0aW9uLXgtc21hbGw7XG4kc2hhZG93LW1vZGFsOiAkZWxldmF0aW9uLWxhcmdlO1xuJGRlZmF1bHQtZm9udC1zaXplOiAkZm9udC1zaXplLW1lZGl1bTtcblxuLyoqXG4gKiBCbG9jayBwYWRkaW5ncy5cbiAqL1xuXG4vLyBQYWRkaW5nIGZvciBibG9ja3Mgd2l0aCBhIGJhY2tncm91bmQgY29sb3IgKGUuZy4gcGFyYWdyYXBoIG9yIGdyb3VwKS5cbiRibG9jay1iZy1wYWRkaW5nLS12OiAxLjI1ZW07XG4kYmxvY2stYmctcGFkZGluZy0taDogMi4zNzVlbTtcblxuXG4vKipcbiAqIFJlYWN0IE5hdGl2ZSBzcGVjaWZpYy5cbiAqIFRoZXNlIHZhcmlhYmxlcyBkbyBub3QgYXBwZWFyIHRvIGJlIHVzZWQgYW55d2hlcmUgZWxzZS5cbiAqL1xuXG4vLyBEaW1lbnNpb25zLlxuJG1vYmlsZS1oZWFkZXItdG9vbGJhci1oZWlnaHQ6IDQ0cHg7XG4kbW9iaWxlLWhlYWRlci10b29sYmFyLWV4cGFuZGVkLWhlaWdodDogNTJweDtcbiRtb2JpbGUtZmxvYXRpbmctdG9vbGJhci1oZWlnaHQ6IDQ0cHg7XG4kbW9iaWxlLWZsb2F0aW5nLXRvb2xiYXItbWFyZ2luOiA4cHg7XG4kbW9iaWxlLWNvbG9yLXN3YXRjaDogNDhweDtcblxuLy8gQmxvY2sgVUkuXG4kbW9iaWxlLWJsb2NrLXRvb2xiYXItaGVpZ2h0OiA0NHB4O1xuJGRpbW1lZC1vcGFjaXR5OiAxO1xuJGJsb2NrLWVkZ2UtdG8tY29udGVudDogMTZweDtcbiRzb2xpZC1ib3JkZXItc3BhY2U6IDEycHg7XG4kZGFzaGVkLWJvcmRlci1zcGFjZTogNnB4O1xuJGJsb2NrLXNlbGVjdGVkLW1hcmdpbjogM3B4O1xuJGJsb2NrLXNlbGVjdGVkLWJvcmRlci13aWR0aDogMXB4O1xuJGJsb2NrLXNlbGVjdGVkLXBhZGRpbmc6IDA7XG4kYmxvY2stc2VsZWN0ZWQtY2hpbGQtbWFyZ2luOiA1cHg7XG4kYmxvY2stc2VsZWN0ZWQtdG8tY29udGVudDogJGJsb2NrLWVkZ2UtdG8tY29udGVudCAtICRibG9jay1zZWxlY3RlZC1tYXJnaW4gLSAkYmxvY2stc2VsZWN0ZWQtYm9yZGVyLXdpZHRoO1xuIiwiLyoqXG4gKiBDb2xvcnNcbiAqL1xuXG4vLyBXb3JkUHJlc3MgZ3JheXMuXG4kYmxhY2s6ICMwMDA7XHRcdFx0Ly8gVXNlIG9ubHkgd2hlbiB5b3UgdHJ1bHkgbmVlZCBwdXJlIGJsYWNrLiBGb3IgVUksIHVzZSAkZ3JheS05MDAuXG4kZ3JheS05MDA6ICMxZTFlMWU7XG4kZ3JheS04MDA6ICMyZjJmMmY7XG4kZ3JheS03MDA6ICM3NTc1NzU7XHRcdC8vIE1lZXRzIDQuNjoxICg0LjU6MSBpcyBtaW5pbXVtKSB0ZXh0IGNvbnRyYXN0IGFnYWluc3Qgd2hpdGUuXG4kZ3JheS02MDA6ICM5NDk0OTQ7XHRcdC8vIE1lZXRzIDM6MSBVSSBvciBsYXJnZSB0ZXh0IGNvbnRyYXN0IGFnYWluc3Qgd2hpdGUuXG4kZ3JheS00MDA6ICNjY2M7XG4kZ3JheS0zMDA6ICNkZGQ7XHRcdC8vIFVzZWQgZm9yIG1vc3QgYm9yZGVycy5cbiRncmF5LTIwMDogI2UwZTBlMDtcdFx0Ly8gVXNlZCBzcGFyaW5nbHkgZm9yIGxpZ2h0IGJvcmRlcnMuXG4kZ3JheS0xMDA6ICNmMGYwZjA7XHRcdC8vIFVzZWQgZm9yIGxpZ2h0IGdyYXkgYmFja2dyb3VuZHMuXG4kd2hpdGU6ICNmZmY7XG5cbi8vIE9wYWNpdGllcyAmIGFkZGl0aW9uYWwgY29sb3JzLlxuJGRhcmstZ3JheS1wbGFjZWhvbGRlcjogcmdiYSgkZ3JheS05MDAsIDAuNjIpO1xuJG1lZGl1bS1ncmF5LXBsYWNlaG9sZGVyOiByZ2JhKCRncmF5LTkwMCwgMC41NSk7XG4kbGlnaHQtZ3JheS1wbGFjZWhvbGRlcjogcmdiYSgkd2hpdGUsIDAuNjUpO1xuXG4vLyBBbGVydCBjb2xvcnMuXG4kYWxlcnQteWVsbG93OiAjZjBiODQ5O1xuJGFsZXJ0LXJlZDogI2NjMTgxODtcbiRhbGVydC1ncmVlbjogIzRhYjg2NjtcblxuLy8gRGVwcmVjYXRlZCwgcGxlYXNlIGF2b2lkIHVzaW5nIHRoZXNlLlxuJGRhcmstdGhlbWUtZm9jdXM6ICR3aGl0ZTtcdC8vIEZvY3VzIGNvbG9yIHdoZW4gdGhlIHRoZW1lIGlzIGRhcmsuXG4iLCJAdXNlIFwiQHdvcmRwcmVzcy9iYXNlLXN0eWxlcy92YXJpYWJsZXNcIjtcblxuLmJvb3Qtc2lkZWJhcl9fc2Nyb2xsYWJsZSB7XG5cdG92ZXJmbG93OiBhdXRvO1xuXHRoZWlnaHQ6IDEwMCU7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0ZGlzcGxheTogZmxleDtcblx0ZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbn1cblxuLmJvb3Qtc2lkZWJhcl9fY29udGVudCB7XG5cdGZsZXgtZ3JvdzogMTtcblx0Y29udGFpbjogY29udGVudDtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xufVxuIl19 */`;
 document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css7));
 function Sidebar() {
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "boot-sidebar__scrollable", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(site_hub_default, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "boot-sidebar__content", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(navigation_default, {}) })
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "boot-sidebar__scrollable", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(site_hub_default, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "boot-sidebar__content", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(navigation_default, {}) })
   ] });
 }
 
@@ -6918,7 +7026,7 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
 );
 
 // packages/boot/build-module/components/root/index.js
-var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+var import_jsx_runtime34 = __toESM(require_jsx_runtime());
 var css8 = `/**
  * SCSS Variables.
  *
@@ -6966,172 +7074,145 @@ var css8 = `/**
  */
 .boot-layout {
   height: 100%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   color: var(--wpds-color-fg-content-neutral, #1e1e1e);
   isolation: isolate;
   background: var(--wpds-color-bg-surface-neutral-weak, #f0f0f0);
 }
 
-.boot-layout__content {
-  height: 100%;
-  flex-grow: 1;
-  display: flex;
-}
-
-.boot-layout__sidebar-region {
-  flex-shrink: 0;
-  width: 240px;
-}
-
 .boot-layout__sidebar {
   height: 100%;
+  flex-shrink: 0;
+  width: 240px;
   position: relative;
   overflow: hidden;
 }
 
-.boot-layout__stage {
+.boot-layout__surfaces {
+  display: flex;
+  flex-grow: 1;
+  margin: 8px;
+  gap: 8px;
+}
+
+.boot-layout__stage,
+.boot-layout__inspector {
   flex: 1;
   overflow-y: auto;
   background: var(--wpds-color-bg-surface-neutral, #fff);
   color: var(--wpds-color-fg-content-neutral, #1e1e1e);
-  margin: 8px;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--wpds-color-stroke-surface-neutral-weak, #ddd);
 }
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvcnVubmVyL3dvcmsvZ3V0ZW5iZXJnL2d1dGVuYmVyZy9wYWNrYWdlcy9ib290L3NyYy9jb21wb25lbnRzL3Jvb3QiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL25vZGVfbW9kdWxlcy9Ad29yZHByZXNzL2Jhc2Utc3R5bGVzL192YXJpYWJsZXMuc2NzcyIsIi4uLy4uLy4uLy4uLy4uL25vZGVfbW9kdWxlcy9Ad29yZHByZXNzL2Jhc2Utc3R5bGVzL19jb2xvcnMuc2NzcyIsInN0eWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUNBQTtBQUFBO0FBQUE7QURVQTtBQUFBO0FBQUE7QUFPQTtBQUFBO0FBQUE7QUE2QkE7QUFBQTtBQUFBO0FBQUE7QUFpQkE7QUFBQTtBQUFBO0FBV0E7QUFBQTtBQUFBO0FBZ0JBO0FBQUE7QUFBQTtBQXdCQTtBQUFBO0FBQUE7QUFLQTtBQUFBO0FBQUE7QUFlQTtBQUFBO0FBQUE7QUFtQkE7QUFBQTtBQUFBO0FBU0E7QUFBQTtBQUFBO0FBQUE7QUVoS0E7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7OztBQUdEO0VBQ0M7RUFDQTtFQUNBOzs7QUFHRDtFQUNDO0VBQ0E7OztBQUdEO0VBQ0M7RUFDQTtFQUNBOzs7QUFHRDtFQUNDO0VBQ0E7RUFDQTtFQUNBO0VBQ0EsUUZvQmM7RUVuQmQ7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBTQ1NTIFZhcmlhYmxlcy5cbiAqXG4gKiBQbGVhc2UgdXNlIHZhcmlhYmxlcyBmcm9tIHRoaXMgc2hlZXQgdG8gZW5zdXJlIGNvbnNpc3RlbmN5IGFjcm9zcyB0aGUgVUkuXG4gKiBEb24ndCBhZGQgdG8gdGhpcyBzaGVldCB1bmxlc3MgeW91J3JlIHByZXR0eSBzdXJlIHRoZSB2YWx1ZSB3aWxsIGJlIHJldXNlZCBpbiBtYW55IHBsYWNlcy5cbiAqIEZvciBleGFtcGxlLCBkb24ndCBhZGQgcnVsZXMgdG8gdGhpcyBzaGVldCB0aGF0IGFmZmVjdCBibG9jayB2aXN1YWxzLiBJdCdzIHB1cmVseSBmb3IgVUkuXG4gKi9cblxuQHVzZSBcIi4vY29sb3JzXCI7XG5cbi8qKlxuICogRm9udHMgJiBiYXNpYyB2YXJpYWJsZXMuXG4gKi9cblxuJGRlZmF1bHQtZm9udDogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LFwiU2Vnb2UgVUlcIiwgUm9ib3RvLCBPeHlnZW4tU2FucywgVWJ1bnR1LCBDYW50YXJlbGwsXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmOyAvLyBUb2RvOiBkZXByZWNhdGUgaW4gZmF2b3Igb2YgJGZhbWlseSB2YXJpYWJsZXNcbiRkZWZhdWx0LWxpbmUtaGVpZ2h0OiAxLjQ7IC8vIFRvZG86IGRlcHJlY2F0ZSBpbiBmYXZvciBvZiAkbGluZS1oZWlnaHQgdG9rZW5zXG5cbi8qKlxuICogVHlwb2dyYXBoeVxuICovXG5cbi8vIFNpemVzXG4kZm9udC1zaXplLXgtc21hbGw6IDExcHg7XG4kZm9udC1zaXplLXNtYWxsOiAxMnB4O1xuJGZvbnQtc2l6ZS1tZWRpdW06IDEzcHg7XG4kZm9udC1zaXplLWxhcmdlOiAxNXB4O1xuJGZvbnQtc2l6ZS14LWxhcmdlOiAyMHB4O1xuJGZvbnQtc2l6ZS0yeC1sYXJnZTogMzJweDtcblxuLy8gTGluZSBoZWlnaHRzXG4kZm9udC1saW5lLWhlaWdodC14LXNtYWxsOiAxNnB4O1xuJGZvbnQtbGluZS1oZWlnaHQtc21hbGw6IDIwcHg7XG4kZm9udC1saW5lLWhlaWdodC1tZWRpdW06IDI0cHg7XG4kZm9udC1saW5lLWhlaWdodC1sYXJnZTogMjhweDtcbiRmb250LWxpbmUtaGVpZ2h0LXgtbGFyZ2U6IDMycHg7XG4kZm9udC1saW5lLWhlaWdodC0yeC1sYXJnZTogNDBweDtcblxuLy8gV2VpZ2h0c1xuJGZvbnQtd2VpZ2h0LXJlZ3VsYXI6IDQwMDtcbiRmb250LXdlaWdodC1tZWRpdW06IDQ5OTsgLy8gZW5zdXJlcyBmYWxsYmFjayB0byA0MDAgKGluc3RlYWQgb2YgNjAwKVxuXG4vLyBGYW1pbGllc1xuJGZvbnQtZmFtaWx5LWhlYWRpbmdzOiAtYXBwbGUtc3lzdGVtLCBcInN5c3RlbS11aVwiLCBcIlNlZ29lIFVJXCIsIFJvYm90bywgT3h5Z2VuLVNhbnMsIFVidW50dSwgQ2FudGFyZWxsLCBcIkhlbHZldGljYSBOZXVlXCIsIHNhbnMtc2VyaWY7XG4kZm9udC1mYW1pbHktYm9keTogLWFwcGxlLXN5c3RlbSwgXCJzeXN0ZW0tdWlcIiwgXCJTZWdvZSBVSVwiLCBSb2JvdG8sIE94eWdlbi1TYW5zLCBVYnVudHUsIENhbnRhcmVsbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmO1xuJGZvbnQtZmFtaWx5LW1vbm86IE1lbmxvLCBDb25zb2xhcywgbW9uYWNvLCBtb25vc3BhY2U7XG5cbi8qKlxuICogR3JpZCBTeXN0ZW0uXG4gKiBodHRwczovL21ha2Uud29yZHByZXNzLm9yZy9kZXNpZ24vMjAxOS8xMC8zMS9wcm9wb3NhbC1hLWNvbnNpc3RlbnQtc3BhY2luZy1zeXN0ZW0tZm9yLXdvcmRwcmVzcy9cbiAqL1xuXG4kZ3JpZC11bml0OiA4cHg7XG4kZ3JpZC11bml0LTA1OiAwLjUgKiAkZ3JpZC11bml0O1x0Ly8gNHB4XG4kZ3JpZC11bml0LTEwOiAxICogJGdyaWQtdW5pdDtcdFx0Ly8gOHB4XG4kZ3JpZC11bml0LTE1OiAxLjUgKiAkZ3JpZC11bml0O1x0Ly8gMTJweFxuJGdyaWQtdW5pdC0yMDogMiAqICRncmlkLXVuaXQ7XHRcdC8vIDE2cHhcbiRncmlkLXVuaXQtMzA6IDMgKiAkZ3JpZC11bml0O1x0XHQvLyAyNHB4XG4kZ3JpZC11bml0LTQwOiA0ICogJGdyaWQtdW5pdDtcdFx0Ly8gMzJweFxuJGdyaWQtdW5pdC01MDogNSAqICRncmlkLXVuaXQ7XHRcdC8vIDQwcHhcbiRncmlkLXVuaXQtNjA6IDYgKiAkZ3JpZC11bml0O1x0XHQvLyA0OHB4XG4kZ3JpZC11bml0LTcwOiA3ICogJGdyaWQtdW5pdDtcdFx0Ly8gNTZweFxuJGdyaWQtdW5pdC04MDogOCAqICRncmlkLXVuaXQ7XHRcdC8vIDY0cHhcblxuLyoqXG4gKiBSYWRpdXMgc2NhbGUuXG4gKi9cblxuJHJhZGl1cy14LXNtYWxsOiAxcHg7ICAgLy8gQXBwbGllZCB0byBlbGVtZW50cyBsaWtlIGJ1dHRvbnMgbmVzdGVkIHdpdGhpbiBwcmltaXRpdmVzIGxpa2UgaW5wdXRzLlxuJHJhZGl1cy1zbWFsbDogMnB4OyAgICAgLy8gQXBwbGllZCB0byBtb3N0IHByaW1pdGl2ZXMuXG4kcmFkaXVzLW1lZGl1bTogNHB4OyAgICAvLyBBcHBsaWVkIHRvIGNvbnRhaW5lcnMgd2l0aCBzbWFsbGVyIHBhZGRpbmcuXG4kcmFkaXVzLWxhcmdlOiA4cHg7ICAgICAvLyBBcHBsaWVkIHRvIGNvbnRhaW5lcnMgd2l0aCBsYXJnZXIgcGFkZGluZy5cbiRyYWRpdXMtZnVsbDogOTk5OXB4OyAgIC8vIEZvciBwaWxscy5cbiRyYWRpdXMtcm91bmQ6IDUwJTsgICAgIC8vIEZvciBjaXJjbGVzIGFuZCBvdmFscy5cblxuLyoqXG4gKiBFbGV2YXRpb24gc2NhbGUuXG4gKi9cblxuLy8gRm9yIHNlY3Rpb25zIGFuZCBjb250YWluZXJzIHRoYXQgZ3JvdXAgcmVsYXRlZCBjb250ZW50IGFuZCBjb250cm9scywgd2hpY2ggbWF5IG92ZXJsYXAgb3RoZXIgY29udGVudC4gRXhhbXBsZTogUHJldmlldyBGcmFtZS5cbiRlbGV2YXRpb24teC1zbWFsbDogMCAxcHggMXB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMyksIDAgMXB4IDJweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpLCAwIDNweCAzcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKSwgMCA0cHggNHB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMSk7XG5cbi8vIEZvciBjb21wb25lbnRzIHRoYXQgcHJvdmlkZSBjb250ZXh0dWFsIGZlZWRiYWNrIHdpdGhvdXQgYmVpbmcgaW50cnVzaXZlLiBHZW5lcmFsbHkgbm9uLWludGVycnVwdGl2ZS4gRXhhbXBsZTogVG9vbHRpcHMsIFNuYWNrYmFyLlxuJGVsZXZhdGlvbi1zbWFsbDogMCAxcHggMnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNSksIDAgMnB4IDNweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDQpLCAwIDZweCA2cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAzKSwgMCA4cHggOHB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMik7XG5cbi8vIEZvciBjb21wb25lbnRzIHRoYXQgb2ZmZXIgYWRkaXRpb25hbCBhY3Rpb25zLiBFeGFtcGxlOiBNZW51cywgQ29tbWFuZCBQYWxldHRlXG4kZWxldmF0aW9uLW1lZGl1bTogMCAycHggM3B4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNSksIDAgNHB4IDVweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDQpLCAwIDEycHggMTJweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDMpLCAwIDE2cHggMTZweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpO1xuXG4vLyBGb3IgY29tcG9uZW50cyB0aGF0IGNvbmZpcm0gZGVjaXNpb25zIG9yIGhhbmRsZSBuZWNlc3NhcnkgaW50ZXJydXB0aW9ucy4gRXhhbXBsZTogTW9kYWxzLlxuJGVsZXZhdGlvbi1sYXJnZTogMCA1cHggMTVweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDgpLCAwIDE1cHggMjdweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDcpLCAwIDMwcHggMzZweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDQpLCAwIDUwcHggNDNweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpO1xuXG4vKipcbiAqIERpbWVuc2lvbnMuXG4gKi9cblxuJGljb24tc2l6ZTogMjRweDtcbiRidXR0b24tc2l6ZTogMzZweDtcbiRidXR0b24tc2l6ZS1uZXh0LWRlZmF1bHQtNDBweDogNDBweDsgLy8gdHJhbnNpdGlvbmFyeSB2YXJpYWJsZSBmb3IgbmV4dCBkZWZhdWx0IGJ1dHRvbiBzaXplXG4kYnV0dG9uLXNpemUtc21hbGw6IDI0cHg7XG4kYnV0dG9uLXNpemUtY29tcGFjdDogMzJweDtcbiRoZWFkZXItaGVpZ2h0OiA2NHB4O1xuJHBhbmVsLWhlYWRlci1oZWlnaHQ6ICRncmlkLXVuaXQtNjA7XG4kbmF2LXNpZGViYXItd2lkdGg6IDMwMHB4O1xuJGFkbWluLWJhci1oZWlnaHQ6IDMycHg7XG4kYWRtaW4tYmFyLWhlaWdodC1iaWc6IDQ2cHg7XG4kYWRtaW4tc2lkZWJhci13aWR0aDogMTYwcHg7XG4kYWRtaW4tc2lkZWJhci13aWR0aC1iaWc6IDE5MHB4O1xuJGFkbWluLXNpZGViYXItd2lkdGgtY29sbGFwc2VkOiAzNnB4O1xuJG1vZGFsLW1pbi13aWR0aDogMzUwcHg7XG4kbW9kYWwtd2lkdGgtc21hbGw6IDM4NHB4O1xuJG1vZGFsLXdpZHRoLW1lZGl1bTogNTEycHg7XG4kbW9kYWwtd2lkdGgtbGFyZ2U6IDg0MHB4O1xuJHNwaW5uZXItc2l6ZTogMTZweDtcbiRjYW52YXMtcGFkZGluZzogJGdyaWQtdW5pdC0yMDtcblxuLyoqXG4gKiBNb2JpbGUgc3BlY2lmaWMgc3R5bGVzXG4gKi9cbiRtb2JpbGUtdGV4dC1taW4tZm9udC1zaXplOiAxNnB4OyAvLyBBbnkgZm9udCBzaXplIGJlbG93IDE2cHggd2lsbCBjYXVzZSBNb2JpbGUgU2FmYXJpIHRvIFwiem9vbSBpblwiLlxuXG4vKipcbiAqIEVkaXRvciBzdHlsZXMuXG4gKi9cblxuJHNpZGViYXItd2lkdGg6IDI4MHB4O1xuJGNvbnRlbnQtd2lkdGg6IDg0MHB4O1xuJHdpZGUtY29udGVudC13aWR0aDogMTEwMHB4O1xuJHdpZGdldC1hcmVhLXdpZHRoOiA3MDBweDtcbiRzZWNvbmRhcnktc2lkZWJhci13aWR0aDogMzUwcHg7XG4kZWRpdG9yLWZvbnQtc2l6ZTogMTZweDtcbiRkZWZhdWx0LWJsb2NrLW1hcmdpbjogMjhweDsgLy8gVGhpcyB2YWx1ZSBwcm92aWRlcyBhIGNvbnNpc3RlbnQsIGNvbnRpZ3VvdXMgc3BhY2luZyBiZXR3ZWVuIGJsb2Nrcy5cbiR0ZXh0LWVkaXRvci1mb250LXNpemU6IDE1cHg7XG4kZWRpdG9yLWxpbmUtaGVpZ2h0OiAxLjg7XG4kZWRpdG9yLWh0bWwtZm9udDogJGZvbnQtZmFtaWx5LW1vbm87XG5cbi8qKlxuICogQmxvY2sgJiBFZGl0b3IgVUkuXG4gKi9cblxuJGJsb2NrLXRvb2xiYXItaGVpZ2h0OiAkZ3JpZC11bml0LTYwO1xuJGJvcmRlci13aWR0aDogMXB4O1xuJGJvcmRlci13aWR0aC1mb2N1cy1mYWxsYmFjazogMnB4OyAvLyBUaGlzIGV4aXN0cyBhcyBhIGZhbGxiYWNrLCBhbmQgaXMgaWRlYWxseSBvdmVycmlkZGVuIGJ5IHZhcigtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cykgdW5sZXNzIGluIHNvbWUgU0FTUyBtYXRoIGNhc2VzLlxuJGJvcmRlci13aWR0aC10YWI6IDEuNXB4O1xuJGhlbHB0ZXh0LWZvbnQtc2l6ZTogMTJweDtcbiRyYWRpby1pbnB1dC1zaXplOiAxNnB4O1xuJHJhZGlvLWlucHV0LXNpemUtc206IDI0cHg7IC8vIFdpZHRoICYgaGVpZ2h0IGZvciBzbWFsbCB2aWV3cG9ydHMuXG5cbi8vIERlcHJlY2F0ZWQsIHBsZWFzZSBhdm9pZCB1c2luZyB0aGVzZS5cbiRibG9jay1wYWRkaW5nOiAxNHB4OyAvLyBVc2VkIHRvIGRlZmluZSBzcGFjZSBiZXR3ZWVuIGJsb2NrIGZvb3RwcmludCBhbmQgc3Vycm91bmRpbmcgYm9yZGVycy5cbiRyYWRpdXMtYmxvY2stdWk6ICRyYWRpdXMtc21hbGw7XG4kc2hhZG93LXBvcG92ZXI6ICRlbGV2YXRpb24teC1zbWFsbDtcbiRzaGFkb3ctbW9kYWw6ICRlbGV2YXRpb24tbGFyZ2U7XG4kZGVmYXVsdC1mb250LXNpemU6ICRmb250LXNpemUtbWVkaXVtO1xuXG4vKipcbiAqIEJsb2NrIHBhZGRpbmdzLlxuICovXG5cbi8vIFBhZGRpbmcgZm9yIGJsb2NrcyB3aXRoIGEgYmFja2dyb3VuZCBjb2xvciAoZS5nLiBwYXJhZ3JhcGggb3IgZ3JvdXApLlxuJGJsb2NrLWJnLXBhZGRpbmctLXY6IDEuMjVlbTtcbiRibG9jay1iZy1wYWRkaW5nLS1oOiAyLjM3NWVtO1xuXG5cbi8qKlxuICogUmVhY3QgTmF0aXZlIHNwZWNpZmljLlxuICogVGhlc2UgdmFyaWFibGVzIGRvIG5vdCBhcHBlYXIgdG8gYmUgdXNlZCBhbnl3aGVyZSBlbHNlLlxuICovXG5cbi8vIERpbWVuc2lvbnMuXG4kbW9iaWxlLWhlYWRlci10b29sYmFyLWhlaWdodDogNDRweDtcbiRtb2JpbGUtaGVhZGVyLXRvb2xiYXItZXhwYW5kZWQtaGVpZ2h0OiA1MnB4O1xuJG1vYmlsZS1mbG9hdGluZy10b29sYmFyLWhlaWdodDogNDRweDtcbiRtb2JpbGUtZmxvYXRpbmctdG9vbGJhci1tYXJnaW46IDhweDtcbiRtb2JpbGUtY29sb3Itc3dhdGNoOiA0OHB4O1xuXG4vLyBCbG9jayBVSS5cbiRtb2JpbGUtYmxvY2stdG9vbGJhci1oZWlnaHQ6IDQ0cHg7XG4kZGltbWVkLW9wYWNpdHk6IDE7XG4kYmxvY2stZWRnZS10by1jb250ZW50OiAxNnB4O1xuJHNvbGlkLWJvcmRlci1zcGFjZTogMTJweDtcbiRkYXNoZWQtYm9yZGVyLXNwYWNlOiA2cHg7XG4kYmxvY2stc2VsZWN0ZWQtbWFyZ2luOiAzcHg7XG4kYmxvY2stc2VsZWN0ZWQtYm9yZGVyLXdpZHRoOiAxcHg7XG4kYmxvY2stc2VsZWN0ZWQtcGFkZGluZzogMDtcbiRibG9jay1zZWxlY3RlZC1jaGlsZC1tYXJnaW46IDVweDtcbiRibG9jay1zZWxlY3RlZC10by1jb250ZW50OiAkYmxvY2stZWRnZS10by1jb250ZW50IC0gJGJsb2NrLXNlbGVjdGVkLW1hcmdpbiAtICRibG9jay1zZWxlY3RlZC1ib3JkZXItd2lkdGg7XG4iLCIvKipcbiAqIENvbG9yc1xuICovXG5cbi8vIFdvcmRQcmVzcyBncmF5cy5cbiRibGFjazogIzAwMDtcdFx0XHQvLyBVc2Ugb25seSB3aGVuIHlvdSB0cnVseSBuZWVkIHB1cmUgYmxhY2suIEZvciBVSSwgdXNlICRncmF5LTkwMC5cbiRncmF5LTkwMDogIzFlMWUxZTtcbiRncmF5LTgwMDogIzJmMmYyZjtcbiRncmF5LTcwMDogIzc1NzU3NTtcdFx0Ly8gTWVldHMgNC42OjEgKDQuNToxIGlzIG1pbmltdW0pIHRleHQgY29udHJhc3QgYWdhaW5zdCB3aGl0ZS5cbiRncmF5LTYwMDogIzk0OTQ5NDtcdFx0Ly8gTWVldHMgMzoxIFVJIG9yIGxhcmdlIHRleHQgY29udHJhc3QgYWdhaW5zdCB3aGl0ZS5cbiRncmF5LTQwMDogI2NjYztcbiRncmF5LTMwMDogI2RkZDtcdFx0Ly8gVXNlZCBmb3IgbW9zdCBib3JkZXJzLlxuJGdyYXktMjAwOiAjZTBlMGUwO1x0XHQvLyBVc2VkIHNwYXJpbmdseSBmb3IgbGlnaHQgYm9yZGVycy5cbiRncmF5LTEwMDogI2YwZjBmMDtcdFx0Ly8gVXNlZCBmb3IgbGlnaHQgZ3JheSBiYWNrZ3JvdW5kcy5cbiR3aGl0ZTogI2ZmZjtcblxuLy8gT3BhY2l0aWVzICYgYWRkaXRpb25hbCBjb2xvcnMuXG4kZGFyay1ncmF5LXBsYWNlaG9sZGVyOiByZ2JhKCRncmF5LTkwMCwgMC42Mik7XG4kbWVkaXVtLWdyYXktcGxhY2Vob2xkZXI6IHJnYmEoJGdyYXktOTAwLCAwLjU1KTtcbiRsaWdodC1ncmF5LXBsYWNlaG9sZGVyOiByZ2JhKCR3aGl0ZSwgMC42NSk7XG5cbi8vIEFsZXJ0IGNvbG9ycy5cbiRhbGVydC15ZWxsb3c6ICNmMGI4NDk7XG4kYWxlcnQtcmVkOiAjY2MxODE4O1xuJGFsZXJ0LWdyZWVuOiAjNGFiODY2O1xuXG4vLyBEZXByZWNhdGVkLCBwbGVhc2UgYXZvaWQgdXNpbmcgdGhlc2UuXG4kZGFyay10aGVtZS1mb2N1czogJHdoaXRlO1x0Ly8gRm9jdXMgY29sb3Igd2hlbiB0aGUgdGhlbWUgaXMgZGFyay5cbiIsIkB1c2UgXCJAd29yZHByZXNzL2Jhc2Utc3R5bGVzL3ZhcmlhYmxlc1wiO1xuXG4uYm9vdC1sYXlvdXQge1xuXHRoZWlnaHQ6IDEwMCU7XG5cdGRpc3BsYXk6IGZsZXg7XG5cdGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG5cdGNvbG9yOiB2YXIoLS13cGRzLWNvbG9yLWZnLWNvbnRlbnQtbmV1dHJhbCwgIzFlMWUxZSk7XG5cdGlzb2xhdGlvbjogaXNvbGF0ZTtcblx0YmFja2dyb3VuZDogdmFyKC0td3Bkcy1jb2xvci1iZy1zdXJmYWNlLW5ldXRyYWwtd2VhaywgI2YwZjBmMCk7XG59XG5cbi5ib290LWxheW91dF9fY29udGVudCB7XG5cdGhlaWdodDogMTAwJTtcblx0ZmxleC1ncm93OiAxO1xuXHRkaXNwbGF5OiBmbGV4O1xufVxuXG4uYm9vdC1sYXlvdXRfX3NpZGViYXItcmVnaW9uIHtcblx0ZmxleC1zaHJpbms6IDA7XG5cdHdpZHRoOiAyNDBweDtcbn1cblxuLmJvb3QtbGF5b3V0X19zaWRlYmFyIHtcblx0aGVpZ2h0OiAxMDAlO1xuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdG92ZXJmbG93OiBoaWRkZW47XG59XG5cbi5ib290LWxheW91dF9fc3RhZ2Uge1xuXHRmbGV4OiAxO1xuXHRvdmVyZmxvdy15OiBhdXRvO1xuXHRiYWNrZ3JvdW5kOiB2YXIoLS13cGRzLWNvbG9yLWJnLXN1cmZhY2UtbmV1dHJhbCwgI2ZmZik7XG5cdGNvbG9yOiB2YXIoLS13cGRzLWNvbG9yLWZnLWNvbnRlbnQtbmV1dHJhbCwgIzFlMWUxZSk7XG5cdG1hcmdpbjogdmFyaWFibGVzLiRncmlkLXVuaXQtMTA7XG5cdGJvcmRlci1yYWRpdXM6IDhweDtcblx0Ym94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwgMCwgMCwgMC4xKTtcblx0Ym9yZGVyOiAxcHggc29saWQgdmFyKC0td3Bkcy1jb2xvci1zdHJva2Utc3VyZmFjZS1uZXV0cmFsLXdlYWssICNkZGQpO1xufVxuIl19 */`;
+
+.boot-layout__inspector {
+  max-width: 400px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvcnVubmVyL3dvcmsvZ3V0ZW5iZXJnL2d1dGVuYmVyZy9wYWNrYWdlcy9ib290L3NyYy9jb21wb25lbnRzL3Jvb3QiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL25vZGVfbW9kdWxlcy9Ad29yZHByZXNzL2Jhc2Utc3R5bGVzL192YXJpYWJsZXMuc2NzcyIsIi4uLy4uLy4uLy4uLy4uL25vZGVfbW9kdWxlcy9Ad29yZHByZXNzL2Jhc2Utc3R5bGVzL19jb2xvcnMuc2NzcyIsInN0eWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUNBQTtBQUFBO0FBQUE7QURVQTtBQUFBO0FBQUE7QUFPQTtBQUFBO0FBQUE7QUE2QkE7QUFBQTtBQUFBO0FBQUE7QUFpQkE7QUFBQTtBQUFBO0FBV0E7QUFBQTtBQUFBO0FBZ0JBO0FBQUE7QUFBQTtBQXdCQTtBQUFBO0FBQUE7QUFLQTtBQUFBO0FBQUE7QUFlQTtBQUFBO0FBQUE7QUFtQkE7QUFBQTtBQUFBO0FBU0E7QUFBQTtBQUFBO0FBQUE7QUVoS0E7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7O0FBR0Q7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBOzs7QUFHRDtFQUNDO0VBQ0E7RUFDQSxRRjhCYztFRTdCZCxLRjZCYzs7O0FFMUJmO0FBQUE7RUFFQztFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7O0FBR0Q7RUFDQyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogU0NTUyBWYXJpYWJsZXMuXG4gKlxuICogUGxlYXNlIHVzZSB2YXJpYWJsZXMgZnJvbSB0aGlzIHNoZWV0IHRvIGVuc3VyZSBjb25zaXN0ZW5jeSBhY3Jvc3MgdGhlIFVJLlxuICogRG9uJ3QgYWRkIHRvIHRoaXMgc2hlZXQgdW5sZXNzIHlvdSdyZSBwcmV0dHkgc3VyZSB0aGUgdmFsdWUgd2lsbCBiZSByZXVzZWQgaW4gbWFueSBwbGFjZXMuXG4gKiBGb3IgZXhhbXBsZSwgZG9uJ3QgYWRkIHJ1bGVzIHRvIHRoaXMgc2hlZXQgdGhhdCBhZmZlY3QgYmxvY2sgdmlzdWFscy4gSXQncyBwdXJlbHkgZm9yIFVJLlxuICovXG5cbkB1c2UgXCIuL2NvbG9yc1wiO1xuXG4vKipcbiAqIEZvbnRzICYgYmFzaWMgdmFyaWFibGVzLlxuICovXG5cbiRkZWZhdWx0LWZvbnQ6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCxcIlNlZ29lIFVJXCIsIFJvYm90bywgT3h5Z2VuLVNhbnMsIFVidW50dSwgQ2FudGFyZWxsLFwiSGVsdmV0aWNhIE5ldWVcIiwgc2Fucy1zZXJpZjsgLy8gVG9kbzogZGVwcmVjYXRlIGluIGZhdm9yIG9mICRmYW1pbHkgdmFyaWFibGVzXG4kZGVmYXVsdC1saW5lLWhlaWdodDogMS40OyAvLyBUb2RvOiBkZXByZWNhdGUgaW4gZmF2b3Igb2YgJGxpbmUtaGVpZ2h0IHRva2Vuc1xuXG4vKipcbiAqIFR5cG9ncmFwaHlcbiAqL1xuXG4vLyBTaXplc1xuJGZvbnQtc2l6ZS14LXNtYWxsOiAxMXB4O1xuJGZvbnQtc2l6ZS1zbWFsbDogMTJweDtcbiRmb250LXNpemUtbWVkaXVtOiAxM3B4O1xuJGZvbnQtc2l6ZS1sYXJnZTogMTVweDtcbiRmb250LXNpemUteC1sYXJnZTogMjBweDtcbiRmb250LXNpemUtMngtbGFyZ2U6IDMycHg7XG5cbi8vIExpbmUgaGVpZ2h0c1xuJGZvbnQtbGluZS1oZWlnaHQteC1zbWFsbDogMTZweDtcbiRmb250LWxpbmUtaGVpZ2h0LXNtYWxsOiAyMHB4O1xuJGZvbnQtbGluZS1oZWlnaHQtbWVkaXVtOiAyNHB4O1xuJGZvbnQtbGluZS1oZWlnaHQtbGFyZ2U6IDI4cHg7XG4kZm9udC1saW5lLWhlaWdodC14LWxhcmdlOiAzMnB4O1xuJGZvbnQtbGluZS1oZWlnaHQtMngtbGFyZ2U6IDQwcHg7XG5cbi8vIFdlaWdodHNcbiRmb250LXdlaWdodC1yZWd1bGFyOiA0MDA7XG4kZm9udC13ZWlnaHQtbWVkaXVtOiA0OTk7IC8vIGVuc3VyZXMgZmFsbGJhY2sgdG8gNDAwIChpbnN0ZWFkIG9mIDYwMClcblxuLy8gRmFtaWxpZXNcbiRmb250LWZhbWlseS1oZWFkaW5nczogLWFwcGxlLXN5c3RlbSwgXCJzeXN0ZW0tdWlcIiwgXCJTZWdvZSBVSVwiLCBSb2JvdG8sIE94eWdlbi1TYW5zLCBVYnVudHUsIENhbnRhcmVsbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmO1xuJGZvbnQtZmFtaWx5LWJvZHk6IC1hcHBsZS1zeXN0ZW0sIFwic3lzdGVtLXVpXCIsIFwiU2Vnb2UgVUlcIiwgUm9ib3RvLCBPeHlnZW4tU2FucywgVWJ1bnR1LCBDYW50YXJlbGwsIFwiSGVsdmV0aWNhIE5ldWVcIiwgc2Fucy1zZXJpZjtcbiRmb250LWZhbWlseS1tb25vOiBNZW5sbywgQ29uc29sYXMsIG1vbmFjbywgbW9ub3NwYWNlO1xuXG4vKipcbiAqIEdyaWQgU3lzdGVtLlxuICogaHR0cHM6Ly9tYWtlLndvcmRwcmVzcy5vcmcvZGVzaWduLzIwMTkvMTAvMzEvcHJvcG9zYWwtYS1jb25zaXN0ZW50LXNwYWNpbmctc3lzdGVtLWZvci13b3JkcHJlc3MvXG4gKi9cblxuJGdyaWQtdW5pdDogOHB4O1xuJGdyaWQtdW5pdC0wNTogMC41ICogJGdyaWQtdW5pdDtcdC8vIDRweFxuJGdyaWQtdW5pdC0xMDogMSAqICRncmlkLXVuaXQ7XHRcdC8vIDhweFxuJGdyaWQtdW5pdC0xNTogMS41ICogJGdyaWQtdW5pdDtcdC8vIDEycHhcbiRncmlkLXVuaXQtMjA6IDIgKiAkZ3JpZC11bml0O1x0XHQvLyAxNnB4XG4kZ3JpZC11bml0LTMwOiAzICogJGdyaWQtdW5pdDtcdFx0Ly8gMjRweFxuJGdyaWQtdW5pdC00MDogNCAqICRncmlkLXVuaXQ7XHRcdC8vIDMycHhcbiRncmlkLXVuaXQtNTA6IDUgKiAkZ3JpZC11bml0O1x0XHQvLyA0MHB4XG4kZ3JpZC11bml0LTYwOiA2ICogJGdyaWQtdW5pdDtcdFx0Ly8gNDhweFxuJGdyaWQtdW5pdC03MDogNyAqICRncmlkLXVuaXQ7XHRcdC8vIDU2cHhcbiRncmlkLXVuaXQtODA6IDggKiAkZ3JpZC11bml0O1x0XHQvLyA2NHB4XG5cbi8qKlxuICogUmFkaXVzIHNjYWxlLlxuICovXG5cbiRyYWRpdXMteC1zbWFsbDogMXB4OyAgIC8vIEFwcGxpZWQgdG8gZWxlbWVudHMgbGlrZSBidXR0b25zIG5lc3RlZCB3aXRoaW4gcHJpbWl0aXZlcyBsaWtlIGlucHV0cy5cbiRyYWRpdXMtc21hbGw6IDJweDsgICAgIC8vIEFwcGxpZWQgdG8gbW9zdCBwcmltaXRpdmVzLlxuJHJhZGl1cy1tZWRpdW06IDRweDsgICAgLy8gQXBwbGllZCB0byBjb250YWluZXJzIHdpdGggc21hbGxlciBwYWRkaW5nLlxuJHJhZGl1cy1sYXJnZTogOHB4OyAgICAgLy8gQXBwbGllZCB0byBjb250YWluZXJzIHdpdGggbGFyZ2VyIHBhZGRpbmcuXG4kcmFkaXVzLWZ1bGw6IDk5OTlweDsgICAvLyBGb3IgcGlsbHMuXG4kcmFkaXVzLXJvdW5kOiA1MCU7ICAgICAvLyBGb3IgY2lyY2xlcyBhbmQgb3ZhbHMuXG5cbi8qKlxuICogRWxldmF0aW9uIHNjYWxlLlxuICovXG5cbi8vIEZvciBzZWN0aW9ucyBhbmQgY29udGFpbmVycyB0aGF0IGdyb3VwIHJlbGF0ZWQgY29udGVudCBhbmQgY29udHJvbHMsIHdoaWNoIG1heSBvdmVybGFwIG90aGVyIGNvbnRlbnQuIEV4YW1wbGU6IFByZXZpZXcgRnJhbWUuXG4kZWxldmF0aW9uLXgtc21hbGw6IDAgMXB4IDFweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDMpLCAwIDFweCAycHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKSwgMCAzcHggM3B4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMiksIDAgNHB4IDRweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDEpO1xuXG4vLyBGb3IgY29tcG9uZW50cyB0aGF0IHByb3ZpZGUgY29udGV4dHVhbCBmZWVkYmFjayB3aXRob3V0IGJlaW5nIGludHJ1c2l2ZS4gR2VuZXJhbGx5IG5vbi1pbnRlcnJ1cHRpdmUuIEV4YW1wbGU6IFRvb2x0aXBzLCBTbmFja2Jhci5cbiRlbGV2YXRpb24tc21hbGw6IDAgMXB4IDJweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDUpLCAwIDJweCAzcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA0KSwgMCA2cHggNnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMyksIDAgOHB4IDhweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpO1xuXG4vLyBGb3IgY29tcG9uZW50cyB0aGF0IG9mZmVyIGFkZGl0aW9uYWwgYWN0aW9ucy4gRXhhbXBsZTogTWVudXMsIENvbW1hbmQgUGFsZXR0ZVxuJGVsZXZhdGlvbi1tZWRpdW06IDAgMnB4IDNweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDUpLCAwIDRweCA1cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA0KSwgMCAxMnB4IDEycHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAzKSwgMCAxNnB4IDE2cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKTtcblxuLy8gRm9yIGNvbXBvbmVudHMgdGhhdCBjb25maXJtIGRlY2lzaW9ucyBvciBoYW5kbGUgbmVjZXNzYXJ5IGludGVycnVwdGlvbnMuIEV4YW1wbGU6IE1vZGFscy5cbiRlbGV2YXRpb24tbGFyZ2U6IDAgNXB4IDE1cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA4KSwgMCAxNXB4IDI3cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA3KSwgMCAzMHB4IDM2cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA0KSwgMCA1MHB4IDQzcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKTtcblxuLyoqXG4gKiBEaW1lbnNpb25zLlxuICovXG5cbiRpY29uLXNpemU6IDI0cHg7XG4kYnV0dG9uLXNpemU6IDM2cHg7XG4kYnV0dG9uLXNpemUtbmV4dC1kZWZhdWx0LTQwcHg6IDQwcHg7IC8vIHRyYW5zaXRpb25hcnkgdmFyaWFibGUgZm9yIG5leHQgZGVmYXVsdCBidXR0b24gc2l6ZVxuJGJ1dHRvbi1zaXplLXNtYWxsOiAyNHB4O1xuJGJ1dHRvbi1zaXplLWNvbXBhY3Q6IDMycHg7XG4kaGVhZGVyLWhlaWdodDogNjRweDtcbiRwYW5lbC1oZWFkZXItaGVpZ2h0OiAkZ3JpZC11bml0LTYwO1xuJG5hdi1zaWRlYmFyLXdpZHRoOiAzMDBweDtcbiRhZG1pbi1iYXItaGVpZ2h0OiAzMnB4O1xuJGFkbWluLWJhci1oZWlnaHQtYmlnOiA0NnB4O1xuJGFkbWluLXNpZGViYXItd2lkdGg6IDE2MHB4O1xuJGFkbWluLXNpZGViYXItd2lkdGgtYmlnOiAxOTBweDtcbiRhZG1pbi1zaWRlYmFyLXdpZHRoLWNvbGxhcHNlZDogMzZweDtcbiRtb2RhbC1taW4td2lkdGg6IDM1MHB4O1xuJG1vZGFsLXdpZHRoLXNtYWxsOiAzODRweDtcbiRtb2RhbC13aWR0aC1tZWRpdW06IDUxMnB4O1xuJG1vZGFsLXdpZHRoLWxhcmdlOiA4NDBweDtcbiRzcGlubmVyLXNpemU6IDE2cHg7XG4kY2FudmFzLXBhZGRpbmc6ICRncmlkLXVuaXQtMjA7XG5cbi8qKlxuICogTW9iaWxlIHNwZWNpZmljIHN0eWxlc1xuICovXG4kbW9iaWxlLXRleHQtbWluLWZvbnQtc2l6ZTogMTZweDsgLy8gQW55IGZvbnQgc2l6ZSBiZWxvdyAxNnB4IHdpbGwgY2F1c2UgTW9iaWxlIFNhZmFyaSB0byBcInpvb20gaW5cIi5cblxuLyoqXG4gKiBFZGl0b3Igc3R5bGVzLlxuICovXG5cbiRzaWRlYmFyLXdpZHRoOiAyODBweDtcbiRjb250ZW50LXdpZHRoOiA4NDBweDtcbiR3aWRlLWNvbnRlbnQtd2lkdGg6IDExMDBweDtcbiR3aWRnZXQtYXJlYS13aWR0aDogNzAwcHg7XG4kc2Vjb25kYXJ5LXNpZGViYXItd2lkdGg6IDM1MHB4O1xuJGVkaXRvci1mb250LXNpemU6IDE2cHg7XG4kZGVmYXVsdC1ibG9jay1tYXJnaW46IDI4cHg7IC8vIFRoaXMgdmFsdWUgcHJvdmlkZXMgYSBjb25zaXN0ZW50LCBjb250aWd1b3VzIHNwYWNpbmcgYmV0d2VlbiBibG9ja3MuXG4kdGV4dC1lZGl0b3ItZm9udC1zaXplOiAxNXB4O1xuJGVkaXRvci1saW5lLWhlaWdodDogMS44O1xuJGVkaXRvci1odG1sLWZvbnQ6ICRmb250LWZhbWlseS1tb25vO1xuXG4vKipcbiAqIEJsb2NrICYgRWRpdG9yIFVJLlxuICovXG5cbiRibG9jay10b29sYmFyLWhlaWdodDogJGdyaWQtdW5pdC02MDtcbiRib3JkZXItd2lkdGg6IDFweDtcbiRib3JkZXItd2lkdGgtZm9jdXMtZmFsbGJhY2s6IDJweDsgLy8gVGhpcyBleGlzdHMgYXMgYSBmYWxsYmFjaywgYW5kIGlzIGlkZWFsbHkgb3ZlcnJpZGRlbiBieSB2YXIoLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMpIHVubGVzcyBpbiBzb21lIFNBU1MgbWF0aCBjYXNlcy5cbiRib3JkZXItd2lkdGgtdGFiOiAxLjVweDtcbiRoZWxwdGV4dC1mb250LXNpemU6IDEycHg7XG4kcmFkaW8taW5wdXQtc2l6ZTogMTZweDtcbiRyYWRpby1pbnB1dC1zaXplLXNtOiAyNHB4OyAvLyBXaWR0aCAmIGhlaWdodCBmb3Igc21hbGwgdmlld3BvcnRzLlxuXG4vLyBEZXByZWNhdGVkLCBwbGVhc2UgYXZvaWQgdXNpbmcgdGhlc2UuXG4kYmxvY2stcGFkZGluZzogMTRweDsgLy8gVXNlZCB0byBkZWZpbmUgc3BhY2UgYmV0d2VlbiBibG9jayBmb290cHJpbnQgYW5kIHN1cnJvdW5kaW5nIGJvcmRlcnMuXG4kcmFkaXVzLWJsb2NrLXVpOiAkcmFkaXVzLXNtYWxsO1xuJHNoYWRvdy1wb3BvdmVyOiAkZWxldmF0aW9uLXgtc21hbGw7XG4kc2hhZG93LW1vZGFsOiAkZWxldmF0aW9uLWxhcmdlO1xuJGRlZmF1bHQtZm9udC1zaXplOiAkZm9udC1zaXplLW1lZGl1bTtcblxuLyoqXG4gKiBCbG9jayBwYWRkaW5ncy5cbiAqL1xuXG4vLyBQYWRkaW5nIGZvciBibG9ja3Mgd2l0aCBhIGJhY2tncm91bmQgY29sb3IgKGUuZy4gcGFyYWdyYXBoIG9yIGdyb3VwKS5cbiRibG9jay1iZy1wYWRkaW5nLS12OiAxLjI1ZW07XG4kYmxvY2stYmctcGFkZGluZy0taDogMi4zNzVlbTtcblxuXG4vKipcbiAqIFJlYWN0IE5hdGl2ZSBzcGVjaWZpYy5cbiAqIFRoZXNlIHZhcmlhYmxlcyBkbyBub3QgYXBwZWFyIHRvIGJlIHVzZWQgYW55d2hlcmUgZWxzZS5cbiAqL1xuXG4vLyBEaW1lbnNpb25zLlxuJG1vYmlsZS1oZWFkZXItdG9vbGJhci1oZWlnaHQ6IDQ0cHg7XG4kbW9iaWxlLWhlYWRlci10b29sYmFyLWV4cGFuZGVkLWhlaWdodDogNTJweDtcbiRtb2JpbGUtZmxvYXRpbmctdG9vbGJhci1oZWlnaHQ6IDQ0cHg7XG4kbW9iaWxlLWZsb2F0aW5nLXRvb2xiYXItbWFyZ2luOiA4cHg7XG4kbW9iaWxlLWNvbG9yLXN3YXRjaDogNDhweDtcblxuLy8gQmxvY2sgVUkuXG4kbW9iaWxlLWJsb2NrLXRvb2xiYXItaGVpZ2h0OiA0NHB4O1xuJGRpbW1lZC1vcGFjaXR5OiAxO1xuJGJsb2NrLWVkZ2UtdG8tY29udGVudDogMTZweDtcbiRzb2xpZC1ib3JkZXItc3BhY2U6IDEycHg7XG4kZGFzaGVkLWJvcmRlci1zcGFjZTogNnB4O1xuJGJsb2NrLXNlbGVjdGVkLW1hcmdpbjogM3B4O1xuJGJsb2NrLXNlbGVjdGVkLWJvcmRlci13aWR0aDogMXB4O1xuJGJsb2NrLXNlbGVjdGVkLXBhZGRpbmc6IDA7XG4kYmxvY2stc2VsZWN0ZWQtY2hpbGQtbWFyZ2luOiA1cHg7XG4kYmxvY2stc2VsZWN0ZWQtdG8tY29udGVudDogJGJsb2NrLWVkZ2UtdG8tY29udGVudCAtICRibG9jay1zZWxlY3RlZC1tYXJnaW4gLSAkYmxvY2stc2VsZWN0ZWQtYm9yZGVyLXdpZHRoO1xuIiwiLyoqXG4gKiBDb2xvcnNcbiAqL1xuXG4vLyBXb3JkUHJlc3MgZ3JheXMuXG4kYmxhY2s6ICMwMDA7XHRcdFx0Ly8gVXNlIG9ubHkgd2hlbiB5b3UgdHJ1bHkgbmVlZCBwdXJlIGJsYWNrLiBGb3IgVUksIHVzZSAkZ3JheS05MDAuXG4kZ3JheS05MDA6ICMxZTFlMWU7XG4kZ3JheS04MDA6ICMyZjJmMmY7XG4kZ3JheS03MDA6ICM3NTc1NzU7XHRcdC8vIE1lZXRzIDQuNjoxICg0LjU6MSBpcyBtaW5pbXVtKSB0ZXh0IGNvbnRyYXN0IGFnYWluc3Qgd2hpdGUuXG4kZ3JheS02MDA6ICM5NDk0OTQ7XHRcdC8vIE1lZXRzIDM6MSBVSSBvciBsYXJnZSB0ZXh0IGNvbnRyYXN0IGFnYWluc3Qgd2hpdGUuXG4kZ3JheS00MDA6ICNjY2M7XG4kZ3JheS0zMDA6ICNkZGQ7XHRcdC8vIFVzZWQgZm9yIG1vc3QgYm9yZGVycy5cbiRncmF5LTIwMDogI2UwZTBlMDtcdFx0Ly8gVXNlZCBzcGFyaW5nbHkgZm9yIGxpZ2h0IGJvcmRlcnMuXG4kZ3JheS0xMDA6ICNmMGYwZjA7XHRcdC8vIFVzZWQgZm9yIGxpZ2h0IGdyYXkgYmFja2dyb3VuZHMuXG4kd2hpdGU6ICNmZmY7XG5cbi8vIE9wYWNpdGllcyAmIGFkZGl0aW9uYWwgY29sb3JzLlxuJGRhcmstZ3JheS1wbGFjZWhvbGRlcjogcmdiYSgkZ3JheS05MDAsIDAuNjIpO1xuJG1lZGl1bS1ncmF5LXBsYWNlaG9sZGVyOiByZ2JhKCRncmF5LTkwMCwgMC41NSk7XG4kbGlnaHQtZ3JheS1wbGFjZWhvbGRlcjogcmdiYSgkd2hpdGUsIDAuNjUpO1xuXG4vLyBBbGVydCBjb2xvcnMuXG4kYWxlcnQteWVsbG93OiAjZjBiODQ5O1xuJGFsZXJ0LXJlZDogI2NjMTgxODtcbiRhbGVydC1ncmVlbjogIzRhYjg2NjtcblxuLy8gRGVwcmVjYXRlZCwgcGxlYXNlIGF2b2lkIHVzaW5nIHRoZXNlLlxuJGRhcmstdGhlbWUtZm9jdXM6ICR3aGl0ZTtcdC8vIEZvY3VzIGNvbG9yIHdoZW4gdGhlIHRoZW1lIGlzIGRhcmsuXG4iLCJAdXNlIFwiQHdvcmRwcmVzcy9iYXNlLXN0eWxlcy92YXJpYWJsZXNcIjtcblxuLmJvb3QtbGF5b3V0IHtcblx0aGVpZ2h0OiAxMDAlO1xuXHR3aWR0aDogMTAwJTtcblx0ZGlzcGxheTogZmxleDtcblx0ZmxleC1kaXJlY3Rpb246IHJvdztcblx0Y29sb3I6IHZhcigtLXdwZHMtY29sb3ItZmctY29udGVudC1uZXV0cmFsLCAjMWUxZTFlKTtcblx0aXNvbGF0aW9uOiBpc29sYXRlO1xuXHRiYWNrZ3JvdW5kOiB2YXIoLS13cGRzLWNvbG9yLWJnLXN1cmZhY2UtbmV1dHJhbC13ZWFrLCAjZjBmMGYwKTtcbn1cblxuLmJvb3QtbGF5b3V0X19zaWRlYmFyIHtcblx0aGVpZ2h0OiAxMDAlO1xuXHRmbGV4LXNocmluazogMDtcblx0d2lkdGg6IDI0MHB4O1xuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdG92ZXJmbG93OiBoaWRkZW47XG59XG5cbi5ib290LWxheW91dF9fc3VyZmFjZXMge1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWdyb3c6IDE7XG5cdG1hcmdpbjogdmFyaWFibGVzLiRncmlkLXVuaXQtMTA7XG5cdGdhcDogdmFyaWFibGVzLiRncmlkLXVuaXQtMTA7XG59XG5cbi5ib290LWxheW91dF9fc3RhZ2UsXG4uYm9vdC1sYXlvdXRfX2luc3BlY3RvciB7XG5cdGZsZXg6IDE7XG5cdG92ZXJmbG93LXk6IGF1dG87XG5cdGJhY2tncm91bmQ6IHZhcigtLXdwZHMtY29sb3ItYmctc3VyZmFjZS1uZXV0cmFsLCAjZmZmKTtcblx0Y29sb3I6IHZhcigtLXdwZHMtY29sb3ItZmctY29udGVudC1uZXV0cmFsLCAjMWUxZTFlKTtcblx0Ym9yZGVyLXJhZGl1czogOHB4O1xuXHRib3gtc2hhZG93OiAwIDFweCAzcHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuXHRib3JkZXI6IDFweCBzb2xpZCB2YXIoLS13cGRzLWNvbG9yLXN0cm9rZS1zdXJmYWNlLW5ldXRyYWwtd2VhaywgI2RkZCk7XG59XG5cbi5ib290LWxheW91dF9faW5zcGVjdG9yIHtcblx0bWF4LXdpZHRoOiA0MDBweDtcbn1cbiJdfQ== */`;
 document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css8));
 var { ThemeProvider } = unlock(import_theme.privateApis);
 function Root() {
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(ThemeProvider, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(ThemeProvider, { color: { bg: "#1e1e1e", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "boot-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_commands2.CommandMenu, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "boot-layout__content", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__sidebar-region", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Sidebar, {}) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
-        ThemeProvider,
-        {
-          color: { bg: "#ffffff", primary: "#3858e9" },
-          children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Outlet, {})
-        }
-      ) })
-    ] })
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(ThemeProvider, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(ThemeProvider, { color: { bg: "#1e1e1e", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "boot-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_commands2.CommandMenu, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Sidebar, {}) }),
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+      ThemeProvider,
+      {
+        color: { bg: "#ffffff", primary: "#3858e9" },
+        children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Outlet, {})
+      }
+    ) })
   ] }) }) });
 }
 
 // packages/boot/build-module/components/home/index.js
+var home_exports = {};
+__export(home_exports, {
+  inspector: () => inspector,
+  stage: () => stage
+});
 var import_i18n5 = __toESM(require_i18n());
-
-// packages/admin-ui/build-module/navigable-region/index.js
-var import_element6 = __toESM(require_element());
-var import_jsx_runtime32 = __toESM(require_jsx_runtime());
-var NavigableRegion = (0, import_element6.forwardRef)(
-  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-      Tag,
-      {
-        ref,
-        className: clsx_default("admin-ui-navigable-region", className),
-        "aria-label": ariaLabel,
-        role: "region",
-        tabIndex: "-1",
-        ...props,
-        children
-      }
-    );
-  }
-);
-NavigableRegion.displayName = "NavigableRegion";
-var navigable_region_default = NavigableRegion;
-
-// packages/admin-ui/build-module/page/header.js
-var import_components8 = __toESM(require_components());
-var import_jsx_runtime33 = __toESM(require_jsx_runtime());
-function Header({
-  breadcrumbs,
-  badges,
-  title,
-  subTitle,
-  actions
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components8.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
-      import_components8.__experimentalHStack,
-      {
-        className: "admin-ui-page__header-title",
-        justify: "space-between",
-        spacing: 2,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components8.__experimentalHStack, { spacing: 2, children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components8.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
-            breadcrumbs,
-            badges
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-            import_components8.__experimentalHStack,
-            {
-              style: { width: "auto", flexShrink: 0 },
-              spacing: 2,
-              className: "admin-ui-page__header-actions",
-              children: actions
-            }
-          )
-        ]
-      }
-    ),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("p", { className: "admin-ui-page__header-subtitle", children: subTitle })
-  ] });
-}
-
-// packages/admin-ui/build-module/page/index.js
-var import_jsx_runtime34 = __toESM(require_jsx_runtime());
-function Page({
-  breadcrumbs,
-  badges,
-  title,
-  subTitle,
-  children,
-  className,
-  actions,
-  hasPadding = false
-}) {
-  const classes = clsx_default("admin-ui-page", className);
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(navigable_region_default, { className: classes, ariaLabel: title, children: [
-    (title || breadcrumbs || badges) && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
-      Header,
-      {
-        breadcrumbs,
-        badges,
-        title,
-        subTitle,
-        actions
-      }
-    ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "admin-ui-page__content has-padding", children }) : children
-  ] });
-}
-var page_default = Page;
-
-// packages/boot/build-module/components/home/index.js
 var import_jsx_runtime35 = __toESM(require_jsx_runtime());
-function Home() {
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(page_default, { title: (0, import_i18n5.__)("Hello World"), hasPadding: true, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: (0, import_i18n5.__)("Welcome to the minimal boot package!") }) });
+function Stage() {
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(page_default, { title: (0, import_i18n5.__)("Hello World"), hasPadding: true, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: (0, import_i18n5.__)("Welcome to the minimal boot package!") }),
+    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: (0, import_i18n5.__)("This is the main route surface") })
+  ] });
 }
+function Inspector() {
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(page_default, { title: (0, import_i18n5.__)("Inspector"), hasPadding: true, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: (0, import_i18n5.__)("This is the inspector panel") }) });
+}
+var stage = Stage;
+var inspector = Inspector;
 
 // packages/boot/build-module/components/app/router.js
 var import_jsx_runtime36 = __toESM(require_jsx_runtime());
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h1", { children: (0, import_i18n6.__)("Route not found") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(page_default, { title: (0, import_i18n6.__)("Route not found"), hasPadding: true, children: (0, import_i18n6.__)("The page you're looking for does not exist") }) });
 }
-var rootRoute = createRootRoute({
-  component: Root
-});
-var homeRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: Home
-});
-var routeTree = rootRoute.addChildren([homeRoute]);
+function RouteComponent({
+  stage: Stage2,
+  inspector: Inspector2
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
+    Stage2 && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_element7.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Stage2, {}) }) }),
+    Inspector2 && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_element7.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Inspector2, {}) }) })
+  ] });
+}
+function createRouteFromDefinition(route, parentRoute) {
+  if (!route.content && !route.content_module) {
+    throw new Error("Route must have content or content_module property");
+  }
+  const SurfacesModule = route.content ? () => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(RouteComponent, { ...route.content }) : (0, import_element7.lazy)(async () => {
+    const module = await import(route.content_module);
+    return {
+      default: () => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+        RouteComponent,
+        {
+          stage: module.stage,
+          inspector: module.inspector
+        }
+      )
+    };
+  });
+  return createRoute({
+    getParentRoute: () => parentRoute,
+    path: route.path,
+    beforeLoad: route.beforeLoad ? async (opts) => {
+      const context = {
+        params: opts.params || {},
+        search: opts.search || {}
+      };
+      await route.beforeLoad?.(context);
+    } : void 0,
+    loader: route.loader ? async (opts) => {
+      const context = {
+        params: opts.params || {},
+        search: opts.search || {}
+      };
+      return await route.loader?.(context);
+    } : void 0,
+    component: SurfacesModule
+  });
+}
+function createRouteTree(routes) {
+  const rootRoute = createRootRoute({
+    component: Root,
+    context: () => ({})
+  });
+  const homeRouteDefinition = {
+    path: "/",
+    content: home_exports
+  };
+  const allRoutes = [homeRouteDefinition, ...routes];
+  const dynamicRoutes = allRoutes.map(
+    (route) => createRouteFromDefinition(route, rootRoute)
+  );
+  return rootRoute.addChildren(dynamicRoutes);
+}
 function createPathHistory() {
   return createBrowserHistory({
     parseLocation: () => {
@@ -7147,30 +7228,40 @@ function createPathHistory() {
     }
   });
 }
-var history = createPathHistory();
-var router = createRouter({
-  history,
-  routeTree,
-  defaultNotFoundComponent: NotFoundComponent
-});
-function Router2() {
+function Router2({ routes }) {
+  const router = (0, import_element7.useMemo)(() => {
+    const history = createPathHistory();
+    const routeTree = createRouteTree(routes);
+    return createRouter({
+      history,
+      routeTree,
+      defaultNotFoundComponent: NotFoundComponent
+    });
+  }, [routes]);
   return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(RouterProvider, { router });
 }
 
 // packages/boot/build-module/components/app/index.js
 var import_jsx_runtime37 = __toESM(require_jsx_runtime());
 function App() {
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Router2, {});
+  const routes = (0, import_data7.useSelect)((select) => select(store).getRoutes(), []);
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Router2, { routes });
 }
-async function init(menuItems) {
-  menuItems.forEach((menuItem) => {
-    (0, import_data7.dispatch)(STORE_NAME).registerMenuItem(menuItem.id, menuItem);
+async function init({
+  menuItems,
+  routes
+}) {
+  (menuItems ?? []).forEach((menuItem) => {
+    (0, import_data7.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
+  });
+  (routes ?? []).forEach((route) => {
+    (0, import_data7.dispatch)(store).registerRoute(route);
   });
   const rootElement = document.getElementById("gutenberg-boot-app");
   if (rootElement) {
-    const root = (0, import_element7.createRoot)(rootElement);
+    const root = (0, import_element8.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_element7.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_element8.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(App, {}) })
     );
   }
 }
