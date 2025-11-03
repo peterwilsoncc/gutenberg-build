@@ -60120,17 +60120,14 @@ var wp;
   var import_components221 = __toESM(require_components());
 
   // packages/block-editor/build-module/utils/fit-text-utils.js
-  function generateCSSRule(elementSelector, fontSize) {
-    return `${elementSelector} { font-size: ${fontSize}px !important; }`;
-  }
-  function findOptimalFontSize(textElement, elementSelector, applyStylesFn) {
+  function findOptimalFontSize(textElement, applyFontSize) {
     const alreadyHasScrollableHeight = textElement.scrollHeight > textElement.clientHeight;
     let minSize = 5;
     let maxSize = 600;
     let bestSize = minSize;
     while (minSize <= maxSize) {
       const midSize = Math.floor((minSize + maxSize) / 2);
-      applyStylesFn(generateCSSRule(elementSelector, midSize));
+      applyFontSize(midSize);
       const fitsWidth = textElement.scrollWidth <= textElement.clientWidth;
       const fitsHeight = alreadyHasScrollableHeight || textElement.scrollHeight <= textElement.clientHeight;
       if (fitsWidth && fitsHeight) {
@@ -60142,18 +60139,14 @@ var wp;
     }
     return bestSize;
   }
-  function optimizeFitText(textElement, elementSelector, applyStylesFn) {
+  function optimizeFitText(textElement, applyFontSize) {
     if (!textElement) {
       return;
     }
-    applyStylesFn("");
-    const optimalSize = findOptimalFontSize(
-      textElement,
-      elementSelector,
-      applyStylesFn
-    );
-    const cssRule = generateCSSRule(elementSelector, optimalSize);
-    applyStylesFn(cssRule);
+    applyFontSize(0);
+    const optimalSize = findOptimalFontSize(textElement, applyFontSize);
+    applyFontSize(optimalSize);
+    return optimalSize;
   }
 
   // packages/block-editor/build-module/hooks/fit-text.js
@@ -60200,10 +60193,14 @@ var wp;
         blockElement.ownerDocument.head.appendChild(styleElement);
       }
       const blockSelector = `#block-${clientId}`;
-      const applyStylesFn = (css) => {
-        styleElement.textContent = css;
+      const applyFontSize = (fontSize) => {
+        if (fontSize === 0) {
+          styleElement.textContent = "";
+        } else {
+          styleElement.textContent = `${blockSelector} { font-size: ${fontSize}px !important; }`;
+        }
       };
-      optimizeFitText(blockElement, blockSelector, applyStylesFn);
+      optimizeFitText(blockElement, applyFontSize);
     }, [blockElement, clientId, hasFitTextSupport2, fitText]);
     (0, import_element216.useEffect)(() => {
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2) {
