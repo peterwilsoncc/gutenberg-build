@@ -162,30 +162,14 @@ function Page({
 var page_default = Page;
 
 // routes/home/stage.tsx
-var import_jsx_runtime4 = __toESM(require_jsx_runtime());
 var stage = () => {
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(page_default, {
-    title: (0, import_i18n.__)("Hello World"),
-    hasPadding: true,
-    children: [/* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", {
-      children: (0, import_i18n.__)("Welcome to the minimal boot package!")
-    }), /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", {
-      children: (0, import_i18n.__)("This is the main route surface")
-    })]
-  });
+  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n.__)("Hello World"), hasPadding: true }, /* @__PURE__ */ React.createElement("p", null, (0, import_i18n.__)("Welcome to the minimal boot package!")), /* @__PURE__ */ React.createElement("p", null, (0, import_i18n.__)("This is the main route surface")));
 };
 
 // routes/home/inspector.tsx
 var import_i18n2 = __toESM(require_i18n());
-var import_jsx_runtime5 = __toESM(require_jsx_runtime());
 var inspector = () => {
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(page_default, {
-    title: (0, import_i18n2.__)("Inspector"),
-    hasPadding: true,
-    children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", {
-      children: (0, import_i18n2.__)("This is the inspector panel")
-    })
-  });
+  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n2.__)("Inspector"), hasPadding: true }, /* @__PURE__ */ React.createElement("p", null, (0, import_i18n2.__)("This is the inspector panel")));
 };
 export {
   inspector,
