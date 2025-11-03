@@ -50790,59 +50790,56 @@ var wp;
     "core/navigation-link",
     "core/navigation-submenu"
   ];
-  function getPostDataFields(select5, context, clientId) {
-    const { getEditedEntityRecord } = select5(import_core_data118.store);
-    const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select5(import_block_editor96.store);
-    let entityDataValues, dataFields;
-    const blockName = getBlockName2?.(clientId);
-    const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
-    let postId2, postType2;
-    if (isNavigationBlock) {
-      const blockAttributes = getBlockAttributes2?.(clientId);
-      postId2 = blockAttributes?.id;
-      postType2 = blockAttributes?.type;
-    } else {
-      postId2 = context?.postId;
-      postType2 = context?.postType;
+  var postDataFields = [
+    {
+      label: (0, import_i18n227.__)("Post Date"),
+      args: { field: "date" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n227.__)("Post Modified Date"),
+      args: { field: "modified" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n227.__)("Post Link"),
+      args: { field: "link" },
+      type: "string"
     }
-    if (postType2 && postId2) {
-      entityDataValues = getEditedEntityRecord(
+  ];
+  var post_data_default = {
+    name: "core/post-data",
+    getValues({ select: select5, context, bindings, clientId }) {
+      const allowedFields = postDataFields.map(
+        (field) => field.args.field
+      );
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select5(import_block_editor96.store);
+      const blockName = getBlockName2?.(clientId);
+      const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
+      let postId2, postType2;
+      if (isNavigationBlock) {
+        const blockAttributes = getBlockAttributes2?.(clientId);
+        postId2 = blockAttributes?.id;
+        postType2 = blockAttributes?.type;
+      } else {
+        postId2 = context?.postId;
+        postType2 = context?.postType;
+      }
+      const { getEditedEntityRecord } = select5(import_core_data118.store);
+      const entityDataValues = getEditedEntityRecord(
         "postType",
         postType2,
         postId2
       );
-      dataFields = {
-        date: {
-          label: (0, import_i18n227.__)("Post Date"),
-          value: entityDataValues?.date,
-          type: "string"
-        },
-        modified: {
-          label: (0, import_i18n227.__)("Post Modified Date"),
-          value: entityDataValues?.modified,
-          type: "string"
-        },
-        link: {
-          label: (0, import_i18n227.__)("Post Link"),
-          value: entityDataValues?.link,
-          type: "string"
-        }
-      };
-    }
-    if (!Object.keys(dataFields || {}).length) {
-      return null;
-    }
-    return dataFields;
-  }
-  var post_data_default = {
-    name: "core/post-data",
-    getValues({ select: select5, context, bindings, clientId }) {
-      const dataFields = getPostDataFields(select5, context, clientId);
       const newValues = {};
-      for (const [attributeName, source] of Object.entries(bindings)) {
-        const fieldKey = source.args.field;
-        const { value: fieldValue, label: fieldLabel } = dataFields?.[fieldKey] || {};
-        newValues[attributeName] = fieldValue ?? fieldLabel ?? fieldKey;
+      for (const [attributeName, binding] of Object.entries(bindings)) {
+        if (!allowedFields.includes(binding.args.field)) {
+          newValues[attributeName] = {};
+          continue;
+        }
+        newValues[attributeName] = entityDataValues?.[binding.args.field] ?? postDataFields.find(
+          (field) => field.args.field === binding.args.field
+        ).label;
       }
       return newValues;
     },
@@ -50863,7 +50860,7 @@ var wp;
         newData
       );
     },
-    canUserEditValue({ select: select5, context, args }) {
+    canUserEditValue({ select: select5, context }) {
       const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor96.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2?.(clientId);
@@ -50876,10 +50873,6 @@ var wp;
       if (!context?.postType) {
         return false;
       }
-      const fieldValue = getPostDataFields(select5, context, void 0)?.[args.field]?.value;
-      if (fieldValue === void 0) {
-        return false;
-      }
       const canUserEdit = select5(import_core_data118.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
@@ -50890,7 +50883,7 @@ var wp;
       }
       return true;
     },
-    getFieldsList({ select: select5, context }) {
+    getFieldsList({ select: select5 }) {
       const selectedBlock = select5(import_block_editor96.store).getSelectedBlock();
       if (selectedBlock?.name !== "core/post-date") {
         return [];
@@ -50898,61 +50891,58 @@ var wp;
       if (NAVIGATION_BLOCK_TYPES.includes(selectedBlock?.name)) {
         return [];
       }
-      const clientId = select5(import_block_editor96.store).getSelectedBlockClientId();
-      const postDataFields = getPostDataFields(select5, context, clientId);
-      if (!postDataFields) {
-        return [];
-      }
-      return Object.entries(postDataFields).map(([key, field]) => ({
-        label: field.label,
-        type: field.type,
-        args: { field: key }
-      }));
+      return postDataFields;
     }
   };
 
   // packages/editor/build-module/bindings/post-meta.js
   var import_core_data119 = __toESM(require_core_data());
   function getPostMetaFields(select5, context) {
-    const { getEditedEntityRecord } = select5(import_core_data119.store);
     const { getRegisteredPostMeta } = unlock(select5(import_core_data119.store));
-    let entityMetaValues;
-    if (context?.postType && context?.postId) {
-      entityMetaValues = getEditedEntityRecord(
-        "postType",
-        context?.postType,
-        context?.postId
-      ).meta;
-    }
     const registeredFields = getRegisteredPostMeta(context?.postType);
-    const metaFields = {};
-    Object.entries(registeredFields || {}).forEach(([key, props]) => {
-      if (key !== "footnotes" && key.charAt(0) !== "_") {
-        metaFields[key] = {
-          label: props.title || key,
-          value: (
-            // When using the entity value, an empty string IS a valid value.
-            entityMetaValues?.[key] ?? // When using the default, an empty string IS NOT a valid value.
-            (props.default || void 0)
-          ),
-          type: props.type
-        };
+    const metaFields = [];
+    Object.entries(registeredFields).forEach(([key, props]) => {
+      if (key === "footnotes" || key.charAt(0) === "_") {
+        return;
       }
+      metaFields.push({
+        label: props.title || key,
+        args: { key },
+        default: props.default,
+        type: props.type
+      });
     });
-    if (!Object.keys(metaFields || {}).length) {
-      return null;
-    }
     return metaFields;
+  }
+  function getValue({ select: select5, context, args }) {
+    const metaFields = getPostMetaFields(select5, context);
+    const metaField = metaFields.find(
+      (field) => field.args.key === args.key
+    );
+    if (!metaField) {
+      return args.key;
+    }
+    if (!context?.postId) {
+      return metaField.default || metaField.label || args.key;
+    }
+    const { getEditedEntityRecord } = select5(import_core_data119.store);
+    const entityMetaValues = getEditedEntityRecord(
+      "postType",
+      context?.postType,
+      context?.postId
+    ).meta;
+    return entityMetaValues?.[args.key] ?? metaField?.label ?? args.key;
   }
   var post_meta_default = {
     name: "core/post-meta",
     getValues({ select: select5, context, bindings }) {
-      const metaFields = getPostMetaFields(select5, context);
       const newValues = {};
-      for (const [attributeName, source] of Object.entries(bindings)) {
-        const fieldKey = source.args.key;
-        const { value: fieldValue, label: fieldLabel } = metaFields?.[fieldKey] || {};
-        newValues[attributeName] = fieldValue ?? fieldLabel ?? fieldKey;
+      for (const [attributeName, binding] of Object.entries(bindings)) {
+        newValues[attributeName] = getValue({
+          select: select5,
+          context,
+          args: binding.args
+        });
       }
       return newValues;
     },
@@ -50977,8 +50967,11 @@ var wp;
       if (!context?.postType) {
         return false;
       }
-      const fieldValue = getPostMetaFields(select5, context)?.[args.key]?.value;
-      if (fieldValue === void 0) {
+      const metaFields = getPostMetaFields(select5, context);
+      const hasMatchingMetaField = metaFields.some(
+        (field) => field.args.key === args.key
+      );
+      if (!hasMatchingMetaField) {
         return false;
       }
       const areCustomFieldsEnabled = select5(store).getEditorSettings().enableCustomFields;
@@ -50997,14 +50990,11 @@ var wp;
     },
     getFieldsList({ select: select5, context }) {
       const metaFields = getPostMetaFields(select5, context);
-      if (!metaFields) {
-        return [];
-      }
-      return Object.entries(metaFields).map(([key, field]) => ({
-        label: field.label,
-        type: field.type,
-        args: { key }
-      }));
+      return metaFields.map(
+        ({ default: defaultProp, ...otherProps }) => ({
+          ...otherProps
+        })
+      );
     }
   };
 
