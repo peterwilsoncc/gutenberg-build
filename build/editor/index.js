@@ -27632,7 +27632,7 @@ var wp;
   var import_data198 = __toESM(require_data());
   var import_blocks24 = __toESM(require_blocks());
   var { CommentIconSlotFill } = unlock(import_block_editor74.privateApis);
-  var AddCommentMenuItem = ({ clientId, onClick }) => {
+  var AddCommentMenuItem = ({ clientId, onClick, isDistractionFree }) => {
     const block = (0, import_data198.useSelect)(
       (select4) => {
         return select4(import_block_editor74.store).getBlock(clientId);
@@ -27642,24 +27642,31 @@ var wp;
     if (!block?.isValid || block?.name === (0, import_blocks24.getUnregisteredTypeHandlerName)()) {
       return null;
     }
-    const isFreeformBlock = block?.name === "core/freeform";
+    const isDisabled = isDistractionFree || block?.name === "core/freeform";
+    let infoText;
+    if (isDistractionFree) {
+      infoText = (0, import_i18n168.__)("Notes are disabled in distraction free mode.");
+    } else if (block?.name === "core/freeform") {
+      infoText = (0, import_i18n168.__)("Convert to blocks to add notes.");
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
       import_components144.MenuItem,
       {
         icon: comment_default,
         onClick,
         "aria-haspopup": "dialog",
-        disabled: isFreeformBlock,
-        info: isFreeformBlock ? (0, import_i18n168.__)("Convert to blocks to add notes.") : void 0,
+        disabled: isDisabled,
+        info: infoText,
         children: (0, import_i18n168.__)("Add note")
       }
     );
   };
-  var AddCommentMenuItemFill = ({ onClick }) => {
+  var AddCommentMenuItemFill = ({ onClick, isDistractionFree }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(CommentIconSlotFill.Fill, { children: ({ clientId, onClose }) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
       AddCommentMenuItem,
       {
         clientId,
+        isDistractionFree,
         onClick: () => {
           onClick();
           onClose();
@@ -27795,14 +27802,22 @@ var wp;
     const isLargeViewport = (0, import_compose50.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element131.useRef)(null);
     const showFloatingSidebar = isLargeViewport && mode === "post-only";
-    const { clientId, blockCommentId } = (0, import_data199.useSelect)((select4) => {
-      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor76.store);
-      const _clientId = getSelectedBlockClientId2();
-      return {
-        clientId: _clientId,
-        blockCommentId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null
-      };
-    }, []);
+    const { clientId, blockCommentId, isDistractionFree } = (0, import_data199.useSelect)(
+      (select4) => {
+        const {
+          getBlockAttributes: getBlockAttributes2,
+          getSelectedBlockClientId: getSelectedBlockClientId2,
+          getSettings: getSettings4
+        } = select4(import_block_editor76.store);
+        const _clientId = getSelectedBlockClientId2();
+        return {
+          clientId: _clientId,
+          blockCommentId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null,
+          isDistractionFree: getSettings4().isDistractionFree
+        };
+      },
+      []
+    );
     const {
       resultComments,
       unresolvedSortedThreads,
@@ -27838,6 +27853,9 @@ var wp;
         !blockCommentId ? "textarea" : void 0
       );
       toggleBlockSpotlight(clientId, true);
+    }
+    if (isDistractionFree) {
+      return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(comment_menu_item_default, { isDistractionFree: true });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(import_jsx_runtime247.Fragment, { children: [
       blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
@@ -27899,20 +27917,15 @@ var wp;
     ] });
   }
   function NotesSidebarContainer() {
-    const { postId: postId2, mode, editorMode, isDistractionFree } = (0, import_data199.useSelect)(
-      (select4) => {
-        const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2, getEditorMode: getEditorMode2 } = select4(store);
-        const { getSettings: getSettings4 } = select4(import_block_editor76.store);
-        return {
-          postId: getCurrentPostId2(),
-          mode: getRenderingMode2(),
-          editorMode: getEditorMode2(),
-          isDistractionFree: getSettings4().isDistractionFree
-        };
-      },
-      []
-    );
-    if (!postId2 || typeof postId2 !== "number" || isDistractionFree) {
+    const { postId: postId2, mode, editorMode } = (0, import_data199.useSelect)((select4) => {
+      const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2, getEditorMode: getEditorMode2 } = select4(store);
+      return {
+        postId: getCurrentPostId2(),
+        mode: getRenderingMode2(),
+        editorMode: getEditorMode2()
+      };
+    }, []);
+    if (!postId2 || typeof postId2 !== "number") {
       return null;
     }
     if (editorMode === "text") {
