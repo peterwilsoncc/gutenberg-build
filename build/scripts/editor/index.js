@@ -49732,15 +49732,20 @@ var wp;
     ] });
   }
   function NotesSidebarContainer() {
-    const { postId: postId2, mode, editorMode } = (0, import_data220.useSelect)((select5) => {
-      const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2, getEditorMode: getEditorMode2 } = select5(store);
-      return {
-        postId: getCurrentPostId2(),
-        mode: getRenderingMode2(),
-        editorMode: getEditorMode2()
-      };
-    }, []);
-    if (!postId2 || typeof postId2 !== "number") {
+    const { postId: postId2, mode, editorMode, isDistractionFree } = (0, import_data220.useSelect)(
+      (select5) => {
+        const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2, getEditorMode: getEditorMode2 } = select5(store);
+        const { getSettings: getSettings5 } = select5(import_block_editor93.store);
+        return {
+          postId: getCurrentPostId2(),
+          mode: getRenderingMode2(),
+          editorMode: getEditorMode2(),
+          isDistractionFree: getSettings5().isDistractionFree
+        };
+      },
+      []
+    );
+    if (!postId2 || typeof postId2 !== "number" || isDistractionFree) {
       return null;
     }
     if (editorMode === "text") {
