@@ -36555,7 +36555,10 @@ var wp;
                   count === 1 && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
                     block_comment_icon_slot_default.Slot,
                     {
-                      fillProps: { onClose }
+                      fillProps: {
+                        clientId: firstBlockClientId,
+                        onClose
+                      }
                     }
                   )
                 ] }),
