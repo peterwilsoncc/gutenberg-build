@@ -40292,10 +40292,10 @@ If there's a particular need for this, please submit a feature request at https:
     type: "boolean",
     getValue: ({ item }) => item._isActive,
     render: function Render({ item }) {
-      const activeLabel = item._isCustom ? (0, import_i18n136.__)("Active when used") : (0, import_i18n136.__)("Active");
+      const activeLabel = item._isCustom ? (0, import_i18n136._x)("Active when used", "template") : (0, import_i18n136._x)("Active", "template");
       const activeIntent = item._isCustom ? "info" : "success";
       const isActive = item._isActive;
-      return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(Badge3, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n136.__)("Inactive") });
+      return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(Badge3, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n136._x)("Inactive", "template") });
     }
   };
   var useThemeField = () => {
