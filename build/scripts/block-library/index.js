@@ -4473,6 +4473,14 @@ var wp;
       showHomeLink: {
         type: "boolean",
         default: true
+      },
+      showLastItem: {
+        type: "boolean",
+        default: true
+      },
+      showOnHomePage: {
+        type: "boolean",
+        default: false
       }
     },
     usesContext: ["postId", "postType", "templateSlug"],
@@ -4537,7 +4545,13 @@ var wp;
     setAttributes,
     context: { postId, postType, templateSlug }
   }) {
-    const { separator, showHomeLink, prefersTaxonomy } = attributes3;
+    const {
+      separator,
+      showHomeLink,
+      showLastItem,
+      prefersTaxonomy,
+      showOnHomePage
+    } = attributes3;
     const {
       post,
       isPostTypeHierarchical,
@@ -4626,7 +4640,7 @@ var wp;
           inert: "true",
           children: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)("ol", { children: [
             placeholderItems.map((text, index) => /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index}`, children: text }) }, index)),
-            /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("span", { "aria-current": "page", children: (0, import_i18n11.__)("Current") }) })
+            showLastItem && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("span", { "aria-current": "page", children: (0, import_i18n11.__)("Current") }) })
           ] })
         }
       );
@@ -4639,7 +4653,8 @@ var wp;
           resetAll: () => {
             setAttributes({
               separator: separatorDefaultValue,
-              showHomeLink: true
+              showHomeLink: true,
+              showLastItem: true
             });
           },
           dropdownMenuProps,
@@ -4660,6 +4675,26 @@ var wp;
                     label: (0, import_i18n11.__)("Show home link"),
                     onChange: (value) => setAttributes({ showHomeLink: value }),
                     checked: showHomeLink
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+              import_components9.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n11.__)("Show last item"),
+                isShownByDefault: true,
+                hasValue: () => !showLastItem,
+                onDeselect: () => setAttributes({
+                  showLastItem: true
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+                  import_components9.ToggleControl,
+                  {
+                    __nextHasNoMarginBottom: true,
+                    label: (0, import_i18n11.__)("Show last item"),
+                    onChange: (value) => setAttributes({ showLastItem: value }),
+                    checked: showLastItem
                   }
                 )
               }
@@ -4696,18 +4731,32 @@ var wp;
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_block_editor17.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
-        import_components9.CheckboxControl,
-        {
-          __nextHasNoMarginBottom: true,
-          label: (0, import_i18n11.__)("Prefer taxonomy terms"),
-          checked: prefersTaxonomy,
-          onChange: (value) => setAttributes({ prefersTaxonomy: value }),
-          help: (0, import_i18n11.__)(
-            "The exact type of breadcrumbs shown will vary automatically depending on the page in which this block is displayed. In the specific case of a hierarchical post type with taxonomies, the breadcrumbs can either reflect its post hierarchy (default) or the hierarchy of its assigned taxonomy terms."
-          )
-        }
-      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(import_block_editor17.InspectorControls, { group: "advanced", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+          import_components9.CheckboxControl,
+          {
+            __nextHasNoMarginBottom: true,
+            label: (0, import_i18n11.__)("Show on homepage"),
+            checked: showOnHomePage,
+            onChange: (value) => setAttributes({ showOnHomePage: value }),
+            help: (0, import_i18n11.__)(
+              "If this breadcrumbs block appears in a template or template part that\u2019s shown on the homepage, enable this option to display the breadcrumb trail. Otherwise, this setting has no effect."
+            )
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+          import_components9.CheckboxControl,
+          {
+            __nextHasNoMarginBottom: true,
+            label: (0, import_i18n11.__)("Prefer taxonomy terms"),
+            checked: prefersTaxonomy,
+            onChange: (value) => setAttributes({ prefersTaxonomy: value }),
+            help: (0, import_i18n11.__)(
+              "The exact type of breadcrumbs shown will vary automatically depending on the page in which this block is displayed. In the specific case of a hierarchical post type with taxonomies, the breadcrumbs can either reflect its post hierarchy (default) or the hierarchy of its assigned taxonomy terms."
+            )
+          }
+        )
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: showPlaceholder ? placeholder2 : /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_element9.RawHTML, { inert: "true", children: content }) })
     ] });
   }
