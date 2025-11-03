@@ -17285,9 +17285,9 @@ var wp;
           return null;
         }
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select2(store);
-        const { getBlockType: getBlockType21, getActiveBlockVariation } = select2(import_blocks13.store);
+        const { getBlockType: getBlockType22, getActiveBlockVariation } = select2(import_blocks13.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType21(blockName);
+        const blockType = getBlockType22(blockName);
         if (!blockType) {
           return null;
         }
@@ -24399,7 +24399,7 @@ var wp;
   var import_notices3 = __toESM(require_notices());
   function useNotifyCopy() {
     const { getBlockName: getBlockName2 } = (0, import_data41.useSelect)(store);
-    const { getBlockType: getBlockType21 } = (0, import_data41.useSelect)(import_blocks21.store);
+    const { getBlockType: getBlockType22 } = (0, import_data41.useSelect)(import_blocks21.store);
     const { createSuccessNotice } = (0, import_data41.useDispatch)(import_notices3.store);
     return (0, import_element39.useCallback)(
       (eventType, selectedBlockClientIds) => {
@@ -24408,7 +24408,7 @@ var wp;
           notice = (0, import_i18n31.__)("Styles copied to clipboard.");
         } else if (selectedBlockClientIds.length === 1) {
           const clientId = selectedBlockClientIds[0];
-          const title = getBlockType21(getBlockName2(clientId))?.title;
+          const title = getBlockType22(getBlockName2(clientId))?.title;
           if (eventType === "copy") {
             notice = (0, import_i18n31.sprintf)(
               // Translators: %s: Name of the block being copied, e.g. "Paragraph".
@@ -24447,7 +24447,7 @@ var wp;
           type: "snackbar"
         });
       },
-      [createSuccessNotice, getBlockName2, getBlockType21]
+      [createSuccessNotice, getBlockName2, getBlockType22]
     );
   }
 
@@ -26260,8 +26260,8 @@ var wp;
   }) => {
     const blockTypeIcon = (0, import_data48.useSelect)(
       (select2) => {
-        const { getBlockType: getBlockType21 } = select2(import_blocks25.store);
-        return blocks2.length === 1 && getBlockType21(blocks2[0].name)?.icon;
+        const { getBlockType: getBlockType22 } = select2(import_blocks25.store);
+        return blocks2.length === 1 && getBlockType22(blocks2[0].name)?.icon;
       },
       [blocks2]
     );
@@ -31276,7 +31276,7 @@ var wp;
       "replace"
     ];
   }
-  function isDropTargetValid(getBlockType21, allowedBlocks, draggedBlockNames, targetBlockName) {
+  function isDropTargetValid(getBlockType22, allowedBlocks, draggedBlockNames, targetBlockName) {
     let areBlocksAllowed = true;
     if (allowedBlocks) {
       const allowedBlockNames = allowedBlocks?.map(({ name }) => name);
@@ -31285,7 +31285,7 @@ var wp;
       );
     }
     const draggedBlockTypes = draggedBlockNames.map(
-      (name) => getBlockType21(name)
+      (name) => getBlockType22(name)
     );
     const targetMatchesDraggedBlockParents = draggedBlockTypes.every(
       (block) => {
@@ -31317,7 +31317,7 @@ var wp;
       index: null,
       operation: "insert"
     });
-    const { getBlockType: getBlockType21, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data69.useSelect)(import_blocks38.store);
+    const { getBlockType: getBlockType22, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data69.useSelect)(import_blocks38.store);
     const {
       canInsertBlockType: canInsertBlockType2,
       getBlockListSettings: getBlockListSettings2,
@@ -31371,7 +31371,7 @@ var wp;
             draggedBlockClientIds
           );
           const isBlockDroppingAllowed = isDropTargetValid(
-            getBlockType21,
+            getBlockType22,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -31482,7 +31482,7 @@ var wp;
           targetRootClientId,
           getBlockNamesByClientId2,
           getDraggedBlockClientIds2,
-          getBlockType21,
+          getBlockType22,
           getSectionRootClientId2,
           isZoomOut2,
           getBlocks2,
@@ -31641,7 +31641,7 @@ var wp;
             isDropZoneDisabled: isZoomOut2() && sectionRootClientId !== ""
           };
         }
-        const { hasBlockSupport: hasBlockSupport44, getBlockType: getBlockType21 } = select2(import_blocks39.store);
+        const { hasBlockSupport: hasBlockSupport44, getBlockType: getBlockType22 } = select2(import_blocks39.store);
         const blockName = getBlockName2(clientId);
         const blockEditingMode = getBlockEditingMode2(clientId);
         const parentClientId2 = getBlockRootClientId2(clientId);
@@ -31658,7 +31658,7 @@ var wp;
             false
           ),
           name: blockName,
-          blockType: getBlockType21(blockName),
+          blockType: getBlockType22(blockName),
           parentLock: getTemplateLock2(parentClientId2),
           parentClientId: parentClientId2,
           isDropZoneDisabled: _isDropZoneDisabled,
@@ -33189,9 +33189,9 @@ var wp;
           return null;
         }
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select2(store);
-        const { getBlockType: getBlockType21, getActiveBlockVariation } = select2(import_blocks41.store);
+        const { getBlockType: getBlockType22, getActiveBlockVariation } = select2(import_blocks41.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType21(blockName);
+        const blockType = getBlockType22(blockName);
         if (!blockType) {
           return null;
         }
@@ -33724,7 +33724,7 @@ var wp;
       isDraggable,
       icon,
       visibleInserter,
-      getBlockType: getBlockType21
+      getBlockType: getBlockType22
     } = (0, import_data79.useSelect)(
       (select2) => {
         const {
@@ -33786,14 +33786,14 @@ var wp;
           ])[0];
           const rootAllowedBlocks = getAllowedBlocks2(targetRootClientId);
           dropTargetValid = isDropTargetValid(
-            getBlockType21,
+            getBlockType22,
             rootAllowedBlocks,
             draggedBlockNames,
             targetRootBlockName
           );
         } else {
           dropTargetValid = isDropTargetValid(
-            getBlockType21,
+            getBlockType22,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -33821,7 +33821,7 @@ var wp;
       getAllowedBlocks2,
       getBlockNamesByClientId2,
       getBlockRootClientId2,
-      getBlockType21,
+      getBlockType22,
       visibleInserter
     ]);
     if (!isDraggable) {
@@ -35320,14 +35320,14 @@ var wp;
           getBlockEditingMode: getBlockEditingMode2,
           isSectionBlock: isSectionBlock2
         } = unlock(select2(store));
-        const { getBlockStyles: getBlockStyles2, getBlockType: getBlockType21, getActiveBlockVariation } = select2(import_blocks50.store);
+        const { getBlockStyles: getBlockStyles2, getBlockType: getBlockType22, getActiveBlockVariation } = select2(import_blocks50.store);
         const _blocks = getBlocksByClientId2(clientIds);
         if (!_blocks.length || _blocks.some((block) => !block)) {
           return { invalidBlocks: true };
         }
         const [{ name: firstBlockName }] = _blocks;
         const _isSingleBlockSelected = _blocks.length === 1;
-        const blockType = getBlockType21(firstBlockName);
+        const blockType = getBlockType22(firstBlockName);
         const editingMode = getBlockEditingMode2(clientIds[0]);
         let _icon;
         let _hasTemplateLock;
@@ -35966,7 +35966,7 @@ var wp;
           isUngroupable: isUngroupable2,
           isGroupable: isGroupable2
         } = select2(store);
-        const { getGroupingBlockName, getBlockType: getBlockType21 } = select2(import_blocks55.store);
+        const { getGroupingBlockName, getBlockType: getBlockType22 } = select2(import_blocks55.store);
         const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds2();
         const blocksSelection = getBlocksByClientId2(clientIds);
         const [firstSelectedBlock] = blocksSelection;
@@ -35977,7 +35977,7 @@ var wp;
           isUngroupable: _isUngroupable,
           blocksSelection,
           groupingBlockName: getGroupingBlockName(),
-          onUngroup: _isUngroupable && getBlockType21(firstSelectedBlock.name)?.transforms?.ungroup
+          onUngroup: _isUngroupable && getBlockType22(firstSelectedBlock.name)?.transforms?.ungroup
         };
       },
       [selectedClientIds]
@@ -49766,7 +49766,7 @@ var wp;
       hasMultiSelection: hasMultiSelection2,
       hasSelectedBlock: hasSelectedBlock2
     } = (0, import_data134.useSelect)(store);
-    const { getBlockType: getBlockType21 } = (0, import_data134.useSelect)(import_blocks78.store);
+    const { getBlockType: getBlockType22 } = (0, import_data134.useSelect)(import_blocks78.store);
     const updateBlockSelection = (0, import_element167.useCallback)(
       async (event, clientId, destinationClientId, focusPosition) => {
         if (!event?.shiftKey && event?.keyCode !== import_keycodes16.ESCAPE) {
@@ -49820,7 +49820,7 @@ var wp;
         );
         let label;
         if (selectionDiff.length === 1) {
-          const title = getBlockType21(
+          const title = getBlockType22(
             getBlockName2(selectionDiff[0])
           )?.title;
           if (title) {
@@ -49844,7 +49844,7 @@ var wp;
       [
         clearSelectedBlock2,
         getBlockName2,
-        getBlockType21,
+        getBlockType22,
         getBlockParents2,
         getBlockSelectionStart2,
         getSelectedBlockClientIds2,
@@ -59420,6 +59420,53 @@ var wp;
     "core/allowedBlocks/attribute",
     addAttribute3
   );
+  function addTransforms(result, source, index, results) {
+    if (!(0, import_blocks94.hasBlockSupport)(result.name, "allowedBlocks")) {
+      return result;
+    }
+    if (source.length !== 1 && results.length === 1 && result.innerBlocks.length === source.length) {
+      return result;
+    }
+    if (results.length === 1 && source.length > 1 || results.length > 1 && source.length === 1) {
+      return result;
+    }
+    if (results.length > 1 && source.length > 1 && results.length !== source.length) {
+      return result;
+    }
+    if (result.attributes.allowedBlocks) {
+      return result;
+    }
+    const sourceAllowedBlocks = source[index]?.attributes?.allowedBlocks;
+    if (!sourceAllowedBlocks) {
+      return result;
+    }
+    const blockType = (0, import_blocks94.getBlockType)(result.name);
+    const destinationAllowedBlocks = blockType?.allowedBlocks || [];
+    if (!destinationAllowedBlocks.length) {
+      return {
+        ...result,
+        attributes: {
+          ...result.attributes,
+          allowedBlocks: sourceAllowedBlocks
+        }
+      };
+    }
+    const filteredSourceAllowedBlocks = sourceAllowedBlocks.filter(
+      (block) => destinationAllowedBlocks.includes(block)
+    );
+    return {
+      ...result,
+      attributes: {
+        ...result.attributes,
+        allowedBlocks: filteredSourceAllowedBlocks
+      }
+    };
+  }
+  (0, import_hooks18.addFilter)(
+    "blocks.switchToBlockType.transformedBlock",
+    "core/allowedBlocks/addTransforms",
+    addTransforms
+  );
 
   // packages/block-editor/build-module/hooks/anchor.js
   var import_jsx_runtime376 = __toESM(require_jsx_runtime());
@@ -59598,7 +59645,7 @@ var wp;
     }
     return extraProps;
   }
-  function addTransforms(result, source, index, results) {
+  function addTransforms2(result, source, index, results) {
     if (!(0, import_blocks97.hasBlockSupport)(result.name, "customClassName", true)) {
       return result;
     }
@@ -59630,7 +59677,7 @@ var wp;
   (0, import_hooks21.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/customClassName/addTransforms",
-    addTransforms
+    addTransforms2
   );
 
   // packages/block-editor/build-module/hooks/generated-class-name.js
@@ -59986,7 +60033,7 @@ var wp;
     ],
     gradient: [["gradient"], ["style", "color", "gradient"]]
   };
-  function addTransforms2(result, source, index, results) {
+  function addTransforms3(result, source, index, results) {
     const destinationBlockType = result.name;
     const activeSupports = {
       linkColor: hasLinkColorSupport(destinationBlockType),
@@ -60011,7 +60058,7 @@ var wp;
   (0, import_hooks23.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/color/addTransforms",
-    addTransforms2
+    addTransforms3
   );
 
   // packages/block-editor/build-module/hooks/typography.js
@@ -60170,7 +60217,7 @@ var wp;
   var MIGRATION_PATHS2 = {
     fontSize: [["fontSize"], ["style", "typography", "fontSize"]]
   };
-  function addTransforms3(result, source, index, results) {
+  function addTransforms4(result, source, index, results) {
     const destinationBlockType = result.name;
     const activeSupports = {
       fontSize: (0, import_blocks102.hasBlockSupport)(
@@ -60195,7 +60242,7 @@ var wp;
   (0, import_hooks25.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/font-size/addTransforms",
-    addTransforms3
+    addTransforms4
   );
 
   // packages/block-editor/build-module/hooks/text-align.js
@@ -62968,7 +63015,7 @@ var wp;
     };
     return blockTypeSettings;
   }
-  function addTransforms4(result, source, index, results) {
+  function addTransforms5(result, source, index, results) {
     if (results.length === 1 && result.innerBlocks.length === source.length) {
       return result;
     }
@@ -63014,7 +63061,7 @@ var wp;
   (0, import_hooks31.addFilter)(
     "blocks.switchToBlockType.transformedBlock",
     "core/metadata/addTransforms",
-    addTransforms4
+    addTransforms5
   );
 
   // packages/block-editor/build-module/hooks/block-hooks.js
