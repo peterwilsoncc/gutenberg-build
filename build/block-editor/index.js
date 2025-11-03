@@ -60465,14 +60465,35 @@ var wp;
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2) {
         return;
       }
-      applyFitText();
       const currentElement = blockElement;
+      const previousVisibility = currentElement.style.visibility;
+      let hideFrameId = null;
+      let calculateFrameId = null;
+      let showTimeoutId = null;
+      hideFrameId = window.requestAnimationFrame(() => {
+        currentElement.style.visibility = "hidden";
+        calculateFrameId = window.requestAnimationFrame(() => {
+          applyFitText();
+          showTimeoutId = setTimeout(() => {
+            currentElement.style.visibility = previousVisibility;
+          }, 10);
+        });
+      });
       let resizeObserver;
       if (window.ResizeObserver && currentElement.parentElement) {
         resizeObserver = new window.ResizeObserver(applyFitText);
         resizeObserver.observe(currentElement.parentElement);
       }
       return () => {
+        if (hideFrameId !== null) {
+          window.cancelAnimationFrame(hideFrameId);
+        }
+        if (calculateFrameId !== null) {
+          window.cancelAnimationFrame(calculateFrameId);
+        }
+        if (showTimeoutId !== null) {
+          clearTimeout(showTimeoutId);
+        }
         if (resizeObserver) {
           resizeObserver.disconnect();
         }
