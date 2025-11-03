@@ -63586,8 +63586,12 @@ var wp;
   var block_bindings_default = {
     edit: BlockBindingsPanel,
     attributeKeys: ["metadata"],
-    hasSupport() {
-      return true;
+    hasSupport(name) {
+      return ![
+        "core/post-date",
+        "core/navigation-link",
+        "core/navigation-submenu"
+      ].includes(name);
     }
   };
 
