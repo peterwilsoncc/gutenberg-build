@@ -21315,7 +21315,7 @@ var wp;
 
   // packages/editor/build-module/components/editor/index.js
   var import_jsx_runtime248 = __toESM(require_jsx_runtime());
-  var import_data199 = __toESM(require_data());
+  var import_data200 = __toESM(require_data());
   var import_core_data103 = __toESM(require_core_data());
   var import_components147 = __toESM(require_components());
   var import_i18n171 = __toESM(require_i18n());
@@ -25065,7 +25065,7 @@ var wp;
   // packages/editor/build-module/components/collab-sidebar/index.js
   var import_jsx_runtime247 = __toESM(require_jsx_runtime());
   var import_i18n170 = __toESM(require_i18n());
-  var import_data198 = __toESM(require_data());
+  var import_data199 = __toESM(require_data());
   var import_components146 = __toESM(require_components());
   var import_element131 = __toESM(require_element());
   var import_compose50 = __toESM(require_compose());
@@ -27626,22 +27626,45 @@ var wp;
   var import_components144 = __toESM(require_components());
   var import_i18n168 = __toESM(require_i18n());
   var import_block_editor74 = __toESM(require_block_editor());
+  var import_data198 = __toESM(require_data());
+  var import_blocks24 = __toESM(require_blocks());
   var { CommentIconSlotFill } = unlock(import_block_editor74.privateApis);
-  var AddCommentMenuItem = ({ onClick }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(CommentIconSlotFill.Fill, { children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+  var AddCommentMenuItem = ({ clientId, onClick }) => {
+    const block = (0, import_data198.useSelect)(
+      (select4) => {
+        return select4(import_block_editor74.store).getBlock(clientId);
+      },
+      [clientId]
+    );
+    if (!block?.isValid || block?.name === (0, import_blocks24.getUnregisteredTypeHandlerName)()) {
+      return null;
+    }
+    const isFreeformBlock = block?.name === "core/freeform";
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
       import_components144.MenuItem,
       {
         icon: comment_default,
+        onClick,
+        "aria-haspopup": "dialog",
+        disabled: isFreeformBlock,
+        info: isFreeformBlock ? (0, import_i18n168.__)("Convert to blocks to add notes.") : void 0,
+        children: (0, import_i18n168.__)("Add note")
+      }
+    );
+  };
+  var AddCommentMenuItemFill = ({ onClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(CommentIconSlotFill.Fill, { children: ({ clientId, onClose }) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+      AddCommentMenuItem,
+      {
+        clientId,
         onClick: () => {
           onClick();
           onClose();
-        },
-        "aria-haspopup": "dialog",
-        children: (0, import_i18n168.__)("Add note")
+        }
       }
     ) });
   };
-  var comment_menu_item_default = AddCommentMenuItem;
+  var comment_menu_item_default = AddCommentMenuItemFill;
 
   // packages/editor/build-module/components/collab-sidebar/comment-indicator-toolbar.js
   var import_jsx_runtime246 = __toESM(require_jsx_runtime());
@@ -27762,13 +27785,13 @@ var wp;
   }
   function NotesSidebar({ postId: postId2, mode }) {
     const [showCommentBoard, setShowCommentBoard] = (0, import_element131.useState)(false);
-    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data198.useSelect)(store2);
-    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data198.useDispatch)(store2);
-    const { toggleBlockSpotlight } = unlock((0, import_data198.useDispatch)(import_block_editor76.store));
+    const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data199.useSelect)(store2);
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data199.useDispatch)(store2);
+    const { toggleBlockSpotlight } = unlock((0, import_data199.useDispatch)(import_block_editor76.store));
     const isLargeViewport = (0, import_compose50.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element131.useRef)(null);
     const showFloatingSidebar = isLargeViewport && mode === "post-only";
-    const { clientId, blockCommentId } = (0, import_data198.useSelect)((select4) => {
+    const { clientId, blockCommentId } = (0, import_data199.useSelect)((select4) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor76.store);
       const _clientId = getSelectedBlockClientId2();
       return {
@@ -27872,7 +27895,7 @@ var wp;
     ] });
   }
   function NotesSidebarContainer() {
-    const { postId: postId2, mode, editorMode } = (0, import_data198.useSelect)((select4) => {
+    const { postId: postId2, mode, editorMode } = (0, import_data199.useSelect)((select4) => {
       const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2, getEditorMode: getEditorMode2 } = select4(store);
       return {
         postId: getCurrentPostId2(),
@@ -27905,7 +27928,7 @@ var wp;
     extraSidebarPanels,
     ...props
   }) {
-    const { post, template: template2, hasLoadedPost, error } = (0, import_data199.useSelect)(
+    const { post, template: template2, hasLoadedPost, error } = (0, import_data200.useSelect)(
       (select4) => {
         const {
           getEntityRecord,
@@ -27970,20 +27993,20 @@ var wp;
   var import_jsx_runtime251 = __toESM(require_jsx_runtime());
   var import_i18n173 = __toESM(require_i18n());
   var import_compose51 = __toESM(require_compose());
-  var import_data202 = __toESM(require_data());
+  var import_data203 = __toESM(require_data());
   var import_element133 = __toESM(require_element());
   var import_preferences25 = __toESM(require_preferences());
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.js
   var import_jsx_runtime249 = __toESM(require_jsx_runtime());
-  var import_data200 = __toESM(require_data());
+  var import_data201 = __toESM(require_data());
   var import_preferences23 = __toESM(require_preferences());
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences23.privateApis);
   function EnablePublishSidebarOption(props) {
-    const isChecked = (0, import_data200.useSelect)((select4) => {
+    const isChecked = (0, import_data201.useSelect)((select4) => {
       return select4(store).isPublishSidebarEnabled();
     }, []);
-    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data200.useDispatch)(store);
+    const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data201.useDispatch)(store);
     return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
       PreferenceBaseOption2,
       {
@@ -27996,9 +28019,9 @@ var wp;
 
   // packages/editor/build-module/components/block-visibility/index.js
   var import_jsx_runtime250 = __toESM(require_jsx_runtime());
-  var import_data201 = __toESM(require_data());
+  var import_data202 = __toESM(require_data());
   var import_preferences24 = __toESM(require_preferences());
-  var import_blocks24 = __toESM(require_blocks());
+  var import_blocks25 = __toESM(require_blocks());
   var import_element132 = __toESM(require_element());
   var import_components148 = __toESM(require_components());
   var import_i18n172 = __toESM(require_i18n());
@@ -28007,15 +28030,15 @@ var wp;
   var EMPTY_ARRAY5 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
-      (0, import_data201.useDispatch)(store)
+      (0, import_data202.useDispatch)(store)
     );
     const {
       blockTypes,
       allowedBlockTypes: _allowedBlockTypes,
       hiddenBlockTypes: _hiddenBlockTypes
-    } = (0, import_data201.useSelect)((select4) => {
+    } = (0, import_data202.useSelect)((select4) => {
       return {
-        blockTypes: select4(import_blocks24.store).getBlockTypes(),
+        blockTypes: select4(import_blocks25.store).getBlockTypes(),
         allowedBlockTypes: select4(store).getEditorSettings().allowedBlockTypes,
         hiddenBlockTypes: select4(import_preferences24.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY5
       };
@@ -28029,7 +28052,7 @@ var wp;
       });
     }, [_allowedBlockTypes, blockTypes]);
     const filteredBlockTypes = allowedBlockTypes.filter(
-      (blockType) => (0, import_blocks24.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
+      (blockType) => (0, import_blocks25.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
     );
     const hiddenBlockTypes = _hiddenBlockTypes.filter((hiddenBlock) => {
       return filteredBlockTypes.some(
@@ -28101,10 +28124,10 @@ var wp;
     PreferenceToggleControl
   } = unlock(import_preferences25.privateApis);
   function EditorPreferencesModal({ extraSections = {} }) {
-    const isActive = (0, import_data202.useSelect)((select4) => {
+    const isActive = (0, import_data203.useSelect)((select4) => {
       return select4(store2).isModalActive("editor/preferences");
     }, []);
-    const { closeModal: closeModal2 } = (0, import_data202.useDispatch)(store2);
+    const { closeModal: closeModal2 } = (0, import_data203.useDispatch)(store2);
     if (!isActive) {
       return null;
     }
@@ -28112,7 +28135,7 @@ var wp;
   }
   function PreferencesModalContents({ extraSections = {} }) {
     const isLargeViewport = (0, import_compose51.useViewportMatch)("medium");
-    const showBlockBreadcrumbsOption = (0, import_data202.useSelect)(
+    const showBlockBreadcrumbsOption = (0, import_data203.useSelect)(
       (select4) => {
         const { getEditorSettings: getEditorSettings2 } = select4(store);
         const { get } = select4(import_preferences25.store);
@@ -28122,8 +28145,8 @@ var wp;
       },
       [isLargeViewport]
     );
-    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data202.useDispatch)(store);
-    const { set: setPreference } = (0, import_data202.useDispatch)(import_preferences25.store);
+    const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data203.useDispatch)(store);
+    const { set: setPreference } = (0, import_data203.useDispatch)(import_preferences25.store);
     const sections = (0, import_element133.useMemo)(
       () => [
         {
@@ -28449,15 +28472,15 @@ var wp;
 
   // packages/editor/build-module/components/post-fields/index.js
   var import_element134 = __toESM(require_element());
-  var import_data203 = __toESM(require_data());
+  var import_data204 = __toESM(require_data());
   function usePostFields({
     postType: postType2
   }) {
-    const { registerPostTypeSchema: registerPostTypeSchema2 } = unlock((0, import_data203.useDispatch)(store));
+    const { registerPostTypeSchema: registerPostTypeSchema2 } = unlock((0, import_data204.useDispatch)(store));
     (0, import_element134.useEffect)(() => {
       registerPostTypeSchema2(postType2);
     }, [registerPostTypeSchema2, postType2]);
-    const { fields: fields2 } = (0, import_data203.useSelect)(
+    const { fields: fields2 } = (0, import_data204.useSelect)(
       (select4) => {
         const { getEntityFields: getEntityFields3 } = unlock(select4(store));
         return {
@@ -28471,7 +28494,7 @@ var wp;
   var post_fields_default = usePostFields;
 
   // packages/editor/build-module/bindings/api.js
-  var import_blocks25 = __toESM(require_blocks());
+  var import_blocks26 = __toESM(require_blocks());
 
   // packages/editor/build-module/bindings/pattern-overrides.js
   var import_block_editor78 = __toESM(require_block_editor());
@@ -28899,10 +28922,10 @@ var wp;
 
   // packages/editor/build-module/bindings/api.js
   function registerCoreBlockBindingsSources() {
-    (0, import_blocks25.registerBlockBindingsSource)(pattern_overrides_default);
-    (0, import_blocks25.registerBlockBindingsSource)(post_data_default);
-    (0, import_blocks25.registerBlockBindingsSource)(post_meta_default);
-    (0, import_blocks25.registerBlockBindingsSource)(term_data_default);
+    (0, import_blocks26.registerBlockBindingsSource)(pattern_overrides_default);
+    (0, import_blocks26.registerBlockBindingsSource)(post_data_default);
+    (0, import_blocks26.registerBlockBindingsSource)(post_meta_default);
+    (0, import_blocks26.registerBlockBindingsSource)(term_data_default);
   }
 
   // packages/editor/build-module/private-apis.js
@@ -28934,10 +28957,10 @@ var wp;
   });
 
   // packages/editor/build-module/dataviews/api.js
-  var import_data204 = __toESM(require_data());
+  var import_data205 = __toESM(require_data());
   function registerEntityAction2(kind, name, config) {
     const { registerEntityAction: _registerEntityAction } = unlock(
-      (0, import_data204.dispatch)(store)
+      (0, import_data205.dispatch)(store)
     );
     if (true) {
       _registerEntityAction(kind, name, config);
@@ -28945,7 +28968,7 @@ var wp;
   }
   function unregisterEntityAction2(kind, name, actionId) {
     const { unregisterEntityAction: _unregisterEntityAction } = unlock(
-      (0, import_data204.dispatch)(store)
+      (0, import_data205.dispatch)(store)
     );
     if (true) {
       _unregisterEntityAction(kind, name, actionId);
@@ -28953,7 +28976,7 @@ var wp;
   }
   function registerEntityField2(kind, name, config) {
     const { registerEntityField: _registerEntityField } = unlock(
-      (0, import_data204.dispatch)(store)
+      (0, import_data205.dispatch)(store)
     );
     if (true) {
       _registerEntityField(kind, name, config);
@@ -28961,7 +28984,7 @@ var wp;
   }
   function unregisterEntityField2(kind, name, fieldId) {
     const { unregisterEntityField: _unregisterEntityField } = unlock(
-      (0, import_data204.dispatch)(store)
+      (0, import_data205.dispatch)(store)
     );
     if (true) {
       _unregisterEntityField(kind, name, fieldId);
