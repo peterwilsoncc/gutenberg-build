@@ -75,7 +75,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState6({
+        cachedValue = useState7({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -87,7 +87,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect6(
+        useEffect7(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -113,7 +113,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React12 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState6 = React12.useState, useEffect6 = React12.useEffect, useLayoutEffect3 = React12.useLayoutEffect, useDebugValue = React12.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React12 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState7 = React12.useState, useEffect7 = React12.useEffect, useLayoutEffect3 = React12.useLayoutEffect, useDebugValue = React12.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React12.useSyncExternalStore ? React12.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -141,14 +141,14 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React12 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef8 = React12.useRef, useEffect6 = React12.useEffect, useMemo5 = React12.useMemo, useDebugValue = React12.useDebugValue;
+      var React12 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef8 = React12.useRef, useEffect7 = React12.useEffect, useMemo4 = React12.useMemo, useDebugValue = React12.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef8(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo5(
+        instRef = useMemo4(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -184,7 +184,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore(subscribe2, instRef[0], instRef[1]);
-        useEffect6(
+        useEffect7(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -5568,7 +5568,7 @@ function useCanGoBack() {
 }
 
 // packages/boot/build-module/components/app/router.js
-var import_i18n6 = __toESM(require_i18n());
+var import_i18n5 = __toESM(require_i18n());
 var import_element7 = __toESM(require_element());
 
 // node_modules/clsx/dist/clsx.mjs
@@ -7128,48 +7128,25 @@ function Root() {
   ] }) }) });
 }
 
-// packages/boot/build-module/components/home/index.js
-var home_exports = {};
-__export(home_exports, {
-  inspector: () => inspector,
-  stage: () => stage
-});
-var import_i18n5 = __toESM(require_i18n());
-var import_jsx_runtime35 = __toESM(require_jsx_runtime());
-function Stage() {
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(page_default, { title: (0, import_i18n5.__)("Hello World"), hasPadding: true, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: (0, import_i18n5.__)("Welcome to the minimal boot package!") }),
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: (0, import_i18n5.__)("This is the main route surface") })
-  ] });
-}
-function Inspector() {
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(page_default, { title: (0, import_i18n5.__)("Inspector"), hasPadding: true, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: (0, import_i18n5.__)("This is the inspector panel") }) });
-}
-var stage = Stage;
-var inspector = Inspector;
-
 // packages/boot/build-module/components/app/router.js
-var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+var import_jsx_runtime35 = __toESM(require_jsx_runtime());
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(page_default, { title: (0, import_i18n6.__)("Route not found"), hasPadding: true, children: (0, import_i18n6.__)("The page you're looking for does not exist") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(page_default, { title: (0, import_i18n5.__)("Route not found"), hasPadding: true, children: (0, import_i18n5.__)("The page you're looking for does not exist") }) });
 }
 function RouteComponent({
-  stage: Stage2,
-  inspector: Inspector2
+  stage: Stage,
+  inspector: Inspector
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
-    Stage2 && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_element7.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Stage2, {}) }) }),
-    Inspector2 && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_element7.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Inspector2, {}) }) })
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
+    Stage && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Stage, {}) }),
+    Inspector && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Inspector, {}) })
   ] });
 }
-function createRouteFromDefinition(route, parentRoute) {
-  if (!route.content && !route.content_module) {
-    throw new Error("Route must have content or content_module property");
-  }
-  const SurfacesModule = route.content ? () => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(RouteComponent, { ...route.content }) : (0, import_element7.lazy)(async () => {
+async function createRouteFromDefinition(route, parentRoute) {
+  const SurfacesModule = route.content_module ? (0, import_element7.lazy)(async () => {
     const module = await import(route.content_module);
     return {
-      default: () => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      default: () => /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         RouteComponent,
         {
           stage: module.stage,
@@ -7177,39 +7154,39 @@ function createRouteFromDefinition(route, parentRoute) {
         }
       )
     };
-  });
+  }) : () => null;
+  let routeConfig = {};
+  if (route.route_module) {
+    const module = await import(route.route_module);
+    routeConfig = module.route || {};
+  }
   return createRoute({
     getParentRoute: () => parentRoute,
     path: route.path,
-    beforeLoad: route.beforeLoad ? async (opts) => {
+    beforeLoad: routeConfig.beforeLoad ? async (opts) => {
       const context = {
         params: opts.params || {},
         search: opts.search || {}
       };
-      await route.beforeLoad?.(context);
+      await routeConfig.beforeLoad(context);
     } : void 0,
-    loader: route.loader ? async (opts) => {
+    loader: routeConfig.loader ? async (opts) => {
       const context = {
         params: opts.params || {},
         search: opts.search || {}
       };
-      return await route.loader?.(context);
+      return await routeConfig.loader(context);
     } : void 0,
     component: SurfacesModule
   });
 }
-function createRouteTree(routes) {
+async function createRouteTree(routes) {
   const rootRoute = createRootRoute({
     component: Root,
     context: () => ({})
   });
-  const homeRouteDefinition = {
-    path: "/",
-    content: home_exports
-  };
-  const allRoutes = [homeRouteDefinition, ...routes];
-  const dynamicRoutes = allRoutes.map(
-    (route) => createRouteFromDefinition(route, rootRoute)
+  const dynamicRoutes = await Promise.all(
+    routes.map((route) => createRouteFromDefinition(route, rootRoute))
   );
   return rootRoute.addChildren(dynamicRoutes);
 }
@@ -7229,23 +7206,37 @@ function createPathHistory() {
   });
 }
 function Router2({ routes }) {
-  const router = (0, import_element7.useMemo)(() => {
-    const history = createPathHistory();
-    const routeTree = createRouteTree(routes);
-    return createRouter({
-      history,
-      routeTree,
-      defaultNotFoundComponent: NotFoundComponent
-    });
+  const [router, setRouter] = (0, import_element7.useState)(null);
+  (0, import_element7.useEffect)(() => {
+    let cancelled = false;
+    async function initializeRouter() {
+      const history = createPathHistory();
+      const routeTree = await createRouteTree(routes);
+      if (!cancelled) {
+        const newRouter = createRouter({
+          history,
+          routeTree,
+          defaultNotFoundComponent: NotFoundComponent
+        });
+        setRouter(newRouter);
+      }
+    }
+    initializeRouter();
+    return () => {
+      cancelled = true;
+    };
   }, [routes]);
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(RouterProvider, { router });
+  if (!router) {
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { children: "Loading routes..." });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(RouterProvider, { router });
 }
 
 // packages/boot/build-module/components/app/index.js
-var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+var import_jsx_runtime36 = __toESM(require_jsx_runtime());
 function App() {
   const routes = (0, import_data7.useSelect)((select) => select(store).getRoutes(), []);
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Router2, { routes });
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Router2, { routes });
 }
 async function init({
   menuItems,
@@ -7261,7 +7252,7 @@ async function init({
   if (rootElement) {
     const root = (0, import_element8.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_element8.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_element8.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(App, {}) })
     );
   }
 }
