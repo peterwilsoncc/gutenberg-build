@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array(), 'module_dependencies' => array(array('id' => '@wordpress/latex-to-mathml', 'import' => 'dynamic')), 'version' => '1762261982646');
+<?php return array('dependencies' => array(), 'module_dependencies' => array(array('id' => '@wordpress/latex-to-mathml', 'import' => 'dynamic')), 'version' => '1762262007455');
