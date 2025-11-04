@@ -46980,7 +46980,7 @@ var wp;
     if (!container) {
       return;
     }
-    const threadSelector = commentId ? `[role=listitem][id="comment-thread-${commentId}"]` : "[role=listitem]:not([id])";
+    const threadSelector = commentId ? `[role=treeitem][id="comment-thread-${commentId}"]` : "[role=treeitem]:not([id])";
     const selector = additionalSelector ? `${threadSelector} ${additionalSelector}` : threadSelector;
     return new Promise((resolve) => {
       if (container.querySelector(selector)) {
@@ -48746,7 +48746,7 @@ var wp;
         spacing: "3",
         tabIndex: 0,
         "aria-label": (0, import_i18n216.__)("New note"),
-        role: "listitem",
+        role: "treeitem",
         ref: isFloating ? refs.setFloating : void 0,
         style: isFloating ? (
           // Delay showing the floating note box until a Y position is known to prevent blink.
@@ -49096,185 +49096,181 @@ var wp;
         }
       );
     }
-    return (
-      // Disable reason: role="listitem" does in fact support aria-expanded.
-      // eslint-disable-next-line jsx-a11y/role-supports-aria-props
-      /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(
-        import_components206.__experimentalVStack,
-        {
-          className: clsx_default("editor-collab-sidebar-panel__thread", {
-            "is-selected": isSelected,
-            "is-floating": isFloating
-          }),
-          id: `comment-thread-${thread.id}`,
-          spacing: "3",
-          onClick: handleCommentSelect,
-          onMouseEnter,
-          onMouseLeave,
-          onFocus: onMouseEnter,
-          onBlur: onMouseLeave,
-          onKeyDown: (event) => {
-            if (event.defaultPrevented) {
-              return;
-            }
-            if (event.key === "Enter" && event.currentTarget === event.target) {
-              if (isSelected) {
-                unselectThread();
-              } else {
-                handleCommentSelect();
-              }
-            }
-            if (event.key === "Escape") {
+    return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(
+      import_components206.__experimentalVStack,
+      {
+        className: clsx_default("editor-collab-sidebar-panel__thread", {
+          "is-selected": isSelected,
+          "is-floating": isFloating
+        }),
+        id: `comment-thread-${thread.id}`,
+        spacing: "3",
+        onClick: handleCommentSelect,
+        onMouseEnter,
+        onMouseLeave,
+        onFocus: onMouseEnter,
+        onBlur: onMouseLeave,
+        onKeyDown: (event) => {
+          if (event.defaultPrevented) {
+            return;
+          }
+          if (event.key === "Enter" && event.currentTarget === event.target) {
+            if (isSelected) {
               unselectThread();
-              focusCommentThread(thread.id, commentSidebarRef.current);
+            } else {
+              handleCommentSelect();
             }
-          },
-          tabIndex: 0,
-          role: "listitem",
-          "aria-label": ariaLabel,
-          "aria-expanded": isSelected,
-          ref: isFloating ? refs.setFloating : void 0,
-          style: isFloating ? { top: y3 } : void 0,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-              import_components206.Button,
-              {
-                className: "editor-collab-sidebar-panel__skip-to-comment",
-                variant: "secondary",
-                size: "compact",
-                onClick: () => {
+          }
+          if (event.key === "Escape") {
+            unselectThread();
+            focusCommentThread(thread.id, commentSidebarRef.current);
+          }
+        },
+        tabIndex: 0,
+        role: "treeitem",
+        "aria-label": ariaLabel,
+        "aria-expanded": isSelected,
+        ref: isFloating ? refs.setFloating : void 0,
+        style: isFloating ? { top: y3 } : void 0,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            import_components206.Button,
+            {
+              className: "editor-collab-sidebar-panel__skip-to-comment",
+              variant: "secondary",
+              size: "compact",
+              onClick: () => {
+                focusCommentThread(
+                  thread.id,
+                  commentSidebarRef.current,
+                  "textarea"
+                );
+              },
+              children: (0, import_i18n217.__)("Add new note")
+            }
+          ),
+          !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n217.__)("Original block deleted.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            CommentBoard,
+            {
+              thread,
+              isExpanded: isSelected,
+              onEdit: (params = {}) => {
+                const { status } = params;
+                onEditComment(params);
+                if (status === "approved") {
+                  unselectThread();
                   focusCommentThread(
                     thread.id,
-                    commentSidebarRef.current,
-                    "textarea"
+                    commentSidebarRef.current
                   );
-                },
-                children: (0, import_i18n217.__)("Add new note")
-              }
-            ),
-            !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n217.__)("Original block deleted.") }),
-            /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-              CommentBoard,
+                }
+              },
+              onDelete: onCommentDelete,
+              reflowComments
+            }
+          ),
+          isSelected && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            CommentBoard,
+            {
+              thread: reply,
+              parent: thread,
+              isExpanded: isSelected,
+              onEdit: onEditComment,
+              onDelete: onCommentDelete,
+              reflowComments
+            },
+            reply.id
+          )),
+          !isSelected && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalHStack, { className: "editor-collab-sidebar-panel__more-reply-separator", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            import_components206.Button,
+            {
+              size: "compact",
+              variant: "tertiary",
+              className: "editor-collab-sidebar-panel__more-reply-button",
+              onClick: () => {
+                setSelectedThread(thread.id);
+                focusCommentThread(
+                  thread.id,
+                  commentSidebarRef.current
+                );
+              },
+              children: (0, import_i18n217.sprintf)(
+                // translators: %s: number of replies.
+                (0, import_i18n217._n)(
+                  "%s more reply",
+                  "%s more replies",
+                  restReplies.length
+                ),
+                restReplies.length
+              )
+            }
+          ) }),
+          !isSelected && lastReply && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            CommentBoard,
+            {
+              thread: lastReply,
+              parent: thread,
+              isExpanded: isSelected,
+              onEdit: onEditComment,
+              onDelete: onCommentDelete,
+              reflowComments
+            }
+          ),
+          isSelected && /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalVStack, { spacing: "2", role: "treeitem", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(comment_author_info_default, {}) }),
+            /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalVStack, { spacing: "2", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+              comment_form_default,
               {
-                thread,
-                isExpanded: isSelected,
-                onEdit: (params = {}) => {
-                  const { status } = params;
-                  onEditComment(params);
-                  if (status === "approved") {
-                    unselectThread();
-                    focusCommentThread(
-                      thread.id,
-                      commentSidebarRef.current
-                    );
+                onSubmit: (inputComment) => {
+                  if ("approved" === thread.status) {
+                    onEditComment({
+                      id: thread.id,
+                      status: "hold",
+                      content: inputComment
+                    });
+                  } else {
+                    onAddReply({
+                      content: inputComment,
+                      parent: thread.id
+                    });
                   }
                 },
-                onDelete: onCommentDelete,
-                reflowComments
-              }
-            ),
-            isSelected && allReplies.map((reply) => /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-              CommentBoard,
-              {
-                thread: reply,
-                parent: thread,
-                isExpanded: isSelected,
-                onEdit: onEditComment,
-                onDelete: onCommentDelete,
-                reflowComments
-              },
-              reply.id
-            )),
-            !isSelected && restReplies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalHStack, { className: "editor-collab-sidebar-panel__more-reply-separator", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-              import_components206.Button,
-              {
-                size: "compact",
-                variant: "tertiary",
-                className: "editor-collab-sidebar-panel__more-reply-button",
-                onClick: () => {
-                  setSelectedThread(thread.id);
+                onCancel: (event) => {
+                  event.stopPropagation();
+                  unselectThread();
                   focusCommentThread(
                     thread.id,
                     commentSidebarRef.current
                   );
                 },
-                children: (0, import_i18n217.sprintf)(
-                  // translators: %s: number of replies.
-                  (0, import_i18n217._n)(
-                    "%s more reply",
-                    "%s more replies",
-                    restReplies.length
-                  ),
-                  restReplies.length
-                )
-              }
-            ) }),
-            !isSelected && lastReply && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-              CommentBoard,
-              {
-                thread: lastReply,
-                parent: thread,
-                isExpanded: isSelected,
-                onEdit: onEditComment,
-                onDelete: onCommentDelete,
+                submitButtonText: "approved" === thread.status ? (0, import_i18n217.__)("Reopen & Reply") : (0, import_i18n217.__)("Reply"),
+                rows: "approved" === thread.status ? 2 : 4,
+                labelText: (0, import_i18n217.sprintf)(
+                  // translators: %1$s: note identifier, %2$s: author name
+                  (0, import_i18n217.__)("Reply to note %1$s by %2$s"),
+                  thread.id,
+                  thread.author_name
+                ),
                 reflowComments
               }
-            ),
-            isSelected && /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalVStack, { spacing: "2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(comment_author_info_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalVStack, { spacing: "2", children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-                comment_form_default,
-                {
-                  onSubmit: (inputComment) => {
-                    if ("approved" === thread.status) {
-                      onEditComment({
-                        id: thread.id,
-                        status: "hold",
-                        content: inputComment
-                      });
-                    } else {
-                      onAddReply({
-                        content: inputComment,
-                        parent: thread.id
-                      });
-                    }
-                  },
-                  onCancel: (event) => {
-                    event.stopPropagation();
-                    unselectThread();
-                    focusCommentThread(
-                      thread.id,
-                      commentSidebarRef.current
-                    );
-                  },
-                  submitButtonText: "approved" === thread.status ? (0, import_i18n217.__)("Reopen & Reply") : (0, import_i18n217.__)("Reply"),
-                  rows: "approved" === thread.status ? 2 : 4,
-                  labelText: (0, import_i18n217.sprintf)(
-                    // translators: %1$s: note identifier, %2$s: author name
-                    (0, import_i18n217.__)("Reply to note %1$s by %2$s"),
-                    thread.id,
-                    thread.author_name
-                  ),
-                  reflowComments
-                }
-              ) })
-            ] }),
-            !!thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-              import_components206.Button,
-              {
-                className: "editor-collab-sidebar-panel__skip-to-block",
-                variant: "secondary",
-                size: "compact",
-                onClick: (event) => {
-                  event.stopPropagation();
-                  relatedBlockElement?.focus();
-                },
-                children: (0, import_i18n217.__)("Back to block")
-              }
-            )
-          ]
-        }
-      )
+            ) })
+          ] }),
+          !!thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            import_components206.Button,
+            {
+              className: "editor-collab-sidebar-panel__skip-to-block",
+              variant: "secondary",
+              size: "compact",
+              onClick: (event) => {
+                event.stopPropagation();
+                relatedBlockElement?.focus();
+              },
+              children: (0, import_i18n217.__)("Back to block")
+            }
+          )
+        ]
+      }
     );
   }
   var CommentBoard = ({
@@ -49328,133 +49324,140 @@ var wp;
     ];
     const canResolve = thread.parent === 0;
     const moreActions = parent?.status !== "approved" ? actions2.filter((item) => item.isEligible(thread)) : [];
-    return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalVStack, { spacing: "2", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-          comment_author_info_default,
-          {
-            avatar: thread?.author_avatar_urls?.[48],
-            name: thread?.author_name,
-            date: thread?.date,
-            userId: thread?.author
-          }
-        ),
-        isExpanded && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-          import_components206.FlexItem,
-          {
-            className: "editor-collab-sidebar-panel__comment-status",
-            onClick: (event) => {
-              event.stopPropagation();
-            },
-            children: /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalHStack, { spacing: "0", children: [
-              canResolve && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-                import_components206.Button,
-                {
-                  label: (0, import_i18n217._x)(
-                    "Resolve",
-                    "Mark note as resolved"
+    return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(
+      import_components206.__experimentalVStack,
+      {
+        spacing: "2",
+        role: thread.parent !== 0 ? "treeitem" : void 0,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalHStack, { alignment: "left", spacing: "3", justify: "flex-start", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+              comment_author_info_default,
+              {
+                avatar: thread?.author_avatar_urls?.[48],
+                name: thread?.author_name,
+                date: thread?.date,
+                userId: thread?.author
+              }
+            ),
+            isExpanded && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+              import_components206.FlexItem,
+              {
+                className: "editor-collab-sidebar-panel__comment-status",
+                onClick: (event) => {
+                  event.stopPropagation();
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components206.__experimentalHStack, { spacing: "0", children: [
+                  canResolve && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                    import_components206.Button,
+                    {
+                      label: (0, import_i18n217._x)(
+                        "Resolve",
+                        "Mark note as resolved"
+                      ),
+                      size: "small",
+                      icon: published_default,
+                      disabled: thread.status === "approved",
+                      accessibleWhenDisabled: thread.status === "approved",
+                      onClick: () => {
+                        onEdit({
+                          id: thread.id,
+                          status: "approved"
+                        });
+                      }
+                    }
                   ),
-                  size: "small",
-                  icon: published_default,
-                  disabled: thread.status === "approved",
-                  accessibleWhenDisabled: thread.status === "approved",
-                  onClick: () => {
-                    onEdit({
-                      id: thread.id,
-                      status: "approved"
-                    });
-                  }
+                  /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(Menu6, { placement: "bottom-end", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                      Menu6.TriggerButton,
+                      {
+                        render: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                          import_components206.Button,
+                          {
+                            ref: actionButtonRef,
+                            size: "small",
+                            icon: more_vertical_default,
+                            label: (0, import_i18n217.__)("Actions"),
+                            disabled: !moreActions.length,
+                            accessibleWhenDisabled: true
+                          }
+                        )
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Menu6.Popover, { children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                      Menu6.Item,
+                      {
+                        onClick: () => action.onClick(),
+                        children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Menu6.ItemLabel, { children: action.title })
+                      },
+                      action.id
+                    )) })
+                  ] })
+                ] })
+              }
+            )
+          ] }),
+          "edit" === actionState ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            comment_form_default,
+            {
+              onSubmit: (value) => {
+                onEdit({
+                  id: thread.id,
+                  content: value
+                });
+                setActionState(false);
+                actionButtonRef.current?.focus();
+              },
+              onCancel: () => handleCancel(),
+              thread,
+              submitButtonText: (0, import_i18n217._x)("Update", "verb"),
+              labelText: (0, import_i18n217.sprintf)(
+                // translators: %1$s: note identifier, %2$s: author name.
+                (0, import_i18n217.__)("Edit note %1$s by %2$s"),
+                thread.id,
+                thread.author_name
+              ),
+              reflowComments
+            }
+          ) : /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            import_element169.RawHTML,
+            {
+              className: clsx_default(
+                "editor-collab-sidebar-panel__user-comment",
+                {
+                  "editor-collab-sidebar-panel__resolution-text": isResolutionComment
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(Menu6, { placement: "bottom-end", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-                  Menu6.TriggerButton,
-                  {
-                    render: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-                      import_components206.Button,
-                      {
-                        ref: actionButtonRef,
-                        size: "small",
-                        icon: more_vertical_default,
-                        label: (0, import_i18n217.__)("Actions"),
-                        disabled: !moreActions.length,
-                        accessibleWhenDisabled: true
-                      }
-                    )
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Menu6.Popover, { children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-                  Menu6.Item,
-                  {
-                    onClick: () => action.onClick(),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Menu6.ItemLabel, { children: action.title })
-                  },
-                  action.id
-                )) })
-              ] })
-            ] })
-          }
-        )
-      ] }),
-      "edit" === actionState ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-        comment_form_default,
-        {
-          onSubmit: (value) => {
-            onEdit({
-              id: thread.id,
-              content: value
-            });
-            setActionState(false);
-            actionButtonRef.current?.focus();
-          },
-          onCancel: () => handleCancel(),
-          thread,
-          submitButtonText: (0, import_i18n217._x)("Update", "verb"),
-          labelText: (0, import_i18n217.sprintf)(
-            // translators: %1$s: note identifier, %2$s: author name.
-            (0, import_i18n217.__)("Edit note %1$s by %2$s"),
-            thread.id,
-            thread.author_name
+              children: isResolutionComment ? (() => {
+                const actionText = thread.meta._wp_note_status === "resolved" ? (0, import_i18n217.__)("Marked as resolved") : (0, import_i18n217.__)("Reopened");
+                const content = thread?.content?.raw;
+                if (content && typeof content === "string" && content.trim() !== "") {
+                  return (0, import_i18n217.sprintf)(
+                    // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: note text.
+                    (0, import_i18n217.__)("%1$s: %2$s"),
+                    actionText,
+                    content
+                  );
+                }
+                return actionText;
+              })() : thread?.content?.rendered
+            }
           ),
-          reflowComments
-        }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-        import_element169.RawHTML,
-        {
-          className: clsx_default(
-            "editor-collab-sidebar-panel__user-comment",
+          "delete" === actionState && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+            import_components206.__experimentalConfirmDialog,
             {
-              "editor-collab-sidebar-panel__resolution-text": isResolutionComment
+              isOpen: showConfirmDialog,
+              onConfirm: handleConfirmDelete,
+              onCancel: handleCancel,
+              confirmButtonText: (0, import_i18n217.__)("Delete"),
+              children: (0, import_i18n217.__)(
+                "Are you sure you want to delete this note? This will also delete all of this note's replies."
+              )
             }
-          ),
-          children: isResolutionComment ? (() => {
-            const actionText = thread.meta._wp_note_status === "resolved" ? (0, import_i18n217.__)("Marked as resolved") : (0, import_i18n217.__)("Reopened");
-            const content = thread?.content?.raw;
-            if (content && typeof content === "string" && content.trim() !== "") {
-              return (0, import_i18n217.sprintf)(
-                // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: note text.
-                (0, import_i18n217.__)("%1$s: %2$s"),
-                actionText,
-                content
-              );
-            }
-            return actionText;
-          })() : thread?.content?.rendered
-        }
-      ),
-      "delete" === actionState && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-        import_components206.__experimentalConfirmDialog,
-        {
-          isOpen: showConfirmDialog,
-          onConfirm: handleConfirmDelete,
-          onCancel: handleCancel,
-          confirmButtonText: (0, import_i18n217.__)("Delete"),
-          children: (0, import_i18n217.__)(
-            "Are you sure you want to delete this note? This will also delete all of this note's replies."
           )
-        }
-      )
-    ] });
+        ]
+      }
+    );
   };
 
   // packages/editor/build-module/components/collab-sidebar/comment-menu-item.js
@@ -49594,7 +49597,7 @@ var wp;
       {
         className: "editor-collab-sidebar-panel",
         style: styles,
-        role: "list",
+        role: "tree",
         spacing: "3",
         justify: "flex-start",
         ref: (node) => {
@@ -49602,6 +49605,7 @@ var wp;
             commentSidebarRef.current = node;
           }
         },
+        "aria-label": isFloating ? (0, import_i18n220.__)("Unresolved notes") : (0, import_i18n220.__)("All notes"),
         children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
           Comments,
           {
