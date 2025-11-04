@@ -27827,7 +27827,7 @@ var wp;
       const activeNotesArea = SIDEBARS.find((name) => name === prevArea);
       if (currentThread?.status === "approved") {
         enableComplementaryArea2("core", collabHistorySidebarName);
-      } else if (!activeNotesArea) {
+      } else if (!activeNotesArea || !showAllNotesSidebar) {
         enableComplementaryArea2(
           "core",
           showFloatingSidebar ? collabSidebarName : collabHistorySidebarName
