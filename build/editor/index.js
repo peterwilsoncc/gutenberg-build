@@ -10593,16 +10593,15 @@ var wp;
             import_components26.Flex,
             {
               className: "editor-start-page-options__modal__actions",
-              justify: "flex-end",
+              justify: "flex-start",
               expanded: false,
               children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components26.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
-                import_components26.ToggleControl,
+                import_components26.CheckboxControl,
                 {
                   __nextHasNoMarginBottom: true,
                   checked: showStartPatterns,
-                  label: (0, import_i18n52.__)("Show starter patterns"),
-                  help: (0, import_i18n52.__)(
-                    "Shows starter patterns when creating a new page."
+                  label: (0, import_i18n52.__)(
+                    "Always show starter patterns for new pages"
                   ),
                   onChange: (newValue) => {
                     setShowStartPatterns(newValue);
@@ -28213,7 +28212,7 @@ var wp;
                       scope: "core",
                       featureName: "enableChoosePatternModal",
                       help: (0, import_i18n173.__)(
-                        "Shows starter patterns when creating a new page."
+                        "Pick from starter content when creating a new page."
                       ),
                       label: (0, import_i18n173.__)("Show starter patterns")
                     }
