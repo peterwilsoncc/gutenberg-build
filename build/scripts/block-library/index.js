@@ -29285,27 +29285,13 @@ ${url}
   var import_data46 = __toESM(require_data());
   var import_jsx_runtime264 = __toESM(require_jsx_runtime());
   var { Badge } = unlock(import_components53.privateApis);
-  function MathEdit({
-    attributes: attributes3,
-    setAttributes,
-    isSelected,
-    clientId
-  }) {
-    const { latex } = attributes3;
+  function MathEdit({ attributes: attributes3, setAttributes, isSelected }) {
+    const { latex, mathML } = attributes3;
     const [blockRef, setBlockRef] = (0, import_element46.useState)();
     const [error, setError] = (0, import_element46.useState)(null);
     const [latexToMathML, setLatexToMathML] = (0, import_element46.useState)();
-    const initialLatex = (0, import_element46.useRef)(attributes3.latex);
+    const initialLatex = (0, import_element46.useRef)(latex);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data46.useDispatch)(import_block_editor117.store);
-    const { isEditingAsHTML } = (0, import_data46.useSelect)(
-      (select8) => {
-        const { getBlockMode } = select8(import_block_editor117.store);
-        return {
-          isEditingAsHTML: getBlockMode(clientId) === "html"
-        };
-      },
-      [clientId]
-    );
     (0, import_element46.useEffect)(() => {
       Promise.resolve().then(() => __toESM(require_latex_to_mathml())).then((module) => {
         setLatexToMathML(() => module.default);
@@ -29328,14 +29314,14 @@ ${url}
       position: "relative"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)("div", { ...blockProps, children: [
-      attributes3.mathML ? /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
+      mathML ? /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
         "math",
         {
           display: "block",
-          dangerouslySetInnerHTML: { __html: attributes3.mathML }
+          dangerouslySetInnerHTML: { __html: mathML }
         }
       ) : "\u200B",
-      isSelected && !isEditingAsHTML && /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
+      isSelected && /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
         import_components53.Popover,
         {
           placement: "bottom-start",
@@ -29357,9 +29343,9 @@ ${url}
                     setAttributes({ latex: newLatex });
                     return;
                   }
-                  let mathML = "";
+                  let newMathML = "";
                   try {
-                    mathML = latexToMathML(newLatex, {
+                    newMathML = latexToMathML(newLatex, {
                       displayMode: true
                     });
                     setError(null);
@@ -29367,7 +29353,7 @@ ${url}
                     setError(err.message);
                   }
                   setAttributes({
-                    mathML,
+                    mathML: newMathML,
                     latex: newLatex
                   });
                 },
@@ -29401,6 +29387,9 @@ ${url}
     description: "Display mathematical notation using LaTeX.",
     keywords: ["equation", "formula", "latex", "mathematics"],
     textdomain: "default",
+    supports: {
+      html: false
+    },
     attributes: {
       latex: {
         type: "string",
