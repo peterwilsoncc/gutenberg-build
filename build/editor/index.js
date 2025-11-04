@@ -25142,13 +25142,16 @@ var wp;
     const isTrimmed = trimmedExcerpt !== rawText;
     return isTrimmed ? trimmedExcerpt + "\u2026" : trimmedExcerpt;
   }
-  function focusCommentThread(commentId, container, additionalSelector) {
-    if (!container) {
+  function focusCommentThread(commentId, threadContainer, additionalSelector) {
+    if (!threadContainer) {
       return;
     }
     const threadSelector = commentId ? `[role=treeitem][id="comment-thread-${commentId}"]` : "[role=treeitem]:not([id])";
     const selector = additionalSelector ? `${threadSelector} ${additionalSelector}` : threadSelector;
     return new Promise((resolve) => {
+      const container = threadContainer.closest(
+        ".interface-interface-skeleton__sidebar"
+      );
       if (container.querySelector(selector)) {
         return resolve(container.querySelector(selector));
       }
@@ -27128,19 +27131,7 @@ var wp;
     ]);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
-      return /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(import_jsx_runtime244.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
-          AddComment,
-          {
-            onSubmit: onAddReply,
-            showCommentBoard,
-            setShowCommentBoard,
-            commentSidebarRef
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_components143.__experimentalText, { as: "p", children: (0, import_i18n167.__)("No notes available.") }),
-        /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_components143.__experimentalText, { as: "p", variant: "muted", children: (0, import_i18n167.__)("Only logged in users can see Notes.") })
-      ] });
+      return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(import_jsx_runtime244.Fragment, { children: [
       !isFloating && showCommentBoard && void 0 === blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
@@ -27830,6 +27821,7 @@ var wp;
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
     const currentThread = blockCommentId ? resultComments.find((thread) => thread.id === blockCommentId) : null;
+    const showAllNotesSidebar = resultComments.length > 0 || !showFloatingSidebar;
     async function openTheSidebar() {
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name) => name === prevArea);
@@ -27866,7 +27858,7 @@ var wp;
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(comment_menu_item_default, { onClick: openTheSidebar }),
-      /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+      showAllNotesSidebar && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
         PluginSidebar,
         {
           identifier: collabHistorySidebarName,
@@ -27996,14 +27988,14 @@ var wp;
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(EditorInterface, { ...props, children: extraContent }),
             children,
-            /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(NotesSidebarContainer, {}),
             /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
               sidebar_default2,
               {
                 onActionPerformed,
                 extraPanels: extraSidebarPanels
               }
-            )
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(NotesSidebarContainer, {})
           ]
         }
       )
