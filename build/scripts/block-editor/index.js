@@ -60564,6 +60564,11 @@ var wp;
       () => computeStyle(blockElement)
     );
     (0, import_element219.useEffect)(() => {
+      if (blockElement && forceShow) {
+        updateStyle();
+      }
+    }, [blockElement, forceShow]);
+    (0, import_element219.useEffect)(() => {
       if (!blockElement) {
         return;
       }
@@ -60698,8 +60703,13 @@ var wp;
   function DimensionsPanel2({ clientId, name, setAttributes, settings: settings2 }) {
     const isEnabled = useHasDimensionsPanel(settings2);
     const value = (0, import_data175.useSelect)(
-      (select3) => select3(store).getBlockAttributes(clientId)?.style,
-      [clientId]
+      (select3) => {
+        if (!isEnabled) {
+          return void 0;
+        }
+        return select3(store).getBlockAttributes(clientId)?.style;
+      },
+      [clientId, isEnabled]
     );
     const [visualizedProperty, setVisualizedProperty] = useVisualizer();
     const onChange = (newStyle) => {
@@ -60735,7 +60745,7 @@ var wp;
           onVisualize: setVisualizedProperty
         }
       ),
-      !!settings2?.spacing?.padding && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+      !!settings2?.spacing?.padding && visualizedProperty === "padding" && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
         PaddingVisualizer,
         {
           forceShow: visualizedProperty === "padding",
@@ -60743,7 +60753,7 @@ var wp;
           value
         }
       ),
-      !!settings2?.spacing?.margin && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+      !!settings2?.spacing?.margin && visualizedProperty === "margin" && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
         MarginVisualizer,
         {
           forceShow: visualizedProperty === "margin",
