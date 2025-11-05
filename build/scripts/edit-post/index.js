@@ -231,11 +231,11 @@ var wp;
     reinitializeEditor: () => reinitializeEditor,
     store: () => store
   });
-  var import_blocks4 = __toESM(require_blocks());
+  var import_blocks3 = __toESM(require_blocks());
   var import_block_library2 = __toESM(require_block_library());
   var import_deprecated4 = __toESM(require_deprecated());
   var import_element13 = __toESM(require_element());
-  var import_data27 = __toESM(require_data());
+  var import_data26 = __toESM(require_data());
   var import_preferences11 = __toESM(require_preferences());
   var import_widgets = __toESM(require_widgets());
   var import_editor20 = __toESM(require_editor());
@@ -280,8 +280,8 @@ var wp;
 
   // packages/edit-post/build-module/components/layout/index.js
   var import_editor18 = __toESM(require_editor());
-  var import_data26 = __toESM(require_data());
-  var import_block_editor3 = __toESM(require_block_editor());
+  var import_data25 = __toESM(require_data());
+  var import_block_editor2 = __toESM(require_block_editor());
 
   // packages/global-styles-engine/build-module/utils/common.js
   var import_style_engine = __toESM(require_style_engine());
@@ -626,7 +626,7 @@ var wp;
   var import_html_entities = __toESM(require_html_entities());
   var import_core_data6 = __toESM(require_core_data());
   var import_components9 = __toESM(require_components());
-  var import_compose4 = __toESM(require_compose());
+  var import_compose3 = __toESM(require_compose());
 
   // packages/edit-post/build-module/components/back-button/index.js
   var import_editor2 = __toESM(require_editor());
@@ -2190,61 +2190,14 @@ var wp;
     });
   }
 
-  // packages/edit-post/build-module/components/layout/use-padding-appender.js
-  var import_data22 = __toESM(require_data());
-  var import_compose3 = __toESM(require_compose());
-  var import_block_editor = __toESM(require_block_editor());
-  var import_blocks2 = __toESM(require_blocks());
-  var CSS = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
-  function usePaddingAppender(enabled) {
-    const registry = (0, import_data22.useRegistry)();
-    const effect = (0, import_compose3.useRefEffect)(
-      (node) => {
-        function onMouseDown(event) {
-          if (event.target !== node && // Tests for the parent element because in the iframed editor if the click is
-          // below the padding the target will be the parent element (html) and should
-          // still be treated as intent to append.
-          event.target !== node.parentElement) {
-            return;
-          }
-          const lastChild = node.lastElementChild;
-          if (!lastChild) {
-            return;
-          }
-          const lastChildRect = lastChild.getBoundingClientRect();
-          if (event.clientY < lastChildRect.bottom) {
-            return;
-          }
-          event.preventDefault();
-          const blockOrder = registry.select(import_block_editor.store).getBlockOrder("");
-          const lastBlockClientId = blockOrder[blockOrder.length - 1];
-          const lastBlock = registry.select(import_block_editor.store).getBlock(lastBlockClientId);
-          const { selectBlock, insertDefaultBlock } = registry.dispatch(import_block_editor.store);
-          if (lastBlock && (0, import_blocks2.isUnmodifiedDefaultBlock)(lastBlock)) {
-            selectBlock(lastBlockClientId);
-          } else {
-            insertDefaultBlock();
-          }
-        }
-        const { ownerDocument } = node;
-        ownerDocument.addEventListener("pointerdown", onMouseDown);
-        return () => {
-          ownerDocument.removeEventListener("pointerdown", onMouseDown);
-        };
-      },
-      [registry]
-    );
-    return enabled ? [effect, CSS] : [];
-  }
-
   // packages/edit-post/build-module/components/layout/use-should-iframe.js
   var import_editor15 = __toESM(require_editor());
-  var import_data23 = __toESM(require_data());
-  var import_blocks3 = __toESM(require_blocks());
-  var import_block_editor2 = __toESM(require_block_editor());
+  var import_data22 = __toESM(require_data());
+  var import_blocks2 = __toESM(require_blocks());
+  var import_block_editor = __toESM(require_block_editor());
   var isGutenbergPlugin = true ? true : false;
   function useShouldIframe() {
-    return (0, import_data23.useSelect)((select3) => {
+    return (0, import_data22.useSelect)((select3) => {
       const { getEditorSettings, getCurrentPostType, getDeviceType } = select3(import_editor15.store);
       return (
         // If the theme is block based and the Gutenberg plugin is active,
@@ -2253,16 +2206,16 @@ var wp;
         isGutenbergPlugin && getEditorSettings().__unstableIsBlockBasedTheme || // We also still want to iframe all the special
         // editor features and modes such as device previews, zoom out, and
         // template/pattern editing.
-        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock(select3(import_block_editor2.store)).isZoomOut() || // Finally, still iframe the editor if all blocks are v3 (which means
+        getDeviceType() !== "Desktop" || ["wp_template", "wp_block"].includes(getCurrentPostType()) || unlock(select3(import_block_editor.store)).isZoomOut() || // Finally, still iframe the editor if all blocks are v3 (which means
         // they are marked as iframe-compatible).
-        select3(import_blocks3.store).getBlockTypes().every((type) => type.apiVersion >= 3)
+        select3(import_blocks2.store).getBlockTypes().every((type) => type.apiVersion >= 3)
       );
     }, []);
   }
 
   // packages/edit-post/build-module/hooks/use-navigate-to-entity-record.js
   var import_element10 = __toESM(require_element());
-  var import_data24 = __toESM(require_data());
+  var import_data23 = __toESM(require_data());
   var import_editor16 = __toESM(require_editor());
   function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRenderingMode) {
     const [postHistory, dispatch2] = (0, import_element10.useReducer)(
@@ -2284,8 +2237,8 @@ var wp;
       ]
     );
     const { post, previousRenderingMode } = postHistory[postHistory.length - 1];
-    const { getRenderingMode } = (0, import_data24.useSelect)(import_editor16.store);
-    const { setRenderingMode } = (0, import_data24.useDispatch)(import_editor16.store);
+    const { getRenderingMode } = (0, import_data23.useSelect)(import_editor16.store);
+    const { setRenderingMode } = (0, import_data23.useDispatch)(import_editor16.store);
     const onNavigateToEntityRecord = (0, import_element10.useCallback)(
       (params) => {
         dispatch2({
@@ -2312,15 +2265,15 @@ var wp;
   }
 
   // packages/edit-post/build-module/components/meta-boxes/use-meta-box-initialization.js
-  var import_data25 = __toESM(require_data());
+  var import_data24 = __toESM(require_data());
   var import_editor17 = __toESM(require_editor());
   var import_element11 = __toESM(require_element());
   var useMetaBoxInitialization = (enabled) => {
-    const isEnabledAndEditorReady = (0, import_data25.useSelect)(
+    const isEnabledAndEditorReady = (0, import_data24.useSelect)(
       (select3) => enabled && select3(import_editor17.store).__unstableIsEditorReady(),
       [enabled]
     );
-    const { initializeMetaBoxes: initializeMetaBoxes2 } = (0, import_data25.useDispatch)(store);
+    const { initializeMetaBoxes: initializeMetaBoxes2 } = (0, import_data24.useDispatch)(store);
     (0, import_element11.useEffect)(() => {
       if (isEnabledAndEditorReady) {
         initializeMetaBoxes2();
@@ -2339,13 +2292,12 @@ var wp;
     "wp_block",
     "wp_navigation"
   ];
-  function useEditorStyles(settings, ...additionalStyles) {
-    const { hasThemeStyleSupport } = (0, import_data26.useSelect)((select3) => {
+  function useEditorStyles(settings) {
+    const { hasThemeStyleSupport } = (0, import_data25.useSelect)((select3) => {
       return {
         hasThemeStyleSupport: select3(store).isFeatureActive("themeStyles")
       };
     }, []);
-    const addedStyles = additionalStyles.join("\n");
     return (0, import_element12.useMemo)(() => {
       const presetStyles = settings.styles?.filter(
         (style) => style.__unstableType && style.__unstableType !== "theme"
@@ -2366,21 +2318,16 @@ var wp;
           })
         });
       }
-      const baseStyles = hasThemeStyles ? settings.styles ?? [] : defaultEditorStyles;
-      if (addedStyles) {
-        return [...baseStyles, { css: addedStyles }];
-      }
-      return baseStyles;
+      return hasThemeStyles ? settings.styles ?? [] : defaultEditorStyles;
     }, [
       settings.defaultEditorStyles,
       settings.disableLayoutStyles,
       settings.styles,
-      hasThemeStyleSupport,
-      addedStyles
+      hasThemeStyleSupport
     ]);
   }
   function MetaBoxesMain({ isLegacy }) {
-    const [isOpen, openHeight, hasAnyVisible] = (0, import_data26.useSelect)((select3) => {
+    const [isOpen, openHeight, hasAnyVisible] = (0, import_data25.useSelect)((select3) => {
       const { get } = select3(import_preferences10.store);
       const { isMetaBoxLocationVisible: isMetaBoxLocationVisible2 } = select3(store);
       return [
@@ -2389,11 +2336,11 @@ var wp;
         isMetaBoxLocationVisible2("normal") || isMetaBoxLocationVisible2("advanced") || isMetaBoxLocationVisible2("side")
       ];
     }, []);
-    const { set: setPreference } = (0, import_data26.useDispatch)(import_preferences10.store);
+    const { set: setPreference } = (0, import_data25.useDispatch)(import_preferences10.store);
     const metaBoxesMainRef = (0, import_element12.useRef)();
-    const isShort = (0, import_compose4.useMediaQuery)("(max-height: 549px)");
+    const isShort = (0, import_compose3.useMediaQuery)("(max-height: 549px)");
     const [{ min, max }, setHeightConstraints] = (0, import_element12.useState)(() => ({}));
-    const effectSizeConstraints = (0, import_compose4.useRefEffect)((node) => {
+    const effectSizeConstraints = (0, import_compose3.useRefEffect)((node) => {
       const container = node.closest(
         ".interface-interface-skeleton__content"
       );
@@ -2451,7 +2398,7 @@ var wp;
         });
       }
     };
-    const getRenderValues = (0, import_compose4.useEvent)(() => ({ isOpen, openHeight, min }));
+    const getRenderValues = (0, import_compose3.useEvent)(() => ({ isOpen, openHeight, min }));
     (0, import_element12.useEffect)(() => {
       const fresh = getRenderValues();
       if (fresh.min !== void 0 && metaBoxesMainRef.current) {
@@ -2602,7 +2549,7 @@ var wp;
   }) {
     useCommands();
     const shouldIframe = useShouldIframe();
-    const { createErrorNotice } = (0, import_data26.useDispatch)(import_notices3.store);
+    const { createErrorNotice } = (0, import_data25.useDispatch)(import_notices3.store);
     const {
       currentPost: { postId: currentPostId, postType: currentPostType },
       onNavigateToEntityRecord,
@@ -2624,9 +2571,8 @@ var wp;
       showMetaBoxes,
       isWelcomeGuideVisible,
       templateId,
-      enablePaddingAppender,
       isDevicePreview
-    } = (0, import_data26.useSelect)(
+    } = (0, import_data25.useSelect)(
       (select3) => {
         const { get } = select3(import_preferences10.store);
         const { isFeatureActive: isFeatureActive2, hasMetaBoxes: hasMetaBoxes2 } = select3(store);
@@ -2640,15 +2586,9 @@ var wp;
           name: "wp_template"
         });
         const { getBlockSelectionStart, isZoomOut } = unlock(
-          select3(import_block_editor3.store)
+          select3(import_block_editor2.store)
         );
-        const {
-          getEditorMode: getEditorMode2,
-          getRenderingMode,
-          getDefaultRenderingMode,
-          getDeviceType
-        } = unlock(select3(import_editor18.store));
-        const isRenderingPostOnly = getRenderingMode() === "post-only";
+        const { getEditorMode: getEditorMode2, getDefaultRenderingMode, getDeviceType } = unlock(select3(import_editor18.store));
         const isNotDesignPostType = !DESIGN_POST_TYPES.includes(currentPostType);
         const isDirectlyEditingPattern = currentPostType === "wp_block" && !onNavigateToPreviousEntityRecord;
         const _templateId = getTemplateId(currentPostType, currentPostId);
@@ -2664,7 +2604,6 @@ var wp;
           showMetaBoxes: isNotDesignPostType && !isZoomOut() || isDirectlyEditingPattern,
           isWelcomeGuideVisible: isFeatureActive2("welcomeGuide"),
           templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate2 ? _templateId : null,
-          enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && isNotDesignPostType,
           isDevicePreview: getDeviceType() !== "Desktop"
         };
       },
@@ -2677,12 +2616,9 @@ var wp;
       ]
     );
     useMetaBoxInitialization(hasActiveMetaboxes && hasResolvedMode);
-    const [paddingAppenderRef, paddingStyle] = usePaddingAppender(
-      enablePaddingAppender
-    );
     const commandContext = hasBlockSelected ? "block-selection-edit" : "entity-edit";
     useCommandContext(commandContext);
-    const styles = useEditorStyles(settings, paddingStyle);
+    const styles = useEditorStyles(settings);
     const editorSettings = (0, import_element12.useMemo)(
       () => ({
         ...settings,
@@ -2718,7 +2654,7 @@ var wp;
         )
       );
     }
-    const { createSuccessNotice } = (0, import_data26.useDispatch)(import_notices3.store);
+    const { createSuccessNotice } = (0, import_data25.useDispatch)(import_notices3.store);
     const onActionPerformed = (0, import_element12.useCallback)(
       (actionId, items) => {
         switch (actionId) {
@@ -2770,7 +2706,7 @@ var wp;
         id: initialPostId
       };
     }, [initialPostType, initialPostId]);
-    const backButton = (0, import_compose4.useViewportMatch)("medium") && isFullscreenActive ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(back_button_default, { initialPost }) : null;
+    const backButton = (0, import_compose3.useViewportMatch)("medium") && isFullscreenActive ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(back_button_default, { initialPost }) : null;
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_components9.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_editor18.ErrorBoundary, { canCopyContent: true, children: [
       /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(WelcomeGuide, { postType: currentPostType }),
       /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
@@ -2789,7 +2725,6 @@ var wp;
               templateId,
               className,
               forceIsDirty: hasActiveMetaboxes,
-              contentRef: paddingAppenderRef,
               disableIframe: !shouldIframe,
               autoFocus: !isWelcomeGuideVisible,
               onActionPerformed,
@@ -2918,13 +2853,13 @@ var wp;
     const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
     const target = document.getElementById(id);
     const root = (0, import_element13.createRoot)(target);
-    (0, import_data27.dispatch)(import_preferences11.store).setDefaults("core/edit-post", {
+    (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core/edit-post", {
       fullscreenMode: true,
       themeStyles: true,
       welcomeGuide: true,
       welcomeGuideTemplate: true
     });
-    (0, import_data27.dispatch)(import_preferences11.store).setDefaults("core", {
+    (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core", {
       allowRightClickOverrides: true,
       editorMode: "visual",
       editorTool: "edit",
@@ -2939,14 +2874,14 @@ var wp;
       isPublishSidebarEnabled: true
     });
     if (window.__experimentalMediaProcessing) {
-      (0, import_data27.dispatch)(import_preferences11.store).setDefaults("core/media", {
+      (0, import_data26.dispatch)(import_preferences11.store).setDefaults("core/media", {
         requireApproval: true,
         optimizeOnUpload: true
       });
     }
-    (0, import_data27.dispatch)(import_blocks4.store).reapplyBlockTypeFilters();
-    if (isMediumOrBigger && (0, import_data27.select)(import_preferences11.store).get("core", "showListViewByDefault") && !(0, import_data27.select)(import_preferences11.store).get("core", "distractionFree")) {
-      (0, import_data27.dispatch)(import_editor20.store).setIsListViewOpened(true);
+    (0, import_data26.dispatch)(import_blocks3.store).reapplyBlockTypeFilters();
+    if (isMediumOrBigger && (0, import_data26.select)(import_preferences11.store).get("core", "showListViewByDefault") && !(0, import_data26.select)(import_preferences11.store).get("core", "distractionFree")) {
+      (0, import_data26.dispatch)(import_editor20.store).setIsListViewOpened(true);
     }
     (0, import_block_library2.registerCoreBlocks)();
     registerCoreBlockBindingsSources();
