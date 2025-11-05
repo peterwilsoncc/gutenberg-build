@@ -958,7 +958,7 @@ var wp;
             onChange: updateHeadingLevel
           }
         ) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_block_editor2.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.ToolbarButton, { onClick: addAccordionItemBlock, children: (0, import_i18n.__)("Add") }) })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_block_editor2.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.ToolbarButton, { onClick: addAccordionItemBlock, children: (0, import_i18n.__)("Add item") }) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_block_editor2.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
         import_components.__experimentalToolsPanel,
