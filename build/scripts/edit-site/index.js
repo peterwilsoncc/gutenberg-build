@@ -24474,8 +24474,7 @@ var wp;
             accessibleWhenDisabled: true,
             text: label,
             size: "small",
-            onClick: () => setIsModalOpen(true),
-            variant: "link"
+            onClick: () => setIsModalOpen(true)
           }
         ),
         children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
@@ -24500,7 +24499,6 @@ var wp;
             onClick: () => {
               primaryAction.callback([item], { registry });
             },
-            variant: "link",
             children: label
           }
         )
