@@ -42728,7 +42728,6 @@ var wp;
   var {
     PatternOverridesControls,
     ResetOverridesControl,
-    PatternOverridesBlockControls,
     PATTERN_TYPES: PATTERN_TYPES4,
     PARTIAL_SYNCING_SUPPORTED_BLOCKS,
     PATTERN_SYNC_TYPES
@@ -42738,8 +42737,7 @@ var wp;
       const isSupportedBlock = !!PARTIAL_SYNCING_SUPPORTED_BLOCKS[props.name];
       return /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(import_jsx_runtime284.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(BlockEdit2, { ...props }, "edit"),
-        props.isSelected && isSupportedBlock && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(ControlsWithStoreSubscription, { ...props }),
-        isSupportedBlock && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(PatternOverridesBlockControls, {})
+        props.isSelected && isSupportedBlock && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(ControlsWithStoreSubscription, { ...props })
       ] });
     },
     "withPatternOverrideControls"
