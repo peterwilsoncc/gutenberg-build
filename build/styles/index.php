@@ -43,14 +43,14 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
-		'handle' => 'wp-components',
-		'path' => 'components/style',
-		'dependencies' => array(),
-	),
-	array(
 		'handle' => 'wp-format-library',
 		'path' => 'format-library/style',
 		'dependencies' => array('wp-block-editor', 'wp-components'),
+	),
+	array(
+		'handle' => 'wp-components',
+		'path' => 'components/style',
+		'dependencies' => array(),
 	),
 	array(
 		'handle' => 'wp-block-directory',

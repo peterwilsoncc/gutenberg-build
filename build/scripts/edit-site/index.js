@@ -22753,7 +22753,19 @@ var wp;
     registry,
     setActiveModalAction
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(Menu5.Group, { children: actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
+    const { primaryActions, regularActions } = (0, import_element67.useMemo)(() => {
+      return actions.reduce(
+        (acc, action) => {
+          (action.isPrimary ? acc.primaryActions : acc.regularActions).push(action);
+          return acc;
+        },
+        {
+          primaryActions: [],
+          regularActions: []
+        }
+      );
+    }, [actions]);
+    const renderActionGroup = (actionList) => actionList.map((action) => /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
       MenuItemTrigger,
       {
         action,
@@ -22767,7 +22779,12 @@ var wp;
         items: [item]
       },
       action.id
-    )) });
+    ));
+    return /* @__PURE__ */ (0, import_jsx_runtime184.jsxs)(Menu5.Group, { children: [
+      renderActionGroup(primaryActions),
+      primaryActions.length > 0 && regularActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(Menu5.Separator, {}),
+      renderActionGroup(regularActions)
+    ] });
   }
   function ItemActions({
     item,
