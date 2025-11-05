@@ -13,13 +13,9 @@
 		}
 	},
 	"supports": {
-		"html": false,
 		"className": false,
 		"customClassName": false,
-		"lock": false,
-		"reusable": false,
-		"renaming": false,
-		"blockVisibility": false
+		"reusable": false
 	},
 	"editorStyle": "wp-block-freeform-editor"
 }

@@ -31,7 +31,6 @@ var wp;
     "@wordpress/block-editor",
     "@wordpress/block-library",
     "@wordpress/blocks",
-    "@wordpress/boot",
     "@wordpress/commands",
     "@wordpress/components",
     "@wordpress/core-commands",

@@ -1,15 +1,15 @@
-// packages/block-editor/build-module/utils/fit-text-frontend.js
-import { store, getElement, getContext } from "@wordpress/interactivity";
-
 // packages/block-editor/build-module/utils/fit-text-utils.js
-function findOptimalFontSize(textElement, applyFontSize) {
+function generateCSSRule(elementSelector, fontSize) {
+  return `${elementSelector} { font-size: ${fontSize}px !important; }`;
+}
+function findOptimalFontSize(textElement, elementSelector, applyStylesFn) {
   const alreadyHasScrollableHeight = textElement.scrollHeight > textElement.clientHeight;
   let minSize = 5;
   let maxSize = 600;
   let bestSize = minSize;
   while (minSize <= maxSize) {
     const midSize = Math.floor((minSize + maxSize) / 2);
-    applyFontSize(midSize);
+    applyStylesFn(generateCSSRule(elementSelector, midSize));
     const fitsWidth = textElement.scrollWidth <= textElement.clientWidth;
     const fitsHeight = alreadyHasScrollableHeight || textElement.scrollHeight <= textElement.clientHeight;
     if (fitsWidth && fitsHeight) {
@@ -21,42 +21,57 @@ function findOptimalFontSize(textElement, applyFontSize) {
   }
   return bestSize;
 }
-function optimizeFitText(textElement, applyFontSize) {
+function optimizeFitText(textElement, elementSelector, applyStylesFn) {
   if (!textElement) {
     return;
   }
-  applyFontSize(0);
-  const optimalSize = findOptimalFontSize(textElement, applyFontSize);
-  applyFontSize(optimalSize);
-  return optimalSize;
+  applyStylesFn("");
+  const optimalSize = findOptimalFontSize(
+    textElement,
+    elementSelector,
+    applyStylesFn
+  );
+  const cssRule = generateCSSRule(elementSelector, optimalSize);
+  applyStylesFn(cssRule);
 }
 
 // packages/block-editor/build-module/utils/fit-text-frontend.js
-store("core/fit-text", {
-  callbacks: {
-    init() {
-      const context = getContext();
-      const { ref } = getElement();
-      const applyFontSize = (fontSize) => {
-        if (fontSize === 0) {
-          ref.style.fontSize = "";
-        } else {
-          ref.style.fontSize = `${fontSize}px`;
-        }
-      };
-      context.fontSize = optimizeFitText(ref, applyFontSize);
-      if (window.ResizeObserver && ref.parentElement) {
-        const resizeObserver = new window.ResizeObserver(() => {
-          context.fontSize = optimizeFitText(ref, applyFontSize);
-        });
-        resizeObserver.observe(ref.parentElement);
-        return () => {
-          if (resizeObserver) {
-            resizeObserver.disconnect();
-          }
-        };
-      }
-    }
+var idCounter = 0;
+function getOrCreateStyleElement(elementId) {
+  const styleId = `fit-text-${elementId}`;
+  let styleElement = document.getElementById(styleId);
+  if (!styleElement) {
+    styleElement = document.createElement("style");
+    styleElement.id = styleId;
+    document.head.appendChild(styleElement);
   }
-});
+  return styleElement;
+}
+function getElementIdentifier(element) {
+  if (!element.dataset.fitTextId) {
+    element.dataset.fitTextId = `fit-text-${++idCounter}`;
+  }
+  return element.dataset.fitTextId;
+}
+function initializeFitText(element) {
+  const elementId = getElementIdentifier(element);
+  const applyFitText = () => {
+    const styleElement = getOrCreateStyleElement(elementId);
+    const elementSelector = `[data-fit-text-id="${elementId}"]`;
+    const applyStylesFn = (css) => {
+      styleElement.textContent = css;
+    };
+    optimizeFitText(element, elementSelector, applyStylesFn);
+  };
+  applyFitText();
+  if (window.ResizeObserver && element.parentElement) {
+    const resizeObserver = new window.ResizeObserver(applyFitText);
+    resizeObserver.observe(element.parentElement);
+  }
+}
+function initializeAllFitText() {
+  const elements = document.querySelectorAll(".has-fit-text");
+  elements.forEach(initializeFitText);
+}
+window.addEventListener("load", initializeAllFitText);
 //# sourceMappingURL=fit-text-frontend.js.map

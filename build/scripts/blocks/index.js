@@ -784,17 +784,17 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/is-shallow-equal
-  var require_is_shallow_equal = __commonJS({
-    "package-external:@wordpress/is-shallow-equal"(exports, module) {
-      module.exports = window.wp.isShallowEqual;
-    }
-  });
-
   // vendor-external:react/jsx-runtime
   var require_jsx_runtime = __commonJS({
     "vendor-external:react/jsx-runtime"(exports, module) {
       module.exports = window.ReactJSXRuntime;
+    }
+  });
+
+  // package-external:@wordpress/is-shallow-equal
+  var require_is_shallow_equal = __commonJS({
+    "package-external:@wordpress/is-shallow-equal"(exports, module) {
+      module.exports = window.wp.isShallowEqual;
     }
   });
 
@@ -5742,19 +5742,40 @@ var wp;
       case "ADD_BOOTSTRAPPED_BLOCK_TYPE":
         const { name, blockType } = action;
         const serverDefinition = state[name];
+        let newDefinition;
         if (serverDefinition) {
-          return state;
+          if (serverDefinition.blockHooks === void 0 && blockType.blockHooks) {
+            newDefinition = {
+              ...serverDefinition,
+              ...newDefinition,
+              blockHooks: blockType.blockHooks
+            };
+          }
+          if (serverDefinition.allowedBlocks === void 0 && blockType.allowedBlocks) {
+            newDefinition = {
+              ...serverDefinition,
+              ...newDefinition,
+              allowedBlocks: blockType.allowedBlocks
+            };
+          }
+        } else {
+          newDefinition = Object.fromEntries(
+            Object.entries(blockType).filter(
+              ([, value]) => value !== null && value !== void 0
+            ).map(([key, value]) => [
+              camelCase(key),
+              value
+            ])
+          );
+          newDefinition.name = name;
         }
-        const newDefinition = Object.fromEntries(
-          Object.entries(blockType).filter(
-            ([, value]) => value !== null && value !== void 0
-          ).map(([key, value]) => [camelCase(key), value])
-        );
-        newDefinition.name = name;
-        return {
-          ...state,
-          [name]: newDefinition
-        };
+        if (newDefinition) {
+          return {
+            ...state,
+            [name]: newDefinition
+          };
+        }
+        return state;
       case "REMOVE_BLOCK_TYPES":
         return omit(state, action.names);
     }
@@ -7021,6 +7042,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   var import_autop2 = __toESM(require_autop());
 
   // packages/blocks/build-module/api/serializer.js
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
   var import_element2 = __toESM(require_element());
   var import_hooks3 = __toESM(require_hooks());
   var import_is_shallow_equal = __toESM(require_is_shallow_equal());
@@ -7047,7 +7069,6 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/serializer.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
   function getBlockDefaultClassName(blockName) {
     const className = "wp-block-" + blockName.replace(/\//, "-").replace(/^core-/, "");
     return (0, import_hooks3.applyFilters)(
@@ -8627,7 +8648,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
     return result;
   }
-  function fromDOM22(domNodes) {
+  function fromDOM2(domNodes) {
     (0, import_deprecated8.default)("wp.blocks.children.fromDOM", {
       since: "6.1",
       version: "6.3",
@@ -8637,7 +8658,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     const result = [];
     for (let i2 = 0; i2 < domNodes.length; i2++) {
       try {
-        result.push(fromDOM2(domNodes[i2]));
+        result.push(fromDOM(domNodes[i2]));
       } catch (error) {
       }
     }
@@ -8666,7 +8687,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
         match = domNode.querySelector(selector);
       }
       if (match) {
-        return fromDOM22(match.childNodes);
+        return fromDOM2(match.childNodes);
       }
       return [];
     };
@@ -8674,7 +8695,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   var children_default = {
     concat,
     getChildrenArray,
-    fromDOM: fromDOM22,
+    fromDOM: fromDOM2,
     toHTML,
     matcher
   };
@@ -8696,7 +8717,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
     return result;
   }
-  function fromDOM2(domNode) {
+  function fromDOM(domNode) {
     (0, import_deprecated9.default)("wp.blocks.node.fromDOM", {
       since: "6.1",
       version: "6.3",
@@ -8715,7 +8736,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
       type: domNode.nodeName.toLowerCase(),
       props: {
         ...getNamedNodeMapAsObject(domNode.attributes),
-        children: fromDOM22(domNode.childNodes)
+        children: fromDOM2(domNode.childNodes)
       }
     };
   }
@@ -8741,7 +8762,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
         match = domNode.querySelector(selector);
       }
       try {
-        return fromDOM2(match);
+        return fromDOM(match);
       } catch (error) {
         return null;
       }
@@ -8749,7 +8770,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
   var node_default = {
     isNodeOfType,
-    fromDOM: fromDOM2,
+    fromDOM,
     toHTML: toHTML2,
     matcher: matcher2
   };
