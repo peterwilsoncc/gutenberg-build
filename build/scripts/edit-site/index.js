@@ -37217,7 +37217,7 @@ If there's a particular need for this, please submit a feature request at https:
   var NonCollapsibleCardHeader = ({
     children,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_components137.CardHeader, { ...props, children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
+  }) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_components137.CardHeader, { isBorderless: true, ...props, children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
     "div",
     {
       style: {
@@ -37250,6 +37250,7 @@ If there's a particular need for this, please submit a feature request at https:
             cursor: "pointer",
             ...props.style
           },
+          isBorderless: true,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
               "div",
@@ -37328,9 +37329,21 @@ If there's a particular need for this, please submit a feature request at https:
     const visibleSummaryFields = summaryFields.filter(
       (summaryField) => isSummaryFieldVisible(summaryField, layout.summary, isOpen)
     );
+    const sizeCard = {
+      blockStart: "medium",
+      blockEnd: "medium",
+      inlineStart: "medium",
+      inlineEnd: "medium"
+    };
     if (!!field.children) {
       const withHeader2 = !!field.label && layout.withHeader;
-      return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_components137.Card, { className: "dataforms-layouts-card__field", children: [
+      const sizeCardBody2 = {
+        blockStart: withHeader2 ? "none" : "medium",
+        blockEnd: "medium",
+        inlineStart: "medium",
+        inlineEnd: "medium"
+      };
+      return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_components137.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
         withHeader2 && /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
           /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: field.label }),
           visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map(
@@ -37346,18 +37359,25 @@ If there's a particular need for this, please submit a feature request at https:
         ] }),
         (isOpen || !withHeader2) && // If it doesn't have a header, keep it open.
         // Otherwise, the card will not be visible.
-        /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_components137.CardBody, { className: "dataforms-layouts-card__field-control", children: [
-          field.description && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-          /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-            DataFormLayout,
-            {
-              data,
-              form,
-              onChange,
-              validity: validity?.children
-            }
-          )
-        ] })
+        /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(
+          import_components137.CardBody,
+          {
+            size: sizeCardBody2,
+            className: "dataforms-layouts-card__field-control",
+            children: [
+              field.description && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+              /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
+                DataFormLayout,
+                {
+                  data,
+                  form,
+                  onChange,
+                  validity: validity?.children
+                }
+              )
+            ]
+          }
+        )
       ] });
     }
     const fieldDefinition = fields.find(
@@ -37371,7 +37391,13 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const withHeader = !!fieldDefinition.label && layout.withHeader;
-    return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_components137.Card, { className: "dataforms-layouts-card__field", children: [
+    const sizeCardBody = {
+      blockStart: withHeader ? "none" : "medium",
+      blockEnd: "medium",
+      inlineStart: "medium",
+      inlineEnd: "medium"
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_components137.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
       withHeader && /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
         /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: fieldDefinition.label }),
         visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
@@ -37385,16 +37411,23 @@ If there's a particular need for this, please submit a feature request at https:
       ] }),
       (isOpen || !withHeader) && // If it doesn't have a header, keep it open.
       // Otherwise, the card will not be visible.
-      /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_components137.CardBody, { className: "dataforms-layouts-card__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-        RegularLayout,
+      /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
+        import_components137.CardBody,
         {
-          data,
-          field,
-          onChange,
-          hideLabelFromVision: hideLabelFromVision || withHeader,
-          validity
+          size: sizeCardBody,
+          className: "dataforms-layouts-card__field-control",
+          children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
+            RegularLayout,
+            {
+              data,
+              field,
+              onChange,
+              hideLabelFromVision: hideLabelFromVision || withHeader,
+              validity
+            }
+          )
         }
-      ) })
+      )
     ] });
   }
 
