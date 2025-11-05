@@ -26968,12 +26968,16 @@ var wp;
     const [blockRefs, setBlockRefs] = (0, import_element129.useState)({});
     const { setCanvasMinHeight: setCanvasMinHeight2 } = unlock((0, import_data197.useDispatch)(store));
     const { blockCommentId, selectedBlockClientId, orderedBlockIds } = (0, import_data197.useSelect)((select4) => {
-      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select4(import_block_editor73.store);
+      const {
+        getBlockAttributes: getBlockAttributes2,
+        getSelectedBlockClientId: getSelectedBlockClientId2,
+        getClientIdsWithDescendants: getClientIdsWithDescendants2
+      } = select4(import_block_editor73.store);
       const clientId = getSelectedBlockClientId2();
       return {
         blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
         selectedBlockClientId: clientId,
-        orderedBlockIds: select4(import_block_editor73.store).getBlockOrder()
+        orderedBlockIds: getClientIdsWithDescendants2()
       };
     }, []);
     const relatedBlockElement = useBlockElement2(selectedBlockClientId);
