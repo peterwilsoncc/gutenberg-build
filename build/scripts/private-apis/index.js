@@ -47,6 +47,7 @@ var wp;
     "@wordpress/preferences",
     "@wordpress/reusable-blocks",
     "@wordpress/router",
+    "@wordpress/routes",
     "@wordpress/sync",
     "@wordpress/theme",
     "@wordpress/dataviews",

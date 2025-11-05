@@ -11,5 +11,10 @@ return array(
 		'name'      => 'home',
 		'path'      => '/',
 		'has_route' => false,
+	),
+	array(
+		'name'      => 'post-list',
+		'path'      => '/types/$type/list/$slug',
+		'has_route' => false,
 	)
 );
