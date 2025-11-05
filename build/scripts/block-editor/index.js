@@ -8851,15 +8851,9 @@ var wp;
     }
     return state;
   }
-  function temporarilyEditingAsBlocks(state = "", action) {
-    if (action.type === "SET_TEMPORARILY_EDITING_AS_BLOCKS") {
-      return action.temporarilyEditingAsBlocks;
-    }
-    return state;
-  }
-  function temporarilyEditingFocusModeRevert(state = "", action) {
-    if (action.type === "SET_TEMPORARILY_EDITING_AS_BLOCKS") {
-      return action.focusModeToRevert;
+  function editedContentOnlySection(state, action) {
+    if (action.type === "EDIT_CONTENT_ONLY_SECTION") {
+      return action.clientId;
     }
     return state;
   }
@@ -8956,8 +8950,7 @@ var wp;
     expandedBlock,
     highlightedBlock,
     lastBlockInserted,
-    temporarilyEditingAsBlocks,
-    temporarilyEditingFocusModeRevert,
+    editedContentOnlySection,
     blockVisibility,
     blockEditingModes,
     styleOverrides,
@@ -9051,6 +9044,21 @@ var wp;
     ];
     traverseBlockTree(state, treeClientId, (block) => {
       const { clientId, name: blockName } = block;
+      if (state.editedContentOnlySection) {
+        if (state.editedContentOnlySection === clientId) {
+          derivedBlockEditingModes.set(clientId, "default");
+          return;
+        }
+        const parentTempEditedClientId = findParentInClientIdsList(
+          state,
+          clientId,
+          [state.editedContentOnlySection]
+        );
+        if (parentTempEditedClientId) {
+          derivedBlockEditingModes.set(clientId, "default");
+          return;
+        }
+      }
       if (state.blockEditingModes.has(clientId)) {
         return;
       }
@@ -9375,6 +9383,7 @@ var wp;
           break;
         }
         case "RESET_BLOCKS":
+        case "EDIT_CONTENT_ONLY_SECTION":
         case "SET_EDITOR_MODE":
         case "RESET_ZOOM_LEVEL":
         case "SET_ZOOM_LEVEL": {
@@ -9444,7 +9453,6 @@ var wp;
     __unstableGetContentLockingParent: () => __unstableGetContentLockingParent,
     __unstableGetSelectedBlocksWithPartialSelection: () => __unstableGetSelectedBlocksWithPartialSelection,
     __unstableGetTemporarilyEditingAsBlocks: () => __unstableGetTemporarilyEditingAsBlocks,
-    __unstableGetTemporarilyEditingFocusModeToRevert: () => __unstableGetTemporarilyEditingFocusModeToRevert,
     __unstableGetVisibleBlocks: () => __unstableGetVisibleBlocks,
     __unstableHasActiveBlockOverlayActive: () => __unstableHasActiveBlockOverlayActive,
     __unstableIsFullySelected: () => __unstableIsFullySelected,
@@ -10310,6 +10318,7 @@ var wp;
     getClosestAllowedInsertionPoint: () => getClosestAllowedInsertionPoint,
     getClosestAllowedInsertionPointForPattern: () => getClosestAllowedInsertionPointForPattern,
     getContentLockingParent: () => getContentLockingParent,
+    getEditedContentOnlySection: () => getEditedContentOnlySection,
     getEnabledBlockParents: () => getEnabledBlockParents,
     getEnabledClientIdsTree: () => getEnabledClientIdsTree,
     getExpandedBlock: () => getExpandedBlock,
@@ -10325,8 +10334,6 @@ var wp;
     getReusableBlocks: () => getReusableBlocks,
     getSectionRootClientId: () => getSectionRootClientId,
     getStyleOverrides: () => getStyleOverrides,
-    getTemporarilyEditingAsBlocks: () => getTemporarilyEditingAsBlocks,
-    getTemporarilyEditingFocusModeToRevert: () => getTemporarilyEditingFocusModeToRevert,
     getZoomLevel: () => getZoomLevel,
     hasAllowedPatterns: () => hasAllowedPatterns,
     hasBlockSpotlight: () => hasBlockSpotlight2,
@@ -10739,11 +10746,8 @@ var wp;
     }
     return false;
   }
-  function getTemporarilyEditingAsBlocks(state) {
-    return state.temporarilyEditingAsBlocks;
-  }
-  function getTemporarilyEditingFocusModeToRevert(state) {
-    return state.temporarilyEditingFocusModeRevert;
+  function getEditedContentOnlySection(state) {
+    return state.editedContentOnlySection;
   }
   var getBlockStyles = (0, import_data2.createSelector)(
     (state, clientIds) => clientIds.reduce((styles, clientId) => {
@@ -10811,7 +10815,7 @@ var wp;
     return attributes?.metadata?.blockVisibility === false;
   };
   function hasBlockSpotlight2(state) {
-    return !!state.hasBlockSpotlight;
+    return !!state.hasBlockSpotlight || !!state.editedContentOnlySection;
   }
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.js
@@ -11635,7 +11639,14 @@ var wp;
     if (!rootClientId) {
       return state.settings.templateLock ?? false;
     }
-    return getBlockListSettings(state, rootClientId)?.templateLock ?? false;
+    const blockListTemplateLock = getBlockListSettings(
+      state,
+      rootClientId
+    )?.templateLock;
+    if (blockListTemplateLock === "contentOnly" && state.editedContentOnlySection === rootClientId) {
+      return false;
+    }
+    return blockListTemplateLock ?? false;
   }
   var isBlockVisibleInTheInserter = (state, blockNameOrType, rootClientId = null) => {
     let blockType;
@@ -12509,17 +12520,7 @@ var wp;
         version: "6.7"
       }
     );
-    return getTemporarilyEditingAsBlocks(state);
-  }
-  function __unstableGetTemporarilyEditingFocusModeToRevert(state) {
-    (0, import_deprecated2.default)(
-      "wp.data.select( 'core/block-editor' ).__unstableGetTemporarilyEditingFocusModeToRevert",
-      {
-        since: "6.5",
-        version: "6.7"
-      }
-    );
-    return getTemporarilyEditingFocusModeToRevert(state);
+    return getEditedContentOnlySection(state);
   }
 
   // packages/block-editor/build-module/store/private-actions.js
@@ -12528,10 +12529,10 @@ var wp;
     __experimentalUpdateSettings: () => __experimentalUpdateSettings,
     clearBlockRemovalPrompt: () => clearBlockRemovalPrompt,
     deleteStyleOverride: () => deleteStyleOverride,
+    editContentOnlySection: () => editContentOnlySection,
     ensureDefaultBlock: () => ensureDefaultBlock,
     expandBlock: () => expandBlock,
     hideBlockInterface: () => hideBlockInterface,
-    modifyContentLockBlock: () => modifyContentLockBlock,
     privateRemoveBlocks: () => privateRemoveBlocks,
     resetZoomLevel: () => resetZoomLevel,
     setBlockRemovalRules: () => setBlockRemovalRules,
@@ -12543,7 +12544,7 @@ var wp;
     showBlockInterface: () => showBlockInterface,
     startDragging: () => startDragging,
     stopDragging: () => stopDragging,
-    stopEditingAsBlocks: () => stopEditingAsBlocks,
+    stopEditingContentOnlySection: () => stopEditingContentOnlySection,
     toggleBlockSpotlight: () => toggleBlockSpotlight
   });
   var import_element5 = __toESM(require_element());
@@ -12697,23 +12698,6 @@ var wp;
       lastFocus: lastFocus2
     };
   }
-  function stopEditingAsBlocks(clientId) {
-    return ({ select: select3, dispatch, registry }) => {
-      const focusModeToRevert = unlock(
-        registry.select(store)
-      ).getTemporarilyEditingFocusModeToRevert();
-      dispatch.__unstableMarkNextChangeAsNotPersistent();
-      dispatch.updateBlockAttributes(clientId, {
-        templateLock: "contentOnly"
-      });
-      dispatch.updateBlockListSettings(clientId, {
-        ...select3.getBlockListSettings(clientId),
-        templateLock: "contentOnly"
-      });
-      dispatch.updateSettings({ focusMode: focusModeToRevert });
-      dispatch.__unstableSetTemporarilyEditingAsBlocks();
-    };
-  }
   function startDragging() {
     return {
       type: "START_DRAGGING"
@@ -12736,23 +12720,17 @@ var wp;
       value
     };
   }
-  var modifyContentLockBlock = (clientId) => ({ select: select3, dispatch }) => {
-    dispatch.selectBlock(clientId);
-    dispatch.__unstableMarkNextChangeAsNotPersistent();
-    dispatch.updateBlockAttributes(clientId, {
-      templateLock: void 0
-    });
-    dispatch.updateBlockListSettings(clientId, {
-      ...select3.getBlockListSettings(clientId),
-      templateLock: false
-    });
-    const focusModeToRevert = select3.getSettings().focusMode;
-    dispatch.updateSettings({ focusMode: true });
-    dispatch.__unstableSetTemporarilyEditingAsBlocks(
-      clientId,
-      focusModeToRevert
-    );
-  };
+  function editContentOnlySection(clientId) {
+    return {
+      type: "EDIT_CONTENT_ONLY_SECTION",
+      clientId
+    };
+  }
+  function stopEditingContentOnlySection() {
+    return {
+      type: "EDIT_CONTENT_ONLY_SECTION"
+    };
+  }
   var setZoomLevel = (zoom = 100) => ({ select: select3, dispatch }) => {
     if (zoom !== 100) {
       const firstSelectedClientId = select3.getBlockSelectionStart();
@@ -13915,12 +13893,14 @@ var wp;
       updates
     };
   }
-  function __unstableSetTemporarilyEditingAsBlocks(temporarilyEditingAsBlocks2, focusModeToRevert) {
-    return {
-      type: "SET_TEMPORARILY_EDITING_AS_BLOCKS",
-      temporarilyEditingAsBlocks: temporarilyEditingAsBlocks2,
-      focusModeToRevert
-    };
+  function __unstableSetTemporarilyEditingAsBlocks(clientId) {
+    (0, import_deprecated4.default)(
+      "wp.data.dispatch( 'core/block-editor' ).__unstableSetTemporarilyEditingAsBlocks",
+      {
+        since: "7.0"
+      }
+    );
+    return editContentOnlySection(clientId);
   }
   var registerInserterMediaCategory = (category) => ({ select: select3, dispatch }) => {
     if (!category || typeof category !== "object") {
@@ -21383,7 +21363,7 @@ var wp;
       hasChildSelected,
       isEditingDisabled,
       hasEditableOutline,
-      isTemporarilyEditingAsBlocks,
+      isEditingContentOnlySection,
       defaultClassName,
       isSectionBlock: isSectionBlock2,
       canMove,
@@ -21453,7 +21433,7 @@ var wp;
           "is-editing-disabled": isEditingDisabled,
           "has-editable-outline": hasEditableOutline,
           "has-negative-margin": hasNegativeMargin,
-          "is-content-locked-temporarily-editing-as-blocks": isTemporarilyEditingAsBlocks,
+          "is-editing-content-only-section": isEditingContentOnlySection,
           "is-block-hidden": isBlockHidden2
         },
         className,
@@ -21826,7 +21806,7 @@ var wp;
           canRemoveBlock: canRemoveBlock2,
           canMoveBlock: canMoveBlock2,
           getSettings: getSettings4,
-          getTemporarilyEditingAsBlocks: getTemporarilyEditingAsBlocks2,
+          getEditedContentOnlySection: getEditedContentOnlySection2,
           getBlockEditingMode: getBlockEditingMode2,
           getBlockName: getBlockName2,
           isFirstMultiSelectedBlock: isFirstMultiSelectedBlock2,
@@ -21906,7 +21886,7 @@ var wp;
           canRemove: canRemove2,
           canMove: canMove2,
           isSelected: _isSelected,
-          isTemporarilyEditingAsBlocks: getTemporarilyEditingAsBlocks2() === clientId,
+          isEditingContentOnlySection: getEditedContentOnlySection2() === clientId,
           blockEditingMode: blockEditingMode2,
           mayDisplayControls: _isSelected || isFirstMultiSelectedBlock2(clientId) && getMultiSelectedBlockClientIds2().every(
             (id) => getBlockName2(id) === blockName
@@ -21949,7 +21929,7 @@ var wp;
       isValid,
       isSelected = false,
       themeSupportsLayout,
-      isTemporarilyEditingAsBlocks,
+      isEditingContentOnlySection,
       blockEditingMode,
       mayDisplayControls,
       mayDisplayParentControls,
@@ -22004,7 +21984,7 @@ var wp;
       isSectionBlock: isSectionBlock2,
       isEditingDisabled,
       hasEditableOutline,
-      isTemporarilyEditingAsBlocks,
+      isEditingContentOnlySection,
       defaultClassName,
       mayDisplayControls,
       mayDisplayParentControls,
@@ -31986,20 +31966,23 @@ var wp;
     trailing: true
   };
   function Root({ className, ...settings2 }) {
-    const { isOutlineMode, isFocusMode, temporarilyEditingAsBlocks: temporarilyEditingAsBlocks2 } = (0, import_data74.useSelect)((select3) => {
-      const {
-        getSettings: getSettings4,
-        getTemporarilyEditingAsBlocks: getTemporarilyEditingAsBlocks2,
-        isTyping: isTyping3,
-        hasBlockSpotlight: hasBlockSpotlight3
-      } = unlock(select3(store));
-      const { outlineMode, focusMode } = getSettings4();
-      return {
-        isOutlineMode: outlineMode && !isTyping3(),
-        isFocusMode: focusMode || hasBlockSpotlight3(),
-        temporarilyEditingAsBlocks: getTemporarilyEditingAsBlocks2()
-      };
-    }, []);
+    const { isOutlineMode, isFocusMode, editedContentOnlySection: editedContentOnlySection2 } = (0, import_data74.useSelect)(
+      (select3) => {
+        const {
+          getSettings: getSettings4,
+          getEditedContentOnlySection: getEditedContentOnlySection2,
+          isTyping: isTyping3,
+          hasBlockSpotlight: hasBlockSpotlight3
+        } = unlock(select3(store));
+        const { outlineMode, focusMode } = getSettings4();
+        return {
+          isOutlineMode: outlineMode && !isTyping3(),
+          isFocusMode: focusMode || hasBlockSpotlight3(),
+          editedContentOnlySection: getEditedContentOnlySection2()
+        };
+      },
+      []
+    );
     const registry = (0, import_data74.useRegistry)();
     const { setBlockVisibility: setBlockVisibility2 } = (0, import_data74.useDispatch)(store);
     const delayedBlockVisibilityUpdates = (0, import_compose53.useDebounce)(
@@ -32045,16 +32028,18 @@ var wp;
     );
     return /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(IntersectionObserver.Provider, { value: intersectionObserver, children: [
       /* @__PURE__ */ (0, import_jsx_runtime197.jsx)("div", { ...innerBlocksProps }),
-      !!temporarilyEditingAsBlocks2 && /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
-        StopEditingAsBlocksOnOutsideSelect,
+      !!editedContentOnlySection2 && /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+        StopEditingContentOnlySectionOnOutsideSelect,
         {
-          clientId: temporarilyEditingAsBlocks2
+          clientId: editedContentOnlySection2
         }
       )
     ] });
   }
-  function StopEditingAsBlocksOnOutsideSelect({ clientId }) {
-    const { stopEditingAsBlocks: stopEditingAsBlocks2 } = unlock((0, import_data74.useDispatch)(store));
+  function StopEditingContentOnlySectionOnOutsideSelect({ clientId }) {
+    const { stopEditingContentOnlySection: stopEditingContentOnlySection2 } = unlock(
+      (0, import_data74.useDispatch)(store)
+    );
     const isBlockOrDescendantSelected = (0, import_data74.useSelect)(
       (select3) => {
         const { isBlockSelected: isBlockSelected2, hasSelectedInnerBlock: hasSelectedInnerBlock2 } = select3(store);
@@ -32064,9 +32049,13 @@ var wp;
     );
     (0, import_element87.useEffect)(() => {
       if (!isBlockOrDescendantSelected) {
-        stopEditingAsBlocks2(clientId);
+        stopEditingContentOnlySection2();
       }
-    }, [isBlockOrDescendantSelected, clientId, stopEditingAsBlocks2]);
+    }, [
+      isBlockOrDescendantSelected,
+      clientId,
+      stopEditingContentOnlySection2
+    ]);
     return null;
   }
   function BlockList(settings2) {
@@ -35823,34 +35812,34 @@ var wp;
   var import_data97 = __toESM(require_data());
   var import_i18n85 = __toESM(require_i18n());
   var import_jsx_runtime226 = __toESM(require_jsx_runtime());
-  function ModifyContentLockMenuItem({ clientId, onClose }) {
-    const { templateLock, isLockedByParent, isEditingAsBlocks } = (0, import_data97.useSelect)(
+  function ModifyContentOnlySectionMenuItem({ clientId, onClose }) {
+    const { templateLock, isLockedByParent, isEditingContentOnlySection } = (0, import_data97.useSelect)(
       (select3) => {
         const {
           getContentLockingParent: getContentLockingParent2,
           getTemplateLock: getTemplateLock2,
-          getTemporarilyEditingAsBlocks: getTemporarilyEditingAsBlocks2
+          getEditedContentOnlySection: getEditedContentOnlySection2
         } = unlock(select3(store));
         return {
           templateLock: getTemplateLock2(clientId),
           isLockedByParent: !!getContentLockingParent2(clientId),
-          isEditingAsBlocks: getTemporarilyEditingAsBlocks2() === clientId
+          isEditingContentOnlySection: getEditedContentOnlySection2() === clientId
         };
       },
       [clientId]
     );
     const blockEditorActions = (0, import_data97.useDispatch)(store);
     const isContentLocked = !isLockedByParent && templateLock === "contentOnly";
-    if (!isContentLocked && !isEditingAsBlocks) {
+    if (!isContentLocked && !isEditingContentOnlySection) {
       return null;
     }
-    const { modifyContentLockBlock: modifyContentLockBlock2 } = unlock(blockEditorActions);
-    const showStartEditingAsBlocks = !isEditingAsBlocks && isContentLocked;
+    const { editContentOnlySection: editContentOnlySection2 } = unlock(blockEditorActions);
+    const showStartEditingAsBlocks = !isEditingContentOnlySection && isContentLocked;
     return showStartEditingAsBlocks && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
       import_components94.MenuItem,
       {
         onClick: () => {
-          modifyContentLockBlock2(clientId);
+          editContentOnlySection2(clientId);
           onClose();
         },
         children: (0, import_i18n85._x)("Modify", "Unlock content locked blocks")
@@ -36243,7 +36232,7 @@ var wp;
             ),
             fills,
             selectedClientIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
-              ModifyContentLockMenuItem,
+              ModifyContentOnlySectionMenuItem,
               {
                 clientId: selectedClientIds[0],
                 onClose: fillProps?.onClose
@@ -62781,31 +62770,33 @@ var wp;
   var import_element226 = __toESM(require_element());
   var import_jsx_runtime394 = __toESM(require_jsx_runtime());
   function ContentLockControlsPure({ clientId }) {
-    const { templateLock, isLockedByParent, isEditingAsBlocks } = (0, import_data179.useSelect)(
+    const { templateLock, isLockedByParent, isEditingContentOnlySection } = (0, import_data179.useSelect)(
       (select3) => {
         const {
           getContentLockingParent: getContentLockingParent2,
           getTemplateLock: getTemplateLock2,
-          getTemporarilyEditingAsBlocks: getTemporarilyEditingAsBlocks2
+          getEditedContentOnlySection: getEditedContentOnlySection2
         } = unlock(select3(store));
         return {
           templateLock: getTemplateLock2(clientId),
           isLockedByParent: !!getContentLockingParent2(clientId),
-          isEditingAsBlocks: getTemporarilyEditingAsBlocks2() === clientId
+          isEditingContentOnlySection: getEditedContentOnlySection2() === clientId
         };
       },
       [clientId]
     );
-    const { stopEditingAsBlocks: stopEditingAsBlocks2 } = unlock((0, import_data179.useDispatch)(store));
+    const { stopEditingContentOnlySection: stopEditingContentOnlySection2 } = unlock(
+      (0, import_data179.useDispatch)(store)
+    );
     const isContentLocked = !isLockedByParent && templateLock === "contentOnly";
     const stopEditingAsBlockCallback = (0, import_element226.useCallback)(() => {
-      stopEditingAsBlocks2(clientId);
-    }, [clientId, stopEditingAsBlocks2]);
-    if (!isContentLocked && !isEditingAsBlocks) {
+      stopEditingContentOnlySection2(clientId);
+    }, [clientId, stopEditingContentOnlySection2]);
+    if (!isContentLocked && !isEditingContentOnlySection) {
       return null;
     }
-    const showStopEditingAsBlocks = isEditingAsBlocks && !isContentLocked;
-    return showStopEditingAsBlocks && /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_components227.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n205.__)("Done") }) });
+    const showDoneButton = isEditingContentOnlySection && !isContentLocked;
+    return showDoneButton && /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_components227.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n205.__)("Done") }) });
   }
   var content_lock_ui_default = {
     edit: ContentLockControlsPure,
