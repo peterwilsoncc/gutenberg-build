@@ -15,6 +15,6 @@ return array(
 	array(
 		'name'      => 'post-list',
 		'path'      => '/types/$type/list/$slug',
-		'has_route' => false,
+		'has_route' => true,
 	)
 );
