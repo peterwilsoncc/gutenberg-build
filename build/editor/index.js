@@ -25141,16 +25141,13 @@ var wp;
     const isTrimmed = trimmedExcerpt !== rawText;
     return isTrimmed ? trimmedExcerpt + "\u2026" : trimmedExcerpt;
   }
-  function focusCommentThread(commentId, threadContainer, additionalSelector) {
-    if (!threadContainer) {
+  function focusCommentThread(commentId, container, additionalSelector) {
+    if (!container) {
       return;
     }
     const threadSelector = commentId ? `[role=treeitem][id="comment-thread-${commentId}"]` : "[role=treeitem]:not([id])";
     const selector = additionalSelector ? `${threadSelector} ${additionalSelector}` : threadSelector;
     return new Promise((resolve) => {
-      const container = threadContainer.closest(
-        ".interface-interface-skeleton__sidebar"
-      );
       if (container.querySelector(selector)) {
         return resolve(container.querySelector(selector));
       }
@@ -26875,8 +26872,8 @@ var wp;
   var { useBlockElement } = unlock(import_block_editor72.privateApis);
   function AddComment({
     onSubmit,
-    showCommentBoard,
-    setShowCommentBoard,
+    newNoteFormState,
+    setNewNoteFormState,
     commentSidebarRef,
     reflowComments = noop5,
     isFloating = false,
@@ -26894,11 +26891,11 @@ var wp;
     const blockElement = useBlockElement(clientId);
     const { toggleBlockSpotlight } = unlock((0, import_data196.useDispatch)(import_block_editor72.store));
     const unselectThread = () => {
-      setShowCommentBoard(false);
+      setNewNoteFormState("closed");
       blockElement?.focus();
       toggleBlockSpotlight(clientId, false);
     };
-    if (!showCommentBoard || !clientId || void 0 !== blockCommentId) {
+    if (newNoteFormState !== "open" || !clientId || void 0 !== blockCommentId) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(
@@ -26924,7 +26921,7 @@ var wp;
             return;
           }
           toggleBlockSpotlight(clientId, false);
-          setShowCommentBoard(false);
+          setNewNoteFormState("closed");
         },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(import_components142.__experimentalHStack, { alignment: "left", spacing: "3", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(comment_author_info_default, {}) }),
@@ -26934,7 +26931,7 @@ var wp;
               onSubmit: async (inputComment) => {
                 const { id } = await onSubmit({ content: inputComment });
                 focusCommentThread(id, commentSidebarRef.current);
-                setShowCommentBoard(false);
+                setNewNoteFormState("creating");
               },
               onCancel: unselectThread,
               reflowComments,
@@ -26955,8 +26952,8 @@ var wp;
     onEditComment,
     onAddReply,
     onCommentDelete,
-    showCommentBoard,
-    setShowCommentBoard,
+    newNoteFormState,
+    setNewNoteFormState,
     commentSidebarRef,
     reflowComments,
     isFloating = false,
@@ -26984,7 +26981,7 @@ var wp;
     const threads = (0, import_element129.useMemo)(() => {
       const t2 = [...noteThreads];
       const orderedThreads = [];
-      if (isFloating && showCommentBoard && void 0 === blockCommentId) {
+      if (isFloating && newNoteFormState === "open" && void 0 === blockCommentId) {
         const newNoteThread = {
           id: "new-note-thread",
           blockClientId: selectedBlockClientId,
@@ -27008,7 +27005,7 @@ var wp;
     }, [
       noteThreads,
       isFloating,
-      showCommentBoard,
+      newNoteFormState,
       blockCommentId,
       selectedBlockClientId,
       orderedBlockIds
@@ -27031,14 +27028,14 @@ var wp;
         focusCommentThread(prevThread.id, commentSidebarRef.current);
       } else {
         setSelectedThread(null);
-        setShowCommentBoard(false);
+        setNewNoteFormState("closed");
         relatedBlockElement?.focus();
       }
     };
     (0, import_element129.useEffect)(() => {
-      const fallback = showCommentBoard ? "new-note-thread" : null;
+      const fallback = newNoteFormState === "open" ? "new-note-thread" : null;
       setSelectedThread(blockCommentId ?? fallback);
-    }, [blockCommentId, showCommentBoard]);
+    }, [blockCommentId, newNoteFormState]);
     const setBlockRef = (0, import_element129.useCallback)((id, blockRef) => {
       setBlockRefs((prev) => ({ ...prev, [id]: blockRef }));
     }, []);
@@ -27137,12 +27134,12 @@ var wp;
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(import_jsx_runtime244.Fragment, { children: [
-      !isFloating && showCommentBoard && void 0 === blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
+      !isFloating && newNoteFormState === "open" && void 0 === blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
-          showCommentBoard,
-          setShowCommentBoard,
+          newNoteFormState,
+          setNewNoteFormState,
           commentSidebarRef
         }
       ),
@@ -27155,7 +27152,7 @@ var wp;
           onEditComment,
           isSelected: selectedThread === thread.id,
           setSelectedThread,
-          setShowCommentBoard,
+          setNewNoteFormState,
           commentSidebarRef,
           reflowComments,
           isFloating,
@@ -27164,7 +27161,7 @@ var wp;
           setBlockRef,
           selectedThread,
           commentLastUpdated,
-          showCommentBoard
+          newNoteFormState
         },
         thread.id
       ))
@@ -27176,7 +27173,7 @@ var wp;
     onAddReply,
     onCommentDelete,
     isSelected,
-    setShowCommentBoard,
+    setNewNoteFormState,
     commentSidebarRef,
     reflowComments,
     isFloating,
@@ -27186,7 +27183,7 @@ var wp;
     setSelectedThread,
     selectedThread,
     commentLastUpdated,
-    showCommentBoard
+    newNoteFormState
   }) {
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data197.useDispatch)(import_block_editor73.store)
@@ -27211,7 +27208,7 @@ var wp;
       debouncedToggleBlockHighlight(thread.blockClientId, false);
     };
     const handleCommentSelect = () => {
-      setShowCommentBoard(false);
+      setNewNoteFormState("closed");
       setSelectedThread(thread.id);
       if (!!thread.blockClientId) {
         selectBlock2(thread.blockClientId, null);
@@ -27220,7 +27217,7 @@ var wp;
     };
     const unselectThread = () => {
       setSelectedThread(null);
-      setShowCommentBoard(false);
+      setNewNoteFormState("closed");
       toggleBlockSpotlight(thread.blockClientId, false);
     };
     const allReplies = thread?.reply || [];
@@ -27239,13 +27236,13 @@ var wp;
       (0, import_i18n167.__)("Original block deleted. Note: %s"),
       commentExcerpt
     );
-    if ("new-note-thread" === thread.id && showCommentBoard && isFloating) {
+    if (thread.id === "new-note-thread" && newNoteFormState === "open" && isFloating) {
       return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
-          showCommentBoard,
-          setShowCommentBoard,
+          newNoteFormState,
+          setNewNoteFormState,
           commentSidebarRef,
           reflowComments,
           isFloating,
@@ -27749,8 +27746,8 @@ var wp;
 
   // packages/editor/build-module/components/collab-sidebar/index.js
   function NotesSidebarContent({
-    showCommentBoard,
-    setShowCommentBoard,
+    newNoteFormState,
+    setNewNoteFormState,
     styles,
     comments,
     commentSidebarRef,
@@ -27780,8 +27777,8 @@ var wp;
             onEditComment: onEdit,
             onAddReply: onCreate,
             onCommentDelete: onDelete,
-            showCommentBoard,
-            setShowCommentBoard,
+            newNoteFormState,
+            setNewNoteFormState,
             commentSidebarRef,
             reflowComments,
             commentLastUpdated,
@@ -27792,7 +27789,7 @@ var wp;
     );
   }
   function NotesSidebar({ postId: postId2, mode }) {
-    const [showCommentBoard, setShowCommentBoard] = (0, import_element131.useState)(false);
+    const [newNoteFormState, setNewNoteFormState] = (0, import_element131.useState)("closed");
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data199.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data199.useDispatch)(store2);
     const { toggleBlockSpotlight } = unlock((0, import_data199.useDispatch)(import_block_editor76.store));
@@ -27822,7 +27819,7 @@ var wp;
       commentLastUpdated
     } = useBlockComments(postId2);
     useEnableFloatingSidebar(
-      showFloatingSidebar && (unresolvedSortedThreads.length > 0 || showCommentBoard)
+      showFloatingSidebar && (unresolvedSortedThreads.length > 0 || newNoteFormState !== "closed")
     );
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
@@ -27843,7 +27840,7 @@ var wp;
       if (!SIDEBARS.includes(currentArea)) {
         return;
       }
-      setShowCommentBoard(!blockCommentId);
+      setNewNoteFormState(!blockCommentId ? "open" : "closed");
       focusCommentThread(
         blockCommentId,
         commentSidebarRef.current,
@@ -27877,8 +27874,8 @@ var wp;
             NotesSidebarContent,
             {
               comments: resultComments,
-              showCommentBoard,
-              setShowCommentBoard,
+              newNoteFormState,
+              setNewNoteFormState,
               commentSidebarRef,
               reflowComments,
               commentLastUpdated
@@ -27899,8 +27896,8 @@ var wp;
             NotesSidebarContent,
             {
               comments: unresolvedSortedThreads,
-              showCommentBoard,
-              setShowCommentBoard,
+              newNoteFormState,
+              setNewNoteFormState,
               commentSidebarRef,
               reflowComments,
               commentLastUpdated,
