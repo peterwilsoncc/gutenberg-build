@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array(), 'module_dependencies' => array(array('id' => '@wordpress/a11y', 'import' => 'dynamic'), array('id' => '@wordpress/interactivity', 'import' => 'static')), 'version' => '1762354685065');
+<?php return array('dependencies' => array(), 'module_dependencies' => array(array('id' => '@wordpress/a11y', 'import' => 'dynamic'), array('id' => '@wordpress/interactivity', 'import' => 'static')), 'version' => '1762355325261');
