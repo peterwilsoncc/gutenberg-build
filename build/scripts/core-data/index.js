@@ -2995,17 +2995,17 @@ var wp;
     }
   });
 
-  // vendor-external:react/jsx-runtime
-  var require_jsx_runtime = __commonJS({
-    "vendor-external:react/jsx-runtime"(exports, module) {
-      module.exports = window.ReactJSXRuntime;
-    }
-  });
-
   // package-external:@wordpress/element
   var require_element = __commonJS({
     "package-external:@wordpress/element"(exports, module) {
       module.exports = window.wp.element;
+    }
+  });
+
+  // vendor-external:react/jsx-runtime
+  var require_jsx_runtime = __commonJS({
+    "vendor-external:react/jsx-runtime"(exports, module) {
+      module.exports = window.ReactJSXRuntime;
     }
   });
 
@@ -18256,7 +18256,6 @@ var wp;
   var dynamicSelectors;
 
   // packages/core-data/build-module/entity-provider.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
   var import_element2 = __toESM(require_element());
 
   // packages/core-data/build-module/entity-context.js
@@ -18265,6 +18264,7 @@ var wp;
   EntityContext.displayName = "EntityContext";
 
   // packages/core-data/build-module/entity-provider.js
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
   function EntityProvider({ kind, type: name, id: id2, children }) {
     const parent = (0, import_element2.useContext)(EntityContext);
     const childContext = (0, import_element2.useMemo)(
