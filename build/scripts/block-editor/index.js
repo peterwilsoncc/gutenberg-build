@@ -51363,6 +51363,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
         Tag,
         {
+          ref,
           ...contentProps,
           dangerouslySetInnerHTML: {
             __html: valueToHTMLString(value, multiline)
