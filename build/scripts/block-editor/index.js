@@ -9058,6 +9058,10 @@ var wp;
           derivedBlockEditingModes.set(clientId, "default");
           return;
         }
+        if (window?.__experimentalContentOnlyPatternInsertion) {
+          derivedBlockEditingModes.set(clientId, "disabled");
+          return;
+        }
       }
       if (state.blockEditingModes.has(clientId)) {
         return;
@@ -10343,6 +10347,7 @@ var wp;
     isContainerInsertableToInContentOnlyMode: () => isContainerInsertableToInContentOnlyMode,
     isDragging: () => isDragging2,
     isSectionBlock: () => isSectionBlock,
+    isWithinEditedContentOnlySection: () => isWithinEditedContentOnlySection,
     isZoomOut: () => isZoomOut
   });
   var import_data2 = __toESM(require_data());
@@ -10727,7 +10732,7 @@ var wp;
   var getParentSectionBlock = (state, clientId) => {
     let current = clientId;
     let result;
-    while (!result && (current = state.blocks.parents.get(current))) {
+    while (current = state.blocks.parents.get(current)) {
       if (isSectionBlock(state, current)) {
         result = current;
       }
@@ -10735,6 +10740,9 @@ var wp;
     return result;
   };
   function isSectionBlock(state, clientId) {
+    if (clientId === state.editedContentOnlySection) {
+      return false;
+    }
     const blockName = getBlockName(state, clientId);
     if (blockName === "core/block" || getTemplateLock(state, clientId) === "contentOnly") {
       return true;
@@ -10748,6 +10756,21 @@ var wp;
   }
   function getEditedContentOnlySection(state) {
     return state.editedContentOnlySection;
+  }
+  function isWithinEditedContentOnlySection(state, clientId) {
+    if (!state.editedContentOnlySection) {
+      return false;
+    }
+    if (state.editedContentOnlySection === clientId) {
+      return true;
+    }
+    let current = clientId;
+    while (current = state.blocks.parents.get(current)) {
+      if (state.editedContentOnlySection === current) {
+        return true;
+      }
+    }
+    return false;
   }
   var getBlockStyles = (0, import_data2.createSelector)(
     (state, clientIds) => clientIds.reduce((styles, clientId) => {
@@ -22095,6 +22118,20 @@ var wp;
   var import_i18n25 = __toESM(require_i18n());
   var import_jsx_runtime140 = __toESM(require_jsx_runtime());
   var { Badge } = unlock(import_components24.privateApis);
+  function OptionalParentSelectButton({ children, onClick }) {
+    if (!onClick) {
+      return children;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+      import_components24.Button,
+      {
+        __next40pxDefaultSize: true,
+        className: "block-editor-block-card__parent-select-button",
+        onClick,
+        children
+      }
+    );
+  }
   function BlockCard({
     title,
     icon,
@@ -22103,7 +22140,10 @@ var wp;
     className,
     name,
     allowParentNavigation,
-    children
+    parentClientId,
+    isChild,
+    children,
+    clientId
   }) {
     if (blockType) {
       (0, import_deprecated6.default)("`blockType` property in `BlockCard component`", {
@@ -22114,46 +22154,73 @@ var wp;
     }
     const parentNavBlockClientId = (0, import_data24.useSelect)(
       (select3) => {
-        if (!allowParentNavigation) {
+        if (parentClientId || isChild || !allowParentNavigation) {
           return;
         }
-        const { getSelectedBlockClientId: getSelectedBlockClientId2, getBlockParentsByBlockName: getBlockParentsByBlockName2 } = select3(store);
-        const _selectedBlockClientId = getSelectedBlockClientId2();
+        const { getBlockParentsByBlockName: getBlockParentsByBlockName2 } = select3(store);
         return getBlockParentsByBlockName2(
-          _selectedBlockClientId,
+          clientId,
           "core/navigation",
           true
         )[0];
       },
-      [allowParentNavigation]
+      [clientId, allowParentNavigation, isChild, parentClientId]
     );
     const { selectBlock: selectBlock2 } = (0, import_data24.useDispatch)(store);
-    return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)("div", { className: clsx_default("block-editor-block-card", className), children: [
-      allowParentNavigation && parentNavBlockClientId && // This is only used by the Navigation block for now. It's not ideal having Navigation block specific code here.
-      /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
-        import_components24.Button,
-        {
-          onClick: () => selectBlock2(parentNavBlockClientId),
-          label: (0, import_i18n25.__)("Go to parent Navigation block"),
-          style: (
-            // TODO: This style override is also used in ToolsPanelHeader.
-            // It should be supported out-of-the-box by Button.
-            { minWidth: 24, padding: 0 }
+    const TitleElement = parentClientId ? "div" : "h2";
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+      "div",
+      {
+        className: clsx_default(
+          "block-editor-block-card",
+          {
+            "is-parent": parentClientId,
+            "is-child": isChild
+          },
+          className
+        ),
+        children: [
+          parentNavBlockClientId && // This is only used by the Navigation block for now. It's not ideal having Navigation block specific code here.
+          /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+            import_components24.Button,
+            {
+              onClick: () => selectBlock2(parentNavBlockClientId),
+              label: parentNavBlockClientId ? (0, import_i18n25.__)("Go to parent Navigation block") : (
+                // TODO - improve copy, not sure that we should use the term 'section'
+                (0, import_i18n25.__)("Go to parent section")
+              ),
+              style: (
+                // TODO: This style override is also used in ToolsPanelHeader.
+                // It should be supported out-of-the-box by Button.
+                { minWidth: 24, padding: 0 }
+              ),
+              icon: (0, import_i18n25.isRTL)() ? chevron_right_default : chevron_left_default,
+              size: "small"
+            }
           ),
-          icon: (0, import_i18n25.isRTL)() ? chevron_right_default : chevron_left_default,
-          size: "small"
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(block_icon_default, { icon, showColors: true }),
-      /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(import_components24.__experimentalVStack, { spacing: 1, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)("h2", { className: "block-editor-block-card__title", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", { className: "block-editor-block-card__name", children: !!name?.length ? name : title }),
-          !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(Badge, { children: title })
-        ] }),
-        description && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components24.__experimentalText, { className: "block-editor-block-card__description", children: description }),
-        children
-      ] })
-    ] });
+          isChild && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", { className: "block-editor-block-card__child-indicator-icon", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components24.Icon, { icon: (0, import_i18n25.isRTL)() ? arrow_left_default : arrow_right_default }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+            OptionalParentSelectButton,
+            {
+              onClick: parentClientId ? () => {
+                selectBlock2(parentClientId);
+              } : void 0,
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(block_icon_default, { icon, showColors: true }),
+                /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(import_components24.__experimentalVStack, { spacing: 1, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(TitleElement, { className: "block-editor-block-card__title", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", { className: "block-editor-block-card__name", children: !!name?.length ? name : title }),
+                    !parentClientId && !isChild && !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(Badge, { children: title })
+                  ] }),
+                  !parentClientId && !isChild && description && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components24.__experimentalText, { className: "block-editor-block-card__description", children: description }),
+                  children
+                ] })
+              ]
+            }
+          )
+        ]
+      }
+    );
   }
   var block_card_default = BlockCard;
 
@@ -23235,6 +23302,14 @@ var wp;
             character: "backspace"
           }
         ]
+      });
+      registerShortcut({
+        name: "core/block-editor/stop-editing-as-blocks",
+        category: "block",
+        description: (0, import_i18n30.__)("Finish editing a design."),
+        keyCombination: {
+          character: "escape"
+        }
       });
       registerShortcut({
         name: "core/block-editor/select-all",
@@ -31970,9 +32045,9 @@ var wp;
       (select3) => {
         const {
           getSettings: getSettings4,
-          getEditedContentOnlySection: getEditedContentOnlySection2,
           isTyping: isTyping3,
-          hasBlockSpotlight: hasBlockSpotlight3
+          hasBlockSpotlight: hasBlockSpotlight3,
+          getEditedContentOnlySection: getEditedContentOnlySection2
         } = unlock(select3(store));
         const { outlineMode, focusMode } = getSettings4();
         return {
@@ -32042,8 +32117,12 @@ var wp;
     );
     const isBlockOrDescendantSelected = (0, import_data74.useSelect)(
       (select3) => {
-        const { isBlockSelected: isBlockSelected2, hasSelectedInnerBlock: hasSelectedInnerBlock2 } = select3(store);
-        return isBlockSelected2(clientId) || hasSelectedInnerBlock2(clientId, true);
+        const {
+          isBlockSelected: isBlockSelected2,
+          hasSelectedInnerBlock: hasSelectedInnerBlock2,
+          getBlockSelectionStart: getBlockSelectionStart2
+        } = select3(store);
+        return !getBlockSelectionStart2() || isBlockSelected2(clientId) || hasSelectedInnerBlock2(clientId, true);
       },
       [clientId]
     );
@@ -32051,11 +32130,7 @@ var wp;
       if (!isBlockOrDescendantSelected) {
         stopEditingContentOnlySection2();
       }
-    }, [
-      isBlockOrDescendantSelected,
-      clientId,
-      stopEditingContentOnlySection2
-    ]);
+    }, [isBlockOrDescendantSelected, stopEditingContentOnlySection2]);
     return null;
   }
   function BlockList(settings2) {
@@ -34935,12 +35010,12 @@ var wp;
     );
     const blockEditorActions = (0, import_data94.useDispatch)(store);
     const isContentLocked = !isLockedByParent && templateLock === "contentOnly";
-    if (!isContentLocked && !isEditingContentOnlySection) {
+    if (window?.__experimentalContentOnlyPatternInsertion || !isContentLocked && !isEditingContentOnlySection) {
       return null;
     }
     const { editContentOnlySection: editContentOnlySection2 } = unlock(blockEditorActions);
-    const showStartEditingAsBlocks = !isEditingContentOnlySection && isContentLocked;
-    return showStartEditingAsBlocks && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+    const showContentOnlyModifyButton = !isEditingContentOnlySection && isContentLocked;
+    return showContentOnlyModifyButton && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
       import_components87.MenuItem,
       {
         onClick: () => {
@@ -39375,8 +39450,9 @@ var wp;
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
       getBlockRootClientId: getBlockRootClientId2,
       isGroupable: isGroupable2,
-      getBlockName: getBlockName2
-    } = (0, import_data117.useSelect)(store);
+      getBlockName: getBlockName2,
+      getEditedContentOnlySection: getEditedContentOnlySection2
+    } = unlock((0, import_data117.useSelect)(store));
     const { getGroupingBlockName } = (0, import_data117.useSelect)(import_blocks71.store);
     const { showEmptyBlockSideInserter, showBlockToolbarPopover } = useShowBlockTools();
     const pasteStyles = usePasteStyles();
@@ -39390,7 +39466,8 @@ var wp;
       moveBlocksUp: moveBlocksUp2,
       moveBlocksDown: moveBlocksDown2,
       expandBlock: expandBlock2,
-      updateBlockAttributes: updateBlockAttributes2
+      updateBlockAttributes: updateBlockAttributes2,
+      stopEditingContentOnlySection: stopEditingContentOnlySection2
     } = unlock((0, import_data117.useDispatch)(store));
     function onKeyDown(event) {
       if (event.defaultPrevented) {
@@ -39512,6 +39589,11 @@ var wp;
           updateBlockAttributes2(clientIds, attributesByClientId, {
             uniqueByBlock: true
           });
+        }
+      }
+      if (isMatch("core/block-editor/stop-editing-as-blocks", event)) {
+        if (getEditedContentOnlySection2()) {
+          stopEditingContentOnlySection2();
         }
       }
     }
@@ -52492,40 +52574,50 @@ var wp;
   var import_components207 = __toESM(require_components());
   var import_data163 = __toESM(require_data());
 
-  // packages/block-editor/build-module/components/block-inspector/edit-contents-button.js
+  // packages/block-editor/build-module/components/block-inspector/edit-contents.js
   var import_components183 = __toESM(require_components());
   var import_data150 = __toESM(require_data());
   var import_i18n172 = __toESM(require_i18n());
   var import_jsx_runtime338 = __toESM(require_jsx_runtime());
-  function EditContentsButton({ clientId }) {
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data150.useDispatch)(store);
-    const { attributes } = (0, import_data150.useSelect)(
+  function EditContents({ clientId }) {
+    const { editContentOnlySection: editContentOnlySection2, stopEditingContentOnlySection: stopEditingContentOnlySection2 } = unlock(
+      (0, import_data150.useDispatch)(store)
+    );
+    const { isWithinSection, isWithinEditedSection, editedContentOnlySection: editedContentOnlySection2 } = (0, import_data150.useSelect)(
       (select3) => {
+        const {
+          isSectionBlock: isSectionBlock2,
+          getParentSectionBlock: getParentSectionBlock2,
+          getEditedContentOnlySection: getEditedContentOnlySection2,
+          isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2
+        } = unlock(select3(store));
         return {
-          attributes: select3(store).getBlockAttributes(clientId)
+          isWithinSection: isSectionBlock2(clientId) || !!getParentSectionBlock2(clientId),
+          isWithinEditedSection: isWithinEditedContentOnlySection2(clientId),
+          editedContentOnlySection: getEditedContentOnlySection2()
         };
       },
       [clientId]
     );
-    if (!attributes?.metadata?.patternName) {
+    if (!isWithinSection && !isWithinEditedSection) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_components183.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
       import_components183.Button,
       {
-        className: "block-editor-block-inspector-edit-contents-button",
+        className: "block-editor-block-inspector-edit-contents__button",
         __next40pxDefaultSize: true,
         variant: "secondary",
         onClick: () => {
-          const { patternName, ...metadataWithoutPatternName } = attributes?.metadata ?? {};
-          updateBlockAttributes2(clientId, {
-            ...attributes,
-            metadata: metadataWithoutPatternName
-          });
+          if (!editedContentOnlySection2) {
+            editContentOnlySection2(clientId);
+          } else {
+            stopEditingContentOnlySection2();
+          }
         },
-        children: (0, import_i18n172.__)("Edit contents")
+        children: editedContentOnlySection2 ? (0, import_i18n172.__)("Lock design") : (0, import_i18n172.__)("Unlock design")
       }
-    );
+    ) });
   }
 
   // packages/block-editor/build-module/components/skip-to-selected-block/index.js
@@ -57344,7 +57436,8 @@ var wp;
       blockType,
       isSectionBlock: isSectionBlock2,
       isSectionBlockInSelection,
-      hasBlockStyles
+      hasBlockStyles,
+      editedContentOnlySection: editedContentOnlySection2
     } = (0, import_data163.useSelect)((select3) => {
       const {
         getSelectedBlockClientId: getSelectedBlockClientId2,
@@ -57352,11 +57445,16 @@ var wp;
         getSelectedBlockCount: getSelectedBlockCount2,
         getBlockName: getBlockName2,
         getParentSectionBlock: getParentSectionBlock2,
-        isSectionBlock: _isSectionBlock
+        isSectionBlock: _isSectionBlock,
+        getEditedContentOnlySection: getEditedContentOnlySection2,
+        isWithinEditedContentOnlySection: isWithinEditedContentOnlySection2
       } = unlock(select3(store));
       const { getBlockStyles: getBlockStyles2 } = select3(import_blocks87.store);
       const _selectedBlockClientId = getSelectedBlockClientId2();
-      const renderedBlockClientId = getParentSectionBlock2(_selectedBlockClientId) || _selectedBlockClientId;
+      const isWithinEditedSection = isWithinEditedContentOnlySection2(
+        _selectedBlockClientId
+      );
+      const renderedBlockClientId = isWithinEditedSection ? _selectedBlockClientId : getParentSectionBlock2(_selectedBlockClientId) || _selectedBlockClientId;
       const _selectedBlockName = renderedBlockClientId && getBlockName2(renderedBlockClientId);
       const _blockType = _selectedBlockName && (0, import_blocks87.getBlockType)(_selectedBlockName);
       const selectedBlockClientIds = getSelectedBlockClientIds2();
@@ -57372,7 +57470,8 @@ var wp;
         blockType: _blockType,
         isSectionBlockInSelection: _isSectionBlockInSelection,
         isSectionBlock: _isSectionBlock(renderedBlockClientId),
-        hasBlockStyles: _hasBlockStyles
+        hasBlockStyles: _hasBlockStyles,
+        editedContentOnlySection: getEditedContentOnlySection2()
       };
     }, []);
     const contentClientIds = (0, import_data163.useSelect)(
@@ -57457,7 +57556,8 @@ var wp;
             isSectionBlock: isSectionBlock2,
             availableTabs,
             contentClientIds,
-            hasBlockStyles
+            hasBlockStyles,
+            editedContentOnlySection: editedContentOnlySection2
           }
         )
       }
@@ -57498,22 +57598,37 @@ var wp;
     isSectionBlock: isSectionBlock2,
     availableTabs,
     contentClientIds,
-    hasBlockStyles
+    hasBlockStyles,
+    editedContentOnlySection: editedContentOnlySection2
   }) => {
     const hasMultipleTabs = availableTabs?.length > 1;
+    const hasParentChildBlockCards = window?.__experimentalContentOnlyPatternInsertion && editedContentOnlySection2 && editedContentOnlySection2 !== clientId;
+    const parentBlockInformation = useBlockDisplayInformation(
+      editedContentOnlySection2
+    );
     const blockInformation = useBlockDisplayInformation(clientId);
     const isBlockSynced = blockInformation.isSynced;
     const shouldShowTabs = !isBlockSynced && hasMultipleTabs;
     return /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)("div", { className: "block-editor-block-inspector", children: [
+      hasParentChildBlockCards && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
+        block_card_default,
+        {
+          ...parentBlockInformation,
+          className: parentBlockInformation.isSynced && "is-synced",
+          parentClientId: editedContentOnlySection2
+        }
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
         block_card_default,
         {
           ...blockInformation,
-          className: isBlockSynced && "is-synced",
           allowParentNavigation: true,
-          children: window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(EditContentsButton, { clientId })
+          className: isBlockSynced && "is-synced",
+          isChild: hasParentChildBlockCards,
+          clientId
         }
       ),
+      window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(EditContents, { clientId }),
       /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(block_variation_transforms_default, { blockClientId: clientId }),
       shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
         InspectorControlsTabs,
@@ -62893,13 +63008,12 @@ var wp;
     );
     const isContentLocked = !isLockedByParent && templateLock === "contentOnly";
     const stopEditingAsBlockCallback = (0, import_element227.useCallback)(() => {
-      stopEditingContentOnlySection2(clientId);
-    }, [clientId, stopEditingContentOnlySection2]);
-    if (!isContentLocked && !isEditingContentOnlySection) {
+      stopEditingContentOnlySection2();
+    }, [stopEditingContentOnlySection2]);
+    if (window?.__experimentalContentOnlyPatternInsertion || !isContentLocked && !isEditingContentOnlySection) {
       return null;
     }
-    const showDoneButton = isEditingContentOnlySection && !isContentLocked;
-    return showDoneButton && /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components229.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n207.__)("Done") }) });
+    return isEditingContentOnlySection && /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components229.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n207.__)("Done") }) });
   }
   var content_lock_ui_default = {
     edit: ContentLockControlsPure,
