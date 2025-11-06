@@ -14615,13 +14615,6 @@ var wp;
       baseURLParams: { context: "edit" },
       plural: "statuses",
       key: "slug"
-    },
-    {
-      label: (0, import_i18n.__)("Registered Templates"),
-      name: "registeredTemplate",
-      kind: "root",
-      baseURL: "/wp/v2/registered-templates",
-      key: "id"
     }
   ];
   var deprecatedEntities = {
@@ -14683,7 +14676,7 @@ var wp;
         __unstable_rest_base: postType.rest_base,
         supportsPagination: true,
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
-        revisionKey: DEFAULT_ENTITY_KEY
+        revisionKey: isTemplate ? "wp_id" : DEFAULT_ENTITY_KEY
       };
       if (window.__experimentalEnableSync) {
         if (true) {
@@ -16051,9 +16044,6 @@ var wp;
         return { postType: "wp_template", postId: frontPageTemplateId };
       },
       (state) => [
-        // Even though getDefaultTemplateId.shouldInvalidate returns true when root/site changes,
-        // it doesn't seem to invalidate this cache, I'm not sure why.
-        getEntityRecord(state, "root", "site"),
         getEntityRecord(state, "root", "__unstableBase"),
         getDefaultTemplateId(state, {
           slug: "front-page"
@@ -16460,12 +16450,8 @@ var wp;
         recordId
       });
       let hasError = false;
-      let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && recordId && typeof recordId === "string" && !/^\d+$/.test(recordId)) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
       try {
-        let path = `${baseURL}/${recordId}`;
+        let path = `${entityConfig.baseURL}/${recordId}`;
         if (query) {
           path = (0, import_url4.addQueryArgs)(path, query);
         }
@@ -16628,12 +16614,8 @@ var wp;
       let updatedRecord;
       let error;
       let hasError = false;
-      let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && recordId && typeof recordId === "string" && !/^\d+$/.test(recordId)) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
       try {
-        const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
+        const path = `${entityConfig.baseURL}${recordId ? "/" + recordId : ""}`;
         const persistedRecord = !isNewRecord ? select.getRawEntityRecord(kind, name, recordId) : {};
         if (isAutosave) {
           const currentUser2 = select.getCurrentUser();
@@ -17269,14 +17251,13 @@ var wp;
           return;
         }
       }
-      let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && key && typeof key === "string" && !/^\d+$/.test(key)) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
-      const path = (0, import_url7.addQueryArgs)(baseURL + (key ? "/" + key : ""), {
-        ...entityConfig.baseURLParams,
-        ...query
-      });
+      const path = (0, import_url7.addQueryArgs)(
+        entityConfig.baseURL + (key ? "/" + key : ""),
+        {
+          ...entityConfig.baseURLParams,
+          ...query
+        }
+      );
       const response = await (0, import_api_fetch8.default)({ path, parse: false });
       const record = await response.json();
       const permissions = getUserPermissionsFromAllowHeader(
@@ -17346,12 +17327,6 @@ var wp;
       dispatch.__unstableReleaseStoreLock(lock2);
     }
   };
-  getEntityRecord2.shouldInvalidate = (action, kind, name) => {
-    return kind === "root" && name === "site" && (action.type === "RECEIVE_ITEMS" && // Making sure persistedEdits is set seems to be the only way of
-    // knowing whether it's an update or fetch. Only an update would
-    // have persistedEdits.
-    action.persistedEdits && action.persistedEdits.status !== "auto-draft" || action.type === "REMOVE_ITEMS") && action.kind === "postType" && action.name === "wp_template";
-  };
   var getRawEntityRecord2 = forward_resolver_default("getEntityRecord");
   var getEditedEntityRecord2 = forward_resolver_default("getEntityRecord");
   var getEntityRecords2 = (kind, name, query = {}) => async ({ dispatch, registry, resolveSelect }) => {
@@ -17394,12 +17369,7 @@ var wp;
           ].join()
         };
       }
-      let { baseURL } = entityConfig;
-      const { combinedTemplates = true } = query;
-      if (kind === "postType" && name === "wp_template" && combinedTemplates) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
-      const path = (0, import_url7.addQueryArgs)(baseURL, {
+      const path = (0, import_url7.addQueryArgs)(entityConfig.baseURL, {
         ...entityConfig.baseURLParams,
         ...query
       });
@@ -17763,24 +17733,19 @@ var wp;
       path: (0, import_url7.addQueryArgs)("/wp/v2/templates/lookup", query)
     });
     await resolveSelect.getEntitiesConfig("postType");
-    const id2 = template?.wp_id || template?.id;
-    if (id2) {
-      template.id = id2;
+    if (template?.id) {
       registry.batch(() => {
-        dispatch.receiveDefaultTemplateId(query, id2);
-        dispatch.receiveEntityRecords("postType", template.type, [
+        dispatch.receiveDefaultTemplateId(query, template.id);
+        dispatch.receiveEntityRecords("postType", "wp_template", [
           template
         ]);
         dispatch.finishResolution("getEntityRecord", [
           "postType",
-          template.type,
-          id2
+          "wp_template",
+          template.id
         ]);
       });
     }
-  };
-  getDefaultTemplateId2.shouldInvalidate = (action) => {
-    return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site";
   };
   var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch, registry, resolveSelect }) => {
     const configs = await resolveSelect.getEntitiesConfig(kind);

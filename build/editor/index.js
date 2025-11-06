@@ -4230,7 +4230,7 @@ var wp;
       try {
         await (0, import_hooks.doActionAsync)(
           "editor.savePost",
-          { id: previousRecord.id, type: previousRecord.type },
+          { id: previousRecord.id },
           options
         );
       } catch (err) {
@@ -4238,9 +4238,6 @@ var wp;
       }
     }
     dispatch5({ type: "REQUEST_POST_UPDATE_FINISH", options });
-    if (!options.isAutosave && previousRecord.type === "wp_template" && (typeof previousRecord.id === "number" || /^\d+$/.test(previousRecord.id))) {
-      templateActivationNotice({ select: select4, dispatch: dispatch5, registry });
-    }
     if (error) {
       const args = getNotificationArgumentsForSaveFail({
         post: previousRecord,
@@ -4266,68 +4263,6 @@ var wp;
       }
     }
   };
-  async function templateActivationNotice({ select: select4, registry }) {
-    const editorSettings2 = select4.getEditorSettings();
-    if (editorSettings2.onNavigateToPreviousEntityRecord) {
-      return;
-    }
-    const { id, slug } = select4.getCurrentPost();
-    const site = await registry.select(import_core_data2.store).getEntityRecord("root", "site");
-    if (site.active_templates[slug] === id) {
-      return;
-    }
-    const currentTheme = await registry.resolveSelect(import_core_data2.store).getCurrentTheme();
-    const templateType = currentTheme?.default_template_types.find(
-      (type) => type.slug === slug
-    );
-    await registry.dispatch(import_notices.store).createNotice(
-      "info",
-      (0, import_i18n2.sprintf)(
-        // translators: %s: The name (or slug) of the type of template.
-        (0, import_i18n2.__)('Do you want to activate this "%s" template?'),
-        templateType?.title ?? slug
-      ),
-      {
-        id: "template-activate-notice",
-        actions: [
-          {
-            label: (0, import_i18n2.__)("Activate"),
-            onClick: async () => {
-              await registry.dispatch(import_notices.store).createNotice(
-                "info",
-                (0, import_i18n2.__)("Activating template\u2026"),
-                { id: "template-activate-notice" }
-              );
-              try {
-                const currentSite = await registry.select(import_core_data2.store).getEntityRecord("root", "site");
-                await registry.dispatch(import_core_data2.store).saveEntityRecord(
-                  "root",
-                  "site",
-                  {
-                    active_templates: {
-                      ...currentSite.active_templates,
-                      [slug]: id
-                    }
-                  },
-                  { throwOnError: true }
-                );
-                await registry.dispatch(import_notices.store).createSuccessNotice(
-                  (0, import_i18n2.__)("Template activated."),
-                  { id: "template-activate-notice" }
-                );
-              } catch (error) {
-                await registry.dispatch(import_notices.store).createErrorNotice(
-                  (0, import_i18n2.__)("Template activation failed."),
-                  { id: "template-activate-notice" }
-                );
-                throw error;
-              }
-            }
-          }
-        ]
-      }
-    );
-  }
   function refreshPost() {
     (0, import_deprecated2.default)("wp.data.dispatch( 'core/editor' ).refreshPost", {
       since: "6.0",
@@ -4454,7 +4389,7 @@ var wp;
     };
   }
   var setRenderingMode = (mode) => ({ dispatch: dispatch5, registry, select: select4 }) => {
-    if (select4.__unstableIsEditorReady() && !select4.getEditorSettings().isPreviewMode) {
+    if (select4.__unstableIsEditorReady()) {
       registry.dispatch(import_block_editor3.store).clearSelectedBlock();
       dispatch5.editPost({ selection: void 0 }, { undoIgnore: true });
     }
@@ -4744,6 +4679,9 @@ var wp;
   // packages/fields/build-module/actions/utils.js
   var import_html_entities = __toESM(require_html_entities());
   var import_i18n3 = __toESM(require_i18n());
+  function isTemplate(post) {
+    return post.type === "wp_template";
+  }
   function isTemplatePart(post) {
     return post.type === "wp_template_part";
   }
@@ -6224,11 +6162,10 @@ var wp;
         if (isCreatingPage) {
           return;
         }
-        const isTemplate = item.type === "wp_template";
         const newItemObject = {
-          status: isTemplate ? "publish" : "draft",
+          status: "draft",
           title: item.title,
-          slug: isTemplate ? item.slug : item.title || (0, import_i18n34.__)("No title"),
+          slug: item.title || (0, import_i18n34.__)("No title"),
           comment_status: item.comment_status,
           content: typeof item.content === "string" ? item.content : item.content.raw,
           excerpt: typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw,
@@ -6286,9 +6223,6 @@ var wp;
         }
       }
       return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("form", { onSubmit: createPage, children: /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components13.__experimentalVStack, { spacing: 3, children: [
-        typeof item.id === "string" && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { children: (0, import_i18n34.__)(
-          "You are about to duplicate a bundled template. Changes will not be live until you activate the new template."
-        ) }),
         /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
           import_components13.__experimentalInputControl,
           {
@@ -6347,14 +6281,15 @@ var wp;
       if (post.status === "trash") {
         return false;
       }
-      if (post.type === "wp_template" && typeof post.id === "string") {
-        return false;
-      }
       if (![
+        "wp_template",
         "wp_template_part",
         ...Object.values(PATTERN_TYPES2)
       ].includes(post.type)) {
         return post.permissions?.update;
+      }
+      if (isTemplate(post)) {
+        return isTemplateRemovable(post) && post.is_custom && post.permissions?.update;
       }
       if (isTemplatePart(post)) {
         return post.source === "custom" && !post?.has_theme_file && post.permissions?.update;
@@ -6557,7 +6492,7 @@ var wp;
     id: "reset-post",
     label: (0, import_i18n36.__)("Reset"),
     isEligible: (item) => {
-      return item.type === "wp_template_part" && item?.source === "custom" && item?.has_theme_file;
+      return isTemplateOrTemplatePart(item) && item?.source === "custom" && (Boolean(item.type === "wp_template" && item?.plugin) || item?.has_theme_file);
     },
     icon: backup_default,
     supportsBulk: true,
@@ -6595,11 +6530,20 @@ var wp;
             }
           );
         } catch (error) {
-          const fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
-            "An error occurred while reverting the template part."
-          ) : (0, import_i18n36.__)(
-            "An error occurred while reverting the template parts."
-          );
+          let fallbackErrorMessage;
+          if (items[0].type === "wp_template") {
+            fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
+              "An error occurred while reverting the template."
+            ) : (0, import_i18n36.__)(
+              "An error occurred while reverting the templates."
+            );
+          } else {
+            fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
+              "An error occurred while reverting the template part."
+            ) : (0, import_i18n36.__)(
+              "An error occurred while reverting the template parts."
+            );
+          }
           const typedError = error;
           const errorMessage = typedError.message && typedError.code !== "unknown_error" ? typedError.message : fallbackErrorMessage;
           createErrorNotice(errorMessage, { type: "snackbar" });
@@ -7267,10 +7211,7 @@ var wp;
     isPrimary: true,
     icon: trash_default,
     isEligible(item) {
-      if (item.type === "wp_template_part" || item.type === "wp_block") {
-        return false;
-      }
-      if (item.type === "wp_template" && typeof item.id === "string") {
+      if (isTemplateOrTemplatePart(item) || item.type === "wp_block") {
         return false;
       }
       return !!item.status && !["auto-draft", "trash"].includes(item.status) && item.permissions?.delete;
@@ -11643,7 +11584,7 @@ var wp;
         setEditedPost: setEditedPost2,
         setRenderingMode: setRenderingMode2
       } = unlock((0, import_data47.useDispatch)(store));
-      const { createWarningNotice, removeNotice } = (0, import_data47.useDispatch)(import_notices15.store);
+      const { createWarningNotice } = (0, import_data47.useDispatch)(import_notices15.store);
       (0, import_element37.useLayoutEffect)(() => {
         if (recovery) {
           return;
@@ -11669,8 +11610,7 @@ var wp;
       }, []);
       (0, import_element37.useEffect)(() => {
         setEditedPost2(post.type, post.id);
-        removeNotice("template-activate-notice");
-      }, [post.type, post.id, setEditedPost2, removeNotice]);
+      }, [post.type, post.id, setEditedPost2]);
       (0, import_element37.useEffect)(() => {
         updateEditorSettings2(settings);
       }, [settings, updateEditorSettings2]);
@@ -11868,19 +11808,13 @@ var wp;
       name: postType2
     });
     const currentTheme = await registry.resolveSelect(import_core_data32.store).getCurrentTheme();
-    let canDuplicate = !["wp_block", "wp_template_part"].includes(
-      postTypeConfig.slug
-    ) && canCreate && duplicate_post_default;
-    if (false) {
-      if ("wp_template" !== postTypeConfig.slug) {
-        canDuplicate = void 0;
-      }
-    }
     const actions2 = [
       postTypeConfig.viewable ? view_post_default : void 0,
       !!postTypeConfig.supports?.revisions ? view_post_revisions_default : void 0,
       // @ts-ignore
-      canDuplicate,
+      true ? !["wp_template", "wp_block", "wp_template_part"].includes(
+        postTypeConfig.slug
+      ) && canCreate && duplicate_post_default : void 0,
       postTypeConfig.slug === "wp_template_part" && canCreate && currentTheme?.is_block_theme ? duplicate_template_part_default : void 0,
       canCreate && postTypeConfig.slug === "wp_block" ? duplicate_pattern_default : void 0,
       postTypeConfig.supports?.title ? rename_post_default : void 0,
@@ -12770,9 +12704,9 @@ var wp;
     }, []);
     const { open: openCommandCenter } = (0, import_data55.useDispatch)(import_commands3.store);
     const isReducedMotion = (0, import_compose11.useReducedMotion)();
-    const isTemplate = TEMPLATE_POST_TYPES.includes(postType2);
+    const isTemplate2 = TEMPLATE_POST_TYPES.includes(postType2);
     const hasBackButton = !!onNavigateToPreviousEntityRecord;
-    const entityTitle = isTemplate ? templateTitle : documentTitle;
+    const entityTitle = isTemplate2 ? templateTitle : documentTitle;
     const title = props.title || entityTitle;
     const icon = props.icon;
     const pageTypeBadge = usePageTypeBadge(postId2);
@@ -12804,7 +12738,7 @@ var wp;
               children: (0, import_i18n64.__)("Back")
             }
           ) }),
-          !isTemplate && isTemplatePreview && !hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+          !isTemplate2 && isTemplatePreview && !hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
             import_block_editor23.BlockIcon,
             {
               icon: layout_default,
@@ -14496,8 +14430,7 @@ var wp;
       const newTemplate = await createTemplate2({
         slug: paramCase(title || DEFAULT_TITLE) || "wp-custom-template",
         content: newTemplateContent,
-        title: title || DEFAULT_TITLE,
-        status: "publish"
+        title: title || DEFAULT_TITLE
       });
       setIsBusy(false);
       onNavigateToEntityRecord({
@@ -14603,8 +14536,6 @@ var wp;
       (select4) => select4(import_core_data48.store).getEntityRecords("postType", "wp_template", {
         per_page: -1,
         post_type: postType2
-        // We look at the combined templates for now (old endpoint)
-        // because posts only accept slugs for templates, not IDs.
       }),
       [postType2]
     );
@@ -14615,7 +14546,7 @@ var wp;
     const templates = useTemplates(postType2);
     return (0, import_element56.useMemo)(
       () => allowSwitchingTemplate && templates?.filter(
-        (template2) => (template2.is_custom || template2.type === "wp_template") && template2.slug !== currentTemplateSlug && !!template2.content.raw
+        (template2) => template2.is_custom && template2.slug !== currentTemplateSlug && !!template2.content.raw
         // Skip empty templates.
       ),
       [templates, currentTemplateSlug, allowSwitchingTemplate]
@@ -15298,24 +15229,17 @@ var wp;
       isTemplateHidden,
       onNavigateToEntityRecord,
       getEditorSettings: getEditorSettings2,
-      hasGoBack,
-      hasSpecificTemplate
+      hasGoBack
     } = (0, import_data83.useSelect)((select4) => {
-      const {
-        getRenderingMode: getRenderingMode2,
-        getEditorSettings: _getEditorSettings,
-        getCurrentPost: getCurrentPost2
-      } = unlock(select4(store));
+      const { getRenderingMode: getRenderingMode2, getEditorSettings: _getEditorSettings } = unlock(select4(store));
       const editorSettings2 = _getEditorSettings();
-      const currentPost = getCurrentPost2();
       return {
         isTemplateHidden: getRenderingMode2() === "post-only",
         onNavigateToEntityRecord: editorSettings2.onNavigateToEntityRecord,
         getEditorSettings: _getEditorSettings,
         hasGoBack: editorSettings2.hasOwnProperty(
           "onNavigateToPreviousEntityRecord"
-        ),
-        hasSpecificTemplate: !!currentPost.template
+        )
       };
     }, []);
     const { get: getPreference } = (0, import_data83.useSelect)(import_preferences12.store);
@@ -15324,8 +15248,6 @@ var wp;
       "wp_template",
       id
     );
-    const { getEntityRecord } = (0, import_data83.useSelect)(import_core_data53.store);
-    const { editEntityRecord } = (0, import_data83.useDispatch)(import_core_data53.store);
     const { createSuccessNotice } = (0, import_data83.useDispatch)(import_notices21.store);
     const { setRenderingMode: setRenderingMode2, setDefaultRenderingMode: setDefaultRenderingMode2 } = unlock(
       (0, import_data83.useDispatch)(store)
@@ -15387,30 +15309,11 @@ var wp;
             canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
               import_components59.MenuItem,
               {
-                onClick: async () => {
+                onClick: () => {
                   onNavigateToEntityRecord({
                     postId: template2.id,
                     postType: "wp_template"
                   });
-                  if (!hasSpecificTemplate) {
-                    const activeTemplates = await getEntityRecord(
-                      "root",
-                      "site"
-                    ).active_templates;
-                    if (activeTemplates[template2.slug] !== template2.id) {
-                      editEntityRecord(
-                        "root",
-                        "site",
-                        void 0,
-                        {
-                          active_templates: {
-                            ...activeTemplates,
-                            [template2.slug]: template2.id
-                          }
-                        }
-                      );
-                    }
-                  }
                   onClose();
                   mayShowTemplateEditNotice();
                 },
@@ -16071,13 +15974,9 @@ var wp;
         postType2,
         getCurrentPostId2()
       );
-      const fallback = !_excerpt && isTemplateOrTemplatePart2 ? getTemplateInfo({
-        template: template2,
-        templateTypes: select4(import_core_data59.store).getCurrentTheme()?.default_template_types
-      })?.description : void 0;
       const _shouldRender = isEditorPanelEnabled2(PANEL_NAME3) || _shouldBeUsedAsDescription;
       return {
-        excerpt: _excerpt ?? fallback,
+        excerpt: _excerpt,
         shouldRender: _shouldRender,
         shouldBeUsedAsDescription: _shouldBeUsedAsDescription,
         // If we should render, allow editing for all post types that are not used as description.
@@ -21904,7 +21803,7 @@ var wp;
     const {
       deviceType: deviceType2,
       homeUrl,
-      isTemplate,
+      isTemplate: isTemplate2,
       isViewable,
       showIconLabels,
       isTemplateHidden,
@@ -21999,7 +21898,7 @@ var wp;
               onSelect: handleDevicePreviewChange
             }
           ) }),
-          isTemplate && /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(import_components114.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(
+          isTemplate2 && /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(import_components114.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(
             import_components114.MenuItem,
             {
               href: homeUrl,
@@ -22016,7 +21915,7 @@ var wp;
               ]
             }
           ) }),
-          !isTemplate && !!templateId2 && /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(import_components114.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
+          !isTemplate2 && !!templateId2 && /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(import_components114.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
             import_components114.MenuItem,
             {
               icon: !isTemplateHidden ? check_default : void 0,
@@ -24257,7 +24156,7 @@ var wp;
   var EMPTY_OBJECT4 = {};
   function BlogTitle() {
     const { editEntityRecord } = (0, import_data183.useDispatch)(import_core_data96.store);
-    const { postsPageTitle, postsPageId, isTemplate, postSlug } = (0, import_data183.useSelect)(
+    const { postsPageTitle, postsPageId, isTemplate: isTemplate2, postSlug } = (0, import_data183.useSelect)(
       (select4) => {
         const { getEntityRecord, getEditedEntityRecord, canUser } = select4(import_core_data96.store);
         const siteSettings = canUser("read", {
@@ -24291,7 +24190,7 @@ var wp;
       }),
       [popoverAnchor]
     );
-    if (!isTemplate || !["home", "index"].includes(postSlug) || !postsPageId) {
+    if (!isTemplate2 || !["home", "index"].includes(postSlug) || !postsPageId) {
       return null;
     }
     const setPostsPageTitle = (newValue) => {
@@ -24358,7 +24257,7 @@ var wp;
   var import_block_editor63 = __toESM(require_block_editor());
   function PostsPerPage() {
     const { editEntityRecord } = (0, import_data184.useDispatch)(import_core_data97.store);
-    const { postsPerPage, isTemplate, postSlug } = (0, import_data184.useSelect)((select4) => {
+    const { postsPerPage, isTemplate: isTemplate2, postSlug } = (0, import_data184.useSelect)((select4) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select4(store);
       const { getEditedEntityRecord, canUser } = select4(import_core_data97.store);
       const siteSettings = canUser("read", {
@@ -24383,7 +24282,7 @@ var wp;
       }),
       [popoverAnchor]
     );
-    if (!isTemplate || !["home", "index"].includes(postSlug)) {
+    if (!isTemplate2 || !["home", "index"].includes(postSlug)) {
       return null;
     }
     const setPostsPerPage = (newValue) => {
@@ -24463,7 +24362,7 @@ var wp;
   ];
   function SiteDiscussion() {
     const { editEntityRecord } = (0, import_data185.useDispatch)(import_core_data98.store);
-    const { allowCommentsOnNewPosts, isTemplate, postSlug } = (0, import_data185.useSelect)(
+    const { allowCommentsOnNewPosts, isTemplate: isTemplate2, postSlug } = (0, import_data185.useSelect)(
       (select4) => {
         const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select4(store);
         const { getEditedEntityRecord, canUser } = select4(import_core_data98.store);
@@ -24491,7 +24390,7 @@ var wp;
       }),
       [popoverAnchor]
     );
-    if (!isTemplate || !["home", "index"].includes(postSlug)) {
+    if (!isTemplate2 || !["home", "index"].includes(postSlug)) {
       return null;
     }
     const setAllowCommentsOnNewPosts = (newValue) => {
