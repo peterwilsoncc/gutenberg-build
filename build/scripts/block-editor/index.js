@@ -56944,11 +56944,16 @@ var wp;
   }
   function BorderPanel2({ clientId, name, setAttributes, settings: settings2 }) {
     const isEnabled = useHasBorderPanel(settings2);
-    function selector3(select3) {
-      const { style: style2, borderColor: borderColor2 } = select3(store).getBlockAttributes(clientId) || {};
-      return { style: style2, borderColor: borderColor2 };
-    }
-    const { style, borderColor } = (0, import_data158.useSelect)(selector3, [clientId]);
+    const { style, borderColor } = (0, import_data158.useSelect)(
+      (select3) => {
+        if (!isEnabled) {
+          return {};
+        }
+        const { style: _style, borderColor: _borderColor } = select3(store).getBlockAttributes(clientId) || {};
+        return { style: _style, borderColor: _borderColor };
+      },
+      [clientId, isEnabled]
+    );
     const value = (0, import_element202.useMemo)(() => {
       return attributesToStyle({ style, borderColor });
     }, [style, borderColor]);
@@ -57439,13 +57444,25 @@ var wp;
     defaultControls
   }) {
     const isEnabled = useHasColorPanel(settings2);
-    function selector3(select3) {
-      const { style: style2, textColor: textColor2, backgroundColor: backgroundColor2, gradient: gradient2 } = select3(store).getBlockAttributes(clientId) || {};
-      return { style: style2, textColor: textColor2, backgroundColor: backgroundColor2, gradient: gradient2 };
-    }
     const { style, textColor, backgroundColor, gradient } = (0, import_data160.useSelect)(
-      selector3,
-      [clientId]
+      (select3) => {
+        if (!isEnabled) {
+          return {};
+        }
+        const {
+          style: _style,
+          textColor: _textColor,
+          backgroundColor: _backgroundColor,
+          gradient: _gradient
+        } = select3(store).getBlockAttributes(clientId) || {};
+        return {
+          style: _style,
+          textColor: _textColor,
+          backgroundColor: _backgroundColor,
+          gradient: _gradient
+        };
+      },
+      [clientId, isEnabled]
     );
     const value = (0, import_element205.useMemo)(() => {
       return attributesToStyle2({
@@ -60709,14 +60726,27 @@ var wp;
     );
   }
   function TypographyPanel2({ clientId, name, setAttributes, settings: settings2 }) {
-    function selector3(select3) {
-      const { style: style2, fontFamily: fontFamily2, fontSize: fontSize2, fitText: fitText2 } = select3(store).getBlockAttributes(clientId) || {};
-      return { style: style2, fontFamily: fontFamily2, fontSize: fontSize2, fitText: fitText2 };
-    }
-    const { style, fontFamily, fontSize, fitText } = (0, import_data175.useSelect)(selector3, [
-      clientId
-    ]);
     const isEnabled = useHasTypographyPanel(settings2);
+    const { style, fontFamily, fontSize, fitText } = (0, import_data175.useSelect)(
+      (select3) => {
+        if (!isEnabled) {
+          return {};
+        }
+        const {
+          style: _style,
+          fontFamily: _fontFamily,
+          fontSize: _fontSize,
+          fitText: _fitText
+        } = select3(store).getBlockAttributes(clientId) || {};
+        return {
+          style: _style,
+          fontFamily: _fontFamily,
+          fontSize: _fontSize,
+          fitText: _fitText
+        };
+      },
+      [clientId, isEnabled]
+    );
     const value = (0, import_element218.useMemo)(
       () => attributesToStyle3({ style, fontFamily, fontSize }),
       [style, fontSize, fontFamily]
@@ -61588,7 +61618,10 @@ var wp;
     }
     const hasGlobalPadding = (0, import_data177.useSelect)(
       (select3) => {
-        return (usedLayout?.inherit || usedLayout?.contentSize || usedLayout?.type === "constrained") && select3(store).getSettings().__experimentalFeatures?.useRootPaddingAwareAlignments;
+        if (!usedLayout?.inherit && !usedLayout?.contentSize && usedLayout?.type !== "constrained") {
+          return false;
+        }
+        return select3(store).getSettings().__experimentalFeatures?.useRootPaddingAwareAlignments;
       },
       [usedLayout?.contentSize, usedLayout?.inherit, usedLayout?.type]
     );
