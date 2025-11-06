@@ -50,6 +50,7 @@ store("core/fit-text", {
           context.fontSize = optimizeFitText(ref, applyFontSize);
         });
         resizeObserver.observe(ref.parentElement);
+        resizeObserver.observe(ref);
         return () => {
           if (resizeObserver) {
             resizeObserver.disconnect();

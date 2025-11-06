@@ -60409,6 +60409,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/fit-text.js
   var import_jsx_runtime385 = __toESM(require_jsx_runtime());
+  var EMPTY_OBJECT3 = {};
   var FIT_TEXT_SUPPORT_KEY = "typography.fitText";
   function addAttributes5(settings2) {
     if (!(0, import_blocks104.hasBlockSupport)(settings2, FIT_TEXT_SUPPORT_KEY)) {
@@ -60430,12 +60431,15 @@ var wp;
   function useFitText({ fitText, name, clientId }) {
     const hasFitTextSupport2 = (0, import_blocks104.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
-    const blockAttributes = (0, import_data174.useSelect)(
+    const { blockAttributes, parentId } = (0, import_data174.useSelect)(
       (select3) => {
         if (!clientId || !hasFitTextSupport2 || !fitText) {
-          return;
+          return EMPTY_OBJECT3;
         }
-        return select3(store).getBlockAttributes(clientId);
+        return {
+          blockAttributes: select3(store).getBlockAttributes(clientId),
+          parentId: select3(store).getBlockRootClientId(clientId)
+        };
       },
       [clientId, hasFitTextSupport2, fitText]
     );
@@ -60482,6 +60486,7 @@ var wp;
       if (window.ResizeObserver && currentElement.parentElement) {
         resizeObserver = new window.ResizeObserver(applyFitText);
         resizeObserver.observe(currentElement.parentElement);
+        resizeObserver.observe(currentElement);
       }
       return () => {
         if (hideFrameId !== null) {
@@ -60502,7 +60507,14 @@ var wp;
           styleElement.remove();
         }
       };
-    }, [fitText, clientId, applyFitText, blockElement, hasFitTextSupport2]);
+    }, [
+      fitText,
+      clientId,
+      parentId,
+      applyFitText,
+      blockElement,
+      hasFitTextSupport2
+    ]);
     (0, import_element217.useEffect)(() => {
       if (fitText && blockElement && hasFitTextSupport2) {
         const frameId = window.requestAnimationFrame(() => {
@@ -63161,7 +63173,7 @@ var wp;
   var import_blocks112 = __toESM(require_blocks());
   var import_data183 = __toESM(require_data());
   var import_jsx_runtime397 = __toESM(require_jsx_runtime());
-  var EMPTY_OBJECT3 = {};
+  var EMPTY_OBJECT4 = {};
   function BlockHooksControlPure({
     name,
     clientId,
@@ -63220,7 +63232,7 @@ var wp;
         if (Object.values(_hookedBlockClientIds).length > 0) {
           return _hookedBlockClientIds;
         }
-        return EMPTY_OBJECT3;
+        return EMPTY_OBJECT4;
       },
       [hookedBlocksForCurrentBlock, name, clientId]
     );
@@ -63340,7 +63352,7 @@ var wp;
   var import_compose98 = __toESM(require_compose());
   var import_jsx_runtime398 = __toESM(require_jsx_runtime());
   var { Menu: Menu2 } = unlock(import_components233.privateApis);
-  var EMPTY_OBJECT4 = {};
+  var EMPTY_OBJECT5 = {};
   var getAttributeType = (blockName, attribute) => {
     const _attributeType = (0, import_blocks113.getBlockType)(blockName).attributes?.[attribute]?.type;
     return _attributeType === "rich-text" ? "string" : _attributeType;
@@ -63546,7 +63558,7 @@ var wp;
         const { __experimentalBlockBindingsSupportedAttributes } = select3(store).getSettings();
         const _bindableAttributes = __experimentalBlockBindingsSupportedAttributes?.[blockName];
         if (!_bindableAttributes || _bindableAttributes.length === 0) {
-          return EMPTY_OBJECT4;
+          return EMPTY_OBJECT5;
         }
         const registeredSources = (0, import_blocks113.getBlockBindingsSources)();
         Object.entries(registeredSources).forEach(
@@ -63580,7 +63592,7 @@ var wp;
           }
         );
         return {
-          sources: Object.values(_sources).length > 0 ? _sources : EMPTY_OBJECT4,
+          sources: Object.values(_sources).length > 0 ? _sources : EMPTY_OBJECT5,
           canUpdateBlockBindings: select3(store).getSettings().canUpdateBlockBindings,
           bindableAttributes: _bindableAttributes
         };
