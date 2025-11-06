@@ -48810,12 +48810,10 @@ var wp;
     y: y3,
     refs
   }) {
-    const { clientId, blockCommentId } = (0, import_data219.useSelect)((select5) => {
-      const { getSelectedBlock: getSelectedBlock2 } = select5(import_block_editor91.store);
-      const selectedBlock = getSelectedBlock2();
+    const { clientId } = (0, import_data219.useSelect)((select5) => {
+      const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor91.store);
       return {
-        clientId: selectedBlock?.clientId,
-        blockCommentId: selectedBlock?.attributes?.metadata?.noteId
+        clientId: getSelectedBlockClientId2()
       };
     }, []);
     const blockElement = useBlockElement(clientId);
@@ -48825,7 +48823,7 @@ var wp;
       blockElement?.focus();
       toggleBlockSpotlight(clientId, false);
     };
-    if (newNoteFormState !== "open" || !clientId || void 0 !== blockCommentId) {
+    if (newNoteFormState !== "open" || !clientId) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)(
@@ -48912,7 +48910,7 @@ var wp;
     const threads = (0, import_element169.useMemo)(() => {
       const t4 = [...noteThreads];
       const orderedThreads = [];
-      if (isFloating && newNoteFormState === "open" && void 0 === blockCommentId) {
+      if (isFloating && newNoteFormState === "open") {
         const newNoteThread = {
           id: "new-note-thread",
           blockClientId: selectedBlockClientId,
@@ -48937,7 +48935,6 @@ var wp;
       noteThreads,
       isFloating,
       newNoteFormState,
-      blockCommentId,
       selectedBlockClientId,
       orderedBlockIds
     ]);
@@ -48964,8 +48961,9 @@ var wp;
       }
     };
     (0, import_element169.useEffect)(() => {
-      const fallback = newNoteFormState === "open" ? "new-note-thread" : null;
-      setSelectedThread(blockCommentId ?? fallback);
+      setSelectedThread(
+        newNoteFormState === "open" ? "new-note-thread" : blockCommentId
+      );
     }, [blockCommentId, newNoteFormState]);
     const setBlockRef = (0, import_element169.useCallback)((id, blockRef) => {
       setBlockRefs((prev) => ({ ...prev, [id]: blockRef }));
@@ -49065,7 +49063,7 @@ var wp;
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_jsx_runtime331.Fragment, { children: [
-      !isFloating && newNoteFormState === "open" && void 0 === blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+      !isFloating && newNoteFormState === "open" && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
@@ -49772,12 +49770,12 @@ var wp;
       if (!SIDEBARS.includes(currentArea)) {
         return;
       }
-      setNewNoteFormState(!blockCommentId ? "open" : "closed");
+      setNewNoteFormState(!currentThread ? "open" : "closed");
       focusCommentThread(
-        blockCommentId,
+        currentThread?.id,
         commentSidebarRef.current,
         // Focus a comment thread when there's a selected block with a comment.
-        !blockCommentId ? "textarea" : void 0
+        !currentThread ? "textarea" : void 0
       );
       toggleBlockSpotlight(clientId, true);
     }
@@ -49785,7 +49783,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(comment_menu_item_default, { isDistractionFree: true });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(import_jsx_runtime334.Fragment, { children: [
-      blockCommentId && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+      !!currentThread && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
         comment_indicator_toolbar_default,
         {
           thread: currentThread,
