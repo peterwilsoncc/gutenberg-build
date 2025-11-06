@@ -40039,13 +40039,14 @@ This message will only show in development mode. It won't appear in production. 
       ...rest
     };
   }
-  function getDescribedBy(currentValue, describedBy) {
+  function getDescribedBy(currentName, describedBy) {
     if (describedBy) {
       return describedBy;
     }
-    return (0, import_i18n41.sprintf)((0, import_i18n41.__)("Currently selected: %s"), currentValue);
+    return (0, import_i18n41.sprintf)((0, import_i18n41.__)("Currently selected: %s"), currentName);
   }
   function CustomSelectControl(props) {
+    var _options$map$find;
     const {
       __next40pxDefaultSize = false,
       __shouldNotWarnDeprecated36pxSize,
@@ -40067,7 +40068,7 @@ This message will only show in development mode. It won't appear in production. 
     const descriptionId = (0, import_compose53.useInstanceId)(CustomSelectControl, "custom-select-control__description");
     const store = useSelectStore({
       async setValue(nextValue) {
-        const nextOption = options2.find((item2) => item2.name === nextValue);
+        const nextOption = options2.find((item2) => item2.key === nextValue);
         if (!onChange || !nextOption) {
           return;
         }
@@ -40082,12 +40083,12 @@ This message will only show in development mode. It won't appear in production. 
         };
         onChange(changeObject);
       },
-      value: value?.name,
+      value: value?.key,
       // Setting the first option as a default value when no value is provided
       // is already done natively by the underlying Ariakit component,
       // but doing this explicitly avoids the `onChange` callback from firing
       // on initial render, thus making this implementation closer to the v1.
-      defaultValue: options2[0]?.name
+      defaultValue: options2[0]?.key
     });
     const children = options2.map(applyOptionDeprecations).map(({
       name,
@@ -40106,7 +40107,7 @@ This message will only show in development mode. It won't appear in production. 
         })]
       });
       return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(item_default, {
-        value: name,
+        value: key,
         children: hint ? withHint : name,
         style: style2,
         className: clsx_default(
@@ -40120,15 +40121,18 @@ This message will only show in development mode. It won't appear in production. 
       }, key);
     });
     const currentValue = useStoreState(store, "value");
-    const renderSelectedValueHint = () => {
-      const selectedOptionHint = options2?.map(applyOptionDeprecations)?.find(({
-        name
-      }) => currentValue === name)?.hint;
+    const selectedOption = (_options$map$find = options2?.map(applyOptionDeprecations)?.find(({
+      key
+    }) => currentValue === key)) !== null && _options$map$find !== void 0 ? _options$map$find : options2[0];
+    const renderSelectedValue = () => {
+      if (!showSelectedHint || !selectedOption.hint) {
+        return selectedOption?.name;
+      }
       return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(SelectedExperimentalHintWrapper, {
-        children: [currentValue, selectedOptionHint && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(SelectedExperimentalHintItem, {
+        children: [selectedOption?.name, /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(SelectedExperimentalHintItem, {
           // Keeping the classname for legacy reasons
           className: "components-custom-select-control__hint",
-          children: selectedOptionHint
+          children: selectedOption?.hint
         })]
       });
     };
@@ -40144,7 +40148,7 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(import_jsx_runtime193.Fragment, {
       children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsx)(custom_select_default, {
         "aria-describedby": descriptionId,
-        renderSelectedValue: showSelectedHint ? renderSelectedValueHint : void 0,
+        renderSelectedValue,
         size: translatedSize,
         store,
         className: clsx_default(
@@ -40158,7 +40162,7 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(component_default2, {
         children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)("span", {
           id: descriptionId,
-          children: getDescribedBy(currentValue, describedBy)
+          children: getDescribedBy(selectedOption?.name, describedBy)
         })
       })]
     });
