@@ -44329,9 +44329,13 @@ var wp;
     if (typeof values === "string") {
       return values;
     }
-    const parsedQuantitiesAndUnits = Object.values(values).map(
-      (value2) => (0, import_components135.__experimentalParseQuantityAndUnitFromRawValue)(value2)
-    );
+    const parsedQuantitiesAndUnits = Object.values(values).map((value2) => {
+      const newValue = (0, import_components135.__experimentalParseQuantityAndUnitFromRawValue)(value2);
+      if (typeof value2 === "string" && newValue[0] === void 0) {
+        return [value2, ""];
+      }
+      return newValue;
+    });
     const allValues = parsedQuantitiesAndUnits.map(
       (value2) => value2[0] ?? ""
     );
