@@ -38990,7 +38990,13 @@ var wp;
     const showBlockTitle = isSingleBlock && isSynced && !showIconLabels;
     const label = isSingleBlock ? blockTitle : (0, import_i18n96.__)("Multiple blocks selected");
     const text = showBlockTitle && blockTitle ? blockTitle : void 0;
-    const BlockIconElement = /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(block_icon_default, { icon });
+    const BlockIconElement = /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
+      block_icon_default,
+      {
+        className: "block-editor-block-toolbar__block-icon",
+        icon
+      }
+    );
     if (variant === "switcher") {
       return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
         block_switcher_default,
@@ -39017,7 +39023,7 @@ var wp;
       import_components109.ToolbarButton,
       {
         disabled: true,
-        className: "block-editor-block-toolbar__block-icon",
+        className: "block-editor-block-toolbar__block-icon-button",
         title: label,
         icon: BlockIconElement,
         text
