@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-api-fetch', 'wp-blob', 'wp-element', 'wp-i18n', 'wp-private-apis'), 'version' => '1762434507899');
+<?php return array('dependencies' => array('wp-api-fetch', 'wp-blob', 'wp-element', 'wp-i18n', 'wp-private-apis'), 'version' => '1762455342188');
