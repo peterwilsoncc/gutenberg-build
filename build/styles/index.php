@@ -13,13 +13,13 @@ return array(
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-list-reusable-blocks',
-		'path' => 'list-reusable-blocks/style',
+		'handle' => 'wp-nux',
+		'path' => 'nux/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-nux',
-		'path' => 'nux/style',
+		'handle' => 'wp-list-reusable-blocks',
+		'path' => 'list-reusable-blocks/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(

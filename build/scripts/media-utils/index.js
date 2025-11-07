@@ -2872,6 +2872,18 @@ var wp;
           "aria-describedby": tableNoticeId,
           role: isInfiniteScroll ? "feed" : void 0,
           children: [
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("colgroup", { children: [
+              hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
+              hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("col", { className: "dataviews-view-table__col-primary" }),
+              columns.map((column) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                "col",
+                {
+                  className: `dataviews-view-table__col-${column}`
+                },
+                `col-${column}`
+              )),
+              !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("col", { className: "dataviews-view-table__col-actions" })
+            ] }),
             /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("tr", { className: "dataviews-view-table__row", children: [
               hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
                 "th",
