@@ -271,10 +271,11 @@ var route = {
     if (view.type !== "list") {
       return void 0;
     }
-    if (search.postId) {
+    if (search.postIds && search.postIds.length > 0) {
       return {
         postType: params.type,
-        postId: search.postId.toString()
+        postId: search.postIds[0].toString(),
+        isPreview: true
       };
     }
     const query = viewToQuery(view, params.type);
@@ -286,7 +287,8 @@ var route = {
     if (posts && posts.length > 0) {
       return {
         postType: params.type,
-        postId: posts[0].id.toString()
+        postId: posts[0].id.toString(),
+        isPreview: true
       };
     }
     return void 0;

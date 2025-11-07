@@ -8,13 +8,21 @@
 
 return array(
 	array(
-		'name'      => 'home',
-		'path'      => '/',
-		'has_route' => false,
+		'name'        => 'home',
+		'path'        => '/',
+		'has_route'   => false,
+		'has_content' => true,
 	),
 	array(
-		'name'      => 'post-list',
-		'path'      => '/types/$type/list/$slug',
-		'has_route' => true,
+		'name'        => 'post-edit',
+		'path'        => '/types/$type/edit/$id',
+		'has_route'   => true,
+		'has_content' => false,
+	),
+	array(
+		'name'        => 'post-list',
+		'path'        => '/types/$type/list/$slug',
+		'has_route'   => true,
+		'has_content' => true,
 	)
 );
