@@ -50269,13 +50269,21 @@ var wp;
           getEntityRecord,
           getResolutionError,
           hasFinishedResolution,
-          getCurrentTheme
+          getCurrentTheme,
+          __experimentalGetCurrentGlobalStylesId,
+          canUser
         } = select5(import_core_data117.store);
         const { getRenderingMode: getRenderingMode2, getCurrentPostType: getCurrentPostType2 } = select5(store);
         const postArgs = ["postType", postType2, postId2];
         const renderingMode2 = getRenderingMode2();
         const currentPostType = getCurrentPostType2();
         const _isBlockTheme = getCurrentTheme()?.is_block_theme;
+        const globalStylesId = __experimentalGetCurrentGlobalStylesId();
+        const userCanEditGlobalStyles = globalStylesId ? canUser("update", {
+          kind: "root",
+          name: "globalStyles",
+          id: globalStylesId
+        }) : false;
         return {
           post: getEntityRecord(...postArgs),
           template: templateId2 ? getEntityRecord(
@@ -50289,7 +50297,7 @@ var wp;
           ),
           error: getResolutionError("getEntityRecord", postArgs)?.message,
           isBlockTheme: _isBlockTheme,
-          showGlobalStyles: _isBlockTheme && (currentPostType === "wp_template" || renderingMode2 === "template-locked")
+          showGlobalStyles: _isBlockTheme && userCanEditGlobalStyles && (currentPostType === "wp_template" || renderingMode2 === "template-locked")
         };
       },
       [postType2, postId2, templateId2]
