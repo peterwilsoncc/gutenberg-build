@@ -3104,7 +3104,7 @@ var wp;
     lighter: { min: 0.2, max: 0.4 },
     darker: { min: 0.75, max: 0.98 }
   };
-  var LIGHTNESS_EPSILON = 4e-3;
+  var CONTRAST_EPSILON = 4e-3;
   var MAX_BISECTION_ITERATIONS = 10;
   var DEFAULT_SEED_COLORS = {
     bg: "#f8f8f8",
@@ -3170,6 +3170,25 @@ var wp;
     visit("seed");
     return result;
   }
+  function stepsForStep(stepName, config) {
+    const result = /* @__PURE__ */ new Set();
+    function visit(step) {
+      if (step === "seed" || result.has(step)) {
+        return;
+      }
+      const stepConfig = config[step];
+      if (!stepConfig) {
+        return;
+      }
+      visit(stepConfig.contrast.reference);
+      if (stepConfig.sameAsIfPossible) {
+        visit(stepConfig.sameAsIfPossible);
+      }
+      result.add(step);
+    }
+    visit(stepName);
+    return Array.from(result);
+  }
   function computeBetterFgColorDirection(seed, preferLighter) {
     const contrastAgainstBlack = getContrast(seed, BLACK);
     const contrastAgainstWhite = getContrast(seed, WHITE);
@@ -3184,6 +3203,44 @@ var wp;
   function clampAccentScaleReferenceLightness(rawLightness, direction) {
     const thresholds = ACCENT_SCALE_BASE_LIGHTNESS_THRESHOLDS[direction];
     return Math.max(thresholds.min, Math.min(thresholds.max, rawLightness));
+  }
+  function solveWithBisect(calculateC, calculateValue, initLowerL, initLowerValue, initUpperL, initUpperValue) {
+    let lowerL = initLowerL;
+    let lowerValue = initLowerValue;
+    let lowerReplaced = false;
+    let upperL = initUpperL;
+    let upperValue = initUpperValue;
+    let upperReplaced = false;
+    let bestC;
+    let bestValue;
+    let iterations = 0;
+    while (true) {
+      iterations++;
+      const newL = (lowerL * upperValue - upperL * lowerValue) / (upperValue - lowerValue);
+      bestC = calculateC(newL);
+      bestValue = calculateValue(bestC);
+      if (Math.abs(bestValue) <= CONTRAST_EPSILON || iterations >= MAX_BISECTION_ITERATIONS) {
+        break;
+      }
+      if (bestValue <= 0) {
+        lowerL = newL;
+        lowerValue = bestValue;
+        if (lowerReplaced) {
+          upperValue /= 2;
+        }
+        lowerReplaced = true;
+        upperReplaced = false;
+      } else {
+        upperL = newL;
+        upperValue = bestValue;
+        if (upperReplaced) {
+          lowerValue /= 2;
+        }
+        upperReplaced = true;
+        lowerReplaced = false;
+      }
+    }
+    return bestC;
   }
 
   // packages/theme/build-module/color-ramps/lib/taper-chroma.js
@@ -3327,11 +3384,14 @@ var wp;
   // packages/theme/build-module/color-ramps/lib/find-color-with-constraints.js
   function findColorMeetingRequirements(reference, seed, target, direction, {
     lightnessConstraint,
-    taperChromaOptions,
-    strict = true
+    taperChromaOptions
   } = {}) {
     if (target <= 1) {
-      return { color: seed, reached: true, achieved: 1 };
+      return {
+        color: reference,
+        reached: true,
+        achieved: 1
+      };
     }
     function getColorForL(l) {
       let newL = l;
@@ -3350,71 +3410,48 @@ var wp;
         coords: [newL, newC, get(seed, [oklch_default, "h"])]
       });
     }
-    if (lightnessConstraint) {
-      const colorWithExactL = getColorForL(lightnessConstraint.value);
-      const exactLContrast = getContrast(reference, colorWithExactL);
-      if (lightnessConstraint.type === "force" || exactLContrast >= target) {
-        return {
-          color: colorWithExactL,
-          reached: exactLContrast >= target,
-          achieved: exactLContrast
-        };
-      }
-    }
     const mostContrastingL = direction === "lighter" ? 1 : 0;
     const mostContrastingColor = direction === "lighter" ? WHITE : BLACK;
     const highestContrast = getContrast(reference, mostContrastingColor);
-    if (highestContrast < target) {
-      if (strict) {
-        throw new Error(
-          `Contrast target ${target.toFixed(
-            2
-          )}:1 unreachable in ${direction} direction(boundary achieves ${highestContrast.toFixed(3)}:1).`
-        );
+    if (lightnessConstraint) {
+      const colorWithExactL = getColorForL(lightnessConstraint.value);
+      const exactLContrast = getContrast(reference, colorWithExactL);
+      const exactLContrastMeetsTarget = exactLContrast >= target - CONTRAST_EPSILON;
+      if (exactLContrastMeetsTarget || lightnessConstraint.type === "force") {
+        return {
+          color: colorWithExactL,
+          reached: exactLContrastMeetsTarget,
+          achieved: exactLContrast,
+          deficit: exactLContrastMeetsTarget ? exactLContrast - highestContrast : target - exactLContrast
+        };
       }
+    }
+    if (highestContrast <= target + CONTRAST_EPSILON) {
       return {
         color: mostContrastingColor,
-        reached: false,
-        achieved: highestContrast
+        reached: highestContrast >= target - CONTRAST_EPSILON,
+        achieved: highestContrast,
+        deficit: target - highestContrast
       };
     }
-    let worseL = get(reference, [oklch_default, "l"]);
-    let worseContrast = 1;
-    let replacedWorse = false;
-    let betterL = mostContrastingL;
-    let betterContrast = highestContrast;
-    let replacedBetter = false;
-    let bestColor = mostContrastingColor;
-    let bestContrast = highestContrast;
-    for (let i = 0; i < MAX_BISECTION_ITERATIONS; i++) {
-      const newL = (worseL * (betterContrast - target) - betterL * (worseContrast - target)) / (betterContrast - worseContrast);
-      bestColor = getColorForL(newL);
-      bestContrast = getContrast(reference, bestColor);
-      if (Math.abs(bestContrast - target) <= LIGHTNESS_EPSILON) {
-        break;
-      }
-      if (bestContrast >= target) {
-        betterL = newL;
-        betterContrast = bestContrast;
-        if (replacedBetter) {
-          worseContrast = (worseContrast + target) / 2;
-        }
-        replacedBetter = true;
-        replacedWorse = false;
-      } else {
-        worseL = newL;
-        worseContrast = bestContrast;
-        if (replacedWorse) {
-          betterContrast = (betterContrast + target) / 2;
-        }
-        replacedWorse = true;
-        replacedBetter = false;
-      }
-    }
+    const lowerL = get(reference, [oklch_default, "l"]);
+    const lowerContrast = 1 - target;
+    const upperL = mostContrastingL;
+    const upperContrast = highestContrast - target;
+    const bestColor = solveWithBisect(
+      getColorForL,
+      (c) => getContrast(reference, c) - target,
+      lowerL,
+      lowerContrast,
+      upperL,
+      upperContrast
+    );
     return {
       color: bestColor,
       reached: true,
-      achieved: bestContrast
+      achieved: target,
+      // Negative number that specifies how much room we have.
+      deficit: target - highestContrast
     };
   }
 
@@ -3428,9 +3465,9 @@ var wp;
     pinLightness
   }) {
     const rampResults = {};
-    let SATISFIED_ALL_CONTRAST_REQUIREMENTS = true;
-    let UNSATISFIED_DIRECTION = "lighter";
-    let MAX_WEIGHTED_DEFICIT = 0;
+    let maxDeficit = -Infinity;
+    let maxDeficitDirection = "lighter";
+    let maxDeficitStep;
     const calculatedColors = /* @__PURE__ */ new Map();
     calculatedColors.set("seed", seed);
     for (const stepName of sortedSteps) {
@@ -3463,20 +3500,23 @@ var wp;
       }
       if (sameAsIfPossible) {
         const candidateColor = calculatedColors.get(sameAsIfPossible);
-        if (candidateColor) {
-          const candidateContrast = getContrast(
-            referenceColor,
-            candidateColor
+        if (!candidateColor) {
+          throw new Error(
+            `Same-as color for step ${stepName} not found: ${sameAsIfPossible}`
           );
-          const adjustedTarget2 = adjustContrastTarget(contrast.target);
-          if (candidateContrast >= adjustedTarget2) {
-            calculatedColors.set(stepName, candidateColor);
-            rampResults[stepName] = {
-              color: getColorString(candidateColor),
-              warning: false
-            };
-            continue;
-          }
+        }
+        const candidateContrast = getContrast(
+          referenceColor,
+          candidateColor
+        );
+        const adjustedTarget2 = adjustContrastTarget(contrast.target);
+        if (candidateContrast >= adjustedTarget2) {
+          calculatedColors.set(stepName, candidateColor);
+          rampResults[stepName] = {
+            color: getColorString(candidateColor),
+            warning: false
+          };
+          continue;
         }
       }
       const computedDir = computeDirection(
@@ -3502,20 +3542,14 @@ var wp;
         adjustedTarget,
         computedDir,
         {
-          strict: false,
           lightnessConstraint,
           taperChromaOptions
         }
       );
-      if (!searchResults.reached && !contrast.ignoreWhenAdjustingSeed) {
-        SATISFIED_ALL_CONTRAST_REQUIREMENTS = false;
-        const deficitVsTarget = adjustedTarget - searchResults.achieved;
-        const impactWeight = 1 / getContrast(seed, referenceColor);
-        const weightedDeficit = deficitVsTarget * impactWeight;
-        if (weightedDeficit > MAX_WEIGHTED_DEFICIT) {
-          MAX_WEIGHTED_DEFICIT = weightedDeficit;
-          UNSATISFIED_DIRECTION = computedDir;
-        }
+      if (!contrast.ignoreWhenAdjustingSeed && searchResults.deficit && searchResults.deficit > maxDeficit) {
+        maxDeficit = searchResults.deficit;
+        maxDeficitDirection = computedDir;
+        maxDeficitStep = stepName;
       }
       calculatedColors.set(stepName, searchResults.color);
       rampResults[stepName] = {
@@ -3525,8 +3559,9 @@ var wp;
     }
     return {
       rampResults,
-      SATISFIED_ALL_CONTRAST_REQUIREMENTS,
-      UNSATISFIED_DIRECTION
+      maxDeficit,
+      maxDeficitDirection,
+      maxDeficitStep
     };
   }
   function buildRamp(seedArg, config, {
@@ -3553,11 +3588,7 @@ var wp;
       oppDir = worse;
     }
     const sortedSteps = sortByDependency(config);
-    const {
-      rampResults,
-      SATISFIED_ALL_CONTRAST_REQUIREMENTS,
-      UNSATISFIED_DIRECTION
-    } = calculateRamp({
+    const { rampResults, maxDeficit, maxDeficitDirection, maxDeficitStep } = calculateRamp({
       seed,
       sortedSteps,
       config,
@@ -3565,45 +3596,52 @@ var wp;
       oppDir,
       pinLightness
     });
-    const toReturn = {
-      ramp: rampResults,
-      direction: mainDir
-    };
-    if (!SATISFIED_ALL_CONTRAST_REQUIREMENTS && rescaleToFitContrastTargets) {
-      let worseSeedL = get(seed, [oklch_default, "l"]);
-      let betterSeedL = UNSATISFIED_DIRECTION === "lighter" ? 0 : 1;
-      for (let i = 0; i < MAX_BISECTION_ITERATIONS && Math.abs(betterSeedL - worseSeedL) > LIGHTNESS_EPSILON; i++) {
-        const newSeed = clampToGamut(
-          set(
-            clone(seed),
-            [oklch_default, "l"],
-            (worseSeedL + betterSeedL) / 2
-          )
-        );
+    let bestRamp = rampResults;
+    if (maxDeficit > CONTRAST_EPSILON && rescaleToFitContrastTargets) {
+      let getSeedForL = function(l) {
+        return clampToGamut(set(clone(seed), [oklch_default, "l"], l));
+      }, getDeficitForSeed = function(s) {
         const iterationResults = calculateRamp({
-          seed: newSeed,
-          sortedSteps,
+          seed: s,
+          sortedSteps: iterSteps,
           config,
           mainDir,
           oppDir,
           pinLightness
         });
-        if (iterationResults.SATISFIED_ALL_CONTRAST_REQUIREMENTS) {
-          betterSeedL = get(newSeed, [oklch_default, "l"]);
-          toReturn.ramp = iterationResults.rampResults;
-        } else if (UNSATISFIED_DIRECTION !== mainDir) {
-          betterSeedL = get(newSeed, [oklch_default, "l"]);
-        } else {
-          worseSeedL = get(newSeed, [oklch_default, "l"]);
-        }
-      }
+        return iterationResults.maxDeficitDirection === maxDeficitDirection ? iterationResults.maxDeficit : -maxDeficit;
+      };
+      const iterSteps = stepsForStep(maxDeficitStep, config);
+      const lowerSeedL = maxDeficitDirection === "lighter" ? 0 : 1;
+      const lowerDeficit = -maxDeficit;
+      const upperSeedL = get(seed, [oklch_default, "l"]);
+      const upperDeficit = maxDeficit;
+      const bestSeed = solveWithBisect(
+        getSeedForL,
+        getDeficitForSeed,
+        lowerSeedL,
+        lowerDeficit,
+        upperSeedL,
+        upperDeficit
+      );
+      bestRamp = calculateRamp({
+        seed: bestSeed,
+        sortedSteps,
+        config,
+        mainDir,
+        oppDir,
+        pinLightness
+      }).rampResults;
     }
     if (mainDir === "darker") {
-      const tmpSurface1 = toReturn.ramp.surface1;
-      toReturn.ramp.surface1 = toReturn.ramp.surface3;
-      toReturn.ramp.surface3 = tmpSurface1;
+      const tmpSurface1 = bestRamp.surface1;
+      bestRamp.surface1 = bestRamp.surface3;
+      bestRamp.surface3 = tmpSurface1;
     }
-    return toReturn;
+    return {
+      ramp: bestRamp,
+      direction: mainDir
+    };
   }
 
   // packages/theme/build-module/color-ramps/lib/ramp-configs.js
