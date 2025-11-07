@@ -8,18 +8,13 @@
 
 return array(
 	array(
-		'handle' => 'wp-preferences',
-		'path' => 'preferences/style',
-		'dependencies' => array('wp-components'),
-	),
-	array(
 		'handle' => 'wp-nux',
 		'path' => 'nux/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-commands',
-		'path' => 'commands/style',
+		'handle' => 'wp-preferences',
+		'path' => 'preferences/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(
@@ -28,9 +23,9 @@ return array(
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-patterns',
-		'path' => 'patterns/style',
-		'dependencies' => array('wp-block-editor', 'wp-components'),
+		'handle' => 'wp-commands',
+		'path' => 'commands/style',
+		'dependencies' => array('wp-components'),
 	),
 	array(
 		'handle' => 'wp-reusable-blocks',
@@ -38,14 +33,19 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
-		'handle' => 'wp-widgets',
-		'path' => 'widgets/style',
+		'handle' => 'wp-patterns',
+		'path' => 'patterns/style',
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
 		'handle' => 'wp-components',
 		'path' => 'components/style',
 		'dependencies' => array(),
+	),
+	array(
+		'handle' => 'wp-widgets',
+		'path' => 'widgets/style',
+		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
 		'handle' => 'wp-format-library',
@@ -78,14 +78,14 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-commands', 'wp-components', 'wp-patterns', 'wp-preferences'),
 	),
 	array(
-		'handle' => 'wp-edit-widgets',
-		'path' => 'edit-widgets/style',
-		'dependencies' => array('wp-block-editor', 'wp-block-library', 'wp-components', 'wp-patterns', 'wp-preferences', 'wp-widgets'),
-	),
-	array(
 		'handle' => 'wp-edit-post',
 		'path' => 'edit-post/style',
 		'dependencies' => array('wp-block-editor', 'wp-block-library', 'wp-commands', 'wp-components', 'wp-editor', 'wp-preferences', 'wp-widgets'),
+	),
+	array(
+		'handle' => 'wp-edit-widgets',
+		'path' => 'edit-widgets/style',
+		'dependencies' => array('wp-block-editor', 'wp-block-library', 'wp-components', 'wp-patterns', 'wp-preferences', 'wp-widgets'),
 	),
 	array(
 		'handle' => 'wp-edit-site',

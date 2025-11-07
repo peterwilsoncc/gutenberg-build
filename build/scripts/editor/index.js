@@ -12826,20 +12826,32 @@ var wp;
     return { isLoading: false, commands };
   };
   var getPageContentFocusCommands = () => function usePageContentFocusCommands() {
-    const { onNavigateToEntityRecord, goBack, templateId: templateId2, isPreviewMode } = (0, import_data37.useSelect)((select5) => {
+    const {
+      onNavigateToEntityRecord,
+      goBack,
+      templateId: templateId2,
+      isPreviewMode,
+      canEditTemplate
+    } = (0, import_data37.useSelect)((select5) => {
       const {
         getRenderingMode: getRenderingMode2,
         getEditorSettings: _getEditorSettings,
         getCurrentTemplateId: getCurrentTemplateId2
       } = unlock(select5(store));
       const editorSettings2 = _getEditorSettings();
+      const _templateId = getCurrentTemplateId2();
       return {
         isTemplateHidden: getRenderingMode2() === "post-only",
         onNavigateToEntityRecord: editorSettings2.onNavigateToEntityRecord,
         getEditorSettings: _getEditorSettings,
         goBack: editorSettings2.onNavigateToPreviousEntityRecord,
-        templateId: getCurrentTemplateId2(),
-        isPreviewMode: editorSettings2.isPreviewMode
+        templateId: _templateId,
+        isPreviewMode: editorSettings2.isPreviewMode,
+        canEditTemplate: !!_templateId && select5(import_core_data25.store).canUser("update", {
+          kind: "postType",
+          name: "wp_template",
+          id: _templateId
+        })
       };
     }, []);
     const { editedRecord: template2, hasResolved } = (0, import_core_data25.useEntityRecord)(
@@ -12851,7 +12863,7 @@ var wp;
       return { isLoading: false, commands: [] };
     }
     const commands = [];
-    if (templateId2 && hasResolved) {
+    if (templateId2 && hasResolved && canEditTemplate) {
       commands.push({
         name: "core/switch-to-template-focus",
         label: (0, import_i18n51.sprintf)(
