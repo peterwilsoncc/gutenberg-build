@@ -454,7 +454,7 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_jsx_runtime3.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_components2.MenuItem, { href: managePatternsUrl, children: (0, import_i18n3.__)("Manage patterns") }),
-      canRemove && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_components2.MenuItem, { onClick: () => convertBlockToStatic(clientId), children: (0, import_i18n3.__)("Detach") })
+      canRemove && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_components2.MenuItem, { onClick: () => convertBlockToStatic(clientId), children: (0, import_i18n3.__)("Disconnect pattern") })
     ] });
   }
   var reusable_blocks_manage_button_default = ReusableBlocksManageButton;
