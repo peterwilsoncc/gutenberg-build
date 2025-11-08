@@ -14,6 +14,12 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'post',
+		'path'        => '/types/$type',
+		'has_route'   => true,
+		'has_content' => false,
+	),
+	array(
 		'name'        => 'post-edit',
 		'path'        => '/types/$type/edit/$id',
 		'has_route'   => true,
@@ -24,5 +30,11 @@ return array(
 		'path'        => '/types/$type/list/$slug',
 		'has_route'   => true,
 		'has_content' => true,
+	),
+	array(
+		'name'        => 'post-new',
+		'path'        => '/types/$type/new',
+		'has_route'   => true,
+		'has_content' => false,
 	)
 );
