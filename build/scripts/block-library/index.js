@@ -14238,7 +14238,7 @@ var wp;
     const colorGradientSettings = (0, import_block_editor62.__experimentalUseMultipleOriginColorsAndGradients)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(import_jsx_runtime204.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_block_editor62.InspectorControls, { children: !!url && /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_block_editor62.InspectorControls, { children: (!!url || useFeaturedImage) && /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(
         import_components31.__experimentalToolsPanel,
         {
           label: (0, import_i18n47.__)("Settings"),
