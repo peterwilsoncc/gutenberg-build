@@ -28691,7 +28691,8 @@ var wp;
         if (!media?.url) {
           return;
         }
-        const [block] = getBlockAndPreviewFromMedia(media, media.type);
+        const mediaType = window.__experimentalDataViewsMediaModal && media.mime_type ? media.mime_type.split("/")[0] : media.type;
+        const [block] = getBlockAndPreviewFromMedia(media, mediaType);
         onInsert(block);
       },
       [onInsert]

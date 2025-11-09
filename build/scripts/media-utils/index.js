@@ -15098,7 +15098,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       });
       if (!filters.media_type) {
-        filters.media_type = allowedTypes.includes("*") ? void 0 : allowedTypes[0];
+        filters.media_type = allowedTypes.includes("*") ? void 0 : allowedTypes;
       }
       return {
         per_page: view.perPage || 20,
