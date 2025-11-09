@@ -44229,7 +44229,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { set } = (0, import_data73.useDispatch)(import_preferences15.store);
     const baseView = persistedView ?? defaultView;
-    const page = queryParams?.page ?? baseView.page ?? 1;
+    const page = Number(queryParams?.page ?? baseView.page ?? 1);
     const search = queryParams?.search ?? baseView.search ?? "";
     const view = (0, import_element125.useMemo)(() => {
       return {
@@ -44961,7 +44961,7 @@ If there's a particular need for this, please submit a feature request at https:
       slug: categoryId,
       defaultView: DEFAULT_VIEW,
       queryParams: {
-        page: Number(query.pageNumber ?? 1),
+        page: query.pageNumber,
         search: query.search
       },
       onChangeQueryParams: (params) => {
