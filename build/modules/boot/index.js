@@ -7437,13 +7437,11 @@ async function createRouteFromDefinition(route, parentRoute) {
   return createRoute({
     getParentRoute: () => parentRoute,
     path: route.path,
-    beforeLoad: routeConfig.beforeLoad ? async (opts) => {
-      const context = {
-        params: opts.params || {},
-        search: opts.search || {}
-      };
-      await routeConfig.beforeLoad(context);
-    } : void 0,
+    beforeLoad: routeConfig.beforeLoad ? (opts) => routeConfig.beforeLoad({
+      params: opts.params || {},
+      search: opts.search || {},
+      redirect
+    }) : void 0,
     loader: async (opts) => {
       const context = {
         params: opts.params || {},
@@ -7462,9 +7460,9 @@ async function createRouteFromDefinition(route, parentRoute) {
     component: SurfacesModule
   });
 }
-async function createRouteTree(routes) {
+async function createRouteTree(routes, rootComponent = Root) {
   const rootRoute = createRootRoute({
-    component: Root,
+    component: rootComponent,
     context: () => ({})
   });
   const dynamicRoutes = await Promise.all(
@@ -7487,13 +7485,16 @@ function createPathHistory() {
     }
   });
 }
-function Router2({ routes }) {
+function Router2({
+  routes,
+  rootComponent = Root
+}) {
   const [router, setRouter] = (0, import_element8.useState)(null);
   (0, import_element8.useEffect)(() => {
     let cancelled = false;
     async function initializeRouter() {
       const history = createPathHistory();
-      const routeTree = await createRouteTree(routes);
+      const routeTree = await createRouteTree(routes, rootComponent);
       if (!cancelled) {
         const newRouter = createRouter({
           history,
@@ -7507,7 +7508,7 @@ function Router2({ routes }) {
     return () => {
       cancelled = true;
     };
-  }, [routes]);
+  }, [routes, rootComponent]);
   if (!router) {
     return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { children: "Loading routes..." });
   }
@@ -7521,6 +7522,7 @@ function App() {
   return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Router2, { routes });
 }
 async function init({
+  mountId,
   menuItems,
   routes
 }) {
@@ -7530,7 +7532,7 @@ async function init({
   (routes ?? []).forEach((route) => {
     (0, import_data7.dispatch)(store).registerRoute(route);
   });
-  const rootElement = document.getElementById("gutenberg-boot-app");
+  const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element9.createRoot)(rootElement);
     root.render(
