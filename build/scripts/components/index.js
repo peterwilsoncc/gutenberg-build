@@ -39654,6 +39654,7 @@ This message will only show in development mode. It won't appear in production. 
                 })]
               }), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", {
                 ref: (0, import_compose52.useMergeRefs)([childrenContainerRef, focusOnMount === "firstContentElement" ? focusOnMountRef : null]),
+                className: "components-modal__children-container",
                 children
               })]
             })
