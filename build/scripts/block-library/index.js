@@ -16801,8 +16801,8 @@ var wp;
   var embedPhotoIcon = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9.2 4.5H19c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V9.8l4.6-5.3zm9.8 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" }) });
   var embedVideoIcon = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zM10 15l5-3-5-3v6z" }) });
   var embedTwitterIcon = {
-    foreground: "#1da1f2",
-    src: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.G, { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.Path, { d: "M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z" }) }) })
+    foreground: "#000000",
+    src: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components35.Path, { d: "M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z" }) })
   };
   var embedYouTubeIcon = {
     foreground: "#ff0000",
@@ -17448,10 +17448,10 @@ ${url}
   var variations4 = [
     {
       name: "twitter",
-      title: getTitle("Twitter"),
+      title: getTitle("X"),
       icon: embedTwitterIcon,
-      keywords: ["tweet", (0, import_i18n59.__)("social")],
-      description: (0, import_i18n59.__)("Embed a tweet."),
+      keywords: ["x", "twitter", "tweet", (0, import_i18n59.__)("social")],
+      description: (0, import_i18n59.__)("Embed an X post."),
       patterns: [/^https?:\/\/(www\.)?twitter\.com\/.+/i],
       attributes: { providerNameSlug: "twitter", responsive: true }
     },
