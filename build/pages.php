@@ -7,3 +7,4 @@
  */
 
 require_once __DIR__ . '/pages/gutenberg-boot/page.php';
+require_once __DIR__ . '/pages/gutenberg-boot/page-wp-admin.php';
