@@ -2998,6 +2998,21 @@ var wp;
     "--wpds-color-stroke-focus-brand": {
       ".": "var(--wpds-color-private-primary-stroke3)"
     },
+    "--wpds-dimension-base": {
+      ".": "var(--wpds-dimension-private-space-10)"
+    },
+    "--wpds-dimension-padding-surface-x-small": {
+      ".": "var(--wpds-dimension-private-space-20)"
+    },
+    "--wpds-dimension-padding-surface-small": {
+      ".": "var(--wpds-dimension-private-space-30)"
+    },
+    "--wpds-dimension-padding-surface-medium": {
+      ".": "var(--wpds-dimension-private-space-40)"
+    },
+    "--wpds-dimension-padding-surface-large": {
+      ".": "var(--wpds-dimension-private-space-60)"
+    },
     "--wpds-elevation-x-small": {
       ".": "0 1px 1px 0 #00000008, 0 1px 2px 0 #00000005, 0 3px 3px 0 #00000005, 0 4px 4px 0 #00000003"
     },
@@ -3009,36 +3024,6 @@ var wp;
     },
     "--wpds-elevation-large": {
       ".": "0 5px 15px 0 #00000014, 0 15px 27px 0 #00000012, 0 30px 36px 0 #0000000a, 0 50px 43px 0 #00000005"
-    },
-    "--wpds-spacing-05": {
-      ".": "4px"
-    },
-    "--wpds-spacing-10": {
-      ".": "8px"
-    },
-    "--wpds-spacing-15": {
-      ".": "12px"
-    },
-    "--wpds-spacing-20": {
-      ".": "16px"
-    },
-    "--wpds-spacing-30": {
-      ".": "24px"
-    },
-    "--wpds-spacing-40": {
-      ".": "32px"
-    },
-    "--wpds-spacing-50": {
-      ".": "40px"
-    },
-    "--wpds-spacing-60": {
-      ".": "48px"
-    },
-    "--wpds-spacing-70": {
-      ".": "56px"
-    },
-    "--wpds-spacing-80": {
-      ".": "64px"
     },
     "--wpds-font-family-heading": {
       ".": '-apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif'
