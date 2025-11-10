@@ -27029,55 +27029,40 @@ var wp;
       selectedThread,
       setCanvasMinHeight2
     ]);
-    const handleThreadNavigation = (0, import_element129.useCallback)(
-      (event, thread, isSelected) => {
-        if (event.defaultPrevented) {
-          return;
+    const handleThreadNavigation = (event, thread, isSelected) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+      const currentIndex = threads.findIndex((t2) => t2.id === thread.id);
+      if ((event.key === "Enter" || event.key === "ArrowRight") && event.currentTarget === event.target && !isSelected) {
+        setNewNoteFormState("closed");
+        setSelectedThread(thread.id);
+        if (!!thread.blockClientId) {
+          selectBlock2(thread.blockClientId, null);
+          toggleBlockSpotlight(thread.blockClientId, true);
         }
-        const currentIndex = threads.findIndex(
-          (t2) => t2.id === thread.id
+      } else if ((event.key === "Enter" || event.key === "ArrowLeft") && event.currentTarget === event.target && isSelected || event.key === "Escape") {
+        setSelectedThread(null);
+        setNewNoteFormState("closed");
+        if (thread.blockClientId) {
+          toggleBlockSpotlight(thread.blockClientId, false);
+        }
+        focusCommentThread(thread.id, commentSidebarRef.current);
+      } else if (event.key === "ArrowDown" && currentIndex < threads.length - 1 && event.currentTarget === event.target) {
+        const nextThread = threads[currentIndex + 1];
+        focusCommentThread(nextThread.id, commentSidebarRef.current);
+      } else if (event.key === "ArrowUp" && currentIndex > 0 && event.currentTarget === event.target) {
+        const prevThread = threads[currentIndex - 1];
+        focusCommentThread(prevThread.id, commentSidebarRef.current);
+      } else if (event.key === "Home" && event.currentTarget === event.target) {
+        focusCommentThread(threads[0].id, commentSidebarRef.current);
+      } else if (event.key === "End" && event.currentTarget === event.target) {
+        focusCommentThread(
+          threads[threads.length - 1].id,
+          commentSidebarRef.current
         );
-        if ((event.key === "Enter" || event.key === "ArrowRight") && event.currentTarget === event.target && !isSelected) {
-          setNewNoteFormState("closed");
-          setSelectedThread(thread.id);
-          if (!!thread.blockClientId) {
-            selectBlock2(thread.blockClientId, null);
-            toggleBlockSpotlight(thread.blockClientId, true);
-          }
-        } else if ((event.key === "Enter" || event.key === "ArrowLeft") && event.currentTarget === event.target && isSelected || event.key === "Escape") {
-          setSelectedThread(null);
-          setNewNoteFormState("closed");
-          if (thread.blockClientId) {
-            toggleBlockSpotlight(thread.blockClientId, false);
-          }
-          focusCommentThread(thread.id, commentSidebarRef.current);
-        } else if (event.key === "ArrowDown" && currentIndex < threads.length - 1 && event.currentTarget === event.target) {
-          const nextThread = threads[currentIndex + 1];
-          focusCommentThread(nextThread.id, commentSidebarRef.current);
-        } else if (event.key === "ArrowUp" && currentIndex > 0 && event.currentTarget === event.target) {
-          const prevThread = threads[currentIndex - 1];
-          focusCommentThread(prevThread.id, commentSidebarRef.current);
-        } else if (event.key === "Home" && event.currentTarget === event.target) {
-          focusCommentThread(
-            threads[0].id,
-            commentSidebarRef.current
-          );
-        } else if (event.key === "End" && event.currentTarget === event.target) {
-          focusCommentThread(
-            threads[threads.length - 1].id,
-            commentSidebarRef.current
-          );
-        }
-      },
-      [
-        threads,
-        setSelectedThread,
-        setNewNoteFormState,
-        commentSidebarRef,
-        selectBlock2,
-        toggleBlockSpotlight
-      ]
-    );
+      }
+    };
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
       return null;
