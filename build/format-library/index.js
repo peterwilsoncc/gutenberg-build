@@ -1827,14 +1827,16 @@ var wp;
       settings: math
     });
     const handleLatexChange = (newLatex) => {
-      let mathML;
+      let mathML = "";
       setLatex(newLatex);
-      try {
-        mathML = latexToMathML(newLatex, { displayMode: false });
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-        return;
+      if (newLatex) {
+        try {
+          mathML = latexToMathML(newLatex, { displayMode: false });
+          setError(null);
+        } catch (err) {
+          setError(err.message);
+          return;
+        }
       }
       const newReplacements = value.replacements.slice();
       newReplacements[value.start] = {
