@@ -6,7 +6,13 @@ var wp;
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __commonJS = (cb, mod) => function __require() {
+  var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+    get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+  }) : x)(function(x) {
+    if (typeof require !== "undefined") return require.apply(this, arguments);
+    throw Error('Dynamic require of "' + x + '" is not supported');
+  });
+  var __commonJS = (cb, mod) => function __require2() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __copyProps = (to, from, except, desc) => {
@@ -114,13 +120,6 @@ var wp;
   var require_compose = __commonJS({
     "wordpress-external:@wordpress/compose"(exports, module) {
       module.exports = window.wp.compose;
-    }
-  });
-
-  // wordpress-external:@wordpress/latex-to-mathml
-  var require_latex_to_mathml = __commonJS({
-    "wordpress-external:@wordpress/latex-to-mathml"(exports, module) {
-      module.exports = window.wp.latexToMathml;
     }
   });
 
@@ -1898,7 +1897,7 @@ var wp;
   }) {
     const [latexToMathML, setLatexToMathML] = (0, import_element9.useState)();
     (0, import_element9.useEffect)(() => {
-      Promise.resolve().then(() => __toESM(require_latex_to_mathml())).then((module) => {
+      import("@wordpress/latex-to-mathml").then((module) => {
         setLatexToMathML(() => module.default);
       });
     }, []);

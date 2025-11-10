@@ -7,7 +7,13 @@ var wp;
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __commonJS = (cb, mod) => function __require() {
+  var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
+    get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
+  }) : x2)(function(x2) {
+    if (typeof require !== "undefined") return require.apply(this, arguments);
+    throw Error('Dynamic require of "' + x2 + '" is not supported');
+  });
+  var __commonJS = (cb, mod) => function __require2() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __export = (target, all) => {
@@ -672,13 +678,6 @@ var wp;
   var require_deprecated = __commonJS({
     "wordpress-external:@wordpress/deprecated"(exports, module) {
       module.exports = window.wp.deprecated;
-    }
-  });
-
-  // wordpress-external:@wordpress/latex-to-mathml
-  var require_latex_to_mathml = __commonJS({
-    "wordpress-external:@wordpress/latex-to-mathml"(exports, module) {
-      module.exports = window.wp.latexToMathml;
     }
   });
 
@@ -29248,7 +29247,7 @@ ${url}
     const initialLatex = (0, import_element46.useRef)(latex);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data46.useDispatch)(import_block_editor117.store);
     (0, import_element46.useEffect)(() => {
-      Promise.resolve().then(() => __toESM(require_latex_to_mathml())).then((module) => {
+      import("@wordpress/latex-to-mathml").then((module) => {
         setLatexToMathML(() => module.default);
         if (initialLatex.current) {
           __unstableMarkNextChangeAsNotPersistent();
@@ -62811,7 +62810,7 @@ ${url}
 
   // packages/block-library/build-module/utils/is-block-metadata-experimental.js
   var __getOwnPropNames2 = Object.getOwnPropertyNames;
-  var __commonJS2 = (cb, mod) => function __require() {
+  var __commonJS2 = (cb, mod) => function __require2() {
     return mod || (0, cb[__getOwnPropNames2(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var require_is_block_metadata_experimental = __commonJS2({
