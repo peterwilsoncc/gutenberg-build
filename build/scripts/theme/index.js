@@ -3382,6 +3382,9 @@ var wp;
   }
 
   // packages/theme/build-module/color-ramps/lib/find-color-with-constraints.js
+  function cdiff(c13, c23) {
+    return Math.log(c13 / c23);
+  }
   function findColorMeetingRequirements(reference, seed, target, direction, {
     lightnessConstraint,
     taperChromaOptions
@@ -3416,31 +3419,31 @@ var wp;
     if (lightnessConstraint) {
       const colorWithExactL = getColorForL(lightnessConstraint.value);
       const exactLContrast = getContrast(reference, colorWithExactL);
-      const exactLContrastMeetsTarget = exactLContrast >= target - CONTRAST_EPSILON;
+      const exactLContrastMeetsTarget = cdiff(exactLContrast, target) >= -CONTRAST_EPSILON;
       if (exactLContrastMeetsTarget || lightnessConstraint.type === "force") {
         return {
           color: colorWithExactL,
           reached: exactLContrastMeetsTarget,
           achieved: exactLContrast,
-          deficit: exactLContrastMeetsTarget ? exactLContrast - highestContrast : target - exactLContrast
+          deficit: exactLContrastMeetsTarget ? cdiff(exactLContrast, highestContrast) : cdiff(target, exactLContrast)
         };
       }
     }
-    if (highestContrast <= target + CONTRAST_EPSILON) {
+    if (cdiff(highestContrast, target) <= CONTRAST_EPSILON) {
       return {
         color: mostContrastingColor,
-        reached: highestContrast >= target - CONTRAST_EPSILON,
+        reached: cdiff(highestContrast, target) >= -CONTRAST_EPSILON,
         achieved: highestContrast,
-        deficit: target - highestContrast
+        deficit: cdiff(target, highestContrast)
       };
     }
     const lowerL = get(reference, [oklch_default, "l"]);
-    const lowerContrast = 1 - target;
+    const lowerContrast = cdiff(1, target);
     const upperL = mostContrastingL;
-    const upperContrast = highestContrast - target;
+    const upperContrast = cdiff(highestContrast, target);
     const bestColor = solveWithBisect(
       getColorForL,
-      (c) => getContrast(reference, c) - target,
+      (c) => cdiff(getContrast(reference, c), target),
       lowerL,
       lowerContrast,
       upperL,
@@ -3451,7 +3454,7 @@ var wp;
       reached: true,
       achieved: target,
       // Negative number that specifies how much room we have.
-      deficit: target - highestContrast
+      deficit: cdiff(target, highestContrast)
     };
   }
 
