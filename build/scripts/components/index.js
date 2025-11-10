@@ -39694,6 +39694,7 @@ This message will only show in development mode. It won't appear in production. 
       children,
       confirmButtonText,
       cancelButtonText,
+      isBusy,
       ...otherProps
     } = useContextSystem(props, "ConfirmDialog");
     const cx3 = useCx();
@@ -39743,12 +39744,17 @@ This message will only show in development mode. It won't appear in production. 
               ref: cancelButtonRef,
               variant: "tertiary",
               onClick: handleEvent(onCancel),
+              accessibleWhenDisabled: true,
+              disabled: isBusy,
               children: cancelLabel
             }), /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(button_default, {
               __next40pxDefaultSize: true,
               ref: confirmButtonRef,
               variant: "primary",
               onClick: handleEvent(onConfirm),
+              accessibleWhenDisabled: true,
+              disabled: isBusy,
+              isBusy,
               children: confirmLabel
             })]
           })]
