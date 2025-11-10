@@ -15372,12 +15372,15 @@ var wp;
       }) ?? false;
       return canCreateTemplates;
     }, []);
-    const canViewTemplates = (0, import_data84.useSelect)((select4) => {
-      return select4(import_core_data54.store).canUser("read", {
-        kind: "postType",
-        name: "wp_template"
-      }) ?? false;
-    }, []);
+    const canViewTemplates = (0, import_data84.useSelect)(
+      (select4) => {
+        return isVisible ? select4(import_core_data54.store).canUser("read", {
+          kind: "postType",
+          name: "wp_template"
+        }) : false;
+      },
+      [isVisible]
+    );
     if ((!isBlockTheme || !canViewTemplates) && isVisible) {
       return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(classic_theme_default, {});
     }
