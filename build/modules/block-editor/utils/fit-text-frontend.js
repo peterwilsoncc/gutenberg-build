@@ -5,7 +5,7 @@ import { store, getElement, getContext } from "@wordpress/interactivity";
 function findOptimalFontSize(textElement, applyFontSize) {
   const alreadyHasScrollableHeight = textElement.scrollHeight > textElement.clientHeight;
   let minSize = 5;
-  let maxSize = 600;
+  let maxSize = 2400;
   let bestSize = minSize;
   while (minSize <= maxSize) {
     const midSize = Math.floor((minSize + maxSize) / 2);
