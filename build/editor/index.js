@@ -26861,6 +26861,9 @@ var wp;
     const [boardOffsets, setBoardOffsets] = (0, import_element129.useState)({});
     const [blockRefs, setBlockRefs] = (0, import_element129.useState)({});
     const { setCanvasMinHeight: setCanvasMinHeight2 } = unlock((0, import_data197.useDispatch)(store));
+    const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
+      (0, import_data197.useDispatch)(import_block_editor73.store)
+    );
     const { blockCommentId, selectedBlockClientId, orderedBlockIds } = (0, import_data197.useSelect)((select4) => {
       const {
         getBlockAttributes: getBlockAttributes2,
@@ -27026,6 +27029,55 @@ var wp;
       selectedThread,
       setCanvasMinHeight2
     ]);
+    const handleThreadNavigation = (0, import_element129.useCallback)(
+      (event, thread, isSelected) => {
+        if (event.defaultPrevented) {
+          return;
+        }
+        const currentIndex = threads.findIndex(
+          (t2) => t2.id === thread.id
+        );
+        if ((event.key === "Enter" || event.key === "ArrowRight") && event.currentTarget === event.target && !isSelected) {
+          setNewNoteFormState("closed");
+          setSelectedThread(thread.id);
+          if (!!thread.blockClientId) {
+            selectBlock2(thread.blockClientId, null);
+            toggleBlockSpotlight(thread.blockClientId, true);
+          }
+        } else if ((event.key === "Enter" || event.key === "ArrowLeft") && event.currentTarget === event.target && isSelected || event.key === "Escape") {
+          setSelectedThread(null);
+          setNewNoteFormState("closed");
+          if (thread.blockClientId) {
+            toggleBlockSpotlight(thread.blockClientId, false);
+          }
+          focusCommentThread(thread.id, commentSidebarRef.current);
+        } else if (event.key === "ArrowDown" && currentIndex < threads.length - 1 && event.currentTarget === event.target) {
+          const nextThread = threads[currentIndex + 1];
+          focusCommentThread(nextThread.id, commentSidebarRef.current);
+        } else if (event.key === "ArrowUp" && currentIndex > 0 && event.currentTarget === event.target) {
+          const prevThread = threads[currentIndex - 1];
+          focusCommentThread(prevThread.id, commentSidebarRef.current);
+        } else if (event.key === "Home" && event.currentTarget === event.target) {
+          focusCommentThread(
+            threads[0].id,
+            commentSidebarRef.current
+          );
+        } else if (event.key === "End" && event.currentTarget === event.target) {
+          focusCommentThread(
+            threads[threads.length - 1].id,
+            commentSidebarRef.current
+          );
+        }
+      },
+      [
+        threads,
+        setSelectedThread,
+        setNewNoteFormState,
+        commentSidebarRef,
+        selectBlock2,
+        toggleBlockSpotlight
+      ]
+    );
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
       return null;
@@ -27058,7 +27110,12 @@ var wp;
           setBlockRef,
           selectedThread,
           commentLastUpdated,
-          newNoteFormState
+          newNoteFormState,
+          onKeyDown: (event) => handleThreadNavigation(
+            event,
+            thread,
+            selectedThread === thread.id
+          )
         },
         thread.id
       ))
@@ -27080,7 +27137,8 @@ var wp;
     setSelectedThread,
     selectedThread,
     commentLastUpdated,
-    newNoteFormState
+    newNoteFormState,
+    onKeyDown
   }) {
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data197.useDispatch)(import_block_editor73.store)
@@ -27162,22 +27220,7 @@ var wp;
         onMouseLeave,
         onFocus: onMouseEnter,
         onBlur: onMouseLeave,
-        onKeyDown: (event) => {
-          if (event.defaultPrevented) {
-            return;
-          }
-          if (event.key === "Enter" && event.currentTarget === event.target) {
-            if (isSelected) {
-              unselectThread();
-            } else {
-              handleCommentSelect();
-            }
-          }
-          if (event.key === "Escape") {
-            unselectThread();
-            focusCommentThread(thread.id, commentSidebarRef.current);
-          }
-        },
+        onKeyDown,
         tabIndex: 0,
         role: "treeitem",
         "aria-label": ariaLabel,
