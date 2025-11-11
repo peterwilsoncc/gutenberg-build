@@ -7377,7 +7377,7 @@ function Root() {
   const currentMatch = matches[matches.length - 1];
   const canvas = currentMatch?.loaderData?.canvas;
   const isFullScreen = canvas && !canvas.isPreview;
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeProvider, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeProvider, { color: { bg: "#1e1e1e", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeProvider, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeProvider, { color: { bg: "#1d2327", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
     "div",
     {
       className: clsx_default("boot-layout", {

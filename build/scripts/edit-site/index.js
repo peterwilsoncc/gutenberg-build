@@ -459,7 +459,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect43(
+          useEffect42(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -485,7 +485,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React6 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState64 = React6.useState, useEffect43 = React6.useEffect, useLayoutEffect7 = React6.useLayoutEffect, useDebugValue = React6.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React6 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState64 = React6.useState, useEffect42 = React6.useEffect, useLayoutEffect7 = React6.useLayoutEffect, useDebugValue = React6.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React6.useSyncExternalStore ? React6.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -1001,18 +1001,17 @@ var wp;
     PluginSidebarMoreMenuItem: () => PluginSidebarMoreMenuItem,
     PluginTemplateSettingPanel: () => plugin_template_setting_panel_default,
     initializeEditor: () => initializeEditor,
-    initializePostsDashboard: () => initializePostsDashboard,
     reinitializeEditor: () => reinitializeEditor,
     store: () => store
   });
-  var import_blocks15 = __toESM(require_blocks());
-  var import_block_library3 = __toESM(require_block_library());
-  var import_data83 = __toESM(require_data());
+  var import_blocks14 = __toESM(require_blocks());
+  var import_block_library2 = __toESM(require_block_library());
+  var import_data79 = __toESM(require_data());
   var import_deprecated5 = __toESM(require_deprecated());
-  var import_element146 = __toESM(require_element());
-  var import_editor43 = __toESM(require_editor());
-  var import_preferences14 = __toESM(require_preferences());
-  var import_widgets2 = __toESM(require_widgets());
+  var import_element144 = __toESM(require_element());
+  var import_editor41 = __toESM(require_editor());
+  var import_preferences13 = __toESM(require_preferences());
+  var import_widgets = __toESM(require_widgets());
 
   // packages/edit-site/build-module/store/index.js
   var import_data3 = __toESM(require_data());
@@ -1185,7 +1184,7 @@ var wp;
       type: "NOTHING"
     };
   }
-  var addTemplate = (template) => async ({ dispatch: dispatch3, registry }) => {
+  var addTemplate = (template) => async ({ dispatch: dispatch2, registry }) => {
     (0, import_deprecated.default)("dispatch( 'core/edit-site' ).addTemplate", {
       since: "6.5",
       version: "6.8",
@@ -1201,7 +1200,7 @@ var wp;
         { undoIgnore: true }
       );
     }
-    dispatch3({
+    dispatch2({
       type: "SET_EDITED_POST",
       postType: TEMPLATE_POST_TYPE,
       id: newTemplate.id
@@ -1332,14 +1331,14 @@ var wp;
     });
     registry.dispatch(import_editor.store).switchEditorMode(mode);
   };
-  var setHasPageContentFocus = (hasPageContentFocus2) => ({ dispatch: dispatch3, registry }) => {
+  var setHasPageContentFocus = (hasPageContentFocus2) => ({ dispatch: dispatch2, registry }) => {
     (0, import_deprecated.default)(`dispatch( 'core/edit-site' ).setHasPageContentFocus`, {
       since: "6.5"
     });
     if (hasPageContentFocus2) {
       registry.dispatch(import_block_editor.store).clearSelectedBlock();
     }
-    dispatch3({
+    dispatch2({
       type: "SET_HAS_PAGE_CONTENT_FOCUS",
       hasPageContentFocus: hasPageContentFocus2
     });
@@ -12614,12 +12613,12 @@ var wp;
                 var STR_APPLY_UIA_OK = true;
                 try {
                   String.fromCharCode.apply(null, [0]);
-                } catch (__140) {
+                } catch (__138) {
                   STR_APPLY_OK = false;
                 }
                 try {
                   String.fromCharCode.apply(null, new Uint8Array(1));
-                } catch (__140) {
+                } catch (__138) {
                   STR_APPLY_UIA_OK = false;
                 }
                 var _utf8len = new utils.Buf8(256);
@@ -20519,10 +20518,7 @@ var wp;
     }
     return (0, import_url10.addQueryArgs)(path, { canvas: void 0 });
   }
-  function EditSiteEditor({
-    isHomeRoute = false,
-    isPostsList = false
-  }) {
+  function EditSiteEditor({ isHomeRoute = false }) {
     const disableMotion = (0, import_compose10.useReducedMotion)();
     const location = useLocation15();
     const { canvas = "view" } = location.query;
@@ -20652,21 +20648,15 @@ var wp;
                       tooltipPosition: "middle right",
                       onClick: () => {
                         resetZoomLevel();
-                        if (isPostsList && location.query?.focusMode) {
-                          history.navigate("/", {
+                        history.navigate(
+                          getNavigationPath(
+                            location,
+                            postWithTemplate ? context.postType : postType2
+                          ),
+                          {
                             transition: "canvas-mode-view-transition"
-                          });
-                        } else {
-                          history.navigate(
-                            getNavigationPath(
-                              location,
-                              postWithTemplate ? context.postType : postType2
-                            ),
-                            {
-                              transition: "canvas-mode-view-transition"
-                            }
-                          );
-                        }
+                          }
+                        );
                       },
                       children: /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
                         import_components81.__unstableMotion.div,
@@ -41077,8 +41067,8 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isBlockTheme) {
           return void 0;
         }
-        const isListView3 = await isTemplateListView(query);
-        return isListView3 ? /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(EditSiteEditor, {}) : void 0;
+        const isListView2 = await isTemplateListView(query);
+        return isListView2 ? /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(EditSiteEditor, {}) : void 0;
       },
       mobile({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
@@ -41087,8 +41077,8 @@ If there's a particular need for this, please submit a feature request at https:
     },
     widths: {
       async content({ query }) {
-        const isListView3 = await isTemplateListView(query);
-        return isListView3 ? 380 : void 0;
+        const isListView2 = await isTemplateListView(query);
+        return isListView2 ? 380 : void 0;
       }
     }
   };
@@ -41373,7 +41363,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [title, setTitle] = (0, import_element139.useState)("");
     const { saveEntityRecord } = (0, import_data73.useDispatch)(import_core_data53.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data73.useDispatch)(import_notices9.store);
-    const { resolveSelect: resolveSelect3 } = (0, import_data73.useRegistry)();
+    const { resolveSelect: resolveSelect2 } = (0, import_data73.useRegistry)();
     async function createPost(event) {
       event.preventDefault();
       if (isCreatingPost) {
@@ -41381,7 +41371,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setIsCreatingPost(true);
       try {
-        const postTypeObject = await resolveSelect3(import_core_data53.store).getPostType(postType2);
+        const postTypeObject = await resolveSelect2(import_core_data53.store).getPostType(postType2);
         const newPage = await saveEntityRecord(
           "postType",
           postType2,
@@ -42045,7 +42035,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function App() {
     useRegisterSiteEditorRoutes();
-    const { routes: routes4, currentTheme, editorSettings } = (0, import_data78.useSelect)((select2) => {
+    const { routes: routes3, currentTheme, editorSettings } = (0, import_data78.useSelect)((select2) => {
       return {
         routes: unlock(select2(store)).getRoutes(),
         currentTheme: select2(import_core_data57.store).getCurrentTheme(),
@@ -42074,7 +42064,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
       RouterProvider,
       {
-        routes: routes4,
+        routes: routes3,
         pathArg: "p",
         beforeNavigate,
         matchResolverArgs: matchResolverArgsValue,
@@ -42119,139 +42109,19 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_editor40.PluginSidebarMoreMenuItem, { ...props });
   }
 
-  // packages/edit-site/build-module/posts.js
-  var import_blocks14 = __toESM(require_blocks());
-  var import_block_library2 = __toESM(require_block_library());
-  var import_data82 = __toESM(require_data());
-  var import_element145 = __toESM(require_element());
-  var import_preferences13 = __toESM(require_preferences());
-  var import_widgets = __toESM(require_widgets());
-
-  // packages/edit-site/build-module/components/posts-app/index.js
-  var import_router40 = __toESM(require_router());
-  var import_data81 = __toESM(require_data());
-
-  // packages/edit-site/build-module/components/posts-app-routes/index.js
-  var import_data80 = __toESM(require_data());
-  var import_element144 = __toESM(require_element());
-
-  // packages/edit-site/build-module/components/posts-app-routes/posts.js
-  var import_router39 = __toESM(require_router());
-  var import_i18n148 = __toESM(require_i18n());
-  var import_data79 = __toESM(require_data());
-  var import_core_data58 = __toESM(require_core_data());
+  // packages/edit-site/build-module/index.js
   var import_jsx_runtime295 = __toESM(require_jsx_runtime());
-  var { useLocation: useLocation31 } = unlock(import_router39.privateApis);
-  async function isListView2(query) {
-    const { activeView = "all" } = query;
-    const postTypeObject = await (0, import_data79.resolveSelect)(import_core_data58.store).getPostType("post");
-    const view = await loadView({
-      kind: "postType",
-      name: "post",
-      slug: activeView,
-      defaultView: getDefaultView2(postTypeObject, activeView)
-    });
-    return view.type === "list";
-  }
-  function MobilePostsView() {
-    const { query = {} } = useLocation31();
-    const { canvas = "view" } = query;
-    return canvas === "edit" ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(PostList, { postType: "post" });
-  }
-  var postsRoute = {
-    name: "posts",
-    path: "/",
-    areas: {
-      sidebar: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        SidebarNavigationScreen,
-        {
-          title: (0, import_i18n148.__)("Posts"),
-          isRoot: true,
-          content: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(DataViewsSidebarContent, { postType: "post" })
-        }
-      ),
-      content: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(PostList, { postType: "post" }),
-      async preview({ query }) {
-        const isList = await isListView2(query);
-        return isList ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(EditSiteEditor, { isPostsList: true }) : void 0;
-      },
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(MobilePostsView, {}),
-      async edit({ query }) {
-        const isList = await isListView2(query);
-        const hasQuickEdit = !isList && !!query.quickEdit;
-        return hasQuickEdit ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(PostEdit, { postType: "post", postId: query.postId }) : void 0;
-      }
-    },
-    widths: {
-      async content({ query }) {
-        const isList = await isListView2(query);
-        return isList ? 380 : void 0;
-      },
-      async edit({ query }) {
-        const isList = await isListView2(query);
-        const hasQuickEdit = !isList && !!query.quickEdit;
-        return hasQuickEdit ? 380 : void 0;
-      }
-    }
-  };
-
-  // packages/edit-site/build-module/components/posts-app-routes/post-item.js
-  var import_i18n149 = __toESM(require_i18n());
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime());
-  var postItemRoute = {
-    name: "post-item",
-    path: "/post/:postId",
-    areas: {
-      sidebar: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
-        SidebarNavigationScreen,
-        {
-          title: (0, import_i18n149.__)("Posts"),
-          isRoot: true,
-          content: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(DataViewsSidebarContent, { postType: "post" })
-        }
-      ),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(EditSiteEditor, { isPostsList: true }),
-      preview: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(EditSiteEditor, { isPostsList: true })
-    }
-  };
-
-  // packages/edit-site/build-module/components/posts-app-routes/index.js
-  var routes3 = [postItemRoute, postsRoute];
-  function useRegisterPostsAppRoutes() {
-    const registry = (0, import_data80.useRegistry)();
-    const { registerRoute: registerRoute2 } = unlock((0, import_data80.useDispatch)(store));
-    (0, import_element144.useEffect)(() => {
-      registry.batch(() => {
-        routes3.forEach(registerRoute2);
-      });
-    }, [registry, registerRoute2]);
-  }
-
-  // packages/edit-site/build-module/components/posts-app/index.js
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime());
-  var { RouterProvider: RouterProvider2 } = unlock(import_router40.privateApis);
-  function PostsApp() {
-    useRegisterPostsAppRoutes();
-    const routes4 = (0, import_data81.useSelect)((select2) => {
-      return unlock(select2(store)).getRoutes();
-    }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(RouterProvider2, { routes: routes4, pathArg: "p", children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(LayoutWithGlobalStylesProvider, {}) });
-  }
-
-  // packages/edit-site/build-module/posts.js
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime());
-  function initializePostsDashboard(id, settings2) {
-    if (false) {
-      return;
-    }
+  var { registerCoreBlockBindingsSources } = unlock(import_editor41.privateApis);
+  function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
-    const root = (0, import_element145.createRoot)(target);
-    (0, import_data82.dispatch)(import_blocks14.store).reapplyBlockTypeFilters();
+    const root = (0, import_element144.createRoot)(target);
+    (0, import_data79.dispatch)(import_blocks14.store).reapplyBlockTypeFilters();
     const coreBlocks = (0, import_block_library2.__experimentalGetCoreBlocks)().filter(
       ({ name: name2 }) => name2 !== "core/freeform"
     );
     (0, import_block_library2.registerCoreBlocks)(coreBlocks);
-    (0, import_data82.dispatch)(import_blocks14.store).setFreeformFallbackBlockName("core/html");
+    registerCoreBlockBindingsSources();
+    (0, import_data79.dispatch)(import_blocks14.store).setFreeformFallbackBlockName("core/html");
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });
     (0, import_widgets.registerWidgetGroupBlock)({ inserter: false });
     if (true) {
@@ -42259,62 +42129,13 @@ If there's a particular need for this, please submit a feature request at https:
         enableFSEBlocks: true
       });
     }
-    (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
+    (0, import_data79.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
       welcomeGuide: true,
       welcomeGuideStyles: true,
       welcomeGuidePage: true,
       welcomeGuideTemplate: true
     });
-    (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core", {
-      allowRightClickOverrides: true,
-      distractionFree: false,
-      editorMode: "visual",
-      editorTool: "edit",
-      fixedToolbar: false,
-      focusMode: false,
-      inactivePanels: [],
-      keepCaretInsideBlock: false,
-      openPanels: ["post-status"],
-      showBlockBreadcrumbs: true,
-      showListViewByDefault: false,
-      enableChoosePatternModal: true
-    });
-    (0, import_data82.dispatch)(store).updateSettings(settings2);
-    window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
-    window.addEventListener("drop", (e2) => e2.preventDefault(), false);
-    root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_element145.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(PostsApp, {}) })
-    );
-    return root;
-  }
-
-  // packages/edit-site/build-module/index.js
-  var import_jsx_runtime299 = __toESM(require_jsx_runtime());
-  var { registerCoreBlockBindingsSources } = unlock(import_editor43.privateApis);
-  function initializeEditor(id, settings2) {
-    const target = document.getElementById(id);
-    const root = (0, import_element146.createRoot)(target);
-    (0, import_data83.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
-    const coreBlocks = (0, import_block_library3.__experimentalGetCoreBlocks)().filter(
-      ({ name: name2 }) => name2 !== "core/freeform"
-    );
-    (0, import_block_library3.registerCoreBlocks)(coreBlocks);
-    registerCoreBlockBindingsSources();
-    (0, import_data83.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
-    (0, import_widgets2.registerLegacyWidgetBlock)({ inserter: false });
-    (0, import_widgets2.registerWidgetGroupBlock)({ inserter: false });
-    if (true) {
-      (0, import_block_library3.__experimentalRegisterExperimentalCoreBlocks)({
-        enableFSEBlocks: true
-      });
-    }
-    (0, import_data83.dispatch)(import_preferences14.store).setDefaults("core/edit-site", {
-      welcomeGuide: true,
-      welcomeGuideStyles: true,
-      welcomeGuidePage: true,
-      welcomeGuideTemplate: true
-    });
-    (0, import_data83.dispatch)(import_preferences14.store).setDefaults("core", {
+    (0, import_data79.dispatch)(import_preferences13.store).setDefaults("core", {
       allowRightClickOverrides: true,
       distractionFree: false,
       editorMode: "visual",
@@ -42329,16 +42150,16 @@ If there's a particular need for this, please submit a feature request at https:
       enableChoosePatternModal: true
     });
     if (window.__experimentalMediaProcessing) {
-      (0, import_data83.dispatch)(import_preferences14.store).setDefaults("core/media", {
+      (0, import_data79.dispatch)(import_preferences13.store).setDefaults("core/media", {
         requireApproval: true,
         optimizeOnUpload: true
       });
     }
-    (0, import_data83.dispatch)(store).updateSettings(settings2);
+    (0, import_data79.dispatch)(store).updateSettings(settings2);
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_element146.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_element144.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(App, {}) })
     );
     return root;
   }
