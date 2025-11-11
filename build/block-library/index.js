@@ -34573,6 +34573,8 @@ ${url}
     const { label, url, description, rel, opensInNewTab } = attributes3;
     const lastURLRef = (0, import_element66.useRef)(url);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    const urlInputRef = (0, import_element66.useRef)();
+    const shouldFocusURLInputRef = (0, import_element66.useRef)(false);
     const inputId = (0, import_compose27.useInstanceId)(Controls2, "link-input");
     const helpTextId = `${inputId}__help`;
     const { hasUrlBinding, clearBinding } = useEntityBinding({
@@ -34580,10 +34582,16 @@ ${url}
       attributes: attributes3
     });
     const { updateBlockAttributes } = (0, import_data67.useDispatch)(import_block_editor143.store);
-    const editBoundLink = () => {
+    const unsyncBoundLink = () => {
       clearBinding();
       updateBlockAttributes(clientId, { url: "", id: void 0 });
     };
+    (0, import_element66.useEffect)(() => {
+      if (!hasUrlBinding && shouldFocusURLInputRef.current) {
+        urlInputRef.current?.focus();
+      }
+      shouldFocusURLInputRef.current = false;
+    }, [hasUrlBinding]);
     return /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(
       import_components71.__experimentalToolsPanel,
       {
@@ -34631,6 +34639,7 @@ ${url}
               children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
                 import_components71.__experimentalInputControl,
                 {
+                  ref: urlInputRef,
                   __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   id: inputId,
@@ -34674,7 +34683,10 @@ ${url}
                     import_components71.Button,
                     {
                       icon: link_off_default,
-                      onClick: editBoundLink,
+                      onClick: () => {
+                        unsyncBoundLink();
+                        shouldFocusURLInputRef.current = true;
+                      },
                       "aria-describedby": helpTextId,
                       showTooltip: true,
                       label: (0, import_i18n115.__)("Unsync and edit"),
