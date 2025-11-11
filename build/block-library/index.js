@@ -34577,6 +34577,11 @@ ${url}
     const shouldFocusURLInputRef = (0, import_element66.useRef)(false);
     const inputId = (0, import_compose27.useInstanceId)(Controls2, "link-input");
     const helpTextId = `${inputId}__help`;
+    const [inputValue, setInputValue] = (0, import_element66.useState)(url);
+    (0, import_element66.useEffect)(() => {
+      setInputValue(url);
+      lastURLRef.current = url;
+    }, [url]);
     const { hasUrlBinding, clearBinding } = useEntityBinding({
       clientId,
       attributes: attributes3
@@ -34584,11 +34589,15 @@ ${url}
     const { updateBlockAttributes } = (0, import_data67.useDispatch)(import_block_editor143.store);
     const unsyncBoundLink = () => {
       clearBinding();
-      updateBlockAttributes(clientId, { url: "", id: void 0 });
+      updateBlockAttributes(clientId, {
+        url: lastURLRef.current,
+        // set the lastURLRef as the new editable value so we avoid bugs from empty link states
+        id: void 0
+      });
     };
     (0, import_element66.useEffect)(() => {
       if (!hasUrlBinding && shouldFocusURLInputRef.current) {
-        urlInputRef.current?.focus();
+        urlInputRef.current?.select();
       }
       shouldFocusURLInputRef.current = false;
     }, [hasUrlBinding]);
@@ -34644,18 +34653,16 @@ ${url}
                   __next40pxDefaultSize: true,
                   id: inputId,
                   label: (0, import_i18n115.__)("Link"),
-                  value: url ? (0, import_url12.safeDecodeURI)(url) : "",
-                  onChange: (urlValue) => {
-                    if (hasUrlBinding) {
-                      return;
-                    }
-                    setAttributes({
-                      url: encodeURI((0, import_url12.safeDecodeURI)(urlValue))
-                    });
-                  },
+                  value: inputValue ? (0, import_url12.safeDecodeURI)(inputValue) : "",
                   autoComplete: "off",
                   type: "url",
                   disabled: hasUrlBinding,
+                  onChange: (newValue) => {
+                    if (hasUrlBinding) {
+                      return;
+                    }
+                    setInputValue(newValue);
+                  },
                   onFocus: () => {
                     if (hasUrlBinding) {
                       return;
@@ -34666,11 +34673,12 @@ ${url}
                     if (hasUrlBinding) {
                       return;
                     }
-                    updateAttributes(
-                      { url: !url ? lastURLRef.current : url },
-                      setAttributes,
-                      { ...attributes3, url: lastURLRef.current }
-                    );
+                    const finalValue = !inputValue ? lastURLRef.current : inputValue;
+                    setInputValue(finalValue);
+                    updateAttributes({ url: finalValue }, setAttributes, {
+                      ...attributes3,
+                      url: lastURLRef.current
+                    });
                   },
                   help: hasUrlBinding && /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
                     BindingHelpText,
