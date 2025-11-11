@@ -47189,6 +47189,7 @@ var wp;
   var import_components204 = __toESM(require_components());
   var import_i18n214 = __toESM(require_i18n());
   var import_compose59 = __toESM(require_compose());
+  var import_keycodes17 = __toESM(require_keycodes());
   var import_jsx_runtime329 = __toESM(require_jsx_runtime());
   function CommentForm({
     onSubmit,
@@ -47212,6 +47213,12 @@ var wp;
       {
         className: "editor-collab-sidebar-panel__comment-form",
         spacing: "4",
+        as: "form",
+        onSubmit: (event) => {
+          event.preventDefault();
+          onSubmit(inputComment);
+          setInputComment("");
+        },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(import_components204.VisuallyHidden, { as: "label", htmlFor: inputId, children: labelText ?? (0, import_i18n214.__)("Note") }),
           /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
@@ -47224,7 +47231,12 @@ var wp;
                 debouncedCommentUpdated();
               },
               rows: 1,
-              maxRows: 20
+              maxRows: 20,
+              onKeyDown: (event) => {
+                if (import_keycodes17.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
+                  event.target.parentNode.requestSubmit();
+                }
+              }
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_components204.__experimentalHStack, { spacing: "2", justify: "flex-end", wrap: true, children: [
@@ -47235,10 +47247,7 @@ var wp;
                 size: "compact",
                 accessibleWhenDisabled: true,
                 variant: "primary",
-                onClick: () => {
-                  onSubmit(inputComment);
-                  setInputComment("");
-                },
+                type: "submit",
                 disabled: isDisabled,
                 children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(import_components204.__experimentalTruncate, { children: submitButtonText })
               }
