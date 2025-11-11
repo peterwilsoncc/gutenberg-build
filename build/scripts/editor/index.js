@@ -49118,7 +49118,15 @@ var wp;
     };
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
-      return null;
+      return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+        AddComment,
+        {
+          onSubmit: onAddReply,
+          newNoteFormState,
+          setNewNoteFormState,
+          commentSidebarRef
+        }
+      );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_jsx_runtime331.Fragment, { children: [
       !isFloating && newNoteFormState === "open" && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
