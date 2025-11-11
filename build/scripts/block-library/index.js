@@ -24161,6 +24161,17 @@ ${url}
   var import_primitives146 = __toESM(require_primitives());
   var import_jsx_runtime248 = __toESM(require_jsx_runtime());
   var variations9 = [
+    {
+      name: "heading",
+      title: (0, import_i18n79.__)("Heading"),
+      description: (0, import_i18n79.__)(
+        "Introduce new sections and organize content to help visitors (and search engines) understand the structure of your content."
+      ),
+      isDefault: true,
+      scope: ["inserter", "transform"],
+      attributes: { fitText: void 0 },
+      icon: heading_default
+    },
     // There is a hardcoded workaround in packages/block-editor/src/store/selectors.js
     // to make Stretchy variations appear as the last of their sections in the inserter.
     {
@@ -24169,7 +24180,7 @@ ${url}
       description: (0, import_i18n79.__)("Heading that resizes to fit its container."),
       icon: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(import_primitives146.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(import_primitives146.Path, { d: "m3 18.6 6-4.7 6 4.7V5H3v13.6Zm16.2-9.8v1.5h2.2L17.7 14l1.1 1.1 3.7-3.7v2.2H24V8.8h-4.8Z" }) }),
       attributes: { fitText: true },
-      scope: ["inserter"],
+      scope: ["inserter", "transform"],
       isActive: (blockAttributes8) => blockAttributes8.fitText === true
     }
   ];
@@ -40204,6 +40215,17 @@ ${js}
   var import_primitives148 = __toESM(require_primitives());
   var import_jsx_runtime321 = __toESM(require_jsx_runtime());
   var variations10 = [
+    {
+      name: "paragraph",
+      title: (0, import_i18n136.__)("Paragraph"),
+      description: (0, import_i18n136.__)(
+        "Start with the basic building block of all narrative."
+      ),
+      isDefault: true,
+      scope: ["block", "inserter", "transform"],
+      attributes: { fitText: void 0 },
+      icon: paragraph_default
+    },
     // There is a hardcoded workaround in packages/block-editor/src/store/selectors.js
     // to make Stretchy variations appear as the last of their sections in the inserter.
     {
@@ -40214,7 +40236,7 @@ ${js}
       attributes: {
         fitText: true
       },
-      scope: ["inserter"],
+      scope: ["inserter", "transform"],
       isActive: (blockAttributes8) => blockAttributes8.fitText === true
     }
   ];
