@@ -15170,6 +15170,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   var x = function(r4) {
     return "string" == typeof r4 ? N(r4.trim(), y.string) : "object" == typeof r4 && null !== r4 ? N(r4, y.object) : [null, void 0];
   };
+  var I = function(r4) {
+    return x(r4)[1];
+  };
   var M = function(r4, t4) {
     var n3 = c(r4);
     return { h: n3.h, s: e(n3.s + 100 * t4, 0, 100), l: n3.l, a: n3.a };
@@ -32532,7 +32535,7 @@ This message will only show in development mode. It won't appear in production. 
     var r4 = /rgba?\(?\s*(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i.exec(e3);
     return r4 ? z({ r: Number(r4[1]) / (r4[2] ? 100 / 255 : 1), g: Number(r4[3]) / (r4[4] ? 100 / 255 : 1), b: Number(r4[5]) / (r4[6] ? 100 / 255 : 1), a: void 0 === r4[7] ? 1 : Number(r4[7]) / (r4[8] ? 100 : 1) }) : { h: 0, s: 0, v: 0, a: 1 };
   };
-  var I = O;
+  var I2 = O;
   var z = function(e3) {
     var r4 = e3.r, t4 = e3.g, o4 = e3.b, n3 = e3.a, a3 = Math.max(r4, t4, o4), l3 = a3 - Math.min(r4, t4, o4), u3 = l3 ? a3 === r4 ? (t4 - o4) / l3 : a3 === t4 ? 2 + (o4 - r4) / l3 : 4 + (r4 - t4) / l3 : 0;
     return { h: p2(60 * (u3 < 0 ? u3 + 6 : u3)), s: p2(a3 ? l3 / a3 * 100 : 0), v: p2(a3 / 255 * 100), a: n3 };
@@ -32623,7 +32626,7 @@ This message will only show in development mode. It won't appear in production. 
   var ge = function(r4) {
     return import_react107.default.createElement(U, u2({}, r4, { colorModel: me }));
   };
-  var _e = { defaultColor: "rgb(0, 0, 0)", toHsva: I, fromHsva: function(e3) {
+  var _e = { defaultColor: "rgb(0, 0, 0)", toHsva: I2, fromHsva: function(e3) {
     var r4 = y2(e3);
     return "rgb(" + r4.r + ", " + r4.g + ", " + r4.b + ")";
   }, equal: D };
@@ -32696,9 +32699,33 @@ This message will only show in development mode. It won't appear in production. 
       debouncedSetColor(nextValue.toHex());
     }, [debouncedSetColor]);
     const [colorType, setColorType] = (0, import_element77.useState)(copyFormat || "hex");
+    const maybeHandlePaste = (0, import_element77.useCallback)((event) => {
+      const pastedText = event.clipboardData?.getData("text")?.trim();
+      if (!pastedText) {
+        return;
+      }
+      const parsedColor = w(pastedText);
+      if (!parsedColor.isValid()) {
+        return;
+      }
+      handleChange(parsedColor);
+      const supportedFormats = {
+        hex: "hex",
+        rgb: "rgb",
+        hsl: "hsl"
+      };
+      const detectedFormat = String(I(pastedText));
+      const newColorType = supportedFormats[detectedFormat];
+      if (newColorType) {
+        setColorType(newColorType);
+      }
+      event.stopPropagation();
+      event.preventDefault();
+    }, [handleChange, setColorType]);
     return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(ColorfulWrapper, {
       ref: forwardedRef,
       ...divProps,
+      onPasteCapture: maybeHandlePaste,
       children: [/* @__PURE__ */ (0, import_jsx_runtime138.jsx)(Picker, {
         onChange: handleChange,
         color: safeColordColor,
