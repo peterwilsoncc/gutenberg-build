@@ -75,7 +75,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState8({
+        cachedValue = useState9({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -87,7 +87,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect8(
+        useEffect9(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -113,7 +113,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React12 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState8 = React12.useState, useEffect8 = React12.useEffect, useLayoutEffect3 = React12.useLayoutEffect, useDebugValue = React12.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React12 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState9 = React12.useState, useEffect9 = React12.useEffect, useLayoutEffect3 = React12.useLayoutEffect, useDebugValue = React12.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React12.useSyncExternalStore ? React12.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -141,7 +141,7 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React12 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef8 = React12.useRef, useEffect8 = React12.useEffect, useMemo4 = React12.useMemo, useDebugValue = React12.useDebugValue;
+      var React12 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef8 = React12.useRef, useEffect9 = React12.useEffect, useMemo4 = React12.useMemo, useDebugValue = React12.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef8(null);
         if (null === instRef.current) {
@@ -184,7 +184,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore(subscribe2, instRef[0], instRef[1]);
-        useEffect8(
+        useEffect9(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -288,13 +288,6 @@ var require_compose = __commonJS({
   }
 });
 
-// package-external:@wordpress/private-apis
-var require_private_apis = __commonJS({
-  "package-external:@wordpress/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
-  }
-});
-
 // package-external:@wordpress/editor
 var require_editor = __commonJS({
   "package-external:@wordpress/editor"(exports, module) {
@@ -302,9 +295,23 @@ var require_editor = __commonJS({
   }
 });
 
+// package-external:@wordpress/keyboard-shortcuts
+var require_keyboard_shortcuts = __commonJS({
+  "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
+    module.exports = window.wp.keyboardShortcuts;
+  }
+});
+
+// package-external:@wordpress/private-apis
+var require_private_apis = __commonJS({
+  "package-external:@wordpress/private-apis"(exports, module) {
+    module.exports = window.wp.privateApis;
+  }
+});
+
 // packages/boot/build-module/components/app/index.js
-var import_element9 = __toESM(require_element());
-var import_data7 = __toESM(require_data());
+var import_element11 = __toESM(require_element());
+var import_data8 = __toESM(require_data());
 
 // node_modules/@tanstack/store/dist/esm/scheduler.js
 var __storeToDerived = /* @__PURE__ */ new WeakMap();
@@ -5575,8 +5582,8 @@ function useCanGoBack() {
 }
 
 // packages/boot/build-module/components/app/router.js
-var import_i18n6 = __toESM(require_i18n());
-var import_element8 = __toESM(require_element());
+var import_i18n8 = __toESM(require_i18n());
+var import_element10 = __toESM(require_element());
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
@@ -7242,6 +7249,89 @@ function Canvas({ canvas }) {
   );
 }
 
+// packages/boot/build-module/components/save-panel/index.js
+var import_element9 = __toESM(require_element());
+var import_components11 = __toESM(require_components());
+var import_editor2 = __toESM(require_editor());
+var import_i18n7 = __toESM(require_i18n());
+
+// packages/boot/build-module/components/save-panel/use-save-shortcut.js
+var import_element8 = __toESM(require_element());
+var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts());
+var import_i18n6 = __toESM(require_i18n());
+var import_data7 = __toESM(require_data());
+var import_core_data3 = __toESM(require_core_data());
+var import_editor = __toESM(require_editor());
+var shortcutName = "core/boot/save";
+function useSaveShortcut({
+  openSavePanel
+}) {
+  const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } = (0, import_data7.useSelect)(import_core_data3.store);
+  const { hasNonPostEntityChanges, isPostSavingLocked } = (0, import_data7.useSelect)(import_editor.store);
+  const { savePost } = (0, import_data7.useDispatch)(import_editor.store);
+  const { registerShortcut, unregisterShortcut } = (0, import_data7.useDispatch)(
+    import_keyboard_shortcuts.store
+  );
+  (0, import_element8.useEffect)(() => {
+    registerShortcut({
+      name: shortcutName,
+      category: "global",
+      description: (0, import_i18n6.__)("Save your changes."),
+      keyCombination: {
+        modifier: "primary",
+        character: "s"
+      }
+    });
+    return () => {
+      unregisterShortcut(shortcutName);
+    };
+  }, [registerShortcut, unregisterShortcut]);
+  (0, import_keyboard_shortcuts.useShortcut)(shortcutName, (event) => {
+    event.preventDefault();
+    const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
+    const hasDirtyEntities = !!dirtyEntityRecords.length;
+    const isSaving = dirtyEntityRecords.some(
+      (record) => isSavingEntityRecord(record.kind, record.name, record.key)
+    );
+    if (!hasDirtyEntities || isSaving) {
+      return;
+    }
+    if (hasNonPostEntityChanges()) {
+      openSavePanel();
+    } else if (!isPostSavingLocked()) {
+      savePost();
+    }
+  });
+}
+
+// packages/boot/build-module/components/save-panel/index.js
+var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+function SavePanel() {
+  const [isOpen, setIsOpen] = (0, import_element9.useState)(false);
+  useSaveShortcut({
+    openSavePanel: () => setIsOpen(true)
+  });
+  if (!isOpen) {
+    return false;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    import_components11.Modal,
+    {
+      className: "edit-site-save-panel__modal",
+      onRequestClose: () => setIsOpen(false),
+      title: (0, import_i18n7.__)("Review changes"),
+      size: "small",
+      children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+        import_editor2.EntitiesSavedStates,
+        {
+          close: () => setIsOpen(false),
+          variant: "inline"
+        }
+      )
+    }
+  );
+}
+
 // packages/boot/build-module/lock-unlock.js
 var import_private_apis = __toESM(require_private_apis());
 var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
@@ -7250,7 +7340,7 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
 );
 
 // packages/boot/build-module/components/root/index.js
-var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+var import_jsx_runtime38 = __toESM(require_jsx_runtime());
 var css9 = `/**
  * SCSS Variables.
  *
@@ -7377,7 +7467,7 @@ function Root() {
   const currentMatch = matches[matches.length - 1];
   const canvas = currentMatch?.loaderData?.canvas;
   const isFullScreen = canvas && !canvas.isPreview;
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeProvider, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeProvider, { color: { bg: "#1d2327", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ThemeProvider, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ThemeProvider, { color: { bg: "#1d2327", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
     "div",
     {
       className: clsx_default("boot-layout", {
@@ -7385,15 +7475,16 @@ function Root() {
         "has-full-canvas": isFullScreen
       }),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_commands2.CommandMenu, {}),
-        !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Sidebar, {}) }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_commands2.CommandMenu, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SavePanel, {}),
+        !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Sidebar, {}) }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
           ThemeProvider,
           {
             color: { bg: "#ffffff", primary: "#3858e9" },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Outlet, {}),
-              canvas && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Canvas, { canvas }) })
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Outlet, {}),
+              canvas && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Canvas, { canvas }) })
             ]
           }
         ) })
@@ -7403,24 +7494,24 @@ function Root() {
 }
 
 // packages/boot/build-module/components/app/router.js
-var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+var import_jsx_runtime39 = __toESM(require_jsx_runtime());
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(page_default, { title: (0, import_i18n6.__)("Route not found"), hasPadding: true, children: (0, import_i18n6.__)("The page you're looking for does not exist") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(page_default, { title: (0, import_i18n8.__)("Route not found"), hasPadding: true, children: (0, import_i18n8.__)("The page you're looking for does not exist") }) });
 }
 function RouteComponent({
   stage: Stage,
   inspector: Inspector
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
-    Stage && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Stage, {}) }),
-    Inspector && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Inspector, {}) })
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
+    Stage && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Stage, {}) }),
+    Inspector && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Inspector, {}) })
   ] });
 }
 async function createRouteFromDefinition(route, parentRoute) {
-  const SurfacesModule = route.content_module ? (0, import_element8.lazy)(async () => {
+  const SurfacesModule = route.content_module ? (0, import_element10.lazy)(async () => {
     const module = await import(route.content_module);
     return {
-      default: () => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      default: () => /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
         RouteComponent,
         {
           stage: module.stage,
@@ -7489,8 +7580,8 @@ function Router2({
   routes,
   rootComponent = Root
 }) {
-  const [router, setRouter] = (0, import_element8.useState)(null);
-  (0, import_element8.useEffect)(() => {
+  const [router, setRouter] = (0, import_element10.useState)(null);
+  (0, import_element10.useEffect)(() => {
     let cancelled = false;
     async function initializeRouter() {
       const history = createPathHistory();
@@ -7510,15 +7601,15 @@ function Router2({
     };
   }, [routes, rootComponent]);
   if (!router) {
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { children: "Loading routes..." });
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { children: "Loading routes..." });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(RouterProvider, { router });
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(RouterProvider, { router });
 }
 
 // packages/boot/build-module/components/root/single-page.js
 var import_commands3 = __toESM(require_commands());
 var import_theme2 = __toESM(require_theme());
-var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+var import_jsx_runtime40 = __toESM(require_jsx_runtime());
 var css10 = `/**
  * SCSS Variables.
  *
@@ -7645,7 +7736,7 @@ function RootSinglePage() {
   const currentMatch = matches[matches.length - 1];
   const canvas = currentMatch?.loaderData?.canvas;
   const isFullScreen = canvas && !canvas.isPreview;
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ThemeProvider2, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ThemeProvider2, { color: { bg: "#1d2327", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(ThemeProvider2, { isRoot: true, color: { bg: "#f8f8f8", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(ThemeProvider2, { color: { bg: "#1d2327", primary: "#3858e9" }, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
     "div",
     {
       className: clsx_default("boot-layout boot-layout--single-page", {
@@ -7653,14 +7744,15 @@ function RootSinglePage() {
         "has-full-canvas": isFullScreen
       }),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_commands3.CommandMenu, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_commands3.CommandMenu, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SavePanel, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
           ThemeProvider2,
           {
             color: { bg: "#ffffff", primary: "#3858e9" },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Outlet, {}),
-              canvas && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Canvas, { canvas }) })
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Outlet, {}),
+              canvas && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Canvas, { canvas }) })
             ]
           }
         ) })
@@ -7670,10 +7762,10 @@ function RootSinglePage() {
 }
 
 // packages/boot/build-module/components/app/index.js
-var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+var import_jsx_runtime41 = __toESM(require_jsx_runtime());
 function App({ rootComponent }) {
-  const routes = (0, import_data7.useSelect)((select) => select(store).getRoutes(), []);
-  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Router2, { routes, rootComponent });
+  const routes = (0, import_data8.useSelect)((select) => select(store).getRoutes(), []);
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Router2, { routes, rootComponent });
 }
 async function init({
   mountId,
@@ -7681,16 +7773,16 @@ async function init({
   routes
 }) {
   (menuItems ?? []).forEach((menuItem) => {
-    (0, import_data7.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
+    (0, import_data8.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
   });
   (routes ?? []).forEach((route) => {
-    (0, import_data7.dispatch)(store).registerRoute(route);
+    (0, import_data8.dispatch)(store).registerRoute(route);
   });
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element9.createRoot)(rootElement);
+    const root = (0, import_element11.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_element9.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_element11.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(App, {}) })
     );
   }
 }
@@ -7699,19 +7791,18 @@ async function initSinglePage({
   routes
 }) {
   (routes ?? []).forEach((route) => {
-    (0, import_data7.dispatch)(store).registerRoute(route);
+    (0, import_data8.dispatch)(store).registerRoute(route);
   });
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element9.createRoot)(rootElement);
+    const root = (0, import_element11.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_element9.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(App, { rootComponent: RootSinglePage }) })
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_element11.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(App, { rootComponent: RootSinglePage }) })
     );
   }
 }
 
 // packages/boot/build-module/index.js
-var import_editor = __toESM(require_editor());
 var css11 = `@charset "UTF-8";
 /* -------------------------------------------
  *  Autogenerated by \u26CB Terrazzo. DO NOT EDIT!
