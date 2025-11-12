@@ -2844,7 +2844,7 @@ var wp;
   // packages/theme/build-module/color-ramps/lib/constants.js
   var WHITE = to("white", oklch_default);
   var BLACK = to("black", oklch_default);
-  var UNIVERSAL_CONTRAST_TOPUP = 0.05;
+  var UNIVERSAL_CONTRAST_TOPUP = 0.012;
   var WHITE_TEXT_CONTRAST_MARGIN = 3.1;
   var ACCENT_SCALE_BASE_LIGHTNESS_THRESHOLDS = {
     lighter: { min: 0.2, max: 0.4 },
@@ -3433,7 +3433,7 @@ var wp;
       contrast: {
         reference: "surface2",
         followDirection: "opposite",
-        target: 1.02,
+        target: 1.06,
         ignoreWhenAdjustingSeed: true
       },
       taperChromaOptions: BG_SURFACE_TAPER_CHROMA
@@ -3449,7 +3449,7 @@ var wp;
       contrast: {
         reference: "surface2",
         followDirection: "main",
-        target: 1.02
+        target: 1.06
       },
       taperChromaOptions: BG_SURFACE_TAPER_CHROMA
     },
@@ -3457,7 +3457,7 @@ var wp;
       contrast: {
         reference: "surface2",
         followDirection: "main",
-        target: 1.08
+        target: 1.12
       },
       taperChromaOptions: BG_SURFACE_TAPER_CHROMA
     },
