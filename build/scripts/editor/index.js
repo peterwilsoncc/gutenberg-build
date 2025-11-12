@@ -4277,7 +4277,7 @@ var wp;
         __unstableShouldCreateUndoLevel: false
       });
     }
-    if (edits && Object.values(edits).some(
+    if (edits && Object.entries(edits).some(
       ([key, edit]) => edit !== (post2[key]?.raw ?? post2[key])
     )) {
       dispatch6.editPost(edits);
