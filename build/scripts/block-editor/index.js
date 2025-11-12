@@ -52649,7 +52649,7 @@ var wp;
             stopEditingContentOnlySection2();
           }
         },
-        children: editedContentOnlySection2 ? (0, import_i18n172.__)("Lock design") : (0, import_i18n172.__)("Unlock design")
+        children: editedContentOnlySection2 ? (0, import_i18n172.__)("Exit pattern") : (0, import_i18n172.__)("Edit pattern")
       }
     ) });
   }
