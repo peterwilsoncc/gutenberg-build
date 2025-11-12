@@ -3214,6 +3214,7 @@ var wp;
     pinLightness
   }) {
     const rampResults = {};
+    let warnings;
     let maxDeficit = -Infinity;
     let maxDeficitDirection = "lighter";
     let maxDeficitStep;
@@ -3261,10 +3262,7 @@ var wp;
         const adjustedTarget2 = adjustContrastTarget(contrast.target);
         if (candidateContrast >= adjustedTarget2) {
           calculatedColors.set(stepName, candidateColor);
-          rampResults[stepName] = {
-            color: getColorString(candidateColor),
-            warning: false
-          };
+          rampResults[stepName] = getColorString(candidateColor);
           continue;
         }
       }
@@ -3301,13 +3299,15 @@ var wp;
         maxDeficitStep = stepName;
       }
       calculatedColors.set(stepName, searchResults.color);
-      rampResults[stepName] = {
-        color: getColorString(searchResults.color),
-        warning: !contrast.ignoreWhenAdjustingSeed && !searchResults.reached
-      };
+      rampResults[stepName] = getColorString(searchResults.color);
+      if (!searchResults.reached && !contrast.ignoreWhenAdjustingSeed) {
+        warnings ??= [];
+        warnings.push(stepName);
+      }
     }
     return {
       rampResults,
+      warnings,
       maxDeficit,
       maxDeficitDirection,
       maxDeficitStep
@@ -3337,7 +3337,13 @@ var wp;
       oppDir = worse;
     }
     const sortedSteps = sortByDependency(config);
-    const { rampResults, maxDeficit, maxDeficitDirection, maxDeficitStep } = calculateRamp({
+    const {
+      rampResults,
+      warnings,
+      maxDeficit,
+      maxDeficitDirection,
+      maxDeficitStep
+    } = calculateRamp({
       seed,
       sortedSteps,
       config,
@@ -3389,6 +3395,7 @@ var wp;
     }
     return {
       ramp: bestRamp,
+      warnings,
       direction: mainDir
     };
   }
@@ -3694,7 +3701,7 @@ var wp;
       pinLightness: {
         stepName: STEP_TO_PIN,
         value: clampAccentScaleReferenceLightness(
-          get(parse(ramp.ramp[STEP_TO_PIN].color), [oklch_default, "l"]),
+          get(parse(ramp.ramp[STEP_TO_PIN]), [oklch_default, "l"]),
           ramp.direction
         )
       }
@@ -3832,10 +3839,7 @@ var wp;
         const key = `${rampName}-${tokenName}`;
         const aliasedBy = color_tokens_default[key] ?? [];
         for (const aliasedId of aliasedBy) {
-          entries.push([
-            `--wpds-color-${aliasedId}`,
-            tokenValue.color
-          ]);
+          entries.push([`--wpds-color-${aliasedId}`, tokenValue]);
         }
       }
     }
