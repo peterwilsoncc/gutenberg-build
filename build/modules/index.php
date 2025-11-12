@@ -38,6 +38,11 @@ return array(
 		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/route',
+		'path' => 'route/index',
+		'asset' => 'route/index.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/lazy-editor',
 		'path' => 'lazy-editor/index',
 		'asset' => 'lazy-editor/index.min.asset.php',
