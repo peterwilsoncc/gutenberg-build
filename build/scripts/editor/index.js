@@ -1014,7 +1014,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment84 = REACT_FRAGMENT_TYPE;
+          var Fragment83 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1073,7 +1073,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment84;
+          exports.Fragment = Fragment83;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -14988,18 +14988,9 @@ var wp;
   // packages/global-styles-ui/build-module/screen-root.js
   var import_jsx_runtime119 = __toESM(require_jsx_runtime());
   function ScreenRoot() {
-    const { hasVariations, canEditCSS } = (0, import_data49.useSelect)((select5) => {
-      const {
-        __experimentalGetCurrentThemeGlobalStylesVariations,
-        __experimentalGetCurrentGlobalStylesId,
-        getEntityRecord
-      } = select5(import_core_data31.store);
-      const globalStylesId = __experimentalGetCurrentGlobalStylesId();
-      const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
-      return {
-        hasVariations: !!__experimentalGetCurrentThemeGlobalStylesVariations()?.length,
-        canEditCSS: !!globalStyles?._links?.["wp:action-edit-css"]
-      };
+    const hasVariations = (0, import_data49.useSelect)((select5) => {
+      const { __experimentalGetCurrentThemeGlobalStylesVariations } = select5(import_core_data31.store);
+      return !!__experimentalGetCurrentThemeGlobalStylesVariations()?.length;
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(
       import_components37.Card,
@@ -15045,32 +15036,6 @@ var wp;
                 }
               )
             ] }) }) })
-          ] }),
-          canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(import_jsx_runtime119.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components37.CardDivider, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(import_components37.CardBody, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
-                import_components37.__experimentalSpacer,
-                {
-                  as: "p",
-                  paddingTop: 2,
-                  paddingX: "13px",
-                  marginBottom: 4,
-                  children: (0, import_i18n63.__)(
-                    "Add your own CSS to customize the appearance and layout of your site."
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components37.__experimentalItemGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(NavigationButtonAsItem, { path: "/css", children: /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(import_components37.__experimentalHStack, { justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components37.FlexItem, { children: (0, import_i18n63.__)("Additional CSS") }),
-                /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
-                  IconWithCurrentColor,
-                  {
-                    icon: (0, import_i18n63.isRTL)() ? chevron_left_default : chevron_right_default
-                  }
-                )
-              ] }) }) })
-            ] })
           ] })
         ]
       }
@@ -30027,9 +29992,6 @@ var wp;
   var import_jsx_runtime167 = __toESM(require_jsx_runtime());
   var { AdvancedPanel: StylesAdvancedPanel2 } = unlock3(import_block_editor29.privateApis);
   function ScreenCSS() {
-    const description = (0, import_i18n95.__)(
-      "Add your own CSS to customize the appearance and layout of your site."
-    );
     const [style] = useStyle("", void 0, "user", false);
     const [inheritedStyle, setStyle2] = useStyle(
       "",
@@ -30038,27 +30000,36 @@ var wp;
       false
     );
     return /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(import_jsx_runtime167.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(ScreenHeader, { title: (0, import_i18n95.__)("CSS"), description }),
-      /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)("div", { className: "global-styles-ui-screen-css", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
-          import_components79.ExternalLink,
-          {
-            href: (0, import_i18n95.__)(
-              "https://developer.wordpress.org/advanced-administration/wordpress/css/"
+      /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+        ScreenHeader,
+        {
+          title: (0, import_i18n95.__)("Additional CSS"),
+          description: /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(import_jsx_runtime167.Fragment, { children: [
+            (0, import_i18n95.__)(
+              "You can add custom CSS to further customize the appearance and layout of your site."
             ),
-            className: "global-styles-ui-screen-css-help-link",
-            children: (0, import_i18n95.__)("Learn more about CSS")
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
-          StylesAdvancedPanel2,
-          {
-            value: style,
-            onChange: setStyle2,
-            inheritedValue: inheritedStyle
-          }
-        )
-      ] })
+            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)("br", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+              import_components79.ExternalLink,
+              {
+                href: (0, import_i18n95.__)(
+                  "https://developer.wordpress.org/advanced-administration/wordpress/css/"
+                ),
+                className: "global-styles-ui-screen-css-help-link",
+                children: (0, import_i18n95.__)("Learn more about CSS")
+              }
+            )
+          ] })
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime167.jsx)("div", { className: "global-styles-ui-screen-css", children: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+        StylesAdvancedPanel2,
+        {
+          value: style,
+          onChange: setStyle2,
+          inheritedValue: inheritedStyle
+        }
+      ) })
     ] });
   }
   var screen_css_default = ScreenCSS;
@@ -31248,7 +31219,13 @@ var wp;
       [name2]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime178.jsxs)(import_jsx_runtime178.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: parentMenu + "/colors/palette", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_color_palette_default, { name: name2 }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+        GlobalStylesNavigationScreen,
+        {
+          path: parentMenu + "/colors/palette",
+          children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_color_palette_default, { name: name2 })
+        }
+      ),
       !!blockStyleVariations?.length && /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
         BlockStylesNavigationScreens,
         {
@@ -31305,27 +31282,27 @@ var wp;
                   onPathChange
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_root_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/colors", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_colors_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography/font-sizes", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(font_sizes_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography/font-sizes/:origin/:slug", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(font_size_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/layout", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_layout_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/colors/palette", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_color_palette_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/variations", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_style_variations_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/css", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_css_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/revisions/:revisionId?", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_revisions_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/shadows", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(ScreenShadows, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/shadows/edit/:category/:slug", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(ScreenShadowsEdit, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/background", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_background_default, {}) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography/text", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "text" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography/link", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "link" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography/heading", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "heading" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography/caption", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "caption" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/typography/button", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "button" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components89.Navigator.Screen, { path: "/blocks", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_block_list_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_root_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/colors", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_colors_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography/font-sizes", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(font_sizes_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography/font-sizes/:origin/:slug", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(font_size_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/layout", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_layout_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/colors/palette", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_color_palette_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/variations", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_style_variations_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/css", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_css_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/revisions/:revisionId?", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_revisions_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/shadows", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(ScreenShadows, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/shadows/edit/:category/:slug", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(ScreenShadowsEdit, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/background", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_background_default, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography/text", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "text" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography/link", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "link" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography/heading", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "heading" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography/caption", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "caption" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/typography/button", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_typography_element_default, { element: "button" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(GlobalStylesNavigationScreen, { path: "/blocks", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_block_list_default, {}) }),
               blocks.map((block) => /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
-                import_components89.Navigator.Screen,
+                GlobalStylesNavigationScreen,
                 {
                   path: "/blocks/" + encodeURIComponent(block.name),
                   children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(screen_block_default, { name: block.name })
@@ -31344,6 +31321,19 @@ var wp;
             ]
           }
         ) })
+      }
+    );
+  }
+  function GlobalStylesNavigationScreen({
+    path,
+    children
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+      import_components89.Navigator.Screen,
+      {
+        className: "global-styles-ui-sidebar__navigator-screen",
+        path,
+        children
       }
     );
   }
