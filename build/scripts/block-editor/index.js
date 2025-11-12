@@ -53774,7 +53774,7 @@ var wp;
               )
             }
           ),
-          hasTextAlignmentControl && /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+          hasTextAlignmentControl && /* @__PURE__ */ (0, import_jsx_runtime345.jsxs)(
             import_components189.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n180.__)("Text alignment"),
@@ -53782,15 +53782,21 @@ var wp;
               onDeselect: resetTextAlign,
               isShownByDefault: defaultControls.textAlign,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
-                TextAlignmentControl,
-                {
-                  value: textAlign,
-                  onChange: setTextAlign,
-                  size: "__unstable-large",
-                  __nextHasNoMarginBottom: true
-                }
-              )
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+                  TextAlignmentControl,
+                  {
+                    value: textAlign,
+                    onChange: setTextAlign,
+                    options: ["left", "center", "right", "justify"],
+                    size: "__unstable-large",
+                    __nextHasNoMarginBottom: true
+                  }
+                ),
+                textAlign === "justify" && /* @__PURE__ */ (0, import_jsx_runtime345.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(import_components189.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n180.__)(
+                  "Justified text can reduce readability. For better accessibility, use left-aligned text instead."
+                ) }) })
+              ]
             }
           )
         ]
