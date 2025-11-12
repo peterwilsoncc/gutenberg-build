@@ -12537,23 +12537,29 @@ var wp;
   var { RenamePatternModal } = unlock(import_patterns5.privateApis);
   var modalName = "editor/pattern-rename";
   function PatternRenameModal() {
-    const { record, postType: postType2 } = (0, import_data35.useSelect)((select5) => {
-      const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select5(store);
-      const { getEditedEntityRecord } = select5(import_core_data23.store);
-      const _postType = getCurrentPostType2();
-      return {
-        record: getEditedEntityRecord(
-          "postType",
-          _postType,
-          getCurrentPostId2()
-        ),
-        postType: _postType
-      };
-    }, []);
-    const { closeModal: closeModal2 } = (0, import_data35.useDispatch)(store2);
     const isActive = (0, import_data35.useSelect)(
       (select5) => select5(store2).isModalActive(modalName)
     );
+    const { record, postType: postType2 } = (0, import_data35.useSelect)(
+      (select5) => {
+        if (!isActive) {
+          return {};
+        }
+        const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select5(store);
+        const { getEditedEntityRecord } = select5(import_core_data23.store);
+        const _postType = getCurrentPostType2();
+        return {
+          record: getEditedEntityRecord(
+            "postType",
+            _postType,
+            getCurrentPostId2()
+          ),
+          postType: _postType
+        };
+      },
+      [isActive]
+    );
+    const { closeModal: closeModal2 } = (0, import_data35.useDispatch)(store2);
     if (!isActive || postType2 !== PATTERN_POST_TYPE) {
       return null;
     }
@@ -12568,23 +12574,29 @@ var wp;
   var { DuplicatePatternModal } = unlock(import_patterns6.privateApis);
   var modalName2 = "editor/pattern-duplicate";
   function PatternDuplicateModal() {
-    const { record, postType: postType2 } = (0, import_data36.useSelect)((select5) => {
-      const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select5(store);
-      const { getEditedEntityRecord } = select5(import_core_data24.store);
-      const _postType = getCurrentPostType2();
-      return {
-        record: getEditedEntityRecord(
-          "postType",
-          _postType,
-          getCurrentPostId2()
-        ),
-        postType: _postType
-      };
-    }, []);
-    const { closeModal: closeModal2 } = (0, import_data36.useDispatch)(store2);
     const isActive = (0, import_data36.useSelect)(
       (select5) => select5(store2).isModalActive(modalName2)
     );
+    const { record, postType: postType2 } = (0, import_data36.useSelect)(
+      (select5) => {
+        if (!isActive) {
+          return {};
+        }
+        const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select5(store);
+        const { getEditedEntityRecord } = select5(import_core_data24.store);
+        const _postType = getCurrentPostType2();
+        return {
+          record: getEditedEntityRecord(
+            "postType",
+            _postType,
+            getCurrentPostId2()
+          ),
+          postType: _postType
+        };
+      },
+      [isActive]
+    );
+    const { closeModal: closeModal2 } = (0, import_data36.useDispatch)(store2);
     if (!isActive || postType2 !== PATTERN_POST_TYPE) {
       return null;
     }
