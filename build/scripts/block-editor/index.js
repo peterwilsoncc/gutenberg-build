@@ -39056,6 +39056,7 @@ var wp;
       shouldShowVisualToolbar,
       showParentSelector,
       isUsingBindings,
+      isSectionContainer,
       hasContentOnlyLocking,
       showShuffleButton,
       showSlots,
@@ -39100,7 +39101,8 @@ var wp;
         (id) => getTemplateLock2(id) === "contentOnly"
       );
       const _isZoomOut = isZoomOut2();
-      const _showSwitchSectionStyleButton = window?.__experimentalContentOnlyPatternInsertion && (_isZoomOut || isSectionBlock2(selectedBlockClientId));
+      const _isSectionBlock = isSectionBlock2(selectedBlockClientId);
+      const _showSwitchSectionStyleButton = window?.__experimentalContentOnlyPatternInsertion && (_isZoomOut || _isSectionBlock);
       return {
         blockClientId: selectedBlockClientId,
         blockClientIds: selectedBlockClientIds,
@@ -39114,6 +39116,7 @@ var wp;
           true
         ) && selectedBlockClientIds.length === 1,
         isUsingBindings: _isUsingBindings,
+        isSectionContainer: _isSectionBlock,
         hasContentOnlyLocking: _hasTemplateLock,
         showShuffleButton: _isZoomOut,
         showSlots: !_isZoomOut,
@@ -39186,28 +39189,30 @@ var wp;
           showShuffleButton && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
           showSwitchSectionStyleButton && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(switch_section_style_default, { clientId: blockClientIds[0] }),
           shouldShowVisualToolbar && showSlots && /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(import_jsx_runtime242.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
-              block_controls_default.Slot,
-              {
-                group: "parent",
-                className: "block-editor-block-toolbar__slot"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
-              block_controls_default.Slot,
-              {
-                group: "block",
-                className: "block-editor-block-toolbar__slot"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(block_controls_default.Slot, { className: "block-editor-block-toolbar__slot" }),
-            /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
-              block_controls_default.Slot,
-              {
-                group: "inline",
-                className: "block-editor-block-toolbar__slot"
-              }
-            ),
+            !isSectionContainer && /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(import_jsx_runtime242.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                block_controls_default.Slot,
+                {
+                  group: "parent",
+                  className: "block-editor-block-toolbar__slot"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                block_controls_default.Slot,
+                {
+                  group: "block",
+                  className: "block-editor-block-toolbar__slot"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(block_controls_default.Slot, { className: "block-editor-block-toolbar__slot" }),
+              /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                block_controls_default.Slot,
+                {
+                  group: "inline",
+                  className: "block-editor-block-toolbar__slot"
+                }
+              )
+            ] }),
             /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
               block_controls_default.Slot,
               {

@@ -51043,8 +51043,8 @@ ${js}
       [recordId]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_jsx_runtime384.Fragment, { children: [
-      canUserEdit && !!handleEditOriginal && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor212.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components124.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components124.ToolbarButton, { onClick: handleEditOriginal, children: (0, import_i18n195.__)("Edit original") }) }) }),
-      canOverrideBlocks && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor212.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components124.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+      canUserEdit && !!handleEditOriginal && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor212.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components124.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components124.ToolbarButton, { onClick: handleEditOriginal, children: (0, import_i18n195.__)("Edit original") }) }) }),
+      canOverrideBlocks && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor212.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components124.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
         import_components124.ToolbarButton,
         {
           onClick: resetContent,
