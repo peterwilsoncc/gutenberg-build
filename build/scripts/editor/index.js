@@ -49277,7 +49277,7 @@ var wp;
                   "textarea"
                 );
               },
-              children: (0, import_i18n217.__)("Add new note")
+              children: (0, import_i18n217.__)("Add new reply")
             }
           ),
           !thread.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components206.__experimentalText, { as: "p", weight: 500, variant: "muted", children: (0, import_i18n217.__)("Original block deleted.") }),
