@@ -11,8 +11,8 @@ return array(
 		'name'        => 'home',
 		'path'        => '/',
 		'page'        => 'gutenberg-boot',
-		'has_route'   => false,
-		'has_content' => true,
+		'has_route'   => true,
+		'has_content' => false,
 	),
 	array(
 		'name'        => 'post',

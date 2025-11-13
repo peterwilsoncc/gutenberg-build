@@ -1,7 +1,12 @@
 // routes/styles/route.ts
 var route = {
-  async canvas() {
-    return null;
+  async canvas(context) {
+    if (context.search.preview === "stylebook") {
+      return null;
+    }
+    return {
+      isPreview: true
+    };
   }
 };
 export {

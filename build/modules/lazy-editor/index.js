@@ -2403,20 +2403,32 @@ function Editor({
   settings,
   backButton
 }) {
-  const templateId = (0, import_data6.useSelect)(
+  const homePage = (0, import_data6.useSelect)(
     (select2) => {
-      if (!postType || !postId) {
-        return void 0;
+      if (postType || postId) {
+        return null;
       }
-      if (postType === "wp_template") {
-        return postId;
-      }
-      return unlock(select2(import_core_data5.store)).getTemplateId(
-        postType,
-        postId
-      );
+      const { getHomePage } = unlock(select2(import_core_data5.store));
+      return getHomePage();
     },
     [postType, postId]
+  );
+  const resolvedPostType = postType || homePage?.postType;
+  const resolvedPostId = postId || homePage?.postId;
+  const templateId = (0, import_data6.useSelect)(
+    (select2) => {
+      if (!resolvedPostType || !resolvedPostId) {
+        return void 0;
+      }
+      if (resolvedPostType === "wp_template") {
+        return resolvedPostId;
+      }
+      return unlock(select2(import_core_data5.store)).getTemplateId(
+        resolvedPostType,
+        resolvedPostId
+      );
+    },
+    [resolvedPostType, resolvedPostId]
   );
   const stylesId = useStylesId({ templateId });
   const { isReady: settingsReady, editorSettings } = useEditorSettings({
@@ -2447,8 +2459,8 @@ function Editor({
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
     PrivateEditor,
     {
-      postType,
-      postId,
+      postType: resolvedPostType,
+      postId: resolvedPostId,
       templateId,
       settings: finalSettings,
       styles: finalSettings.styles,
