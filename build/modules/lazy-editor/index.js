@@ -2130,6 +2130,41 @@ function useEditorSettings({ stylesId }) {
 }
 
 // packages/asset-loader/build-module/index.js
+function injectImportMap(scriptModules) {
+  if (!scriptModules || Object.keys(scriptModules).length === 0) {
+    return;
+  }
+  const existingMapElement = document.querySelector(
+    "script#wp-importmap[type=importmap]"
+  );
+  if (existingMapElement) {
+    try {
+      const existingMap = JSON.parse(existingMapElement.text);
+      if (!existingMap.imports) {
+        existingMap.imports = {};
+      }
+      existingMap.imports = {
+        ...existingMap.imports,
+        ...scriptModules
+      };
+      existingMapElement.text = JSON.stringify(existingMap, null, 2);
+    } catch (error) {
+      console.error("Failed to parse or update import map:", error);
+    }
+  } else {
+    const script = document.createElement("script");
+    script.type = "importmap";
+    script.id = "wp-importmap";
+    script.text = JSON.stringify(
+      {
+        imports: scriptModules
+      },
+      null,
+      2
+    );
+    document.head.appendChild(script);
+  }
+}
 function loadStylesheet(handle, styleData) {
   return new Promise((resolve) => {
     if (!styleData.src) {
@@ -2248,7 +2283,10 @@ async function performScriptLoad(scriptElements, destination) {
   await Promise.all(parallel);
   parallel = [];
 }
-async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles, htmlTemplates) {
+async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles, htmlTemplates, scriptModules) {
+  if (scriptModules) {
+    injectImportMap(scriptModules);
+  }
   const orderedStyles = buildDependencyOrderedList(stylesData);
   const orderedScripts = buildDependencyOrderedList(scriptsData);
   const stylePromises = [];
@@ -2327,7 +2365,8 @@ async function loadEditorAssets() {
       editorAssets.inline_scripts || { before: {}, after: {} },
       editorAssets.styles || {},
       editorAssets.inline_styles || { before: {}, after: {} },
-      editorAssets.html_templates || []
+      editorAssets.html_templates || [],
+      editorAssets.script_modules || {}
     );
   };
   if (!loadAssetsPromise) {
