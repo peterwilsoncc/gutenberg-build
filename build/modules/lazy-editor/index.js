@@ -2248,7 +2248,7 @@ async function performScriptLoad(scriptElements, destination) {
   await Promise.all(parallel);
   parallel = [];
 }
-async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles) {
+async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles, htmlTemplates) {
   const orderedStyles = buildDependencyOrderedList(stylesData);
   const orderedScripts = buildDependencyOrderedList(scriptsData);
   const stylePromises = [];
@@ -2287,6 +2287,28 @@ async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles) 
     await performScriptLoad(scriptElementsBody, document.body);
   })();
   await Promise.all([Promise.all(stylePromises), scriptsPromise]);
+  if (htmlTemplates && htmlTemplates.length > 0) {
+    htmlTemplates.forEach((templateHtml) => {
+      const scriptMatch = templateHtml.match(
+        /<script([^>]*)>(.*?)<\/script>/is
+      );
+      if (scriptMatch) {
+        const attributes = scriptMatch[1];
+        const content = scriptMatch[2];
+        const script = document.createElement("script");
+        const idMatch = attributes.match(/id=["']([^"']+)["']/);
+        if (idMatch) {
+          script.id = idMatch[1];
+        }
+        const typeMatch = attributes.match(/type=["']([^"']+)["']/);
+        if (typeMatch) {
+          script.type = typeMatch[1];
+        }
+        script.textContent = content;
+        document.body.appendChild(script);
+      }
+    });
+  }
 }
 var index_default = loadAssets;
 
@@ -2304,7 +2326,8 @@ async function loadEditorAssets() {
       editorAssets.scripts || {},
       editorAssets.inline_scripts || { before: {}, after: {} },
       editorAssets.styles || {},
-      editorAssets.inline_styles || { before: {}, after: {} }
+      editorAssets.inline_styles || { before: {}, after: {} },
+      editorAssets.html_templates || []
     );
   };
   if (!loadAssetsPromise) {
