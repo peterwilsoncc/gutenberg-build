@@ -27427,6 +27427,12 @@ var wp;
     ];
     const canResolve = thread.parent === 0;
     const moreActions = parent?.status !== "approved" ? actions2.filter((item) => item.isEligible(thread)) : [];
+    const deleteConfirmMessage = (
+      // When deleting a top level note, descendants will also be deleted.
+      thread.parent === 0 ? (0, import_i18n167.__)(
+        "Are you sure you want to delete this note? This will also delete all of this note's replies."
+      ) : (0, import_i18n167.__)("Are you sure you want to delete this reply?")
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(
       import_components143.__experimentalVStack,
       {
@@ -27553,9 +27559,7 @@ var wp;
               onConfirm: handleConfirmDelete,
               onCancel: handleCancel,
               confirmButtonText: (0, import_i18n167.__)("Delete"),
-              children: (0, import_i18n167.__)(
-                "Are you sure you want to delete this note? This will also delete all of this note's replies."
-              )
+              children: deleteConfirmMessage
             }
           )
         ]
