@@ -34311,10 +34311,11 @@ ${js}
         }
         const { getEntityRecord, hasFinishedResolution } = select8(import_core_data32.store);
         const entityType = isTaxonomy ? "taxonomy" : "postType";
-        const entityRecord = getEntityRecord(entityType, type, id);
+        const typeForAPI = type === "tag" ? "post_tag" : type;
+        const entityRecord = getEntityRecord(entityType, typeForAPI, id);
         const hasResolved = hasFinishedResolution("getEntityRecord", [
           entityType,
-          type,
+          typeForAPI,
           id
         ]);
         return hasResolved ? entityRecord !== void 0 : true;
