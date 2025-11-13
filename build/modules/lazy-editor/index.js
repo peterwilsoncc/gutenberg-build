@@ -2457,6 +2457,8 @@ function Editor({
   );
 }
 export {
-  Editor
+  Editor,
+  loadEditorAssets,
+  useEditorAssets
 };
 //# sourceMappingURL=index.js.map

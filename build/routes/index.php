@@ -41,5 +41,12 @@ return array(
 		'page'        => 'gutenberg-boot',
 		'has_route'   => true,
 		'has_content' => false,
+	),
+	array(
+		'name'        => 'styles',
+		'path'        => '/styles',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => true,
 	)
 );

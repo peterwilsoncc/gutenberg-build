@@ -31613,14 +31613,14 @@ var wp;
       const { canUser } = select5(import_core_data40.store);
       const editorSettings2 = getEditorSettings2();
       const canUserUploadMedia = canUser("create", {
-        kind: "root",
-        name: "media"
+        kind: "postType",
+        name: "attachement"
       });
       return {
-        styles: editorSettings2?.styles || [],
-        __unstableResolvedAssets: editorSettings2?.__unstableResolvedAssets || {},
-        colors: editorSettings2?.colors || [],
-        gradients: editorSettings2?.gradients || [],
+        styles: editorSettings2?.styles,
+        __unstableResolvedAssets: editorSettings2?.__unstableResolvedAssets,
+        colors: editorSettings2?.colors,
+        gradients: editorSettings2?.gradients,
         __experimentalDiscussionSettings: editorSettings2?.__experimentalDiscussionSettings,
         mediaUploadHandler: canUserUploadMedia ? import_media_utils4.uploadMedia : void 0,
         fontLibraryEnabled: editorSettings2?.fontLibraryEnabled ?? true
@@ -31638,10 +31638,10 @@ var wp;
         settings: {
           color: {
             palette: {
-              theme: colors
+              theme: colors ?? []
             },
             gradients: {
-              theme: gradients
+              theme: gradients ?? []
             },
             duotone: {
               theme: []
