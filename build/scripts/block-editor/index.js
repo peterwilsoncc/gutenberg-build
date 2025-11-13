@@ -43196,7 +43196,13 @@ var wp;
   }
   function __experimentalBlockVariationTransforms({ blockClientId }) {
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data135.useDispatch)(store);
-    const { activeBlockVariation, variations, isContentOnly, isSection } = (0, import_data135.useSelect)(
+    const {
+      activeBlockVariation,
+      unfilteredVariations,
+      blockName,
+      isContentOnly,
+      isSection
+    } = (0, import_data135.useSelect)(
       (select3) => {
         const { getActiveBlockVariation, getBlockVariations: getBlockVariations2 } = select3(import_blocks78.store);
         const {
@@ -43206,9 +43212,7 @@ var wp;
           isSectionBlock: isSectionBlock2
         } = unlock(select3(store));
         const name = blockClientId && getBlockName2(blockClientId);
-        const { hasContentRoleAttribute } = unlock(
-          select3(import_blocks78.store)
-        );
+        const { hasContentRoleAttribute } = unlock(select3(import_blocks78.store));
         const isContentBlock4 = hasContentRoleAttribute(name);
         return {
           activeBlockVariation: getActiveBlockVariation(
@@ -43216,13 +43220,36 @@ var wp;
             getBlockAttributes3(blockClientId),
             "transform"
           ),
-          variations: name && getBlockVariations2(name, "transform"),
+          unfilteredVariations: name && getBlockVariations2(name, "transform"),
+          blockName: name,
           isContentOnly: getBlockEditingMode2(blockClientId) === "contentOnly" && !isContentBlock4,
           isSection: isSectionBlock2(blockClientId)
         };
       },
       [blockClientId]
     );
+    const variations = (0, import_element145.useMemo)(() => {
+      if (blockName === "core/paragraph") {
+        if (activeBlockVariation?.name === "stretchy-paragraph" || unfilteredVariations.every(
+          (v2) => ["paragraph", "stretchy-paragraph"].includes(v2.name)
+        )) {
+          return [];
+        }
+        return unfilteredVariations.filter(
+          (v2) => v2.name !== "stretchy-paragraph"
+        );
+      } else if (blockName === "core/heading") {
+        if (activeBlockVariation?.name === "stretchy-heading" || unfilteredVariations.every(
+          (v2) => ["heading", "stretchy-heading"].includes(v2.name)
+        )) {
+          return [];
+        }
+        return unfilteredVariations.filter(
+          (v2) => v2.name !== "stretchy-heading"
+        );
+      }
+      return unfilteredVariations;
+    }, [activeBlockVariation?.name, blockName, unfilteredVariations]);
     const selectedValue = activeBlockVariation?.name;
     const hasUniqueIcons = (0, import_element145.useMemo)(() => {
       const variationIcons = /* @__PURE__ */ new Set();
