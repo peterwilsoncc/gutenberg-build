@@ -94,6 +94,13 @@ var require_private_apis = __commonJS({
   }
 });
 
+// package-external:@wordpress/date
+var require_date = __commonJS({
+  "package-external:@wordpress/date"(exports, module) {
+    module.exports = window.wp.date;
+  }
+});
+
 // vendor-external:react
 var require_react = __commonJS({
   "vendor-external:react"(exports, module) {
@@ -719,13 +726,6 @@ var require_es6 = __commonJS({
       }
       return a2 !== a2 && b2 !== b2;
     };
-  }
-});
-
-// package-external:@wordpress/date
-var require_date = __commonJS({
-  "package-external:@wordpress/date"(exports, module) {
-    module.exports = window.wp.date;
   }
 });
 
@@ -4819,6 +4819,7 @@ var import_components21 = __toESM(require_components());
 var import_components18 = __toESM(require_components());
 var import_i18n19 = __toESM(require_i18n());
 var import_element22 = __toESM(require_element());
+var import_date2 = __toESM(require_date());
 
 // node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
 var __defProp2 = Object.defineProperty;
@@ -11337,7 +11338,16 @@ function Filter({
   } else if (filterInView?.value !== void 0) {
     const field = fields.find((f2) => f2.id === filter.field);
     let label = filterInView.value;
-    if (field?.type === "datetime" && typeof label === "string") {
+    if (field?.type === "date" && typeof label === "string") {
+      try {
+        const dateValue = parseDateTime(label);
+        if (dateValue !== null) {
+          label = (0, import_date2.dateI18n)(field.format.date, (0, import_date2.getDate)(label));
+        }
+      } catch (e2) {
+        label = filterInView.value;
+      }
+    } else if (field?.type === "datetime" && typeof label === "string") {
       try {
         const dateValue = parseDateTime(label);
         if (dateValue !== null) {
@@ -12235,6 +12245,9 @@ function _DataViewsViewConfig() {
 var DataViewsViewConfig = (0, import_element32.memo)(_DataViewsViewConfig);
 var dataviews_view_config_default = DataViewsViewConfig;
 
+// packages/dataviews/build-module/utils/normalize-fields.js
+var import_date8 = __toESM(require_date());
+
 // packages/dataviews/build-module/field-types/email.js
 var import_i18n27 = __toESM(require_i18n());
 
@@ -12498,9 +12511,8 @@ var datetime_default = {
 };
 
 // packages/dataviews/build-module/field-types/date.js
-var import_date2 = __toESM(require_date());
+var import_date3 = __toESM(require_date());
 var import_jsx_runtime66 = __toESM(require_jsx_runtime());
-var getFormattedDate = (dateToDisplay) => (0, import_date2.dateI18n)((0, import_date2.getSettings)().formats.date, (0, import_date2.getDate)(dateToDisplay));
 function sort6(a2, b2, direction) {
   const timeA = new Date(a2).getTime();
   const timeB = new Date(b2).getTime();
@@ -12521,7 +12533,10 @@ var date_default = {
     if (!value) {
       return "";
     }
-    return getFormattedDate(value);
+    if (field.type !== "date") {
+      return "";
+    }
+    return (0, import_date3.dateI18n)(field.format.date, (0, import_date3.getDate)(value));
   },
   enableSorting: true,
   filterBy: {
@@ -13094,7 +13109,7 @@ function Checkbox({
 var import_components29 = __toESM(require_components());
 var import_element35 = __toESM(require_element());
 var import_i18n34 = __toESM(require_i18n());
-var import_date4 = __toESM(require_date());
+var import_date5 = __toESM(require_date());
 
 // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
 var import_components28 = __toESM(require_components());
@@ -13279,7 +13294,7 @@ function CalendarDateTimeControl({
   const {
     timezone: { string: timezoneString },
     l10n: { startOfWeek: startOfWeek2 }
-  } = (0, import_date4.getSettings)();
+  } = (0, import_date5.getSettings)();
   const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n34.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
     import_components29.BaseControl,
@@ -13359,20 +13374,49 @@ function DateTime({
 var import_components30 = __toESM(require_components());
 var import_element36 = __toESM(require_element());
 var import_i18n35 = __toESM(require_i18n());
-var import_date5 = __toESM(require_date());
+var import_date6 = __toESM(require_date());
+
+// packages/dataviews/build-module/utils/week-starts-on.js
+var DAYS_OF_WEEK = [
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday"
+];
+var DEFAULT_DAY_STRING = "sunday";
+var DEFAULT_DAY_NUMBER = 0;
+function weekStartsOnToNumber(day) {
+  const index = DAYS_OF_WEEK.indexOf(day);
+  if (index === -1) {
+    return DEFAULT_DAY_NUMBER;
+  }
+  return index;
+}
+function numberToWeekStartsOn(day) {
+  const result = DAYS_OF_WEEK[day];
+  if (result === void 0) {
+    return DEFAULT_DAY_STRING;
+  }
+  return result;
+}
+
+// packages/dataviews/build-module/dataform-controls/date.js
 var import_jsx_runtime76 = __toESM(require_jsx_runtime());
 var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock(import_components30.privateApis);
 var DATE_PRESETS = [
   {
     id: "today",
     label: (0, import_i18n35.__)("Today"),
-    getValue: () => (0, import_date5.getDate)(null)
+    getValue: () => (0, import_date6.getDate)(null)
   },
   {
     id: "yesterday",
     label: (0, import_i18n35.__)("Yesterday"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 1);
     }
   },
@@ -13380,7 +13424,7 @@ var DATE_PRESETS = [
     id: "past-week",
     label: (0, import_i18n35.__)("Past week"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 7);
     }
   },
@@ -13388,7 +13432,7 @@ var DATE_PRESETS = [
     id: "past-month",
     label: (0, import_i18n35.__)("Past month"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subMonths(today, 1);
     }
   }
@@ -13398,7 +13442,7 @@ var DATE_RANGE_PRESETS = [
     id: "last-7-days",
     label: (0, import_i18n35.__)("Last 7 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 7), today];
     }
   },
@@ -13406,7 +13450,7 @@ var DATE_RANGE_PRESETS = [
     id: "last-30-days",
     label: (0, import_i18n35.__)("Last 30 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 30), today];
     }
   },
@@ -13414,7 +13458,7 @@ var DATE_RANGE_PRESETS = [
     id: "month-to-date",
     label: (0, import_i18n35.__)("Month to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfMonth(today), today];
     }
   },
@@ -13422,7 +13466,7 @@ var DATE_RANGE_PRESETS = [
     id: "last-year",
     label: (0, import_i18n35.__)("Last year"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subYears(today, 1), today];
     }
   },
@@ -13430,7 +13474,7 @@ var DATE_RANGE_PRESETS = [
     id: "year-to-date",
     label: (0, import_i18n35.__)("Year to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfYear(today), today];
     }
   }
@@ -13439,7 +13483,7 @@ var parseDate = (dateString) => {
   if (!dateString) {
     return null;
   }
-  const parsed = (0, import_date5.getDate)(dateString);
+  const parsed = (0, import_date6.getDate)(dateString);
   return parsed && isValid(parsed) ? parsed : null;
 };
 var formatDate = (date) => {
@@ -13526,10 +13570,22 @@ function CalendarDateControl({
   hideLabelFromVision,
   validity
 }) {
-  const { id, label, setValue, getValue, isValid: isValid2 } = field;
+  const {
+    id,
+    type,
+    label,
+    setValue,
+    getValue,
+    isValid: isValid2,
+    format: fieldFormat
+  } = field;
   const [selectedPresetId, setSelectedPresetId] = (0, import_element36.useState)(
     null
   );
+  let weekStartsOn;
+  if (type === "date") {
+    weekStartsOn = weekStartsOnToNumber(fieldFormat.weekStartsOn);
+  }
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const [calendarMonth, setCalendarMonth] = (0, import_element36.useState)(() => {
@@ -13577,9 +13633,8 @@ function CalendarDateControl({
     [onChangeCallback]
   );
   const {
-    timezone: { string: timezoneString },
-    l10n: { startOfWeek: startOfWeek2 }
-  } = (0, import_date5.getSettings)();
+    timezone: { string: timezoneString }
+  } = (0, import_date6.getSettings)();
   const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n35.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
     ValidatedDateControl,
@@ -13649,7 +13704,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 timeZone: timezoneString || void 0,
-                weekStartsOn: startOfWeek2
+                weekStartsOn
               }
             )
           ] })
@@ -13665,11 +13720,15 @@ function CalendarDateRangeControl({
   hideLabelFromVision,
   validity
 }) {
-  const { id, label, getValue, setValue } = field;
+  const { id, type, label, getValue, setValue, format: fieldFormat } = field;
   let value;
   const fieldValue = getValue({ item: data });
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
     value = fieldValue;
+  }
+  let weekStartsOn;
+  if (type === "date") {
+    weekStartsOn = weekStartsOnToNumber(fieldFormat.weekStartsOn);
   }
   const onChangeCallback = (0, import_element36.useCallback)(
     (newValue) => {
@@ -13752,7 +13811,7 @@ function CalendarDateRangeControl({
     },
     [value, updateDateRange]
   );
-  const { timezone, l10n } = (0, import_date5.getSettings)();
+  const { timezone } = (0, import_date6.getSettings)();
   const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n35.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
     ValidatedDateControl,
@@ -13837,7 +13896,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 timeZone: timezone.string || void 0,
-                weekStartsOn: l10n.startOfWeek
+                weekStartsOn
               }
             )
           ] })
@@ -14784,8 +14843,9 @@ function normalizeFields(fields) {
       return fieldTypeDefinition.render({ item, field: renderedField });
     };
     const filterBy = getFilterBy(field, fieldTypeDefinition);
-    return {
-      ...field,
+    const { type, ...fieldWithoutType } = field;
+    const baseField = {
+      ...fieldWithoutType,
       label: field.label || field.id,
       header: field.header || field.label || field.id,
       getValue,
@@ -14798,8 +14858,25 @@ function normalizeFields(fields) {
       enableHiding: field.enableHiding ?? true,
       enableSorting: field.enableSorting ?? fieldTypeDefinition.enableSorting ?? true,
       filterBy,
-      readOnly: field.readOnly ?? fieldTypeDefinition.readOnly ?? false
+      readOnly: field.readOnly ?? fieldTypeDefinition.readOnly ?? false,
+      format: {}
     };
+    if (field.type === "date") {
+      const format2 = {
+        date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date8.getSettings)().formats.date,
+        weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(
+          field.format?.weekStartsOn
+        ) ? field.format.weekStartsOn : numberToWeekStartsOn(
+          (0, import_date8.getSettings)().l10n.startOfWeek
+        )
+      };
+      return {
+        ...baseField,
+        type: "date",
+        format: format2
+      };
+    }
+    return { ...baseField, type: field.type, format: {} };
   });
 }
 
