@@ -50670,7 +50670,14 @@ var wp;
   var import_react5 = __toESM(require_react());
   var DEFAULT_BLOCK_CONTEXT2 = {};
   var usesContextKey = Symbol("usesContext");
-  function Edit3({ onChange, onFocus, value, forwardedRef, settings: settings2 }) {
+  function Edit3({
+    onChange,
+    onFocus,
+    value,
+    forwardedRef,
+    settings: settings2,
+    isVisible
+  }) {
     const {
       name,
       edit: EditFunction,
@@ -50695,6 +50702,7 @@ var wp;
       EditFunction,
       {
         isActive,
+        isVisible,
         activeAttributes: isActive ? activeFormat.attributes || {} : {},
         isObjectActive,
         activeObjectAttributes: isObjectActive ? activeObject.attributes || {} : {},
