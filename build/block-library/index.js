@@ -34718,7 +34718,7 @@ ${url}
                     });
                   },
                   help: hasUrlBinding && !isBoundEntityAvailable ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
-                    MissingEntityHelpText,
+                    MissingEntityHelp,
                     {
                       id: helpTextId,
                       type: attributes3.type,
@@ -34828,24 +34828,16 @@ ${url}
       entityType
     );
   }
-  function MissingEntityHelpText({ id, type, kind }) {
+  function MissingEntityHelpText({ type, kind }) {
     const entityType = getEntityTypeName(type, kind);
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
-      "span",
-      {
-        id,
-        className: "navigation-link-control__error-text",
-        role: "alert",
-        "aria-live": "polite",
-        children: (0, import_i18n115.sprintf)(
-          /* translators: %s is the entity type (e.g., "page", "post", "category") */
-          (0, import_i18n115.__)(
-            "Synced %s is missing. Please update or remove this link."
-          ),
-          entityType
-        )
-      }
+    return (0, import_i18n115.sprintf)(
+      /* translators: %s is the entity type (e.g., "page", "post", "category") */
+      (0, import_i18n115.__)("Synced %s is missing. Please update or remove this link."),
+      entityType
     );
+  }
+  function MissingEntityHelp({ id, type, kind }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("span", { id, className: "navigation-link-control__error-text", children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(MissingEntityHelpText, { type, kind }) });
   }
 
   // packages/block-library/build-module/navigation-link/link-ui/index.js
@@ -37226,6 +37218,9 @@ ${url}
         setIsLinkOpen(true);
       }
     }
+    const instanceId = (0, import_compose32.useInstanceId)(NavigationLinkEdit);
+    const hasMissingEntity = hasUrlBinding && !isBoundEntityAvailable;
+    const missingEntityDescriptionId = hasMissingEntity ? (0, import_i18n124.sprintf)("navigation-link-edit-%d-desc", instanceId) : void 0;
     const blockProps = (0, import_block_editor150.useBlockProps)({
       ref: (0, import_compose32.useMergeRefs)([setPopoverAnchor, listItemRef]),
       className: clsx_default("wp-block-navigation-item", {
@@ -37238,6 +37233,8 @@ ${url}
         "has-background": !!backgroundColor || customBackgroundColor,
         [(0, import_block_editor150.getColorClassName)("background-color", backgroundColor)]: !!backgroundColor
       }),
+      "aria-describedby": missingEntityDescriptionId,
+      "aria-invalid": hasMissingEntity,
       style: {
         color: !textColor && customTextColor,
         backgroundColor: !backgroundColor && customBackgroundColor
@@ -37299,6 +37296,7 @@ ${url}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)("div", { ...blockProps, children: [
+        hasMissingEntity && /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(import_components78.VisuallyHidden, { id: missingEntityDescriptionId, children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(MissingEntityHelpText, { type, kind }) }),
         /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)("a", { className: classes, children: [
           !url && !metadata?.bindings?.url ? /* @__PURE__ */ (0, import_jsx_runtime303.jsx)("div", { className: "wp-block-navigation-link__placeholder-text", children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)("span", { children: missingText }) }) : /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(import_jsx_runtime303.Fragment, { children: [
             !isInvalid && !isDraft && /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(import_jsx_runtime303.Fragment, { children: [
