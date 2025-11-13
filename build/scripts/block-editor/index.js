@@ -20990,16 +20990,22 @@ var wp;
       event.type === "mouseover"
     );
   }
-  function useIsHovered() {
-    return (0, import_compose6.useRefEffect)((node2) => {
-      node2.addEventListener("mouseout", listener);
-      node2.addEventListener("mouseover", listener);
-      return () => {
-        node2.removeEventListener("mouseout", listener);
-        node2.removeEventListener("mouseover", listener);
-        node2.classList.remove("is-hovered");
-      };
-    }, []);
+  function useIsHovered({ isEnabled = true } = {}) {
+    return (0, import_compose6.useRefEffect)(
+      (node2) => {
+        if (!isEnabled) {
+          return;
+        }
+        node2.addEventListener("mouseout", listener);
+        node2.addEventListener("mouseover", listener);
+        return () => {
+          node2.removeEventListener("mouseout", listener);
+          node2.removeEventListener("mouseover", listener);
+          node2.classList.remove("is-hovered");
+        };
+      },
+      [isEnabled]
+    );
   }
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-focus-handler.js
@@ -21409,19 +21415,21 @@ var wp;
       isEditingContentOnlySection,
       defaultClassName,
       isSectionBlock: isSectionBlock2,
+      isWithinSectionBlock,
       canMove,
       isBlockHidden: isBlockHidden2
     } = (0, import_element28.useContext)(PrivateBlockContext);
     const blockLabel = (0, import_i18n23.sprintf)((0, import_i18n23.__)("Block: %s"), blockTitle);
     const htmlSuffix = mode2 === "html" && !__unstableIsHtml ? "-visual" : "";
     const ffDragRef = useFirefoxDraggableCompatibility();
+    const isHoverEnabled = !isWithinSectionBlock;
     const mergedRefs = (0, import_compose13.useMergeRefs)([
       props.ref,
       useFocusFirstElement({ clientId, initialPosition: initialPosition2 }),
       useBlockRefProvider(clientId),
       useFocusHandler(clientId),
       useEventHandlers({ clientId, isSelected }),
-      useIsHovered(),
+      useIsHovered({ isEnabled: isHoverEnabled }),
       useIntersectionObserver(),
       use_moving_animation_default({ triggerAnimationOnChange: index, clientId }),
       (0, import_compose13.useDisabled)({ isDisabled: !hasOverlay }),
@@ -21844,6 +21852,7 @@ var wp;
           isSelectionEnabled: isSelectionEnabled22,
           getTemplateLock: getTemplateLock2,
           isSectionBlock: _isSectionBlock,
+          getParentSectionBlock: getParentSectionBlock2,
           getBlockWithoutAttributes: getBlockWithoutAttributes2,
           getBlockAttributes: getBlockAttributes3,
           canRemoveBlock: canRemoveBlock2,
@@ -21926,6 +21935,7 @@ var wp;
           isSelectionEnabled: isSelectionEnabled22(),
           isLocked: !!getTemplateLock2(rootClientId),
           isSectionBlock: _isSectionBlock(clientId),
+          isWithinSectionBlock: _isSectionBlock(clientId) || !!getParentSectionBlock2(clientId),
           canRemove: canRemove2,
           canMove: canMove2,
           isSelected: _isSelected,
@@ -21989,6 +21999,7 @@ var wp;
       isDragging: isDragging3,
       hasChildSelected,
       isSectionBlock: isSectionBlock2,
+      isWithinSectionBlock,
       isEditingDisabled,
       hasEditableOutline,
       className,
@@ -22025,6 +22036,7 @@ var wp;
       isDragging: isDragging3,
       hasChildSelected,
       isSectionBlock: isSectionBlock2,
+      isWithinSectionBlock,
       isEditingDisabled,
       hasEditableOutline,
       isEditingContentOnlySection,
