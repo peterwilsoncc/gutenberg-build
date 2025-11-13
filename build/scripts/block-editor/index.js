@@ -12509,6 +12509,9 @@ var wp;
       if (!_clientId) {
         return false;
       }
+      if (isSectionBlock(state, _clientId)) {
+        return false;
+      }
       const { getGroupingBlockName } = select3(import_blocks5.store);
       const block = getBlock(state, _clientId);
       const groupingBlockName = getGroupingBlockName();
