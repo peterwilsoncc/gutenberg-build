@@ -33257,7 +33257,7 @@ var wp;
       "core/image",
       "core/separator",
       "core/buttons",
-      "core/pullquote",
+      "core/quote",
       "core/search"
     ];
     otherBlockExamples.forEach((blockName) => {

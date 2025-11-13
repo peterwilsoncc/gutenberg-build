@@ -34503,7 +34503,7 @@ ${js}
     const [error, setError] = (0, import_element65.useState)(null);
     const { saveEntityRecord, editEntityRecord } = (0, import_data65.useDispatch)(import_core_data36.store);
     const generateDefaultTitle = useGenerateDefaultNavigationTitle(clientId);
-    const create5 = (0, import_element65.useCallback)(
+    const create4 = (0, import_element65.useCallback)(
       async (title = null, blocks = [], postStatus) => {
         if (title && typeof title !== "string") {
           setError(
@@ -34557,7 +34557,7 @@ ${js}
       [saveEntityRecord, editEntityRecord, generateDefaultTitle]
     );
     return {
-      create: create5,
+      create: create4,
       status,
       value,
       error,
@@ -46195,9 +46195,9 @@ ${js}
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
     name: "core/pullquote",
-    title: "Pullquote",
+    title: "Pullquote (deprecated)",
     category: "text",
-    description: "Give special visual emphasis to a quote from your text.",
+    description: "This block is deprecated. Please use the Quote block instead.",
     textdomain: "default",
     attributes: {
       value: {
@@ -46241,6 +46241,7 @@ ${js}
           minHeight: false
         }
       },
+      inserter: false,
       spacing: {
         margin: true,
         padding: true
@@ -46308,38 +46309,7 @@ ${js}
 
   // packages/block-library/build-module/pullquote/transforms.js
   var import_blocks71 = __toESM(require_blocks());
-  var import_rich_text5 = __toESM(require_rich_text());
   var transforms27 = {
-    from: [
-      {
-        type: "block",
-        isMultiBlock: true,
-        blocks: ["core/paragraph"],
-        transform: (attributes3) => {
-          return (0, import_blocks71.createBlock)("core/pullquote", {
-            value: (0, import_rich_text5.toHTMLString)({
-              value: (0, import_rich_text5.join)(
-                attributes3.map(
-                  ({ content }) => (0, import_rich_text5.create)({ html: content })
-                ),
-                "\n"
-              )
-            }),
-            anchor: attributes3.anchor
-          });
-        }
-      },
-      {
-        type: "block",
-        blocks: ["core/heading"],
-        transform: ({ content, anchor }) => {
-          return (0, import_blocks71.createBlock)("core/pullquote", {
-            value: content,
-            anchor
-          });
-        }
-      }
-    ],
     to: [
       {
         type: "block",
@@ -50931,26 +50901,6 @@ ${js}
       }
     ],
     to: [
-      {
-        type: "block",
-        blocks: ["core/pullquote"],
-        isMatch: ({}, block) => {
-          return block.innerBlocks.every(
-            ({ name: name116 }) => name116 === "core/paragraph"
-          );
-        },
-        transform: ({ align, citation, anchor, fontSize, style: style2 }, innerBlocks) => {
-          const value = innerBlocks.map(({ attributes: attributes3 }) => `${attributes3.content}`).join("<br>");
-          return (0, import_blocks76.createBlock)("core/pullquote", {
-            value,
-            align,
-            citation,
-            anchor,
-            fontSize,
-            style: style2
-          });
-        }
-      },
       {
         type: "block",
         blocks: ["core/paragraph"],
@@ -64204,7 +64154,7 @@ ${declarations}
     name: () => name115,
     settings: () => settings114
   });
-  var import_rich_text7 = __toESM(require_rich_text());
+  var import_rich_text6 = __toESM(require_rich_text());
 
   // packages/block-library/build-module/footnotes/edit.js
   var import_block_editor272 = __toESM(require_block_editor());
@@ -64410,7 +64360,7 @@ ${declarations}
 
   // packages/block-library/build-module/footnotes/format.js
   var import_i18n247 = __toESM(require_i18n());
-  var import_rich_text6 = __toESM(require_rich_text());
+  var import_rich_text5 = __toESM(require_rich_text());
   var import_block_editor273 = __toESM(require_block_editor());
   var import_data144 = __toESM(require_data());
   var import_core_data90 = __toESM(require_core_data());
@@ -64485,7 +64435,7 @@ ${declarations}
             id = object?.attributes?.["data-fn"];
           } else {
             id = v4_default();
-            const newValue = (0, import_rich_text6.insertObject)(
+            const newValue = (0, import_rich_text5.insertObject)(
               value,
               {
                 type: formatName,
@@ -64548,7 +64498,7 @@ ${declarations}
     edit: FootnotesEdit
   };
   var init114 = () => {
-    (0, import_rich_text7.registerFormatType)(formatName, format2);
+    (0, import_rich_text6.registerFormatType)(formatName, format2);
     initBlock({ name: name115, metadata: block_default114, settings: settings114 });
   };
 
