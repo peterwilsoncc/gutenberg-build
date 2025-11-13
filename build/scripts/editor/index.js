@@ -11140,7 +11140,8 @@ var wp;
     selectBlockPatternsKey,
     reusableBlocksSelectKey,
     sectionRootClientIdKey,
-    mediaEditKey
+    mediaEditKey,
+    getMediaSelectKey
   } = unlock(import_block_editor7.privateApis);
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
     const isLargeViewport = (0, import_compose6.useViewportMatch)("medium");
@@ -11282,6 +11283,13 @@ var wp;
         hasFixedToolbar,
         isDistractionFree,
         keepCaretInsideBlock,
+        [getMediaSelectKey]: (select5, attachmentId) => {
+          return select5(import_core_data22.store).getEntityRecord(
+            "postType",
+            "attachment",
+            attachmentId
+          );
+        },
         [mediaEditKey]: hasUploadPermissions ? editMediaEntity : void 0,
         mediaUpload: hasUploadPermissions ? mediaUpload : void 0,
         mediaSideload: hasUploadPermissions ? media_sideload_default : void 0,

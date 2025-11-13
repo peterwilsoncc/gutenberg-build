@@ -1138,7 +1138,7 @@ var wp;
           "aria-expanded": addingLink
         }
       ),
-      addingLink && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+      isVisible && addingLink && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         inline_default,
         {
           stopAddingLink,
