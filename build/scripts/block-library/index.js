@@ -4646,7 +4646,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(import_components9.Spinner, {}) });
     }
     let _showTerms;
-    if (!isPostTypeHierarchical) {
+    if (!isPostTypeHierarchical && !post?.parent) {
       _showTerms = true;
     } else if (!postTypeHasTaxonomies) {
       _showTerms = false;
