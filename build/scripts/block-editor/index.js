@@ -16436,7 +16436,7 @@ var wp;
                     nextWidth = 0 > parseFloat(nextWidth) ? "0" : nextWidth;
                     onChange({
                       ...layout,
-                      contentSize: nextWidth
+                      contentSize: nextWidth !== "" ? nextWidth : void 0
                     });
                   },
                   units: units2,
@@ -16454,7 +16454,7 @@ var wp;
                     nextWidth = 0 > parseFloat(nextWidth) ? "0" : nextWidth;
                     onChange({
                       ...layout,
-                      wideSize: nextWidth
+                      wideSize: nextWidth !== "" ? nextWidth : void 0
                     });
                   },
                   units: units2,
