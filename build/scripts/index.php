@@ -8,34 +8,9 @@
 
 return array(
 	array(
-		'handle' => 'wp-is-shallow-equal',
-		'path' => 'is-shallow-equal/index',
-		'asset' => 'is-shallow-equal/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-autop',
-		'path' => 'autop/index',
-		'asset' => 'autop/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-blob',
-		'path' => 'blob/index',
-		'asset' => 'blob/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-dom-ready',
-		'path' => 'dom-ready/index',
-		'asset' => 'dom-ready/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-private-apis',
-		'path' => 'private-apis/index',
-		'asset' => 'private-apis/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-priority-queue',
-		'path' => 'priority-queue/index',
-		'asset' => 'priority-queue/index.min.asset.php',
+		'handle' => 'wp-shortcode',
+		'path' => 'shortcode/index',
+		'asset' => 'shortcode/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-redux-routine',
@@ -43,14 +18,9 @@ return array(
 		'asset' => 'redux-routine/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-block-serialization-spec-parser',
-		'path' => 'block-serialization-spec-parser/index',
-		'asset' => 'block-serialization-spec-parser/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-block-serialization-default-parser',
-		'path' => 'block-serialization-default-parser/index',
-		'asset' => 'block-serialization-default-parser/index.min.asset.php',
+		'handle' => 'wp-escape-html',
+		'path' => 'escape-html/index',
+		'asset' => 'escape-html/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-token-list',
@@ -63,24 +33,9 @@ return array(
 		'asset' => 'hooks/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-escape-html',
-		'path' => 'escape-html/index',
-		'asset' => 'escape-html/index.min.asset.php',
-	),
-	array(
 		'handle' => 'wp-wordcount',
 		'path' => 'wordcount/index',
 		'asset' => 'wordcount/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-html-entities',
-		'path' => 'html-entities/index',
-		'asset' => 'html-entities/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-url',
-		'path' => 'url/index',
-		'asset' => 'url/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-style-engine',
@@ -88,29 +43,59 @@ return array(
 		'asset' => 'style-engine/index.min.asset.php',
 	),
 	array(
+		'handle' => 'wp-html-entities',
+		'path' => 'html-entities/index',
+		'asset' => 'html-entities/index.min.asset.php',
+	),
+	array(
 		'handle' => 'wp-warning',
 		'path' => 'warning/index',
 		'asset' => 'warning/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-shortcode',
-		'path' => 'shortcode/index',
-		'asset' => 'shortcode/index.min.asset.php',
+		'handle' => 'wp-private-apis',
+		'path' => 'private-apis/index',
+		'asset' => 'private-apis/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-deprecated',
-		'path' => 'deprecated/index',
-		'asset' => 'deprecated/index.min.asset.php',
+		'handle' => 'wp-block-serialization-default-parser',
+		'path' => 'block-serialization-default-parser/index',
+		'asset' => 'block-serialization-default-parser/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-dom',
-		'path' => 'dom/index',
-		'asset' => 'dom/index.min.asset.php',
+		'handle' => 'wp-block-serialization-spec-parser',
+		'path' => 'block-serialization-spec-parser/index',
+		'asset' => 'block-serialization-spec-parser/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-notices',
-		'path' => 'notices/index',
-		'asset' => 'notices/index.min.asset.php',
+		'handle' => 'wp-autop',
+		'path' => 'autop/index',
+		'asset' => 'autop/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-dom-ready',
+		'path' => 'dom-ready/index',
+		'asset' => 'dom-ready/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-is-shallow-equal',
+		'path' => 'is-shallow-equal/index',
+		'asset' => 'is-shallow-equal/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-priority-queue',
+		'path' => 'priority-queue/index',
+		'asset' => 'priority-queue/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-url',
+		'path' => 'url/index',
+		'asset' => 'url/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-blob',
+		'path' => 'blob/index',
+		'asset' => 'blob/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-undo-manager',
@@ -118,14 +103,9 @@ return array(
 		'asset' => 'undo-manager/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-keycodes',
-		'path' => 'keycodes/index',
-		'asset' => 'keycodes/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-i18n',
-		'path' => 'i18n/index',
-		'asset' => 'i18n/index.min.asset.php',
+		'handle' => 'wp-notices',
+		'path' => 'notices/index',
+		'asset' => 'notices/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-preferences-persistence',
@@ -133,9 +113,34 @@ return array(
 		'asset' => 'preferences-persistence/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-keyboard-shortcuts',
-		'path' => 'keyboard-shortcuts/index',
-		'asset' => 'keyboard-shortcuts/index.min.asset.php',
+		'handle' => 'wp-deprecated',
+		'path' => 'deprecated/index',
+		'asset' => 'deprecated/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-i18n',
+		'path' => 'i18n/index',
+		'asset' => 'i18n/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-element',
+		'path' => 'element/index',
+		'asset' => 'element/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-keycodes',
+		'path' => 'keycodes/index',
+		'asset' => 'keycodes/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-dom',
+		'path' => 'dom/index',
+		'asset' => 'dom/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-viewport',
+		'path' => 'viewport/index',
+		'asset' => 'viewport/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-api-fetch',
@@ -148,14 +153,14 @@ return array(
 		'asset' => 'theme/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-element',
-		'path' => 'element/index',
-		'asset' => 'element/index.min.asset.php',
+		'handle' => 'wp-primitives',
+		'path' => 'primitives/index',
+		'asset' => 'primitives/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-viewport',
-		'path' => 'viewport/index',
-		'asset' => 'viewport/index.min.asset.php',
+		'handle' => 'wp-keyboard-shortcuts',
+		'path' => 'keyboard-shortcuts/index',
+		'asset' => 'keyboard-shortcuts/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-a11y',
@@ -163,9 +168,9 @@ return array(
 		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-compose',
-		'path' => 'compose/index',
-		'asset' => 'compose/index.min.asset.php',
+		'handle' => 'wp-react-i18n',
+		'path' => 'react-i18n/index',
+		'asset' => 'react-i18n/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-data-controls',
@@ -178,19 +183,19 @@ return array(
 		'asset' => 'annotations/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-react-i18n',
-		'path' => 'react-i18n/index',
-		'asset' => 'react-i18n/index.min.asset.php',
-	),
-	array(
 		'handle' => 'wp-data',
 		'path' => 'data/index',
 		'asset' => 'data/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-primitives',
-		'path' => 'primitives/index',
-		'asset' => 'primitives/index.min.asset.php',
+		'handle' => 'wp-compose',
+		'path' => 'compose/index',
+		'asset' => 'compose/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-router',
+		'path' => 'router/index',
+		'asset' => 'router/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-date',
@@ -201,11 +206,6 @@ return array(
 		'handle' => 'wp-plugins',
 		'path' => 'plugins/index',
 		'asset' => 'plugins/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-router',
-		'path' => 'router/index',
-		'asset' => 'router/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-server-side-render',
@@ -223,14 +223,14 @@ return array(
 		'asset' => 'blocks/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-preferences',
-		'path' => 'preferences/index',
-		'asset' => 'preferences/index.min.asset.php',
-	),
-	array(
 		'handle' => 'wp-core-data',
 		'path' => 'core-data/index',
 		'asset' => 'core-data/index.min.asset.php',
+	),
+	array(
+		'handle' => 'wp-preferences',
+		'path' => 'preferences/index',
+		'asset' => 'preferences/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-nux',
@@ -248,9 +248,9 @@ return array(
 		'asset' => 'commands/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-patterns',
-		'path' => 'patterns/index',
-		'asset' => 'patterns/index.min.asset.php',
+		'handle' => 'wp-core-commands',
+		'path' => 'core-commands/index',
+		'asset' => 'core-commands/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-reusable-blocks',
@@ -258,9 +258,9 @@ return array(
 		'asset' => 'reusable-blocks/index.min.asset.php',
 	),
 	array(
-		'handle' => 'wp-core-commands',
-		'path' => 'core-commands/index',
-		'asset' => 'core-commands/index.min.asset.php',
+		'handle' => 'wp-patterns',
+		'path' => 'patterns/index',
+		'asset' => 'patterns/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-widgets',
@@ -303,6 +303,11 @@ return array(
 		'asset' => 'customize-widgets/index.min.asset.php',
 	),
 	array(
+		'handle' => 'wp-editor',
+		'path' => 'editor/index',
+		'asset' => 'editor/index.min.asset.php',
+	),
+	array(
 		'handle' => 'wp-edit-widgets',
 		'path' => 'edit-widgets/index',
 		'asset' => 'edit-widgets/index.min.asset.php',
@@ -311,11 +316,6 @@ return array(
 		'handle' => 'wp-edit-post',
 		'path' => 'edit-post/index',
 		'asset' => 'edit-post/index.min.asset.php',
-	),
-	array(
-		'handle' => 'wp-editor',
-		'path' => 'editor/index',
-		'asset' => 'editor/index.min.asset.php',
 	),
 	array(
 		'handle' => 'wp-edit-site',
