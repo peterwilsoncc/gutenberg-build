@@ -69,5 +69,19 @@ return array(
 		'page'        => 'gutenberg-boot',
 		'has_route'   => true,
 		'has_content' => true,
+	),
+	array(
+		'name'        => 'template-part',
+		'path'        => '/template-parts',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => false,
+	),
+	array(
+		'name'        => 'template-part-list',
+		'path'        => '/template-parts/list/$area',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => true,
 	)
 );
