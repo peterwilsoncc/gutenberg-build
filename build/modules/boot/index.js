@@ -697,6 +697,17 @@ function reducer(state = initialState, action) {
           [action.id]: action.menuItem
         }
       };
+    case "UPDATE_MENU_ITEM":
+      return {
+        ...state,
+        menuItems: {
+          ...state.menuItems,
+          [action.id]: {
+            ...state.menuItems[action.id],
+            ...action.updates
+          }
+        }
+      };
     case "REGISTER_ROUTE":
       return {
         ...state,
@@ -710,13 +721,21 @@ function reducer(state = initialState, action) {
 var actions_exports = {};
 __export(actions_exports, {
   registerMenuItem: () => registerMenuItem,
-  registerRoute: () => registerRoute
+  registerRoute: () => registerRoute,
+  updateMenuItem: () => updateMenuItem
 });
 function registerMenuItem(id, menuItem) {
   return {
     type: "REGISTER_MENU_ITEM",
     id,
     menuItem
+  };
+}
+function updateMenuItem(id, updates) {
+  return {
+    type: "UPDATE_MENU_ITEM",
+    id,
+    updates
   };
 }
 function registerRoute(route) {
@@ -2476,7 +2495,8 @@ function App({ rootComponent }) {
 async function init({
   mountId,
   menuItems,
-  routes
+  routes,
+  initModules
 }) {
   (menuItems ?? []).forEach((menuItem) => {
     (0, import_data9.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
@@ -2484,6 +2504,10 @@ async function init({
   (routes ?? []).forEach((route) => {
     (0, import_data9.dispatch)(store).registerRoute(route);
   });
+  for (const moduleId of initModules ?? []) {
+    const module = await import(moduleId);
+    await module.init();
+  }
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element12.createRoot)(rootElement);
@@ -2941,6 +2965,7 @@ body:has(.boot-layout-container) {
 document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css12));
 export {
   init,
-  initSinglePage
+  initSinglePage,
+  store
 };
 //# sourceMappingURL=index.js.map
