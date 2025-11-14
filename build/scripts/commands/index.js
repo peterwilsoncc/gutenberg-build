@@ -1162,10 +1162,10 @@ var wp;
   }
 
   // node_modules/react-remove-scroll/dist/es2015/Combination.js
-  var React6 = __toESM(require_react());
+  var React7 = __toESM(require_react());
 
   // node_modules/react-remove-scroll/dist/es2015/UI.js
-  var React2 = __toESM(require_react());
+  var React3 = __toESM(require_react());
 
   // node_modules/react-remove-scroll-bar/dist/es2015/constants.js
   var zeroRightClassName = "right-scroll-bar-position";
@@ -1212,12 +1212,35 @@ var wp;
   }
 
   // node_modules/use-callback-ref/dist/es2015/useMergeRef.js
+  var React = __toESM(require_react());
+  var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+  var currentValues = /* @__PURE__ */ new WeakMap();
   function useMergeRefs(refs, defaultValue) {
-    return useCallbackRef(defaultValue || null, function(newValue) {
+    var callbackRef = useCallbackRef(defaultValue || null, function(newValue) {
       return refs.forEach(function(ref) {
         return assignRef(ref, newValue);
       });
     });
+    useIsomorphicLayoutEffect(function() {
+      var oldValue = currentValues.get(callbackRef);
+      if (oldValue) {
+        var prevRefs_1 = new Set(oldValue);
+        var nextRefs_1 = new Set(refs);
+        var current_1 = callbackRef.current;
+        prevRefs_1.forEach(function(ref) {
+          if (!nextRefs_1.has(ref)) {
+            assignRef(ref, null);
+          }
+        });
+        nextRefs_1.forEach(function(ref) {
+          if (!prevRefs_1.has(ref)) {
+            assignRef(ref, current_1);
+          }
+        });
+      }
+      currentValues.set(callbackRef, refs);
+    }, [refs]);
+    return callbackRef;
   }
 
   // node_modules/use-sidecar/dist/es2015/medium.js
@@ -1307,7 +1330,7 @@ var wp;
   }
 
   // node_modules/use-sidecar/dist/es2015/exports.js
-  var React = __toESM(require_react());
+  var React2 = __toESM(require_react());
   var SideCar = function(_a) {
     var sideCar = _a.sideCar, rest = __rest(_a, ["sideCar"]);
     if (!sideCar) {
@@ -1317,7 +1340,7 @@ var wp;
     if (!Target) {
       throw new Error("Sidecar medium not found");
     }
-    return React.createElement(Target, __assign({}, rest));
+    return React2.createElement(Target, __assign({}, rest));
   };
   SideCar.isSideCarExport = true;
   function exportSidecar(medium, exported) {
@@ -1332,9 +1355,9 @@ var wp;
   var nothing = function() {
     return;
   };
-  var RemoveScroll = React2.forwardRef(function(props, parentRef) {
-    var ref = React2.useRef(null);
-    var _a = React2.useState({
+  var RemoveScroll = React3.forwardRef(function(props, parentRef) {
+    var ref = React3.useRef(null);
+    var _a = React3.useState({
       onScrollCapture: nothing,
       onWheelCapture: nothing,
       onTouchMoveCapture: nothing
@@ -1343,11 +1366,11 @@ var wp;
     var SideCar2 = sideCar;
     var containerRef = useMergeRefs([ref, parentRef]);
     var containerProps = __assign(__assign({}, rest), callbacks);
-    return React2.createElement(
-      React2.Fragment,
+    return React3.createElement(
+      React3.Fragment,
       null,
-      enabled && React2.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref }),
-      forwardProps ? React2.cloneElement(React2.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React2.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
+      enabled && React3.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref }),
+      forwardProps ? React3.cloneElement(React3.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React3.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
     );
   });
   RemoveScroll.defaultProps = {
@@ -1361,13 +1384,13 @@ var wp;
   };
 
   // node_modules/react-remove-scroll/dist/es2015/SideEffect.js
-  var React5 = __toESM(require_react());
+  var React6 = __toESM(require_react());
 
   // node_modules/react-remove-scroll-bar/dist/es2015/component.js
-  var React4 = __toESM(require_react());
+  var React5 = __toESM(require_react());
 
   // node_modules/react-style-singleton/dist/es2015/hook.js
-  var React3 = __toESM(require_react());
+  var React4 = __toESM(require_react());
 
   // node_modules/get-nonce/dist/es2015/index.js
   var currentNonce;
@@ -1431,7 +1454,7 @@ var wp;
   var styleHookSingleton = function() {
     var sheet = stylesheetSingleton();
     return function(styles, isDynamic) {
-      React3.useEffect(function() {
+      React4.useEffect(function() {
         sheet.add(styles);
         return function() {
           sheet.remove();
@@ -1505,7 +1528,7 @@ var wp;
     return isFinite(counter) ? counter : 0;
   };
   var useLockAttribute = function() {
-    React4.useEffect(function() {
+    React5.useEffect(function() {
       document.body.setAttribute(lockAttribute, (getCurrentUseCounter() + 1).toString());
       return function() {
         var newCounter = getCurrentUseCounter() - 1;
@@ -1520,10 +1543,10 @@ var wp;
   var RemoveScrollBar = function(_a) {
     var noRelative = _a.noRelative, noImportant = _a.noImportant, _b = _a.gapMode, gapMode = _b === void 0 ? "margin" : _b;
     useLockAttribute();
-    var gap = React4.useMemo(function() {
+    var gap = React5.useMemo(function() {
       return getGapWidth(gapMode);
     }, [gapMode]);
-    return React4.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
+    return React5.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
   };
 
   // node_modules/react-remove-scroll/dist/es2015/aggresiveCapture.js
@@ -1656,18 +1679,18 @@ var wp;
   var idCounter = 0;
   var lockStack = [];
   function RemoveScrollSideCar(props) {
-    var shouldPreventQueue = React5.useRef([]);
-    var touchStartRef = React5.useRef([0, 0]);
-    var activeAxis = React5.useRef();
-    var id = React5.useState(idCounter++)[0];
-    var Style2 = React5.useState(function() {
+    var shouldPreventQueue = React6.useRef([]);
+    var touchStartRef = React6.useRef([0, 0]);
+    var activeAxis = React6.useRef();
+    var id = React6.useState(idCounter++)[0];
+    var Style2 = React6.useState(function() {
       return styleSingleton();
     })[0];
-    var lastProps = React5.useRef(props);
-    React5.useEffect(function() {
+    var lastProps = React6.useRef(props);
+    React6.useEffect(function() {
       lastProps.current = props;
     }, [props]);
-    React5.useEffect(function() {
+    React6.useEffect(function() {
       if (props.inert) {
         document.body.classList.add("block-interactivity-".concat(id));
         var allow_1 = __spreadArray([props.lockRef.current], (props.shards || []).map(extractRef), true).filter(Boolean);
@@ -1683,7 +1706,7 @@ var wp;
       }
       return;
     }, [props.inert, props.lockRef.current, props.shards]);
-    var shouldCancelEvent = React5.useCallback(function(event, parent) {
+    var shouldCancelEvent = React6.useCallback(function(event, parent) {
       if ("touches" in event && event.touches.length === 2) {
         return !lastProps.current.allowPinchZoom;
       }
@@ -1719,7 +1742,7 @@ var wp;
       var cancelingAxis = activeAxis.current || currentAxis;
       return handleScroll(cancelingAxis, parent, event, cancelingAxis === "h" ? deltaX : deltaY, true);
     }, []);
-    var shouldPrevent = React5.useCallback(function(_event) {
+    var shouldPrevent = React6.useCallback(function(_event) {
       var event = _event;
       if (!lockStack.length || lockStack[lockStack.length - 1] !== Style2) {
         return;
@@ -1746,7 +1769,7 @@ var wp;
         }
       }
     }, []);
-    var shouldCancel = React5.useCallback(function(name, delta, target, should) {
+    var shouldCancel = React6.useCallback(function(name, delta, target, should) {
       var event = { name, delta, target, should };
       shouldPreventQueue.current.push(event);
       setTimeout(function() {
@@ -1755,17 +1778,17 @@ var wp;
         });
       }, 1);
     }, []);
-    var scrollTouchStart = React5.useCallback(function(event) {
+    var scrollTouchStart = React6.useCallback(function(event) {
       touchStartRef.current = getTouchXY(event);
       activeAxis.current = void 0;
     }, []);
-    var scrollWheel = React5.useCallback(function(event) {
+    var scrollWheel = React6.useCallback(function(event) {
       shouldCancel(event.type, getDeltaXY(event), event.target, shouldCancelEvent(event, props.lockRef.current));
     }, []);
-    var scrollTouchMove = React5.useCallback(function(event) {
+    var scrollTouchMove = React6.useCallback(function(event) {
       shouldCancel(event.type, getTouchXY(event), event.target, shouldCancelEvent(event, props.lockRef.current));
     }, []);
-    React5.useEffect(function() {
+    React6.useEffect(function() {
       lockStack.push(Style2);
       props.setCallbacks({
         onScrollCapture: scrollWheel,
@@ -1785,11 +1808,11 @@ var wp;
       };
     }, []);
     var removeScrollBar = props.removeScrollBar, inert = props.inert;
-    return React5.createElement(
-      React5.Fragment,
+    return React6.createElement(
+      React6.Fragment,
       null,
-      inert ? React5.createElement(Style2, { styles: generateStyle(id) }) : null,
-      removeScrollBar ? React5.createElement(RemoveScrollBar, { gapMode: "margin" }) : null
+      inert ? React6.createElement(Style2, { styles: generateStyle(id) }) : null,
+      removeScrollBar ? React6.createElement(RemoveScrollBar, { gapMode: "margin" }) : null
     );
   }
 
@@ -1797,8 +1820,8 @@ var wp;
   var sidecar_default = exportSidecar(effectCar, RemoveScrollSideCar);
 
   // node_modules/react-remove-scroll/dist/es2015/Combination.js
-  var ReactRemoveScroll = React6.forwardRef(function(props, ref) {
-    return React6.createElement(RemoveScroll, __assign({}, props, { ref, sideCar: sidecar_default }));
+  var ReactRemoveScroll = React7.forwardRef(function(props, ref) {
+    return React7.createElement(RemoveScroll, __assign({}, props, { ref, sideCar: sidecar_default }));
   });
   ReactRemoveScroll.classNames = RemoveScroll.classNames;
   var Combination_default = ReactRemoveScroll;
@@ -1858,21 +1881,25 @@ var wp;
         if (elementsToKeep.has(node)) {
           deep(node);
         } else {
-          var attr = node.getAttribute(controlAttribute);
-          var alreadyHidden = attr !== null && attr !== "false";
-          var counterValue = (counterMap.get(node) || 0) + 1;
-          var markerValue = (markerCounter.get(node) || 0) + 1;
-          counterMap.set(node, counterValue);
-          markerCounter.set(node, markerValue);
-          hiddenNodes.push(node);
-          if (counterValue === 1 && alreadyHidden) {
-            uncontrolledNodes.set(node, true);
-          }
-          if (markerValue === 1) {
-            node.setAttribute(markerName, "true");
-          }
-          if (!alreadyHidden) {
-            node.setAttribute(controlAttribute, "true");
+          try {
+            var attr = node.getAttribute(controlAttribute);
+            var alreadyHidden = attr !== null && attr !== "false";
+            var counterValue = (counterMap.get(node) || 0) + 1;
+            var markerValue = (markerCounter.get(node) || 0) + 1;
+            counterMap.set(node, counterValue);
+            markerCounter.set(node, markerValue);
+            hiddenNodes.push(node);
+            if (counterValue === 1 && alreadyHidden) {
+              uncontrolledNodes.set(node, true);
+            }
+            if (markerValue === 1) {
+              node.setAttribute(markerName, "true");
+            }
+            if (!alreadyHidden) {
+              node.setAttribute(controlAttribute, "true");
+            }
+          } catch (e) {
+            console.error("aria-hidden: cannot operate on ", node, e);
           }
         }
       });
@@ -1916,7 +1943,7 @@ var wp;
         return null;
       };
     }
-    targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll("[aria-live]")));
+    targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll("[aria-live], script")));
     return applyAttributeToOthers(targets, activeParentNode, markerName, "aria-hidden");
   };
 
@@ -2653,6 +2680,7 @@ var wp;
 
   // packages/commands/build-module/components/command-menu.js
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var { withIgnoreIMEEvents } = unlock(import_components.privateApis);
   var inputLabel = (0, import_i18n.__)("Search commands and settings");
   function CommandMenuLoader({ name, search, hook, setLoader, close: close2 }) {
     const { isLoading, commands: commands2 = [] } = hook({ search }) ?? {};
@@ -2789,8 +2817,7 @@ var wp;
         value: search,
         onValueChange: setSearch,
         placeholder: inputLabel,
-        "aria-activedescendant": selectedItemId,
-        icon: search
+        "aria-activedescendant": selectedItemId
       }
     );
   }
@@ -2817,7 +2844,7 @@ var wp;
     (0, import_keyboard_shortcuts.useShortcut)(
       "core/commands",
       /** @type {import('react').KeyboardEventHandler} */
-      (event) => {
+      withIgnoreIMEEvents((event) => {
         if (event.defaultPrevented) {
           return;
         }
@@ -2827,7 +2854,7 @@ var wp;
         } else {
           open2();
         }
-      },
+      }),
       {
         bindGlobal: true
       }
@@ -2846,17 +2873,6 @@ var wp;
     if (!isOpen3) {
       return false;
     }
-    const onKeyDown = (event) => {
-      if (
-        // Ignore keydowns from IMEs
-        event.nativeEvent.isComposing || // Workaround for Mac Safari where the final Enter/Backspace of an IME composition
-        // is `isComposing=false`, even though it's technically still part of the composition.
-        // These can only be detected by keyCode.
-        event.keyCode === 229
-      ) {
-        event.preventDefault();
-      }
-    };
     const isLoading = Object.values(loaders).some(Boolean);
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       import_components.Modal,
@@ -2866,7 +2882,7 @@ var wp;
         onRequestClose: closeAndReset,
         __experimentalHideHeader: true,
         contentLabel: (0, import_i18n.__)("Command palette"),
-        children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "commands-command-menu__container", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(He, { label: inputLabel, onKeyDown, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "commands-command-menu__container", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(He, { label: inputLabel, children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "commands-command-menu__header", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
               icon_default,

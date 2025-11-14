@@ -33,6 +33,7 @@ var wp;
     "@wordpress/blocks",
     "@wordpress/boot",
     "@wordpress/commands",
+    "@wordpress/workflows",
     "@wordpress/components",
     "@wordpress/core-commands",
     "@wordpress/core-data",
