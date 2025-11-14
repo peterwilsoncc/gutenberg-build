@@ -2685,7 +2685,8 @@ function ViewTable({
         className: clsx_default("dataviews-view-table", className, {
           [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
             view.layout.density
-          )
+          ),
+          "has-bulk-actions": hasBulkActions
         }),
         "aria-busy": isLoading,
         "aria-describedby": tableNoticeId,
