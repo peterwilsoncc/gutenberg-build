@@ -87,10 +87,10 @@ var wp;
     }
   });
 
-  // vendor-external:react/jsx-runtime
-  var require_jsx_runtime = __commonJS({
-    "vendor-external:react/jsx-runtime"(exports, module) {
-      module.exports = window.ReactJSXRuntime;
+  // package-external:@wordpress/i18n
+  var require_i18n = __commonJS({
+    "package-external:@wordpress/i18n"(exports, module) {
+      module.exports = window.wp.i18n;
     }
   });
 
@@ -98,6 +98,13 @@ var wp;
   var require_components = __commonJS({
     "package-external:@wordpress/components"(exports, module) {
       module.exports = window.wp.components;
+    }
+  });
+
+  // vendor-external:react/jsx-runtime
+  var require_jsx_runtime = __commonJS({
+    "vendor-external:react/jsx-runtime"(exports, module) {
+      module.exports = window.ReactJSXRuntime;
     }
   });
 
@@ -112,13 +119,6 @@ var wp;
   var require_style_engine = __commonJS({
     "package-external:@wordpress/style-engine"(exports, module) {
       module.exports = window.wp.styleEngine;
-    }
-  });
-
-  // package-external:@wordpress/i18n
-  var require_i18n = __commonJS({
-    "package-external:@wordpress/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
     }
   });
 

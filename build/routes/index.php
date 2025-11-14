@@ -15,6 +15,27 @@ return array(
 		'has_content' => false,
 	),
 	array(
+		'name'        => 'navigation',
+		'path'        => '/navigation',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => false,
+	),
+	array(
+		'name'        => 'navigation-edit',
+		'path'        => '/navigation/edit/$id',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
+		'name'        => 'navigation-list',
+		'path'        => '/navigation/list',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'post',
 		'path'        => '/types/$type',
 		'page'        => 'gutenberg-boot',
