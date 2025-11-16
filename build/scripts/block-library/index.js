@@ -55567,7 +55567,7 @@ ${js}
                   {
                     __next40pxDefaultSize: true,
                     __nextHasNoMarginBottom: true,
-                    label: (0, import_i18n213.__)("Icon Size"),
+                    label: (0, import_i18n213.__)("Icon size"),
                     onChange: (newSize) => {
                       setAttributes({
                         size: newSize === "" ? void 0 : newSize
