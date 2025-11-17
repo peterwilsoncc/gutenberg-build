@@ -15669,7 +15669,14 @@ var import_i18n39 = __toESM(require_i18n());
 import { Preview } from "@wordpress/lazy-editor";
 function PreviewField({ item }) {
   const description = item.description;
-  return /* @__PURE__ */ React.createElement(Preview, { item, description });
+  return /* @__PURE__ */ React.createElement(
+    Preview,
+    {
+      content: item?.content?.raw,
+      blocks: item.blocks,
+      description
+    }
+  );
 }
 var previewField = {
   label: (0, import_i18n39.__)("Preview"),

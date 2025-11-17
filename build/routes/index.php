@@ -36,6 +36,20 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'pattern',
+		'path'        => '/patterns',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => false,
+	),
+	array(
+		'name'        => 'pattern-list',
+		'path'        => '/patterns/list/$type',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => false,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'post',
 		'path'        => '/types/$type',
 		'page'        => 'gutenberg-boot',

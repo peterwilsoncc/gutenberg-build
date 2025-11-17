@@ -2556,17 +2556,18 @@ var css = `/**
 document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
 var { useStyle } = unlock(import_editor2.privateApis);
 function PreviewContent({
-  item,
+  blocks,
+  content,
   description
 }) {
   const descriptionId = (0, import_element5.useId)();
   const backgroundColor = useStyle("color.background");
-  const blocks = (0, import_element5.useMemo)(() => {
-    return item.blocks ?? (0, import_blocks2.parse)(item.content.raw, {
+  const actualBlocks = (0, import_element5.useMemo)(() => {
+    return blocks ?? (0, import_blocks2.parse)(content, {
       __unstableSkipMigrationLogs: true
     });
-  }, [item?.content?.raw, item.blocks]);
-  const isEmpty = !blocks?.length;
+  }, [content, blocks]);
+  const isEmpty = !actualBlocks?.length;
   return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
     "div",
     {
@@ -2574,15 +2575,16 @@ function PreviewContent({
       style: { backgroundColor },
       "aria-describedby": !!description ? descriptionId : void 0,
       children: [
-        isEmpty && (0, import_i18n.__)("Empty template part"),
-        !isEmpty && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_block_editor.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_block_editor.BlockPreview, { blocks }) }),
+        isEmpty && (0, import_i18n.__)("Empty."),
+        !isEmpty && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_block_editor.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_block_editor.BlockPreview, { blocks: actualBlocks }) }),
         !!description && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { hidden: true, id: descriptionId, children: description })
       ]
     }
   );
 }
 function Preview({
-  item,
+  blocks,
+  content,
   description
 }) {
   const stylesId = useStylesId();
@@ -2600,7 +2602,14 @@ function Preview({
   if (!settingsReady || !assetsReady) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_block_editor.BlockEditorProvider, { settings: finalSettings, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(PreviewContent, { item, description }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_block_editor.BlockEditorProvider, { settings: finalSettings, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+    PreviewContent,
+    {
+      blocks,
+      content,
+      description
+    }
+  ) });
 }
 export {
   Editor,
