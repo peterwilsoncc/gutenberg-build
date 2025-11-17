@@ -37227,7 +37227,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [field]
     );
-    const { validity, isValid: isValid2 } = use_form_validity_default(
+    const { validity } = use_form_validity_default(
       modalData,
       fields,
       form
@@ -37288,8 +37288,6 @@ If there's a particular need for this, please submit a feature request at https:
                   import_components137.Button,
                   {
                     variant: "primary",
-                    disabled: !isValid2,
-                    accessibleWhenDisabled: true,
                     onClick: onApply,
                     __next40pxDefaultSize: true,
                     children: (0, import_i18n123.__)("Apply")
