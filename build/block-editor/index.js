@@ -44526,6 +44526,7 @@ var wp;
     const onChangeUnit = (next2) => {
       const newUnits = { ...selectedUnits };
       if (corner === "all") {
+        newUnits.flat = next2;
         newUnits.topLeft = next2;
         newUnits.topRight = next2;
         newUnits.bottomLeft = next2;
