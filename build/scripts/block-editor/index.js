@@ -32572,7 +32572,11 @@ var wp;
         if (!clientId) {
           return null;
         }
-        const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
+        const {
+          getBlockName: getBlockName2,
+          getBlockAttributes: getBlockAttributes3,
+          __experimentalGetParsedPattern: __experimentalGetParsedPattern2
+        } = select3(store);
         const { getBlockType: getBlockType23, getActiveBlockVariation } = select3(import_blocks41.store);
         const blockName = getBlockName2(clientId);
         const blockType = getBlockType23(blockName);
@@ -32580,6 +32584,21 @@ var wp;
           return null;
         }
         const attributes = getBlockAttributes3(clientId);
+        const patternName = attributes?.metadata?.patternName;
+        if (patternName && window?.__experimentalContentOnlyPatternInsertion) {
+          const pattern = __experimentalGetParsedPattern2(patternName);
+          const positionLabel2 = getPositionTypeLabel(attributes);
+          return {
+            isSynced: false,
+            title: (0, import_i18n65.__)("Pattern"),
+            icon: symbol_default,
+            description: pattern?.description || (0, import_i18n65.__)("A block pattern."),
+            anchor: attributes?.anchor,
+            positionLabel: positionLabel2,
+            positionType: attributes?.style?.position?.type,
+            name: pattern?.title || attributes?.metadata?.name
+          };
+        }
         const match2 = getActiveBlockVariation(blockName, attributes);
         const isSynced = (0, import_blocks41.isReusableBlock)(blockType) || (0, import_blocks41.isTemplatePart)(blockType);
         const syncedTitle = isSynced ? (0, import_blocks41.__experimentalGetBlockLabel)(blockType, attributes) : void 0;
@@ -38981,7 +39000,6 @@ var wp;
       getBlockName: getBlockName2,
       getBlockAttributes: getBlockAttributes3,
       getBlockParentsByBlockName: getBlockParentsByBlockName2,
-      isSectionBlock: isSectionBlock2,
       canRemoveBlocks: canRemoveBlocks2,
       getTemplateLock: getTemplateLock2,
       getBlockEditingMode: getBlockEditingMode2
@@ -38993,8 +39011,8 @@ var wp;
     const isSingleBlock = clientIds.length === 1;
     const blockName = isSingleBlock && getBlockName2(clientIds[0]);
     const hasBlockStyles = isSingleBlock && !!getBlockStyles2(blockName)?.length;
-    const isSectionInSelection = clientIds.some(
-      (id) => isSectionBlock2(id)
+    const hasPatternNameInSelection = clientIds.some(
+      (id) => !!getBlockAttributes3(id)?.metadata?.patternName
     );
     const hasPatternOverrides = clientIds.every(
       (clientId) => hasPatternOverridesDefaultBinding(
@@ -39006,7 +39024,7 @@ var wp;
     );
     const canRemove = canRemoveBlocks2(clientIds);
     const isDefaultEditingMode = getBlockEditingMode2(clientIds[0]) === "default";
-    const _hideTransformsForSections = window?.__experimentalContentOnlyPatternInsertion && isSectionInSelection;
+    const _hideTransformsForSections = window?.__experimentalContentOnlyPatternInsertion && hasPatternNameInSelection;
     const _showBlockSwitcher = !_hideTransformsForSections && isDefaultEditingMode && (hasBlockStyles || canRemove) && !hasTemplateLock;
     const _showPatternOverrides = hasPatternOverrides && hasParentPattern;
     if (_showBlockSwitcher) {
@@ -39020,16 +39038,17 @@ var wp;
     const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = unlock(
       select3(store)
     );
-    const { getActiveBlockVariation } = select3(import_blocks68.store);
     const _isSingleBlock = clientIds.length === 1;
     const firstClientId = clientIds[0];
+    const blockAttributes = getBlockAttributes3(firstClientId);
+    if (_isSingleBlock && blockAttributes?.metadata?.patternName && window?.__experimentalContentOnlyPatternInsertion) {
+      return symbol_default;
+    }
     const blockName = getBlockName2(firstClientId);
     const blockType = (0, import_blocks68.getBlockType)(blockName);
     if (_isSingleBlock) {
-      const match2 = getActiveBlockVariation(
-        blockName,
-        getBlockAttributes3(firstClientId)
-      );
+      const { getActiveBlockVariation } = select3(import_blocks68.store);
+      const match2 = getActiveBlockVariation(blockName, blockAttributes);
       return match2?.icon || blockType?.icon;
     }
     const blockNames = clientIds.map((id) => getBlockName2(id));
@@ -40470,12 +40489,18 @@ var wp;
       context: "list-view"
     });
     const { isLocked } = useBlockLock(clientId);
-    const { canToggleBlockVisibility, isBlockHidden: isBlockHidden2, isContentOnly } = (0, import_data122.useSelect)(
+    const {
+      canToggleBlockVisibility,
+      isBlockHidden: isBlockHidden2,
+      isContentOnly,
+      hasPatternName
+    } = (0, import_data122.useSelect)(
       (select3) => {
-        const { getBlockName: getBlockName2 } = select3(store);
+        const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
         const { isBlockHidden: _isBlockHidden } = unlock(
           select3(store)
         );
+        const blockAttributes = getBlockAttributes3(clientId);
         return {
           canToggleBlockVisibility: (0, import_blocks73.hasBlockSupport)(
             getBlockName2(clientId),
@@ -40485,7 +40510,8 @@ var wp;
           isBlockHidden: _isBlockHidden(clientId),
           isContentOnly: select3(store).getBlockEditingMode(
             clientId
-          ) === "contentOnly"
+          ) === "contentOnly",
+          hasPatternName: !!blockAttributes?.metadata?.patternName
         };
       },
       [clientId]
@@ -40528,7 +40554,7 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
             block_icon_default,
             {
-              icon: blockInformation?.icon,
+              icon: hasPatternName ? symbol_default : blockInformation?.icon,
               showColors: true,
               context: "list-view"
             }
