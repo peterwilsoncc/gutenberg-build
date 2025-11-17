@@ -24648,23 +24648,13 @@ ${js}
     const [isDirty, setIsDirty] = (0, import_element37.useState)(false);
     const [showUnsavedWarning, setShowUnsavedWarning] = (0, import_element37.useState)(false);
     const [isFullscreen, setIsFullscreen] = (0, import_element37.useState)(false);
-    const { canUserUseUnfilteredHTML, editorStyles } = (0, import_data41.useSelect)(
-      (select8) => {
-        const settings115 = select8(import_block_editor106.store).getSettings();
-        return {
-          canUserUseUnfilteredHTML: settings115.__experimentalCanUserUseUnfilteredHTML,
-          editorStyles: settings115.styles
-        };
-      },
-      []
-    );
+    const { canUserUseUnfilteredHTML } = (0, import_data41.useSelect)((select8) => {
+      const settings115 = select8(import_block_editor106.store).getSettings();
+      return {
+        canUserUseUnfilteredHTML: settings115.__experimentalCanUserUseUnfilteredHTML
+      };
+    }, []);
     const shouldShowJsTab = canUserUseUnfilteredHTML || js.trim() !== "";
-    const styleContent = (0, import_element37.useMemo)(() => {
-      if (!editorStyles) {
-        return "";
-      }
-      return editorStyles.filter((style2) => style2.css).map((style2) => style2.css).join("\n");
-    }, [editorStyles]);
     if (!isOpen) {
       return null;
     }
@@ -24716,7 +24706,7 @@ ${js}
       setIsFullscreen((prevState) => !prevState);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(import_jsx_runtime252.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
         import_components46.Modal,
         {
           title: (0, import_i18n85.__)("Edit HTML"),
@@ -24728,148 +24718,140 @@ ${js}
           shouldCloseOnEsc: !isDirty,
           isFullScreen: isFullscreen,
           __experimentalHideHeader: true,
-          children: [
-            styleContent && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-              "style",
-              {
-                dangerouslySetInnerHTML: { __html: styleContent }
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs, { orientation: "horizontal", defaultTabId: "html", children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(import_components46.__experimentalVStack, { spacing: 4, style: { height: "100%" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(import_components46.__experimentalHStack, { justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(Tabs.TabList, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs.Tab, { tabId: "html", children: "HTML" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs.Tab, { tabId: "css", children: "CSS" }),
-                  shouldShowJsTab && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs.Tab, { tabId: "js", children: (0, import_i18n85.__)("JavaScript") })
-                ] }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                  import_components46.Button,
-                  {
-                    __next40pxDefaultSize: true,
-                    icon: isFullscreen ? square_default : fullscreen_default,
-                    label: (0, import_i18n85.__)("Enable/disable fullscreen"),
-                    onClick: toggleFullscreen,
-                    variant: "tertiary"
-                  }
-                ) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
-                import_components46.__experimentalHStack,
+          children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs, { orientation: "horizontal", defaultTabId: "html", children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(import_components46.__experimentalVStack, { spacing: 4, style: { height: "100%" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(import_components46.__experimentalHStack, { justify: "space-between", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(Tabs.TabList, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs.Tab, { tabId: "html", children: "HTML" }),
+                /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs.Tab, { tabId: "css", children: "CSS" }),
+                shouldShowJsTab && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Tabs.Tab, { tabId: "js", children: (0, import_i18n85.__)("JavaScript") })
+              ] }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                import_components46.Button,
                 {
-                  alignment: "stretch",
-                  justify: "flex-start",
-                  spacing: 4,
-                  className: "block-library-html__modal-tabs",
-                  style: { flexGrow: 1 },
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("div", { style: { flexGrow: 1 }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                        Tabs.TabPanel,
-                        {
-                          tabId: "html",
-                          focusable: false,
-                          className: "block-library-html__modal-tab",
-                          children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                            import_block_editor106.PlainText,
-                            {
-                              value: editedHtml,
-                              onChange: handleHtmlChange,
-                              placeholder: (0, import_i18n85.__)("Write HTML\u2026"),
-                              "aria-label": (0, import_i18n85.__)("HTML"),
-                              className: "block-library-html__modal-editor"
-                            }
-                          )
-                        }
-                      ),
-                      /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                        Tabs.TabPanel,
-                        {
-                          tabId: "css",
-                          focusable: false,
-                          className: "block-library-html__modal-tab",
-                          children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                            import_block_editor106.PlainText,
-                            {
-                              value: editedCss,
-                              onChange: handleCssChange,
-                              placeholder: (0, import_i18n85.__)("Write CSS\u2026"),
-                              "aria-label": (0, import_i18n85.__)("CSS"),
-                              className: "block-library-html__modal-editor"
-                            }
-                          )
-                        }
-                      ),
-                      shouldShowJsTab && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                        Tabs.TabPanel,
-                        {
-                          tabId: "js",
-                          focusable: false,
-                          className: "block-library-html__modal-tab",
-                          children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                            import_block_editor106.PlainText,
-                            {
-                              value: editedJs,
-                              onChange: handleJsChange,
-                              placeholder: (0, import_i18n85.__)(
-                                "Write JavaScript\u2026"
-                              ),
-                              "aria-label": (0, import_i18n85.__)("JavaScript"),
-                              className: "block-library-html__modal-editor"
-                            }
-                          )
-                        }
-                      )
-                    ] }),
+                  __next40pxDefaultSize: true,
+                  icon: isFullscreen ? square_default : fullscreen_default,
+                  label: (0, import_i18n85.__)("Enable/disable fullscreen"),
+                  onClick: toggleFullscreen,
+                  variant: "tertiary"
+                }
+              ) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
+              import_components46.__experimentalHStack,
+              {
+                alignment: "stretch",
+                justify: "flex-start",
+                spacing: 4,
+                className: "block-library-html__modal-tabs",
+                style: { flexGrow: 1 },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("div", { style: { flexGrow: 1 }, children: [
                     /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                      "div",
+                      Tabs.TabPanel,
                       {
-                        className: "block-library-html__preview",
-                        style: { width: "50%" },
+                        tabId: "html",
+                        focusable: false,
+                        className: "block-library-html__modal-tab",
                         children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                          HTMLEditPreview,
+                          import_block_editor106.PlainText,
                           {
-                            content: serializeContent({
-                              html: editedHtml,
-                              css: editedCss,
-                              js: editedJs
-                            })
+                            value: editedHtml,
+                            onChange: handleHtmlChange,
+                            placeholder: (0, import_i18n85.__)("Write HTML\u2026"),
+                            "aria-label": (0, import_i18n85.__)("HTML"),
+                            className: "block-library-html__modal-editor"
+                          }
+                        )
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                      Tabs.TabPanel,
+                      {
+                        tabId: "css",
+                        focusable: false,
+                        className: "block-library-html__modal-tab",
+                        children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                          import_block_editor106.PlainText,
+                          {
+                            value: editedCss,
+                            onChange: handleCssChange,
+                            placeholder: (0, import_i18n85.__)("Write CSS\u2026"),
+                            "aria-label": (0, import_i18n85.__)("CSS"),
+                            className: "block-library-html__modal-editor"
+                          }
+                        )
+                      }
+                    ),
+                    shouldShowJsTab && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                      Tabs.TabPanel,
+                      {
+                        tabId: "js",
+                        focusable: false,
+                        className: "block-library-html__modal-tab",
+                        children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                          import_block_editor106.PlainText,
+                          {
+                            value: editedJs,
+                            onChange: handleJsChange,
+                            placeholder: (0, import_i18n85.__)(
+                              "Write JavaScript\u2026"
+                            ),
+                            "aria-label": (0, import_i18n85.__)("JavaScript"),
+                            className: "block-library-html__modal-editor"
                           }
                         )
                       }
                     )
-                  ]
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
-                import_components46.__experimentalHStack,
-                {
-                  alignment: "center",
-                  justify: "flex-end",
-                  spacing: 4,
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                      import_components46.Button,
-                      {
-                        __next40pxDefaultSize: true,
-                        variant: "tertiary",
-                        onClick: handleCancel,
-                        children: (0, import_i18n85.__)("Cancel")
-                      }
-                    ),
-                    /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-                      import_components46.Button,
-                      {
-                        __next40pxDefaultSize: true,
-                        variant: "primary",
-                        onClick: handleUpdateAndClose,
-                        children: (0, import_i18n85.__)("Update")
-                      }
-                    )
-                  ]
-                }
-              )
-            ] }) })
-          ]
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                    "div",
+                    {
+                      className: "block-library-html__preview",
+                      style: { width: "50%" },
+                      children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                        HTMLEditPreview,
+                        {
+                          content: serializeContent({
+                            html: editedHtml,
+                            css: editedCss,
+                            js: editedJs
+                          })
+                        }
+                      )
+                    }
+                  )
+                ]
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
+              import_components46.__experimentalHStack,
+              {
+                alignment: "center",
+                justify: "flex-end",
+                spacing: 4,
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                    import_components46.Button,
+                    {
+                      __next40pxDefaultSize: true,
+                      variant: "tertiary",
+                      onClick: handleCancel,
+                      children: (0, import_i18n85.__)("Cancel")
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+                    import_components46.Button,
+                    {
+                      __next40pxDefaultSize: true,
+                      variant: "primary",
+                      onClick: handleUpdateAndClose,
+                      children: (0, import_i18n85.__)("Update")
+                    }
+                  )
+                ]
+              }
+            )
+          ] }) })
         }
       ),
       showUnsavedWarning && /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
