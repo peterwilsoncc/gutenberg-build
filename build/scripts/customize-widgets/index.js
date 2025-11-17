@@ -2370,18 +2370,6 @@ var wp;
   // packages/customize-widgets/build-module/filters/replace-media-upload.js
   var import_hooks3 = __toESM(require_hooks());
   var import_media_utils2 = __toESM(require_media_utils());
-  var { MediaUploadModal: MediaUploadModalComponent } = unlock(
-    import_media_utils2.privateApis
-  );
-  if (window.__experimentalDataViewsMediaModal) {
-    (0, import_hooks3.addFilter)(
-      "editor.MediaUploadModal",
-      "core/customize-widgets/replace-media-upload-modal",
-      () => {
-        return MediaUploadModalComponent;
-      }
-    );
-  }
   var replaceMediaUpload = () => import_media_utils2.MediaUpload;
   (0, import_hooks3.addFilter)(
     "editor.MediaUpload",
