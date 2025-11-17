@@ -9040,8 +9040,7 @@ var wp;
     ) : [];
     const contentOnlyParents = [
       ...contentOnlyTemplateLockedClientIds,
-      ...unsyncedPatternClientIds,
-      ...window?.__experimentalContentOnlyPatternInsertion ? templatePartClientIds : []
+      ...unsyncedPatternClientIds
     ];
     traverseBlockTree(state, treeClientId, (block) => {
       const { clientId, name: blockName } = block;
@@ -10759,8 +10758,7 @@ var wp;
       return true;
     }
     const attributes = getBlockAttributes(state, clientId);
-    const isTemplatePart6 = blockName === "core/template-part";
-    if ((attributes?.metadata?.patternName || isTemplatePart6) && !!window?.__experimentalContentOnlyPatternInsertion) {
+    if (attributes?.metadata?.patternName && !!window?.__experimentalContentOnlyPatternInsertion) {
       return true;
     }
     return false;
