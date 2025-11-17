@@ -2840,11 +2840,14 @@ var wp;
   function getContrast(colorA, colorB) {
     return contrastWCAG21(colorA, colorB);
   }
+  function clampToGamut(c) {
+    return to(toGamut(c, { space: srgb_default, method: "css" }), oklch_default);
+  }
 
   // packages/theme/build-module/color-ramps/lib/constants.js
   var WHITE = to("white", oklch_default);
   var BLACK = to("black", oklch_default);
-  var UNIVERSAL_CONTRAST_TOPUP = 0.012;
+  var UNIVERSAL_CONTRAST_TOPUP = 0.02;
   var WHITE_TEXT_CONTRAST_MARGIN = 3.1;
   var ACCENT_SCALE_BASE_LIGHTNESS_THRESHOLDS = {
     lighter: { min: 0.2, max: 0.4 },
@@ -2863,7 +2866,6 @@ var wp;
   };
 
   // packages/theme/build-module/color-ramps/lib/utils.js
-  var clampToGamut = (c) => to(toGamut(c, { space: p3_default, method: "css" }), oklch_default);
   function buildDependencyGraph(config) {
     const dependencies = /* @__PURE__ */ new Map();
     const dependents = /* @__PURE__ */ new Map();
@@ -3524,7 +3526,7 @@ var wp;
       contrast: {
         reference: "stroke3",
         followDirection: "opposite",
-        target: 2.2
+        target: 2.6
       },
       taperChromaOptions: STROKE_TAPER_CHROMA
     },
@@ -3532,7 +3534,7 @@ var wp;
       contrast: {
         reference: "stroke3",
         followDirection: "opposite",
-        target: 1.5
+        target: 2.4
       },
       taperChromaOptions: STROKE_TAPER_CHROMA
     },
