@@ -63275,7 +63275,6 @@ var wp;
   var import_element230 = __toESM(require_element());
   var import_compose98 = __toESM(require_compose());
   var { Menu } = unlock(import_components230.privateApis);
-  var EMPTY_OBJECT5 = {};
   var getAttributeType = (blockName, attribute) => {
     const _attributeType = (0, import_blocks113.getBlockType)(blockName).attributes?.[attribute]?.type;
     return _attributeType === "rich-text" ? "string" : _attributeType;
@@ -63305,14 +63304,15 @@ var wp;
       },
       [clientId, attribute]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(Menu, { placement: isMobile ? "bottom-start" : "left-start", children: Object.entries(sources).map(([sourceKey, source]) => {
-      const sourceDataItems = source.data?.filter(
-        (item) => item?.type === attributeType
+    return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(Menu, { placement: isMobile ? "bottom-start" : "left-start", children: Object.entries(sources).map(([sourceKey, data]) => {
+      const sourceDataItems = data.filter(
+        (item) => item.type === attributeType
       );
       const noItemsAvailable = !sourceDataItems || sourceDataItems.length === 0;
       if (noItemsAvailable) {
         return null;
       }
+      const source = (0, import_blocks113.getBlockBindingsSource)(sourceKey);
       return /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
         Menu,
         {
@@ -63322,7 +63322,7 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(Menu.Popover, { gutter: 8, children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(Menu.Group, { children: sourceDataItems.map((item) => {
               const itemBindings = {
                 source: sourceKey,
-                args: item?.args || {
+                args: item.args || {
                   key: item.key
                 }
               };
@@ -63360,7 +63360,7 @@ var wp;
                   ) ?? // Deprecate key dependency in 7.0.
                   item.key === binding?.args?.key,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(Menu.ItemLabel, { children: item?.label }),
+                    /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(Menu.ItemLabel, { children: item.label }),
                     /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(Menu.ItemHelpText, { children: values[attribute] })
                   ]
                 },
@@ -63377,14 +63377,15 @@ var wp;
   }
   function BlockBindingsAttribute({ attribute, binding, sources, blockName }) {
     const { source: sourceName, args } = binding || {};
-    const source = sources?.[sourceName];
+    const data = sources?.[sourceName];
+    const source = (0, import_blocks113.getBlockBindingsSource)(sourceName);
     let displayText;
     let isValid = true;
     const isNotBound = binding === void 0;
     if (isNotBound) {
       const attributeType = getAttributeType(blockName, attribute);
       const hasCompatibleSources = Object.values(sources).some(
-        (src) => src.data?.some((item) => item?.type === attributeType)
+        (items) => items.some((item) => item.type === attributeType)
       );
       if (!hasCompatibleSources) {
         displayText = (0, import_i18n207.__)("No sources available");
@@ -63395,11 +63396,8 @@ var wp;
     } else if (!source) {
       isValid = false;
       displayText = (0, import_i18n207.__)("Source not registered");
-      if (Object.keys(sources).length === 0) {
-        displayText = (0, import_i18n207.__)("No sources available");
-      }
     } else {
-      displayText = source.data?.find((item) => (0, import_es66.default)(item.args, args))?.label || source.label || sourceName;
+      displayText = data?.find((item) => (0, import_es66.default)(item.args, args))?.label || source?.label || sourceName;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(import_components230.__experimentalVStack, { className: "block-editor-bindings__item", spacing: 0, children: [
       /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components230.__experimentalText, { truncate: true, children: attribute }),
@@ -63475,60 +63473,51 @@ var wp;
     const blockContext = (0, import_element230.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
-    const _sources = {};
-    const { sources, canUpdateBlockBindings, bindableAttributes } = (0, import_data181.useSelect)(
+    const { canUpdateBlockBindings, bindableAttributes } = (0, import_data181.useSelect)(
       (select2) => {
         const { __experimentalBlockBindingsSupportedAttributes } = select2(store).getSettings();
-        const _bindableAttributes = __experimentalBlockBindingsSupportedAttributes?.[blockName];
-        if (!_bindableAttributes || _bindableAttributes.length === 0) {
-          return EMPTY_OBJECT5;
-        }
-        const registeredSources = (0, import_blocks113.getBlockBindingsSources)();
-        Object.entries(registeredSources).forEach(
-          ([
-            sourceName,
-            { getFieldsList, usesContext, label, getValues }
-          ]) => {
+        return {
+          canUpdateBlockBindings: select2(store).getSettings().canUpdateBlockBindings,
+          bindableAttributes: __experimentalBlockBindingsSupportedAttributes?.[blockName]
+        };
+      },
+      [blockName]
+    );
+    const sources = (0, import_data181.useSelect)(
+      (select2) => {
+        const { getAllBlockBindingsSources } = unlock(
+          select2(import_blocks113.store)
+        );
+        const data = {};
+        Object.entries(getAllBlockBindingsSources()).forEach(
+          ([sourceName, source]) => {
+            if (!source.getFieldsList) {
+              return;
+            }
             const context = {};
-            if (usesContext?.length) {
-              for (const key of usesContext) {
+            if (source.usesContext?.length) {
+              for (const key of source.usesContext) {
                 context[key] = blockContext[key];
               }
             }
-            if (getFieldsList) {
-              const fieldsListResult = getFieldsList({
-                select: select2,
-                context
-              });
-              _sources[sourceName] = {
-                data: fieldsListResult || [],
-                label,
-                getValues
-              };
-            } else {
-              _sources[sourceName] = {
-                data: [],
-                label,
-                getValues
-              };
+            const items = source.getFieldsList({
+              select: select2,
+              context
+            });
+            if (items?.length) {
+              data[sourceName] = items;
             }
           }
         );
-        return {
-          sources: Object.values(_sources).length > 0 ? _sources : EMPTY_OBJECT5,
-          canUpdateBlockBindings: select2(store).getSettings().canUpdateBlockBindings,
-          bindableAttributes: _bindableAttributes
-        };
+        return data;
       },
-      [blockContext, blockName]
+      [blockContext]
     );
     if (!bindableAttributes || bindableAttributes.length === 0) {
       return null;
     }
     const { bindings } = metadata || {};
-    const hasCompatibleData = Object.values(sources).some(
-      (source) => source.data && source.data.length > 0
-    );
+    const hasCompatibleData = Object.keys(sources).length > 0;
     const readOnly = !canUpdateBlockBindings || !hasCompatibleData;
     if (bindings === void 0 && !hasCompatibleData) {
       return null;
@@ -63552,9 +63541,7 @@ var wp;
             const hasCompatibleDataForAttribute = Object.values(
               sources
             ).some(
-              (source) => source.data?.some(
-                (item) => item?.type === attributeType
-              )
+              (data) => data.some((item) => item.type === attributeType)
             );
             const isAttributeReadOnly = readOnly || !hasCompatibleDataForAttribute;
             return isAttributeReadOnly ? /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
