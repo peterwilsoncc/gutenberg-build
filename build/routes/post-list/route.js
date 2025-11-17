@@ -272,10 +272,12 @@ var route = {
       return void 0;
     }
     if (search.postIds && search.postIds.length > 0) {
+      const postId = search.postIds[0].toString();
       return {
         postType: params.type,
-        postId: search.postIds[0].toString(),
-        isPreview: true
+        postId,
+        isPreview: true,
+        editLink: `/types/${params.type}/edit/${postId}`
       };
     }
     const query = viewToQuery(view, params.type);
@@ -285,10 +287,12 @@ var route = {
       { ...query, per_page: 1 }
     );
     if (posts && posts.length > 0) {
+      const postId = posts[0].id.toString();
       return {
         postType: params.type,
-        postId: posts[0].id.toString(),
-        isPreview: true
+        postId,
+        isPreview: true,
+        editLink: `/types/${params.type}/edit/${postId}`
       };
     }
     return void 0;

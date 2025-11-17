@@ -1995,6 +1995,7 @@ function Root() {
 // packages/boot/build-module/components/canvas/index.js
 var import_element10 = __toESM(require_element());
 var import_components12 = __toESM(require_components());
+import { useNavigate } from "@wordpress/route";
 
 // packages/boot/build-module/components/canvas/back-button.js
 var import_components11 = __toESM(require_components());
@@ -2163,6 +2164,7 @@ function BootBackButton({ length }) {
 var import_jsx_runtime28 = __toESM(require_jsx_runtime());
 function Canvas({ canvas }) {
   const [Editor, setEditor] = (0, import_element10.useState)(null);
+  const navigate = useNavigate();
   (0, import_element10.useEffect)(() => {
     import("@wordpress/lazy-editor").then((module) => {
       setEditor(() => module.Editor);
@@ -2186,22 +2188,45 @@ function Canvas({ canvas }) {
     );
   }
   const backButton = !canvas.isPreview ? ({ length }) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(BootBackButton, { length }) : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-    "div",
-    {
-      style: { height: "100%" },
-      inert: canvas.isPreview ? "true" : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-        Editor,
-        {
-          postType: canvas.postType,
-          postId: canvas.postId,
-          settings: { isPreviewMode: canvas.isPreview },
-          backButton
-        }
-      )
-    }
-  );
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { style: { height: "100%", position: "relative" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      "div",
+      {
+        style: { height: "100%" },
+        inert: canvas.isPreview ? "true" : void 0,
+        children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+          Editor,
+          {
+            postType: canvas.postType,
+            postId: canvas.postId,
+            settings: { isPreviewMode: canvas.isPreview },
+            backButton
+          }
+        )
+      }
+    ),
+    canvas.isPreview && canvas.editLink && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      "div",
+      {
+        onClick: () => navigate({ to: canvas.editLink }),
+        onKeyDown: (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            navigate({ to: canvas.editLink });
+          }
+        },
+        style: {
+          position: "absolute",
+          inset: 0,
+          cursor: "pointer",
+          zIndex: 1
+        },
+        role: "button",
+        tabIndex: 0,
+        "aria-label": "Click to edit"
+      }
+    )
+  ] });
 }
 
 // packages/boot/build-module/components/app/router.js

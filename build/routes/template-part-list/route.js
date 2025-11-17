@@ -217,10 +217,14 @@ var route = {
       return void 0;
     }
     if (search.postIds && search.postIds.length > 0) {
+      const postId = search.postIds[0].toString();
       return {
         postType: "wp_template_part",
-        postId: search.postIds[0].toString(),
-        isPreview: true
+        postId,
+        isPreview: true,
+        editLink: `/types/wp_template_part/edit/${encodeURIComponent(
+          postId
+        )}`
       };
     }
     const query = viewToQuery(view);
@@ -230,10 +234,14 @@ var route = {
       { ...query, per_page: 1 }
     );
     if (posts && posts.length > 0) {
+      const postId = posts[0].id.toString();
       return {
         postType: "wp_template_part",
-        postId: posts[0].id.toString(),
-        isPreview: true
+        postId,
+        isPreview: true,
+        editLink: `/types/wp_template_part/edit/${encodeURIComponent(
+          postId
+        )}`
       };
     }
     return void 0;

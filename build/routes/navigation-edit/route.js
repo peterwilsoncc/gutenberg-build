@@ -46,10 +46,12 @@ var route = {
   canvas: async ({
     params
   }) => {
+    const postId = parseInt(params.id);
     return {
       postType: NAVIGATION_POST_TYPE,
-      postId: parseInt(params.id),
-      isPreview: true
+      postId,
+      isPreview: true,
+      editLink: `/types/wp_navigation/edit/${postId}`
     };
   },
   loader: async ({

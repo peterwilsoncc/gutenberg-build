@@ -62,10 +62,12 @@ var route = {
     if (!firstNavigation) {
       return { postType: NAVIGATION_POST_TYPE, isPreview: true };
     }
+    const postId = search.ids ? parseInt(search.ids[0]) : firstNavigation.id;
     return {
       postType: NAVIGATION_POST_TYPE,
-      postId: search.ids ? parseInt(search.ids[0]) : firstNavigation.id,
-      isPreview: true
+      postId,
+      isPreview: true,
+      editLink: `/types/wp_navigation/edit/${postId}`
     };
   },
   loader: async () => {
