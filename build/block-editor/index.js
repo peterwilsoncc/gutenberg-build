@@ -63327,13 +63327,17 @@ var wp;
                   key: item.key
                 }
               };
-              const values = source.getValues({
-                select: select2,
-                context: blockContext,
-                bindings: {
-                  [attribute]: itemBindings
-                }
-              });
+              let values = {};
+              try {
+                values = source.getValues({
+                  select: select2,
+                  context: blockContext,
+                  bindings: {
+                    [attribute]: itemBindings
+                  }
+                });
+              } catch (e2) {
+              }
               return /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
                 Menu.CheckboxItem,
                 {
