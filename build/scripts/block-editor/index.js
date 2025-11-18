@@ -44819,8 +44819,6 @@ var wp;
   function FontFamilyControl({
     /** Start opting into the larger default height that will become the default size in a future version. */
     __next40pxDefaultSize = false,
-    /** Start opting into the new margin-free styles that will become the default in a future version. */
-    __nextHasNoMarginBottom = false,
     value = "",
     onChange,
     fontFamilies,
@@ -44845,16 +44843,6 @@ var wp;
         style: { fontFamily }
       }))
     ];
-    if (!__nextHasNoMarginBottom) {
-      (0, import_deprecated17.default)(
-        "Bottom margin styles for wp.blockEditor.FontFamilyControl",
-        {
-          since: "6.7",
-          version: "7.0",
-          hint: "Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version"
-        }
-      );
-    }
     if (!__next40pxDefaultSize && (props.size === void 0 || props.size === "default")) {
       (0, import_deprecated17.default)(
         `36px default size for wp.blockEditor.__experimentalFontFamilyControl`,
@@ -44875,9 +44863,7 @@ var wp;
         value: selectedValue,
         onChange: ({ selectedItem }) => onChange(selectedItem.key),
         options,
-        className: clsx_default("block-editor-font-family-control", className, {
-          "is-next-has-no-margin-bottom": __nextHasNoMarginBottom
-        }),
+        className: clsx_default("block-editor-font-family-control", className),
         ...props
       }
     );
@@ -53665,8 +53651,7 @@ var wp;
                   fontFamilies,
                   value: fontFamily,
                   onChange: setFontFamily,
-                  size: "__unstable-large",
-                  __nextHasNoMarginBottom: true
+                  size: "__unstable-large"
                 }
               )
             }
