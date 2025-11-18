@@ -37094,7 +37094,7 @@ ${url}
     const ref = (0, import_element70.useRef)();
     const linkUIref = (0, import_element70.useRef)();
     const prevUrl = (0, import_compose32.usePrevious)(url);
-    const isNewLink = (0, import_element70.useRef)(!url);
+    const isNewLink = (0, import_element70.useRef)(!url && !metadata?.bindings?.url);
     const {
       isAtMaxNesting,
       isTopLevelLink,
