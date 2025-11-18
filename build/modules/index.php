@@ -43,6 +43,11 @@ return array(
 		'asset' => 'route/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/abilities',
+		'path' => 'abilities/index',
+		'asset' => 'abilities/index.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/edit-site-init',
 		'path' => 'edit-site-init/index',
 		'asset' => 'edit-site-init/index.min.asset.php',
@@ -51,6 +56,11 @@ return array(
 		'id' => '@wordpress/lazy-editor',
 		'path' => 'lazy-editor/index',
 		'asset' => 'lazy-editor/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/workflow',
+		'path' => 'workflow/index',
+		'asset' => 'workflow/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/boot',
