@@ -1148,6 +1148,8 @@ var wp;
   var OPERATOR_IS = "is";
   var OPERATOR_IS_ANY = "isAny";
   var OPERATOR_IS_NONE = "isNone";
+  var OPERATOR_BEFORE = "before";
+  var OPERATOR_AFTER = "after";
 
   // packages/edit-site/build-module/store/actions.js
   var { interfaceStore } = unlock(import_editor.privateApis);
@@ -22433,8 +22435,8 @@ var wp;
   var OPERATOR_GREATER_THAN = "greaterThan";
   var OPERATOR_LESS_THAN_OR_EQUAL = "lessThanOrEqual";
   var OPERATOR_GREATER_THAN_OR_EQUAL = "greaterThanOrEqual";
-  var OPERATOR_BEFORE = "before";
-  var OPERATOR_AFTER = "after";
+  var OPERATOR_BEFORE2 = "before";
+  var OPERATOR_AFTER2 = "after";
   var OPERATOR_BEFORE_INC = "beforeInc";
   var OPERATOR_AFTER_INC = "afterInc";
   var OPERATOR_CONTAINS = "contains";
@@ -22456,8 +22458,8 @@ var wp;
     OPERATOR_GREATER_THAN,
     OPERATOR_LESS_THAN_OR_EQUAL,
     OPERATOR_GREATER_THAN_OR_EQUAL,
-    OPERATOR_BEFORE,
-    OPERATOR_AFTER,
+    OPERATOR_BEFORE2,
+    OPERATOR_AFTER2,
     OPERATOR_BEFORE_INC,
     OPERATOR_AFTER_INC,
     OPERATOR_CONTAINS,
@@ -22476,8 +22478,8 @@ var wp;
     OPERATOR_GREATER_THAN,
     OPERATOR_LESS_THAN_OR_EQUAL,
     OPERATOR_GREATER_THAN_OR_EQUAL,
-    OPERATOR_BEFORE,
-    OPERATOR_AFTER,
+    OPERATOR_BEFORE2,
+    OPERATOR_AFTER2,
     OPERATOR_BEFORE_INC,
     OPERATOR_AFTER_INC,
     OPERATOR_CONTAINS,
@@ -22527,11 +22529,11 @@ var wp;
       key: "greater-than-or-equal-filter",
       label: (0, import_i18n83.__)("Greater than or equal")
     },
-    [OPERATOR_BEFORE]: {
+    [OPERATOR_BEFORE2]: {
       key: "before-filter",
       label: (0, import_i18n83.__)("Before")
     },
-    [OPERATOR_AFTER]: {
+    [OPERATOR_AFTER2]: {
       key: "after-filter",
       label: (0, import_i18n83.__)("After")
     },
@@ -32777,7 +32779,7 @@ If there's a particular need for this, please submit a feature request at https:
         filterTextWrappers
       );
     }
-    if (filterInView?.operator === OPERATOR_BEFORE) {
+    if (filterInView?.operator === OPERATOR_BEFORE2) {
       return (0, import_element88.createInterpolateElement)(
         (0, import_i18n102.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is before: 2024-01-01". */
@@ -32788,7 +32790,7 @@ If there's a particular need for this, please submit a feature request at https:
         filterTextWrappers
       );
     }
-    if (filterInView?.operator === OPERATOR_AFTER) {
+    if (filterInView?.operator === OPERATOR_AFTER2) {
       return (0, import_element88.createInterpolateElement)(
         (0, import_i18n102.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is after: 2024-01-01". */
@@ -34143,8 +34145,8 @@ If there's a particular need for this, please submit a feature request at https:
       defaultOperators: [
         OPERATOR_ON,
         OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
+        OPERATOR_BEFORE2,
+        OPERATOR_AFTER2,
         OPERATOR_BEFORE_INC,
         OPERATOR_AFTER_INC,
         OPERATOR_IN_THE_PAST,
@@ -34153,8 +34155,8 @@ If there's a particular need for this, please submit a feature request at https:
       validOperators: [
         OPERATOR_ON,
         OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
+        OPERATOR_BEFORE2,
+        OPERATOR_AFTER2,
         OPERATOR_BEFORE_INC,
         OPERATOR_AFTER_INC,
         OPERATOR_IN_THE_PAST,
@@ -34196,8 +34198,8 @@ If there's a particular need for this, please submit a feature request at https:
       defaultOperators: [
         OPERATOR_ON,
         OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
+        OPERATOR_BEFORE2,
+        OPERATOR_AFTER2,
         OPERATOR_BEFORE_INC,
         OPERATOR_AFTER_INC,
         OPERATOR_IN_THE_PAST,
@@ -34207,8 +34209,8 @@ If there's a particular need for this, please submit a feature request at https:
       validOperators: [
         OPERATOR_ON,
         OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
+        OPERATOR_BEFORE2,
+        OPERATOR_AFTER2,
         OPERATOR_BEFORE_INC,
         OPERATOR_AFTER_INC,
         OPERATOR_IN_THE_PAST,
@@ -38362,7 +38364,7 @@ If there's a particular need for this, please submit a feature request at https:
                 String(filter.value).toLowerCase()
               );
             });
-          } else if (filter.operator === OPERATOR_BEFORE && filter.value !== void 0) {
+          } else if (filter.operator === OPERATOR_BEFORE2 && filter.value !== void 0) {
             const filterValue = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
               const fieldValue = (0, import_date10.getDate)(
@@ -38370,7 +38372,7 @@ If there's a particular need for this, please submit a feature request at https:
               );
               return fieldValue < filterValue;
             });
-          } else if (filter.operator === OPERATOR_AFTER && filter.value !== void 0) {
+          } else if (filter.operator === OPERATOR_AFTER2 && filter.value !== void 0) {
             const filterValue = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
               const fieldValue = (0, import_date10.getDate)(
@@ -43453,6 +43455,16 @@ If there's a particular need for this, please submit a feature request at https:
           filters.author = filter.value;
         } else if (filter.field === "author" && filter.operator === OPERATOR_IS_NONE) {
           filters.author_exclude = filter.value;
+        }
+        if (filter.field === "date") {
+          if (!filter.value) {
+            return;
+          }
+          if (filter.operator === OPERATOR_BEFORE) {
+            filters.before = filter.value;
+          } else if (filter.operator === OPERATOR_AFTER) {
+            filters.after = filter.value;
+          }
         }
       });
       if (!filters.status || filters.status === "") {

@@ -2822,6 +2822,12 @@ var wp;
     "wp_block",
     "wp_navigation"
   ];
+  var DESIGN_POST_TYPES = [
+    TEMPLATE_POST_TYPE,
+    TEMPLATE_PART_POST_TYPE,
+    PATTERN_POST_TYPE,
+    NAVIGATION_POST_TYPE
+  ];
 
   // packages/icons/build-module/icon/index.js
   var import_element = __toESM(require_element());
@@ -6191,7 +6197,9 @@ var wp;
     type: "datetime",
     label: (0, import_i18n29.__)("Date"),
     render: date_view_default,
-    filterBy: false
+    filterBy: {
+      operators: ["before", "after"]
+    }
   };
   var date_default = dateField;
 
@@ -31886,7 +31894,7 @@ var wp;
       postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.["post-thumbnails"] && featured_image_default,
       postTypeConfig.supports?.author && author_default,
       status_default,
-      date_default,
+      !DESIGN_POST_TYPES.includes(postTypeConfig.slug) && date_default,
       slug_default,
       postTypeConfig.supports?.["page-attributes"] && parent_default,
       postTypeConfig.supports?.comments && comment_status_default,
@@ -41024,12 +41032,6 @@ var wp;
       description: (0, import_i18n164.__)("Visible to everyone.")
     }
   ];
-  var DESIGN_POST_TYPES = [
-    TEMPLATE_POST_TYPE,
-    TEMPLATE_PART_POST_TYPE,
-    PATTERN_POST_TYPE,
-    NAVIGATION_POST_TYPE
-  ];
   function PostStatus() {
     const { status, date, password, postId: postId2, postType: postType2, canEdit } = (0, import_data145.useSelect)(
       (select5) => {
@@ -41345,12 +41347,6 @@ var wp;
   var import_element122 = __toESM(require_element());
   var import_data148 = __toESM(require_data());
   var import_jsx_runtime268 = __toESM(require_jsx_runtime());
-  var DESIGN_POST_TYPES2 = [
-    TEMPLATE_POST_TYPE,
-    TEMPLATE_PART_POST_TYPE,
-    PATTERN_POST_TYPE,
-    NAVIGATION_POST_TYPE
-  ];
   function PostSchedulePanel() {
     const [popoverAnchor, setPopoverAnchor] = (0, import_element122.useState)(null);
     const postType2 = (0, import_data148.useSelect)(
@@ -41371,7 +41367,7 @@ var wp;
     );
     const label = usePostScheduleLabel();
     const fullLabel = usePostScheduleLabel({ full: true });
-    if (DESIGN_POST_TYPES2.includes(postType2)) {
+    if (DESIGN_POST_TYPES.includes(postType2)) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(PostScheduleCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(post_panel_row_default, { label: (0, import_i18n166.__)("Publish"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
@@ -44942,12 +44938,6 @@ var wp;
     ExperimentalBlockCanvas: BlockCanvas,
     useFlashEditableBlocks
   } = unlock(import_block_editor78.privateApis);
-  var DESIGN_POST_TYPES3 = [
-    PATTERN_POST_TYPE,
-    TEMPLATE_POST_TYPE,
-    NAVIGATION_POST_TYPE,
-    TEMPLATE_PART_POST_TYPE
-  ];
   function getPostContentAttributes(blocks) {
     for (let i3 = 0; i3 < blocks.length; i3++) {
       if (blocks[i3].name === "core/post-content") {
@@ -45024,7 +45014,7 @@ var wp;
       return {
         renderingMode: _renderingMode,
         postContentAttributes: editorSettings2.postContentAttributes,
-        isDesignPostType: DESIGN_POST_TYPES3.includes(postTypeSlug),
+        isDesignPostType: DESIGN_POST_TYPES.includes(postTypeSlug),
         // Post template fetch returns a 404 on classic themes, which
         // messes with e2e tests, so check it's a block theme first.
         editedPostTemplate: postTypeObject?.viewable && supportsTemplateMode ? template2 : void 0,
