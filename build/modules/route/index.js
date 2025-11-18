@@ -4933,6 +4933,14 @@ var LazyRoute = class {
     this.$$typeof = Symbol.for("react.memo");
   }
 };
+function createLazyRoute(id) {
+  return (opts) => {
+    return new LazyRoute({
+      id,
+      ...opts
+    });
+  };
+}
 function createLazyFileRoute(id) {
   if (typeof id === "object") {
     return new LazyRoute(id);
@@ -5487,6 +5495,7 @@ var privateApis = {};
 lock(privateApis, {
   // Router creation and setup
   createBrowserHistory,
+  createLazyRoute,
   createRouter,
   createRootRoute,
   createRoute,

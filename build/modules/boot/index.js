@@ -2232,6 +2232,7 @@ function Canvas({ canvas }) {
 // packages/boot/build-module/components/app/router.js
 var import_jsx_runtime29 = __toESM(require_jsx_runtime());
 var {
+  createLazyRoute,
   createRouter,
   createRootRoute,
   createRoute,
@@ -2259,25 +2260,12 @@ function RouteComponent({
   ] });
 }
 async function createRouteFromDefinition(route, parentRoute) {
-  const SurfacesModule = (0, import_element11.lazy)(async () => {
-    const module = route.content_module ? await import(route.content_module) : {};
-    return {
-      default: () => /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
-        RouteComponent,
-        {
-          stage: module.stage,
-          inspector: module.inspector,
-          canvas: module.canvas
-        }
-      )
-    };
-  });
   let routeConfig = {};
   if (route.route_module) {
     const module = await import(route.route_module);
     routeConfig = module.route || {};
   }
-  return createRoute({
+  let tanstackRoute = createRoute({
     getParentRoute: () => parentRoute,
     path: route.path,
     beforeLoad: routeConfig.beforeLoad ? (opts) => routeConfig.beforeLoad({
@@ -2298,9 +2286,24 @@ async function createRouteFromDefinition(route, parentRoute) {
         canvas: canvasData
       };
     },
-    loaderDeps: (opts) => opts.search,
-    component: SurfacesModule
+    loaderDeps: (opts) => opts.search
   });
+  tanstackRoute = tanstackRoute.lazy(async () => {
+    const module = route.content_module ? await import(route.content_module) : {};
+    return createLazyRoute(route.path)({
+      component: function Component() {
+        return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          RouteComponent,
+          {
+            stage: module.stage,
+            inspector: module.inspector,
+            canvas: module.canvas
+          }
+        );
+      }
+    });
+  });
+  return tanstackRoute;
 }
 async function createRouteTree(routes, rootComponent = Root) {
   const rootRoute = createRootRoute({
@@ -2341,6 +2344,7 @@ function Router({
         const newRouter = createRouter({
           history,
           routeTree,
+          defaultPreload: "intent",
           defaultNotFoundComponent: NotFoundComponent
         });
         setRouter(newRouter);
