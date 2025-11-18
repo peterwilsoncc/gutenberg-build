@@ -49243,18 +49243,40 @@ var wp;
       selectedThread,
       commentLastUpdated
     });
+    const isKeyboardTabbingRef = (0, import_element170.useRef)(false);
     const onMouseEnter = () => {
       debouncedToggleBlockHighlight(thread.blockClientId, true);
     };
     const onMouseLeave = () => {
       debouncedToggleBlockHighlight(thread.blockClientId, false);
     };
+    const onFocus = () => {
+      toggleBlockHighlight(thread.blockClientId, true);
+    };
+    const onBlur = (event) => {
+      const isNoteFocused = event.relatedTarget?.closest(
+        ".editor-collab-sidebar-panel__thread"
+      );
+      const isDialogFocused = event.relatedTarget?.closest('[role="dialog"]');
+      const isTabbing = isKeyboardTabbingRef.current;
+      if (isNoteFocused && !isTabbing) {
+        return;
+      }
+      if (isDialogFocused) {
+        return;
+      }
+      if (isTabbing && event.currentTarget.contains(event.relatedTarget)) {
+        return;
+      }
+      toggleBlockHighlight(thread.blockClientId, false);
+      unselectThread();
+    };
     const handleCommentSelect = () => {
       setNewNoteFormState("closed");
       setSelectedThread(thread.id);
+      toggleBlockSpotlight(thread.blockClientId, true);
       if (!!thread.blockClientId) {
         selectBlock2(thread.blockClientId, null);
-        toggleBlockSpotlight(thread.blockClientId, true);
       }
     };
     const unselectThread = () => {
@@ -49305,9 +49327,20 @@ var wp;
         onClick: handleCommentSelect,
         onMouseEnter,
         onMouseLeave,
-        onFocus: onMouseEnter,
-        onBlur: onMouseLeave,
-        onKeyDown,
+        onFocus,
+        onBlur,
+        onKeyUp: (event) => {
+          if (event.key === "Tab") {
+            isKeyboardTabbingRef.current = false;
+          }
+        },
+        onKeyDown: (event) => {
+          if (event.key === "Tab") {
+            isKeyboardTabbingRef.current = true;
+          } else {
+            onKeyDown(event);
+          }
+        },
         tabIndex: 0,
         role: "treeitem",
         "aria-label": ariaLabel,
@@ -49575,14 +49608,20 @@ var wp;
                         )
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(Menu6.Popover, { children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
-                      Menu6.Item,
+                    /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
+                      Menu6.Popover,
                       {
-                        onClick: () => action.onClick(),
-                        children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(Menu6.ItemLabel, { children: action.title })
-                      },
-                      action.id
-                    )) })
+                        modal: false,
+                        children: moreActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
+                          Menu6.Item,
+                          {
+                            onClick: () => action.onClick(),
+                            children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(Menu6.ItemLabel, { children: action.title })
+                          },
+                          action.id
+                        ))
+                      }
+                    )
                   ] })
                 ] })
               }
