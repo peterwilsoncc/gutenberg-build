@@ -21047,15 +21047,20 @@ var wp;
     return !color || color === "transparent" || color === "rgba(0, 0, 0, 0)";
   }
   function useEventHandlers({ clientId, isSelected }) {
-    const { getBlockRootClientId: getBlockRootClientId2, isZoomOut: isZoomOut2, hasMultiSelection: hasMultiSelection2 } = unlock(
-      (0, import_data21.useSelect)(store)
-    );
+    const {
+      getBlockRootClientId: getBlockRootClientId2,
+      isZoomOut: isZoomOut2,
+      hasMultiSelection: hasMultiSelection2,
+      isSectionBlock: isSectionBlock2,
+      editedContentOnlySection: editedContentOnlySection2
+    } = unlock((0, import_data21.useSelect)(store));
     const {
       insertAfterBlock: insertAfterBlock2,
       removeBlock: removeBlock2,
       resetZoomLevel: resetZoomLevel2,
       startDraggingBlocks: startDraggingBlocks2,
-      stopDraggingBlocks: stopDraggingBlocks2
+      stopDraggingBlocks: stopDraggingBlocks2,
+      editContentOnlySection: editContentOnlySection2
     } = unlock((0, import_data21.useDispatch)(store));
     return (0, import_compose8.useRefEffect)(
       (node2) => {
@@ -21210,9 +21215,23 @@ var wp;
         }
         node2.addEventListener("keydown", onKeyDown);
         node2.addEventListener("dragstart", onDragStart);
+        function onDoubleClick(event) {
+          const isSection = isSectionBlock2(clientId);
+          const isAlreadyEditing = editedContentOnlySection2 === clientId;
+          if (isSection && !isAlreadyEditing) {
+            event.preventDefault();
+            editContentOnlySection2(clientId);
+          }
+        }
+        if (window?.__experimentalContentOnlyPatternInsertion) {
+          node2.addEventListener("dblclick", onDoubleClick);
+        }
         return () => {
           node2.removeEventListener("keydown", onKeyDown);
           node2.removeEventListener("dragstart", onDragStart);
+          if (window?.__experimentalContentOnlyPatternInsertion) {
+            node2.removeEventListener("dblclick", onDoubleClick);
+          }
         };
       },
       [
@@ -21225,7 +21244,10 @@ var wp;
         resetZoomLevel2,
         hasMultiSelection2,
         startDraggingBlocks2,
-        stopDraggingBlocks2
+        stopDraggingBlocks2,
+        isSectionBlock2,
+        editedContentOnlySection2,
+        editContentOnlySection2
       ]
     );
   }
