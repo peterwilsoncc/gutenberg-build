@@ -4398,7 +4398,7 @@ var wp;
       }
     }
     dispatch6({ type: "REQUEST_POST_UPDATE_FINISH", options });
-    if (!options.isAutosave && previousRecord.type === "wp_template" && (typeof previousRecord.id === "number" || /^\d+$/.test(previousRecord.id))) {
+    if (typeof window !== "undefined" && window.__experimentalTemplateActivate && !options.isAutosave && previousRecord.type === "wp_template" && (typeof previousRecord.id === "number" || /^\d+$/.test(previousRecord.id))) {
       templateActivationNotice({ select: select5, dispatch: dispatch6, registry });
     }
     if (error) {
@@ -4906,6 +4906,9 @@ var wp;
   // packages/fields/build-module/actions/utils.js
   var import_html_entities = __toESM(require_html_entities());
   var import_i18n3 = __toESM(require_i18n());
+  function isTemplate(post2) {
+    return post2.type === "wp_template";
+  }
   function isTemplatePart(post2) {
     return post2.type === "wp_template_part";
   }
@@ -6413,11 +6416,11 @@ var wp;
         if (isCreatingPage) {
           return;
         }
-        const isTemplate = item.type === "wp_template";
+        const isTemplate2 = item.type === "wp_template";
         const newItemObject = {
-          status: isTemplate ? "publish" : "draft",
+          status: isTemplate2 ? "publish" : "draft",
           title: item.title,
-          slug: isTemplate ? item.slug : item.title || (0, import_i18n34.__)("No title"),
+          slug: isTemplate2 ? item.slug : item.title || (0, import_i18n34.__)("No title"),
           comment_status: item.comment_status,
           content: typeof item.content === "string" ? item.content : item.content.raw,
           excerpt: typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw,
@@ -6536,14 +6539,18 @@ var wp;
       if (post2.status === "trash") {
         return false;
       }
-      if (post2.type === "wp_template" && typeof post2.id === "string") {
+      if (post2.type === "wp_template" && typeof post2.id === "string" && window?.__experimentalTemplateActivate) {
         return false;
       }
-      if (![
-        "wp_template_part",
-        ...Object.values(PATTERN_TYPES2)
-      ].includes(post2.type)) {
+      const specialChecks = ["wp_template", "wp_template_part"];
+      if (!window?.__experimentalTemplateActivate) {
+        specialChecks.push("wp_template");
+      }
+      if (!specialChecks.includes(post2.type)) {
         return post2.permissions?.update;
+      }
+      if (isTemplate(post2) && !window?.__experimentalTemplateActivate) {
+        return isTemplateRemovable(post2) && post2.is_custom && post2.permissions?.update;
       }
       if (isTemplatePart(post2)) {
         return post2.source === "custom" && !post2?.has_theme_file && post2.permissions?.update;
@@ -6746,7 +6753,10 @@ var wp;
     id: "reset-post",
     label: (0, import_i18n36.__)("Reset"),
     isEligible: (item) => {
-      return item.type === "wp_template_part" && item?.source === "custom" && item?.has_theme_file;
+      if (window?.__experimentalTemplateActivate) {
+        return item.type === "wp_template_part" && item?.source === "custom" && item?.has_theme_file;
+      }
+      return isTemplateOrTemplatePart(item) && item?.source === "custom" && (Boolean(item.type === "wp_template" && item?.plugin) || item?.has_theme_file);
     },
     icon: backup_default,
     supportsBulk: true,
@@ -6784,11 +6794,20 @@ var wp;
             }
           );
         } catch (error) {
-          const fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
-            "An error occurred while reverting the template part."
-          ) : (0, import_i18n36.__)(
-            "An error occurred while reverting the template parts."
-          );
+          let fallbackErrorMessage;
+          if (items[0].type === "wp_template") {
+            fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
+              "An error occurred while reverting the template."
+            ) : (0, import_i18n36.__)(
+              "An error occurred while reverting the templates."
+            );
+          } else {
+            fallbackErrorMessage = items.length === 1 ? (0, import_i18n36.__)(
+              "An error occurred while reverting the template part."
+            ) : (0, import_i18n36.__)(
+              "An error occurred while reverting the template parts."
+            );
+          }
           const typedError = error;
           const errorMessage = typedError.message && typedError.code !== "unknown_error" ? typedError.message : fallbackErrorMessage;
           createErrorNotice(errorMessage, { type: "snackbar" });
@@ -14065,7 +14084,9 @@ var wp;
       }, []);
       (0, import_element37.useEffect)(() => {
         setEditedPost2(post2.type, post2.id);
-        removeNotice("template-activate-notice");
+        if (typeof window !== "undefined" && window.__experimentalTemplateActivate) {
+          removeNotice("template-activate-notice");
+        }
       }, [post2.type, post2.id, setEditedPost2, removeNotice]);
       (0, import_element37.useEffect)(() => {
         updateEditorSettings2(settings);
@@ -31842,6 +31863,9 @@ var wp;
         canDuplicate = void 0;
       }
     }
+    if (postTypeConfig.slug === "wp_template" && !window?.__experimentalTemplateActivate) {
+      canDuplicate = void 0;
+    }
     const actions2 = [
       postTypeConfig.viewable ? view_post_default : void 0,
       !!postTypeConfig.supports?.revisions ? view_post_revisions_default : void 0,
@@ -34390,9 +34414,9 @@ var wp;
     }, []);
     const { open: openCommandCenter } = (0, import_data75.useDispatch)(import_commands3.store);
     const isReducedMotion = (0, import_compose19.useReducedMotion)();
-    const isTemplate = TEMPLATE_POST_TYPES.includes(postType2);
+    const isTemplate2 = TEMPLATE_POST_TYPES.includes(postType2);
     const hasBackButton = !!onNavigateToPreviousEntityRecord;
-    const entityTitle = isTemplate ? templateTitle : documentTitle;
+    const entityTitle = isTemplate2 ? templateTitle : documentTitle;
     const title = props.title || stylesCanvasTitle || entityTitle;
     const icon = props.icon;
     const pageTypeBadge = usePageTypeBadge(postId2);
@@ -34424,7 +34448,7 @@ var wp;
               children: (0, import_i18n114.__)("Back")
             }
           ) }),
-          !isTemplate && isTemplatePreview && !hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
+          !isTemplate2 && isTemplatePreview && !hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
             import_block_editor40.BlockIcon,
             {
               icon: layout_default,
@@ -36238,7 +36262,7 @@ var wp;
     const templates = useTemplates(postType2);
     return (0, import_element96.useMemo)(
       () => allowSwitchingTemplate && templates?.filter(
-        (template2) => (template2.is_custom || template2.type === "wp_template") && template2.slug !== currentTemplateSlug && !!template2.content.raw
+        (template2) => template2.is_custom && template2.slug !== currentTemplateSlug && !!template2.content.raw
         // Skip empty templates.
       ),
       [templates, currentTemplateSlug, allowSwitchingTemplate]
@@ -37015,7 +37039,7 @@ var wp;
                     postId: template2.id,
                     postType: "wp_template"
                   });
-                  if (!hasSpecificTemplate) {
+                  if (!hasSpecificTemplate && window?.__experimentalTemplateActivate) {
                     const activeTemplates = await getEntityRecord(
                       "root",
                       "site"
@@ -43914,7 +43938,7 @@ var wp;
     const {
       deviceType: deviceType2,
       homeUrl,
-      isTemplate,
+      isTemplate: isTemplate2,
       isViewable,
       showIconLabels,
       isTemplateHidden,
@@ -44009,7 +44033,7 @@ var wp;
               onSelect: handleDevicePreviewChange
             }
           ) }),
-          isTemplate && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components179.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(
+          isTemplate2 && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components179.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(
             import_components179.MenuItem,
             {
               href: homeUrl,
@@ -44026,7 +44050,7 @@ var wp;
               ]
             }
           ) }),
-          !isTemplate && !!templateId2 && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components179.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
+          !isTemplate2 && !!templateId2 && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components179.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
             import_components179.MenuItem,
             {
               icon: !isTemplateHidden ? check_default : void 0,
@@ -46240,7 +46264,7 @@ var wp;
   var EMPTY_OBJECT4 = {};
   function BlogTitle() {
     const { editEntityRecord } = (0, import_data206.useDispatch)(import_core_data108.store);
-    const { postsPageTitle, postsPageId, isTemplate, postSlug } = (0, import_data206.useSelect)(
+    const { postsPageTitle, postsPageId, isTemplate: isTemplate2, postSlug } = (0, import_data206.useSelect)(
       (select5) => {
         const { getEntityRecord, getEditedEntityRecord, canUser } = select5(import_core_data108.store);
         const siteSettings = canUser("read", {
@@ -46274,7 +46298,7 @@ var wp;
       }),
       [popoverAnchor]
     );
-    if (!isTemplate || !["home", "index"].includes(postSlug) || !postsPageId) {
+    if (!isTemplate2 || !["home", "index"].includes(postSlug) || !postsPageId) {
       return null;
     }
     const setPostsPageTitle = (newValue) => {
@@ -46341,7 +46365,7 @@ var wp;
   var import_jsx_runtime321 = __toESM(require_jsx_runtime());
   function PostsPerPage() {
     const { editEntityRecord } = (0, import_data207.useDispatch)(import_core_data109.store);
-    const { postsPerPage, isTemplate, postSlug } = (0, import_data207.useSelect)((select5) => {
+    const { postsPerPage, isTemplate: isTemplate2, postSlug } = (0, import_data207.useSelect)((select5) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select5(store);
       const { getEditedEntityRecord, canUser } = select5(import_core_data109.store);
       const siteSettings = canUser("read", {
@@ -46366,7 +46390,7 @@ var wp;
       }),
       [popoverAnchor]
     );
-    if (!isTemplate || !["home", "index"].includes(postSlug)) {
+    if (!isTemplate2 || !["home", "index"].includes(postSlug)) {
       return null;
     }
     const setPostsPerPage = (newValue) => {
@@ -46446,7 +46470,7 @@ var wp;
   ];
   function SiteDiscussion() {
     const { editEntityRecord } = (0, import_data208.useDispatch)(import_core_data110.store);
-    const { allowCommentsOnNewPosts, isTemplate, postSlug } = (0, import_data208.useSelect)(
+    const { allowCommentsOnNewPosts, isTemplate: isTemplate2, postSlug } = (0, import_data208.useSelect)(
       (select5) => {
         const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select5(store);
         const { getEditedEntityRecord, canUser } = select5(import_core_data110.store);
@@ -46474,7 +46498,7 @@ var wp;
       }),
       [popoverAnchor]
     );
-    if (!isTemplate || !["home", "index"].includes(postSlug)) {
+    if (!isTemplate2 || !["home", "index"].includes(postSlug)) {
       return null;
     }
     const setAllowCommentsOnNewPosts = (newValue) => {

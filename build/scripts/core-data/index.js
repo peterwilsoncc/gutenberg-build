@@ -14819,7 +14819,7 @@ var wp;
         __unstable_rest_base: postType.rest_base,
         supportsPagination: true,
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
-        revisionKey: DEFAULT_ENTITY_KEY
+        revisionKey: isTemplate && !window?.__experimentalTemplateActivate ? "wp_id" : DEFAULT_ENTITY_KEY
       };
       if (window.__experimentalEnableSync) {
         if (true) {
@@ -16623,7 +16623,7 @@ var wp;
       });
       let hasError = false;
       let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && recordId && typeof recordId === "string" && !/^\d+$/.test(recordId)) {
+      if (kind === "postType" && name === "wp_template" && (recordId && typeof recordId === "string" && !/^\d+$/.test(recordId) || !window?.__experimentalTemplateActivate)) {
         baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
       }
       try {
@@ -16791,7 +16791,7 @@ var wp;
       let error;
       let hasError = false;
       let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && recordId && typeof recordId === "string" && !/^\d+$/.test(recordId)) {
+      if (kind === "postType" && name === "wp_template" && (recordId && typeof recordId === "string" && !/^\d+$/.test(recordId) || !window?.__experimentalTemplateActivate)) {
         baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
       }
       try {
@@ -17448,7 +17448,7 @@ var wp;
         }
       }
       let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && key && typeof key === "string" && !/^\d+$/.test(key)) {
+      if (kind === "postType" && name === "wp_template" && (key && typeof key === "string" && !/^\d+$/.test(key) || !window?.__experimentalTemplateActivate)) {
         baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
       }
       const path = (0, import_url7.addQueryArgs)(baseURL + (key ? "/" + key : ""), {
