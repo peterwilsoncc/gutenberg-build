@@ -58,19 +58,14 @@ return array(
 		'asset' => 'lazy-editor/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/boot',
-		'path' => 'boot/index',
-		'asset' => 'boot/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/workflow',
 		'path' => 'workflow/index',
 		'asset' => 'workflow/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
-		'path' => 'block-editor/utils/fit-text-frontend',
-		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
+		'id' => '@wordpress/boot',
+		'path' => 'boot/index',
+		'asset' => 'boot/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/block-library/accordion/view',
@@ -111,6 +106,11 @@ return array(
 		'id' => '@wordpress/block-library/tabs/view',
 		'path' => 'block-library/tabs/view',
 		'asset' => 'block-library/tabs/view.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
+		'path' => 'block-editor/utils/fit-text-frontend',
+		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/boot',
