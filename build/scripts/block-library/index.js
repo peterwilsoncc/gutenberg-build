@@ -61583,6 +61583,7 @@ ${declarations}
   var { name: name107 } = block_default106;
   var settings106 = {
     icon: term_count_default,
+    example: {},
     edit: TermCountEdit
   };
   var init106 = () => initBlock({ name: name107, metadata: block_default106, settings: settings106 });
@@ -62008,6 +62009,7 @@ ${declarations}
   var { name: name109 } = block_default108;
   var settings108 = {
     icon: term_name_default,
+    example: {},
     edit: TermNameEdit
   };
   var init108 = () => initBlock({ name: name109, metadata: block_default108, settings: settings108 });
