@@ -21151,17 +21151,14 @@ var wp;
     if (!hasNavigationBlocks || !isNavigationEditable) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_block_editor49.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_components103.ToolbarGroup, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components103.__experimentalDivider, { orientation: "vertical", marginEnd: 3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-        import_components103.ToolbarButton,
-        {
-          label: (0, import_i18n131.__)("Edit navigation"),
-          onClick: onEditNavigation,
-          children: (0, import_i18n131.__)("Edit navigation")
-        }
-      )
-    ] }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_block_editor49.__unstableBlockToolbarLastItem, { children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components103.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
+      import_components103.ToolbarButton,
+      {
+        label: (0, import_i18n131.__)("Edit navigation"),
+        onClick: onEditNavigation,
+        children: (0, import_i18n131.__)("Edit navigation")
+      }
+    ) }) });
   }
   var withTemplatePartNavigationEditButton = (0, import_compose35.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
