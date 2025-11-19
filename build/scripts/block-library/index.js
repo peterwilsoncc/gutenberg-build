@@ -37784,15 +37784,16 @@ ${js}
     const itemLabelPlaceholder = (0, import_i18n128.__)("Add label\u2026");
     const ref = (0, import_element71.useRef)();
     const linkUIref = (0, import_element71.useRef)();
-    const prevUrl = (0, import_compose31.usePrevious)(url);
-    const isNewLink = (0, import_element71.useRef)(!url && !metadata?.bindings?.url);
+    const isNewLink = (0, import_element71.useRef)(label === void 0);
+    const shouldSelectSubmenuAppenderOnClose = (0, import_element71.useRef)(false);
     const {
       isAtMaxNesting,
       isTopLevelLink,
       isParentOfSelectedBlock,
       hasChildren,
       validateLinkStatus,
-      parentBlockClientId
+      parentBlockClientId,
+      isSubmenu
     } = (0, import_data74.useSelect)(
       (select8) => {
         const {
@@ -37822,7 +37823,8 @@ ${js}
           ),
           hasChildren: !!getBlockCount(clientId),
           validateLinkStatus: enableLinkStatusValidation,
-          parentBlockClientId: parentBlockId
+          parentBlockClientId: parentBlockId,
+          isSubmenu: parentBlockName === "core/navigation-submenu"
         };
       },
       [clientId, maxNestingLevel]
@@ -37857,7 +37859,7 @@ ${js}
       replaceBlock(clientId, newSubmenu);
     }, [getBlocks, clientId, selectBlock, replaceBlock, attributes3]);
     (0, import_element71.useEffect)(() => {
-      if (isNewLink.current && isSelected && !url) {
+      if (isNewLink.current && isSelected) {
         selectBlock(parentBlockClientId);
       }
     }, []);
@@ -37872,10 +37874,22 @@ ${js}
       transformToSubmenu
     ]);
     (0, import_element71.useEffect)(() => {
-      if (!prevUrl && url && isLinkOpen && (0, import_url13.isURL)((0, import_url13.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
-        selectLabelText();
+      if (!isNewLink.current || !url || !isLinkOpen) {
+        return;
       }
-    }, [prevUrl, url, isLinkOpen, label]);
+      isNewLink.current = false;
+      if ((0, import_url13.isURL)((0, import_url13.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
+        selectLabelText();
+      } else {
+        selectBlock(clientId, null);
+        if (isSubmenu) {
+          const parentBlocks = getBlocks(parentBlockClientId);
+          if (parentBlocks.length === 1 && parentBlocks[0].clientId === clientId) {
+            shouldSelectSubmenuAppenderOnClose.current = true;
+          }
+        }
+      }
+    }, [url, isLinkOpen, isNewLink, label]);
     function selectLabelText() {
       ref.current.focus();
       const { ownerDocument } = ref.current;
@@ -37945,13 +37959,14 @@ ${js}
         renderAppender: false
       }
     );
-    if (!url || isInvalid || isDraft || hasUrlBinding && !isBoundEntityAvailable) {
+    const needsValidLink = !url && !(hasUrlBinding && isBoundEntityAvailable) || isInvalid || isDraft || hasUrlBinding && !isBoundEntityAvailable;
+    if (needsValidLink) {
       blockProps.onClick = () => {
         setIsLinkOpen(true);
       };
     }
     const classes = clsx_default("wp-block-navigation-item__content", {
-      "wp-block-navigation-link__placeholder": !url || isInvalid || isDraft || hasUrlBinding && !isBoundEntityAvailable
+      "wp-block-navigation-link__placeholder": needsValidLink
     });
     const missingText = getMissingText(type);
     const placeholderText = `(${isInvalid ? (0, import_i18n128.__)("Invalid") : (0, import_i18n128.__)("Draft")})`;
@@ -38050,8 +38065,18 @@ ${js}
                 setIsLinkOpen(false);
                 if (!url && !hasUrlBinding) {
                   onReplace([]);
-                } else if (isNewLink.current) {
-                  selectBlock(clientId);
+                  return;
+                }
+                if (shouldSelectSubmenuAppenderOnClose.current) {
+                  shouldSelectSubmenuAppenderOnClose.current = false;
+                  if (listItemRef.current?.nextElementSibling) {
+                    const appenderButton = listItemRef.current.nextElementSibling.querySelector(
+                      ".block-editor-button-block-appender"
+                    );
+                    if (appenderButton) {
+                      appenderButton.focus();
+                    }
+                  }
                 }
               },
               anchor: popoverAnchor,

@@ -48190,7 +48190,7 @@ var wp;
     const wrapperNode = (0, import_element164.useRef)();
     const textInputRef = (0, import_element164.useRef)();
     const searchInputRef = (0, import_element164.useRef)();
-    const isEndingEditWithFocusRef = (0, import_element164.useRef)(false);
+    const entityUrlFallbackRef = (0, import_element164.useRef)();
     const settingsKeys = settings2.map(({ id }) => id);
     const [
       internalControlValue,
@@ -48219,7 +48219,6 @@ var wp;
       }
       const nextFocusTarget = import_dom35.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current;
       nextFocusTarget.focus();
-      isEndingEditWithFocusRef.current = false;
     }, [isEditingLink, isCreatingPage]);
     (0, import_element164.useEffect)(() => {
       isMountingRef.current = false;
@@ -48229,12 +48228,12 @@ var wp;
     }, []);
     const hasLinkValue = value?.url?.trim()?.length > 0;
     const stopEditing = () => {
-      isEndingEditWithFocusRef.current = !!wrapperNode.current?.contains(
-        wrapperNode.current.ownerDocument.activeElement
-      );
       setIsEditingLink(false);
     };
     const handleSelectSuggestion = (updatedValue) => {
+      if (updatedValue?.kind === "taxonomy" && updatedValue?.url) {
+        entityUrlFallbackRef.current = updatedValue.url;
+      }
       const nonSettingsChanges = Object.keys(updatedValue).reduce(
         (acc, key) => {
           if (!settingsKeys.includes(key)) {
@@ -48311,6 +48310,15 @@ var wp;
     const isEditing = (isEditingLink || !value) && !isCreatingPage;
     const isDisabled = !valueHasChanges || currentInputIsEmpty;
     const showSettings = !!settings2?.length && isEditingLink && hasLinkValue;
+    const previewValue = (0, import_element164.useMemo)(() => {
+      if (value?.kind === "taxonomy" && !value?.url && entityUrlFallbackRef.current) {
+        return {
+          ...value,
+          url: entityUrlFallbackRef.current
+        };
+      }
+      return value;
+    }, [value]);
     return /* @__PURE__ */ (0, import_jsx_runtime309.jsxs)(
       "div",
       {
@@ -48408,7 +48416,7 @@ var wp;
           value && !isEditingLink && !isCreatingPage && /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
             LinkPreview,
             {
-              value,
+              value: previewValue,
               onEditClick: () => setIsEditingLink(true),
               hasRichPreviews,
               hasUnlinkControl: shownUnlinkControl,
@@ -48417,7 +48425,7 @@ var wp;
                 setIsEditingLink(true);
               }
             },
-            value?.url
+            previewValue?.url
           ),
           showSettings && /* @__PURE__ */ (0, import_jsx_runtime309.jsx)("div", { className: "block-editor-link-control__tools", children: !currentInputIsEmpty && /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
             settings_drawer_default,
