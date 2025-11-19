@@ -51106,15 +51106,12 @@ var wp;
   var post_data_default = {
     name: "core/post-data",
     getValues({ select: select5, context, bindings, clientId }) {
-      const allowedFields = postDataFields.map(
-        (field) => field.args.field
-      );
       const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select5(import_block_editor98.store);
-      const blockName = getBlockName2?.(clientId);
+      const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
       let postId2, postType2;
       if (isNavigationBlock) {
-        const blockAttributes = getBlockAttributes2?.(clientId);
+        const blockAttributes = getBlockAttributes2(clientId);
         postId2 = blockAttributes?.id;
         postType2 = blockAttributes?.type;
       } else {
@@ -51129,19 +51126,22 @@ var wp;
       );
       const newValues = {};
       for (const [attributeName, binding] of Object.entries(bindings)) {
-        if (!allowedFields.includes(binding.args.field)) {
-          newValues[attributeName] = {};
-          continue;
-        }
-        newValues[attributeName] = entityDataValues?.[binding.args.field] ?? postDataFields.find(
+        const postDataField = postDataFields.find(
           (field) => field.args.field === binding.args.field
-        ).label;
+        );
+        if (!postDataField) {
+          newValues[attributeName] = binding.args.field;
+        } else if (!entityDataValues) {
+          newValues[attributeName] = postDataField.label;
+        } else {
+          newValues[attributeName] = entityDataValues[binding.args.field];
+        }
       }
       return newValues;
     },
     setValues({ dispatch: dispatch6, context, bindings, clientId, select: select5 }) {
       const { getBlockName: getBlockName2 } = select5(import_block_editor98.store);
-      const blockName = getBlockName2?.(clientId);
+      const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
         return false;
       }
@@ -51159,7 +51159,7 @@ var wp;
     canUserEditValue({ select: select5, context }) {
       const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor98.store);
       const clientId = getSelectedBlockClientId2();
-      const blockName = getBlockName2?.(clientId);
+      const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
         return false;
       }
@@ -51179,12 +51179,12 @@ var wp;
       }
       return true;
     },
-    getFieldsList({ select: select5 }) {
+    getFieldsList({ context, select: select5 }) {
       const selectedBlock = select5(import_block_editor98.store).getSelectedBlock();
       if (selectedBlock?.name !== "core/post-date") {
         return [];
       }
-      if (NAVIGATION_BLOCK_TYPES.includes(selectedBlock?.name)) {
+      if (!context || !context.postId || !context.postType) {
         return [];
       }
       return postDataFields;
