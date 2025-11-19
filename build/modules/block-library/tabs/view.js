@@ -6,23 +6,8 @@ import {
   withSyncEvent
 } from "@wordpress/interactivity";
 function createReadOnlyProxy(obj) {
-  const arrayMutationMethods = /* @__PURE__ */ new Set([
-    "push",
-    "pop",
-    "shift",
-    "unshift",
-    "splice",
-    "sort",
-    "reverse",
-    "copyWithin",
-    "fill"
-  ]);
   return new Proxy(obj, {
     get(target, prop) {
-      if (Array.isArray(target) && arrayMutationMethods.has(prop)) {
-        return () => {
-        };
-      }
       const value = target[prop];
       if (typeof value === "object" && value !== null) {
         return createReadOnlyProxy(value);
@@ -191,19 +176,21 @@ store("core/tabs", {
     /**
      * Gets the index of the active tab element whether it
      * is a tab label or tab panel.
+     * Public API for third-party access.
      *
      * @type {number|null}
      */
     get tabIndex() {
-      return privateState.tabIndex;
+      return createReadOnlyProxy(privateState.tabIndex);
     },
     /**
      * Whether the tab panel or tab label is the active tab.
+     * Public API for third-party access.
      *
      * @type {boolean}
      */
     get isActiveTab() {
-      return privateState.isActiveTab;
+      return createReadOnlyProxy(privateState.isActiveTab);
     }
   },
   actions: {

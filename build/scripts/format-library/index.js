@@ -227,7 +227,7 @@ var wp;
     tagName: "strong",
     className: null,
     [essentialFormatKey]: true,
-    edit({ isActive, value, onChange, onFocus, isVisible = true }) {
+    edit({ isActive, value, onChange, onFocus }) {
       function onToggle() {
         onChange((0, import_rich_text.toggleFormat)(value, { type: name, title }));
       }
@@ -244,7 +244,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        isVisible && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
           import_block_editor.RichTextToolbarButton,
           {
             name: "bold",
@@ -533,7 +533,7 @@ var wp;
     tagName: "em",
     className: null,
     [essentialFormatKey2]: true,
-    edit({ isActive, value, onChange, onFocus, isVisible = true }) {
+    edit({ isActive, value, onChange, onFocus }) {
       function onToggle() {
         onChange((0, import_rich_text4.toggleFormat)(value, { type: name4, title: title4 }));
       }
@@ -550,7 +550,7 @@ var wp;
             onUse: onToggle
           }
         ),
-        isVisible && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           import_block_editor4.RichTextToolbarButton,
           {
             name: "italic",
@@ -1020,8 +1020,7 @@ var wp;
     value,
     onChange,
     onFocus,
-    contentRef,
-    isVisible = true
+    contentRef
   }) {
     const [addingLink, setAddingLink] = (0, import_element5.useState)(false);
     const [openedBy, setOpenedBy] = (0, import_element5.useState)(null);
@@ -1122,7 +1121,7 @@ var wp;
           onUse: onRemoveFormat
         }
       ),
-      isVisible && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         import_block_editor6.RichTextToolbarButton,
         {
           name: "link",
@@ -1138,7 +1137,7 @@ var wp;
           "aria-expanded": addingLink
         }
       ),
-      isVisible && addingLink && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+      addingLink && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         inline_default,
         {
           stopAddingLink,

@@ -254,14 +254,6 @@ function viewToQuery(view, postType) {
   if (mediaType) {
     result.media_type = mediaType.value;
   }
-  const date = view.filters?.find((filter) => filter.field === "date");
-  if (date && date.value) {
-    if (date.operator === "before") {
-      result.before = date.value;
-    } else if (date.operator === "after") {
-      result.after = date.value;
-    }
-  }
   if (postType === "attachment") {
     result._embed = "wp:attached-to";
   }
@@ -280,12 +272,10 @@ var route = {
       return void 0;
     }
     if (search.postIds && search.postIds.length > 0) {
-      const postId = search.postIds[0].toString();
       return {
         postType: params.type,
-        postId,
-        isPreview: true,
-        editLink: `/types/${params.type}/edit/${postId}`
+        postId: search.postIds[0].toString(),
+        isPreview: true
       };
     }
     const query = viewToQuery(view, params.type);
@@ -295,12 +285,10 @@ var route = {
       { ...query, per_page: 1 }
     );
     if (posts && posts.length > 0) {
-      const postId = posts[0].id.toString();
       return {
         postType: params.type,
-        postId,
-        isPreview: true,
-        editLink: `/types/${params.type}/edit/${postId}`
+        postId: posts[0].id.toString(),
+        isPreview: true
       };
     }
     return void 0;

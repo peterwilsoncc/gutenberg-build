@@ -34,8 +34,7 @@
 			"default": false
 		},
 		"url": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		},
 		"title": {
 			"type": "string"

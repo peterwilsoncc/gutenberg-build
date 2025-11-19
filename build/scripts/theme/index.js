@@ -2840,14 +2840,11 @@ var wp;
   function getContrast(colorA, colorB) {
     return contrastWCAG21(colorA, colorB);
   }
-  function clampToGamut(c) {
-    return to(toGamut(c, { space: srgb_default, method: "css" }), oklch_default);
-  }
 
   // packages/theme/build-module/color-ramps/lib/constants.js
   var WHITE = to("white", oklch_default);
   var BLACK = to("black", oklch_default);
-  var UNIVERSAL_CONTRAST_TOPUP = 0.02;
+  var UNIVERSAL_CONTRAST_TOPUP = 0.012;
   var WHITE_TEXT_CONTRAST_MARGIN = 3.1;
   var ACCENT_SCALE_BASE_LIGHTNESS_THRESHOLDS = {
     lighter: { min: 0.2, max: 0.4 },
@@ -2866,6 +2863,7 @@ var wp;
   };
 
   // packages/theme/build-module/color-ramps/lib/utils.js
+  var clampToGamut = (c) => to(toGamut(c, { space: p3_default, method: "css" }), oklch_default);
   function buildDependencyGraph(config) {
     const dependencies = /* @__PURE__ */ new Map();
     const dependents = /* @__PURE__ */ new Map();
@@ -3216,7 +3214,6 @@ var wp;
     pinLightness
   }) {
     const rampResults = {};
-    let warnings;
     let maxDeficit = -Infinity;
     let maxDeficitDirection = "lighter";
     let maxDeficitStep;
@@ -3264,7 +3261,10 @@ var wp;
         const adjustedTarget2 = adjustContrastTarget(contrast.target);
         if (candidateContrast >= adjustedTarget2) {
           calculatedColors.set(stepName, candidateColor);
-          rampResults[stepName] = getColorString(candidateColor);
+          rampResults[stepName] = {
+            color: getColorString(candidateColor),
+            warning: false
+          };
           continue;
         }
       }
@@ -3301,15 +3301,13 @@ var wp;
         maxDeficitStep = stepName;
       }
       calculatedColors.set(stepName, searchResults.color);
-      rampResults[stepName] = getColorString(searchResults.color);
-      if (!searchResults.reached && !contrast.ignoreWhenAdjustingSeed) {
-        warnings ??= [];
-        warnings.push(stepName);
-      }
+      rampResults[stepName] = {
+        color: getColorString(searchResults.color),
+        warning: !contrast.ignoreWhenAdjustingSeed && !searchResults.reached
+      };
     }
     return {
       rampResults,
-      warnings,
       maxDeficit,
       maxDeficitDirection,
       maxDeficitStep
@@ -3339,13 +3337,7 @@ var wp;
       oppDir = worse;
     }
     const sortedSteps = sortByDependency(config);
-    const {
-      rampResults,
-      warnings,
-      maxDeficit,
-      maxDeficitDirection,
-      maxDeficitStep
-    } = calculateRamp({
+    const { rampResults, maxDeficit, maxDeficitDirection, maxDeficitStep } = calculateRamp({
       seed,
       sortedSteps,
       config,
@@ -3397,7 +3389,6 @@ var wp;
     }
     return {
       ramp: bestRamp,
-      warnings,
       direction: mainDir
     };
   }
@@ -3526,7 +3517,7 @@ var wp;
       contrast: {
         reference: "stroke3",
         followDirection: "opposite",
-        target: 2.6
+        target: 2.2
       },
       taperChromaOptions: STROKE_TAPER_CHROMA
     },
@@ -3534,7 +3525,7 @@ var wp;
       contrast: {
         reference: "stroke3",
         followDirection: "opposite",
-        target: 2.4
+        target: 1.5
       },
       taperChromaOptions: STROKE_TAPER_CHROMA
     },
@@ -3703,7 +3694,7 @@ var wp;
       pinLightness: {
         stepName: STEP_TO_PIN,
         value: clampAccentScaleReferenceLightness(
-          get(parse(ramp.ramp[STEP_TO_PIN]), [oklch_default, "l"]),
+          get(parse(ramp.ramp[STEP_TO_PIN].color), [oklch_default, "l"]),
           ramp.direction
         )
       }
@@ -3841,7 +3832,10 @@ var wp;
         const key = `${rampName}-${tokenName}`;
         const aliasedBy = color_tokens_default[key] ?? [];
         for (const aliasedId of aliasedBy) {
-          entries.push([`--wpds-color-${aliasedId}`, tokenValue]);
+          entries.push([
+            `--wpds-color-${aliasedId}`,
+            tokenValue.color
+          ]);
         }
       }
     }

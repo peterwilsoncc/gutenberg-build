@@ -8,7 +8,7 @@
 /**
  * Renders the `core/breadcrumbs` block on the server.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @param array    $attributes Block attributes.
  * @param string   $content    Block default content.
@@ -76,55 +76,25 @@ function gutenberg_render_block_core_breadcrumbs( $attributes, $content, $block 
 			return '';
 		}
 
-		// For non-hierarchical post types with parents (e.g., attachments), build trail for the parent.
-		$post_parent = $post->post_parent;
-		$parent_post = null;
-		if ( ! is_post_type_hierarchical( $post_type ) && $post_parent ) {
-			$parent_post = get_post( $post_parent );
-			if ( $parent_post ) {
-				$post_id     = $parent_post->ID;
-				$post_type   = $parent_post->post_type;
-				$post_parent = $parent_post->post_parent;
-			}
-		}
-
-		// Determine breadcrumb type.
-		// Some non-hierarchical post types (e.g., attachments) can have parents.
-		// Use hierarchical breadcrumbs if a parent exists, otherwise use taxonomy breadcrumbs.
+		// Determine breadcrumb type for accurate rendering (matching JavaScript logic).
 		$show_terms = false;
-		if ( ! is_post_type_hierarchical( $post_type ) && ! $post_parent ) {
+		if ( ! is_post_type_hierarchical( $post_type ) ) {
 			$show_terms = true;
 		} elseif ( empty( get_object_taxonomies( $post_type, 'objects' ) ) ) {
+			// Hierarchical post type without taxonomies can only use ancestors.
 			$show_terms = false;
 		} else {
+			// For hierarchical post types with taxonomies, use the attribute.
 			$show_terms = $attributes['prefersTaxonomy'];
 		}
 
-		// Build breadcrumb trail.
 		if ( ! $show_terms ) {
 			$breadcrumb_items = array_merge( $breadcrumb_items, gutenberg_block_core_breadcrumbs_get_hierarchical_post_type_breadcrumbs( $post_id ) );
 		} else {
 			$breadcrumb_items = array_merge( $breadcrumb_items, gutenberg_block_core_breadcrumbs_get_terms_breadcrumbs( $post_id, $post_type ) );
 		}
-
-		// Add post title: linked when viewing a paginated page, plain text otherwise.
-		$is_paged = (int) get_query_var( 'page' ) > 1;
-		$title    = gutenberg_block_core_breadcrumbs_get_post_title( $post );
-
-		if ( $is_paged ) {
-			$breadcrumb_items[] = gutenberg_block_core_breadcrumbs_create_link(
-				get_permalink( $post ),
-				$title,
-				true
-			);
-
-			$breadcrumb_items[] = gutenberg_block_core_breadcrumbs_create_page_number_item( 'page' );
-		} else {
-			$breadcrumb_items[] = gutenberg_block_core_breadcrumbs_create_current_item(
-				$title,
-				true
-			);
-		}
+		// Add current post title (not linked).
+		$breadcrumb_items[] = gutenberg_block_core_breadcrumbs_create_current_item( gutenberg_block_core_breadcrumbs_get_post_title( $post ), true );
 	}
 
 	// Remove last item if disabled.
@@ -163,7 +133,7 @@ function gutenberg_render_block_core_breadcrumbs( $attributes, $content, $block 
 /**
  * Checks if we're on a paginated view (page 2 or higher).
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @return bool True if paged > 1, false otherwise.
  */
@@ -175,13 +145,12 @@ function gutenberg_block_core_breadcrumbs_is_paged() {
 /**
  * Creates a "Page X" breadcrumb item for paginated views.
  *
- * @since 7.0.0
- * @param string $query_var Optional. Query variable to get current page number. Default 'paged'.
+ * @since 6.9.0
+ *
  * @return string The "Page X" breadcrumb HTML.
  */
-function gutenberg_block_core_breadcrumbs_create_page_number_item( $query_var = 'paged' ) {
-	$paged = (int) get_query_var( $query_var );
-
+function gutenberg_block_core_breadcrumbs_create_page_number_item() {
+	$paged = (int) get_query_var( 'paged' );
 	return gutenberg_block_core_breadcrumbs_create_current_item(
 		/* translators: %s: page number */
 		sprintf( __( 'Page %s' ), number_format_i18n( $paged ) )
@@ -191,7 +160,7 @@ function gutenberg_block_core_breadcrumbs_create_page_number_item( $query_var = 
 /**
  * Creates a breadcrumb link item.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @param string $url        The URL for the link (will be escaped).
  * @param string $text       The link text (will be escaped).
@@ -210,7 +179,7 @@ function gutenberg_block_core_breadcrumbs_create_link( $url, $text, $allow_html 
 /**
  * Creates a breadcrumb current page item.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @param string $text       The text content (will be escaped).
  * @param bool   $allow_html Whether to allow HTML in the text. If true, uses wp_kses_post(), otherwise uses esc_html(). Default false.
@@ -230,7 +199,7 @@ function gutenberg_block_core_breadcrumbs_create_current_item( $text, $allow_htm
  * When paginated (is_paged is true), creates a link to page 1.
  * Otherwise, creates a span marked as the current page.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @param string $text       The text content (will be escaped).
  * @param bool   $is_paged   Whether we're on a paginated view.
@@ -248,7 +217,7 @@ function gutenberg_block_core_breadcrumbs_create_item( $text, $is_paged = false,
 /**
  * Gets a post title with fallback for empty titles.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @param int|WP_Post $post_id_or_object The post ID or post object.
  *
@@ -265,9 +234,9 @@ function gutenberg_block_core_breadcrumbs_get_post_title( $post_id_or_object ) {
 /**
  * Generates breadcrumb items from hierarchical post type ancestors.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
- * @param int $post_id   The post ID.
+ * @param int    $post_id   The post ID.
  *
  * @return array Array of breadcrumb HTML items.
  */
@@ -291,7 +260,7 @@ function gutenberg_block_core_breadcrumbs_get_hierarchical_post_type_breadcrumbs
  *
  * For hierarchical taxonomies, retrieves and formats ancestor terms as breadcrumb links.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @param int    $term_id  The term ID.
  * @param string $taxonomy The taxonomy name.
@@ -325,7 +294,7 @@ function gutenberg_block_core_breadcrumbs_get_term_ancestors_items( $term_id, $t
  * Handles taxonomy archives, post type archives, date archives, and author archives.
  * For hierarchical taxonomies, includes ancestor terms in the breadcrumb trail.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @return array Array of breadcrumb HTML items.
  */
@@ -457,7 +426,7 @@ function gutenberg_block_core_breadcrumbs_get_archive_breadcrumbs() {
  * Finds the first publicly queryable taxonomy with terms assigned to the post
  * and generates breadcrumb links, including hierarchical term ancestors if applicable.
  *
- * @since 7.0.0
+ * @since 6.9.0
  *
  * @param int    $post_id   The post ID.
  * @param string $post_type The post type name.
@@ -479,72 +448,21 @@ function gutenberg_block_core_breadcrumbs_get_terms_breadcrumbs( $post_id, $post
 		return array();
 	}
 
-	/**
-	 * Filters breadcrumb settings on a per-post-type basis.
-	 *
-	 * Allow developers to customize breadcrumb behavior for specific post types.
-	 *
-	 * @since 7.0.0
-	 *
-	 * @param array  $settings {
-	 *     Array of breadcrumb settings. Default empty array.
-	 *
-	 *     @type string $taxonomy Optional. Taxonomy slug to use for breadcrumbs.
-	 *                            The taxonomy must be registered for the post type and have
-	 *                            terms assigned to the post. If not found or has no terms,
-	 *                            fall back to the first available taxonomy with terms.
-	 *     @type string $term     Optional. Term slug to use when the post has multiple terms
-	 *                            in the selected taxonomy. If the term is not found or not
-	 *                            assigned to the post, fall back to the first term. If the
-	 *                            post has only one term, that term is used regardless.
-	 * }
-	 * @param string $post_type The post type slug.
-	 */
-	$settings = apply_filters( 'block_core_breadcrumbs_post_type_settings', array(), $post_type );
-
+	// Find the first taxonomy that has terms assigned to this post.
 	$taxonomy_name = null;
 	$terms         = array();
-
-	// Try preferred taxonomy first if specified.
-	if ( ! empty( $settings['taxonomy'] ) ) {
-		foreach ( $taxonomies as $taxonomy ) {
-			if ( $taxonomy->name === $settings['taxonomy'] ) {
-				$post_terms = get_the_terms( $post_id, $taxonomy->name );
-				if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) {
-					$taxonomy_name = $taxonomy->name;
-					$terms         = $post_terms;
-				}
-				break;
-			}
-		}
-	}
-
-	// If no preferred taxonomy or it didn't have terms, find the first taxonomy with terms.
-	if ( empty( $terms ) ) {
-		foreach ( $taxonomies as $taxonomy ) {
-			$post_terms = get_the_terms( $post_id, $taxonomy->name );
-			if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) {
-				$taxonomy_name = $taxonomy->name;
-				$terms         = $post_terms;
-				break;
-			}
+	foreach ( $taxonomies as $taxonomy ) {
+		$post_terms = get_the_terms( $post_id, $taxonomy->name );
+		if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) {
+			$taxonomy_name = $taxonomy->name;
+			$terms         = $post_terms;
+			break;
 		}
 	}
 
 	if ( ! empty( $terms ) ) {
-		// Select which term to use.
+		// Use the first term (if multiple are assigned).
 		$term = reset( $terms );
-
-		// Try preferred term if specified and post has multiple terms.
-		if ( ! empty( $settings['term'] ) && count( $terms ) > 1 ) {
-			foreach ( $terms as $candidate_term ) {
-				if ( $candidate_term->slug === $settings['term'] ) {
-					$term = $candidate_term;
-					break;
-				}
-			}
-		}
-
 		// Add hierarchical term ancestors if applicable.
 		$breadcrumb_items   = array_merge(
 			$breadcrumb_items,
@@ -561,7 +479,7 @@ function gutenberg_block_core_breadcrumbs_get_terms_breadcrumbs( $post_id, $post
 /**
  * Registers the `core/breadcrumbs` block on the server.
  *
- * @since 7.0.0
+ * @since 6.9.0
  */
 function gutenberg_register_block_core_breadcrumbs() {
 	register_block_type_from_metadata(

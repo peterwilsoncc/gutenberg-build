@@ -43712,7 +43712,7 @@ This message will only show in development mode. It won't appear in production. 
             /* translators: accessibility text */
             (0, import_i18n51.__)("(opens in a new tab)")
           ),
-          children: (0, import_i18n51.isRTL)() ? "\u2196" : "\u2197"
+          children: "\u2197"
         })]
       })
     );
@@ -47414,7 +47414,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     isBack,
     onAnimationEnd
   }) {
-    const isRTL23 = (0, import_i18n70.isRTL)();
+    const isRTL22 = (0, import_i18n70.isRTL)();
     const prefersReducedMotion2 = (0, import_compose66.useReducedMotion)();
     const [animationStatus, setAnimationStatus] = (0, import_element168.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
@@ -47426,7 +47426,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setAnimationStatus(skipAnimation || prefersReducedMotion2 ? "OUT" : "ANIMATING_OUT");
       }
     }, [becameSelected, becameUnselected, skipAnimation, prefersReducedMotion2]);
-    const animationDirection = isRTL23 && isBack || !isRTL23 && !isBack ? "end" : "start";
+    const animationDirection = isRTL22 && isBack || !isRTL22 && !isBack ? "end" : "start";
     const isAnimatingIn = animationStatus === "ANIMATING_IN";
     const isAnimatingOut = animationStatus === "ANIMATING_OUT";
     let animationType;

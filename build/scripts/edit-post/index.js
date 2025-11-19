@@ -87,10 +87,10 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/i18n
-  var require_i18n = __commonJS({
-    "package-external:@wordpress/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+  // vendor-external:react/jsx-runtime
+  var require_jsx_runtime = __commonJS({
+    "vendor-external:react/jsx-runtime"(exports, module) {
+      module.exports = window.ReactJSXRuntime;
     }
   });
 
@@ -98,13 +98,6 @@ var wp;
   var require_components = __commonJS({
     "package-external:@wordpress/components"(exports, module) {
       module.exports = window.wp.components;
-    }
-  });
-
-  // vendor-external:react/jsx-runtime
-  var require_jsx_runtime = __commonJS({
-    "vendor-external:react/jsx-runtime"(exports, module) {
-      module.exports = window.ReactJSXRuntime;
     }
   });
 
@@ -119,6 +112,13 @@ var wp;
   var require_style_engine = __commonJS({
     "package-external:@wordpress/style-engine"(exports, module) {
       module.exports = window.wp.styleEngine;
+    }
+  });
+
+  // package-external:@wordpress/i18n
+  var require_i18n = __commonJS({
+    "package-external:@wordpress/i18n"(exports, module) {
+      module.exports = window.wp.i18n;
     }
   });
 
@@ -1530,12 +1530,17 @@ var wp;
     const { editPost } = (0, import_data8.useDispatch)(import_editor6.store);
     const [syncType, setSyncType] = (0, import_element4.useState)(void 0);
     const [title, setTitle] = (0, import_element4.useState)("");
-    const isNewPost = (0, import_data8.useSelect)(
-      (select3) => select3(import_editor6.store).isCleanNewPost(),
-      []
+    const { postType, isNewPost } = (0, import_data8.useSelect)((select3) => {
+      const { getEditedPostAttribute, isCleanNewPost } = select3(import_editor6.store);
+      return {
+        postType: getEditedPostAttribute("type"),
+        isNewPost: isCleanNewPost()
+      };
+    }, []);
+    const [isModalOpen, setIsModalOpen] = (0, import_element4.useState)(
+      () => isNewPost && postType === "wp_block"
     );
-    const [isModalOpen, setIsModalOpen] = (0, import_element4.useState)(() => isNewPost);
-    if (!isNewPost) {
+    if (postType !== "wp_block" || !isNewPost) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_jsx_runtime9.Fragment, { children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
@@ -2741,7 +2746,7 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(keyboard_shortcuts_default, {}),
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_editor18.EditorKeyboardShortcutsRegister, {}),
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(BlockKeyboardShortcuts, {}),
-                currentPostType === "wp_block" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(InitPatternModal, {}),
+                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(InitPatternModal, {}),
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
                 /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(more_menu_default, {}),
                 backButton,
