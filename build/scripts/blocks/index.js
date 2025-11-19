@@ -10223,8 +10223,9 @@ ${p3}`
   }
 
   // packages/blocks/build-module/api/index.js
+  var fieldsKey = Symbol("fields");
   var privateApis = {};
-  lock(privateApis, { isContentBlock });
+  lock(privateApis, { isContentBlock, fieldsKey });
 
   // packages/blocks/build-module/deprecated.js
   var import_deprecated11 = __toESM(require_deprecated());
