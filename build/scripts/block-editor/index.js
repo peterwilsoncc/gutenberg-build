@@ -58464,6 +58464,7 @@ var wp;
 
   // packages/block-editor/build-module/components/content-only-controls/index.js
   var import_jsx_runtime370 = __toESM(require_jsx_runtime());
+  var { fieldsKey } = unlock(import_blocks89.privateApis);
   var controls = {
     PlainText: PlainText2,
     RichText: RichTextControl,
@@ -58511,7 +58512,7 @@ var wp;
     });
     const blockInformation = useBlockDisplayInformation(clientId);
     const popoverPlacementProps = useInspectorPopoverPlacement();
-    if (!blockType?.fields?.length) {
+    if (!blockType?.[fieldsKey]?.length) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
@@ -58523,7 +58524,7 @@ var wp;
         ] }),
         panelId: clientId,
         dropdownMenuProps: popoverPlacementProps,
-        children: blockType?.fields?.map((field, index) => /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
+        children: blockType?.[fieldsKey]?.map((field, index) => /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
           BlockAttributeToolsPanelItem,
           {
             clientId,
