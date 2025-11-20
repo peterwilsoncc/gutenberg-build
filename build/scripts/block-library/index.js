@@ -4459,12 +4459,13 @@ var wp;
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings7[fieldsKey] = [
       {
+        id: "audio",
         label: (0, import_i18n11.__)("Audio"),
-        type: "Media",
+        type: "media",
         shownByDefault: true,
         mapping: {
           id: "id",
-          src: "src"
+          url: "src"
         },
         args: {
           allowedTypes: ["audio"],
@@ -4472,12 +4473,10 @@ var wp;
         }
       },
       {
+        id: "caption",
         label: (0, import_i18n11.__)("Caption"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "caption"
-        }
+        type: "richtext",
+        shownByDefault: false
       }
     ];
   }
@@ -6681,21 +6680,20 @@ var wp;
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings9[fieldsKey2] = [
       {
+        id: "text",
         label: (0, import_i18n14.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "text"
-        }
+        type: "richtext",
+        shownByDefault: true
       },
       {
+        id: "link",
         label: (0, import_i18n14.__)("Link"),
-        type: "Link",
+        type: "link",
         shownByDefault: false,
         mapping: {
-          href: "url",
+          url: "url",
           rel: "rel",
-          target: "linkTarget"
+          linkTarget: "linkTarget"
         }
       }
     ];
@@ -8332,12 +8330,10 @@ var wp;
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings14[fieldsKey3] = [
       {
+        id: "content",
         label: (0, import_i18n23.__)("Code"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "content"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -16516,13 +16512,14 @@ var wp;
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings30[fieldsKey4] = [
       {
+        id: "background",
         label: (0, import_i18n53.__)("Background"),
-        type: "Media",
+        type: "media",
         shownByDefault: true,
         mapping: {
           type: "backgroundType",
           id: "id",
-          src: "url",
+          url: "url",
           alt: "alt",
           featuredImage: "useFeaturedImage"
         },
@@ -16844,12 +16841,10 @@ var wp;
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings31[fieldsKey5] = [
       {
+        id: "summary",
         label: (0, import_i18n55.__)("Summary"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "summary"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -19106,12 +19101,13 @@ ${url}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings33[fieldsKey6] = [
       {
+        id: "file",
         label: (0, import_i18n64.__)("File"),
-        type: "Media",
+        type: "media",
         shownByDefault: true,
         mapping: {
           id: "id",
-          src: "href"
+          url: "href"
         },
         args: {
           allowedTypes: [],
@@ -19119,20 +19115,16 @@ ${url}
         }
       },
       {
+        id: "fileName",
         label: (0, import_i18n64.__)("Filename"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "fileName"
-        }
+        type: "richtext",
+        shownByDefault: false
       },
       {
+        id: "downloadButtonText",
         label: (0, import_i18n64.__)("Button Text"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "downloadButtonText"
-        }
+        type: "richtext",
+        shownByDefault: false
       }
     ];
   }
@@ -24399,12 +24391,10 @@ ${url}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings40[fieldsKey7] = [
       {
+        id: "content",
         label: (0, import_i18n81.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "content"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -27757,12 +27747,13 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings43[fieldsKey8] = [
       {
+        id: "image",
         label: (0, import_i18n90.__)("Image"),
-        type: "Media",
+        type: "media",
         shownByDefault: true,
         mapping: {
           id: "id",
-          src: "url",
+          url: "url",
           caption: "caption",
           alt: "alt"
         },
@@ -27772,31 +27763,28 @@ ${js}
         }
       },
       {
+        id: "link",
         label: (0, import_i18n90.__)("Link"),
-        type: "Link",
+        type: "link",
         shownByDefault: false,
         mapping: {
-          href: "href",
+          url: "href",
           rel: "rel",
-          target: "linkTarget",
+          linkTarget: "linkTarget",
           destination: "linkDestination"
         }
       },
       {
+        id: "caption",
         label: (0, import_i18n90.__)("Caption"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "caption"
-        }
+        type: "richtext",
+        shownByDefault: false
       },
       {
+        id: "alt",
         label: (0, import_i18n90.__)("Alt text"),
-        type: "PlainText",
-        shownByDefault: false,
-        mapping: {
-          value: "alt"
-        }
+        type: "text",
+        shownByDefault: false
       }
     ];
   }
@@ -30624,12 +30612,10 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings48[fieldsKey9] = [
       {
+        id: "content",
         label: (0, import_i18n98.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "content"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -32848,13 +32834,15 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings50[fieldsKey10] = [
       {
+        id: "media",
         label: (0, import_i18n103.__)("Media"),
-        type: "Media",
+        type: "media",
         shownByDefault: true,
         mapping: {
           id: "mediaId",
           type: "mediaType",
-          src: "mediaUrl"
+          url: "mediaUrl",
+          link: "mediaLink"
         },
         args: {
           allowedTypes: ["image", "video"],
@@ -32862,13 +32850,14 @@ ${js}
         }
       },
       {
+        id: "link",
         label: (0, import_i18n103.__)("Link"),
-        type: "Link",
+        type: "link",
         shownByDefault: false,
         mapping: {
-          href: "href",
+          url: "href",
           rel: "rel",
-          target: "linkTarget"
+          linkTarget: "linkTarget"
         }
       }
     ];
@@ -33197,12 +33186,10 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings52[fieldsKey11] = [
       {
+        id: "customText",
         label: (0, import_i18n106.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "customText"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -38348,16 +38335,15 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings54[fieldsKey12] = [
       {
+        id: "label",
         label: (0, import_i18n129.__)("Label"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "label"
-        }
+        type: "richtext",
+        shownByDefault: true
       },
       {
+        id: "link",
         label: (0, import_i18n129.__)("Link"),
-        type: "Link",
+        type: "link",
         shownByDefault: false,
         mapping: {
           href: "url",
@@ -38880,16 +38866,15 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings55[fieldsKey13] = [
       {
+        id: "label",
         label: (0, import_i18n131.__)("Label"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "label"
-        }
+        type: "richtext",
+        shownByDefault: true
       },
       {
+        id: "link",
         label: (0, import_i18n131.__)("Link"),
-        type: "Link",
+        type: "link",
         shownByDefault: false,
         mapping: {
           href: "url",
@@ -40755,12 +40740,10 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings60[fieldsKey14] = [
       {
+        id: "content",
         label: (0, import_i18n140.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "content"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -45961,12 +45944,10 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings77[fieldsKey15] = [
       {
+        id: "content",
         label: (0, import_i18n164.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "content"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -46737,20 +46718,16 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings78[fieldsKey16] = [
       {
+        id: "value",
         label: (0, import_i18n166.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "value"
-        }
+        type: "richtext",
+        shownByDefault: true
       },
       {
+        id: "citation",
         label: (0, import_i18n166.__)("Citation"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "citation"
-        }
+        type: "richtext",
+        shownByDefault: false
       }
     ];
   }
@@ -52852,28 +52829,22 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings91[fieldsKey17] = [
       {
+        id: "label",
         label: (0, import_i18n203.__)("Label"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "label"
-        }
+        type: "richtext",
+        shownByDefault: true
       },
       {
+        id: "buttonText",
         label: (0, import_i18n203.__)("Button text"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "buttonText"
-        }
+        type: "richtext",
+        shownByDefault: false
       },
       {
+        id: "placeholder",
         label: (0, import_i18n203.__)("Placeholder"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "placeholder"
-        }
+        type: "richtext",
+        shownByDefault: false
       }
     ];
   }
@@ -55358,8 +55329,9 @@ ${js}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings97[fieldsKey18] = [
       {
+        id: "link",
         label: (0, import_i18n212.__)("Link"),
-        type: "Link",
+        type: "link",
         shownByDefault: true,
         mapping: {
           href: "url",
@@ -55367,12 +55339,10 @@ ${js}
         }
       },
       {
+        id: "label",
         label: (0, import_i18n212.__)("Label"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "label"
-        }
+        type: "richtext",
+        shownByDefault: false
       }
     ];
   }
@@ -63532,12 +63502,10 @@ ${declarations}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings112[fieldsKey19] = [
       {
+        id: "content",
         label: (0, import_i18n244.__)("Content"),
-        type: "RichText",
-        shownByDefault: true,
-        mapping: {
-          value: "content"
-        }
+        type: "richtext",
+        shownByDefault: true
       }
     ];
   }
@@ -64588,12 +64556,13 @@ ${declarations}
   if (window.__experimentalContentOnlyPatternInsertion) {
     settings113[fieldsKey20] = [
       {
+        id: "video",
         label: (0, import_i18n248.__)("Video"),
-        type: "Media",
+        type: "media",
         shownByDefault: true,
         mapping: {
           id: "id",
-          src: "src",
+          url: "src",
           caption: "caption",
           poster: "poster"
         },
@@ -64603,12 +64572,10 @@ ${declarations}
         }
       },
       {
+        id: "caption",
         label: (0, import_i18n248.__)("Caption"),
-        type: "RichText",
-        shownByDefault: false,
-        mapping: {
-          value: "caption"
-        }
+        type: "richtext",
+        shownByDefault: false
       }
     ];
   }
