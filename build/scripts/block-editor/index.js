@@ -58066,23 +58066,6 @@ var wp;
     OPERATOR_IN_THE_PAST,
     OPERATOR_OVER
   ];
-  var SINGLE_SELECTION_OPERATORS = [
-    OPERATOR_IS,
-    OPERATOR_IS_NOT,
-    OPERATOR_LESS_THAN,
-    OPERATOR_GREATER_THAN,
-    OPERATOR_LESS_THAN_OR_EQUAL,
-    OPERATOR_GREATER_THAN_OR_EQUAL,
-    OPERATOR_BEFORE,
-    OPERATOR_AFTER,
-    OPERATOR_BEFORE_INC,
-    OPERATOR_AFTER_INC,
-    OPERATOR_CONTAINS,
-    OPERATOR_NOT_CONTAINS,
-    OPERATOR_STARTS_WITH,
-    OPERATOR_ON,
-    OPERATOR_NOT_ON
-  ];
   var OPERATORS = {
     [OPERATOR_IS]: {
       key: "is-filter",
@@ -59865,11 +59848,8 @@ var wp;
     return parsed && isValid(parsed) ? parsed : null;
   }
 
-  // packages/dataviews/build-module/utils/normalize-fields.js
-  var import_date8 = __toESM(require_date());
-
   // packages/dataviews/build-module/field-types/email.js
-  var import_i18n196 = __toESM(require_i18n());
+  var import_i18n201 = __toESM(require_i18n());
 
   // packages/dataviews/build-module/field-types/utils/render-from-elements.js
   function RenderFromElements({
@@ -59890,636 +59870,6 @@ var wp;
     return elements?.find((element) => element.value === value)?.label || field.getValue({ item });
   }
 
-  // packages/dataviews/build-module/field-types/email.js
-  var import_jsx_runtime369 = __toESM(require_jsx_runtime());
-  function sort(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  var email_default = {
-    sort,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-          return (0, import_i18n196.__)("Value must be a valid email address.");
-        }
-        return null;
-      }
-    },
-    Edit: "email",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-      validOperators: [
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY,
-        OPERATOR_IS_NONE,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/integer.js
-  var import_i18n197 = __toESM(require_i18n());
-  var import_jsx_runtime370 = __toESM(require_jsx_runtime());
-  function sort2(a2, b2, direction) {
-    return direction === "asc" ? a2 - b2 : b2 - a2;
-  }
-  var integer_default = {
-    sort: sort2,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-          return (0, import_i18n197.__)("Value must be an integer.");
-        }
-        return null;
-      }
-    },
-    Edit: "integer",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN
-      ],
-      validOperators: [
-        // Single-selection
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN,
-        // Multiple-selection
-        OPERATOR_IS_ANY,
-        OPERATOR_IS_NONE,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/number.js
-  var import_i18n198 = __toESM(require_i18n());
-  var import_jsx_runtime371 = __toESM(require_jsx_runtime());
-  function sort3(a2, b2, direction) {
-    return direction === "asc" ? a2 - b2 : b2 - a2;
-  }
-  function isEmpty3(value) {
-    return value === "" || value === void 0 || value === null;
-  }
-  var number_default = {
-    sort: sort3,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (!isEmpty3(value) && !Number.isFinite(value)) {
-          return (0, import_i18n198.__)("Value must be a number.");
-        }
-        return null;
-      }
-    },
-    Edit: "number",
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (![null, void 0].includes(value)) {
-        return Number(value).toFixed(2);
-      }
-      return null;
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN
-      ],
-      validOperators: [
-        // Single-selection
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN,
-        // Multiple-selection
-        OPERATOR_IS_ANY,
-        OPERATOR_IS_NONE,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/text.js
-  var import_jsx_runtime372 = __toESM(require_jsx_runtime());
-  function sort4(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var text_default = {
-    sort: sort4,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "text",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-      validOperators: [
-        // Single selection
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY,
-        OPERATOR_IS_NONE,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/datetime.js
-  var import_jsx_runtime373 = __toESM(require_jsx_runtime());
-  function sort5(a2, b2, direction) {
-    const timeA = new Date(a2).getTime();
-    const timeB = new Date(b2).getTime();
-    return direction === "asc" ? timeA - timeB : timeB - timeA;
-  }
-  var datetime_default = {
-    sort: sort5,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "datetime",
-    render: ({ item, field }) => {
-      if (field.elements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (["", void 0, null].includes(value)) {
-        return null;
-      }
-      try {
-        const dateValue = parseDateTime(value);
-        return dateValue?.toLocaleString();
-      } catch (error) {
-        return null;
-      }
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER
-      ],
-      validOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/date.js
-  var import_date3 = __toESM(require_date());
-  var import_jsx_runtime374 = __toESM(require_jsx_runtime());
-  function sort6(a2, b2, direction) {
-    const timeA = new Date(a2).getTime();
-    const timeB = new Date(b2).getTime();
-    return direction === "asc" ? timeA - timeB : timeB - timeA;
-  }
-  var date_default = {
-    sort: sort6,
-    Edit: "date",
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (!value) {
-        return "";
-      }
-      if (field.type !== "date") {
-        return "";
-      }
-      return (0, import_date3.dateI18n)(field.format.date, (0, import_date3.getDate)(value));
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER,
-        OPERATOR_BETWEEN
-      ],
-      validOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE,
-        OPERATOR_AFTER,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER,
-        OPERATOR_BETWEEN
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/boolean.js
-  var import_i18n199 = __toESM(require_i18n());
-  var import_jsx_runtime375 = __toESM(require_jsx_runtime());
-  function sort7(a2, b2, direction) {
-    const boolA = Boolean(a2);
-    const boolB = Boolean(b2);
-    if (boolA === boolB) {
-      return 0;
-    }
-    if (direction === "asc") {
-      return boolA ? 1 : -1;
-    }
-    return boolA ? -1 : 1;
-  }
-  var boolean_default = {
-    sort: sort7,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-          return (0, import_i18n199.__)("Value must be true, false, or undefined");
-        }
-        return null;
-      }
-    },
-    Edit: "checkbox",
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(RenderFromElements, { item, field });
-      }
-      if (field.getValue({ item }) === true) {
-        return (0, import_i18n199.__)("True");
-      }
-      if (field.getValue({ item }) === false) {
-        return (0, import_i18n199.__)("False");
-      }
-      return null;
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
-      validOperators: [OPERATOR_IS, OPERATOR_IS_NOT]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/media.js
-  function sort8() {
-    return 0;
-  }
-  var media_default2 = {
-    sort: sort8,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: null,
-    render: () => null,
-    enableSorting: false,
-    filterBy: false
-  };
-
-  // packages/dataviews/build-module/field-types/array.js
-  var import_i18n200 = __toESM(require_i18n());
-  function sort9(valueA, valueB, direction) {
-    const arrA = Array.isArray(valueA) ? valueA : [];
-    const arrB = Array.isArray(valueB) ? valueB : [];
-    if (arrA.length !== arrB.length) {
-      return direction === "asc" ? arrA.length - arrB.length : arrB.length - arrA.length;
-    }
-    const joinedA = arrA.join(",");
-    const joinedB = arrB.join(",");
-    return direction === "asc" ? joinedA.localeCompare(joinedB) : joinedB.localeCompare(joinedA);
-  }
-  function render({ item, field }) {
-    const value = field.getValue({ item }) || [];
-    return value.join(", ");
-  }
-  var arrayFieldType = {
-    sort: sort9,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-          return (0, import_i18n200.__)("Value must be an array.");
-        }
-        if (!value.every((v2) => typeof v2 === "string")) {
-          return (0, import_i18n200.__)("Every value must be a string.");
-        }
-        return null;
-      }
-    },
-    Edit: "array",
-    // Use array control
-    render,
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-      validOperators: [
-        OPERATOR_IS_ANY,
-        OPERATOR_IS_NONE,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-  var array_default = arrayFieldType;
-
-  // packages/dataviews/build-module/field-types/password.js
-  var import_jsx_runtime376 = __toESM(require_jsx_runtime());
-  function sort10(valueA, valueB, direction) {
-    return 0;
-  }
-  var password_default = {
-    sort: sort10,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "password",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
-    },
-    enableSorting: false,
-    filterBy: false
-  };
-
-  // packages/dataviews/build-module/field-types/telephone.js
-  var import_jsx_runtime377 = __toESM(require_jsx_runtime());
-  function sort11(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var telephone_default = {
-    sort: sort11,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "telephone",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-      validOperators: [
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY,
-        OPERATOR_IS_NONE,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/color.js
-  var import_i18n201 = __toESM(require_i18n());
-  var import_jsx_runtime378 = __toESM(require_jsx_runtime());
-  function sort12(valueA, valueB, direction) {
-    const colorA = w(valueA);
-    const colorB = w(valueB);
-    if (!colorA.isValid() && !colorB.isValid()) {
-      return 0;
-    }
-    if (!colorA.isValid()) {
-      return direction === "asc" ? 1 : -1;
-    }
-    if (!colorB.isValid()) {
-      return direction === "asc" ? -1 : 1;
-    }
-    const hslA = colorA.toHsl();
-    const hslB = colorB.toHsl();
-    if (hslA.h !== hslB.h) {
-      return direction === "asc" ? hslA.h - hslB.h : hslB.h - hslA.h;
-    }
-    if (hslA.s !== hslB.s) {
-      return direction === "asc" ? hslA.s - hslB.s : hslB.s - hslA.s;
-    }
-    return direction === "asc" ? hslA.l - hslB.l : hslB.l - hslA.l;
-  }
-  var color_default2 = {
-    sort: sort12,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-          return (0, import_i18n201.__)("Value must be a valid color.");
-        }
-        return null;
-      }
-    },
-    Edit: "color",
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (!value || !w(value).isValid()) {
-        return value;
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime378.jsxs)(
-        "div",
-        {
-          style: { display: "flex", alignItems: "center", gap: "8px" },
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
-              "div",
-              {
-                style: {
-                  width: "16px",
-                  height: "16px",
-                  borderRadius: "50%",
-                  backgroundColor: value,
-                  border: "1px solid #ddd",
-                  flexShrink: 0
-                }
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime378.jsx)("span", { children: value })
-          ]
-        }
-      );
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-      validOperators: [OPERATOR_IS, OPERATOR_IS_NOT]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/url.js
-  var import_jsx_runtime379 = __toESM(require_jsx_runtime());
-  function sort13(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var url_default = {
-    sort: sort13,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "url",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-      validOperators: [
-        OPERATOR_IS,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY,
-        OPERATOR_IS_NONE,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/index.js
-  var import_jsx_runtime380 = __toESM(require_jsx_runtime());
-  function getFieldTypeDefinition(type) {
-    if ("email" === type) {
-      return email_default;
-    }
-    if ("integer" === type) {
-      return integer_default;
-    }
-    if ("number" === type) {
-      return number_default;
-    }
-    if ("text" === type) {
-      return text_default;
-    }
-    if ("datetime" === type) {
-      return datetime_default;
-    }
-    if ("date" === type) {
-      return date_default;
-    }
-    if ("boolean" === type) {
-      return boolean_default;
-    }
-    if ("media" === type) {
-      return media_default2;
-    }
-    if ("array" === type) {
-      return array_default;
-    }
-    if ("password" === type) {
-      return password_default;
-    }
-    if ("telephone" === type) {
-      return telephone_default;
-    }
-    if ("color" === type) {
-      return color_default2;
-    }
-    if ("url" === type) {
-      return url_default;
-    }
-    return {
-      sort: (a2, b2, direction) => {
-        if (typeof a2 === "number" && typeof b2 === "number") {
-          return direction === "asc" ? a2 - b2 : b2 - a2;
-        }
-        return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
-      },
-      isValid: {
-        elements: true,
-        custom: () => null
-      },
-      Edit: null,
-      render: ({ item, field }) => {
-        return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-      },
-      enableSorting: true,
-      filterBy: {
-        defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
-        validOperators: ALL_OPERATORS
-      }
-    };
-  }
-
   // packages/dataviews/build-module/dataform-controls/checkbox.js
   var import_components204 = __toESM(require_components());
   var import_element206 = __toESM(require_element());
@@ -60538,7 +59888,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
-  var import_jsx_runtime381 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime369 = __toESM(require_jsx_runtime());
   var { ValidatedCheckboxControl } = unlock3(import_components204.privateApis);
   function Checkbox({
     field,
@@ -60553,7 +59903,7 @@ var wp;
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [data, getValue, onChange, setValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
@@ -60570,26 +59920,26 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/datetime.js
   var import_components206 = __toESM(require_components());
   var import_element208 = __toESM(require_element());
-  var import_i18n203 = __toESM(require_i18n());
-  var import_date5 = __toESM(require_date());
+  var import_i18n197 = __toESM(require_i18n());
+  var import_date3 = __toESM(require_date());
 
   // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
   var import_components205 = __toESM(require_components());
   var import_element207 = __toESM(require_element());
-  var import_i18n202 = __toESM(require_i18n());
-  var import_jsx_runtime382 = __toESM(require_jsx_runtime());
+  var import_i18n196 = __toESM(require_i18n());
+  var import_jsx_runtime370 = __toESM(require_jsx_runtime());
   var TIME_UNITS_OPTIONS = {
     [OPERATOR_IN_THE_PAST]: [
-      { value: "days", label: (0, import_i18n202.__)("Days") },
-      { value: "weeks", label: (0, import_i18n202.__)("Weeks") },
-      { value: "months", label: (0, import_i18n202.__)("Months") },
-      { value: "years", label: (0, import_i18n202.__)("Years") }
+      { value: "days", label: (0, import_i18n196.__)("Days") },
+      { value: "weeks", label: (0, import_i18n196.__)("Weeks") },
+      { value: "months", label: (0, import_i18n196.__)("Months") },
+      { value: "years", label: (0, import_i18n196.__)("Years") }
     ],
     [OPERATOR_OVER]: [
-      { value: "days", label: (0, import_i18n202.__)("Days ago") },
-      { value: "weeks", label: (0, import_i18n202.__)("Weeks ago") },
-      { value: "months", label: (0, import_i18n202.__)("Months ago") },
-      { value: "years", label: (0, import_i18n202.__)("Years ago") }
+      { value: "days", label: (0, import_i18n196.__)("Days ago") },
+      { value: "weeks", label: (0, import_i18n196.__)("Weeks ago") },
+      { value: "months", label: (0, import_i18n196.__)("Months ago") },
+      { value: "years", label: (0, import_i18n196.__)("Years ago") }
     ]
   };
   function RelativeDateControl({
@@ -60622,7 +59972,7 @@ var wp;
       ),
       [onChange, setValue, data, relValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
       import_components205.BaseControl,
       {
         id,
@@ -60630,8 +59980,8 @@ var wp;
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime382.jsxs)(import_components205.__experimentalHStack, { spacing: 2.5, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime370.jsxs)(import_components205.__experimentalHStack, { spacing: 2.5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
             import_components205.__experimentalNumberControl,
             {
               __next40pxDefaultSize: true,
@@ -60643,13 +59993,13 @@ var wp;
               onChange: onChangeValue
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
             import_components205.SelectControl,
             {
               className: "dataviews-controls__relative-date-unit",
               __next40pxDefaultSize: true,
               __nextHasNoMarginBottom: true,
-              label: (0, import_i18n202.__)("Unit"),
+              label: (0, import_i18n196.__)("Unit"),
               value: unit,
               options,
               onChange: onChangeUnit,
@@ -60662,7 +60012,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/datetime.js
-  var import_jsx_runtime383 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime371 = __toESM(require_jsx_runtime());
   var { DateCalendar, ValidatedInputControl } = unlock3(import_components206.privateApis);
   var formatDateTime = (date) => {
     if (!date) {
@@ -60756,9 +60106,9 @@ var wp;
     const {
       timezone: { string: timezoneString },
       l10n: { startOfWeek: startOfWeek2 }
-    } = (0, import_date5.getSettings)();
-    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n203.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+    } = (0, import_date3.getSettings)();
+    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n197.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
       import_components206.BaseControl,
       {
         __nextHasNoMarginBottom: true,
@@ -60766,8 +60116,8 @@ var wp;
         label: displayLabel,
         help: description,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime383.jsxs)(import_components206.__experimentalVStack, { spacing: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_components206.__experimentalVStack, { spacing: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
             DateCalendar,
             {
               style: { width: "100%" },
@@ -60779,7 +60129,7 @@ var wp;
               weekStartsOn: startOfWeek2
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
             ValidatedInputControl,
             {
               ref: inputControlRef,
@@ -60787,7 +60137,7 @@ var wp;
               required: !!isValid2?.required,
               customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
-              label: (0, import_i18n203.__)("Date time"),
+              label: (0, import_i18n197.__)("Date time"),
               hideLabelFromVision: true,
               value: value ? formatDateTime(
                 parseDateTime(value) || void 0
@@ -60808,7 +60158,7 @@ var wp;
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__datetime",
@@ -60820,7 +60170,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
       CalendarDateTimeControl,
       {
         data,
@@ -60835,10 +60185,10 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/date.js
   var import_components207 = __toESM(require_components());
   var import_element209 = __toESM(require_element());
-  var import_i18n204 = __toESM(require_i18n());
-  var import_date6 = __toESM(require_date());
+  var import_i18n198 = __toESM(require_i18n());
+  var import_date4 = __toESM(require_date());
 
-  // packages/dataviews/build-module/utils/week-starts-on.js
+  // packages/dataviews/build-module/field-types/utils/week-starts-on.js
   var DAYS_OF_WEEK = [
     "sunday",
     "monday",
@@ -60866,35 +60216,35 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/date.js
-  var import_jsx_runtime384 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime372 = __toESM(require_jsx_runtime());
   var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components207.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
-      label: (0, import_i18n204.__)("Today"),
-      getValue: () => (0, import_date6.getDate)(null)
+      label: (0, import_i18n198.__)("Today"),
+      getValue: () => (0, import_date4.getDate)(null)
     },
     {
       id: "yesterday",
-      label: (0, import_i18n204.__)("Yesterday"),
+      label: (0, import_i18n198.__)("Yesterday"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return subDays(today, 1);
       }
     },
     {
       id: "past-week",
-      label: (0, import_i18n204.__)("Past week"),
+      label: (0, import_i18n198.__)("Past week"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return subDays(today, 7);
       }
     },
     {
       id: "past-month",
-      label: (0, import_i18n204.__)("Past month"),
+      label: (0, import_i18n198.__)("Past month"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return subMonths(today, 1);
       }
     }
@@ -60902,41 +60252,41 @@ var wp;
   var DATE_RANGE_PRESETS = [
     {
       id: "last-7-days",
-      label: (0, import_i18n204.__)("Last 7 days"),
+      label: (0, import_i18n198.__)("Last 7 days"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return [subDays(today, 7), today];
       }
     },
     {
       id: "last-30-days",
-      label: (0, import_i18n204.__)("Last 30 days"),
+      label: (0, import_i18n198.__)("Last 30 days"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return [subDays(today, 30), today];
       }
     },
     {
       id: "month-to-date",
-      label: (0, import_i18n204.__)("Month to date"),
+      label: (0, import_i18n198.__)("Month to date"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return [startOfMonth(today), today];
       }
     },
     {
       id: "last-year",
-      label: (0, import_i18n204.__)("Last year"),
+      label: (0, import_i18n198.__)("Last year"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return [subYears(today, 1), today];
       }
     },
     {
       id: "year-to-date",
-      label: (0, import_i18n204.__)("Year to date"),
+      label: (0, import_i18n198.__)("Year to date"),
       getValue: () => {
-        const today = (0, import_date6.getDate)(null);
+        const today = (0, import_date4.getDate)(null);
         return [startOfYear(today), today];
       }
     }
@@ -60945,7 +60295,7 @@ var wp;
     if (!dateString) {
       return null;
     }
-    const parsed = (0, import_date6.getDate)(dateString);
+    const parsed = (0, import_date4.getDate)(dateString);
     return parsed && isValid(parsed) ? parsed : null;
   };
   var formatDate = (date) => {
@@ -60999,9 +60349,9 @@ var wp;
         setIsTouched(true);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)("div", { onBlur, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime384.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime372.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -61010,7 +60360,7 @@ var wp;
             customValidity.type === "valid" ? "is-valid" : void 0
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
               import_components207.Icon,
               {
                 className: "components-validated-control__indicator-icon",
@@ -61044,9 +60394,11 @@ var wp;
     const [selectedPresetId, setSelectedPresetId] = (0, import_element209.useState)(
       null
     );
-    let weekStartsOn;
+    let weekStartsOn = (0, import_date4.getSettings)().l10n.startOfWeek;
     if (type === "date") {
-      weekStartsOn = weekStartsOnToNumber(fieldFormat.weekStartsOn);
+      weekStartsOn = weekStartsOnToNumber(
+        fieldFormat.weekStartsOn
+      );
     }
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
@@ -61096,9 +60448,9 @@ var wp;
     );
     const {
       timezone: { string: timezoneString }
-    } = (0, import_date6.getSettings)();
-    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n204.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+    } = (0, import_date4.getSettings)();
+    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n198.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -61106,7 +60458,7 @@ var wp;
         inputRefs: validityTargetRef,
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           import_components207.BaseControl,
           {
             __nextHasNoMarginBottom: true,
@@ -61114,11 +60466,11 @@ var wp;
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_components207.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_components207.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_components207.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_components207.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_PRESETS.map((preset) => {
                   const isSelected = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                     import_components207.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -61131,7 +60483,7 @@ var wp;
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                   import_components207.Button,
                   {
                     className: "dataviews-controls__date-preset",
@@ -61140,24 +60492,24 @@ var wp;
                     size: "small",
                     disabled: !!selectedPresetId,
                     accessibleWhenDisabled: false,
-                    children: (0, import_i18n204.__)("Custom")
+                    children: (0, import_i18n198.__)("Custom")
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                 import_components207.__experimentalInputControl,
                 {
                   __next40pxDefaultSize: true,
                   ref: validityTargetRef,
                   type: "date",
-                  label: (0, import_i18n204.__)("Date"),
+                  label: (0, import_i18n198.__)("Date"),
                   hideLabelFromVision: true,
                   value,
                   onChange: handleManualDateChange,
                   required: !!field.isValid?.required
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                 DateCalendar2,
                 {
                   style: { width: "100%" },
@@ -61190,7 +60542,9 @@ var wp;
     }
     let weekStartsOn;
     if (type === "date") {
-      weekStartsOn = weekStartsOnToNumber(fieldFormat.weekStartsOn);
+      weekStartsOn = weekStartsOnToNumber(
+        fieldFormat.weekStartsOn
+      );
     }
     const onChangeCallback = (0, import_element209.useCallback)(
       (newValue) => {
@@ -61273,9 +60627,9 @@ var wp;
       },
       [value, updateDateRange]
     );
-    const { timezone } = (0, import_date6.getSettings)();
-    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n204.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+    const { timezone } = (0, import_date4.getSettings)();
+    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n198.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -61283,7 +60637,7 @@ var wp;
         inputRefs: [fromInputRef, toInputRef],
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           import_components207.BaseControl,
           {
             __nextHasNoMarginBottom: true,
@@ -61291,11 +60645,11 @@ var wp;
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_components207.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_components207.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_components207.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_components207.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_RANGE_PRESETS.map((preset) => {
                   const isSelected = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                     import_components207.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -61308,7 +60662,7 @@ var wp;
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                   import_components207.Button,
                   {
                     className: "dataviews-controls__date-preset",
@@ -61317,31 +60671,31 @@ var wp;
                     size: "small",
                     accessibleWhenDisabled: false,
                     disabled: !!selectedPresetId,
-                    children: (0, import_i18n204.__)("Custom")
+                    children: (0, import_i18n198.__)("Custom")
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_components207.__experimentalHStack, { spacing: 2, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_components207.__experimentalHStack, { spacing: 2, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                   import_components207.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: fromInputRef,
                     type: "date",
-                    label: (0, import_i18n204.__)("From"),
+                    label: (0, import_i18n198.__)("From"),
                     hideLabelFromVision: true,
                     value: value?.[0],
                     onChange: (newValue) => handleManualDateChange("from", newValue),
                     required: !!field.isValid?.required
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                   import_components207.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: toInputRef,
                     type: "date",
-                    label: (0, import_i18n204.__)("To"),
+                    label: (0, import_i18n198.__)("To"),
                     hideLabelFromVision: true,
                     value: value?.[1],
                     onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -61349,7 +60703,7 @@ var wp;
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                 DateRangeCalendar,
                 {
                   style: { width: "100%" },
@@ -61376,7 +60730,7 @@ var wp;
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__date",
@@ -61389,7 +60743,7 @@ var wp;
       );
     }
     if (operator === OPERATOR_BETWEEN) {
-      return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
         CalendarDateRangeControl,
         {
           data,
@@ -61400,7 +60754,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
       CalendarDateControl,
       {
         data,
@@ -61418,7 +60772,7 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
   var import_components208 = __toESM(require_components());
   var import_element210 = __toESM(require_element());
-  var import_jsx_runtime385 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime373 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components208.privateApis);
   function ValidatedText({
     data,
@@ -61441,7 +60795,7 @@ var wp;
       ),
       [data, setValue, onChange]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(
       ValidatedInputControl2,
       {
         required: !!isValid2?.required,
@@ -61461,7 +60815,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/email.js
-  var import_jsx_runtime386 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime374 = __toESM(require_jsx_runtime());
   function Email({
     data,
     field,
@@ -61469,7 +60823,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
       ValidatedText,
       {
         ...{
@@ -61479,7 +60833,7 @@ var wp;
           hideLabelFromVision,
           validity,
           type: "email",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_components209.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_components209.Icon, { icon: envelope_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_components209.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_components209.Icon, { icon: envelope_default }) })
         }
       }
     );
@@ -61487,7 +60841,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/telephone.js
   var import_components210 = __toESM(require_components());
-  var import_jsx_runtime387 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime375 = __toESM(require_jsx_runtime());
   function Telephone({
     data,
     field,
@@ -61495,7 +60849,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
       ValidatedText,
       {
         ...{
@@ -61505,7 +60859,7 @@ var wp;
           hideLabelFromVision,
           validity,
           type: "tel",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components210.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components210.Icon, { icon: mobile_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_components210.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_components210.Icon, { icon: mobile_default }) })
         }
       }
     );
@@ -61513,7 +60867,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/url.js
   var import_components211 = __toESM(require_components());
-  var import_jsx_runtime388 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime376 = __toESM(require_jsx_runtime());
   function Url({
     data,
     field,
@@ -61521,7 +60875,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
       ValidatedText,
       {
         ...{
@@ -61531,7 +60885,7 @@ var wp;
           hideLabelFromVision,
           validity,
           type: "url",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components211.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components211.Icon, { icon: link_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_components211.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_components211.Icon, { icon: link_default }) })
         }
       }
     );
@@ -61540,8 +60894,8 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
   var import_components212 = __toESM(require_components());
   var import_element211 = __toESM(require_element());
-  var import_i18n205 = __toESM(require_i18n());
-  var import_jsx_runtime389 = __toESM(require_jsx_runtime());
+  var import_i18n199 = __toESM(require_i18n());
+  var import_jsx_runtime377 = __toESM(require_jsx_runtime());
   var { ValidatedNumberControl } = unlock3(import_components212.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
@@ -61565,16 +60919,16 @@ var wp;
       (newValue) => onChange([min, toNumberOrEmpty(newValue)]),
       [onChange, min]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
       import_components212.BaseControl,
       {
         __nextHasNoMarginBottom: true,
-        help: (0, import_i18n205.__)("The max. value must be greater than the min. value."),
-        children: /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(import_components212.Flex, { direction: "row", gap: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+        help: (0, import_i18n199.__)("The max. value must be greater than the min. value."),
+        children: /* @__PURE__ */ (0, import_jsx_runtime377.jsxs)(import_components212.Flex, { direction: "row", gap: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
             import_components212.__experimentalNumberControl,
             {
-              label: (0, import_i18n205.__)("Min."),
+              label: (0, import_i18n199.__)("Min."),
               value: min,
               max: max ? Number(max) - step : void 0,
               onChange: onChangeMin,
@@ -61583,10 +60937,10 @@ var wp;
               step
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
             import_components212.__experimentalNumberControl,
             {
-              label: (0, import_i18n205.__)("Max."),
+              label: (0, import_i18n199.__)("Max."),
               value: max,
               min: min ? Number(min) + step : void 0,
               onChange: onChangeMax,
@@ -61643,7 +60997,7 @@ var wp;
       )) {
         valueBetween = value;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
         BetweenControls,
         {
           value: valueBetween,
@@ -61653,7 +61007,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
       ValidatedNumberControl,
       {
         required: !!isValid2?.required,
@@ -61670,21 +61024,21 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/integer.js
-  var import_jsx_runtime390 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime378 = __toESM(require_jsx_runtime());
   function Number2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(ValidatedNumber, { ...props, decimals: 0 });
+    return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(ValidatedNumber, { ...props, decimals: 0 });
   }
 
   // packages/dataviews/build-module/dataform-controls/number.js
-  var import_jsx_runtime391 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime379 = __toESM(require_jsx_runtime());
   function Number3(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(ValidatedNumber, { ...props, decimals: 2 });
+    return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(ValidatedNumber, { ...props, decimals: 2 });
   }
 
   // packages/dataviews/build-module/dataform-controls/radio.js
   var import_components213 = __toESM(require_components());
   var import_element212 = __toESM(require_element());
-  var import_jsx_runtime392 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime380 = __toESM(require_jsx_runtime());
   var { ValidatedRadioControl } = unlock3(import_components213.privateApis);
   function Radio({
     data,
@@ -61704,9 +61058,9 @@ var wp;
       [data, onChange, setValue]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(import_components213.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_components213.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
@@ -61724,7 +61078,7 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/select.js
   var import_components214 = __toESM(require_components());
   var import_element213 = __toESM(require_element());
-  var import_jsx_runtime393 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime381 = __toESM(require_jsx_runtime());
   var { ValidatedSelectControl } = unlock3(import_components214.privateApis);
   function Select({
     data,
@@ -61745,9 +61099,9 @@ var wp;
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components214.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components214.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
@@ -61767,7 +61121,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/text.js
   var import_element214 = __toESM(require_element());
-  var import_jsx_runtime394 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime382 = __toESM(require_jsx_runtime());
   function Text7({
     data,
     field,
@@ -61777,7 +61131,7 @@ var wp;
     validity
   }) {
     const { prefix: prefix3, suffix } = config2 || {};
-    return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(
       ValidatedText,
       {
         ...{
@@ -61796,7 +61150,7 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/toggle.js
   var import_components215 = __toESM(require_components());
   var import_element215 = __toESM(require_element());
-  var import_jsx_runtime395 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime383 = __toESM(require_jsx_runtime());
   var { ValidatedToggleControl } = unlock3(import_components215.privateApis);
   function Toggle({
     field,
@@ -61811,7 +61165,7 @@ var wp;
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [onChange, setValue, data, getValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
       ValidatedToggleControl,
       {
         required: !!isValid2.required,
@@ -61829,7 +61183,7 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/textarea.js
   var import_components216 = __toESM(require_components());
   var import_element216 = __toESM(require_element());
-  var import_jsx_runtime396 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime384 = __toESM(require_jsx_runtime());
   var { ValidatedTextareaControl } = unlock3(import_components216.privateApis);
   function Textarea({
     data,
@@ -61846,7 +61200,7 @@ var wp;
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
       ValidatedTextareaControl,
       {
         required: !!isValid2?.required,
@@ -61867,7 +61221,7 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/toggle-group.js
   var import_components217 = __toESM(require_components());
   var import_element217 = __toESM(require_element());
-  var import_jsx_runtime397 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime385 = __toESM(require_jsx_runtime());
   var { ValidatedToggleGroupControl } = unlock3(import_components217.privateApis);
   function ToggleGroup({
     data,
@@ -61887,13 +61241,13 @@ var wp;
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_components217.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components217.Spinner, {});
     }
     if (elements.length === 0) {
       return null;
     }
     const selectedOption = elements.find((el) => el.value === value);
-    return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
@@ -61906,7 +61260,7 @@ var wp;
         onChange: onChangeControl,
         value,
         hideLabelFromVision,
-        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
+        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
           import_components217.__experimentalToggleGroupControlOption,
           {
             label: el.label,
@@ -61921,7 +61275,7 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/array.js
   var import_components218 = __toESM(require_components());
   var import_element218 = __toESM(require_element());
-  var import_jsx_runtime398 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime386 = __toESM(require_jsx_runtime());
   var { ValidatedFormTokenField } = unlock3(import_components218.privateApis);
   function ArrayControl({
     data,
@@ -61958,9 +61312,9 @@ var wp;
       [onChange, setValue, data]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(import_components218.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_components218.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
@@ -61997,9 +61351,9 @@ var wp;
             const element = elements.find(
               (el) => el.value === item
             );
-            return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)("span", { children: element?.label || item });
+            return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { children: element?.label || item });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)("span", { children: item });
+          return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { children: item });
         }
       }
     );
@@ -62008,17 +61362,17 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/color.js
   var import_components219 = __toESM(require_components());
   var import_element219 = __toESM(require_element());
-  var import_jsx_runtime399 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime387 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock3(import_components219.privateApis);
   var ColorPicker = ({
     color,
     onColorChange
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
-    return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
       import_components219.Dropdown,
       {
-        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(import_components219.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
+        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components219.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
           "button",
           {
             type: "button",
@@ -62041,7 +61395,7 @@ var wp;
             "aria-label": "Open color picker"
           }
         ) }),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime399.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime387.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
           Picker,
           {
             color: w(validColor),
@@ -62073,7 +61427,7 @@ var wp;
       },
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
       ValidatedInputControl3,
       {
         required: !!field.isValid?.required,
@@ -62085,7 +61439,7 @@ var wp;
         onChange: handleInputChange,
         hideLabelFromVision,
         type: "text",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
           ColorPicker,
           {
             color: value,
@@ -62099,8 +61453,8 @@ var wp;
   // packages/dataviews/build-module/dataform-controls/password.js
   var import_components220 = __toESM(require_components());
   var import_element220 = __toESM(require_element());
-  var import_i18n206 = __toESM(require_i18n());
-  var import_jsx_runtime400 = __toESM(require_jsx_runtime());
+  var import_i18n200 = __toESM(require_i18n());
+  var import_jsx_runtime388 = __toESM(require_jsx_runtime());
   function Password({
     data,
     field,
@@ -62112,7 +61466,7 @@ var wp;
     const toggleVisibility = (0, import_element220.useCallback)(() => {
       setIsVisible((prev2) => !prev2);
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
       ValidatedText,
       {
         ...{
@@ -62122,13 +61476,13 @@ var wp;
           hideLabelFromVision,
           validity,
           type: isVisible ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(import_components220.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components220.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
             import_components220.Button,
             {
               icon: isVisible ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              label: isVisible ? (0, import_i18n206.__)("Hide password") : (0, import_i18n206.__)("Show password")
+              label: isVisible ? (0, import_i18n200.__)("Hide password") : (0, import_i18n200.__)("Show password")
             }
           ) })
         }
@@ -62136,13 +61490,13 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/utils/has-elements.js
+  // packages/dataviews/build-module/field-types/utils/has-elements.js
   function hasElements(field) {
     return Array.isArray(field.elements) && field.elements.length > 0 || typeof field.getElements === "function";
   }
 
   // packages/dataviews/build-module/dataform-controls/index.js
-  var import_jsx_runtime401 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime389 = __toESM(require_jsx_runtime());
   var FORM_CONTROLS = {
     array: ArrayControl,
     checkbox: Checkbox,
@@ -62168,11 +61522,14 @@ var wp;
   function createConfiguredControl(config2) {
     const { control, ...controlConfig } = config2;
     const BaseControlType = getControlByType(control);
+    if (BaseControlType === null) {
+      return null;
+    }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(BaseControlType, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(BaseControlType, { ...props, config: controlConfig });
     };
   }
-  function getControl(field, fieldTypeDefinition) {
+  function getControl(field, fallback) {
     if (typeof field.Edit === "function") {
       return field.Edit;
     }
@@ -62185,22 +61542,19 @@ var wp;
     if (hasElements(field) && field.type !== "array") {
       return getControlByType("select");
     }
-    if (typeof fieldTypeDefinition.Edit === "string") {
-      return getControlByType(fieldTypeDefinition.Edit);
+    if (fallback === null) {
+      return null;
     }
-    if (isEditConfig(fieldTypeDefinition.Edit)) {
-      return createConfiguredControl(fieldTypeDefinition.Edit);
-    }
-    return fieldTypeDefinition.Edit;
+    return getControlByType(fallback);
   }
   function getControlByType(type) {
     if (Object.keys(FORM_CONTROLS).includes(type)) {
       return FORM_CONTROLS[type];
     }
-    throw "Control " + type + " not found";
+    return null;
   }
 
-  // packages/dataviews/build-module/utils/normalize-fields.js
+  // packages/dataviews/build-module/field-types/utils/get-value-from-id.js
   var getValueFromId = (id) => ({ item }) => {
     const path = id.split(".");
     let value = item;
@@ -62213,6 +61567,9 @@ var wp;
     }
     return value;
   };
+  var get_value_from_id_default = getValueFromId;
+
+  // packages/dataviews/build-module/field-types/utils/set-value-from-id.js
   var setValueFromId = (id) => ({ value }) => {
     const path = id.split(".");
     const result = {};
@@ -62224,40 +61581,21 @@ var wp;
     current[path.at(-1)] = value;
     return result;
   };
-  function getFilterBy(field, fieldTypeDefinition) {
+  var set_value_from_id_default = setValueFromId;
+
+  // packages/dataviews/build-module/field-types/utils/get-filter-by.js
+  function getFilterBy(field, defaultOperators2, validOperators2) {
     if (field.filterBy === false) {
       return false;
     }
     if (typeof field.filterBy === "object") {
       let operators = field.filterBy.operators;
       if (!operators || !Array.isArray(operators)) {
-        operators = !!fieldTypeDefinition.filterBy ? fieldTypeDefinition.filterBy.defaultOperators : [];
-      }
-      let validOperators = ALL_OPERATORS;
-      if (typeof fieldTypeDefinition.filterBy === "object") {
-        validOperators = fieldTypeDefinition.filterBy.validOperators;
+        operators = defaultOperators2;
       }
       operators = operators.filter(
-        (operator) => validOperators.includes(operator)
+        (operator) => validOperators2.includes(operator)
       );
-      if (hasElements(field) && operators.includes(OPERATOR_BETWEEN)) {
-        operators = operators.filter(
-          (operator) => operator !== OPERATOR_BETWEEN
-        );
-      }
-      const hasSingleSelectionOperator = operators.some(
-        (operator) => SINGLE_SELECTION_OPERATORS.includes(operator)
-      );
-      if (hasSingleSelectionOperator) {
-        operators = operators.filter(
-          (operator) => (
-            // The 'Between' operator is unique as it can be combined with single selection operators.
-            [...SINGLE_SELECTION_OPERATORS, OPERATOR_BETWEEN].includes(
-              operator
-            )
-          )
-        );
-      }
       if (operators.length === 0) {
         return false;
       }
@@ -62266,79 +61604,1023 @@ var wp;
         operators
       };
     }
-    if (fieldTypeDefinition.filterBy === false) {
+    if (defaultOperators2.length === 0) {
       return false;
     }
-    let defaultOperators = fieldTypeDefinition.filterBy.defaultOperators;
-    if (hasElements(field) && defaultOperators.includes(OPERATOR_BETWEEN)) {
-      defaultOperators = defaultOperators.filter(
-        (operator) => operator !== OPERATOR_BETWEEN
-      );
-    }
     return {
-      operators: defaultOperators
+      isPrimary: false,
+      operators: defaultOperators2
     };
   }
+  var get_filter_by_default = getFilterBy;
+
+  // packages/dataviews/build-module/field-types/email.js
+  var import_jsx_runtime390 = __toESM(require_jsx_runtime());
+  var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  function render({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
+          return (0, import_i18n201.__)("Value must be a valid email address.");
+        }
+        return null;
+      }
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY, OPERATOR_IS_NONE];
+    const validOperators2 = [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "email",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render,
+      Edit: getControl(field, "email"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/integer.js
+  var import_i18n202 = __toESM(require_i18n());
+  var import_jsx_runtime391 = __toESM(require_jsx_runtime());
+  function render2({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField2(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
+          return (0, import_i18n202.__)("Value must be an integer.");
+        }
+        return null;
+      }
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA - valueB : valueB - valueA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN
+    ];
+    const validOperators2 = [
+      // Single-selection
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN,
+      // Multiple-selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "integer",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render2,
+      Edit: getControl(field, "integer"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/number.js
+  var import_i18n203 = __toESM(require_i18n());
+  var import_jsx_runtime392 = __toESM(require_jsx_runtime());
+  function isEmpty3(value) {
+    return value === "" || value === void 0 || value === null;
+  }
+  function render3({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (![null, void 0].includes(value)) {
+      return Number(value).toFixed(2);
+    }
+    return null;
+  }
+  function normalizeField3(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (!isEmpty3(value) && !Number.isFinite(value)) {
+          return (0, import_i18n203.__)("Value must be a number.");
+        }
+        return null;
+      }
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA - valueB : valueB - valueA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN
+    ];
+    const validOperators2 = [
+      // Single-selection
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN,
+      // Multiple-selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "number",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render3,
+      Edit: getControl(field, "number"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/text.js
+  var import_jsx_runtime393 = __toESM(require_jsx_runtime());
+  function render4({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField4(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY, OPERATOR_IS_NONE];
+    const validOperators2 = [
+      // Single selection
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "text",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render4,
+      Edit: getControl(field, "text"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/datetime.js
+  var import_jsx_runtime394 = __toESM(require_jsx_runtime());
+  function render5({ item, field }) {
+    if (field.elements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (["", void 0, null].includes(value)) {
+      return null;
+    }
+    try {
+      const dateValue = parseDateTime(value);
+      return dateValue?.toLocaleString();
+    } catch (error) {
+      return null;
+    }
+  }
+  function normalizeField5(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      const timeA = new Date(valueA).getTime();
+      const timeB = new Date(valueB).getTime();
+      return direction === "asc" ? timeA - timeB : timeB - timeA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE,
+      OPERATOR_AFTER,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER
+    ];
+    const validOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE,
+      OPERATOR_AFTER,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER
+    ];
+    return {
+      id: field.id,
+      type: "datetime",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render5,
+      Edit: getControl(field, "datetime"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/date.js
+  var import_date6 = __toESM(require_date());
+  var import_jsx_runtime395 = __toESM(require_jsx_runtime());
+  function getFormat(field) {
+    return {
+      date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date6.getSettings)().formats.date,
+      weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(field.format?.weekStartsOn) ? field.format.weekStartsOn : numberToWeekStartsOn((0, import_date6.getSettings)().l10n.startOfWeek)
+    };
+  }
+  function render6({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (!value) {
+      return "";
+    }
+    let format2;
+    if (field.type !== "date") {
+      format2 = getFormat(field);
+    } else {
+      format2 = field.format;
+    }
+    return (0, import_date6.dateI18n)(format2.weekStartsOn, (0, import_date6.getDate)(value));
+  }
+  function normalizeField6(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      const timeA = new Date(valueA).getTime();
+      const timeB = new Date(valueB).getTime();
+      return direction === "asc" ? timeA - timeB : timeB - timeA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE,
+      OPERATOR_AFTER,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER,
+      OPERATOR_BETWEEN
+    ];
+    const validOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE,
+      OPERATOR_AFTER,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER,
+      OPERATOR_BETWEEN
+    ];
+    return {
+      id: field.id,
+      type: "date",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render6,
+      Edit: getControl(field, "date"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: getFormat(field)
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/boolean.js
+  var import_i18n204 = __toESM(require_i18n());
+  var import_jsx_runtime396 = __toESM(require_jsx_runtime());
+  function render7({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(RenderFromElements, { item, field });
+    }
+    if (field.getValue({ item }) === true) {
+      return (0, import_i18n204.__)("True");
+    }
+    if (field.getValue({ item }) === false) {
+      return (0, import_i18n204.__)("False");
+    }
+    return null;
+  }
+  function normalizeField7(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      const boolA = Boolean(valueA);
+      const boolB = Boolean(valueB);
+      if (boolA === boolB) {
+        return 0;
+      }
+      if (direction === "asc") {
+        return boolA ? 1 : -1;
+      }
+      return boolA ? -1 : 1;
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
+          return (0, import_i18n204.__)("Value must be true, false, or undefined");
+        }
+        return null;
+      }
+    };
+    const defaultOperators2 = [OPERATOR_IS, OPERATOR_IS_NOT];
+    const validOperators2 = [OPERATOR_IS, OPERATOR_IS_NOT];
+    return {
+      id: field.id,
+      type: "boolean",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render7,
+      Edit: getControl(field, "checkbox"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/media.js
+  function sort() {
+    return 0;
+  }
+  function render8() {
+    return null;
+  }
+  function normalizeField8(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    return {
+      id: field.id,
+      type: "media",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render8,
+      Edit: getControl(field, null),
+      sort: field.sort ?? sort,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? false,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: false,
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/array.js
+  var import_i18n205 = __toESM(require_i18n());
+  function render9({ item, field }) {
+    const value = field.getValue({ item }) || [];
+    return value.join(", ");
+  }
+  var defaultOperators = [OPERATOR_IS_ANY, OPERATOR_IS_NONE];
+  var validOperators = [
+    OPERATOR_IS_ANY,
+    OPERATOR_IS_NONE,
+    OPERATOR_IS_ALL,
+    OPERATOR_IS_NOT_ALL
+  ];
+  function normalizeField9(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue(a2);
+      const valueB = getValue(b2);
+      const arrA = Array.isArray(valueA) ? valueA : [];
+      const arrB = Array.isArray(valueB) ? valueB : [];
+      if (arrA.length !== arrB.length) {
+        return direction === "asc" ? arrA.length - arrB.length : arrB.length - arrA.length;
+      }
+      const joinedA = arrA.join(",");
+      const joinedB = arrB.join(",");
+      return direction === "asc" ? joinedA.localeCompare(joinedB) : joinedB.localeCompare(joinedA);
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
+          return (0, import_i18n205.__)("Value must be an array.");
+        }
+        if (!value.every((v2) => typeof v2 === "string")) {
+          return (0, import_i18n205.__)("Every value must be a string.");
+        }
+        return null;
+      }
+    };
+    return {
+      id: field.id,
+      type: "array",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render9,
+      Edit: getControl(field, "array"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators, validOperators),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/password.js
+  var import_jsx_runtime397 = __toESM(require_jsx_runtime());
+  function sort2(_valueA, _valueB, _direction) {
+    return 0;
+  }
+  function render10({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
+  }
+  function normalizeField10(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    return {
+      id: field.id,
+      type: "password",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render10,
+      Edit: getControl(field, "password"),
+      sort: field.sort ?? sort2,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? false,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: false,
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/telephone.js
+  var import_jsx_runtime398 = __toESM(require_jsx_runtime());
+  function render11({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField11(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY, OPERATOR_IS_NONE];
+    const validOperators2 = [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "telephone",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render11,
+      Edit: getControl(field, "telephone"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/color.js
+  var import_i18n206 = __toESM(require_i18n());
+  var import_jsx_runtime399 = __toESM(require_jsx_runtime());
+  function render12({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (!value || !w(value).isValid()) {
+      return value;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime399.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
+        "div",
+        {
+          style: {
+            width: "16px",
+            height: "16px",
+            borderRadius: "50%",
+            backgroundColor: value,
+            border: "1px solid #ddd",
+            flexShrink: 0
+          }
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime399.jsx)("span", { children: value })
+    ] });
+  }
+  function normalizeField12(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (valueA, valueB, direction) => {
+      const colorA = w(valueA);
+      const colorB = w(valueB);
+      if (!colorA.isValid() && !colorB.isValid()) {
+        return 0;
+      }
+      if (!colorA.isValid()) {
+        return direction === "asc" ? 1 : -1;
+      }
+      if (!colorB.isValid()) {
+        return direction === "asc" ? -1 : 1;
+      }
+      const hslA = colorA.toHsl();
+      const hslB = colorB.toHsl();
+      if (hslA.h !== hslB.h) {
+        return direction === "asc" ? hslA.h - hslB.h : hslB.h - hslA.h;
+      }
+      if (hslA.s !== hslB.s) {
+        return direction === "asc" ? hslA.s - hslB.s : hslB.s - hslA.s;
+      }
+      return direction === "asc" ? hslA.l - hslB.l : hslB.l - hslA.l;
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+          return (0, import_i18n206.__)("Value must be a valid color.");
+        }
+        return null;
+      }
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY, OPERATOR_IS_NONE];
+    const validOperators2 = [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE
+    ];
+    return {
+      id: field.id,
+      type: "color",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render12,
+      Edit: getControl(field, "color"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/url.js
+  var import_jsx_runtime400 = __toESM(require_jsx_runtime());
+  function render13({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField13(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY, OPERATOR_IS_NONE];
+    const validOperators2 = [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "url",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render13,
+      Edit: getControl(field, "url"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/index.js
+  var import_jsx_runtime401 = __toESM(require_jsx_runtime());
+  function normalizeField14(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      if (typeof valueA === "number" && typeof valueB === "number") {
+        return direction === "asc" ? valueA - valueB : valueB - valueA;
+      }
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const render14 = ({
+      item,
+      field: normalizedField
+    }) => {
+      return normalizedField.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(RenderFromElements, { item, field: normalizedField }) : normalizedField.getValue({ item });
+    };
+    const defaultOperators2 = [OPERATOR_IS, OPERATOR_IS_NOT];
+    const validOperators2 = ALL_OPERATORS;
+    return {
+      id: field.id,
+      // type — it does not have a type
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render14,
+      Edit: getControl(field, null),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+  function getNormalizeFieldFunction(type) {
+    if ("email" === type) {
+      return normalizeField;
+    }
+    if ("integer" === type) {
+      return normalizeField2;
+    }
+    if ("number" === type) {
+      return normalizeField3;
+    }
+    if ("text" === type) {
+      return normalizeField4;
+    }
+    if ("datetime" === type) {
+      return normalizeField5;
+    }
+    if ("date" === type) {
+      return normalizeField6;
+    }
+    if ("boolean" === type) {
+      return normalizeField7;
+    }
+    if ("media" === type) {
+      return normalizeField8;
+    }
+    if ("array" === type) {
+      return normalizeField9;
+    }
+    if ("password" === type) {
+      return normalizeField10;
+    }
+    if ("telephone" === type) {
+      return normalizeField11;
+    }
+    if ("color" === type) {
+      return normalizeField12;
+    }
+    if ("url" === type) {
+      return normalizeField13;
+    }
+    return normalizeField14;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/normalize-fields.js
   function normalizeFields(fields) {
     return fields.map((field) => {
-      const fieldTypeDefinition = getFieldTypeDefinition(
-        field.type
-      );
-      const getValue = field.getValue || getValueFromId(field.id);
-      const setValue = field.setValue || setValueFromId(field.id);
-      const sort14 = field.sort ?? function sort22(a2, b2, direction) {
-        return fieldTypeDefinition.sort(
-          getValue({ item: a2 }),
-          getValue({ item: b2 }),
-          direction
-        );
-      };
-      const isValid2 = {
-        ...fieldTypeDefinition.isValid,
-        ...field.isValid
-      };
-      const Edit4 = getControl(field, fieldTypeDefinition);
-      const render2 = field.render ?? function render22({
-        item,
-        field: renderedField
-      }) {
-        return fieldTypeDefinition.render({ item, field: renderedField });
-      };
-      const filterBy = getFilterBy(field, fieldTypeDefinition);
-      const { type, ...fieldWithoutType } = field;
-      const baseField = {
-        ...fieldWithoutType,
-        label: field.label || field.id,
-        header: field.header || field.label || field.id,
-        getValue,
-        setValue,
-        render: render2,
-        sort: sort14,
-        isValid: isValid2,
-        Edit: Edit4,
-        hasElements: hasElements(field),
-        enableHiding: field.enableHiding ?? true,
-        enableSorting: field.enableSorting ?? fieldTypeDefinition.enableSorting ?? true,
-        filterBy,
-        readOnly: field.readOnly ?? fieldTypeDefinition.readOnly ?? false,
-        format: {}
-      };
-      if (field.type === "date") {
-        const format2 = {
-          date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date8.getSettings)().formats.date,
-          weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(
-            field.format?.weekStartsOn
-          ) ? field.format.weekStartsOn : numberToWeekStartsOn(
-            (0, import_date8.getSettings)().l10n.startOfWeek
-          )
-        };
-        return {
-          ...baseField,
-          type: "date",
-          format: format2
-        };
-      }
-      return { ...baseField, type: field.type, format: {} };
+      const normalize = getNormalizeFieldFunction(field.type);
+      return normalize(field);
     });
   }
 
@@ -65718,7 +66000,7 @@ var wp;
   var import_components240 = __toESM(require_components());
   var import_i18n219 = __toESM(require_i18n());
   var import_element237 = __toESM(require_element());
-  var import_date9 = __toESM(require_date());
+  var import_date8 = __toESM(require_date());
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.js
   var import_components239 = __toESM(require_components());
@@ -65782,7 +66064,7 @@ var wp;
     ...additionalProps
   }, ref) {
     const datePickerProps = {
-      startOfWeek: (0, import_date9.getSettings)().l10n.startOfWeek,
+      startOfWeek: (0, import_date8.getSettings)().l10n.startOfWeek,
       onChange,
       currentDate: isCompact ? void 0 : currentDate,
       currentTime: isCompact ? currentDate : void 0,

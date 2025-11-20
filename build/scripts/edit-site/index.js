@@ -27134,23 +27134,23 @@ var wp;
   // node_modules/@ariakit/react-core/esm/__chunks/LMDWO4NN.js
   var React4 = __toESM(require_react(), 1);
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
-  function forwardRef22(render2) {
-    const Role = React4.forwardRef((props, ref) => render2(__spreadProps(__spreadValues({}, props), { ref })));
-    Role.displayName = render2.displayName || render2.name;
+  function forwardRef22(render14) {
+    const Role = React4.forwardRef((props, ref) => render14(__spreadProps(__spreadValues({}, props), { ref })));
+    Role.displayName = render14.displayName || render14.name;
     return Role;
   }
   function memo22(Component, propsAreEqual) {
     return React4.memo(Component, propsAreEqual);
   }
   function createElement4(Type, props) {
-    const _a = props, { wrapElement, render: render2 } = _a, rest = __objRest(_a, ["wrapElement", "render"]);
-    const mergedRef = useMergeRefs(props.ref, getRefProperty(render2));
+    const _a = props, { wrapElement, render: render14 } = _a, rest = __objRest(_a, ["wrapElement", "render"]);
+    const mergedRef = useMergeRefs(props.ref, getRefProperty(render14));
     let element;
-    if (React4.isValidElement(render2)) {
-      const renderProps = __spreadProps(__spreadValues({}, render2.props), { ref: mergedRef });
-      element = React4.cloneElement(render2, mergeProps(rest, renderProps));
-    } else if (render2) {
-      element = render2(rest);
+    if (React4.isValidElement(render14)) {
+      const renderProps = __spreadProps(__spreadValues({}, render14.props), { ref: mergedRef });
+      element = React4.cloneElement(render14, mergeProps(rest, renderProps));
+    } else if (render14) {
+      element = render14(rest);
     } else {
       element = /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Type, __spreadValues({}, rest));
     }
@@ -32996,7 +32996,10 @@ If there's a particular need for this, please submit a feature request at https:
         try {
           const dateValue = parseDateTime(label);
           if (dateValue !== null) {
-            label = (0, import_date3.dateI18n)(field.format.date, (0, import_date3.getDate)(label));
+            label = (0, import_date3.dateI18n)(
+              field.format.date,
+              (0, import_date3.getDate)(label)
+            );
           }
         } catch (e2) {
           label = filterInView.value;
@@ -33900,11 +33903,8 @@ If there's a particular need for this, please submit a feature request at https:
   var DataViewsViewConfig = (0, import_element98.memo)(_DataViewsViewConfig);
   var dataviews_view_config_default = DataViewsViewConfig;
 
-  // packages/dataviews/build-module/utils/normalize-fields.js
-  var import_date9 = __toESM(require_date());
-
   // packages/dataviews/build-module/field-types/email.js
-  var import_i18n110 = __toESM(require_i18n());
+  var import_i18n115 = __toESM(require_i18n());
 
   // packages/dataviews/build-module/field-types/utils/render-from-elements.js
   function RenderFromElements({
@@ -33925,636 +33925,6 @@ If there's a particular need for this, please submit a feature request at https:
     return elements2?.find((element) => element.value === value)?.label || field.getValue({ item });
   }
 
-  // packages/dataviews/build-module/field-types/email.js
-  var import_jsx_runtime223 = __toESM(require_jsx_runtime());
-  function sort(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  var email_default = {
-    sort,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-          return (0, import_i18n110.__)("Value must be a valid email address.");
-        }
-        return null;
-      }
-    },
-    Edit: "email",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
-      validOperators: [
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY2,
-        OPERATOR_IS_NONE2,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/integer.js
-  var import_i18n111 = __toESM(require_i18n());
-  var import_jsx_runtime224 = __toESM(require_jsx_runtime());
-  function sort2(a2, b2, direction) {
-    return direction === "asc" ? a2 - b2 : b2 - a2;
-  }
-  var integer_default = {
-    sort: sort2,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-          return (0, import_i18n111.__)("Value must be an integer.");
-        }
-        return null;
-      }
-    },
-    Edit: "integer",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN
-      ],
-      validOperators: [
-        // Single-selection
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN,
-        // Multiple-selection
-        OPERATOR_IS_ANY2,
-        OPERATOR_IS_NONE2,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/number.js
-  var import_i18n112 = __toESM(require_i18n());
-  var import_jsx_runtime225 = __toESM(require_jsx_runtime());
-  function sort3(a2, b2, direction) {
-    return direction === "asc" ? a2 - b2 : b2 - a2;
-  }
-  function isEmpty2(value) {
-    return value === "" || value === void 0 || value === null;
-  }
-  var number_default = {
-    sort: sort3,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (!isEmpty2(value) && !Number.isFinite(value)) {
-          return (0, import_i18n112.__)("Value must be a number.");
-        }
-        return null;
-      }
-    },
-    Edit: "number",
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (![null, void 0].includes(value)) {
-        return Number(value).toFixed(2);
-      }
-      return null;
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN
-      ],
-      validOperators: [
-        // Single-selection
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_LESS_THAN,
-        OPERATOR_GREATER_THAN,
-        OPERATOR_LESS_THAN_OR_EQUAL,
-        OPERATOR_GREATER_THAN_OR_EQUAL,
-        OPERATOR_BETWEEN,
-        // Multiple-selection
-        OPERATOR_IS_ANY2,
-        OPERATOR_IS_NONE2,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/text.js
-  var import_jsx_runtime226 = __toESM(require_jsx_runtime());
-  function sort4(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var text_default = {
-    sort: sort4,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "text",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
-      validOperators: [
-        // Single selection
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY2,
-        OPERATOR_IS_NONE2,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/datetime.js
-  var import_jsx_runtime227 = __toESM(require_jsx_runtime());
-  function sort5(a2, b2, direction) {
-    const timeA = new Date(a2).getTime();
-    const timeB = new Date(b2).getTime();
-    return direction === "asc" ? timeA - timeB : timeB - timeA;
-  }
-  var datetime_default = {
-    sort: sort5,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "datetime",
-    render: ({ item, field }) => {
-      if (field.elements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (["", void 0, null].includes(value)) {
-        return null;
-      }
-      try {
-        const dateValue = parseDateTime(value);
-        return dateValue?.toLocaleString();
-      } catch (error) {
-        return null;
-      }
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE2,
-        OPERATOR_AFTER2,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER
-      ],
-      validOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE2,
-        OPERATOR_AFTER2,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/date.js
-  var import_date4 = __toESM(require_date());
-  var import_jsx_runtime228 = __toESM(require_jsx_runtime());
-  function sort6(a2, b2, direction) {
-    const timeA = new Date(a2).getTime();
-    const timeB = new Date(b2).getTime();
-    return direction === "asc" ? timeA - timeB : timeB - timeA;
-  }
-  var date_default = {
-    sort: sort6,
-    Edit: "date",
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (!value) {
-        return "";
-      }
-      if (field.type !== "date") {
-        return "";
-      }
-      return (0, import_date4.dateI18n)(field.format.date, (0, import_date4.getDate)(value));
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE2,
-        OPERATOR_AFTER2,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER,
-        OPERATOR_BETWEEN
-      ],
-      validOperators: [
-        OPERATOR_ON,
-        OPERATOR_NOT_ON,
-        OPERATOR_BEFORE2,
-        OPERATOR_AFTER2,
-        OPERATOR_BEFORE_INC,
-        OPERATOR_AFTER_INC,
-        OPERATOR_IN_THE_PAST,
-        OPERATOR_OVER,
-        OPERATOR_BETWEEN
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/boolean.js
-  var import_i18n113 = __toESM(require_i18n());
-  var import_jsx_runtime229 = __toESM(require_jsx_runtime());
-  function sort7(a2, b2, direction) {
-    const boolA = Boolean(a2);
-    const boolB = Boolean(b2);
-    if (boolA === boolB) {
-      return 0;
-    }
-    if (direction === "asc") {
-      return boolA ? 1 : -1;
-    }
-    return boolA ? -1 : 1;
-  }
-  var boolean_default = {
-    sort: sort7,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-          return (0, import_i18n113.__)("Value must be true, false, or undefined");
-        }
-        return null;
-      }
-    },
-    Edit: "checkbox",
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(RenderFromElements, { item, field });
-      }
-      if (field.getValue({ item }) === true) {
-        return (0, import_i18n113.__)("True");
-      }
-      if (field.getValue({ item }) === false) {
-        return (0, import_i18n113.__)("False");
-      }
-      return null;
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS2, OPERATOR_IS_NOT],
-      validOperators: [OPERATOR_IS2, OPERATOR_IS_NOT]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/media.js
-  function sort8() {
-    return 0;
-  }
-  var media_default2 = {
-    sort: sort8,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: null,
-    render: () => null,
-    enableSorting: false,
-    filterBy: false
-  };
-
-  // packages/dataviews/build-module/field-types/array.js
-  var import_i18n114 = __toESM(require_i18n());
-  function sort9(valueA, valueB, direction) {
-    const arrA = Array.isArray(valueA) ? valueA : [];
-    const arrB = Array.isArray(valueB) ? valueB : [];
-    if (arrA.length !== arrB.length) {
-      return direction === "asc" ? arrA.length - arrB.length : arrB.length - arrA.length;
-    }
-    const joinedA = arrA.join(",");
-    const joinedB = arrB.join(",");
-    return direction === "asc" ? joinedA.localeCompare(joinedB) : joinedB.localeCompare(joinedA);
-  }
-  function render({ item, field }) {
-    const value = field.getValue({ item }) || [];
-    return value.join(", ");
-  }
-  var arrayFieldType = {
-    sort: sort9,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-          return (0, import_i18n114.__)("Value must be an array.");
-        }
-        if (!value.every((v2) => typeof v2 === "string")) {
-          return (0, import_i18n114.__)("Every value must be a string.");
-        }
-        return null;
-      }
-    },
-    Edit: "array",
-    // Use array control
-    render,
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
-      validOperators: [
-        OPERATOR_IS_ANY2,
-        OPERATOR_IS_NONE2,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-  var array_default = arrayFieldType;
-
-  // packages/dataviews/build-module/field-types/password.js
-  var import_jsx_runtime230 = __toESM(require_jsx_runtime());
-  function sort10(valueA, valueB, direction) {
-    return 0;
-  }
-  var password_default = {
-    sort: sort10,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "password",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
-    },
-    enableSorting: false,
-    filterBy: false
-  };
-
-  // packages/dataviews/build-module/field-types/telephone.js
-  var import_jsx_runtime231 = __toESM(require_jsx_runtime());
-  function sort11(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var telephone_default = {
-    sort: sort11,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "telephone",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
-      validOperators: [
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY2,
-        OPERATOR_IS_NONE2,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/color.js
-  var import_i18n115 = __toESM(require_i18n());
-  var import_jsx_runtime232 = __toESM(require_jsx_runtime());
-  function sort12(valueA, valueB, direction) {
-    const colorA = w(valueA);
-    const colorB = w(valueB);
-    if (!colorA.isValid() && !colorB.isValid()) {
-      return 0;
-    }
-    if (!colorA.isValid()) {
-      return direction === "asc" ? 1 : -1;
-    }
-    if (!colorB.isValid()) {
-      return direction === "asc" ? -1 : 1;
-    }
-    const hslA = colorA.toHsl();
-    const hslB = colorB.toHsl();
-    if (hslA.h !== hslB.h) {
-      return direction === "asc" ? hslA.h - hslB.h : hslB.h - hslA.h;
-    }
-    if (hslA.s !== hslB.s) {
-      return direction === "asc" ? hslA.s - hslB.s : hslB.s - hslA.s;
-    }
-    return direction === "asc" ? hslA.l - hslB.l : hslB.l - hslA.l;
-  }
-  var color_default = {
-    sort: sort12,
-    isValid: {
-      elements: true,
-      custom: (item, field) => {
-        const value = field.getValue({ item });
-        if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-          return (0, import_i18n115.__)("Value must be a valid color.");
-        }
-        return null;
-      }
-    },
-    Edit: "color",
-    render: ({ item, field }) => {
-      if (field.hasElements) {
-        return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(RenderFromElements, { item, field });
-      }
-      const value = field.getValue({ item });
-      if (!value || !w(value).isValid()) {
-        return value;
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(
-        "div",
-        {
-          style: { display: "flex", alignItems: "center", gap: "8px" },
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
-              "div",
-              {
-                style: {
-                  width: "16px",
-                  height: "16px",
-                  borderRadius: "50%",
-                  backgroundColor: value,
-                  border: "1px solid #ddd",
-                  flexShrink: 0
-                }
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("span", { children: value })
-          ]
-        }
-      );
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
-      validOperators: [OPERATOR_IS2, OPERATOR_IS_NOT]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/url.js
-  var import_jsx_runtime233 = __toESM(require_jsx_runtime());
-  function sort13(valueA, valueB, direction) {
-    return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-  }
-  var url_default = {
-    sort: sort13,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
-    Edit: "url",
-    render: ({ item, field }) => {
-      return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2],
-      validOperators: [
-        OPERATOR_IS2,
-        OPERATOR_IS_NOT,
-        OPERATOR_CONTAINS,
-        OPERATOR_NOT_CONTAINS,
-        OPERATOR_STARTS_WITH,
-        // Multiple selection
-        OPERATOR_IS_ANY2,
-        OPERATOR_IS_NONE2,
-        OPERATOR_IS_ALL,
-        OPERATOR_IS_NOT_ALL
-      ]
-    }
-  };
-
-  // packages/dataviews/build-module/field-types/index.js
-  var import_jsx_runtime234 = __toESM(require_jsx_runtime());
-  function getFieldTypeDefinition(type) {
-    if ("email" === type) {
-      return email_default;
-    }
-    if ("integer" === type) {
-      return integer_default;
-    }
-    if ("number" === type) {
-      return number_default;
-    }
-    if ("text" === type) {
-      return text_default;
-    }
-    if ("datetime" === type) {
-      return datetime_default;
-    }
-    if ("date" === type) {
-      return date_default;
-    }
-    if ("boolean" === type) {
-      return boolean_default;
-    }
-    if ("media" === type) {
-      return media_default2;
-    }
-    if ("array" === type) {
-      return array_default;
-    }
-    if ("password" === type) {
-      return password_default;
-    }
-    if ("telephone" === type) {
-      return telephone_default;
-    }
-    if ("color" === type) {
-      return color_default;
-    }
-    if ("url" === type) {
-      return url_default;
-    }
-    return {
-      sort: (a2, b2, direction) => {
-        if (typeof a2 === "number" && typeof b2 === "number") {
-          return direction === "asc" ? a2 - b2 : b2 - a2;
-        }
-        return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
-      },
-      isValid: {
-        elements: true,
-        custom: () => null
-      },
-      Edit: null,
-      render: ({ item, field }) => {
-        return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
-      },
-      enableSorting: true,
-      filterBy: {
-        defaultOperators: [OPERATOR_IS2, OPERATOR_IS_NOT],
-        validOperators: ALL_OPERATORS
-      }
-    };
-  }
-
   // packages/dataviews/build-module/dataform-controls/checkbox.js
   var import_components119 = __toESM(require_components());
   var import_element99 = __toESM(require_element());
@@ -34573,7 +33943,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
-  var import_jsx_runtime235 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime223 = __toESM(require_jsx_runtime());
   var { ValidatedCheckboxControl } = unlock3(import_components119.privateApis);
   function Checkbox({
     field,
@@ -34588,7 +33958,7 @@ If there's a particular need for this, please submit a feature request at https:
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [data, getValue, onChange, setValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
@@ -34605,26 +33975,26 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/datetime.js
   var import_components121 = __toESM(require_components());
   var import_element101 = __toESM(require_element());
-  var import_i18n117 = __toESM(require_i18n());
-  var import_date6 = __toESM(require_date());
+  var import_i18n111 = __toESM(require_i18n());
+  var import_date4 = __toESM(require_date());
 
   // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
   var import_components120 = __toESM(require_components());
   var import_element100 = __toESM(require_element());
-  var import_i18n116 = __toESM(require_i18n());
-  var import_jsx_runtime236 = __toESM(require_jsx_runtime());
+  var import_i18n110 = __toESM(require_i18n());
+  var import_jsx_runtime224 = __toESM(require_jsx_runtime());
   var TIME_UNITS_OPTIONS = {
     [OPERATOR_IN_THE_PAST]: [
-      { value: "days", label: (0, import_i18n116.__)("Days") },
-      { value: "weeks", label: (0, import_i18n116.__)("Weeks") },
-      { value: "months", label: (0, import_i18n116.__)("Months") },
-      { value: "years", label: (0, import_i18n116.__)("Years") }
+      { value: "days", label: (0, import_i18n110.__)("Days") },
+      { value: "weeks", label: (0, import_i18n110.__)("Weeks") },
+      { value: "months", label: (0, import_i18n110.__)("Months") },
+      { value: "years", label: (0, import_i18n110.__)("Years") }
     ],
     [OPERATOR_OVER]: [
-      { value: "days", label: (0, import_i18n116.__)("Days ago") },
-      { value: "weeks", label: (0, import_i18n116.__)("Weeks ago") },
-      { value: "months", label: (0, import_i18n116.__)("Months ago") },
-      { value: "years", label: (0, import_i18n116.__)("Years ago") }
+      { value: "days", label: (0, import_i18n110.__)("Days ago") },
+      { value: "weeks", label: (0, import_i18n110.__)("Weeks ago") },
+      { value: "months", label: (0, import_i18n110.__)("Months ago") },
+      { value: "years", label: (0, import_i18n110.__)("Years ago") }
     ]
   };
   function RelativeDateControl({
@@ -34657,7 +34027,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [onChange, setValue, data, relValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
       import_components120.BaseControl,
       {
         id,
@@ -34665,8 +34035,8 @@ If there's a particular need for this, please submit a feature request at https:
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(import_components120.__experimentalHStack, { spacing: 2.5, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(import_components120.__experimentalHStack, { spacing: 2.5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
             import_components120.__experimentalNumberControl,
             {
               __next40pxDefaultSize: true,
@@ -34678,13 +34048,13 @@ If there's a particular need for this, please submit a feature request at https:
               onChange: onChangeValue
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
             import_components120.SelectControl,
             {
               className: "dataviews-controls__relative-date-unit",
               __next40pxDefaultSize: true,
               __nextHasNoMarginBottom: true,
-              label: (0, import_i18n116.__)("Unit"),
+              label: (0, import_i18n110.__)("Unit"),
               value: unit,
               options,
               onChange: onChangeUnit,
@@ -34697,7 +34067,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/datetime.js
-  var import_jsx_runtime237 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime225 = __toESM(require_jsx_runtime());
   var { DateCalendar, ValidatedInputControl } = unlock3(import_components121.privateApis);
   var formatDateTime = (date) => {
     if (!date) {
@@ -34791,9 +34161,9 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       timezone: { string: timezoneString },
       l10n: { startOfWeek: startOfWeek2 }
-    } = (0, import_date6.getSettings)();
-    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n117.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+    } = (0, import_date4.getSettings)();
+    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n111.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
       import_components121.BaseControl,
       {
         __nextHasNoMarginBottom: true,
@@ -34801,8 +34171,8 @@ If there's a particular need for this, please submit a feature request at https:
         label: displayLabel,
         help: description,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_components121.__experimentalVStack, { spacing: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(import_components121.__experimentalVStack, { spacing: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
             DateCalendar,
             {
               style: { width: "100%" },
@@ -34814,7 +34184,7 @@ If there's a particular need for this, please submit a feature request at https:
               weekStartsOn: startOfWeek2
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
             ValidatedInputControl,
             {
               ref: inputControlRef,
@@ -34822,7 +34192,7 @@ If there's a particular need for this, please submit a feature request at https:
               required: !!isValid2?.required,
               customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
-              label: (0, import_i18n117.__)("Date time"),
+              label: (0, import_i18n111.__)("Date time"),
               hideLabelFromVision: true,
               value: value ? formatDateTime(
                 parseDateTime(value) || void 0
@@ -34843,7 +34213,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__datetime",
@@ -34855,7 +34225,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
       CalendarDateTimeControl,
       {
         data,
@@ -34870,10 +34240,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/date.js
   var import_components122 = __toESM(require_components());
   var import_element102 = __toESM(require_element());
-  var import_i18n118 = __toESM(require_i18n());
-  var import_date7 = __toESM(require_date());
+  var import_i18n112 = __toESM(require_i18n());
+  var import_date5 = __toESM(require_date());
 
-  // packages/dataviews/build-module/utils/week-starts-on.js
+  // packages/dataviews/build-module/field-types/utils/week-starts-on.js
   var DAYS_OF_WEEK = [
     "sunday",
     "monday",
@@ -34901,35 +34271,35 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/date.js
-  var import_jsx_runtime238 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime226 = __toESM(require_jsx_runtime());
   var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components122.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
-      label: (0, import_i18n118.__)("Today"),
-      getValue: () => (0, import_date7.getDate)(null)
+      label: (0, import_i18n112.__)("Today"),
+      getValue: () => (0, import_date5.getDate)(null)
     },
     {
       id: "yesterday",
-      label: (0, import_i18n118.__)("Yesterday"),
+      label: (0, import_i18n112.__)("Yesterday"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return subDays(today, 1);
       }
     },
     {
       id: "past-week",
-      label: (0, import_i18n118.__)("Past week"),
+      label: (0, import_i18n112.__)("Past week"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return subDays(today, 7);
       }
     },
     {
       id: "past-month",
-      label: (0, import_i18n118.__)("Past month"),
+      label: (0, import_i18n112.__)("Past month"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return subMonths(today, 1);
       }
     }
@@ -34937,41 +34307,41 @@ If there's a particular need for this, please submit a feature request at https:
   var DATE_RANGE_PRESETS = [
     {
       id: "last-7-days",
-      label: (0, import_i18n118.__)("Last 7 days"),
+      label: (0, import_i18n112.__)("Last 7 days"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return [subDays(today, 7), today];
       }
     },
     {
       id: "last-30-days",
-      label: (0, import_i18n118.__)("Last 30 days"),
+      label: (0, import_i18n112.__)("Last 30 days"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return [subDays(today, 30), today];
       }
     },
     {
       id: "month-to-date",
-      label: (0, import_i18n118.__)("Month to date"),
+      label: (0, import_i18n112.__)("Month to date"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return [startOfMonth(today), today];
       }
     },
     {
       id: "last-year",
-      label: (0, import_i18n118.__)("Last year"),
+      label: (0, import_i18n112.__)("Last year"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return [subYears(today, 1), today];
       }
     },
     {
       id: "year-to-date",
-      label: (0, import_i18n118.__)("Year to date"),
+      label: (0, import_i18n112.__)("Year to date"),
       getValue: () => {
-        const today = (0, import_date7.getDate)(null);
+        const today = (0, import_date5.getDate)(null);
         return [startOfYear(today), today];
       }
     }
@@ -34980,7 +34350,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!dateString) {
       return null;
     }
-    const parsed = (0, import_date7.getDate)(dateString);
+    const parsed = (0, import_date5.getDate)(dateString);
     return parsed && isValid(parsed) ? parsed : null;
   };
   var formatDate = (date) => {
@@ -35034,9 +34404,9 @@ If there's a particular need for this, please submit a feature request at https:
         setIsTouched(true);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)("div", { onBlur, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -35045,7 +34415,7 @@ If there's a particular need for this, please submit a feature request at https:
             customValidity.type === "valid" ? "is-valid" : void 0
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
               import_components122.Icon,
               {
                 className: "components-validated-control__indicator-icon",
@@ -35079,9 +34449,11 @@ If there's a particular need for this, please submit a feature request at https:
     const [selectedPresetId, setSelectedPresetId] = (0, import_element102.useState)(
       null
     );
-    let weekStartsOn;
+    let weekStartsOn = (0, import_date5.getSettings)().l10n.startOfWeek;
     if (type === "date") {
-      weekStartsOn = weekStartsOnToNumber(fieldFormat.weekStartsOn);
+      weekStartsOn = weekStartsOnToNumber(
+        fieldFormat.weekStartsOn
+      );
     }
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
@@ -35131,9 +34503,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const {
       timezone: { string: timezoneString }
-    } = (0, import_date7.getSettings)();
-    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n118.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+    } = (0, import_date5.getSettings)();
+    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n112.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -35141,7 +34513,7 @@ If there's a particular need for this, please submit a feature request at https:
         inputRefs: validityTargetRef,
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
           import_components122.BaseControl,
           {
             __nextHasNoMarginBottom: true,
@@ -35149,11 +34521,11 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(import_components122.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(import_components122.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(import_components122.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(import_components122.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_PRESETS.map((preset) => {
                   const isSelected2 = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                     import_components122.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -35166,7 +34538,7 @@ If there's a particular need for this, please submit a feature request at https:
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                   import_components122.Button,
                   {
                     className: "dataviews-controls__date-preset",
@@ -35175,24 +34547,24 @@ If there's a particular need for this, please submit a feature request at https:
                     size: "small",
                     disabled: !!selectedPresetId,
                     accessibleWhenDisabled: false,
-                    children: (0, import_i18n118.__)("Custom")
+                    children: (0, import_i18n112.__)("Custom")
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                 import_components122.__experimentalInputControl,
                 {
                   __next40pxDefaultSize: true,
                   ref: validityTargetRef,
                   type: "date",
-                  label: (0, import_i18n118.__)("Date"),
+                  label: (0, import_i18n112.__)("Date"),
                   hideLabelFromVision: true,
                   value,
                   onChange: handleManualDateChange,
                   required: !!field.isValid?.required
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                 DateCalendar2,
                 {
                   style: { width: "100%" },
@@ -35225,7 +34597,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let weekStartsOn;
     if (type === "date") {
-      weekStartsOn = weekStartsOnToNumber(fieldFormat.weekStartsOn);
+      weekStartsOn = weekStartsOnToNumber(
+        fieldFormat.weekStartsOn
+      );
     }
     const onChangeCallback = (0, import_element102.useCallback)(
       (newValue) => {
@@ -35308,9 +34682,9 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [value, updateDateRange]
     );
-    const { timezone } = (0, import_date7.getSettings)();
-    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n118.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+    const { timezone } = (0, import_date5.getSettings)();
+    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n112.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -35318,7 +34692,7 @@ If there's a particular need for this, please submit a feature request at https:
         inputRefs: [fromInputRef, toInputRef],
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
           import_components122.BaseControl,
           {
             __nextHasNoMarginBottom: true,
@@ -35326,11 +34700,11 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(import_components122.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(import_components122.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(import_components122.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(import_components122.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_RANGE_PRESETS.map((preset) => {
                   const isSelected2 = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                     import_components122.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -35343,7 +34717,7 @@ If there's a particular need for this, please submit a feature request at https:
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                   import_components122.Button,
                   {
                     className: "dataviews-controls__date-preset",
@@ -35352,31 +34726,31 @@ If there's a particular need for this, please submit a feature request at https:
                     size: "small",
                     accessibleWhenDisabled: false,
                     disabled: !!selectedPresetId,
-                    children: (0, import_i18n118.__)("Custom")
+                    children: (0, import_i18n112.__)("Custom")
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(import_components122.__experimentalHStack, { spacing: 2, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(import_components122.__experimentalHStack, { spacing: 2, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                   import_components122.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: fromInputRef,
                     type: "date",
-                    label: (0, import_i18n118.__)("From"),
+                    label: (0, import_i18n112.__)("From"),
                     hideLabelFromVision: true,
                     value: value?.[0],
                     onChange: (newValue) => handleManualDateChange("from", newValue),
                     required: !!field.isValid?.required
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                   import_components122.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: toInputRef,
                     type: "date",
-                    label: (0, import_i18n118.__)("To"),
+                    label: (0, import_i18n112.__)("To"),
                     hideLabelFromVision: true,
                     value: value?.[1],
                     onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -35384,7 +34758,7 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                 DateRangeCalendar,
                 {
                   style: { width: "100%" },
@@ -35411,7 +34785,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__date",
@@ -35424,7 +34798,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     if (operator === OPERATOR_BETWEEN) {
-      return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
         CalendarDateRangeControl,
         {
           data,
@@ -35435,7 +34809,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
       CalendarDateControl,
       {
         data,
@@ -35453,7 +34827,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
   var import_components123 = __toESM(require_components());
   var import_element103 = __toESM(require_element());
-  var import_jsx_runtime239 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime227 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components123.privateApis);
   function ValidatedText({
     data,
@@ -35476,7 +34850,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [data, setValue, onChange]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
       ValidatedInputControl2,
       {
         required: !!isValid2?.required,
@@ -35496,7 +34870,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/email.js
-  var import_jsx_runtime240 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime228 = __toESM(require_jsx_runtime());
   function Email({
     data,
     field,
@@ -35504,7 +34878,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
       ValidatedText,
       {
         ...{
@@ -35514,7 +34888,7 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           validity,
           type: "email",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components124.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components124.Icon, { icon: envelope_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(import_components124.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(import_components124.Icon, { icon: envelope_default }) })
         }
       }
     );
@@ -35522,7 +34896,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/dataform-controls/telephone.js
   var import_components125 = __toESM(require_components());
-  var import_jsx_runtime241 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime229 = __toESM(require_jsx_runtime());
   function Telephone({
     data,
     field,
@@ -35530,7 +34904,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       ValidatedText,
       {
         ...{
@@ -35540,7 +34914,7 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           validity,
           type: "tel",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components125.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components125.Icon, { icon: mobile_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(import_components125.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(import_components125.Icon, { icon: mobile_default }) })
         }
       }
     );
@@ -35548,7 +34922,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/dataform-controls/url.js
   var import_components126 = __toESM(require_components());
-  var import_jsx_runtime242 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime230 = __toESM(require_jsx_runtime());
   function Url({
     data,
     field,
@@ -35556,7 +34930,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
       ValidatedText,
       {
         ...{
@@ -35566,7 +34940,7 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           validity,
           type: "url",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components126.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components126.Icon, { icon: link_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_components126.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_components126.Icon, { icon: link_default }) })
         }
       }
     );
@@ -35575,8 +34949,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
   var import_components127 = __toESM(require_components());
   var import_element104 = __toESM(require_element());
-  var import_i18n119 = __toESM(require_i18n());
-  var import_jsx_runtime243 = __toESM(require_jsx_runtime());
+  var import_i18n113 = __toESM(require_i18n());
+  var import_jsx_runtime231 = __toESM(require_jsx_runtime());
   var { ValidatedNumberControl } = unlock3(import_components127.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
@@ -35600,16 +34974,16 @@ If there's a particular need for this, please submit a feature request at https:
       (newValue) => onChange([min, toNumberOrEmpty(newValue)]),
       [onChange, min]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
       import_components127.BaseControl,
       {
         __nextHasNoMarginBottom: true,
-        help: (0, import_i18n119.__)("The max. value must be greater than the min. value."),
-        children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(import_components127.Flex, { direction: "row", gap: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+        help: (0, import_i18n113.__)("The max. value must be greater than the min. value."),
+        children: /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(import_components127.Flex, { direction: "row", gap: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
             import_components127.__experimentalNumberControl,
             {
-              label: (0, import_i18n119.__)("Min."),
+              label: (0, import_i18n113.__)("Min."),
               value: min,
               max: max ? Number(max) - step : void 0,
               onChange: onChangeMin,
@@ -35618,10 +34992,10 @@ If there's a particular need for this, please submit a feature request at https:
               step
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
             import_components127.__experimentalNumberControl,
             {
-              label: (0, import_i18n119.__)("Max."),
+              label: (0, import_i18n113.__)("Max."),
               value: max,
               min: min ? Number(min) + step : void 0,
               onChange: onChangeMax,
@@ -35678,7 +35052,7 @@ If there's a particular need for this, please submit a feature request at https:
       )) {
         valueBetween = value;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
         BetweenControls,
         {
           value: valueBetween,
@@ -35688,7 +35062,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
       ValidatedNumberControl,
       {
         required: !!isValid2?.required,
@@ -35705,21 +35079,21 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/integer.js
-  var import_jsx_runtime244 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime232 = __toESM(require_jsx_runtime());
   function Number2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(ValidatedNumber, { ...props, decimals: 0 });
+    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(ValidatedNumber, { ...props, decimals: 0 });
   }
 
   // packages/dataviews/build-module/dataform-controls/number.js
-  var import_jsx_runtime245 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime233 = __toESM(require_jsx_runtime());
   function Number3(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(ValidatedNumber, { ...props, decimals: 2 });
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(ValidatedNumber, { ...props, decimals: 2 });
   }
 
   // packages/dataviews/build-module/dataform-controls/radio.js
   var import_components128 = __toESM(require_components());
   var import_element105 = __toESM(require_element());
-  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime234 = __toESM(require_jsx_runtime());
   var { ValidatedRadioControl } = unlock3(import_components128.privateApis);
   function Radio({
     data,
@@ -35739,9 +35113,9 @@ If there's a particular need for this, please submit a feature request at https:
       [data, onChange, setValue]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_components128.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(import_components128.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
@@ -35759,7 +35133,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/select.js
   var import_components129 = __toESM(require_components());
   var import_element106 = __toESM(require_element());
-  var import_jsx_runtime247 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime235 = __toESM(require_jsx_runtime());
   var { ValidatedSelectControl } = unlock3(import_components129.privateApis);
   function Select({
     data,
@@ -35780,9 +35154,9 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components129.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(import_components129.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
@@ -35802,7 +35176,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/dataform-controls/text.js
   var import_element107 = __toESM(require_element());
-  var import_jsx_runtime248 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime236 = __toESM(require_jsx_runtime());
   function Text12({
     data,
     field,
@@ -35812,7 +35186,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { prefix: prefix2, suffix } = config2 || {};
-    return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
       ValidatedText,
       {
         ...{
@@ -35831,7 +35205,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/toggle.js
   var import_components130 = __toESM(require_components());
   var import_element108 = __toESM(require_element());
-  var import_jsx_runtime249 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime237 = __toESM(require_jsx_runtime());
   var { ValidatedToggleControl } = unlock3(import_components130.privateApis);
   function Toggle({
     field,
@@ -35846,7 +35220,7 @@ If there's a particular need for this, please submit a feature request at https:
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [onChange, setValue, data, getValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
       ValidatedToggleControl,
       {
         required: !!isValid2.required,
@@ -35864,7 +35238,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/textarea.js
   var import_components131 = __toESM(require_components());
   var import_element109 = __toESM(require_element());
-  var import_jsx_runtime250 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime238 = __toESM(require_jsx_runtime());
   var { ValidatedTextareaControl } = unlock3(import_components131.privateApis);
   function Textarea({
     data,
@@ -35881,7 +35255,7 @@ If there's a particular need for this, please submit a feature request at https:
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
       ValidatedTextareaControl,
       {
         required: !!isValid2?.required,
@@ -35902,7 +35276,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/toggle-group.js
   var import_components132 = __toESM(require_components());
   var import_element110 = __toESM(require_element());
-  var import_jsx_runtime251 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime239 = __toESM(require_jsx_runtime());
   var { ValidatedToggleGroupControl } = unlock3(import_components132.privateApis);
   function ToggleGroup({
     data,
@@ -35922,13 +35296,13 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(import_components132.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(import_components132.Spinner, {});
     }
     if (elements2.length === 0) {
       return null;
     }
     const selectedOption = elements2.find((el) => el.value === value);
-    return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
@@ -35941,7 +35315,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         value,
         hideLabelFromVision,
-        children: elements2.map((el) => /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+        children: elements2.map((el) => /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
           import_components132.__experimentalToggleGroupControlOption,
           {
             label: el.label,
@@ -35956,7 +35330,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/array.js
   var import_components133 = __toESM(require_components());
   var import_element111 = __toESM(require_element());
-  var import_jsx_runtime252 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime240 = __toESM(require_jsx_runtime());
   var { ValidatedFormTokenField } = unlock3(import_components133.privateApis);
   function ArrayControl({
     data,
@@ -35993,9 +35367,9 @@ If there's a particular need for this, please submit a feature request at https:
       [onChange, setValue, data]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(import_components133.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_components133.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
@@ -36032,9 +35406,9 @@ If there's a particular need for this, please submit a feature request at https:
             const element = elements2.find(
               (el) => el.value === item
             );
-            return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", { children: element?.label || item });
+            return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("span", { children: element?.label || item });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", { children: item });
+          return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("span", { children: item });
         }
       }
     );
@@ -36043,17 +35417,17 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/color.js
   var import_components134 = __toESM(require_components());
   var import_element112 = __toESM(require_element());
-  var import_jsx_runtime253 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime241 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock3(import_components134.privateApis);
   var ColorPicker = ({
     color,
     onColorChange
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
-    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
       import_components134.Dropdown,
       {
-        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components134.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components134.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
           "button",
           {
             type: "button",
@@ -36076,7 +35450,7 @@ If there's a particular need for this, please submit a feature request at https:
             "aria-label": "Open color picker"
           }
         ) }),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
           Picker,
           {
             color: w(validColor),
@@ -36108,7 +35482,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
       ValidatedInputControl3,
       {
         required: !!field.isValid?.required,
@@ -36120,7 +35494,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: handleInputChange,
         hideLabelFromVision,
         type: "text",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
           ColorPicker,
           {
             color: value,
@@ -36134,8 +35508,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/password.js
   var import_components135 = __toESM(require_components());
   var import_element113 = __toESM(require_element());
-  var import_i18n120 = __toESM(require_i18n());
-  var import_jsx_runtime254 = __toESM(require_jsx_runtime());
+  var import_i18n114 = __toESM(require_i18n());
+  var import_jsx_runtime242 = __toESM(require_jsx_runtime());
   function Password({
     data,
     field,
@@ -36147,7 +35521,7 @@ If there's a particular need for this, please submit a feature request at https:
     const toggleVisibility = (0, import_element113.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
       ValidatedText,
       {
         ...{
@@ -36157,13 +35531,13 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           validity,
           type: isVisible2 ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_components135.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components135.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
             import_components135.Button,
             {
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              label: isVisible2 ? (0, import_i18n120.__)("Hide password") : (0, import_i18n120.__)("Show password")
+              label: isVisible2 ? (0, import_i18n114.__)("Hide password") : (0, import_i18n114.__)("Show password")
             }
           ) })
         }
@@ -36171,13 +35545,13 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/utils/has-elements.js
+  // packages/dataviews/build-module/field-types/utils/has-elements.js
   function hasElements(field) {
     return Array.isArray(field.elements) && field.elements.length > 0 || typeof field.getElements === "function";
   }
 
   // packages/dataviews/build-module/dataform-controls/index.js
-  var import_jsx_runtime255 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime243 = __toESM(require_jsx_runtime());
   var FORM_CONTROLS = {
     array: ArrayControl,
     checkbox: Checkbox,
@@ -36203,11 +35577,14 @@ If there's a particular need for this, please submit a feature request at https:
   function createConfiguredControl(config2) {
     const { control, ...controlConfig } = config2;
     const BaseControlType = getControlByType(control);
+    if (BaseControlType === null) {
+      return null;
+    }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(BaseControlType, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(BaseControlType, { ...props, config: controlConfig });
     };
   }
-  function getControl(field, fieldTypeDefinition) {
+  function getControl(field, fallback) {
     if (typeof field.Edit === "function") {
       return field.Edit;
     }
@@ -36220,22 +35597,19 @@ If there's a particular need for this, please submit a feature request at https:
     if (hasElements(field) && field.type !== "array") {
       return getControlByType("select");
     }
-    if (typeof fieldTypeDefinition.Edit === "string") {
-      return getControlByType(fieldTypeDefinition.Edit);
+    if (fallback === null) {
+      return null;
     }
-    if (isEditConfig(fieldTypeDefinition.Edit)) {
-      return createConfiguredControl(fieldTypeDefinition.Edit);
-    }
-    return fieldTypeDefinition.Edit;
+    return getControlByType(fallback);
   }
   function getControlByType(type) {
     if (Object.keys(FORM_CONTROLS).includes(type)) {
       return FORM_CONTROLS[type];
     }
-    throw "Control " + type + " not found";
+    return null;
   }
 
-  // packages/dataviews/build-module/utils/normalize-fields.js
+  // packages/dataviews/build-module/field-types/utils/get-value-from-id.js
   var getValueFromId = (id) => ({ item }) => {
     const path = id.split(".");
     let value = item;
@@ -36248,6 +35622,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return value;
   };
+  var get_value_from_id_default = getValueFromId;
+
+  // packages/dataviews/build-module/field-types/utils/set-value-from-id.js
   var setValueFromId = (id) => ({ value }) => {
     const path = id.split(".");
     const result = {};
@@ -36259,40 +35636,21 @@ If there's a particular need for this, please submit a feature request at https:
     current[path.at(-1)] = value;
     return result;
   };
-  function getFilterBy(field, fieldTypeDefinition) {
+  var set_value_from_id_default = setValueFromId;
+
+  // packages/dataviews/build-module/field-types/utils/get-filter-by.js
+  function getFilterBy(field, defaultOperators2, validOperators2) {
     if (field.filterBy === false) {
       return false;
     }
     if (typeof field.filterBy === "object") {
       let operators = field.filterBy.operators;
       if (!operators || !Array.isArray(operators)) {
-        operators = !!fieldTypeDefinition.filterBy ? fieldTypeDefinition.filterBy.defaultOperators : [];
-      }
-      let validOperators = ALL_OPERATORS;
-      if (typeof fieldTypeDefinition.filterBy === "object") {
-        validOperators = fieldTypeDefinition.filterBy.validOperators;
+        operators = defaultOperators2;
       }
       operators = operators.filter(
-        (operator) => validOperators.includes(operator)
+        (operator) => validOperators2.includes(operator)
       );
-      if (hasElements(field) && operators.includes(OPERATOR_BETWEEN)) {
-        operators = operators.filter(
-          (operator) => operator !== OPERATOR_BETWEEN
-        );
-      }
-      const hasSingleSelectionOperator = operators.some(
-        (operator) => SINGLE_SELECTION_OPERATORS.includes(operator)
-      );
-      if (hasSingleSelectionOperator) {
-        operators = operators.filter(
-          (operator) => (
-            // The 'Between' operator is unique as it can be combined with single selection operators.
-            [...SINGLE_SELECTION_OPERATORS, OPERATOR_BETWEEN].includes(
-              operator
-            )
-          )
-        );
-      }
       if (operators.length === 0) {
         return false;
       }
@@ -36301,79 +35659,1023 @@ If there's a particular need for this, please submit a feature request at https:
         operators
       };
     }
-    if (fieldTypeDefinition.filterBy === false) {
+    if (defaultOperators2.length === 0) {
       return false;
     }
-    let defaultOperators = fieldTypeDefinition.filterBy.defaultOperators;
-    if (hasElements(field) && defaultOperators.includes(OPERATOR_BETWEEN)) {
-      defaultOperators = defaultOperators.filter(
-        (operator) => operator !== OPERATOR_BETWEEN
-      );
-    }
     return {
-      operators: defaultOperators
+      isPrimary: false,
+      operators: defaultOperators2
     };
   }
+  var get_filter_by_default = getFilterBy;
+
+  // packages/dataviews/build-module/field-types/email.js
+  var import_jsx_runtime244 = __toESM(require_jsx_runtime());
+  var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  function render({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
+          return (0, import_i18n115.__)("Value must be a valid email address.");
+        }
+        return null;
+      }
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2];
+    const validOperators2 = [
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY2,
+      OPERATOR_IS_NONE2,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "email",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render,
+      Edit: getControl(field, "email"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/integer.js
+  var import_i18n116 = __toESM(require_i18n());
+  var import_jsx_runtime245 = __toESM(require_jsx_runtime());
+  function render2({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField2(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
+          return (0, import_i18n116.__)("Value must be an integer.");
+        }
+        return null;
+      }
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA - valueB : valueB - valueA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN
+    ];
+    const validOperators2 = [
+      // Single-selection
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN,
+      // Multiple-selection
+      OPERATOR_IS_ANY2,
+      OPERATOR_IS_NONE2,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "integer",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render2,
+      Edit: getControl(field, "integer"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/number.js
+  var import_i18n117 = __toESM(require_i18n());
+  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
+  function isEmpty2(value) {
+    return value === "" || value === void 0 || value === null;
+  }
+  function render3({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (![null, void 0].includes(value)) {
+      return Number(value).toFixed(2);
+    }
+    return null;
+  }
+  function normalizeField3(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (!isEmpty2(value) && !Number.isFinite(value)) {
+          return (0, import_i18n117.__)("Value must be a number.");
+        }
+        return null;
+      }
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA - valueB : valueB - valueA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN
+    ];
+    const validOperators2 = [
+      // Single-selection
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN,
+      // Multiple-selection
+      OPERATOR_IS_ANY2,
+      OPERATOR_IS_NONE2,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "number",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render3,
+      Edit: getControl(field, "number"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/text.js
+  var import_jsx_runtime247 = __toESM(require_jsx_runtime());
+  function render4({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField4(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2];
+    const validOperators2 = [
+      // Single selection
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY2,
+      OPERATOR_IS_NONE2,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "text",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render4,
+      Edit: getControl(field, "text"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/datetime.js
+  var import_jsx_runtime248 = __toESM(require_jsx_runtime());
+  function render5({ item, field }) {
+    if (field.elements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (["", void 0, null].includes(value)) {
+      return null;
+    }
+    try {
+      const dateValue = parseDateTime(value);
+      return dateValue?.toLocaleString();
+    } catch (error) {
+      return null;
+    }
+  }
+  function normalizeField5(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      const timeA = new Date(valueA).getTime();
+      const timeB = new Date(valueB).getTime();
+      return direction === "asc" ? timeA - timeB : timeB - timeA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE2,
+      OPERATOR_AFTER2,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER
+    ];
+    const validOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE2,
+      OPERATOR_AFTER2,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER
+    ];
+    return {
+      id: field.id,
+      type: "datetime",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render5,
+      Edit: getControl(field, "datetime"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/date.js
+  var import_date7 = __toESM(require_date());
+  var import_jsx_runtime249 = __toESM(require_jsx_runtime());
+  function getFormat(field) {
+    return {
+      date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date7.getSettings)().formats.date,
+      weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(field.format?.weekStartsOn) ? field.format.weekStartsOn : numberToWeekStartsOn((0, import_date7.getSettings)().l10n.startOfWeek)
+    };
+  }
+  function render6({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (!value) {
+      return "";
+    }
+    let format2;
+    if (field.type !== "date") {
+      format2 = getFormat(field);
+    } else {
+      format2 = field.format;
+    }
+    return (0, import_date7.dateI18n)(format2.weekStartsOn, (0, import_date7.getDate)(value));
+  }
+  function normalizeField6(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      const timeA = new Date(valueA).getTime();
+      const timeB = new Date(valueB).getTime();
+      return direction === "asc" ? timeA - timeB : timeB - timeA;
+    };
+    const defaultOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE2,
+      OPERATOR_AFTER2,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER,
+      OPERATOR_BETWEEN
+    ];
+    const validOperators2 = [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE2,
+      OPERATOR_AFTER2,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_IN_THE_PAST,
+      OPERATOR_OVER,
+      OPERATOR_BETWEEN
+    ];
+    return {
+      id: field.id,
+      type: "date",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render6,
+      Edit: getControl(field, "date"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: getFormat(field)
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/boolean.js
+  var import_i18n118 = __toESM(require_i18n());
+  var import_jsx_runtime250 = __toESM(require_jsx_runtime());
+  function render7({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(RenderFromElements, { item, field });
+    }
+    if (field.getValue({ item }) === true) {
+      return (0, import_i18n118.__)("True");
+    }
+    if (field.getValue({ item }) === false) {
+      return (0, import_i18n118.__)("False");
+    }
+    return null;
+  }
+  function normalizeField7(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      const boolA = Boolean(valueA);
+      const boolB = Boolean(valueB);
+      if (boolA === boolB) {
+        return 0;
+      }
+      if (direction === "asc") {
+        return boolA ? 1 : -1;
+      }
+      return boolA ? -1 : 1;
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
+          return (0, import_i18n118.__)("Value must be true, false, or undefined");
+        }
+        return null;
+      }
+    };
+    const defaultOperators2 = [OPERATOR_IS2, OPERATOR_IS_NOT];
+    const validOperators2 = [OPERATOR_IS2, OPERATOR_IS_NOT];
+    return {
+      id: field.id,
+      type: "boolean",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render7,
+      Edit: getControl(field, "checkbox"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/media.js
+  function sort() {
+    return 0;
+  }
+  function render8() {
+    return null;
+  }
+  function normalizeField8(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    return {
+      id: field.id,
+      type: "media",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render8,
+      Edit: getControl(field, null),
+      sort: field.sort ?? sort,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? false,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: false,
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/array.js
+  var import_i18n119 = __toESM(require_i18n());
+  function render9({ item, field }) {
+    const value = field.getValue({ item }) || [];
+    return value.join(", ");
+  }
+  var defaultOperators = [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2];
+  var validOperators = [
+    OPERATOR_IS_ANY2,
+    OPERATOR_IS_NONE2,
+    OPERATOR_IS_ALL,
+    OPERATOR_IS_NOT_ALL
+  ];
+  function normalizeField9(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue(a2);
+      const valueB = getValue(b2);
+      const arrA = Array.isArray(valueA) ? valueA : [];
+      const arrB = Array.isArray(valueB) ? valueB : [];
+      if (arrA.length !== arrB.length) {
+        return direction === "asc" ? arrA.length - arrB.length : arrB.length - arrA.length;
+      }
+      const joinedA = arrA.join(",");
+      const joinedB = arrB.join(",");
+      return direction === "asc" ? joinedA.localeCompare(joinedB) : joinedB.localeCompare(joinedA);
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
+          return (0, import_i18n119.__)("Value must be an array.");
+        }
+        if (!value.every((v2) => typeof v2 === "string")) {
+          return (0, import_i18n119.__)("Every value must be a string.");
+        }
+        return null;
+      }
+    };
+    return {
+      id: field.id,
+      type: "array",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render9,
+      Edit: getControl(field, "array"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators, validOperators),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/password.js
+  var import_jsx_runtime251 = __toESM(require_jsx_runtime());
+  function sort2(_valueA, _valueB, _direction) {
+    return 0;
+  }
+  function render10({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
+  }
+  function normalizeField10(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    return {
+      id: field.id,
+      type: "password",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render10,
+      Edit: getControl(field, "password"),
+      sort: field.sort ?? sort2,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? false,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: false,
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/telephone.js
+  var import_jsx_runtime252 = __toESM(require_jsx_runtime());
+  function render11({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField11(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2];
+    const validOperators2 = [
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY2,
+      OPERATOR_IS_NONE2,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "telephone",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render11,
+      Edit: getControl(field, "telephone"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/color.js
+  var import_i18n120 = __toESM(require_i18n());
+  var import_jsx_runtime253 = __toESM(require_jsx_runtime());
+  function render12({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if (!value || !w(value).isValid()) {
+      return value;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        "div",
+        {
+          style: {
+            width: "16px",
+            height: "16px",
+            borderRadius: "50%",
+            backgroundColor: value,
+            border: "1px solid #ddd",
+            flexShrink: 0
+          }
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("span", { children: value })
+    ] });
+  }
+  function normalizeField12(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const sort3 = (valueA, valueB, direction) => {
+      const colorA = w(valueA);
+      const colorB = w(valueB);
+      if (!colorA.isValid() && !colorB.isValid()) {
+        return 0;
+      }
+      if (!colorA.isValid()) {
+        return direction === "asc" ? 1 : -1;
+      }
+      if (!colorB.isValid()) {
+        return direction === "asc" ? -1 : 1;
+      }
+      const hslA = colorA.toHsl();
+      const hslB = colorB.toHsl();
+      if (hslA.h !== hslB.h) {
+        return direction === "asc" ? hslA.h - hslB.h : hslB.h - hslA.h;
+      }
+      if (hslA.s !== hslB.s) {
+        return direction === "asc" ? hslA.s - hslB.s : hslB.s - hslA.s;
+      }
+      return direction === "asc" ? hslA.l - hslB.l : hslB.l - hslA.l;
+    };
+    const isValid2 = {
+      elements: true,
+      custom: (item, normalizedField) => {
+        const value = normalizedField.getValue({ item });
+        if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+          return (0, import_i18n120.__)("Value must be a valid color.");
+        }
+        return null;
+      }
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2];
+    const validOperators2 = [
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_IS_ANY2,
+      OPERATOR_IS_NONE2
+    ];
+    return {
+      id: field.id,
+      type: "color",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render12,
+      Edit: getControl(field, "color"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/url.js
+  var import_jsx_runtime254 = __toESM(require_jsx_runtime());
+  function render13({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+  }
+  function normalizeField13(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const defaultOperators2 = [OPERATOR_IS_ANY2, OPERATOR_IS_NONE2];
+    const validOperators2 = [
+      OPERATOR_IS2,
+      OPERATOR_IS_NOT,
+      OPERATOR_CONTAINS,
+      OPERATOR_NOT_CONTAINS,
+      OPERATOR_STARTS_WITH,
+      // Multiple selection
+      OPERATOR_IS_ANY2,
+      OPERATOR_IS_NONE2,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ];
+    return {
+      id: field.id,
+      type: "url",
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render13,
+      Edit: getControl(field, "url"),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+
+  // packages/dataviews/build-module/field-types/index.js
+  var import_jsx_runtime255 = __toESM(require_jsx_runtime());
+  function normalizeField14(field) {
+    const getValue = field.getValue || get_value_from_id_default(field.id);
+    const setValue = field.setValue || set_value_from_id_default(field.id);
+    const isValid2 = {
+      elements: true,
+      custom: () => null
+    };
+    const sort3 = (a2, b2, direction) => {
+      const valueA = getValue({ item: a2 });
+      const valueB = getValue({ item: b2 });
+      if (typeof valueA === "number" && typeof valueB === "number") {
+        return direction === "asc" ? valueA - valueB : valueB - valueA;
+      }
+      return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    };
+    const render14 = ({
+      item,
+      field: normalizedField
+    }) => {
+      return normalizedField.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(RenderFromElements, { item, field: normalizedField }) : normalizedField.getValue({ item });
+    };
+    const defaultOperators2 = [OPERATOR_IS2, OPERATOR_IS_NOT];
+    const validOperators2 = ALL_OPERATORS;
+    return {
+      id: field.id,
+      // type — it does not have a type
+      label: field.label || field.id,
+      header: field.header || field.label || field.id,
+      description: field.description,
+      placeholder: field.placeholder,
+      getValue,
+      setValue,
+      elements: field.elements,
+      getElements: field.getElements,
+      hasElements: hasElements(field),
+      render: field.render ?? render14,
+      Edit: getControl(field, null),
+      sort: field.sort ?? sort3,
+      isValid: {
+        ...isValid2,
+        ...field.isValid
+      },
+      isVisible: field.isVisible,
+      enableSorting: field.enableSorting ?? true,
+      enableGlobalSearch: field.enableGlobalSearch ?? false,
+      enableHiding: field.enableHiding ?? true,
+      readOnly: field.readOnly ?? false,
+      filterBy: get_filter_by_default(field, defaultOperators2, validOperators2),
+      format: {}
+    };
+  }
+  function getNormalizeFieldFunction(type) {
+    if ("email" === type) {
+      return normalizeField;
+    }
+    if ("integer" === type) {
+      return normalizeField2;
+    }
+    if ("number" === type) {
+      return normalizeField3;
+    }
+    if ("text" === type) {
+      return normalizeField4;
+    }
+    if ("datetime" === type) {
+      return normalizeField5;
+    }
+    if ("date" === type) {
+      return normalizeField6;
+    }
+    if ("boolean" === type) {
+      return normalizeField7;
+    }
+    if ("media" === type) {
+      return normalizeField8;
+    }
+    if ("array" === type) {
+      return normalizeField9;
+    }
+    if ("password" === type) {
+      return normalizeField10;
+    }
+    if ("telephone" === type) {
+      return normalizeField11;
+    }
+    if ("color" === type) {
+      return normalizeField12;
+    }
+    if ("url" === type) {
+      return normalizeField13;
+    }
+    return normalizeField14;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/normalize-fields.js
   function normalizeFields(fields) {
     return fields.map((field) => {
-      const fieldTypeDefinition = getFieldTypeDefinition(
-        field.type
-      );
-      const getValue = field.getValue || getValueFromId(field.id);
-      const setValue = field.setValue || setValueFromId(field.id);
-      const sort14 = field.sort ?? function sort22(a2, b2, direction) {
-        return fieldTypeDefinition.sort(
-          getValue({ item: a2 }),
-          getValue({ item: b2 }),
-          direction
-        );
-      };
-      const isValid2 = {
-        ...fieldTypeDefinition.isValid,
-        ...field.isValid
-      };
-      const Edit = getControl(field, fieldTypeDefinition);
-      const render2 = field.render ?? function render22({
-        item,
-        field: renderedField
-      }) {
-        return fieldTypeDefinition.render({ item, field: renderedField });
-      };
-      const filterBy = getFilterBy(field, fieldTypeDefinition);
-      const { type, ...fieldWithoutType } = field;
-      const baseField = {
-        ...fieldWithoutType,
-        label: field.label || field.id,
-        header: field.header || field.label || field.id,
-        getValue,
-        setValue,
-        render: render2,
-        sort: sort14,
-        isValid: isValid2,
-        Edit,
-        hasElements: hasElements(field),
-        enableHiding: field.enableHiding ?? true,
-        enableSorting: field.enableSorting ?? fieldTypeDefinition.enableSorting ?? true,
-        filterBy,
-        readOnly: field.readOnly ?? fieldTypeDefinition.readOnly ?? false,
-        format: {}
-      };
-      if (field.type === "date") {
-        const format2 = {
-          date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date9.getSettings)().formats.date,
-          weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(
-            field.format?.weekStartsOn
-          ) ? field.format.weekStartsOn : numberToWeekStartsOn(
-            (0, import_date9.getSettings)().l10n.startOfWeek
-          )
-        };
-        return {
-          ...baseField,
-          type: "date",
-          format: format2
-        };
-      }
-      return { ...baseField, type: field.type, format: {} };
+      const normalize = getNormalizeFieldFunction(field.type);
+      return normalize(field);
     });
   }
 
@@ -38219,7 +38521,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/utils/filter-sort-and-paginate.js
   var import_remove_accents2 = __toESM(require_remove_accents());
-  var import_date10 = __toESM(require_date());
+  var import_date9 = __toESM(require_date());
   function normalizeSearchInput2(input = "") {
     return (0, import_remove_accents2.default)(input.trim().toLowerCase());
   }
@@ -38312,15 +38614,15 @@ If there's a particular need for this, please submit a feature request at https:
               return filter.value !== field.getValue({ item });
             });
           } else if (filter.operator === OPERATOR_ON && filter.value !== void 0) {
-            const filterDate = (0, import_date10.getDate)(filter.value);
+            const filterDate = (0, import_date9.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldDate = (0, import_date10.getDate)(field.getValue({ item }));
+              const fieldDate = (0, import_date9.getDate)(field.getValue({ item }));
               return filterDate.getTime() === fieldDate.getTime();
             });
           } else if (filter.operator === OPERATOR_NOT_ON && filter.value !== void 0) {
-            const filterDate = (0, import_date10.getDate)(filter.value);
+            const filterDate = (0, import_date9.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldDate = (0, import_date10.getDate)(field.getValue({ item }));
+              const fieldDate = (0, import_date9.getDate)(field.getValue({ item }));
               return filterDate.getTime() !== fieldDate.getTime();
             });
           } else if (filter.operator === OPERATOR_LESS_THAN && filter.value !== void 0) {
@@ -38365,33 +38667,33 @@ If there's a particular need for this, please submit a feature request at https:
               );
             });
           } else if (filter.operator === OPERATOR_BEFORE2 && filter.value !== void 0) {
-            const filterValue = (0, import_date10.getDate)(filter.value);
+            const filterValue = (0, import_date9.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date10.getDate)(
+              const fieldValue = (0, import_date9.getDate)(
                 field.getValue({ item })
               );
               return fieldValue < filterValue;
             });
           } else if (filter.operator === OPERATOR_AFTER2 && filter.value !== void 0) {
-            const filterValue = (0, import_date10.getDate)(filter.value);
+            const filterValue = (0, import_date9.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date10.getDate)(
+              const fieldValue = (0, import_date9.getDate)(
                 field.getValue({ item })
               );
               return fieldValue > filterValue;
             });
           } else if (filter.operator === OPERATOR_BEFORE_INC && filter.value !== void 0) {
-            const filterValue = (0, import_date10.getDate)(filter.value);
+            const filterValue = (0, import_date9.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date10.getDate)(
+              const fieldValue = (0, import_date9.getDate)(
                 field.getValue({ item })
               );
               return fieldValue <= filterValue;
             });
           } else if (filter.operator === OPERATOR_AFTER_INC && filter.value !== void 0) {
-            const filterValue = (0, import_date10.getDate)(filter.value);
+            const filterValue = (0, import_date9.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date10.getDate)(
+              const fieldValue = (0, import_date9.getDate)(
                 field.getValue({ item })
               );
               return fieldValue >= filterValue;
@@ -38410,7 +38712,7 @@ If there's a particular need for this, please submit a feature request at https:
               filter.value.unit
             );
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date10.getDate)(
+              const fieldValue = (0, import_date9.getDate)(
                 field.getValue({ item })
               );
               return fieldValue >= targetDate && fieldValue <= /* @__PURE__ */ new Date();
@@ -38421,7 +38723,7 @@ If there's a particular need for this, please submit a feature request at https:
               filter.value.unit
             );
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date10.getDate)(
+              const fieldValue = (0, import_date9.getDate)(
                 field.getValue({ item })
               );
               return fieldValue < targetDate;
