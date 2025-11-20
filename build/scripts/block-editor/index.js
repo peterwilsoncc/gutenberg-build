@@ -10887,12 +10887,18 @@ var wp;
       return false;
     }
     const blockName = getBlockName(state, clientId);
-    if (blockName === "core/block" || getTemplateLock(state, clientId) === "contentOnly") {
+    if (blockName === "core/block") {
       return true;
     }
     const attributes = getBlockAttributes(state, clientId);
     const isTemplatePart6 = blockName === "core/template-part";
     if ((attributes?.metadata?.patternName || isTemplatePart6) && !!window?.__experimentalContentOnlyPatternInsertion) {
+      return true;
+    }
+    const hasContentOnlyTempateLock = getTemplateLock(state, clientId) === "contentOnly";
+    const rootClientId = getBlockRootClientId(state, clientId);
+    const hasRootContentOnlyTemplateLock = getTemplateLock(state, rootClientId) === "contentOnly";
+    if (hasContentOnlyTempateLock && !hasRootContentOnlyTemplateLock) {
       return true;
     }
     return false;
@@ -11865,7 +11871,8 @@ var wp;
     } else {
       blockType = (0, import_blocks5.getBlockType)(blockName);
     }
-    if (getTemplateLock(state, rootClientId)) {
+    const rootTemplateLock = getTemplateLock(state, rootClientId);
+    if (rootTemplateLock && rootTemplateLock !== "contentOnly") {
       return false;
     }
     const blockEditingMode = getBlockEditingMode(state, rootClientId ?? "");
@@ -11969,7 +11976,8 @@ var wp;
       return !attributes.lock.remove;
     }
     const rootClientId = getBlockRootClientId(state, clientId);
-    if (getTemplateLock(state, rootClientId)) {
+    const rootTemplateLock = getTemplateLock(state, rootClientId);
+    if (rootTemplateLock && rootTemplateLock !== "contentOnly") {
       return false;
     }
     const isBlockWithinSection = !!getParentSectionBlock(state, clientId);
@@ -12002,8 +12010,8 @@ var wp;
       return !attributes.lock.move;
     }
     const rootClientId = getBlockRootClientId(state, clientId);
-    const templateLock = getTemplateLock(state, rootClientId);
-    if (templateLock === "all" || templateLock === "contentOnly") {
+    const rootTemplateLock = getTemplateLock(state, rootClientId);
+    if (rootTemplateLock === "all") {
       return false;
     }
     const isBlockWithinSection = !!getParentSectionBlock(state, clientId);
@@ -32335,6 +32343,7 @@ var wp;
           rootClientId
         ));
         const hasSelectedRoot = !!(rootClientId && selectedBlockClientId && rootClientId === selectedBlockClientId);
+        const templateLock = getTemplateLock2(rootClientId);
         return {
           order: _order,
           selectedBlocks: selectedBlockClientIds,
@@ -32343,7 +32352,7 @@ var wp;
           shouldRenderAppender: (!isSectionBlock2(rootClientId) || isContainerInsertableToInContentOnlyMode2(
             getBlockName2(selectedBlockClientId),
             rootClientId
-          )) && getBlockEditingMode2(rootClientId) !== "disabled" && !getTemplateLock2(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || hasSelectedRoot || showRootAppender)
+          )) && getBlockEditingMode2(rootClientId) !== "disabled" && (!templateLock || templateLock === "contentOnly") && hasAppender && !_isZoomOut() && (hasCustomAppender || hasSelectedRoot || showRootAppender)
         };
       },
       [rootClientId, hasAppender, hasCustomAppender]
