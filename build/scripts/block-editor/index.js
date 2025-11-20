@@ -9143,7 +9143,8 @@ var wp;
     ) : [];
     const contentOnlyParents = [
       ...contentOnlyTemplateLockedClientIds,
-      ...unsyncedPatternClientIds
+      ...unsyncedPatternClientIds,
+      ...window?.__experimentalContentOnlyPatternInsertion ? templatePartClientIds : []
     ];
     traverseBlockTree(state, treeClientId, (block) => {
       const { clientId, name: blockName } = block;
@@ -10890,7 +10891,8 @@ var wp;
       return true;
     }
     const attributes = getBlockAttributes(state, clientId);
-    if (attributes?.metadata?.patternName && !!window?.__experimentalContentOnlyPatternInsertion) {
+    const isTemplatePart6 = blockName === "core/template-part";
+    if ((attributes?.metadata?.patternName || isTemplatePart6) && !!window?.__experimentalContentOnlyPatternInsertion) {
       return true;
     }
     return false;

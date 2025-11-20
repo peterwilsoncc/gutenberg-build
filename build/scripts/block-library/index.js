@@ -60288,9 +60288,8 @@ ${declarations}
     return (0, import_data125.useSelect)(
       (select8) => {
         const blockNameWithArea = area ? `core/template-part/${area}` : "core/template-part";
-        const { getBlockRootClientId, getPatternsByBlockTypes } = select8(import_block_editor247.store);
-        const rootClientId = getBlockRootClientId(clientId);
-        return getPatternsByBlockTypes(blockNameWithArea, rootClientId);
+        const { getPatternsByBlockTypes } = select8(import_block_editor247.store);
+        return getPatternsByBlockTypes(blockNameWithArea, clientId);
       },
       [area, clientId]
     );
@@ -61039,6 +61038,12 @@ ${declarations}
 
   // packages/block-library/build-module/template-part/edit/index.js
   var import_jsx_runtime476 = __toESM(require_jsx_runtime());
+  function getTemplatePartEditButtonTitle(clientId, editedContentOnlySection) {
+    if (!window?.__experimentalContentOnlyPatternInsertion) {
+      return (0, import_i18n231.__)("Edit");
+    }
+    return editedContentOnlySection === clientId ? (0, import_i18n231.__)("Exit section") : (0, import_i18n231.__)("Edit section");
+  }
   function ReplaceButton({
     isEntityAvailable,
     area,
@@ -61090,8 +61095,18 @@ ${declarations}
   }) {
     const { createSuccessNotice } = (0, import_data131.useDispatch)(import_notices18.store);
     const { editEntityRecord } = (0, import_data131.useDispatch)(import_core_data80.store);
-    const currentTheme = (0, import_data131.useSelect)(
-      (select8) => select8(import_core_data80.store).getCurrentTheme()?.stylesheet,
+    const { editContentOnlySection, stopEditingContentOnlySection } = unlock(
+      (0, import_data131.useDispatch)(import_block_editor251.store)
+    );
+    const { currentTheme, editedContentOnlySection } = (0, import_data131.useSelect)(
+      (select8) => {
+        return {
+          currentTheme: select8(import_core_data80.store).getCurrentTheme()?.stylesheet,
+          editedContentOnlySection: unlock(
+            select8(import_block_editor251.store)
+          ).getEditedContentOnlySection()
+        };
+      },
       []
     );
     const { slug, theme = currentTheme, tagName, layout = {} } = attributes3;
@@ -61181,11 +61196,24 @@ ${declarations}
         isEntityAvailable && onNavigateToEntityRecord && canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(import_block_editor251.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(
           import_components150.ToolbarButton,
           {
-            onClick: () => onNavigateToEntityRecord({
-              postId: templatePartId,
-              postType: "wp_template_part"
-            }),
-            children: (0, import_i18n231.__)("Edit")
+            onClick: () => {
+              if (window?.__experimentalContentOnlyPatternInsertion) {
+                if (editedContentOnlySection !== clientId) {
+                  editContentOnlySection(clientId);
+                } else {
+                  stopEditingContentOnlySection();
+                }
+                return;
+              }
+              onNavigateToEntityRecord({
+                postId: templatePartId,
+                postType: "wp_template_part"
+              });
+            },
+            children: getTemplatePartEditButtonTitle(
+              clientId,
+              editedContentOnlySection
+            )
           }
         ) }),
         canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(import_block_editor251.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(
