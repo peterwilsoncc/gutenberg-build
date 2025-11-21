@@ -4096,7 +4096,7 @@ var wp;
     const target = document.getElementById(id);
     const root = (0, import_element25.createRoot)(target);
     const coreBlocks = (0, import_block_library2.__experimentalGetCoreBlocks)().filter((block) => {
-      return !(disabledBlocks.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation"));
+      return !(disabledBlocks.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation") || block.name.startsWith("core/term"));
     });
     (0, import_data33.dispatch)(import_preferences10.store).setDefaults("core/edit-widgets", {
       fixedToolbar: false,

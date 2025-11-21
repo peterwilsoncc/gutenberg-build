@@ -2415,7 +2415,7 @@ var wp;
     });
     (0, import_data17.dispatch)(import_blocks2.store).reapplyBlockTypeFilters();
     const coreBlocks = (0, import_block_library2.__experimentalGetCoreBlocks)().filter((block) => {
-      return !(DISABLED_BLOCKS.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation"));
+      return !(DISABLED_BLOCKS.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation") || block.name.startsWith("core/term"));
     });
     (0, import_block_library2.registerCoreBlocks)(coreBlocks);
     (0, import_widgets5.registerLegacyWidgetBlock)();
