@@ -23257,6 +23257,20 @@ var wp;
   var import_i18n87 = __toESM(require_i18n());
   var import_components93 = __toESM(require_components());
   var import_element69 = __toESM(require_element());
+
+  // packages/dataviews/build-module/utils/get-hideable-fields.js
+  function getHideableFields(view, fields) {
+    const togglableFields = [
+      view?.titleField,
+      view?.mediaField,
+      view?.descriptionField
+    ].filter(Boolean);
+    return fields.filter(
+      (f2) => !togglableFields.includes(f2.id) && f2.type !== "media" && f2.enableHiding !== false
+    );
+  }
+
+  // packages/dataviews/build-module/dataviews-layouts/table/column-header-menu.js
   var import_jsx_runtime185 = __toESM(require_jsx_runtime());
   var { Menu: Menu6 } = unlock3(import_components93.privateApis);
   function WithMenuSeparators({ children }) {
@@ -23272,7 +23286,9 @@ var wp;
     onChangeView,
     onHide,
     setOpenedFilter,
-    canMove = true
+    canMove = true,
+    canInsertLeft = true,
+    canInsertRight = true
   }, ref) {
     const visibleFieldIds = view.fields ?? [];
     const index = visibleFieldIds?.indexOf(fieldId);
@@ -23294,6 +23310,10 @@ var wp;
     if (!isSortable && !canMove && !isHidable && !canAddFilter) {
       return header;
     }
+    const hiddenFields = getHideableFields(view, fields).filter(
+      (f2) => !visibleFieldIds.includes(f2.id)
+    );
+    const canInsert = (canInsertLeft || canInsertRight) && !!hiddenFields.length;
     return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(Menu6, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(
         Menu6.TriggerButton,
@@ -23363,7 +23383,7 @@ var wp;
             children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Add filter") })
           }
         ) }),
-        (canMove || isHidable) && field && /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(Menu6.Group, { children: [
+        (canMove || isHidable || canInsert) && field && /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(Menu6.Group, { children: [
           canMove && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
             Menu6.Item,
             {
@@ -23412,6 +23432,56 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Move right") })
             }
           ),
+          canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(Menu6, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Insert left") }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+              Menu6.Item,
+              {
+                onClick: () => {
+                  onChangeView({
+                    ...view,
+                    fields: [
+                      ...visibleFieldIds.slice(
+                        0,
+                        index
+                      ),
+                      hiddenField.id,
+                      ...visibleFieldIds.slice(
+                        index
+                      )
+                    ]
+                  });
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
+              },
+              hiddenField.id
+            )) })
+          ] }),
+          canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(Menu6, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Insert right") }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+              Menu6.Item,
+              {
+                onClick: () => {
+                  onChangeView({
+                    ...view,
+                    fields: [
+                      ...visibleFieldIds.slice(
+                        0,
+                        index + 1
+                      ),
+                      hiddenField.id,
+                      ...visibleFieldIds.slice(
+                        index + 1
+                      )
+                    ]
+                  });
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
+              },
+              hiddenField.id
+            )) })
+          ] }),
           isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
             Menu6.Item,
             {
@@ -23662,14 +23732,7 @@ var wp;
     showLabel = true
   }) {
     const { view, fields, onChangeView } = (0, import_element72.useContext)(dataviews_context_default);
-    const togglableFields = [
-      view?.titleField,
-      view?.mediaField,
-      view?.descriptionField
-    ].filter(Boolean);
-    const regularFields = fields.filter(
-      (f2) => !togglableFields.includes(f2.id) && f2.type !== "media" && f2.enableHiding !== false
-    );
+    const regularFields = getHideableFields(view, fields);
     if (!regularFields?.length) {
       return null;
     }
@@ -24093,11 +24156,14 @@ var wp;
                   onChangeView,
                   onHide,
                   setOpenedFilter,
-                  canMove: false
+                  canMove: false,
+                  canInsertLeft: false,
+                  canInsertRight: view.layout?.enableMoving ?? true
                 }
               ) }),
               columns.map((column, index) => {
                 const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+                const canInsertOrMove = view.layout?.enableMoving ?? true;
                 return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(
                   "th",
                   {
@@ -24119,7 +24185,9 @@ var wp;
                         onChangeView,
                         onHide,
                         setOpenedFilter,
-                        canMove: view.layout?.enableMoving ?? true
+                        canMove: canInsertOrMove,
+                        canInsertLeft: canInsertOrMove,
+                        canInsertRight: canInsertOrMove
                       }
                     )
                   },
