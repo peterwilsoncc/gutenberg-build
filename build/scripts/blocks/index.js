@@ -6410,6 +6410,12 @@ var wp;
         Array.isArray(blockSettings?.variations) ? blockSettings.variations : []
       )
     };
+    if (!blockType.attributes || typeof blockType.attributes !== "object") {
+      (0, import_warning2.default)(
+        'The block "' + name + '" is registering attributes as `null` or `undefined`. Use an empty object (`attributes: {}`) or exclude the `attributes` key.'
+      );
+      blockType.attributes = {};
+    }
     const settings = (0, import_hooks.applyFilters)(
       "blocks.registerBlockType",
       blockType,
