@@ -23282,6 +23282,7 @@ var wp;
     let canAddFilter = false;
     let operators = [];
     const field = fields.find((f2) => f2.id === fieldId);
+    const { setIsShowingFilter } = (0, import_element69.useContext)(dataviews_context_default);
     if (!field) {
       return null;
     }
@@ -23345,6 +23346,7 @@ var wp;
             prefix: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(import_components93.Icon, { icon: funnel_default }),
             onClick: () => {
               setOpenedFilter(fieldId);
+              setIsShowingFilter(true);
               onChangeView({
                 ...view,
                 page: 1,

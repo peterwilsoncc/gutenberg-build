@@ -1967,6 +1967,7 @@ var _HeaderMenu = (0, import_element5.forwardRef)(function HeaderMenu({
   let canAddFilter = false;
   let operators = [];
   const field = fields.find((f2) => f2.id === fieldId);
+  const { setIsShowingFilter } = (0, import_element5.useContext)(dataviews_context_default);
   if (!field) {
     return null;
   }
@@ -2030,6 +2031,7 @@ var _HeaderMenu = (0, import_element5.forwardRef)(function HeaderMenu({
           prefix: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_components4.Icon, { icon: funnel_default }),
           onClick: () => {
             setOpenedFilter(fieldId);
+            setIsShowingFilter(true);
             onChangeView({
               ...view,
               page: 1,
@@ -5854,16 +5856,16 @@ function createHook(useProps) {
 function createStoreContext(providers = [], scopedProviders = []) {
   const context = React3.createContext(void 0);
   const scopedContext = React3.createContext(void 0);
-  const useContext26 = () => React3.useContext(context);
+  const useContext27 = () => React3.useContext(context);
   const useScopedContext = (onlyScoped = false) => {
     const scoped = React3.useContext(scopedContext);
-    const store = useContext26();
+    const store = useContext27();
     if (onlyScoped) return scoped;
     return scoped || store;
   };
   const useProviderContext = () => {
     const scoped = React3.useContext(scopedContext);
-    const store = useContext26();
+    const store = useContext27();
     if (scoped && scoped === store) return;
     return store;
   };
@@ -5882,7 +5884,7 @@ function createStoreContext(providers = [], scopedProviders = []) {
   return {
     context,
     scopedContext,
-    useContext: useContext26,
+    useContext: useContext27,
     useScopedContext,
     useProviderContext,
     ContextProvider,

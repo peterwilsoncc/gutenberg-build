@@ -2288,6 +2288,7 @@ var wp;
     let canAddFilter = false;
     let operators = [];
     const field = fields.find((f2) => f2.id === fieldId);
+    const { setIsShowingFilter } = (0, import_element5.useContext)(dataviews_context_default);
     if (!field) {
       return null;
     }
@@ -2351,6 +2352,7 @@ var wp;
             prefix: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_components4.Icon, { icon: funnel_default }),
             onClick: () => {
               setOpenedFilter(fieldId);
+              setIsShowingFilter(true);
               onChangeView({
                 ...view,
                 page: 1,
@@ -6319,16 +6321,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React2.createContext(void 0);
     const scopedContext = React2.createContext(void 0);
-    const useContext25 = () => React2.useContext(context);
+    const useContext26 = () => React2.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React2.useContext(scopedContext);
-      const store = useContext25();
+      const store = useContext26();
       if (onlyScoped) return scoped;
       return scoped || store;
     };
     const useProviderContext = () => {
       const scoped = React2.useContext(scopedContext);
-      const store = useContext25();
+      const store = useContext26();
       if (scoped && scoped === store) return;
       return store;
     };
@@ -6347,7 +6349,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext25,
+      useContext: useContext26,
       useScopedContext,
       useProviderContext,
       ContextProvider,
