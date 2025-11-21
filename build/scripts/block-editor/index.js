@@ -59879,6 +59879,8 @@ var wp;
     let customValidity;
     if (isValid2?.required && validity?.required) {
       customValidity = validity?.required?.message ? validity.required : void 0;
+    } else if (isValid2?.pattern && validity?.pattern) {
+      customValidity = validity.pattern;
     } else if (isValid2?.elements && validity?.elements) {
       customValidity = validity.elements;
     } else if (validity?.custom) {
@@ -60809,6 +60811,7 @@ var wp;
         type,
         prefix: prefix3,
         suffix,
+        pattern: isValid2?.pattern,
         __next40pxDefaultSize: true
       }
     );
@@ -63346,6 +63349,31 @@ var wp;
       return {
         required: { type: "invalid" }
       };
+    }
+    if (!!formField.field && formField.field.isValid.pattern && (formField.field.type === "text" || formField.field.type === "email" || formField.field.type === "url" || formField.field.type === "telephone" || formField.field.type === "password")) {
+      const value = formField.field.getValue({ item });
+      if (!isEmptyNullOrUndefined(value)) {
+        try {
+          const regex = new RegExp(formField.field.isValid.pattern);
+          if (!regex.test(String(value))) {
+            return {
+              pattern: {
+                type: "invalid",
+                message: (0, import_i18n209.__)(
+                  "Value does not match the required pattern."
+                )
+              }
+            };
+          }
+        } catch (error) {
+          return {
+            pattern: {
+              type: "invalid",
+              message: (0, import_i18n209.__)("Invalid pattern configuration.")
+            }
+          };
+        }
+      }
     }
     if (!!formField.field && formField.field.isValid.elements && formField.field.hasElements && !formField.field.getElements && Array.isArray(formField.field.elements)) {
       const value = formField.field.getValue({ item });

@@ -12705,6 +12705,8 @@ function getCustomValidity(isValid2, validity) {
   let customValidity;
   if (isValid2?.required && validity?.required) {
     customValidity = validity?.required?.message ? validity.required : void 0;
+  } else if (isValid2?.pattern && validity?.pattern) {
+    customValidity = validity.pattern;
   } else if (isValid2?.elements && validity?.elements) {
     customValidity = validity.elements;
   } else if (validity?.custom) {
@@ -13635,6 +13637,7 @@ function ValidatedText({
       type,
       prefix,
       suffix,
+      pattern: isValid2?.pattern,
       __next40pxDefaultSize: true
     }
   );
