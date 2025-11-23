@@ -10810,7 +10810,7 @@ var wp;
   }
   var isBlockHidden = (state, clientId) => {
     const blockName = getBlockName(state, clientId);
-    if (!(0, import_blocks3.hasBlockSupport)(state, blockName, "blockVisibility", true)) {
+    if (!(0, import_blocks3.hasBlockSupport)(state, blockName, "visibility", true)) {
       return false;
     }
     const attributes = state.blocks.attributes.get(clientId);
@@ -31390,11 +31390,7 @@ var wp;
             return;
           }
           const blocks2 = getBlocks2(targetRootClientId).filter((block) => {
-            return !((0, import_blocks38.hasBlockSupport)(
-              block.name,
-              "blockVisibility",
-              true
-            ) && block.attributes?.metadata?.blockVisibility === false);
+            return !((0, import_blocks38.hasBlockSupport)(block.name, "visibility", true) && block.attributes?.metadata?.blockVisibility === false);
           });
           if (blocks2.length === 0) {
             registry.batch(() => {
@@ -36803,7 +36799,7 @@ var wp;
           canToggleBlockVisibility: _blocks.every(
             ({ clientId }) => (0, import_blocks61.hasBlockSupport)(
               getBlockName2(clientId),
-              "blockVisibility",
+              "visibility",
               true
             )
           )
@@ -36875,7 +36871,7 @@ var wp;
           canToggleSelectedBlocksVisibility: getBlocksByClientId2(
             ids
           ).every(
-            (block) => (0, import_blocks62.hasBlockSupport)(block.name, "blockVisibility", true)
+            (block) => (0, import_blocks62.hasBlockSupport)(block.name, "visibility", true)
           )
         };
       },
@@ -47786,7 +47782,7 @@ var wp;
           const canToggleBlockVisibility = blocks2.every(
             (block) => (0, import_blocks74.hasBlockSupport)(
               getBlockName2(block.clientId),
-              "blockVisibility",
+              "visibility",
               true
             )
           );
@@ -48018,7 +48014,7 @@ var wp;
     });
     const canRemove = canRemoveBlocks2(clientIds);
     const canToggleBlockVisibility = blocks2.every(
-      ({ clientId }) => (0, import_blocks75.hasBlockSupport)(getBlockName2(clientId), "blockVisibility", true)
+      ({ clientId }) => (0, import_blocks75.hasBlockSupport)(getBlockName2(clientId), "visibility", true)
     );
     const commands = [];
     if (canDuplicate) {
@@ -48619,7 +48615,7 @@ var wp;
         return {
           canToggleBlockVisibility: (0, import_blocks76.hasBlockSupport)(
             getBlockName2(clientId),
-            "blockVisibility",
+            "visibility",
             true
           ),
           isBlockHidden: _isBlockHidden(clientId),
@@ -49098,10 +49094,10 @@ var wp;
         event.preventDefault();
         const { blocksToUpdate } = getBlocksToUpdate();
         const blocks2 = getBlocksByClientId2(blocksToUpdate);
-        const canToggleBlockVisibility = blocks2.every(
-          (blockToUpdate) => (0, import_blocks77.hasBlockSupport)(blockToUpdate.name, "blockVisibility", true)
+        const canToggleVisibility = blocks2.every(
+          (blockToUpdate) => (0, import_blocks77.hasBlockSupport)(blockToUpdate.name, "visibility", true)
         );
-        if (!canToggleBlockVisibility) {
+        if (!canToggleVisibility) {
           return;
         }
         const hasHiddenBlock = blocks2.some(
@@ -63062,7 +63058,7 @@ var wp;
     if (sourceMetadata.name && !result.attributes?.metadata?.name && (0, import_blocks111.hasBlockSupport)(result.name, "renaming", true)) {
       preservedMetadata.name = sourceMetadata.name;
     }
-    if (sourceMetadata.blockVisibility !== void 0 && !result.attributes?.metadata?.blockVisibility && (0, import_blocks111.hasBlockSupport)(result.name, "blockVisibility", true)) {
+    if (sourceMetadata.blockVisibility !== void 0 && !result.attributes?.metadata?.blockVisibility && (0, import_blocks111.hasBlockSupport)(result.name, "visibility", true)) {
       preservedMetadata.blockVisibility = sourceMetadata.blockVisibility;
     }
     if (Object.keys(preservedMetadata).length > 0) {

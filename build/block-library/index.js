@@ -1715,7 +1715,7 @@ var wp;
         }
       },
       shadow: true,
-      blockVisibility: false,
+      visibility: false,
       lock: false
     },
     selectors: {
@@ -1837,7 +1837,7 @@ var wp;
         }
       },
       shadow: true,
-      blockVisibility: false
+      visibility: false
     },
     save({ attributes: attributes3 }) {
       const { level, title, iconPosition, showIcon } = attributes3;
@@ -1981,7 +1981,7 @@ var wp;
       layout: {
         allowEditing: false
       },
-      blockVisibility: false,
+      visibility: false,
       contentRole: true,
       allowedBlocks: true,
       lock: false
@@ -7989,7 +7989,7 @@ var wp;
       lock: false,
       reusable: false,
       renaming: false,
-      blockVisibility: false
+      visibility: false
     },
     editorStyle: "wp-block-freeform-editor"
   };
@@ -32343,7 +32343,7 @@ ${url}
       lock: false,
       reusable: false,
       renaming: false,
-      blockVisibility: false,
+      visibility: false,
       interactivity: {
         clientNavigation: true
       }
@@ -38232,7 +38232,7 @@ ${url}
       html: false,
       inserter: false,
       renaming: false,
-      blockVisibility: false,
+      visibility: false,
       interactivity: {
         clientNavigation: true
       }
