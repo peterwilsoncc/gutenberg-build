@@ -10489,6 +10489,10 @@ var wp;
     isBlockSubtreeDisabled: () => isBlockSubtreeDisabled,
     isContainerInsertableToInContentOnlyMode: () => isContainerInsertableToInContentOnlyMode,
     isDragging: () => isDragging2,
+    isEditLockedBlock: () => isEditLockedBlock,
+    isLockedBlock: () => isLockedBlock,
+    isMoveLockedBlock: () => isMoveLockedBlock,
+    isRemoveLockedBlock: () => isRemoveLockedBlock,
     isSectionBlock: () => isSectionBlock,
     isWithinEditedContentOnlySection: () => isWithinEditedContentOnlySection,
     isZoomOut: () => isZoomOut
@@ -10988,6 +10992,31 @@ var wp;
   };
   function hasBlockSpotlight2(state) {
     return !!state.hasBlockSpotlight || !!state.editedContentOnlySection;
+  }
+  function isEditLockedBlock(state, clientId) {
+    const attributes = getBlockAttributes(state, clientId);
+    return !!attributes?.lock?.edit;
+  }
+  function isMoveLockedBlock(state, clientId) {
+    const attributes = getBlockAttributes(state, clientId);
+    if (attributes?.lock?.move !== void 0) {
+      return !!attributes?.lock?.move;
+    }
+    const rootClientId = getBlockRootClientId(state, clientId);
+    const templateLock = getTemplateLock(state, rootClientId);
+    return templateLock === "all";
+  }
+  function isRemoveLockedBlock(state, clientId) {
+    const attributes = getBlockAttributes(state, clientId);
+    if (attributes?.lock?.remove !== void 0) {
+      return !!attributes?.lock?.remove;
+    }
+    const rootClientId = getBlockRootClientId(state, clientId);
+    const templateLock = getTemplateLock(state, rootClientId);
+    return templateLock === "all" || templateLock === "insert";
+  }
+  function isLockedBlock(state, clientId) {
+    return isEditLockedBlock(state, clientId) || isMoveLockedBlock(state, clientId) || isRemoveLockedBlock(state, clientId);
   }
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.js
@@ -34824,23 +34853,19 @@ var wp;
     return (0, import_data90.useSelect)(
       (select3) => {
         const {
-          canEditBlock: canEditBlock2,
-          canMoveBlock: canMoveBlock2,
-          canRemoveBlock: canRemoveBlock2,
           canLockBlockType: canLockBlockType2,
           getBlockName: getBlockName2,
-          getTemplateLock: getTemplateLock2
-        } = select3(store);
-        const canEdit = canEditBlock2(clientId);
-        const canMove = canMoveBlock2(clientId);
-        const canRemove = canRemoveBlock2(clientId);
+          isEditLockedBlock: isEditLockedBlock2,
+          isMoveLockedBlock: isMoveLockedBlock2,
+          isRemoveLockedBlock: isRemoveLockedBlock2,
+          isLockedBlock: isLockedBlock2
+        } = unlock(select3(store));
         return {
-          canEdit,
-          canMove,
-          canRemove,
+          isEditLocked: isEditLockedBlock2(clientId),
+          isMoveLocked: isMoveLockedBlock2(clientId),
+          isRemoveLocked: isRemoveLockedBlock2(clientId),
           canLock: canLockBlockType2(getBlockName2(clientId)),
-          isContentLocked: getTemplateLock2(clientId) === "contentOnly",
-          isLocked: !canEdit || !canMove || !canRemove
+          isLocked: isLockedBlock2(clientId)
         };
       },
       [clientId]
@@ -34866,7 +34891,7 @@ var wp;
   }
   function BlockLockModal({ clientId, onClose }) {
     const [lock4, setLock] = (0, import_element101.useState)({ move: false, remove: false });
-    const { canEdit, canMove, canRemove } = useBlockLock(clientId);
+    const { isEditLocked, isMoveLocked, isRemoveLocked } = useBlockLock(clientId);
     const { allowsEditLocking, templateLock, hasTemplateLock } = (0, import_data91.useSelect)(
       (select3) => {
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
@@ -34887,11 +34912,11 @@ var wp;
     const blockInformation = useBlockDisplayInformation(clientId);
     (0, import_element101.useEffect)(() => {
       setLock({
-        move: !canMove,
-        remove: !canRemove,
-        ...allowsEditLocking ? { edit: !canEdit } : {}
+        move: isMoveLocked,
+        remove: isRemoveLocked,
+        ...allowsEditLocking ? { edit: isEditLocked } : {}
       });
-    }, [canEdit, canMove, canRemove, allowsEditLocking]);
+    }, [isEditLocked, isMoveLocked, isRemoveLocked, allowsEditLocking]);
     const isAllChecked = Object.values(lock4).every(Boolean);
     const isMixed = Object.values(lock4).some(Boolean) && !isAllChecked;
     return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
@@ -40654,12 +40679,7 @@ var wp;
       context: "list-view"
     });
     const { isLocked } = useBlockLock(clientId);
-    const {
-      canToggleBlockVisibility,
-      isBlockHidden: isBlockHidden2,
-      isContentOnly,
-      hasPatternName
-    } = (0, import_data122.useSelect)(
+    const { canToggleBlockVisibility, isBlockHidden: isBlockHidden2, hasPatternName } = (0, import_data122.useSelect)(
       (select3) => {
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
         const { isBlockHidden: _isBlockHidden } = unlock(
@@ -40673,15 +40693,12 @@ var wp;
             true
           ),
           isBlockHidden: _isBlockHidden(clientId),
-          isContentOnly: select3(store).getBlockEditingMode(
-            clientId
-          ) === "contentOnly",
           hasPatternName: !!blockAttributes?.metadata?.patternName
         };
       },
       [clientId]
     );
-    const shouldShowLockIcon = isLocked && !isContentOnly;
+    const shouldShowLockIcon = isLocked;
     const shouldShowBlockVisibilityIcon = canToggleBlockVisibility && isBlockHidden2;
     const isSticky = blockInformation?.positionType === "sticky";
     const images = useListViewImages({ clientId, isExpanded });
@@ -40953,7 +40970,7 @@ var wp;
     const settingsRef = (0, import_element132.useRef)(null);
     const [isHovered, setIsHovered] = (0, import_element132.useState)(false);
     const [settingsAnchorRect, setSettingsAnchorRect] = (0, import_element132.useState)();
-    const { isLocked, canEdit, canMove } = useBlockLock(clientId);
+    const { isLocked } = useBlockLock(clientId);
     const isFirstSelectedBlock = isSelected && selectedClientIds[0] === clientId;
     const isLastSelectedBlock = isSelected && selectedClientIds[selectedClientIds.length - 1] === clientId;
     const {
@@ -40979,6 +40996,8 @@ var wp;
       getBlockOrder: getBlockOrder2,
       getBlockParents: getBlockParents2,
       getBlocksByClientId: getBlocksByClientId2,
+      canEditBlock: canEditBlock2,
+      canMoveBlock: canMoveBlock2,
       canRemoveBlocks: canRemoveBlocks2,
       isGroupable: isGroupable2
     } = (0, import_data123.useSelect)(store);
@@ -41290,7 +41309,7 @@ var wp;
       "is-dragging": isDragged,
       "has-single-cell": !showBlockActions,
       "is-synced": blockInformation?.isSynced,
-      "is-draggable": canMove,
+      "is-draggable": canMoveBlock2,
       "is-displacement-normal": displacement === "normal",
       "is-displacement-up": displacement === "up",
       "is-displacement-down": displacement === "down",
@@ -41315,7 +41334,7 @@ var wp;
         path,
         id: `list-view-${listViewInstanceId}-block-${clientId}`,
         "data-block": clientId,
-        "data-expanded": canEdit ? isExpanded : void 0,
+        "data-expanded": canEditBlock2 ? isExpanded : void 0,
         ref: rowRef,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(
@@ -41341,7 +41360,7 @@ var wp;
                     ref,
                     tabIndex: currentlyEditingBlockInCanvas ? 0 : tabIndex,
                     onFocus,
-                    isExpanded: canEdit ? isExpanded : void 0,
+                    isExpanded: canEditBlock2 ? isExpanded : void 0,
                     selectedClientIds,
                     ariaDescribedBy: descriptionId
                   }
