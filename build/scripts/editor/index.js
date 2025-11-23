@@ -31651,7 +31651,7 @@ var wp;
       const editorSettings2 = getEditorSettings2();
       const canUserUploadMedia = canUser("create", {
         kind: "postType",
-        name: "attachement"
+        name: "attachment"
       });
       return {
         styles: editorSettings2?.styles,
