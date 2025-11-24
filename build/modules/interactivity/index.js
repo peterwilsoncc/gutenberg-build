@@ -1246,6 +1246,7 @@ var getElement = () => {
     attributes: deepReadOnly(attributes, deepReadOnlyOptions)
   });
 };
+var navigationContextSignal = d3(0);
 function getServerContext(namespace) {
   const scope = getScope();
   if (true) {
@@ -1253,7 +1254,7 @@ function getServerContext(namespace) {
       throwNotInScope("getServerContext");
     }
   }
-  getServerContext.subscribe = navigationSignal.value;
+  getServerContext.subscribe = navigationContextSignal.value;
   return deepClone(scope.serverContext[namespace || getNamespace()]);
 }
 getServerContext.subscribe = 0;
@@ -1990,7 +1991,6 @@ var populateServerData = (data2) => {
       }
     );
   }
-  navigationSignal.value += 1;
 };
 var data = parseServerData();
 populateServerData(data);
@@ -2852,6 +2852,11 @@ var directives_default = () => {
         routerRegions.set(regionId, d3());
       }
       const vdom = routerRegions.get(regionId).value;
+      _2(() => {
+        if (vdom && typeof vdom.type !== "string") {
+          navigationContextSignal.value = navigationContextSignal.peek() + 1;
+        }
+      }, [vdom]);
       if (vdom && typeof vdom.type !== "string") {
         const previousScope = getScope();
         return E(vdom, { previousScope });
