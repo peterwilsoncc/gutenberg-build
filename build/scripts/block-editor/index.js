@@ -64877,7 +64877,7 @@ var wp;
 
   // packages/block-editor/build-module/components/content-only-controls/index.js
   var import_jsx_runtime418 = __toESM(require_jsx_runtime());
-  var { fieldsKey } = unlock(import_blocks89.privateApis);
+  var { fieldsKey, formKey } = unlock(import_blocks89.privateApis);
   var CONTROLS = {
     richtext: RichTextControl,
     media: Media,
@@ -64979,8 +64979,8 @@ var wp;
     });
     const blockInformation = useBlockDisplayInformation(clientId);
     const blockTypeFields = blockType?.[fieldsKey];
-    const [visibleFields, setVisibleFields] = (0, import_element233.useState)(() => {
-      return blockTypeFields?.filter((field) => field.shownByDefault).map((field) => field.id) || [];
+    const [form, setForm] = (0, import_element233.useState)(() => {
+      return blockType?.[formKey];
     });
     const dataFormFields = (0, import_element233.useMemo)(() => {
       if (!blockTypeFields?.length) {
@@ -65067,18 +65067,18 @@ var wp;
       clientId,
       updateBlockAttributes2
     ]);
-    const form = (0, import_element233.useMemo)(
-      () => ({
-        fields: dataFormFields.filter((field) => visibleFields.includes(field.id)).map((field) => field.id)
-      }),
-      [dataFormFields, visibleFields]
-    );
     const handleToggleField = (fieldId) => {
-      setVisibleFields((prev2) => {
-        if (prev2.includes(fieldId)) {
-          return prev2.filter((id) => id !== fieldId);
+      setForm((prev2) => {
+        if (prev2.fields?.includes(fieldId)) {
+          return {
+            ...prev2,
+            fields: prev2.fields.filter((id) => id !== fieldId)
+          };
         }
-        return [...prev2, fieldId];
+        return {
+          ...prev2,
+          fields: [...prev2.fields || [], fieldId]
+        };
       });
     };
     if (!blockTypeFields?.length) {
@@ -65094,7 +65094,7 @@ var wp;
           FieldsDropdownMenu,
           {
             fields: dataFormFields,
-            visibleFields,
+            visibleFields: form.fields,
             onToggleField: handleToggleField
           }
         )

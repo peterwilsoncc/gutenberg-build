@@ -4441,7 +4441,7 @@ var wp;
   var transforms_default = transforms;
 
   // packages/block-library/build-module/audio/index.js
-  var { fieldsKey } = unlock(import_blocks6.privateApis);
+  var { fieldsKey, formKey } = unlock(import_blocks6.privateApis);
   var { name: name7 } = block_default8;
   var settings7 = {
     icon: audio_default,
@@ -4462,7 +4462,6 @@ var wp;
         id: "audio",
         label: (0, import_i18n11.__)("Audio"),
         type: "media",
-        shownByDefault: true,
         mapping: {
           id: "id",
           url: "src"
@@ -4475,10 +4474,12 @@ var wp;
       {
         id: "caption",
         label: (0, import_i18n11.__)("Caption"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       }
     ];
+    settings7[formKey] = {
+      fields: ["audio"]
+    };
   }
   var init7 = () => initBlock({ name: name7, metadata: block_default8, settings: settings7 });
 
@@ -6659,7 +6660,7 @@ var wp;
   }
 
   // packages/block-library/build-module/button/index.js
-  var { fieldsKey: fieldsKey2 } = unlock(import_blocks8.privateApis);
+  var { fieldsKey: fieldsKey2, formKey: formKey2 } = unlock(import_blocks8.privateApis);
   var { name: name9 } = block_default10;
   var settings9 = {
     icon: button_default,
@@ -6682,14 +6683,12 @@ var wp;
       {
         id: "text",
         label: (0, import_i18n14.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       },
       {
         id: "link",
         label: (0, import_i18n14.__)("Link"),
         type: "link",
-        shownByDefault: false,
         mapping: {
           url: "url",
           rel: "rel",
@@ -6697,6 +6696,9 @@ var wp;
         }
       }
     ];
+    settings9[formKey2] = {
+      fields: ["text"]
+    };
   }
   var init9 = () => initBlock({ name: name9, metadata: block_default10, settings: settings9 });
 
@@ -8304,7 +8306,7 @@ var wp;
   var transforms_default4 = transforms4;
 
   // packages/block-library/build-module/code/index.js
-  var { fieldsKey: fieldsKey3 } = unlock(import_blocks16.privateApis);
+  var { fieldsKey: fieldsKey3, formKey: formKey3 } = unlock(import_blocks16.privateApis);
   var { name: name14 } = block_default15;
   var settings14 = {
     icon: code_default,
@@ -8332,10 +8334,12 @@ var wp;
       {
         id: "content",
         label: (0, import_i18n23.__)("Code"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings14[formKey3] = {
+      fields: ["content"]
+    };
   }
   var init14 = () => initBlock({ name: name14, metadata: block_default15, settings: settings14 });
 
@@ -16475,7 +16479,7 @@ var wp;
   var variations_default3 = variations3;
 
   // packages/block-library/build-module/cover/index.js
-  var { fieldsKey: fieldsKey4 } = unlock(import_blocks22.privateApis);
+  var { fieldsKey: fieldsKey4, formKey: formKey4 } = unlock(import_blocks22.privateApis);
   var { name: name30 } = block_default31;
   var settings30 = {
     icon: cover_default,
@@ -16515,7 +16519,6 @@ var wp;
         id: "background",
         label: (0, import_i18n53.__)("Background"),
         type: "media",
-        shownByDefault: true,
         mapping: {
           type: "backgroundType",
           id: "id",
@@ -16531,6 +16534,9 @@ var wp;
         }
       }
     ];
+    settings30[formKey4] = {
+      fields: ["content"]
+    };
   }
   var init30 = () => initBlock({ name: name30, metadata: block_default31, settings: settings30 });
 
@@ -16799,7 +16805,7 @@ var wp;
   };
 
   // packages/block-library/build-module/details/index.js
-  var { fieldsKey: fieldsKey5 } = unlock(import_blocks24.privateApis);
+  var { fieldsKey: fieldsKey5, formKey: formKey5 } = unlock(import_blocks24.privateApis);
   var { name: name31 } = block_default32;
   var settings31 = {
     icon: details_default,
@@ -16843,10 +16849,12 @@ var wp;
       {
         id: "summary",
         label: (0, import_i18n55.__)("Summary"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings31[formKey5] = {
+      fields: ["summary"]
+    };
   }
   var init31 = () => initBlock({ name: name31, metadata: block_default32, settings: settings31 });
 
@@ -19083,7 +19091,7 @@ ${url}
   var transforms_default9 = transforms8;
 
   // packages/block-library/build-module/file/index.js
-  var { fieldsKey: fieldsKey6 } = unlock(import_blocks27.privateApis);
+  var { fieldsKey: fieldsKey6, formKey: formKey6 } = unlock(import_blocks27.privateApis);
   var { name: name33 } = block_default33;
   var settings33 = {
     icon: file_default,
@@ -19104,7 +19112,6 @@ ${url}
         id: "file",
         label: (0, import_i18n64.__)("File"),
         type: "media",
-        shownByDefault: true,
         mapping: {
           id: "id",
           url: "href"
@@ -19117,16 +19124,17 @@ ${url}
       {
         id: "fileName",
         label: (0, import_i18n64.__)("Filename"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       },
       {
         id: "downloadButtonText",
         label: (0, import_i18n64.__)("Button Text"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       }
     ];
+    settings33[formKey6] = {
+      fields: ["file"]
+    };
   }
   var init33 = () => initBlock({ name: name33, metadata: block_default33, settings: settings33 });
 
@@ -24346,7 +24354,7 @@ ${url}
   var variations_default9 = variations9;
 
   // packages/block-library/build-module/heading/index.js
-  var { fieldsKey: fieldsKey7 } = unlock(import_blocks34.privateApis);
+  var { fieldsKey: fieldsKey7, formKey: formKey7 } = unlock(import_blocks34.privateApis);
   var { name: name40 } = block_default40;
   var settings40 = {
     icon: heading_default,
@@ -24393,10 +24401,12 @@ ${url}
       {
         id: "content",
         label: (0, import_i18n81.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings40[formKey7] = {
+      fields: ["content"]
+    };
   }
   var init40 = () => initBlock({ name: name40, metadata: block_default40, settings: settings40 });
 
@@ -27715,7 +27725,7 @@ ${js}
   var transforms_default14 = transforms13;
 
   // packages/block-library/build-module/image/index.js
-  var { fieldsKey: fieldsKey8 } = unlock(import_blocks39.privateApis);
+  var { fieldsKey: fieldsKey8, formKey: formKey8 } = unlock(import_blocks39.privateApis);
   var { name: name43 } = block_default43;
   var settings43 = {
     icon: image_default,
@@ -27759,7 +27769,6 @@ ${js}
         id: "image",
         label: (0, import_i18n90.__)("Image"),
         type: "media",
-        shownByDefault: true,
         mapping: {
           id: "id",
           url: "url",
@@ -27775,7 +27784,6 @@ ${js}
         id: "link",
         label: (0, import_i18n90.__)("Link"),
         type: "link",
-        shownByDefault: false,
         mapping: {
           url: "href",
           rel: "rel",
@@ -27786,16 +27794,17 @@ ${js}
       {
         id: "caption",
         label: (0, import_i18n90.__)("Caption"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       },
       {
         id: "alt",
         label: (0, import_i18n90.__)("Alt text"),
-        type: "text",
-        shownByDefault: false
+        type: "text"
       }
     ];
+    settings43[formKey8] = {
+      fields: ["image"]
+    };
   }
   var init43 = () => initBlock({ name: name43, metadata: block_default43, settings: settings43 });
 
@@ -30606,7 +30615,7 @@ ${js}
   var transforms_default16 = transforms15;
 
   // packages/block-library/build-module/list-item/index.js
-  var { fieldsKey: fieldsKey9 } = unlock(import_blocks47.privateApis);
+  var { fieldsKey: fieldsKey9, formKey: formKey9 } = unlock(import_blocks47.privateApis);
   var { name: name48 } = block_default48;
   var settings48 = {
     icon: list_item_default,
@@ -30626,10 +30635,12 @@ ${js}
       {
         id: "content",
         label: (0, import_i18n98.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings48[formKey9] = {
+      fields: ["content"]
+    };
   }
   var init48 = () => initBlock({ name: name48, metadata: block_default48, settings: settings48 });
 
@@ -32810,7 +32821,7 @@ ${js}
   var transforms_default17 = transforms16;
 
   // packages/block-library/build-module/media-text/index.js
-  var { fieldsKey: fieldsKey10 } = unlock(import_blocks49.privateApis);
+  var { fieldsKey: fieldsKey10, formKey: formKey10 } = unlock(import_blocks49.privateApis);
   var { name: name50 } = block_default50;
   var settings50 = {
     icon: media_and_text_default,
@@ -32849,7 +32860,6 @@ ${js}
         id: "media",
         label: (0, import_i18n103.__)("Media"),
         type: "media",
-        shownByDefault: true,
         mapping: {
           id: "mediaId",
           type: "mediaType",
@@ -32865,7 +32875,6 @@ ${js}
         id: "link",
         label: (0, import_i18n103.__)("Link"),
         type: "link",
-        shownByDefault: false,
         mapping: {
           url: "href",
           rel: "rel",
@@ -32873,6 +32882,9 @@ ${js}
         }
       }
     ];
+    settings50[formKey10] = {
+      fields: ["media"]
+    };
   }
   var init50 = () => initBlock({ name: name50, metadata: block_default50, settings: settings50 });
 
@@ -33177,7 +33189,7 @@ ${js}
   var transforms_default18 = transforms17;
 
   // packages/block-library/build-module/more/index.js
-  var { fieldsKey: fieldsKey11 } = unlock(import_blocks54.privateApis);
+  var { fieldsKey: fieldsKey11, formKey: formKey11 } = unlock(import_blocks54.privateApis);
   var { name: name52 } = block_default52;
   var settings52 = {
     icon: more_default,
@@ -33200,10 +33212,12 @@ ${js}
       {
         id: "customText",
         label: (0, import_i18n106.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings52[formKey11] = {
+      fields: ["customText"]
+    };
   }
   var init52 = () => initBlock({ name: name52, metadata: block_default52, settings: settings52 });
 
@@ -38283,7 +38297,7 @@ ${js}
 
   // packages/block-library/build-module/navigation-link/index.js
   var import_jsx_runtime307 = __toESM(require_jsx_runtime());
-  var { fieldsKey: fieldsKey12 } = unlock(import_blocks61.privateApis);
+  var { fieldsKey: fieldsKey12, formKey: formKey12 } = unlock(import_blocks61.privateApis);
   var { name: name54 } = block_default54;
   var settings54 = {
     icon: custom_link_default,
@@ -38349,14 +38363,12 @@ ${js}
       {
         id: "label",
         label: (0, import_i18n129.__)("Label"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       },
       {
         id: "link",
         label: (0, import_i18n129.__)("Link"),
         type: "link",
-        shownByDefault: false,
         mapping: {
           href: "url",
           rel: "rel"
@@ -38364,6 +38376,9 @@ ${js}
         }
       }
     ];
+    settings54[formKey12] = {
+      fields: ["label"]
+    };
   }
   var init54 = () => {
     (0, import_hooks42.addFilter)(
@@ -38848,7 +38863,7 @@ ${js}
   var transforms_default20 = transforms19;
 
   // packages/block-library/build-module/navigation-submenu/index.js
-  var { fieldsKey: fieldsKey13 } = unlock(import_blocks64.privateApis);
+  var { fieldsKey: fieldsKey13, formKey: formKey13 } = unlock(import_blocks64.privateApis);
   var { name: name55 } = block_default55;
   var settings55 = {
     icon: ({ context }) => {
@@ -38880,14 +38895,12 @@ ${js}
       {
         id: "label",
         label: (0, import_i18n131.__)("Label"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       },
       {
         id: "link",
         label: (0, import_i18n131.__)("Link"),
         type: "link",
-        shownByDefault: false,
         mapping: {
           href: "url",
           rel: "rel"
@@ -38895,6 +38908,9 @@ ${js}
         }
       }
     ];
+    settings55[formKey13] = {
+      fields: ["label"]
+    };
   }
   var init55 = () => initBlock({ name: name55, metadata: block_default55, settings: settings55 });
 
@@ -40714,7 +40730,7 @@ ${js}
   var variations_default10 = variations10;
 
   // packages/block-library/build-module/paragraph/index.js
-  var { fieldsKey: fieldsKey14 } = unlock(import_blocks72.privateApis);
+  var { fieldsKey: fieldsKey14, formKey: formKey14 } = unlock(import_blocks72.privateApis);
   var { name: name61 } = block_default60;
   var settings60 = {
     icon: paragraph_default,
@@ -40754,10 +40770,12 @@ ${js}
       {
         id: "content",
         label: (0, import_i18n140.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings60[formKey14] = {
+      fields: ["content"]
+    };
   }
   var init60 = () => initBlock({ name: name61, metadata: block_default60, settings: settings60 });
 
@@ -45930,7 +45948,7 @@ ${js}
   var transforms_default27 = transforms26;
 
   // packages/block-library/build-module/preformatted/index.js
-  var { fieldsKey: fieldsKey15 } = unlock(import_blocks84.privateApis);
+  var { fieldsKey: fieldsKey15, formKey: formKey15 } = unlock(import_blocks84.privateApis);
   var { name: name78 } = block_default77;
   var settings77 = {
     icon: preformatted_default,
@@ -45958,10 +45976,12 @@ ${js}
       {
         id: "content",
         label: (0, import_i18n164.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings77[formKey15] = {
+      fields: ["content"]
+    };
   }
   var init77 = () => initBlock({ name: name78, metadata: block_default77, settings: settings77 });
 
@@ -46707,7 +46727,7 @@ ${js}
   var transforms_default28 = transforms27;
 
   // packages/block-library/build-module/pullquote/index.js
-  var { fieldsKey: fieldsKey16 } = unlock(import_blocks87.privateApis);
+  var { fieldsKey: fieldsKey16, formKey: formKey16 } = unlock(import_blocks87.privateApis);
   var { name: name79 } = block_default78;
   var settings78 = {
     icon: pullquote_default,
@@ -46732,16 +46752,17 @@ ${js}
       {
         id: "value",
         label: (0, import_i18n166.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       },
       {
         id: "citation",
         label: (0, import_i18n166.__)("Citation"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       }
     ];
+    settings78[formKey16] = {
+      fields: ["value"]
+    };
   }
   var init78 = () => initBlock({ name: name79, metadata: block_default78, settings: settings78 });
 
@@ -52827,7 +52848,7 @@ ${js}
   var variations_default16 = variations16;
 
   // packages/block-library/build-module/search/index.js
-  var { fieldsKey: fieldsKey17 } = unlock(import_blocks95.privateApis);
+  var { fieldsKey: fieldsKey17, formKey: formKey17 } = unlock(import_blocks95.privateApis);
   var { name: name92 } = block_default91;
   var settings91 = {
     icon: search_default,
@@ -52849,16 +52870,17 @@ ${js}
       {
         id: "buttonText",
         label: (0, import_i18n203.__)("Button text"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       },
       {
         id: "placeholder",
         label: (0, import_i18n203.__)("Placeholder"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       }
     ];
+    settings91[formKey17] = {
+      fields: ["label"]
+    };
   }
   var init91 = () => initBlock({ name: name92, metadata: block_default91, settings: settings91 });
 
@@ -55331,7 +55353,7 @@ ${js}
   var variations_default17 = variations17;
 
   // packages/block-library/build-module/social-link/index.js
-  var { fieldsKey: fieldsKey18 } = unlock(import_blocks102.privateApis);
+  var { fieldsKey: fieldsKey18, formKey: formKey18 } = unlock(import_blocks102.privateApis);
   var { name: name98 } = block_default97;
   var settings97 = {
     icon: share_default,
@@ -55344,7 +55366,6 @@ ${js}
         id: "link",
         label: (0, import_i18n212.__)("Link"),
         type: "link",
-        shownByDefault: true,
         mapping: {
           href: "url",
           rel: "rel"
@@ -55353,10 +55374,12 @@ ${js}
       {
         id: "label",
         label: (0, import_i18n212.__)("Label"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       }
     ];
+    settings97[formKey18] = {
+      fields: ["link"]
+    };
   }
   var init97 = () => initBlock({ name: name98, metadata: block_default97, settings: settings97 });
 
@@ -63515,7 +63538,7 @@ ${declarations}
   var transforms_default38 = transforms37;
 
   // packages/block-library/build-module/verse/index.js
-  var { fieldsKey: fieldsKey19 } = unlock(import_blocks117.privateApis);
+  var { fieldsKey: fieldsKey19, formKey: formKey19 } = unlock(import_blocks117.privateApis);
   var { name: name113 } = block_default112;
   var settings112 = {
     icon: verse_default,
@@ -63544,10 +63567,12 @@ ${declarations}
       {
         id: "content",
         label: (0, import_i18n244.__)("Content"),
-        type: "richtext",
-        shownByDefault: true
+        type: "richtext"
       }
     ];
+    settings112[formKey19] = {
+      fields: ["content"]
+    };
   }
   var init112 = () => initBlock({ name: name113, metadata: block_default112, settings: settings112 });
 
@@ -64577,7 +64602,7 @@ ${declarations}
   var transforms_default39 = transforms38;
 
   // packages/block-library/build-module/video/index.js
-  var { fieldsKey: fieldsKey20 } = unlock(import_blocks119.privateApis);
+  var { fieldsKey: fieldsKey20, formKey: formKey20 } = unlock(import_blocks119.privateApis);
   var { name: name114 } = block_default113;
   var settings113 = {
     icon: video_default,
@@ -64599,7 +64624,6 @@ ${declarations}
         id: "video",
         label: (0, import_i18n248.__)("Video"),
         type: "media",
-        shownByDefault: true,
         mapping: {
           id: "id",
           url: "src",
@@ -64614,10 +64638,12 @@ ${declarations}
       {
         id: "caption",
         label: (0, import_i18n248.__)("Caption"),
-        type: "richtext",
-        shownByDefault: false
+        type: "richtext"
       }
     ];
+    settings113[formKey20] = {
+      fields: ["video"]
+    };
   }
   var init113 = () => initBlock({ name: name114, metadata: block_default113, settings: settings113 });
 
