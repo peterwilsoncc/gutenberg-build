@@ -8327,7 +8327,7 @@ var wp;
       },
       [name2]
     );
-    const [variations] = useSetting("variations", name2);
+    const [variations] = useStyle2("variations", name2);
     const variationNames = Object.keys(variations ?? {});
     return getFilteredBlockStyles(blockStyles, variationNames);
   }
