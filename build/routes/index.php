@@ -85,6 +85,20 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'template',
+		'path'        => '/templates',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => false,
+	),
+	array(
+		'name'        => 'template-list',
+		'path'        => '/templates/list/$activeView',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'template-part',
 		'path'        => '/template-parts',
 		'page'        => 'gutenberg-boot',
