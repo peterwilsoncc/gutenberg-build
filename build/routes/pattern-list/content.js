@@ -17183,6 +17183,7 @@ function PatternList() {
             }
           });
         },
+        isItemClickable: (item) => item.type !== PATTERN_TYPES2.theme,
         renderItemLink: ({
           item,
           ...props

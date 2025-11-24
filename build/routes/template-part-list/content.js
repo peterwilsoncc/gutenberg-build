@@ -16462,7 +16462,7 @@ function PreviewField({ item }) {
     Preview,
     {
       content: item?.content?.raw,
-      blocks: item.blocks,
+      blocks: item?.blocks,
       description
     }
   );
