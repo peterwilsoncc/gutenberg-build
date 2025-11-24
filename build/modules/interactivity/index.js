@@ -1254,7 +1254,7 @@ function getServerContext(namespace) {
     }
   }
   getServerContext.subscribe = navigationSignal.value;
-  return scope.serverContext[namespace || getNamespace()];
+  return deepClone(scope.serverContext[namespace || getNamespace()]);
 }
 getServerContext.subscribe = 0;
 
@@ -1456,6 +1456,20 @@ function deepReadOnly(obj, options) {
   return readOnlyMap.get(obj);
 }
 var navigationSignal = d3(0);
+function deepClone(source) {
+  if (isPlainObject(source)) {
+    return Object.fromEntries(
+      Object.entries(source).map(([key, value]) => [
+        key,
+        deepClone(value)
+      ])
+    );
+  }
+  if (Array.isArray(source)) {
+    return source.map((i6) => deepClone(i6));
+  }
+  return source;
+}
 
 // packages/interactivity/build-module/hooks.js
 init_preact_module();
@@ -1875,10 +1889,10 @@ var getConfig = (namespace) => storeConfigs.get(namespace || getNamespace()) || 
 function getServerState(namespace) {
   const ns = namespace || getNamespace();
   if (!serverStates.has(ns)) {
-    serverStates.set(ns, deepReadOnly({}));
+    serverStates.set(ns, {});
   }
   getServerState.subscribe = navigationSignal.value;
-  return serverStates.get(ns);
+  return deepClone(serverStates.get(ns));
 }
 getServerState.subscribe = 0;
 var universalUnlock = "I acknowledge that using a private store means my plugin will inevitably break on the next store release.";
@@ -1942,7 +1956,7 @@ var populateServerData = (data2) => {
     Object.entries(data2.state).forEach(([namespace, state]) => {
       const st = store(namespace, {}, { lock: universalUnlock });
       deepMerge(st.state, state, false);
-      serverStates.set(namespace, deepReadOnly(state));
+      serverStates.set(namespace, state);
     });
   }
   if (isPlainObject(data2?.config)) {
@@ -2161,20 +2175,6 @@ var warnWithSyncEvent = (wrongPrefix, rightPrefix) => {
     );
   }
 };
-function deepClone(source) {
-  if (isPlainObject(source)) {
-    return Object.fromEntries(
-      Object.entries(source).map(([key, value]) => [
-        key,
-        deepClone(value)
-      ])
-    );
-  }
-  if (Array.isArray(source)) {
-    return source.map((i6) => deepClone(i6));
-  }
-  return source;
-}
 function wrapEventAsync(event) {
   const handler = {
     get(target, prop, receiver) {
@@ -2370,7 +2370,7 @@ var directives_default = () => {
           deepClone(value),
           false
         );
-        server[namespace] = deepReadOnly(value);
+        server[namespace] = value;
         namespaces2.add(namespace);
       });
       namespaces2.forEach((namespace) => {
