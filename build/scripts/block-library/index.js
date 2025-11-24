@@ -29867,6 +29867,7 @@ ${js}
   var import_components54 = __toESM(require_components());
   var import_element47 = __toESM(require_element());
   var import_data46 = __toESM(require_data());
+  var import_a11y = __toESM(require_a11y());
   var import_jsx_runtime267 = __toESM(require_jsx_runtime());
   var { Badge } = unlock(import_components54.privateApis);
   function MathEdit({ attributes: attributes3, setAttributes, isSelected }) {
@@ -29911,7 +29912,8 @@ ${js}
           placement: "bottom-start",
           offset: 8,
           anchor: blockRef,
-          focusOnMount: "firstContentElement",
+          focusOnMount: false,
+          __unstableSlotName: "__unstable-block-tools-after",
           children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("div", { style: { padding: "4px", minWidth: "300px" }, children: /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)(import_components54.__experimentalVStack, { spacing: 1, children: [
             /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
               import_components54.TextareaControl,
@@ -29935,6 +29937,7 @@ ${js}
                     setError(null);
                   } catch (err) {
                     setError(err.message);
+                    (0, import_a11y.speak)(err.message);
                   }
                   setAttributes({
                     mathML: newMathML,
@@ -33363,7 +33366,7 @@ ${js}
   var import_data72 = __toESM(require_data());
   var import_components78 = __toESM(require_components());
   var import_i18n126 = __toESM(require_i18n());
-  var import_a11y2 = __toESM(require_a11y());
+  var import_a11y3 = __toESM(require_a11y());
   var import_blocks58 = __toESM(require_blocks());
   var import_compose29 = __toESM(require_compose());
 
@@ -33520,7 +33523,7 @@ ${js}
   // packages/block-library/build-module/navigation/edit/placeholder/index.js
   var import_components62 = __toESM(require_components());
   var import_i18n109 = __toESM(require_i18n());
-  var import_a11y = __toESM(require_a11y());
+  var import_a11y2 = __toESM(require_a11y());
   var import_element57 = __toESM(require_element());
 
   // packages/block-library/build-module/navigation/edit/placeholder/placeholder-preview.js
@@ -33716,10 +33719,10 @@ ${js}
         return;
       }
       if (isResolvingMenus) {
-        (0, import_a11y.speak)((0, import_i18n109.__)("Loading navigation block setup options\u2026"));
+        (0, import_a11y2.speak)((0, import_i18n109.__)("Loading navigation block setup options\u2026"));
       }
       if (hasResolvedMenus) {
-        (0, import_a11y.speak)((0, import_i18n109.__)("Navigation block setup options ready."));
+        (0, import_a11y2.speak)((0, import_i18n109.__)("Navigation block setup options ready."));
       }
     }, [hasResolvedMenus, isResolvingMenus, isSelected]);
     const isResolvingActions = isResolvingMenus && isResolvingCanUserCreateNavigationMenus;
@@ -36453,7 +36456,7 @@ ${js}
     (0, import_element70.useEffect)(() => {
       hideNavigationMenuStatusNotice();
       if (isCreatingNavigationMenu) {
-        (0, import_a11y2.speak)((0, import_i18n126.__)(`Creating Navigation Menu.`));
+        (0, import_a11y3.speak)((0, import_i18n126.__)(`Creating Navigation Menu.`));
       }
       if (createNavigationMenuIsSuccess) {
         handleUpdateMenu(createNavigationMenuPost?.id, {
@@ -36482,7 +36485,7 @@ ${js}
     (0, import_element70.useEffect)(() => {
       hideClassicMenuConversionNotice();
       if (classicMenuConversionStatus === CLASSIC_MENU_CONVERSION_PENDING) {
-        (0, import_a11y2.speak)((0, import_i18n126.__)("Classic menu importing."));
+        (0, import_a11y3.speak)((0, import_i18n126.__)("Classic menu importing."));
       }
       if (classicMenuConversionStatus === CLASSIC_MENU_CONVERSION_SUCCESS) {
         showClassicMenuConversionNotice(
@@ -36548,7 +36551,7 @@ ${js}
     const isFirstRender = (0, import_element70.useRef)(true);
     (0, import_element70.useEffect)(() => {
       if (!isFirstRender.current && submenuAccessibilityNotice) {
-        (0, import_a11y2.speak)(submenuAccessibilityNotice);
+        (0, import_a11y3.speak)(submenuAccessibilityNotice);
       }
       isFirstRender.current = false;
     }, [submenuAccessibilityNotice]);
@@ -38466,7 +38469,7 @@ ${js}
   var import_block_editor154 = __toESM(require_block_editor());
   var import_url14 = __toESM(require_url());
   var import_element72 = __toESM(require_element());
-  var import_a11y3 = __toESM(require_a11y());
+  var import_a11y4 = __toESM(require_a11y());
   var import_blocks62 = __toESM(require_blocks());
   var import_compose32 = __toESM(require_compose());
 
@@ -38748,7 +38751,7 @@ ${js}
               anchor: popoverAnchor,
               onRemove: () => {
                 setAttributes({ url: "" });
-                (0, import_a11y3.speak)((0, import_i18n130.__)("Link removed."), "assertive");
+                (0, import_a11y4.speak)((0, import_i18n130.__)("Link removed."), "assertive");
               },
               onChange: (updatedValue) => {
                 const {
