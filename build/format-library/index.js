@@ -1808,6 +1808,7 @@ var wp;
   var import_rich_text16 = __toESM(require_rich_text());
   var import_block_editor16 = __toESM(require_block_editor());
   var import_components6 = __toESM(require_components());
+  var import_a11y3 = __toESM(require_a11y());
   var { Badge } = unlock(import_components6.privateApis);
   var name14 = "core/math";
   var title14 = (0, import_i18n17.__)("Math");
@@ -1835,6 +1836,7 @@ var wp;
           setError(null);
         } catch (err) {
           setError(err.message);
+          (0, import_a11y3.speak)(err.message);
           return;
         }
       }
