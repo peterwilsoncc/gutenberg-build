@@ -63601,7 +63601,9 @@ var wp;
     const { fields } = (0, import_element225.useContext)(dataform_context_default);
     const [changes, setChanges] = (0, import_element225.useState)({});
     const modalData = (0, import_element225.useMemo)(() => {
-      return (0, import_deepmerge2.default)(data, changes);
+      return (0, import_deepmerge2.default)(data, changes, {
+        arrayMerge: (target, source) => source
+      });
     }, [data, changes]);
     const form = (0, import_element225.useMemo)(
       () => ({
@@ -63623,7 +63625,11 @@ var wp;
       onClose();
     };
     const handleOnChange = (newValue) => {
-      setChanges((prev2) => (0, import_deepmerge2.default)(prev2, newValue));
+      setChanges(
+        (prev2) => (0, import_deepmerge2.default)(prev2, newValue, {
+          arrayMerge: (target, source) => source
+        })
+      );
     };
     const focusOnMountRef = (0, import_compose88.useFocusOnMount)("firstInputElement");
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsxs)(

@@ -38022,7 +38022,9 @@ If there's a particular need for this, please submit a feature request at https:
     const { fields } = (0, import_element120.useContext)(dataform_context_default);
     const [changes, setChanges] = (0, import_element120.useState)({});
     const modalData = (0, import_element120.useMemo)(() => {
-      return (0, import_deepmerge3.default)(data, changes);
+      return (0, import_deepmerge3.default)(data, changes, {
+        arrayMerge: (target, source) => source
+      });
     }, [data, changes]);
     const form = (0, import_element120.useMemo)(
       () => ({
@@ -38044,7 +38046,11 @@ If there's a particular need for this, please submit a feature request at https:
       onClose();
     };
     const handleOnChange = (newValue) => {
-      setChanges((prev) => (0, import_deepmerge3.default)(prev, newValue));
+      setChanges(
+        (prev) => (0, import_deepmerge3.default)(prev, newValue, {
+          arrayMerge: (target, source) => source
+        })
+      );
     };
     const focusOnMountRef = (0, import_compose24.useFocusOnMount)("firstInputElement");
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsxs)(
