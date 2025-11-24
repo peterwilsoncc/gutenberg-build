@@ -39889,50 +39889,60 @@ var wp;
     const blockToolbarAfterRef = use_popover_scroll_default(__unstableContentRef);
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", { ...props, onKeyDown, children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(InsertionPointOpenRef.Provider, { value: (0, import_element122.useRef)(false), children: [
-        !isTyping3 && !isZoomOutMode && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-          InsertionPoint,
-          {
-            __unstableContentRef
-          }
-        ),
-        showEmptyBlockSideInserter && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-          EmptyBlockInserter,
-          {
-            __unstableContentRef,
-            clientId
-          }
-        ),
-        showBlockToolbarPopover && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-          BlockToolbarPopover,
-          {
-            __unstableContentRef,
-            clientId,
-            isTyping: isTyping3
-          }
-        ),
-        !isZoomOutMode && !hasFixedToolbar && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-          import_components112.Popover.Slot,
-          {
-            name: "block-toolbar",
-            ref: blockToolbarRef
-          }
-        ),
-        children,
-        /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-          import_components112.Popover.Slot,
-          {
-            name: "__unstable-block-tools-after",
-            ref: blockToolbarAfterRef
-          }
-        ),
-        isZoomOutMode && !isDragging3 && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
-          zoom_out_mode_inserters_default,
-          {
-            __unstableContentRef
-          }
-        )
-      ] }) })
+      /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+        "div",
+        {
+          ...props,
+          onKeyDown,
+          className: clsx_default(props.className, {
+            "block-editor-block-tools--is-dragging": isDragging3
+          }),
+          children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(InsertionPointOpenRef.Provider, { value: (0, import_element122.useRef)(false), children: [
+            !isTyping3 && !isZoomOutMode && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+              InsertionPoint,
+              {
+                __unstableContentRef
+              }
+            ),
+            showEmptyBlockSideInserter && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+              EmptyBlockInserter,
+              {
+                __unstableContentRef,
+                clientId
+              }
+            ),
+            showBlockToolbarPopover && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+              BlockToolbarPopover,
+              {
+                __unstableContentRef,
+                clientId,
+                isTyping: isTyping3
+              }
+            ),
+            !isZoomOutMode && !hasFixedToolbar && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+              import_components112.Popover.Slot,
+              {
+                name: "block-toolbar",
+                ref: blockToolbarRef
+              }
+            ),
+            children,
+            /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+              import_components112.Popover.Slot,
+              {
+                name: "__unstable-block-tools-after",
+                ref: blockToolbarAfterRef
+              }
+            ),
+            isZoomOutMode && !isDragging3 && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+              zoom_out_mode_inserters_default,
+              {
+                __unstableContentRef
+              }
+            )
+          ] })
+        }
+      )
     );
   }
 
