@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-hooks'), 'version' => '1763984431993');
+<?php return array('dependencies' => array('wp-hooks'), 'version' => '1763988497403');
