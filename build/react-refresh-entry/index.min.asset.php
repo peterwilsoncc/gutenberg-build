@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-react-refresh-runtime'), 'version' => '1763979719305');
+<?php return array('dependencies' => array('wp-react-refresh-runtime'), 'version' => '1763983843855');
