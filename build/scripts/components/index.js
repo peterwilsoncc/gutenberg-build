@@ -15635,11 +15635,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       end--;
     return result.slice(start, end).split("\0").map(transform).join(delimiter2);
   }
-  function replace2(input, re2, value) {
-    if (re2 instanceof RegExp)
-      return input.replace(re2, value);
-    return re2.reduce(function(input2, re3) {
-      return input2.replace(re3, value);
+  function replace2(input, re3, value) {
+    if (re3 instanceof RegExp)
+      return input.replace(re3, value);
+    return re3.reduce(function(input2, re4) {
+      return input2.replace(re4, value);
     }, input);
   }
 
@@ -42045,7 +42045,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/date-time/date/index.js
   var import_i18n42 = __toESM(require_i18n());
-  var import_date = __toESM(require_date());
+  var import_date2 = __toESM(require_date());
   var import_element128 = __toESM(require_element());
 
   // packages/components/build-module/date-time/date/use-lilius/index.js
@@ -42259,10 +42259,50 @@ This message will only show in development mode. It won't appear in production. 
 		}
 		`, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFrRUciLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBib3hTaXppbmdSZXNldCwgQ09MT1JTLCBDT05GSUcgfSBmcm9tICcuLi8uLi91dGlscyc7XG5pbXBvcnQgeyBIU3RhY2sgfSBmcm9tICcuLi8uLi9oLXN0YWNrJztcbmltcG9ydCB7IEhlYWRpbmcgfSBmcm9tICcuLi8uLi9oZWFkaW5nJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdCR7IGJveFNpemluZ1Jlc2V0IH1cbmA7XG5cbmV4cG9ydCBjb25zdCBOYXZpZ2F0b3IgPSBzdHlsZWQoIEhTdGFjayApYFxuXHRjb2x1bW4tZ2FwOiAkeyBzcGFjZSggMiApIH07XG5cdGRpc3BsYXk6IGdyaWQ7XG5cdGdyaWQtdGVtcGxhdGUtY29sdW1uczogMC41ZnIgcmVwZWF0KCA1LCAxZnIgKSAwLjVmcjtcblx0anVzdGlmeS1pdGVtczogY2VudGVyO1xuXHRtYXJnaW4tYm90dG9tOiAkeyBzcGFjZSggNCApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgVmlld1ByZXZpb3VzTW9udGhCdXR0b24gPSBzdHlsZWQoIEJ1dHRvbiApYFxuXHRncmlkLWNvbHVtbjogMSAvIDI7XG5gO1xuXG5leHBvcnQgY29uc3QgVmlld05leHRNb250aEJ1dHRvbiA9IHN0eWxlZCggQnV0dG9uIClgXG5cdGdyaWQtY29sdW1uOiA3IC8gODtcbmA7XG5cbmV4cG9ydCBjb25zdCBOYXZpZ2F0b3JIZWFkaW5nID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdGZvbnQtc2l6ZTogJHsgQ09ORklHLmZvbnRTaXplIH07XG5cdGZvbnQtd2VpZ2h0OiAkeyBDT05GSUcuZm9udFdlaWdodCB9O1xuXHRncmlkLWNvbHVtbjogMiAvIDc7XG5cblx0c3Ryb25nIHtcblx0XHRmb250LXdlaWdodDogJHsgQ09ORklHLmZvbnRXZWlnaHRIZWFkaW5nIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBDYWxlbmRhciA9IHN0eWxlZC5kaXZgXG5cdGNvbHVtbi1nYXA6ICR7IHNwYWNlKCAyICkgfTtcblx0ZGlzcGxheTogZ3JpZDtcblx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAwLjVmciByZXBlYXQoIDUsIDFmciApIDAuNWZyO1xuXHRqdXN0aWZ5LWl0ZW1zOiBjZW50ZXI7XG5cdHJvdy1nYXA6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBEYXlPZldlZWsgPSBzdHlsZWQuZGl2YFxuXHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmdyYXlbIDcwMCBdIH07XG5cdGZvbnQtc2l6ZTogJHsgQ09ORklHLmZvbnRTaXplIH07XG5cdGxpbmUtaGVpZ2h0OiAkeyBDT05GSUcuZm9udExpbmVIZWlnaHRCYXNlIH07XG5gO1xuXG5leHBvcnQgY29uc3QgRGF5QnV0dG9uID0gc3R5bGVkKCBCdXR0b24sIHtcblx0c2hvdWxkRm9yd2FyZFByb3A6ICggcHJvcDogc3RyaW5nICkgPT5cblx0XHQhIFsgJ2NvbHVtbicsICdpc1NlbGVjdGVkJywgJ2lzVG9kYXknLCAnaGFzRXZlbnRzJyBdLmluY2x1ZGVzKCBwcm9wICksXG59ICk8IHtcblx0Y29sdW1uOiBudW1iZXI7XG5cdGlzU2VsZWN0ZWQ6IGJvb2xlYW47XG5cdGlzVG9kYXk6IGJvb2xlYW47XG5cdGhhc0V2ZW50czogYm9vbGVhbjtcbn0gPmBcblx0Z3JpZC1jb2x1bW46ICR7ICggcHJvcHMgKSA9PiBwcm9wcy5jb2x1bW4gfTtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcblxuXHQkeyAoIHByb3BzICkgPT5cblx0XHRwcm9wcy5kaXNhYmxlZCAmJlxuXHRcdGBcblx0XHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0XHRgIH1cblxuXHQmJiYge1xuXHRcdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNSb3VuZCB9O1xuXHRcdGhlaWdodDogJHsgc3BhY2UoIDcgKSB9O1xuXHRcdHdpZHRoOiAkeyBzcGFjZSggNyApIH07XG5cdFx0Zm9udC13ZWlnaHQ6IDQwMDtcblxuXHRcdCR7ICggcHJvcHMgKSA9PlxuXHRcdFx0cHJvcHMuaXNTZWxlY3RlZCAmJlxuXHRcdFx0YFxuXHRcdFx0XHRiYWNrZ3JvdW5kOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cblx0XHRcdFx0Jixcblx0XHRcdFx0Jjpob3Zlcjpub3QoOmRpc2FibGVkLCBbYXJpYS1kaXNhYmxlZD10cnVlXSkge1xuXHRcdFx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblx0XHRcdFx0fVxuXG5cdFx0XHRcdCY6Zm9jdXM6bm90KDpkaXNhYmxlZCksXG5cdFx0XHRcdCY6Zm9jdXM6bm90KDpkaXNhYmxlZCkge1xuXHRcdFx0XHRcdGJvcmRlcjogJHsgQ09ORklHLmJvcmRlcldpZHRoRm9jdXMgfSBzb2xpZCBjdXJyZW50Q29sb3I7XG5cdFx0XHRcdH1cblxuXHRcdFx0XHQvKiBIaWdobGlnaHQgdGhlIHNlbGVjdGVkIGRheSBmb3IgaGlnaC1jb250cmFzdCBtb2RlICovXG5cdFx0XHRcdCY6OmFmdGVyIHtcblx0XHRcdFx0XHRjb250ZW50OiAnJztcblx0XHRcdFx0XHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdFx0XHRcdFx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdFx0XHRcdFx0aW5zZXQ6IDA7XG5cdFx0XHRcdFx0Ym9yZGVyLXJhZGl1czogaW5oZXJpdDtcblx0XHRcdFx0XHRib3JkZXI6IDFweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRcdFx0fVxuXHRcdFx0YCB9XG5cblx0XHQkeyAoIHByb3BzICkgPT5cblx0XHRcdCEgcHJvcHMuaXNTZWxlY3RlZCAmJlxuXHRcdFx0cHJvcHMuaXNUb2RheSAmJlxuXHRcdFx0YFxuXHRcdFx0YmFja2dyb3VuZDogJHsgQ09MT1JTLnRoZW1lLmdyYXlbIDIwMCBdIH07XG5cdFx0XHRgIH1cblx0fVxuXG5cdCR7ICggcHJvcHMgKSA9PlxuXHRcdHByb3BzLmhhc0V2ZW50cyAmJlxuXHRcdGBcblx0XHQ6OmJlZm9yZSB7XG5cdFx0XHRib3JkZXI6IDJweCBzb2xpZCAke1xuXHRcdFx0XHRwcm9wcy5pc1NlbGVjdGVkXG5cdFx0XHRcdFx0PyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWRcblx0XHRcdFx0XHQ6IENPTE9SUy50aGVtZS5hY2NlbnRcblx0XHRcdH07XG5cdFx0XHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzUm91bmQgfTtcblx0XHRcdGNvbnRlbnQ6IFwiIFwiO1xuXHRcdFx0bGVmdDogNTAlO1xuXHRcdFx0cG9zaXRpb246IGFic29sdXRlO1xuXHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgOXB4KTtcblx0XHR9XG5cdFx0YCB9XG5gO1xuIl19 */"));
 
+  // node_modules/@date-fns/utc/date/mini.js
+  var UTCDateMini = class extends Date {
+    constructor() {
+      super();
+      this.setTime(arguments.length === 0 ? (
+        // Enables Sinon's fake timers that override the constructor
+        Date.now()
+      ) : arguments.length === 1 ? typeof arguments[0] === "string" ? +new Date(arguments[0]) : arguments[0] : Date.UTC(...arguments));
+    }
+    getTimezoneOffset() {
+      return 0;
+    }
+  };
+  var re = /^(get|set)(?!UTC)/;
+  Object.getOwnPropertyNames(Date.prototype).forEach((method) => {
+    if (re.test(method)) {
+      const utcMethod = Date.prototype[method.replace(re, "$1UTC")];
+      if (utcMethod) UTCDateMini.prototype[method] = utcMethod;
+    }
+  });
+
+  // node_modules/@date-fns/utc/date/index.js
+  var weekdayFormat = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    timeZone: "UTC"
+  });
+  var dateFormat = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC"
+  });
+  var timeFormat = new Intl.DateTimeFormat("en-GB", {
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZone: "UTC"
+  });
+
   // packages/components/build-module/date-time/utils.js
   function inputToDate(input) {
     if (typeof input === "string") {
-      return new Date(input);
+      const hasTimezone = /Z|[+-]\d{2}(:?\d{2})?$/.test(input);
+      return hasTimezone ? new Date(input) : new UTCDateMini(input + "Z");
     }
     return toDate(input);
   }
@@ -42348,8 +42388,8 @@ This message will only show in development mode. It won't appear in production. 
         }), /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(NavigatorHeading, {
           level: 3,
           children: [/* @__PURE__ */ (0, import_jsx_runtime194.jsx)("strong", {
-            children: (0, import_date.dateI18n)("F", viewing, -viewing.getTimezoneOffset())
-          }), " ", (0, import_date.dateI18n)("Y", viewing, -viewing.getTimezoneOffset())]
+            children: (0, import_date2.gmdateI18n)("F", viewing)
+          }), " ", (0, import_date2.gmdateI18n)("Y", viewing)]
         }), /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(ViewNextMonthButton, {
           icon: (0, import_i18n42.isRTL)() ? arrow_left_default : arrow_right_default,
           variant: "tertiary",
@@ -42365,7 +42405,7 @@ This message will only show in development mode. It won't appear in production. 
         onFocus: () => setIsFocusWithinCalendar(true),
         onBlur: () => setIsFocusWithinCalendar(false),
         children: [calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(DayOfWeek, {
-          children: (0, import_date.dateI18n)("D", day, -day.getTimezoneOffset())
+          children: (0, import_date2.gmdateI18n)("D", day)
         }, day.toString())), calendar[0].map((week) => week.map((day, index2) => {
           if (!isSameMonth(day, viewing)) {
             return null;
@@ -42459,14 +42499,14 @@ This message will only show in development mode. It won't appear in production. 
       hasEvents: numEvents > 0,
       onClick,
       onKeyDown,
-      children: (0, import_date.dateI18n)("j", day, -day.getTimezoneOffset())
+      children: (0, import_date2.gmdateI18n)("j", day)
     });
   }
   function getDayLabel(date, isSelected2, numEvents) {
     const {
       formats
-    } = (0, import_date.getSettings)();
-    const localizedDate = (0, import_date.dateI18n)(formats.date, date, -date.getTimezoneOffset());
+    } = (0, import_date2.getSettings)();
+    const localizedDate = (0, import_date2.gmdateI18n)(formats.date, date);
     if (isSelected2 && numEvents > 0) {
       return (0, import_i18n42.sprintf)(
         // translators: 1: The calendar date. 2: Number of events on the calendar date.
@@ -42498,7 +42538,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/date-time/time/timezone.js
   var import_i18n43 = __toESM(require_i18n());
-  var import_date2 = __toESM(require_date());
+  var import_date3 = __toESM(require_date());
 
   // packages/components/build-module/date-time/time/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__31() {
@@ -42595,7 +42635,7 @@ This message will only show in development mode. It won't appear in production. 
   var TimeZone2 = () => {
     const {
       timezone
-    } = (0, import_date2.getSettings)();
+    } = (0, import_date3.getSettings)();
     const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
     if (Number(timezone.offset) === userTimezoneOffset) {
       return null;
@@ -46900,10 +46940,10 @@ This message will only show in development mode. It won't appear in production. 
   }
   function match3(str, options2) {
     var keys = [];
-    var re2 = pathToRegexp(str, keys, options2);
-    return regexpToFunction(re2, keys, options2);
+    var re3 = pathToRegexp(str, keys, options2);
+    return regexpToFunction(re3, keys, options2);
   }
-  function regexpToFunction(re2, keys, options2) {
+  function regexpToFunction(re3, keys, options2) {
     if (options2 === void 0) {
       options2 = {};
     }
@@ -46911,7 +46951,7 @@ This message will only show in development mode. It won't appear in production. 
       return x2;
     } : _a;
     return function(pathname) {
-      var m3 = re2.exec(pathname);
+      var m3 = re3.exec(pathname);
       if (!m3)
         return false;
       var path = m3[0], index2 = m3.index;
@@ -53632,10 +53672,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     //#endregion
   };
-  var re = /^(get|set)(?!UTC)/;
+  var re2 = /^(get|set)(?!UTC)/;
   Object.getOwnPropertyNames(Date.prototype).forEach((method) => {
-    if (!re.test(method)) return;
-    const utcMethod = method.replace(re, "$1UTC");
+    if (!re2.test(method)) return;
+    const utcMethod = method.replace(re2, "$1UTC");
     if (!TZDateMini.prototype[utcMethod]) return;
     if (method.startsWith("get")) {
       TZDateMini.prototype[method] = function() {
