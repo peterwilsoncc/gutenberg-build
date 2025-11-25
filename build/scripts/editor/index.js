@@ -51320,91 +51320,85 @@ var wp;
     "core/navigation-link",
     "core/navigation-submenu"
   ];
-  function createDataFields(termDataValues, idValue) {
-    return {
-      id: {
-        label: (0, import_i18n228.__)("Term ID"),
-        value: idValue,
-        type: "string"
-      },
-      name: {
-        label: (0, import_i18n228.__)("Name"),
-        value: termDataValues?.name,
-        type: "string"
-      },
-      slug: {
-        label: (0, import_i18n228.__)("Slug"),
-        value: termDataValues?.slug,
-        type: "string"
-      },
-      link: {
-        label: (0, import_i18n228.__)("Link"),
-        value: termDataValues?.link,
-        type: "string"
-      },
-      description: {
-        label: (0, import_i18n228.__)("Description"),
-        value: termDataValues?.description,
-        type: "string"
-      },
-      parent: {
-        label: (0, import_i18n228.__)("Parent ID"),
-        value: termDataValues?.parent,
-        type: "string"
-      },
-      count: {
-        label: (0, import_i18n228.__)("Count"),
-        value: `(${termDataValues?.count ?? 0})`,
-        type: "string"
-      }
-    };
-  }
-  function getTermDataFields(select5, context, clientId) {
-    const { getEntityRecord } = select5(import_core_data121.store);
-    const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select5(import_block_editor99.store);
-    let termDataValues, dataFields;
-    const blockName = getBlockName2?.(clientId);
-    const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
-    let termId, taxonomy;
-    if (isNavigationBlock) {
-      const blockAttributes = getBlockAttributes2?.(clientId);
-      termId = blockAttributes?.id;
-      const typeFromAttributes = blockAttributes?.type;
-      taxonomy = typeFromAttributes === "tag" ? "post_tag" : typeFromAttributes;
-    } else {
-      termId = context?.termId;
-      taxonomy = context?.taxonomy;
+  var termDataFields = [
+    {
+      label: (0, import_i18n228.__)("Term ID"),
+      args: { field: "id" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n228.__)("Name"),
+      args: { field: "name" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n228.__)("Slug"),
+      args: { field: "slug" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n228.__)("Link"),
+      args: { field: "link" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n228.__)("Description"),
+      args: { field: "description" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n228.__)("Parent ID"),
+      args: { field: "parent" },
+      type: "string"
+    },
+    {
+      label: (0, import_i18n228.__)("Count"),
+      args: { field: "count" },
+      type: "string"
     }
-    if (taxonomy && termId) {
-      termDataValues = getEntityRecord("taxonomy", taxonomy, termId);
-      if (!termDataValues && context?.termData) {
-        termDataValues = context.termData;
-      }
-      if (termDataValues) {
-        dataFields = createDataFields(termDataValues, termId);
-      }
-    } else if (context?.termData) {
-      termDataValues = context.termData;
-      dataFields = createDataFields(
-        termDataValues,
-        termDataValues?.term_id
-      );
-    }
-    if (!dataFields || !Object.keys(dataFields).length) {
-      return null;
-    }
-    return dataFields;
-  }
+  ];
   var term_data_default = {
     name: "core/term-data",
     usesContext: ["taxonomy", "termId", "termData"],
     getValues({ select: select5, context, bindings, clientId }) {
-      const dataFields = getTermDataFields(select5, context, clientId);
+      const { getEntityRecord } = select5(import_core_data121.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select5(import_block_editor99.store);
+      const blockName = getBlockName2(clientId);
+      const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
+      let termDataValues;
+      if (isNavigationBlock) {
+        const blockAttributes = getBlockAttributes2(clientId);
+        const typeFromAttributes = blockAttributes?.type;
+        const taxonomy = typeFromAttributes === "tag" ? "post_tag" : typeFromAttributes;
+        termDataValues = getEntityRecord(
+          "taxonomy",
+          taxonomy,
+          blockAttributes?.id
+        );
+      } else if (context.termId && context.taxonomy) {
+        termDataValues = getEntityRecord(
+          "taxonomy",
+          context.taxonomy,
+          context.termId
+        );
+      }
+      if (!termDataValues && context?.termData && !isNavigationBlock) {
+        termDataValues = context.termData;
+      }
       const newValues = {};
-      for (const [attributeName, source] of Object.entries(bindings)) {
-        const fieldKey = source.args.field;
-        const { value: fieldValue, label: fieldLabel } = dataFields?.[fieldKey] || {};
-        newValues[attributeName] = fieldValue ?? fieldLabel ?? fieldKey;
+      for (const [attributeName, binding] of Object.entries(bindings)) {
+        const termDataField = termDataFields.find(
+          (field) => field.args.field === binding.args.field
+        );
+        if (!termDataField) {
+          newValues[attributeName] = binding.args.field;
+        } else if (!termDataValues || termDataValues[binding.args.field] === void 0) {
+          newValues[attributeName] = termDataField.label;
+        } else if (binding.args.field === "count") {
+          newValues[attributeName] = "(" + termDataValues[binding.args.field] + ")";
+        } else {
+          newValues[attributeName] = termDataValues[binding.args.field];
+        }
       }
       return newValues;
     },
@@ -51412,10 +51406,10 @@ var wp;
     setValues({ dispatch: dispatch6, context, bindings }) {
       return false;
     },
-    canUserEditValue({ select: select5, context, args }) {
+    canUserEditValue({ select: select5, context }) {
       const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor99.store);
       const clientId = getSelectedBlockClientId2();
-      const blockName = getBlockName2?.(clientId);
+      const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
         return false;
       }
@@ -51425,23 +51419,26 @@ var wp;
       if (!context?.taxonomy || !context?.termId) {
         return false;
       }
-      const fieldValue = getTermDataFields(select5, context, void 0)?.[args.field]?.value;
-      if (fieldValue === void 0) {
-        return false;
-      }
       return false;
     },
-    getFieldsList({ select: select5, context }) {
-      const clientId = select5(import_block_editor99.store).getSelectedBlockClientId();
-      const termDataFields = getTermDataFields(select5, context, clientId);
-      if (!termDataFields) {
+    getFieldsList({ context, select: select5 }) {
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor99.store);
+      const clientId = getSelectedBlockClientId2();
+      const blockName = getBlockName2(clientId);
+      if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
+        const blockAttributes = getBlockAttributes2(clientId);
+        if (!blockAttributes || !blockAttributes.id || !blockAttributes.type) {
+          return [];
+        }
+        return termDataFields;
+      }
+      if (!context) {
         return [];
       }
-      return Object.entries(termDataFields).map(([key, field]) => ({
-        label: field.label,
-        type: field.type,
-        args: { field: key }
-      }));
+      if (context.taxonomy && context.termId || context.termData) {
+        return termDataFields;
+      }
+      return [];
     }
   };
 
