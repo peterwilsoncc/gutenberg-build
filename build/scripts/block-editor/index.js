@@ -58219,6 +58219,7 @@ var wp;
     asc: (0, import_i18n195.__)("Sort ascending"),
     desc: (0, import_i18n195.__)("Sort descending")
   };
+  var DAYS_OF_WEEK = [0, 1, 2, 3, 4, 5, 6];
 
   // packages/dataviews/build-module/lock-unlock.js
   var import_private_apis3 = __toESM(require_private_apis());
@@ -60248,35 +60249,6 @@ var wp;
   var import_element209 = __toESM(require_element());
   var import_i18n198 = __toESM(require_i18n());
   var import_date4 = __toESM(require_date());
-
-  // packages/dataviews/build-module/field-types/utils/week-starts-on.js
-  var DAYS_OF_WEEK = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday"
-  ];
-  var DEFAULT_DAY_STRING = "sunday";
-  var DEFAULT_DAY_NUMBER = 0;
-  function weekStartsOnToNumber(day) {
-    const index = DAYS_OF_WEEK.indexOf(day);
-    if (index === -1) {
-      return DEFAULT_DAY_NUMBER;
-    }
-    return index;
-  }
-  function numberToWeekStartsOn(day) {
-    const result = DAYS_OF_WEEK[day];
-    if (result === void 0) {
-      return DEFAULT_DAY_STRING;
-    }
-    return result;
-  }
-
-  // packages/dataviews/build-module/dataform-controls/date.js
   var import_jsx_runtime372 = __toESM(require_jsx_runtime());
   var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components207.privateApis);
   var DATE_PRESETS = [
@@ -60457,9 +60429,7 @@ var wp;
     );
     let weekStartsOn = (0, import_date4.getSettings)().l10n.startOfWeek;
     if (type === "date") {
-      weekStartsOn = weekStartsOnToNumber(
-        fieldFormat.weekStartsOn
-      );
+      weekStartsOn = fieldFormat.weekStartsOn;
     }
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
@@ -60603,9 +60573,7 @@ var wp;
     }
     let weekStartsOn;
     if (type === "date") {
-      weekStartsOn = weekStartsOnToNumber(
-        fieldFormat.weekStartsOn
-      );
+      weekStartsOn = fieldFormat.weekStartsOn;
     }
     const onChangeCallback = (0, import_element209.useCallback)(
       (newValue) => {
@@ -62052,7 +62020,7 @@ var wp;
   function getFormat(field) {
     return {
       date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date6.getSettings)().formats.date,
-      weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(field.format?.weekStartsOn) ? field.format.weekStartsOn : numberToWeekStartsOn((0, import_date6.getSettings)().l10n.startOfWeek)
+      weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(field.format?.weekStartsOn) ? field.format.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
     };
   }
   function render6({ item, field }) {
@@ -62069,7 +62037,7 @@ var wp;
     } else {
       format2 = field.format;
     }
-    return (0, import_date6.dateI18n)(format2.weekStartsOn, (0, import_date6.getDate)(value));
+    return (0, import_date6.dateI18n)(format2.date, (0, import_date6.getDate)(value));
   }
   function normalizeField6(field) {
     const getValue = field.getValue || get_value_from_id_default(field.id);

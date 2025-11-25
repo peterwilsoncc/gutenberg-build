@@ -1290,6 +1290,7 @@ var LAYOUT_LIST = "list";
 var LAYOUT_ACTIVITY = "activity";
 var LAYOUT_PICKER_GRID = "pickerGrid";
 var LAYOUT_PICKER_TABLE = "pickerTable";
+var DAYS_OF_WEEK = [0, 1, 2, 3, 4, 5, 6];
 
 // packages/dataviews/build-module/components/dataviews-context/index.js
 var DataViewsContext = (0, import_element2.createContext)({
@@ -13114,35 +13115,6 @@ var import_components35 = __toESM(require_components());
 var import_element39 = __toESM(require_element());
 var import_i18n32 = __toESM(require_i18n());
 var import_date4 = __toESM(require_date());
-
-// packages/dataviews/build-module/field-types/utils/week-starts-on.js
-var DAYS_OF_WEEK = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday"
-];
-var DEFAULT_DAY_STRING = "sunday";
-var DEFAULT_DAY_NUMBER = 0;
-function weekStartsOnToNumber(day) {
-  const index = DAYS_OF_WEEK.indexOf(day);
-  if (index === -1) {
-    return DEFAULT_DAY_NUMBER;
-  }
-  return index;
-}
-function numberToWeekStartsOn(day) {
-  const result = DAYS_OF_WEEK[day];
-  if (result === void 0) {
-    return DEFAULT_DAY_STRING;
-  }
-  return result;
-}
-
-// packages/dataviews/build-module/dataform-controls/date.js
 var import_jsx_runtime74 = __toESM(require_jsx_runtime());
 var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock(import_components35.privateApis);
 var DATE_PRESETS = [
@@ -13323,9 +13295,7 @@ function CalendarDateControl({
   );
   let weekStartsOn = (0, import_date4.getSettings)().l10n.startOfWeek;
   if (type === "date") {
-    weekStartsOn = weekStartsOnToNumber(
-      fieldFormat.weekStartsOn
-    );
+    weekStartsOn = fieldFormat.weekStartsOn;
   }
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
@@ -13469,9 +13439,7 @@ function CalendarDateRangeControl({
   }
   let weekStartsOn;
   if (type === "date") {
-    weekStartsOn = weekStartsOnToNumber(
-      fieldFormat.weekStartsOn
-    );
+    weekStartsOn = fieldFormat.weekStartsOn;
   }
   const onChangeCallback = (0, import_element39.useCallback)(
     (newValue) => {
@@ -15076,7 +15044,7 @@ var import_jsx_runtime97 = __toESM(require_jsx_runtime());
 function getFormat(field) {
   return {
     date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date6.getSettings)().formats.date,
-    weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(field.format?.weekStartsOn) ? field.format.weekStartsOn : numberToWeekStartsOn((0, import_date6.getSettings)().l10n.startOfWeek)
+    weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(field.format?.weekStartsOn) ? field.format.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
   };
 }
 function render6({ item, field }) {
@@ -15093,7 +15061,7 @@ function render6({ item, field }) {
   } else {
     format2 = field.format;
   }
-  return (0, import_date6.dateI18n)(format2.weekStartsOn, (0, import_date6.getDate)(value));
+  return (0, import_date6.dateI18n)(format2.date, (0, import_date6.getDate)(value));
 }
 function normalizeField6(field) {
   const getValue = field.getValue || get_value_from_id_default(field.id);
