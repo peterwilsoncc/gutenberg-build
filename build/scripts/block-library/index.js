@@ -30260,7 +30260,34 @@ ${js}
     keywords: ["equation", "formula", "latex", "mathematics"],
     textdomain: "default",
     supports: {
-      html: false
+      html: false,
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
+      color: {
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
+      typography: {
+        fontSize: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      }
     },
     attributes: {
       latex: {
