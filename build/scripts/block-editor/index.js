@@ -65420,7 +65420,7 @@ var wp;
     if (settingsFills.length && !isSectionBlock2) {
       tabs.push(TAB_SETTINGS);
     }
-    if (hasBlockStyles || hasStyleFills || window?.__experimentalContentOnlyPatternInsertion) {
+    if (hasBlockStyles || hasStyleFills) {
       tabs.push(TAB_STYLES);
     }
     const tabSettings = (0, import_data166.useSelect)((select3) => {
