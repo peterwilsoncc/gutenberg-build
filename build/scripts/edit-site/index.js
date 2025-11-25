@@ -6850,6 +6850,7 @@ var wp;
     "custom",
     "dimensions.aspectRatio",
     "dimensions.minHeight",
+    "dimensions.width",
     "layout.contentSize",
     "layout.definitions",
     "layout.wideSize",

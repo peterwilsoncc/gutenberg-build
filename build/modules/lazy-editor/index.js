@@ -185,6 +185,7 @@ var VALID_SETTINGS = [
   "custom",
   "dimensions.aspectRatio",
   "dimensions.minHeight",
+  "dimensions.width",
   "layout.contentSize",
   "layout.definitions",
   "layout.wideSize",
@@ -1112,6 +1113,7 @@ var ELEMENT_CLASS_NAMES = {
 var BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
   __experimentalBorder: "border",
   color: "color",
+  dimensions: "dimensions",
   spacing: "spacing",
   typography: "typography"
 };

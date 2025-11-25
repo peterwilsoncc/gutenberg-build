@@ -37321,6 +37321,7 @@ var wp;
   var BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
     __experimentalBorder: "border",
     color: "color",
+    dimensions: "dimensions",
     spacing: "spacing",
     typography: "typography"
   };
@@ -53213,7 +53214,7 @@ var wp;
           };
         }
       });
-      ["aspectRatio", "minHeight"].forEach((key) => {
+      ["aspectRatio", "minHeight", "width"].forEach((key) => {
         if (!supportedStyles.includes(key)) {
           updatedSettings.dimensions = {
             ...updatedSettings.dimensions,
@@ -54477,9 +54478,10 @@ var wp;
     const hasMargin = useHasMargin(settings2);
     const hasGap = useHasGap(settings2);
     const hasMinHeight = useHasMinHeight(settings2);
+    const hasWidth = useHasWidth(settings2);
     const hasAspectRatio = useHasAspectRatio(settings2);
     const hasChildLayout = useHasChildLayout(settings2);
-    return import_element193.Platform.OS === "web" && (hasContentSize || hasWideSize || hasPadding || hasMargin || hasGap || hasMinHeight || hasAspectRatio || hasChildLayout);
+    return import_element193.Platform.OS === "web" && (hasContentSize || hasWideSize || hasPadding || hasMargin || hasGap || hasMinHeight || hasWidth || hasAspectRatio || hasChildLayout);
   }
   function useHasContentSize(settings2) {
     return settings2?.layout?.contentSize;
@@ -54498,6 +54500,9 @@ var wp;
   }
   function useHasMinHeight(settings2) {
     return settings2?.dimensions?.minHeight;
+  }
+  function useHasWidth(settings2) {
+    return settings2?.dimensions?.width;
   }
   function useHasAspectRatio(settings2) {
     return settings2?.dimensions?.aspectRatio;
@@ -54587,6 +54592,7 @@ var wp;
     margin: true,
     blockGap: true,
     minHeight: true,
+    width: true,
     aspectRatio: true,
     childLayout: true
   };
@@ -54729,6 +54735,15 @@ var wp;
       setMinHeightValue(void 0);
     };
     const hasMinHeightValue = () => !!value?.dimensions?.minHeight;
+    const showWidthControl = useHasWidth(settings2);
+    const widthValue = decodeValue(inheritedValue?.dimensions?.width);
+    const setWidthValue = (newValue) => {
+      onChange(setImmutably(value, ["dimensions", "width"], newValue));
+    };
+    const resetWidthValue = () => {
+      setWidthValue(void 0);
+    };
+    const hasWidthValue = () => !!value?.dimensions?.width;
     const showAspectRatioControl = useHasAspectRatio(settings2);
     const aspectRatioValue = decodeValue(
       inheritedValue?.dimensions?.aspectRatio
@@ -54777,7 +54792,8 @@ var wp;
         dimensions: {
           ...previousValue?.dimensions,
           minHeight: void 0,
-          aspectRatio: void 0
+          aspectRatio: void 0,
+          width: void 0
         }
       };
     }, []);
@@ -55016,6 +55032,24 @@ var wp;
                   label: (0, import_i18n184.__)("Minimum height"),
                   value: minHeightValue,
                   onChange: setMinHeightValue
+                }
+              )
+            }
+          ),
+          showWidthControl && /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
+            import_components192.__experimentalToolsPanelItem,
+            {
+              hasValue: hasWidthValue,
+              label: (0, import_i18n184.__)("Width"),
+              onDeselect: resetWidthValue,
+              isShownByDefault: defaultControls.width ?? DEFAULT_CONTROLS4.width,
+              panelId,
+              children: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
+                HeightControl,
+                {
+                  label: (0, import_i18n184.__)("Width"),
+                  value: widthValue,
+                  onChange: setWidthValue
                 }
               )
             }
@@ -66338,6 +66372,7 @@ var wp;
       units2,
       aspectRatio,
       minHeight,
+      width,
       layout,
       borderColor,
       borderRadius,
@@ -66396,6 +66431,7 @@ var wp;
       "spacing.units",
       "dimensions.aspectRatio",
       "dimensions.minHeight",
+      "dimensions.width",
       "layout",
       "border.color",
       "border.radius",
@@ -66503,7 +66539,8 @@ var wp;
         },
         dimensions: {
           aspectRatio,
-          minHeight
+          minHeight,
+          width
         },
         layout,
         parentLayout,
@@ -66540,6 +66577,7 @@ var wp;
       units2,
       aspectRatio,
       minHeight,
+      width,
       layout,
       parentLayout,
       borderColor,
@@ -68474,15 +68512,15 @@ var wp;
       return true;
     }
     if (feature === "any") {
-      return !!(support?.aspectRatio || !!support?.minHeight);
+      return !!(support?.aspectRatio || !!support?.minHeight || !!support?.width);
     }
     return !!support?.[feature];
   }
   var dimensions_default = {
     useBlockProps: useBlockProps12,
-    attributeKeys: ["minHeight", "style"],
+    attributeKeys: ["minHeight", "width", "style"],
     hasSupport(name) {
-      return hasDimensionsSupport(name, "aspectRatio");
+      return hasDimensionsSupport(name);
     }
   };
   function useBlockProps12({ name, minHeight, style }) {

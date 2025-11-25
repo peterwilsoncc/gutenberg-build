@@ -8648,6 +8648,7 @@ var wp;
     "custom",
     "dimensions.aspectRatio",
     "dimensions.minHeight",
+    "dimensions.width",
     "layout.contentSize",
     "layout.definitions",
     "layout.wideSize",
@@ -10041,6 +10042,7 @@ var wp;
   var BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
     __experimentalBorder: "border",
     color: "color",
+    dimensions: "dimensions",
     spacing: "spacing",
     typography: "typography"
   };
@@ -29844,6 +29846,7 @@ var wp;
     margin: true,
     blockGap: true,
     minHeight: true,
+    width: true,
     childLayout: false
   };
   function DimensionsPanel() {
