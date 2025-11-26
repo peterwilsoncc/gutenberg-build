@@ -10918,7 +10918,8 @@ var wp;
       hasBlockGapSupport: hasBlockGapSupportOption,
       hasFallbackGapSupport: hasFallbackGapSupportOption,
       disableLayoutStyles = false,
-      disableRootPadding = false
+      disableRootPadding = false,
+      styleOptions = {}
     } = options;
     const blocks = blockTypes.length > 0 ? blockTypes : (0, import_blocks8.getBlockTypes)();
     const blockGap = getSetting(config, "spacing.blockGap");
@@ -10939,7 +10940,8 @@ var wp;
       hasBlockGapSupport,
       hasFallbackGapSupport,
       disableLayoutStyles,
-      disableRootPadding
+      disableRootPadding,
+      styleOptions
     );
     const svgs = generateSvgFilters(updatedConfig, blockSelectors);
     const styles = [
@@ -31320,7 +31322,13 @@ var wp;
     const mergedValue = (0, import_element69.useMemo)(() => {
       return mergeGlobalStyles(baseValue, value);
     }, [baseValue, value]);
-    const [globalStylesCSS, globalSettings] = generateGlobalStyles(mergedValue);
+    const [globalStylesCSS, globalSettings] = generateGlobalStyles(
+      mergedValue,
+      [],
+      {
+        styleOptions: { variationStyles: true }
+      }
+    );
     const styles = (0, import_element69.useMemo)(
       () => [...serverCSS ?? [], ...globalStylesCSS ?? []],
       [serverCSS, globalStylesCSS]

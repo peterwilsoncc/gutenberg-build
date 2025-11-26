@@ -1989,7 +1989,8 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
     hasBlockGapSupport: hasBlockGapSupportOption,
     hasFallbackGapSupport: hasFallbackGapSupportOption,
     disableLayoutStyles = false,
-    disableRootPadding = false
+    disableRootPadding = false,
+    styleOptions = {}
   } = options;
   const blocks = blockTypes.length > 0 ? blockTypes : (0, import_blocks.getBlockTypes)();
   const blockGap = getSetting(config, "spacing.blockGap");
@@ -2010,7 +2011,8 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
     hasBlockGapSupport,
     hasFallbackGapSupport,
     disableLayoutStyles,
-    disableRootPadding
+    disableRootPadding,
+    styleOptions
   );
   const svgs = generateSvgFilters(updatedConfig, blockSelectors);
   const styles = [
