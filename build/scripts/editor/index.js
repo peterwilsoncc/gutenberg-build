@@ -48845,6 +48845,14 @@ var wp;
   }) {
     const blockRef = (0, import_element169.useRef)();
     useBlockElementRef(thread.blockClientId, blockRef);
+    const blockMode = (0, import_data219.useSelect)(
+      (select5) => {
+        return thread.blockClientId ? select5(import_block_editor90.store).getBlockMode(
+          thread.blockClientId
+        ) : null;
+      },
+      [thread.blockClientId]
+    );
     const updateHeight = (0, import_element169.useCallback)(
       (id, newHeight) => {
         setHeights((prev) => {
@@ -48869,7 +48877,7 @@ var wp;
       if (blockRef.current) {
         refs.setReference(blockRef.current);
       }
-    }, [blockRef, refs, commentLastUpdated]);
+    }, [blockRef, refs, commentLastUpdated, blockMode]);
     (0, import_element169.useEffect)(() => {
       if (refs.floating?.current) {
         setBlockRef(thread.id, blockRef.current);
@@ -48997,17 +49005,24 @@ var wp;
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data221.useDispatch)(import_block_editor92.store)
     );
-    const { blockCommentId, selectedBlockClientId, orderedBlockIds } = (0, import_data221.useSelect)((select5) => {
+    const {
+      blockCommentId,
+      selectedBlockClientId,
+      orderedBlockIds,
+      blockMode
+    } = (0, import_data221.useSelect)((select5) => {
       const {
         getBlockAttributes: getBlockAttributes2,
         getSelectedBlockClientId: getSelectedBlockClientId2,
-        getClientIdsWithDescendants: getClientIdsWithDescendants2
+        getClientIdsWithDescendants: getClientIdsWithDescendants2,
+        getBlockMode: getBlockMode2
       } = select5(import_block_editor92.store);
       const clientId = getSelectedBlockClientId2();
       return {
         blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
         selectedBlockClientId: clientId,
-        orderedBlockIds: getClientIdsWithDescendants2()
+        orderedBlockIds: getClientIdsWithDescendants2(),
+        blockMode: clientId ? getBlockMode2(clientId) : null
       };
     }, []);
     const relatedBlockElement = useBlockElement2(selectedBlockClientId);
@@ -49160,7 +49175,8 @@ var wp;
       isFloating,
       threads,
       selectedThread,
-      setCanvasMinHeight2
+      setCanvasMinHeight2,
+      blockMode
     ]);
     const handleThreadNavigation = (event, thread, isSelected) => {
       if (event.defaultPrevented) {

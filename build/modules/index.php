@@ -58,14 +58,14 @@ return array(
 		'asset' => 'lazy-editor/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/workflow',
-		'path' => 'workflow/index',
-		'asset' => 'workflow/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/boot',
 		'path' => 'boot/index',
 		'asset' => 'boot/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/workflow',
+		'path' => 'workflow/index',
+		'asset' => 'workflow/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/block-library/accordion/view',
