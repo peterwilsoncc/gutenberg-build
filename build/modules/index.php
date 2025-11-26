@@ -8,9 +8,14 @@
 
 return array(
 	array(
-		'id' => '@wordpress/interactivity',
-		'path' => 'interactivity/index',
-		'asset' => 'interactivity/index.min.asset.php',
+		'id' => '@wordpress/interactivity-router',
+		'path' => 'interactivity-router/index',
+		'asset' => 'interactivity-router/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/interactivity-router/full-page',
+		'path' => 'interactivity-router/full-page',
+		'asset' => 'interactivity-router/full-page.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/latex-to-mathml',
@@ -23,14 +28,9 @@ return array(
 		'asset' => 'latex-to-mathml/loader.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/interactivity-router',
-		'path' => 'interactivity-router/index',
-		'asset' => 'interactivity-router/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/interactivity-router/full-page',
-		'path' => 'interactivity-router/full-page',
-		'asset' => 'interactivity-router/full-page.min.asset.php',
+		'id' => '@wordpress/interactivity',
+		'path' => 'interactivity/index',
+		'asset' => 'interactivity/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/a11y',
@@ -38,19 +38,14 @@ return array(
 		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/abilities',
-		'path' => 'abilities/index',
-		'asset' => 'abilities/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/route',
 		'path' => 'route/index',
 		'asset' => 'route/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/edit-site-init',
-		'path' => 'edit-site-init/index',
-		'asset' => 'edit-site-init/index.min.asset.php',
+		'id' => '@wordpress/abilities',
+		'path' => 'abilities/index',
+		'asset' => 'abilities/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/lazy-editor',
@@ -58,14 +53,19 @@ return array(
 		'asset' => 'lazy-editor/index.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/workflow',
-		'path' => 'workflow/index',
-		'asset' => 'workflow/index.min.asset.php',
+		'id' => '@wordpress/edit-site-init',
+		'path' => 'edit-site-init/index',
+		'asset' => 'edit-site-init/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/boot',
 		'path' => 'boot/index',
 		'asset' => 'boot/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/workflow',
+		'path' => 'workflow/index',
+		'asset' => 'workflow/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/block-library/accordion/view',
