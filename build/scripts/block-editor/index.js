@@ -7078,7 +7078,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/utils.js
   var import_blocks91 = __toESM(require_blocks());
-  var import_element239 = __toESM(require_element());
+  var import_element240 = __toESM(require_element());
   var import_data172 = __toESM(require_data());
   var import_compose92 = __toESM(require_compose());
   var import_hooks13 = __toESM(require_hooks());
@@ -48797,6 +48797,41 @@ var wp;
   var import_compose81 = __toESM(require_compose());
   var import_dom36 = __toESM(require_dom());
   var import_notices10 = __toESM(require_notices());
+  var import_element165 = __toESM(require_element());
+
+  // packages/block-editor/build-module/components/media-placeholder/utils.js
+  function getComputedAcceptAttribute(allowedTypes, allowedMimeTypes, accept) {
+    if (accept) {
+      return accept;
+    }
+    if (!allowedMimeTypes || typeof allowedMimeTypes !== "object" || Object.keys(allowedMimeTypes).length === 0) {
+      if (allowedTypes && allowedTypes.length > 0) {
+        return allowedTypes.map((type) => `${type}/*`).join(",");
+      }
+      return void 0;
+    }
+    if (!allowedTypes || allowedTypes.length === 0) {
+      return void 0;
+    }
+    const acceptedMimeTypes = [];
+    for (const [, mimeType] of Object.entries(allowedMimeTypes)) {
+      const isAllowed = allowedTypes.some((allowedType) => {
+        if (allowedType.includes("/")) {
+          return mimeType === allowedType;
+        }
+        return mimeType.startsWith(`${allowedType}/`);
+      });
+      if (isAllowed) {
+        acceptedMimeTypes.push(mimeType);
+      }
+    }
+    if (acceptedMimeTypes.length > 0) {
+      return acceptedMimeTypes.join(",");
+    }
+    return allowedTypes.map((type) => `${type}/*`).join(",");
+  }
+
+  // packages/block-editor/build-module/components/media-replace-flow/index.js
   var import_jsx_runtime314 = __toESM(require_jsx_runtime());
   var noop16 = () => {
   };
@@ -48825,8 +48860,23 @@ var wp;
     renderToggle: renderToggle3,
     className
   }) => {
-    const { getSettings: getSettings7 } = (0, import_data142.useSelect)(store);
+    const { mediaUpload: mediaUpload2, allowedMimeTypes } = (0, import_data142.useSelect)((select3) => {
+      const { getSettings: getSettings7 } = select3(store);
+      const settings2 = getSettings7();
+      return {
+        mediaUpload: settings2.mediaUpload,
+        allowedMimeTypes: settings2.allowedMimeTypes
+      };
+    }, []);
     const errorNoticeID = `block-editor/media-replace-flow/error-notice/${++uniqueId}`;
+    const computedAccept = (0, import_element165.useMemo)(
+      () => getComputedAcceptAttribute(
+        allowedTypes,
+        allowedMimeTypes,
+        accept
+      ),
+      [allowedTypes, allowedMimeTypes, accept]
+    );
     const onUploadError = (message2) => {
       const safeMessage = (0, import_dom36.__unstableStripHTML)(message2);
       if (onError) {
@@ -48857,7 +48907,7 @@ var wp;
         return onSelect(files);
       }
       onFilesUpload(files);
-      getSettings7().mediaUpload({
+      mediaUpload2({
         allowedTypes,
         filesList: files,
         onFileChange: ([media]) => {
@@ -48936,7 +48986,7 @@ var wp;
                   onChange: (event) => {
                     uploadFiles(event, onClose);
                   },
-                  accept,
+                  accept: computedAccept,
                   multiple: !!multiple,
                   render: ({ openFileDialog }) => {
                     return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
@@ -49009,13 +49059,13 @@ var wp;
   // packages/block-editor/build-module/components/media-placeholder/index.js
   var import_components170 = __toESM(require_components());
   var import_i18n161 = __toESM(require_i18n());
-  var import_element167 = __toESM(require_element());
+  var import_element168 = __toESM(require_element());
   var import_data144 = __toESM(require_data());
   var import_deprecated25 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/components/url-popover/index.js
   var import_i18n160 = __toESM(require_i18n());
-  var import_element166 = __toESM(require_element());
+  var import_element167 = __toESM(require_element());
   var import_components169 = __toESM(require_components());
   var import_deprecated24 = __toESM(require_deprecated());
 
@@ -49085,7 +49135,7 @@ var wp;
 
   // packages/block-editor/build-module/components/url-input/index.js
   var import_i18n158 = __toESM(require_i18n());
-  var import_element165 = __toESM(require_element());
+  var import_element166 = __toESM(require_element());
   var import_keycodes18 = __toESM(require_keycodes());
   var import_components167 = __toESM(require_components());
   var import_compose82 = __toESM(require_compose());
@@ -49096,7 +49146,7 @@ var wp;
   function isFunction(maybeFunc) {
     return typeof maybeFunc === "function";
   }
-  var URLInput = class extends import_element165.Component {
+  var URLInput = class extends import_element166.Component {
     constructor(props) {
       super(props);
       this.onChange = this.onChange.bind(this);
@@ -49105,8 +49155,8 @@ var wp;
       this.selectLink = this.selectLink.bind(this);
       this.handleOnClick = this.handleOnClick.bind(this);
       this.bindSuggestionNode = this.bindSuggestionNode.bind(this);
-      this.autocompleteRef = props.autocompleteRef || (0, import_element165.createRef)();
-      this.inputRef = props.inputRef || (0, import_element165.createRef)();
+      this.autocompleteRef = props.autocompleteRef || (0, import_element166.createRef)();
+      this.inputRef = props.inputRef || (0, import_element166.createRef)();
       this.updateSuggestions = (0, import_compose82.debounce)(
         this.updateSuggestions.bind(this),
         200
@@ -49549,7 +49599,7 @@ var wp;
     import_components169.privateApis
   );
   var DEFAULT_PLACEMENT = "bottom";
-  var URLPopover = (0, import_element166.forwardRef)(
+  var URLPopover = (0, import_element167.forwardRef)(
     ({
       additionalControls,
       children,
@@ -49575,7 +49625,7 @@ var wp;
         computedPlacement = __experimentalPopoverLegacyPositionToPlacement(position2);
       }
       computedPlacement = computedPlacement || DEFAULT_PLACEMENT;
-      const [isSettingsExpanded, setIsSettingsExpanded] = (0, import_element166.useState)(false);
+      const [isSettingsExpanded, setIsSettingsExpanded] = (0, import_element167.useState)(false);
       const showSettings = !!renderSettings && isSettingsExpanded;
       const toggleSettingsVisibility = () => {
         setIsSettingsExpanded(!isSettingsExpanded);
@@ -49658,8 +49708,8 @@ var wp;
     }
   ) });
   var URLSelectionUI = ({ src, onChangeSrc, onSelectURL }) => {
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element167.useState)(null);
-    const [isURLInputVisible, setIsURLInputVisible] = (0, import_element167.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element168.useState)(null);
+    const [isURLInputVisible, setIsURLInputVisible] = (0, import_element168.useState)(false);
     const openURLInput = () => {
       setIsURLInputVisible(true);
     };
@@ -49734,14 +49784,26 @@ var wp;
         version: "6.4"
       });
     }
-    const mediaUpload2 = (0, import_data144.useSelect)((select3) => {
+    const { mediaUpload: mediaUpload2, allowedMimeTypes } = (0, import_data144.useSelect)((select3) => {
       const { getSettings: getSettings7 } = select3(store);
-      return getSettings7().mediaUpload;
+      const settings2 = getSettings7();
+      return {
+        mediaUpload: settings2.mediaUpload,
+        allowedMimeTypes: settings2.allowedMimeTypes
+      };
     }, []);
-    const [src, setSrc] = (0, import_element167.useState)("");
-    (0, import_element167.useEffect)(() => {
+    const [src, setSrc] = (0, import_element168.useState)("");
+    (0, import_element168.useEffect)(() => {
       setSrc(value?.src ?? "");
     }, [value?.src]);
+    const computedAccept = (0, import_element168.useMemo)(
+      () => getComputedAcceptAttribute(
+        allowedTypes,
+        allowedMimeTypes,
+        accept
+      ),
+      [allowedTypes, allowedMimeTypes, accept]
+    );
     const onlyAllowsImages = () => {
       if (!allowedTypes || allowedTypes.length === 0) {
         return false;
@@ -49997,7 +50059,7 @@ var wp;
             import_components170.FormFileUpload,
             {
               onChange: onUpload,
-              accept,
+              accept: computedAccept,
               multiple: !!multiple,
               render: ({ openFileDialog }) => {
                 const content = /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(import_jsx_runtime320.Fragment, { children: [
@@ -50045,7 +50107,7 @@ var wp;
                 }
               ),
               onChange: onUpload,
-              accept,
+              accept: computedAccept,
               multiple: !!multiple
             }
           ),
@@ -50099,14 +50161,14 @@ var wp;
 
   // packages/block-editor/build-module/components/plain-text/index.js
   var import_react_autosize_textarea2 = __toESM(require_lib());
-  var import_element180 = __toESM(require_element());
+  var import_element181 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/editable-text/index.js
-  var import_element179 = __toESM(require_element());
+  var import_element180 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/rich-text/index.js
   var import_es63 = __toESM(require_es6());
-  var import_element178 = __toESM(require_element());
+  var import_element179 = __toESM(require_element());
   var import_data148 = __toESM(require_data());
   var import_compose84 = __toESM(require_compose());
   var import_rich_text15 = __toESM(require_rich_text());
@@ -50201,13 +50263,13 @@ var wp;
   var format_toolbar_container_default = FormatToolbarContainer;
 
   // packages/block-editor/build-module/components/rich-text/use-mark-persistent.js
-  var import_element168 = __toESM(require_element());
+  var import_element169 = __toESM(require_element());
   var import_data145 = __toESM(require_data());
   function useMarkPersistent({ html, value }) {
-    const previousTextRef = (0, import_element168.useRef)();
+    const previousTextRef = (0, import_element169.useRef)();
     const hasActiveFormats = !!value.activeFormats?.length;
     const { __unstableMarkLastChangeAsPersistent: __unstableMarkLastChangeAsPersistent2 } = (0, import_data145.useDispatch)(store);
-    (0, import_element168.useLayoutEffect)(() => {
+    (0, import_element169.useLayoutEffect)(() => {
       if (!previousTextRef.current) {
         previousTextRef.current = value.text;
         return;
@@ -50226,7 +50288,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/rich-text/use-format-types.js
-  var import_element169 = __toESM(require_element());
+  var import_element170 = __toESM(require_element());
   var import_data146 = __toESM(require_data());
   var import_rich_text5 = __toESM(require_rich_text());
   function formatTypesSelector(select3) {
@@ -50273,7 +50335,7 @@ var wp;
     disableNoneEssentialFormatting = false
   }) {
     const allFormatTypes = (0, import_data146.useSelect)(formatTypesSelector, []);
-    const formatTypes = (0, import_element169.useMemo)(() => {
+    const formatTypes = (0, import_element170.useMemo)(() => {
       return allFormatTypes.filter(
         ({
           name,
@@ -50379,7 +50441,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/index.js
-  var import_element171 = __toESM(require_element());
+  var import_element172 = __toESM(require_element());
   var import_compose83 = __toESM(require_compose());
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/before-input-rules.js
@@ -50646,7 +50708,7 @@ var wp;
   var import_url10 = __toESM(require_url());
 
   // packages/block-editor/build-module/components/rich-text/utils.js
-  var import_element170 = __toESM(require_element());
+  var import_element171 = __toESM(require_element());
   var import_blocks80 = __toESM(require_blocks());
   var import_jsx_runtime324 = __toESM(require_jsx_runtime());
   function addActiveFormats(value, activeFormats) {
@@ -50890,11 +50952,11 @@ var wp;
     firefox_compat_default
   ];
   function useEventListeners(props) {
-    const propsRef = (0, import_element171.useRef)(props);
-    (0, import_element171.useInsertionEffect)(() => {
+    const propsRef = (0, import_element172.useRef)(props);
+    (0, import_element172.useInsertionEffect)(() => {
       propsRef.current = props;
     });
-    const refEffects = (0, import_element171.useMemo)(
+    const refEffects = (0, import_element172.useMemo)(
       () => allEventListeners.map((refEffect) => refEffect(propsRef)),
       [propsRef]
     );
@@ -50914,7 +50976,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/format-edit.js
   var import_rich_text12 = __toESM(require_rich_text());
-  var import_element172 = __toESM(require_element());
+  var import_element173 = __toESM(require_element());
   var import_jsx_runtime325 = __toESM(require_jsx_runtime());
   var import_react5 = __toESM(require_react());
   var DEFAULT_BLOCK_CONTEXT2 = {};
@@ -50932,8 +50994,8 @@ var wp;
       edit: EditFunction,
       [usesContextKey]: usesContext
     } = settings2;
-    const blockContext = (0, import_element172.useContext)(block_context_default);
-    const context = (0, import_element172.useMemo)(() => {
+    const blockContext = (0, import_element173.useContext)(block_context_default);
+    const context = (0, import_element173.useMemo)(() => {
       return usesContext ? Object.fromEntries(
         Object.entries(blockContext).filter(
           ([key]) => usesContext.includes(key)
@@ -50969,7 +51031,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/rich-text/content.js
-  var import_element173 = __toESM(require_element());
+  var import_element174 = __toESM(require_element());
   var import_blocks82 = __toESM(require_blocks());
   var import_deprecated26 = __toESM(require_deprecated());
   var import_jsx_runtime326 = __toESM(require_jsx_runtime());
@@ -50999,18 +51061,18 @@ var wp;
     format: format2,
     ...props
   }) {
-    value = /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_element173.RawHTML, { children: valueToHTMLString(value, multiline) });
+    value = /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_element174.RawHTML, { children: valueToHTMLString(value, multiline) });
     return Tag ? /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(Tag, { ...props, children: value }) : value;
   }
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.js
-  var import_element175 = __toESM(require_element());
+  var import_element176 = __toESM(require_element());
   var import_blocks83 = __toESM(require_blocks());
   var import_rich_text14 = __toESM(require_rich_text());
   var import_deprecated28 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/components/rich-text/multiline.js
-  var import_element174 = __toESM(require_element());
+  var import_element175 = __toESM(require_element());
   var import_deprecated27 = __toESM(require_deprecated());
   var import_data147 = __toESM(require_data());
   var import_keycodes23 = __toESM(require_keycodes());
@@ -51126,12 +51188,12 @@ var wp;
       );
     }) });
   }
-  var multiline_default = (0, import_element174.forwardRef)(RichTextMultiline);
+  var multiline_default = (0, import_element175.forwardRef)(RichTextMultiline);
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.js
   var import_jsx_runtime328 = __toESM(require_jsx_runtime());
   function withDeprecations(Component7) {
-    return (0, import_element175.forwardRef)((props, ref) => {
+    return (0, import_element176.forwardRef)((props, ref) => {
       let value = props.value;
       let onChange = props.onChange;
       if (Array.isArray(value)) {
@@ -51163,12 +51225,12 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/shortcut.js
   var import_keycodes24 = __toESM(require_keycodes());
-  var import_element176 = __toESM(require_element());
+  var import_element177 = __toESM(require_element());
   function RichTextShortcut({ character: character2, type, onUse }) {
-    const keyboardShortcuts = (0, import_element176.useContext)(keyboardShortcutContext);
-    const onUseRef = (0, import_element176.useRef)();
+    const keyboardShortcuts = (0, import_element177.useContext)(keyboardShortcutContext);
+    const onUseRef = (0, import_element177.useRef)();
     onUseRef.current = onUse;
-    (0, import_element176.useEffect)(() => {
+    (0, import_element177.useEffect)(() => {
       function callback(event) {
         if (import_keycodes24.isKeyboardEvent[type](event, character2)) {
           onUseRef.current();
@@ -51205,12 +51267,12 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/rich-text/input-event.js
-  var import_element177 = __toESM(require_element());
+  var import_element178 = __toESM(require_element());
   function __unstableRichTextInputEvent({ inputType, onInput }) {
-    const callbacks = (0, import_element177.useContext)(inputEventContext);
-    const onInputRef = (0, import_element177.useRef)();
+    const callbacks = (0, import_element178.useContext)(inputEventContext);
+    const onInputRef = (0, import_element178.useRef)();
     onInputRef.current = onInput;
-    (0, import_element177.useEffect)(() => {
+    (0, import_element178.useEffect)(() => {
       function callback(event) {
         if (event.inputType === inputType) {
           onInputRef.current();
@@ -51227,9 +51289,9 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/index.js
   var import_jsx_runtime330 = __toESM(require_jsx_runtime());
-  var keyboardShortcutContext = (0, import_element178.createContext)();
+  var keyboardShortcutContext = (0, import_element179.createContext)();
   keyboardShortcutContext.displayName = "keyboardShortcutContext";
-  var inputEventContext = (0, import_element178.createContext)();
+  var inputEventContext = (0, import_element179.createContext)();
   inputEventContext.displayName = "inputEventContext";
   var instanceIdKey = Symbol("instanceId");
   function removeNativeProps(props) {
@@ -51290,12 +51352,12 @@ var wp;
       });
     }
     const instanceId = (0, import_compose84.useInstanceId)(RichTextWrapper);
-    const anchorRef = (0, import_element178.useRef)();
+    const anchorRef = (0, import_element179.useRef)();
     const context = useBlockEditContext();
     const { clientId, isSelected: isBlockSelected2 } = context;
     const blockBindings = context[blockBindingsKey];
-    const blockContext = (0, import_element178.useContext)(block_context_default);
-    const { bindableAttributes } = (0, import_element178.useContext)(PrivateBlockContext);
+    const blockContext = (0, import_element179.useContext)(block_context_default);
+    const { bindableAttributes } = (0, import_element179.useContext)(PrivateBlockContext);
     const registry = (0, import_data148.useRegistry)();
     const selector3 = (select3) => {
       if (!isBlockSelected2) {
@@ -51401,7 +51463,7 @@ var wp;
       disableFormats
     });
     const hasFormats = !adjustedAllowedFormats || adjustedAllowedFormats.length > 0;
-    const onSelectionChange = (0, import_element178.useCallback)(
+    const onSelectionChange = (0, import_element179.useCallback)(
       (start2, end) => {
         const selection2 = {};
         const unset = start2 === void 0 && end === void 0;
@@ -51509,8 +51571,8 @@ var wp;
       onChange
     });
     useMarkPersistent({ html: adjustedValue, value });
-    const keyboardShortcuts = (0, import_element178.useRef)(/* @__PURE__ */ new Set());
-    const inputEvents = (0, import_element178.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element179.useRef)(/* @__PURE__ */ new Set());
+    const inputEvents = (0, import_element179.useRef)(/* @__PURE__ */ new Set());
     function onFocus() {
       anchorRef.current?.focus();
     }
@@ -51594,13 +51656,13 @@ var wp;
     ] });
   }
   var PrivateRichText = withDeprecations(
-    (0, import_element178.forwardRef)(RichTextWrapper)
+    (0, import_element179.forwardRef)(RichTextWrapper)
   );
   PrivateRichText.Content = Content;
   PrivateRichText.isEmpty = (value) => {
     return !value || value.length === 0;
   };
-  var PublicForwardedRichTextContainer = (0, import_element178.forwardRef)((props, ref) => {
+  var PublicForwardedRichTextContainer = (0, import_element179.forwardRef)((props, ref) => {
     const context = useBlockEditContext();
     const isPreviewMode = context[isPreviewModeKey];
     if (isPreviewMode) {
@@ -51654,7 +51716,7 @@ var wp;
 
   // packages/block-editor/build-module/components/editable-text/index.js
   var import_jsx_runtime331 = __toESM(require_jsx_runtime());
-  var EditableText = (0, import_element179.forwardRef)((props, ref) => {
+  var EditableText = (0, import_element180.forwardRef)((props, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(rich_text_default, { ref, ...props, __unstableDisableFormats: true });
   });
   EditableText.Content = ({ value = "", tagName: Tag = "div", ...props }) => {
@@ -51664,7 +51726,7 @@ var wp;
 
   // packages/block-editor/build-module/components/plain-text/index.js
   var import_jsx_runtime332 = __toESM(require_jsx_runtime());
-  var PlainText = (0, import_element180.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
+  var PlainText = (0, import_element181.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
     if (__experimentalVersion === 2) {
       return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(editable_text_default, { ref, ...props });
     }
@@ -51683,7 +51745,7 @@ var wp;
 
   // packages/block-editor/build-module/components/responsive-block-control/index.js
   var import_i18n166 = __toESM(require_i18n());
-  var import_element181 = __toESM(require_element());
+  var import_element182 = __toESM(require_element());
   var import_components176 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/responsive-block-control/label.js
@@ -51764,7 +51826,7 @@ var wp;
       defaultLabel
     );
     const defaultResponsiveControls = () => {
-      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(import_element181.Fragment, { children: renderDefaultControl(
+      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(import_element182.Fragment, { children: renderDefaultControl(
         /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
           ResponsiveBlockControlLabel,
           {
@@ -51823,11 +51885,11 @@ var wp;
 
   // packages/block-editor/build-module/components/url-input/button.js
   var import_i18n167 = __toESM(require_i18n());
-  var import_element182 = __toESM(require_element());
+  var import_element183 = __toESM(require_element());
   var import_components178 = __toESM(require_components());
   var import_jsx_runtime336 = __toESM(require_jsx_runtime());
   function URLInputButton({ url, onChange }) {
-    const [expanded2, toggleExpanded] = (0, import_element182.useReducer)(
+    const [expanded2, toggleExpanded] = (0, import_element183.useReducer)(
       (isExpanded) => !isExpanded,
       false
     );
@@ -51888,7 +51950,7 @@ var wp;
 
   // packages/block-editor/build-module/components/url-popover/image-url-input-ui.js
   var import_i18n168 = __toESM(require_i18n());
-  var import_element183 = __toESM(require_element());
+  var import_element184 = __toESM(require_element());
   var import_dom37 = __toESM(require_dom());
   var import_components179 = __toESM(require_components());
   var import_url11 = __toESM(require_url());
@@ -51913,16 +51975,16 @@ var wp;
     onSetLightbox,
     resetLightbox
   }) => {
-    const [isOpen, setIsOpen] = (0, import_element183.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element183.useState)(null);
+    const [isOpen, setIsOpen] = (0, import_element184.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element184.useState)(null);
     const openLinkUI = () => {
       setIsOpen(true);
     };
-    const [isEditingLink, setIsEditingLink] = (0, import_element183.useState)(false);
-    const [urlInput, setUrlInput] = (0, import_element183.useState)(null);
-    const autocompleteRef = (0, import_element183.useRef)(null);
-    const wrapperRef = (0, import_element183.useRef)();
-    (0, import_element183.useEffect)(() => {
+    const [isEditingLink, setIsEditingLink] = (0, import_element184.useState)(false);
+    const [urlInput, setUrlInput] = (0, import_element184.useState)(null);
+    const autocompleteRef = (0, import_element184.useRef)(null);
+    const wrapperRef = (0, import_element184.useRef)();
+    (0, import_element184.useEffect)(() => {
       if (!wrapperRef.current) {
         return;
       }
@@ -52061,7 +52123,7 @@ var wp;
           label: (0, import_i18n168.__)("Link relation"),
           value: rel ?? "",
           onChange: onSetLinkRel,
-          help: (0, import_element183.createInterpolateElement)(
+          help: (0, import_element184.createInterpolateElement)(
             (0, import_i18n168.__)(
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
@@ -52213,11 +52275,11 @@ var wp;
 
   // packages/block-editor/build-module/components/spacing-sizes-control/index.js
   var import_components182 = __toESM(require_components());
-  var import_element186 = __toESM(require_element());
+  var import_element187 = __toESM(require_element());
   var import_i18n172 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.js
-  var import_element184 = __toESM(require_element());
+  var import_element185 = __toESM(require_element());
   var import_i18n169 = __toESM(require_i18n());
   var EMPTY_ARRAY10 = [];
   var compare = new Intl.Collator("und", { numeric: true }).compare;
@@ -52236,7 +52298,7 @@ var wp;
     const customSizes = customSpacingSizes ?? EMPTY_ARRAY10;
     const themeSizes = themeSpacingSizes ?? EMPTY_ARRAY10;
     const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : EMPTY_ARRAY10;
-    return (0, import_element184.useMemo)(() => {
+    return (0, import_element185.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n169.__)("None"), slug: "0", size: 0 },
         ...customSizes,
@@ -52260,7 +52322,7 @@ var wp;
   // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/spacing-input-control.js
   var import_components180 = __toESM(require_components());
   var import_data149 = __toESM(require_data());
-  var import_element185 = __toESM(require_element());
+  var import_element186 = __toESM(require_element());
   var import_compose86 = __toESM(require_compose());
   var import_i18n170 = __toESM(require_i18n());
   var import_jsx_runtime338 = __toESM(require_jsx_runtime());
@@ -52314,10 +52376,10 @@ var wp;
       const editorSettings = select3(store).getSettings();
       return editorSettings?.disableCustomSpacingSizes;
     });
-    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element185.useState)(
+    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element186.useState)(
       !disableCustomSpacingSizes && value !== void 0 && !isValueSpacingPreset(value)
     );
-    const [minValue, setMinValue] = (0, import_element185.useState)(minimumCustomValue);
+    const [minValue, setMinValue] = (0, import_element186.useState)(minimumCustomValue);
     const previousValue = (0, import_compose86.usePrevious)(value);
     if (!!value && previousValue !== value && !isValueSpacingPreset(value) && showCustomValueControl !== true) {
       setShowCustomValueControl(true);
@@ -52344,7 +52406,7 @@ var wp;
     } else if (!isMixed) {
       currentValue = !showCustomValueControl ? getSliderValueFromPreset(value, spacingSizes) : getCustomValueFromPreset(value, spacingSizes);
     }
-    const selectedUnit = (0, import_element185.useMemo)(
+    const selectedUnit = (0, import_element186.useMemo)(
       () => (0, import_components180.__experimentalParseQuantityAndUnitFromRawValue)(currentValue),
       [currentValue]
     )[1] || units2[0]?.value;
@@ -52717,7 +52779,7 @@ var wp;
     const inputValues = values || DEFAULT_VALUES;
     const hasOneSide = sides?.length === 1;
     const hasOnlyAxialSides = sides?.includes("horizontal") && sides?.includes("vertical") && sides?.length === 2;
-    const [view, setView] = (0, import_element186.useState)(getInitialView(inputValues, sides));
+    const [view, setView] = (0, import_element187.useState)(getInitialView(inputValues, sides));
     const toggleLinked = () => {
       setView(view === VIEWS.axial ? VIEWS.custom : VIEWS.axial);
     };
@@ -52793,10 +52855,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/use-resize-canvas/index.js
-  var import_element187 = __toESM(require_element());
+  var import_element188 = __toESM(require_element());
   function useResizeCanvas(deviceType) {
-    const [actualWidth, updateActualWidth] = (0, import_element187.useState)(window.innerWidth);
-    (0, import_element187.useEffect)(() => {
+    const [actualWidth, updateActualWidth] = (0, import_element188.useState)(window.innerWidth);
+    (0, import_element188.useEffect)(() => {
       if (deviceType === "Desktop") {
         return;
       }
@@ -52891,14 +52953,14 @@ var wp;
   var import_data150 = __toESM(require_data());
   var import_i18n174 = __toESM(require_i18n());
   var import_components184 = __toESM(require_components());
-  var import_element188 = __toESM(require_element());
+  var import_element189 = __toESM(require_element());
   var import_jsx_runtime345 = __toESM(require_jsx_runtime());
   function SkipToSelectedBlock() {
     const selectedBlockClientId = (0, import_data150.useSelect)(
       (select3) => select3(store).getBlockSelectionStart(),
       []
     );
-    const ref = (0, import_element188.useRef)();
+    const ref = (0, import_element189.useRef)();
     useBlockElementRef(selectedBlockClientId, ref);
     const onClick = () => {
       ref.current?.focus();
@@ -52945,7 +53007,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.js
   var import_components236 = __toESM(require_components());
-  var import_element234 = __toESM(require_element());
+  var import_element235 = __toESM(require_element());
   var import_preferences5 = __toESM(require_preferences());
   var import_data165 = __toESM(require_data());
 
@@ -53099,7 +53161,7 @@ var wp;
   // packages/block-editor/build-module/hooks/border.js
   var import_blocks86 = __toESM(require_blocks());
   var import_components201 = __toESM(require_components());
-  var import_element201 = __toESM(require_element());
+  var import_element202 = __toESM(require_element());
   var import_hooks11 = __toESM(require_hooks());
   var import_data157 = __toESM(require_data());
 
@@ -53126,7 +53188,7 @@ var wp;
   });
 
   // packages/block-editor/build-module/components/global-styles/hooks.js
-  var import_element189 = __toESM(require_element());
+  var import_element190 = __toESM(require_element());
   var import_data153 = __toESM(require_data());
   var import_blocks85 = __toESM(require_blocks());
   var import_i18n179 = __toESM(require_i18n());
@@ -53142,7 +53204,7 @@ var wp;
       },
       [blockName, element]
     );
-    return (0, import_element189.useMemo)(() => {
+    return (0, import_element190.useMemo)(() => {
       const updatedSettings = { ...parentSettings };
       if (!supportedStyles.includes("fontSize")) {
         updatedSettings.typography = {
@@ -53262,7 +53324,7 @@ var wp;
     const themeColors = settings2?.color?.palette?.theme;
     const defaultColors = settings2?.color?.palette?.default;
     const shouldDisplayDefaultColors = settings2?.color?.defaultPalette;
-    return (0, import_element189.useMemo)(() => {
+    return (0, import_element190.useMemo)(() => {
       const result = [];
       if (themeColors && themeColors.length) {
         result.push({
@@ -53304,7 +53366,7 @@ var wp;
     const themeGradients = settings2?.color?.gradients?.theme;
     const defaultGradients = settings2?.color?.gradients?.default;
     const shouldDisplayDefaultGradients = settings2?.color?.defaultGradients;
-    return (0, import_element189.useMemo)(() => {
+    return (0, import_element190.useMemo)(() => {
       const result = [];
       if (themeGradients && themeGradients.length) {
         result.push({
@@ -53345,11 +53407,11 @@ var wp;
   // packages/block-editor/build-module/components/global-styles/typography-panel.js
   var import_components189 = __toESM(require_components());
   var import_i18n181 = __toESM(require_i18n());
-  var import_element191 = __toESM(require_element());
+  var import_element192 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/text-alignment-control/index.js
   var import_i18n180 = __toESM(require_i18n());
-  var import_element190 = __toESM(require_element());
+  var import_element191 = __toESM(require_element());
   var import_components188 = __toESM(require_components());
   var import_jsx_runtime350 = __toESM(require_jsx_runtime());
   var TEXT_ALIGNMENT_OPTIONS = [
@@ -53381,7 +53443,7 @@ var wp;
     onChange,
     options = DEFAULT_OPTIONS
   }) {
-    const validOptions = (0, import_element190.useMemo)(
+    const validOptions = (0, import_element191.useMemo)(
       () => TEXT_ALIGNMENT_OPTIONS.filter(
         (option) => options.includes(option.value)
       ),
@@ -53609,7 +53671,7 @@ var wp;
     const decodeValue = (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue);
     const hasFontFamilyEnabled = useHasFontFamilyControl(settings2);
     const fontFamily = decodeValue(inheritedValue?.typography?.fontFamily);
-    const { fontFamilies, fontFamilyFaces } = (0, import_element191.useMemo)(() => {
+    const { fontFamilies, fontFamilyFaces } = (0, import_element192.useMemo)(() => {
       return getMergedFontFamiliesAndFontFamilyFaces(settings2, fontFamily);
     }, [settings2, fontFamily]);
     const setFontFamily = (newValue) => {
@@ -53669,7 +53731,7 @@ var wp;
       fontStyle,
       fontWeight
     );
-    const setFontAppearance = (0, import_element191.useCallback)(
+    const setFontAppearance = (0, import_element192.useCallback)(
       ({ fontStyle: newFontStyle, fontWeight: newFontWeight }) => {
         if (newFontStyle !== fontStyle || newFontWeight !== fontWeight) {
           onChange({
@@ -53685,10 +53747,10 @@ var wp;
       [fontStyle, fontWeight, onChange, value]
     );
     const hasFontAppearance = () => !!value?.typography?.fontStyle || !!value?.typography?.fontWeight;
-    const resetFontAppearance = (0, import_element191.useCallback)(() => {
+    const resetFontAppearance = (0, import_element192.useCallback)(() => {
       setFontAppearance({});
     }, [setFontAppearance]);
-    (0, import_element191.useEffect)(() => {
+    (0, import_element192.useEffect)(() => {
       if (nearestFontStyle && nearestFontWeight) {
         setFontAppearance({
           fontStyle: nearestFontStyle,
@@ -53800,7 +53862,7 @@ var wp;
     };
     const hasTextAlign = () => !!value?.typography?.textAlign;
     const resetTextAlign = () => setTextAlign(void 0);
-    const resetAllFilter = (0, import_element191.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element192.useCallback)((previousValue) => {
       return {
         ...previousValue,
         typography: {}
@@ -54039,12 +54101,12 @@ var wp;
   // packages/block-editor/build-module/components/global-styles/dimensions-panel.js
   var import_i18n184 = __toESM(require_i18n());
   var import_components192 = __toESM(require_components());
-  var import_element193 = __toESM(require_element());
+  var import_element194 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/child-layout-control/index.js
   var import_components190 = __toESM(require_components());
   var import_i18n182 = __toESM(require_i18n());
-  var import_element192 = __toESM(require_element());
+  var import_element193 = __toESM(require_element());
   var import_data155 = __toESM(require_data());
 
   // packages/block-editor/build-module/components/grid/use-get-number-of-blocks-before-cell.js
@@ -54145,7 +54207,7 @@ var wp;
         flexSize: void 0
       });
     };
-    (0, import_element192.useEffect)(() => {
+    (0, import_element193.useEffect)(() => {
       if (selfStretch === "fixed" && !flexSize) {
         onChange({
           ...childLayout,
@@ -54491,7 +54553,7 @@ var wp;
     const hasWidth = useHasWidth(settings2);
     const hasAspectRatio = useHasAspectRatio(settings2);
     const hasChildLayout = useHasChildLayout(settings2);
-    return import_element193.Platform.OS === "web" && (hasContentSize || hasWideSize || hasPadding || hasMargin || hasGap || hasMinHeight || hasWidth || hasAspectRatio || hasChildLayout);
+    return import_element194.Platform.OS === "web" && (hasContentSize || hasWideSize || hasPadding || hasMargin || hasGap || hasMinHeight || hasWidth || hasAspectRatio || hasChildLayout);
   }
   function useHasContentSize(settings2) {
     return settings2?.layout?.contentSize;
@@ -54649,7 +54711,7 @@ var wp;
       ]
     });
     const minimumMargin = -Infinity;
-    const [minMarginValue, setMinMarginValue] = (0, import_element193.useState)(minimumMargin);
+    const [minMarginValue, setMinMarginValue] = (0, import_element194.useState)(minimumMargin);
     const showContentSizeControl = useHasContentSize(settings2) && includeLayoutControls;
     const contentSizeValue = decodeValue(inheritedValue?.layout?.contentSize);
     const setContentSizeValue = (newValue) => {
@@ -54779,7 +54841,7 @@ var wp;
         }
       });
     };
-    const resetAllFilter = (0, import_element193.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element194.useCallback)((previousValue) => {
       return {
         ...previousValue,
         layout: cleanEmptyObject({
@@ -55081,13 +55143,13 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/border-panel.js
   var import_components194 = __toESM(require_components());
-  var import_element195 = __toESM(require_element());
+  var import_element196 = __toESM(require_element());
   var import_i18n186 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/global-styles/shadow-panel-components.js
   var import_i18n185 = __toESM(require_i18n());
   var import_components193 = __toESM(require_components());
-  var import_element194 = __toESM(require_element());
+  var import_element195 = __toESM(require_element());
   var import_jsx_runtime355 = __toESM(require_jsx_runtime());
   var EMPTY_ARRAY11 = [];
   function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings2 }) {
@@ -55189,7 +55251,7 @@ var wp;
   }
   function renderShadowToggle(shadow, onShadowChange) {
     return ({ onToggle, isOpen }) => {
-      const shadowButtonRef = (0, import_element194.useRef)(void 0);
+      const shadowButtonRef = (0, import_element195.useRef)(void 0);
       const toggleProps = {
         onClick: onToggle,
         className: clsx_default(
@@ -55238,7 +55300,7 @@ var wp;
     };
   }
   function useShadowPresets(settings2) {
-    return (0, import_element194.useMemo)(() => {
+    return (0, import_element195.useMemo)(() => {
       if (!settings2?.shadow) {
         return EMPTY_ARRAY11;
       }
@@ -55338,7 +55400,7 @@ var wp;
     defaultControls = DEFAULT_CONTROLS5
   }) {
     const colors2 = useColorsPerOrigin(settings2);
-    const decodeValue = (0, import_element195.useCallback)(
+    const decodeValue = (0, import_element196.useCallback)(
       (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue),
       [settings2]
     );
@@ -55351,7 +55413,7 @@ var wp;
       );
       return colorObject ? "var:preset|color|" + colorObject.slug : colorValue;
     };
-    const border = (0, import_element195.useMemo)(() => {
+    const border = (0, import_element196.useMemo)(() => {
       if ((0, import_components194.__experimentalHasSplitBorders)(inheritedValue?.border)) {
         const borderValue = { ...inheritedValue?.border };
         ["top", "right", "bottom", "left"].forEach((side) => {
@@ -55372,7 +55434,7 @@ var wp;
     const showBorderStyle = useHasBorderStyleControl(settings2);
     const showBorderWidth = useHasBorderWidthControl(settings2);
     const showBorderRadius = useHasBorderRadiusControl(settings2);
-    const borderRadiusValues = (0, import_element195.useMemo)(() => {
+    const borderRadiusValues = (0, import_element196.useMemo)(() => {
       if (typeof inheritedValue?.border?.radius !== "object") {
         return decodeValue(inheritedValue?.border?.radius);
       }
@@ -55435,7 +55497,7 @@ var wp;
       }
       setBorder({ radius: border?.radius, ...updatedBorder });
     };
-    const resetAllFilter = (0, import_element195.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element196.useCallback)((previousValue) => {
       return {
         ...previousValue,
         border: void 0,
@@ -55532,7 +55594,7 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/color-panel.js
   var import_components195 = __toESM(require_components());
-  var import_element196 = __toESM(require_element());
+  var import_element197 = __toESM(require_element());
   var import_i18n187 = __toESM(require_i18n());
   var import_jsx_runtime357 = __toESM(require_jsx_runtime());
   function useHasColorPanel(settings2) {
@@ -55655,7 +55717,7 @@ var wp;
   }) {
     const currentTab = tabs.find((tab) => tab.userValue !== void 0);
     const { key: firstTabKey, ...firstTab } = tabs[0] ?? {};
-    const colorGradientDropdownButtonRef = (0, import_element196.useRef)(void 0);
+    const colorGradientDropdownButtonRef = (0, import_element197.useRef)(void 0);
     return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
       import_components195.__experimentalToolsPanelItem,
       {
@@ -55930,7 +55992,7 @@ var wp;
         showPanel: useHasHeadingPanel(settings2)
       }
     ];
-    const resetAllFilter = (0, import_element196.useCallback)(
+    const resetAllFilter = (0, import_element197.useCallback)(
       (previousValue) => {
         return {
           ...previousValue,
@@ -56161,7 +56223,7 @@ var wp;
   // packages/block-editor/build-module/components/global-styles/filters-panel.js
   var import_components196 = __toESM(require_components());
   var import_i18n188 = __toESM(require_i18n());
-  var import_element197 = __toESM(require_element());
+  var import_element198 = __toESM(require_element());
   var import_jsx_runtime358 = __toESM(require_jsx_runtime());
   var EMPTY_ARRAY12 = [];
   function useMultiOriginColorPresets(settings2, { presetSetting, defaultSetting }) {
@@ -56169,7 +56231,7 @@ var wp;
     const userPresets = settings2?.color?.[presetSetting]?.custom || EMPTY_ARRAY12;
     const themePresets = settings2?.color?.[presetSetting]?.theme || EMPTY_ARRAY12;
     const defaultPresets = settings2?.color?.[presetSetting]?.default || EMPTY_ARRAY12;
-    return (0, import_element197.useMemo)(
+    return (0, import_element198.useMemo)(
       () => [
         ...userPresets,
         ...themePresets,
@@ -56222,7 +56284,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_components196.FlexItem, { title: label, children: label })
   ] });
   var renderToggle2 = (duotone, resetDuotone) => ({ onToggle, isOpen }) => {
-    const duotoneButtonRef = (0, import_element197.useRef)(void 0);
+    const duotoneButtonRef = (0, import_element198.useRef)(void 0);
     const toggleProps = {
       onClick: onToggle,
       className: clsx_default(
@@ -56292,7 +56354,7 @@ var wp;
     };
     const hasDuotone = () => !!value?.filter?.duotone;
     const resetDuotone = () => setDuotone(void 0);
-    const resetAllFilter = (0, import_element197.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element198.useCallback)((previousValue) => {
       return {
         ...previousValue,
         filter: {
@@ -56404,7 +56466,7 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/advanced-panel.js
   var import_components198 = __toESM(require_components());
-  var import_element198 = __toESM(require_element());
+  var import_element199 = __toESM(require_element());
   var import_i18n190 = __toESM(require_i18n());
   var import_jsx_runtime360 = __toESM(require_jsx_runtime());
   function AdvancedPanel({
@@ -56412,7 +56474,7 @@ var wp;
     onChange,
     inheritedValue = value
   }) {
-    const [cssError, setCSSError] = (0, import_element198.useState)(null);
+    const [cssError, setCSSError] = (0, import_element199.useState)(null);
     const customCSS = inheritedValue?.css;
     function handleOnChange(newValue) {
       onChange({
@@ -56461,14 +56523,14 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/background-panel.js
   var import_components200 = __toESM(require_components());
-  var import_element200 = __toESM(require_element());
+  var import_element201 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/background-image-control/index.js
   var import_components199 = __toESM(require_components());
   var import_i18n191 = __toESM(require_i18n());
   var import_notices11 = __toESM(require_notices());
   var import_url12 = __toESM(require_url());
-  var import_element199 = __toESM(require_element());
+  var import_element200 = __toESM(require_element());
   var import_data156 = __toESM(require_data());
   var import_dom38 = __toESM(require_dom());
   var import_blob3 = __toESM(require_blob());
@@ -56526,7 +56588,7 @@ var wp;
     onToggleCallback = noop18
   }) {
     const { isOpen, ...restToggleProps } = toggleProps;
-    (0, import_element199.useEffect)(() => {
+    (0, import_element200.useEffect)(() => {
       if (typeof isOpen !== "undefined") {
         onToggleCallback(isOpen);
       }
@@ -56659,7 +56721,7 @@ var wp;
     defaultValues,
     containerRef
   }) {
-    const [isUploading2, setIsUploading] = (0, import_element199.useState)(false);
+    const [isUploading2, setIsUploading] = (0, import_element200.useState)(false);
     const { getSettings: getSettings7 } = (0, import_data156.useSelect)(store);
     const { id, title, url } = style?.background?.backgroundImage || {
       ...inheritedValue?.background?.backgroundImage
@@ -56969,7 +57031,7 @@ var wp;
         _links: _settings[globalStylesLinksDataKey]
       };
     }, []);
-    const resolvedInheritedValue = (0, import_element199.useMemo)(() => {
+    const resolvedInheritedValue = (0, import_element200.useMemo)(() => {
       const resolvedValues = {
         background: {}
       };
@@ -56996,8 +57058,8 @@ var wp;
     const hasImageValue = hasBackgroundImageValue(value) || hasBackgroundImageValue(resolvedInheritedValue);
     const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
     const shouldShowBackgroundImageControls = hasImageValue && "none" !== imageValue && (settings2?.background?.backgroundSize || settings2?.background?.backgroundPosition || settings2?.background?.backgroundRepeat);
-    const [isDropDownOpen, setIsDropDownOpen] = (0, import_element199.useState)(false);
-    const containerRef = (0, import_element199.useRef)();
+    const [isDropDownOpen, setIsDropDownOpen] = (0, import_element200.useState)(false);
+    const containerRef = (0, import_element200.useRef)();
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
       "div",
       {
@@ -57072,7 +57134,7 @@ var wp;
     backgroundImage: true
   };
   function useHasBackgroundPanel(settings2) {
-    return import_element200.Platform.OS === "web" && settings2?.background?.backgroundImage;
+    return import_element201.Platform.OS === "web" && settings2?.background?.backgroundImage;
   }
   function hasBackgroundImageValue(style) {
     return !!style?.background?.backgroundImage?.id || // Supports url() string values in theme.json.
@@ -57115,7 +57177,7 @@ var wp;
   }) {
     const showBackgroundImageControl = useHasBackgroundPanel(settings2);
     const resetBackground = () => onChange(setImmutably(value, ["background"], {}));
-    const resetAllFilter = (0, import_element200.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element201.useCallback)((previousValue) => {
       return {
         ...previousValue,
         background: {}
@@ -57224,7 +57286,7 @@ var wp;
     };
   }
   function BordersInspectorControl({ label, children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element201.useCallback)(
+    const attributesResetAllFilter = (0, import_element202.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -57257,7 +57319,7 @@ var wp;
       },
       [clientId, isEnabled]
     );
-    const value = (0, import_element201.useMemo)(() => {
+    const value = (0, import_element202.useMemo)(() => {
       return attributesToStyle({ style, borderColor });
     }, [style, borderColor]);
     const onChange = (newStyle) => {
@@ -57289,7 +57351,7 @@ var wp;
     );
   }
   function hasBorderSupport2(blockName, feature = "any") {
-    if (import_element201.Platform.OS !== "web") {
+    if (import_element202.Platform.OS !== "web") {
       return false;
     }
     const support = (0, import_blocks86.getBlockSupport)(blockName, BORDER_SUPPORT_KEY2);
@@ -57408,13 +57470,13 @@ var wp;
   // packages/block-editor/build-module/hooks/color.js
   var import_hooks12 = __toESM(require_hooks());
   var import_blocks88 = __toESM(require_blocks());
-  var import_element204 = __toESM(require_element());
+  var import_element205 = __toESM(require_element());
   var import_data159 = __toESM(require_data());
 
   // packages/block-editor/build-module/hooks/background.js
   var import_blocks87 = __toESM(require_blocks());
   var import_data158 = __toESM(require_data());
-  var import_element202 = __toESM(require_element());
+  var import_element203 = __toESM(require_element());
   var import_jsx_runtime364 = __toESM(require_jsx_runtime());
   var BACKGROUND_SUPPORT_KEY = "background";
   var BACKGROUND_BLOCK_DEFAULT_VALUES2 = {
@@ -57467,7 +57529,7 @@ var wp;
     return hasBackgroundImageValue(style) ? "has-background" : "";
   }
   function BackgroundInspectorControl({ children }) {
-    const resetAllFilter = (0, import_element202.useCallback)((attributes) => {
+    const resetAllFilter = (0, import_element203.useCallback)((attributes) => {
       return {
         ...attributes,
         style: {
@@ -57542,7 +57604,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/contrast-checker.js
-  var import_element203 = __toESM(require_element());
+  var import_element204 = __toESM(require_element());
   var import_jsx_runtime365 = __toESM(require_jsx_runtime());
   function getComputedValue(node2, property) {
     return node2.ownerDocument.defaultView.getComputedStyle(node2).getPropertyValue(property);
@@ -57580,8 +57642,8 @@ var wp;
   }
   function BlockColorContrastChecker({ clientId }) {
     const blockEl = useBlockElement(clientId);
-    const [colors2, setColors] = (0, import_element203.useReducer)(reducer3, {});
-    (0, import_element203.useLayoutEffect)(() => {
+    const [colors2, setColors] = (0, import_element204.useReducer)(reducer3, {});
+    (0, import_element204.useLayoutEffect)(() => {
       if (!blockEl) {
         return;
       }
@@ -57611,7 +57673,7 @@ var wp;
     return colorSupport && (colorSupport.link === true || colorSupport.gradient === true || colorSupport.background !== false || colorSupport.text !== false);
   };
   var hasLinkColorSupport = (blockType) => {
-    if (import_element204.Platform.OS !== "web") {
+    if (import_element205.Platform.OS !== "web") {
       return false;
     }
     const colorSupport = (0, import_blocks88.getBlockSupport)(blockType, COLOR_SUPPORT_KEY2);
@@ -57717,7 +57779,7 @@ var wp;
     };
   }
   function ColorInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element204.useCallback)(
+    const attributesResetAllFilter = (0, import_element205.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle2(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -57767,7 +57829,7 @@ var wp;
       },
       [clientId, isEnabled]
     );
-    const value = (0, import_element204.useMemo)(() => {
+    const value = (0, import_element205.useMemo)(() => {
       return attributesToStyle2({
         style,
         textColor,
@@ -57785,7 +57847,7 @@ var wp;
       COLOR_SUPPORT_KEY2,
       "__experimentalDefaultControls"
     ]);
-    const enableContrastChecking = import_element204.Platform.OS === "web" && !value?.color?.gradient && (settings2?.color?.text || settings2?.color?.link) && // Contrast checking is enabled by default.
+    const enableContrastChecking = import_element205.Platform.OS === "web" && !value?.color?.gradient && (settings2?.color?.text || settings2?.color?.link) && // Contrast checking is enabled by default.
     // Deactivating it requires `enableContrastChecker` to have
     // an explicit value of `false`.
     false !== (0, import_blocks88.getBlockSupport)(name, [
@@ -57823,7 +57885,7 @@ var wp;
       "color.palette.theme",
       "color.palette.default"
     );
-    const colors2 = (0, import_element204.useMemo)(
+    const colors2 = (0, import_element205.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -58229,16 +58291,16 @@ var wp;
   );
 
   // packages/dataviews/build-module/hooks/use-elements.js
-  var import_element205 = __toESM(require_element());
+  var import_element206 = __toESM(require_element());
   var EMPTY_ARRAY13 = [];
   function useElements({
     elements,
     getElements
   }) {
     const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY13;
-    const [records, setRecords] = (0, import_element205.useState)(staticElements);
-    const [isLoading, setIsLoading] = (0, import_element205.useState)(false);
-    (0, import_element205.useEffect)(() => {
+    const [records, setRecords] = (0, import_element206.useState)(staticElements);
+    const [isLoading, setIsLoading] = (0, import_element206.useState)(false);
+    (0, import_element206.useEffect)(() => {
       if (!getElements) {
         setRecords(staticElements);
         return;
@@ -59910,7 +59972,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
   var import_components204 = __toESM(require_components());
-  var import_element206 = __toESM(require_element());
+  var import_element207 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-controls/utils/get-custom-validity.js
   function getCustomValidity(isValid8, validity) {
@@ -59938,7 +60000,7 @@ var wp;
     validity
   }) {
     const { getValue, setValue, label, description, isValid: isValid8 } = field;
-    const onChangeControl = (0, import_element206.useCallback)(() => {
+    const onChangeControl = (0, import_element207.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -59959,13 +60021,13 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/datetime.js
   var import_components206 = __toESM(require_components());
-  var import_element208 = __toESM(require_element());
+  var import_element209 = __toESM(require_element());
   var import_i18n197 = __toESM(require_i18n());
   var import_date3 = __toESM(require_date());
 
   // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
   var import_components205 = __toESM(require_components());
-  var import_element207 = __toESM(require_element());
+  var import_element208 = __toESM(require_element());
   var import_i18n196 = __toESM(require_i18n());
   var import_jsx_runtime370 = __toESM(require_jsx_runtime());
   var TIME_UNITS_OPTIONS = {
@@ -59994,7 +60056,7 @@ var wp;
     const { id, label, getValue, setValue } = field;
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-    const onChangeValue = (0, import_element207.useCallback)(
+    const onChangeValue = (0, import_element208.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -60003,7 +60065,7 @@ var wp;
       ),
       [onChange, setValue, data, unit]
     );
-    const onChangeUnit = (0, import_element207.useCallback)(
+    const onChangeUnit = (0, import_element208.useCallback)(
       (newUnit) => onChange(
         setValue({
           item: data,
@@ -60073,25 +60135,25 @@ var wp;
     const { id, label, description, setValue, getValue, isValid: isValid8 } = field;
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const [calendarMonth, setCalendarMonth] = (0, import_element208.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element209.useState)(() => {
       const parsedDate = parseDateTime(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
-    const inputControlRef = (0, import_element208.useRef)(null);
-    const validationTimeoutRef = (0, import_element208.useRef)();
-    const previousFocusRef = (0, import_element208.useRef)(null);
-    const onChangeCallback = (0, import_element208.useCallback)(
+    const inputControlRef = (0, import_element209.useRef)(null);
+    const validationTimeoutRef = (0, import_element209.useRef)();
+    const previousFocusRef = (0, import_element209.useRef)(null);
+    const onChangeCallback = (0, import_element209.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    (0, import_element208.useEffect)(() => {
+    (0, import_element209.useEffect)(() => {
       return () => {
         if (validationTimeoutRef.current) {
           clearTimeout(validationTimeoutRef.current);
         }
       };
     }, []);
-    const onSelectDate = (0, import_element208.useCallback)(
+    const onSelectDate = (0, import_element209.useCallback)(
       (newDate) => {
         let dateTimeValue;
         if (newDate) {
@@ -60128,7 +60190,7 @@ var wp;
       },
       [onChangeCallback, value]
     );
-    const handleManualDateTimeChange = (0, import_element208.useCallback)(
+    const handleManualDateTimeChange = (0, import_element209.useCallback)(
       (newValue) => {
         if (newValue) {
           const dateTime = new Date(newValue);
@@ -60224,7 +60286,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/date.js
   var import_components207 = __toESM(require_components());
-  var import_element209 = __toESM(require_element());
+  var import_element210 = __toESM(require_element());
   var import_i18n198 = __toESM(require_i18n());
   var import_date4 = __toESM(require_date());
   var import_jsx_runtime372 = __toESM(require_jsx_runtime());
@@ -60324,8 +60386,8 @@ var wp;
     children
   }) {
     const { isValid: isValid8 } = field;
-    const [customValidity, setCustomValidity] = (0, import_element209.useState)(void 0);
-    const validateRefs = (0, import_element209.useCallback)(() => {
+    const [customValidity, setCustomValidity] = (0, import_element210.useState)(void 0);
+    const validateRefs = (0, import_element210.useCallback)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       for (const ref of refs) {
         const input = ref.current;
@@ -60339,7 +60401,7 @@ var wp;
       }
       setCustomValidity(void 0);
     }, [inputRefs]);
-    (0, import_element209.useEffect)(() => {
+    (0, import_element210.useEffect)(() => {
       if (isTouched) {
         const timeoutId = setTimeout(() => {
           if (validity) {
@@ -60402,7 +60464,7 @@ var wp;
       isValid: isValid8,
       format: fieldFormat
     } = field;
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element209.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element210.useState)(
       null
     );
     let weekStartsOn = (0, import_date4.getSettings)().l10n.startOfWeek;
@@ -60411,17 +60473,17 @@ var wp;
     }
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const [calendarMonth, setCalendarMonth] = (0, import_element209.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element210.useState)(() => {
       const parsedDate = parseDate(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
-    const [isTouched, setIsTouched] = (0, import_element209.useState)(false);
-    const validityTargetRef = (0, import_element209.useRef)(null);
-    const onChangeCallback = (0, import_element209.useCallback)(
+    const [isTouched, setIsTouched] = (0, import_element210.useState)(false);
+    const validityTargetRef = (0, import_element210.useRef)(null);
+    const onChangeCallback = (0, import_element210.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    const onSelectDate = (0, import_element209.useCallback)(
+    const onSelectDate = (0, import_element210.useCallback)(
       (newDate) => {
         const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
         onChangeCallback(dateValue);
@@ -60430,7 +60492,7 @@ var wp;
       },
       [onChangeCallback]
     );
-    const handlePresetClick = (0, import_element209.useCallback)(
+    const handlePresetClick = (0, import_element210.useCallback)(
       (preset) => {
         const presetDate = preset.getValue();
         const dateValue = formatDate(presetDate);
@@ -60441,7 +60503,7 @@ var wp;
       },
       [onChangeCallback]
     );
-    const handleManualDateChange = (0, import_element209.useCallback)(
+    const handleManualDateChange = (0, import_element210.useCallback)(
       (newValue) => {
         onChangeCallback(newValue);
         if (newValue) {
@@ -60553,7 +60615,7 @@ var wp;
     if (type === "date") {
       weekStartsOn = fieldFormat.weekStartsOn;
     }
-    const onChangeCallback = (0, import_element209.useCallback)(
+    const onChangeCallback = (0, import_element210.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -60564,10 +60626,10 @@ var wp;
       },
       [data, onChange, setValue]
     );
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element209.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element210.useState)(
       null
     );
-    const selectedRange = (0, import_element209.useMemo)(() => {
+    const selectedRange = (0, import_element210.useMemo)(() => {
       if (!value) {
         return { from: void 0, to: void 0 };
       }
@@ -60577,13 +60639,13 @@ var wp;
         to: parseDate(to2) || void 0
       };
     }, [value]);
-    const [calendarMonth, setCalendarMonth] = (0, import_element209.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element210.useState)(() => {
       return selectedRange.from || /* @__PURE__ */ new Date();
     });
-    const [isTouched, setIsTouched] = (0, import_element209.useState)(false);
-    const fromInputRef = (0, import_element209.useRef)(null);
-    const toInputRef = (0, import_element209.useRef)(null);
-    const updateDateRange = (0, import_element209.useCallback)(
+    const [isTouched, setIsTouched] = (0, import_element210.useState)(false);
+    const fromInputRef = (0, import_element210.useRef)(null);
+    const toInputRef = (0, import_element210.useRef)(null);
+    const updateDateRange = (0, import_element210.useCallback)(
       (fromDate, toDate2) => {
         if (fromDate && toDate2) {
           onChangeCallback([
@@ -60596,7 +60658,7 @@ var wp;
       },
       [onChangeCallback]
     );
-    const onSelectCalendarRange = (0, import_element209.useCallback)(
+    const onSelectCalendarRange = (0, import_element210.useCallback)(
       (newRange) => {
         updateDateRange(newRange?.from, newRange?.to);
         setSelectedPresetId(null);
@@ -60604,7 +60666,7 @@ var wp;
       },
       [updateDateRange]
     );
-    const handlePresetClick = (0, import_element209.useCallback)(
+    const handlePresetClick = (0, import_element210.useCallback)(
       (preset) => {
         const [startDate, endDate] = preset.getValue();
         setCalendarMonth(startDate);
@@ -60614,7 +60676,7 @@ var wp;
       },
       [updateDateRange]
     );
-    const handleManualDateChange = (0, import_element209.useCallback)(
+    const handleManualDateChange = (0, import_element210.useCallback)(
       (fromOrTo, newValue) => {
         const [currentFrom, currentTo] = value || [
           void 0,
@@ -60778,7 +60840,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
   var import_components208 = __toESM(require_components());
-  var import_element210 = __toESM(require_element());
+  var import_element211 = __toESM(require_element());
   var import_jsx_runtime373 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components208.privateApis);
   function ValidatedText({
@@ -60793,7 +60855,7 @@ var wp;
   }) {
     const { label, placeholder, description, getValue, setValue, isValid: isValid8 } = field;
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element210.useCallback)(
+    const onChangeControl = (0, import_element211.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -60901,7 +60963,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
   var import_components212 = __toESM(require_components());
-  var import_element211 = __toESM(require_element());
+  var import_element212 = __toESM(require_element());
   var import_i18n199 = __toESM(require_i18n());
   var import_jsx_runtime377 = __toESM(require_jsx_runtime());
   var { ValidatedNumberControl } = unlock3(import_components212.privateApis);
@@ -60919,11 +60981,11 @@ var wp;
     step
   }) {
     const [min = "", max = ""] = value;
-    const onChangeMin = (0, import_element211.useCallback)(
+    const onChangeMin = (0, import_element212.useCallback)(
       (newValue) => onChange([toNumberOrEmpty(newValue), max]),
       [onChange, max]
     );
-    const onChangeMax = (0, import_element211.useCallback)(
+    const onChangeMax = (0, import_element212.useCallback)(
       (newValue) => onChange([min, toNumberOrEmpty(newValue)]),
       [onChange, min]
     );
@@ -60973,7 +61035,7 @@ var wp;
     const step = Math.pow(10, Math.abs(decimals) * -1);
     const { label, description, getValue, setValue, isValid: isValid8 } = field;
     const value = getValue({ item: data }) ?? "";
-    const onChangeControl = (0, import_element211.useCallback)(
+    const onChangeControl = (0, import_element212.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -60987,7 +61049,7 @@ var wp;
       },
       [data, onChange, setValue]
     );
-    const onChangeBetweenControls = (0, import_element211.useCallback)(
+    const onChangeBetweenControls = (0, import_element212.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -61045,7 +61107,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/radio.js
   var import_components213 = __toESM(require_components());
-  var import_element212 = __toESM(require_element());
+  var import_element213 = __toESM(require_element());
   var import_jsx_runtime380 = __toESM(require_jsx_runtime());
   var { ValidatedRadioControl } = unlock3(import_components213.privateApis);
   function Radio({
@@ -61061,7 +61123,7 @@ var wp;
       getElements: field.getElements
     });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element212.useCallback)(
+    const onChangeControl = (0, import_element213.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -61085,7 +61147,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/select.js
   var import_components214 = __toESM(require_components());
-  var import_element213 = __toESM(require_element());
+  var import_element214 = __toESM(require_element());
   var import_jsx_runtime381 = __toESM(require_jsx_runtime());
   var { ValidatedSelectControl } = unlock3(import_components214.privateApis);
   function Select({
@@ -61098,7 +61160,7 @@ var wp;
     const { type, label, description, getValue, setValue, isValid: isValid8 } = field;
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-    const onChangeControl = (0, import_element213.useCallback)(
+    const onChangeControl = (0, import_element214.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -61128,7 +61190,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/text.js
-  var import_element214 = __toESM(require_element());
+  var import_element215 = __toESM(require_element());
   var import_jsx_runtime382 = __toESM(require_jsx_runtime());
   function Text7({
     data,
@@ -61148,8 +61210,8 @@ var wp;
           onChange,
           hideLabelFromVision,
           validity,
-          prefix: prefix3 ? (0, import_element214.createElement)(prefix3) : void 0,
-          suffix: suffix ? (0, import_element214.createElement)(suffix) : void 0
+          prefix: prefix3 ? (0, import_element215.createElement)(prefix3) : void 0,
+          suffix: suffix ? (0, import_element215.createElement)(suffix) : void 0
         }
       }
     );
@@ -61157,7 +61219,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/toggle.js
   var import_components215 = __toESM(require_components());
-  var import_element215 = __toESM(require_element());
+  var import_element216 = __toESM(require_element());
   var import_jsx_runtime383 = __toESM(require_jsx_runtime());
   var { ValidatedToggleControl } = unlock3(import_components215.privateApis);
   function Toggle({
@@ -61168,7 +61230,7 @@ var wp;
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid8 } = field;
-    const onChangeControl = (0, import_element215.useCallback)(() => {
+    const onChangeControl = (0, import_element216.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -61190,7 +61252,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/textarea.js
   var import_components216 = __toESM(require_components());
-  var import_element216 = __toESM(require_element());
+  var import_element217 = __toESM(require_element());
   var import_jsx_runtime384 = __toESM(require_jsx_runtime());
   var { ValidatedTextareaControl } = unlock3(import_components216.privateApis);
   function Textarea({
@@ -61204,7 +61266,7 @@ var wp;
     const { rows = 4 } = config2 || {};
     const { label, placeholder, description, setValue, isValid: isValid8 } = field;
     const value = field.getValue({ item: data });
-    const onChangeControl = (0, import_element216.useCallback)(
+    const onChangeControl = (0, import_element217.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -61228,7 +61290,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/toggle-group.js
   var import_components217 = __toESM(require_components());
-  var import_element217 = __toESM(require_element());
+  var import_element218 = __toESM(require_element());
   var import_jsx_runtime385 = __toESM(require_jsx_runtime());
   var { ValidatedToggleGroupControl } = unlock3(import_components217.privateApis);
   function ToggleGroup({
@@ -61240,7 +61302,7 @@ var wp;
   }) {
     const { getValue, setValue, isValid: isValid8 } = field;
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element217.useCallback)(
+    const onChangeControl = (0, import_element218.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -61282,7 +61344,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/array.js
   var import_components218 = __toESM(require_components());
-  var import_element218 = __toESM(require_element());
+  var import_element219 = __toESM(require_element());
   var import_jsx_runtime386 = __toESM(require_jsx_runtime());
   var { ValidatedFormTokenField } = unlock3(import_components218.privateApis);
   function ArrayControl({
@@ -61298,7 +61360,7 @@ var wp;
       elements: field.elements,
       getElements: field.getElements
     });
-    const arrayValueAsElements = (0, import_element218.useMemo)(
+    const arrayValueAsElements = (0, import_element219.useMemo)(
       () => Array.isArray(value) ? value.map((token2) => {
         const element = elements?.find(
           (suggestion) => suggestion.value === token2
@@ -61307,7 +61369,7 @@ var wp;
       }) : [],
       [value, elements]
     );
-    const onChangeControl = (0, import_element218.useCallback)(
+    const onChangeControl = (0, import_element219.useCallback)(
       (tokens) => {
         const valueTokens = tokens.map((token2) => {
           if (typeof token2 === "object" && "value" in token2) {
@@ -61369,7 +61431,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/color.js
   var import_components219 = __toESM(require_components());
-  var import_element219 = __toESM(require_element());
+  var import_element220 = __toESM(require_element());
   var import_jsx_runtime387 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock3(import_components219.privateApis);
   var ColorPicker = ({
@@ -61423,13 +61485,13 @@ var wp;
   }) {
     const { label, placeholder, description, setValue, isValid: isValid8 } = field;
     const value = field.getValue({ item: data }) || "";
-    const handleColorChange = (0, import_element219.useCallback)(
+    const handleColorChange = (0, import_element220.useCallback)(
       (colorObject) => {
         onChange(setValue({ item: data, value: colorObject.toHex() }));
       },
       [data, onChange, setValue]
     );
-    const handleInputChange = (0, import_element219.useCallback)(
+    const handleInputChange = (0, import_element220.useCallback)(
       (newValue) => {
         onChange(setValue({ item: data, value: newValue || "" }));
       },
@@ -61460,7 +61522,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/password.js
   var import_components220 = __toESM(require_components());
-  var import_element220 = __toESM(require_element());
+  var import_element221 = __toESM(require_element());
   var import_i18n200 = __toESM(require_i18n());
   var import_jsx_runtime388 = __toESM(require_jsx_runtime());
   function Password({
@@ -61470,8 +61532,8 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const [isVisible, setIsVisible] = (0, import_element220.useState)(false);
-    const toggleVisibility = (0, import_element220.useCallback)(() => {
+    const [isVisible, setIsVisible] = (0, import_element221.useState)(false);
+    const toggleVisibility = (0, import_element221.useCallback)(() => {
       setIsVisible((prev2) => !prev2);
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
@@ -62306,12 +62368,12 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform/index.js
-  var import_element230 = __toESM(require_element());
+  var import_element231 = __toESM(require_element());
 
   // packages/dataviews/build-module/components/dataform-context/index.js
-  var import_element221 = __toESM(require_element());
+  var import_element222 = __toESM(require_element());
   var import_jsx_runtime397 = __toESM(require_jsx_runtime());
-  var DataFormContext = (0, import_element221.createContext)({
+  var DataFormContext = (0, import_element222.createContext)({
     fields: []
   });
   DataFormContext.displayName = "DataFormContext";
@@ -62325,13 +62387,13 @@ var wp;
 
   // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
   var import_components229 = __toESM(require_components());
-  var import_element229 = __toESM(require_element());
+  var import_element230 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-layouts/index.js
   var import_components228 = __toESM(require_components());
 
   // packages/dataviews/build-module/dataform-layouts/regular/index.js
-  var import_element222 = __toESM(require_element());
+  var import_element223 = __toESM(require_element());
   var import_components221 = __toESM(require_components());
 
   // packages/dataviews/build-module/dataform-layouts/normalize-form.js
@@ -62448,9 +62510,9 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { fields } = (0, import_element222.useContext)(dataform_context_default);
+    const { fields } = (0, import_element223.useContext)(dataform_context_default);
     const layout = field.layout;
-    const form = (0, import_element222.useMemo)(
+    const form = (0, import_element223.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : []
@@ -62532,12 +62594,12 @@ var wp;
 
   // packages/dataviews/build-module/dataform-layouts/panel/index.js
   var import_components225 = __toESM(require_components());
-  var import_element226 = __toESM(require_element());
+  var import_element227 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
   var import_components223 = __toESM(require_components());
   var import_i18n208 = __toESM(require_i18n());
-  var import_element223 = __toESM(require_element());
+  var import_element224 = __toESM(require_element());
   var import_compose87 = __toESM(require_compose());
 
   // packages/dataviews/build-module/dataform-layouts/panel/summary-button.js
@@ -62649,7 +62711,7 @@ var wp;
     popoverAnchor
   }) {
     const fieldLabel = !!field.children ? field.label : fieldDefinition?.label;
-    const form = (0, import_element223.useMemo)(
+    const form = (0, import_element224.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -62659,7 +62721,7 @@ var wp;
       }),
       [field]
     );
-    const formValidity = (0, import_element223.useMemo)(() => {
+    const formValidity = (0, import_element224.useMemo)(() => {
       if (validity === void 0) {
         return void 0;
       }
@@ -62668,7 +62730,7 @@ var wp;
       }
       return { [field.id]: validity };
     }, [validity, field]);
-    const popoverProps3 = (0, import_element223.useMemo)(
+    const popoverProps3 = (0, import_element224.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -62735,13 +62797,13 @@ var wp;
   var import_deepmerge2 = __toESM(require_cjs());
   var import_components224 = __toESM(require_components());
   var import_i18n210 = __toESM(require_i18n());
-  var import_element225 = __toESM(require_element());
+  var import_element226 = __toESM(require_element());
   var import_compose88 = __toESM(require_compose());
 
   // packages/dataviews/build-module/hooks/use-form-validity.js
   var import_deepmerge = __toESM(require_cjs());
   var import_es64 = __toESM(require_es6());
-  var import_element224 = __toESM(require_element());
+  var import_element225 = __toESM(require_element());
   var import_i18n209 = __toESM(require_i18n());
   var isEmptyNullOrUndefined = (value) => [void 0, "", null].includes(value);
   var isArrayOrElementsEmptyNullOrUndefined = (value) => {
@@ -63180,11 +63242,11 @@ var wp;
     };
   }
   function useFormValidity(item, fields, form) {
-    const [formValidity, setFormValidity] = (0, import_element224.useState)();
-    const customCounterRef = (0, import_element224.useRef)({});
-    const elementsCounterRef = (0, import_element224.useRef)({});
-    const previousValuesRef = (0, import_element224.useRef)({});
-    const validate = (0, import_element224.useCallback)(() => {
+    const [formValidity, setFormValidity] = (0, import_element225.useState)();
+    const customCounterRef = (0, import_element225.useRef)({});
+    const elementsCounterRef = (0, import_element225.useRef)({});
+    const previousValuesRef = (0, import_element225.useRef)({});
+    const validate = (0, import_element225.useCallback)(() => {
       const promiseHandler = {
         customCounterRef,
         elementsCounterRef,
@@ -63242,7 +63304,7 @@ var wp;
         return validity;
       });
     }, [item, fields, form]);
-    (0, import_element224.useEffect)(() => {
+    (0, import_element225.useEffect)(() => {
       validate();
     }, [validate]);
     return {
@@ -63261,14 +63323,14 @@ var wp;
     fieldLabel,
     onClose
   }) {
-    const { fields } = (0, import_element225.useContext)(dataform_context_default);
-    const [changes, setChanges] = (0, import_element225.useState)({});
-    const modalData = (0, import_element225.useMemo)(() => {
+    const { fields } = (0, import_element226.useContext)(dataform_context_default);
+    const [changes, setChanges] = (0, import_element226.useState)({});
+    const modalData = (0, import_element226.useMemo)(() => {
       return (0, import_deepmerge2.default)(data, changes, {
         arrayMerge: (target, source) => source
       });
     }, [data, changes]);
-    const form = (0, import_element225.useMemo)(
+    const form = (0, import_element226.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -63364,7 +63426,7 @@ var wp;
     summaryFields,
     fieldDefinition
   }) {
-    const [isOpen, setIsOpen] = (0, import_element225.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element226.useState)(false);
     const fieldLabel = !!field.children ? field.label : fieldDefinition?.label;
     return /* @__PURE__ */ (0, import_jsx_runtime401.jsxs)(import_jsx_runtime401.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
@@ -63452,9 +63514,9 @@ var wp;
     onChange,
     validity
   }) {
-    const { fields } = (0, import_element226.useContext)(dataform_context_default);
+    const { fields } = (0, import_element227.useContext)(dataform_context_default);
     const layout = field.layout;
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element226.useState)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element227.useState)(
       null
     );
     const { fieldDefinition, summaryFields } = getFieldDefinitionAndSummaryFields(layout, field, fields);
@@ -63521,7 +63583,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-layouts/card/index.js
   var import_components226 = __toESM(require_components());
-  var import_element227 = __toESM(require_element());
+  var import_element228 = __toESM(require_element());
   var import_jsx_runtime403 = __toESM(require_jsx_runtime());
   var NonCollapsibleCardHeader = ({
     children,
@@ -63542,11 +63604,11 @@ var wp;
   ) });
   function useCardHeader(layout) {
     const { isOpened, isCollapsible } = layout;
-    const [isOpen, setIsOpen] = (0, import_element227.useState)(isOpened);
-    const toggle = (0, import_element227.useCallback)(() => {
+    const [isOpen, setIsOpen] = (0, import_element228.useState)(isOpened);
+    const toggle = (0, import_element228.useCallback)(() => {
       setIsOpen((prev2) => !prev2);
     }, []);
-    const CollapsibleCardHeader = (0, import_element227.useCallback)(
+    const CollapsibleCardHeader = (0, import_element228.useCallback)(
       ({
         children,
         ...props
@@ -63624,9 +63686,9 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { fields } = (0, import_element227.useContext)(dataform_context_default);
+    const { fields } = (0, import_element228.useContext)(dataform_context_default);
     const layout = field.layout;
-    const form = (0, import_element227.useMemo)(
+    const form = (0, import_element228.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
@@ -63811,7 +63873,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-layouts/details/index.js
-  var import_element228 = __toESM(require_element());
+  var import_element229 = __toESM(require_element());
   var import_i18n211 = __toESM(require_i18n());
   var import_jsx_runtime405 = __toESM(require_jsx_runtime());
   function FormDetailsField({
@@ -63819,8 +63881,8 @@ var wp;
     field,
     onChange
   }) {
-    const { fields } = (0, import_element228.useContext)(dataform_context_default);
-    const form = (0, import_element228.useMemo)(
+    const { fields } = (0, import_element229.useContext)(dataform_context_default);
+    const form = (0, import_element229.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
@@ -63904,7 +63966,7 @@ var wp;
     children,
     as
   }) {
-    const { fields: fieldDefinitions } = (0, import_element229.useContext)(dataform_context_default);
+    const { fields: fieldDefinitions } = (0, import_element230.useContext)(dataform_context_default);
     function getFieldDefinition2(field) {
       return fieldDefinitions.find(
         (fieldDefinition) => fieldDefinition.id === field.id
@@ -63949,8 +64011,8 @@ var wp;
     onChange,
     validity
   }) {
-    const normalizedForm = (0, import_element230.useMemo)(() => normalize_form_default(form), [form]);
-    const normalizedFields = (0, import_element230.useMemo)(
+    const normalizedForm = (0, import_element231.useMemo)(() => normalize_form_default(form), [form]);
+    const normalizedFields = (0, import_element231.useMemo)(
       () => normalizeFields(fields),
       [fields]
     );
@@ -63969,7 +64031,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/content-only-controls/index.js
-  var import_element233 = __toESM(require_element());
+  var import_element234 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/content-only-controls/fields-dropdown-menu.js
   var import_components230 = __toESM(require_components());
@@ -64030,7 +64092,7 @@ var wp;
   var import_components231 = __toESM(require_components());
   var import_compose90 = __toESM(require_compose());
   var import_data162 = __toESM(require_data());
-  var import_element231 = __toESM(require_element());
+  var import_element232 = __toESM(require_element());
   var import_rich_text17 = __toESM(require_rich_text());
   var import_jsx_runtime410 = __toESM(require_jsx_runtime());
   function RichTextControl({
@@ -64047,14 +64109,14 @@ var wp;
       const mappedChanges = field.setValue({ item: data, value: html });
       updateBlockAttributes2(clientId, mappedChanges);
     };
-    const [selection2, setSelection] = (0, import_element231.useState)({
+    const [selection2, setSelection] = (0, import_element232.useState)({
       start: void 0,
       end: void 0
     });
-    const [isSelected, setIsSelected] = (0, import_element231.useState)(false);
-    const anchorRef = (0, import_element231.useRef)();
-    const inputEvents = (0, import_element231.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element231.useRef)(/* @__PURE__ */ new Set());
+    const [isSelected, setIsSelected] = (0, import_element232.useState)(false);
+    const anchorRef = (0, import_element232.useRef)();
+    const inputEvents = (0, import_element232.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element232.useRef)(/* @__PURE__ */ new Set());
     const adjustedAllowedFormats = getAllowedFormats({
       allowedFormats: fieldConfig?.allowedFormats,
       disableFormats: fieldConfig?.disableFormats
@@ -64401,7 +64463,7 @@ var wp;
 
   // packages/block-editor/build-module/components/content-only-controls/link/index.js
   var import_components233 = __toESM(require_components());
-  var import_element232 = __toESM(require_element());
+  var import_element233 = __toESM(require_element());
   var import_i18n214 = __toESM(require_i18n());
   var import_url15 = __toESM(require_url());
   var import_jsx_runtime412 = __toESM(require_jsx_runtime());
@@ -64436,7 +64498,7 @@ var wp;
     };
   }
   function Link({ data, field, config: config2 = {} }) {
-    const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element232.useState)(false);
+    const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element233.useState)(false);
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement({
       isControl: true
     });
@@ -64451,7 +64513,7 @@ var wp;
     const target = value?.linkTarget;
     const opensInNewTab = target === NEW_TAB_TARGET;
     const nofollow = rel === NOFOLLOW_REL;
-    const linkValue = (0, import_element232.useMemo)(
+    const linkValue = (0, import_element233.useMemo)(
       () => ({ url, opensInNewTab, nofollow }),
       [url, opensInNewTab, nofollow]
     );
@@ -64648,10 +64710,10 @@ var wp;
     });
     const blockInformation = useBlockDisplayInformation(clientId);
     const blockTypeFields = blockType?.[fieldsKey];
-    const [form, setForm] = (0, import_element233.useState)(() => {
+    const [form, setForm] = (0, import_element234.useState)(() => {
       return blockType?.[formKey];
     });
-    const dataFormFields = (0, import_element233.useMemo)(() => {
+    const dataFormFields = (0, import_element234.useMemo)(() => {
       if (!blockTypeFields?.length) {
         return [];
       }
@@ -64973,10 +65035,10 @@ var wp;
       return select3(import_preferences5.store).get("core", "showIconLabels");
     }, []);
     const initialTabName = !use_is_list_view_tab_disabled_default(blockName) ? TAB_LIST_VIEW.name : void 0;
-    const [selectedTabId, setSelectedTabId] = (0, import_element234.useState)(
+    const [selectedTabId, setSelectedTabId] = (0, import_element235.useState)(
       initialTabName ?? tabs[0]?.name
     );
-    (0, import_element234.useEffect)(() => {
+    (0, import_element235.useEffect)(() => {
       if (initialTabName) {
         return;
       }
@@ -65434,7 +65496,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/library.js
   var import_data169 = __toESM(require_data());
-  var import_element235 = __toESM(require_element());
+  var import_element236 = __toESM(require_element());
   var import_jsx_runtime418 = __toESM(require_jsx_runtime());
   var noop19 = () => {
   };
@@ -65483,7 +65545,7 @@ var wp;
       }
     );
   }
-  var PrivateInserterLibrary = (0, import_element235.forwardRef)(InserterLibrary);
+  var PrivateInserterLibrary = (0, import_element236.forwardRef)(InserterLibrary);
   function PublicInserterLibrary(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
       PrivateInserterLibrary,
@@ -65494,7 +65556,7 @@ var wp;
       }
     );
   }
-  var library_default = (0, import_element235.forwardRef)(PublicInserterLibrary);
+  var library_default = (0, import_element236.forwardRef)(PublicInserterLibrary);
 
   // packages/block-editor/build-module/components/selection-scroll-into-view/index.js
   var import_deprecated32 = __toESM(require_deprecated());
@@ -65668,10 +65730,10 @@ var wp;
   var typewriter_default = TypewriterOrIEBypass;
 
   // packages/block-editor/build-module/components/recursion-provider/index.js
-  var import_element236 = __toESM(require_element());
+  var import_element237 = __toESM(require_element());
   var import_deprecated33 = __toESM(require_deprecated());
   var import_jsx_runtime420 = __toESM(require_jsx_runtime());
-  var RenderedRefsContext = (0, import_element236.createContext)({});
+  var RenderedRefsContext = (0, import_element237.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
   function addToBlockType(renderedBlocks, blockName, uniqueId2) {
     const result = {
@@ -65682,17 +65744,17 @@ var wp;
     return result;
   }
   function RecursionProvider({ children, uniqueId: uniqueId2, blockName = "" }) {
-    const previouslyRenderedBlocks = (0, import_element236.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element237.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
-    const newRenderedBlocks = (0, import_element236.useMemo)(
+    const newRenderedBlocks = (0, import_element237.useMemo)(
       () => addToBlockType(previouslyRenderedBlocks, blockName, uniqueId2),
       [previouslyRenderedBlocks, blockName, uniqueId2]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
   }
   function useHasRecursion(uniqueId2, blockName = "") {
-    const previouslyRenderedBlocks = (0, import_element236.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element237.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
     return Boolean(previouslyRenderedBlocks[blockName]?.has(uniqueId2));
@@ -65715,7 +65777,7 @@ var wp;
   // packages/block-editor/build-module/components/publish-date-time-picker/index.js
   var import_components240 = __toESM(require_components());
   var import_i18n219 = __toESM(require_i18n());
-  var import_element237 = __toESM(require_element());
+  var import_element238 = __toESM(require_element());
   var import_date8 = __toESM(require_date());
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.js
@@ -65804,7 +65866,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(DatePickerComponent, { ...datePickerProps })
     ] });
   }
-  var PrivatePublishDateTimePicker = (0, import_element237.forwardRef)(PublishDateTimePicker);
+  var PrivatePublishDateTimePicker = (0, import_element238.forwardRef)(PublishDateTimePicker);
   function PublicPublishDateTimePicker(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
       PrivatePublishDateTimePicker,
@@ -65816,11 +65878,11 @@ var wp;
       }
     );
   }
-  var publish_date_time_picker_default = (0, import_element237.forwardRef)(PublicPublishDateTimePicker);
+  var publish_date_time_picker_default = (0, import_element238.forwardRef)(PublicPublishDateTimePicker);
 
   // packages/block-editor/build-module/components/block-editing-mode/index.js
   var import_data171 = __toESM(require_data());
-  var import_element238 = __toESM(require_element());
+  var import_element239 = __toESM(require_element());
   function useBlockEditingMode(mode2) {
     const context = useBlockEditContext();
     const { clientId = "" } = context;
@@ -65832,7 +65894,7 @@ var wp;
       ),
       [clientId]
     );
-    (0, import_element238.useEffect)(() => {
+    (0, import_element239.useEffect)(() => {
       if (mode2) {
         setBlockEditingMode2(clientId, mode2);
       }
@@ -65918,8 +65980,8 @@ var wp;
       (0, import_data172.useDispatch)(store)
     );
     const registry = (0, import_data172.useRegistry)();
-    const fallbackId = (0, import_element239.useId)();
-    (0, import_element239.useEffect)(() => {
+    const fallbackId = (0, import_element240.useId)();
+    (0, import_element240.useEffect)(() => {
       if (!css && !assets) {
         return;
       }
@@ -66089,7 +66151,7 @@ var wp;
       "color.button",
       "shadow"
     );
-    const rawSettings = (0, import_element239.useMemo)(() => {
+    const rawSettings = (0, import_element240.useMemo)(() => {
       return {
         background: {
           backgroundImage,
@@ -66240,7 +66302,7 @@ var wp;
   }
   function createBlockEditFilter(features) {
     features = features.map((settings2) => {
-      return { ...settings2, Edit: (0, import_element239.memo)(settings2.edit) };
+      return { ...settings2, Edit: (0, import_element240.memo)(settings2.edit) };
     });
     const withBlockEditHooks = (0, import_compose92.createHigherOrderComponent)(
       (OriginalBlockEdit) => (props) => {
@@ -66295,7 +66357,7 @@ var wp;
       nextAll[index] = next2;
       return nextAll;
     });
-    (0, import_element239.useEffect)(() => {
+    (0, import_element240.useEffect)(() => {
       setWrapperProps(wrapperProps);
       return () => {
         setWrapperProps(void 0);
@@ -66303,11 +66365,11 @@ var wp;
     });
     return null;
   }
-  var BlockPropsPure = (0, import_element239.memo)(BlockProps);
+  var BlockPropsPure = (0, import_element240.memo)(BlockProps);
   function createBlockListBlockFilter(features) {
     const withBlockListBlockHooks = (0, import_compose92.createHigherOrderComponent)(
       (BlockListBlock2) => (props) => {
-        const [allWrapperProps, setAllWrapperProps] = (0, import_element239.useState)(
+        const [allWrapperProps, setAllWrapperProps] = (0, import_element240.useState)(
           Array(features.length).fill(void 0)
         );
         return [
@@ -66568,13 +66630,13 @@ var wp;
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.js
   var import_components247 = __toESM(require_components());
   var import_i18n222 = __toESM(require_i18n());
-  var import_element243 = __toESM(require_element());
+  var import_element244 = __toESM(require_element());
   var import_data175 = __toESM(require_data());
   var import_blocks95 = __toESM(require_blocks());
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.js
   var import_components246 = __toESM(require_components());
-  var import_element242 = __toESM(require_element());
+  var import_element243 = __toESM(require_element());
   var import_i18n221 = __toESM(require_i18n());
   var import_data174 = __toESM(require_data());
 
@@ -66583,12 +66645,12 @@ var wp;
   var import_data173 = __toESM(require_data());
   var import_components245 = __toESM(require_components());
   var import_i18n220 = __toESM(require_i18n());
-  var import_element241 = __toESM(require_element());
+  var import_element242 = __toESM(require_element());
   var import_compose94 = __toESM(require_compose());
   var import_a11y19 = __toESM(require_a11y());
 
   // packages/block-editor/build-module/components/block-manager/category.js
-  var import_element240 = __toESM(require_element());
+  var import_element241 = __toESM(require_element());
   var import_compose93 = __toESM(require_compose());
   var import_components244 = __toESM(require_components());
 
@@ -66627,7 +66689,7 @@ var wp;
     onChange
   }) {
     const instanceId = (0, import_compose93.useInstanceId)(BlockManagerCategory);
-    const toggleVisible = (0, import_element240.useCallback)(
+    const toggleVisible = (0, import_element241.useCallback)(
       (blockType, nextIsChecked) => {
         if (nextIsChecked) {
           onChange([...selectedBlockTypes, blockType]);
@@ -66641,7 +66703,7 @@ var wp;
       },
       [selectedBlockTypes, onChange]
     );
-    const toggleAllVisible = (0, import_element240.useCallback)(
+    const toggleAllVisible = (0, import_element241.useCallback)(
       (nextIsChecked) => {
         if (nextIsChecked) {
           onChange([
@@ -66716,7 +66778,7 @@ var wp;
     showSelectAll = true
   }) {
     const debouncedSpeak = (0, import_compose94.useDebounce)(import_a11y19.speak, 500);
-    const [search, setSearch] = (0, import_element241.useState)("");
+    const [search, setSearch] = (0, import_element242.useState)("");
     const { categories, isMatchingSearchTerm } = (0, import_data173.useSelect)((select3) => {
       return {
         categories: select3(import_blocks94.store).getCategories(),
@@ -66728,7 +66790,7 @@ var wp;
     });
     const isIndeterminate = selectedBlockTypes.length > 0 && selectedBlockTypes.length !== blockTypes.length;
     const isAllChecked = blockTypes.length > 0 && selectedBlockTypes.length === blockTypes.length;
-    (0, import_element241.useEffect)(() => {
+    (0, import_element242.useEffect)(() => {
       if (!search) {
         return;
       }
@@ -66815,7 +66877,7 @@ var wp;
     selectedBlockTypes,
     onClose
   }) {
-    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element242.useState)(selectedBlockTypes);
+    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element243.useState)(selectedBlockTypes);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data174.useDispatch)(store);
     const handleSubmit = () => {
       const isFullySelected = currentSelectedBlockTypes.length === blockTypes.length;
@@ -66896,7 +66958,7 @@ var wp;
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.js
   var import_jsx_runtime429 = __toESM(require_jsx_runtime());
   function BlockAllowedBlocksControl({ clientId }) {
-    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element243.useState)(false);
+    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element244.useState)(false);
     const { blockTypes, selectedBlockNames } = (0, import_data175.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
@@ -67042,7 +67104,7 @@ var wp;
   var import_components248 = __toESM(require_components());
   var import_i18n223 = __toESM(require_i18n());
   var import_blocks97 = __toESM(require_blocks());
-  var import_element244 = __toESM(require_element());
+  var import_element245 = __toESM(require_element());
   var import_jsx_runtime431 = __toESM(require_jsx_runtime());
   var ANCHOR_REGEX = /[\s#]/g;
   var ANCHOR_SCHEMA = {
@@ -67068,7 +67130,7 @@ var wp;
     if (blockEditingMode !== "default") {
       return null;
     }
-    const isWeb = import_element244.Platform.OS === "web";
+    const isWeb = import_element245.Platform.OS === "web";
     return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
       import_components248.TextControl,
       {
@@ -67274,7 +67336,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/style.js
-  var import_element249 = __toESM(require_element());
+  var import_element250 = __toESM(require_element());
   var import_hooks26 = __toESM(require_hooks());
   var import_blocks108 = __toESM(require_blocks());
   var import_compose95 = __toESM(require_compose());
@@ -67282,7 +67344,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/typography.js
   var import_blocks106 = __toESM(require_blocks());
-  var import_element246 = __toESM(require_element());
+  var import_element247 = __toESM(require_element());
   var import_data177 = __toESM(require_data());
 
   // packages/block-editor/build-module/hooks/line-height.js
@@ -67585,7 +67647,7 @@ var wp;
   // packages/block-editor/build-module/hooks/fit-text.js
   var import_hooks25 = __toESM(require_hooks());
   var import_blocks105 = __toESM(require_blocks());
-  var import_element245 = __toESM(require_element());
+  var import_element246 = __toESM(require_element());
   var import_data176 = __toESM(require_data());
 
   // packages/block-editor/build-module/utils/fit-text-utils.js
@@ -67661,7 +67723,7 @@ var wp;
       },
       [clientId, hasFitTextSupport2, fitText]
     );
-    const applyFitText = (0, import_element245.useCallback)(() => {
+    const applyFitText = (0, import_element246.useCallback)(() => {
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
         return;
       }
@@ -67682,7 +67744,7 @@ var wp;
       };
       optimizeFitText(blockElement, applyFontSize);
     }, [blockElement, clientId, hasFitTextSupport2, fitText]);
-    (0, import_element245.useEffect)(() => {
+    (0, import_element246.useEffect)(() => {
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2) {
         return;
       }
@@ -67733,7 +67795,7 @@ var wp;
       blockElement,
       hasFitTextSupport2
     ]);
-    (0, import_element245.useEffect)(() => {
+    (0, import_element246.useEffect)(() => {
       if (fitText && blockElement && hasFitTextSupport2) {
         const frameId = window.requestAnimationFrame(() => {
           if (blockElement) {
@@ -67847,7 +67909,7 @@ var wp;
     };
   }
   function TypographyInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element246.useCallback)(
+    const attributesResetAllFilter = (0, import_element247.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle3(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -67889,7 +67951,7 @@ var wp;
       },
       [clientId, isEnabled]
     );
-    const value = (0, import_element246.useMemo)(
+    const value = (0, import_element247.useMemo)(
       () => attributesToStyle3({ style, fontFamily, fontSize }),
       [style, fontSize, fontFamily]
     );
@@ -67918,26 +67980,26 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/dimensions.js
-  var import_element248 = __toESM(require_element());
+  var import_element249 = __toESM(require_element());
   var import_data178 = __toESM(require_data());
   var import_blocks107 = __toESM(require_blocks());
   var import_deprecated34 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.js
-  var import_element247 = __toESM(require_element());
+  var import_element248 = __toESM(require_element());
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal());
   var import_jsx_runtime437 = __toESM(require_jsx_runtime());
   function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
     const blockElement = useBlockElement(clientId);
-    const [style, updateStyle] = (0, import_element247.useReducer)(
+    const [style, updateStyle] = (0, import_element248.useReducer)(
       () => computeStyle(blockElement)
     );
-    (0, import_element247.useEffect)(() => {
+    (0, import_element248.useEffect)(() => {
       if (blockElement && forceShow) {
         updateStyle();
       }
     }, [blockElement, forceShow]);
-    (0, import_element247.useEffect)(() => {
+    (0, import_element248.useEffect)(() => {
       if (!blockElement) {
         return;
       }
@@ -67950,9 +68012,9 @@ var wp;
         observer.disconnect();
       };
     }, [blockElement]);
-    const previousValueRef = (0, import_element247.useRef)(value);
-    const [isActive, setIsActive] = (0, import_element247.useState)(false);
-    (0, import_element247.useEffect)(() => {
+    const previousValueRef = (0, import_element248.useRef)(value);
+    const [isActive, setIsActive] = (0, import_element248.useState)(false);
+    (0, import_element248.useEffect)(() => {
       if ((0, import_is_shallow_equal4.default)(value, previousValueRef.current) || forceShow) {
         return;
       }
@@ -68035,11 +68097,11 @@ var wp;
   var DIMENSIONS_SUPPORT_KEY = "dimensions";
   var SPACING_SUPPORT_KEY2 = "spacing";
   function useVisualizer() {
-    const [property, setProperty] = (0, import_element248.useState)(false);
+    const [property, setProperty] = (0, import_element249.useState)(false);
     const { hideBlockInterface: hideBlockInterface2, showBlockInterface: showBlockInterface2 } = unlock(
       (0, import_data178.useDispatch)(store)
     );
-    (0, import_element248.useEffect)(() => {
+    (0, import_element249.useEffect)(() => {
       if (!property) {
         showBlockInterface2();
       } else {
@@ -68049,7 +68111,7 @@ var wp;
     return [property, setProperty];
   }
   function DimensionsInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element248.useCallback)(
+    const attributesResetAllFilter = (0, import_element249.useCallback)(
       (attributes) => {
         const existingStyle = attributes.style;
         const updatedStyle = resetAllFilter(existingStyle);
@@ -68133,7 +68195,7 @@ var wp;
     ] });
   }
   function hasDimensionsSupport(blockName, feature = "any") {
-    if (import_element248.Platform.OS !== "web") {
+    if (import_element249.Platform.OS !== "web") {
       return false;
     }
     const support = (0, import_blocks107.getBlockSupport)(blockName, DIMENSIONS_SUPPORT_KEY);
@@ -68341,7 +68403,7 @@ var wp;
     );
     const baseElementSelector = `.${blockElementsContainerIdentifier}`;
     const blockElementStyles = style?.elements;
-    const styles = (0, import_element249.useMemo)(() => {
+    const styles = (0, import_element250.useMemo)(() => {
       if (!blockElementStyles) {
         return;
       }
@@ -68438,7 +68500,7 @@ var wp;
   var import_blocks110 = __toESM(require_blocks());
   var import_compose96 = __toESM(require_compose());
   var import_hooks28 = __toESM(require_hooks());
-  var import_element250 = __toESM(require_element());
+  var import_element251 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/duotone/utils.js
   function getValuesFromColors(colors2 = []) {
@@ -68504,7 +68566,7 @@ var wp;
       `${presetSetting}.theme`,
       `${presetSetting}.default`
     );
-    return (0, import_element250.useMemo)(
+    return (0, import_element251.useMemo)(
       () => [
         ...userPresets || EMPTY_ARRAY15,
         ...themePresets || EMPTY_ARRAY15,
@@ -68670,7 +68732,7 @@ var wp;
       } : void 0
     );
     const blockElement = useBlockElement(clientId);
-    (0, import_element250.useEffect)(() => {
+    (0, import_element251.useEffect)(() => {
       if (!isValidFilter) {
         return;
       }
@@ -68685,7 +68747,7 @@ var wp;
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps14({ clientId, name, style }) {
     const id = (0, import_compose96.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
-    const selector3 = (0, import_element250.useMemo)(() => {
+    const selector3 = (0, import_element251.useMemo)(() => {
       const blockType = (0, import_blocks110.getBlockType)(name);
       if (blockType) {
         const duotoneSupport = (0, import_blocks110.getBlockSupport)(
@@ -69054,10 +69116,10 @@ var wp;
   // packages/block-editor/build-module/hooks/layout-child.js
   var import_compose101 = __toESM(require_compose());
   var import_data183 = __toESM(require_data());
-  var import_element254 = __toESM(require_element());
+  var import_element255 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.js
-  var import_element251 = __toESM(require_element());
+  var import_element252 = __toESM(require_element());
   var import_data180 = __toESM(require_data());
   var import_compose98 = __toESM(require_compose());
 
@@ -69189,13 +69251,13 @@ var wp;
       }
     );
   }
-  var GridVisualizerGrid = (0, import_element251.forwardRef)(
+  var GridVisualizerGrid = (0, import_element252.forwardRef)(
     ({ gridClientId, gridElement, isManualGrid }, ref) => {
-      const [gridInfo, setGridInfo] = (0, import_element251.useState)(
+      const [gridInfo, setGridInfo] = (0, import_element252.useState)(
         () => getGridInfo(gridElement)
       );
-      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element251.useState)(false);
-      (0, import_element251.useEffect)(() => {
+      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element252.useState)(false);
+      (0, import_element252.useEffect)(() => {
         const resizeCallback = () => setGridInfo(getGridInfo(gridElement));
         const borderBoxSpy = new window.ResizeObserver(resizeCallback);
         borderBoxSpy.observe(gridElement, { box: "border-box" });
@@ -69206,7 +69268,7 @@ var wp;
           contentBoxSpy.disconnect();
         };
       }, [gridElement]);
-      (0, import_element251.useEffect)(() => {
+      (0, import_element252.useEffect)(() => {
         function onGlobalDrag() {
           setIsDroppingAllowed(true);
         }
@@ -69254,7 +69316,7 @@ var wp;
     }
   );
   function ManualGridVisualizer({ gridClientId, gridInfo }) {
-    const [highlightedRect, setHighlightedRect] = (0, import_element251.useState)(null);
+    const [highlightedRect, setHighlightedRect] = (0, import_element252.useState)(null);
     const gridItemStyles = (0, import_data180.useSelect)(
       (select3) => {
         const { getBlockOrder: getBlockOrder2, getBlockStyles: getBlockStyles2 } = unlock(
@@ -69265,7 +69327,7 @@ var wp;
       },
       [gridClientId]
     );
-    const occupiedRects = (0, import_element251.useMemo)(() => {
+    const occupiedRects = (0, import_element252.useMemo)(() => {
       const rects = [];
       for (const style of Object.values(gridItemStyles)) {
         const {
@@ -69517,7 +69579,7 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.js
   var import_components257 = __toESM(require_components());
-  var import_element252 = __toESM(require_element());
+  var import_element253 = __toESM(require_element());
   var import_jsx_runtime443 = __toESM(require_jsx_runtime());
   function GridItemResizer({
     clientId,
@@ -69551,14 +69613,14 @@ var wp;
     onChange,
     isManualGrid
   }) {
-    const [resizeDirection, setResizeDirection] = (0, import_element252.useState)(null);
-    const [enableSide, setEnableSide] = (0, import_element252.useState)({
+    const [resizeDirection, setResizeDirection] = (0, import_element253.useState)(null);
+    const [enableSide, setEnableSide] = (0, import_element253.useState)({
       top: false,
       bottom: false,
       left: false,
       right: false
     });
-    (0, import_element252.useEffect)(() => {
+    (0, import_element253.useEffect)(() => {
       const observer = new window.ResizeObserver(() => {
         const blockClientRect = blockElement.getBoundingClientRect();
         const rootBlockClientRect = rootBlockElement.getBoundingClientRect();
@@ -69829,7 +69891,7 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.js
   var import_data182 = __toESM(require_data());
-  var import_element253 = __toESM(require_element());
+  var import_element254 = __toESM(require_element());
   var import_compose100 = __toESM(require_compose());
   function useGridLayoutSync({ clientId: gridClientId }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data182.useSelect)(
@@ -69846,7 +69908,7 @@ var wp;
     );
     const { getBlockAttributes: getBlockAttributes3, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data182.useSelect)(store);
     const { updateBlockAttributes: updateBlockAttributes2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data182.useDispatch)(store);
-    const selectedBlockRect = (0, import_element253.useMemo)(
+    const selectedBlockRect = (0, import_element254.useMemo)(
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
     );
@@ -69855,7 +69917,7 @@ var wp;
       gridLayout.isManualPlacement
     );
     const previousBlockOrder = (0, import_compose100.usePrevious)(blockOrder);
-    (0, import_element253.useEffect)(() => {
+    (0, import_element254.useEffect)(() => {
       const updates = {};
       if (gridLayout.isManualPlacement) {
         const occupiedRects = [];
@@ -70184,7 +70246,7 @@ var wp;
       },
       [clientId]
     );
-    const [resizerBounds, setResizerBounds] = (0, import_element254.useState)();
+    const [resizerBounds, setResizerBounds] = (0, import_element255.useState)();
     if (!isVisible) {
       return null;
     }
@@ -70242,7 +70304,7 @@ var wp;
   var import_components259 = __toESM(require_components());
   var import_data184 = __toESM(require_data());
   var import_i18n228 = __toESM(require_i18n());
-  var import_element255 = __toESM(require_element());
+  var import_element256 = __toESM(require_element());
   var import_jsx_runtime446 = __toESM(require_jsx_runtime());
   function ContentLockControlsPure({ clientId }) {
     const { templateLock, isLockedByParent, isEditingContentOnlySection } = (0, import_data184.useSelect)(
@@ -70264,7 +70326,7 @@ var wp;
       (0, import_data184.useDispatch)(store)
     );
     const isContentLocked = !isLockedByParent && templateLock === "contentOnly";
-    const stopEditingAsBlockCallback = (0, import_element255.useCallback)(() => {
+    const stopEditingAsBlockCallback = (0, import_element256.useCallback)(() => {
       stopEditingContentOnlySection2();
     }, [stopEditingContentOnlySection2]);
     if (window?.__experimentalContentOnlyPatternInsertion || !isContentLocked && !isEditingContentOnlySection) {
@@ -70346,7 +70408,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-hooks.js
   var import_i18n229 = __toESM(require_i18n());
-  var import_element256 = __toESM(require_element());
+  var import_element257 = __toESM(require_element());
   var import_components261 = __toESM(require_components());
   var import_blocks113 = __toESM(require_blocks());
   var import_data185 = __toESM(require_data());
@@ -70361,7 +70423,7 @@ var wp;
       (select3) => select3(import_blocks113.store).getBlockTypes(),
       []
     );
-    const hookedBlocksForCurrentBlock = (0, import_element256.useMemo)(
+    const hookedBlocksForCurrentBlock = (0, import_element257.useMemo)(
       () => blockTypes?.filter(
         ({ name: blockName, blockHooks }) => blockHooks && name in blockHooks || ignoredHookedBlocks.includes(blockName)
       ),
@@ -70478,7 +70540,7 @@ var wp;
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime447.jsxs)(import_element256.Fragment, { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime447.jsxs)(import_element257.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime447.jsx)("h3", { children: vendor }),
               groupedHookedBlocks[vendor].map((block) => {
                 const checked = block.name in hookedBlockClientIds;
@@ -70526,7 +70588,7 @@ var wp;
   var import_blocks114 = __toESM(require_blocks());
   var import_components263 = __toESM(require_components());
   var import_data186 = __toESM(require_data());
-  var import_element257 = __toESM(require_element());
+  var import_element258 = __toESM(require_element());
   var import_compose102 = __toESM(require_compose());
   var import_jsx_runtime448 = __toESM(require_jsx_runtime());
   var { Menu: Menu2 } = unlock(import_components263.privateApis);
@@ -70548,7 +70610,7 @@ var wp;
     const { clientId } = useBlockEditContext();
     const { updateBlockBindings } = useBlockBindingsUtils();
     const isMobile = (0, import_compose102.useViewportMatch)("medium", "<");
-    const blockContext = (0, import_element257.useContext)(block_context_default);
+    const blockContext = (0, import_element258.useContext)(block_context_default);
     const { attributeType, select: select3 } = (0, import_data186.useSelect)(
       (_select) => {
         const { name: blockName } = _select(store).getBlock(clientId);
@@ -70729,7 +70791,7 @@ var wp;
     );
   }
   var BlockBindingsPanel = ({ name: blockName, metadata }) => {
-    const blockContext = (0, import_element257.useContext)(block_context_default);
+    const blockContext = (0, import_element258.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
     const { canUpdateBlockBindings, bindableAttributes } = (0, import_data186.useSelect)(
@@ -70956,7 +71018,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-color-props.js
-  var import_element258 = __toESM(require_element());
+  var import_element259 = __toESM(require_element());
   function getColorClassesAndStyles(attributes) {
     const { backgroundColor, textColor, gradient, style } = attributes;
     const backgroundClass = getColorClassName(
@@ -70997,7 +71059,7 @@ var wp;
       "color.gradients.theme",
       "color.gradients.default"
     );
-    const colors2 = (0, import_element258.useMemo)(
+    const colors2 = (0, import_element259.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -71005,7 +71067,7 @@ var wp;
       ],
       [userPalette, themePalette, defaultPalette]
     );
-    const gradients = (0, import_element258.useMemo)(
+    const gradients = (0, import_element259.useMemo)(
       () => [
         ...userGradients || [],
         ...themeGradients || [],
@@ -71074,10 +71136,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-cached-truthy.js
-  var import_element259 = __toESM(require_element());
+  var import_element260 = __toESM(require_element());
   function useCachedTruthy(value) {
-    const [cachedValue, setCachedValue] = (0, import_element259.useState)(value);
-    (0, import_element259.useEffect)(() => {
+    const [cachedValue, setCachedValue] = (0, import_element260.useState)(value);
+    (0, import_element260.useEffect)(() => {
       if (value) {
         setCachedValue(value);
       }
@@ -71147,7 +71209,7 @@ var wp;
   var get_px_from_css_unit_default = () => "";
 
   // packages/block-editor/build-module/components/rich-text/get-rich-text-values.js
-  var import_element260 = __toESM(require_element());
+  var import_element261 = __toESM(require_element());
   var import_blocks116 = __toESM(require_blocks());
   var import_rich_text21 = __toESM(require_rich_text());
   var import_jsx_runtime450 = __toESM(require_jsx_runtime());
@@ -71165,10 +71227,10 @@ var wp;
     }
     const { type, props } = element;
     switch (type) {
-      case import_element260.StrictMode:
-      case import_element260.Fragment:
+      case import_element261.StrictMode:
+      case import_element261.Fragment:
         return addValuesForElements(props.children, values, innerBlocks);
-      case import_element260.RawHTML:
+      case import_element261.RawHTML:
         return;
       case inner_blocks_default.Content:
         return addValuesForBlocks(values, innerBlocks);
@@ -71241,7 +71303,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.js
-  var import_element261 = __toESM(require_element());
+  var import_element262 = __toESM(require_element());
   var import_data188 = __toESM(require_data());
   var import_components266 = __toESM(require_components());
   var import_i18n231 = __toESM(require_i18n());
@@ -71255,7 +71317,7 @@ var wp;
       setBlockRemovalRules: setBlockRemovalRules2,
       privateRemoveBlocks: privateRemoveBlocks2
     } = unlock((0, import_data188.useDispatch)(store));
-    (0, import_element261.useEffect)(() => {
+    (0, import_element262.useEffect)(() => {
       setBlockRemovalRules2(rules);
       return () => {
         setBlockRemovalRules2();
@@ -71307,11 +71369,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/index.js
-  var import_element263 = __toESM(require_element());
+  var import_element264 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.js
   var import_components267 = __toESM(require_components());
-  var import_element262 = __toESM(require_element());
+  var import_element263 = __toESM(require_element());
   var import_i18n232 = __toESM(require_i18n());
   var import_jsx_runtime453 = __toESM(require_jsx_runtime());
   var DEFAULT_SCALE_OPTIONS = [
@@ -71354,7 +71416,7 @@ var wp;
     isShownByDefault = true
   }) {
     const displayValue = value ?? "fill";
-    const scaleHelp = (0, import_element262.useMemo)(() => {
+    const scaleHelp = (0, import_element263.useMemo)(() => {
       return options.reduce((acc, option) => {
         acc[option.value] = option.help;
         return acc;
@@ -73382,8 +73444,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const height = value.height === void 0 || value.height === "auto" ? null : value.height;
     const aspectRatio = value.aspectRatio === void 0 || value.aspectRatio === "auto" ? null : value.aspectRatio;
     const scale = value.scale === void 0 || value.scale === "fill" ? null : value.scale;
-    const [lastScale, setLastScale] = (0, import_element263.useState)(scale);
-    const [lastAspectRatio, setLastAspectRatio] = (0, import_element263.useState)(aspectRatio);
+    const [lastScale, setLastScale] = (0, import_element264.useState)(scale);
+    const [lastAspectRatio, setLastAspectRatio] = (0, import_element264.useState)(aspectRatio);
     const aspectRatioValue = width && height ? "custom" : lastAspectRatio;
     const showScaleControl = aspectRatio || width && height;
     return /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(import_jsx_runtime455.Fragment, { children: [
