@@ -2466,7 +2466,7 @@ var wp;
         const _site = getEntityRecord("root", "site");
         const currentTheme = getCurrentTheme();
         const settings2 = getSettings6();
-        const supportsEditorStyles = currentTheme.theme_supports["editor-styles"];
+        const supportsEditorStyles = currentTheme?.theme_supports["editor-styles"];
         const hasThemeJson = settings2.supportsLayout;
         return {
           dashboardLink: settings2.__experimentalDashboardLink,
