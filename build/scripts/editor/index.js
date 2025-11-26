@@ -44937,13 +44937,12 @@ var wp;
           if (!editedContentOnlySection) {
             return;
           }
-          if (!event.defaultPrevented) {
+          const isClickOutside = !event.target.closest(
+            `[data-block="${editedContentOnlySection}"]`
+          );
+          if (isClickOutside && !event.defaultPrevented) {
             event.preventDefault();
-            if (!event.target.closest(
-              `[data-block="${editedContentOnlySection}"]`
-            )) {
-              stopEditingContentOnlySection();
-            }
+            stopEditingContentOnlySection();
           }
         }
         node.addEventListener("click", onClick);
