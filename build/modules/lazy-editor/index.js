@@ -2319,11 +2319,8 @@ async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles, 
       injectInlineStyle(handle, afterInline, "after");
     }
   }
-  const scriptElementsHead = [];
-  const scriptElementsBody = [];
+  const scriptElements = [];
   for (const handle of orderedScripts) {
-    const inFooter = scriptsData[handle].in_footer || false;
-    const scriptElements = inFooter ? scriptElementsBody : scriptElementsHead;
     const beforeInline = inlineScripts.before?.[handle];
     if (beforeInline) {
       scriptElements.push(
@@ -2338,10 +2335,7 @@ async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles, 
       );
     }
   }
-  const scriptsPromise = (async () => {
-    await performScriptLoad(scriptElementsHead, document.head);
-    await performScriptLoad(scriptElementsBody, document.body);
-  })();
+  const scriptsPromise = performScriptLoad(scriptElements, document.body);
   await Promise.all([Promise.all(stylePromises), scriptsPromise]);
   if (htmlTemplates && htmlTemplates.length > 0) {
     htmlTemplates.forEach((templateHtml) => {
