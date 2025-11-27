@@ -60880,6 +60880,8 @@ var wp;
         prefix: prefix3,
         suffix,
         pattern: isValid8?.pattern,
+        minLength: isValid8?.minLength,
+        maxLength: isValid8?.maxLength,
         __next40pxDefaultSize: true
       }
     );
@@ -61089,7 +61091,9 @@ var wp;
         onChange: onChangeControl,
         __next40pxDefaultSize: true,
         hideLabelFromVision,
-        step
+        step,
+        min: isValid8?.min,
+        max: isValid8?.max
       }
     );
   }
@@ -61282,6 +61286,8 @@ var wp;
         help: description,
         onChange: onChangeControl,
         rows,
+        minLength: isValid8?.minLength,
+        maxLength: isValid8?.maxLength,
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         hideLabelFromVision
@@ -63111,6 +63117,58 @@ var wp;
             pattern: {
               type: "invalid",
               message: (0, import_i18n209.__)("Invalid pattern configuration.")
+            }
+          };
+        }
+      }
+    }
+    if (!!formField.field && formField.field.isValid.min !== void 0 && (formField.field.type === "integer" || formField.field.type === "number")) {
+      const value = formField.field.getValue({ item });
+      if (!isEmptyNullOrUndefined(value)) {
+        if (Number(value) < formField.field.isValid.min) {
+          return {
+            min: {
+              type: "invalid",
+              message: (0, import_i18n209.__)("Value is below the minimum.")
+            }
+          };
+        }
+      }
+    }
+    if (!!formField.field && formField.field.isValid.max !== void 0 && (formField.field.type === "integer" || formField.field.type === "number")) {
+      const value = formField.field.getValue({ item });
+      if (!isEmptyNullOrUndefined(value)) {
+        if (Number(value) > formField.field.isValid.max) {
+          return {
+            max: {
+              type: "invalid",
+              message: (0, import_i18n209.__)("Value is above the maximum.")
+            }
+          };
+        }
+      }
+    }
+    if (!!formField.field && formField.field.isValid.minLength !== void 0 && (formField.field.type === "text" || formField.field.type === "email" || formField.field.type === "url" || formField.field.type === "telephone" || formField.field.type === "password")) {
+      const value = formField.field.getValue({ item });
+      if (!isEmptyNullOrUndefined(value)) {
+        if (String(value).length < formField.field.isValid.minLength) {
+          return {
+            minLength: {
+              type: "invalid",
+              message: (0, import_i18n209.__)("Value is too short.")
+            }
+          };
+        }
+      }
+    }
+    if (!!formField.field && formField.field.isValid.maxLength !== void 0 && (formField.field.type === "text" || formField.field.type === "email" || formField.field.type === "url" || formField.field.type === "telephone" || formField.field.type === "password")) {
+      const value = formField.field.getValue({ item });
+      if (!isEmptyNullOrUndefined(value)) {
+        if (String(value).length > formField.field.isValid.maxLength) {
+          return {
+            maxLength: {
+              type: "invalid",
+              message: (0, import_i18n209.__)("Value is too long.")
             }
           };
         }

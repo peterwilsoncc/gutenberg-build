@@ -14092,6 +14092,8 @@ If there's a particular need for this, please submit a feature request at https:
         prefix,
         suffix,
         pattern: isValid8?.pattern,
+        minLength: isValid8?.minLength,
+        maxLength: isValid8?.maxLength,
         __next40pxDefaultSize: true
       }
     );
@@ -14301,7 +14303,9 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         __next40pxDefaultSize: true,
         hideLabelFromVision,
-        step
+        step,
+        min: isValid8?.min,
+        max: isValid8?.max
       }
     );
   }
@@ -14494,6 +14498,8 @@ If there's a particular need for this, please submit a feature request at https:
         help: description,
         onChange: onChangeControl,
         rows,
+        minLength: isValid8?.minLength,
+        maxLength: isValid8?.maxLength,
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         hideLabelFromVision
