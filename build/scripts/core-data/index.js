@@ -14747,6 +14747,15 @@ var wp;
       kind: "root",
       baseURL: "/wp/v2/registered-templates",
       key: "id"
+    },
+    {
+      label: (0, import_i18n.__)("Font Collections"),
+      name: "fontCollection",
+      kind: "root",
+      baseURL: "/wp/v2/font-collections",
+      baseURLParams: { context: "view" },
+      plural: "fontCollections",
+      key: "slug"
     }
   ];
   var deprecatedEntities = {
