@@ -15808,30 +15808,44 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/page/header.js
+var import_components51 = __toESM(require_components());
+
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.js
 var import_components50 = __toESM(require_components());
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components50.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.js
 var import_jsx_runtime97 = __toESM(require_jsx_runtime());
 function Header({
   breadcrumbs,
   badges,
   title,
   subTitle,
-  actions
+  actions,
+  showSidebarToggle = true
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components50.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components51.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
     /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
-      import_components50.__experimentalHStack,
+      import_components51.__experimentalHStack,
       {
         className: "admin-ui-page__header-title",
         justify: "space-between",
         spacing: 2,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components50.__experimentalHStack, { spacing: 2, children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components50.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components51.__experimentalHStack, { spacing: 2, justify: "flex-start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              SidebarToggleSlot,
+              {
+                bubblesVirtually: true,
+                className: "admin-ui-page__sidebar-toggle-slot"
+              }
+            ),
+            title && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components51.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
             breadcrumbs,
             badges
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
-            import_components50.__experimentalHStack,
+            import_components51.__experimentalHStack,
             {
               style: { width: "auto", flexShrink: 0 },
               spacing: 2,
@@ -15856,7 +15870,8 @@ function Page({
   children,
   className,
   actions,
-  hasPadding = false
+  hasPadding = false,
+  showSidebarToggle = true
 }) {
   const classes = clsx_default("admin-ui-page", className);
   return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(navigable_region_default, { className: classes, ariaLabel: title, children: [
@@ -15867,17 +15882,19 @@ function Page({
         badges,
         title,
         subTitle,
-        actions
+        actions,
+        showSidebarToggle
       }
     ),
     hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { className: "admin-ui-page__content has-padding", children }) : children
   ] });
 }
+Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/pattern-list/stage.tsx
 var import_core_data3 = __toESM(require_core_data());
-var import_components51 = __toESM(require_components());
+var import_components52 = __toESM(require_components());
 var import_data10 = __toESM(require_data());
 var import_element55 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
@@ -16584,7 +16601,7 @@ document.head.appendChild(document.createElement("style")).appendChild(document.
 
 // routes/pattern-list/stage.tsx
 var { usePostActions, patternTitleField } = unlock2(import_editor.privateApis);
-var { Tabs } = unlock2(import_components51.privateApis);
+var { Tabs } = unlock2(import_components52.privateApis);
 var { PATTERN_TYPES: PATTERN_TYPES2, CreatePatternModal } = unlock2(import_patterns3.privateApis);
 function PatternList() {
   const invalidate = useInvalidate();
@@ -16749,7 +16766,7 @@ function PatternList() {
       ),
       className: "pattern-page",
       actions: /* @__PURE__ */ React.createElement(React.Fragment, null, isModified && /* @__PURE__ */ React.createElement(
-        import_components51.Button,
+        import_components52.Button,
         {
           variant: "tertiary",
           size: "compact",
@@ -16757,7 +16774,7 @@ function PatternList() {
         },
         (0, import_i18n45.__)("Reset view")
       ), labels?.add_new_item && canCreateRecord && /* @__PURE__ */ React.createElement(
-        import_components51.Button,
+        import_components52.Button,
         {
           variant: "primary",
           onClick: () => setShowPatternModal(true),

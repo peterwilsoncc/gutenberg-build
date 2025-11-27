@@ -15570,30 +15570,44 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/page/header.js
+var import_components51 = __toESM(require_components());
+
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.js
 var import_components50 = __toESM(require_components());
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components50.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.js
 var import_jsx_runtime101 = __toESM(require_jsx_runtime());
 function Header({
   breadcrumbs,
   badges,
   title,
   subTitle,
-  actions
+  actions,
+  showSidebarToggle = true
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_components50.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_components51.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
     /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(
-      import_components50.__experimentalHStack,
+      import_components51.__experimentalHStack,
       {
         className: "admin-ui-page__header-title",
         justify: "space-between",
         spacing: 2,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_components50.__experimentalHStack, { spacing: 2, children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components50.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_components51.__experimentalHStack, { spacing: 2, justify: "flex-start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+              SidebarToggleSlot,
+              {
+                bubblesVirtually: true,
+                className: "admin-ui-page__sidebar-toggle-slot"
+              }
+            ),
+            title && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components51.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
             breadcrumbs,
             badges
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-            import_components50.__experimentalHStack,
+            import_components51.__experimentalHStack,
             {
               style: { width: "auto", flexShrink: 0 },
               spacing: 2,
@@ -15618,7 +15632,8 @@ function Page({
   children,
   className,
   actions,
-  hasPadding = false
+  hasPadding = false,
+  showSidebarToggle = true
 }) {
   const classes = clsx_default("admin-ui-page", className);
   return /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(navigable_region_default, { className: classes, ariaLabel: title, children: [
@@ -15629,17 +15644,19 @@ function Page({
         badges,
         title,
         subTitle,
-        actions
+        actions,
+        showSidebarToggle
       }
     ),
     hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("div", { className: "admin-ui-page__content has-padding", children }) : children
   ] });
 }
+Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/template-part-list/stage.tsx
 var import_core_data4 = __toESM(require_core_data());
-var import_components52 = __toESM(require_components());
+var import_components53 = __toESM(require_components());
 var import_data11 = __toESM(require_data());
 var import_element54 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
@@ -15704,7 +15721,7 @@ function paramCase(input, options) {
 }
 
 // packages/fields/build-module/components/create-template-part-modal/index.js
-var import_components51 = __toESM(require_components());
+var import_components52 = __toESM(require_components());
 var import_compose12 = __toESM(require_compose());
 var import_core_data2 = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
@@ -15763,7 +15780,7 @@ function CreateTemplatePartModal({
     []
   );
   return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-    import_components51.Modal,
+    import_components52.Modal,
     {
       title: modalTitle || defaultModalTitle,
       onRequestClose: restProps.closeModal,
@@ -15844,9 +15861,9 @@ function CreateTemplatePartModalContents({
         event.preventDefault();
         await createTemplatePart();
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_components51.__experimentalVStack, { spacing: "4", children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_components52.__experimentalVStack, { spacing: "4", children: [
         /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-          import_components51.TextControl,
+          import_components52.TextControl,
           {
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
@@ -15857,7 +15874,7 @@ function CreateTemplatePartModalContents({
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)("fieldset", { className: "fields-create-template-part-modal__area-fieldset", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components51.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n41.__)("Area") }),
+          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components52.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n41.__)("Area") }),
           /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("div", { className: "fields-create-template-part-modal__area-radio-group", children: (defaultTemplatePartAreas ?? []).map(
             (item) => {
               const icon = getTemplatePartIcon(item.icon);
@@ -15887,7 +15904,7 @@ function CreateTemplatePartModalContents({
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-                      import_components51.Icon,
+                      import_components52.Icon,
                       {
                         icon,
                         className: "fields-create-template-part-modal__area-radio-icon"
@@ -15905,7 +15922,7 @@ function CreateTemplatePartModalContents({
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-                      import_components51.Icon,
+                      import_components52.Icon,
                       {
                         icon: check_default,
                         className: "fields-create-template-part-modal__area-radio-checkmark"
@@ -15929,9 +15946,9 @@ function CreateTemplatePartModalContents({
             }
           ) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_components51.__experimentalHStack, { justify: "right", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_components52.__experimentalHStack, { justify: "right", children: [
           /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-            import_components51.Button,
+            import_components52.Button,
             {
               __next40pxDefaultSize: true,
               variant: "tertiary",
@@ -15942,7 +15959,7 @@ function CreateTemplatePartModalContents({
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-            import_components51.Button,
+            import_components52.Button,
             {
               __next40pxDefaultSize: true,
               variant: "primary",
@@ -16536,7 +16553,7 @@ document.head.appendChild(document.createElement("style")).appendChild(document.
 // routes/template-part-list/stage.tsx
 var { useEntityRecordsWithPermissions } = unlock2(import_core_data4.privateApis);
 var { usePostActions, usePostFields } = unlock2(import_editor.privateApis);
-var { Tabs } = unlock2(import_components52.privateApis);
+var { Tabs } = unlock2(import_components53.privateApis);
 function getItemId(item) {
   return item.id.toString();
 }
@@ -16692,7 +16709,7 @@ function TemplatePartList() {
       subTitle: postTypeObject.labels?.description,
       className: "template-part-page",
       actions: /* @__PURE__ */ React.createElement(React.Fragment, null, isModified && /* @__PURE__ */ React.createElement(
-        import_components52.Button,
+        import_components53.Button,
         {
           variant: "tertiary",
           size: "compact",
@@ -16700,7 +16717,7 @@ function TemplatePartList() {
         },
         (0, import_i18n43.__)("Reset view")
       ), labels?.add_new_item && canCreateRecord && /* @__PURE__ */ React.createElement(
-        import_components52.Button,
+        import_components53.Button,
         {
           variant: "primary",
           onClick: () => setShowTemplatePartModal(true),
