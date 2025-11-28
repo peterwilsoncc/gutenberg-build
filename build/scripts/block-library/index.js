@@ -30216,7 +30216,15 @@ ${js}
                     setError(null);
                   } catch (err) {
                     setError(err.message);
-                    (0, import_a11y.speak)(err.message);
+                    (0, import_a11y.speak)(
+                      (0, import_i18n97.sprintf)(
+                        /* translators: %s: error message returned when parsing LaTeX. */
+                        (0, import_i18n97.__)(
+                          "Error parsing mathematical expression: %s"
+                        ),
+                        err.message
+                      )
+                    );
                   }
                   setAttributes({
                     mathML: newMathML,
@@ -30232,7 +30240,11 @@ ${js}
                 {
                   intent: "error",
                   className: "wp-block-math__error",
-                  children: error
+                  children: (0, import_i18n97.sprintf)(
+                    /* translators: %s: error message returned when parsing LaTeX. */
+                    (0, import_i18n97.__)("Error: %s"),
+                    error
+                  )
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("style", { children: ".wp-block-math__error .components-badge__content{white-space:normal}" })
