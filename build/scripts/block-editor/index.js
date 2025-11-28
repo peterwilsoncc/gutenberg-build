@@ -15308,6 +15308,35 @@ var wp;
   // packages/block-editor/build-module/components/inserter/search-items.js
   var import_remove_accents = __toESM(require_remove_accents());
 
+  // node_modules/tslib/tslib.es6.mjs
+  var extendStatics = function(d2, b2) {
+    extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
+      d3.__proto__ = b3;
+    } || function(d3, b3) {
+      for (var p2 in b3) if (Object.prototype.hasOwnProperty.call(b3, p2)) d3[p2] = b3[p2];
+    };
+    return extendStatics(d2, b2);
+  };
+  function __extends(d2, b2) {
+    if (typeof b2 !== "function" && b2 !== null)
+      throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
+    extendStatics(d2, b2);
+    function __209() {
+      this.constructor = d2;
+    }
+    d2.prototype = b2 === null ? Object.create(b2) : (__209.prototype = b2.prototype, new __209());
+  }
+  var __assign = function() {
+    __assign = Object.assign || function __assign2(t3) {
+      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+        s2 = arguments[i2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t3[p2] = s2[p2];
+      }
+      return t3;
+    };
+    return __assign.apply(this, arguments);
+  };
+
   // node_modules/lower-case/dist.es2015/index.js
   function lowerCase(str) {
     return str.toLowerCase();
@@ -46165,34 +46194,7 @@ var wp;
     );
   }
 
-  // packages/block-editor/node_modules/tslib/tslib.es6.js
-  var extendStatics = function(d2, b2) {
-    extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
-      d3.__proto__ = b3;
-    } || function(d3, b3) {
-      for (var p2 in b3) if (Object.prototype.hasOwnProperty.call(b3, p2)) d3[p2] = b3[p2];
-    };
-    return extendStatics(d2, b2);
-  };
-  function __extends(d2, b2) {
-    extendStatics(d2, b2);
-    function __209() {
-      this.constructor = d2;
-    }
-    d2.prototype = b2 === null ? Object.create(b2) : (__209.prototype = b2.prototype, new __209());
-  }
-  var __assign = function() {
-    __assign = Object.assign || function __assign2(t3) {
-      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-        s2 = arguments[i2];
-        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t3[p2] = s2[p2];
-      }
-      return t3;
-    };
-    return __assign.apply(this, arguments);
-  };
-
-  // packages/block-editor/node_modules/react-easy-crop/index.module.js
+  // node_modules/react-easy-crop/index.module.js
   var React3 = __toESM(require_react());
   var import_normalize_wheel = __toESM(require_normalize_wheel());
   function getCropSize(mediaWidth, mediaHeight, containerWidth, containerHeight, aspect, rotation) {
@@ -46343,12 +46345,14 @@ var wp;
   var css_248z = ".reactEasyCrop_Container {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  user-select: none;\n  touch-action: none;\n  cursor: move;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.reactEasyCrop_Image,\n.reactEasyCrop_Video {\n  will-change: transform; /* this improves performances and prevent painting issues on iOS Chrome */\n}\n\n.reactEasyCrop_Contain {\n  max-width: 100%;\n  max-height: 100%;\n  margin: auto;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n.reactEasyCrop_Cover_Horizontal {\n  width: 100%;\n  height: auto;\n}\n.reactEasyCrop_Cover_Vertical {\n  width: auto;\n  height: 100%;\n}\n\n.reactEasyCrop_CropArea {\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  border: 1px solid rgba(255, 255, 255, 0.5);\n  box-sizing: border-box;\n  box-shadow: 0 0 0 9999em;\n  color: rgba(0, 0, 0, 0.5);\n  overflow: hidden;\n}\n\n.reactEasyCrop_CropAreaRound {\n  border-radius: 50%;\n}\n\n.reactEasyCrop_CropAreaGrid::before {\n  content: ' ';\n  box-sizing: border-box;\n  position: absolute;\n  border: 1px solid rgba(255, 255, 255, 0.5);\n  top: 0;\n  bottom: 0;\n  left: 33.33%;\n  right: 33.33%;\n  border-top: 0;\n  border-bottom: 0;\n}\n\n.reactEasyCrop_CropAreaGrid::after {\n  content: ' ';\n  box-sizing: border-box;\n  position: absolute;\n  border: 1px solid rgba(255, 255, 255, 0.5);\n  top: 33.33%;\n  bottom: 33.33%;\n  left: 0;\n  right: 0;\n  border-left: 0;\n  border-right: 0;\n}\n";
   var MIN_ZOOM2 = 1;
   var MAX_ZOOM2 = 3;
+  var KEYBOARD_STEP = 1;
   var Cropper = (
     /** @class */
     (function(_super) {
       __extends(Cropper2, _super);
       function Cropper2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.cropperRef = React3.createRef();
         _this.imageRef = React3.createRef();
         _this.videoRef = React3.createRef();
         _this.containerPosition = {
@@ -46383,6 +46387,8 @@ var wp;
         _this.currentDoc = typeof document !== "undefined" ? document : null;
         _this.currentWindow = typeof window !== "undefined" ? window : null;
         _this.resizeObserver = null;
+        _this.previousCropSize = null;
+        _this.isInitialized = false;
         _this.state = {
           cropSize: null,
           hasWheelJustStarted: false,
@@ -46411,7 +46417,7 @@ var wp;
           _this.currentDoc.removeEventListener("mouseup", _this.onDragStopped);
           _this.currentDoc.removeEventListener("touchmove", _this.onTouchMove);
           _this.currentDoc.removeEventListener("touchend", _this.onDragStopped);
-          _this.currentDoc.removeEventListener("gesturemove", _this.onGestureMove);
+          _this.currentDoc.removeEventListener("gesturechange", _this.onGestureChange);
           _this.currentDoc.removeEventListener("gestureend", _this.onGestureEnd);
           _this.currentDoc.removeEventListener("scroll", _this.onScroll);
         };
@@ -46424,8 +46430,10 @@ var wp;
         _this.onMediaLoad = function() {
           var cropSize = _this.computeSizes();
           if (cropSize) {
+            _this.previousCropSize = cropSize;
             _this.emitCropData();
             _this.setInitialCrop(cropSize);
+            _this.isInitialized = true;
           }
           if (_this.props.onMediaLoaded) {
             _this.props.onMediaLoaded(_this.mediaSize);
@@ -46558,12 +46566,12 @@ var wp;
         _this.onGestureStart = function(e2) {
           if (!_this.currentDoc) return;
           e2.preventDefault();
-          _this.currentDoc.addEventListener("gesturechange", _this.onGestureMove);
+          _this.currentDoc.addEventListener("gesturechange", _this.onGestureChange);
           _this.currentDoc.addEventListener("gestureend", _this.onGestureEnd);
           _this.gestureZoomStart = _this.props.zoom;
           _this.gestureRotationStart = _this.props.rotation;
         };
-        _this.onGestureMove = function(e2) {
+        _this.onGestureChange = function(e2) {
           e2.preventDefault();
           if (_this.isTouching) {
             return;
@@ -46709,9 +46717,74 @@ var wp;
         };
         _this.recomputeCropPosition = function() {
           if (!_this.state.cropSize) return;
-          var newPosition = _this.props.restrictPosition ? restrictPosition(_this.props.crop, _this.mediaSize, _this.state.cropSize, _this.props.zoom, _this.props.rotation) : _this.props.crop;
+          var adjustedCrop = _this.props.crop;
+          if (_this.isInitialized && _this.previousCropSize) {
+            var sizeChanged = Math.abs(_this.previousCropSize.width - _this.state.cropSize.width) > 1e-6 || Math.abs(_this.previousCropSize.height - _this.state.cropSize.height) > 1e-6;
+            if (sizeChanged) {
+              var scaleX = _this.state.cropSize.width / _this.previousCropSize.width;
+              var scaleY = _this.state.cropSize.height / _this.previousCropSize.height;
+              adjustedCrop = {
+                x: _this.props.crop.x * scaleX,
+                y: _this.props.crop.y * scaleY
+              };
+            }
+          }
+          var newPosition = _this.props.restrictPosition ? restrictPosition(adjustedCrop, _this.mediaSize, _this.state.cropSize, _this.props.zoom, _this.props.rotation) : adjustedCrop;
+          _this.previousCropSize = _this.state.cropSize;
           _this.props.onCropChange(newPosition);
           _this.emitCropData();
+        };
+        _this.onKeyDown = function(event) {
+          var _a, _b;
+          var _c = _this.props, crop = _c.crop, onCropChange = _c.onCropChange, keyboardStep = _c.keyboardStep, zoom = _c.zoom, rotation = _c.rotation;
+          var step = keyboardStep;
+          if (!_this.state.cropSize) return;
+          if (event.shiftKey) {
+            step *= 0.2;
+          }
+          var newCrop = __assign({}, crop);
+          switch (event.key) {
+            case "ArrowUp":
+              newCrop.y -= step;
+              event.preventDefault();
+              break;
+            case "ArrowDown":
+              newCrop.y += step;
+              event.preventDefault();
+              break;
+            case "ArrowLeft":
+              newCrop.x -= step;
+              event.preventDefault();
+              break;
+            case "ArrowRight":
+              newCrop.x += step;
+              event.preventDefault();
+              break;
+            default:
+              return;
+          }
+          if (_this.props.restrictPosition) {
+            newCrop = restrictPosition(newCrop, _this.mediaSize, _this.state.cropSize, zoom, rotation);
+          }
+          if (!event.repeat) {
+            (_b = (_a = _this.props).onInteractionStart) === null || _b === void 0 ? void 0 : _b.call(_a);
+          }
+          onCropChange(newCrop);
+        };
+        _this.onKeyUp = function(event) {
+          var _a, _b;
+          switch (event.key) {
+            case "ArrowUp":
+            case "ArrowDown":
+            case "ArrowLeft":
+            case "ArrowRight":
+              event.preventDefault();
+              break;
+            default:
+              return;
+          }
+          _this.emitCropData();
+          (_b = (_a = _this.props).onInteractionEnd) === null || _b === void 0 ? void 0 : _b.call(_a);
         };
         return _this;
       }
@@ -46751,6 +46824,9 @@ var wp;
         }
         if (this.props.setVideoRef) {
           this.props.setVideoRef(this.videoRef);
+        }
+        if (this.props.setCropperRef) {
+          this.props.setCropperRef(this.cropperRef);
         }
       };
       Cropper2.prototype.componentWillUnmount = function() {
@@ -46853,8 +46929,9 @@ var wp;
       };
       Cropper2.prototype.render = function() {
         var _this = this;
-        var _a = this.props, image = _a.image, video = _a.video, mediaProps = _a.mediaProps, transform = _a.transform, _b = _a.crop, x2 = _b.x, y2 = _b.y, rotation = _a.rotation, zoom = _a.zoom, cropShape = _a.cropShape, showGrid = _a.showGrid, _c = _a.style, containerStyle = _c.containerStyle, cropAreaStyle = _c.cropAreaStyle, mediaStyle = _c.mediaStyle, _d = _a.classes, containerClassName = _d.containerClassName, cropAreaClassName = _d.cropAreaClassName, mediaClassName = _d.mediaClassName;
-        var objectFit = this.state.mediaObjectFit;
+        var _a;
+        var _b = this.props, image = _b.image, video = _b.video, mediaProps = _b.mediaProps, cropperProps = _b.cropperProps, transform = _b.transform, _c = _b.crop, x2 = _c.x, y2 = _c.y, rotation = _b.rotation, zoom = _b.zoom, cropShape = _b.cropShape, showGrid = _b.showGrid, roundCropAreaPixels = _b.roundCropAreaPixels, _d = _b.style, containerStyle = _d.containerStyle, cropAreaStyle = _d.cropAreaStyle, mediaStyle = _d.mediaStyle, _e = _b.classes, containerClassName = _e.containerClassName, cropAreaClassName = _e.cropAreaClassName, mediaClassName = _e.mediaClassName;
+        var objectFit = (_a = this.state.mediaObjectFit) !== null && _a !== void 0 ? _a : this.getObjectFit();
         return React3.createElement("div", {
           onMouseDown: this.onMouseDown,
           onTouchStart: this.onTouchStart,
@@ -46876,6 +46953,7 @@ var wp;
           onLoad: this.onMediaLoad
         })) : video && React3.createElement("video", __assign({
           autoPlay: true,
+          playsInline: true,
           loop: true,
           muted: true,
           className: classNames("reactEasyCrop_Video", objectFit === "contain" && "reactEasyCrop_Contain", objectFit === "horizontal-cover" && "reactEasyCrop_Cover_Horizontal", objectFit === "vertical-cover" && "reactEasyCrop_Cover_Vertical", mediaClassName)
@@ -46892,14 +46970,18 @@ var wp;
           return React3.createElement("source", __assign({
             key: item.src
           }, item));
-        })), this.state.cropSize && React3.createElement("div", {
+        })), this.state.cropSize && React3.createElement("div", __assign({
+          ref: this.cropperRef,
           style: __assign(__assign({}, cropAreaStyle), {
-            width: this.state.cropSize.width,
-            height: this.state.cropSize.height
+            width: roundCropAreaPixels ? Math.round(this.state.cropSize.width) : this.state.cropSize.width,
+            height: roundCropAreaPixels ? Math.round(this.state.cropSize.height) : this.state.cropSize.height
           }),
+          tabIndex: 0,
+          onKeyDown: this.onKeyDown,
+          onKeyUp: this.onKeyUp,
           "data-testid": "cropper",
           className: classNames("reactEasyCrop_CropArea", cropShape === "round" && "reactEasyCrop_CropAreaRound", showGrid && "reactEasyCrop_CropAreaGrid", cropAreaClassName)
-        }));
+        }, cropperProps)));
       };
       Cropper2.defaultProps = {
         zoom: 1,
@@ -46913,9 +46995,11 @@ var wp;
         style: {},
         classes: {},
         mediaProps: {},
+        cropperProps: {},
         zoomSpeed: 1,
         restrictPosition: true,
-        zoomWithScroll: true
+        zoomWithScroll: true,
+        keyboardStep: KEYBOARD_STEP
       };
       Cropper2.getMousePoint = function(e2) {
         return {
@@ -73870,21 +73954,5 @@ normalize-wheel/src/isEventSupported.js:
    * @internal
    * @license Modernizr 3.0.0pre (Custom Build) | MIT
    *)
-
-tslib/tslib.es6.js:
-  (*! *****************************************************************************
-  Copyright (c) Microsoft Corporation.
-  
-  Permission to use, copy, modify, and/or distribute this software for any
-  purpose with or without fee is hereby granted.
-  
-  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-  PERFORMANCE OF THIS SOFTWARE.
-  ***************************************************************************** *)
 */
 //# sourceMappingURL=index.js.map
