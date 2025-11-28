@@ -4511,11 +4511,11 @@ var wp;
         type: "string",
         default: "/"
       },
-      showHomeLink: {
+      showHomeItem: {
         type: "boolean",
         default: true
       },
-      showLastItem: {
+      showCurrentItem: {
         type: "boolean",
         default: true
       },
@@ -4588,8 +4588,8 @@ var wp;
   }) {
     const {
       separator,
-      showHomeLink,
-      showLastItem,
+      showHomeItem,
+      showCurrentItem,
       prefersTaxonomy,
       showOnHomePage
     } = attributes3;
@@ -4662,7 +4662,7 @@ var wp;
     templateSlug && !postType || !_showTerms && !isPostTypeHierarchical || _showTerms && !hasTermsAssigned;
     if (showPlaceholder) {
       const placeholderItems = [];
-      if (showHomeLink) {
+      if (showHomeItem) {
         placeholderItems.push((0, import_i18n12.__)("Home"));
       }
       if (templateSlug && !postId) {
@@ -4681,7 +4681,7 @@ var wp;
           inert: "true",
           children: /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)("ol", { children: [
             placeholderItems.map((text, index) => /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index}`, children: text }) }, index)),
-            showLastItem && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("span", { "aria-current": "page", children: (0, import_i18n12.__)("Current") }) })
+            showCurrentItem && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("span", { "aria-current": "page", children: (0, import_i18n12.__)("Current") }) })
           ] })
         }
       );
@@ -4694,8 +4694,8 @@ var wp;
           resetAll: () => {
             setAttributes({
               separator: separatorDefaultValue,
-              showHomeLink: true,
-              showLastItem: true
+              showHomeItem: true,
+              showCurrentItem: true
             });
           },
           dropdownMenuProps,
@@ -4703,19 +4703,19 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
               import_components9.__experimentalToolsPanelItem,
               {
-                label: (0, import_i18n12.__)("Show home link"),
+                label: (0, import_i18n12.__)("Show home breadcrumb"),
                 isShownByDefault: true,
-                hasValue: () => !showHomeLink,
+                hasValue: () => !showHomeItem,
                 onDeselect: () => setAttributes({
-                  showHomeLink: true
+                  showHomeItem: true
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
                   import_components9.ToggleControl,
                   {
                     __nextHasNoMarginBottom: true,
-                    label: (0, import_i18n12.__)("Show home link"),
-                    onChange: (value) => setAttributes({ showHomeLink: value }),
-                    checked: showHomeLink
+                    label: (0, import_i18n12.__)("Show home breadcrumb"),
+                    onChange: (value) => setAttributes({ showHomeItem: value }),
+                    checked: showHomeItem
                   }
                 )
               }
@@ -4723,19 +4723,19 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
               import_components9.__experimentalToolsPanelItem,
               {
-                label: (0, import_i18n12.__)("Show last item"),
+                label: (0, import_i18n12.__)("Show current breadcrumb"),
                 isShownByDefault: true,
-                hasValue: () => !showLastItem,
+                hasValue: () => !showCurrentItem,
                 onDeselect: () => setAttributes({
-                  showLastItem: true
+                  showCurrentItem: true
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
                   import_components9.ToggleControl,
                   {
                     __nextHasNoMarginBottom: true,
-                    label: (0, import_i18n12.__)("Show last item"),
-                    onChange: (value) => setAttributes({ showLastItem: value }),
-                    checked: showLastItem
+                    label: (0, import_i18n12.__)("Show current breadcrumb"),
+                    onChange: (value) => setAttributes({ showCurrentItem: value }),
+                    checked: showCurrentItem
                   }
                 )
               }
