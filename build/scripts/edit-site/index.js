@@ -8676,7 +8676,7 @@ var wp;
   var import_core_data17 = __toESM(require_core_data());
   var import_i18n22 = __toESM(require_i18n());
 
-  // packages/global-styles-ui/build-module/font-library-modal/resolvers.js
+  // packages/global-styles-ui/build-module/font-library-modal/api.js
   var import_api_fetch2 = __toESM(require_api_fetch());
 
   // packages/global-styles-ui/build-module/font-library-modal/utils/index.js
@@ -43493,7 +43493,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [title, setTitle] = (0, import_element147.useState)("");
     const { saveEntityRecord } = (0, import_data76.useDispatch)(import_core_data59.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data76.useDispatch)(import_notices10.store);
-    const { resolveSelect: resolveSelect2 } = (0, import_data76.useRegistry)();
+    const { resolveSelect: resolveSelect3 } = (0, import_data76.useRegistry)();
     async function createPost(event) {
       event.preventDefault();
       if (isCreatingPost) {
@@ -43501,7 +43501,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setIsCreatingPost(true);
       try {
-        const postTypeObject = await resolveSelect2(import_core_data59.store).getPostType(postType2);
+        const postTypeObject = await resolveSelect3(import_core_data59.store).getPostType(postType2);
         const newPage = await saveEntityRecord(
           "postType",
           postType2,

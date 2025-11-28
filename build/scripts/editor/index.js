@@ -15954,7 +15954,7 @@ var wp;
   var import_core_data34 = __toESM(require_core_data());
   var import_i18n71 = __toESM(require_i18n());
 
-  // packages/global-styles-ui/build-module/font-library-modal/resolvers.js
+  // packages/global-styles-ui/build-module/font-library-modal/api.js
   var import_api_fetch3 = __toESM(require_api_fetch());
   var FONT_FAMILIES_URL = "/wp/v2/font-families";
   async function fetchInstallFontFamily(data) {
@@ -15981,31 +15981,6 @@ var wp;
       id: response.id,
       ...response.font_face_settings
     };
-  }
-  async function fetchGetFontFamilyBySlug(slug) {
-    const config = {
-      path: `${FONT_FAMILIES_URL}?slug=${slug}&_embed=true`,
-      method: "GET"
-    };
-    const response = await (0, import_api_fetch3.default)(config);
-    if (!response || response.length === 0) {
-      return null;
-    }
-    const fontFamilyPost = response[0];
-    return {
-      id: fontFamilyPost.id,
-      ...fontFamilyPost.font_family_settings,
-      fontFace: (fontFamilyPost?._embedded?.font_faces ?? []).map(
-        (face) => face.font_face_settings
-      ) || []
-    };
-  }
-  async function fetchUninstallFontFamily(fontFamilyId) {
-    const config = {
-      path: `${FONT_FAMILIES_URL}/${fontFamilyId}?force=true`,
-      method: "DELETE"
-    };
-    return await (0, import_api_fetch3.default)(config);
   }
 
   // packages/global-styles-ui/build-module/font-library-modal/utils/index.js
@@ -16311,7 +16286,7 @@ var wp;
   );
   FontLibraryContext.displayName = "FontLibraryContext";
   function FontLibraryProvider({ children }) {
-    const { saveEntityRecord } = (0, import_data54.useDispatch)(import_core_data34.store);
+    const { saveEntityRecord, deleteEntityRecord } = (0, import_data54.useDispatch)(import_core_data34.store);
     const { globalStylesId } = (0, import_data54.useSelect)((select5) => {
       const { __experimentalGetCurrentGlobalStylesId } = select5(import_core_data34.store);
       return { globalStylesId: __experimentalGetCurrentGlobalStylesId() };
@@ -16345,6 +16320,9 @@ var wp;
     }) || [];
     const [fontFamilies, setFontFamilies] = useSetting("typography.fontFamilies");
     const saveFontFamilies = async (fonts) => {
+      if (!globalStyles.record) {
+        return;
+      }
       const updatedGlobalStyles = globalStyles.record;
       setImmutably2(
         updatedGlobalStyles ?? {},
@@ -16416,9 +16394,21 @@ var wp;
         let installationErrors = [];
         for (const fontFamilyToInstall of fontFamiliesToInstall) {
           let isANewFontFamily = false;
-          let installedFontFamily = await fetchGetFontFamilyBySlug(
-            fontFamilyToInstall.slug
-          );
+          const fontFamilyRecords = await (0, import_data54.resolveSelect)(
+            import_core_data34.store
+          ).getEntityRecords("postType", "wp_font_family", {
+            slug: fontFamilyToInstall.slug,
+            per_page: 1,
+            _embed: true
+          });
+          const fontFamilyPost = fontFamilyRecords && fontFamilyRecords.length > 0 ? fontFamilyRecords[0] : null;
+          let installedFontFamily = fontFamilyPost ? {
+            id: fontFamilyPost.id,
+            ...fontFamilyPost.font_family_settings,
+            fontFace: (fontFamilyPost?._embedded?.font_faces ?? []).map(
+              (face) => face.font_face_settings
+            ) || []
+          } : null;
           if (!installedFontFamily) {
             isANewFontFamily = true;
             installedFontFamily = await fetchInstallFontFamily(
@@ -16461,7 +16451,12 @@ var wp;
             fontFamiliesToActivate.push(installedFontFamily);
           }
           if (isANewFontFamily && (fontFamilyToInstall?.fontFace?.length ?? 0) > 0 && successfullyInstalledFontFaces?.length === 0) {
-            await fetchUninstallFontFamily(installedFontFamily.id);
+            await deleteEntityRecord(
+              "postType",
+              "wp_font_family",
+              installedFontFamily.id,
+              { force: true }
+            );
           }
           installationErrors = installationErrors.concat(
             unsuccessfullyInstalledFontFaces
@@ -16492,17 +16487,16 @@ var wp;
         throw new Error((0, import_i18n71.__)("Font family to uninstall is not defined."));
       }
       try {
-        const uninstalledFontFamily = await fetchUninstallFontFamily(
-          fontFamilyToUninstall.id
+        await deleteEntityRecord(
+          "postType",
+          "wp_font_family",
+          fontFamilyToUninstall.id,
+          { force: true }
         );
-        if (uninstalledFontFamily.deleted) {
-          const activeFonts = deactivateFontFamily(
-            fontFamilyToUninstall
-          );
-          await saveFontFamilies(activeFonts);
-        }
+        const activeFonts = deactivateFontFamily(fontFamilyToUninstall);
+        await saveFontFamilies(activeFonts);
         refreshLibrary();
-        return uninstalledFontFamily;
+        return { deleted: true };
       } catch (error) {
         console.error(
           `There was an error uninstalling the font family:`,
@@ -16666,8 +16660,7 @@ var wp;
     return {
       fontStyle: "normal",
       fontWeight: "400",
-      fontFamily: font2.fontFamily,
-      fake: true
+      fontFamily: font2.fontFamily
     };
   }
   function FontDemo({ font: font2, text }) {
