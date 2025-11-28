@@ -16533,7 +16533,7 @@ var wp;
       entities: entities2
     };
   }
-  function receiveEntityRecords(kind, name, records, query, invalidateCache = false, edits, meta) {
+  function receiveEntityRecords(kind, name, records, query = void 0, invalidateCache = false, edits = void 0, meta = void 0) {
     if (kind === "postType") {
       records = (Array.isArray(records) ? records : [records]).map(
         (record) => record.status === "auto-draft" ? { ...record, title: "" } : record
