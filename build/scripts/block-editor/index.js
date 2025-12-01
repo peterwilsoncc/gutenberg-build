@@ -14310,10 +14310,10 @@ var wp;
         )
       };
     }, [
-      name,
       blockType?.usesContext,
       blockContext,
       attributes?.metadata?.bindings,
+      bindableAttributes,
       registeredSources
     ]);
     const computedAttributes = (0, import_data6.useSelect)(
@@ -14375,7 +14375,6 @@ var wp;
         blockBindings,
         clientId,
         context,
-        name,
         registeredSources
       ]
     );
@@ -14444,7 +14443,6 @@ var wp;
         hasPatternOverrides,
         setAttributes,
         registeredSources,
-        name,
         registry
       ]
     );
