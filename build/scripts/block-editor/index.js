@@ -26543,12 +26543,12 @@ var wp;
     children,
     pattern
   }) => {
+    const blockName = blocks2.length === 1 ? blocks2[0].name : void 0;
     const blockTypeIcon = (0, import_data48.useSelect)(
       (select3) => {
-        const { getBlockType: getBlockType23 } = select3(import_blocks25.store);
-        return blocks2.length === 1 && getBlockType23(blocks2[0].name)?.icon;
+        return blockName && select3(import_blocks25.store).getBlockType(blockName)?.icon;
       },
-      [blocks2]
+      [blockName]
     );
     const { startDragging: startDragging2, stopDragging: stopDragging2 } = unlock(
       (0, import_data48.useDispatch)(store)
