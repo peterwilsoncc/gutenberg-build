@@ -17482,7 +17482,7 @@ var wp;
           { kind, name, id: key }
         ]);
       }
-      if (window.__experimentalEnableSync && entityConfig.syncConfig && !query) {
+      if (window.__experimentalEnableSync && entityConfig.syncConfig && isNumericID(key) && !query) {
         if (true) {
           const objectType = `${kind}/${name}`;
           const objectId = key;
