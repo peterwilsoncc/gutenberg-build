@@ -2993,8 +2993,7 @@ var wp;
 
   // packages/theme/build-module/color-ramps/lib/taper-chroma.js
   function taperChroma(seed, lTarget, options = {}) {
-    const gamut = options.gamut ?? "p3";
-    const gamutSpace = gamut === "p3" ? p3_default : srgb_default;
+    const gamut = options.gamut ?? srgb_default;
     const alpha = options.alpha ?? 0.65;
     const carry = options.carry ?? 0.5;
     const cUpperBound = options.cUpperBound ?? 0.45;
@@ -3012,22 +3011,18 @@ var wp;
         hSeed = normalizeHue(options.hueFallback);
       } else {
         return {
-          spaceId: "oklch",
-          coords: [clamp01(lTarget), 0, 0]
+          space: oklch_default,
+          coords: [clamp01(lTarget), 0, 0],
+          alpha: 1
         };
       }
     }
     const lSeed = clamp01(get(seed, [oklch_default, "l"]));
-    const cmaxSeed = getCachedMaxChromaAtLH(
-      lSeed,
-      hSeed,
-      gamutSpace,
-      cUpperBound
-    );
+    const cmaxSeed = getCachedMaxChromaAtLH(lSeed, hSeed, gamut, cUpperBound);
     const cmaxTarget = getCachedMaxChromaAtLH(
       clamp01(lTarget),
       hSeed,
-      gamutSpace,
+      gamut,
       cUpperBound
     );
     let seedRelative = 0;
@@ -3041,17 +3036,8 @@ var wp;
       kLight,
       kDark
     });
-    let cPlanned = cWithCarry * t;
+    const cPlanned = cWithCarry * t;
     const lOut = clamp01(lTarget);
-    const candidate = {
-      spaceId: "oklch",
-      coords: [lOut, cPlanned, hSeed]
-    };
-    if (!inGamut(candidate, gamutSpace)) {
-      const cap = Math.min(cPlanned, cUpperBound);
-      cPlanned = getCachedMaxChromaAtLH(lOut, hSeed, gamutSpace, cap);
-    }
-    cPlanned = Math.min(cPlanned, cSeed);
     return { l: lOut, c: cPlanned };
   }
   function clamp01(x) {
@@ -3087,9 +3073,9 @@ var wp;
   }
   var maxChromaCache = /* @__PURE__ */ new Map();
   function keyMax(l, h, gamut, cap) {
-    const lq = quantize(l, 1e-3);
-    const hq = quantize(normalizeHue(h), 0.1);
-    const cq = quantize(cap, 1e-3);
+    const lq = quantize(l, 0.05);
+    const hq = quantize(normalizeHue(h), 10);
+    const cq = quantize(cap, 0.05);
     return `${gamut}|L:${lq}|H:${hq}|cap:${cq}`;
   }
   function quantize(x, step) {
@@ -3097,7 +3083,7 @@ var wp;
     return k * step;
   }
   function getCachedMaxChromaAtLH(l, h, gamutSpace, cap) {
-    const gamut = gamutSpace === p3_default ? "p3" : "srgb";
+    const gamut = gamutSpace.id;
     const key = keyMax(l, h, gamut, cap);
     const hit = maxChromaCache.get(key);
     if (typeof hit === "number") {
@@ -3108,25 +3094,13 @@ var wp;
     return computed;
   }
   function maxInGamutChromaAtLH(l, h, gamutSpace, cap) {
-    let lo = 0;
-    let hi = cap;
-    let ok = 0;
-    const lFixed = clamp01(l);
-    const hFixed = normalizeHue(h);
-    for (let i = 0; i < 18; i++) {
-      const mid = (lo + hi) / 2;
-      const probe = {
-        spaceId: "oklch",
-        coords: [lFixed, mid, hFixed]
-      };
-      if (inGamut(probe, gamutSpace)) {
-        ok = mid;
-        lo = mid;
-      } else {
-        hi = mid;
-      }
-    }
-    return ok;
+    const probe = {
+      space: oklch_default,
+      coords: [l, cap, h],
+      alpha: 1
+    };
+    const clamped = toGamut(probe, { space: gamutSpace, method: "css" });
+    return get(clamped, [oklch_default, "c"]);
   }
 
   // packages/theme/build-module/color-ramps/lib/find-color-with-constraints.js
