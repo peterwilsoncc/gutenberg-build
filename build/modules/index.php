@@ -33,14 +33,14 @@ return array(
 		'asset' => 'interactivity-router/full-page.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/a11y',
-		'path' => 'a11y/index',
-		'asset' => 'a11y/index.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/route',
 		'path' => 'route/index',
 		'asset' => 'route/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/a11y',
+		'path' => 'a11y/index',
+		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/abilities',
