@@ -3182,7 +3182,7 @@ function chunk(array, size) {
   }
   return chunks;
 }
-function GridItem({
+var GridItem = (0, import_element11.forwardRef)(function GridItem2({
   view,
   selection,
   onChangeSelection,
@@ -3198,12 +3198,13 @@ function GridItem({
   regularFields,
   badgeFields,
   hasBulkActions,
-  config
-}) {
+  config,
+  ...props
+}, ref) {
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const hasBulkAction = useHasAPossibleBulkAction(actions, item);
   const id = getItemId2(item);
-  const instanceId = (0, import_compose4.useInstanceId)(GridItem);
+  const instanceId = (0, import_compose4.useInstanceId)(GridItem2);
   const isSelected2 = selection.includes(id);
   const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
     mediaField.render,
@@ -3234,11 +3235,19 @@ function GridItem({
   return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
     import_components9.__experimentalVStack,
     {
+      ...props,
+      ref,
       spacing: 0,
-      className: clsx_default("dataviews-view-grid__card", {
-        "is-selected": hasBulkAction && isSelected2
-      }),
+      className: clsx_default(
+        props.className,
+        "dataviews-view-grid__row__gridcell",
+        "dataviews-view-grid__card",
+        {
+          "is-selected": hasBulkAction && isSelected2
+        }
+      ),
       onClickCapture: (event) => {
+        props.onClickCapture?.(event);
         if ((0, import_keycodes2.isAppleOS)() ? event.metaKey : event.ctrlKey) {
           event.stopPropagation();
           event.preventDefault();
@@ -3378,10 +3387,9 @@ function GridItem({
           )
         ] })
       ]
-    },
-    id
+    }
   );
-}
+});
 function CompositeGrid({
   data,
   isInfiniteScroll,
@@ -3457,37 +3465,31 @@ function CompositeGrid({
             return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
               import_components9.Composite.Item,
               {
-                render: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
-                  "div",
+                render: (props) => /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+                  GridItem,
                   {
-                    id: getItemId2(item),
-                    className: "dataviews-view-grid__row__gridcell",
+                    ...props,
                     role: isInfiniteScroll ? "article" : "gridcell",
                     "aria-setsize": isInfiniteScroll ? paginationInfo.totalItems : void 0,
                     "aria-posinset": isInfiniteScroll ? index + 1 : void 0,
-                    children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
-                      GridItem,
-                      {
-                        view,
-                        selection,
-                        onChangeSelection,
-                        onClickItem,
-                        isItemClickable,
-                        renderItemLink,
-                        getItemId: getItemId2,
-                        item,
-                        actions,
-                        mediaField,
-                        titleField,
-                        descriptionField: descriptionField2,
-                        regularFields,
-                        badgeFields,
-                        hasBulkActions,
-                        config: {
-                          sizes: size
-                        }
-                      }
-                    )
+                    view,
+                    selection,
+                    onChangeSelection,
+                    onClickItem,
+                    isItemClickable,
+                    renderItemLink,
+                    getItemId: getItemId2,
+                    item,
+                    actions,
+                    mediaField,
+                    titleField,
+                    descriptionField: descriptionField2,
+                    regularFields,
+                    badgeFields,
+                    hasBulkActions,
+                    config: {
+                      sizes: size
+                    }
                   }
                 )
               },
@@ -4517,7 +4519,7 @@ var GridItems = (0, import_element17.forwardRef)(({ className, previewSize, ...p
 // packages/dataviews/build-module/dataviews-layouts/picker-grid/index.js
 var import_jsx_runtime58 = __toESM(require_jsx_runtime());
 var { Badge: Badge2 } = unlock(import_components17.privateApis);
-function GridItem2({
+function GridItem3({
   view,
   multiselect,
   selection,
@@ -4789,7 +4791,7 @@ function ViewPickerGrid({
                     children: groupItems.map((item) => {
                       const posInSet = (currentPage - 1) * perPage + data.indexOf(item) + 1;
                       return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-                        GridItem2,
+                        GridItem3,
                         {
                           view,
                           multiselect: isMultiselect,
@@ -4846,7 +4848,7 @@ function ViewPickerGrid({
               posinset = (currentPage - 1) * perPage + index + 1;
             }
             return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-              GridItem2,
+              GridItem3,
               {
                 view,
                 multiselect: isMultiselect,
