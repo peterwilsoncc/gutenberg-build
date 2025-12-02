@@ -13312,11 +13312,11 @@ var wp;
     blocks2 = castArray2(blocks2);
     const allowedBlocks = [];
     for (const block of blocks2) {
-      const isValid8 = select3.canInsertBlockType(
+      const isValid2 = select3.canInsertBlockType(
         block.name,
         rootClientId
       );
-      if (isValid8) {
+      if (isValid2) {
         allowedBlocks.push(block);
       }
     }
@@ -13352,10 +13352,10 @@ var wp;
       type: "HIDE_INSERTION_POINT"
     });
   };
-  function setTemplateValidity(isValid8) {
+  function setTemplateValidity(isValid2) {
     return {
       type: "SET_TEMPLATE_VALIDITY",
-      isValid: isValid8
+      isValid: isValid2
     };
   }
   var synchronizeTemplate = () => ({ select: select3, dispatch }) => {
@@ -17988,7 +17988,7 @@ var wp;
         block.attributes
       );
       const content = html ? html : (0, import_blocks16.getSaveContent)(blockType, attributes);
-      const [isValid8] = html ? (0, import_blocks16.validateBlock)({
+      const [isValid2] = html ? (0, import_blocks16.validateBlock)({
         ...block,
         attributes,
         originalContent: content
@@ -17996,7 +17996,7 @@ var wp;
       updateBlock2(clientId, {
         attributes,
         originalContent: content,
-        isValid: isValid8
+        isValid: isValid2
       });
       if (!html) {
         setHtml(content);
@@ -21740,7 +21740,7 @@ var wp;
     className,
     __unstableLayoutClassNames: layoutClassNames,
     name,
-    isValid: isValid8,
+    isValid: isValid2,
     attributes,
     wrapperProps,
     setAttributes,
@@ -21799,7 +21799,7 @@ var wp;
       );
     }
     let block;
-    if (!isValid8) {
+    if (!isValid2) {
       const saveContent = __unstableBlockSource ? (0, import_blocks18.serializeRawBlock)(__unstableBlockSource) : (0, import_blocks18.getSaveContent)(blockType, attributes);
       block = /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(Block, { className: "has-warning", children: [
         /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(BlockInvalidWarning, { clientId }),
@@ -22193,7 +22193,7 @@ var wp;
       blockWithoutAttributes,
       name,
       attributes,
-      isValid: isValid8,
+      isValid: isValid2,
       isSelected = false,
       themeSupportsLayout,
       isEditingContentOnlySection,
@@ -22283,7 +22283,7 @@ var wp;
           block,
           name,
           attributes,
-          isValid: isValid8,
+          isValid: isValid2,
           isSelected
         }
       }
@@ -39385,7 +39385,7 @@ var wp;
       const editingMode = getBlockEditingMode2(selectedBlockClientId);
       const _isDefaultEditingMode = editingMode === "default";
       const _blockName = getBlockName2(selectedBlockClientId);
-      const isValid8 = selectedBlockClientIds.every(
+      const isValid2 = selectedBlockClientIds.every(
         (id) => isBlockValid2(id)
       );
       const isVisual = selectedBlockClientIds.every(
@@ -39405,7 +39405,7 @@ var wp;
         blockClientIds: selectedBlockClientIds,
         isDefaultEditingMode: _isDefaultEditingMode,
         blockType: selectedBlockClientId && (0, import_blocks69.getBlockType)(_blockName),
-        shouldShowVisualToolbar: isValid8 && isVisual,
+        shouldShowVisualToolbar: isValid2 && isVisual,
         toolbarKey: `${selectedBlockClientId}${parentClientId}`,
         showParentSelector: !_isZoomOut && parentBlockType && editingMode !== "contentOnly" && getBlockEditingMode2(parentClientId) !== "disabled" && (0, import_blocks69.hasBlockSupport)(
           parentBlockType,
@@ -60498,6 +60498,47 @@ var wp;
     return direction === "asc" ? a2 - b2 : b2 - a2;
   };
 
+  // packages/dataviews/build-module/field-types/utils/is-valid-required.js
+  function isValidRequired(item, field) {
+    const value = field.getValue({ item });
+    return ![void 0, "", null].includes(value);
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-min.js
+  function isValidMin(item, field) {
+    if (typeof field.isValid.min?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return Number(value) >= field.isValid.min.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-max.js
+  function isValidMax(item, field) {
+    if (typeof field.isValid.max?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return Number(value) <= field.isValid.max.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-elements.js
+  function isValidElements(item, field) {
+    const elements = field.elements ?? [];
+    const validValues = elements.map((el) => el.value);
+    if (validValues.length === 0) {
+      return true;
+    }
+    const value = field.getValue({ item });
+    return [].concat(value).every((v2) => validValues.includes(v2));
+  }
+
   // packages/dataviews/build-module/field-types/number.js
   var import_jsx_runtime371 = __toESM(require_jsx_runtime());
   function getFormat(field) {
@@ -60537,22 +60578,18 @@ var wp;
     }
     return formatNumber(Number(value), format2);
   }
-  var isValid2 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (!isEmpty3(value) && !Number.isFinite(value)) {
-        return (0, import_i18n196.__)("Value must be a number.");
-      }
-      return null;
+  function isValidCustom(item, field) {
+    const value = field.getValue({ item });
+    if (!isEmpty3(value) && !Number.isFinite(value)) {
+      return (0, import_i18n196.__)("Value must be a number.");
     }
-  };
+    return null;
+  }
   var number_default = {
     type: "number",
     render,
     Edit: "number",
     sort: sort_number_default,
-    isValid: isValid2,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
@@ -60579,7 +60616,14 @@ var wp;
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat
+    getFormat,
+    validate: {
+      required: isValidRequired,
+      min: isValidMin,
+      max: isValidMax,
+      elements: isValidElements,
+      custom: isValidCustom
+    }
   };
 
   // packages/dataviews/build-module/field-types/integer.js
@@ -60621,22 +60665,18 @@ var wp;
     }
     return formatInteger(Number(value), format2);
   }
-  var isValid3 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-        return (0, import_i18n197.__)("Value must be an integer.");
-      }
-      return null;
+  function isValidCustom2(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
+      return (0, import_i18n197.__)("Value must be an integer.");
     }
-  };
+    return null;
+  }
   var integer_default = {
     type: "integer",
     render: render2,
     Edit: "integer",
     sort: sort_number_default,
-    isValid: isValid3,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
@@ -60663,7 +60703,14 @@ var wp;
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: getFormat2
+    getFormat: getFormat2,
+    validate: {
+      required: isValidRequired,
+      min: isValidMin,
+      max: isValidMax,
+      elements: isValidElements,
+      custom: isValidCustom2
+    }
   };
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
@@ -60671,13 +60718,21 @@ var wp;
   var import_element210 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-controls/utils/get-custom-validity.js
-  function getCustomValidity(isValid8, validity) {
+  function getCustomValidity(isValid2, validity) {
     let customValidity;
-    if (isValid8?.required && validity?.required) {
+    if (isValid2?.required && validity?.required) {
       customValidity = validity?.required?.message ? validity.required : void 0;
-    } else if (isValid8?.pattern && validity?.pattern) {
+    } else if (isValid2?.pattern && validity?.pattern) {
       customValidity = validity.pattern;
-    } else if (isValid8?.elements && validity?.elements) {
+    } else if (isValid2?.min && validity?.min) {
+      customValidity = validity.min;
+    } else if (isValid2?.max && validity?.max) {
+      customValidity = validity.max;
+    } else if (isValid2?.minLength && validity?.minLength) {
+      customValidity = validity.minLength;
+    } else if (isValid2?.maxLength && validity?.maxLength) {
+      customValidity = validity.maxLength;
+    } else if (isValid2?.elements && validity?.elements) {
       customValidity = validity.elements;
     } else if (validity?.custom) {
       customValidity = validity.custom;
@@ -60695,7 +60750,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { getValue, setValue, label, description, isValid: isValid8 } = field;
+    const { getValue, setValue, label, description, isValid: isValid2 } = field;
     const onChangeControl = (0, import_element210.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
@@ -60705,7 +60760,7 @@ var wp;
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
         help: description,
@@ -60828,7 +60883,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { id, label, description, setValue, getValue, isValid: isValid8 } = field;
+    const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element212.useState)(() => {
@@ -60905,7 +60960,7 @@ var wp;
       timezone: { string: timezoneString },
       l10n: { startOfWeek: startOfWeek2 }
     } = (0, import_date3.getSettings)();
-    const displayLabel = isValid8?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n199.__)("Required")})` : label;
+    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n199.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
       import_components206.BaseControl,
       {
@@ -60932,8 +60987,8 @@ var wp;
             {
               ref: inputControlRef,
               __next40pxDefaultSize: true,
-              required: !!isValid8?.required,
-              customValidity: getCustomValidity(isValid8, validity),
+              required: !!isValid2?.required,
+              customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
               label: (0, import_i18n199.__)("Date time"),
               hideLabelFromVision: true,
@@ -61081,7 +61136,7 @@ var wp;
     setIsTouched,
     children
   }) {
-    const { isValid: isValid8 } = field;
+    const { isValid: isValid2 } = field;
     const [customValidity, setCustomValidity] = (0, import_element213.useState)(void 0);
     const validateRefs = (0, import_element213.useCallback)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
@@ -61101,7 +61156,7 @@ var wp;
       if (isTouched) {
         const timeoutId = setTimeout(() => {
           if (validity) {
-            setCustomValidity(getCustomValidity(isValid8, validity));
+            setCustomValidity(getCustomValidity(isValid2, validity));
           } else {
             validateRefs();
           }
@@ -61109,7 +61164,7 @@ var wp;
         return () => clearTimeout(timeoutId);
       }
       return void 0;
-    }, [isTouched, isValid8, validity, validateRefs]);
+    }, [isTouched, isValid2, validity, validateRefs]);
     const onBlur = (event) => {
       if (isTouched) {
         return;
@@ -61157,7 +61212,7 @@ var wp;
       label,
       setValue,
       getValue,
-      isValid: isValid8,
+      isValid: isValid2,
       format: fieldFormat
     } = field;
     const [selectedPresetId, setSelectedPresetId] = (0, import_element213.useState)(
@@ -61216,7 +61271,7 @@ var wp;
     const {
       timezone: { string: timezoneString }
     } = (0, import_date4.getSettings)();
-    const displayLabel = isValid8?.required ? `${label} (${(0, import_i18n200.__)("Required")})` : label;
+    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n200.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
       ValidatedDateControl,
       {
@@ -61549,7 +61604,7 @@ var wp;
     suffix,
     validity
   }) {
-    const { label, placeholder, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const onChangeControl = (0, import_element214.useCallback)(
       (newValue) => onChange(
@@ -61563,8 +61618,8 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
       ValidatedInputControl2,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
         value: value ?? "",
@@ -61574,9 +61629,9 @@ var wp;
         type,
         prefix: prefix3,
         suffix,
-        pattern: isValid8?.pattern,
-        minLength: isValid8?.minLength,
-        maxLength: isValid8?.maxLength,
+        pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
+        minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
+        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true
       }
     );
@@ -61731,7 +61786,7 @@ var wp;
     validity
   }) {
     const step = Math.pow(10, Math.abs(decimals) * -1);
-    const { label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
     const onChangeControl = (0, import_element215.useCallback)(
       (newValue) => {
@@ -61778,8 +61833,8 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
       ValidatedNumberControl,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
         value,
@@ -61787,8 +61842,8 @@ var wp;
         __next40pxDefaultSize: true,
         hideLabelFromVision,
         step,
-        min: isValid8?.min,
-        max: isValid8?.max
+        min: isValid2.min ? isValid2.min.constraint : void 0,
+        max: isValid2.max ? isValid2.max.constraint : void 0
       }
     );
   }
@@ -61818,7 +61873,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const { elements, isLoading } = useElements({
       elements: field.elements,
       getElements: field.getElements
@@ -61835,7 +61890,7 @@ var wp;
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
         onChange: onChangeControl,
@@ -61858,7 +61913,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { type, label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
     const onChangeControl = (0, import_element217.useCallback)(
@@ -61876,7 +61931,7 @@ var wp;
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         value,
         help: description,
@@ -61930,7 +61985,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const onChangeControl = (0, import_element219.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
@@ -61939,8 +61994,8 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
       ValidatedToggleControl,
       {
-        required: !!isValid8.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         __nextHasNoMarginBottom: true,
         label,
@@ -61965,7 +62020,7 @@ var wp;
     validity
   }) {
     const { rows = 4 } = config2 || {};
-    const { label, placeholder, description, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
     const onChangeControl = (0, import_element220.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -61974,16 +62029,16 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
       ValidatedTextareaControl,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
         value: value ?? "",
         help: description,
         onChange: onChangeControl,
         rows,
-        minLength: isValid8?.minLength,
-        maxLength: isValid8?.maxLength,
+        minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
+        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         hideLabelFromVision
@@ -62003,7 +62058,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { getValue, setValue, isValid: isValid8 } = field;
+    const { getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const onChangeControl = (0, import_element221.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -62024,7 +62079,7 @@ var wp;
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         isBlock: true,
@@ -62057,7 +62112,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { label, placeholder, getValue, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const { elements, isLoading } = useElements({
       elements: field.elements,
@@ -62090,8 +62145,8 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
       ValidatedFormTokenField,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2?.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label: hideLabelFromVision ? void 0 : label,
         value: arrayValueAsElements,
         onChange: onChangeControl,
@@ -62186,7 +62241,7 @@ var wp;
     hideLabelFromVision,
     validity
   }) {
-    const { label, placeholder, description, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data }) || "";
     const handleColorChange = (0, import_element223.useCallback)(
       (colorObject) => {
@@ -62204,7 +62259,7 @@ var wp;
       ValidatedInputControl3,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
         value,
@@ -62391,24 +62446,61 @@ var wp;
     return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
   };
 
+  // packages/dataviews/build-module/field-types/utils/is-valid-min-length.js
+  function isValidMinLength(item, field) {
+    if (typeof field.isValid.minLength?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return String(value).length >= field.isValid.minLength.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-max-length.js
+  function isValidMaxLength(item, field) {
+    if (typeof field.isValid.maxLength?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return String(value).length <= field.isValid.maxLength.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-pattern.js
+  function isValidPattern(item, field) {
+    if (field.isValid.pattern?.constraint === void 0) {
+      return true;
+    }
+    try {
+      const regexp = new RegExp(field.isValid.pattern.constraint);
+      const value = field.getValue({ item });
+      if ([void 0, "", null].includes(value)) {
+        return true;
+      }
+      return regexp.test(String(value));
+    } catch {
+      return false;
+    }
+  }
+
   // packages/dataviews/build-module/field-types/email.js
   var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  var isValid4 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-        return (0, import_i18n203.__)("Value must be a valid email address.");
-      }
-      return null;
+  function isValidCustom3(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
+      return (0, import_i18n203.__)("Value must be a valid email address.");
     }
-  };
+    return null;
+  }
   var email_default = {
     type: "email",
     render: render3,
     Edit: "email",
     sort: sort_text_default,
-    isValid: isValid4,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -62424,7 +62516,15 @@ var wp;
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements,
+      custom: isValidCustom3
+    }
   };
 
   // packages/dataviews/build-module/field-types/text.js
@@ -62433,10 +62533,6 @@ var wp;
     render: render3,
     Edit: "text",
     sort: sort_text_default,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -62453,7 +62549,14 @@ var wp;
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/datetime.js
@@ -62483,10 +62586,6 @@ var wp;
     render: render4,
     Edit: "datetime",
     sort,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
@@ -62509,7 +62608,11 @@ var wp;
       OPERATOR_IN_THE_PAST,
       OPERATOR_OVER
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/date.js
@@ -62532,7 +62635,7 @@ var wp;
     }
     let format2;
     if (field.type !== "date") {
-      format2 = getFormat3(field);
+      format2 = getFormat3({});
     } else {
       format2 = field.format;
     }
@@ -62548,10 +62651,6 @@ var wp;
     render: render5,
     Edit: "date",
     sort: sort2,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
@@ -62576,11 +62675,23 @@ var wp;
       OPERATOR_OVER,
       OPERATOR_BETWEEN
     ],
-    getFormat: getFormat3
+    getFormat: getFormat3,
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/boolean.js
   var import_i18n204 = __toESM(require_i18n());
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.js
+  function isValidRequiredForBool(item, field) {
+    const value = field.getValue({ item });
+    return value === true;
+  }
+
+  // packages/dataviews/build-module/field-types/boolean.js
   var import_jsx_runtime397 = __toESM(require_jsx_runtime());
   function render6({ item, field }) {
     if (field.hasElements) {
@@ -62594,16 +62705,13 @@ var wp;
     }
     return null;
   }
-  var isValid5 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-        return (0, import_i18n204.__)("Value must be true, false, or undefined");
-      }
-      return null;
+  function isValidCustom4(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
+      return (0, import_i18n204.__)("Value must be true, false, or undefined");
     }
-  };
+    return null;
+  }
   var sort3 = (a2, b2, direction) => {
     const boolA = Boolean(a2);
     const boolB = Boolean(b2);
@@ -62620,7 +62728,11 @@ var wp;
     render: render6,
     Edit: "checkbox",
     sort: sort3,
-    isValid: isValid5,
+    validate: {
+      required: isValidRequiredForBool,
+      elements: isValidElements,
+      custom: isValidCustom4
+    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
@@ -62634,36 +62746,43 @@ var wp;
     render: () => null,
     Edit: null,
     sort: () => 0,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: false,
     enableGlobalSearch: false,
     defaultOperators: [],
     validOperators: [],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    // cannot validate any constraint, so
+    // the only available validation for the field author
+    // would be providing a custom validator.
+    validate: {}
   };
 
   // packages/dataviews/build-module/field-types/array.js
   var import_i18n205 = __toESM(require_i18n());
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.js
+  function isValidRequiredForArray(item, field) {
+    const value = field.getValue({ item });
+    return Array.isArray(value) && value.length > 0 && value.every(
+      (element) => ![void 0, "", null].includes(element)
+    );
+  }
+
+  // packages/dataviews/build-module/field-types/array.js
   function render7({ item, field }) {
     const value = field.getValue({ item }) || [];
     return value.join(", ");
   }
-  var isValid6 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-        return (0, import_i18n205.__)("Value must be an array.");
-      }
-      if (!value.every((v2) => typeof v2 === "string")) {
-        return (0, import_i18n205.__)("Every value must be a string.");
-      }
-      return null;
+  function isValidCustom5(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
+      return (0, import_i18n205.__)("Value must be an array.");
     }
-  };
+    if (!value.every((v2) => typeof v2 === "string")) {
+      return (0, import_i18n205.__)("Every value must be a string.");
+    }
+    return null;
+  }
   var sort4 = (a2, b2, direction) => {
     const arrA = Array.isArray(a2) ? a2 : [];
     const arrB = Array.isArray(b2) ? b2 : [];
@@ -62679,7 +62798,6 @@ var wp;
     render: render7,
     Edit: "array",
     sort: sort4,
-    isValid: isValid6,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -62689,7 +62807,12 @@ var wp;
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequiredForArray,
+      elements: isValidElements,
+      custom: isValidCustom5
+    }
   };
 
   // packages/dataviews/build-module/field-types/password.js
@@ -62703,15 +62826,18 @@ var wp;
     Edit: "password",
     sort: () => 0,
     // Passwords should not be sortable for security reasons
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: false,
     enableGlobalSearch: false,
     defaultOperators: [],
     validOperators: [],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/telephone.js
@@ -62720,10 +62846,6 @@ var wp;
     render: render3,
     Edit: "telephone",
     sort: sort_text_default,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -62739,7 +62861,14 @@ var wp;
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/color.js
@@ -62770,16 +62899,13 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime399.jsx)("span", { children: value })
     ] });
   }
-  var isValid7 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-        return (0, import_i18n206.__)("Value must be a valid color.");
-      }
-      return null;
+  function isValidCustom6(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+      return (0, import_i18n206.__)("Value must be a valid color.");
     }
-  };
+    return null;
+  }
   var sort5 = (a2, b2, direction) => {
     const colorA = w(a2);
     const colorB = w(b2);
@@ -62807,7 +62933,6 @@ var wp;
     render: render9,
     Edit: "color",
     sort: sort5,
-    isValid: isValid7,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -62817,7 +62942,12 @@ var wp;
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements,
+      custom: isValidCustom6
+    }
   };
 
   // packages/dataviews/build-module/field-types/url.js
@@ -62826,10 +62956,6 @@ var wp;
     render: render3,
     Edit: "url",
     sort: sort_text_default,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -62845,7 +62971,14 @@ var wp;
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/no-type.js
@@ -62860,16 +62993,81 @@ var wp;
     render: render3,
     Edit: null,
     sort: sort6,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
     validOperators: ALL_OPERATORS,
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements
+    }
   };
+
+  // packages/dataviews/build-module/field-types/utils/get-is-valid.js
+  function getIsValid(field, fieldType) {
+    let required;
+    if (field.isValid?.required === true && fieldType.validate.required !== void 0) {
+      required = {
+        constraint: true,
+        validate: fieldType.validate.required
+      };
+    }
+    let elements;
+    if ((field.isValid?.elements === true || // elements is enabled unless the field opts-out
+    field.isValid?.elements === void 0 && (!!field.elements || !!field.getElements)) && fieldType.validate.elements !== void 0) {
+      elements = {
+        constraint: true,
+        validate: fieldType.validate.elements
+      };
+    }
+    let min;
+    if (typeof field.isValid?.min === "number" && fieldType.validate.min !== void 0) {
+      min = {
+        constraint: field.isValid.min,
+        validate: fieldType.validate.min
+      };
+    }
+    let max;
+    if (typeof field.isValid?.max === "number" && fieldType.validate.max !== void 0) {
+      max = {
+        constraint: field.isValid.max,
+        validate: fieldType.validate.max
+      };
+    }
+    let minLength;
+    if (typeof field.isValid?.minLength === "number" && fieldType.validate.minLength !== void 0) {
+      minLength = {
+        constraint: field.isValid.minLength,
+        validate: fieldType.validate.minLength
+      };
+    }
+    let maxLength;
+    if (typeof field.isValid?.maxLength === "number" && fieldType.validate.maxLength !== void 0) {
+      maxLength = {
+        constraint: field.isValid.maxLength,
+        validate: fieldType.validate.maxLength
+      };
+    }
+    let pattern;
+    if (field.isValid?.pattern !== void 0 && fieldType.validate.pattern !== void 0) {
+      pattern = {
+        constraint: field.isValid?.pattern,
+        validate: fieldType.validate.pattern
+      };
+    }
+    const custom = field.isValid?.custom ?? fieldType.validate.custom;
+    return {
+      required,
+      elements,
+      min,
+      max,
+      minLength,
+      maxLength,
+      pattern,
+      custom
+    };
+  }
 
   // packages/dataviews/build-module/field-types/index.js
   function getFieldTypeByName(type) {
@@ -62895,12 +63093,12 @@ var wp;
   }
   function normalizeFields(fields) {
     return fields.map((field) => {
-      const defaultProps = getFieldTypeByName(field.type);
+      const fieldType = getFieldTypeByName(field.type);
       const getValue = field.getValue || get_value_from_id_default(field.id);
       const sort7 = function(a2, b2, direction) {
         const aValue = getValue({ item: a2 });
         const bValue = getValue({ item: b2 });
-        return field.sort ? field.sort(aValue, bValue, direction) : defaultProps.sort(aValue, bValue, direction);
+        return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
       };
       return {
         id: field.id,
@@ -62917,22 +63115,19 @@ var wp;
         enableHiding: field.enableHiding ?? true,
         readOnly: field.readOnly ?? false,
         // The type provides defaults for the following props
-        type: defaultProps.type,
-        render: field.render ?? defaultProps.render,
-        Edit: getControl(field, defaultProps.Edit),
+        type: fieldType.type,
+        render: field.render ?? fieldType.render,
+        Edit: getControl(field, fieldType.Edit),
         sort: sort7,
-        enableSorting: field.enableSorting ?? defaultProps.enableSorting,
-        enableGlobalSearch: field.enableGlobalSearch ?? defaultProps.enableGlobalSearch,
-        isValid: {
-          ...defaultProps.isValid,
-          ...field.isValid
-        },
+        enableSorting: field.enableSorting ?? fieldType.enableSorting,
+        enableGlobalSearch: field.enableGlobalSearch ?? fieldType.enableGlobalSearch,
+        isValid: getIsValid(field, fieldType),
         filterBy: get_filter_by_default(
           field,
-          defaultProps.defaultOperators,
-          defaultProps.validOperators
+          fieldType.defaultOperators,
+          fieldType.validOperators
         ),
-        format: defaultProps.getFormat(field)
+        format: fieldType.getFormat(field)
       };
     });
   }
@@ -63375,16 +63570,6 @@ var wp;
   var import_es64 = __toESM(require_es6());
   var import_element228 = __toESM(require_element());
   var import_i18n209 = __toESM(require_i18n());
-  var isEmptyNullOrUndefined = (value) => [void 0, "", null].includes(value);
-  var isArrayOrElementsEmptyNullOrUndefined = (value) => {
-    return !Array.isArray(value) || value.length === 0 || value.every((element) => isEmptyNullOrUndefined(element));
-  };
-  function isInvalidForRequired(fieldType, value) {
-    if (fieldType === void 0 && isEmptyNullOrUndefined(value) || fieldType === "text" && isEmptyNullOrUndefined(value) || fieldType === "email" && isEmptyNullOrUndefined(value) || fieldType === "url" && isEmptyNullOrUndefined(value) || fieldType === "telephone" && isEmptyNullOrUndefined(value) || fieldType === "password" && isEmptyNullOrUndefined(value) || fieldType === "integer" && isEmptyNullOrUndefined(value) || fieldType === "number" && isEmptyNullOrUndefined(value) || fieldType === "array" && isArrayOrElementsEmptyNullOrUndefined(value) || fieldType === "boolean" && value !== true) {
-      return true;
-    }
-    return false;
-  }
   function isFormValid(formValidity) {
     if (!formValidity) {
       return true;
@@ -63492,42 +63677,10 @@ var wp;
         });
         return;
       }
-      const validValues = result.map((el) => el.value);
-      if (!!formField.field && formField.field.type !== "array" && !validValues.includes(formField.field.getValue({ item }))) {
-        setFormValidity((prev2) => {
-          const newFormValidity = setValidityAtPath(
-            prev2,
-            {
-              elements: {
-                type: "invalid",
-                message: (0, import_i18n209.__)(
-                  "Value must be one of the elements."
-                )
-              }
-            },
-            [...path, formField.id]
-          );
-          return newFormValidity;
-        });
-        return;
-      }
-      if (!!formField.field && formField.field.type === "array" && !Array.isArray(formField.field.getValue({ item }))) {
-        setFormValidity((prev2) => {
-          const newFormValidity = setValidityAtPath(
-            prev2,
-            {
-              elements: {
-                type: "invalid",
-                message: (0, import_i18n209.__)("Value must be an array.")
-              }
-            },
-            [...path, formField.id]
-          );
-          return newFormValidity;
-        });
-        return;
-      }
-      if (!!formField.field && formField.field.type === "array" && formField.field.getValue({ item }).some((v2) => !validValues.includes(v2))) {
+      if (formField.field?.isValid.elements && !formField.field.isValid.elements.validate(item, {
+        ...formField.field,
+        elements: result
+      })) {
         setFormValidity((prev2) => {
           const newFormValidity = setValidityAtPath(
             prev2,
@@ -63652,118 +63805,58 @@ var wp;
     });
   }
   function validateFormField(item, formField, promiseHandler) {
-    if (!!formField.field && formField.field.isValid.required && isInvalidForRequired(
-      formField.field.type,
-      formField.field.getValue({ item })
-    )) {
+    if (formField.field?.isValid.required && !formField.field.isValid.required.validate(item, formField.field)) {
       return {
         required: { type: "invalid" }
       };
     }
-    if (!!formField.field && formField.field.isValid.pattern && (formField.field.type === "text" || formField.field.type === "email" || formField.field.type === "url" || formField.field.type === "telephone" || formField.field.type === "password")) {
-      const value = formField.field.getValue({ item });
-      if (!isEmptyNullOrUndefined(value)) {
-        try {
-          const regex = new RegExp(formField.field.isValid.pattern);
-          if (!regex.test(String(value))) {
-            return {
-              pattern: {
-                type: "invalid",
-                message: (0, import_i18n209.__)(
-                  "Value does not match the required pattern."
-                )
-              }
-            };
-          }
-        } catch (error) {
-          return {
-            pattern: {
-              type: "invalid",
-              message: (0, import_i18n209.__)("Invalid pattern configuration.")
-            }
-          };
+    if (formField.field?.isValid.pattern && !formField.field.isValid.pattern.validate(item, formField.field)) {
+      return {
+        pattern: {
+          type: "invalid",
+          message: (0, import_i18n209.__)("Value does not match the required pattern.")
         }
-      }
+      };
     }
-    if (!!formField.field && formField.field.isValid.min !== void 0 && (formField.field.type === "integer" || formField.field.type === "number")) {
-      const value = formField.field.getValue({ item });
-      if (!isEmptyNullOrUndefined(value)) {
-        if (Number(value) < formField.field.isValid.min) {
-          return {
-            min: {
-              type: "invalid",
-              message: (0, import_i18n209.__)("Value is below the minimum.")
-            }
-          };
+    if (formField.field?.isValid.min && !formField.field.isValid.min.validate(item, formField.field)) {
+      return {
+        min: {
+          type: "invalid",
+          message: (0, import_i18n209.__)("Value is below the minimum.")
         }
-      }
+      };
     }
-    if (!!formField.field && formField.field.isValid.max !== void 0 && (formField.field.type === "integer" || formField.field.type === "number")) {
-      const value = formField.field.getValue({ item });
-      if (!isEmptyNullOrUndefined(value)) {
-        if (Number(value) > formField.field.isValid.max) {
-          return {
-            max: {
-              type: "invalid",
-              message: (0, import_i18n209.__)("Value is above the maximum.")
-            }
-          };
+    if (formField.field?.isValid.max && !formField.field.isValid.max.validate(item, formField.field)) {
+      return {
+        max: {
+          type: "invalid",
+          message: (0, import_i18n209.__)("Value is above the maximum.")
         }
-      }
+      };
     }
-    if (!!formField.field && formField.field.isValid.minLength !== void 0 && (formField.field.type === "text" || formField.field.type === "email" || formField.field.type === "url" || formField.field.type === "telephone" || formField.field.type === "password")) {
-      const value = formField.field.getValue({ item });
-      if (!isEmptyNullOrUndefined(value)) {
-        if (String(value).length < formField.field.isValid.minLength) {
-          return {
-            minLength: {
-              type: "invalid",
-              message: (0, import_i18n209.__)("Value is too short.")
-            }
-          };
+    if (formField.field?.isValid.minLength && !formField.field.isValid.minLength.validate(item, formField.field)) {
+      return {
+        minLength: {
+          type: "invalid",
+          message: (0, import_i18n209.__)("Value is too short.")
         }
-      }
+      };
     }
-    if (!!formField.field && formField.field.isValid.maxLength !== void 0 && (formField.field.type === "text" || formField.field.type === "email" || formField.field.type === "url" || formField.field.type === "telephone" || formField.field.type === "password")) {
-      const value = formField.field.getValue({ item });
-      if (!isEmptyNullOrUndefined(value)) {
-        if (String(value).length > formField.field.isValid.maxLength) {
-          return {
-            maxLength: {
-              type: "invalid",
-              message: (0, import_i18n209.__)("Value is too long.")
-            }
-          };
+    if (formField.field?.isValid.maxLength && !formField.field.isValid.maxLength.validate(item, formField.field)) {
+      return {
+        maxLength: {
+          type: "invalid",
+          message: (0, import_i18n209.__)("Value is too long.")
         }
-      }
+      };
     }
-    if (!!formField.field && formField.field.isValid.elements && formField.field.hasElements && !formField.field.getElements && Array.isArray(formField.field.elements)) {
-      const value = formField.field.getValue({ item });
-      const validValues = formField.field.elements.map((el) => el.value);
-      if (formField.field.type !== "array" && !validValues.includes(value)) {
-        return {
-          elements: {
-            type: "invalid",
-            message: (0, import_i18n209.__)("Value must be one of the elements.")
-          }
-        };
-      }
-      if (formField.field.type === "array" && !Array.isArray(value)) {
-        return {
-          elements: {
-            type: "invalid",
-            message: (0, import_i18n209.__)("Value must be an array.")
-          }
-        };
-      }
-      if (formField.field.type === "array" && value.some((v2) => !validValues.includes(v2))) {
-        return {
-          elements: {
-            type: "invalid",
-            message: (0, import_i18n209.__)("Value must be one of the elements.")
-          }
-        };
-      }
+    if (formField.field?.isValid.elements && formField.field.hasElements && !formField.field.getElements && Array.isArray(formField.field.elements) && !formField.field.isValid.elements.validate(item, formField.field)) {
+      return {
+        elements: {
+          type: "invalid",
+          message: (0, import_i18n209.__)("Value must be one of the elements.")
+        }
+      };
     }
     if (!!formField.field && formField.field.isValid.elements && formField.field.hasElements && typeof formField.field.getElements === "function") {
       handleElementsValidationAsync(
@@ -63779,10 +63872,10 @@ var wp;
       };
     }
     let customError;
-    if (!!formField.field) {
+    if (!!formField.field && formField.field.isValid.custom) {
       try {
         const value = formField.field.getValue({ item });
-        customError = formField.field.isValid?.custom?.(
+        customError = formField.field.isValid.custom(
           (0, import_deepmerge.default)(
             item,
             formField.field.setValue({
@@ -63962,11 +64055,20 @@ var wp;
       }),
       [field]
     );
-    const { validity } = use_form_validity_default(
-      modalData,
-      fields,
-      form
-    );
+    const fieldsAsFieldType = fields.map((f2) => ({
+      ...f2,
+      Edit: f2.Edit === null ? void 0 : f2.Edit,
+      isValid: {
+        required: f2.isValid.required?.constraint,
+        elements: f2.isValid.elements?.constraint,
+        min: f2.isValid.min?.constraint,
+        max: f2.isValid.max?.constraint,
+        pattern: f2.isValid.pattern?.constraint,
+        minLength: f2.isValid.minLength?.constraint,
+        maxLength: f2.isValid.maxLength?.constraint
+      }
+    }));
+    const { validity } = use_form_validity_default(modalData, fieldsAsFieldType, form);
     const onApply = () => {
       onChange(changes);
       onClose();
@@ -71314,7 +71416,7 @@ var wp;
     const data = sources?.[sourceName];
     const source = (0, import_blocks113.getBlockBindingsSource)(sourceName);
     let displayText;
-    let isValid8 = true;
+    let isValid2 = true;
     const isNotBound = binding === void 0;
     if (isNotBound) {
       const attributeType = getAttributeType(blockName, attribute);
@@ -71326,9 +71428,9 @@ var wp;
       } else {
         displayText = (0, import_i18n230.__)("Not connected");
       }
-      isValid8 = true;
+      isValid2 = true;
     } else if (!source) {
-      isValid8 = false;
+      isValid2 = false;
       displayText = (0, import_i18n230.__)("Source not registered");
     } else {
       displayText = data?.find((item) => (0, import_es65.default)(item.args, args))?.label || source?.label || sourceName;
@@ -71339,8 +71441,8 @@ var wp;
         import_components263.__experimentalText,
         {
           truncate: true,
-          variant: isValid8 ? "muted" : void 0,
-          isDestructive: !isValid8,
+          variant: isValid2 ? "muted" : void 0,
+          isDestructive: !isValid2,
           children: displayText
         }
       )

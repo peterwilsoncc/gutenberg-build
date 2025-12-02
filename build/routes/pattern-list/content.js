@@ -9754,10 +9754,7 @@ function InputWidget({
       return {
         ...currentField,
         // Deactivate validation for filters.
-        isValid: {
-          required: false,
-          custom: () => null
-        },
+        isValid: {},
         // Configure getValue/setValue as if Item was a plain object.
         getValue: ({ item }) => item[currentField.id],
         setValue: ({ value }) => ({
@@ -11500,6 +11497,47 @@ var sort_number_default = (a2, b2, direction) => {
   return direction === "asc" ? a2 - b2 : b2 - a2;
 };
 
+// packages/dataviews/build-module/field-types/utils/is-valid-required.js
+function isValidRequired(item, field) {
+  const value = field.getValue({ item });
+  return ![void 0, "", null].includes(value);
+}
+
+// packages/dataviews/build-module/field-types/utils/is-valid-min.js
+function isValidMin(item, field) {
+  if (typeof field.isValid.min?.constraint !== "number") {
+    return false;
+  }
+  const value = field.getValue({ item });
+  if ([void 0, "", null].includes(value)) {
+    return true;
+  }
+  return Number(value) >= field.isValid.min.constraint;
+}
+
+// packages/dataviews/build-module/field-types/utils/is-valid-max.js
+function isValidMax(item, field) {
+  if (typeof field.isValid.max?.constraint !== "number") {
+    return false;
+  }
+  const value = field.getValue({ item });
+  if ([void 0, "", null].includes(value)) {
+    return true;
+  }
+  return Number(value) <= field.isValid.max.constraint;
+}
+
+// packages/dataviews/build-module/field-types/utils/is-valid-elements.js
+function isValidElements(item, field) {
+  const elements = field.elements ?? [];
+  const validValues = elements.map((el) => el.value);
+  if (validValues.length === 0) {
+    return true;
+  }
+  const value = field.getValue({ item });
+  return [].concat(value).every((v2) => validValues.includes(v2));
+}
+
 // packages/dataviews/build-module/field-types/number.js
 var import_jsx_runtime56 = __toESM(require_jsx_runtime());
 function getFormat(field) {
@@ -11539,22 +11577,18 @@ function render({ item, field }) {
   }
   return formatNumber(Number(value), format2);
 }
-var isValid2 = {
-  elements: true,
-  custom: (item, normalizedField) => {
-    const value = normalizedField.getValue({ item });
-    if (!isEmpty2(value) && !Number.isFinite(value)) {
-      return (0, import_i18n22.__)("Value must be a number.");
-    }
-    return null;
+function isValidCustom(item, field) {
+  const value = field.getValue({ item });
+  if (!isEmpty2(value) && !Number.isFinite(value)) {
+    return (0, import_i18n22.__)("Value must be a number.");
   }
-};
+  return null;
+}
 var number_default = {
   type: "number",
   render,
   Edit: "number",
   sort: sort_number_default,
-  isValid: isValid2,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [
@@ -11581,7 +11615,14 @@ var number_default = {
     OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
-  getFormat
+  getFormat,
+  validate: {
+    required: isValidRequired,
+    min: isValidMin,
+    max: isValidMax,
+    elements: isValidElements,
+    custom: isValidCustom
+  }
 };
 
 // packages/dataviews/build-module/field-types/integer.js
@@ -11623,22 +11664,18 @@ function render2({ item, field }) {
   }
   return formatInteger(Number(value), format2);
 }
-var isValid3 = {
-  elements: true,
-  custom: (item, normalizedField) => {
-    const value = normalizedField.getValue({ item });
-    if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-      return (0, import_i18n23.__)("Value must be an integer.");
-    }
-    return null;
+function isValidCustom2(item, field) {
+  const value = field.getValue({ item });
+  if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
+    return (0, import_i18n23.__)("Value must be an integer.");
   }
-};
+  return null;
+}
 var integer_default = {
   type: "integer",
   render: render2,
   Edit: "integer",
   sort: sort_number_default,
-  isValid: isValid3,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [
@@ -11665,7 +11702,14 @@ var integer_default = {
     OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
-  getFormat: getFormat2
+  getFormat: getFormat2,
+  validate: {
+    required: isValidRequired,
+    min: isValidMin,
+    max: isValidMax,
+    elements: isValidElements,
+    custom: isValidCustom2
+  }
 };
 
 // packages/dataviews/build-module/components/dataviews-filters/filter.js
@@ -12966,13 +13010,21 @@ var import_components32 = __toESM(require_components());
 var import_element36 = __toESM(require_element());
 
 // packages/dataviews/build-module/dataform-controls/utils/get-custom-validity.js
-function getCustomValidity(isValid8, validity) {
+function getCustomValidity(isValid2, validity) {
   let customValidity;
-  if (isValid8?.required && validity?.required) {
+  if (isValid2?.required && validity?.required) {
     customValidity = validity?.required?.message ? validity.required : void 0;
-  } else if (isValid8?.pattern && validity?.pattern) {
+  } else if (isValid2?.pattern && validity?.pattern) {
     customValidity = validity.pattern;
-  } else if (isValid8?.elements && validity?.elements) {
+  } else if (isValid2?.min && validity?.min) {
+    customValidity = validity.min;
+  } else if (isValid2?.max && validity?.max) {
+    customValidity = validity.max;
+  } else if (isValid2?.minLength && validity?.minLength) {
+    customValidity = validity.minLength;
+  } else if (isValid2?.maxLength && validity?.maxLength) {
+    customValidity = validity.maxLength;
+  } else if (isValid2?.elements && validity?.elements) {
     customValidity = validity.elements;
   } else if (validity?.custom) {
     customValidity = validity.custom;
@@ -12990,7 +13042,7 @@ function Checkbox({
   hideLabelFromVision,
   validity
 }) {
-  const { getValue, setValue, label, description, isValid: isValid8 } = field;
+  const { getValue, setValue, label, description, isValid: isValid2 } = field;
   const onChangeControl = (0, import_element36.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
@@ -13000,7 +13052,7 @@ function Checkbox({
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      customValidity: getCustomValidity(isValid2, validity),
       hidden: hideLabelFromVision,
       label,
       help: description,
@@ -13123,7 +13175,7 @@ function CalendarDateTimeControl({
   hideLabelFromVision,
   validity
 }) {
-  const { id, label, description, setValue, getValue, isValid: isValid8 } = field;
+  const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const [calendarMonth, setCalendarMonth] = (0, import_element38.useState)(() => {
@@ -13200,7 +13252,7 @@ function CalendarDateTimeControl({
     timezone: { string: timezoneString },
     l10n: { startOfWeek: startOfWeek2 }
   } = (0, import_date3.getSettings)();
-  const displayLabel = isValid8?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n33.__)("Required")})` : label;
+  const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n33.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
     import_components34.BaseControl,
     {
@@ -13227,8 +13279,8 @@ function CalendarDateTimeControl({
           {
             ref: inputControlRef,
             __next40pxDefaultSize: true,
-            required: !!isValid8?.required,
-            customValidity: getCustomValidity(isValid8, validity),
+            required: !!isValid2?.required,
+            customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
             label: (0, import_i18n33.__)("Date time"),
             hideLabelFromVision: true,
@@ -13376,7 +13428,7 @@ function ValidatedDateControl({
   setIsTouched,
   children
 }) {
-  const { isValid: isValid8 } = field;
+  const { isValid: isValid2 } = field;
   const [customValidity, setCustomValidity] = (0, import_element39.useState)(void 0);
   const validateRefs = (0, import_element39.useCallback)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
@@ -13396,7 +13448,7 @@ function ValidatedDateControl({
     if (isTouched) {
       const timeoutId = setTimeout(() => {
         if (validity) {
-          setCustomValidity(getCustomValidity(isValid8, validity));
+          setCustomValidity(getCustomValidity(isValid2, validity));
         } else {
           validateRefs();
         }
@@ -13404,7 +13456,7 @@ function ValidatedDateControl({
       return () => clearTimeout(timeoutId);
     }
     return void 0;
-  }, [isTouched, isValid8, validity, validateRefs]);
+  }, [isTouched, isValid2, validity, validateRefs]);
   const onBlur = (event) => {
     if (isTouched) {
       return;
@@ -13452,7 +13504,7 @@ function CalendarDateControl({
     label,
     setValue,
     getValue,
-    isValid: isValid8,
+    isValid: isValid2,
     format: fieldFormat
   } = field;
   const [selectedPresetId, setSelectedPresetId] = (0, import_element39.useState)(
@@ -13511,7 +13563,7 @@ function CalendarDateControl({
   const {
     timezone: { string: timezoneString }
   } = (0, import_date4.getSettings)();
-  const displayLabel = isValid8?.required ? `${label} (${(0, import_i18n34.__)("Required")})` : label;
+  const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n34.__)("Required")})` : label;
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     ValidatedDateControl,
     {
@@ -13844,7 +13896,7 @@ function ValidatedText({
   suffix,
   validity
 }) {
-  const { label, placeholder, description, getValue, setValue, isValid: isValid8 } = field;
+  const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const onChangeControl = (0, import_element40.useCallback)(
     (newValue) => onChange(
@@ -13858,8 +13910,8 @@ function ValidatedText({
   return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
     ValidatedInputControl2,
     {
-      required: !!isValid8?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      required: !!isValid2.required,
+      customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
       value: value ?? "",
@@ -13869,9 +13921,9 @@ function ValidatedText({
       type,
       prefix,
       suffix,
-      pattern: isValid8?.pattern,
-      minLength: isValid8?.minLength,
-      maxLength: isValid8?.maxLength,
+      pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
+      minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
+      maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
       __next40pxDefaultSize: true
     }
   );
@@ -14026,7 +14078,7 @@ function ValidatedNumber({
   validity
 }) {
   const step = Math.pow(10, Math.abs(decimals) * -1);
-  const { label, description, getValue, setValue, isValid: isValid8 } = field;
+  const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
   const onChangeControl = (0, import_element41.useCallback)(
     (newValue) => {
@@ -14073,8 +14125,8 @@ function ValidatedNumber({
   return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
     ValidatedNumberControl,
     {
-      required: !!isValid8?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      required: !!isValid2.required,
+      customValidity: getCustomValidity(isValid2, validity),
       label,
       help: description,
       value,
@@ -14082,8 +14134,8 @@ function ValidatedNumber({
       __next40pxDefaultSize: true,
       hideLabelFromVision,
       step,
-      min: isValid8?.min,
-      max: isValid8?.max
+      min: isValid2.min ? isValid2.min.constraint : void 0,
+      max: isValid2.max ? isValid2.max.constraint : void 0
     }
   );
 }
@@ -14113,7 +14165,7 @@ function Radio({
   hideLabelFromVision,
   validity
 }) {
-  const { label, description, getValue, setValue, isValid: isValid8 } = field;
+  const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const { elements, isLoading } = useElements({
     elements: field.elements,
     getElements: field.getElements
@@ -14130,7 +14182,7 @@ function Radio({
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      customValidity: getCustomValidity(isValid2, validity),
       label,
       help: description,
       onChange: onChangeControl,
@@ -14153,7 +14205,7 @@ function Select({
   hideLabelFromVision,
   validity
 }) {
-  const { type, label, description, getValue, setValue, isValid: isValid8 } = field;
+  const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
   const onChangeControl = (0, import_element43.useCallback)(
@@ -14171,7 +14223,7 @@ function Select({
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      customValidity: getCustomValidity(isValid2, validity),
       label,
       value,
       help: description,
@@ -14225,7 +14277,7 @@ function Toggle({
   hideLabelFromVision,
   validity
 }) {
-  const { label, description, getValue, setValue, isValid: isValid8 } = field;
+  const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const onChangeControl = (0, import_element45.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
@@ -14234,8 +14286,8 @@ function Toggle({
   return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
     ValidatedToggleControl,
     {
-      required: !!isValid8.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      required: !!isValid2.required,
+      customValidity: getCustomValidity(isValid2, validity),
       hidden: hideLabelFromVision,
       __nextHasNoMarginBottom: true,
       label,
@@ -14260,7 +14312,7 @@ function Textarea({
   validity
 }) {
   const { rows = 4 } = config || {};
-  const { label, placeholder, description, setValue, isValid: isValid8 } = field;
+  const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
   const onChangeControl = (0, import_element46.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -14269,16 +14321,16 @@ function Textarea({
   return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
     ValidatedTextareaControl,
     {
-      required: !!isValid8?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      required: !!isValid2.required,
+      customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
       value: value ?? "",
       help: description,
       onChange: onChangeControl,
       rows,
-      minLength: isValid8?.minLength,
-      maxLength: isValid8?.maxLength,
+      minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
+      maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       hideLabelFromVision
@@ -14298,7 +14350,7 @@ function ToggleGroup({
   hideLabelFromVision,
   validity
 }) {
-  const { getValue, setValue, isValid: isValid8 } = field;
+  const { getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const onChangeControl = (0, import_element47.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -14319,7 +14371,7 @@ function ToggleGroup({
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      customValidity: getCustomValidity(isValid2, validity),
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       isBlock: true,
@@ -14352,7 +14404,7 @@ function ArrayControl({
   hideLabelFromVision,
   validity
 }) {
-  const { label, placeholder, getValue, setValue, isValid: isValid8 } = field;
+  const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const { elements, isLoading } = useElements({
     elements: field.elements,
@@ -14385,8 +14437,8 @@ function ArrayControl({
   return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
     ValidatedFormTokenField,
     {
-      required: !!isValid8?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      required: !!isValid2?.required,
+      customValidity: getCustomValidity(isValid2, validity),
       label: hideLabelFromVision ? void 0 : label,
       value: arrayValueAsElements,
       onChange: onChangeControl,
@@ -14639,7 +14691,7 @@ function Color({
   hideLabelFromVision,
   validity
 }) {
-  const { label, placeholder, description, setValue, isValid: isValid8 } = field;
+  const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data }) || "";
   const handleColorChange = (0, import_element49.useCallback)(
     (colorObject) => {
@@ -14657,7 +14709,7 @@ function Color({
     ValidatedInputControl3,
     {
       required: !!field.isValid?.required,
-      customValidity: getCustomValidity(isValid8, validity),
+      customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
       value,
@@ -14844,24 +14896,61 @@ var sort_text_default = (a2, b2, direction) => {
   return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
 };
 
+// packages/dataviews/build-module/field-types/utils/is-valid-min-length.js
+function isValidMinLength(item, field) {
+  if (typeof field.isValid.minLength?.constraint !== "number") {
+    return false;
+  }
+  const value = field.getValue({ item });
+  if ([void 0, "", null].includes(value)) {
+    return true;
+  }
+  return String(value).length >= field.isValid.minLength.constraint;
+}
+
+// packages/dataviews/build-module/field-types/utils/is-valid-max-length.js
+function isValidMaxLength(item, field) {
+  if (typeof field.isValid.maxLength?.constraint !== "number") {
+    return false;
+  }
+  const value = field.getValue({ item });
+  if ([void 0, "", null].includes(value)) {
+    return true;
+  }
+  return String(value).length <= field.isValid.maxLength.constraint;
+}
+
+// packages/dataviews/build-module/field-types/utils/is-valid-pattern.js
+function isValidPattern(item, field) {
+  if (field.isValid.pattern?.constraint === void 0) {
+    return true;
+  }
+  try {
+    const regexp = new RegExp(field.isValid.pattern.constraint);
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return regexp.test(String(value));
+  } catch {
+    return false;
+  }
+}
+
 // packages/dataviews/build-module/field-types/email.js
 var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-var isValid4 = {
-  elements: true,
-  custom: (item, normalizedField) => {
-    const value = normalizedField.getValue({ item });
-    if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-      return (0, import_i18n37.__)("Value must be a valid email address.");
-    }
-    return null;
+function isValidCustom3(item, field) {
+  const value = field.getValue({ item });
+  if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
+    return (0, import_i18n37.__)("Value must be a valid email address.");
   }
-};
+  return null;
+}
 var email_default = {
   type: "email",
   render: render3,
   Edit: "email",
   sort: sort_text_default,
-  isValid: isValid4,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -14877,7 +14966,15 @@ var email_default = {
     OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    pattern: isValidPattern,
+    minLength: isValidMinLength,
+    maxLength: isValidMaxLength,
+    elements: isValidElements,
+    custom: isValidCustom3
+  }
 };
 
 // packages/dataviews/build-module/field-types/text.js
@@ -14886,10 +14983,6 @@ var text_default = {
   render: render3,
   Edit: "text",
   sort: sort_text_default,
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -14906,7 +14999,14 @@ var text_default = {
     OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    pattern: isValidPattern,
+    minLength: isValidMinLength,
+    maxLength: isValidMaxLength,
+    elements: isValidElements
+  }
 };
 
 // packages/dataviews/build-module/field-types/datetime.js
@@ -14936,10 +15036,6 @@ var datetime_default = {
   render: render4,
   Edit: "datetime",
   sort,
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [
@@ -14962,7 +15058,11 @@ var datetime_default = {
     OPERATOR_IN_THE_PAST,
     OPERATOR_OVER
   ],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    elements: isValidElements
+  }
 };
 
 // packages/dataviews/build-module/field-types/date.js
@@ -14985,7 +15085,7 @@ function render5({ item, field }) {
   }
   let format2;
   if (field.type !== "date") {
-    format2 = getFormat3(field);
+    format2 = getFormat3({});
   } else {
     format2 = field.format;
   }
@@ -15001,10 +15101,6 @@ var date_default = {
   render: render5,
   Edit: "date",
   sort: sort2,
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [
@@ -15029,11 +15125,23 @@ var date_default = {
     OPERATOR_OVER,
     OPERATOR_BETWEEN
   ],
-  getFormat: getFormat3
+  getFormat: getFormat3,
+  validate: {
+    required: isValidRequired,
+    elements: isValidElements
+  }
 };
 
 // packages/dataviews/build-module/field-types/boolean.js
 var import_i18n38 = __toESM(require_i18n());
+
+// packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.js
+function isValidRequiredForBool(item, field) {
+  const value = field.getValue({ item });
+  return value === true;
+}
+
+// packages/dataviews/build-module/field-types/boolean.js
 var import_jsx_runtime93 = __toESM(require_jsx_runtime());
 function render6({ item, field }) {
   if (field.hasElements) {
@@ -15047,16 +15155,13 @@ function render6({ item, field }) {
   }
   return null;
 }
-var isValid5 = {
-  elements: true,
-  custom: (item, normalizedField) => {
-    const value = normalizedField.getValue({ item });
-    if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-      return (0, import_i18n38.__)("Value must be true, false, or undefined");
-    }
-    return null;
+function isValidCustom4(item, field) {
+  const value = field.getValue({ item });
+  if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
+    return (0, import_i18n38.__)("Value must be true, false, or undefined");
   }
-};
+  return null;
+}
 var sort3 = (a2, b2, direction) => {
   const boolA = Boolean(a2);
   const boolB = Boolean(b2);
@@ -15073,7 +15178,11 @@ var boolean_default = {
   render: render6,
   Edit: "checkbox",
   sort: sort3,
-  isValid: isValid5,
+  validate: {
+    required: isValidRequiredForBool,
+    elements: isValidElements,
+    custom: isValidCustom4
+  },
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
@@ -15087,36 +15196,43 @@ var media_default = {
   render: () => null,
   Edit: null,
   sort: () => 0,
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: false,
   enableGlobalSearch: false,
   defaultOperators: [],
   validOperators: [],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  // cannot validate any constraint, so
+  // the only available validation for the field author
+  // would be providing a custom validator.
+  validate: {}
 };
 
 // packages/dataviews/build-module/field-types/array.js
 var import_i18n39 = __toESM(require_i18n());
+
+// packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.js
+function isValidRequiredForArray(item, field) {
+  const value = field.getValue({ item });
+  return Array.isArray(value) && value.length > 0 && value.every(
+    (element) => ![void 0, "", null].includes(element)
+  );
+}
+
+// packages/dataviews/build-module/field-types/array.js
 function render7({ item, field }) {
   const value = field.getValue({ item }) || [];
   return value.join(", ");
 }
-var isValid6 = {
-  elements: true,
-  custom: (item, normalizedField) => {
-    const value = normalizedField.getValue({ item });
-    if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-      return (0, import_i18n39.__)("Value must be an array.");
-    }
-    if (!value.every((v2) => typeof v2 === "string")) {
-      return (0, import_i18n39.__)("Every value must be a string.");
-    }
-    return null;
+function isValidCustom5(item, field) {
+  const value = field.getValue({ item });
+  if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
+    return (0, import_i18n39.__)("Value must be an array.");
   }
-};
+  if (!value.every((v2) => typeof v2 === "string")) {
+    return (0, import_i18n39.__)("Every value must be a string.");
+  }
+  return null;
+}
 var sort4 = (a2, b2, direction) => {
   const arrA = Array.isArray(a2) ? a2 : [];
   const arrB = Array.isArray(b2) ? b2 : [];
@@ -15132,7 +15248,6 @@ var array_default = {
   render: render7,
   Edit: "array",
   sort: sort4,
-  isValid: isValid6,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15142,7 +15257,12 @@ var array_default = {
     OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequiredForArray,
+    elements: isValidElements,
+    custom: isValidCustom5
+  }
 };
 
 // packages/dataviews/build-module/field-types/password.js
@@ -15156,15 +15276,18 @@ var password_default = {
   Edit: "password",
   sort: () => 0,
   // Passwords should not be sortable for security reasons
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: false,
   enableGlobalSearch: false,
   defaultOperators: [],
   validOperators: [],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    pattern: isValidPattern,
+    minLength: isValidMinLength,
+    maxLength: isValidMaxLength,
+    elements: isValidElements
+  }
 };
 
 // packages/dataviews/build-module/field-types/telephone.js
@@ -15173,10 +15296,6 @@ var telephone_default = {
   render: render3,
   Edit: "telephone",
   sort: sort_text_default,
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15192,7 +15311,14 @@ var telephone_default = {
     OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    pattern: isValidPattern,
+    minLength: isValidMinLength,
+    maxLength: isValidMaxLength,
+    elements: isValidElements
+  }
 };
 
 // packages/dataviews/build-module/field-types/color.js
@@ -15223,16 +15349,13 @@ function render9({ item, field }) {
     /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { children: value })
   ] });
 }
-var isValid7 = {
-  elements: true,
-  custom: (item, normalizedField) => {
-    const value = normalizedField.getValue({ item });
-    if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-      return (0, import_i18n40.__)("Value must be a valid color.");
-    }
-    return null;
+function isValidCustom6(item, field) {
+  const value = field.getValue({ item });
+  if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+    return (0, import_i18n40.__)("Value must be a valid color.");
   }
-};
+  return null;
+}
 var sort5 = (a2, b2, direction) => {
   const colorA = w(a2);
   const colorB = w(b2);
@@ -15260,7 +15383,6 @@ var color_default = {
   render: render9,
   Edit: "color",
   sort: sort5,
-  isValid: isValid7,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15270,7 +15392,12 @@ var color_default = {
     OPERATOR_IS_ANY,
     OPERATOR_IS_NONE
   ],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    elements: isValidElements,
+    custom: isValidCustom6
+  }
 };
 
 // packages/dataviews/build-module/field-types/url.js
@@ -15279,10 +15406,6 @@ var url_default = {
   render: render3,
   Edit: "url",
   sort: sort_text_default,
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15298,7 +15421,14 @@ var url_default = {
     OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    pattern: isValidPattern,
+    minLength: isValidMinLength,
+    maxLength: isValidMaxLength,
+    elements: isValidElements
+  }
 };
 
 // packages/dataviews/build-module/field-types/no-type.js
@@ -15313,16 +15443,81 @@ var no_type_default = {
   render: render3,
   Edit: null,
   sort: sort6,
-  isValid: {
-    elements: true,
-    custom: () => null
-  },
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
   validOperators: ALL_OPERATORS,
-  getFormat: () => ({})
+  getFormat: () => ({}),
+  validate: {
+    required: isValidRequired,
+    elements: isValidElements
+  }
 };
+
+// packages/dataviews/build-module/field-types/utils/get-is-valid.js
+function getIsValid(field, fieldType) {
+  let required;
+  if (field.isValid?.required === true && fieldType.validate.required !== void 0) {
+    required = {
+      constraint: true,
+      validate: fieldType.validate.required
+    };
+  }
+  let elements;
+  if ((field.isValid?.elements === true || // elements is enabled unless the field opts-out
+  field.isValid?.elements === void 0 && (!!field.elements || !!field.getElements)) && fieldType.validate.elements !== void 0) {
+    elements = {
+      constraint: true,
+      validate: fieldType.validate.elements
+    };
+  }
+  let min;
+  if (typeof field.isValid?.min === "number" && fieldType.validate.min !== void 0) {
+    min = {
+      constraint: field.isValid.min,
+      validate: fieldType.validate.min
+    };
+  }
+  let max;
+  if (typeof field.isValid?.max === "number" && fieldType.validate.max !== void 0) {
+    max = {
+      constraint: field.isValid.max,
+      validate: fieldType.validate.max
+    };
+  }
+  let minLength;
+  if (typeof field.isValid?.minLength === "number" && fieldType.validate.minLength !== void 0) {
+    minLength = {
+      constraint: field.isValid.minLength,
+      validate: fieldType.validate.minLength
+    };
+  }
+  let maxLength;
+  if (typeof field.isValid?.maxLength === "number" && fieldType.validate.maxLength !== void 0) {
+    maxLength = {
+      constraint: field.isValid.maxLength,
+      validate: fieldType.validate.maxLength
+    };
+  }
+  let pattern;
+  if (field.isValid?.pattern !== void 0 && fieldType.validate.pattern !== void 0) {
+    pattern = {
+      constraint: field.isValid?.pattern,
+      validate: fieldType.validate.pattern
+    };
+  }
+  const custom = field.isValid?.custom ?? fieldType.validate.custom;
+  return {
+    required,
+    elements,
+    min,
+    max,
+    minLength,
+    maxLength,
+    pattern,
+    custom
+  };
+}
 
 // packages/dataviews/build-module/field-types/index.js
 function getFieldTypeByName(type) {
@@ -15348,12 +15543,12 @@ function getFieldTypeByName(type) {
 }
 function normalizeFields(fields) {
   return fields.map((field) => {
-    const defaultProps = getFieldTypeByName(field.type);
+    const fieldType = getFieldTypeByName(field.type);
     const getValue = field.getValue || get_value_from_id_default(field.id);
     const sort7 = function(a2, b2, direction) {
       const aValue = getValue({ item: a2 });
       const bValue = getValue({ item: b2 });
-      return field.sort ? field.sort(aValue, bValue, direction) : defaultProps.sort(aValue, bValue, direction);
+      return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
     };
     return {
       id: field.id,
@@ -15370,22 +15565,19 @@ function normalizeFields(fields) {
       enableHiding: field.enableHiding ?? true,
       readOnly: field.readOnly ?? false,
       // The type provides defaults for the following props
-      type: defaultProps.type,
-      render: field.render ?? defaultProps.render,
-      Edit: getControl(field, defaultProps.Edit),
+      type: fieldType.type,
+      render: field.render ?? fieldType.render,
+      Edit: getControl(field, fieldType.Edit),
       sort: sort7,
-      enableSorting: field.enableSorting ?? defaultProps.enableSorting,
-      enableGlobalSearch: field.enableGlobalSearch ?? defaultProps.enableGlobalSearch,
-      isValid: {
-        ...defaultProps.isValid,
-        ...field.isValid
-      },
+      enableSorting: field.enableSorting ?? fieldType.enableSorting,
+      enableGlobalSearch: field.enableGlobalSearch ?? fieldType.enableGlobalSearch,
+      isValid: getIsValid(field, fieldType),
       filterBy: get_filter_by_default(
         field,
-        defaultProps.defaultOperators,
-        defaultProps.validOperators
+        fieldType.defaultOperators,
+        fieldType.validOperators
       ),
-      format: defaultProps.getFormat(field)
+      format: fieldType.getFormat(field)
     };
   });
 }
