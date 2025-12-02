@@ -26571,9 +26571,13 @@ var wp;
         transferData: { type: "inserter", blocks: draggableBlocks },
         onDragStart: (event) => {
           startDragging2();
+          const addedTypes = /* @__PURE__ */ new Set();
           for (const block of draggableBlocks) {
             const type = `wp-block:${block.name}`;
-            event.dataTransfer.items.add("", type);
+            if (!addedTypes.has(type)) {
+              event.dataTransfer.items.add("", type);
+              addedTypes.add(type);
+            }
           }
         },
         onDragEnd: () => {
