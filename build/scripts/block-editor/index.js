@@ -64724,15 +64724,16 @@ var wp;
     data,
     field,
     hideLabelFromVision,
+    onChange,
     config: config2 = {}
   }) {
     const registry = (0, import_data162.useRegistry)();
     const attrValue = field.getValue({ item: data });
     const fieldConfig = field.config || {};
-    const { clientId, updateBlockAttributes: updateBlockAttributes2 } = config2;
+    const { clientId } = config2;
     const updateAttributes = (html) => {
       const mappedChanges = field.setValue({ item: data, value: html });
-      updateBlockAttributes2(clientId, mappedChanges);
+      onChange(mappedChanges);
     };
     const [selection2, setSelection] = (0, import_element235.useState)({
       start: void 0,
@@ -64916,19 +64917,19 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components232.Icon, { icon: media_default, size: 24 });
   }
-  function Media({ data, field, config: config2 = {} }) {
+  function Media({ data, field, onChange, config: config2 = {} }) {
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement({
       isControl: true
     });
     const value = field.getValue({ item: data });
     const { allowedTypes = [], multiple = false } = field.config || {};
-    const { clientId, updateBlockAttributes: updateBlockAttributes2, fieldDef } = config2;
+    const { fieldDef } = config2;
     const updateAttributes = (newFieldValue) => {
       const mappedChanges = field.setValue({
         item: data,
         value: newFieldValue
       });
-      updateBlockAttributes2(clientId, mappedChanges);
+      onChange(mappedChanges);
     };
     const hasFeaturedImageSupport = fieldDef?.mapping && "featuredImage" in fieldDef.mapping;
     const id = value?.id;
@@ -65122,15 +65123,15 @@ var wp;
       rel: updatedRel || void 0
     };
   }
-  function Link({ data, field, config: config2 = {} }) {
+  function Link({ data, field, onChange, config: config2 = {} }) {
     const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element236.useState)(false);
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement({
       isControl: true
     });
-    const { clientId, updateBlockAttributes: updateBlockAttributes2, fieldDef } = config2;
+    const { fieldDef } = config2;
     const updateAttributes = (newValue) => {
       const mappedChanges = field.setValue({ item: data, value: newValue });
-      updateBlockAttributes2(clientId, mappedChanges);
+      onChange(mappedChanges);
     };
     const value = field.getValue({ item: data });
     const url = value?.url;
@@ -65411,18 +65412,12 @@ var wp;
           field.Edit = createConfiguredControl2({
             control: fieldDef.type,
             clientId,
-            updateBlockAttributes: updateBlockAttributes2,
             fieldDef
           });
         }
         return field;
       });
-    }, [
-      blockTypeFields,
-      blockType?.attributes,
-      clientId,
-      updateBlockAttributes2
-    ]);
+    }, [blockTypeFields, blockType?.attributes, clientId]);
     const handleToggleField = (fieldId) => {
       setForm((prev2) => {
         if (prev2.fields?.includes(fieldId)) {
@@ -65462,24 +65457,7 @@ var wp;
           fields: dataFormFields,
           form,
           onChange: (changes) => {
-            const mappedChanges = {};
-            Object.entries(changes).forEach(
-              ([fieldId, fieldValue]) => {
-                const field = dataFormFields.find(
-                  (f2) => f2.id === fieldId
-                );
-                if (field && field.setValue) {
-                  const updates = field.setValue({
-                    item: attributes,
-                    value: fieldValue
-                  });
-                  Object.assign(mappedChanges, updates);
-                } else {
-                  mappedChanges[fieldId] = fieldValue;
-                }
-              }
-            );
-            updateBlockAttributes2(clientId, mappedChanges);
+            updateBlockAttributes2(clientId, changes);
           }
         }
       )

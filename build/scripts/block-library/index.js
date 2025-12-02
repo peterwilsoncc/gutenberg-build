@@ -16800,7 +16800,7 @@ var wp;
       }
     ];
     settings30[formKey4] = {
-      fields: ["content"]
+      fields: ["background"]
     };
   }
   var init30 = () => initBlock({ name: name30, metadata: block_default31, settings: settings30 });
