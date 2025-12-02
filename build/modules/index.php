@@ -8,21 +8,6 @@
 
 return array(
 	array(
-		'id' => '@wordpress/interactivity',
-		'path' => 'interactivity/index',
-		'asset' => 'interactivity/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/latex-to-mathml',
-		'path' => 'latex-to-mathml/index',
-		'asset' => 'latex-to-mathml/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/latex-to-mathml/loader',
-		'path' => 'latex-to-mathml/loader',
-		'asset' => 'latex-to-mathml/loader.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/interactivity-router',
 		'path' => 'interactivity-router/index',
 		'asset' => 'interactivity-router/index.min.asset.php',
@@ -38,6 +23,21 @@ return array(
 		'asset' => 'a11y/index.min.asset.php',
 	),
 	array(
+		'id' => '@wordpress/latex-to-mathml',
+		'path' => 'latex-to-mathml/index',
+		'asset' => 'latex-to-mathml/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/latex-to-mathml/loader',
+		'path' => 'latex-to-mathml/loader',
+		'asset' => 'latex-to-mathml/loader.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/interactivity',
+		'path' => 'interactivity/index',
+		'asset' => 'interactivity/index.min.asset.php',
+	),
+	array(
 		'id' => '@wordpress/lazy-editor',
 		'path' => 'lazy-editor/index',
 		'asset' => 'lazy-editor/index.min.asset.php',
@@ -46,11 +46,6 @@ return array(
 		'id' => '@wordpress/boot',
 		'path' => 'boot/index',
 		'asset' => 'boot/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
-		'path' => 'block-editor/utils/fit-text-frontend',
-		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/block-library/accordion/view',
@@ -91,5 +86,10 @@ return array(
 		'id' => '@wordpress/block-library/tabs/view',
 		'path' => 'block-library/tabs/view',
 		'asset' => 'block-library/tabs/view.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
+		'path' => 'block-editor/utils/fit-text-frontend',
+		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 );
