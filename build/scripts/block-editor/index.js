@@ -65631,9 +65631,10 @@ var wp;
     if (!contentClientIds || contentClientIds.length === 0) {
       return null;
     }
+    const shouldShowContentOnlyControls = window?.__experimentalContentOnlyPatternInsertion && window?.__experimentalContentOnlyInspectorFields;
     return /* @__PURE__ */ (0, import_jsx_runtime417.jsxs)(import_jsx_runtime417.Fragment, { children: [
-      !window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(import_components235.PanelBody, { title: (0, import_i18n216.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(BlockQuickNavigation, { clientIds: contentClientIds }) }),
-      window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(ContentOnlyControls, { rootClientId })
+      !shouldShowContentOnlyControls && /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(import_components235.PanelBody, { title: (0, import_i18n216.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(BlockQuickNavigation, { clientIds: contentClientIds }) }),
+      shouldShowContentOnlyControls && /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(ContentOnlyControls, { rootClientId })
     ] });
   };
   var content_tab_default = ContentTab;

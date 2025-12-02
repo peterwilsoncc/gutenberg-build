@@ -4456,7 +4456,7 @@ var wp;
     edit: edit_default,
     save: save5
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings7[fieldsKey] = [
       {
         id: "audio",
@@ -6678,7 +6678,7 @@ var wp;
       text: (a2.text || "") + text
     })
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings9[fieldsKey2] = [
       {
         id: "text",
@@ -8329,7 +8329,7 @@ var wp;
     edit: CodeEdit,
     save: save9
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings14[fieldsKey3] = [
       {
         id: "content",
@@ -16778,7 +16778,7 @@ var wp;
     deprecated: deprecated_default11,
     variations: variations_default3
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings30[fieldsKey4] = [
       {
         id: "background",
@@ -17109,7 +17109,7 @@ var wp;
     edit: edit_default8,
     transforms: transforms_default7
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings31[fieldsKey5] = [
       {
         id: "summary",
@@ -19371,7 +19371,7 @@ ${url}
     edit: edit_default10,
     save: save17
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings33[fieldsKey6] = [
       {
         id: "file",
@@ -24659,7 +24659,7 @@ ${url}
     save: save23,
     variations: variations_default9
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings40[fieldsKey7] = [
       {
         id: "content",
@@ -28024,7 +28024,7 @@ ${js}
     save: save26,
     deprecated: deprecated_default19
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings43[fieldsKey8] = [
       {
         id: "image",
@@ -30930,7 +30930,7 @@ ${js}
     transforms: transforms_default16,
     [unlock(import_block_editor128.privateApis).requiresWrapperOnCopy]: true
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings48[fieldsKey9] = [
       {
         id: "content",
@@ -33152,7 +33152,7 @@ ${js}
     save: save30,
     deprecated: deprecated_default24
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings50[fieldsKey10] = [
       {
         id: "media",
@@ -33505,7 +33505,7 @@ ${js}
     edit: MoreEdit,
     save: save32
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings52[fieldsKey11] = [
       {
         id: "customText",
@@ -38656,7 +38656,7 @@ ${js}
     ],
     transforms: transforms_default19
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings54[fieldsKey12] = [
       {
         id: "label",
@@ -39188,7 +39188,7 @@ ${js}
     save: save35,
     transforms: transforms_default20
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings55[fieldsKey13] = [
       {
         id: "label",
@@ -41099,7 +41099,7 @@ ${js}
     save: save37,
     variations: variations_default10
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings60[fieldsKey14] = [
       {
         id: "content",
@@ -46305,7 +46305,7 @@ ${js}
       };
     }
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings77[fieldsKey15] = [
       {
         id: "content",
@@ -47081,7 +47081,7 @@ ${js}
     save: save40,
     deprecated: deprecated_default29
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings78[fieldsKey16] = [
       {
         id: "value",
@@ -53193,7 +53193,7 @@ ${js}
     variations: variations_default16,
     edit: SearchEdit
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings91[fieldsKey17] = [
       {
         id: "label",
@@ -55694,7 +55694,7 @@ ${js}
     edit: edit_default29,
     variations: variations_default17
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings97[fieldsKey18] = [
       {
         id: "link",
@@ -63896,7 +63896,7 @@ ${declarations}
     edit: VerseEdit,
     save: save52
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings112[fieldsKey19] = [
       {
         id: "content",
@@ -64952,7 +64952,7 @@ ${declarations}
     edit: edit_default36,
     save: save53
   };
-  if (window.__experimentalContentOnlyPatternInsertion) {
+  if (window.__experimentalContentOnlyInspectorFields) {
     settings113[fieldsKey20] = [
       {
         id: "video",
