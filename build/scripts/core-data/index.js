@@ -14747,15 +14747,6 @@ var wp;
       kind: "root",
       baseURL: "/wp/v2/registered-templates",
       key: "id"
-    },
-    {
-      label: (0, import_i18n.__)("Font Collections"),
-      name: "fontCollection",
-      kind: "root",
-      baseURL: "/wp/v2/font-collections",
-      baseURLParams: { context: "view" },
-      plural: "fontCollections",
-      key: "slug"
     }
   ];
   var deprecatedEntities = {
@@ -16533,7 +16524,7 @@ var wp;
       entities: entities2
     };
   }
-  function receiveEntityRecords(kind, name, records, query = void 0, invalidateCache = false, edits = void 0, meta = void 0) {
+  function receiveEntityRecords(kind, name, records, query, invalidateCache = false, edits, meta) {
     if (kind === "postType") {
       records = (Array.isArray(records) ? records : [records]).map(
         (record) => record.status === "auto-draft" ? { ...record, title: "" } : record
@@ -17482,7 +17473,7 @@ var wp;
           { kind, name, id: key }
         ]);
       }
-      if (window.__experimentalEnableSync && entityConfig.syncConfig && isNumericID(key) && !query) {
+      if (window.__experimentalEnableSync && entityConfig.syncConfig && !query) {
         if (true) {
           const objectType = `${kind}/${name}`;
           const objectId = key;

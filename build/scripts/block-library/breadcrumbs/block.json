@@ -16,11 +16,11 @@
 			"type": "string",
 			"default": "/"
 		},
-		"showHomeItem": {
+		"showHomeLink": {
 			"type": "boolean",
 			"default": true
 		},
-		"showCurrentItem": {
+		"showLastItem": {
 			"type": "boolean",
 			"default": true
 		},

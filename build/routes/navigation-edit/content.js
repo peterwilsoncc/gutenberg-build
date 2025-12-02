@@ -174,44 +174,30 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/page/header.js
-var import_components3 = __toESM(require_components());
-
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.js
 var import_components2 = __toESM(require_components());
-var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components2.createSlotFill)("SidebarToggle");
-
-// packages/admin-ui/build-module/page/header.js
 var import_jsx_runtime3 = __toESM(require_jsx_runtime());
 function Header({
   breadcrumbs,
   badges,
   title,
   subTitle,
-  actions,
-  showSidebarToggle = true
+  actions
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components3.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components2.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
     /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-      import_components3.__experimentalHStack,
+      import_components2.__experimentalHStack,
       {
         className: "admin-ui-page__header-title",
         justify: "space-between",
         spacing: 2,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components3.__experimentalHStack, { spacing: 2, justify: "flex-start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              SidebarToggleSlot,
-              {
-                bubblesVirtually: true,
-                className: "admin-ui-page__sidebar-toggle-slot"
-              }
-            ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_components3.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components2.__experimentalHStack, { spacing: 2, children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_components2.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
             breadcrumbs,
             badges
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-            import_components3.__experimentalHStack,
+            import_components2.__experimentalHStack,
             {
               style: { width: "auto", flexShrink: 0 },
               spacing: 2,
@@ -236,8 +222,7 @@ function Page({
   children,
   className,
   actions,
-  hasPadding = false,
-  showSidebarToggle = true
+  hasPadding = false
 }) {
   const classes = clsx_default("admin-ui-page", className);
   return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(navigable_region_default, { className: classes, ariaLabel: title, children: [
@@ -248,14 +233,12 @@ function Page({
         badges,
         title,
         subTitle,
-        actions,
-        showSidebarToggle
+        actions
       }
     ),
     hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "admin-ui-page__content has-padding", children }) : children
   ] });
 }
-Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/navigation-edit/stage.tsx
@@ -268,7 +251,7 @@ var import_html_entities = __toESM(require_html_entities());
 var import_element3 = __toESM(require_element());
 var import_block_editor3 = __toESM(require_block_editor());
 var import_blocks2 = __toESM(require_blocks());
-var import_components5 = __toESM(require_components());
+var import_components4 = __toESM(require_components());
 import { useEditorAssets } from "@wordpress/lazy-editor";
 
 // routes/navigation-edit/editor/style.scss
@@ -307,7 +290,7 @@ var import_jsx_runtime7 = __toESM(require_jsx_runtime());
 var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives3.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
 
 // routes/navigation-edit/editor/leaf-more-menu.tsx
-var import_components4 = __toESM(require_components());
+var import_components3 = __toESM(require_components());
 var import_data = __toESM(require_data());
 var import_i18n2 = __toESM(require_i18n());
 var import_block_editor = __toESM(require_block_editor());
@@ -334,7 +317,7 @@ function LeafMoreMenu({
     [clientId]
   );
   return /* @__PURE__ */ React.createElement(
-    import_components4.DropdownMenu,
+    import_components3.DropdownMenu,
     {
       icon: more_vertical_default,
       label: (0, import_i18n2.__)("Options"),
@@ -343,8 +326,8 @@ function LeafMoreMenu({
       noIcons: true,
       ...props
     },
-    ({ onClose }) => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components4.MenuGroup, null, /* @__PURE__ */ React.createElement(
-      import_components4.MenuItem,
+    ({ onClose }) => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components3.MenuGroup, null, /* @__PURE__ */ React.createElement(
+      import_components3.MenuItem,
       {
         icon: chevron_up_default,
         onClick: () => {
@@ -354,7 +337,7 @@ function LeafMoreMenu({
       },
       (0, import_i18n2.__)("Move up")
     ), /* @__PURE__ */ React.createElement(
-      import_components4.MenuItem,
+      import_components3.MenuItem,
       {
         icon: chevron_down_default,
         onClick: () => {
@@ -363,8 +346,8 @@ function LeafMoreMenu({
         }
       },
       (0, import_i18n2.__)("Move down")
-    )), /* @__PURE__ */ React.createElement(import_components4.MenuGroup, null, /* @__PURE__ */ React.createElement(
-      import_components4.MenuItem,
+    )), /* @__PURE__ */ React.createElement(import_components3.MenuGroup, null, /* @__PURE__ */ React.createElement(
+      import_components3.MenuItem,
       {
         onClick: () => {
           removeBlocks([clientId], false);
@@ -467,7 +450,7 @@ function NavigationMenuEditor({ id }) {
           height: "100vh"
         }
       },
-      /* @__PURE__ */ React.createElement(import_components5.Spinner, null)
+      /* @__PURE__ */ React.createElement(import_components4.Spinner, null)
     );
   }
   return /* @__PURE__ */ React.createElement(
