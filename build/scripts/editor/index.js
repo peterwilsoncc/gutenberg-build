@@ -7518,7 +7518,7 @@ var wp;
   var import_jsx_runtime87 = __toESM(require_jsx_runtime());
   var trashPost2 = {
     id: "move-to-trash",
-    label: (0, import_i18n43.__)("Trash"),
+    label: (0, import_i18n43._x)("Trash", "verb"),
     isPrimary: true,
     icon: trash_default,
     isEligible(item) {
