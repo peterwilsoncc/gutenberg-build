@@ -3428,6 +3428,15 @@ var wp;
       }
     ) });
   };
+  var AvatarLinkWrapper = ({ children, isLink }) => isLink ? /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+    "a",
+    {
+      href: "#avatar-pseudo-link",
+      className: "wp-block-avatar__link",
+      onClick: (event) => event.preventDefault(),
+      children
+    }
+  ) : children;
   var ResizableAvatar = ({
     setAttributes,
     attributes: attributes3,
@@ -3442,7 +3451,7 @@ var wp;
         s: attributes3?.size * 2
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(AvatarLinkWrapper, { isLink: attributes3.isLink, children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
       import_components5.ResizableBox,
       {
         size: {
@@ -3483,7 +3492,7 @@ var wp;
           }
         )
       }
-    ) });
+    ) }) });
   };
   var CommentEdit = ({ attributes: attributes3, context, setAttributes, isSelected }) => {
     const { commentId } = context;
@@ -3499,24 +3508,7 @@ var wp;
           selectUser: false
         }
       ),
-      attributes3.isLink ? /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
-        "a",
-        {
-          href: "#avatar-pseudo-link",
-          className: "wp-block-avatar__link",
-          onClick: (event) => event.preventDefault(),
-          children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
-            ResizableAvatar,
-            {
-              attributes: attributes3,
-              avatar,
-              blockProps,
-              isSelected,
-              setAttributes
-            }
-          )
-        }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
         ResizableAvatar,
         {
           attributes: attributes3,
@@ -3546,24 +3538,7 @@ var wp;
           setAttributes
         }
       ),
-      attributes3.isLink ? /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
-        "a",
-        {
-          href: "#avatar-pseudo-link",
-          className: "wp-block-avatar__link",
-          onClick: (event) => event.preventDefault(),
-          children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
-            ResizableAvatar,
-            {
-              attributes: attributes3,
-              avatar,
-              blockProps,
-              isSelected,
-              setAttributes
-            }
-          )
-        }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
         ResizableAvatar,
         {
           attributes: attributes3,
