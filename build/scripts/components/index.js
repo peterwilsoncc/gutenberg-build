@@ -47900,7 +47900,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         children: getStatusLabel(status)
       }), /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
         className: "components-notice__content",
-        children: [children, /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
+        children: [children, actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
           className: "components-notice__actions",
           children: actions.map(({
             className: buttonCustomClasses,

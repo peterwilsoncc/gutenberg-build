@@ -150,6 +150,20 @@ var DEFAULT_VIEWS = [
     }
   },
   {
+    slug: "overlay",
+    label: "Overlays",
+    view: {
+      ...DEFAULT_VIEW,
+      filters: [
+        {
+          field: "area",
+          operator: "is",
+          value: "overlay"
+        }
+      ]
+    }
+  },
+  {
     slug: "uncategorized",
     label: "General",
     view: {

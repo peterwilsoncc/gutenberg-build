@@ -3369,7 +3369,7 @@ var wp;
     }
     return chunks;
   }
-  function GridItem({
+  var GridItem = (0, import_element11.forwardRef)(function GridItem2({
     view,
     selection,
     onChangeSelection,
@@ -3385,12 +3385,13 @@ var wp;
     regularFields,
     badgeFields,
     hasBulkActions,
-    config
-  }) {
+    config,
+    ...props
+  }, ref) {
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const hasBulkAction = useHasAPossibleBulkAction(actions, item);
     const id = getItemId(item);
-    const instanceId = (0, import_compose4.useInstanceId)(GridItem);
+    const instanceId = (0, import_compose4.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
     const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
       mediaField.render,
@@ -3421,11 +3422,19 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
       import_components9.__experimentalVStack,
       {
+        ...props,
+        ref,
         spacing: 0,
-        className: clsx_default("dataviews-view-grid__card", {
-          "is-selected": hasBulkAction && isSelected2
-        }),
+        className: clsx_default(
+          props.className,
+          "dataviews-view-grid__row__gridcell",
+          "dataviews-view-grid__card",
+          {
+            "is-selected": hasBulkAction && isSelected2
+          }
+        ),
         onClickCapture: (event) => {
+          props.onClickCapture?.(event);
           if ((0, import_keycodes2.isAppleOS)() ? event.metaKey : event.ctrlKey) {
             event.stopPropagation();
             event.preventDefault();
@@ -3565,10 +3574,9 @@ var wp;
             )
           ] })
         ]
-      },
-      id
+      }
     );
-  }
+  });
   function CompositeGrid({
     data,
     isInfiniteScroll,
@@ -3644,37 +3652,31 @@ var wp;
               return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
                 import_components9.Composite.Item,
                 {
-                  render: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
-                    "div",
+                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+                    GridItem,
                     {
-                      id: getItemId(item),
-                      className: "dataviews-view-grid__row__gridcell",
+                      ...props,
                       role: isInfiniteScroll ? "article" : "gridcell",
                       "aria-setsize": isInfiniteScroll ? paginationInfo.totalItems : void 0,
                       "aria-posinset": isInfiniteScroll ? index + 1 : void 0,
-                      children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
-                        GridItem,
-                        {
-                          view,
-                          selection,
-                          onChangeSelection,
-                          onClickItem,
-                          isItemClickable: isItemClickable2,
-                          renderItemLink,
-                          getItemId,
-                          item,
-                          actions,
-                          mediaField,
-                          titleField,
-                          descriptionField,
-                          regularFields,
-                          badgeFields,
-                          hasBulkActions,
-                          config: {
-                            sizes: size
-                          }
-                        }
-                      )
+                      view,
+                      selection,
+                      onChangeSelection,
+                      onClickItem,
+                      isItemClickable: isItemClickable2,
+                      renderItemLink,
+                      getItemId,
+                      item,
+                      actions,
+                      mediaField,
+                      titleField,
+                      descriptionField,
+                      regularFields,
+                      badgeFields,
+                      hasBulkActions,
+                      config: {
+                        sizes: size
+                      }
                     }
                   )
                 },
@@ -4848,7 +4850,7 @@ var wp;
   // packages/dataviews/build-module/dataviews-layouts/picker-grid/index.js
   var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   var { Badge: Badge2 } = unlock(import_components17.privateApis);
-  function GridItem2({
+  function GridItem3({
     view,
     multiselect,
     selection,
@@ -5120,7 +5122,7 @@ var wp;
                       children: groupItems.map((item) => {
                         const posInSet = (currentPage - 1) * perPage + data.indexOf(item) + 1;
                         return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-                          GridItem2,
+                          GridItem3,
                           {
                             view,
                             multiselect: isMultiselect,
@@ -5177,7 +5179,7 @@ var wp;
                 posinset = (currentPage - 1) * perPage + index + 1;
               }
               return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-                GridItem2,
+                GridItem3,
                 {
                   view,
                   multiselect: isMultiselect,
@@ -5781,7 +5783,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-filters/filter.js
   var import_components23 = __toESM(require_components());
-  var import_i18n28 = __toESM(require_i18n());
+  var import_i18n30 = __toESM(require_i18n());
   var import_element25 = __toESM(require_element());
   var import_date2 = __toESM(require_date());
 
@@ -6454,23 +6456,23 @@ var wp;
   // node_modules/@ariakit/react-core/esm/__chunks/LMDWO4NN.js
   var React2 = __toESM(require_react(), 1);
   var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
-  function forwardRef22(render9) {
-    const Role = React2.forwardRef((props, ref) => render9(__spreadProps(__spreadValues({}, props), { ref })));
-    Role.displayName = render9.displayName || render9.name;
+  function forwardRef22(render10) {
+    const Role = React2.forwardRef((props, ref) => render10(__spreadProps(__spreadValues({}, props), { ref })));
+    Role.displayName = render10.displayName || render10.name;
     return Role;
   }
   function memo22(Component2, propsAreEqual) {
     return React2.memo(Component2, propsAreEqual);
   }
   function createElement2(Type, props) {
-    const _a = props, { wrapElement, render: render9 } = _a, rest = __objRest(_a, ["wrapElement", "render"]);
-    const mergedRef = useMergeRefs(props.ref, getRefProperty(render9));
+    const _a = props, { wrapElement, render: render10 } = _a, rest = __objRest(_a, ["wrapElement", "render"]);
+    const mergedRef = useMergeRefs(props.ref, getRefProperty(render10));
     let element;
-    if (React2.isValidElement(render9)) {
-      const renderProps = __spreadProps(__spreadValues({}, render9.props), { ref: mergedRef });
-      element = React2.cloneElement(render9, mergeProps(rest, renderProps));
-    } else if (render9) {
-      element = render9(rest);
+    if (React2.isValidElement(render10)) {
+      const renderProps = __spreadProps(__spreadValues({}, render10.props), { ref: mergedRef });
+      element = React2.cloneElement(render10, mergeProps(rest, renderProps));
+    } else if (render10) {
+      element = render10(rest);
     } else {
       element = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Type, __spreadValues({}, rest));
     }
@@ -10217,10 +10219,7 @@ If there's a particular need for this, please submit a feature request at https:
         return {
           ...currentField,
           // Deactivate validation for filters.
-          isValid: {
-            required: false,
-            custom: () => null
-          },
+          isValid: {},
           // Configure getValue/setValue as if Item was a plain object.
           getValue: ({ item }) => item[currentField.id],
           setValue: ({ value }) => ({
@@ -11926,8 +11925,250 @@ If there's a particular need for this, please submit a feature request at https:
     return parsed && isValid(parsed) ? parsed : null;
   }
 
-  // packages/dataviews/build-module/components/dataviews-filters/filter.js
+  // packages/dataviews/build-module/field-types/number.js
+  var import_i18n28 = __toESM(require_i18n());
+
+  // packages/dataviews/build-module/field-types/utils/render-from-elements.js
+  function RenderFromElements({
+    item,
+    field
+  }) {
+    const { elements, isLoading } = useElements({
+      elements: field.elements,
+      getElements: field.getElements
+    });
+    const value = field.getValue({ item });
+    if (isLoading) {
+      return value;
+    }
+    if (elements.length === 0) {
+      return value;
+    }
+    return elements?.find((element) => element.value === value)?.label || field.getValue({ item });
+  }
+
+  // packages/dataviews/build-module/field-types/utils/sort-number.js
+  var sort_number_default = (a2, b2, direction) => {
+    return direction === "asc" ? a2 - b2 : b2 - a2;
+  };
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-required.js
+  function isValidRequired(item, field) {
+    const value = field.getValue({ item });
+    return ![void 0, "", null].includes(value);
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-min.js
+  function isValidMin(item, field) {
+    if (typeof field.isValid.min?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return Number(value) >= field.isValid.min.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-max.js
+  function isValidMax(item, field) {
+    if (typeof field.isValid.max?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return Number(value) <= field.isValid.max.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-elements.js
+  function isValidElements(item, field) {
+    const elements = field.elements ?? [];
+    const validValues = elements.map((el) => el.value);
+    if (validValues.length === 0) {
+      return true;
+    }
+    const value = field.getValue({ item });
+    return [].concat(value).every((v2) => validValues.includes(v2));
+  }
+
+  // packages/dataviews/build-module/field-types/number.js
   var import_jsx_runtime57 = __toESM(require_jsx_runtime());
+  function getFormat(field) {
+    const fieldFormat = field.format;
+    return {
+      separatorThousand: fieldFormat?.separatorThousand !== void 0 && typeof fieldFormat.separatorThousand === "string" ? fieldFormat.separatorThousand : ",",
+      separatorDecimal: fieldFormat?.separatorDecimal !== void 0 && typeof fieldFormat.separatorDecimal === "string" ? fieldFormat.separatorDecimal : ".",
+      decimals: fieldFormat?.decimals !== void 0 && typeof fieldFormat.decimals === "number" && fieldFormat.decimals >= 0 && fieldFormat.decimals <= 100 && Number.isInteger(fieldFormat.decimals) ? fieldFormat.decimals : 2
+    };
+  }
+  function formatNumber(value, format2) {
+    if (!Number.isFinite(value)) {
+      return String(value);
+    }
+    const { separatorThousand, separatorDecimal, decimals } = format2;
+    const fixedValue = value.toFixed(decimals);
+    const [integerPart, decimalPart] = fixedValue.split(".");
+    const formattedInteger = separatorThousand ? integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, separatorThousand) : integerPart;
+    return decimals === 0 ? formattedInteger : formattedInteger + separatorDecimal + decimalPart;
+  }
+  function isEmpty2(value) {
+    return value === "" || value === void 0 || value === null;
+  }
+  function render({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if ([null, void 0].includes(value)) {
+      return "";
+    }
+    let format2;
+    if (field.type !== "number") {
+      format2 = getFormat(field);
+    } else {
+      format2 = field.format;
+    }
+    return formatNumber(Number(value), format2);
+  }
+  function isValidCustom(item, field) {
+    const value = field.getValue({ item });
+    if (!isEmpty2(value) && !Number.isFinite(value)) {
+      return (0, import_i18n28.__)("Value must be a number.");
+    }
+    return null;
+  }
+  var number_default = {
+    type: "number",
+    render,
+    Edit: "number",
+    sort: sort_number_default,
+    enableSorting: true,
+    enableGlobalSearch: false,
+    defaultOperators: [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN
+    ],
+    validOperators: [
+      // Single-selection
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN,
+      // Multiple-selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ],
+    getFormat,
+    validate: {
+      required: isValidRequired,
+      min: isValidMin,
+      max: isValidMax,
+      elements: isValidElements,
+      custom: isValidCustom
+    }
+  };
+
+  // packages/dataviews/build-module/field-types/integer.js
+  var import_i18n29 = __toESM(require_i18n());
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+  function getFormat2(field) {
+    const fieldFormat = field.format;
+    return {
+      separatorThousand: fieldFormat?.separatorThousand !== void 0 && typeof fieldFormat.separatorThousand === "string" ? fieldFormat.separatorThousand : ","
+    };
+  }
+  function formatInteger(value, format2) {
+    if (!Number.isFinite(value)) {
+      return String(value);
+    }
+    const { separatorThousand } = format2;
+    const integerValue = Math.trunc(value);
+    if (!separatorThousand) {
+      return String(integerValue);
+    }
+    return String(integerValue).replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      separatorThousand
+    );
+  }
+  function render2({ item, field }) {
+    if (field.hasElements) {
+      return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(RenderFromElements, { item, field });
+    }
+    const value = field.getValue({ item });
+    if ([null, void 0].includes(value)) {
+      return "";
+    }
+    let format2;
+    if (field.type !== "integer") {
+      format2 = getFormat2(field);
+    } else {
+      format2 = field.format;
+    }
+    return formatInteger(Number(value), format2);
+  }
+  function isValidCustom2(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
+      return (0, import_i18n29.__)("Value must be an integer.");
+    }
+    return null;
+  }
+  var integer_default = {
+    type: "integer",
+    render: render2,
+    Edit: "integer",
+    sort: sort_number_default,
+    enableSorting: true,
+    enableGlobalSearch: false,
+    defaultOperators: [
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN
+    ],
+    validOperators: [
+      // Single-selection
+      OPERATOR_IS,
+      OPERATOR_IS_NOT,
+      OPERATOR_LESS_THAN,
+      OPERATOR_GREATER_THAN,
+      OPERATOR_LESS_THAN_OR_EQUAL,
+      OPERATOR_GREATER_THAN_OR_EQUAL,
+      OPERATOR_BETWEEN,
+      // Multiple-selection
+      OPERATOR_IS_ANY,
+      OPERATOR_IS_NONE,
+      OPERATOR_IS_ALL,
+      OPERATOR_IS_NOT_ALL
+    ],
+    getFormat: getFormat2,
+    validate: {
+      required: isValidRequired,
+      min: isValidMin,
+      max: isValidMax,
+      elements: isValidElements,
+      custom: isValidCustom2
+    }
+  };
+
+  // packages/dataviews/build-module/components/dataviews-filters/filter.js
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
   var ENTER = "Enter";
   var SPACE = " ";
   var FilterText = ({
@@ -11939,14 +12180,14 @@ If there's a particular need for this, please submit a feature request at https:
       return filter.name;
     }
     const filterTextWrappers = {
-      Name: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
-      Value: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
+      Name: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
+      Value: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
     };
     if (filterInView?.operator === OPERATOR_IS_ANY) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Author is any: Admin, Editor". */
-          (0, import_i18n28.__)("<Name>%1$s is any: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is any: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements.map((element) => element.label).join(", ")
         ),
@@ -11955,9 +12196,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_IS_NONE) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Author is none: Admin, Editor". */
-          (0, import_i18n28.__)("<Name>%1$s is none: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is none: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements.map((element) => element.label).join(", ")
         ),
@@ -11966,9 +12207,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_IS_ALL) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Author is all: Admin, Editor". */
-          (0, import_i18n28.__)("<Name>%1$s is all: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is all: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements.map((element) => element.label).join(", ")
         ),
@@ -11977,9 +12218,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_IS_NOT_ALL) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Author is not all: Admin, Editor". */
-          (0, import_i18n28.__)("<Name>%1$s is not all: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is not all: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements.map((element) => element.label).join(", ")
         ),
@@ -11988,9 +12229,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_IS) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Author is: Admin". */
-          (0, import_i18n28.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -11999,9 +12240,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_IS_NOT) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Author is not: Admin". */
-          (0, import_i18n28.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12010,9 +12251,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_LESS_THAN) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Price is less than: 10". */
-          (0, import_i18n28.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12021,9 +12262,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_GREATER_THAN) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Price is greater than: 10". */
-          (0, import_i18n28.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12032,9 +12273,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_LESS_THAN_OR_EQUAL) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Price is less than or equal to: 10". */
-          (0, import_i18n28.__)(
+          (0, import_i18n30.__)(
             "<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"
           ),
           filter.name,
@@ -12045,9 +12286,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_GREATER_THAN_OR_EQUAL) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Price is greater than or equal to: 10". */
-          (0, import_i18n28.__)(
+          (0, import_i18n30.__)(
             "<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"
           ),
           filter.name,
@@ -12058,9 +12299,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_CONTAINS) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Title contains: Mars". */
-          (0, import_i18n28.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12069,9 +12310,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_NOT_CONTAINS) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Description doesn't contain: photo". */
-          (0, import_i18n28.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12080,9 +12321,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_STARTS_WITH) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Title starts with: Mar". */
-          (0, import_i18n28.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12091,9 +12332,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_BEFORE) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is before: 2024-01-01". */
-          (0, import_i18n28.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12102,9 +12343,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_AFTER) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is after: 2024-01-01". */
-          (0, import_i18n28.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12113,9 +12354,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_BEFORE_INC) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is on or before: 2024-01-01". */
-          (0, import_i18n28.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12124,9 +12365,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_AFTER_INC) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is on or after: 2024-01-01". */
-          (0, import_i18n28.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12136,9 +12377,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (filterInView?.operator === OPERATOR_BETWEEN) {
       const { label } = activeElements[0];
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Min value. 3: Max value. e.g.: "Item count between (inc): 10 and 180". */
-          (0, import_i18n28.__)(
+          (0, import_i18n30.__)(
             "<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"
           ),
           filter.name,
@@ -12150,9 +12391,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_ON) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is: 2024-01-01". */
-          (0, import_i18n28.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12161,9 +12402,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_NOT_ON) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is not: 2024-01-01". */
-          (0, import_i18n28.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
           filter.name,
           activeElements[0].label
         ),
@@ -12172,9 +12413,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_IN_THE_PAST) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is in the past: 1 days". */
-          (0, import_i18n28.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"),
+          (0, import_i18n30.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"),
           filter.name,
           `${activeElements[0].value.value} ${activeElements[0].value.unit}`
         ),
@@ -12183,18 +12424,18 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (filterInView?.operator === OPERATOR_OVER) {
       return (0, import_element25.createInterpolateElement)(
-        (0, import_i18n28.sprintf)(
+        (0, import_i18n30.sprintf)(
           /* translators: 1: Filter name. 2: Filter value. e.g.: "Date is over: 1 days ago". */
-          (0, import_i18n28.__)("<Name>%1$s is over: </Name><Value>%2$s</Value> ago"),
+          (0, import_i18n30.__)("<Name>%1$s is over: </Name><Value>%2$s</Value> ago"),
           filter.name,
           `${activeElements[0].value.value} ${activeElements[0].value.unit}`
         ),
         filterTextWrappers
       );
     }
-    return (0, import_i18n28.sprintf)(
+    return (0, import_i18n30.sprintf)(
       /* translators: 1: Filter name e.g.: "Unknown status for Author". */
-      (0, import_i18n28.__)("Unknown status for %1$s"),
+      (0, import_i18n30.__)("Unknown status for %1$s"),
       filter.name
     );
   };
@@ -12211,19 +12452,19 @@ If there's a particular need for this, please submit a feature request at https:
       (_filter) => _filter.field === filter.field
     );
     const value = currentFilter?.operator || filter.operators[0];
-    return operatorOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(
+    return operatorOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(
       import_components23.__experimentalHStack,
       {
         spacing: 2,
         justify: "flex-start",
         className: "dataviews-filters__summary-operators-container",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_components23.FlexItem, { className: "dataviews-filters__summary-operators-filter-name", children: filter.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components23.FlexItem, { className: "dataviews-filters__summary-operators-filter-name", children: filter.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
             import_components23.SelectControl,
             {
               className: "dataviews-filters__summary-operators-filter-select",
-              label: (0, import_i18n28.__)("Conditions"),
+              label: (0, import_i18n30.__)("Conditions"),
               value,
               options: operatorOptions,
               onChange: (newValue) => {
@@ -12323,6 +12564,12 @@ If there's a particular need for this, please submit a feature request at https:
         } catch (e2) {
           label = filterInView.value;
         }
+      } else if (field?.type === "number" && typeof label === "number") {
+        const numberField = field;
+        label = formatNumber(label, numberField.format);
+      } else if (field?.type === "integer" && typeof label === "number") {
+        const integerField = field;
+        label = formatInteger(label, integerField.format);
       }
       activeElements = [
         {
@@ -12335,7 +12582,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isLocked = filterInView?.isLocked;
     const hasValues = !isLocked && filterInView?.value !== void 0;
     const canResetOrRemove = !isLocked && (!isPrimary || hasValues);
-    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
       import_components23.Dropdown,
       {
         defaultOpen: openedFilter === filter.field,
@@ -12344,17 +12591,17 @@ If there's a particular need for this, please submit a feature request at https:
         onClose: () => {
           toggleRef.current?.focus();
         },
-        renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)("div", { className: "dataviews-filters__summary-chip-container", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+        renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)("div", { className: "dataviews-filters__summary-chip-container", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
             import_components23.Tooltip,
             {
-              text: (0, import_i18n28.sprintf)(
+              text: (0, import_i18n30.sprintf)(
                 /* translators: 1: Filter name. */
-                (0, import_i18n28.__)("Filter by: %1$s"),
+                (0, import_i18n30.__)("Filter by: %1$s"),
                 filter.name.toLowerCase()
               ),
               placement: "top",
-              children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
                 "div",
                 {
                   className: clsx_default(
@@ -12382,7 +12629,7 @@ If there's a particular need for this, please submit a feature request at https:
                   "aria-pressed": isOpen,
                   "aria-expanded": isOpen,
                   ref: toggleRef,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
                     FilterText,
                     {
                       activeElements,
@@ -12394,12 +12641,12 @@ If there's a particular need for this, please submit a feature request at https:
               )
             }
           ),
-          canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+          canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
             import_components23.Tooltip,
             {
-              text: isPrimary ? (0, import_i18n28.__)("Reset") : (0, import_i18n28.__)("Remove"),
+              text: isPrimary ? (0, import_i18n30.__)("Reset") : (0, import_i18n30.__)("Remove"),
               placement: "top",
-              children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
                 "button",
                 {
                   className: clsx_default(
@@ -12420,16 +12667,16 @@ If there's a particular need for this, please submit a feature request at https:
                       toggleRef.current?.focus();
                     }
                   },
-                  children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_components23.Icon, { icon: close_small_default })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_components23.Icon, { icon: close_small_default })
                 }
               )
             }
           )
         ] }),
         renderContent: () => {
-          return /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(import_components23.__experimentalVStack, { spacing: 0, justify: "flex-start", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(OperatorSelector, { ...commonProps }),
-            commonProps.filter.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)(import_components23.__experimentalVStack, { spacing: 0, justify: "flex-start", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(OperatorSelector, { ...commonProps }),
+            commonProps.filter.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
               SearchWidget,
               {
                 ...commonProps,
@@ -12438,7 +12685,7 @@ If there's a particular need for this, please submit a feature request at https:
                   elements
                 }
               }
-            ) : /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(InputWidget, { ...commonProps, fields })
+            ) : /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(InputWidget, { ...commonProps, fields })
           ] });
         }
       }
@@ -12447,9 +12694,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/add-filter.js
   var import_components24 = __toESM(require_components());
-  var import_i18n29 = __toESM(require_i18n());
+  var import_i18n31 = __toESM(require_i18n());
   var import_element26 = __toESM(require_element());
-  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
   var { Menu: Menu4 } = unlock(import_components24.privateApis);
   function AddFilterMenu({
     filters,
@@ -12459,10 +12706,10 @@ If there's a particular need for this, please submit a feature request at https:
     triggerProps
   }) {
     const inactiveFilters = filters.filter((filter) => !filter.isVisible);
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)(Menu4, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Menu4.TriggerButton, { ...triggerProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Menu4.Popover, { children: inactiveFilters.map((filter) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(Menu4, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Menu4.TriggerButton, { ...triggerProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Menu4.Popover, { children: inactiveFilters.map((filter) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
           Menu4.Item,
           {
             onClick: () => {
@@ -12480,7 +12727,7 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Menu4.ItemLabel, { children: filter.name })
+            children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Menu4.ItemLabel, { children: filter.name })
           },
           filter.field
         );
@@ -12492,11 +12739,11 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const inactiveFilters = filters.filter((filter) => !filter.isVisible);
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
       AddFilterMenu,
       {
         triggerProps: {
-          render: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
             import_components24.Button,
             {
               accessibleWhenDisabled: true,
@@ -12507,7 +12754,7 @@ If there's a particular need for this, please submit a feature request at https:
               ref
             }
           ),
-          children: (0, import_i18n29.__)("Add filter")
+          children: (0, import_i18n31.__)("Add filter")
         },
         ...{ filters, view, onChangeView, setOpenedFilter }
       }
@@ -12517,8 +12764,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/reset-filters.js
   var import_components25 = __toESM(require_components());
-  var import_i18n30 = __toESM(require_i18n());
-  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
+  var import_i18n32 = __toESM(require_i18n());
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
   function ResetFilter({
     filters,
     view,
@@ -12530,7 +12777,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isDisabled = !view.search && !view.filters?.some(
       (_filter) => !_filter.isLocked && (_filter.value !== void 0 || !isPrimary(_filter.field))
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
       import_components25.Button,
       {
         disabled: isDisabled,
@@ -12546,7 +12793,7 @@ If there's a particular need for this, please submit a feature request at https:
             filters: view.filters?.filter((f2) => !!f2.isLocked) || []
           });
         },
-        children: (0, import_i18n30.__)("Reset")
+        children: (0, import_i18n32.__)("Reset")
       }
     );
   }
@@ -12603,12 +12850,12 @@ If there's a particular need for this, please submit a feature request at https:
   var use_filters_default = useFilters;
 
   // packages/dataviews/build-module/components/dataviews-filters/filters.js
-  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
   function Filters({ className }) {
     const { fields, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element28.useContext)(dataviews_context_default);
     const addFilterRef = (0, import_element28.useRef)(null);
     const filters = use_filters_default(fields, view);
-    const addFilter = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+    const addFilter = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
       add_filter_default,
       {
         filters,
@@ -12625,7 +12872,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const filterComponents = [
       ...visibleFilters.map((filter) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
           Filter,
           {
             filter,
@@ -12641,7 +12888,7 @@ If there's a particular need for this, please submit a feature request at https:
       addFilter
     ];
     filterComponents.push(
-      /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
         ResetFilter,
         {
           filters,
@@ -12651,7 +12898,7 @@ If there's a particular need for this, please submit a feature request at https:
         "reset-filters"
       )
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
       import_components26.__experimentalHStack,
       {
         justify: "flex-start",
@@ -12667,8 +12914,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/toggle.js
   var import_element29 = __toESM(require_element());
   var import_components27 = __toESM(require_components());
-  var import_i18n31 = __toESM(require_i18n());
-  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
+  var import_i18n33 = __toESM(require_i18n());
+  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
   function FiltersToggle() {
     const {
       filters,
@@ -12692,12 +12939,12 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const addFilterButtonProps = {
-      label: (0, import_i18n31.__)("Add filter"),
+      label: (0, import_i18n33.__)("Add filter"),
       "aria-expanded": false,
       isPressed: false
     };
     const toggleFiltersButtonProps = {
-      label: (0, import_i18n31._x)("Filter", "verb"),
+      label: (0, import_i18n33._x)("Filter", "verb"),
       "aria-expanded": isShowingFilter,
       isPressed: isShowingFilter,
       onClick: () => {
@@ -12707,7 +12954,7 @@ If there's a particular need for this, please submit a feature request at https:
         setIsShowingFilter(!isShowingFilter);
       }
     };
-    const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+    const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
       import_components27.Button,
       {
         ref: buttonRef,
@@ -12717,7 +12964,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...hasVisibleFilters ? toggleFiltersButtonProps : addFilterButtonProps
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("div", { className: "dataviews-filters__container-visibility-toggle", children: !hasVisibleFilters ? /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)("div", { className: "dataviews-filters__container-visibility-toggle", children: !hasVisibleFilters ? /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
       AddFilterMenu,
       {
         filters,
@@ -12726,7 +12973,7 @@ If there's a particular need for this, please submit a feature request at https:
         setOpenedFilter,
         triggerProps: { render: buttonComponent }
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
       FilterVisibilityToggle,
       {
         buttonRef,
@@ -12746,29 +12993,29 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [buttonRef]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(import_jsx_runtime61.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)(import_jsx_runtime63.Fragment, { children: [
       children,
-      !!filtersCount && /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("span", { className: "dataviews-filters-toggle__count", children: filtersCount })
+      !!filtersCount && /* @__PURE__ */ (0, import_jsx_runtime63.jsx)("span", { className: "dataviews-filters-toggle__count", children: filtersCount })
     ] });
   }
   var toggle_default = FiltersToggle;
 
   // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.js
   var import_element30 = __toESM(require_element());
-  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime64 = __toESM(require_jsx_runtime());
   function FiltersToggled(props) {
     const { isShowingFilter } = (0, import_element30.useContext)(dataviews_context_default);
     if (!isShowingFilter) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(filters_default, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(filters_default, { ...props });
   }
   var filters_toggled_default = FiltersToggled;
 
   // packages/dataviews/build-module/components/dataviews-layout/index.js
   var import_element31 = __toESM(require_element());
-  var import_i18n32 = __toESM(require_i18n());
-  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
+  var import_i18n34 = __toESM(require_i18n());
+  var import_jsx_runtime65 = __toESM(require_jsx_runtime());
   function DataViewsLayout({ className }) {
     const {
       actions = [],
@@ -12786,12 +13033,12 @@ If there's a particular need for this, please submit a feature request at https:
       isItemClickable: isItemClickable2,
       renderItemLink,
       defaultLayouts,
-      empty = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)("p", { children: (0, import_i18n32.__)("No results") })
+      empty = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("p", { children: (0, import_i18n34.__)("No results") })
     } = (0, import_element31.useContext)(dataviews_context_default);
     const ViewComponent = VIEW_LAYOUTS.find(
       (v2) => v2.type === view.type && defaultLayouts[v2.type]
     )?.component;
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
       ViewComponent,
       {
         className,
@@ -12815,11 +13062,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-search/index.js
-  var import_i18n33 = __toESM(require_i18n());
+  var import_i18n35 = __toESM(require_i18n());
   var import_element32 = __toESM(require_element());
   var import_components28 = __toESM(require_components());
   var import_compose9 = __toESM(require_compose());
-  var import_jsx_runtime64 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime66 = __toESM(require_jsx_runtime());
   var DataViewsSearch = (0, import_element32.memo)(function Search({ label }) {
     const { view, onChangeView } = (0, import_element32.useContext)(dataviews_context_default);
     const [search, setSearch, debouncedSearch] = (0, import_compose9.useDebouncedInput)(
@@ -12843,8 +13090,8 @@ If there's a particular need for this, please submit a feature request at https:
         });
       }
     }, [debouncedSearch]);
-    const searchLabel = label || (0, import_i18n33.__)("Search");
-    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+    const searchLabel = label || (0, import_i18n35.__)("Search");
+    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
       import_components28.SearchControl,
       {
         className: "dataviews-search",
@@ -12861,16 +13108,16 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-view-config/index.js
   var import_components30 = __toESM(require_components());
-  var import_i18n35 = __toESM(require_i18n());
+  var import_i18n37 = __toESM(require_i18n());
   var import_element34 = __toESM(require_element());
   var import_warning = __toESM(require_warning());
   var import_compose10 = __toESM(require_compose());
 
   // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.js
   var import_components29 = __toESM(require_components());
-  var import_i18n34 = __toESM(require_i18n());
+  var import_i18n36 = __toESM(require_i18n());
   var import_element33 = __toESM(require_element());
-  var import_jsx_runtime65 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime67 = __toESM(require_jsx_runtime());
   function InfiniteScrollToggle() {
     const context = (0, import_element33.useContext)(dataviews_context_default);
     const { view, onChangeView } = context;
@@ -12878,12 +13125,12 @@ If there's a particular need for this, please submit a feature request at https:
     if (!context.hasInfiniteScrollHandler) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
       import_components29.ToggleControl,
       {
         __nextHasNoMarginBottom: true,
-        label: (0, import_i18n34.__)("Enable infinite scroll"),
-        help: (0, import_i18n34.__)(
+        label: (0, import_i18n36.__)("Enable infinite scroll"),
+        help: (0, import_i18n36.__)(
           "Automatically load more content as you scroll, instead of showing pagination links."
         ),
         checked: infiniteScrollEnabled,
@@ -12898,7 +13145,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-view-config/index.js
-  var import_jsx_runtime66 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime68 = __toESM(require_jsx_runtime());
   var { Menu: Menu5 } = unlock(import_components30.privateApis);
   var DATAVIEWS_CONFIG_POPOVER_PROPS = {
     className: "dataviews-config__popover",
@@ -12912,28 +13159,28 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const activeView = VIEW_LAYOUTS.find((v2) => view.type === v2.type);
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(Menu5, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(Menu5, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
         Menu5.TriggerButton,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
             import_components30.Button,
             {
               size: "compact",
               icon: activeView?.icon,
-              label: (0, import_i18n35.__)("Layout")
+              label: (0, import_i18n37.__)("Layout")
             }
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(Menu5.Popover, { children: availableLayouts.map((layout) => {
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(Menu5.Popover, { children: availableLayouts.map((layout) => {
         const config = VIEW_LAYOUTS.find(
           (v2) => v2.type === layout
         );
         if (!config) {
           return null;
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
           Menu5.RadioItem,
           {
             value: layout,
@@ -12960,7 +13207,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
               (0, import_warning.default)("Invalid dataview");
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(Menu5.ItemLabel, { children: config.label })
+            children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(Menu5.ItemLabel, { children: config.label })
           },
           layout
         );
@@ -12980,12 +13227,12 @@ If there's a particular need for this, please submit a feature request at https:
         };
       });
     }, [fields]);
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
       import_components30.SelectControl,
       {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
-        label: (0, import_i18n35.__)("Sort by"),
+        label: (0, import_i18n37.__)("Sort by"),
         value: view.sort?.field,
         options: orderOptions,
         onChange: (value) => {
@@ -13013,14 +13260,14 @@ If there's a particular need for this, please submit a feature request at https:
     if (!value && view.sort?.field) {
       value = "desc";
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
       import_components30.__experimentalToggleGroupControl,
       {
         className: "dataviews-view-config__sort-direction",
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         isBlock: true,
-        label: (0, import_i18n35.__)("Order"),
+        label: (0, import_i18n37.__)("Order"),
         value,
         onChange: (newDirection) => {
           if (newDirection === "asc" || newDirection === "desc") {
@@ -13040,7 +13287,7 @@ If there's a particular need for this, please submit a feature request at https:
           (0, import_warning.default)("Invalid direction");
         },
         children: SORTING_DIRECTIONS.map((direction) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
             import_components30.__experimentalToggleGroupControlOptionIcon,
             {
               value: direction,
@@ -13059,13 +13306,13 @@ If there's a particular need for this, please submit a feature request at https:
     if (!config || !config.perPageSizes || config.perPageSizes.length < 2 || config.perPageSizes.length > 6 || infiniteScrollEnabled) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
       import_components30.__experimentalToggleGroupControl,
       {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         isBlock: true,
-        label: (0, import_i18n35.__)("Items per page"),
+        label: (0, import_i18n37.__)("Items per page"),
         value: view.perPage || 10,
         disabled: !view?.sort?.field,
         onChange: (newItemsPerPage) => {
@@ -13077,7 +13324,7 @@ If there's a particular need for this, please submit a feature request at https:
           });
         },
         children: config.perPageSizes.map((value) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
             import_components30.__experimentalToggleGroupControlOption,
             {
               value,
@@ -13094,9 +13341,9 @@ If there's a particular need for this, please submit a feature request at https:
     description,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_components30.__experimentalGrid, { columns: 12, className: "dataviews-settings-section", gap: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)("div", { className: "dataviews-settings-section__sidebar", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(import_components30.__experimentalGrid, { columns: 12, className: "dataviews-settings-section", gap: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)("div", { className: "dataviews-settings-section__sidebar", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
           import_components30.__experimentalHeading,
           {
             level: 2,
@@ -13104,7 +13351,7 @@ If there's a particular need for this, please submit a feature request at https:
             children: title
           }
         ),
-        description && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+        description && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
           import_components30.__experimentalText,
           {
             variant: "muted",
@@ -13113,7 +13360,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
         import_components30.__experimentalGrid,
         {
           columns: 8,
@@ -13133,7 +13380,7 @@ If there's a particular need for this, please submit a feature request at https:
     const activeLayout = VIEW_LAYOUTS.find(
       (layout) => layout.type === view.type
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
       import_components30.Dropdown,
       {
         expandOnMobile: true,
@@ -13142,32 +13389,32 @@ If there's a particular need for this, please submit a feature request at https:
           id: popoverId
         },
         renderToggle: ({ onToggle, isOpen }) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
             import_components30.Button,
             {
               size: "compact",
               icon: cog_default,
-              label: (0, import_i18n35._x)("View options", "View is used as a noun"),
+              label: (0, import_i18n37._x)("View options", "View is used as a noun"),
               onClick: onToggle,
               "aria-expanded": isOpen ? "true" : "false",
               "aria-controls": popoverId
             }
           );
         },
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
           import_components30.__experimentalDropdownContentWrapper,
           {
             paddingSize: "medium",
             className: "dataviews-config__popover-content-wrapper",
-            children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_components30.__experimentalVStack, { className: "dataviews-view-config", spacing: 6, children: /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(SettingsSection, { title: (0, import_i18n35.__)("Appearance"), children: [
-              /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_components30.__experimentalHStack, { expanded: true, className: "is-divided-in-two", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(SortFieldControl, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(SortDirectionControl, {})
+            children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_components30.__experimentalVStack, { className: "dataviews-view-config", spacing: 6, children: /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(SettingsSection, { title: (0, import_i18n37.__)("Appearance"), children: [
+              /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(import_components30.__experimentalHStack, { expanded: true, className: "is-divided-in-two", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(SortFieldControl, {}),
+                /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(SortDirectionControl, {})
               ] }),
-              !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(activeLayout.viewConfigOptions, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(InfiniteScrollToggle, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(ItemsPerPageControl, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(PropertiesSection, {})
+              !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(activeLayout.viewConfigOptions, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(InfiniteScrollToggle, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(ItemsPerPageControl, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(PropertiesSection, {})
             ] }) })
           }
         )
@@ -13175,9 +13422,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function _DataViewsViewConfig() {
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_jsx_runtime66.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(ViewTypeMenu, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(DataviewsViewConfigDropdown, {})
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(import_jsx_runtime68.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(ViewTypeMenu, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(DataviewsViewConfigDropdown, {})
     ] });
   }
   var DataViewsViewConfig = (0, import_element34.memo)(_DataViewsViewConfig);
@@ -13188,13 +13435,21 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element35 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-controls/utils/get-custom-validity.js
-  function getCustomValidity(isValid8, validity) {
+  function getCustomValidity(isValid2, validity) {
     let customValidity;
-    if (isValid8?.required && validity?.required) {
+    if (isValid2?.required && validity?.required) {
       customValidity = validity?.required?.message ? validity.required : void 0;
-    } else if (isValid8?.pattern && validity?.pattern) {
+    } else if (isValid2?.pattern && validity?.pattern) {
       customValidity = validity.pattern;
-    } else if (isValid8?.elements && validity?.elements) {
+    } else if (isValid2?.min && validity?.min) {
+      customValidity = validity.min;
+    } else if (isValid2?.max && validity?.max) {
+      customValidity = validity.max;
+    } else if (isValid2?.minLength && validity?.minLength) {
+      customValidity = validity.minLength;
+    } else if (isValid2?.maxLength && validity?.maxLength) {
+      customValidity = validity.maxLength;
+    } else if (isValid2?.elements && validity?.elements) {
       customValidity = validity.elements;
     } else if (validity?.custom) {
       customValidity = validity.custom;
@@ -13203,7 +13458,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
-  var import_jsx_runtime67 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime69 = __toESM(require_jsx_runtime());
   var { ValidatedCheckboxControl } = unlock(import_components31.privateApis);
   function Checkbox({
     field,
@@ -13212,17 +13467,17 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { getValue, setValue, label, description, isValid: isValid8 } = field;
+    const { getValue, setValue, label, description, isValid: isValid2 } = field;
     const onChangeControl = (0, import_element35.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [data, getValue, onChange, setValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
         help: description,
@@ -13235,26 +13490,26 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/datetime.js
   var import_components33 = __toESM(require_components());
   var import_element37 = __toESM(require_element());
-  var import_i18n37 = __toESM(require_i18n());
+  var import_i18n39 = __toESM(require_i18n());
   var import_date3 = __toESM(require_date());
 
   // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
   var import_components32 = __toESM(require_components());
   var import_element36 = __toESM(require_element());
-  var import_i18n36 = __toESM(require_i18n());
-  var import_jsx_runtime68 = __toESM(require_jsx_runtime());
+  var import_i18n38 = __toESM(require_i18n());
+  var import_jsx_runtime70 = __toESM(require_jsx_runtime());
   var TIME_UNITS_OPTIONS = {
     [OPERATOR_IN_THE_PAST]: [
-      { value: "days", label: (0, import_i18n36.__)("Days") },
-      { value: "weeks", label: (0, import_i18n36.__)("Weeks") },
-      { value: "months", label: (0, import_i18n36.__)("Months") },
-      { value: "years", label: (0, import_i18n36.__)("Years") }
+      { value: "days", label: (0, import_i18n38.__)("Days") },
+      { value: "weeks", label: (0, import_i18n38.__)("Weeks") },
+      { value: "months", label: (0, import_i18n38.__)("Months") },
+      { value: "years", label: (0, import_i18n38.__)("Years") }
     ],
     [OPERATOR_OVER]: [
-      { value: "days", label: (0, import_i18n36.__)("Days ago") },
-      { value: "weeks", label: (0, import_i18n36.__)("Weeks ago") },
-      { value: "months", label: (0, import_i18n36.__)("Months ago") },
-      { value: "years", label: (0, import_i18n36.__)("Years ago") }
+      { value: "days", label: (0, import_i18n38.__)("Days ago") },
+      { value: "weeks", label: (0, import_i18n38.__)("Weeks ago") },
+      { value: "months", label: (0, import_i18n38.__)("Months ago") },
+      { value: "years", label: (0, import_i18n38.__)("Years ago") }
     ]
   };
   function RelativeDateControl({
@@ -13287,7 +13542,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [onChange, setValue, data, relValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
       import_components32.BaseControl,
       {
         id,
@@ -13295,8 +13550,8 @@ If there's a particular need for this, please submit a feature request at https:
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(import_components32.__experimentalHStack, { spacing: 2.5, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components32.__experimentalHStack, { spacing: 2.5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
             import_components32.__experimentalNumberControl,
             {
               __next40pxDefaultSize: true,
@@ -13308,13 +13563,13 @@ If there's a particular need for this, please submit a feature request at https:
               onChange: onChangeValue
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
             import_components32.SelectControl,
             {
               className: "dataviews-controls__relative-date-unit",
               __next40pxDefaultSize: true,
               __nextHasNoMarginBottom: true,
-              label: (0, import_i18n36.__)("Unit"),
+              label: (0, import_i18n38.__)("Unit"),
               value: unit,
               options,
               onChange: onChangeUnit,
@@ -13327,7 +13582,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/datetime.js
-  var import_jsx_runtime69 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime71 = __toESM(require_jsx_runtime());
   var { DateCalendar, ValidatedInputControl } = unlock(import_components33.privateApis);
   var formatDateTime = (date) => {
     if (!date) {
@@ -13345,7 +13600,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { id, label, description, setValue, getValue, isValid: isValid8 } = field;
+    const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element37.useState)(() => {
@@ -13422,8 +13677,8 @@ If there's a particular need for this, please submit a feature request at https:
       timezone: { string: timezoneString },
       l10n: { startOfWeek: startOfWeek2 }
     } = (0, import_date3.getSettings)();
-    const displayLabel = isValid8?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n37.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n39.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
       import_components33.BaseControl,
       {
         __nextHasNoMarginBottom: true,
@@ -13431,8 +13686,8 @@ If there's a particular need for this, please submit a feature request at https:
         label: displayLabel,
         help: description,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(import_components33.__experimentalVStack, { spacing: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(import_components33.__experimentalVStack, { spacing: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
             DateCalendar,
             {
               style: { width: "100%" },
@@ -13444,15 +13699,15 @@ If there's a particular need for this, please submit a feature request at https:
               weekStartsOn: startOfWeek2
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
             ValidatedInputControl,
             {
               ref: inputControlRef,
               __next40pxDefaultSize: true,
-              required: !!isValid8?.required,
-              customValidity: getCustomValidity(isValid8, validity),
+              required: !!isValid2?.required,
+              customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
-              label: (0, import_i18n37.__)("Date time"),
+              label: (0, import_i18n39.__)("Date time"),
               hideLabelFromVision: true,
               value: value ? formatDateTime(
                 parseDateTime(value) || void 0
@@ -13473,7 +13728,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__datetime",
@@ -13485,7 +13740,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
       CalendarDateTimeControl,
       {
         data,
@@ -13500,19 +13755,19 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/date.js
   var import_components34 = __toESM(require_components());
   var import_element38 = __toESM(require_element());
-  var import_i18n38 = __toESM(require_i18n());
+  var import_i18n40 = __toESM(require_i18n());
   var import_date4 = __toESM(require_date());
-  var import_jsx_runtime70 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime72 = __toESM(require_jsx_runtime());
   var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock(import_components34.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
-      label: (0, import_i18n38.__)("Today"),
+      label: (0, import_i18n40.__)("Today"),
       getValue: () => (0, import_date4.getDate)(null)
     },
     {
       id: "yesterday",
-      label: (0, import_i18n38.__)("Yesterday"),
+      label: (0, import_i18n40.__)("Yesterday"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return subDays(today, 1);
@@ -13520,7 +13775,7 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       id: "past-week",
-      label: (0, import_i18n38.__)("Past week"),
+      label: (0, import_i18n40.__)("Past week"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return subDays(today, 7);
@@ -13528,7 +13783,7 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       id: "past-month",
-      label: (0, import_i18n38.__)("Past month"),
+      label: (0, import_i18n40.__)("Past month"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return subMonths(today, 1);
@@ -13538,7 +13793,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DATE_RANGE_PRESETS = [
     {
       id: "last-7-days",
-      label: (0, import_i18n38.__)("Last 7 days"),
+      label: (0, import_i18n40.__)("Last 7 days"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return [subDays(today, 7), today];
@@ -13546,7 +13801,7 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       id: "last-30-days",
-      label: (0, import_i18n38.__)("Last 30 days"),
+      label: (0, import_i18n40.__)("Last 30 days"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return [subDays(today, 30), today];
@@ -13554,7 +13809,7 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       id: "month-to-date",
-      label: (0, import_i18n38.__)("Month to date"),
+      label: (0, import_i18n40.__)("Month to date"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return [startOfMonth(today), today];
@@ -13562,7 +13817,7 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       id: "last-year",
-      label: (0, import_i18n38.__)("Last year"),
+      label: (0, import_i18n40.__)("Last year"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return [subYears(today, 1), today];
@@ -13570,7 +13825,7 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       id: "year-to-date",
-      label: (0, import_i18n38.__)("Year to date"),
+      label: (0, import_i18n40.__)("Year to date"),
       getValue: () => {
         const today = (0, import_date4.getDate)(null);
         return [startOfYear(today), today];
@@ -13598,7 +13853,7 @@ If there's a particular need for this, please submit a feature request at https:
     setIsTouched,
     children
   }) {
-    const { isValid: isValid8 } = field;
+    const { isValid: isValid2 } = field;
     const [customValidity, setCustomValidity] = (0, import_element38.useState)(void 0);
     const validateRefs = (0, import_element38.useCallback)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
@@ -13618,7 +13873,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (isTouched) {
         const timeoutId = setTimeout(() => {
           if (validity) {
-            setCustomValidity(getCustomValidity(isValid8, validity));
+            setCustomValidity(getCustomValidity(isValid2, validity));
           } else {
             validateRefs();
           }
@@ -13626,7 +13881,7 @@ If there's a particular need for this, please submit a feature request at https:
         return () => clearTimeout(timeoutId);
       }
       return void 0;
-    }, [isTouched, isValid8, validity, validateRefs]);
+    }, [isTouched, isValid2, validity, validateRefs]);
     const onBlur = (event) => {
       if (isTouched) {
         return;
@@ -13635,9 +13890,9 @@ If there's a particular need for this, please submit a feature request at https:
         setIsTouched(true);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)("div", { onBlur, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -13646,7 +13901,7 @@ If there's a particular need for this, please submit a feature request at https:
             customValidity.type === "valid" ? "is-valid" : void 0
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
               import_components34.Icon,
               {
                 className: "components-validated-control__indicator-icon",
@@ -13674,7 +13929,7 @@ If there's a particular need for this, please submit a feature request at https:
       label,
       setValue,
       getValue,
-      isValid: isValid8,
+      isValid: isValid2,
       format: fieldFormat
     } = field;
     const [selectedPresetId, setSelectedPresetId] = (0, import_element38.useState)(
@@ -13733,8 +13988,8 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       timezone: { string: timezoneString }
     } = (0, import_date4.getSettings)();
-    const displayLabel = isValid8?.required ? `${label} (${(0, import_i18n38.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n40.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -13742,7 +13997,7 @@ If there's a particular need for this, please submit a feature request at https:
         inputRefs: validityTargetRef,
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
           import_components34.BaseControl,
           {
             __nextHasNoMarginBottom: true,
@@ -13750,11 +14005,11 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components34.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components34.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components34.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components34.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_PRESETS.map((preset) => {
                   const isSelected2 = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                     import_components34.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -13767,7 +14022,7 @@ If there's a particular need for this, please submit a feature request at https:
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                   import_components34.Button,
                   {
                     className: "dataviews-controls__date-preset",
@@ -13776,24 +14031,24 @@ If there's a particular need for this, please submit a feature request at https:
                     size: "small",
                     disabled: !!selectedPresetId,
                     accessibleWhenDisabled: false,
-                    children: (0, import_i18n38.__)("Custom")
+                    children: (0, import_i18n40.__)("Custom")
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                 import_components34.__experimentalInputControl,
                 {
                   __next40pxDefaultSize: true,
                   ref: validityTargetRef,
                   type: "date",
-                  label: (0, import_i18n38.__)("Date"),
+                  label: (0, import_i18n40.__)("Date"),
                   hideLabelFromVision: true,
                   value,
                   onChange: handleManualDateChange,
                   required: !!field.isValid?.required
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                 DateCalendar2,
                 {
                   style: { width: "100%" },
@@ -13910,8 +14165,8 @@ If there's a particular need for this, please submit a feature request at https:
       [value, updateDateRange]
     );
     const { timezone } = (0, import_date4.getSettings)();
-    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n38.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n40.__)("Required")})` : label;
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -13919,7 +14174,7 @@ If there's a particular need for this, please submit a feature request at https:
         inputRefs: [fromInputRef, toInputRef],
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
           import_components34.BaseControl,
           {
             __nextHasNoMarginBottom: true,
@@ -13927,11 +14182,11 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components34.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components34.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components34.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components34.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_RANGE_PRESETS.map((preset) => {
                   const isSelected2 = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                     import_components34.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -13944,7 +14199,7 @@ If there's a particular need for this, please submit a feature request at https:
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                   import_components34.Button,
                   {
                     className: "dataviews-controls__date-preset",
@@ -13953,31 +14208,31 @@ If there's a particular need for this, please submit a feature request at https:
                     size: "small",
                     accessibleWhenDisabled: false,
                     disabled: !!selectedPresetId,
-                    children: (0, import_i18n38.__)("Custom")
+                    children: (0, import_i18n40.__)("Custom")
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_components34.__experimentalHStack, { spacing: 2, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(import_components34.__experimentalHStack, { spacing: 2, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                   import_components34.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: fromInputRef,
                     type: "date",
-                    label: (0, import_i18n38.__)("From"),
+                    label: (0, import_i18n40.__)("From"),
                     hideLabelFromVision: true,
                     value: value?.[0],
                     onChange: (newValue) => handleManualDateChange("from", newValue),
                     required: !!field.isValid?.required
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                   import_components34.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: toInputRef,
                     type: "date",
-                    label: (0, import_i18n38.__)("To"),
+                    label: (0, import_i18n40.__)("To"),
                     hideLabelFromVision: true,
                     value: value?.[1],
                     onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -13985,7 +14240,7 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
                 DateRangeCalendar,
                 {
                   style: { width: "100%" },
@@ -14012,7 +14267,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__date",
@@ -14025,7 +14280,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     if (operator === OPERATOR_BETWEEN) {
-      return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
         CalendarDateRangeControl,
         {
           data,
@@ -14036,7 +14291,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
       CalendarDateControl,
       {
         data,
@@ -14054,7 +14309,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
   var import_components35 = __toESM(require_components());
   var import_element39 = __toESM(require_element());
-  var import_jsx_runtime71 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime73 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl2 } = unlock(import_components35.privateApis);
   function ValidatedText({
     data,
@@ -14066,7 +14321,7 @@ If there's a particular need for this, please submit a feature request at https:
     suffix,
     validity
   }) {
-    const { label, placeholder, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const onChangeControl = (0, import_element39.useCallback)(
       (newValue) => onChange(
@@ -14077,11 +14332,11 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [data, setValue, onChange]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
       ValidatedInputControl2,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
         value: value ?? "",
@@ -14091,67 +14346,17 @@ If there's a particular need for this, please submit a feature request at https:
         type,
         prefix,
         suffix,
-        pattern: isValid8?.pattern,
+        pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
+        minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
+        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true
       }
     );
   }
 
   // packages/dataviews/build-module/dataform-controls/email.js
-  var import_jsx_runtime72 = __toESM(require_jsx_runtime());
-  function Email({
-    data,
-    field,
-    onChange,
-    hideLabelFromVision,
-    validity
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-      ValidatedText,
-      {
-        ...{
-          data,
-          field,
-          onChange,
-          hideLabelFromVision,
-          validity,
-          type: "email",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components36.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components36.Icon, { icon: envelope_default }) })
-        }
-      }
-    );
-  }
-
-  // packages/dataviews/build-module/dataform-controls/telephone.js
-  var import_components37 = __toESM(require_components());
-  var import_jsx_runtime73 = __toESM(require_jsx_runtime());
-  function Telephone({
-    data,
-    field,
-    onChange,
-    hideLabelFromVision,
-    validity
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
-      ValidatedText,
-      {
-        ...{
-          data,
-          field,
-          onChange,
-          hideLabelFromVision,
-          validity,
-          type: "tel",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_components37.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_components37.Icon, { icon: mobile_default }) })
-        }
-      }
-    );
-  }
-
-  // packages/dataviews/build-module/dataform-controls/url.js
-  var import_components38 = __toESM(require_components());
   var import_jsx_runtime74 = __toESM(require_jsx_runtime());
-  function Url({
+  function Email({
     data,
     field,
     onChange,
@@ -14167,8 +14372,60 @@ If there's a particular need for this, please submit a feature request at https:
           onChange,
           hideLabelFromVision,
           validity,
+          type: "email",
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components36.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components36.Icon, { icon: envelope_default }) })
+        }
+      }
+    );
+  }
+
+  // packages/dataviews/build-module/dataform-controls/telephone.js
+  var import_components37 = __toESM(require_components());
+  var import_jsx_runtime75 = __toESM(require_jsx_runtime());
+  function Telephone({
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    validity
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      ValidatedText,
+      {
+        ...{
+          data,
+          field,
+          onChange,
+          hideLabelFromVision,
+          validity,
+          type: "tel",
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components37.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components37.Icon, { icon: mobile_default }) })
+        }
+      }
+    );
+  }
+
+  // packages/dataviews/build-module/dataform-controls/url.js
+  var import_components38 = __toESM(require_components());
+  var import_jsx_runtime76 = __toESM(require_jsx_runtime());
+  function Url({
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    validity
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+      ValidatedText,
+      {
+        ...{
+          data,
+          field,
+          onChange,
+          hideLabelFromVision,
+          validity,
           type: "url",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components38.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components38.Icon, { icon: link_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_components38.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_components38.Icon, { icon: link_default }) })
         }
       }
     );
@@ -14177,8 +14434,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
   var import_components39 = __toESM(require_components());
   var import_element40 = __toESM(require_element());
-  var import_i18n39 = __toESM(require_i18n());
-  var import_jsx_runtime75 = __toESM(require_jsx_runtime());
+  var import_i18n41 = __toESM(require_i18n());
+  var import_jsx_runtime77 = __toESM(require_jsx_runtime());
   var { ValidatedNumberControl } = unlock(import_components39.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
@@ -14202,16 +14459,16 @@ If there's a particular need for this, please submit a feature request at https:
       (newValue) => onChange([min, toNumberOrEmpty(newValue)]),
       [onChange, min]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
       import_components39.BaseControl,
       {
         __nextHasNoMarginBottom: true,
-        help: (0, import_i18n39.__)("The max. value must be greater than the min. value."),
-        children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(import_components39.Flex, { direction: "row", gap: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+        help: (0, import_i18n41.__)("The max. value must be greater than the min. value."),
+        children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(import_components39.Flex, { direction: "row", gap: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
             import_components39.__experimentalNumberControl,
             {
-              label: (0, import_i18n39.__)("Min."),
+              label: (0, import_i18n41.__)("Min."),
               value: min,
               max: max ? Number(max) - step : void 0,
               onChange: onChangeMin,
@@ -14220,10 +14477,10 @@ If there's a particular need for this, please submit a feature request at https:
               step
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
             import_components39.__experimentalNumberControl,
             {
-              label: (0, import_i18n39.__)("Max."),
+              label: (0, import_i18n41.__)("Max."),
               value: max,
               min: min ? Number(min) + step : void 0,
               onChange: onChangeMax,
@@ -14246,7 +14503,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const step = Math.pow(10, Math.abs(decimals) * -1);
-    const { label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
     const onChangeControl = (0, import_element40.useCallback)(
       (newValue) => {
@@ -14280,7 +14537,7 @@ If there's a particular need for this, please submit a feature request at https:
       )) {
         valueBetween = value;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
         BetweenControls,
         {
           value: valueBetween,
@@ -14290,38 +14547,41 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
       ValidatedNumberControl,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
         value,
         onChange: onChangeControl,
         __next40pxDefaultSize: true,
         hideLabelFromVision,
-        step
+        step,
+        min: isValid2.min ? isValid2.min.constraint : void 0,
+        max: isValid2.max ? isValid2.max.constraint : void 0
       }
     );
   }
 
   // packages/dataviews/build-module/dataform-controls/integer.js
-  var import_jsx_runtime76 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime78 = __toESM(require_jsx_runtime());
   function Number2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(ValidatedNumber, { ...props, decimals: 0 });
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(ValidatedNumber, { ...props, decimals: 0 });
   }
 
   // packages/dataviews/build-module/dataform-controls/number.js
-  var import_jsx_runtime77 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime79 = __toESM(require_jsx_runtime());
   function Number3(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(ValidatedNumber, { ...props, decimals: 2 });
+    const decimals = props.field.format?.decimals ?? 2;
+    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(ValidatedNumber, { ...props, decimals });
   }
 
   // packages/dataviews/build-module/dataform-controls/radio.js
   var import_components40 = __toESM(require_components());
   var import_element41 = __toESM(require_element());
-  var import_jsx_runtime78 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime80 = __toESM(require_jsx_runtime());
   var { ValidatedRadioControl } = unlock(import_components40.privateApis);
   function Radio({
     data,
@@ -14330,7 +14590,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const { elements, isLoading } = useElements({
       elements: field.elements,
       getElements: field.getElements
@@ -14341,13 +14601,13 @@ If there's a particular need for this, please submit a feature request at https:
       [data, onChange, setValue]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_components40.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components40.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
         onChange: onChangeControl,
@@ -14361,7 +14621,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/select.js
   var import_components41 = __toESM(require_components());
   var import_element42 = __toESM(require_element());
-  var import_jsx_runtime79 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime81 = __toESM(require_jsx_runtime());
   var { ValidatedSelectControl } = unlock(import_components41.privateApis);
   function Select({
     data,
@@ -14370,7 +14630,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { type, label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
     const onChangeControl = (0, import_element42.useCallback)(
@@ -14382,13 +14642,13 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_components41.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components41.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         value,
         help: description,
@@ -14404,7 +14664,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/dataform-controls/text.js
   var import_element43 = __toESM(require_element());
-  var import_jsx_runtime80 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime82 = __toESM(require_jsx_runtime());
   function Text2({
     data,
     field,
@@ -14414,7 +14674,7 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { prefix, suffix } = config || {};
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
       ValidatedText,
       {
         ...{
@@ -14433,7 +14693,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/toggle.js
   var import_components42 = __toESM(require_components());
   var import_element44 = __toESM(require_element());
-  var import_jsx_runtime81 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime83 = __toESM(require_jsx_runtime());
   var { ValidatedToggleControl } = unlock(import_components42.privateApis);
   function Toggle({
     field,
@@ -14442,17 +14702,17 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { label, description, getValue, setValue, isValid: isValid8 } = field;
+    const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const onChangeControl = (0, import_element44.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [onChange, setValue, data, getValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
       ValidatedToggleControl,
       {
-        required: !!isValid8.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         __nextHasNoMarginBottom: true,
         label,
@@ -14466,7 +14726,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/textarea.js
   var import_components43 = __toESM(require_components());
   var import_element45 = __toESM(require_element());
-  var import_jsx_runtime82 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime84 = __toESM(require_jsx_runtime());
   var { ValidatedTextareaControl } = unlock(import_components43.privateApis);
   function Textarea({
     data,
@@ -14477,23 +14737,25 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const { rows = 4 } = config || {};
-    const { label, placeholder, description, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
     const onChangeControl = (0, import_element45.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
       ValidatedTextareaControl,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
         value: value ?? "",
         help: description,
         onChange: onChangeControl,
         rows,
+        minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
+        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         hideLabelFromVision
@@ -14504,7 +14766,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/toggle-group.js
   var import_components44 = __toESM(require_components());
   var import_element46 = __toESM(require_element());
-  var import_jsx_runtime83 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime85 = __toESM(require_jsx_runtime());
   var { ValidatedToggleGroupControl } = unlock(import_components44.privateApis);
   function ToggleGroup({
     data,
@@ -14513,7 +14775,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { getValue, setValue, isValid: isValid8 } = field;
+    const { getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const onChangeControl = (0, import_element46.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -14524,17 +14786,17 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components44.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components44.Spinner, {});
     }
     if (elements.length === 0) {
       return null;
     }
     const selectedOption = elements.find((el) => el.value === value);
-    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         isBlock: true,
@@ -14543,7 +14805,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         value,
         hideLabelFromVision,
-        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
           import_components44.__experimentalToggleGroupControlOption,
           {
             label: el.label,
@@ -14558,7 +14820,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/array.js
   var import_components45 = __toESM(require_components());
   var import_element47 = __toESM(require_element());
-  var import_jsx_runtime84 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime86 = __toESM(require_jsx_runtime());
   var { ValidatedFormTokenField } = unlock(import_components45.privateApis);
   function ArrayControl({
     data,
@@ -14567,7 +14829,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { label, placeholder, getValue, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const { elements, isLoading } = useElements({
       elements: field.elements,
@@ -14595,13 +14857,13 @@ If there's a particular need for this, please submit a feature request at https:
       [onChange, setValue, data]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components45.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components45.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
       ValidatedFormTokenField,
       {
-        required: !!isValid8?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        required: !!isValid2?.required,
+        customValidity: getCustomValidity(isValid2, validity),
         label: hideLabelFromVision ? void 0 : label,
         value: arrayValueAsElements,
         onChange: onChangeControl,
@@ -14634,9 +14896,9 @@ If there's a particular need for this, please submit a feature request at https:
             const element = elements.find(
               (el) => el.value === item
             );
-            return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("span", { children: element?.label || item });
+            return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("span", { children: element?.label || item });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("span", { children: item });
+          return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("span", { children: item });
         }
       }
     );
@@ -14803,17 +15065,17 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/color.js
   var import_components46 = __toESM(require_components());
   var import_element48 = __toESM(require_element());
-  var import_jsx_runtime85 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime87 = __toESM(require_jsx_runtime());
   var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock(import_components46.privateApis);
   var ColorPicker = ({
     color,
     onColorChange
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
-    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
       import_components46.Dropdown,
       {
-        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
           "button",
           {
             type: "button",
@@ -14836,7 +15098,7 @@ If there's a particular need for this, please submit a feature request at https:
             "aria-label": "Open color picker"
           }
         ) }),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime85.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
           Picker,
           {
             color: w(validColor),
@@ -14854,7 +15116,7 @@ If there's a particular need for this, please submit a feature request at https:
     hideLabelFromVision,
     validity
   }) {
-    const { label, placeholder, description, setValue, isValid: isValid8 } = field;
+    const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data }) || "";
     const handleColorChange = (0, import_element48.useCallback)(
       (colorObject) => {
@@ -14868,11 +15130,11 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
       ValidatedInputControl3,
       {
         required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid8, validity),
+        customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
         value,
@@ -14880,7 +15142,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: handleInputChange,
         hideLabelFromVision,
         type: "text",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
           ColorPicker,
           {
             color: value,
@@ -14894,8 +15156,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/dataform-controls/password.js
   var import_components47 = __toESM(require_components());
   var import_element49 = __toESM(require_element());
-  var import_i18n40 = __toESM(require_i18n());
-  var import_jsx_runtime86 = __toESM(require_jsx_runtime());
+  var import_i18n42 = __toESM(require_i18n());
+  var import_jsx_runtime88 = __toESM(require_jsx_runtime());
   function Password({
     data,
     field,
@@ -14907,7 +15169,7 @@ If there's a particular need for this, please submit a feature request at https:
     const toggleVisibility = (0, import_element49.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
       ValidatedText,
       {
         ...{
@@ -14917,13 +15179,13 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           validity,
           type: isVisible2 ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components47.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components47.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
             import_components47.Button,
             {
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              label: isVisible2 ? (0, import_i18n40.__)("Hide password") : (0, import_i18n40.__)("Show password")
+              label: isVisible2 ? (0, import_i18n42.__)("Hide password") : (0, import_i18n42.__)("Show password")
             }
           ) })
         }
@@ -14937,7 +15199,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataform-controls/index.js
-  var import_jsx_runtime87 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime89 = __toESM(require_jsx_runtime());
   var FORM_CONTROLS = {
     array: ArrayControl,
     checkbox: Checkbox,
@@ -14967,7 +15229,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(BaseControlType, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(BaseControlType, { ...props, config: controlConfig });
     };
   }
   function getControl(field, fallback) {
@@ -15043,34 +15305,15 @@ If there's a particular need for this, please submit a feature request at https:
   var set_value_from_id_default = setValueFromId;
 
   // packages/dataviews/build-module/field-types/email.js
-  var import_i18n41 = __toESM(require_i18n());
-
-  // packages/dataviews/build-module/field-types/utils/render-from-elements.js
-  function RenderFromElements({
-    item,
-    field
-  }) {
-    const { elements, isLoading } = useElements({
-      elements: field.elements,
-      getElements: field.getElements
-    });
-    const value = field.getValue({ item });
-    if (isLoading) {
-      return value;
-    }
-    if (elements.length === 0) {
-      return value;
-    }
-    return elements?.find((element) => element.value === value)?.label || field.getValue({ item });
-  }
+  var import_i18n43 = __toESM(require_i18n());
 
   // packages/dataviews/build-module/field-types/utils/render-default.js
-  var import_jsx_runtime88 = __toESM(require_jsx_runtime());
-  function render({
+  var import_jsx_runtime90 = __toESM(require_jsx_runtime());
+  function render3({
     item,
     field
   }) {
-    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
   }
 
   // packages/dataviews/build-module/field-types/utils/sort-text.js
@@ -15078,24 +15321,61 @@ If there's a particular need for this, please submit a feature request at https:
     return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
   };
 
+  // packages/dataviews/build-module/field-types/utils/is-valid-min-length.js
+  function isValidMinLength(item, field) {
+    if (typeof field.isValid.minLength?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return String(value).length >= field.isValid.minLength.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-max-length.js
+  function isValidMaxLength(item, field) {
+    if (typeof field.isValid.maxLength?.constraint !== "number") {
+      return false;
+    }
+    const value = field.getValue({ item });
+    if ([void 0, "", null].includes(value)) {
+      return true;
+    }
+    return String(value).length <= field.isValid.maxLength.constraint;
+  }
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-pattern.js
+  function isValidPattern(item, field) {
+    if (field.isValid.pattern?.constraint === void 0) {
+      return true;
+    }
+    try {
+      const regexp = new RegExp(field.isValid.pattern.constraint);
+      const value = field.getValue({ item });
+      if ([void 0, "", null].includes(value)) {
+        return true;
+      }
+      return regexp.test(String(value));
+    } catch {
+      return false;
+    }
+  }
+
   // packages/dataviews/build-module/field-types/email.js
   var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  var isValid2 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-        return (0, import_i18n41.__)("Value must be a valid email address.");
-      }
-      return null;
+  function isValidCustom3(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
+      return (0, import_i18n43.__)("Value must be a valid email address.");
     }
-  };
+    return null;
+  }
   var email_default = {
     type: "email",
-    render,
+    render: render3,
     Edit: "email",
     sort: sort_text_default,
-    isValid: isValid2,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15111,134 +15391,23 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
-  };
-
-  // packages/dataviews/build-module/field-types/integer.js
-  var import_i18n42 = __toESM(require_i18n());
-
-  // packages/dataviews/build-module/field-types/utils/sort-number.js
-  var sort_number_default = (a2, b2, direction) => {
-    return direction === "asc" ? a2 - b2 : b2 - a2;
-  };
-
-  // packages/dataviews/build-module/field-types/integer.js
-  var isValid3 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-        return (0, import_i18n42.__)("Value must be an integer.");
-      }
-      return null;
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements,
+      custom: isValidCustom3
     }
-  };
-  var integer_default = {
-    type: "integer",
-    render,
-    Edit: "integer",
-    sort: sort_number_default,
-    isValid: isValid3,
-    enableSorting: true,
-    enableGlobalSearch: false,
-    defaultOperators: [
-      OPERATOR_IS,
-      OPERATOR_IS_NOT,
-      OPERATOR_LESS_THAN,
-      OPERATOR_GREATER_THAN,
-      OPERATOR_LESS_THAN_OR_EQUAL,
-      OPERATOR_GREATER_THAN_OR_EQUAL,
-      OPERATOR_BETWEEN
-    ],
-    validOperators: [
-      // Single-selection
-      OPERATOR_IS,
-      OPERATOR_IS_NOT,
-      OPERATOR_LESS_THAN,
-      OPERATOR_GREATER_THAN,
-      OPERATOR_LESS_THAN_OR_EQUAL,
-      OPERATOR_GREATER_THAN_OR_EQUAL,
-      OPERATOR_BETWEEN,
-      // Multiple-selection
-      OPERATOR_IS_ANY,
-      OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
-      OPERATOR_IS_NOT_ALL
-    ],
-    getFormat: () => ({})
-  };
-
-  // packages/dataviews/build-module/field-types/number.js
-  var import_i18n43 = __toESM(require_i18n());
-  var import_jsx_runtime89 = __toESM(require_jsx_runtime());
-  function isEmpty2(value) {
-    return value === "" || value === void 0 || value === null;
-  }
-  function render2({ item, field }) {
-    if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(RenderFromElements, { item, field });
-    }
-    const value = field.getValue({ item });
-    if (![null, void 0].includes(value)) {
-      return Number(value).toFixed(2);
-    }
-    return null;
-  }
-  var isValid4 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (!isEmpty2(value) && !Number.isFinite(value)) {
-        return (0, import_i18n43.__)("Value must be a number.");
-      }
-      return null;
-    }
-  };
-  var number_default = {
-    type: "number",
-    render: render2,
-    Edit: "number",
-    sort: sort_number_default,
-    isValid: isValid4,
-    enableSorting: true,
-    enableGlobalSearch: false,
-    defaultOperators: [
-      OPERATOR_IS,
-      OPERATOR_IS_NOT,
-      OPERATOR_LESS_THAN,
-      OPERATOR_GREATER_THAN,
-      OPERATOR_LESS_THAN_OR_EQUAL,
-      OPERATOR_GREATER_THAN_OR_EQUAL,
-      OPERATOR_BETWEEN
-    ],
-    validOperators: [
-      // Single-selection
-      OPERATOR_IS,
-      OPERATOR_IS_NOT,
-      OPERATOR_LESS_THAN,
-      OPERATOR_GREATER_THAN,
-      OPERATOR_LESS_THAN_OR_EQUAL,
-      OPERATOR_GREATER_THAN_OR_EQUAL,
-      OPERATOR_BETWEEN,
-      // Multiple-selection
-      OPERATOR_IS_ANY,
-      OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
-      OPERATOR_IS_NOT_ALL
-    ],
-    getFormat: () => ({})
   };
 
   // packages/dataviews/build-module/field-types/text.js
   var text_default = {
     type: "text",
-    render,
+    render: render3,
     Edit: "text",
     sort: sort_text_default,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15255,14 +15424,21 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/datetime.js
-  var import_jsx_runtime90 = __toESM(require_jsx_runtime());
-  function render3({ item, field }) {
+  var import_jsx_runtime91 = __toESM(require_jsx_runtime());
+  function render4({ item, field }) {
     if (field.elements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if (["", void 0, null].includes(value)) {
@@ -15282,13 +15458,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var datetime_default = {
     type: "datetime",
-    render: render3,
+    render: render4,
     Edit: "datetime",
     sort,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
@@ -15311,21 +15483,26 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IN_THE_PAST,
       OPERATOR_OVER
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/date.js
   var import_date6 = __toESM(require_date());
-  var import_jsx_runtime91 = __toESM(require_jsx_runtime());
-  function getFormat(field) {
+  var import_jsx_runtime92 = __toESM(require_jsx_runtime());
+  function getFormat3(field) {
+    const fieldFormat = field.format;
     return {
-      date: field.format?.date !== void 0 && typeof field.format.date === "string" ? field.format.date : (0, import_date6.getSettings)().formats.date,
-      weekStartsOn: field.format?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(field.format?.weekStartsOn) ? field.format.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
+      date: fieldFormat?.date !== void 0 && typeof fieldFormat.date === "string" ? fieldFormat.date : (0, import_date6.getSettings)().formats.date,
+      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
     };
   }
-  function render4({ item, field }) {
+  function render5({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if (!value) {
@@ -15333,7 +15510,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let format2;
     if (field.type !== "date") {
-      format2 = getFormat(field);
+      format2 = getFormat3({});
     } else {
       format2 = field.format;
     }
@@ -15346,13 +15523,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var date_default = {
     type: "date",
-    render: render4,
+    render: render5,
     Edit: "date",
     sort: sort2,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [
@@ -15377,15 +15550,27 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_OVER,
       OPERATOR_BETWEEN
     ],
-    getFormat
+    getFormat: getFormat3,
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/boolean.js
   var import_i18n44 = __toESM(require_i18n());
-  var import_jsx_runtime92 = __toESM(require_jsx_runtime());
-  function render5({ item, field }) {
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.js
+  function isValidRequiredForBool(item, field) {
+    const value = field.getValue({ item });
+    return value === true;
+  }
+
+  // packages/dataviews/build-module/field-types/boolean.js
+  var import_jsx_runtime93 = __toESM(require_jsx_runtime());
+  function render6({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(RenderFromElements, { item, field });
     }
     if (field.getValue({ item }) === true) {
       return (0, import_i18n44.__)("True");
@@ -15395,16 +15580,13 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   }
-  var isValid5 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-        return (0, import_i18n44.__)("Value must be true, false, or undefined");
-      }
-      return null;
+  function isValidCustom4(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
+      return (0, import_i18n44.__)("Value must be true, false, or undefined");
     }
-  };
+    return null;
+  }
   var sort3 = (a2, b2, direction) => {
     const boolA = Boolean(a2);
     const boolB = Boolean(b2);
@@ -15418,10 +15600,14 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var boolean_default = {
     type: "boolean",
-    render: render5,
+    render: render6,
     Edit: "checkbox",
     sort: sort3,
-    isValid: isValid5,
+    validate: {
+      required: isValidRequiredForBool,
+      elements: isValidElements,
+      custom: isValidCustom4
+    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
@@ -15435,36 +15621,43 @@ If there's a particular need for this, please submit a feature request at https:
     render: () => null,
     Edit: null,
     sort: () => 0,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: false,
     enableGlobalSearch: false,
     defaultOperators: [],
     validOperators: [],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    // cannot validate any constraint, so
+    // the only available validation for the field author
+    // would be providing a custom validator.
+    validate: {}
   };
 
   // packages/dataviews/build-module/field-types/array.js
   var import_i18n45 = __toESM(require_i18n());
-  function render6({ item, field }) {
+
+  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.js
+  function isValidRequiredForArray(item, field) {
+    const value = field.getValue({ item });
+    return Array.isArray(value) && value.length > 0 && value.every(
+      (element) => ![void 0, "", null].includes(element)
+    );
+  }
+
+  // packages/dataviews/build-module/field-types/array.js
+  function render7({ item, field }) {
     const value = field.getValue({ item }) || [];
     return value.join(", ");
   }
-  var isValid6 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-        return (0, import_i18n45.__)("Value must be an array.");
-      }
-      if (!value.every((v2) => typeof v2 === "string")) {
-        return (0, import_i18n45.__)("Every value must be a string.");
-      }
-      return null;
+  function isValidCustom5(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
+      return (0, import_i18n45.__)("Value must be an array.");
     }
-  };
+    if (!value.every((v2) => typeof v2 === "string")) {
+      return (0, import_i18n45.__)("Every value must be a string.");
+    }
+    return null;
+  }
   var sort4 = (a2, b2, direction) => {
     const arrA = Array.isArray(a2) ? a2 : [];
     const arrB = Array.isArray(b2) ? b2 : [];
@@ -15477,10 +15670,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var array_default = {
     type: "array",
-    render: render6,
+    render: render7,
     Edit: "array",
     sort: sort4,
-    isValid: isValid6,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15490,41 +15682,45 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequiredForArray,
+      elements: isValidElements,
+      custom: isValidCustom5
+    }
   };
 
   // packages/dataviews/build-module/field-types/password.js
-  var import_jsx_runtime93 = __toESM(require_jsx_runtime());
-  function render7({ item, field }) {
-    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
+  var import_jsx_runtime94 = __toESM(require_jsx_runtime());
+  function render8({ item, field }) {
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
   }
   var password_default = {
     type: "password",
-    render: render7,
+    render: render8,
     Edit: "password",
     sort: () => 0,
     // Passwords should not be sortable for security reasons
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: false,
     enableGlobalSearch: false,
     defaultOperators: [],
     validOperators: [],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/telephone.js
   var telephone_default = {
     type: "telephone",
-    render,
+    render: render3,
     Edit: "telephone",
     sort: sort_text_default,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15540,22 +15736,29 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/color.js
   var import_i18n46 = __toESM(require_i18n());
-  var import_jsx_runtime94 = __toESM(require_jsx_runtime());
-  function render8({ item, field }) {
+  var import_jsx_runtime95 = __toESM(require_jsx_runtime());
+  function render9({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if (!value || !w(value).isValid()) {
       return value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
         "div",
         {
           style: {
@@ -15568,19 +15771,16 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime94.jsx)("span", { children: value })
+      /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { children: value })
     ] });
   }
-  var isValid7 = {
-    elements: true,
-    custom: (item, normalizedField) => {
-      const value = normalizedField.getValue({ item });
-      if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-        return (0, import_i18n46.__)("Value must be a valid color.");
-      }
-      return null;
+  function isValidCustom6(item, field) {
+    const value = field.getValue({ item });
+    if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+      return (0, import_i18n46.__)("Value must be a valid color.");
     }
-  };
+    return null;
+  }
   var sort5 = (a2, b2, direction) => {
     const colorA = w(a2);
     const colorB = w(b2);
@@ -15605,10 +15805,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var color_default = {
     type: "color",
-    render: render8,
+    render: render9,
     Edit: "color",
     sort: sort5,
-    isValid: isValid7,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15618,19 +15817,20 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements,
+      custom: isValidCustom6
+    }
   };
 
   // packages/dataviews/build-module/field-types/url.js
   var url_default = {
     type: "url",
-    render,
+    render: render3,
     Edit: "url",
     sort: sort_text_default,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -15646,7 +15846,14 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      pattern: isValidPattern,
+      minLength: isValidMinLength,
+      maxLength: isValidMaxLength,
+      elements: isValidElements
+    }
   };
 
   // packages/dataviews/build-module/field-types/no-type.js
@@ -15658,19 +15865,84 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var no_type_default = {
     // type: no type for this one
-    render,
+    render: render3,
     Edit: null,
     sort: sort6,
-    isValid: {
-      elements: true,
-      custom: () => null
-    },
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
     validOperators: ALL_OPERATORS,
-    getFormat: () => ({})
+    getFormat: () => ({}),
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements
+    }
   };
+
+  // packages/dataviews/build-module/field-types/utils/get-is-valid.js
+  function getIsValid(field, fieldType) {
+    let required;
+    if (field.isValid?.required === true && fieldType.validate.required !== void 0) {
+      required = {
+        constraint: true,
+        validate: fieldType.validate.required
+      };
+    }
+    let elements;
+    if ((field.isValid?.elements === true || // elements is enabled unless the field opts-out
+    field.isValid?.elements === void 0 && (!!field.elements || !!field.getElements)) && fieldType.validate.elements !== void 0) {
+      elements = {
+        constraint: true,
+        validate: fieldType.validate.elements
+      };
+    }
+    let min;
+    if (typeof field.isValid?.min === "number" && fieldType.validate.min !== void 0) {
+      min = {
+        constraint: field.isValid.min,
+        validate: fieldType.validate.min
+      };
+    }
+    let max;
+    if (typeof field.isValid?.max === "number" && fieldType.validate.max !== void 0) {
+      max = {
+        constraint: field.isValid.max,
+        validate: fieldType.validate.max
+      };
+    }
+    let minLength;
+    if (typeof field.isValid?.minLength === "number" && fieldType.validate.minLength !== void 0) {
+      minLength = {
+        constraint: field.isValid.minLength,
+        validate: fieldType.validate.minLength
+      };
+    }
+    let maxLength;
+    if (typeof field.isValid?.maxLength === "number" && fieldType.validate.maxLength !== void 0) {
+      maxLength = {
+        constraint: field.isValid.maxLength,
+        validate: fieldType.validate.maxLength
+      };
+    }
+    let pattern;
+    if (field.isValid?.pattern !== void 0 && fieldType.validate.pattern !== void 0) {
+      pattern = {
+        constraint: field.isValid?.pattern,
+        validate: fieldType.validate.pattern
+      };
+    }
+    const custom = field.isValid?.custom ?? fieldType.validate.custom;
+    return {
+      required,
+      elements,
+      min,
+      max,
+      minLength,
+      maxLength,
+      pattern,
+      custom
+    };
+  }
 
   // packages/dataviews/build-module/field-types/index.js
   function getFieldTypeByName(type) {
@@ -15696,12 +15968,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function normalizeFields(fields) {
     return fields.map((field) => {
-      const defaultProps = getFieldTypeByName(field.type);
+      const fieldType = getFieldTypeByName(field.type);
       const getValue = field.getValue || get_value_from_id_default(field.id);
       const sort7 = function(a2, b2, direction) {
         const aValue = getValue({ item: a2 });
         const bValue = getValue({ item: b2 });
-        return field.sort ? field.sort(aValue, bValue, direction) : defaultProps.sort(aValue, bValue, direction);
+        return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
       };
       return {
         id: field.id,
@@ -15718,22 +15990,19 @@ If there's a particular need for this, please submit a feature request at https:
         enableHiding: field.enableHiding ?? true,
         readOnly: field.readOnly ?? false,
         // The type provides defaults for the following props
-        type: defaultProps.type,
-        render: field.render ?? defaultProps.render,
-        Edit: getControl(field, defaultProps.Edit),
+        type: fieldType.type,
+        render: field.render ?? fieldType.render,
+        Edit: getControl(field, fieldType.Edit),
         sort: sort7,
-        enableSorting: field.enableSorting ?? defaultProps.enableSorting,
-        enableGlobalSearch: field.enableGlobalSearch ?? defaultProps.enableGlobalSearch,
-        isValid: {
-          ...defaultProps.isValid,
-          ...field.isValid
-        },
+        enableSorting: field.enableSorting ?? fieldType.enableSorting,
+        enableGlobalSearch: field.enableGlobalSearch ?? fieldType.enableGlobalSearch,
+        isValid: getIsValid(field, fieldType),
         filterBy: get_filter_by_default(
           field,
-          defaultProps.defaultOperators,
-          defaultProps.validOperators
+          fieldType.defaultOperators,
+          fieldType.validOperators
         ),
-        format: defaultProps.getFormat(field)
+        format: fieldType.getFormat(field)
       };
     });
   }
@@ -15742,7 +16011,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components48 = __toESM(require_components());
   var import_element50 = __toESM(require_element());
   var import_compose11 = __toESM(require_compose());
-  var import_jsx_runtime95 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime96 = __toESM(require_jsx_runtime());
   var isItemClickable = () => false;
   var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
     (viewLayout) => viewLayout.isPicker
@@ -15753,8 +16022,8 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = void 0
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(import_jsx_runtime95.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(import_jsx_runtime96.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
         import_components48.__experimentalHStack,
         {
           alignment: "top",
@@ -15762,33 +16031,33 @@ If there's a particular need for this, please submit a feature request at https:
           className: "dataviews__view-actions",
           spacing: 1,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
               import_components48.__experimentalHStack,
               {
                 justify: "start",
                 expanded: false,
                 className: "dataviews__search",
                 children: [
-                  search && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(dataviews_search_default, { label: searchLabel }),
-                  /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(toggle_default, {})
+                  search && /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(dataviews_search_default, { label: searchLabel }),
+                  /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(toggle_default, {})
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
               import_components48.__experimentalHStack,
               {
                 spacing: 1,
                 expanded: false,
                 style: { flexShrink: 0 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(dataviews_view_config_default, {})
+                children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(dataviews_view_config_default, {})
               }
             )
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-      /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(DataViewsLayout, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(DataViewsPickerFooter, {})
+      /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+      /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(DataViewsLayout, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(DataViewsPickerFooter, {})
     ] });
   }
   function DataViewsPicker({
@@ -15879,7 +16148,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!defaultLayouts[view.type]) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       dataviews_context_default.Provider,
       {
         value: {
@@ -15908,7 +16177,7 @@ If there's a particular need for this, please submit a feature request at https:
           empty,
           hasInfiniteScrollHandler: !!infiniteScrollHandler
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("div", { className: "dataviews-picker-wrapper", ref: containerRef, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(DefaultUI, { search, searchLabel }) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("div", { className: "dataviews-picker-wrapper", ref: containerRef, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(DefaultUI, { search, searchLabel }) })
       }
     );
   }
@@ -15932,7 +16201,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-utils/build-module/components/media-upload-modal/index.js
-  var import_jsx_runtime96 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime97 = __toESM(require_jsx_runtime());
   var { useEntityRecordsWithPermissions } = unlock2(import_core_data.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
@@ -16008,7 +16277,7 @@ If there's a particular need for this, please submit a feature request at https:
           id: "url",
           type: "media",
           label: (0, import_i18n47.__)("Media"),
-          render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+          render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
             "img",
             {
               src: item.source_url,
@@ -16110,7 +16379,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isOpen) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
       import_components49.Modal,
       {
         title,
@@ -16118,14 +16387,14 @@ If there's a particular need for this, please submit a feature request at https:
         isDismissible,
         className: modalClass,
         size: "fill",
-        headerActions: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+        headerActions: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
           import_components49.FormFileUpload,
           {
             accept: acceptTypes,
             multiple: true,
             onChange: handleFileSelect,
             __next40pxDefaultSize: true,
-            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
               import_components49.Button,
               {
                 onClick: openFileDialog,
@@ -16137,7 +16406,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
             import_components49.DropZone,
             {
               onFilesDrop: (files) => {
@@ -16161,7 +16430,7 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n47.__)("Drop files to upload")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
             dataviews_picker_default,
             {
               data: mediaRecords || [],
