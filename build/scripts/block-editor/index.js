@@ -16887,10 +16887,10 @@ var wp;
       layoutBlockSupport = {}
     }) {
       const { allowSizingOnChildren = false } = layoutBlockSupport;
-      const showColumnsControl = window.__experimentalEnableGridInteractivity || !!layout?.columnCount;
-      const showMinWidthControl = window.__experimentalEnableGridInteractivity || !layout?.columnCount;
+      const showColumnsControl = true;
+      const showMinWidthControl = !layout?.isManualPlacement || window.__experimentalEnableGridInteractivity;
       return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_jsx_runtime130.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           GridLayoutTypeControl,
           {
             layout,
@@ -17018,7 +17018,7 @@ var wp;
       });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)("fieldset", { className: "block-editor-hooks__grid-layout-minimum-width-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n14.__)("Minimum column width") }),
+      /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n14.__)("Min. column width") }),
       /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_components15.Flex, { gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           import_components15.__experimentalUnitControl,
@@ -17052,7 +17052,10 @@ var wp;
             hideLabelFromVision: true
           }
         ) })
-      ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("p", { className: "components-base-control__help", children: (0, import_i18n14.__)(
+        "Columns will wrap to fewer per row when they can no longer maintain the minimum width."
+      ) })
     ] });
   }
   function GridLayoutColumnsAndRowsControl({
@@ -17060,42 +17063,34 @@ var wp;
     onChange,
     allowSizingOnChildren
   }) {
-    const defaultColumnCount = window.__experimentalEnableGridInteractivity ? void 0 : 3;
+    const defaultColumnCount = void 0;
     const {
       columnCount = defaultColumnCount,
       rowCount,
       isManualPlacement
     } = layout;
     return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_jsx_runtime130.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)("fieldset", { className: "block-editor-hooks__grid-layout-columns-and-rows-controls", children: [
-      (!window.__experimentalEnableGridInteractivity || !isManualPlacement) && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n14.__)("Columns") }),
+      !isManualPlacement && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n14.__)("Max. columns") }),
       /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_components15.Flex, { gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           import_components15.__experimentalNumberControl,
           {
             size: "__unstable-large",
             onChange: (value) => {
-              if (window.__experimentalEnableGridInteractivity) {
-                const defaultNewColumnCount = isManualPlacement ? 1 : void 0;
-                const newColumnCount = value === "" || value === "0" ? defaultNewColumnCount : parseInt(value, 10);
-                onChange({
-                  ...layout,
-                  columnCount: newColumnCount
-                });
-              } else {
-                const newColumnCount = value === "" || value === "0" ? 1 : parseInt(value, 10);
-                onChange({
-                  ...layout,
-                  columnCount: newColumnCount
-                });
-              }
+              const defaultNewColumnCount = isManualPlacement ? 1 : void 0;
+              const newColumnCount = value === "" || value === "0" ? defaultNewColumnCount : parseInt(value, 10);
+              onChange({
+                ...layout,
+                columnCount: newColumnCount
+              });
             },
             value: columnCount,
             min: 1,
             label: (0, import_i18n14.__)("Columns"),
-            hideLabelFromVision: !window.__experimentalEnableGridInteractivity || !isManualPlacement
+            hideLabelFromVision: !isManualPlacement
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.FlexItem, { isBlock: true, children: window.__experimentalEnableGridInteractivity && allowSizingOnChildren && isManualPlacement ? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components15.FlexItem, { isBlock: true, children: allowSizingOnChildren && isManualPlacement ? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           import_components15.__experimentalNumberControl,
           {
             size: "__unstable-large",
@@ -17139,7 +17134,7 @@ var wp;
     const [tempMinimumColumnWidth, setTempMinimumColumnWidth] = (0, import_element16.useState)(
       minimumColumnWidth || "12rem"
     );
-    const gridPlacement = isManualPlacement || !!columnCount && !window.__experimentalEnableGridInteractivity ? "manual" : "auto";
+    const gridPlacement = isManualPlacement ? "manual" : "auto";
     const onChangeType = (value) => {
       if (value === "manual") {
         setTempMinimumColumnWidth(minimumColumnWidth || "12rem");
@@ -17149,9 +17144,9 @@ var wp;
       }
       onChange({
         ...layout,
-        columnCount: value === "manual" ? tempColumnCount : null,
-        rowCount: value === "manual" && window.__experimentalEnableGridInteractivity ? tempRowCount : void 0,
-        isManualPlacement: value === "manual" && window.__experimentalEnableGridInteractivity ? true : void 0,
+        columnCount: value === "manual" ? tempColumnCount : tempColumnCount,
+        rowCount: value === "manual" ? tempRowCount : void 0,
+        isManualPlacement: value === "manual" ? true : void 0,
         minimumColumnWidth: value === "auto" ? tempMinimumColumnWidth : null
       });
     };
@@ -17169,7 +17164,7 @@ var wp;
         value: gridPlacement,
         onChange: onChangeType,
         isBlock: true,
-        help: window.__experimentalEnableGridInteractivity ? helpText2 : void 0,
+        help: helpText2,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
             import_components15.__experimentalToggleGroupControlOption,
