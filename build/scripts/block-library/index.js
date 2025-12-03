@@ -65618,10 +65618,16 @@ ${declarations}
         const bootstrappedBlockType = unlock(
           (0, import_data147.select)(import_blocks123.store)
         ).getBootstrappedBlockType(blockName);
-        const bootstrappedApiVersion = bootstrappedBlockType.apiVersion;
         (0, import_blocks123.registerBlockType)(blockName, {
-          title: blockName,
-          ...bootstrappedApiVersion < 3 && { apiVersion: 3 },
+          // Use all metadata from PHP registration,
+          // but fall back title to block name if not provided,
+          // ensure minimum apiVersion 3 for block wrapper support,
+          // and override with a ServerSideRender-based edit function.
+          ...bootstrappedBlockType,
+          title: bootstrappedBlockType?.title || blockName,
+          ...(bootstrappedBlockType?.apiVersion ?? 0) < 3 && {
+            apiVersion: 3
+          },
           edit: function Edit21({ attributes: attributes3 }) {
             const blockProps = (0, import_block_editor276.useBlockProps)();
             const { content, status, error } = (0, import_server_side_render7.useServerSideRender)({
