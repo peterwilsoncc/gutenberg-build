@@ -48624,9 +48624,7 @@ var wp;
   var import_block_editor91 = __toESM(require_block_editor());
   var import_notices29 = __toESM(require_notices());
   var import_html_entities28 = __toESM(require_html_entities());
-  var { useBlockElementRef, cleanEmptyObject: cleanEmptyObject4 } = unlock(
-    import_block_editor91.privateApis
-  );
+  var { useBlockElement, cleanEmptyObject: cleanEmptyObject4 } = unlock(import_block_editor91.privateApis);
   function useBlockComments(postId2) {
     const [commentLastUpdated, reflowComments] = (0, import_element168.useReducer)(
       () => Date.now(),
@@ -48892,16 +48890,7 @@ var wp;
     setBlockRef,
     commentLastUpdated
   }) {
-    const blockRef = (0, import_element168.useRef)();
-    useBlockElementRef(thread.blockClientId, blockRef);
-    const blockMode = (0, import_data220.useSelect)(
-      (select5) => {
-        return thread.blockClientId ? select5(import_block_editor91.store).getBlockMode(
-          thread.blockClientId
-        ) : null;
-      },
-      [thread.blockClientId]
-    );
+    const blockElement = useBlockElement(thread.blockClientId);
     const updateHeight = (0, import_element168.useCallback)(
       (id, newHeight) => {
         setHeights((prev) => {
@@ -48923,15 +48912,15 @@ var wp;
       whileElementsMounted: autoUpdate
     });
     (0, import_element168.useEffect)(() => {
-      if (blockRef.current) {
-        refs.setReference(blockRef.current);
+      if (blockElement) {
+        refs.setReference(blockElement);
       }
-    }, [blockRef, refs, commentLastUpdated, blockMode]);
+    }, [blockElement, refs, commentLastUpdated]);
     (0, import_element168.useEffect)(() => {
       if (refs.floating?.current) {
-        setBlockRef(thread.id, blockRef.current);
+        setBlockRef(thread.id, blockElement);
       }
-    }, [thread.id, refs.floating, setBlockRef]);
+    }, [blockElement, thread.id, refs.floating, setBlockRef]);
     (0, import_element168.useEffect)(() => {
       if (refs.floating?.current) {
         const newHeight = refs.floating.current.scrollHeight;
@@ -48945,7 +48934,6 @@ var wp;
       commentLastUpdated
     ]);
     return {
-      blockRef,
       y: y3,
       refs
     };
@@ -48957,7 +48945,7 @@ var wp;
   var import_components205 = __toESM(require_components());
   var import_block_editor92 = __toESM(require_block_editor());
   var import_jsx_runtime332 = __toESM(require_jsx_runtime());
-  var { useBlockElement } = unlock(import_block_editor92.privateApis);
+  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor92.privateApis);
   function AddComment({
     onSubmit,
     newNoteFormState,
@@ -48974,7 +48962,7 @@ var wp;
         clientId: getSelectedBlockClientId2()
       };
     }, []);
-    const blockElement = useBlockElement(clientId);
+    const blockElement = useBlockElement2(clientId);
     const { toggleBlockSpotlight } = unlock((0, import_data221.useDispatch)(import_block_editor92.store));
     const unselectThread = () => {
       setNewNoteFormState("closed");
@@ -49032,7 +49020,7 @@ var wp;
 
   // packages/editor/build-module/components/collab-sidebar/comments.js
   var import_jsx_runtime333 = __toESM(require_jsx_runtime());
-  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor93.privateApis);
+  var { useBlockElement: useBlockElement3 } = unlock(import_block_editor93.privateApis);
   var { Menu: Menu6 } = unlock(import_components206.privateApis);
   function Comments({
     threads: noteThreads,
@@ -49054,27 +49042,20 @@ var wp;
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data222.useDispatch)(import_block_editor93.store)
     );
-    const {
-      blockCommentId,
-      selectedBlockClientId,
-      orderedBlockIds,
-      blockMode
-    } = (0, import_data222.useSelect)((select5) => {
+    const { blockCommentId, selectedBlockClientId, orderedBlockIds } = (0, import_data222.useSelect)((select5) => {
       const {
         getBlockAttributes: getBlockAttributes2,
         getSelectedBlockClientId: getSelectedBlockClientId2,
-        getClientIdsWithDescendants: getClientIdsWithDescendants2,
-        getBlockMode: getBlockMode2
+        getClientIdsWithDescendants: getClientIdsWithDescendants2
       } = select5(import_block_editor93.store);
       const clientId = getSelectedBlockClientId2();
       return {
         blockCommentId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
         selectedBlockClientId: clientId,
-        orderedBlockIds: getClientIdsWithDescendants2(),
-        blockMode: clientId ? getBlockMode2(clientId) : null
+        orderedBlockIds: getClientIdsWithDescendants2()
       };
     }, []);
-    const relatedBlockElement = useBlockElement2(selectedBlockClientId);
+    const relatedBlockElement = useBlockElement3(selectedBlockClientId);
     const threads = (0, import_element169.useMemo)(() => {
       const t4 = [...noteThreads];
       const orderedThreads = [];
@@ -49224,8 +49205,7 @@ var wp;
       isFloating,
       threads,
       selectedThread,
-      setCanvasMinHeight2,
-      blockMode
+      setCanvasMinHeight2
     ]);
     const handleThreadNavigation = (event, thread, isSelected) => {
       if (event.defaultPrevented) {
@@ -49334,7 +49314,7 @@ var wp;
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data222.useDispatch)(import_block_editor93.store)
     );
-    const relatedBlockElement = useBlockElement2(thread.blockClientId);
+    const relatedBlockElement = useBlockElement3(thread.blockClientId);
     const debouncedToggleBlockHighlight = (0, import_compose60.useDebounce)(
       toggleBlockHighlight,
       50
