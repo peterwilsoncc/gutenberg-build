@@ -13,19 +13,14 @@ return array(
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-nux',
-		'path' => 'nux/style',
-		'dependencies' => array('wp-components'),
-	),
-	array(
 		'handle' => 'wp-list-reusable-blocks',
 		'path' => 'list-reusable-blocks/style',
 		'dependencies' => array('wp-components'),
 	),
 	array(
-		'handle' => 'wp-patterns',
-		'path' => 'patterns/style',
-		'dependencies' => array('wp-block-editor', 'wp-components'),
+		'handle' => 'wp-nux',
+		'path' => 'nux/style',
+		'dependencies' => array('wp-components'),
 	),
 	array(
 		'handle' => 'wp-reusable-blocks',
@@ -40,6 +35,11 @@ return array(
 	array(
 		'handle' => 'wp-widgets',
 		'path' => 'widgets/style',
+		'dependencies' => array('wp-block-editor', 'wp-components'),
+	),
+	array(
+		'handle' => 'wp-patterns',
+		'path' => 'patterns/style',
 		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(

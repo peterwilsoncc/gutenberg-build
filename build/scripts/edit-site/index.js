@@ -19997,14 +19997,14 @@ var wp;
   var { useLocation: useLocation11, useHistory: useHistory9 } = unlock(import_router13.privateApis);
   function useNavigateToPreviousEntityRecord() {
     const location = useLocation11();
-    const previousLocation = (0, import_compose9.usePrevious)(location);
+    const previousCanvas = (0, import_compose9.usePrevious)(location.query.canvas);
     const history = useHistory9();
     const goBack = (0, import_element50.useMemo)(() => {
       const isFocusMode = location.query.focusMode || location?.params?.postId && FOCUSABLE_ENTITIES.includes(location?.params?.postType);
-      const didComeFromEditorCanvas = previousLocation?.query.canvas === "edit";
+      const didComeFromEditorCanvas = previousCanvas === "edit";
       const showBackButton = isFocusMode && didComeFromEditorCanvas;
       return showBackButton ? () => history.back() : void 0;
-    }, [location, history]);
+    }, [location, history, previousCanvas]);
     return goBack;
   }
   function useSpecificEditorSettings() {
