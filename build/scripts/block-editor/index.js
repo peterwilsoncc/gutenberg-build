@@ -36495,7 +36495,7 @@ var wp;
       if (block) {
         return (0, import_blocks60.cloneBlock)(block);
       }
-    }, [type?.example ? block?.name : block, type]);
+    }, [block, type?.example, type?.name]);
   }
   function useStylesForBlocks({ clientId, onSwitch }) {
     const selector3 = (select3) => {
@@ -36507,7 +36507,7 @@ var wp;
       const blockType2 = (0, import_blocks60.getBlockType)(block2.name);
       const { getBlockStyles: getBlockStyles2 } = select3(import_blocks60.store);
       return {
-        block: block2,
+        block: !blockType2?.example ? block2 : null,
         blockType: blockType2,
         styles: getBlockStyles2(block2.name),
         className: block2.attributes.className || ""
