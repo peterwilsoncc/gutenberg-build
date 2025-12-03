@@ -22302,7 +22302,8 @@ var wp;
       header: {},
       footer: {},
       sidebar: {},
-      uncategorized: {}
+      uncategorized: {},
+      overlay: {}
     };
     templatePartAreas.forEach(
       (templatePartArea) => knownAreas[templatePartArea.area] = {

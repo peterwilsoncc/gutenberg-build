@@ -34949,13 +34949,18 @@ ${js}
   }
 
   // packages/block-library/build-module/template-part/edit/utils/get-template-part-icon.js
-  var getTemplatePartIcon = (iconName) => {
-    if ("header" === iconName) {
+  var getTemplatePartIcon = (areaOrIconName) => {
+    if ("header" === areaOrIconName) {
       return header_default;
-    } else if ("footer" === iconName) {
+    } else if ("footer" === areaOrIconName) {
       return footer_default;
-    } else if ("sidebar" === iconName) {
+    } else if ("sidebar" === areaOrIconName) {
       return sidebar_default;
+    } else if ("overlay" === areaOrIconName) {
+      return table_column_after_default;
+    }
+    if ("menu" === areaOrIconName) {
+      return table_column_after_default;
     }
     return symbol_filled_default;
   };
