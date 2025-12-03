@@ -30130,7 +30130,7 @@ var wp;
           globalStylesId,
           _query
         ) || EMPTY_ARRAY4 : EMPTY_ARRAY4;
-        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || [];
+        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || EMPTY_ARRAY4;
         const _isResolving = globalStylesId ? isResolving("getRevisions", [
           "root",
           "globalStyles",

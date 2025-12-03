@@ -19330,7 +19330,7 @@ var wp;
           globalStylesId,
           _query
         ) || EMPTY_ARRAY3 : EMPTY_ARRAY3;
-        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || [];
+        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || EMPTY_ARRAY3;
         const _isResolving = globalStylesId ? isResolving("getRevisions", [
           "root",
           "globalStyles",
