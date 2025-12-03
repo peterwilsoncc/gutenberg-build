@@ -23094,7 +23094,7 @@ ${url}
       {
         type: "shortcode",
         tag: "gallery",
-        transform({ named: { ids, columns = 3, link, orderby } }) {
+        transform({ named: { ids, columns = 3, link, orderby, size } }) {
           const imageIds = parseShortcodeIds(ids).map(
             (id) => parseInt(id, 10)
           );
@@ -23109,10 +23109,14 @@ ${url}
             {
               columns: parseInt(columns, 10),
               linkTo,
-              randomOrder: orderby === "rand"
+              randomOrder: orderby === "rand",
+              ...size && { sizeSlug: size }
             },
             imageIds.map(
-              (imageId) => (0, import_blocks31.createBlock)("core/image", { id: imageId })
+              (imageId) => (0, import_blocks31.createBlock)("core/image", {
+                id: imageId,
+                ...size && { sizeSlug: size }
+              })
             )
           );
           return galleryBlock;
