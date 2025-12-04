@@ -17459,14 +17459,7 @@ var wp;
             }
           );
         },
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
-          import_components18.AlignmentMatrixControl,
-          {
-            hasFocusBorder: false,
-            onChange,
-            value
-          }
-        )
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components18.AlignmentMatrixControl, { onChange, value })
       }
     );
   }
