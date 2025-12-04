@@ -2791,11 +2791,16 @@ function ViewTable({
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("colgroup", { children: [
             hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
-            hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("col", { className: "dataviews-view-table__col-primary" }),
-            columns.map((column) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+            hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
+            columns.map((column, index) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
               "col",
               {
-                className: `dataviews-view-table__col-${column}`
+                className: clsx_default(
+                  `dataviews-view-table__col-${column}`,
+                  {
+                    "dataviews-view-table__col-first-data": !hasPrimaryColumn && index === 0
+                  }
+                )
               },
               `col-${column}`
             )),
