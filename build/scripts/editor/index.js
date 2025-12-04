@@ -15856,7 +15856,7 @@ var wp;
       onChange: setUserConfig
     } = (0, import_element46.useContext)(GlobalStylesContext);
     const context = (0, import_element46.useMemo)(() => {
-      let merged = { ...base, ...variation };
+      let merged = mergeGlobalStyles(base, variation);
       if (properties) {
         merged = filterObjectByProperties(merged, properties);
       }
