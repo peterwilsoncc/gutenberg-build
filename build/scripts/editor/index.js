@@ -31251,23 +31251,17 @@ var wp;
       },
       [name2]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(import_jsx_runtime179.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-        GlobalStylesNavigationScreen,
-        {
-          path: parentMenu + "/colors/palette",
-          children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(screen_color_palette_default, { name: name2 })
-        }
-      ),
-      !!blockStyleVariations?.length && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-        BlockStylesNavigationScreens,
-        {
-          parentMenu,
-          blockStyles: blockStyleVariations,
-          blockName: name2 || ""
-        }
-      )
-    ] });
+    if (!blockStyleVariations?.length) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
+      BlockStylesNavigationScreens,
+      {
+        parentMenu,
+        blockStyles: blockStyleVariations,
+        blockName: name2 || ""
+      }
+    );
   }
   function GlobalStylesUI({
     value,
@@ -31340,23 +31334,22 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(GlobalStylesNavigationScreen, { path: "/typography/caption", children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(screen_typography_element_default, { element: "caption" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(GlobalStylesNavigationScreen, { path: "/typography/button", children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(screen_typography_element_default, { element: "button" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(GlobalStylesNavigationScreen, { path: "/blocks", children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(screen_block_list_default, {}) }),
-              blocks.map((block) => /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                GlobalStylesNavigationScreen,
-                {
-                  path: "/blocks/" + encodeURIComponent(block.name),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(screen_block_default, { name: block.name })
-                },
-                "menu-block-" + block.name
-              )),
-              /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(ContextScreens, {}),
-              blocks.map((block) => /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                ContextScreens,
-                {
-                  name: block.name,
-                  parentMenu: "/blocks/" + encodeURIComponent(block.name)
-                },
-                "screens-block-" + block.name
-              ))
+              blocks.map((block) => /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(import_element68.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
+                  GlobalStylesNavigationScreen,
+                  {
+                    path: "/blocks/" + encodeURIComponent(block.name),
+                    children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(screen_block_default, { name: block.name })
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
+                  ContextScreens,
+                  {
+                    name: block.name,
+                    parentMenu: "/blocks/" + encodeURIComponent(block.name)
+                  }
+                )
+              ] }, block.name))
             ]
           }
         ) })
