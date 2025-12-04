@@ -22220,7 +22220,7 @@ ${url}
         ...newLinkTarget,
         className: newClassName,
         sizeSlug,
-        caption: imageAttributes.caption || image.caption?.raw,
+        caption: imageAttributes.caption.length > 0 ? imageAttributes.caption : image.caption?.raw,
         alt: imageAttributes.alt || image.alt_text,
         aspectRatio: aspectRatio === "auto" ? void 0 : aspectRatio
       };
