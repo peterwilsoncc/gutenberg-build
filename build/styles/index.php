@@ -58,14 +58,14 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-components', 'wp-editor'),
 	),
 	array(
-		'handle' => 'wp-block-library',
-		'path' => 'block-library/style',
-		'dependencies' => array('wp-block-editor', 'wp-components', 'wp-patterns'),
-	),
-	array(
 		'handle' => 'wp-media-utils',
 		'path' => 'media-utils/style',
 		'dependencies' => array('wp-components'),
+	),
+	array(
+		'handle' => 'wp-block-library',
+		'path' => 'block-library/style',
+		'dependencies' => array('wp-block-editor', 'wp-components', 'wp-patterns'),
 	),
 	array(
 		'handle' => 'wp-customize-widgets',

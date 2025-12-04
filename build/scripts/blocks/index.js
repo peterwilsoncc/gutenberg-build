@@ -9612,7 +9612,25 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return getBlockContentSchemaFromTransforms(getRawTransforms(), context);
   }
   function isPlain(HTML) {
-    return !/<(?!br[ />])/i.test(HTML);
+    if (!/<(?!br[ />])/i.test(HTML)) {
+      return true;
+    }
+    const doc = document.implementation.createHTMLDocument("");
+    doc.body.innerHTML = HTML;
+    if (doc.body.children.length !== 1) {
+      return false;
+    }
+    const wrapper = doc.body.children.item(0);
+    const descendants = wrapper.getElementsByTagName("*");
+    for (let i2 = 0; i2 < descendants.length; i2++) {
+      if (descendants.item(i2).tagName !== "BR") {
+        return false;
+      }
+    }
+    if (wrapper.tagName !== "SPAN") {
+      return false;
+    }
+    return true;
   }
   function deepFilterNodeList(nodeList, filters, doc, schema) {
     Array.from(nodeList).forEach((node) => {
