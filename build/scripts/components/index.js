@@ -16049,8 +16049,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
  * React Native specific.
  * These variables do not appear to be used anywhere else.
  */
-/* Grid structure */
-.style-module__gridContainer__2ubMW {
+.style-module__grid-container__AuKvW {
   direction: ltr;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -16063,14 +16062,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   cursor: pointer;
 }
 
-.style-module__gridRow__KBB-i {
+.style-module__grid-row__xCH47 {
   grid-column: 1/-1;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* Cell */
 .style-module__cell__Ovdp9 {
   position: relative;
   display: flex;
@@ -16084,7 +16082,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   outline: none;
 }
 
-/* Point */
 .style-module__point__N-8S1 {
   display: block;
   contain: strict;
@@ -16096,25 +16093,25 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   /* Use border instead of background color so that the point shows
   in Windows High Contrast Mode */
   border: 3px solid currentColor;
+  /* Highlight active item */
 }
-
-/* Highlight active item */
 .style-module__cell__Ovdp9[data-active-item] .style-module__point__N-8S1 {
   color: var(--wp-components-color-foreground, #1e1e1e);
   transform: scale(1.6666666667);
 }
-
-/* Hover styles for non-active items */
+.style-module__point__N-8S1 {
+  /* Hover styles for non-active items */
+}
 .style-module__cell__Ovdp9:not([data-active-item]):hover .style-module__point__N-8S1 {
   color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
 }
-
-/* Show an outline only when interacting with keyboard */
+.style-module__point__N-8S1 {
+  /* Show an outline only when interacting with keyboard */
+}
 .style-module__cell__Ovdp9[data-focus-visible] .style-module__point__N-8S1 {
   outline: 1px solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
   outline-offset: 1px;
 }
-
 @media not (prefers-reduced-motion) {
   .style-module__point__N-8S1 {
     transition-property: color, transform;
@@ -16124,8 +16121,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 }`;
   document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css3));
   var style_module_default = {
-    "gridContainer": "style-module__gridContainer__2ubMW",
-    "gridRow": "style-module__gridRow__KBB-i",
+    "grid-container": "style-module__grid-container__AuKvW",
+    "grid-row": "style-module__grid-row__xCH47",
     "cell": "style-module__cell__Ovdp9",
     "point": "style-module__point__N-8S1"
   };
@@ -16245,8 +16242,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
  * React Native specific.
  * These variables do not appear to be used anywhere else.
  */
-/* Grid structure */
-.style-module__gridContainer__2ubMW {
+.style-module__grid-container__AuKvW {
   direction: ltr;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -16259,14 +16255,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   cursor: pointer;
 }
 
-.style-module__gridRow__KBB-i {
+.style-module__grid-row__xCH47 {
   grid-column: 1/-1;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* Cell */
 .style-module__cell__Ovdp9 {
   position: relative;
   display: flex;
@@ -16280,7 +16275,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   outline: none;
 }
 
-/* Point */
 .style-module__point__N-8S1 {
   display: block;
   contain: strict;
@@ -16292,25 +16286,25 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
   /* Use border instead of background color so that the point shows
   in Windows High Contrast Mode */
   border: 3px solid currentColor;
+  /* Highlight active item */
 }
-
-/* Highlight active item */
 .style-module__cell__Ovdp9[data-active-item] .style-module__point__N-8S1 {
   color: var(--wp-components-color-foreground, #1e1e1e);
   transform: scale(1.6666666667);
 }
-
-/* Hover styles for non-active items */
+.style-module__point__N-8S1 {
+  /* Hover styles for non-active items */
+}
 .style-module__cell__Ovdp9:not([data-active-item]):hover .style-module__point__N-8S1 {
   color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
 }
-
-/* Show an outline only when interacting with keyboard */
+.style-module__point__N-8S1 {
+  /* Show an outline only when interacting with keyboard */
+}
 .style-module__cell__Ovdp9[data-focus-visible] .style-module__point__N-8S1 {
   outline: 1px solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
   outline-offset: 1px;
 }
-
 @media not (prefers-reduced-motion) {
   .style-module__point__N-8S1 {
     transition-property: color, transform;
@@ -16320,8 +16314,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 }`;
   document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css4));
   var style_module_default2 = {
-    "gridContainer": "style-module__gridContainer__2ubMW",
-    "gridRow": "style-module__gridRow__KBB-i",
+    "grid-container": "style-module__grid-container__AuKvW",
+    "grid-row": "style-module__grid-row__xCH47",
     "cell": "style-module__cell__Ovdp9",
     "point": "style-module__point__N-8S1"
   };
@@ -16342,7 +16336,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         onChange?.(nextValue);
       }
     }, [baseId, onChange]);
-    const classes = clsx_default("component-alignment-matrix-control", style_module_default2.gridContainer, className);
+    const classes = clsx_default("component-alignment-matrix-control", style_module_default2["grid-container"], className);
     return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Composite22, {
       defaultActiveId: getItemId(baseId, defaultValue2),
       activeId: getItemId(baseId, value),
@@ -16360,7 +16354,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }),
       children: GRID.map((cells, index2) => /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Composite22.Row, {
         render: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", {
-          className: style_module_default2.gridRow,
+          className: style_module_default2["grid-row"],
           role: "row"
         }),
         children: cells.map((cell) => /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Cell, {
