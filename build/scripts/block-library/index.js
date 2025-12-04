@@ -45888,7 +45888,7 @@ ${js}
         import_block_editor186.PlainText,
         {
           tagName: TagName2,
-          placeholder: (0, import_i18n163.__)("No title"),
+          placeholder: (0, import_i18n163.__)("(no title)"),
           value: rawTitle,
           onChange: setTitle,
           __experimentalVersion: 2,
@@ -45899,7 +45899,9 @@ ${js}
         TagName2,
         {
           ...blockProps,
-          dangerouslySetInnerHTML: { __html: fullTitle?.rendered }
+          dangerouslySetInnerHTML: {
+            __html: fullTitle?.rendered || (0, import_i18n163.__)("(no title)")
+          }
         }
       );
     }
@@ -45911,7 +45913,7 @@ ${js}
           href: link,
           target: linkTarget,
           rel,
-          placeholder: !rawTitle.length ? (0, import_i18n163.__)("No title") : null,
+          placeholder: !rawTitle.length ? (0, import_i18n163.__)("(no title)") : null,
           value: rawTitle,
           onChange: setTitle,
           __experimentalVersion: 2,
@@ -45925,7 +45927,7 @@ ${js}
           rel,
           onClick: (event) => event.preventDefault(),
           dangerouslySetInnerHTML: {
-            __html: fullTitle?.rendered
+            __html: fullTitle?.rendered || (0, import_i18n163.__)("(no title)")
           }
         }
       ) });
