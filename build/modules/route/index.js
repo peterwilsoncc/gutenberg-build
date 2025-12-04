@@ -5512,6 +5512,7 @@ lock(privateApis, {
   redirect,
   createLink,
   useCanGoBack,
+  useLoaderData,
   useLocation,
   useMatches,
   useRouter,

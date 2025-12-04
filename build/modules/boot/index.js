@@ -2551,19 +2551,11 @@ var {
   createRoute,
   RouterProvider,
   createBrowserHistory,
-  parseHref
+  parseHref,
+  useLoaderData
 } = unlock(routePrivateApis5);
 function NotFoundComponent() {
   return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(page_default, { title: (0, import_i18n10.__)("Route not found"), hasPadding: true, children: (0, import_i18n10.__)("The page you're looking for does not exist") }) });
-}
-function RouteComponent({
-  stage: Stage,
-  inspector: Inspector
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_jsx_runtime31.Fragment, { children: [
-    Stage && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Stage, {}) }),
-    Inspector && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Inspector, {}) })
-  ] });
 }
 async function createRouteFromDefinition(route, parentRoute) {
   let routeConfig = {};
@@ -2587,10 +2579,14 @@ async function createRouteFromDefinition(route, parentRoute) {
         routeConfig.loader ? routeConfig.loader(context) : Promise.resolve(void 0),
         routeConfig.canvas ? routeConfig.canvas(context) : Promise.resolve(void 0)
       ]);
+      let inspector = true;
+      if (routeConfig.inspector) {
+        inspector = await routeConfig.inspector(context);
+      }
       return {
         ...loaderData,
         canvas: canvasData,
-        // Include content module path so Root can load custom canvas
+        inspector,
         routeContentModule: route.content_module
       };
     },
@@ -2598,15 +2594,15 @@ async function createRouteFromDefinition(route, parentRoute) {
   });
   tanstackRoute = tanstackRoute.lazy(async () => {
     const module = route.content_module ? await import(route.content_module) : {};
+    const Stage = module.stage;
+    const Inspector = module.inspector;
     return createLazyRoute(route.path)({
-      component: function Component() {
-        return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
-          RouteComponent,
-          {
-            stage: module.stage,
-            inspector: module.inspector
-          }
-        );
+      component: function RouteComponent() {
+        const { inspector: showInspector } = useLoaderData({ from: route.path }) ?? {};
+        return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_jsx_runtime31.Fragment, { children: [
+          Stage && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Stage, {}) }),
+          Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Inspector, {}) })
+        ] });
       }
     });
   });
