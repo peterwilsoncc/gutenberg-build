@@ -6043,6 +6043,7 @@ var wp;
   __export(private_selectors_exports, {
     getAllBlockBindingsSources: () => getAllBlockBindingsSources,
     getBlockBindingsSource: () => getBlockBindingsSource2,
+    getBlockBindingsSourceFieldsList: () => getBlockBindingsSourceFieldsList,
     getBootstrappedBlockType: () => getBootstrappedBlockType,
     getSupportedStyles: () => getSupportedStyles,
     getUnprocessedBlockTypes: () => getUnprocessedBlockTypes,
@@ -6152,6 +6153,27 @@ var wp;
   function getBlockBindingsSource2(state, sourceName) {
     return state.blockBindingsSources[sourceName];
   }
+  var getBlockBindingsSourceFieldsList = (0, import_data3.createRegistrySelector)(
+    (select3) => (0, import_data3.createSelector)(
+      (state, source, blockContext) => {
+        if (!source.getFieldsList) {
+          return [];
+        }
+        const context = {};
+        if (source?.usesContext?.length) {
+          for (const key of source.usesContext) {
+            context[key] = blockContext[key];
+          }
+        }
+        return source.getFieldsList({ select: select3, context });
+      },
+      (state, source, blockContext) => [
+        source.getFieldsList,
+        source.usesContext,
+        blockContext
+      ]
+    )
+  );
   var hasContentRoleAttribute = (state, blockTypeName) => {
     const blockType = getBlockType2(state, blockTypeName);
     if (!blockType) {
