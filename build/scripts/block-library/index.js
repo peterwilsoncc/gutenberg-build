@@ -11839,6 +11839,13 @@ var wp;
       },
       interactivity: {
         clientNavigation: true
+      },
+      spacing: {
+        margin: true,
+        padding: true,
+        __experimentalDefaultControls: {
+          padding: true
+        }
       }
     }
   };
