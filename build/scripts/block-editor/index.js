@@ -14,11 +14,11 @@ var wp;
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
   };
-  var __copyProps = (to2, from2, except, desc) => {
-    if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-      for (let key of __getOwnPropNames(from2))
+  var __copyProps = (to2, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
         if (!__hasOwnProp.call(to2, key) && key !== except)
-          __defProp(to2, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc(from2, key)) || desc.enumerable });
+          __defProp(to2, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
     }
     return to2;
   };
@@ -117,11 +117,11 @@ var wp;
         if (a2 === b2) return true;
         if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
           if (a2.constructor !== b2.constructor) return false;
-          var length2, i2, keys;
+          var length, i2, keys;
           if (Array.isArray(a2)) {
-            length2 = a2.length;
-            if (length2 != b2.length) return false;
-            for (i2 = length2; i2-- !== 0; )
+            length = a2.length;
+            if (length != b2.length) return false;
+            for (i2 = length; i2-- !== 0; )
               if (!equal(a2[i2], b2[i2])) return false;
             return true;
           }
@@ -140,9 +140,9 @@ var wp;
             return true;
           }
           if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-            length2 = a2.length;
-            if (length2 != b2.length) return false;
-            for (i2 = length2; i2-- !== 0; )
+            length = a2.length;
+            if (length != b2.length) return false;
+            for (i2 = length; i2-- !== 0; )
               if (a2[i2] !== b2[i2]) return false;
             return true;
           }
@@ -150,11 +150,11 @@ var wp;
           if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
           if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
           keys = Object.keys(a2);
-          length2 = keys.length;
-          if (length2 !== Object.keys(b2).length) return false;
-          for (i2 = length2; i2-- !== 0; )
+          length = keys.length;
+          if (length !== Object.keys(b2).length) return false;
+          for (i2 = length; i2-- !== 0; )
             if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-          for (i2 = length2; i2-- !== 0; ) {
+          for (i2 = length; i2-- !== 0; ) {
             var key = keys[i2];
             if (!equal(a2[key], b2[key])) return false;
           }
@@ -674,8 +674,8 @@ var wp;
       var chars = Object.keys(characterMap).join("|");
       var allAccents = new RegExp(chars, "g");
       var firstAccent = new RegExp(chars, "");
-      function matcher(match3) {
-        return characterMap[match3];
+      function matcher(match2) {
+        return characterMap[match2];
       }
       var removeAccents2 = function(string) {
         return string.replace(allAccents, matcher);
@@ -829,10 +829,10 @@ var wp;
         /*istanbul ignore start*/
         /*istanbul ignore end*/
         pushComponent: function pushComponent(components, added, removed) {
-          var last3 = components[components.length - 1];
-          if (last3 && last3.added === added && last3.removed === removed) {
+          var last = components[components.length - 1];
+          if (last && last.added === added && last.removed === removed) {
             components[components.length - 1] = {
-              count: last3.count + 1,
+              count: last.count + 1,
               added,
               removed
             };
@@ -888,7 +888,7 @@ var wp;
         },
         /*istanbul ignore start*/
         /*istanbul ignore end*/
-        tokenize: function tokenize3(value) {
+        tokenize: function tokenize2(value) {
           return value.split("");
         },
         /*istanbul ignore start*/
@@ -1040,7 +1040,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment98 = REACT_FRAGMENT_TYPE;
+          var Fragment95 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1099,7 +1099,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment98;
+          exports.Fragment = Fragment95;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -1143,7 +1143,7 @@ var wp;
     "node_modules/object-assign/index.js"(exports, module) {
       "use strict";
       var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-      var hasOwnProperty2 = Object.prototype.hasOwnProperty;
+      var hasOwnProperty = Object.prototype.hasOwnProperty;
       var propIsEnumerable = Object.prototype.propertyIsEnumerable;
       function toObject(val) {
         if (val === null || val === void 0) {
@@ -1184,21 +1184,21 @@ var wp;
         }
       }
       module.exports = shouldUseNative() ? Object.assign : function(target, source) {
-        var from2;
+        var from;
         var to2 = toObject(target);
         var symbols;
         for (var s2 = 1; s2 < arguments.length; s2++) {
-          from2 = Object(arguments[s2]);
-          for (var key in from2) {
-            if (hasOwnProperty2.call(from2, key)) {
-              to2[key] = from2[key];
+          from = Object(arguments[s2]);
+          for (var key in from) {
+            if (hasOwnProperty.call(from, key)) {
+              to2[key] = from[key];
             }
           }
           if (getOwnPropertySymbols) {
-            symbols = getOwnPropertySymbols(from2);
+            symbols = getOwnPropertySymbols(from);
             for (var i2 = 0; i2 < symbols.length; i2++) {
-              if (propIsEnumerable.call(from2, symbols[i2])) {
-                to2[symbols[i2]] = from2[symbols[i2]];
+              if (propIsEnumerable.call(from, symbols[i2])) {
+                to2[symbols[i2]] = from[symbols[i2]];
               }
             }
           }
@@ -1295,7 +1295,7 @@ var wp;
     "node_modules/prop-types/factoryWithTypeCheckers.js"(exports, module) {
       "use strict";
       var ReactIs = require_react_is();
-      var assign3 = require_object_assign();
+      var assign2 = require_object_assign();
       var ReactPropTypesSecret = require_ReactPropTypesSecret();
       var has2 = require_has();
       var checkPropTypes = require_checkPropTypes();
@@ -1600,7 +1600,7 @@ var wp;
             if (propType !== "object") {
               return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type `" + propType + "` " + ("supplied to `" + componentName + "`, expected `object`."));
             }
-            var allKeys = assign3({}, props[propName], shapeTypes);
+            var allKeys = assign2({}, props[propName], shapeTypes);
             for (var key in allKeys) {
               var checker = shapeTypes[key];
               if (has2(shapeTypes, key) && typeof checker !== "function") {
@@ -1751,7 +1751,7 @@ var wp;
   // node_modules/autosize/dist/autosize.js
   var require_autosize = __commonJS({
     "node_modules/autosize/dist/autosize.js"(exports, module) {
-      (function(global2, factory) {
+      (function(global, factory) {
         if (typeof define === "function" && define.amd) {
           define(["module", "exports"], factory);
         } else if (typeof exports !== "undefined") {
@@ -1761,7 +1761,7 @@ var wp;
             exports: {}
           };
           factory(mod, mod.exports);
-          global2.autosize = mod.exports;
+          global.autosize = mod.exports;
         }
       })(exports, function(module2, exports2) {
         "use strict";
@@ -1802,7 +1802,7 @@ var wp;
             return evt;
           };
         }
-        function assign3(ta) {
+        function assign2(ta) {
           if (!ta || !ta.nodeName || ta.nodeName !== "TEXTAREA" || map.has(ta)) return;
           var heightOffset = null;
           var clientWidth = null;
@@ -1953,7 +1953,7 @@ var wp;
           autosize = function autosize2(el, options) {
             if (el) {
               Array.prototype.forEach.call(el.length ? el : [el], function(x2) {
-                return assign3(x2, options);
+                return assign2(x2, options);
               });
             }
             return el;
@@ -2010,18 +2010,18 @@ var wp;
   var require_line_height = __commonJS({
     "node_modules/line-height/lib/line-height.js"(exports, module) {
       var computedStyle = require_computedStyle_commonjs();
-      function lineHeight(node2) {
-        var lnHeightStr = computedStyle(node2, "line-height");
+      function lineHeight(node) {
+        var lnHeightStr = computedStyle(node, "line-height");
         var lnHeight = parseFloat(lnHeightStr, 10);
         if (lnHeightStr === lnHeight + "") {
-          var _lnHeightStyle = node2.style.lineHeight;
-          node2.style.lineHeight = lnHeightStr + "em";
-          lnHeightStr = computedStyle(node2, "line-height");
+          var _lnHeightStyle = node.style.lineHeight;
+          node.style.lineHeight = lnHeightStr + "em";
+          lnHeightStr = computedStyle(node, "line-height");
           lnHeight = parseFloat(lnHeightStr, 10);
           if (_lnHeightStyle) {
-            node2.style.lineHeight = _lnHeightStyle;
+            node.style.lineHeight = _lnHeightStyle;
           } else {
-            delete node2.style.lineHeight;
+            delete node.style.lineHeight;
           }
         }
         if (lnHeightStr.indexOf("pt") !== -1) {
@@ -2040,13 +2040,13 @@ var wp;
         }
         lnHeight = Math.round(lnHeight);
         if (lnHeightStr === "normal") {
-          var nodeName = node2.nodeName;
+          var nodeName = node.nodeName;
           var _node = document.createElement(nodeName);
           _node.innerHTML = "&nbsp;";
           if (nodeName.toUpperCase() === "TEXTAREA") {
             _node.setAttribute("rows", "1");
           }
-          var fontSizeStr = computedStyle(node2, "font-size");
+          var fontSizeStr = computedStyle(node, "font-size");
           _node.style.fontSize = fontSizeStr;
           _node.style.padding = "0px";
           _node.style.border = "0px";
@@ -2300,7 +2300,7 @@ var wp;
       var pico = require_picocolors_browser();
       var terminalHighlight = require_terminal_highlight();
       var CssSyntaxError2 = class _CssSyntaxError extends Error {
-        constructor(message2, line2, column2, source, file, plugin) {
+        constructor(message2, line, column, source, file, plugin) {
           super(message2);
           this.name = "CssSyntaxError";
           this.reason = message2;
@@ -2313,15 +2313,15 @@ var wp;
           if (plugin) {
             this.plugin = plugin;
           }
-          if (typeof line2 !== "undefined" && typeof column2 !== "undefined") {
-            if (typeof line2 === "number") {
-              this.line = line2;
-              this.column = column2;
+          if (typeof line !== "undefined" && typeof column !== "undefined") {
+            if (typeof line === "number") {
+              this.line = line;
+              this.column = column;
             } else {
-              this.line = line2.line;
-              this.column = line2.column;
-              this.endLine = column2.line;
-              this.endColumn = column2.column;
+              this.line = line.line;
+              this.column = line.column;
+              this.endLine = column.line;
+              this.endColumn = column.column;
             }
           }
           this.setMessage();
@@ -2356,14 +2356,14 @@ var wp;
           } else {
             mark = aside = (str) => str;
           }
-          return lines.slice(start2, end).map((line2, index) => {
+          return lines.slice(start2, end).map((line, index) => {
             let number = start2 + 1 + index;
             let gutter = " " + (" " + number).slice(-maxWidth) + " | ";
             if (number === this.line) {
-              let spacing = aside(gutter.replace(/\d/g, " ")) + line2.slice(0, this.column - 1).replace(/[^\t]/g, " ");
-              return mark(">") + aside(gutter) + line2 + "\n " + spacing + mark("^");
+              let spacing = aside(gutter.replace(/\d/g, " ")) + line.slice(0, this.column - 1).replace(/[^\t]/g, " ");
+              return mark(">") + aside(gutter) + line + "\n " + spacing + mark("^");
             }
-            return " " + aside(gutter) + line2;
+            return " " + aside(gutter) + line;
           }).join("\n");
         }
         toString() {
@@ -2404,8 +2404,8 @@ var wp;
           if (opts.map === false) return;
           this.loadAnnotation(css);
           this.inline = this.startWith(this.annotation, "data:");
-          let prev2 = opts.map ? opts.map.prev : void 0;
-          let text = this.loadMap(opts.from, prev2);
+          let prev = opts.map ? opts.map.prev : void 0;
+          let text = this.loadMap(opts.from, prev);
           if (!this.mapFile && opts.from) {
             this.mapFile = opts.from;
           }
@@ -2455,13 +2455,13 @@ var wp;
             return readFileSync(path, "utf-8").toString().trim();
           }
         }
-        loadMap(file, prev2) {
-          if (prev2 === false) return false;
-          if (prev2) {
-            if (typeof prev2 === "string") {
-              return prev2;
-            } else if (typeof prev2 === "function") {
-              let prevPath = prev2(file);
+        loadMap(file, prev) {
+          if (prev === false) return false;
+          if (prev) {
+            if (typeof prev === "string") {
+              return prev;
+            } else if (typeof prev === "function") {
+              let prevPath = prev(file);
               if (prevPath) {
                 let map = this.loadFile(prevPath);
                 if (!map) {
@@ -2471,15 +2471,15 @@ var wp;
                 }
                 return map;
               }
-            } else if (prev2 instanceof SourceMapConsumer) {
-              return SourceMapGenerator.fromSourceMap(prev2).toString();
-            } else if (prev2 instanceof SourceMapGenerator) {
-              return prev2.toString();
-            } else if (this.isMap(prev2)) {
-              return JSON.stringify(prev2);
+            } else if (prev instanceof SourceMapConsumer) {
+              return SourceMapGenerator.fromSourceMap(prev).toString();
+            } else if (prev instanceof SourceMapGenerator) {
+              return prev.toString();
+            } else if (this.isMap(prev)) {
+              return JSON.stringify(prev);
             } else {
               throw new Error(
-                "Unsupported previous source map format: " + prev2.toString()
+                "Unsupported previous source map format: " + prev.toString()
               );
             }
           } else if (this.inline) {
@@ -2549,18 +2549,18 @@ var wp;
           }
           if (this.map) this.map.file = this.from;
         }
-        error(message2, line2, column2, opts = {}) {
+        error(message2, line, column, opts = {}) {
           let result, endLine, endColumn;
-          if (line2 && typeof line2 === "object") {
-            let start2 = line2;
-            let end = column2;
+          if (line && typeof line === "object") {
+            let start2 = line;
+            let end = column;
             if (typeof start2.offset === "number") {
               let pos = this.fromOffset(start2.offset);
-              line2 = pos.line;
-              column2 = pos.col;
+              line = pos.line;
+              column = pos.col;
             } else {
-              line2 = start2.line;
-              column2 = start2.column;
+              line = start2.line;
+              column = start2.column;
             }
             if (typeof end.offset === "number") {
               let pos = this.fromOffset(end.offset);
@@ -2570,12 +2570,12 @@ var wp;
               endLine = end.line;
               endColumn = end.column;
             }
-          } else if (!column2) {
-            let pos = this.fromOffset(line2);
-            line2 = pos.line;
-            column2 = pos.col;
+          } else if (!column) {
+            let pos = this.fromOffset(line);
+            line = pos.line;
+            column = pos.col;
           }
-          let origin = this.origin(line2, column2, endLine, endColumn);
+          let origin = this.origin(line, column, endLine, endColumn);
           if (origin) {
             result = new CssSyntaxError2(
               message2,
@@ -2588,14 +2588,14 @@ var wp;
           } else {
             result = new CssSyntaxError2(
               message2,
-              endLine === void 0 ? line2 : { column: column2, line: line2 },
-              endLine === void 0 ? column2 : { column: endColumn, line: endLine },
+              endLine === void 0 ? line : { column, line },
+              endLine === void 0 ? column : { column: endColumn, line: endLine },
               this.css,
               this.file,
               opts.plugin
             );
           }
-          result.input = { column: column2, endColumn, endLine, line: line2, source: this.css };
+          result.input = { column, endColumn, endLine, line, source: this.css };
           if (this.file) {
             if (pathToFileURL) {
               result.input.url = pathToFileURL(this.file).toString();
@@ -2648,29 +2648,29 @@ var wp;
           }
           return resolve(this.map.consumer().sourceRoot || this.map.root || ".", file);
         }
-        origin(line2, column2, endLine, endColumn) {
+        origin(line, column, endLine, endColumn) {
           if (!this.map) return false;
           let consumer = this.map.consumer();
-          let from2 = consumer.originalPositionFor({ column: column2, line: line2 });
-          if (!from2.source) return false;
+          let from = consumer.originalPositionFor({ column, line });
+          if (!from.source) return false;
           let to2;
           if (typeof endLine === "number") {
             to2 = consumer.originalPositionFor({ column: endColumn, line: endLine });
           }
           let fromUrl;
-          if (isAbsolute(from2.source)) {
-            fromUrl = pathToFileURL(from2.source);
+          if (isAbsolute(from.source)) {
+            fromUrl = pathToFileURL(from.source);
           } else {
             fromUrl = new URL(
-              from2.source,
+              from.source,
               this.map.consumer().sourceRoot || pathToFileURL(this.map.mapFile)
             );
           }
           let result = {
-            column: from2.column,
+            column: from.column,
             endColumn: to2 && to2.column,
             endLine: to2 && to2.line,
-            line: from2.line,
+            line: from.line,
             url: fromUrl.toString()
           };
           if (fromUrl.protocol === "file:") {
@@ -2680,7 +2680,7 @@ var wp;
               throw new Error(`file: protocol is not available in this PostCSS build`);
             }
           }
-          let source = consumer.sourceContentFor(from2.source);
+          let source = consumer.sourceContentFor(from.source);
           if (source) result.source = source;
           return result;
         }
@@ -2722,8 +2722,8 @@ var wp;
       var sourceMapAvailable = Boolean(SourceMapConsumer && SourceMapGenerator);
       var pathAvailable = Boolean(dirname && resolve && relative && sep);
       var MapGenerator = class {
-        constructor(stringify3, root, opts, cssString) {
-          this.stringify = stringify3;
+        constructor(stringify2, root, opts, cssString) {
+          this.stringify = stringify2;
           this.mapOpts = opts.map || {};
           this.root = root;
           this.opts = opts;
@@ -2750,29 +2750,29 @@ var wp;
           this.css += eol + "/*# sourceMappingURL=" + content + " */";
         }
         applyPrevMaps() {
-          for (let prev2 of this.previous()) {
-            let from2 = this.toUrl(this.path(prev2.file));
-            let root = prev2.root || dirname(prev2.file);
+          for (let prev of this.previous()) {
+            let from = this.toUrl(this.path(prev.file));
+            let root = prev.root || dirname(prev.file);
             let map;
             if (this.mapOpts.sourcesContent === false) {
-              map = new SourceMapConsumer(prev2.text);
+              map = new SourceMapConsumer(prev.text);
               if (map.sourcesContent) {
                 map.sourcesContent = null;
               }
             } else {
-              map = prev2.consumer();
+              map = prev.consumer();
             }
-            this.map.applySourceMap(map, from2, this.toUrl(this.path(root)));
+            this.map.applySourceMap(map, from, this.toUrl(this.path(root)));
           }
         }
         clearAnnotation() {
           if (this.mapOpts.annotation === false) return;
           if (this.root) {
-            let node2;
+            let node;
             for (let i2 = this.root.nodes.length - 1; i2 >= 0; i2--) {
-              node2 = this.root.nodes[i2];
-              if (node2.type !== "comment") continue;
-              if (node2.text.indexOf("# sourceMappingURL=") === 0) {
+              node = this.root.nodes[i2];
+              if (node.type !== "comment") continue;
+              if (node.text.indexOf("# sourceMappingURL=") === 0) {
                 this.root.removeChild(i2);
               }
             }
@@ -2796,9 +2796,9 @@ var wp;
           if (this.root) {
             this.generateString();
           } else if (this.previous().length === 1) {
-            let prev2 = this.previous()[0].consumer();
-            prev2.file = this.outputFile();
-            this.map = SourceMapGenerator.fromSourceMap(prev2, {
+            let prev = this.previous()[0].consumer();
+            prev.file = this.outputFile();
+            this.map = SourceMapGenerator.fromSourceMap(prev, {
               ignoreInvalidMapping: true
             });
           } else {
@@ -2827,24 +2827,24 @@ var wp;
             file: this.outputFile(),
             ignoreInvalidMapping: true
           });
-          let line2 = 1;
-          let column2 = 1;
+          let line = 1;
+          let column = 1;
           let noSource = "<no source>";
           let mapping = {
             generated: { column: 0, line: 0 },
             original: { column: 0, line: 0 },
             source: ""
           };
-          let lines, last3;
-          this.stringify(this.root, (str, node2, type) => {
+          let lines, last;
+          this.stringify(this.root, (str, node, type) => {
             this.css += str;
-            if (node2 && type !== "end") {
-              mapping.generated.line = line2;
-              mapping.generated.column = column2 - 1;
-              if (node2.source && node2.source.start) {
-                mapping.source = this.sourcePath(node2);
-                mapping.original.line = node2.source.start.line;
-                mapping.original.column = node2.source.start.column - 1;
+            if (node && type !== "end") {
+              mapping.generated.line = line;
+              mapping.generated.column = column - 1;
+              if (node.source && node.source.start) {
+                mapping.source = this.sourcePath(node);
+                mapping.original.line = node.source.start.line;
+                mapping.original.column = node.source.start.column - 1;
                 this.map.addMapping(mapping);
               } else {
                 mapping.source = noSource;
@@ -2855,29 +2855,29 @@ var wp;
             }
             lines = str.match(/\n/g);
             if (lines) {
-              line2 += lines.length;
-              last3 = str.lastIndexOf("\n");
-              column2 = str.length - last3;
+              line += lines.length;
+              last = str.lastIndexOf("\n");
+              column = str.length - last;
             } else {
-              column2 += str.length;
+              column += str.length;
             }
-            if (node2 && type !== "start") {
-              let p2 = node2.parent || { raws: {} };
-              let childless = node2.type === "decl" || node2.type === "atrule" && !node2.nodes;
-              if (!childless || node2 !== p2.last || p2.raws.semicolon) {
-                if (node2.source && node2.source.end) {
-                  mapping.source = this.sourcePath(node2);
-                  mapping.original.line = node2.source.end.line;
-                  mapping.original.column = node2.source.end.column - 1;
-                  mapping.generated.line = line2;
-                  mapping.generated.column = column2 - 2;
+            if (node && type !== "start") {
+              let p2 = node.parent || { raws: {} };
+              let childless = node.type === "decl" || node.type === "atrule" && !node.nodes;
+              if (!childless || node !== p2.last || p2.raws.semicolon) {
+                if (node.source && node.source.end) {
+                  mapping.source = this.sourcePath(node);
+                  mapping.original.line = node.source.end.line;
+                  mapping.original.column = node.source.end.column - 1;
+                  mapping.generated.line = line;
+                  mapping.generated.column = column - 2;
                   this.map.addMapping(mapping);
                 } else {
                   mapping.source = noSource;
                   mapping.original.line = 1;
                   mapping.original.column = 0;
-                  mapping.generated.line = line2;
-                  mapping.generated.column = column2 - 1;
+                  mapping.generated.line = line;
+                  mapping.generated.column = column - 1;
                   this.map.addMapping(mapping);
                 }
               }
@@ -2939,11 +2939,11 @@ var wp;
           if (/^\w+:\/\//.test(file)) return file;
           let cached = this.memoizedPaths.get(file);
           if (cached) return cached;
-          let from2 = this.opts.to ? dirname(this.opts.to) : ".";
+          let from = this.opts.to ? dirname(this.opts.to) : ".";
           if (typeof this.mapOpts.annotation === "string") {
-            from2 = dirname(resolve(from2, this.mapOpts.annotation));
+            from = dirname(resolve(from, this.mapOpts.annotation));
           }
-          let path = relative(from2, file);
+          let path = relative(from, file);
           this.memoizedPaths.set(file, path);
           return path;
         }
@@ -2951,9 +2951,9 @@ var wp;
           if (!this.previousMaps) {
             this.previousMaps = [];
             if (this.root) {
-              this.root.walk((node2) => {
-                if (node2.source && node2.source.input.map) {
-                  let map = node2.source.input.map;
+              this.root.walk((node) => {
+                if (node.source && node.source.input.map) {
+                  let map = node.source.input.map;
                   if (!this.previousMaps.includes(map)) {
                     this.previousMaps.push(map);
                   }
@@ -2969,28 +2969,28 @@ var wp;
         setSourcesContent() {
           let already = {};
           if (this.root) {
-            this.root.walk((node2) => {
-              if (node2.source) {
-                let from2 = node2.source.input.from;
-                if (from2 && !already[from2]) {
-                  already[from2] = true;
-                  let fromUrl = this.usesFileUrls ? this.toFileUrl(from2) : this.toUrl(this.path(from2));
-                  this.map.setSourceContent(fromUrl, node2.source.input.css);
+            this.root.walk((node) => {
+              if (node.source) {
+                let from = node.source.input.from;
+                if (from && !already[from]) {
+                  already[from] = true;
+                  let fromUrl = this.usesFileUrls ? this.toFileUrl(from) : this.toUrl(this.path(from));
+                  this.map.setSourceContent(fromUrl, node.source.input.css);
                 }
               }
             });
           } else if (this.css) {
-            let from2 = this.opts.from ? this.toUrl(this.path(this.opts.from)) : "<no source>";
-            this.map.setSourceContent(from2, this.css);
+            let from = this.opts.from ? this.toUrl(this.path(this.opts.from)) : "<no source>";
+            this.map.setSourceContent(from, this.css);
           }
         }
-        sourcePath(node2) {
+        sourcePath(node) {
           if (this.mapOpts.from) {
             return this.toUrl(this.mapOpts.from);
           } else if (this.usesFileUrls) {
-            return this.toFileUrl(node2.source.input.from);
+            return this.toFileUrl(node.source.input.from);
           } else {
-            return this.toUrl(this.path(node2.source.input.from));
+            return this.toUrl(this.path(node.source.input.from));
           }
         }
         toBase64(str) {
@@ -3053,100 +3053,100 @@ var wp;
         constructor(builder) {
           this.builder = builder;
         }
-        atrule(node2, semicolon) {
-          let name = "@" + node2.name;
-          let params = node2.params ? this.rawValue(node2, "params") : "";
-          if (typeof node2.raws.afterName !== "undefined") {
-            name += node2.raws.afterName;
+        atrule(node, semicolon) {
+          let name = "@" + node.name;
+          let params = node.params ? this.rawValue(node, "params") : "";
+          if (typeof node.raws.afterName !== "undefined") {
+            name += node.raws.afterName;
           } else if (params) {
             name += " ";
           }
-          if (node2.nodes) {
-            this.block(node2, name + params);
+          if (node.nodes) {
+            this.block(node, name + params);
           } else {
-            let end = (node2.raws.between || "") + (semicolon ? ";" : "");
-            this.builder(name + params + end, node2);
+            let end = (node.raws.between || "") + (semicolon ? ";" : "");
+            this.builder(name + params + end, node);
           }
         }
-        beforeAfter(node2, detect) {
+        beforeAfter(node, detect) {
           let value;
-          if (node2.type === "decl") {
-            value = this.raw(node2, null, "beforeDecl");
-          } else if (node2.type === "comment") {
-            value = this.raw(node2, null, "beforeComment");
+          if (node.type === "decl") {
+            value = this.raw(node, null, "beforeDecl");
+          } else if (node.type === "comment") {
+            value = this.raw(node, null, "beforeComment");
           } else if (detect === "before") {
-            value = this.raw(node2, null, "beforeRule");
+            value = this.raw(node, null, "beforeRule");
           } else {
-            value = this.raw(node2, null, "beforeClose");
+            value = this.raw(node, null, "beforeClose");
           }
-          let buf = node2.parent;
+          let buf = node.parent;
           let depth = 0;
           while (buf && buf.type !== "root") {
             depth += 1;
             buf = buf.parent;
           }
           if (value.includes("\n")) {
-            let indent = this.raw(node2, null, "indent");
+            let indent = this.raw(node, null, "indent");
             if (indent.length) {
               for (let step = 0; step < depth; step++) value += indent;
             }
           }
           return value;
         }
-        block(node2, start2) {
-          let between = this.raw(node2, "between", "beforeOpen");
-          this.builder(start2 + between + "{", node2, "start");
+        block(node, start2) {
+          let between = this.raw(node, "between", "beforeOpen");
+          this.builder(start2 + between + "{", node, "start");
           let after;
-          if (node2.nodes && node2.nodes.length) {
-            this.body(node2);
-            after = this.raw(node2, "after");
+          if (node.nodes && node.nodes.length) {
+            this.body(node);
+            after = this.raw(node, "after");
           } else {
-            after = this.raw(node2, "after", "emptyBody");
+            after = this.raw(node, "after", "emptyBody");
           }
           if (after) this.builder(after);
-          this.builder("}", node2, "end");
+          this.builder("}", node, "end");
         }
-        body(node2) {
-          let last3 = node2.nodes.length - 1;
-          while (last3 > 0) {
-            if (node2.nodes[last3].type !== "comment") break;
-            last3 -= 1;
+        body(node) {
+          let last = node.nodes.length - 1;
+          while (last > 0) {
+            if (node.nodes[last].type !== "comment") break;
+            last -= 1;
           }
-          let semicolon = this.raw(node2, "semicolon");
-          for (let i2 = 0; i2 < node2.nodes.length; i2++) {
-            let child = node2.nodes[i2];
+          let semicolon = this.raw(node, "semicolon");
+          for (let i2 = 0; i2 < node.nodes.length; i2++) {
+            let child = node.nodes[i2];
             let before = this.raw(child, "before");
             if (before) this.builder(before);
-            this.stringify(child, last3 !== i2 || semicolon);
+            this.stringify(child, last !== i2 || semicolon);
           }
         }
-        comment(node2) {
-          let left = this.raw(node2, "left", "commentLeft");
-          let right = this.raw(node2, "right", "commentRight");
-          this.builder("/*" + left + node2.text + right + "*/", node2);
+        comment(node) {
+          let left = this.raw(node, "left", "commentLeft");
+          let right = this.raw(node, "right", "commentRight");
+          this.builder("/*" + left + node.text + right + "*/", node);
         }
-        decl(node2, semicolon) {
-          let between = this.raw(node2, "between", "colon");
-          let string = node2.prop + between + this.rawValue(node2, "value");
-          if (node2.important) {
-            string += node2.raws.important || " !important";
+        decl(node, semicolon) {
+          let between = this.raw(node, "between", "colon");
+          let string = node.prop + between + this.rawValue(node, "value");
+          if (node.important) {
+            string += node.raws.important || " !important";
           }
           if (semicolon) string += ";";
-          this.builder(string, node2);
+          this.builder(string, node);
         }
-        document(node2) {
-          this.body(node2);
+        document(node) {
+          this.body(node);
         }
-        raw(node2, own, detect) {
+        raw(node, own, detect) {
           let value;
           if (!detect) detect = own;
           if (own) {
-            value = node2.raws[own];
+            value = node.raws[own];
             if (typeof value !== "undefined") return value;
           }
-          let parent = node2.parent;
+          let parent = node.parent;
           if (detect === "before") {
-            if (!parent || parent.type === "root" && parent.first === node2) {
+            if (!parent || parent.type === "root" && parent.first === node) {
               return "";
             }
             if (parent && parent.type === "document") {
@@ -3154,17 +3154,17 @@ var wp;
             }
           }
           if (!parent) return DEFAULT_RAW[detect];
-          let root = node2.root();
+          let root = node.root();
           if (!root.rawCache) root.rawCache = {};
           if (typeof root.rawCache[detect] !== "undefined") {
             return root.rawCache[detect];
           }
           if (detect === "before" || detect === "after") {
-            return this.beforeAfter(node2, detect);
+            return this.beforeAfter(node, detect);
           } else {
             let method = "raw" + capitalize(detect);
             if (this[method]) {
-              value = this[method](root, node2);
+              value = this[method](root, node);
             } else {
               root.walk((i2) => {
                 value = i2.raws[own];
@@ -3192,7 +3192,7 @@ var wp;
           if (value) value = value.replace(/\S/g, "");
           return value;
         }
-        rawBeforeComment(root, node2) {
+        rawBeforeComment(root, node) {
           let value;
           root.walkComments((i2) => {
             if (typeof i2.raws.before !== "undefined") {
@@ -3204,13 +3204,13 @@ var wp;
             }
           });
           if (typeof value === "undefined") {
-            value = this.raw(node2, null, "beforeDecl");
+            value = this.raw(node, null, "beforeDecl");
           } else if (value) {
             value = value.replace(/\S/g, "");
           }
           return value;
         }
-        rawBeforeDecl(root, node2) {
+        rawBeforeDecl(root, node) {
           let value;
           root.walkDecls((i2) => {
             if (typeof i2.raws.before !== "undefined") {
@@ -3222,7 +3222,7 @@ var wp;
             }
           });
           if (typeof value === "undefined") {
-            value = this.raw(node2, null, "beforeRule");
+            value = this.raw(node, null, "beforeRule");
           } else if (value) {
             value = value.replace(/\S/g, "");
           }
@@ -3300,31 +3300,31 @@ var wp;
           });
           return value;
         }
-        rawValue(node2, prop) {
-          let value = node2[prop];
-          let raw = node2.raws[prop];
+        rawValue(node, prop) {
+          let value = node[prop];
+          let raw = node.raws[prop];
           if (raw && raw.value === value) {
             return raw.raw;
           }
           return value;
         }
-        root(node2) {
-          this.body(node2);
-          if (node2.raws.after) this.builder(node2.raws.after);
+        root(node) {
+          this.body(node);
+          if (node.raws.after) this.builder(node.raws.after);
         }
-        rule(node2) {
-          this.block(node2, this.rawValue(node2, "selector"));
-          if (node2.raws.ownSemicolon) {
-            this.builder(node2.raws.ownSemicolon, node2, "end");
+        rule(node) {
+          this.block(node, this.rawValue(node, "selector"));
+          if (node.raws.ownSemicolon) {
+            this.builder(node.raws.ownSemicolon, node, "end");
           }
         }
-        stringify(node2, semicolon) {
-          if (!this[node2.type]) {
+        stringify(node, semicolon) {
+          if (!this[node.type]) {
             throw new Error(
-              "Unknown AST node type " + node2.type + ". Maybe you need to change PostCSS stringifier."
+              "Unknown AST node type " + node.type + ". Maybe you need to change PostCSS stringifier."
             );
           }
-          this[node2.type](node2, semicolon);
+          this[node.type](node, semicolon);
         }
       };
       module.exports = Stringifier;
@@ -3337,12 +3337,12 @@ var wp;
     "node_modules/postcss/lib/stringify.js"(exports, module) {
       "use strict";
       var Stringifier = require_stringifier();
-      function stringify3(node2, builder) {
+      function stringify2(node, builder) {
         let str = new Stringifier(builder);
-        str.stringify(node2);
+        str.stringify(node);
       }
-      module.exports = stringify3;
-      stringify3.default = stringify3;
+      module.exports = stringify2;
+      stringify2.default = stringify2;
     }
   });
 
@@ -3377,7 +3377,7 @@ var wp;
       var { isClean, my } = require_symbols();
       var CssSyntaxError2 = require_css_syntax_error();
       var Stringifier = require_stringifier();
-      var stringify3 = require_stringify();
+      var stringify2 = require_stringify();
       function cloneNode(obj, parent) {
         let cloned = new obj.constructor();
         for (let i2 in obj) {
@@ -3408,11 +3408,11 @@ var wp;
           for (let name in defaults2) {
             if (name === "nodes") {
               this.nodes = [];
-              for (let node2 of defaults2[name]) {
-                if (typeof node2.clone === "function") {
-                  this.append(node2.clone());
+              for (let node of defaults2[name]) {
+                if (typeof node.clone === "function") {
+                  this.append(node.clone());
                 } else {
-                  this.append(node2);
+                  this.append(node);
                 }
               }
             } else {
@@ -3481,21 +3481,21 @@ var wp;
         }
         getProxyProcessor() {
           return {
-            get(node2, prop) {
+            get(node, prop) {
               if (prop === "proxyOf") {
-                return node2;
+                return node;
               } else if (prop === "root") {
-                return () => node2.root().toProxy();
+                return () => node.root().toProxy();
               } else {
-                return node2[prop];
+                return node[prop];
               }
             },
-            set(node2, prop, value) {
-              if (node2[prop] === value) return true;
-              node2[prop] = value;
+            set(node, prop, value) {
+              if (node[prop] === value) return true;
+              node[prop] = value;
               if (prop === "prop" || prop === "value" || prop === "name" || prop === "params" || prop === "important" || /* c8 ignore next */
               prop === "text") {
-                node2.markDirty();
+                node.markDirty();
               }
               return true;
             }
@@ -3504,9 +3504,9 @@ var wp;
         markDirty() {
           if (this[isClean]) {
             this[isClean] = false;
-            let next2 = this;
-            while (next2 = next2.parent) {
-              next2[isClean] = false;
+            let next = this;
+            while (next = next.parent) {
+              next[isClean] = false;
             }
           }
         }
@@ -3528,17 +3528,17 @@ var wp;
         }
         positionInside(index, stringRepresentation) {
           let string = stringRepresentation || this.toString();
-          let column2 = this.source.start.column;
-          let line2 = this.source.start.line;
+          let column = this.source.start.column;
+          let line = this.source.start.line;
           for (let i2 = 0; i2 < index; i2++) {
             if (string[i2] === "\n") {
-              column2 = 1;
-              line2 += 1;
+              column = 1;
+              line += 1;
             } else {
-              column2 += 1;
+              column += 1;
             }
           }
-          return { column: column2, line: line2 };
+          return { column, line };
         }
         prev() {
           if (!this.parent) return void 0;
@@ -3604,14 +3604,14 @@ var wp;
           if (this.parent) {
             let bookmark = this;
             let foundSelf = false;
-            for (let node2 of nodes) {
-              if (node2 === this) {
+            for (let node of nodes) {
+              if (node === this) {
                 foundSelf = true;
               } else if (foundSelf) {
-                this.parent.insertAfter(bookmark, node2);
-                bookmark = node2;
+                this.parent.insertAfter(bookmark, node);
+                bookmark = node;
               } else {
-                this.parent.insertBefore(bookmark, node2);
+                this.parent.insertBefore(bookmark, node);
               }
             }
             if (!foundSelf) {
@@ -3675,7 +3675,7 @@ var wp;
           }
           return this.proxyCache;
         }
-        toString(stringifier = stringify3) {
+        toString(stringifier = stringify2) {
           if (stringifier.stringify) stringifier = stringifier.stringify;
           let result = "";
           stringifier(this, (i2) => {
@@ -3743,7 +3743,7 @@ var wp;
       var Declaration = require_declaration();
       var Comment = require_comment();
       var Node = require_node();
-      var parse5;
+      var parse4;
       var Rule;
       var AtRule;
       var Root2;
@@ -3754,10 +3754,10 @@ var wp;
           return i2;
         });
       }
-      function markDirtyUp(node2) {
-        node2[isClean] = false;
-        if (node2.proxyOf.nodes) {
-          for (let i2 of node2.proxyOf.nodes) {
+      function markDirtyUp(node) {
+        node[isClean] = false;
+        if (node.proxyOf.nodes) {
+          for (let i2 of node.proxyOf.nodes) {
             markDirtyUp(i2);
           }
         }
@@ -3766,7 +3766,7 @@ var wp;
         append(...children) {
           for (let child of children) {
             let nodes = this.normalize(child, this.last);
-            for (let node2 of nodes) this.proxyOf.nodes.push(node2);
+            for (let node of nodes) this.proxyOf.nodes.push(node);
           }
           this.markDirty();
           return this;
@@ -3774,7 +3774,7 @@ var wp;
         cleanRaws(keepBetween) {
           super.cleanRaws(keepBetween);
           if (this.nodes) {
-            for (let node2 of this.nodes) node2.cleanRaws(keepBetween);
+            for (let node of this.nodes) node.cleanRaws(keepBetween);
           }
         }
         each(callback) {
@@ -3803,14 +3803,14 @@ var wp;
         }
         getProxyProcessor() {
           return {
-            get(node2, prop) {
+            get(node, prop) {
               if (prop === "proxyOf") {
-                return node2;
-              } else if (!node2[prop]) {
-                return node2[prop];
+                return node;
+              } else if (!node[prop]) {
+                return node[prop];
               } else if (prop === "each" || typeof prop === "string" && prop.startsWith("walk")) {
                 return (...args) => {
-                  return node2[prop](
+                  return node[prop](
                     ...args.map((i2) => {
                       if (typeof i2 === "function") {
                         return (child, index) => i2(child.toProxy(), index);
@@ -3822,25 +3822,25 @@ var wp;
                 };
               } else if (prop === "every" || prop === "some") {
                 return (cb) => {
-                  return node2[prop](
+                  return node[prop](
                     (child, ...other) => cb(child.toProxy(), ...other)
                   );
                 };
               } else if (prop === "root") {
-                return () => node2.root().toProxy();
+                return () => node.root().toProxy();
               } else if (prop === "nodes") {
-                return node2.nodes.map((i2) => i2.toProxy());
+                return node.nodes.map((i2) => i2.toProxy());
               } else if (prop === "first" || prop === "last") {
-                return node2[prop].toProxy();
+                return node[prop].toProxy();
               } else {
-                return node2[prop];
+                return node[prop];
               }
             },
-            set(node2, prop, value) {
-              if (node2[prop] === value) return true;
-              node2[prop] = value;
+            set(node, prop, value) {
+              if (node[prop] === value) return true;
+              node[prop] = value;
               if (prop === "name" || prop === "params" || prop === "selector") {
-                node2.markDirty();
+                node.markDirty();
               }
               return true;
             }
@@ -3855,7 +3855,7 @@ var wp;
           let existIndex = this.index(exist);
           let nodes = this.normalize(add2, this.proxyOf.nodes[existIndex]).reverse();
           existIndex = this.index(exist);
-          for (let node2 of nodes) this.proxyOf.nodes.splice(existIndex + 1, 0, node2);
+          for (let node of nodes) this.proxyOf.nodes.splice(existIndex + 1, 0, node);
           let index;
           for (let id in this.indexes) {
             index = this.indexes[id];
@@ -3871,7 +3871,7 @@ var wp;
           let type = existIndex === 0 ? "prepend" : false;
           let nodes = this.normalize(add2, this.proxyOf.nodes[existIndex], type).reverse();
           existIndex = this.index(exist);
-          for (let node2 of nodes) this.proxyOf.nodes.splice(existIndex, 0, node2);
+          for (let node of nodes) this.proxyOf.nodes.splice(existIndex, 0, node);
           let index;
           for (let id in this.indexes) {
             index = this.indexes[id];
@@ -3884,7 +3884,7 @@ var wp;
         }
         normalize(nodes, sample) {
           if (typeof nodes === "string") {
-            nodes = cleanSource(parse5(nodes).nodes);
+            nodes = cleanSource(parse4(nodes).nodes);
           } else if (typeof nodes === "undefined") {
             nodes = [];
           } else if (Array.isArray(nodes)) {
@@ -3934,7 +3934,7 @@ var wp;
           children = children.reverse();
           for (let child of children) {
             let nodes = this.normalize(child, this.first, "prepend").reverse();
-            for (let node2 of nodes) this.proxyOf.nodes.unshift(node2);
+            for (let node of nodes) this.proxyOf.nodes.unshift(node);
             for (let id in this.indexes) {
               this.indexes[id] = this.indexes[id] + nodes.length;
             }
@@ -3948,7 +3948,7 @@ var wp;
           return this;
         }
         removeAll() {
-          for (let node2 of this.proxyOf.nodes) node2.parent = void 0;
+          for (let node of this.proxyOf.nodes) node.parent = void 0;
           this.proxyOf.nodes = [];
           this.markDirty();
           return this;
@@ -4080,7 +4080,7 @@ var wp;
         }
       };
       Container.registerParse = (dependant) => {
-        parse5 = dependant;
+        parse4 = dependant;
       };
       Container.registerRule = (dependant) => {
         Rule = dependant;
@@ -4093,21 +4093,21 @@ var wp;
       };
       module.exports = Container;
       Container.default = Container;
-      Container.rebuild = (node2) => {
-        if (node2.type === "atrule") {
-          Object.setPrototypeOf(node2, AtRule.prototype);
-        } else if (node2.type === "rule") {
-          Object.setPrototypeOf(node2, Rule.prototype);
-        } else if (node2.type === "decl") {
-          Object.setPrototypeOf(node2, Declaration.prototype);
-        } else if (node2.type === "comment") {
-          Object.setPrototypeOf(node2, Comment.prototype);
-        } else if (node2.type === "root") {
-          Object.setPrototypeOf(node2, Root2.prototype);
+      Container.rebuild = (node) => {
+        if (node.type === "atrule") {
+          Object.setPrototypeOf(node, AtRule.prototype);
+        } else if (node.type === "rule") {
+          Object.setPrototypeOf(node, Rule.prototype);
+        } else if (node.type === "decl") {
+          Object.setPrototypeOf(node, Declaration.prototype);
+        } else if (node.type === "comment") {
+          Object.setPrototypeOf(node, Comment.prototype);
+        } else if (node.type === "root") {
+          Object.setPrototypeOf(node, Root2.prototype);
         }
-        node2[my] = true;
-        if (node2.nodes) {
-          node2.nodes.forEach((child) => {
+        node[my] = true;
+        if (node.nodes) {
+          node.nodes.forEach((child) => {
             Container.rebuild(child);
           });
         }
@@ -4145,24 +4145,24 @@ var wp;
       module.exports = function tokenizer(input, options = {}) {
         let css = input.css.valueOf();
         let ignore = options.ignoreErrors;
-        let code, next2, quote, content, escape;
-        let escaped, escapePos, prev2, n2, currentToken;
-        let length2 = css.length;
+        let code, next, quote, content, escape;
+        let escaped, escapePos, prev, n2, currentToken;
+        let length = css.length;
         let pos = 0;
         let buffer = [];
         let returned = [];
-        function position2() {
+        function position() {
           return pos;
         }
         function unclosed(what) {
           throw input.error("Unclosed " + what, pos);
         }
         function endOfFile() {
-          return returned.length === 0 && pos >= length2;
+          return returned.length === 0 && pos >= length;
         }
         function nextToken(opts) {
           if (returned.length) return returned.pop();
-          if (pos >= length2) return;
+          if (pos >= length) return;
           let ignoreUnclosed = opts ? opts.ignoreUnclosed : false;
           code = css.charCodeAt(pos);
           switch (code) {
@@ -4171,13 +4171,13 @@ var wp;
             case TAB4:
             case CR:
             case FEED: {
-              next2 = pos;
+              next = pos;
               do {
-                next2 += 1;
-                code = css.charCodeAt(next2);
+                next += 1;
+                code = css.charCodeAt(next);
               } while (code === SPACE3 || code === NEWLINE || code === TAB4 || code === CR || code === FEED);
-              currentToken = ["space", css.slice(pos, next2)];
-              pos = next2 - 1;
+              currentToken = ["space", css.slice(pos, next)];
+              pos = next - 1;
               break;
             }
             case OPEN_SQUARE:
@@ -4192,37 +4192,37 @@ var wp;
               break;
             }
             case OPEN_PARENTHESES: {
-              prev2 = buffer.length ? buffer.pop()[1] : "";
+              prev = buffer.length ? buffer.pop()[1] : "";
               n2 = css.charCodeAt(pos + 1);
-              if (prev2 === "url" && n2 !== SINGLE_QUOTE && n2 !== DOUBLE_QUOTE && n2 !== SPACE3 && n2 !== NEWLINE && n2 !== TAB4 && n2 !== FEED && n2 !== CR) {
-                next2 = pos;
+              if (prev === "url" && n2 !== SINGLE_QUOTE && n2 !== DOUBLE_QUOTE && n2 !== SPACE3 && n2 !== NEWLINE && n2 !== TAB4 && n2 !== FEED && n2 !== CR) {
+                next = pos;
                 do {
                   escaped = false;
-                  next2 = css.indexOf(")", next2 + 1);
-                  if (next2 === -1) {
+                  next = css.indexOf(")", next + 1);
+                  if (next === -1) {
                     if (ignore || ignoreUnclosed) {
-                      next2 = pos;
+                      next = pos;
                       break;
                     } else {
                       unclosed("bracket");
                     }
                   }
-                  escapePos = next2;
+                  escapePos = next;
                   while (css.charCodeAt(escapePos - 1) === BACKSLASH) {
                     escapePos -= 1;
                     escaped = !escaped;
                   }
                 } while (escaped);
-                currentToken = ["brackets", css.slice(pos, next2 + 1), pos, next2];
-                pos = next2;
+                currentToken = ["brackets", css.slice(pos, next + 1), pos, next];
+                pos = next;
               } else {
-                next2 = css.indexOf(")", pos + 1);
-                content = css.slice(pos, next2 + 1);
-                if (next2 === -1 || RE_BAD_BRACKET.test(content)) {
+                next = css.indexOf(")", pos + 1);
+                content = css.slice(pos, next + 1);
+                if (next === -1 || RE_BAD_BRACKET.test(content)) {
                   currentToken = ["(", "(", pos];
                 } else {
-                  currentToken = ["brackets", content, pos, next2];
-                  pos = next2;
+                  currentToken = ["brackets", content, pos, next];
+                  pos = next;
                 }
               }
               break;
@@ -4230,86 +4230,86 @@ var wp;
             case SINGLE_QUOTE:
             case DOUBLE_QUOTE: {
               quote = code === SINGLE_QUOTE ? "'" : '"';
-              next2 = pos;
+              next = pos;
               do {
                 escaped = false;
-                next2 = css.indexOf(quote, next2 + 1);
-                if (next2 === -1) {
+                next = css.indexOf(quote, next + 1);
+                if (next === -1) {
                   if (ignore || ignoreUnclosed) {
-                    next2 = pos + 1;
+                    next = pos + 1;
                     break;
                   } else {
                     unclosed("string");
                   }
                 }
-                escapePos = next2;
+                escapePos = next;
                 while (css.charCodeAt(escapePos - 1) === BACKSLASH) {
                   escapePos -= 1;
                   escaped = !escaped;
                 }
               } while (escaped);
-              currentToken = ["string", css.slice(pos, next2 + 1), pos, next2];
-              pos = next2;
+              currentToken = ["string", css.slice(pos, next + 1), pos, next];
+              pos = next;
               break;
             }
             case AT: {
               RE_AT_END.lastIndex = pos + 1;
               RE_AT_END.test(css);
               if (RE_AT_END.lastIndex === 0) {
-                next2 = css.length - 1;
+                next = css.length - 1;
               } else {
-                next2 = RE_AT_END.lastIndex - 2;
+                next = RE_AT_END.lastIndex - 2;
               }
-              currentToken = ["at-word", css.slice(pos, next2 + 1), pos, next2];
-              pos = next2;
+              currentToken = ["at-word", css.slice(pos, next + 1), pos, next];
+              pos = next;
               break;
             }
             case BACKSLASH: {
-              next2 = pos;
+              next = pos;
               escape = true;
-              while (css.charCodeAt(next2 + 1) === BACKSLASH) {
-                next2 += 1;
+              while (css.charCodeAt(next + 1) === BACKSLASH) {
+                next += 1;
                 escape = !escape;
               }
-              code = css.charCodeAt(next2 + 1);
+              code = css.charCodeAt(next + 1);
               if (escape && code !== SLASH && code !== SPACE3 && code !== NEWLINE && code !== TAB4 && code !== CR && code !== FEED) {
-                next2 += 1;
-                if (RE_HEX_ESCAPE.test(css.charAt(next2))) {
-                  while (RE_HEX_ESCAPE.test(css.charAt(next2 + 1))) {
-                    next2 += 1;
+                next += 1;
+                if (RE_HEX_ESCAPE.test(css.charAt(next))) {
+                  while (RE_HEX_ESCAPE.test(css.charAt(next + 1))) {
+                    next += 1;
                   }
-                  if (css.charCodeAt(next2 + 1) === SPACE3) {
-                    next2 += 1;
+                  if (css.charCodeAt(next + 1) === SPACE3) {
+                    next += 1;
                   }
                 }
               }
-              currentToken = ["word", css.slice(pos, next2 + 1), pos, next2];
-              pos = next2;
+              currentToken = ["word", css.slice(pos, next + 1), pos, next];
+              pos = next;
               break;
             }
             default: {
               if (code === SLASH && css.charCodeAt(pos + 1) === ASTERISK) {
-                next2 = css.indexOf("*/", pos + 2) + 1;
-                if (next2 === 0) {
+                next = css.indexOf("*/", pos + 2) + 1;
+                if (next === 0) {
                   if (ignore || ignoreUnclosed) {
-                    next2 = css.length;
+                    next = css.length;
                   } else {
                     unclosed("comment");
                   }
                 }
-                currentToken = ["comment", css.slice(pos, next2 + 1), pos, next2];
-                pos = next2;
+                currentToken = ["comment", css.slice(pos, next + 1), pos, next];
+                pos = next;
               } else {
                 RE_WORD_END.lastIndex = pos + 1;
                 RE_WORD_END.test(css);
                 if (RE_WORD_END.lastIndex === 0) {
-                  next2 = css.length - 1;
+                  next = css.length - 1;
                 } else {
-                  next2 = RE_WORD_END.lastIndex - 2;
+                  next = RE_WORD_END.lastIndex - 2;
                 }
-                currentToken = ["word", css.slice(pos, next2 + 1), pos, next2];
+                currentToken = ["word", css.slice(pos, next + 1), pos, next];
                 buffer.push(currentToken);
-                pos = next2;
+                pos = next;
               }
               break;
             }
@@ -4317,14 +4317,14 @@ var wp;
           pos++;
           return currentToken;
         }
-        function back(token2) {
-          returned.push(token2);
+        function back(token) {
+          returned.push(token);
         }
         return {
           back,
           endOfFile,
           nextToken,
-          position: position2
+          position
         };
       };
     }
@@ -4378,8 +4378,8 @@ var wp;
                 delete sample.raws.before;
               }
             } else if (this.first !== sample) {
-              for (let node2 of nodes) {
-                node2.raws.before = sample.raws.before;
+              for (let node of nodes) {
+                node.raws.before = sample.raws.before;
               }
             }
           }
@@ -4421,7 +4421,7 @@ var wp;
           let spaces = [" ", "\n", "	"];
           return list.split(string, spaces);
         },
-        split(string, separators, last3) {
+        split(string, separators, last) {
           let array = [];
           let current = "";
           let split2 = false;
@@ -4456,7 +4456,7 @@ var wp;
               current += letter;
             }
           }
-          if (last3 || current !== "") array.push(current.trim());
+          if (last || current !== "") array.push(current.trim());
           return array;
         }
       };
@@ -4481,8 +4481,8 @@ var wp;
           return list.comma(this.selector);
         }
         set selectors(values) {
-          let match3 = this.selector ? this.selector.match(/,\s*/) : null;
-          let sep = match3 ? match3[0] : "," + this.raw("between", "beforeOpen");
+          let match2 = this.selector ? this.selector.match(/,\s*/) : null;
+          let sep = match2 ? match2[0] : "," + this.raw("between", "beforeOpen");
           this.selector = values.join(sep);
         }
       };
@@ -4508,8 +4508,8 @@ var wp;
       };
       function findLastWithPosition(tokens) {
         for (let i2 = tokens.length - 1; i2 >= 0; i2--) {
-          let token2 = tokens[i2];
-          let pos = token2[3] || token2[2];
+          let token = tokens[i2];
+          let pos = token[3] || token[2];
           if (pos) return pos;
         }
       }
@@ -4523,23 +4523,23 @@ var wp;
           this.createTokenizer();
           this.root.source = { input, start: { column: 1, line: 1, offset: 0 } };
         }
-        atrule(token2) {
-          let node2 = new AtRule();
-          node2.name = token2[1].slice(1);
-          if (node2.name === "") {
-            this.unnamedAtrule(node2, token2);
+        atrule(token) {
+          let node = new AtRule();
+          node.name = token[1].slice(1);
+          if (node.name === "") {
+            this.unnamedAtrule(node, token);
           }
-          this.init(node2, token2[2]);
+          this.init(node, token[2]);
           let type;
-          let prev2;
+          let prev;
           let shift;
-          let last3 = false;
+          let last = false;
           let open = false;
           let params = [];
           let brackets = [];
           while (!this.tokenizer.endOfFile()) {
-            token2 = this.tokenizer.nextToken();
-            type = token2[0];
+            token = this.tokenizer.nextToken();
+            type = token[0];
             if (type === "(" || type === "[") {
               brackets.push(type === "(" ? ")" : "]");
             } else if (type === "{" && brackets.length > 0) {
@@ -4549,8 +4549,8 @@ var wp;
             }
             if (brackets.length === 0) {
               if (type === ";") {
-                node2.source.end = this.getPosition(token2[2]);
-                node2.source.end.offset++;
+                node.source.end = this.getPosition(token[2]);
+                node.source.end.offset++;
                 this.semicolon = true;
                 break;
               } else if (type === "{") {
@@ -4559,71 +4559,71 @@ var wp;
               } else if (type === "}") {
                 if (params.length > 0) {
                   shift = params.length - 1;
-                  prev2 = params[shift];
-                  while (prev2 && prev2[0] === "space") {
-                    prev2 = params[--shift];
+                  prev = params[shift];
+                  while (prev && prev[0] === "space") {
+                    prev = params[--shift];
                   }
-                  if (prev2) {
-                    node2.source.end = this.getPosition(prev2[3] || prev2[2]);
-                    node2.source.end.offset++;
+                  if (prev) {
+                    node.source.end = this.getPosition(prev[3] || prev[2]);
+                    node.source.end.offset++;
                   }
                 }
-                this.end(token2);
+                this.end(token);
                 break;
               } else {
-                params.push(token2);
+                params.push(token);
               }
             } else {
-              params.push(token2);
+              params.push(token);
             }
             if (this.tokenizer.endOfFile()) {
-              last3 = true;
+              last = true;
               break;
             }
           }
-          node2.raws.between = this.spacesAndCommentsFromEnd(params);
+          node.raws.between = this.spacesAndCommentsFromEnd(params);
           if (params.length) {
-            node2.raws.afterName = this.spacesAndCommentsFromStart(params);
-            this.raw(node2, "params", params);
-            if (last3) {
-              token2 = params[params.length - 1];
-              node2.source.end = this.getPosition(token2[3] || token2[2]);
-              node2.source.end.offset++;
-              this.spaces = node2.raws.between;
-              node2.raws.between = "";
+            node.raws.afterName = this.spacesAndCommentsFromStart(params);
+            this.raw(node, "params", params);
+            if (last) {
+              token = params[params.length - 1];
+              node.source.end = this.getPosition(token[3] || token[2]);
+              node.source.end.offset++;
+              this.spaces = node.raws.between;
+              node.raws.between = "";
             }
           } else {
-            node2.raws.afterName = "";
-            node2.params = "";
+            node.raws.afterName = "";
+            node.params = "";
           }
           if (open) {
-            node2.nodes = [];
-            this.current = node2;
+            node.nodes = [];
+            this.current = node;
           }
         }
         checkMissedSemicolon(tokens) {
           let colon = this.colon(tokens);
           if (colon === false) return;
           let founded = 0;
-          let token2;
+          let token;
           for (let j2 = colon - 1; j2 >= 0; j2--) {
-            token2 = tokens[j2];
-            if (token2[0] !== "space") {
+            token = tokens[j2];
+            if (token[0] !== "space") {
               founded += 1;
               if (founded === 2) break;
             }
           }
           throw this.input.error(
             "Missed semicolon",
-            token2[0] === "word" ? token2[3] + 1 : token2[2]
+            token[0] === "word" ? token[3] + 1 : token[2]
           );
         }
         colon(tokens) {
           let brackets = 0;
-          let token2, type, prev2;
+          let token, type, prev;
           for (let [i2, element] of tokens.entries()) {
-            token2 = element;
-            type = token2[0];
+            token = element;
+            type = token[0];
             if (type === "(") {
               brackets += 1;
             }
@@ -4631,98 +4631,98 @@ var wp;
               brackets -= 1;
             }
             if (brackets === 0 && type === ":") {
-              if (!prev2) {
-                this.doubleColon(token2);
-              } else if (prev2[0] === "word" && prev2[1] === "progid") {
+              if (!prev) {
+                this.doubleColon(token);
+              } else if (prev[0] === "word" && prev[1] === "progid") {
                 continue;
               } else {
                 return i2;
               }
             }
-            prev2 = token2;
+            prev = token;
           }
           return false;
         }
-        comment(token2) {
-          let node2 = new Comment();
-          this.init(node2, token2[2]);
-          node2.source.end = this.getPosition(token2[3] || token2[2]);
-          node2.source.end.offset++;
-          let text = token2[1].slice(2, -2);
+        comment(token) {
+          let node = new Comment();
+          this.init(node, token[2]);
+          node.source.end = this.getPosition(token[3] || token[2]);
+          node.source.end.offset++;
+          let text = token[1].slice(2, -2);
           if (/^\s*$/.test(text)) {
-            node2.text = "";
-            node2.raws.left = text;
-            node2.raws.right = "";
+            node.text = "";
+            node.raws.left = text;
+            node.raws.right = "";
           } else {
-            let match3 = text.match(/^(\s*)([^]*\S)(\s*)$/);
-            node2.text = match3[2];
-            node2.raws.left = match3[1];
-            node2.raws.right = match3[3];
+            let match2 = text.match(/^(\s*)([^]*\S)(\s*)$/);
+            node.text = match2[2];
+            node.raws.left = match2[1];
+            node.raws.right = match2[3];
           }
         }
         createTokenizer() {
           this.tokenizer = tokenizer(this.input);
         }
         decl(tokens, customProperty) {
-          let node2 = new Declaration();
-          this.init(node2, tokens[0][2]);
-          let last3 = tokens[tokens.length - 1];
-          if (last3[0] === ";") {
+          let node = new Declaration();
+          this.init(node, tokens[0][2]);
+          let last = tokens[tokens.length - 1];
+          if (last[0] === ";") {
             this.semicolon = true;
             tokens.pop();
           }
-          node2.source.end = this.getPosition(
-            last3[3] || last3[2] || findLastWithPosition(tokens)
+          node.source.end = this.getPosition(
+            last[3] || last[2] || findLastWithPosition(tokens)
           );
-          node2.source.end.offset++;
+          node.source.end.offset++;
           while (tokens[0][0] !== "word") {
             if (tokens.length === 1) this.unknownWord(tokens);
-            node2.raws.before += tokens.shift()[1];
+            node.raws.before += tokens.shift()[1];
           }
-          node2.source.start = this.getPosition(tokens[0][2]);
-          node2.prop = "";
+          node.source.start = this.getPosition(tokens[0][2]);
+          node.prop = "";
           while (tokens.length) {
             let type = tokens[0][0];
             if (type === ":" || type === "space" || type === "comment") {
               break;
             }
-            node2.prop += tokens.shift()[1];
+            node.prop += tokens.shift()[1];
           }
-          node2.raws.between = "";
-          let token2;
+          node.raws.between = "";
+          let token;
           while (tokens.length) {
-            token2 = tokens.shift();
-            if (token2[0] === ":") {
-              node2.raws.between += token2[1];
+            token = tokens.shift();
+            if (token[0] === ":") {
+              node.raws.between += token[1];
               break;
             } else {
-              if (token2[0] === "word" && /\w/.test(token2[1])) {
-                this.unknownWord([token2]);
+              if (token[0] === "word" && /\w/.test(token[1])) {
+                this.unknownWord([token]);
               }
-              node2.raws.between += token2[1];
+              node.raws.between += token[1];
             }
           }
-          if (node2.prop[0] === "_" || node2.prop[0] === "*") {
-            node2.raws.before += node2.prop[0];
-            node2.prop = node2.prop.slice(1);
+          if (node.prop[0] === "_" || node.prop[0] === "*") {
+            node.raws.before += node.prop[0];
+            node.prop = node.prop.slice(1);
           }
           let firstSpaces = [];
-          let next2;
+          let next;
           while (tokens.length) {
-            next2 = tokens[0][0];
-            if (next2 !== "space" && next2 !== "comment") break;
+            next = tokens[0][0];
+            if (next !== "space" && next !== "comment") break;
             firstSpaces.push(tokens.shift());
           }
           this.precheckMissedSemicolon(tokens);
           for (let i2 = tokens.length - 1; i2 >= 0; i2--) {
-            token2 = tokens[i2];
-            if (token2[1].toLowerCase() === "!important") {
-              node2.important = true;
+            token = tokens[i2];
+            if (token[1].toLowerCase() === "!important") {
+              node.important = true;
               let string = this.stringFrom(tokens, i2);
               string = this.spacesFromEnd(tokens) + string;
-              if (string !== " !important") node2.raws.important = string;
+              if (string !== " !important") node.raws.important = string;
               break;
-            } else if (token2[1].toLowerCase() === "important") {
+            } else if (token[1].toLowerCase() === "important") {
               let cache = tokens.slice(0);
               let str = "";
               for (let j2 = i2; j2 > 0; j2--) {
@@ -4733,40 +4733,40 @@ var wp;
                 str = cache.pop()[1] + str;
               }
               if (str.trim().indexOf("!") === 0) {
-                node2.important = true;
-                node2.raws.important = str;
+                node.important = true;
+                node.raws.important = str;
                 tokens = cache;
               }
             }
-            if (token2[0] !== "space" && token2[0] !== "comment") {
+            if (token[0] !== "space" && token[0] !== "comment") {
               break;
             }
           }
           let hasWord = tokens.some((i2) => i2[0] !== "space" && i2[0] !== "comment");
           if (hasWord) {
-            node2.raws.between += firstSpaces.map((i2) => i2[1]).join("");
+            node.raws.between += firstSpaces.map((i2) => i2[1]).join("");
             firstSpaces = [];
           }
-          this.raw(node2, "value", firstSpaces.concat(tokens), customProperty);
-          if (node2.value.includes(":") && !customProperty) {
+          this.raw(node, "value", firstSpaces.concat(tokens), customProperty);
+          if (node.value.includes(":") && !customProperty) {
             this.checkMissedSemicolon(tokens);
           }
         }
-        doubleColon(token2) {
+        doubleColon(token) {
           throw this.input.error(
             "Double colon",
-            { offset: token2[2] },
-            { offset: token2[2] + token2[1].length }
+            { offset: token[2] },
+            { offset: token[2] + token[1].length }
           );
         }
-        emptyRule(token2) {
-          let node2 = new Rule();
-          this.init(node2, token2[2]);
-          node2.selector = "";
-          node2.raws.between = "";
-          this.current = node2;
+        emptyRule(token) {
+          let node = new Rule();
+          this.init(node, token[2]);
+          node.selector = "";
+          node.raws.between = "";
+          this.current = node;
         }
-        end(token2) {
+        end(token) {
           if (this.current.nodes && this.current.nodes.length) {
             this.current.raws.semicolon = this.semicolon;
           }
@@ -4774,11 +4774,11 @@ var wp;
           this.current.raws.after = (this.current.raws.after || "") + this.spaces;
           this.spaces = "";
           if (this.current.parent) {
-            this.current.source.end = this.getPosition(token2[2]);
+            this.current.source.end = this.getPosition(token[2]);
             this.current.source.end.offset++;
             this.current = this.current.parent;
           } else {
-            this.unexpectedClose(token2);
+            this.unexpectedClose(token);
           }
         }
         endFile() {
@@ -4789,12 +4789,12 @@ var wp;
           this.current.raws.after = (this.current.raws.after || "") + this.spaces;
           this.root.source.end = this.getPosition(this.tokenizer.position());
         }
-        freeSemicolon(token2) {
-          this.spaces += token2[1];
+        freeSemicolon(token) {
+          this.spaces += token[1];
           if (this.current.nodes) {
-            let prev2 = this.current.nodes[this.current.nodes.length - 1];
-            if (prev2 && prev2.type === "rule" && !prev2.raws.ownSemicolon) {
-              prev2.raws.ownSemicolon = this.spaces;
+            let prev = this.current.nodes[this.current.nodes.length - 1];
+            if (prev && prev.type === "rule" && !prev.raws.ownSemicolon) {
+              prev.raws.ownSemicolon = this.spaces;
               this.spaces = "";
             }
           }
@@ -4808,15 +4808,15 @@ var wp;
             offset
           };
         }
-        init(node2, offset) {
-          this.current.push(node2);
-          node2.source = {
+        init(node, offset) {
+          this.current.push(node);
+          node.source = {
             input: this.input,
             start: this.getPosition(offset)
           };
-          node2.raws.before = this.spaces;
+          node.raws.before = this.spaces;
           this.spaces = "";
-          if (node2.type !== "comment") this.semicolon = false;
+          if (node.type !== "comment") this.semicolon = false;
         }
         other(start2) {
           let end = false;
@@ -4826,15 +4826,15 @@ var wp;
           let brackets = [];
           let customProperty = start2[1].startsWith("--");
           let tokens = [];
-          let token2 = start2;
-          while (token2) {
-            type = token2[0];
-            tokens.push(token2);
+          let token = start2;
+          while (token) {
+            type = token[0];
+            tokens.push(token);
             if (type === "(" || type === "[") {
-              if (!bracket) bracket = token2;
+              if (!bracket) bracket = token;
               brackets.push(type === "(" ? ")" : "]");
             } else if (customProperty && colon && type === "{") {
-              if (!bracket) bracket = token2;
+              if (!bracket) bracket = token;
               brackets.push("}");
             } else if (brackets.length === 0) {
               if (type === ";") {
@@ -4858,15 +4858,15 @@ var wp;
               brackets.pop();
               if (brackets.length === 0) bracket = null;
             }
-            token2 = this.tokenizer.nextToken();
+            token = this.tokenizer.nextToken();
           }
           if (this.tokenizer.endOfFile()) end = true;
           if (brackets.length > 0) this.unclosedBracket(bracket);
           if (end && colon) {
             if (!customProperty) {
               while (tokens.length) {
-                token2 = tokens[tokens.length - 1][0];
-                if (token2 !== "space" && token2 !== "comment") break;
+                token = tokens[tokens.length - 1][0];
+                if (token !== "space" && token !== "comment") break;
                 this.tokenizer.back(tokens.pop());
               }
             }
@@ -4876,30 +4876,30 @@ var wp;
           }
         }
         parse() {
-          let token2;
+          let token;
           while (!this.tokenizer.endOfFile()) {
-            token2 = this.tokenizer.nextToken();
-            switch (token2[0]) {
+            token = this.tokenizer.nextToken();
+            switch (token[0]) {
               case "space":
-                this.spaces += token2[1];
+                this.spaces += token[1];
                 break;
               case ";":
-                this.freeSemicolon(token2);
+                this.freeSemicolon(token);
                 break;
               case "}":
-                this.end(token2);
+                this.end(token);
                 break;
               case "comment":
-                this.comment(token2);
+                this.comment(token);
                 break;
               case "at-word":
-                this.atrule(token2);
+                this.atrule(token);
                 break;
               case "{":
-                this.emptyRule(token2);
+                this.emptyRule(token);
                 break;
               default:
-                this.other(token2);
+                this.other(token);
                 break;
             }
           }
@@ -4907,46 +4907,46 @@ var wp;
         }
         precheckMissedSemicolon() {
         }
-        raw(node2, prop, tokens, customProperty) {
-          let token2, type;
-          let length2 = tokens.length;
+        raw(node, prop, tokens, customProperty) {
+          let token, type;
+          let length = tokens.length;
           let value = "";
           let clean = true;
-          let next2, prev2;
-          for (let i2 = 0; i2 < length2; i2 += 1) {
-            token2 = tokens[i2];
-            type = token2[0];
-            if (type === "space" && i2 === length2 - 1 && !customProperty) {
+          let next, prev;
+          for (let i2 = 0; i2 < length; i2 += 1) {
+            token = tokens[i2];
+            type = token[0];
+            if (type === "space" && i2 === length - 1 && !customProperty) {
               clean = false;
             } else if (type === "comment") {
-              prev2 = tokens[i2 - 1] ? tokens[i2 - 1][0] : "empty";
-              next2 = tokens[i2 + 1] ? tokens[i2 + 1][0] : "empty";
-              if (!SAFE_COMMENT_NEIGHBOR[prev2] && !SAFE_COMMENT_NEIGHBOR[next2]) {
+              prev = tokens[i2 - 1] ? tokens[i2 - 1][0] : "empty";
+              next = tokens[i2 + 1] ? tokens[i2 + 1][0] : "empty";
+              if (!SAFE_COMMENT_NEIGHBOR[prev] && !SAFE_COMMENT_NEIGHBOR[next]) {
                 if (value.slice(-1) === ",") {
                   clean = false;
                 } else {
-                  value += token2[1];
+                  value += token[1];
                 }
               } else {
                 clean = false;
               }
             } else {
-              value += token2[1];
+              value += token[1];
             }
           }
           if (!clean) {
             let raw = tokens.reduce((all, i2) => all + i2[1], "");
-            node2.raws[prop] = { raw, value };
+            node.raws[prop] = { raw, value };
           }
-          node2[prop] = value;
+          node[prop] = value;
         }
         rule(tokens) {
           tokens.pop();
-          let node2 = new Rule();
-          this.init(node2, tokens[0][2]);
-          node2.raws.between = this.spacesAndCommentsFromEnd(tokens);
-          this.raw(node2, "selector", tokens);
-          this.current = node2;
+          let node = new Rule();
+          this.init(node, tokens[0][2]);
+          node.raws.between = this.spacesAndCommentsFromEnd(tokens);
+          this.raw(node, "selector", tokens);
+          this.current = node;
         }
         spacesAndCommentsFromEnd(tokens) {
           let lastTokenType;
@@ -4960,11 +4960,11 @@ var wp;
         }
         // Errors
         spacesAndCommentsFromStart(tokens) {
-          let next2;
+          let next;
           let spaces = "";
           while (tokens.length) {
-            next2 = tokens[0][0];
-            if (next2 !== "space" && next2 !== "comment") break;
+            next = tokens[0][0];
+            if (next !== "space" && next !== "comment") break;
             spaces += tokens.shift()[1];
           }
           return spaces;
@@ -4979,12 +4979,12 @@ var wp;
           }
           return spaces;
         }
-        stringFrom(tokens, from2) {
+        stringFrom(tokens, from) {
           let result = "";
-          for (let i2 = from2; i2 < tokens.length; i2++) {
+          for (let i2 = from; i2 < tokens.length; i2++) {
             result += tokens[i2][1];
           }
-          tokens.splice(from2, tokens.length - from2);
+          tokens.splice(from, tokens.length - from);
           return result;
         }
         unclosedBlock() {
@@ -4998,11 +4998,11 @@ var wp;
             { offset: bracket[2] + 1 }
           );
         }
-        unexpectedClose(token2) {
+        unexpectedClose(token) {
           throw this.input.error(
             "Unexpected }",
-            { offset: token2[2] },
-            { offset: token2[2] + 1 }
+            { offset: token[2] },
+            { offset: token[2] + 1 }
           );
         }
         unknownWord(tokens) {
@@ -5012,11 +5012,11 @@ var wp;
             { offset: tokens[0][2] + tokens[0][1].length }
           );
         }
-        unnamedAtrule(node2, token2) {
+        unnamedAtrule(node, token) {
           throw this.input.error(
             "At-rule without name",
-            { offset: token2[2] },
-            { offset: token2[2] + token2[1].length }
+            { offset: token[2] },
+            { offset: token[2] + token[1].length }
           );
         }
       };
@@ -5031,7 +5031,7 @@ var wp;
       var Container = require_container();
       var Parser = require_parser();
       var Input = require_input();
-      function parse5(css, opts) {
+      function parse4(css, opts) {
         let input = new Input(css, opts);
         let parser = new Parser(input);
         try {
@@ -5052,9 +5052,9 @@ var wp;
         }
         return parser.root;
       }
-      module.exports = parse5;
-      parse5.default = parse5;
-      Container.registerParse(parse5);
+      module.exports = parse4;
+      parse4.default = parse4;
+      Container.registerParse(parse4);
     }
   });
 
@@ -5138,9 +5138,9 @@ var wp;
     "node_modules/postcss/lib/no-work-result.js"(exports, module) {
       "use strict";
       var MapGenerator = require_map_generator();
-      var stringify3 = require_stringify();
+      var stringify2 = require_stringify();
       var warnOnce = require_warn_once();
-      var parse5 = require_parse();
+      var parse4 = require_parse();
       var Result = require_result();
       var NoWorkResult = class {
         constructor(processor, css, opts) {
@@ -5151,7 +5151,7 @@ var wp;
           this._opts = opts;
           this._map = void 0;
           let root;
-          let str = stringify3;
+          let str = stringify2;
           this.result = new Result(this._processor, root, this._opts);
           this.result.css = css;
           let self = this;
@@ -5227,7 +5227,7 @@ var wp;
             return this._root;
           }
           let root;
-          let parser = parse5;
+          let parser = parse4;
           try {
             root = parser(this._css, this._opts);
           } catch (error) {
@@ -5285,12 +5285,12 @@ var wp;
       "use strict";
       var { isClean, my } = require_symbols();
       var MapGenerator = require_map_generator();
-      var stringify3 = require_stringify();
+      var stringify2 = require_stringify();
       var Container = require_container();
       var Document = require_document();
       var warnOnce = require_warn_once();
       var Result = require_result();
-      var parse5 = require_parse();
+      var parse4 = require_parse();
       var Root2 = require_root();
       var TYPE_TO_CLASS_NAME = {
         atrule: "AtRule",
@@ -5327,15 +5327,15 @@ var wp;
       function isPromise(obj) {
         return typeof obj === "object" && typeof obj.then === "function";
       }
-      function getEvents(node2) {
+      function getEvents(node) {
         let key = false;
-        let type = TYPE_TO_CLASS_NAME[node2.type];
-        if (node2.type === "decl") {
-          key = node2.prop.toLowerCase();
-        } else if (node2.type === "atrule") {
-          key = node2.name.toLowerCase();
+        let type = TYPE_TO_CLASS_NAME[node.type];
+        if (node.type === "decl") {
+          key = node.prop.toLowerCase();
+        } else if (node.type === "atrule") {
+          key = node.name.toLowerCase();
         }
-        if (key && node2.append) {
+        if (key && node.append) {
           return [
             type,
             type + "-" + key,
@@ -5345,34 +5345,34 @@ var wp;
           ];
         } else if (key) {
           return [type, type + "-" + key, type + "Exit", type + "Exit-" + key];
-        } else if (node2.append) {
+        } else if (node.append) {
           return [type, CHILDREN, type + "Exit"];
         } else {
           return [type, type + "Exit"];
         }
       }
-      function toStack(node2) {
+      function toStack(node) {
         let events;
-        if (node2.type === "document") {
+        if (node.type === "document") {
           events = ["Document", CHILDREN, "DocumentExit"];
-        } else if (node2.type === "root") {
+        } else if (node.type === "root") {
           events = ["Root", CHILDREN, "RootExit"];
         } else {
-          events = getEvents(node2);
+          events = getEvents(node);
         }
         return {
           eventIndex: 0,
           events,
           iterator: 0,
-          node: node2,
+          node,
           visitorIndex: 0,
           visitors: []
         };
       }
-      function cleanMarks(node2) {
-        node2[isClean] = false;
-        if (node2.nodes) node2.nodes.forEach((i2) => cleanMarks(i2));
-        return node2;
+      function cleanMarks(node) {
+        node[isClean] = false;
+        if (node.nodes) node.nodes.forEach((i2) => cleanMarks(i2));
+        return node;
       }
       var postcss = {};
       var LazyResult = class _LazyResult {
@@ -5390,7 +5390,7 @@ var wp;
               opts.map.prev = css.map;
             }
           } else {
-            let parser = parse5;
+            let parser = parse4;
             if (opts.syntax) parser = opts.syntax.parse;
             if (opts.parser) parser = opts.parser;
             if (parser.parse) parser = parser.parse;
@@ -5431,10 +5431,10 @@ var wp;
         getAsyncError() {
           throw new Error("Use process(css).then(cb) to work with async plugins");
         }
-        handleError(error, node2) {
+        handleError(error, node) {
           let plugin = this.result.lastPlugin;
           try {
-            if (node2) node2.addToError(error);
+            if (node) node.addToError(error);
             this.error = error;
             if (error.name === "CssSyntaxError" && !error.plugin) {
               error.plugin = plugin.postcssPlugin;
@@ -5519,8 +5519,8 @@ var wp;
                   try {
                     await promise;
                   } catch (e2) {
-                    let node2 = stack[stack.length - 1].node;
-                    throw this.handleError(e2, node2);
+                    let node = stack[stack.length - 1].node;
+                    throw this.handleError(e2, node);
                   }
                 }
               }
@@ -5573,7 +5573,7 @@ var wp;
           this.stringified = true;
           this.sync();
           let opts = this.result.opts;
-          let str = stringify3;
+          let str = stringify2;
           if (opts.syntax) str = opts.syntax.stringify;
           if (opts.stringifier) str = opts.stringifier;
           if (str.stringify) str = str.stringify;
@@ -5628,16 +5628,16 @@ var wp;
         toString() {
           return this.css;
         }
-        visitSync(visitors, node2) {
+        visitSync(visitors, node) {
           for (let [plugin, visitor] of visitors) {
             this.result.lastPlugin = plugin;
             let promise;
             try {
-              promise = visitor(node2, this.helpers);
+              promise = visitor(node, this.helpers);
             } catch (e2) {
-              throw this.handleError(e2, node2.proxyOf);
+              throw this.handleError(e2, node.proxyOf);
             }
-            if (node2.type !== "root" && node2.type !== "document" && !node2.parent) {
+            if (node.type !== "root" && node.type !== "document" && !node.parent) {
               return true;
             }
             if (isPromise(promise)) {
@@ -5647,8 +5647,8 @@ var wp;
         }
         visitTick(stack) {
           let visit = stack[stack.length - 1];
-          let { node: node2, visitors } = visit;
-          if (node2.type !== "root" && node2.type !== "document" && !node2.parent) {
+          let { node, visitors } = visit;
+          if (node.type !== "root" && node.type !== "document" && !node.parent) {
             stack.pop();
             return;
           }
@@ -5661,16 +5661,16 @@ var wp;
             }
             this.result.lastPlugin = plugin;
             try {
-              return visitor(node2.toProxy(), this.helpers);
+              return visitor(node.toProxy(), this.helpers);
             } catch (e2) {
-              throw this.handleError(e2, node2);
+              throw this.handleError(e2, node);
             }
           }
           if (visit.iterator !== 0) {
             let iterator = visit.iterator;
             let child;
-            while (child = node2.nodes[node2.indexes[iterator]]) {
-              node2.indexes[iterator] += 1;
+            while (child = node.nodes[node.indexes[iterator]]) {
+              node.indexes[iterator] += 1;
               if (!child[isClean]) {
                 child[isClean] = true;
                 stack.push(toStack(child));
@@ -5678,16 +5678,16 @@ var wp;
               }
             }
             visit.iterator = 0;
-            delete node2.indexes[iterator];
+            delete node.indexes[iterator];
           }
           let events = visit.events;
           while (visit.eventIndex < events.length) {
             let event = events[visit.eventIndex];
             visit.eventIndex += 1;
             if (event === CHILDREN) {
-              if (node2.nodes && node2.nodes.length) {
-                node2[isClean] = true;
-                visit.iterator = node2.getIterator();
+              if (node.nodes && node.nodes.length) {
+                node[isClean] = true;
+                visit.iterator = node.getIterator();
               }
               return;
             } else if (this.listeners[event]) {
@@ -5697,20 +5697,20 @@ var wp;
           }
           stack.pop();
         }
-        walkSync(node2) {
-          node2[isClean] = true;
-          let events = getEvents(node2);
+        walkSync(node) {
+          node[isClean] = true;
+          let events = getEvents(node);
           for (let event of events) {
             if (event === CHILDREN) {
-              if (node2.nodes) {
-                node2.each((child) => {
+              if (node.nodes) {
+                node.each((child) => {
                   if (!child[isClean]) this.walkSync(child);
                 });
               }
             } else {
               let visitors = this.listeners[event];
               if (visitors) {
-                if (this.visitSync(visitors, node2.toProxy())) return;
+                if (this.visitSync(visitors, node.toProxy())) return;
               }
             }
           }
@@ -5815,8 +5815,8 @@ var wp;
   var require_postcss_prefix_selector = __commonJS({
     "node_modules/postcss-prefix-selector/index.js"(exports, module) {
       module.exports = function postcssPrefixSelector(options) {
-        const prefix3 = options.prefix;
-        const prefixWithSpace = /\s+$/.test(prefix3) ? prefix3 : `${prefix3} `;
+        const prefix2 = options.prefix;
+        const prefixWithSpace = /\s+$/.test(prefix2) ? prefix2 : `${prefix2} `;
         const ignoreFiles = options.ignoreFiles ? [].concat(options.ignoreFiles) : [];
         const includeFiles = options.includeFiles ? [].concat(options.includeFiles) : [];
         return function(root) {
@@ -5843,7 +5843,7 @@ var wp;
               }
               if (options.transform) {
                 return options.transform(
-                  prefix3,
+                  prefix2,
                   selector3,
                   prefixWithSpace + selector3,
                   root.source.input.file,
@@ -5893,7 +5893,7 @@ var wp;
       module.exports = function(input) {
         var tokens = [];
         var value = input;
-        var next2, quote, prev2, token2, escape, escapePos, whitespacePos, parenthesesOpenPos;
+        var next, quote, prev, token, escape, escapePos, whitespacePos, parenthesesOpenPos;
         var pos = 0;
         var code = value.charCodeAt(pos);
         var max = value.length;
@@ -5905,90 +5905,90 @@ var wp;
         var after = "";
         while (pos < max) {
           if (code <= 32) {
-            next2 = pos;
+            next = pos;
             do {
-              next2 += 1;
-              code = value.charCodeAt(next2);
+              next += 1;
+              code = value.charCodeAt(next);
             } while (code <= 32);
-            token2 = value.slice(pos, next2);
-            prev2 = tokens[tokens.length - 1];
+            token = value.slice(pos, next);
+            prev = tokens[tokens.length - 1];
             if (code === closeParentheses && balanced) {
-              after = token2;
-            } else if (prev2 && prev2.type === "div") {
-              prev2.after = token2;
-              prev2.sourceEndIndex += token2.length;
-            } else if (code === comma || code === colon || code === slash && value.charCodeAt(next2 + 1) !== star && (!parent || parent && parent.type === "function" && parent.value !== "calc")) {
-              before = token2;
+              after = token;
+            } else if (prev && prev.type === "div") {
+              prev.after = token;
+              prev.sourceEndIndex += token.length;
+            } else if (code === comma || code === colon || code === slash && value.charCodeAt(next + 1) !== star && (!parent || parent && parent.type === "function" && parent.value !== "calc")) {
+              before = token;
             } else {
               tokens.push({
                 type: "space",
                 sourceIndex: pos,
-                sourceEndIndex: next2,
-                value: token2
+                sourceEndIndex: next,
+                value: token
               });
             }
-            pos = next2;
+            pos = next;
           } else if (code === singleQuote || code === doubleQuote) {
-            next2 = pos;
+            next = pos;
             quote = code === singleQuote ? "'" : '"';
-            token2 = {
+            token = {
               type: "string",
               sourceIndex: pos,
               quote
             };
             do {
               escape = false;
-              next2 = value.indexOf(quote, next2 + 1);
-              if (~next2) {
-                escapePos = next2;
+              next = value.indexOf(quote, next + 1);
+              if (~next) {
+                escapePos = next;
                 while (value.charCodeAt(escapePos - 1) === backslash) {
                   escapePos -= 1;
                   escape = !escape;
                 }
               } else {
                 value += quote;
-                next2 = value.length - 1;
-                token2.unclosed = true;
+                next = value.length - 1;
+                token.unclosed = true;
               }
             } while (escape);
-            token2.value = value.slice(pos + 1, next2);
-            token2.sourceEndIndex = token2.unclosed ? next2 : next2 + 1;
-            tokens.push(token2);
-            pos = next2 + 1;
+            token.value = value.slice(pos + 1, next);
+            token.sourceEndIndex = token.unclosed ? next : next + 1;
+            tokens.push(token);
+            pos = next + 1;
             code = value.charCodeAt(pos);
           } else if (code === slash && value.charCodeAt(pos + 1) === star) {
-            next2 = value.indexOf("*/", pos);
-            token2 = {
+            next = value.indexOf("*/", pos);
+            token = {
               type: "comment",
               sourceIndex: pos,
-              sourceEndIndex: next2 + 2
+              sourceEndIndex: next + 2
             };
-            if (next2 === -1) {
-              token2.unclosed = true;
-              next2 = value.length;
-              token2.sourceEndIndex = next2;
+            if (next === -1) {
+              token.unclosed = true;
+              next = value.length;
+              token.sourceEndIndex = next;
             }
-            token2.value = value.slice(pos + 2, next2);
-            tokens.push(token2);
-            pos = next2 + 2;
+            token.value = value.slice(pos + 2, next);
+            tokens.push(token);
+            pos = next + 2;
             code = value.charCodeAt(pos);
           } else if ((code === slash || code === star) && parent && parent.type === "function" && parent.value === "calc") {
-            token2 = value[pos];
+            token = value[pos];
             tokens.push({
               type: "word",
               sourceIndex: pos - before.length,
-              sourceEndIndex: pos + token2.length,
-              value: token2
+              sourceEndIndex: pos + token.length,
+              value: token
             });
             pos += 1;
             code = value.charCodeAt(pos);
           } else if (code === slash || code === comma || code === colon) {
-            token2 = value[pos];
+            token = value[pos];
             tokens.push({
               type: "div",
               sourceIndex: pos - before.length,
-              sourceEndIndex: pos + token2.length,
-              value: token2,
+              sourceEndIndex: pos + token.length,
+              value: token,
               before,
               after: ""
             });
@@ -5996,44 +5996,44 @@ var wp;
             pos += 1;
             code = value.charCodeAt(pos);
           } else if (openParentheses === code) {
-            next2 = pos;
+            next = pos;
             do {
-              next2 += 1;
-              code = value.charCodeAt(next2);
+              next += 1;
+              code = value.charCodeAt(next);
             } while (code <= 32);
             parenthesesOpenPos = pos;
-            token2 = {
+            token = {
               type: "function",
               sourceIndex: pos - name.length,
               value: name,
-              before: value.slice(parenthesesOpenPos + 1, next2)
+              before: value.slice(parenthesesOpenPos + 1, next)
             };
-            pos = next2;
+            pos = next;
             if (name === "url" && code !== singleQuote && code !== doubleQuote) {
-              next2 -= 1;
+              next -= 1;
               do {
                 escape = false;
-                next2 = value.indexOf(")", next2 + 1);
-                if (~next2) {
-                  escapePos = next2;
+                next = value.indexOf(")", next + 1);
+                if (~next) {
+                  escapePos = next;
                   while (value.charCodeAt(escapePos - 1) === backslash) {
                     escapePos -= 1;
                     escape = !escape;
                   }
                 } else {
                   value += ")";
-                  next2 = value.length - 1;
-                  token2.unclosed = true;
+                  next = value.length - 1;
+                  token.unclosed = true;
                 }
               } while (escape);
-              whitespacePos = next2;
+              whitespacePos = next;
               do {
                 whitespacePos -= 1;
                 code = value.charCodeAt(whitespacePos);
               } while (code <= 32);
               if (parenthesesOpenPos < whitespacePos) {
                 if (pos !== whitespacePos + 1) {
-                  token2.nodes = [
+                  token.nodes = [
                     {
                       type: "word",
                       sourceIndex: pos,
@@ -6042,36 +6042,36 @@ var wp;
                     }
                   ];
                 } else {
-                  token2.nodes = [];
+                  token.nodes = [];
                 }
-                if (token2.unclosed && whitespacePos + 1 !== next2) {
-                  token2.after = "";
-                  token2.nodes.push({
+                if (token.unclosed && whitespacePos + 1 !== next) {
+                  token.after = "";
+                  token.nodes.push({
                     type: "space",
                     sourceIndex: whitespacePos + 1,
-                    sourceEndIndex: next2,
-                    value: value.slice(whitespacePos + 1, next2)
+                    sourceEndIndex: next,
+                    value: value.slice(whitespacePos + 1, next)
                   });
                 } else {
-                  token2.after = value.slice(whitespacePos + 1, next2);
-                  token2.sourceEndIndex = next2;
+                  token.after = value.slice(whitespacePos + 1, next);
+                  token.sourceEndIndex = next;
                 }
               } else {
-                token2.after = "";
-                token2.nodes = [];
+                token.after = "";
+                token.nodes = [];
               }
-              pos = next2 + 1;
-              token2.sourceEndIndex = token2.unclosed ? next2 : pos;
+              pos = next + 1;
+              token.sourceEndIndex = token.unclosed ? next : pos;
               code = value.charCodeAt(pos);
-              tokens.push(token2);
+              tokens.push(token);
             } else {
               balanced += 1;
-              token2.after = "";
-              token2.sourceEndIndex = pos + 1;
-              tokens.push(token2);
-              stack.push(token2);
-              tokens = token2.nodes = [];
-              parent = token2;
+              token.after = "";
+              token.sourceEndIndex = pos + 1;
+              tokens.push(token);
+              stack.push(token);
+              tokens = token.nodes = [];
+              parent = token;
             }
             name = "";
           } else if (closeParentheses === code && balanced) {
@@ -6086,33 +6086,33 @@ var wp;
             parent = stack[balanced];
             tokens = parent.nodes;
           } else {
-            next2 = pos;
+            next = pos;
             do {
               if (code === backslash) {
-                next2 += 1;
+                next += 1;
               }
-              next2 += 1;
-              code = value.charCodeAt(next2);
-            } while (next2 < max && !(code <= 32 || code === singleQuote || code === doubleQuote || code === comma || code === colon || code === slash || code === openParentheses || code === star && parent && parent.type === "function" && parent.value === "calc" || code === slash && parent.type === "function" && parent.value === "calc" || code === closeParentheses && balanced));
-            token2 = value.slice(pos, next2);
+              next += 1;
+              code = value.charCodeAt(next);
+            } while (next < max && !(code <= 32 || code === singleQuote || code === doubleQuote || code === comma || code === colon || code === slash || code === openParentheses || code === star && parent && parent.type === "function" && parent.value === "calc" || code === slash && parent.type === "function" && parent.value === "calc" || code === closeParentheses && balanced));
+            token = value.slice(pos, next);
             if (openParentheses === code) {
-              name = token2;
-            } else if ((uLower === token2.charCodeAt(0) || uUpper === token2.charCodeAt(0)) && plus === token2.charCodeAt(1) && isUnicodeRange.test(token2.slice(2))) {
+              name = token;
+            } else if ((uLower === token.charCodeAt(0) || uUpper === token.charCodeAt(0)) && plus === token.charCodeAt(1) && isUnicodeRange.test(token.slice(2))) {
               tokens.push({
                 type: "unicode-range",
                 sourceIndex: pos,
-                sourceEndIndex: next2,
-                value: token2
+                sourceEndIndex: next,
+                value: token
               });
             } else {
               tokens.push({
                 type: "word",
                 sourceIndex: pos,
-                sourceEndIndex: next2,
-                value: token2
+                sourceEndIndex: next,
+                value: token
               });
             }
-            pos = next2;
+            pos = next;
           }
         }
         for (pos = stack.length - 1; pos; pos -= 1) {
@@ -6128,17 +6128,17 @@ var wp;
   var require_walk = __commonJS({
     "packages/block-editor/node_modules/postcss-value-parser/lib/walk.js"(exports, module) {
       module.exports = function walk(nodes, cb, bubble) {
-        var i2, max, node2, result;
+        var i2, max, node, result;
         for (i2 = 0, max = nodes.length; i2 < max; i2 += 1) {
-          node2 = nodes[i2];
+          node = nodes[i2];
           if (!bubble) {
-            result = cb(node2, i2, nodes);
+            result = cb(node, i2, nodes);
           }
-          if (result !== false && node2.type === "function" && Array.isArray(node2.nodes)) {
-            walk(node2.nodes, cb, bubble);
+          if (result !== false && node.type === "function" && Array.isArray(node.nodes)) {
+            walk(node.nodes, cb, bubble);
           }
           if (bubble) {
-            cb(node2, i2, nodes);
+            cb(node, i2, nodes);
           }
         }
       };
@@ -6148,32 +6148,32 @@ var wp;
   // packages/block-editor/node_modules/postcss-value-parser/lib/stringify.js
   var require_stringify2 = __commonJS({
     "packages/block-editor/node_modules/postcss-value-parser/lib/stringify.js"(exports, module) {
-      function stringifyNode(node2, custom) {
-        var type = node2.type;
-        var value = node2.value;
+      function stringifyNode(node, custom) {
+        var type = node.type;
+        var value = node.value;
         var buf;
         var customResult;
-        if (custom && (customResult = custom(node2)) !== void 0) {
+        if (custom && (customResult = custom(node)) !== void 0) {
           return customResult;
         } else if (type === "word" || type === "space") {
           return value;
         } else if (type === "string") {
-          buf = node2.quote || "";
-          return buf + value + (node2.unclosed ? "" : buf);
+          buf = node.quote || "";
+          return buf + value + (node.unclosed ? "" : buf);
         } else if (type === "comment") {
-          return "/*" + value + (node2.unclosed ? "" : "*/");
+          return "/*" + value + (node.unclosed ? "" : "*/");
         } else if (type === "div") {
-          return (node2.before || "") + value + (node2.after || "");
-        } else if (Array.isArray(node2.nodes)) {
-          buf = stringify3(node2.nodes, custom);
+          return (node.before || "") + value + (node.after || "");
+        } else if (Array.isArray(node.nodes)) {
+          buf = stringify2(node.nodes, custom);
           if (type !== "function") {
             return buf;
           }
-          return value + "(" + (node2.before || "") + buf + (node2.after || "") + (node2.unclosed ? "" : ")");
+          return value + "(" + (node.before || "") + buf + (node.after || "") + (node.unclosed ? "" : ")");
         }
         return value;
       }
-      function stringify3(nodes, custom) {
+      function stringify2(nodes, custom) {
         var result, i2;
         if (Array.isArray(nodes)) {
           result = "";
@@ -6184,7 +6184,7 @@ var wp;
         }
         return stringifyNode(nodes, custom);
       }
-      module.exports = stringify3;
+      module.exports = stringify2;
     }
   });
 
@@ -6224,18 +6224,18 @@ var wp;
       }
       module.exports = function(value) {
         var pos = 0;
-        var length2 = value.length;
+        var length = value.length;
         var code;
         var nextCode;
         var nextNextCode;
-        if (length2 === 0 || !likeNumber(value)) {
+        if (length === 0 || !likeNumber(value)) {
           return false;
         }
         code = value.charCodeAt(pos);
         if (code === plus || code === minus) {
           pos++;
         }
-        while (pos < length2) {
+        while (pos < length) {
           code = value.charCodeAt(pos);
           if (code < 48 || code > 57) {
             break;
@@ -6246,7 +6246,7 @@ var wp;
         nextCode = value.charCodeAt(pos + 1);
         if (code === dot && nextCode >= 48 && nextCode <= 57) {
           pos += 2;
-          while (pos < length2) {
+          while (pos < length) {
             code = value.charCodeAt(pos);
             if (code < 48 || code > 57) {
               break;
@@ -6259,7 +6259,7 @@ var wp;
         nextNextCode = value.charCodeAt(pos + 2);
         if ((code === exp || code === EXP) && (nextCode >= 48 && nextCode <= 57 || (nextCode === plus || nextCode === minus) && nextNextCode >= 48 && nextNextCode <= 57)) {
           pos += nextCode === plus || nextCode === minus ? 3 : 2;
-          while (pos < length2) {
+          while (pos < length) {
             code = value.charCodeAt(pos);
             if (code < 48 || code > 57) {
               break;
@@ -6278,18 +6278,18 @@ var wp;
   // packages/block-editor/node_modules/postcss-value-parser/lib/index.js
   var require_lib2 = __commonJS({
     "packages/block-editor/node_modules/postcss-value-parser/lib/index.js"(exports, module) {
-      var parse5 = require_parse2();
+      var parse4 = require_parse2();
       var walk = require_walk();
-      var stringify3 = require_stringify2();
+      var stringify2 = require_stringify2();
       function ValueParser(value) {
         if (this instanceof ValueParser) {
-          this.nodes = parse5(value);
+          this.nodes = parse4(value);
           return this;
         }
         return new ValueParser(value);
       }
       ValueParser.prototype.toString = function() {
-        return Array.isArray(this.nodes) ? stringify3(this.nodes) : "";
+        return Array.isArray(this.nodes) ? stringify2(this.nodes) : "";
       };
       ValueParser.prototype.walk = function(cb, bubble) {
         walk(this.nodes, cb, bubble);
@@ -6297,7 +6297,7 @@ var wp;
       };
       ValueParser.unit = require_unit();
       ValueParser.walk = walk;
-      ValueParser.stringify = stringify3;
+      ValueParser.stringify = stringify2;
       module.exports = ValueParser;
     }
   });
@@ -6316,16 +6316,16 @@ var wp;
           Declaration(decl) {
             const parsedValue = CSSValueParser(decl.value);
             let valueChanged = false;
-            parsedValue.walk((node2) => {
-              if (node2.type !== "function" || node2.value !== "url") {
+            parsedValue.walk((node) => {
+              if (node.type !== "function" || node.value !== "url") {
                 return;
               }
-              const urlVal = node2.nodes[0].value;
+              const urlVal = node.nodes[0].value;
               const basedUrl = new URL(urlVal, opts.rootUrl);
               if (basedUrl.pathname === urlVal && config2.skipHostRelativeUrls) {
                 return false;
               }
-              node2.nodes[0].value = basedUrl.toString();
+              node.nodes[0].value = basedUrl.toString();
               valueChanged = true;
               return false;
             });
@@ -6454,8 +6454,8 @@ var wp;
         if (!Array.isArray(array)) {
           throw new Error("first argument should be an array");
         }
-        return array.reduce(function(prev2, next2) {
-          return deepmerge(prev2, next2, options);
+        return array.reduce(function(prev, next) {
+          return deepmerge(prev, next, options);
         }, {});
       };
       var deepmerge_1 = deepmerge;
@@ -6790,11 +6790,11 @@ var wp;
         if (a2 === b2) return true;
         if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
           if (a2.constructor !== b2.constructor) return false;
-          var length2, i2, keys;
+          var length, i2, keys;
           if (Array.isArray(a2)) {
-            length2 = a2.length;
-            if (length2 != b2.length) return false;
-            for (i2 = length2; i2-- !== 0; )
+            length = a2.length;
+            if (length != b2.length) return false;
+            for (i2 = length; i2-- !== 0; )
               if (!equal(a2[i2], b2[i2])) return false;
             return true;
           }
@@ -6802,11 +6802,11 @@ var wp;
           if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
           if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
           keys = Object.keys(a2);
-          length2 = keys.length;
-          if (length2 !== Object.keys(b2).length) return false;
-          for (i2 = length2; i2-- !== 0; )
+          length = keys.length;
+          if (length !== Object.keys(b2).length) return false;
+          for (i2 = length; i2-- !== 0; )
             if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-          for (i2 = length2; i2-- !== 0; ) {
+          for (i2 = length; i2-- !== 0; ) {
             var key = keys[i2];
             if (!equal(a2[key], b2[key])) return false;
           }
@@ -6814,94 +6814,6 @@ var wp;
         }
         return a2 !== a2 && b2 !== b2;
       };
-    }
-  });
-
-  // node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-  var require_hoist_non_react_statics_cjs = __commonJS({
-    "node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"(exports, module) {
-      "use strict";
-      var reactIs = require_react_is();
-      var REACT_STATICS = {
-        childContextTypes: true,
-        contextType: true,
-        contextTypes: true,
-        defaultProps: true,
-        displayName: true,
-        getDefaultProps: true,
-        getDerivedStateFromError: true,
-        getDerivedStateFromProps: true,
-        mixins: true,
-        propTypes: true,
-        type: true
-      };
-      var KNOWN_STATICS = {
-        name: true,
-        length: true,
-        prototype: true,
-        caller: true,
-        callee: true,
-        arguments: true,
-        arity: true
-      };
-      var FORWARD_REF_STATICS = {
-        "$$typeof": true,
-        render: true,
-        defaultProps: true,
-        displayName: true,
-        propTypes: true
-      };
-      var MEMO_STATICS = {
-        "$$typeof": true,
-        compare: true,
-        defaultProps: true,
-        displayName: true,
-        propTypes: true,
-        type: true
-      };
-      var TYPE_STATICS = {};
-      TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
-      TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
-      function getStatics(component) {
-        if (reactIs.isMemo(component)) {
-          return MEMO_STATICS;
-        }
-        return TYPE_STATICS[component["$$typeof"]] || REACT_STATICS;
-      }
-      var defineProperty = Object.defineProperty;
-      var getOwnPropertyNames = Object.getOwnPropertyNames;
-      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-      var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-      var getPrototypeOf = Object.getPrototypeOf;
-      var objectPrototype = Object.prototype;
-      function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-        if (typeof sourceComponent !== "string") {
-          if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-              hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-            }
-          }
-          var keys = getOwnPropertyNames(sourceComponent);
-          if (getOwnPropertySymbols) {
-            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-          }
-          var targetStatics = getStatics(targetComponent);
-          var sourceStatics = getStatics(sourceComponent);
-          for (var i2 = 0; i2 < keys.length; ++i2) {
-            var key = keys[i2];
-            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
-              var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-              try {
-                defineProperty(targetComponent, key, descriptor);
-              } catch (e2) {
-              }
-            }
-          }
-        }
-        return targetComponent;
-      }
-      module.exports = hoistNonReactStatics;
     }
   });
 
@@ -7909,12 +7821,12 @@ var wp;
       ...array.slice(index)
     ];
   }
-  function moveTo(array, from2, to2, count = 1) {
+  function moveTo(array, from, to2, count = 1) {
     const withoutMovedElements = [...array];
-    withoutMovedElements.splice(from2, count);
+    withoutMovedElements.splice(from, count);
     return insertAt(
       withoutMovedElements,
-      array.slice(from2, from2 + count),
+      array.slice(from, from + count),
       to2
     );
   }
@@ -9050,12 +8962,12 @@ var wp;
           (prevUsage, block) => {
             const { attributes, name: blockName } = block;
             let id = blockName;
-            const match3 = (0, import_data2.select)(import_blocks2.store).getActiveBlockVariation(
+            const match2 = (0, import_data2.select)(import_blocks2.store).getActiveBlockVariation(
               blockName,
               attributes
             );
-            if (match3?.name) {
-              id += "/" + match3.name;
+            if (match2?.name) {
+              id += "/" + match2.name;
             }
             if (blockName === "core/block") {
               id += "/" + attributes.ref;
@@ -10757,12 +10669,12 @@ var wp;
     path = Array.isArray(path) ? [...path] : [path];
     object = Array.isArray(object) ? [...object] : { ...object };
     const leaf = path.pop();
-    let prev2 = object;
+    let prev = object;
     for (const key of path) {
-      const lvl = prev2[key];
-      prev2 = prev2[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
+      const lvl = prev[key];
+      prev = prev[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
     }
-    prev2[leaf] = value;
+    prev[leaf] = value;
     return object;
   }
   var getValueFromObjectPath = (object, path, defaultValue) => {
@@ -13797,8 +13709,8 @@ var wp;
           );
         };
         var createEmpty = createEmpty2;
-        const length2 = blockAttributes[attributeKeyA].length;
-        if (selectionA.offset === 0 && length2) {
+        const length = blockAttributes[attributeKeyA].length;
+        if (selectionA.offset === 0 && length) {
           dispatch.insertBlocks(
             [createEmpty2()],
             select3.getBlockIndex(selectionA.clientId),
@@ -13807,7 +13719,7 @@ var wp;
           );
           return;
         }
-        if (selectionA.offset === length2) {
+        if (selectionA.offset === length) {
           dispatch.insertBlocks(
             [createEmpty2()],
             select3.getBlockIndex(selectionA.clientId) + 1,
@@ -13897,12 +13809,12 @@ var wp;
     if (lastBlock) {
       const lastBlocks = tailType.merge && tailType.name === lastBlock.name ? [lastBlock] : (0, import_blocks7.switchToBlockType)(lastBlock, tailType.name);
       if (lastBlocks?.length) {
-        const last3 = lastBlocks.pop();
+        const last = lastBlocks.pop();
         output.push({
           ...tail,
           attributes: {
             ...tail.attributes,
-            ...tailType.merge(last3.attributes, tail.attributes)
+            ...tailType.merge(last.attributes, tail.attributes)
           }
         });
         output.push(...lastBlocks);
@@ -13910,7 +13822,7 @@ var wp;
           clientId: tail.clientId,
           attributeKey: attributeKeyB,
           offset: (0, import_rich_text3.create)({
-            html: last3.attributes[attributeKeyB]
+            html: last.attributes[attributeKeyB]
           }).text.length
         };
       } else {
@@ -15308,7 +15220,7 @@ var wp;
     if (options === void 0) {
       options = {};
     }
-    var _a = options.splitRegexp, splitRegexp2 = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options.stripRegexp, stripRegexp2 = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options.transform, transform = _c === void 0 ? lowerCase : _c, _d = options.delimiter, delimiter2 = _d === void 0 ? " " : _d;
+    var _a = options.splitRegexp, splitRegexp2 = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options.stripRegexp, stripRegexp2 = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options.transform, transform = _c === void 0 ? lowerCase : _c, _d = options.delimiter, delimiter = _d === void 0 ? " " : _d;
     var result = replace(replace(input, splitRegexp2, "$1\0$2"), stripRegexp2, "\0");
     var start2 = 0;
     var end = result.length;
@@ -15316,7 +15228,7 @@ var wp;
       start2++;
     while (result.charAt(end - 1) === "\0")
       end--;
-    return result.slice(start2, end).split("\0").map(transform).join(delimiter2);
+    return result.slice(start2, end).split("\0").map(transform).join(delimiter);
   }
   function replace(input, re, value) {
     if (re instanceof RegExp)
@@ -15942,9 +15854,9 @@ var wp;
   };
 
   // packages/block-editor/build-module/layouts/utils.js
-  function appendSelectors(selectors, append2 = "") {
+  function appendSelectors(selectors, append = "") {
     return selectors.split(",").map(
-      (subselector) => `${subselector}${append2 ? ` ${append2}` : ""}`
+      (subselector) => `${subselector}${append ? ` ${append}` : ""}`
     ).join(",");
   }
   function getBlockGapCSS(selector3, layoutDefinitions = LAYOUT_DEFINITIONS, layoutType, blockGapValue) {
@@ -16133,8 +16045,8 @@ var wp;
       return null;
     }
     const row = getSpacingPresetCssVar(blockGapBoxControlValue?.top) || defaultValue;
-    const column2 = getSpacingPresetCssVar(blockGapBoxControlValue?.left) || defaultValue;
-    return row === column2 ? row : `${row} ${column2}`;
+    const column = getSpacingPresetCssVar(blockGapBoxControlValue?.left) || defaultValue;
+    return row === column ? row : `${row} ${column}`;
   }
 
   // packages/block-editor/build-module/layouts/flex.js
@@ -16960,10 +16872,10 @@ var wp;
     const defaultValue = isManualPlacement || columnCount ? null : "12rem";
     const value = minimumColumnWidth || defaultValue;
     const [quantity, unit = "rem"] = (0, import_components15.__experimentalParseQuantityAndUnitFromRawValue)(value);
-    const handleSliderChange = (next2) => {
+    const handleSliderChange = (next) => {
       onChange({
         ...layout,
-        minimumColumnWidth: [next2, unit].join("")
+        minimumColumnWidth: [next, unit].join("")
       });
     };
     const handleUnitChange = (newUnit) => {
@@ -17732,8 +17644,8 @@ var wp;
         if (label !== blockType.title) {
           return label;
         }
-        const match3 = getActiveBlockVariation(blockName, attributes);
-        return match3?.title || blockType.title;
+        const match2 = getActiveBlockVariation(blockName, attributes);
+        return match2?.title || blockType.title;
       },
       [clientId, context]
     );
@@ -18377,24 +18289,24 @@ var wp;
     onFinishQueue.flush();
   }
   function makeQueue() {
-    let next2 = /* @__PURE__ */ new Set();
-    let current = next2;
+    let next = /* @__PURE__ */ new Set();
+    let current = next;
     return {
       add(fn) {
-        pendingCount += current == next2 && !next2.has(fn) ? 1 : 0;
-        next2.add(fn);
+        pendingCount += current == next && !next.has(fn) ? 1 : 0;
+        next.add(fn);
       },
       delete(fn) {
-        pendingCount -= current == next2 && next2.has(fn) ? 1 : 0;
-        return next2.delete(fn);
+        pendingCount -= current == next && next.has(fn) ? 1 : 0;
+        return next.delete(fn);
       },
       flush(arg) {
         if (current.size) {
-          next2 = /* @__PURE__ */ new Set();
+          next = /* @__PURE__ */ new Set();
           pendingCount -= current.size;
-          eachSafely(current, (fn) => fn(arg) && next2.add(fn));
-          pendingCount += next2.size;
-          current = next2;
+          eachSafely(current, (fn) => fn(arg) && next.add(fn));
+          pendingCount += next.size;
+          current = next;
         }
       }
     };
@@ -18729,32 +18641,32 @@ var wp;
   var hex6 = /^#([0-9a-fA-F]{6})$/;
   var hex8 = /^#([0-9a-fA-F]{8})$/;
   function normalizeColor(color) {
-    let match3;
+    let match2;
     if (typeof color === "number") {
       return color >>> 0 === color && color >= 0 && color <= 4294967295 ? color : null;
     }
-    if (match3 = hex6.exec(color)) return parseInt(match3[1] + "ff", 16) >>> 0;
+    if (match2 = hex6.exec(color)) return parseInt(match2[1] + "ff", 16) >>> 0;
     if (colors$1 && colors$1[color] !== void 0) {
       return colors$1[color];
     }
-    if (match3 = rgb.exec(color)) {
-      return (parse255(match3[1]) << 24 | parse255(match3[2]) << 16 | parse255(match3[3]) << 8 | 255) >>> 0;
+    if (match2 = rgb.exec(color)) {
+      return (parse255(match2[1]) << 24 | parse255(match2[2]) << 16 | parse255(match2[3]) << 8 | 255) >>> 0;
     }
-    if (match3 = rgba.exec(color)) {
-      return (parse255(match3[1]) << 24 | parse255(match3[2]) << 16 | parse255(match3[3]) << 8 | parse1(match3[4])) >>> 0;
+    if (match2 = rgba.exec(color)) {
+      return (parse255(match2[1]) << 24 | parse255(match2[2]) << 16 | parse255(match2[3]) << 8 | parse1(match2[4])) >>> 0;
     }
-    if (match3 = hex3.exec(color)) {
-      return parseInt(match3[1] + match3[1] + match3[2] + match3[2] + match3[3] + match3[3] + "ff", 16) >>> 0;
+    if (match2 = hex3.exec(color)) {
+      return parseInt(match2[1] + match2[1] + match2[2] + match2[2] + match2[3] + match2[3] + "ff", 16) >>> 0;
     }
-    if (match3 = hex8.exec(color)) return parseInt(match3[1], 16) >>> 0;
-    if (match3 = hex4.exec(color)) {
-      return parseInt(match3[1] + match3[1] + match3[2] + match3[2] + match3[3] + match3[3] + match3[4] + match3[4], 16) >>> 0;
+    if (match2 = hex8.exec(color)) return parseInt(match2[1], 16) >>> 0;
+    if (match2 = hex4.exec(color)) {
+      return parseInt(match2[1] + match2[1] + match2[2] + match2[2] + match2[3] + match2[3] + match2[4] + match2[4], 16) >>> 0;
     }
-    if (match3 = hsl.exec(color)) {
-      return (hslToRgb(parse360(match3[1]), parsePercentage(match3[2]), parsePercentage(match3[3])) | 255) >>> 0;
+    if (match2 = hsl.exec(color)) {
+      return (hslToRgb(parse360(match2[1]), parsePercentage(match2[2]), parsePercentage(match2[3])) | 255) >>> 0;
     }
-    if (match3 = hsla.exec(color)) {
-      return (hslToRgb(parse360(match3[1]), parsePercentage(match3[2]), parsePercentage(match3[3])) | parse1(match3[4])) >>> 0;
+    if (match2 = hsla.exec(color)) {
+      return (hslToRgb(parse360(match2[1]), parsePercentage(match2[2]), parsePercentage(match2[3])) | parse1(match2[4])) >>> 0;
     }
     return null;
   }
@@ -18941,11 +18853,11 @@ var wp;
   var rgbaRegex = /rgba\(([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+)\)/gi;
   var cssVariableRegex = /var\((--[a-zA-Z0-9-_]+),? ?([a-zA-Z0-9 ()%#.,-]+)?\)/;
   var variableToRgba = (input) => {
-    const [token2, fallback] = parseCSSVariable(input);
-    if (!token2 || isSSR()) {
+    const [token, fallback] = parseCSSVariable(input);
+    if (!token || isSSR()) {
       return input;
     }
-    const value = window.getComputedStyle(document.documentElement).getPropertyValue(token2);
+    const value = window.getComputedStyle(document.documentElement).getPropertyValue(token);
     if (value) {
       return value.trim();
     } else if (fallback && fallback.startsWith("--")) {
@@ -18963,10 +18875,10 @@ var wp;
     return input;
   };
   var parseCSSVariable = (current) => {
-    const match3 = cssVariableRegex.exec(current);
-    if (!match3) return [,];
-    const [, token2, fallback] = match3;
-    return [token2, fallback];
+    const match2 = cssVariableRegex.exec(current);
+    if (!match2) return [,];
+    const [, token, fallback] = match2;
+    return [token, fallback];
   };
   var namedColorRegex;
   var rgbaRound = (_, p1, p2, p3, p4) => `rgba(${Math.round(p1)}, ${Math.round(p2)}, ${Math.round(p3)}, ${p4})`;
@@ -19061,12 +18973,12 @@ var wp;
     }, [cache]);
     return cache.result;
   }
-  function areInputsEqual(next2, prev2) {
-    if (next2.length !== prev2.length) {
+  function areInputsEqual(next, prev) {
+    if (next.length !== prev.length) {
       return false;
     }
-    for (let i2 = 0; i2 < next2.length; i2++) {
-      if (next2[i2] !== prev2[i2]) {
+    for (let i2 = 0; i2 < next.length; i2++) {
+      if (next[i2] !== prev[i2]) {
         return false;
       }
     }
@@ -19085,7 +18997,7 @@ var wp;
   var $node = Symbol.for("Animated:node");
   var isAnimated = (value) => !!value && value[$node] === value;
   var getAnimated = (owner) => owner && owner[$node];
-  var setAnimated = (owner, node2) => defineHidden(owner, $node, node2);
+  var setAnimated = (owner, node) => defineHidden(owner, $node, node);
   var getPayload = (owner) => owner && owner[$node] && owner[$node].getPayload();
   var Animated = class {
     constructor() {
@@ -19217,7 +19129,7 @@ var wp;
     }
     reset() {
       if (this.payload) {
-        each(this.payload, (node2) => node2.reset());
+        each(this.payload, (node) => node.reset());
       }
     }
     _makePayload(source) {
@@ -19233,7 +19145,7 @@ var wp;
       }
       const payload = getPayload(source);
       if (payload) {
-        each(payload, (node2) => this.add(node2));
+        each(payload, (node) => this.add(node));
       }
     }
   };
@@ -19245,12 +19157,12 @@ var wp;
       return new _AnimatedArray(source);
     }
     getValue() {
-      return this.source.map((node2) => node2.getValue());
+      return this.source.map((node) => node.getValue());
     }
     setValue(source) {
       const payload = this.getPayload();
       if (source.length == payload.length) {
-        return payload.map((node2, i2) => node2.setValue(source[i2])).some(Boolean);
+        return payload.map((node, i2) => node.setValue(source[i2])).some(Boolean);
       }
       super.setValue(source.map(makeAnimated));
       return true;
@@ -19864,8 +19776,8 @@ var wp;
       }
     }
     get() {
-      const node2 = getAnimated(this);
-      return node2 && node2.getValue();
+      const node = getAnimated(this);
+      return node && node.getValue();
     }
     to(...args) {
       return globals.to(this, args);
@@ -19950,8 +19862,8 @@ var wp;
       return getFluidValue(this.animation.to);
     }
     get velocity() {
-      const node2 = getAnimated(this);
-      return node2 instanceof AnimatedValue ? node2.lastVelocity || 0 : node2.getPayload().map((node3) => node3.lastVelocity || 0);
+      const node = getAnimated(this);
+      return node instanceof AnimatedValue ? node.lastVelocity || 0 : node.getPayload().map((node2) => node2.lastVelocity || 0);
     }
     get hasAnimated() {
       return hasAnimated(this);
@@ -19977,51 +19889,51 @@ var wp;
       if (!payload && hasFluidValue(anim.to)) {
         toValues = toArray(getFluidValue(anim.to));
       }
-      anim.values.forEach((node3, i2) => {
-        if (node3.done) return;
-        const to2 = node3.constructor == AnimatedString ? 1 : payload ? payload[i2].lastPosition : toValues[i2];
+      anim.values.forEach((node2, i2) => {
+        if (node2.done) return;
+        const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i2].lastPosition : toValues[i2];
         let finished = anim.immediate;
-        let position2 = to2;
+        let position = to2;
         if (!finished) {
-          position2 = node3.lastPosition;
+          position = node2.lastPosition;
           if (config2.tension <= 0) {
-            node3.done = true;
+            node2.done = true;
             return;
           }
-          let elapsed = node3.elapsedTime += dt;
-          const from2 = anim.fromValues[i2];
-          const v0 = node3.v0 != null ? node3.v0 : node3.v0 = is.arr(config2.velocity) ? config2.velocity[i2] : config2.velocity;
+          let elapsed = node2.elapsedTime += dt;
+          const from = anim.fromValues[i2];
+          const v0 = node2.v0 != null ? node2.v0 : node2.v0 = is.arr(config2.velocity) ? config2.velocity[i2] : config2.velocity;
           let velocity;
-          const precision = config2.precision || (from2 == to2 ? 5e-3 : Math.min(1, Math.abs(to2 - from2) * 1e-3));
+          const precision = config2.precision || (from == to2 ? 5e-3 : Math.min(1, Math.abs(to2 - from) * 1e-3));
           if (!is.und(config2.duration)) {
             let p2 = 1;
             if (config2.duration > 0) {
               if (this._memoizedDuration !== config2.duration) {
                 this._memoizedDuration = config2.duration;
-                if (node3.durationProgress > 0) {
-                  node3.elapsedTime = config2.duration * node3.durationProgress;
-                  elapsed = node3.elapsedTime += dt;
+                if (node2.durationProgress > 0) {
+                  node2.elapsedTime = config2.duration * node2.durationProgress;
+                  elapsed = node2.elapsedTime += dt;
                 }
               }
               p2 = (config2.progress || 0) + elapsed / this._memoizedDuration;
               p2 = p2 > 1 ? 1 : p2 < 0 ? 0 : p2;
-              node3.durationProgress = p2;
+              node2.durationProgress = p2;
             }
-            position2 = from2 + config2.easing(p2) * (to2 - from2);
-            velocity = (position2 - node3.lastPosition) / dt;
+            position = from + config2.easing(p2) * (to2 - from);
+            velocity = (position - node2.lastPosition) / dt;
             finished = p2 == 1;
           } else if (config2.decay) {
             const decay = config2.decay === true ? 0.998 : config2.decay;
             const e2 = Math.exp(-(1 - decay) * elapsed);
-            position2 = from2 + v0 / (1 - decay) * (1 - e2);
-            finished = Math.abs(node3.lastPosition - position2) <= precision;
+            position = from + v0 / (1 - decay) * (1 - e2);
+            finished = Math.abs(node2.lastPosition - position) <= precision;
             velocity = v0 * e2;
           } else {
-            velocity = node3.lastVelocity == null ? v0 : node3.lastVelocity;
+            velocity = node2.lastVelocity == null ? v0 : node2.lastVelocity;
             const restVelocity = config2.restVelocity || precision / 10;
             const bounceFactor = config2.clamp ? 0 : config2.bounce;
             const canBounce = !is.und(bounceFactor);
-            const isGrowing = from2 == to2 ? node3.v0 > 0 : from2 < to2;
+            const isGrowing = from == to2 ? node2.v0 > 0 : from < to2;
             let isMoving;
             let isBouncing = false;
             const step = 1;
@@ -20029,27 +19941,27 @@ var wp;
             for (let n2 = 0; n2 < numSteps; ++n2) {
               isMoving = Math.abs(velocity) > restVelocity;
               if (!isMoving) {
-                finished = Math.abs(to2 - position2) <= precision;
+                finished = Math.abs(to2 - position) <= precision;
                 if (finished) {
                   break;
                 }
               }
               if (canBounce) {
-                isBouncing = position2 == to2 || position2 > to2 == isGrowing;
+                isBouncing = position == to2 || position > to2 == isGrowing;
                 if (isBouncing) {
                   velocity = -velocity * bounceFactor;
-                  position2 = to2;
+                  position = to2;
                 }
               }
-              const springForce = -config2.tension * 1e-6 * (position2 - to2);
+              const springForce = -config2.tension * 1e-6 * (position - to2);
               const dampingForce = -config2.friction * 1e-3 * velocity;
               const acceleration = (springForce + dampingForce) / config2.mass;
               velocity = velocity + acceleration * step;
-              position2 = position2 + velocity * step;
+              position = position + velocity * step;
             }
           }
-          node3.lastVelocity = velocity;
-          if (Number.isNaN(position2)) {
+          node2.lastVelocity = velocity;
+          if (Number.isNaN(position)) {
             console.warn(`Got NaN while animating:`, this);
             finished = true;
           }
@@ -20058,20 +19970,20 @@ var wp;
           finished = false;
         }
         if (finished) {
-          node3.done = true;
+          node2.done = true;
         } else {
           idle = false;
         }
-        if (node3.setValue(position2, config2.round)) {
+        if (node2.setValue(position, config2.round)) {
           changed = true;
         }
       });
-      const node2 = getAnimated(this);
-      const currVal = node2.getValue();
+      const node = getAnimated(this);
+      const currVal = node.getValue();
       if (idle) {
         const finalVal = getFluidValue(anim.to);
         if ((currVal !== finalVal || changed) && !config2.decay) {
-          node2.setValue(finalVal);
+          node.setValue(finalVal);
           this._onChange(finalVal);
         } else if (changed && config2.decay) {
           this._onChange(currVal);
@@ -20160,25 +20072,25 @@ var wp;
       const key = this.key || "";
       let {
         to: to2,
-        from: from2
+        from
       } = props;
       to2 = is.obj(to2) ? to2[key] : to2;
       if (to2 == null || isAsyncTo(to2)) {
         to2 = void 0;
       }
-      from2 = is.obj(from2) ? from2[key] : from2;
-      if (from2 == null) {
-        from2 = void 0;
+      from = is.obj(from) ? from[key] : from;
+      if (from == null) {
+        from = void 0;
       }
       const range2 = {
         to: to2,
-        from: from2
+        from
       };
       if (!hasAnimated(this)) {
-        if (props.reverse) [to2, from2] = [from2, to2];
-        from2 = getFluidValue(from2);
-        if (!is.und(from2)) {
-          this._set(from2);
+        if (props.reverse) [to2, from] = [from, to2];
+        from = getFluidValue(from);
+        if (!is.und(from)) {
+          this._set(from);
         } else if (!getAnimated(this)) {
           this._set(to2);
         }
@@ -20259,17 +20171,17 @@ var wp;
       } = anim;
       let {
         to: to2 = prevTo,
-        from: from2 = prevFrom
+        from = prevFrom
       } = range2;
       if (hasFromProp && !hasToProp && (!props.default || is.und(to2))) {
-        to2 = from2;
+        to2 = from;
       }
-      if (props.reverse) [to2, from2] = [from2, to2];
-      const hasFromChanged = !isEqual(from2, prevFrom);
+      if (props.reverse) [to2, from] = [from, to2];
+      const hasFromChanged = !isEqual(from, prevFrom);
       if (hasFromChanged) {
-        anim.from = from2;
+        anim.from = from;
       }
-      from2 = getFluidValue(from2);
+      from = getFluidValue(from);
       const hasToChanged = !isEqual(to2, prevTo);
       if (hasToChanged) {
         this._focus(to2);
@@ -20288,24 +20200,24 @@ var wp;
       if (props.config && !hasAsyncTo) {
         mergeConfig(config2, callProp(props.config, key), props.config !== defaultProps.config ? callProp(defaultProps.config, key) : void 0);
       }
-      let node2 = getAnimated(this);
-      if (!node2 || is.und(to2)) {
+      let node = getAnimated(this);
+      if (!node || is.und(to2)) {
         return resolve(getFinishedResult(this, true));
       }
-      const reset = is.und(props.reset) ? hasFromProp && !props.default : !is.und(from2) && matchProp(props.reset, key);
-      const value = reset ? from2 : this.get();
+      const reset = is.und(props.reset) ? hasFromProp && !props.default : !is.und(from) && matchProp(props.reset, key);
+      const value = reset ? from : this.get();
       const goal = computeGoal(to2);
       const isAnimatable = is.num(goal) || is.arr(goal) || isAnimatedString(goal);
       const immediate = !hasAsyncTo && (!isAnimatable || matchProp(defaultProps.immediate || props.immediate, key));
       if (hasToChanged) {
         const nodeType = getAnimatedType(to2);
-        if (nodeType !== node2.constructor) {
+        if (nodeType !== node.constructor) {
           if (immediate) {
-            node2 = this._set(goal);
-          } else throw Error(`Cannot animate between ${node2.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
+            node = this._set(goal);
+          } else throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
         }
       }
-      const goalType = node2.constructor;
+      const goalType = node.constructor;
       let started = hasFluidValue(to2);
       let finished = false;
       if (!started) {
@@ -20327,7 +20239,7 @@ var wp;
       }
       if (!hasAsyncTo) {
         if (started || hasFluidValue(prevTo)) {
-          anim.values = node2.getPayload();
+          anim.values = node.getPayload();
           anim.toValues = hasFluidValue(to2) ? null : goalType == AnimatedString ? [1] : toArray(goal);
         }
         if (anim.immediate != immediate) {
@@ -20440,7 +20352,7 @@ var wp;
       const anim = this.animation;
       getAnimated(this).reset(getFluidValue(anim.to));
       if (!anim.immediate) {
-        anim.fromValues = anim.values.map((node2) => node2.lastPosition);
+        anim.fromValues = anim.values.map((node) => node.lastPosition);
       }
       if (!isAnimating(this)) {
         setActiveBit(this, true);
@@ -20460,8 +20372,8 @@ var wp;
       if (isAnimating(this)) {
         setActiveBit(this, false);
         const anim = this.animation;
-        each(anim.values, (node2) => {
-          node2.done = true;
+        each(anim.values, (node) => {
+          node.done = true;
         });
         if (anim.toValues) {
           anim.onChange = anim.onPause = anim.onResume = void 0;
@@ -20503,11 +20415,11 @@ var wp;
   function createUpdate(props) {
     const {
       to: to2,
-      from: from2
+      from
     } = props = inferTo(props);
     const keys = /* @__PURE__ */ new Set();
     if (is.obj(to2)) findDefined(to2, keys);
-    if (is.obj(from2)) findDefined(from2, keys);
+    if (is.obj(from)) findDefined(from, keys);
     props.keys = keys.size ? Array.from(keys) : null;
     return props;
   }
@@ -20692,7 +20604,7 @@ var wp;
     const {
       keys,
       to: to2,
-      from: from2,
+      from,
       loop: loop2,
       onRest,
       onResolve
@@ -20702,7 +20614,7 @@ var wp;
       props.loop = false;
     }
     if (to2 === false) props.to = null;
-    if (from2 === false) props.from = null;
+    if (from === false) props.from = null;
     const asyncTo = is.arr(to2) || is.fun(to2) ? to2 : void 0;
     if (asyncTo) {
       props.to = void 0;
@@ -20883,8 +20795,8 @@ var wp;
     _start() {
       if (this.idle && !checkIdle(this._active)) {
         this.idle = false;
-        each(getPayload(this), (node2) => {
-          node2.done = false;
+        each(getPayload(this), (node) => {
+          node.done = false;
         });
         if (globals.skipAnimation) {
           raf.batchedUpdates(() => this.advance());
@@ -20943,8 +20855,8 @@ var wp;
   function becomeIdle(self) {
     if (!self.idle) {
       self.idle = true;
-      each(getPayload(self), (node2) => {
-        node2.done = true;
+      each(getPayload(self), (node) => {
+        node.done = true;
       });
       callFluidObservers(self, {
         type: "idle",
@@ -21059,10 +20971,10 @@ var wp;
     strokeOpacity: true,
     strokeWidth: true
   };
-  var prefixKey = (prefix3, key) => prefix3 + key.charAt(0).toUpperCase() + key.substring(1);
+  var prefixKey = (prefix2, key) => prefix2 + key.charAt(0).toUpperCase() + key.substring(1);
   var prefixes = ["Webkit", "Ms", "Moz", "O"];
   isUnitlessNumber = Object.keys(isUnitlessNumber).reduce((acc, prop) => {
-    prefixes.forEach((prefix3) => acc[prefixKey(prefix3, prop)] = acc[prop]);
+    prefixes.forEach((prefix2) => acc[prefixKey(prefix2, prop)] = acc[prop]);
     return acc;
   }, isUnitlessNumber);
   var _excluded$1 = ["x", "y", "z"];
@@ -21273,16 +21185,16 @@ var wp;
     );
     return parentBlock === blockElement;
   }
-  function getBlockClientId(node2) {
-    while (node2 && node2.nodeType !== node2.ELEMENT_NODE) {
-      node2 = node2.parentNode;
+  function getBlockClientId(node) {
+    while (node && node.nodeType !== node.ELEMENT_NODE) {
+      node = node.parentNode;
     }
-    if (!node2) {
+    if (!node) {
       return;
     }
     const elementNode = (
       /** @type {Element} */
-      node2
+      node
     );
     const blockNode = elementNode.closest(BLOCK_SELECTOR);
     if (!blockNode) {
@@ -21380,7 +21292,7 @@ var wp;
       if (isInsideRootBlock(ref.current, ownerDocument.activeElement)) {
         return;
       }
-      const textInputs = import_dom3.focus.tabbable.find(ref.current).filter((node2) => (0, import_dom3.isTextField)(node2));
+      const textInputs = import_dom3.focus.tabbable.find(ref.current).filter((node) => (0, import_dom3.isTextField)(node));
       const isReverse = -1 === initialPosition2;
       const target = textInputs[isReverse ? textInputs.length - 1 : 0] || ref.current;
       if (!isInsideRootBlock(ref.current, target)) {
@@ -21413,16 +21325,16 @@ var wp;
   }
   function useIsHovered({ isEnabled = true } = {}) {
     return (0, import_compose8.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (!isEnabled) {
           return;
         }
-        node2.addEventListener("mouseout", listener);
-        node2.addEventListener("mouseover", listener);
+        node.addEventListener("mouseout", listener);
+        node.addEventListener("mouseover", listener);
         return () => {
-          node2.removeEventListener("mouseout", listener);
-          node2.removeEventListener("mouseover", listener);
-          node2.classList.remove("is-hovered");
+          node.removeEventListener("mouseout", listener);
+          node.removeEventListener("mouseover", listener);
+          node.classList.remove("is-hovered");
         };
       },
       [isEnabled]
@@ -21436,9 +21348,9 @@ var wp;
     const { isBlockSelected: isBlockSelected2 } = (0, import_data22.useSelect)(store);
     const { selectBlock: selectBlock2, selectionChange: selectionChange2 } = (0, import_data22.useDispatch)(store);
     return (0, import_compose9.useRefEffect)(
-      (node2) => {
+      (node) => {
         function onFocus(event) {
-          if (node2.parentElement.closest('[contenteditable="true"]')) {
+          if (node.parentElement.closest('[contenteditable="true"]')) {
             return;
           }
           if (isBlockSelected2(clientId)) {
@@ -21447,14 +21359,14 @@ var wp;
             }
             return;
           }
-          if (!isInsideRootBlock(node2, event.target)) {
+          if (!isInsideRootBlock(node, event.target)) {
             return;
           }
           selectBlock2(clientId);
         }
-        node2.addEventListener("focusin", onFocus);
+        node.addEventListener("focusin", onFocus);
         return () => {
-          node2.removeEventListener("focusin", onFocus);
+          node.removeEventListener("focusin", onFocus);
         };
       },
       [isBlockSelected2, selectBlock2]
@@ -21486,7 +21398,7 @@ var wp;
       editContentOnlySection: editContentOnlySection2
     } = unlock((0, import_data23.useDispatch)(store));
     return (0, import_compose10.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (!isSelected) {
           return;
         }
@@ -21495,7 +21407,7 @@ var wp;
           if (keyCode !== import_keycodes2.ENTER && keyCode !== import_keycodes2.BACKSPACE && keyCode !== import_keycodes2.DELETE) {
             return;
           }
-          if (target !== node2 || (0, import_dom6.isTextField)(target)) {
+          if (target !== node || (0, import_dom6.isTextField)(target)) {
             return;
           }
           event.preventDefault();
@@ -21508,7 +21420,7 @@ var wp;
           }
         }
         function onDragStart(event) {
-          if (node2 !== event.target || node2.isContentEditable || node2.ownerDocument.activeElement !== node2 || hasMultiSelection2()) {
+          if (node !== event.target || node.isContentEditable || node.ownerDocument.activeElement !== node || hasMultiSelection2()) {
             event.preventDefault();
             return;
           }
@@ -21520,7 +21432,7 @@ var wp;
           event.dataTransfer.effectAllowed = "move";
           event.dataTransfer.clearData();
           event.dataTransfer.setData("wp-blocks", data);
-          const { ownerDocument } = node2;
+          const { ownerDocument } = node;
           const { defaultView } = ownerDocument;
           const selection2 = defaultView.getSelection();
           selection2.removeAllRanges();
@@ -21531,15 +21443,15 @@ var wp;
           dragElement.style.visibility = "hidden";
           ownerDocument.body.appendChild(dragElement);
           event.dataTransfer.setDragImage(dragElement, 0, 0);
-          const rect = node2.getBoundingClientRect();
-          const clone = node2.cloneNode(true);
+          const rect = node.getBoundingClientRect();
+          const clone = node.cloneNode(true);
           clone.style.visibility = "hidden";
           clone.style.display = "none";
-          const id = node2.id;
-          node2.id = null;
+          const id = node.id;
+          node.id = null;
           let _scale = 1;
           {
-            let parentElement = node2;
+            let parentElement = node;
             while (parentElement = parentElement.parentElement) {
               const { scale } = defaultView.getComputedStyle(parentElement);
               if (scale && scale !== "none") {
@@ -21549,7 +21461,7 @@ var wp;
             }
           }
           const inverted = 1 / _scale;
-          node2.after(clone);
+          node.after(clone);
           const originalNodeProperties = {};
           for (const property of [
             "transform",
@@ -21563,28 +21475,28 @@ var wp;
             "opacity",
             "backgroundColor"
           ]) {
-            originalNodeProperties[property] = node2.style[property];
+            originalNodeProperties[property] = node.style[property];
           }
           const originScrollTop = defaultView.scrollY;
           const originScrollLeft = defaultView.scrollX;
           const originClientX = event.clientX;
           const originClientY = event.clientY;
-          node2.style.position = "relative";
-          node2.style.top = `${0}px`;
-          node2.style.left = `${0}px`;
+          node.style.position = "relative";
+          node.style.top = `${0}px`;
+          node.style.left = `${0}px`;
           const originX = event.clientX - rect.left;
           const originY = event.clientY - rect.top;
           const dragScale = rect.height > 200 ? 200 / rect.height : 1;
-          node2.style.zIndex = "1000";
-          node2.style.transformOrigin = `${originX * inverted}px ${originY * inverted}px`;
-          node2.style.transition = "transform 0.2s ease-out";
-          node2.style.transform = `scale(${dragScale})`;
-          node2.style.opacity = "0.9";
+          node.style.zIndex = "1000";
+          node.style.transformOrigin = `${originX * inverted}px ${originY * inverted}px`;
+          node.style.transition = "transform 0.2s ease-out";
+          node.style.transform = `scale(${dragScale})`;
+          node.style.opacity = "0.9";
           if (isColorTransparent(
-            defaultView.getComputedStyle(node2).backgroundColor
+            defaultView.getComputedStyle(node).backgroundColor
           )) {
             let bgColor = "transparent";
-            let parentElement = node2;
+            let parentElement = node;
             while (parentElement = parentElement.parentElement) {
               const { backgroundColor } = defaultView.getComputedStyle(parentElement);
               if (!isColorTransparent(backgroundColor)) {
@@ -21592,18 +21504,18 @@ var wp;
                 break;
               }
             }
-            node2.style.backgroundColor = bgColor;
+            node.style.backgroundColor = bgColor;
           }
           let hasStarted = false;
           function over(e2) {
             if (!hasStarted) {
               hasStarted = true;
-              node2.style.pointerEvents = "none";
+              node.style.pointerEvents = "none";
             }
             const scrollTop = defaultView.scrollY;
             const scrollLeft = defaultView.scrollX;
-            node2.style.top = `${(e2.clientY - originClientY + scrollTop - originScrollTop) * inverted}px`;
-            node2.style.left = `${(e2.clientX - originClientX + scrollLeft - originScrollLeft) * inverted}px`;
+            node.style.top = `${(e2.clientY - originClientY + scrollTop - originScrollTop) * inverted}px`;
+            node.style.left = `${(e2.clientX - originClientX + scrollLeft - originScrollLeft) * inverted}px`;
           }
           function end() {
             ownerDocument.removeEventListener("dragover", over);
@@ -21613,10 +21525,10 @@ var wp;
             for (const [property, value] of Object.entries(
               originalNodeProperties
             )) {
-              node2.style[property] = value;
+              node.style[property] = value;
             }
             clone.remove();
-            node2.id = id;
+            node.id = id;
             dragElement.remove();
             stopDraggingBlocks2();
             document.body.classList.remove(
@@ -21636,8 +21548,8 @@ var wp;
           );
           ownerDocument.documentElement.classList.add("is-dragging");
         }
-        node2.addEventListener("keydown", onKeyDown);
-        node2.addEventListener("dragstart", onDragStart);
+        node.addEventListener("keydown", onKeyDown);
+        node.addEventListener("dragstart", onDragStart);
         function onDoubleClick(event) {
           const isSection = isSectionBlock2(clientId);
           const isAlreadyEditing = editedContentOnlySection2 === clientId;
@@ -21647,13 +21559,13 @@ var wp;
           }
         }
         if (window?.__experimentalContentOnlyPatternInsertion) {
-          node2.addEventListener("dblclick", onDoubleClick);
+          node.addEventListener("dblclick", onDoubleClick);
         }
         return () => {
-          node2.removeEventListener("keydown", onKeyDown);
-          node2.removeEventListener("dragstart", onDragStart);
+          node.removeEventListener("keydown", onKeyDown);
+          node.removeEventListener("dragstart", onDragStart);
           if (window?.__experimentalContentOnlyPatternInsertion) {
-            node2.removeEventListener("dblclick", onDoubleClick);
+            node.removeEventListener("dblclick", onDoubleClick);
           }
         };
       },
@@ -21681,11 +21593,11 @@ var wp;
   function useIntersectionObserver() {
     const observer = (0, import_element29.useContext)(IntersectionObserver);
     return (0, import_compose11.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (observer) {
-          observer.observe(node2);
+          observer.observe(node);
           return () => {
-            observer.unobserve(node2);
+            observer.unobserve(node);
           };
         }
       },
@@ -21698,9 +21610,9 @@ var wp;
   function useScrollIntoView({ isSelected }) {
     const prefersReducedMotion = (0, import_compose12.useReducedMotion)();
     return (0, import_compose12.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (isSelected) {
-          const { ownerDocument } = node2;
+          const { ownerDocument } = node;
           const { defaultView } = ownerDocument;
           if (!defaultView.IntersectionObserver) {
             return;
@@ -21708,14 +21620,14 @@ var wp;
           const observer = new defaultView.IntersectionObserver(
             (entries) => {
               if (!entries[0].isIntersecting) {
-                node2.scrollIntoView({
+                node.scrollIntoView({
                   behavior: prefersReducedMotion ? "instant" : "smooth"
                 });
               }
               observer.disconnect();
             }
           );
-          observer.observe(node2);
+          observer.observe(node);
           return () => {
             observer.disconnect();
           };
@@ -21774,32 +21686,32 @@ var wp;
   // packages/block-editor/build-module/components/block-list/use-block-props/use-firefox-draggable-compatibility.js
   var import_compose14 = __toESM(require_compose());
   var nodesByDocument = /* @__PURE__ */ new Map();
-  function add(doc, node2) {
+  function add(doc, node) {
     let set = nodesByDocument.get(doc);
     if (!set) {
       set = /* @__PURE__ */ new Set();
       nodesByDocument.set(doc, set);
       doc.addEventListener("pointerdown", down);
     }
-    set.add(node2);
+    set.add(node);
   }
-  function remove3(doc, node2) {
+  function remove3(doc, node) {
     const set = nodesByDocument.get(doc);
     if (set) {
-      set.delete(node2);
-      restore(node2);
+      set.delete(node);
+      restore(node);
       if (set.size === 0) {
         nodesByDocument.delete(doc);
         doc.removeEventListener("pointerdown", down);
       }
     }
   }
-  function restore(node2) {
-    const prevDraggable = node2.getAttribute("data-draggable");
+  function restore(node) {
+    const prevDraggable = node.getAttribute("data-draggable");
     if (prevDraggable) {
-      node2.removeAttribute("data-draggable");
-      if (prevDraggable === "true" && !node2.getAttribute("draggable")) {
-        node2.setAttribute("draggable", "true");
+      node.removeAttribute("data-draggable");
+      if (prevDraggable === "true" && !node.getAttribute("draggable")) {
+        node.setAttribute("draggable", "true");
       }
     }
   }
@@ -21809,23 +21721,23 @@ var wp;
     const isInputOrTextArea = ["INPUT", "TEXTAREA"].includes(tagName);
     const nodes = nodesByDocument.get(ownerDocument);
     if (isContentEditable || isInputOrTextArea) {
-      for (const node2 of nodes) {
-        if (node2.getAttribute("draggable") === "true" && node2.contains(target)) {
-          node2.removeAttribute("draggable");
-          node2.setAttribute("data-draggable", "true");
+      for (const node of nodes) {
+        if (node.getAttribute("draggable") === "true" && node.contains(target)) {
+          node.removeAttribute("draggable");
+          node.setAttribute("data-draggable", "true");
         }
       }
     } else {
-      for (const node2 of nodes) {
-        restore(node2);
+      for (const node of nodes) {
+        restore(node);
       }
     }
   }
   function useFirefoxDraggableCompatibility() {
-    return (0, import_compose14.useRefEffect)((node2) => {
-      add(node2.ownerDocument, node2);
+    return (0, import_compose14.useRefEffect)((node) => {
+      add(node.ownerDocument, node);
       return () => {
-        remove3(node2.ownerDocument, node2);
+        remove3(node.ownerDocument, node);
       };
     }, []);
   }
@@ -22361,7 +22273,7 @@ var wp;
         const _isSelected = isBlockSelected2(clientId);
         const canRemove2 = canRemoveBlock2(clientId);
         const canMove2 = canMoveBlock2(clientId);
-        const match3 = getActiveBlockVariation(blockName, attributes2);
+        const match2 = getActiveBlockVariation(blockName, attributes2);
         const isMultiSelected2 = isBlockMultiSelected2(clientId);
         const checkDeep = true;
         const isAncestorOfSelectedBlock = hasSelectedInnerBlock2(
@@ -22393,7 +22305,7 @@ var wp;
             false
           ) && hasSelectedInnerBlock2(clientId),
           blockApiVersion: blockType?.apiVersion || 1,
-          blockTitle: match3?.title || blockType?.title,
+          blockTitle: match2?.title || blockType?.title,
           isSubtreeDisabled: blockEditingMode2 === "disabled" && isBlockSubtreeDisabled2(clientId),
           hasOverlay: __unstableHasActiveBlockOverlayActive2(clientId) && !isDragging22(),
           initialPosition: _isSelected ? getSelectedBlocksInitialCaretPosition2() : void 0,
@@ -23996,7 +23908,7 @@ var wp;
     const { clearSelectedBlock: clearSelectedBlock2 } = (0, import_data34.useDispatch)(store);
     const { clearBlockSelection: isEnabled } = getSettings7();
     return (0, import_compose19.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (!isEnabled) {
           return;
         }
@@ -24004,14 +23916,14 @@ var wp;
           if (!hasSelectedBlock2() && !hasMultiSelection2()) {
             return;
           }
-          if (event.target !== node2) {
+          if (event.target !== node) {
             return;
           }
           clearSelectedBlock2();
         }
-        node2.addEventListener("mousedown", onMouseDown);
+        node.addEventListener("mousedown", onMouseDown);
         return () => {
-          node2.removeEventListener("mousedown", onMouseDown);
+          node.removeEventListener("mousedown", onMouseDown);
         };
       },
       [hasSelectedBlock2, hasMultiSelection2, clearSelectedBlock2, isEnabled]
@@ -24058,8 +23970,8 @@ var wp;
       isFullSelection
     } = (0, import_data35.useSelect)(selector, []);
     return (0, import_compose20.useRefEffect)(
-      (node2) => {
-        const { ownerDocument } = node2;
+      (node) => {
+        const { ownerDocument } = node;
         const { defaultView } = ownerDocument;
         if (initialPosition2 === void 0 || initialPosition2 === null) {
           return;
@@ -24067,15 +23979,15 @@ var wp;
         if (!hasMultiSelection2 || isMultiSelecting3) {
           return;
         }
-        const { length: length2 } = multiSelectedBlockClientIds;
-        if (length2 < 2) {
+        const { length } = multiSelectedBlockClientIds;
+        if (length < 2) {
           return;
         }
         if (!isFullSelection) {
           return;
         }
-        node2.contentEditable = true;
-        node2.focus();
+        node.contentEditable = true;
+        node.focus();
         defaultView.getSelection().removeAllRanges();
       },
       [
@@ -24145,8 +24057,8 @@ var wp;
         );
         const tabbables = import_dom8.focus.tabbable.find(containerRef.current);
         if (tabbables.length) {
-          const next2 = isBefore ? tabbables[0] : tabbables[tabbables.length - 1];
-          next2.focus();
+          const next = isBefore ? tabbables[0] : tabbables[tabbables.length - 1];
+          next.focus();
         }
       }
     }
@@ -24166,7 +24078,7 @@ var wp;
         onFocus: onFocusCapture
       }
     );
-    const ref = (0, import_compose21.useRefEffect)((node2) => {
+    const ref = (0, import_compose21.useRefEffect)((node) => {
       function onKeyDown(event) {
         if (event.defaultPrevented) {
           return;
@@ -24190,15 +24102,15 @@ var wp;
         if ((0, import_dom8.isFormElement)(nextTabbable) && isElementPartOfSelectedBlock) {
           return;
         }
-        const next2 = isShift ? focusCaptureBeforeRef : focusCaptureAfterRef;
+        const next = isShift ? focusCaptureBeforeRef : focusCaptureAfterRef;
         noCaptureRef.current = true;
-        next2.current.focus({ preventScroll: true });
+        next.current.focus({ preventScroll: true });
       }
       function onFocusOut(event) {
         setLastFocus2({ ...getLastFocus2(), current: event.target });
-        const { ownerDocument: ownerDocument2 } = node2;
+        const { ownerDocument: ownerDocument2 } = node;
         if (!event.relatedTarget && event.target.hasAttribute("data-block") && ownerDocument2.activeElement === ownerDocument2.body && getBlockCount2() === 0) {
-          node2.focus();
+          node.focus();
         }
       }
       function preventScrollOnTab(event) {
@@ -24219,15 +24131,15 @@ var wp;
           target.focus({ preventScroll: true });
         }
       }
-      const { ownerDocument } = node2;
+      const { ownerDocument } = node;
       const { defaultView } = ownerDocument;
       defaultView.addEventListener("keydown", preventScrollOnTab);
-      node2.addEventListener("keydown", onKeyDown);
-      node2.addEventListener("focusout", onFocusOut);
+      node.addEventListener("keydown", onKeyDown);
+      node.addEventListener("focusout", onFocusOut);
       return () => {
         defaultView.removeEventListener("keydown", preventScrollOnTab);
-        node2.removeEventListener("keydown", onKeyDown);
-        node2.removeEventListener("focusout", onFocusOut);
+        node.removeEventListener("keydown", onKeyDown);
+        node.removeEventListener("focusout", onFocusOut);
       };
     }, []);
     const mergedRefs = (0, import_compose21.useMergeRefs)([containerRef, ref]);
@@ -24286,21 +24198,21 @@ var wp;
     if (onlyVertical) {
       targetRect = target.getBoundingClientRect();
     }
-    function isTabCandidate(node2) {
-      if (node2.closest("[inert]")) {
+    function isTabCandidate(node) {
+      if (node.closest("[inert]")) {
         return;
       }
-      if (node2.children.length === 1 && isInSameBlock(node2, node2.firstElementChild) && node2.firstElementChild.getAttribute("contenteditable") === "true") {
+      if (node.children.length === 1 && isInSameBlock(node, node.firstElementChild) && node.firstElementChild.getAttribute("contenteditable") === "true") {
         return;
       }
-      if (!import_dom10.focus.tabbable.isTabbableIndex(node2)) {
+      if (!import_dom10.focus.tabbable.isTabbableIndex(node)) {
         return false;
       }
-      if (node2.isContentEditable && node2.contentEditable !== "true") {
+      if (node.isContentEditable && node.contentEditable !== "true") {
         return false;
       }
       if (onlyVertical) {
-        const nodeRect = node2.getBoundingClientRect();
+        const nodeRect = node.getBoundingClientRect();
         if (nodeRect.left >= targetRect.right || nodeRect.right <= targetRect.left) {
           return false;
         }
@@ -24318,7 +24230,7 @@ var wp;
       __unstableIsFullySelected: __unstableIsFullySelected2
     } = (0, import_data37.useSelect)(store);
     const { selectBlock: selectBlock2 } = (0, import_data37.useDispatch)(store);
-    return (0, import_compose22.useRefEffect)((node2) => {
+    return (0, import_compose22.useRefEffect)((node) => {
       let verticalRect;
       function onMouseDown() {
         verticalRect = null;
@@ -24327,7 +24239,7 @@ var wp;
         const closestTabbable = getClosestTabbable(
           target,
           isReverse,
-          node2
+          node
         );
         return closestTabbable && getBlockClientId(closestTabbable);
       }
@@ -24346,7 +24258,7 @@ var wp;
         const isNav = isHorizontal || isVertical;
         const hasModifier = shiftKey || ctrlKey || altKey || metaKey;
         const isNavEdge = isVertical ? import_dom10.isVerticalEdge : import_dom10.isHorizontalEdge;
-        const { ownerDocument } = node2;
+        const { ownerDocument } = node;
         const { defaultView } = ownerDocument;
         if (!isNav) {
           return;
@@ -24378,8 +24290,8 @@ var wp;
         const { keepCaretInsideBlock } = getSettings7();
         if (shiftKey) {
           if (isClosestTabbableABlock(target, isReverse) && isNavEdge(target, isReverse)) {
-            node2.contentEditable = true;
-            node2.focus();
+            node.contentEditable = true;
+            node.focus();
           }
         } else if (isVertical && (0, import_dom10.isVerticalEdge)(target, isReverse) && // When Alt is pressed, only intercept if the caret is also at
         // the horizontal edge.
@@ -24387,7 +24299,7 @@ var wp;
           const closestTabbable = getClosestTabbable(
             target,
             isReverse,
-            node2,
+            node,
             true
           );
           if (closestTabbable) {
@@ -24404,17 +24316,17 @@ var wp;
           const closestTabbable = getClosestTabbable(
             target,
             isReverseDir,
-            node2
+            node
           );
           (0, import_dom10.placeCaretAtHorizontalEdge)(closestTabbable, isReverse);
           event.preventDefault();
         }
       }
-      node2.addEventListener("mousedown", onMouseDown);
-      node2.addEventListener("keydown", onKeyDown);
+      node.addEventListener("mousedown", onMouseDown);
+      node.addEventListener("keydown", onKeyDown);
       return () => {
-        node2.removeEventListener("mousedown", onMouseDown);
-        node2.removeEventListener("keydown", onKeyDown);
+        node.removeEventListener("mousedown", onMouseDown);
+        node.removeEventListener("keydown", onKeyDown);
       };
     }, []);
   }
@@ -24428,7 +24340,7 @@ var wp;
     const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data38.useSelect)(store);
     const { multiSelect: multiSelect2, selectBlock: selectBlock2 } = (0, import_data38.useDispatch)(store);
     const isMatch = (0, import_keyboard_shortcuts3.__unstableUseShortcutEventMatch)();
-    return (0, import_compose23.useRefEffect)((node2) => {
+    return (0, import_compose23.useRefEffect)((node) => {
       function onKeyDown(event) {
         if (!isMatch("core/block-editor/select-all", event)) {
           return;
@@ -24443,7 +24355,7 @@ var wp;
         const blockClientIds = getBlockOrder2(rootClientId);
         if (selectedClientIds.length === blockClientIds.length) {
           if (rootClientId) {
-            node2.ownerDocument.defaultView.getSelection().removeAllRanges();
+            node.ownerDocument.defaultView.getSelection().removeAllRanges();
             selectBlock2(rootClientId);
           }
           return;
@@ -24453,9 +24365,9 @@ var wp;
           blockClientIds[blockClientIds.length - 1]
         );
       }
-      node2.addEventListener("keydown", onKeyDown);
+      node.addEventListener("keydown", onKeyDown);
       return () => {
-        node2.removeEventListener("keydown", onKeyDown);
+        node.removeEventListener("keydown", onKeyDown);
       };
     }, []);
   }
@@ -24463,10 +24375,10 @@ var wp;
   // packages/block-editor/build-module/components/writing-flow/use-drag-selection.js
   var import_data39 = __toESM(require_data());
   var import_compose24 = __toESM(require_compose());
-  function setContentEditableWrapper(node2, value) {
-    node2.contentEditable = value;
+  function setContentEditableWrapper(node, value) {
+    node.contentEditable = value;
     if (value) {
-      node2.focus();
+      node.focus();
     }
   }
   function useDragSelection() {
@@ -24478,8 +24390,8 @@ var wp;
       isMultiSelecting: isMultiSelecting3
     } = (0, import_data39.useSelect)(store);
     return (0, import_compose24.useRefEffect)(
-      (node2) => {
-        const { ownerDocument } = node2;
+      (node) => {
+        const { ownerDocument } = node;
         const { defaultView } = ownerDocument;
         let anchorElement;
         let rafId;
@@ -24490,7 +24402,7 @@ var wp;
             if (!hasSelectedBlock2()) {
               return;
             }
-            setContentEditableWrapper(node2, false);
+            setContentEditableWrapper(node, false);
             const selection2 = defaultView.getSelection();
             if (selection2.rangeCount) {
               const range2 = selection2.getRangeAt(0);
@@ -24524,7 +24436,7 @@ var wp;
           if (isMultiSelecting3()) {
             return;
           }
-          if (node2 === target) {
+          if (node === target) {
             return;
           }
           if (target.getAttribute("contenteditable") !== "true") {
@@ -24536,12 +24448,12 @@ var wp;
           anchorElement = target;
           startMultiSelect2();
           defaultView.addEventListener("mouseup", onMouseUp);
-          setContentEditableWrapper(node2, true);
+          setContentEditableWrapper(node, true);
         }
-        node2.addEventListener("mouseout", onMouseLeave);
-        node2.addEventListener("mousedown", onMouseDown);
+        node.addEventListener("mouseout", onMouseLeave);
+        node.addEventListener("mousedown", onMouseDown);
         return () => {
-          node2.removeEventListener("mouseout", onMouseLeave);
+          node.removeEventListener("mouseout", onMouseLeave);
           defaultView.removeEventListener("mouseup", onMouseUp);
           defaultView.cancelAnimationFrame(rafId);
         };
@@ -24590,24 +24502,24 @@ var wp;
     }
     return depth;
   }
-  function setContentEditableWrapper2(node2, value) {
-    if (node2.contentEditable !== String(value)) {
-      node2.contentEditable = value;
+  function setContentEditableWrapper2(node, value) {
+    if (node.contentEditable !== String(value)) {
+      node.contentEditable = value;
       if (value) {
-        node2.focus();
+        node.focus();
       }
     }
   }
-  function getRichTextElement(node2) {
-    const element = node2.nodeType === node2.ELEMENT_NODE ? node2 : node2.parentElement;
+  function getRichTextElement(node) {
+    const element = node.nodeType === node.ELEMENT_NODE ? node : node.parentElement;
     return element?.closest("[data-wp-block-attribute-key]");
   }
   function useSelectionObserver() {
     const { multiSelect: multiSelect2, selectBlock: selectBlock2, selectionChange: selectionChange2 } = (0, import_data40.useDispatch)(store);
     const { getBlockParents: getBlockParents2, getBlockSelectionStart: getBlockSelectionStart2, isMultiSelecting: isMultiSelecting3 } = (0, import_data40.useSelect)(store);
     return (0, import_compose25.useRefEffect)(
-      (node2) => {
-        const { ownerDocument } = node2;
+      (node) => {
+        const { ownerDocument } = node;
         const { defaultView } = ownerDocument;
         function onSelectionChange(event) {
           const selection2 = defaultView.getSelection();
@@ -24616,13 +24528,13 @@ var wp;
           }
           const startNode = extractSelectionStartNode(selection2);
           const endNode = extractSelectionEndNode(selection2);
-          if (!node2.contains(startNode) || !node2.contains(endNode)) {
+          if (!node.contains(startNode) || !node.contains(endNode)) {
             return;
           }
           const isClickShift = event.shiftKey && event.type === "mouseup";
           if (selection2.isCollapsed && !isClickShift) {
-            if (node2.contentEditable === "true" && !isMultiSelecting3()) {
-              setContentEditableWrapper2(node2, false);
+            if (node.contentEditable === "true" && !isMultiSelecting3()) {
+              setContentEditableWrapper2(node, false);
               let element = startNode.nodeType === startNode.ELEMENT_NODE ? startNode : startNode.parentElement;
               element = element?.closest("[contenteditable]");
               element?.focus();
@@ -24643,7 +24555,7 @@ var wp;
             }
           }
           if (startClientId === void 0 && endClientId === void 0) {
-            setContentEditableWrapper2(node2, false);
+            setContentEditableWrapper2(node, false);
             return;
           }
           const isSingularSelection = startClientId === endClientId;
@@ -24724,7 +24636,7 @@ var wp;
     const { selectBlock: selectBlock2 } = (0, import_data41.useDispatch)(store);
     const { isSelectionEnabled: isSelectionEnabled3, getBlockSelectionStart: getBlockSelectionStart2, hasMultiSelection: hasMultiSelection2 } = (0, import_data41.useSelect)(store);
     return (0, import_compose26.useRefEffect)(
-      (node2) => {
+      (node) => {
         function onMouseDown(event) {
           if (!isSelectionEnabled3() || event.button !== 0) {
             return;
@@ -24733,16 +24645,16 @@ var wp;
           const clickedClientId = getBlockClientId(event.target);
           if (event.shiftKey) {
             if (startClientId && startClientId !== clickedClientId) {
-              node2.contentEditable = true;
-              node2.focus();
+              node.contentEditable = true;
+              node.focus();
             }
           } else if (hasMultiSelection2()) {
             selectBlock2(clickedClientId);
           }
         }
-        node2.addEventListener("mousedown", onMouseDown);
+        node.addEventListener("mousedown", onMouseDown);
         return () => {
-          node2.removeEventListener("mousedown", onMouseDown);
+          node.removeEventListener("mousedown", onMouseDown);
         };
       },
       [
@@ -24781,9 +24693,9 @@ var wp;
       __unstableExpandSelection: __unstableExpandSelection2,
       __unstableMarkAutomaticChange: __unstableMarkAutomaticChange2
     } = (0, import_data42.useDispatch)(store);
-    return (0, import_compose27.useRefEffect)((node2) => {
+    return (0, import_compose27.useRefEffect)((node) => {
       function onBeforeInput(event) {
-        if (node2.contentEditable === "true") {
+        if (node.contentEditable === "true") {
           event.preventDefault();
         }
       }
@@ -24838,7 +24750,7 @@ var wp;
           return;
         }
         if (event.keyCode === import_keycodes5.ENTER) {
-          node2.contentEditable = false;
+          node.contentEditable = false;
           event.preventDefault();
           if (__unstableIsFullySelected2()) {
             replaceBlocks2(
@@ -24849,7 +24761,7 @@ var wp;
             __unstableSplitSelection2();
           }
         } else if (event.keyCode === import_keycodes5.BACKSPACE || event.keyCode === import_keycodes5.DELETE) {
-          node2.contentEditable = false;
+          node.contentEditable = false;
           event.preventDefault();
           if (__unstableIsFullySelected2()) {
             removeBlocks2(getSelectedBlockClientIds2());
@@ -24863,12 +24775,12 @@ var wp;
           // input anything.
           event.key.length === 1 && !(event.metaKey || event.ctrlKey)
         ) {
-          node2.contentEditable = false;
+          node.contentEditable = false;
           if (__unstableIsSelectionMergeable2()) {
             __unstableDeleteSelection2(event.keyCode === import_keycodes5.DELETE);
           } else {
             event.preventDefault();
-            node2.ownerDocument.defaultView.getSelection().removeAllRanges();
+            node.ownerDocument.defaultView.getSelection().removeAllRanges();
           }
         }
       }
@@ -24876,21 +24788,21 @@ var wp;
         if (!hasMultiSelection2()) {
           return;
         }
-        node2.contentEditable = false;
+        node.contentEditable = false;
         if (__unstableIsSelectionMergeable2()) {
           __unstableDeleteSelection2();
         } else {
           event.preventDefault();
-          node2.ownerDocument.defaultView.getSelection().removeAllRanges();
+          node.ownerDocument.defaultView.getSelection().removeAllRanges();
         }
       }
-      node2.addEventListener("beforeinput", onBeforeInput);
-      node2.addEventListener("keydown", onKeyDown);
-      node2.addEventListener("compositionstart", onCompositionStart);
+      node.addEventListener("beforeinput", onBeforeInput);
+      node.addEventListener("keydown", onKeyDown);
+      node.addEventListener("compositionstart", onCompositionStart);
       return () => {
-        node2.removeEventListener("beforeinput", onBeforeInput);
-        node2.removeEventListener("keydown", onKeyDown);
-        node2.removeEventListener("compositionstart", onCompositionStart);
+        node.removeEventListener("beforeinput", onBeforeInput);
+        node.removeEventListener("keydown", onKeyDown);
+        node.removeEventListener("compositionstart", onCompositionStart);
       };
     }, []);
   }
@@ -25102,7 +25014,7 @@ var wp;
       __unstableSplitSelection: __unstableSplitSelection2
     } = (0, import_data44.useDispatch)(store);
     const notifyCopy = useNotifyCopy();
-    return (0, import_compose28.useRefEffect)((node2) => {
+    return (0, import_compose28.useRefEffect)((node) => {
       function handler(event) {
         if (event.defaultPrevented) {
           return;
@@ -25120,7 +25032,7 @@ var wp;
           }
         }
         const { activeElement } = event.target.ownerDocument;
-        if (!node2.contains(activeElement)) {
+        if (!node.contains(activeElement)) {
           return;
         }
         const isSelectionMergeable = __unstableIsSelectionMergeable2();
@@ -25241,13 +25153,13 @@ var wp;
           event.preventDefault();
         }
       }
-      node2.ownerDocument.addEventListener("copy", handler);
-      node2.ownerDocument.addEventListener("cut", handler);
-      node2.ownerDocument.addEventListener("paste", handler);
+      node.ownerDocument.addEventListener("copy", handler);
+      node.ownerDocument.addEventListener("cut", handler);
+      node.ownerDocument.addEventListener("paste", handler);
       return () => {
-        node2.ownerDocument.removeEventListener("copy", handler);
-        node2.ownerDocument.removeEventListener("cut", handler);
-        node2.ownerDocument.removeEventListener("paste", handler);
+        node.ownerDocument.removeEventListener("copy", handler);
+        node.ownerDocument.removeEventListener("cut", handler);
+        node.ownerDocument.removeEventListener("paste", handler);
       };
     }, []);
   }
@@ -25273,21 +25185,21 @@ var wp;
         useSelectAll(),
         useArrowNav(),
         (0, import_compose29.useRefEffect)(
-          (node2) => {
-            node2.tabIndex = 0;
-            node2.dataset.hasMultiSelection = hasMultiSelection2;
+          (node) => {
+            node.tabIndex = 0;
+            node.dataset.hasMultiSelection = hasMultiSelection2;
             if (!hasMultiSelection2) {
               return () => {
-                delete node2.dataset.hasMultiSelection;
+                delete node.dataset.hasMultiSelection;
               };
             }
-            node2.setAttribute(
+            node.setAttribute(
               "aria-label",
               (0, import_i18n33.__)("Multiple selected blocks")
             );
             return () => {
-              delete node2.dataset.hasMultiSelection;
-              node2.removeAttribute("aria-label");
+              delete node.dataset.hasMultiSelection;
+              node.removeAttribute("aria-label");
             };
           },
           [hasMultiSelection2]
@@ -25727,9 +25639,9 @@ var wp;
     const [bodyClasses, setBodyClasses] = (0, import_element44.useState)([]);
     const clearerRef = useBlockSelectionClearer();
     const [before, writingFlowRef, after] = useWritingFlow();
-    const setRef = (0, import_compose31.useRefEffect)((node2) => {
-      node2._load = () => {
-        setIframeDocument(node2.contentDocument);
+    const setRef = (0, import_compose31.useRefEffect)((node) => {
+      node._load = () => {
+        setIframeDocument(node.contentDocument);
       };
       let iFrameDocument;
       function preventFileDropDefault(event) {
@@ -25741,14 +25653,14 @@ var wp;
           iFrameDocument.defaultView.location.hash = event.target.getAttribute("href").slice(1);
         }
       }
-      const { ownerDocument } = node2;
+      const { ownerDocument } = node;
       setBodyClasses(
         Array.from(ownerDocument.body.classList).filter(
           (name) => name.startsWith("admin-color-") || name.startsWith("post-type-") || name === "wp-embed-responsive"
         )
       );
       function onLoad() {
-        const { contentDocument } = node2;
+        const { contentDocument } = node;
         const { documentElement } = contentDocument;
         iFrameDocument = contentDocument;
         documentElement.classList.add("block-editor-iframe__html");
@@ -25780,10 +25692,10 @@ var wp;
         );
         iFrameDocument.addEventListener("click", interceptLinkClicks);
       }
-      node2.addEventListener("load", onLoad);
+      node.addEventListener("load", onLoad);
       return () => {
-        delete node2._load;
-        node2.removeEventListener("load", onLoad);
+        delete node._load;
+        node.removeEventListener("load", onLoad);
         iFrameDocument?.removeEventListener(
           "dragover",
           preventFileDropDefault
@@ -25962,8 +25874,8 @@ var wp;
     let nesting = 0;
     let result = "";
     for (; offset < text.length; offset++) {
-      const char2 = text[offset];
-      switch (char2) {
+      const char = text[offset];
+      switch (char) {
         case "(":
           ++nesting;
           break;
@@ -25971,7 +25883,7 @@ var wp;
           --nesting;
           break;
       }
-      result += char2;
+      result += char;
       if (nesting === 0) {
         return result;
       }
@@ -25985,28 +25897,28 @@ var wp;
     const tokens = [text];
     for (const [type, pattern] of Object.entries(grammar)) {
       for (let i2 = 0; i2 < tokens.length; i2++) {
-        const token2 = tokens[i2];
-        if (typeof token2 !== "string") {
+        const token = tokens[i2];
+        if (typeof token !== "string") {
           continue;
         }
         pattern.lastIndex = 0;
-        const match3 = pattern.exec(token2);
-        if (!match3) {
+        const match2 = pattern.exec(token);
+        if (!match2) {
           continue;
         }
-        const from2 = match3.index - 1;
+        const from = match2.index - 1;
         const args = [];
-        const content = match3[0];
-        const before = token2.slice(0, from2 + 1);
+        const content = match2[0];
+        const before = token.slice(0, from + 1);
         if (before) {
           args.push(before);
         }
         args.push({
-          ...match3.groups,
+          ...match2.groups,
           type,
           content
         });
-        const after = token2.slice(from2 + content.length + 1);
+        const after = token.slice(from + content.length + 1);
         if (after) {
           args.push(after);
         }
@@ -26014,15 +25926,15 @@ var wp;
       }
     }
     let offset = 0;
-    for (const token2 of tokens) {
-      switch (typeof token2) {
+    for (const token of tokens) {
+      switch (typeof token) {
         case "string":
-          throw new Error(`Unexpected sequence ${token2} found at index ${offset}`);
+          throw new Error(`Unexpected sequence ${token} found at index ${offset}`);
         case "object":
-          offset += token2.content.length;
-          token2.pos = [offset - token2.content.length, offset];
-          if (TRIM_TOKENS.has(token2.type)) {
-            token2.content = token2.content.trim() || " ";
+          offset += token.content.length;
+          token.pos = [offset - token.content.length, offset];
+          if (TRIM_TOKENS.has(token.type)) {
+            token.content = token.content.trim() || " ";
           }
           break;
       }
@@ -26058,49 +25970,49 @@ var wp;
     const tokens = tokenizeBy(selector3, grammar);
     const changedTokens = /* @__PURE__ */ new Set();
     for (const replacement of replacements.reverse()) {
-      for (const token2 of tokens) {
+      for (const token of tokens) {
         const { offset, value } = replacement;
-        if (!(token2.pos[0] <= offset && offset + value.length <= token2.pos[1])) {
+        if (!(token.pos[0] <= offset && offset + value.length <= token.pos[1])) {
           continue;
         }
-        const { content } = token2;
-        const tokenOffset = offset - token2.pos[0];
-        token2.content = content.slice(0, tokenOffset) + value + content.slice(tokenOffset + value.length);
-        if (token2.content !== content) {
-          changedTokens.add(token2);
+        const { content } = token;
+        const tokenOffset = offset - token.pos[0];
+        token.content = content.slice(0, tokenOffset) + value + content.slice(tokenOffset + value.length);
+        if (token.content !== content) {
+          changedTokens.add(token);
         }
       }
     }
-    for (const token2 of changedTokens) {
-      const pattern = getArgumentPatternByType(token2.type);
+    for (const token of changedTokens) {
+      const pattern = getArgumentPatternByType(token.type);
       if (!pattern) {
-        throw new Error(`Unknown token type: ${token2.type}`);
+        throw new Error(`Unknown token type: ${token.type}`);
       }
       pattern.lastIndex = 0;
-      const match3 = pattern.exec(token2.content);
-      if (!match3) {
-        throw new Error(`Unable to parse content for ${token2.type}: ${token2.content}`);
+      const match2 = pattern.exec(token.content);
+      if (!match2) {
+        throw new Error(`Unable to parse content for ${token.type}: ${token.content}`);
       }
-      Object.assign(token2, match3.groups);
+      Object.assign(token, match2.groups);
     }
     return tokens;
   }
-  function* flatten(node2, parent) {
-    switch (node2.type) {
+  function* flatten(node, parent) {
+    switch (node.type) {
       case "list":
-        for (let child of node2.list) {
-          yield* flatten(child, node2);
+        for (let child of node.list) {
+          yield* flatten(child, node);
         }
         break;
       case "complex":
-        yield* flatten(node2.left, node2);
-        yield* flatten(node2.right, node2);
+        yield* flatten(node.left, node);
+        yield* flatten(node.right, node);
         break;
       case "compound":
-        yield* node2.list.map((token2) => [token2, node2]);
+        yield* node.list.map((token) => [token, node]);
         break;
       default:
-        yield [node2, parent];
+        yield [node, parent];
     }
   }
   function stringify(listOrNode) {
@@ -26108,9 +26020,9 @@ var wp;
     if (Array.isArray(listOrNode)) {
       tokens = listOrNode;
     } else {
-      tokens = [...flatten(listOrNode)].map(([token2]) => token2);
+      tokens = [...flatten(listOrNode)].map(([token]) => token);
     }
-    return tokens.map((token2) => token2.content).join("");
+    return tokens.map((token) => token.content).join("");
   }
 
   // packages/block-editor/build-module/utils/transform-styles/index.js
@@ -26127,7 +26039,7 @@ var wp;
     { type: "pseudo-class", content: ":where(:root)" },
     { type: "pseudo-class", content: ":where(html)" }
   ];
-  function prefixRootSelector(prefix3, selector3) {
+  function prefixRootSelector(prefix2, selector3) {
     const tokenized = tokenize(selector3);
     const lastRootIndex = tokenized.findLastIndex(({ content, type }) => {
       return ROOT_SELECTOR_TOKENS.some(
@@ -26141,7 +26053,7 @@ var wp;
         break;
       }
     }
-    const tokenizedPrefix = tokenize(prefix3);
+    const tokenizedPrefix = tokenize(prefix2);
     tokenized.splice(
       // Insert at the insertion point, or the end.
       insertionPoint2 === -1 ? tokenized.length : insertionPoint2,
@@ -26168,7 +26080,7 @@ var wp;
         [
           wrapperSelector && (0, import_postcss_prefix_selector.default)({
             prefix: wrapperSelector,
-            transform(prefix3, selector3, prefixedSelector) {
+            transform(prefix2, selector3, prefixedSelector) {
               if (excludedSelectors.some(
                 (excludedSelector) => excludedSelector instanceof RegExp ? selector3.match(excludedSelector) : selector3.includes(excludedSelector)
               )) {
@@ -26178,7 +26090,7 @@ var wp;
                 (rootSelector) => selector3.startsWith(rootSelector.content)
               );
               if (hasRootSelector) {
-                return prefixRootSelector(prefix3, selector3);
+                return prefixRootSelector(prefix2, selector3);
               }
               return prefixedSelector;
             }
@@ -26223,11 +26135,11 @@ var wp;
   k([names_default, a11y_default]);
   function useDarkThemeBodyClassName(styles, scope) {
     return (0, import_element45.useCallback)(
-      (node2) => {
-        if (!node2) {
+      (node) => {
+        if (!node) {
           return;
         }
-        const { ownerDocument } = node2;
+        const { ownerDocument } = node;
         const { defaultView, body } = ownerDocument;
         const canvas = scope ? ownerDocument.querySelector(scope) : body;
         let backgroundColor;
@@ -30059,7 +29971,7 @@ var wp;
     }
     render() {
       const {
-        position: position2,
+        position,
         hasSingleBlockType,
         directInsertBlock,
         insertOnlyAllowedBlock,
@@ -30076,7 +29988,7 @@ var wp;
           contentClassName: clsx_default("block-editor-inserter__popover", {
             "is-quick": isQuick
           }),
-          popoverProps: { position: position2, shift: true },
+          popoverProps: { position, shift: true },
           onToggle: this.onToggle,
           expandOnMobile: true,
           headerTitle: (0, import_i18n59.__)("Add a block"),
@@ -30438,7 +30350,7 @@ var wp;
   var scrollContainerCache = /* @__PURE__ */ new WeakMap();
   function usePopoverScroll(contentRef) {
     const effect = (0, import_compose46.useRefEffect)(
-      (node2) => {
+      (node) => {
         function onWheel(event) {
           const { deltaX, deltaY, target } = event;
           const contentEl = contentRef.current;
@@ -30448,14 +30360,14 @@ var wp;
             scrollContainerCache.set(contentEl, scrollContainer);
           }
           const eventScrollContainer = (0, import_dom20.getScrollContainer)(target);
-          if (!node2.contains(eventScrollContainer)) {
+          if (!node.contains(eventScrollContainer)) {
             scrollContainer.scrollBy(deltaX, deltaY);
           }
         }
         const options = { passive: true };
-        node2.addEventListener("wheel", onWheel, options);
+        node.addEventListener("wheel", onWheel, options);
         return () => {
-          node2.removeEventListener("wheel", onWheel, options);
+          node.removeEventListener("wheel", onWheel, options);
         };
       },
       [contentRef]
@@ -30910,8 +30822,8 @@ var wp;
       }
     }
     const maybeResetOpenRef = (0, import_element81.useCallback)(
-      (node2) => {
-        if (!node2 && openRef.current) {
+      (node) => {
+        if (!node && openRef.current) {
           openRef.current = false;
         }
       },
@@ -31082,7 +30994,7 @@ var wp;
     } = unlock((0, import_data66.useSelect)(store));
     const { showInsertionPoint: showInsertionPoint2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data66.useDispatch)(store);
     return (0, import_compose50.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (isInBetweenInserterDisabled) {
           return;
         }
@@ -31154,9 +31066,9 @@ var wp;
             __unstableWithInserter: true
           });
         }
-        node2.addEventListener("mousemove", onMouseMove);
+        node.addEventListener("mousemove", onMouseMove);
         return () => {
-          node2.removeEventListener("mousemove", onMouseMove);
+          node.removeEventListener("mousemove", onMouseMove);
         };
       },
       [
@@ -31700,7 +31612,7 @@ var wp;
   var THRESHOLD_DISTANCE = 30;
   var MINIMUM_HEIGHT_FOR_THRESHOLD = 120;
   var MINIMUM_WIDTH_FOR_THRESHOLD = 120;
-  function getDropTargetPosition(blocksData, position2, orientation = "vertical", options = {}) {
+  function getDropTargetPosition(blocksData, position, orientation = "vertical", options = {}) {
     const allowedEdges = orientation === "horizontal" ? ["left", "right"] : ["top", "bottom"];
     let nearestIndex = 0;
     let insertPosition = "before";
@@ -31714,7 +31626,7 @@ var wp;
     } = options;
     if (dropZoneElement && parentBlockOrientation !== "horizontal") {
       const rect = dropZoneElement.getBoundingClientRect();
-      const [distance, edge] = getDistanceToNearestEdge(position2, rect, [
+      const [distance, edge] = getDistanceToNearestEdge(position, rect, [
         "top",
         "bottom"
       ]);
@@ -31730,7 +31642,7 @@ var wp;
     const isRightToLeft = (0, import_i18n64.isRTL)();
     if (dropZoneElement && parentBlockOrientation === "horizontal") {
       const rect = dropZoneElement.getBoundingClientRect();
-      const [distance, edge] = getDistanceToNearestEdge(position2, rect, [
+      const [distance, edge] = getDistanceToNearestEdge(position, rect, [
         "left",
         "right"
       ]);
@@ -31755,20 +31667,20 @@ var wp;
           return;
         }
         let [distance, edge] = getDistanceToNearestEdge(
-          position2,
+          position,
           rect,
           allowedEdges
         );
         const [sideDistance, sideEdge] = getDistanceToNearestEdge(
-          position2,
+          position,
           rect,
           ["left", "right"]
         );
-        const isPointInsideRect = isPointContainedByRect(position2, rect);
+        const isPointInsideRect = isPointContainedByRect(position, rect);
         if (isUnmodifiedDefaultBlock5 && isPointInsideRect) {
           distance = 0;
         } else if (orientation === "vertical" && blockOrientation !== "horizontal" && (isPointInsideRect && sideDistance < THRESHOLD_DISTANCE || !isPointInsideRect && isPointWithinTopAndBottomBoundariesOfRect(
-          position2,
+          position,
           rect
         ))) {
           targetBlockIndex = blockIndex;
@@ -32254,11 +32166,11 @@ var wp;
     );
     const { stopTyping: stopTyping2 } = (0, import_data73.useDispatch)(store);
     return (0, import_compose53.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (!isTyping3) {
           return;
         }
-        const { ownerDocument } = node2;
+        const { ownerDocument } = node;
         let lastClientX;
         let lastClientY;
         function stopTypingOnMouseMove(event) {
@@ -32293,8 +32205,8 @@ var wp;
     const { startTyping: startTyping2, stopTyping: stopTyping2 } = (0, import_data73.useDispatch)(store);
     const ref1 = useMouseMoveTypingReset();
     const ref2 = (0, import_compose53.useRefEffect)(
-      (node2) => {
-        const { ownerDocument } = node2;
+      (node) => {
+        const { ownerDocument } = node;
         const { defaultView } = ownerDocument;
         const selection2 = defaultView.getSelection();
         if (isTyping3) {
@@ -32317,19 +32229,19 @@ var wp;
           };
           var stopTypingOnNonTextField = stopTypingOnNonTextField2, stopTypingOnEscapeKey = stopTypingOnEscapeKey2, stopTypingOnSelectionUncollapse = stopTypingOnSelectionUncollapse2;
           let timerId;
-          node2.addEventListener("focus", stopTypingOnNonTextField2);
-          node2.addEventListener("keydown", stopTypingOnEscapeKey2);
+          node.addEventListener("focus", stopTypingOnNonTextField2);
+          node.addEventListener("keydown", stopTypingOnEscapeKey2);
           ownerDocument.addEventListener(
             "selectionchange",
             stopTypingOnSelectionUncollapse2
           );
           return () => {
             defaultView.clearTimeout(timerId);
-            node2.removeEventListener(
+            node.removeEventListener(
               "focus",
               stopTypingOnNonTextField2
             );
-            node2.removeEventListener(
+            node.removeEventListener(
               "keydown",
               stopTypingOnEscapeKey2
             );
@@ -32341,7 +32253,7 @@ var wp;
         }
         function startTypingInTextField(event) {
           const { type, target } = event;
-          if (!(0, import_dom23.isTextField)(target) || !node2.contains(target)) {
+          if (!(0, import_dom23.isTextField)(target) || !node.contains(target)) {
             return;
           }
           if (type === "keydown" && !isKeyDownEligibleForStartTyping(event)) {
@@ -32349,11 +32261,11 @@ var wp;
           }
           startTyping2();
         }
-        node2.addEventListener("keypress", startTypingInTextField);
-        node2.addEventListener("keydown", startTypingInTextField);
+        node.addEventListener("keypress", startTypingInTextField);
+        node.addEventListener("keydown", startTypingInTextField);
         return () => {
-          node2.removeEventListener("keypress", startTypingInTextField);
-          node2.removeEventListener("keydown", startTypingInTextField);
+          node.removeEventListener("keypress", startTypingInTextField);
+          node.removeEventListener("keydown", startTypingInTextField);
         };
       },
       [isTyping3, startTyping2, stopTyping2]
@@ -32375,7 +32287,7 @@ var wp;
   function ZoomOutSeparator({
     clientId,
     rootClientId = "",
-    position: position2 = "top"
+    position = "top"
   }) {
     const [isDraggedOver, setIsDraggedOver] = (0, import_element88.useState)(false);
     const {
@@ -32416,10 +32328,10 @@ var wp;
     }
     const hasTopInsertionPoint = insertionPoint2?.index === 0 && clientId === sectionClientIds[insertionPoint2.index];
     const hasBottomInsertionPoint = insertionPoint2 && insertionPoint2.hasOwnProperty("index") && clientId === sectionClientIds[insertionPoint2.index - 1];
-    if (position2 === "top") {
+    if (position === "top") {
       isVisible = hasTopInsertionPoint || blockInsertionPointVisible && blockInsertionPoint.index === 0 && clientId === sectionClientIds[blockInsertionPoint.index];
     }
-    if (position2 === "bottom") {
+    if (position === "bottom") {
       isVisible = hasBottomInsertionPoint || blockInsertionPointVisible && clientId === sectionClientIds[blockInsertionPoint.index - 1];
     }
     const blockBeingDraggedClientId = blocksBeingDragged[0];
@@ -33045,7 +32957,7 @@ var wp;
             name: pattern?.title || attributes?.metadata?.name
           };
         }
-        const match3 = getActiveBlockVariation(blockName, attributes);
+        const match2 = getActiveBlockVariation(blockName, attributes);
         const isSynced = (0, import_blocks43.isReusableBlock)(blockType) || (0, import_blocks43.isTemplatePart)(blockType);
         const syncedTitle = isSynced ? (0, import_blocks43.__experimentalGetBlockLabel)(blockType, attributes) : void 0;
         const title = syncedTitle || blockType.title;
@@ -33060,14 +32972,14 @@ var wp;
           positionType: attributes?.style?.position?.type,
           name: attributes?.metadata?.name
         };
-        if (!match3) {
+        if (!match2) {
           return blockTypeInfo;
         }
         return {
           isSynced,
-          title: match3.title || blockType.title,
-          icon: match3.icon || blockType.icon,
-          description: match3.description || blockType.description,
+          title: match2.title || blockType.title,
+          icon: match2.icon || blockType.icon,
+          description: match2.description || blockType.description,
           anchor: attributes?.anchor,
           positionLabel,
           positionType: attributes?.style?.position?.type,
@@ -33180,14 +33092,14 @@ var wp;
       }
       return availableOptions;
     }, [allowFixed, allowSticky, value]);
-    const onChangeType = (next2) => {
+    const onChangeType = (next) => {
       const placementValue = "0px";
       const newStyle = {
         ...style,
         position: {
           ...style?.position,
-          type: next2,
-          top: next2 === "sticky" || next2 === "fixed" ? placementValue : void 0
+          type: next,
+          top: next === "sticky" || next === "fixed" ? placementValue : void 0
         }
       };
       setAttributes({
@@ -33756,7 +33668,7 @@ var wp;
     return null;
   };
   function getBlockMoverDescription(selectedCount, type, firstIndex, isFirst, isLast, dir, orientation) {
-    const position2 = firstIndex + 1;
+    const position = firstIndex + 1;
     if (selectedCount > 1) {
       return getMultiBlockMoverDescription(
         selectedCount,
@@ -33783,8 +33695,8 @@ var wp;
             "Move %1$s block from position %2$d down to position %3$d"
           ),
           type,
-          position2,
-          position2 + 1
+          position,
+          position + 1
         );
       }
       if (movementDirection === "left") {
@@ -33794,8 +33706,8 @@ var wp;
             "Move %1$s block from position %2$d left to position %3$d"
           ),
           type,
-          position2,
-          position2 + 1
+          position,
+          position + 1
         );
       }
       if (movementDirection === "right") {
@@ -33805,8 +33717,8 @@ var wp;
             "Move %1$s block from position %2$d right to position %3$d"
           ),
           type,
-          position2,
-          position2 + 1
+          position,
+          position + 1
         );
       }
     }
@@ -33847,8 +33759,8 @@ var wp;
           // translators: 1: Type of block (i.e. Text, Image etc), 2: Position of selected block, 3: New position
           (0, import_i18n68.__)("Move %1$s block from position %2$d up to position %3$d"),
           type,
-          position2,
-          position2 - 1
+          position,
+          position - 1
         );
       }
       if (movementDirection === "left") {
@@ -33858,8 +33770,8 @@ var wp;
             "Move %1$s block from position %2$d left to position %3$d"
           ),
           type,
-          position2,
-          position2 - 1
+          position,
+          position - 1
         );
       }
       if (movementDirection === "right") {
@@ -33869,8 +33781,8 @@ var wp;
             "Move %1$s block from position %2$d right to position %3$d"
           ),
           type,
-          position2,
-          position2 - 1
+          position,
+          position - 1
         );
       }
     }
@@ -33906,7 +33818,7 @@ var wp;
     }
   }
   function getMultiBlockMoverDescription(selectedCount, firstIndex, isFirst, isLast, dir, orientation) {
-    const position2 = firstIndex + 1;
+    const position = firstIndex + 1;
     if (isFirst && isLast) {
       return (0, import_i18n68.__)("All blocks are selected, and cannot be moved");
     }
@@ -33917,7 +33829,7 @@ var wp;
           // translators: 1: Number of selected blocks, 2: Position of selected blocks
           (0, import_i18n68.__)("Move %1$d blocks from position %2$d down by one place"),
           selectedCount,
-          position2
+          position
         );
       }
       if (movementDirection === "left") {
@@ -33925,7 +33837,7 @@ var wp;
           // translators: 1: Number of selected blocks, 2: Position of selected blocks
           (0, import_i18n68.__)("Move %1$d blocks from position %2$d left by one place"),
           selectedCount,
-          position2
+          position
         );
       }
       if (movementDirection === "right") {
@@ -33933,7 +33845,7 @@ var wp;
           // translators: 1: Number of selected blocks, 2: Position of selected blocks
           (0, import_i18n68.__)("Move %1$d blocks from position %2$d right by one place"),
           selectedCount,
-          position2
+          position
         );
       }
     }
@@ -33962,7 +33874,7 @@ var wp;
           // translators: 1: Number of selected blocks, 2: Position of selected blocks
           (0, import_i18n68.__)("Move %1$d blocks from position %2$d up by one place"),
           selectedCount,
-          position2
+          position
         );
       }
       if (movementDirection === "left") {
@@ -33970,7 +33882,7 @@ var wp;
           // translators: 1: Number of selected blocks, 2: Position of selected blocks
           (0, import_i18n68.__)("Move %1$d blocks from position %2$d left by one place"),
           selectedCount,
-          position2
+          position
         );
       }
       if (movementDirection === "right") {
@@ -33978,7 +33890,7 @@ var wp;
           // translators: 1: Number of selected blocks, 2: Position of selected blocks
           (0, import_i18n68.__)("Move %1$d blocks from position %2$d right by one place"),
           selectedCount,
-          position2
+          position
         );
       }
     }
@@ -34310,7 +34222,7 @@ var wp;
       return ref?.current && ref.current.contains(ref.current.ownerDocument.activeElement);
     };
     (0, import_element98.useEffect)(() => {
-      const node2 = ref.current;
+      const node = ref.current;
       const handleOnFocus = () => {
         if (isFocusedWithin()) {
           setIsFocused(true);
@@ -34323,15 +34235,15 @@ var wp;
           debouncedHideGestures();
         }
       };
-      if (node2 && !registerRef.current) {
-        node2.addEventListener("focus", handleOnFocus, true);
-        node2.addEventListener("blur", handleOnBlur, true);
+      if (node && !registerRef.current) {
+        node.addEventListener("focus", handleOnFocus, true);
+        node.addEventListener("blur", handleOnBlur, true);
         registerRef.current = true;
       }
       return () => {
-        if (node2) {
-          node2.removeEventListener("focus", handleOnFocus);
-          node2.removeEventListener("blur", handleOnBlur);
+        if (node) {
+          node.removeEventListener("focus", handleOnFocus);
+          node.removeEventListener("blur", handleOnBlur);
         }
       };
     }, [
@@ -36768,12 +36680,12 @@ var wp;
     path = Array.isArray(path) ? [...path] : [path];
     object = Array.isArray(object) ? [...object] : { ...object };
     const leaf = path.pop();
-    let prev2 = object;
+    let prev = object;
     for (const key of path) {
-      const lvl = prev2[key];
-      prev2 = prev2[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
+      const lvl = prev[key];
+      prev = prev[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
     }
-    prev2[leaf] = value;
+    prev[leaf] = value;
     return object;
   }
   var getValueFromObjectPath2 = (object, path, defaultValue) => {
@@ -37361,8 +37273,8 @@ var wp;
       return null;
     }
     const row = getSpacingPresetCssVar2(blockGapBoxControlValue?.top) || defaultValue;
-    const column2 = getSpacingPresetCssVar2(blockGapBoxControlValue?.left) || defaultValue;
-    return row === column2 ? row : `${row} ${column2}`;
+    const column = getSpacingPresetCssVar2(blockGapBoxControlValue?.left) || defaultValue;
+    return row === column ? row : `${row} ${column}`;
   }
 
   // packages/global-styles-engine/build-module/utils/background.js
@@ -37756,7 +37668,7 @@ var wp;
     hasFallbackGapSupport,
     fallbackGapValue
   }) {
-    let ruleset2 = "";
+    let ruleset = "";
     let gapValue = hasBlockGapSupport ? getGapCSSValue2(style?.spacing?.blockGap) : "";
     if (hasFallbackGapSupport) {
       if (selector3 === ROOT_BLOCK_SELECTOR) {
@@ -37790,7 +37702,7 @@ var wp;
                 } else {
                   combinedSelector = selector3 === ROOT_BLOCK_SELECTOR ? `:root :where(.${className})${spacingStyle?.selector || ""}` : `:root :where(${selector3}-${className})${spacingStyle?.selector || ""}`;
                 }
-                ruleset2 += `${combinedSelector} { ${declarations.join(
+                ruleset += `${combinedSelector} { ${declarations.join(
                   "; "
                 )}; }`;
               }
@@ -37799,7 +37711,7 @@ var wp;
         }
       );
       if (selector3 === ROOT_BLOCK_SELECTOR && hasBlockGapSupport) {
-        ruleset2 += `${ROOT_CSS_PROPERTIES_SELECTOR} { --wp--style--block-gap: ${gapValue}; }`;
+        ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} { --wp--style--block-gap: ${gapValue}; }`;
       }
     }
     if (selector3 === ROOT_BLOCK_SELECTOR && layoutDefinitions) {
@@ -37807,7 +37719,7 @@ var wp;
       Object.values(layoutDefinitions).forEach(
         ({ className, displayMode, baseStyles }) => {
           if (displayMode && validDisplayModes.includes(displayMode)) {
-            ruleset2 += `${selector3} .${className} { display:${displayMode}; }`;
+            ruleset += `${selector3} .${className} { display:${displayMode}; }`;
           }
           if (baseStyles?.length) {
             baseStyles.forEach((baseStyle) => {
@@ -37823,7 +37735,7 @@ var wp;
               }
               if (declarations.length) {
                 const combinedSelector = `.${className}${baseStyle?.selector || ""}`;
-                ruleset2 += `${combinedSelector} { ${declarations.join(
+                ruleset += `${combinedSelector} { ${declarations.join(
                   "; "
                 )}; }`;
               }
@@ -37832,7 +37744,7 @@ var wp;
         }
       );
     }
-    return ruleset2;
+    return ruleset;
   }
   var STYLE_KEYS = [
     "border",
@@ -37886,9 +37798,9 @@ var wp;
       }
     });
     Object.entries(tree.styles?.blocks ?? {}).forEach(
-      ([blockName, node2]) => {
-        const blockStyles = pickStyleKeys(node2);
-        const typedNode = node2;
+      ([blockName, node]) => {
+        const blockStyles = pickStyleKeys(node);
+        const typedNode = node;
         if (typedNode?.variations) {
           const variations = {};
           Object.entries(typedNode.variations).forEach(
@@ -38023,12 +37935,12 @@ var wp;
       });
     }
     Object.entries(tree.settings?.blocks ?? {}).forEach(
-      ([blockName, node2]) => {
-        const blockCustom = node2.custom;
+      ([blockName, node]) => {
+        const blockCustom = node.custom;
         if (typeof blockSelectors === "string" || !blockSelectors[blockName]) {
           return;
         }
-        const blockPresets = pickPresets(node2);
+        const blockPresets = pickPresets(node);
         if (Object.keys(blockPresets).length > 0 || blockCustom) {
           nodes.push({
             presets: blockPresets,
@@ -38056,24 +37968,24 @@ var wp;
     const useRootPaddingAlign = tree?.settings?.useRootPaddingAwareAlignments;
     const { contentSize, wideSize } = tree?.settings?.layout || {};
     const hasBodyStyles = options.marginReset || options.rootPadding || options.layoutStyles;
-    let ruleset2 = "";
+    let ruleset = "";
     if (options.presets && (contentSize || wideSize)) {
-      ruleset2 += `${ROOT_CSS_PROPERTIES_SELECTOR} {`;
-      ruleset2 = contentSize ? ruleset2 + ` --wp--style--global--content-size: ${contentSize};` : ruleset2;
-      ruleset2 = wideSize ? ruleset2 + ` --wp--style--global--wide-size: ${wideSize};` : ruleset2;
-      ruleset2 += "}";
+      ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} {`;
+      ruleset = contentSize ? ruleset + ` --wp--style--global--content-size: ${contentSize};` : ruleset;
+      ruleset = wideSize ? ruleset + ` --wp--style--global--wide-size: ${wideSize};` : ruleset;
+      ruleset += "}";
     }
     if (hasBodyStyles) {
-      ruleset2 += ":where(body) {margin: 0;";
+      ruleset += ":where(body) {margin: 0;";
       if (options.rootPadding && useRootPaddingAlign) {
-        ruleset2 += `padding-right: 0; padding-left: 0; padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom) }
+        ruleset += `padding-right: 0; padding-left: 0; padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom) }
 				.has-global-padding { padding-right: var(--wp--style--root--padding-right); padding-left: var(--wp--style--root--padding-left); }
 				.has-global-padding > .alignfull { margin-right: calc(var(--wp--style--root--padding-right) * -1); margin-left: calc(var(--wp--style--root--padding-left) * -1); }
 				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) { padding-right: 0; padding-left: 0; }
 				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) > .alignfull { margin-left: 0; margin-right: 0;
 				`;
       }
-      ruleset2 += "}";
+      ruleset += "}";
     }
     if (options.blockStyles) {
       nodesWithStyles.forEach(
@@ -38096,7 +38008,7 @@ var wp;
               ([cssSelector, declarations]) => {
                 if (declarations.length) {
                   const rules = declarations.join(";");
-                  ruleset2 += `:root :where(${cssSelector}){${rules};}`;
+                  ruleset += `:root :where(${cssSelector}){${rules};}`;
                 }
               }
             );
@@ -38109,13 +38021,13 @@ var wp;
             }
             const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
             if (duotoneDeclarations.length) {
-              ruleset2 += `${duotoneSelector}{${duotoneDeclarations.join(
+              ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
                 ";"
               )};}`;
             }
           }
           if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selector3 || hasLayoutSupport2)) {
-            ruleset2 += getLayoutStyles({
+            ruleset += getLayoutStyles({
               style: styles,
               selector: selector3,
               hasBlockGapSupport,
@@ -38132,12 +38044,12 @@ var wp;
           );
           if (styleDeclarations?.length) {
             const generalSelector = skipSelectorWrapper ? selector3 : `:root :where(${selector3})`;
-            ruleset2 += `${generalSelector}{${styleDeclarations.join(
+            ruleset += `${generalSelector}{${styleDeclarations.join(
               ";"
             )};}`;
           }
           if (styles?.css) {
-            ruleset2 += processCSSNesting(
+            ruleset += processCSSNesting(
               styles.css,
               `:root :where(${selector3})`
             );
@@ -38162,7 +38074,7 @@ var wp;
                             styleVariationSelector
                           );
                           const rules = declarations.join(";");
-                          ruleset2 += `:root :where(${cssSelector}){${rules};}`;
+                          ruleset += `:root :where(${cssSelector}){${rules};}`;
                         }
                       }
                     );
@@ -38174,12 +38086,12 @@ var wp;
                     tree
                   );
                   if (styleVariationDeclarations.length) {
-                    ruleset2 += `:root :where(${styleVariationSelector}){${styleVariationDeclarations.join(
+                    ruleset += `:root :where(${styleVariationSelector}){${styleVariationDeclarations.join(
                       ";"
                     )};}`;
                   }
                   if (styleVariations?.css) {
-                    ruleset2 += processCSSNesting(
+                    ruleset += processCSSNesting(
                       styleVariations.css,
                       `:root :where(${styleVariationSelector})`
                     );
@@ -38202,7 +38114,7 @@ var wp;
                 const pseudoRule = `:root :where(${_selector}){${pseudoDeclarations.join(
                   ";"
                 )};}`;
-                ruleset2 += pseudoRule;
+                ruleset += pseudoRule;
               }
             );
           }
@@ -38210,15 +38122,15 @@ var wp;
       );
     }
     if (options.layoutStyles) {
-      ruleset2 = ruleset2 + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
-      ruleset2 = ruleset2 + ".wp-site-blocks > .alignright { float: right; margin-left: 2em; }";
-      ruleset2 = ruleset2 + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
+      ruleset = ruleset + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
+      ruleset = ruleset + ".wp-site-blocks > .alignright { float: right; margin-left: 2em; }";
+      ruleset = ruleset + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
     }
     if (options.blockGap && hasBlockGapSupport) {
       const gapValue = getGapCSSValue2(tree?.styles?.spacing?.blockGap) || "0.5em";
-      ruleset2 = ruleset2 + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
-      ruleset2 = ruleset2 + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
-      ruleset2 = ruleset2 + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";
+      ruleset = ruleset + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
+      ruleset = ruleset + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
+      ruleset = ruleset + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";
     }
     if (options.presets) {
       nodesWithSettings.forEach(({ selector: selector3, presets }) => {
@@ -38227,11 +38139,11 @@ var wp;
         }
         const classes = getPresetsClasses(selector3, presets);
         if (classes.length > 0) {
-          ruleset2 += classes;
+          ruleset += classes;
         }
       });
     }
-    return ruleset2;
+    return ruleset;
   };
   var getSelectorsConfig = (blockType, rootSelector) => {
     if (blockType?.selectors && Object.keys(blockType.selectors).length > 0) {
@@ -38341,9 +38253,9 @@ var wp;
     }
     return className.split(/\s+/).reduce((matches, name) => {
       if (name.startsWith(VARIATION_PREFIX)) {
-        const match3 = name.slice(VARIATION_PREFIX.length);
-        if (match3 !== "default") {
-          matches.push(match3);
+        const match2 = name.slice(VARIATION_PREFIX.length);
+        if (match2 !== "default") {
+          matches.push(match2);
         }
       }
       return matches;
@@ -39005,13 +38917,13 @@ var wp;
       return block;
     }
     for (const innerBlock of innerBlocks) {
-      const match3 = getMatchingBlockByName(
+      const match2 = getMatchingBlockByName(
         innerBlock,
         selectedBlockName,
         consumedBlocks
       );
-      if (match3) {
-        return match3;
+      if (match2) {
+        return match2;
       }
     }
   };
@@ -39029,13 +38941,13 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/block-switcher/use-transformed-patterns.js
-  var transformMatchingBlock = (match3, selectedBlock) => {
+  var transformMatchingBlock = (match2, selectedBlock) => {
     const retainedBlockAttributes = getRetainedBlockAttributes(
       selectedBlock.name,
       selectedBlock.attributes
     );
-    match3.attributes = {
-      ...match3.attributes,
+    match2.attributes = {
+      ...match2.attributes,
       ...retainedBlockAttributes
     };
   };
@@ -39047,17 +38959,17 @@ var wp;
     for (const selectedBlock of selectedBlocks) {
       let isMatch = false;
       for (const patternBlock of _patternBlocks) {
-        const match3 = getMatchingBlockByName(
+        const match2 = getMatchingBlockByName(
           patternBlock,
           selectedBlock.name,
           consumedBlocks
         );
-        if (!match3) {
+        if (!match2) {
           continue;
         }
         isMatch = true;
-        consumedBlocks.add(match3.clientId);
-        transformMatchingBlock(match3, selectedBlock);
+        consumedBlocks.add(match2.clientId);
+        transformMatchingBlock(match2, selectedBlock);
         break;
       }
       if (!isMatch) {
@@ -39485,8 +39397,8 @@ var wp;
     const blockType = (0, import_blocks70.getBlockType)(blockName);
     if (_isSingleBlock) {
       const { getActiveBlockVariation } = select3(import_blocks70.store);
-      const match3 = getActiveBlockVariation(blockName, blockAttributes);
-      return match3?.icon || blockType?.icon;
+      const match2 = getActiveBlockVariation(blockName, blockAttributes);
+      return match2?.icon || blockType?.icon;
     }
     const blockNames = clientIds.map((id) => getBlockName2(id));
     const isSelectionOfSameType = new Set(blockNames).size === 1;
@@ -40739,7 +40651,7 @@ var wp;
     ({
       isDragged,
       isSelected,
-      position: position2,
+      position,
       level,
       rowCount,
       children,
@@ -40759,7 +40671,7 @@ var wp;
           ref: mergedRef,
           className: clsx_default("block-editor-list-view-leaf", className),
           level,
-          positionInSet: position2,
+          positionInSet: position,
           setSize: rowCount,
           isExpanded: void 0,
           ...props,
@@ -41041,7 +40953,7 @@ var wp;
       onToggleExpanded,
       block,
       isSelected,
-      position: position2,
+      position,
       siblingBlockCount,
       level,
       isExpanded,
@@ -41075,7 +40987,7 @@ var wp;
                 onClick,
                 onToggleExpanded,
                 isSelected,
-                position: position2,
+                position,
                 siblingBlockCount,
                 level,
                 draggable,
@@ -41095,10 +41007,10 @@ var wp;
   // packages/block-editor/build-module/components/list-view/utils.js
   var import_i18n106 = __toESM(require_i18n());
   var import_dom30 = __toESM(require_dom());
-  var getBlockPositionDescription = (position2, siblingCount, level) => (0, import_i18n106.sprintf)(
+  var getBlockPositionDescription = (position, siblingCount, level) => (0, import_i18n106.sprintf)(
     /* translators: 1: The numerical position of the block. 2: The total number of blocks. 3. The level of nesting for the block. */
     (0, import_i18n106.__)("Block %1$d of %2$d, Level %3$d."),
-    position2,
+    position,
     siblingCount,
     level
   );
@@ -41206,7 +41118,7 @@ var wp;
     isSelected,
     isBranchSelected,
     selectBlock: selectBlock2,
-    position: position2,
+    position,
     level,
     rowCount,
     siblingBlockCount,
@@ -41526,7 +41438,7 @@ var wp;
       return null;
     }
     const blockPositionDescription = getBlockPositionDescription(
-      position2,
+      position,
       siblingBlockCount,
       level
     );
@@ -41580,7 +41492,7 @@ var wp;
         onFocus: onMouseEnter,
         onBlur: onMouseLeave,
         level,
-        position: position2,
+        position,
         rowCount,
         path,
         id: `list-view-${listViewInstanceId}-block-${clientId}`,
@@ -41605,7 +41517,7 @@ var wp;
                     onMouseDown,
                     onToggleExpanded: toggleExpanded,
                     isSelected,
-                    position: position2,
+                    position,
                     siblingBlockCount,
                     level,
                     ref,
@@ -41798,8 +41710,8 @@ var wp;
         });
         const { itemInView } = fixedListWindow;
         const blockInView = itemInView(nextPositionRef.current);
-        const position2 = index + 1;
-        const updatedPath = path.length > 0 ? `${path}_${position2}` : `${position2}`;
+        const position = index + 1;
+        const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
         const hasNestedBlocks = !!innerBlocks?.length;
         const shouldExpand = hasNestedBlocks && shouldShowInnerBlocks ? expandedState[clientId] ?? isExpanded : void 0;
         const isSelected = isClientIdSelected(
@@ -41818,7 +41730,7 @@ var wp;
               isBranchSelected: isSelectedBranch,
               isDragged,
               level,
-              position: position2,
+              position,
               rowCount,
               siblingBlockCount: blockCount,
               showBlockMovers,
@@ -42307,7 +42219,7 @@ var wp;
     return isNestingHorizontalGesture && point.y < rect.bottom;
   }
   var ALLOWED_DROP_EDGES = ["top", "bottom"];
-  function getListViewDropTarget(blocksData, position2, rtl = false) {
+  function getListViewDropTarget(blocksData, position, rtl = false) {
     let candidateEdge;
     let candidateBlockData;
     let candidateDistance;
@@ -42320,11 +42232,11 @@ var wp;
       }
       const rect = blockData.element.getBoundingClientRect();
       const [distance, edge] = getDistanceToNearestEdge(
-        position2,
+        position,
         rect,
         ALLOWED_DROP_EDGES
       );
-      const isCursorWithinBlock = isPointContainedByRect(position2, rect);
+      const isCursorWithinBlock = isPointContainedByRect(position, rect);
       if (candidateDistance === void 0 || distance < candidateDistance || isCursorWithinBlock) {
         candidateDistance = distance;
         const index = blocksData.indexOf(blockData);
@@ -42354,7 +42266,7 @@ var wp;
     );
     const isDraggingBelow = candidateEdge === "bottom";
     if (isDraggingBelow && candidateBlockData.canInsertDraggedBlocksAsChild && (candidateBlockData.innerBlockCount > 0 && candidateBlockData.isExpanded || isNestingGesture(
-      position2,
+      position,
       candidateRect,
       candidateBlockParents.length,
       rtl
@@ -42368,7 +42280,7 @@ var wp;
       };
     }
     if (isDraggingBelow && candidateBlockData.rootClientId && isUpGesture(
-      position2,
+      position,
       candidateRect,
       candidateBlockParents.length,
       rtl
@@ -42381,7 +42293,7 @@ var wp;
       const nextLevel = nextBlock ? nextBlock.nestingLevel : 1;
       if (currentLevel && nextLevel) {
         const desiredRelativeLevel = getDesiredRelativeParentLevel(
-          position2,
+          position,
           candidateRect,
           candidateBlockParents.length,
           rtl
@@ -42482,7 +42394,7 @@ var wp;
     const throttled = (0, import_compose70.useThrottle)(
       (0, import_element139.useCallback)(
         (event, currentTarget) => {
-          const position2 = { x: event.clientX, y: event.clientY };
+          const position = { x: event.clientX, y: event.clientY };
           const isBlockDrag = !!draggedBlockClientIds?.length;
           const blockElements = Array.from(
             currentTarget.querySelectorAll("[data-block]")
@@ -42514,7 +42426,7 @@ var wp;
           });
           const newTarget = getListViewDropTarget(
             blocksData,
-            position2,
+            position,
             rtl
           );
           if (newTarget) {
@@ -42614,12 +42526,12 @@ var wp;
     } = (0, import_data132.useSelect)(store);
     const { flashBlock: flashBlock2, removeBlocks: removeBlocks2, replaceBlocks: replaceBlocks2, insertBlocks: insertBlocks2 } = (0, import_data132.useDispatch)(store);
     const notifyCopy = useNotifyCopy();
-    return (0, import_compose71.useRefEffect)((node2) => {
+    return (0, import_compose71.useRefEffect)((node) => {
       function updateFocusAndSelection(focusClientId, shouldSelectBlock) {
         if (shouldSelectBlock) {
           selectBlock2(void 0, focusClientId, null, null);
         }
-        focusListItem(focusClientId, node2);
+        focusListItem(focusClientId, node);
       }
       function getBlocksToUpdate(clientId) {
         const selectedBlockClientIds = getSelectedBlockClientIds2();
@@ -42638,7 +42550,7 @@ var wp;
         if (event.defaultPrevented) {
           return;
         }
-        if (!node2.contains(event.target.ownerDocument.activeElement)) {
+        if (!node.contains(event.target.ownerDocument.activeElement)) {
           return;
         }
         const listViewRow = event.target.ownerDocument.activeElement?.closest(
@@ -42713,13 +42625,13 @@ var wp;
           updateFocusAndSelection(blocks2[0]?.clientId, false);
         }
       }
-      node2.ownerDocument.addEventListener("copy", handler);
-      node2.ownerDocument.addEventListener("cut", handler);
-      node2.ownerDocument.addEventListener("paste", handler);
+      node.ownerDocument.addEventListener("copy", handler);
+      node.ownerDocument.addEventListener("cut", handler);
+      node.ownerDocument.addEventListener("paste", handler);
       return () => {
-        node2.ownerDocument.removeEventListener("copy", handler);
-        node2.ownerDocument.removeEventListener("cut", handler);
-        node2.ownerDocument.removeEventListener("paste", handler);
+        node.ownerDocument.removeEventListener("copy", handler);
+        node.ownerDocument.removeEventListener("cut", handler);
+        node.ownerDocument.removeEventListener("paste", handler);
       };
     }, []);
   }
@@ -44096,24 +44008,24 @@ var wp;
         });
       }
     };
-    const onChangeValue = (next2) => {
+    const onChangeValue = (next) => {
       if (!onChange) {
         return;
       }
-      const isNumeric = !isNaN(parseFloat(next2));
-      const nextValue = isNumeric ? next2 : void 0;
+      const isNumeric = !isNaN(parseFloat(next));
+      const nextValue = isNumeric ? next : void 0;
       changeCornerValue(nextValue);
     };
-    const onChangeUnit = (next2) => {
+    const onChangeUnit = (next) => {
       const newUnits = { ...selectedUnits };
       if (corner === "all") {
-        newUnits.flat = next2;
-        newUnits.topLeft = next2;
-        newUnits.topRight = next2;
-        newUnits.bottomLeft = next2;
-        newUnits.bottomRight = next2;
+        newUnits.flat = next;
+        newUnits.topLeft = next;
+        newUnits.topRight = next;
+        newUnits.bottomLeft = next;
+        newUnits.bottomRight = next;
       } else {
-        newUnits[corner] = next2;
+        newUnits[corner] = next;
       }
       setSelectedUnits(newUnits);
     };
@@ -44162,8 +44074,8 @@ var wp;
       }));
     }
     const icon = ICONS2[corner];
-    const handleSliderChange = (next2) => {
-      const val = next2 !== void 0 ? `${next2}${computedUnit}` : void 0;
+    const handleSliderChange = (next) => {
+      const val = next !== void 0 ? `${next}${computedUnit}` : void 0;
       changeCornerValue(val);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(import_components133.__experimentalHStack, { children: [
@@ -45923,8 +45835,8 @@ var wp;
       () => (0, import_components148.__experimentalParseQuantityAndUnitFromRawValue)(value),
       [value]
     )[1] || units2[0]?.value || "px";
-    const handleSliderChange = (next2) => {
-      onChange([next2, selectedUnit].join(""));
+    const handleSliderChange = (next) => {
+      onChange([next, selectedUnit].join(""));
     };
     const handleUnitChange = (newUnit) => {
       const [currentValue, currentUnit] = (0, import_components148.__experimentalParseQuantityAndUnitFromRawValue)(value);
@@ -46024,19 +45936,19 @@ var wp;
   function getMediaZoom(mediaSize) {
     return mediaSize.width > mediaSize.height ? mediaSize.width / mediaSize.naturalWidth : mediaSize.height / mediaSize.naturalHeight;
   }
-  function restrictPosition(position2, mediaSize, cropSize, zoom, rotation) {
+  function restrictPosition(position, mediaSize, cropSize, zoom, rotation) {
     if (rotation === void 0) {
       rotation = 0;
     }
     var _a = rotateSize(mediaSize.width, mediaSize.height, rotation), width = _a.width, height = _a.height;
     return {
-      x: restrictPositionCoord(position2.x, width, cropSize.width, zoom),
-      y: restrictPositionCoord(position2.y, height, cropSize.height, zoom)
+      x: restrictPositionCoord(position.x, width, cropSize.width, zoom),
+      y: restrictPositionCoord(position.y, height, cropSize.height, zoom)
     };
   }
-  function restrictPositionCoord(position2, mediaSize, cropSize, zoom) {
+  function restrictPositionCoord(position, mediaSize, cropSize, zoom) {
     var maxPosition = mediaSize * zoom / 2 - cropSize / 2;
-    return clamp(position2, -maxPosition, maxPosition);
+    return clamp(position, -maxPosition, maxPosition);
   }
   function getDistanceBetweenPoints(pointA, pointB) {
     return Math.sqrt(Math.pow(pointA.y - pointB.y, 2) + Math.pow(pointA.x - pointB.x, 2));
@@ -47020,15 +46932,15 @@ var wp;
     const [resetState, setInternalResetState] = (0, import_element154.useState)(null);
     const setCropperState = (0, import_element154.useCallback)(
       (newState) => {
-        setInternalCropperState((prev2) => {
-          const updates = typeof newState === "function" ? newState(prev2) : newState;
+        setInternalCropperState((prev) => {
+          const updates = typeof newState === "function" ? newState(prev) : newState;
           const normalizedUpdates = { ...updates };
           if ("rotation" in normalizedUpdates && normalizedUpdates.rotation !== void 0) {
             normalizedUpdates.rotation = normalizeRotation(
               normalizedUpdates.rotation
             );
           }
-          return { ...prev2, ...normalizedUpdates };
+          return { ...prev, ...normalizedUpdates };
         });
       },
       []
@@ -48022,11 +47934,11 @@ var wp;
     popoverProps: popoverProps3,
     isToolbar
   }) {
-    const handleClick = (next2) => {
-      if (next2 === value) {
+    const handleClick = (next) => {
+      if (next === value) {
         onChange(void 0);
       } else {
-        onChange(next2);
+        onChange(next);
       }
     };
     const icon = value ? icons[value] : icons.left;
@@ -50326,11 +50238,11 @@ var wp;
       placement,
       focusOnMount = "firstElement",
       // Deprecated
-      position: position2,
+      position,
       // Rest
       ...popoverProps3
     }, ref) => {
-      if (position2 !== void 0) {
+      if (position !== void 0) {
         (0, import_deprecated24.default)("`position` prop in wp.blockEditor.URLPopover", {
           since: "6.2",
           alternative: "`placement` prop"
@@ -50339,8 +50251,8 @@ var wp;
       let computedPlacement;
       if (placement !== void 0) {
         computedPlacement = placement;
-      } else if (position2 !== void 0) {
-        computedPlacement = __experimentalPopoverLegacyPositionToPlacement(position2);
+      } else if (position !== void 0) {
+        computedPlacement = __experimentalPopoverLegacyPositionToPlacement(position);
       }
       computedPlacement = computedPlacement || DEFAULT_PLACEMENT;
       const [isSettingsExpanded, setIsSettingsExpanded] = (0, import_element171.useState)(false);
@@ -50693,11 +50605,11 @@ var wp;
           onFilesDrop: onFilesUpload,
           onDrop: handleBlocksDrop,
           isEligible: (dataTransfer) => {
-            const prefix3 = "wp-block:core/";
+            const prefix2 = "wp-block:core/";
             const types = [];
             for (const type of dataTransfer.types) {
-              if (type.startsWith(prefix3)) {
-                types.push(type.slice(prefix3.length));
+              if (type.startsWith(prefix2)) {
+                types.push(type.slice(prefix2.length));
               }
             }
             return types.every(
@@ -51025,29 +50937,29 @@ var wp;
     "textarea",
     "video"
   ]);
-  function prefixSelectKeys(selected, prefix3) {
+  function prefixSelectKeys(selected, prefix2) {
     if (typeof selected !== "object") {
-      return { [prefix3]: selected };
+      return { [prefix2]: selected };
     }
     return Object.fromEntries(
       Object.entries(selected).map(([key, value]) => [
-        `${prefix3}.${key}`,
+        `${prefix2}.${key}`,
         value
       ])
     );
   }
-  function getPrefixedSelectKeys(selected, prefix3) {
-    if (selected[prefix3]) {
-      return selected[prefix3];
+  function getPrefixedSelectKeys(selected, prefix2) {
+    if (selected[prefix2]) {
+      return selected[prefix2];
     }
-    return Object.keys(selected).filter((key) => key.startsWith(prefix3 + ".")).reduce((accumulator, key) => {
-      accumulator[key.slice(prefix3.length + 1)] = selected[key];
+    return Object.keys(selected).filter((key) => key.startsWith(prefix2 + ".")).reduce((accumulator, key) => {
+      accumulator[key.slice(prefix2.length + 1)] = selected[key];
       return accumulator;
     }, {});
   }
   function useFormatTypes({
     clientId,
-    identifier: identifier2,
+    identifier,
     allowedFormats,
     withoutInteractiveFormatting,
     disableNoneEssentialFormatting = false
@@ -51090,7 +51002,7 @@ var wp;
             type.__experimentalGetPropsForEditableTreePreparation(
               select3,
               {
-                richTextIdentifier: identifier2,
+                richTextIdentifier: identifier,
                 blockClientId: clientId
               }
             ),
@@ -51098,7 +51010,7 @@ var wp;
           )
         };
       }, {}),
-      [formatTypes, clientId, identifier2]
+      [formatTypes, clientId, identifier]
     );
     const dispatch = (0, import_data148.useDispatch)();
     const prepareHandlers = [];
@@ -51113,7 +51025,7 @@ var wp;
         const handler = type.__experimentalCreatePrepareEditableTree(
           getPrefixedSelectKeys(keyedSelected, type.name),
           {
-            richTextIdentifier: identifier2,
+            richTextIdentifier: identifier,
             blockClientId: clientId
           }
         );
@@ -51129,7 +51041,7 @@ var wp;
           dispatchers = type.__experimentalGetPropsForEditableTreeChangeHandler(
             dispatch,
             {
-              richTextIdentifier: identifier2,
+              richTextIdentifier: identifier,
               blockClientId: clientId
             }
           );
@@ -51142,7 +51054,7 @@ var wp;
               ...dispatchers
             },
             {
-              richTextIdentifier: identifier2,
+              richTextIdentifier: identifier,
               blockClientId: clientId
             }
           )
@@ -51272,8 +51184,8 @@ var wp;
       );
       const transformation = (0, import_blocks80.findTransform)(
         prefixTransforms,
-        ({ prefix: prefix3 }) => {
-          return trimmedTextBefore === prefix3;
+        ({ prefix: prefix2 }) => {
+          return trimmedTextBefore === prefix2;
         }
       );
       if (!transformation) {
@@ -51351,15 +51263,15 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/remove-browser-shortcuts.js
   var import_keycodes19 = __toESM(require_keycodes());
-  var remove_browser_shortcuts_default = () => (node2) => {
+  var remove_browser_shortcuts_default = () => (node) => {
     function onKeydown(event) {
       if (import_keycodes19.isKeyboardEvent.primary(event, "z") || import_keycodes19.isKeyboardEvent.primary(event, "y") || import_keycodes19.isKeyboardEvent.primaryShift(event, "z")) {
         event.preventDefault();
       }
     }
-    node2.addEventListener("keydown", onKeydown);
+    node.addEventListener("keydown", onKeydown);
     return () => {
-      node2.removeEventListener("keydown", onKeydown);
+      node.removeEventListener("keydown", onKeydown);
     };
   };
 
@@ -51798,7 +51710,7 @@ var wp;
   var import_jsx_runtime331 = __toESM(require_jsx_runtime());
   function RichTextMultiline({
     children,
-    identifier: identifier2,
+    identifier,
     tagName: TagName = "div",
     value = "",
     onChange,
@@ -51833,7 +51745,7 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
         RichTextWrapper,
         {
-          identifier: `${identifier2}-${index}`,
+          identifier: `${identifier}-${index}`,
           tagName: multilineTagName,
           value: _value,
           onChange: (newValue) => {
@@ -51863,7 +51775,7 @@ var wp;
             _onChange(newValues);
             selectionChange2(
               clientId,
-              `${identifier2}-${index + 1}`,
+              `${identifier}-${index + 1}`,
               0,
               0
             );
@@ -51895,7 +51807,7 @@ var wp;
             _onChange(newValues);
             selectionChange2(
               clientId,
-              `${identifier2}-${index - (forward ? 0 : 1)}`,
+              `${identifier}-${index - (forward ? 0 : 1)}`,
               offset,
               offset
             );
@@ -51944,13 +51856,13 @@ var wp;
   // packages/block-editor/build-module/components/rich-text/shortcut.js
   var import_keycodes24 = __toESM(require_keycodes());
   var import_element181 = __toESM(require_element());
-  function RichTextShortcut({ character: character2, type, onUse }) {
+  function RichTextShortcut({ character, type, onUse }) {
     const keyboardShortcuts = (0, import_element181.useContext)(keyboardShortcutContext);
     const onUseRef = (0, import_element181.useRef)();
     onUseRef.current = onUse;
     (0, import_element181.useEffect)(() => {
       function callback(event) {
-        if (import_keycodes24.isKeyboardEvent[type](event, character2)) {
+        if (import_keycodes24.isKeyboardEvent[type](event, character)) {
           onUseRef.current();
           event.preventDefault();
         }
@@ -51959,7 +51871,7 @@ var wp;
       return () => {
         keyboardShortcuts.current.delete(callback);
       };
-    }, [character2, type]);
+    }, [character, type]);
     return null;
   }
 
@@ -52052,7 +51964,7 @@ var wp;
     onSplit,
     __unstableOnSplitAtEnd: onSplitAtEnd,
     __unstableOnSplitAtDoubleLineEnd: onSplitAtDoubleLineEnd,
-    identifier: identifier2,
+    identifier,
     preserveWhiteSpace,
     __unstablePastePlainText: pastePlainText,
     __unstableEmbedURLOnPaste,
@@ -52086,7 +51998,7 @@ var wp;
       const selectionEnd2 = getSelectionEnd22();
       let isSelected2;
       if (originalIsSelected === void 0) {
-        isSelected2 = selectionStart2.clientId === clientId && selectionEnd2.clientId === clientId && (identifier2 ? selectionStart2.attributeKey === identifier2 : selectionStart2[instanceIdKey] === instanceId);
+        isSelected2 = selectionStart2.clientId === clientId && selectionEnd2.clientId === clientId && (identifier ? selectionStart2.attributeKey === identifier : selectionStart2[instanceIdKey] === instanceId);
       } else if (originalIsSelected) {
         isSelected2 = selectionStart2.clientId === clientId;
       }
@@ -52099,17 +52011,17 @@ var wp;
     };
     const { selectionStart, selectionEnd, isSelected, isContentOnly } = (0, import_data150.useSelect)(selector3, [
       clientId,
-      identifier2,
+      identifier,
       instanceId,
       originalIsSelected,
       isBlockSelected2
     ]);
     const { disableBoundBlock, bindingsPlaceholder, bindingsLabel } = (0, import_data150.useSelect)(
       (select3) => {
-        if (!blockBindings?.[identifier2] || !bindableAttributes) {
+        if (!blockBindings?.[identifier] || !bindableAttributes) {
           return {};
         }
-        const relatedBinding = blockBindings[identifier2];
+        const relatedBinding = blockBindings[identifier];
         const blockBindingsSource = (0, import_blocks85.getBlockBindingsSource)(
           relatedBinding.source
         );
@@ -52163,7 +52075,7 @@ var wp;
       },
       [
         blockBindings,
-        identifier2,
+        identifier,
         bindableAttributes,
         adjustedValue,
         clientId,
@@ -52187,7 +52099,7 @@ var wp;
         const unset = start2 === void 0 && end === void 0;
         const baseSelection = {
           clientId,
-          [identifier2 ? "attributeKey" : instanceIdKey]: identifier2 ? identifier2 : instanceId
+          [identifier ? "attributeKey" : instanceIdKey]: identifier ? identifier : instanceId
         };
         if (typeof start2 === "number" || unset) {
           if (end === void 0 && getBlockRootClientId2(clientId) !== getBlockRootClientId2(getSelectionEnd2().clientId)) {
@@ -52214,7 +52126,7 @@ var wp;
         getBlockRootClientId2,
         getSelectionEnd2,
         getSelectionStart2,
-        identifier2,
+        identifier,
         instanceId,
         selectionChange2
       ]
@@ -52227,7 +52139,7 @@ var wp;
       dependencies
     } = useFormatTypes({
       clientId,
-      identifier: identifier2,
+      identifier,
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
       disableNoneEssentialFormatting: isContentOnly
@@ -52368,7 +52280,7 @@ var wp;
             "rich-text"
           ),
           tabIndex: props.tabIndex === 0 && !shouldDisableEditing ? null : props.tabIndex,
-          "data-wp-block-attribute-key": identifier2
+          "data-wp-block-attribute-key": identifier
         }
       )
     ] });
@@ -52403,7 +52315,7 @@ var wp;
         onSplit,
         __unstableOnSplitAtEnd,
         __unstableOnSplitAtDoubleLineEnd,
-        identifier: identifier2,
+        identifier,
         preserveWhiteSpace,
         __unstablePastePlainText,
         __unstableEmbedURLOnPaste,
@@ -53154,8 +53066,8 @@ var wp;
       }
       return `var:preset|spacing|${spacingSizes[newSize]?.slug}`;
     };
-    const handleCustomValueSliderChange = (next2) => {
-      onChange([next2, selectedUnit].join(""));
+    const handleCustomValueSliderChange = (next) => {
+      onChange([next, selectedUnit].join(""));
     };
     const allPlaceholder = isMixed ? (0, import_i18n171.__)("Mixed") : null;
     const options = selectListSizes.map((size, index) => ({
@@ -53324,7 +53236,7 @@ var wp;
     type,
     values
   }) {
-    const createHandleOnChange = (side) => (next2) => {
+    const createHandleOnChange = (side) => (next) => {
       if (!onChange) {
         return;
       }
@@ -53338,12 +53250,12 @@ var wp;
         }, {})
       };
       if (side === "vertical") {
-        nextValues.top = next2;
-        nextValues.bottom = next2;
+        nextValues.top = next;
+        nextValues.bottom = next;
       }
       if (side === "horizontal") {
-        nextValues.left = next2;
-        nextValues.right = next2;
+        nextValues.left = next;
+        nextValues.right = next;
       }
       onChange(nextValues);
     };
@@ -53383,7 +53295,7 @@ var wp;
     values
   }) {
     const filteredSides = sides?.length ? ALL_SIDES.filter((side) => sides.includes(side)) : ALL_SIDES;
-    const createHandleOnChange = (side) => (next2) => {
+    const createHandleOnChange = (side) => (next) => {
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
           acc[key] = getPresetValueFromCustomValue(
@@ -53393,7 +53305,7 @@ var wp;
           return acc;
         }, {})
       };
-      nextValues[side] = next2;
+      nextValues[side] = next;
       onChange(nextValues);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(import_jsx_runtime344.Fragment, { children: filteredSides.map((side) => {
@@ -53430,7 +53342,7 @@ var wp;
     type,
     values
   }) {
-    const createHandleOnChange = (currentSide) => (next2) => {
+    const createHandleOnChange = (currentSide) => (next) => {
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
           acc[key] = getPresetValueFromCustomValue(
@@ -53440,7 +53352,7 @@ var wp;
           return acc;
         }, {})
       };
-      nextValues[currentSide] = next2;
+      nextValues[currentSide] = next;
       onChange(nextValues);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
@@ -54831,8 +54743,8 @@ var wp;
   var import_data156 = __toESM(require_data());
   function useGetNumberOfBlocksBeforeCell(gridClientId, numColumns) {
     const { getBlockOrder: getBlockOrder2, getBlockAttributes: getBlockAttributes3 } = (0, import_data156.useSelect)(store);
-    const getNumberOfBlocksBeforeCell = (column2, row) => {
-      const targetIndex = (row - 1) * numColumns + column2 - 1;
+    const getNumberOfBlocksBeforeCell = (column, row) => {
+      const targetIndex = (row - 1) * numColumns + column - 1;
       let count = 0;
       for (const clientId of getBlockOrder2(gridClientId)) {
         const { columnStart, rowStart } = getBlockAttributes3(clientId).style?.layout ?? {};
@@ -57585,41 +57497,41 @@ var wp;
       currentValueForToggle
     ) ? "auto" : currentValueForToggle;
     const repeatCheckedValue = !(repeatValue === "no-repeat" || currentValueForToggle === "cover" && repeatValue === void 0);
-    const updateBackgroundSize = (next2) => {
+    const updateBackgroundSize = (next) => {
       let nextRepeat = repeatValue;
       let nextPosition = positionValue;
-      if (next2 === "contain") {
+      if (next === "contain") {
         nextRepeat = "no-repeat";
         nextPosition = void 0;
       }
-      if (next2 === "cover") {
+      if (next === "cover") {
         nextRepeat = void 0;
         nextPosition = void 0;
       }
-      if ((currentValueForToggle === "cover" || currentValueForToggle === "contain") && next2 === "auto") {
+      if ((currentValueForToggle === "cover" || currentValueForToggle === "contain") && next === "auto") {
         nextRepeat = void 0;
         if (!!style?.background?.backgroundImage?.id) {
           nextPosition = "50% 0";
         }
       }
-      if (!next2 && currentValueForToggle === "auto") {
-        next2 = "auto";
+      if (!next && currentValueForToggle === "auto") {
+        next = "auto";
       }
       onChange(
         setImmutably(style, ["background"], {
           ...style?.background,
           backgroundPosition: nextPosition,
           backgroundRepeat: nextRepeat,
-          backgroundSize: next2
+          backgroundSize: next
         })
       );
     };
-    const updateBackgroundPosition = (next2) => {
+    const updateBackgroundPosition = (next) => {
       onChange(
         setImmutably(
           style,
           ["background", "backgroundPosition"],
-          coordsToBackgroundPosition(next2)
+          coordsToBackgroundPosition(next)
         )
       );
     };
@@ -58324,8 +58236,8 @@ var wp;
   // packages/block-editor/build-module/hooks/contrast-checker.js
   var import_element208 = __toESM(require_element());
   var import_jsx_runtime369 = __toESM(require_jsx_runtime());
-  function getComputedValue(node2, property) {
-    return node2.ownerDocument.defaultView.getComputedStyle(node2).getPropertyValue(property);
+  function getComputedValue(node, property) {
+    return node.ownerDocument.defaultView.getComputedStyle(node).getPropertyValue(property);
   }
   function getBlockElementColors(blockEl) {
     if (!blockEl) {
@@ -59305,9 +59217,9 @@ var wp;
       other: "almost {{count}} years"
     }
   };
-  var formatDistance = (token2, count, options) => {
+  var formatDistance = (token, count, options) => {
     let result;
-    const tokenValue = formatDistanceLocale[token2];
+    const tokenValue = formatDistanceLocale[token];
     if (typeof tokenValue === "string") {
       result = tokenValue;
     } else if (count === 1) {
@@ -59377,7 +59289,7 @@ var wp;
     nextWeek: "eeee 'at' p",
     other: "P"
   };
-  var formatRelative = (token2, _date, _baseDate, _options) => formatRelativeLocale[token2];
+  var formatRelative = (token, _date, _baseDate, _options) => formatRelativeLocale[token];
 
   // packages/dataviews/node_modules/date-fns/locale/_lib/buildLocalizeFn.js
   function buildLocalizeFn(args) {
@@ -59817,24 +59729,24 @@ var wp;
   // packages/dataviews/node_modules/date-fns/_lib/format/lightFormatters.js
   var lightFormatters = {
     // Year
-    y(date, token2) {
+    y(date, token) {
       const signedYear = date.getFullYear();
       const year = signedYear > 0 ? signedYear : 1 - signedYear;
-      return addLeadingZeros(token2 === "yy" ? year % 100 : year, token2.length);
+      return addLeadingZeros(token === "yy" ? year % 100 : year, token.length);
     },
     // Month
-    M(date, token2) {
+    M(date, token) {
       const month = date.getMonth();
-      return token2 === "M" ? String(month + 1) : addLeadingZeros(month + 1, 2);
+      return token === "M" ? String(month + 1) : addLeadingZeros(month + 1, 2);
     },
     // Day of the month
-    d(date, token2) {
-      return addLeadingZeros(date.getDate(), token2.length);
+    d(date, token) {
+      return addLeadingZeros(date.getDate(), token.length);
     },
     // AM or PM
-    a(date, token2) {
+    a(date, token) {
       const dayPeriodEnumValue = date.getHours() / 12 >= 1 ? "pm" : "am";
-      switch (token2) {
+      switch (token) {
         case "a":
         case "aa":
           return dayPeriodEnumValue.toUpperCase();
@@ -59848,29 +59760,29 @@ var wp;
       }
     },
     // Hour [1-12]
-    h(date, token2) {
-      return addLeadingZeros(date.getHours() % 12 || 12, token2.length);
+    h(date, token) {
+      return addLeadingZeros(date.getHours() % 12 || 12, token.length);
     },
     // Hour [0-23]
-    H(date, token2) {
-      return addLeadingZeros(date.getHours(), token2.length);
+    H(date, token) {
+      return addLeadingZeros(date.getHours(), token.length);
     },
     // Minute
-    m(date, token2) {
-      return addLeadingZeros(date.getMinutes(), token2.length);
+    m(date, token) {
+      return addLeadingZeros(date.getMinutes(), token.length);
     },
     // Second
-    s(date, token2) {
-      return addLeadingZeros(date.getSeconds(), token2.length);
+    s(date, token) {
+      return addLeadingZeros(date.getSeconds(), token.length);
     },
     // Fraction of second
-    S(date, token2) {
-      const numberOfDigits = token2.length;
+    S(date, token) {
+      const numberOfDigits = token.length;
       const milliseconds = date.getMilliseconds();
       const fractionalSeconds = Math.trunc(
         milliseconds * Math.pow(10, numberOfDigits - 3)
       );
-      return addLeadingZeros(fractionalSeconds, token2.length);
+      return addLeadingZeros(fractionalSeconds, token.length);
     }
   };
 
@@ -59887,9 +59799,9 @@ var wp;
   };
   var formatters = {
     // Era
-    G: function(date, token2, localize2) {
+    G: function(date, token, localize2) {
       const era = date.getFullYear() > 0 ? 1 : 0;
-      switch (token2) {
+      switch (token) {
         // AD, BC
         case "G":
         case "GG":
@@ -59905,31 +59817,31 @@ var wp;
       }
     },
     // Year
-    y: function(date, token2, localize2) {
-      if (token2 === "yo") {
+    y: function(date, token, localize2) {
+      if (token === "yo") {
         const signedYear = date.getFullYear();
         const year = signedYear > 0 ? signedYear : 1 - signedYear;
         return localize2.ordinalNumber(year, { unit: "year" });
       }
-      return lightFormatters.y(date, token2);
+      return lightFormatters.y(date, token);
     },
     // Local week-numbering year
-    Y: function(date, token2, localize2, options) {
+    Y: function(date, token, localize2, options) {
       const signedWeekYear = getWeekYear(date, options);
       const weekYear = signedWeekYear > 0 ? signedWeekYear : 1 - signedWeekYear;
-      if (token2 === "YY") {
+      if (token === "YY") {
         const twoDigitYear = weekYear % 100;
         return addLeadingZeros(twoDigitYear, 2);
       }
-      if (token2 === "Yo") {
+      if (token === "Yo") {
         return localize2.ordinalNumber(weekYear, { unit: "year" });
       }
-      return addLeadingZeros(weekYear, token2.length);
+      return addLeadingZeros(weekYear, token.length);
     },
     // ISO week-numbering year
-    R: function(date, token2) {
+    R: function(date, token) {
       const isoWeekYear = getISOWeekYear(date);
-      return addLeadingZeros(isoWeekYear, token2.length);
+      return addLeadingZeros(isoWeekYear, token.length);
     },
     // Extended year. This is a single number designating the year of this calendar system.
     // The main difference between `y` and `u` localizers are B.C. years:
@@ -59940,14 +59852,14 @@ var wp;
     // | BC 2 |   2 |  -1 |
     // Also `yy` always returns the last two digits of a year,
     // while `uu` pads single digit years to 2 characters and returns other years unchanged.
-    u: function(date, token2) {
+    u: function(date, token) {
       const year = date.getFullYear();
-      return addLeadingZeros(year, token2.length);
+      return addLeadingZeros(year, token.length);
     },
     // Quarter
-    Q: function(date, token2, localize2) {
+    Q: function(date, token, localize2) {
       const quarter = Math.ceil((date.getMonth() + 1) / 3);
-      switch (token2) {
+      switch (token) {
         // 1, 2, 3, 4
         case "Q":
           return String(quarter);
@@ -59979,9 +59891,9 @@ var wp;
       }
     },
     // Stand-alone quarter
-    q: function(date, token2, localize2) {
+    q: function(date, token, localize2) {
       const quarter = Math.ceil((date.getMonth() + 1) / 3);
-      switch (token2) {
+      switch (token) {
         // 1, 2, 3, 4
         case "q":
           return String(quarter);
@@ -60013,12 +59925,12 @@ var wp;
       }
     },
     // Month
-    M: function(date, token2, localize2) {
+    M: function(date, token, localize2) {
       const month = date.getMonth();
-      switch (token2) {
+      switch (token) {
         case "M":
         case "MM":
-          return lightFormatters.M(date, token2);
+          return lightFormatters.M(date, token);
         // 1st, 2nd, ..., 12th
         case "Mo":
           return localize2.ordinalNumber(month + 1, { unit: "month" });
@@ -60041,9 +59953,9 @@ var wp;
       }
     },
     // Stand-alone month
-    L: function(date, token2, localize2) {
+    L: function(date, token, localize2) {
       const month = date.getMonth();
-      switch (token2) {
+      switch (token) {
         // 1, 2, ..., 12
         case "L":
           return String(month + 1);
@@ -60072,40 +59984,40 @@ var wp;
       }
     },
     // Local week of year
-    w: function(date, token2, localize2, options) {
+    w: function(date, token, localize2, options) {
       const week = getWeek(date, options);
-      if (token2 === "wo") {
+      if (token === "wo") {
         return localize2.ordinalNumber(week, { unit: "week" });
       }
-      return addLeadingZeros(week, token2.length);
+      return addLeadingZeros(week, token.length);
     },
     // ISO week of year
-    I: function(date, token2, localize2) {
+    I: function(date, token, localize2) {
       const isoWeek = getISOWeek(date);
-      if (token2 === "Io") {
+      if (token === "Io") {
         return localize2.ordinalNumber(isoWeek, { unit: "week" });
       }
-      return addLeadingZeros(isoWeek, token2.length);
+      return addLeadingZeros(isoWeek, token.length);
     },
     // Day of the month
-    d: function(date, token2, localize2) {
-      if (token2 === "do") {
+    d: function(date, token, localize2) {
+      if (token === "do") {
         return localize2.ordinalNumber(date.getDate(), { unit: "date" });
       }
-      return lightFormatters.d(date, token2);
+      return lightFormatters.d(date, token);
     },
     // Day of year
-    D: function(date, token2, localize2) {
+    D: function(date, token, localize2) {
       const dayOfYear = getDayOfYear(date);
-      if (token2 === "Do") {
+      if (token === "Do") {
         return localize2.ordinalNumber(dayOfYear, { unit: "dayOfYear" });
       }
-      return addLeadingZeros(dayOfYear, token2.length);
+      return addLeadingZeros(dayOfYear, token.length);
     },
     // Day of week
-    E: function(date, token2, localize2) {
+    E: function(date, token, localize2) {
       const dayOfWeek = date.getDay();
-      switch (token2) {
+      switch (token) {
         // Tue
         case "E":
         case "EE":
@@ -60136,10 +60048,10 @@ var wp;
       }
     },
     // Local day of week
-    e: function(date, token2, localize2, options) {
+    e: function(date, token, localize2, options) {
       const dayOfWeek = date.getDay();
       const localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
-      switch (token2) {
+      switch (token) {
         // Numerical value (Nth day of week with current locale or weekStartsOn)
         case "e":
           return String(localDayOfWeek);
@@ -60176,16 +60088,16 @@ var wp;
       }
     },
     // Stand-alone local day of week
-    c: function(date, token2, localize2, options) {
+    c: function(date, token, localize2, options) {
       const dayOfWeek = date.getDay();
       const localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
-      switch (token2) {
+      switch (token) {
         // Numerical value (same as in `e`)
         case "c":
           return String(localDayOfWeek);
         // Padded numerical value
         case "cc":
-          return addLeadingZeros(localDayOfWeek, token2.length);
+          return addLeadingZeros(localDayOfWeek, token.length);
         // 1st, 2nd, ..., 7th
         case "co":
           return localize2.ordinalNumber(localDayOfWeek, { unit: "day" });
@@ -60216,16 +60128,16 @@ var wp;
       }
     },
     // ISO day of week
-    i: function(date, token2, localize2) {
+    i: function(date, token, localize2) {
       const dayOfWeek = date.getDay();
       const isoDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
-      switch (token2) {
+      switch (token) {
         // 2
         case "i":
           return String(isoDayOfWeek);
         // 02
         case "ii":
-          return addLeadingZeros(isoDayOfWeek, token2.length);
+          return addLeadingZeros(isoDayOfWeek, token.length);
         // 2nd
         case "io":
           return localize2.ordinalNumber(isoDayOfWeek, { unit: "day" });
@@ -60257,10 +60169,10 @@ var wp;
       }
     },
     // AM or PM
-    a: function(date, token2, localize2) {
+    a: function(date, token, localize2) {
       const hours = date.getHours();
       const dayPeriodEnumValue = hours / 12 >= 1 ? "pm" : "am";
-      switch (token2) {
+      switch (token) {
         case "a":
         case "aa":
           return localize2.dayPeriod(dayPeriodEnumValue, {
@@ -60286,7 +60198,7 @@ var wp;
       }
     },
     // AM, PM, midnight, noon
-    b: function(date, token2, localize2) {
+    b: function(date, token, localize2) {
       const hours = date.getHours();
       let dayPeriodEnumValue;
       if (hours === 12) {
@@ -60296,7 +60208,7 @@ var wp;
       } else {
         dayPeriodEnumValue = hours / 12 >= 1 ? "pm" : "am";
       }
-      switch (token2) {
+      switch (token) {
         case "b":
         case "bb":
           return localize2.dayPeriod(dayPeriodEnumValue, {
@@ -60322,7 +60234,7 @@ var wp;
       }
     },
     // in the morning, in the afternoon, in the evening, at night
-    B: function(date, token2, localize2) {
+    B: function(date, token, localize2) {
       const hours = date.getHours();
       let dayPeriodEnumValue;
       if (hours >= 17) {
@@ -60334,7 +60246,7 @@ var wp;
       } else {
         dayPeriodEnumValue = dayPeriodEnum.night;
       }
-      switch (token2) {
+      switch (token) {
         case "B":
         case "BB":
         case "BBB":
@@ -60356,63 +60268,63 @@ var wp;
       }
     },
     // Hour [1-12]
-    h: function(date, token2, localize2) {
-      if (token2 === "ho") {
+    h: function(date, token, localize2) {
+      if (token === "ho") {
         let hours = date.getHours() % 12;
         if (hours === 0) hours = 12;
         return localize2.ordinalNumber(hours, { unit: "hour" });
       }
-      return lightFormatters.h(date, token2);
+      return lightFormatters.h(date, token);
     },
     // Hour [0-23]
-    H: function(date, token2, localize2) {
-      if (token2 === "Ho") {
+    H: function(date, token, localize2) {
+      if (token === "Ho") {
         return localize2.ordinalNumber(date.getHours(), { unit: "hour" });
       }
-      return lightFormatters.H(date, token2);
+      return lightFormatters.H(date, token);
     },
     // Hour [0-11]
-    K: function(date, token2, localize2) {
+    K: function(date, token, localize2) {
       const hours = date.getHours() % 12;
-      if (token2 === "Ko") {
+      if (token === "Ko") {
         return localize2.ordinalNumber(hours, { unit: "hour" });
       }
-      return addLeadingZeros(hours, token2.length);
+      return addLeadingZeros(hours, token.length);
     },
     // Hour [1-24]
-    k: function(date, token2, localize2) {
+    k: function(date, token, localize2) {
       let hours = date.getHours();
       if (hours === 0) hours = 24;
-      if (token2 === "ko") {
+      if (token === "ko") {
         return localize2.ordinalNumber(hours, { unit: "hour" });
       }
-      return addLeadingZeros(hours, token2.length);
+      return addLeadingZeros(hours, token.length);
     },
     // Minute
-    m: function(date, token2, localize2) {
-      if (token2 === "mo") {
+    m: function(date, token, localize2) {
+      if (token === "mo") {
         return localize2.ordinalNumber(date.getMinutes(), { unit: "minute" });
       }
-      return lightFormatters.m(date, token2);
+      return lightFormatters.m(date, token);
     },
     // Second
-    s: function(date, token2, localize2) {
-      if (token2 === "so") {
+    s: function(date, token, localize2) {
+      if (token === "so") {
         return localize2.ordinalNumber(date.getSeconds(), { unit: "second" });
       }
-      return lightFormatters.s(date, token2);
+      return lightFormatters.s(date, token);
     },
     // Fraction of second
-    S: function(date, token2) {
-      return lightFormatters.S(date, token2);
+    S: function(date, token) {
+      return lightFormatters.S(date, token);
     },
     // Timezone (ISO-8601. If offset is 0, output is always `'Z'`)
-    X: function(date, token2, _localize) {
+    X: function(date, token, _localize) {
       const timezoneOffset = date.getTimezoneOffset();
       if (timezoneOffset === 0) {
         return "Z";
       }
-      switch (token2) {
+      switch (token) {
         // Hours and optional minutes
         case "X":
           return formatTimezoneWithOptionalMinutes(timezoneOffset);
@@ -60433,9 +60345,9 @@ var wp;
       }
     },
     // Timezone (ISO-8601. If offset is 0, output is `'+00:00'` or equivalent)
-    x: function(date, token2, _localize) {
+    x: function(date, token, _localize) {
       const timezoneOffset = date.getTimezoneOffset();
-      switch (token2) {
+      switch (token) {
         // Hours and optional minutes
         case "x":
           return formatTimezoneWithOptionalMinutes(timezoneOffset);
@@ -60456,9 +60368,9 @@ var wp;
       }
     },
     // Timezone (GMT)
-    O: function(date, token2, _localize) {
+    O: function(date, token, _localize) {
       const timezoneOffset = date.getTimezoneOffset();
-      switch (token2) {
+      switch (token) {
         // Short
         case "O":
         case "OO":
@@ -60471,9 +60383,9 @@ var wp;
       }
     },
     // Timezone (specific non-location)
-    z: function(date, token2, _localize) {
+    z: function(date, token, _localize) {
       const timezoneOffset = date.getTimezoneOffset();
-      switch (token2) {
+      switch (token) {
         // Short
         case "z":
         case "zz":
@@ -60486,16 +60398,16 @@ var wp;
       }
     },
     // Seconds timestamp
-    t: function(date, token2, _localize) {
+    t: function(date, token, _localize) {
       const timestamp = Math.trunc(+date / 1e3);
-      return addLeadingZeros(timestamp, token2.length);
+      return addLeadingZeros(timestamp, token.length);
     },
     // Milliseconds timestamp
-    T: function(date, token2, _localize) {
-      return addLeadingZeros(+date, token2.length);
+    T: function(date, token, _localize) {
+      return addLeadingZeros(+date, token.length);
     }
   };
-  function formatTimezoneShort(offset, delimiter2 = "") {
+  function formatTimezoneShort(offset, delimiter = "") {
     const sign = offset > 0 ? "-" : "+";
     const absOffset = Math.abs(offset);
     const hours = Math.trunc(absOffset / 60);
@@ -60503,21 +60415,21 @@ var wp;
     if (minutes === 0) {
       return sign + String(hours);
     }
-    return sign + String(hours) + delimiter2 + addLeadingZeros(minutes, 2);
+    return sign + String(hours) + delimiter + addLeadingZeros(minutes, 2);
   }
-  function formatTimezoneWithOptionalMinutes(offset, delimiter2) {
+  function formatTimezoneWithOptionalMinutes(offset, delimiter) {
     if (offset % 60 === 0) {
       const sign = offset > 0 ? "-" : "+";
       return sign + addLeadingZeros(Math.abs(offset) / 60, 2);
     }
-    return formatTimezone(offset, delimiter2);
+    return formatTimezone(offset, delimiter);
   }
-  function formatTimezone(offset, delimiter2 = "") {
+  function formatTimezone(offset, delimiter = "") {
     const sign = offset > 0 ? "-" : "+";
     const absOffset = Math.abs(offset);
     const hours = addLeadingZeros(Math.trunc(absOffset / 60), 2);
     const minutes = addLeadingZeros(absOffset % 60, 2);
-    return sign + hours + delimiter2 + minutes;
+    return sign + hours + delimiter + minutes;
   }
 
   // packages/dataviews/node_modules/date-fns/_lib/format/longFormatters.js
@@ -60581,20 +60493,20 @@ var wp;
   var dayOfYearTokenRE = /^D+$/;
   var weekYearTokenRE = /^Y+$/;
   var throwTokens = ["D", "DD", "YY", "YYYY"];
-  function isProtectedDayOfYearToken(token2) {
-    return dayOfYearTokenRE.test(token2);
+  function isProtectedDayOfYearToken(token) {
+    return dayOfYearTokenRE.test(token);
   }
-  function isProtectedWeekYearToken(token2) {
-    return weekYearTokenRE.test(token2);
+  function isProtectedWeekYearToken(token) {
+    return weekYearTokenRE.test(token);
   }
-  function warnOrThrowProtectedError(token2, format2, input) {
-    const _message = message(token2, format2, input);
+  function warnOrThrowProtectedError(token, format2, input) {
+    const _message = message(token, format2, input);
     console.warn(_message);
-    if (throwTokens.includes(token2)) throw new RangeError(_message);
+    if (throwTokens.includes(token)) throw new RangeError(_message);
   }
-  function message(token2, format2, input) {
-    const subject = token2[0] === "Y" ? "years" : "days of the month";
-    return `Use \`${token2.toLowerCase()}\` instead of \`${token2}\` (in \`${format2}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
+  function message(token, format2, input) {
+    const subject = token[0] === "Y" ? "years" : "days of the month";
+    return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format2}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
   }
 
   // packages/dataviews/node_modules/date-fns/format.js
@@ -60647,12 +60559,12 @@ var wp;
     };
     return parts.map((part) => {
       if (!part.isToken) return part.value;
-      const token2 = part.value;
-      if (!options?.useAdditionalWeekYearTokens && isProtectedWeekYearToken(token2) || !options?.useAdditionalDayOfYearTokens && isProtectedDayOfYearToken(token2)) {
-        warnOrThrowProtectedError(token2, formatStr, String(date));
+      const token = part.value;
+      if (!options?.useAdditionalWeekYearTokens && isProtectedWeekYearToken(token) || !options?.useAdditionalDayOfYearTokens && isProtectedDayOfYearToken(token)) {
+        warnOrThrowProtectedError(token, formatStr, String(date));
       }
-      const formatter = formatters[token2[0]];
-      return formatter(originalDate, token2, locale.localize, formatterOptions);
+      const formatter = formatters[token[0]];
+      return formatter(originalDate, token, locale.localize, formatterOptions);
     }).join("");
   }
   function cleanEscapedString(input) {
@@ -61601,9 +61513,9 @@ var wp;
       if (!value) {
         return { from: void 0, to: void 0 };
       }
-      const [from2, to2] = value;
+      const [from, to2] = value;
       return {
-        from: parseDate(from2) || void 0,
+        from: parseDate(from) || void 0,
         to: parseDate(to2) || void 0
       };
     }, [value]);
@@ -61817,7 +61729,7 @@ var wp;
     onChange,
     hideLabelFromVision,
     type,
-    prefix: prefix3,
+    prefix: prefix2,
     suffix,
     validity
   }) {
@@ -61844,7 +61756,7 @@ var wp;
         onChange: onChangeControl,
         hideLabelFromVision,
         type,
-        prefix: prefix3,
+        prefix: prefix2,
         suffix,
         pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
@@ -62173,7 +62085,7 @@ var wp;
     config: config2,
     validity
   }) {
-    const { prefix: prefix3, suffix } = config2 || {};
+    const { prefix: prefix2, suffix } = config2 || {};
     return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
       ValidatedText,
       {
@@ -62183,7 +62095,7 @@ var wp;
           onChange,
           hideLabelFromVision,
           validity,
-          prefix: prefix3 ? (0, import_element219.createElement)(prefix3) : void 0,
+          prefix: prefix2 ? (0, import_element219.createElement)(prefix2) : void 0,
           suffix: suffix ? (0, import_element219.createElement)(suffix) : void 0
         }
       }
@@ -62336,21 +62248,21 @@ var wp;
       getElements: field.getElements
     });
     const arrayValueAsElements = (0, import_element223.useMemo)(
-      () => Array.isArray(value) ? value.map((token2) => {
+      () => Array.isArray(value) ? value.map((token) => {
         const element = elements?.find(
-          (suggestion) => suggestion.value === token2
+          (suggestion) => suggestion.value === token
         );
-        return element || { value: token2, label: token2 };
+        return element || { value: token, label: token };
       }) : [],
       [value, elements]
     );
     const onChangeControl = (0, import_element223.useCallback)(
       (tokens) => {
-        const valueTokens = tokens.map((token2) => {
-          if (typeof token2 === "object" && "value" in token2) {
-            return token2.value;
+        const valueTokens = tokens.map((token) => {
+          if (typeof token === "object" && "value" in token) {
+            return token.value;
           }
-          return token2;
+          return token;
         });
         onChange(setValue({ item: data, value: valueTokens }));
       },
@@ -62369,27 +62281,27 @@ var wp;
         onChange: onChangeControl,
         placeholder,
         suggestions: elements?.map((element) => element.value),
-        __experimentalValidateInput: (token2) => {
+        __experimentalValidateInput: (token) => {
           if (field.isValid?.elements && elements) {
             return elements.some(
-              (element) => element.value === token2 || element.label === token2
+              (element) => element.value === token || element.label === token
             );
           }
           return true;
         },
         __experimentalExpandOnFocus: elements && elements.length > 0,
         __experimentalShowHowTo: !field.isValid?.elements,
-        displayTransform: (token2) => {
-          if (typeof token2 === "object" && "label" in token2) {
-            return token2.label;
+        displayTransform: (token) => {
+          if (typeof token === "object" && "label" in token) {
+            return token.label;
           }
-          if (typeof token2 === "string" && elements) {
+          if (typeof token === "string" && elements) {
             const element = elements.find(
-              (el) => el.value === token2
+              (el) => el.value === token
             );
-            return element?.label || token2;
+            return element?.label || token;
           }
-          return token2;
+          return token;
         },
         __experimentalRenderItem: ({ item }) => {
           if (typeof item === "string" && elements) {
@@ -62509,7 +62421,7 @@ var wp;
   }) {
     const [isVisible, setIsVisible] = (0, import_element225.useState)(false);
     const toggleVisibility = (0, import_element225.useCallback)(() => {
-      setIsVisible((prev2) => !prev2);
+      setIsVisible((prev) => !prev);
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
       ValidatedText,
@@ -63879,9 +63791,9 @@ var wp;
         return;
       }
       if (!Array.isArray(result)) {
-        setFormValidity((prev2) => {
+        setFormValidity((prev) => {
           const newFormValidity = setValidityAtPath(
-            prev2,
+            prev,
             {
               elements: {
                 type: "invalid",
@@ -63898,9 +63810,9 @@ var wp;
         ...formField.field,
         elements: result
       })) {
-        setFormValidity((prev2) => {
+        setFormValidity((prev) => {
           const newFormValidity = setValidityAtPath(
-            prev2,
+            prev,
             {
               elements: {
                 type: "invalid",
@@ -63926,9 +63838,9 @@ var wp;
           "Unknown error when running elements validation asynchronously."
         );
       }
-      setFormValidity((prev2) => {
+      setFormValidity((prev) => {
         const newFormValidity = setValidityAtPath(
-          prev2,
+          prev,
           {
             elements: {
               type: "invalid",
@@ -63950,9 +63862,9 @@ var wp;
         return;
       }
       if (result === null) {
-        setFormValidity((prev2) => {
+        setFormValidity((prev) => {
           const newFormValidity = setValidityAtPath(
-            prev2,
+            prev,
             {
               custom: {
                 type: "valid",
@@ -63966,9 +63878,9 @@ var wp;
         return;
       }
       if (typeof result === "string") {
-        setFormValidity((prev2) => {
+        setFormValidity((prev) => {
           const newFormValidity = setValidityAtPath(
-            prev2,
+            prev,
             {
               custom: {
                 type: "invalid",
@@ -63981,9 +63893,9 @@ var wp;
         });
         return;
       }
-      setFormValidity((prev2) => {
+      setFormValidity((prev) => {
         const newFormValidity = setValidityAtPath(
-          prev2,
+          prev,
           {
             custom: {
               type: "invalid",
@@ -64006,9 +63918,9 @@ var wp;
           "Unknown error when running custom validation asynchronously."
         );
       }
-      setFormValidity((prev2) => {
+      setFormValidity((prev) => {
         const newFormValidity = setValidityAtPath(
-          prev2,
+          prev,
           {
             custom: {
               type: "invalid",
@@ -64292,7 +64204,7 @@ var wp;
     };
     const handleOnChange = (newValue) => {
       setChanges(
-        (prev2) => (0, import_deepmerge2.default)(prev2, newValue, {
+        (prev) => (0, import_deepmerge2.default)(prev, newValue, {
           arrayMerge: (target, source) => source
         })
       );
@@ -64547,7 +64459,7 @@ var wp;
     const { isOpened, isCollapsible } = layout;
     const [isOpen, setIsOpen] = (0, import_element232.useState)(isOpened);
     const toggle = (0, import_element232.useCallback)(() => {
-      setIsOpen((prev2) => !prev2);
+      setIsOpen((prev) => !prev);
     }, []);
     const CollapsibleCardHeader = (0, import_element232.useCallback)(
       ({
@@ -65735,16 +65647,16 @@ var wp;
       });
     }, [blockTypeFields, blockType?.attributes, clientId]);
     const handleToggleField = (fieldId) => {
-      setForm((prev2) => {
-        if (prev2.fields?.includes(fieldId)) {
+      setForm((prev) => {
+        if (prev.fields?.includes(fieldId)) {
           return {
-            ...prev2,
-            fields: prev2.fields.filter((id) => id !== fieldId)
+            ...prev,
+            fields: prev.fields.filter((id) => id !== fieldId)
           };
         }
         return {
-          ...prev2,
-          fields: [...prev2.fields || [], fieldId]
+          ...prev,
+          fields: [...prev.fields || [], fieldId]
         };
       });
     };
@@ -66503,11 +66415,11 @@ var wp;
       []
     );
     return (0, import_compose93.useRefEffect)(
-      (node2) => {
+      (node) => {
         if (!hasSelectedBlock2) {
           return;
         }
-        const { ownerDocument } = node2;
+        const { ownerDocument } = node;
         const { defaultView } = ownerDocument;
         let scrollResizeRafId;
         let onKeyDownRafId;
@@ -66550,7 +66462,7 @@ var wp;
           if (diff === 0) {
             return;
           }
-          const scrollContainer = (0, import_dom39.getScrollContainer)(node2);
+          const scrollContainer = (0, import_dom39.getScrollContainer)(node);
           if (!scrollContainer) {
             return;
           }
@@ -66596,10 +66508,10 @@ var wp;
           }
         }
         function isSelectionEligibleForScroll() {
-          return node2.contains(ownerDocument.activeElement) && ownerDocument.activeElement.isContentEditable;
+          return node.contains(ownerDocument.activeElement) && ownerDocument.activeElement.isContentEditable;
         }
         function isLastEditableNode() {
-          const editableNodes = node2.querySelectorAll(
+          const editableNodes = node.querySelectorAll(
             '[contenteditable="true"]'
           );
           const lastEditableNode = editableNodes[editableNodes.length - 1];
@@ -66607,10 +66519,10 @@ var wp;
         }
         defaultView.addEventListener("scroll", onScrollResize, true);
         defaultView.addEventListener("resize", onScrollResize, true);
-        node2.addEventListener("keydown", onKeyDown);
-        node2.addEventListener("keyup", maintainCaretPosition);
-        node2.addEventListener("mousedown", addSelectionChangeListener);
-        node2.addEventListener("touchstart", addSelectionChangeListener);
+        node.addEventListener("keydown", onKeyDown);
+        node.addEventListener("keyup", maintainCaretPosition);
+        node.addEventListener("mousedown", addSelectionChangeListener);
+        node.addEventListener("touchstart", addSelectionChangeListener);
         return () => {
           defaultView.removeEventListener(
             "scroll",
@@ -66622,13 +66534,13 @@ var wp;
             onScrollResize,
             true
           );
-          node2.removeEventListener("keydown", onKeyDown);
-          node2.removeEventListener("keyup", maintainCaretPosition);
-          node2.removeEventListener(
+          node.removeEventListener("keydown", onKeyDown);
+          node.removeEventListener("keyup", maintainCaretPosition);
+          node.removeEventListener(
             "mousedown",
             addSelectionChangeListener
           );
-          node2.removeEventListener(
+          node.removeEventListener(
             "touchstart",
             addSelectionChangeListener
           );
@@ -67284,9 +67196,9 @@ var wp;
     ...props
   }) {
     const wrapperProps = hook(props);
-    const setWrapperProps = (next2) => setAllWrapperProps((prev2) => {
-      const nextAll = [...prev2];
-      nextAll[index] = next2;
+    const setWrapperProps = (next) => setAllWrapperProps((prev) => {
+      const nextAll = [...prev];
+      nextAll[index] = next;
       return nextAll;
     });
     (0, import_element245.useEffect)(() => {
@@ -70056,8 +69968,8 @@ var wp;
   var import_compose100 = __toESM(require_compose());
 
   // packages/block-editor/build-module/components/grid/utils.js
-  function range(start2, length2) {
-    return Array.from({ length: length2 }, (_, i2) => start2 + i2);
+  function range(start2, length) {
+    return Array.from({ length }, (_, i2) => start2 + i2);
   }
   var GridRect = class {
     constructor({
@@ -70087,8 +69999,8 @@ var wp;
     get rowSpan() {
       return this.rowEnd - this.rowStart + 1;
     }
-    contains(column2, row) {
-      return column2 >= this.columnStart && column2 <= this.columnEnd && row >= this.rowStart && row <= this.rowEnd;
+    contains(column, row) {
+      return column >= this.columnStart && column <= this.columnEnd && row >= this.rowStart && row <= this.rowEnd;
     }
     containsRect(rect) {
       return this.contains(rect.columnStart, rect.rowStart) && this.contains(rect.columnEnd, rect.rowEnd);
@@ -70110,9 +70022,9 @@ var wp;
     }
     return tracks;
   }
-  function getClosestTrack(tracks, position2, edge = "start") {
+  function getClosestTrack(tracks, position, edge = "start") {
     return tracks.reduce(
-      (closest, track, index) => Math.abs(track[edge] - position2) < Math.abs(tracks[closest][edge] - position2) ? index : closest,
+      (closest, track, index) => Math.abs(track[edge] - position) < Math.abs(tracks[closest][edge] - position) ? index : closest,
       0
     );
   }
@@ -70283,11 +70195,11 @@ var wp;
       return rects;
     }, [gridItemStyles]);
     return range(1, gridInfo.numRows).map(
-      (row) => range(1, gridInfo.numColumns).map((column2) => {
+      (row) => range(1, gridInfo.numColumns).map((column) => {
         const isCellOccupied = occupiedRects.some(
-          (rect) => rect.contains(column2, row)
+          (rect) => rect.contains(column, row)
         );
-        const isHighlighted = highlightedRect?.contains(column2, row) ?? false;
+        const isHighlighted = highlightedRect?.contains(column, row) ?? false;
         return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
           GridVisualizerCell,
           {
@@ -70296,7 +70208,7 @@ var wp;
             children: isCellOccupied ? /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
               GridVisualizerDropZone,
               {
-                column: column2,
+                column,
                 row,
                 gridClientId,
                 gridInfo,
@@ -70305,7 +70217,7 @@ var wp;
             ) : /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
               GridVisualizerAppender,
               {
-                column: column2,
+                column,
                 row,
                 gridClientId,
                 gridInfo,
@@ -70313,7 +70225,7 @@ var wp;
               }
             )
           },
-          `${row}-${column2}`
+          `${row}-${column}`
         );
       })
     );
@@ -70334,7 +70246,7 @@ var wp;
       }
     );
   }
-  function useGridVisualizerDropZone(column2, row, gridClientId, gridInfo, setHighlightedRect) {
+  function useGridVisualizerDropZone(column, row, gridClientId, gridInfo, setHighlightedRect) {
     const {
       getBlockAttributes: getBlockAttributes3,
       getBlockRootClientId: getBlockRootClientId2,
@@ -70358,7 +70270,7 @@ var wp;
         }
         const attributes = getBlockAttributes3(srcClientId);
         const rect = new GridRect({
-          columnStart: column2,
+          columnStart: column,
           rowStart: row,
           columnSpan: attributes.style?.layout?.columnSpan,
           rowSpan: attributes.style?.layout?.rowSpan
@@ -70373,7 +70285,7 @@ var wp;
         const attributes = getBlockAttributes3(srcClientId);
         setHighlightedRect(
           new GridRect({
-            columnStart: column2,
+            columnStart: column,
             rowStart: row,
             columnSpan: attributes.style?.layout?.columnSpan,
             rowSpan: attributes.style?.layout?.rowSpan
@@ -70382,7 +70294,7 @@ var wp;
       },
       onDragLeave() {
         setHighlightedRect(
-          (prevHighlightedRect) => prevHighlightedRect?.columnStart === column2 && prevHighlightedRect?.rowStart === row ? null : prevHighlightedRect
+          (prevHighlightedRect) => prevHighlightedRect?.columnStart === column && prevHighlightedRect?.rowStart === row ? null : prevHighlightedRect
         );
       },
       onDrop(srcClientId) {
@@ -70393,7 +70305,7 @@ var wp;
             ...attributes.style,
             layout: {
               ...attributes.style?.layout,
-              columnStart: column2,
+              columnStart: column,
               rowStart: row
             }
           }
@@ -70403,13 +70315,13 @@ var wp;
           [srcClientId],
           getBlockRootClientId2(srcClientId),
           gridClientId,
-          getNumberOfBlocksBeforeCell(column2, row)
+          getNumberOfBlocksBeforeCell(column, row)
         );
       }
     });
   }
   function GridVisualizerDropZone({
-    column: column2,
+    column,
     row,
     gridClientId,
     gridInfo,
@@ -70420,7 +70332,7 @@ var wp;
       {
         className: "block-editor-grid-visualizer__drop-zone",
         ref: useGridVisualizerDropZone(
-          column2,
+          column,
           row,
           gridClientId,
           gridInfo,
@@ -70430,7 +70342,7 @@ var wp;
     );
   }
   function GridVisualizerAppender({
-    column: column2,
+    column,
     row,
     gridClientId,
     gridInfo,
@@ -70451,7 +70363,7 @@ var wp;
         rootClientId: gridClientId,
         className: "block-editor-grid-visualizer__appender",
         ref: useGridVisualizerDropZone(
-          column2,
+          column,
           row,
           gridClientId,
           gridInfo,
@@ -70467,7 +70379,7 @@ var wp;
           updateBlockAttributes2(block.clientId, {
             style: {
               layout: {
-                columnStart: column2,
+                columnStart: column,
                 rowStart: row
               }
             }
@@ -70477,7 +70389,7 @@ var wp;
             [block.clientId],
             gridClientId,
             gridClientId,
-            getNumberOfBlocksBeforeCell(column2, row)
+            getNumberOfBlocksBeforeCell(column, row)
           );
         }
       }
@@ -70999,9 +70911,9 @@ var wp;
   }
   function placeBlock(occupiedRects, gridColumnCount, blockColumnSpan, blockRowSpan, startColumn = 1, startRow = 1) {
     for (let row = startRow; ; row++) {
-      for (let column2 = row === startRow ? startColumn : 1; column2 <= gridColumnCount; column2++) {
+      for (let column = row === startRow ? startColumn : 1; column <= gridColumnCount; column++) {
         const candidateRect = new GridRect({
-          columnStart: column2,
+          columnStart: column,
           rowStart: row,
           columnSpan: blockColumnSpan,
           rowSpan: blockRowSpan
@@ -71009,7 +70921,7 @@ var wp;
         if (!occupiedRects.some(
           (r3) => r3.intersectsRect(candidateRect)
         )) {
-          return [column2, row];
+          return [column, row];
         }
       }
     }
@@ -72148,1905 +72060,10 @@ var wp;
     );
   }
 
-  // node_modules/@babel/runtime/helpers/esm/extends.js
-  function _extends4() {
-    return _extends4 = Object.assign ? Object.assign.bind() : function(n2) {
-      for (var e2 = 1; e2 < arguments.length; e2++) {
-        var t3 = arguments[e2];
-        for (var r3 in t3) ({}).hasOwnProperty.call(t3, r3) && (n2[r3] = t3[r3]);
-      }
-      return n2;
-    }, _extends4.apply(null, arguments);
-  }
-
-  // node_modules/@emotion/styled/dist/emotion-styled.browser.esm.js
-  var import_react10 = __toESM(require_react());
-
-  // node_modules/@emotion/is-prop-valid/node_modules/@emotion/memoize/dist/emotion-memoize.esm.js
-  function memoize(fn) {
-    var cache = /* @__PURE__ */ Object.create(null);
-    return function(arg) {
-      if (cache[arg] === void 0) cache[arg] = fn(arg);
-      return cache[arg];
-    };
-  }
-
-  // node_modules/@emotion/is-prop-valid/dist/emotion-is-prop-valid.esm.js
-  var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/;
-  var isPropValid = /* @__PURE__ */ memoize(
-    function(prop) {
-      return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111 && prop.charCodeAt(1) === 110 && prop.charCodeAt(2) < 91;
-    }
-    /* Z+1 */
-  );
-
-  // node_modules/@emotion/styled/base/dist/emotion-styled-base.browser.esm.js
-  var import_react8 = __toESM(require_react());
-
-  // node_modules/@emotion/react/dist/emotion-react.browser.esm.js
-  var import_react7 = __toESM(require_react());
-
-  // node_modules/@emotion/sheet/dist/emotion-sheet.browser.esm.js
-  function sheetForTag(tag) {
-    if (tag.sheet) {
-      return tag.sheet;
-    }
-    for (var i2 = 0; i2 < document.styleSheets.length; i2++) {
-      if (document.styleSheets[i2].ownerNode === tag) {
-        return document.styleSheets[i2];
-      }
-    }
-  }
-  function createStyleElement(options) {
-    var tag = document.createElement("style");
-    tag.setAttribute("data-emotion", options.key);
-    if (options.nonce !== void 0) {
-      tag.setAttribute("nonce", options.nonce);
-    }
-    tag.appendChild(document.createTextNode(""));
-    tag.setAttribute("data-s", "");
-    return tag;
-  }
-  var StyleSheet = /* @__PURE__ */ (function() {
-    function StyleSheet2(options) {
-      var _this = this;
-      this._insertTag = function(tag) {
-        var before;
-        if (_this.tags.length === 0) {
-          if (_this.insertionPoint) {
-            before = _this.insertionPoint.nextSibling;
-          } else if (_this.prepend) {
-            before = _this.container.firstChild;
-          } else {
-            before = _this.before;
-          }
-        } else {
-          before = _this.tags[_this.tags.length - 1].nextSibling;
-        }
-        _this.container.insertBefore(tag, before);
-        _this.tags.push(tag);
-      };
-      this.isSpeedy = options.speedy === void 0 ? false : options.speedy;
-      this.tags = [];
-      this.ctr = 0;
-      this.nonce = options.nonce;
-      this.key = options.key;
-      this.container = options.container;
-      this.prepend = options.prepend;
-      this.insertionPoint = options.insertionPoint;
-      this.before = null;
-    }
-    var _proto = StyleSheet2.prototype;
-    _proto.hydrate = function hydrate(nodes) {
-      nodes.forEach(this._insertTag);
-    };
-    _proto.insert = function insert7(rule) {
-      if (this.ctr % (this.isSpeedy ? 65e3 : 1) === 0) {
-        this._insertTag(createStyleElement(this));
-      }
-      var tag = this.tags[this.tags.length - 1];
-      if (true) {
-        var isImportRule3 = rule.charCodeAt(0) === 64 && rule.charCodeAt(1) === 105;
-        if (isImportRule3 && this._alreadyInsertedOrderInsensitiveRule) {
-          console.error("You're attempting to insert the following rule:\n" + rule + "\n\n`@import` rules must be before all other types of rules in a stylesheet but other rules have already been inserted. Please ensure that `@import` rules are before all other rules.");
-        }
-        this._alreadyInsertedOrderInsensitiveRule = this._alreadyInsertedOrderInsensitiveRule || !isImportRule3;
-      }
-      if (this.isSpeedy) {
-        var sheet = sheetForTag(tag);
-        try {
-          sheet.insertRule(rule, sheet.cssRules.length);
-        } catch (e2) {
-          if (!/:(-moz-placeholder|-moz-focus-inner|-moz-focusring|-ms-input-placeholder|-moz-read-write|-moz-read-only|-ms-clear){/.test(rule)) {
-            console.error('There was a problem inserting the following rule: "' + rule + '"', e2);
-          }
-        }
-      } else {
-        tag.appendChild(document.createTextNode(rule));
-      }
-      this.ctr++;
-    };
-    _proto.flush = function flush2() {
-      this.tags.forEach(function(tag) {
-        return tag.parentNode && tag.parentNode.removeChild(tag);
-      });
-      this.tags = [];
-      this.ctr = 0;
-      if (true) {
-        this._alreadyInsertedOrderInsensitiveRule = false;
-      }
-    };
-    return StyleSheet2;
-  })();
-
-  // node_modules/stylis/src/Enum.js
-  var MS = "-ms-";
-  var MOZ = "-moz-";
-  var WEBKIT = "-webkit-";
-  var COMMENT = "comm";
-  var RULESET = "rule";
-  var DECLARATION = "decl";
-  var IMPORT = "@import";
-  var KEYFRAMES = "@keyframes";
-
-  // node_modules/stylis/src/Utility.js
-  var abs = Math.abs;
-  var from = String.fromCharCode;
-  var assign2 = Object.assign;
-  function hash(value, length2) {
-    return (((length2 << 2 ^ charat(value, 0)) << 2 ^ charat(value, 1)) << 2 ^ charat(value, 2)) << 2 ^ charat(value, 3);
-  }
-  function trim(value) {
-    return value.trim();
-  }
-  function match2(value, pattern) {
-    return (value = pattern.exec(value)) ? value[0] : value;
-  }
-  function replace2(value, pattern, replacement) {
-    return value.replace(pattern, replacement);
-  }
-  function indexof(value, search) {
-    return value.indexOf(search);
-  }
-  function charat(value, index) {
-    return value.charCodeAt(index) | 0;
-  }
-  function substr(value, begin, end) {
-    return value.slice(begin, end);
-  }
-  function strlen(value) {
-    return value.length;
-  }
-  function sizeof(value) {
-    return value.length;
-  }
-  function append(value, array) {
-    return array.push(value), value;
-  }
-  function combine(array, callback) {
-    return array.map(callback).join("");
-  }
-
-  // node_modules/stylis/src/Tokenizer.js
-  var line = 1;
-  var column = 1;
-  var length = 0;
-  var position = 0;
-  var character = 0;
-  var characters = "";
-  function node(value, root, parent, type, props, children, length2) {
-    return { value, root, parent, type, props, children, line, column, length: length2, return: "" };
-  }
-  function copy(root, props) {
-    return assign2(node("", null, null, "", null, null, 0), root, { length: -root.length }, props);
-  }
-  function char() {
-    return character;
-  }
-  function prev() {
-    character = position > 0 ? charat(characters, --position) : 0;
-    if (column--, character === 10)
-      column = 1, line--;
-    return character;
-  }
-  function next() {
-    character = position < length ? charat(characters, position++) : 0;
-    if (column++, character === 10)
-      column = 1, line++;
-    return character;
-  }
-  function peek() {
-    return charat(characters, position);
-  }
-  function caret() {
-    return position;
-  }
-  function slice(begin, end) {
-    return substr(characters, begin, end);
-  }
-  function token(type) {
-    switch (type) {
-      // \0 \t \n \r \s whitespace token
-      case 0:
-      case 9:
-      case 10:
-      case 13:
-      case 32:
-        return 5;
-      // ! + , / > @ ~ isolate token
-      case 33:
-      case 43:
-      case 44:
-      case 47:
-      case 62:
-      case 64:
-      case 126:
-      // ; { } breakpoint token
-      case 59:
-      case 123:
-      case 125:
-        return 4;
-      // : accompanied token
-      case 58:
-        return 3;
-      // " ' ( [ opening delimit token
-      case 34:
-      case 39:
-      case 40:
-      case 91:
-        return 2;
-      // ) ] closing delimit token
-      case 41:
-      case 93:
-        return 1;
-    }
-    return 0;
-  }
-  function alloc(value) {
-    return line = column = 1, length = strlen(characters = value), position = 0, [];
-  }
-  function dealloc(value) {
-    return characters = "", value;
-  }
-  function delimit(type) {
-    return trim(slice(position - 1, delimiter(type === 91 ? type + 2 : type === 40 ? type + 1 : type)));
-  }
-  function whitespace(type) {
-    while (character = peek())
-      if (character < 33)
-        next();
-      else
-        break;
-    return token(type) > 2 || token(character) > 3 ? "" : " ";
-  }
-  function escaping(index, count) {
-    while (--count && next())
-      if (character < 48 || character > 102 || character > 57 && character < 65 || character > 70 && character < 97)
-        break;
-    return slice(index, caret() + (count < 6 && peek() == 32 && next() == 32));
-  }
-  function delimiter(type) {
-    while (next())
-      switch (character) {
-        // ] ) " '
-        case type:
-          return position;
-        // " '
-        case 34:
-        case 39:
-          if (type !== 34 && type !== 39)
-            delimiter(character);
-          break;
-        // (
-        case 40:
-          if (type === 41)
-            delimiter(type);
-          break;
-        // \
-        case 92:
-          next();
-          break;
-      }
-    return position;
-  }
-  function commenter(type, index) {
-    while (next())
-      if (type + character === 47 + 10)
-        break;
-      else if (type + character === 42 + 42 && peek() === 47)
-        break;
-    return "/*" + slice(index, position - 1) + "*" + from(type === 47 ? type : next());
-  }
-  function identifier(index) {
-    while (!token(peek()))
-      next();
-    return slice(index, position);
-  }
-
-  // node_modules/stylis/src/Parser.js
-  function compile(value) {
-    return dealloc(parse4("", null, null, null, [""], value = alloc(value), 0, [0], value));
-  }
-  function parse4(value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
-    var index = 0;
-    var offset = 0;
-    var length2 = pseudo;
-    var atrule = 0;
-    var property = 0;
-    var previous = 0;
-    var variable = 1;
-    var scanning = 1;
-    var ampersand = 1;
-    var character2 = 0;
-    var type = "";
-    var props = rules;
-    var children = rulesets;
-    var reference = rule;
-    var characters2 = type;
-    while (scanning)
-      switch (previous = character2, character2 = next()) {
-        // (
-        case 40:
-          if (previous != 108 && characters2.charCodeAt(length2 - 1) == 58) {
-            if (indexof(characters2 += replace2(delimit(character2), "&", "&\f"), "&\f") != -1)
-              ampersand = -1;
-            break;
-          }
-        // " ' [
-        case 34:
-        case 39:
-        case 91:
-          characters2 += delimit(character2);
-          break;
-        // \t \n \r \s
-        case 9:
-        case 10:
-        case 13:
-        case 32:
-          characters2 += whitespace(previous);
-          break;
-        // \
-        case 92:
-          characters2 += escaping(caret() - 1, 7);
-          continue;
-        // /
-        case 47:
-          switch (peek()) {
-            case 42:
-            case 47:
-              append(comment(commenter(next(), caret()), root, parent), declarations);
-              break;
-            default:
-              characters2 += "/";
-          }
-          break;
-        // {
-        case 123 * variable:
-          points[index++] = strlen(characters2) * ampersand;
-        // } ; \0
-        case 125 * variable:
-        case 59:
-        case 0:
-          switch (character2) {
-            // \0 }
-            case 0:
-            case 125:
-              scanning = 0;
-            // ;
-            case 59 + offset:
-              if (property > 0 && strlen(characters2) - length2)
-                append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace2(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
-              break;
-            // @ ;
-            case 59:
-              characters2 += ";";
-            // { rule/at-rule
-            default:
-              append(reference = ruleset(characters2, root, parent, index, offset, rules, points, type, props = [], children = [], length2), rulesets);
-              if (character2 === 123)
-                if (offset === 0)
-                  parse4(characters2, root, reference, reference, props, rulesets, length2, points, children);
-                else
-                  switch (atrule) {
-                    // d m s
-                    case 100:
-                    case 109:
-                    case 115:
-                      parse4(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length2), children), rules, children, length2, points, rule ? props : children);
-                      break;
-                    default:
-                      parse4(characters2, reference, reference, reference, [""], children, 0, points, children);
-                  }
-          }
-          index = offset = property = 0, variable = ampersand = 1, type = characters2 = "", length2 = pseudo;
-          break;
-        // :
-        case 58:
-          length2 = 1 + strlen(characters2), property = previous;
-        default:
-          if (variable < 1) {
-            if (character2 == 123)
-              --variable;
-            else if (character2 == 125 && variable++ == 0 && prev() == 125)
-              continue;
-          }
-          switch (characters2 += from(character2), character2 * variable) {
-            // &
-            case 38:
-              ampersand = offset > 0 ? 1 : (characters2 += "\f", -1);
-              break;
-            // ,
-            case 44:
-              points[index++] = (strlen(characters2) - 1) * ampersand, ampersand = 1;
-              break;
-            // @
-            case 64:
-              if (peek() === 45)
-                characters2 += delimit(next());
-              atrule = peek(), offset = length2 = strlen(type = characters2 += identifier(caret())), character2++;
-              break;
-            // -
-            case 45:
-              if (previous === 45 && strlen(characters2) == 2)
-                variable = 0;
-          }
-      }
-    return rulesets;
-  }
-  function ruleset(value, root, parent, index, offset, rules, points, type, props, children, length2) {
-    var post = offset - 1;
-    var rule = offset === 0 ? rules : [""];
-    var size = sizeof(rule);
-    for (var i2 = 0, j2 = 0, k2 = 0; i2 < index; ++i2)
-      for (var x2 = 0, y2 = substr(value, post + 1, post = abs(j2 = points[i2])), z = value; x2 < size; ++x2)
-        if (z = trim(j2 > 0 ? rule[x2] + " " + y2 : replace2(y2, /&\f/g, rule[x2])))
-          props[k2++] = z;
-    return node(value, root, parent, offset === 0 ? RULESET : type, props, children, length2);
-  }
-  function comment(value, root, parent) {
-    return node(value, root, parent, COMMENT, from(char()), substr(value, 2, -2), 0);
-  }
-  function declaration(value, root, parent, length2) {
-    return node(value, root, parent, DECLARATION, substr(value, 0, length2), substr(value, length2 + 1, -1), length2);
-  }
-
-  // node_modules/stylis/src/Prefixer.js
-  function prefix2(value, length2) {
-    switch (hash(value, length2)) {
-      // color-adjust
-      case 5103:
-        return WEBKIT + "print-" + value + value;
-      // animation, animation-(delay|direction|duration|fill-mode|iteration-count|name|play-state|timing-function)
-      case 5737:
-      case 4201:
-      case 3177:
-      case 3433:
-      case 1641:
-      case 4457:
-      case 2921:
-      // text-decoration, filter, clip-path, backface-visibility, column, box-decoration-break
-      case 5572:
-      case 6356:
-      case 5844:
-      case 3191:
-      case 6645:
-      case 3005:
-      // mask, mask-image, mask-(mode|clip|size), mask-(repeat|origin), mask-position, mask-composite,
-      case 6391:
-      case 5879:
-      case 5623:
-      case 6135:
-      case 4599:
-      case 4855:
-      // background-clip, columns, column-(count|fill|gap|rule|rule-color|rule-style|rule-width|span|width)
-      case 4215:
-      case 6389:
-      case 5109:
-      case 5365:
-      case 5621:
-      case 3829:
-        return WEBKIT + value + value;
-      // appearance, user-select, transform, hyphens, text-size-adjust
-      case 5349:
-      case 4246:
-      case 4810:
-      case 6968:
-      case 2756:
-        return WEBKIT + value + MOZ + value + MS + value + value;
-      // flex, flex-direction
-      case 6828:
-      case 4268:
-        return WEBKIT + value + MS + value + value;
-      // order
-      case 6165:
-        return WEBKIT + value + MS + "flex-" + value + value;
-      // align-items
-      case 5187:
-        return WEBKIT + value + replace2(value, /(\w+).+(:[^]+)/, WEBKIT + "box-$1$2" + MS + "flex-$1$2") + value;
-      // align-self
-      case 5443:
-        return WEBKIT + value + MS + "flex-item-" + replace2(value, /flex-|-self/, "") + value;
-      // align-content
-      case 4675:
-        return WEBKIT + value + MS + "flex-line-pack" + replace2(value, /align-content|flex-|-self/, "") + value;
-      // flex-shrink
-      case 5548:
-        return WEBKIT + value + MS + replace2(value, "shrink", "negative") + value;
-      // flex-basis
-      case 5292:
-        return WEBKIT + value + MS + replace2(value, "basis", "preferred-size") + value;
-      // flex-grow
-      case 6060:
-        return WEBKIT + "box-" + replace2(value, "-grow", "") + WEBKIT + value + MS + replace2(value, "grow", "positive") + value;
-      // transition
-      case 4554:
-        return WEBKIT + replace2(value, /([^-])(transform)/g, "$1" + WEBKIT + "$2") + value;
-      // cursor
-      case 6187:
-        return replace2(replace2(replace2(value, /(zoom-|grab)/, WEBKIT + "$1"), /(image-set)/, WEBKIT + "$1"), value, "") + value;
-      // background, background-image
-      case 5495:
-      case 3959:
-        return replace2(value, /(image-set\([^]*)/, WEBKIT + "$1$`$1");
-      // justify-content
-      case 4968:
-        return replace2(replace2(value, /(.+:)(flex-)?(.*)/, WEBKIT + "box-pack:$3" + MS + "flex-pack:$3"), /s.+-b[^;]+/, "justify") + WEBKIT + value + value;
-      // (margin|padding)-inline-(start|end)
-      case 4095:
-      case 3583:
-      case 4068:
-      case 2532:
-        return replace2(value, /(.+)-inline(.+)/, WEBKIT + "$1$2") + value;
-      // (min|max)?(width|height|inline-size|block-size)
-      case 8116:
-      case 7059:
-      case 5753:
-      case 5535:
-      case 5445:
-      case 5701:
-      case 4933:
-      case 4677:
-      case 5533:
-      case 5789:
-      case 5021:
-      case 4765:
-        if (strlen(value) - 1 - length2 > 6)
-          switch (charat(value, length2 + 1)) {
-            // (m)ax-content, (m)in-content
-            case 109:
-              if (charat(value, length2 + 4) !== 45)
-                break;
-            // (f)ill-available, (f)it-content
-            case 102:
-              return replace2(value, /(.+:)(.+)-([^]+)/, "$1" + WEBKIT + "$2-$3$1" + MOZ + (charat(value, length2 + 3) == 108 ? "$3" : "$2-$3")) + value;
-            // (s)tretch
-            case 115:
-              return ~indexof(value, "stretch") ? prefix2(replace2(value, "stretch", "fill-available"), length2) + value : value;
-          }
-        break;
-      // position: sticky
-      case 4949:
-        if (charat(value, length2 + 1) !== 115)
-          break;
-      // display: (flex|inline-flex)
-      case 6444:
-        switch (charat(value, strlen(value) - 3 - (~indexof(value, "!important") && 10))) {
-          // stic(k)y
-          case 107:
-            return replace2(value, ":", ":" + WEBKIT) + value;
-          // (inline-)?fl(e)x
-          case 101:
-            return replace2(value, /(.+:)([^;!]+)(;|!.+)?/, "$1" + WEBKIT + (charat(value, 14) === 45 ? "inline-" : "") + "box$3$1" + WEBKIT + "$2$3$1" + MS + "$2box$3") + value;
-        }
-        break;
-      // writing-mode
-      case 5936:
-        switch (charat(value, length2 + 11)) {
-          // vertical-l(r)
-          case 114:
-            return WEBKIT + value + MS + replace2(value, /[svh]\w+-[tblr]{2}/, "tb") + value;
-          // vertical-r(l)
-          case 108:
-            return WEBKIT + value + MS + replace2(value, /[svh]\w+-[tblr]{2}/, "tb-rl") + value;
-          // horizontal(-)tb
-          case 45:
-            return WEBKIT + value + MS + replace2(value, /[svh]\w+-[tblr]{2}/, "lr") + value;
-        }
-        return WEBKIT + value + MS + value + value;
-    }
-    return value;
-  }
-
-  // node_modules/stylis/src/Serializer.js
-  function serialize3(children, callback) {
-    var output = "";
-    var length2 = sizeof(children);
-    for (var i2 = 0; i2 < length2; i2++)
-      output += callback(children[i2], i2, children, callback) || "";
-    return output;
-  }
-  function stringify2(element, index, children, callback) {
-    switch (element.type) {
-      case IMPORT:
-      case DECLARATION:
-        return element.return = element.return || element.value;
-      case COMMENT:
-        return "";
-      case KEYFRAMES:
-        return element.return = element.value + "{" + serialize3(element.children, callback) + "}";
-      case RULESET:
-        element.value = element.props.join(",");
-    }
-    return strlen(children = serialize3(element.children, callback)) ? element.return = element.value + "{" + children + "}" : "";
-  }
-
-  // node_modules/stylis/src/Middleware.js
-  function middleware(collection) {
-    var length2 = sizeof(collection);
-    return function(element, index, children, callback) {
-      var output = "";
-      for (var i2 = 0; i2 < length2; i2++)
-        output += collection[i2](element, index, children, callback) || "";
-      return output;
-    };
-  }
-  function prefixer(element, index, children, callback) {
-    if (element.length > -1) {
-      if (!element.return)
-        switch (element.type) {
-          case DECLARATION:
-            element.return = prefix2(element.value, element.length);
-            break;
-          case KEYFRAMES:
-            return serialize3([copy(element, { value: replace2(element.value, "@", "@" + WEBKIT) })], callback);
-          case RULESET:
-            if (element.length)
-              return combine(element.props, function(value) {
-                switch (match2(value, /(::plac\w+|:read-\w+)/)) {
-                  // :read-(only|write)
-                  case ":read-only":
-                  case ":read-write":
-                    return serialize3([copy(element, { props: [replace2(value, /:(read-\w+)/, ":" + MOZ + "$1")] })], callback);
-                  // :placeholder
-                  case "::placeholder":
-                    return serialize3([
-                      copy(element, { props: [replace2(value, /:(plac\w+)/, ":" + WEBKIT + "input-$1")] }),
-                      copy(element, { props: [replace2(value, /:(plac\w+)/, ":" + MOZ + "$1")] }),
-                      copy(element, { props: [replace2(value, /:(plac\w+)/, MS + "input-$1")] })
-                    ], callback);
-                }
-                return "";
-              });
-        }
-    }
-  }
-
-  // node_modules/@emotion/cache/dist/emotion-cache.browser.esm.js
-  var last = function last2(arr) {
-    return arr.length ? arr[arr.length - 1] : null;
-  };
-  var identifierWithPointTracking = function identifierWithPointTracking2(begin, points, index) {
-    var previous = 0;
-    var character2 = 0;
-    while (true) {
-      previous = character2;
-      character2 = peek();
-      if (previous === 38 && character2 === 12) {
-        points[index] = 1;
-      }
-      if (token(character2)) {
-        break;
-      }
-      next();
-    }
-    return slice(begin, position);
-  };
-  var toRules = function toRules2(parsed, points) {
-    var index = -1;
-    var character2 = 44;
-    do {
-      switch (token(character2)) {
-        case 0:
-          if (character2 === 38 && peek() === 12) {
-            points[index] = 1;
-          }
-          parsed[index] += identifierWithPointTracking(position - 1, points, index);
-          break;
-        case 2:
-          parsed[index] += delimit(character2);
-          break;
-        case 4:
-          if (character2 === 44) {
-            parsed[++index] = peek() === 58 ? "&\f" : "";
-            points[index] = parsed[index].length;
-            break;
-          }
-        // fallthrough
-        default:
-          parsed[index] += from(character2);
-      }
-    } while (character2 = next());
-    return parsed;
-  };
-  var getRules = function getRules2(value, points) {
-    return dealloc(toRules(alloc(value), points));
-  };
-  var fixedElements = /* @__PURE__ */ new WeakMap();
-  var compat = function compat2(element) {
-    if (element.type !== "rule" || !element.parent || // positive .length indicates that this rule contains pseudo
-    // negative .length indicates that this rule has been already prefixed
-    element.length < 1) {
-      return;
-    }
-    var value = element.value, parent = element.parent;
-    var isImplicitRule = element.column === parent.column && element.line === parent.line;
-    while (parent.type !== "rule") {
-      parent = parent.parent;
-      if (!parent) return;
-    }
-    if (element.props.length === 1 && value.charCodeAt(0) !== 58 && !fixedElements.get(parent)) {
-      return;
-    }
-    if (isImplicitRule) {
-      return;
-    }
-    fixedElements.set(element, true);
-    var points = [];
-    var rules = getRules(value, points);
-    var parentRules = parent.props;
-    for (var i2 = 0, k2 = 0; i2 < rules.length; i2++) {
-      for (var j2 = 0; j2 < parentRules.length; j2++, k2++) {
-        element.props[k2] = points[i2] ? rules[i2].replace(/&\f/g, parentRules[j2]) : parentRules[j2] + " " + rules[i2];
-      }
-    }
-  };
-  var removeLabel = function removeLabel2(element) {
-    if (element.type === "decl") {
-      var value = element.value;
-      if (
-        // charcode for l
-        value.charCodeAt(0) === 108 && // charcode for b
-        value.charCodeAt(2) === 98
-      ) {
-        element["return"] = "";
-        element.value = "";
-      }
-    }
-  };
-  var ignoreFlag = "emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason";
-  var isIgnoringComment = function isIgnoringComment2(element) {
-    return !!element && element.type === "comm" && element.children.indexOf(ignoreFlag) > -1;
-  };
-  var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm2(cache) {
-    return function(element, index, children) {
-      if (element.type !== "rule") return;
-      var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
-      if (unsafePseudoClasses && cache.compat !== true) {
-        var prevElement = index > 0 ? children[index - 1] : null;
-        if (prevElement && isIgnoringComment(last(prevElement.children))) {
-          return;
-        }
-        unsafePseudoClasses.forEach(function(unsafePseudoClass) {
-          console.error('The pseudo class "' + unsafePseudoClass + '" is potentially unsafe when doing server-side rendering. Try changing it to "' + unsafePseudoClass.split("-child")[0] + '-of-type".');
-        });
-      }
-    };
-  };
-  var isImportRule = function isImportRule2(element) {
-    return element.type.charCodeAt(1) === 105 && element.type.charCodeAt(0) === 64;
-  };
-  var isPrependedWithRegularRules = function isPrependedWithRegularRules2(index, children) {
-    for (var i2 = index - 1; i2 >= 0; i2--) {
-      if (!isImportRule(children[i2])) {
-        return true;
-      }
-    }
-    return false;
-  };
-  var nullifyElement = function nullifyElement2(element) {
-    element.type = "";
-    element.value = "";
-    element["return"] = "";
-    element.children = "";
-    element.props = "";
-  };
-  var incorrectImportAlarm = function incorrectImportAlarm2(element, index, children) {
-    if (!isImportRule(element)) {
-      return;
-    }
-    if (element.parent) {
-      console.error("`@import` rules can't be nested inside other rules. Please move it to the top level and put it before regular rules. Keep in mind that they can only be used within global styles.");
-      nullifyElement(element);
-    } else if (isPrependedWithRegularRules(index, children)) {
-      console.error("`@import` rules can't be after other rules. Please put your `@import` rules before your other rules.");
-      nullifyElement(element);
-    }
-  };
-  var defaultStylisPlugins = [prefixer];
-  var createCache = function createCache2(options) {
-    var key = options.key;
-    if (!key) {
-      throw new Error("You have to configure `key` for your cache. Please make sure it's unique (and not equal to 'css') as it's used for linking styles to your cache.\nIf multiple caches share the same key they might \"fight\" for each other's style elements.");
-    }
-    if (key === "css") {
-      var ssrStyles = document.querySelectorAll("style[data-emotion]:not([data-s])");
-      Array.prototype.forEach.call(ssrStyles, function(node2) {
-        var dataEmotionAttribute = node2.getAttribute("data-emotion");
-        if (dataEmotionAttribute.indexOf(" ") === -1) {
-          return;
-        }
-        document.head.appendChild(node2);
-        node2.setAttribute("data-s", "");
-      });
-    }
-    var stylisPlugins = options.stylisPlugins || defaultStylisPlugins;
-    if (true) {
-      if (/[^a-z-]/.test(key)) {
-        throw new Error('Emotion key must only contain lower case alphabetical characters and - but "' + key + '" was passed');
-      }
-    }
-    var inserted = {};
-    var container;
-    var nodesToHydrate = [];
-    {
-      container = options.container || document.head;
-      Array.prototype.forEach.call(
-        // this means we will ignore elements which don't have a space in them which
-        // means that the style elements we're looking at are only Emotion 11 server-rendered style elements
-        document.querySelectorAll('style[data-emotion^="' + key + ' "]'),
-        function(node2) {
-          var attrib = node2.getAttribute("data-emotion").split(" ");
-          for (var i2 = 1; i2 < attrib.length; i2++) {
-            inserted[attrib[i2]] = true;
-          }
-          nodesToHydrate.push(node2);
-        }
-      );
-    }
-    var _insert;
-    var omnipresentPlugins = [compat, removeLabel];
-    if (true) {
-      omnipresentPlugins.push(createUnsafeSelectorsAlarm({
-        get compat() {
-          return cache.compat;
-        }
-      }), incorrectImportAlarm);
-    }
-    {
-      var currentSheet;
-      var finalizingPlugins = [stringify2, true ? function(element) {
-        if (!element.root) {
-          if (element["return"]) {
-            currentSheet.insert(element["return"]);
-          } else if (element.value && element.type !== COMMENT) {
-            currentSheet.insert(element.value + "{}");
-          }
-        }
-      } : rulesheet(function(rule) {
-        currentSheet.insert(rule);
-      })];
-      var serializer = middleware(omnipresentPlugins.concat(stylisPlugins, finalizingPlugins));
-      var stylis = function stylis2(styles) {
-        return serialize3(compile(styles), serializer);
-      };
-      _insert = function insert7(selector3, serialized, sheet, shouldCache) {
-        currentSheet = sheet;
-        if (serialized.map !== void 0) {
-          currentSheet = {
-            insert: function insert8(rule) {
-              sheet.insert(rule + serialized.map);
-            }
-          };
-        }
-        stylis(selector3 ? selector3 + "{" + serialized.styles + "}" : serialized.styles);
-        if (shouldCache) {
-          cache.inserted[serialized.name] = true;
-        }
-      };
-    }
-    var cache = {
-      key,
-      sheet: new StyleSheet({
-        key,
-        container,
-        nonce: options.nonce,
-        speedy: options.speedy,
-        prepend: options.prepend,
-        insertionPoint: options.insertionPoint
-      }),
-      nonce: options.nonce,
-      inserted,
-      registered: {},
-      insert: _insert
-    };
-    cache.sheet.hydrate(nodesToHydrate);
-    return cache;
-  };
-  var emotion_cache_browser_esm_default = createCache;
-
-  // node_modules/@emotion/react/dist/emotion-element-699e6908.browser.esm.js
-  var import_react6 = __toESM(require_react());
-
-  // node_modules/@emotion/utils/dist/emotion-utils.browser.esm.js
-  var isBrowser = true;
-  function getRegisteredStyles(registered, registeredStyles, classNames2) {
-    var rawClassName = "";
-    classNames2.split(" ").forEach(function(className) {
-      if (registered[className] !== void 0) {
-        registeredStyles.push(registered[className] + ";");
-      } else {
-        rawClassName += className + " ";
-      }
-    });
-    return rawClassName;
-  }
-  var registerStyles = function registerStyles2(cache, serialized, isStringTag) {
-    var className = cache.key + "-" + serialized.name;
-    if (
-      // we only need to add the styles to the registered cache if the
-      // class name could be used further down
-      // the tree but if it's a string tag, we know it won't
-      // so we don't have to add it to registered cache.
-      // this improves memory usage since we can avoid storing the whole style string
-      (isStringTag === false || // we need to always store it if we're in compat mode and
-      // in node since emotion-server relies on whether a style is in
-      // the registered cache to know whether a style is global or not
-      // also, note that this check will be dead code eliminated in the browser
-      isBrowser === false) && cache.registered[className] === void 0
-    ) {
-      cache.registered[className] = serialized.styles;
-    }
-  };
-  var insertStyles = function insertStyles2(cache, serialized, isStringTag) {
-    registerStyles(cache, serialized, isStringTag);
-    var className = cache.key + "-" + serialized.name;
-    if (cache.inserted[serialized.name] === void 0) {
-      var current = serialized;
-      do {
-        cache.insert(serialized === current ? "." + className : "", current, cache.sheet, true);
-        current = current.next;
-      } while (current !== void 0);
-    }
-  };
-
-  // node_modules/@emotion/hash/dist/emotion-hash.esm.js
-  function murmur2(str) {
-    var h2 = 0;
-    var k2, i2 = 0, len = str.length;
-    for (; len >= 4; ++i2, len -= 4) {
-      k2 = str.charCodeAt(i2) & 255 | (str.charCodeAt(++i2) & 255) << 8 | (str.charCodeAt(++i2) & 255) << 16 | (str.charCodeAt(++i2) & 255) << 24;
-      k2 = /* Math.imul(k, m): */
-      (k2 & 65535) * 1540483477 + ((k2 >>> 16) * 59797 << 16);
-      k2 ^= /* k >>> r: */
-      k2 >>> 24;
-      h2 = /* Math.imul(k, m): */
-      (k2 & 65535) * 1540483477 + ((k2 >>> 16) * 59797 << 16) ^ /* Math.imul(h, m): */
-      (h2 & 65535) * 1540483477 + ((h2 >>> 16) * 59797 << 16);
-    }
-    switch (len) {
-      case 3:
-        h2 ^= (str.charCodeAt(i2 + 2) & 255) << 16;
-      case 2:
-        h2 ^= (str.charCodeAt(i2 + 1) & 255) << 8;
-      case 1:
-        h2 ^= str.charCodeAt(i2) & 255;
-        h2 = /* Math.imul(h, m): */
-        (h2 & 65535) * 1540483477 + ((h2 >>> 16) * 59797 << 16);
-    }
-    h2 ^= h2 >>> 13;
-    h2 = /* Math.imul(h, m): */
-    (h2 & 65535) * 1540483477 + ((h2 >>> 16) * 59797 << 16);
-    return ((h2 ^ h2 >>> 15) >>> 0).toString(36);
-  }
-
-  // node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
-  var unitlessKeys = {
-    animationIterationCount: 1,
-    aspectRatio: 1,
-    borderImageOutset: 1,
-    borderImageSlice: 1,
-    borderImageWidth: 1,
-    boxFlex: 1,
-    boxFlexGroup: 1,
-    boxOrdinalGroup: 1,
-    columnCount: 1,
-    columns: 1,
-    flex: 1,
-    flexGrow: 1,
-    flexPositive: 1,
-    flexShrink: 1,
-    flexNegative: 1,
-    flexOrder: 1,
-    gridRow: 1,
-    gridRowEnd: 1,
-    gridRowSpan: 1,
-    gridRowStart: 1,
-    gridColumn: 1,
-    gridColumnEnd: 1,
-    gridColumnSpan: 1,
-    gridColumnStart: 1,
-    msGridRow: 1,
-    msGridRowSpan: 1,
-    msGridColumn: 1,
-    msGridColumnSpan: 1,
-    fontWeight: 1,
-    lineHeight: 1,
-    opacity: 1,
-    order: 1,
-    orphans: 1,
-    tabSize: 1,
-    widows: 1,
-    zIndex: 1,
-    zoom: 1,
-    WebkitLineClamp: 1,
-    // SVG-related properties
-    fillOpacity: 1,
-    floodOpacity: 1,
-    stopOpacity: 1,
-    strokeDasharray: 1,
-    strokeDashoffset: 1,
-    strokeMiterlimit: 1,
-    strokeOpacity: 1,
-    strokeWidth: 1
-  };
-
-  // node_modules/@emotion/serialize/node_modules/@emotion/memoize/dist/emotion-memoize.esm.js
-  function memoize2(fn) {
-    var cache = /* @__PURE__ */ Object.create(null);
-    return function(arg) {
-      if (cache[arg] === void 0) cache[arg] = fn(arg);
-      return cache[arg];
-    };
-  }
-
-  // node_modules/@emotion/serialize/dist/emotion-serialize.browser.esm.js
-  var ILLEGAL_ESCAPE_SEQUENCE_ERROR = `You have illegal escape sequence in your template literal, most likely inside content's property value.
-Because you write your CSS inside a JavaScript string you actually have to do double escaping, so for example "content: '\\00d7';" should become "content: '\\\\00d7';".
-You can read more about this here:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#ES2018_revision_of_illegal_escape_sequences`;
-  var UNDEFINED_AS_OBJECT_KEY_ERROR = "You have passed in falsy value as style object's key (can happen when in example you pass unexported component as computed key).";
-  var hyphenateRegex = /[A-Z]|^ms/g;
-  var animationRegex = /_EMO_([^_]+?)_([^]*?)_EMO_/g;
-  var isCustomProperty = function isCustomProperty2(property) {
-    return property.charCodeAt(1) === 45;
-  };
-  var isProcessableValue = function isProcessableValue2(value) {
-    return value != null && typeof value !== "boolean";
-  };
-  var processStyleName = /* @__PURE__ */ memoize2(function(styleName) {
-    return isCustomProperty(styleName) ? styleName : styleName.replace(hyphenateRegex, "-$&").toLowerCase();
-  });
-  var processStyleValue = function processStyleValue2(key, value) {
-    switch (key) {
-      case "animation":
-      case "animationName": {
-        if (typeof value === "string") {
-          return value.replace(animationRegex, function(match3, p1, p2) {
-            cursor = {
-              name: p1,
-              styles: p2,
-              next: cursor
-            };
-            return p1;
-          });
-        }
-      }
-    }
-    if (unitlessKeys[key] !== 1 && !isCustomProperty(key) && typeof value === "number" && value !== 0) {
-      return value + "px";
-    }
-    return value;
-  };
-  if (true) {
-    contentValuePattern = /(var|attr|counters?|url|element|(((repeating-)?(linear|radial))|conic)-gradient)\(|(no-)?(open|close)-quote/;
-    contentValues = ["normal", "none", "initial", "inherit", "unset"];
-    oldProcessStyleValue = processStyleValue;
-    msPattern = /^-ms-/;
-    hyphenPattern = /-(.)/g;
-    hyphenatedCache = {};
-    processStyleValue = function processStyleValue3(key, value) {
-      if (key === "content") {
-        if (typeof value !== "string" || contentValues.indexOf(value) === -1 && !contentValuePattern.test(value) && (value.charAt(0) !== value.charAt(value.length - 1) || value.charAt(0) !== '"' && value.charAt(0) !== "'")) {
-          throw new Error("You seem to be using a value for 'content' without quotes, try replacing it with `content: '\"" + value + "\"'`");
-        }
-      }
-      var processed = oldProcessStyleValue(key, value);
-      if (processed !== "" && !isCustomProperty(key) && key.indexOf("-") !== -1 && hyphenatedCache[key] === void 0) {
-        hyphenatedCache[key] = true;
-        console.error("Using kebab-case for css properties in objects is not supported. Did you mean " + key.replace(msPattern, "ms-").replace(hyphenPattern, function(str, _char) {
-          return _char.toUpperCase();
-        }) + "?");
-      }
-      return processed;
-    };
-  }
-  var contentValuePattern;
-  var contentValues;
-  var oldProcessStyleValue;
-  var msPattern;
-  var hyphenPattern;
-  var hyphenatedCache;
-  var noComponentSelectorMessage = "Component selectors can only be used in conjunction with @emotion/babel-plugin, the swc Emotion plugin, or another Emotion-aware compiler transform.";
-  function handleInterpolation(mergedProps, registered, interpolation) {
-    if (interpolation == null) {
-      return "";
-    }
-    if (interpolation.__emotion_styles !== void 0) {
-      if (interpolation.toString() === "NO_COMPONENT_SELECTOR") {
-        throw new Error(noComponentSelectorMessage);
-      }
-      return interpolation;
-    }
-    switch (typeof interpolation) {
-      case "boolean": {
-        return "";
-      }
-      case "object": {
-        if (interpolation.anim === 1) {
-          cursor = {
-            name: interpolation.name,
-            styles: interpolation.styles,
-            next: cursor
-          };
-          return interpolation.name;
-        }
-        if (interpolation.styles !== void 0) {
-          var next2 = interpolation.next;
-          if (next2 !== void 0) {
-            while (next2 !== void 0) {
-              cursor = {
-                name: next2.name,
-                styles: next2.styles,
-                next: cursor
-              };
-              next2 = next2.next;
-            }
-          }
-          var styles = interpolation.styles + ";";
-          if (interpolation.map !== void 0) {
-            styles += interpolation.map;
-          }
-          return styles;
-        }
-        return createStringFromObject(mergedProps, registered, interpolation);
-      }
-      case "function": {
-        if (mergedProps !== void 0) {
-          var previousCursor = cursor;
-          var result = interpolation(mergedProps);
-          cursor = previousCursor;
-          return handleInterpolation(mergedProps, registered, result);
-        } else if (true) {
-          console.error("Functions that are interpolated in css calls will be stringified.\nIf you want to have a css call based on props, create a function that returns a css call like this\nlet dynamicStyle = (props) => css`color: ${props.color}`\nIt can be called directly with props or interpolated in a styled call like this\nlet SomeComponent = styled('div')`${dynamicStyle}`");
-        }
-        break;
-      }
-      case "string":
-        if (true) {
-          var matched = [];
-          var replaced = interpolation.replace(animationRegex, function(match3, p1, p2) {
-            var fakeVarName = "animation" + matched.length;
-            matched.push("const " + fakeVarName + " = keyframes`" + p2.replace(/^@keyframes animation-\w+/, "") + "`");
-            return "${" + fakeVarName + "}";
-          });
-          if (matched.length) {
-            console.error("`keyframes` output got interpolated into plain string, please wrap it with `css`.\n\nInstead of doing this:\n\n" + [].concat(matched, ["`" + replaced + "`"]).join("\n") + "\n\nYou should wrap it with `css` like this:\n\n" + ("css`" + replaced + "`"));
-          }
-        }
-        break;
-    }
-    if (registered == null) {
-      return interpolation;
-    }
-    var cached = registered[interpolation];
-    return cached !== void 0 ? cached : interpolation;
-  }
-  function createStringFromObject(mergedProps, registered, obj) {
-    var string = "";
-    if (Array.isArray(obj)) {
-      for (var i2 = 0; i2 < obj.length; i2++) {
-        string += handleInterpolation(mergedProps, registered, obj[i2]) + ";";
-      }
-    } else {
-      for (var _key in obj) {
-        var value = obj[_key];
-        if (typeof value !== "object") {
-          if (registered != null && registered[value] !== void 0) {
-            string += _key + "{" + registered[value] + "}";
-          } else if (isProcessableValue(value)) {
-            string += processStyleName(_key) + ":" + processStyleValue(_key, value) + ";";
-          }
-        } else {
-          if (_key === "NO_COMPONENT_SELECTOR" && true) {
-            throw new Error(noComponentSelectorMessage);
-          }
-          if (Array.isArray(value) && typeof value[0] === "string" && (registered == null || registered[value[0]] === void 0)) {
-            for (var _i = 0; _i < value.length; _i++) {
-              if (isProcessableValue(value[_i])) {
-                string += processStyleName(_key) + ":" + processStyleValue(_key, value[_i]) + ";";
-              }
-            }
-          } else {
-            var interpolated = handleInterpolation(mergedProps, registered, value);
-            switch (_key) {
-              case "animation":
-              case "animationName": {
-                string += processStyleName(_key) + ":" + interpolated + ";";
-                break;
-              }
-              default: {
-                if (_key === "undefined") {
-                  console.error(UNDEFINED_AS_OBJECT_KEY_ERROR);
-                }
-                string += _key + "{" + interpolated + "}";
-              }
-            }
-          }
-        }
-      }
-    }
-    return string;
-  }
-  var labelPattern = /label:\s*([^\s;\n{]+)\s*(;|$)/g;
-  var sourceMapPattern;
-  if (true) {
-    sourceMapPattern = /\/\*#\ssourceMappingURL=data:application\/json;\S+\s+\*\//g;
-  }
-  var cursor;
-  var serializeStyles = function serializeStyles2(args, registered, mergedProps) {
-    if (args.length === 1 && typeof args[0] === "object" && args[0] !== null && args[0].styles !== void 0) {
-      return args[0];
-    }
-    var stringMode = true;
-    var styles = "";
-    cursor = void 0;
-    var strings = args[0];
-    if (strings == null || strings.raw === void 0) {
-      stringMode = false;
-      styles += handleInterpolation(mergedProps, registered, strings);
-    } else {
-      if (strings[0] === void 0) {
-        console.error(ILLEGAL_ESCAPE_SEQUENCE_ERROR);
-      }
-      styles += strings[0];
-    }
-    for (var i2 = 1; i2 < args.length; i2++) {
-      styles += handleInterpolation(mergedProps, registered, args[i2]);
-      if (stringMode) {
-        if (strings[i2] === void 0) {
-          console.error(ILLEGAL_ESCAPE_SEQUENCE_ERROR);
-        }
-        styles += strings[i2];
-      }
-    }
-    var sourceMap;
-    if (true) {
-      styles = styles.replace(sourceMapPattern, function(match4) {
-        sourceMap = match4;
-        return "";
-      });
-    }
-    labelPattern.lastIndex = 0;
-    var identifierName = "";
-    var match3;
-    while ((match3 = labelPattern.exec(styles)) !== null) {
-      identifierName += "-" + // $FlowFixMe we know it's not null
-      match3[1];
-    }
-    var name = murmur2(styles) + identifierName;
-    if (true) {
-      return {
-        name,
-        styles,
-        map: sourceMap,
-        next: cursor,
-        toString: function toString() {
-          return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
-        }
-      };
-    }
-    return {
-      name,
-      styles,
-      next: cursor
-    };
-  };
-
-  // node_modules/@emotion/react/dist/emotion-element-699e6908.browser.esm.js
-  var hasOwnProperty = {}.hasOwnProperty;
-  var EmotionCacheContext = /* @__PURE__ */ (0, import_react6.createContext)(
-    // we're doing this to avoid preconstruct's dead code elimination in this one case
-    // because this module is primarily intended for the browser and node
-    // but it's also required in react native and similar environments sometimes
-    // and we could have a special build just for that
-    // but this is much easier and the native packages
-    // might use a different theme context in the future anyway
-    typeof HTMLElement !== "undefined" ? /* @__PURE__ */ emotion_cache_browser_esm_default({
-      key: "css"
-    }) : null
-  );
-  if (true) {
-    EmotionCacheContext.displayName = "EmotionCacheContext";
-  }
-  var CacheProvider = EmotionCacheContext.Provider;
-  var withEmotionCache = function withEmotionCache2(func) {
-    return /* @__PURE__ */ (0, import_react6.forwardRef)(function(props, ref) {
-      var cache = (0, import_react6.useContext)(EmotionCacheContext);
-      return func(props, cache, ref);
-    });
-  };
-  var ThemeContext = /* @__PURE__ */ (0, import_react6.createContext)({});
-  if (true) {
-    ThemeContext.displayName = "EmotionThemeContext";
-  }
-  var typePropName = "__EMOTION_TYPE_PLEASE_DO_NOT_USE__";
-  var labelPropName = "__EMOTION_LABEL_PLEASE_DO_NOT_USE__";
-  var Noop = function Noop2() {
-    return null;
-  };
-  var Emotion = /* @__PURE__ */ withEmotionCache(function(props, cache, ref) {
-    var cssProp = props.css;
-    if (typeof cssProp === "string" && cache.registered[cssProp] !== void 0) {
-      cssProp = cache.registered[cssProp];
-    }
-    var type = props[typePropName];
-    var registeredStyles = [cssProp];
-    var className = "";
-    if (typeof props.className === "string") {
-      className = getRegisteredStyles(cache.registered, registeredStyles, props.className);
-    } else if (props.className != null) {
-      className = props.className + " ";
-    }
-    var serialized = serializeStyles(registeredStyles, void 0, (0, import_react6.useContext)(ThemeContext));
-    if (serialized.name.indexOf("-") === -1) {
-      var labelFromStack = props[labelPropName];
-      if (labelFromStack) {
-        serialized = serializeStyles([serialized, "label:" + labelFromStack + ";"]);
-      }
-    }
-    var rules = insertStyles(cache, serialized, typeof type === "string");
-    className += cache.key + "-" + serialized.name;
-    var newProps = {};
-    for (var key in props) {
-      if (hasOwnProperty.call(props, key) && key !== "css" && key !== typePropName && key !== labelPropName) {
-        newProps[key] = props[key];
-      }
-    }
-    newProps.ref = ref;
-    newProps.className = className;
-    var ele = /* @__PURE__ */ (0, import_react6.createElement)(type, newProps);
-    var possiblyStyleElement = /* @__PURE__ */ (0, import_react6.createElement)(Noop, null);
-    return /* @__PURE__ */ (0, import_react6.createElement)(import_react6.Fragment, null, possiblyStyleElement, ele);
-  });
-  if (true) {
-    Emotion.displayName = "EmotionCssPropInternal";
-  }
-
-  // node_modules/@emotion/react/dist/emotion-react.browser.esm.js
-  var import_hoist_non_react_statics = __toESM(require_hoist_non_react_statics_cjs());
-  var pkg = {
-    name: "@emotion/react",
-    version: "11.7.1",
-    main: "dist/emotion-react.cjs.js",
-    module: "dist/emotion-react.esm.js",
-    browser: {
-      "./dist/emotion-react.cjs.js": "./dist/emotion-react.browser.cjs.js",
-      "./dist/emotion-react.esm.js": "./dist/emotion-react.browser.esm.js"
-    },
-    types: "types/index.d.ts",
-    files: [
-      "src",
-      "dist",
-      "jsx-runtime",
-      "jsx-dev-runtime",
-      "_isolated-hnrs",
-      "types/*.d.ts",
-      "macro.js",
-      "macro.d.ts",
-      "macro.js.flow"
-    ],
-    sideEffects: false,
-    author: "mitchellhamilton <mitchell@mitchellhamilton.me>",
-    license: "MIT",
-    scripts: {
-      "test:typescript": "dtslint types"
-    },
-    dependencies: {
-      "@babel/runtime": "^7.13.10",
-      "@emotion/cache": "^11.7.1",
-      "@emotion/serialize": "^1.0.2",
-      "@emotion/sheet": "^1.1.0",
-      "@emotion/utils": "^1.0.0",
-      "@emotion/weak-memoize": "^0.2.5",
-      "hoist-non-react-statics": "^3.3.1"
-    },
-    peerDependencies: {
-      "@babel/core": "^7.0.0",
-      react: ">=16.8.0"
-    },
-    peerDependenciesMeta: {
-      "@babel/core": {
-        optional: true
-      },
-      "@types/react": {
-        optional: true
-      }
-    },
-    devDependencies: {
-      "@babel/core": "^7.13.10",
-      "@emotion/css": "11.7.1",
-      "@emotion/css-prettifier": "1.0.1",
-      "@emotion/server": "11.4.0",
-      "@emotion/styled": "11.6.0",
-      "@types/react": "^16.9.11",
-      dtslint: "^0.3.0",
-      "html-tag-names": "^1.1.2",
-      react: "16.14.0",
-      "svg-tag-names": "^1.1.1"
-    },
-    repository: "https://github.com/emotion-js/emotion/tree/main/packages/react",
-    publishConfig: {
-      access: "public"
-    },
-    "umd:main": "dist/emotion-react.umd.min.js",
-    preconstruct: {
-      entrypoints: [
-        "./index.js",
-        "./jsx-runtime.js",
-        "./jsx-dev-runtime.js",
-        "./_isolated-hnrs.js"
-      ],
-      umdName: "emotionReact"
-    }
-  };
-  var warnedAboutCssPropForGlobal = false;
-  var Global = /* @__PURE__ */ withEmotionCache(function(props, cache) {
-    if (!warnedAboutCssPropForGlobal && // check for className as well since the user is
-    // probably using the custom createElement which
-    // means it will be turned into a className prop
-    // $FlowFixMe I don't really want to add it to the type since it shouldn't be used
-    (props.className || props.css)) {
-      console.error("It looks like you're using the css prop on Global, did you mean to use the styles prop instead?");
-      warnedAboutCssPropForGlobal = true;
-    }
-    var styles = props.styles;
-    var serialized = serializeStyles([styles], void 0, (0, import_react7.useContext)(ThemeContext));
-    var sheetRef = (0, import_react7.useRef)();
-    (0, import_react7.useLayoutEffect)(function() {
-      var key = cache.key + "-global";
-      var sheet = new StyleSheet({
-        key,
-        nonce: cache.sheet.nonce,
-        container: cache.sheet.container,
-        speedy: cache.sheet.isSpeedy
-      });
-      var rehydrating = false;
-      var node2 = document.querySelector('style[data-emotion="' + key + " " + serialized.name + '"]');
-      if (cache.sheet.tags.length) {
-        sheet.before = cache.sheet.tags[0];
-      }
-      if (node2 !== null) {
-        rehydrating = true;
-        node2.setAttribute("data-emotion", key);
-        sheet.hydrate([node2]);
-      }
-      sheetRef.current = [sheet, rehydrating];
-      return function() {
-        sheet.flush();
-      };
-    }, [cache]);
-    (0, import_react7.useLayoutEffect)(function() {
-      var sheetRefCurrent = sheetRef.current;
-      var sheet = sheetRefCurrent[0], rehydrating = sheetRefCurrent[1];
-      if (rehydrating) {
-        sheetRefCurrent[1] = false;
-        return;
-      }
-      if (serialized.next !== void 0) {
-        insertStyles(cache, serialized.next, true);
-      }
-      if (sheet.tags.length) {
-        var element = sheet.tags[sheet.tags.length - 1].nextElementSibling;
-        sheet.before = element;
-        sheet.flush();
-      }
-      cache.insert("", serialized, sheet, false);
-    }, [cache, serialized.name]);
-    return null;
-  });
-  if (true) {
-    Global.displayName = "EmotionGlobal";
-  }
-  var classnames = function classnames2(args) {
-    var len = args.length;
-    var i2 = 0;
-    var cls = "";
-    for (; i2 < len; i2++) {
-      var arg = args[i2];
-      if (arg == null) continue;
-      var toAdd = void 0;
-      switch (typeof arg) {
-        case "boolean":
-          break;
-        case "object": {
-          if (Array.isArray(arg)) {
-            toAdd = classnames2(arg);
-          } else {
-            if (arg.styles !== void 0 && arg.name !== void 0) {
-              console.error("You have passed styles created with `css` from `@emotion/react` package to the `cx`.\n`cx` is meant to compose class names (strings) so you should convert those styles to a class name by passing them to the `css` received from <ClassNames/> component.");
-            }
-            toAdd = "";
-            for (var k2 in arg) {
-              if (arg[k2] && k2) {
-                toAdd && (toAdd += " ");
-                toAdd += k2;
-              }
-            }
-          }
-          break;
-        }
-        default: {
-          toAdd = arg;
-        }
-      }
-      if (toAdd) {
-        cls && (cls += " ");
-        cls += toAdd;
-      }
-    }
-    return cls;
-  };
-  function merge(registered, css, className) {
-    var registeredStyles = [];
-    var rawClassName = getRegisteredStyles(registered, registeredStyles, className);
-    if (registeredStyles.length < 2) {
-      return className;
-    }
-    return rawClassName + css(registeredStyles);
-  }
-  var Noop3 = function Noop4() {
-    return null;
-  };
-  var ClassNames = /* @__PURE__ */ withEmotionCache(function(props, cache) {
-    var hasRendered = false;
-    var css = function css2() {
-      if (hasRendered && true) {
-        throw new Error("css can only be used during render");
-      }
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      var serialized = serializeStyles(args, cache.registered);
-      {
-        insertStyles(cache, serialized, false);
-      }
-      return cache.key + "-" + serialized.name;
-    };
-    var cx = function cx2() {
-      if (hasRendered && true) {
-        throw new Error("cx can only be used during render");
-      }
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
-      return merge(cache.registered, css, classnames(args));
-    };
-    var content = {
-      css,
-      cx,
-      theme: (0, import_react7.useContext)(ThemeContext)
-    };
-    var ele = props.children(content);
-    hasRendered = true;
-    var possiblyStyleElement = /* @__PURE__ */ (0, import_react7.createElement)(Noop3, null);
-    return /* @__PURE__ */ (0, import_react7.createElement)(import_react7.Fragment, null, possiblyStyleElement, ele);
-  });
-  if (true) {
-    ClassNames.displayName = "EmotionClassNames";
-  }
-  if (true) {
-    isBrowser2 = true;
-    isJest = typeof jest !== "undefined";
-    if (isBrowser2 && !isJest) {
-      globalContext = // $FlowIgnore
-      typeof globalThis !== "undefined" ? globalThis : isBrowser2 ? window : global;
-      globalKey = "__EMOTION_REACT_" + pkg.version.split(".")[0] + "__";
-      if (globalContext[globalKey]) {
-        console.warn("You are loading @emotion/react when it is already loaded. Running multiple instances may cause problems. This can happen if multiple versions are used, or if multiple builds of the same version are used.");
-      }
-      globalContext[globalKey] = true;
-    }
-  }
-  var isBrowser2;
-  var isJest;
-  var globalContext;
-  var globalKey;
-
-  // node_modules/@emotion/styled/base/dist/emotion-styled-base.browser.esm.js
-  var testOmitPropsOnStringTag = isPropValid;
-  var testOmitPropsOnComponent = function testOmitPropsOnComponent2(key) {
-    return key !== "theme";
-  };
-  var getDefaultShouldForwardProp = function getDefaultShouldForwardProp2(tag) {
-    return typeof tag === "string" && // 96 is one less than the char code
-    // for "a" so this is checking that
-    // it's a lowercase character
-    tag.charCodeAt(0) > 96 ? testOmitPropsOnStringTag : testOmitPropsOnComponent;
-  };
-  var composeShouldForwardProps = function composeShouldForwardProps2(tag, options, isReal) {
-    var shouldForwardProp;
-    if (options) {
-      var optionsShouldForwardProp = options.shouldForwardProp;
-      shouldForwardProp = tag.__emotion_forwardProp && optionsShouldForwardProp ? function(propName) {
-        return tag.__emotion_forwardProp(propName) && optionsShouldForwardProp(propName);
-      } : optionsShouldForwardProp;
-    }
-    if (typeof shouldForwardProp !== "function" && isReal) {
-      shouldForwardProp = tag.__emotion_forwardProp;
-    }
-    return shouldForwardProp;
-  };
-  var ILLEGAL_ESCAPE_SEQUENCE_ERROR2 = `You have illegal escape sequence in your template literal, most likely inside content's property value.
-Because you write your CSS inside a JavaScript string you actually have to do double escaping, so for example "content: '\\00d7';" should become "content: '\\\\00d7';".
-You can read more about this here:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#ES2018_revision_of_illegal_escape_sequences`;
-  var Noop5 = function Noop6() {
-    return null;
-  };
-  var createStyled = function createStyled2(tag, options) {
-    if (true) {
-      if (tag === void 0) {
-        throw new Error("You are trying to create a styled element with an undefined component.\nYou may have forgotten to import it.");
-      }
-    }
-    var isReal = tag.__emotion_real === tag;
-    var baseTag = isReal && tag.__emotion_base || tag;
-    var identifierName;
-    var targetClassName;
-    if (options !== void 0) {
-      identifierName = options.label;
-      targetClassName = options.target;
-    }
-    var shouldForwardProp = composeShouldForwardProps(tag, options, isReal);
-    var defaultShouldForwardProp = shouldForwardProp || getDefaultShouldForwardProp(baseTag);
-    var shouldUseAs = !defaultShouldForwardProp("as");
-    return function() {
-      var args = arguments;
-      var styles = isReal && tag.__emotion_styles !== void 0 ? tag.__emotion_styles.slice(0) : [];
-      if (identifierName !== void 0) {
-        styles.push("label:" + identifierName + ";");
-      }
-      if (args[0] == null || args[0].raw === void 0) {
-        styles.push.apply(styles, args);
-      } else {
-        if (args[0][0] === void 0) {
-          console.error(ILLEGAL_ESCAPE_SEQUENCE_ERROR2);
-        }
-        styles.push(args[0][0]);
-        var len = args.length;
-        var i2 = 1;
-        for (; i2 < len; i2++) {
-          if (args[0][i2] === void 0) {
-            console.error(ILLEGAL_ESCAPE_SEQUENCE_ERROR2);
-          }
-          styles.push(args[i2], args[0][i2]);
-        }
-      }
-      var Styled = withEmotionCache(function(props, cache, ref) {
-        var finalTag = shouldUseAs && props.as || baseTag;
-        var className = "";
-        var classInterpolations = [];
-        var mergedProps = props;
-        if (props.theme == null) {
-          mergedProps = {};
-          for (var key in props) {
-            mergedProps[key] = props[key];
-          }
-          mergedProps.theme = (0, import_react8.useContext)(ThemeContext);
-        }
-        if (typeof props.className === "string") {
-          className = getRegisteredStyles(cache.registered, classInterpolations, props.className);
-        } else if (props.className != null) {
-          className = props.className + " ";
-        }
-        var serialized = serializeStyles(styles.concat(classInterpolations), cache.registered, mergedProps);
-        var rules = insertStyles(cache, serialized, typeof finalTag === "string");
-        className += cache.key + "-" + serialized.name;
-        if (targetClassName !== void 0) {
-          className += " " + targetClassName;
-        }
-        var finalShouldForwardProp = shouldUseAs && shouldForwardProp === void 0 ? getDefaultShouldForwardProp(finalTag) : defaultShouldForwardProp;
-        var newProps = {};
-        for (var _key in props) {
-          if (shouldUseAs && _key === "as") continue;
-          if (
-            // $FlowFixMe
-            finalShouldForwardProp(_key)
-          ) {
-            newProps[_key] = props[_key];
-          }
-        }
-        newProps.className = className;
-        newProps.ref = ref;
-        var ele = /* @__PURE__ */ (0, import_react8.createElement)(finalTag, newProps);
-        var possiblyStyleElement = /* @__PURE__ */ (0, import_react8.createElement)(Noop5, null);
-        return /* @__PURE__ */ (0, import_react8.createElement)(import_react8.Fragment, null, possiblyStyleElement, ele);
-      });
-      Styled.displayName = identifierName !== void 0 ? identifierName : "Styled(" + (typeof baseTag === "string" ? baseTag : baseTag.displayName || baseTag.name || "Component") + ")";
-      Styled.defaultProps = tag.defaultProps;
-      Styled.__emotion_real = Styled;
-      Styled.__emotion_base = baseTag;
-      Styled.__emotion_styles = styles;
-      Styled.__emotion_forwardProp = shouldForwardProp;
-      Object.defineProperty(Styled, "toString", {
-        value: function value() {
-          if (targetClassName === void 0 && true) {
-            return "NO_COMPONENT_SELECTOR";
-          }
-          return "." + targetClassName;
-        }
-      });
-      Styled.withComponent = function(nextTag, nextOptions) {
-        return createStyled2(nextTag, _extends4({}, options, nextOptions, {
-          shouldForwardProp: composeShouldForwardProps(Styled, nextOptions, true)
-        })).apply(void 0, styles);
-      };
-      return Styled;
-    };
-  };
-  var emotion_styled_base_browser_esm_default = createStyled;
-
-  // node_modules/@emotion/styled/dist/emotion-styled.browser.esm.js
-  var tags = [
-    "a",
-    "abbr",
-    "address",
-    "area",
-    "article",
-    "aside",
-    "audio",
-    "b",
-    "base",
-    "bdi",
-    "bdo",
-    "big",
-    "blockquote",
-    "body",
-    "br",
-    "button",
-    "canvas",
-    "caption",
-    "cite",
-    "code",
-    "col",
-    "colgroup",
-    "data",
-    "datalist",
-    "dd",
-    "del",
-    "details",
-    "dfn",
-    "dialog",
-    "div",
-    "dl",
-    "dt",
-    "em",
-    "embed",
-    "fieldset",
-    "figcaption",
-    "figure",
-    "footer",
-    "form",
-    "h1",
-    "h2",
-    "h3",
-    "h4",
-    "h5",
-    "h6",
-    "head",
-    "header",
-    "hgroup",
-    "hr",
-    "html",
-    "i",
-    "iframe",
-    "img",
-    "input",
-    "ins",
-    "kbd",
-    "keygen",
-    "label",
-    "legend",
-    "li",
-    "link",
-    "main",
-    "map",
-    "mark",
-    "marquee",
-    "menu",
-    "menuitem",
-    "meta",
-    "meter",
-    "nav",
-    "noscript",
-    "object",
-    "ol",
-    "optgroup",
-    "option",
-    "output",
-    "p",
-    "param",
-    "picture",
-    "pre",
-    "progress",
-    "q",
-    "rp",
-    "rt",
-    "ruby",
-    "s",
-    "samp",
-    "script",
-    "section",
-    "select",
-    "small",
-    "source",
-    "span",
-    "strong",
-    "style",
-    "sub",
-    "summary",
-    "sup",
-    "table",
-    "tbody",
-    "td",
-    "textarea",
-    "tfoot",
-    "th",
-    "thead",
-    "time",
-    "title",
-    "tr",
-    "track",
-    "u",
-    "ul",
-    "var",
-    "video",
-    "wbr",
-    // SVG
-    "circle",
-    "clipPath",
-    "defs",
-    "ellipse",
-    "foreignObject",
-    "g",
-    "image",
-    "line",
-    "linearGradient",
-    "mask",
-    "path",
-    "pattern",
-    "polygon",
-    "polyline",
-    "radialGradient",
-    "rect",
-    "stop",
-    "svg",
-    "text",
-    "tspan"
-  ];
-  var newStyled = emotion_styled_base_browser_esm_default.bind();
-  tags.forEach(function(tagName) {
-    newStyled[tagName] = newStyled(tagName);
-  });
-  var emotion_styled_browser_esm_default = newStyled;
-
   // packages/block-editor/build-module/components/dimensions-tool/width-height-tool.js
   var import_components270 = __toESM(require_components());
   var import_i18n234 = __toESM(require_i18n());
   var import_jsx_runtime459 = __toESM(require_jsx_runtime());
-  var SingleColumnToolsPanelItem = emotion_styled_browser_esm_default(import_components270.__experimentalToolsPanelItem)`
-	grid-column: span 1;
-`;
   function WidthHeightTool({
     panelId,
     value = {},
@@ -74068,8 +72085,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     };
     return /* @__PURE__ */ (0, import_jsx_runtime459.jsxs)(import_jsx_runtime459.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
-        SingleColumnToolsPanelItem,
+        import_components270.__experimentalToolsPanelItem,
         {
+          style: { gridColumn: "span 1" },
           label: (0, import_i18n234.__)("Width"),
           isShownByDefault,
           hasValue: () => width !== "",
@@ -74091,8 +72109,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
-        SingleColumnToolsPanelItem,
+        import_components270.__experimentalToolsPanelItem,
         {
+          style: { gridColumn: "span 1" },
           label: (0, import_i18n234.__)("Height"),
           isShownByDefault,
           hasValue: () => height !== "",
