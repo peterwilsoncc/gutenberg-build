@@ -191,37 +191,29 @@ function Header({
   showSidebarToggle = true
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components3.__experimentalVStack, { className: "admin-ui-page__header", as: "header", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-      import_components3.__experimentalHStack,
-      {
-        className: "admin-ui-page__header-title",
-        justify: "space-between",
-        spacing: 2,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components3.__experimentalHStack, { spacing: 2, justify: "flex-start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              SidebarToggleSlot,
-              {
-                bubblesVirtually: true,
-                className: "admin-ui-page__sidebar-toggle-slot"
-              }
-            ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_components3.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
-            breadcrumbs,
-            badges
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-            import_components3.__experimentalHStack,
-            {
-              style: { width: "auto", flexShrink: 0 },
-              spacing: 2,
-              className: "admin-ui-page__header-actions",
-              children: actions
-            }
-          )
-        ]
-      }
-    ),
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components3.__experimentalHStack, { justify: "space-between", spacing: 2, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_components3.__experimentalHStack, { spacing: 2, justify: "left", children: [
+        showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          SidebarToggleSlot,
+          {
+            bubblesVirtually: true,
+            className: "admin-ui-page__sidebar-toggle-slot"
+          }
+        ),
+        title && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_components3.__experimentalHeading, { as: "h2", level: 3, weight: 500, truncate: true, children: title }),
+        breadcrumbs,
+        badges
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+        import_components3.__experimentalHStack,
+        {
+          style: { width: "auto", flexShrink: 0 },
+          spacing: 2,
+          className: "admin-ui-page__header-actions",
+          children: actions
+        }
+      )
+    ] }),
     subTitle && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "admin-ui-page__header-subtitle", children: subTitle })
   ] });
 }

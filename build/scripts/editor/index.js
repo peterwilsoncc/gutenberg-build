@@ -15092,7 +15092,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
       import_components37.Card,
       {
-        size: "small",
+        size: "none",
         isBorderless: true,
         className: "global-styles-ui-screen-root",
         isRounded: false,
@@ -15198,8 +15198,8 @@ var wp;
     description,
     onBack
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components39.__experimentalVStack, { spacing: 0, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components39.__experimentalView, { children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components39.__experimentalSpacer, { marginBottom: 0, paddingX: 4, paddingY: 3, children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components39.__experimentalHStack, { spacing: 2, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components39.__experimentalVStack, { spacing: 0, className: "global-styles-ui-screen-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components39.__experimentalHStack, { spacing: 2, justify: "flex-start", children: [
         /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
           import_components39.Navigator.BackButton,
           {
@@ -15209,7 +15209,7 @@ var wp;
             onClick: onBack
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components39.__experimentalSpacer, { children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
           import_components39.__experimentalHeading,
           {
             className: "global-styles-ui-header",
@@ -15217,8 +15217,8 @@ var wp;
             size: 13,
             children: title
           }
-        ) })
-      ] }) }) }),
+        )
+      ] }),
       description && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("p", { className: "global-styles-ui-header__description", children: description })
     ] });
   }
@@ -30008,7 +30008,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
         import_components78.Card,
         {
-          size: "small",
+          size: "none",
           isBorderless: true,
           className: "global-styles-ui-screen-style-variations",
           children: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(import_components78.CardBody, { children: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(StyleVariationsContent, {}) })
