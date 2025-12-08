@@ -50297,7 +50297,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_i18n77 = __toESM(require_i18n());
   var import_warning9 = __toESM(require_warning());
   var import_jsx_runtime268 = __toESM(require_jsx_runtime());
-  var NOTICE_TIMEOUT = 1e4;
+  var NOTICE_TIMEOUT = 6e3;
   function useSpokenMessage2(message3, politeness) {
     const spokenMessage = typeof message3 === "string" ? message3 : (0, import_element190.renderToString)(message3);
     (0, import_element190.useEffect)(() => {
