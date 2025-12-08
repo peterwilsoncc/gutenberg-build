@@ -13037,8 +13037,7 @@ var wp;
   function useCommands() {
     (0, import_commands.useCommandLoader)({
       name: "core/editor/edit-ui",
-      hook: getEditorCommandLoader(),
-      context: "entity-edit"
+      hook: getEditorCommandLoader()
     });
     (0, import_commands.useCommandLoader)({
       name: "core/editor/contextual-commands",
