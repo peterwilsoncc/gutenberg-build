@@ -58236,11 +58236,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.js
-  var import_compose89 = __toESM(require_compose());
+  var import_compose88 = __toESM(require_compose());
   var import_element247 = __toESM(require_element());
 
   // packages/components/build-module/validated-form-controls/control-with-error.js
-  var import_compose88 = __toESM(require_compose());
   var import_i18n84 = __toESM(require_i18n());
   var import_element246 = __toESM(require_element());
 
@@ -58282,30 +58281,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     return label;
   }
+  var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
   function UnforwardedControlWithError({
     required,
     markWhenOptional,
-    onValidate,
     customValidity,
     getValidityTarget,
     children
   }, forwardedRef) {
     const [errorMessage, setErrorMessage] = (0, import_element246.useState)();
     const [statusMessage, setStatusMessage] = (0, import_element246.useState)();
+    const [showMessage, setShowMessage] = (0, import_element246.useState)(false);
     const [isTouched, setIsTouched] = (0, import_element246.useState)(false);
-    const previousCustomValidityType = (0, import_compose88.usePrevious)(customValidity?.type);
     (0, import_element246.useEffect)(() => {
       const validityTarget = getValidityTarget();
-      const showValidationMessage = () => setErrorMessage(validityTarget?.validationMessage);
-      validityTarget?.addEventListener("invalid", showValidationMessage);
-      return () => {
-        validityTarget?.removeEventListener("invalid", showValidationMessage);
+      const handler = () => {
+        setShowMessage(true);
+        validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       };
-    });
+      validityTarget?.addEventListener("invalid", handler);
+      return () => validityTarget?.removeEventListener("invalid", handler);
+    }, [getValidityTarget]);
     (0, import_element246.useEffect)(() => {
-      if (!isTouched) {
-        return;
-      }
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -58315,20 +58312,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       switch (customValidity.type) {
         case "validating": {
-          const timer = setTimeout(() => {
-            validityTarget?.setCustomValidity("");
-            setErrorMessage(void 0);
-            setStatusMessage({
-              type: "validating",
-              message: customValidity.message
-            });
-          }, 1e3);
-          return () => clearTimeout(timer);
+          validityTarget?.setCustomValidity("");
+          setErrorMessage(void 0);
+          setStatusMessage({
+            type: "validating",
+            message: customValidity.message
+          });
+          break;
         }
         case "valid": {
-          if (previousCustomValidityType === "valid") {
-            break;
-          }
           validityTarget?.setCustomValidity("");
           setErrorMessage(validityTarget?.validationMessage);
           setStatusMessage({
@@ -58345,51 +58337,55 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           break;
         }
       }
-    }, [isTouched, customValidity?.type, customValidity?.message, getValidityTarget, previousCustomValidityType]);
+    }, [customValidity, getValidityTarget]);
+    (0, import_element246.useEffect)(() => {
+      if (!isTouched || showMessage) {
+        return;
+      }
+      if (customValidity?.type === "validating") {
+        const timer = setTimeout(() => {
+          setShowMessage(true);
+        }, 1e3);
+        return () => clearTimeout(timer);
+      }
+      setShowMessage(true);
+    }, [isTouched, customValidity?.type, showMessage]);
     const onBlur = (event) => {
       if (isTouched) {
         return;
       }
       if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
         setIsTouched(true);
-        onValidate?.();
+        getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
     };
-    const onChange = (...args) => {
-      children.props.onChange?.(...args);
-      if (isTouched || errorMessage) {
-        onValidate?.();
+    const message3 = () => {
+      if (errorMessage) {
+        return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
+          type: "invalid",
+          message: errorMessage
+        });
       }
-    };
-    const onKeyDown = (event) => {
-      if (event.key === "Enter") {
-        onValidate?.();
+      if (statusMessage?.type) {
+        return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
+          type: statusMessage.type,
+          message: statusMessage.message
+        });
       }
+      return null;
     };
-    return (
-      // Disable reason: Just listening to a bubbled event, not for interaction.
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
-        className: "components-validated-control",
-        ref: forwardedRef,
-        onBlur,
-        onKeyDown: withIgnoreIMEEvents(onKeyDown),
-        children: [(0, import_element246.cloneElement)(children, {
-          label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
-          onChange,
-          required
-        }), /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
-          "aria-live": "polite",
-          children: [errorMessage && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
-            type: "invalid",
-            message: errorMessage
-          }), !errorMessage && statusMessage && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
-            type: statusMessage.type,
-            message: statusMessage.message
-          })]
-        })]
-      })
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
+      className: "components-validated-control",
+      ref: forwardedRef,
+      onBlur,
+      children: [(0, import_element246.cloneElement)(children, {
+        label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
+        required
+      }), /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", {
+        "aria-live": "polite",
+        children: showMessage && message3()
+      })]
+    });
   }
   var ControlWithError = (0, import_element246.forwardRef)(UnforwardedControlWithError);
 
@@ -58397,30 +58393,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime325 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedCheckboxControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element247.useRef)(null);
-    const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element247.useRef)(restProps.checked);
+    const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
       children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(checkbox_control_default, {
         __nextHasNoMarginBottom: true,
-        onChange: (value) => {
-          valueRef.current = value;
-          onChange?.(value);
-        },
         ...restProps
       })
     });
@@ -58432,40 +58418,30 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime326 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedFormTokenField = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element248.useRef)(null);
-    const valueRef = (0, import_element248.useRef)(restProps.value);
     return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       ref: forwardedRef,
       children: [/* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ControlWithError, {
         required,
         markWhenOptional,
-        onValidate: () => {
-          return onValidate?.(valueRef.current);
-        },
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
         children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(FormTokenField, {
           __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
-          ...restProps,
-          onChange: (value, ...args) => {
-            valueRef.current = value;
-            onChange?.(value, ...args);
-          }
+          ...restProps
         })
       }), /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
         required,
-        value: valueRef.current && valueRef.current.length > 0 ? "hasvalue" : "",
+        value: restProps.value && restProps.value.length > 0 ? "hasvalue" : "",
         tabIndex: -1,
         onChange: () => {
         },
@@ -58479,34 +58455,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/input-control.js
   var import_element249 = __toESM(require_element());
-  var import_compose90 = __toESM(require_compose());
+  var import_compose89 = __toESM(require_compose());
   var import_jsx_runtime327 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedInputControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element249.useRef)(null);
-    const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element249.useRef)(restProps.value);
+    const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ControlWithError, {
       required,
       markWhenOptional,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(input_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
-        onChange: (value, ...args) => {
-          valueRef.current = value;
-          onChange?.(value, ...args);
-        },
         ...restProps
       })
     });
@@ -58515,34 +58481,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/number-control.js
   var import_element250 = __toESM(require_element());
-  var import_compose91 = __toESM(require_compose());
+  var import_compose90 = __toESM(require_compose());
   var import_jsx_runtime328 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedNumberControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element250.useRef)(null);
-    const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element250.useRef)(restProps.value);
+    const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(ControlWithError, {
       required,
       markWhenOptional,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(number_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
-        onChange: (value, ...args) => {
-          valueRef.current = value;
-          onChange?.(value, ...args);
-        },
         ...restProps
       })
     });
@@ -58550,34 +58506,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var ValidatedNumberControl = (0, import_element250.forwardRef)(UnforwardedValidatedNumberControl);
 
   // packages/components/build-module/validated-form-controls/components/radio-control.js
-  var import_compose92 = __toESM(require_compose());
+  var import_compose91 = __toESM(require_compose());
   var import_element251 = __toESM(require_element());
   var import_jsx_runtime329 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedRadioControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element251.useRef)(null);
-    const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element251.useRef)(restProps.selected);
+    const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="radio"]'),
       children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(radio_control_default, {
-        onChange: (value) => {
-          valueRef.current = value;
-          onChange?.(value);
-        },
         ...restProps
       })
     });
@@ -58586,35 +58532,25 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/select-control.js
   var import_element252 = __toESM(require_element());
-  var import_compose93 = __toESM(require_compose());
+  var import_compose92 = __toESM(require_compose());
   var import_jsx_runtime330 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedSelectControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element252.useRef)(null);
-    const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element252.useRef)(restProps.value);
+    const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(ControlWithError, {
       required,
       markWhenOptional,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(select_control_default, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         ref: mergedRefs,
-        onChange: (value) => {
-          valueRef.current = value;
-          onChange?.(value);
-        },
         ...restProps
       })
     });
@@ -58622,36 +58558,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var ValidatedSelectControl = (0, import_element252.forwardRef)(UnforwardedValidatedSelectControl);
 
   // packages/components/build-module/validated-form-controls/components/text-control.js
-  var import_compose94 = __toESM(require_compose());
+  var import_compose93 = __toESM(require_compose());
   var import_element253 = __toESM(require_element());
   var import_jsx_runtime331 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedTextControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element253.useRef)(null);
-    const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element253.useRef)(restProps.value);
+    const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ControlWithError, {
       required,
       markWhenOptional,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(text_control_default, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
-        onChange: (value) => {
-          valueRef.current = value;
-          onChange?.(value);
-        },
         ...restProps
       })
     });
@@ -58660,34 +58586,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.js
   var import_element254 = __toESM(require_element());
-  var import_compose95 = __toESM(require_compose());
+  var import_compose94 = __toESM(require_compose());
   var import_jsx_runtime332 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedTextareaControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element254.useRef)(null);
-    const mergedRefs = (0, import_compose95.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element254.useRef)(restProps.value);
+    const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
       required,
       markWhenOptional,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(textarea_control_default, {
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
-        onChange: (value) => {
-          valueRef.current = value;
-          onChange?.(value);
-        },
         ...restProps
       })
     });
@@ -58696,19 +58612,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/toggle-control.js
   var import_element255 = __toESM(require_element());
-  var import_compose96 = __toESM(require_compose());
+  var import_compose95 = __toESM(require_compose());
   var import_jsx_runtime333 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedToggleControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element255.useRef)(null);
-    const mergedRefs = (0, import_compose96.useMergeRefs)([forwardedRef, validityTargetRef]);
-    const valueRef = (0, import_element255.useRef)(restProps.checked);
+    const mergedRefs = (0, import_compose95.useMergeRefs)([forwardedRef, validityTargetRef]);
     (0, import_element255.useEffect)(() => {
       if (validityTargetRef.current) {
         validityTargetRef.current.required = required !== null && required !== void 0 ? required : false;
@@ -58717,18 +58630,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ControlWithError, {
       required,
       markWhenOptional,
-      onValidate: () => {
-        return onValidate?.(valueRef.current);
-      },
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(toggle_control_default, {
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
-        onChange: (value) => {
-          valueRef.current = value;
-          onChange?.(value);
-        },
         ...restProps
       })
     });
@@ -58740,33 +58646,23 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime334 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedToggleGroupControl = ({
     required,
-    onValidate,
     customValidity,
-    onChange,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element256.useRef)(null);
-    const valueRef = (0, import_element256.useRef)(restProps.value);
     const nameAttr = (0, import_element256.useId)();
     return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsx)(ControlWithError, {
         required,
         markWhenOptional,
-        onValidate: () => {
-          return onValidate?.(valueRef.current);
-        },
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
         children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(component_default12, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           ref: forwardedRef,
-          onChange: (value) => {
-            valueRef.current = value;
-            onChange?.(value);
-          },
           ...restProps
         })
       }), /* @__PURE__ */ (0, import_jsx_runtime334.jsx)("input", {
