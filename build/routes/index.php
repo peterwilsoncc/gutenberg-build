@@ -8,6 +8,13 @@
 
 return array(
 	array(
+		'name'        => 'font-list',
+		'path'        => '/font-list',
+		'page'        => 'gutenberg-boot',
+		'has_route'   => false,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'home',
 		'path'        => '/',
 		'page'        => 'gutenberg-boot',

@@ -16845,12 +16845,7 @@ var css = `/**
 
 .routes-pattern-list__tabs-wrapper {
   border-bottom: 1px solid #f0f0f0;
-  padding: 0 48px;
-}
-@container (max-width: 430px) {
-  .routes-pattern-list__tabs-wrapper {
-    padding: 0 24px;
-  }
+  padding: 0 24px;
 }
 
 .dataviews-view-grid__badge-fields .dataviews-view-grid__field-value:has(.routes-pattern-list__field-sync-status-fully) {

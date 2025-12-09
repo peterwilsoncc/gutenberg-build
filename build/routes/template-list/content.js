@@ -18363,12 +18363,7 @@ fieldset.fields-controls__featured-image .fields-controls__featured-image-remove
 
 .routes-template-list__tabs-wrapper {
   border-bottom: 1px solid #f0f0f0;
-  padding: 0 48px;
-}
-@container (max-width: 430px) {
-  .routes-template-list__tabs-wrapper {
-    padding: 0 24px;
-  }
+  padding: 0 24px;
 }
 
 .routes-template-list-author-field__avatar {
