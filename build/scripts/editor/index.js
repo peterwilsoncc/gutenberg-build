@@ -46125,7 +46125,7 @@ var wp;
         {
           spacing: 2,
           className: "editor-post-card-panel__header",
-          align: "flex-start",
+          alignment: "flex-start",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(import_components189.Icon, { className: "editor-post-card-panel__icon", icon }),
             /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(
