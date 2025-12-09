@@ -5009,15 +5009,15 @@ var wp;
           {
             __next40pxDefaultSize: true,
             prefix: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_components.__experimentalInputControlPrefixWrapper, { children: "/" }),
-            suffix: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+            suffix: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_components.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
               import_components.Button,
               {
-                __next40pxDefaultSize: true,
+                size: "small",
                 icon: copy_small_default,
                 ref: copyButtonRef,
                 label: (0, import_i18n4.__)("Copy")
               }
-            ),
+            ) }),
             label: (0, import_i18n4.__)("Link"),
             hideLabelFromVision: true,
             value: slug,
