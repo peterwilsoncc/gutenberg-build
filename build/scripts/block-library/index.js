@@ -24918,7 +24918,7 @@ ${js}
         canUserUseUnfilteredHTML: settings115.__experimentalCanUserUseUnfilteredHTML
       };
     }, []);
-    const shouldShowJsTab = canUserUseUnfilteredHTML || js.trim() !== "";
+    const hasRestrictedContent = !canUserUseUnfilteredHTML && (css.trim() || js.trim());
     if (!isOpen) {
       return null;
     }
@@ -24938,8 +24938,8 @@ ${js}
       setAttributes({
         content: serializeContent({
           html: editedHtml,
-          css: editedCss,
-          js: editedJs
+          css: canUserUseUnfilteredHTML ? editedCss : "",
+          js: canUserUseUnfilteredHTML ? editedJs : ""
         })
       });
       setIsDirty(false);
@@ -24998,8 +24998,8 @@ ${js}
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(Tabs.TabList, { children: [
                         /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Tabs.Tab, { tabId: "html", children: "HTML" }),
-                        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Tabs.Tab, { tabId: "css", children: "CSS" }),
-                        shouldShowJsTab && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Tabs.Tab, { tabId: "js", children: (0, import_i18n86.__)("JavaScript") })
+                        canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Tabs.Tab, { tabId: "css", children: "CSS" }),
+                        canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Tabs.Tab, { tabId: "js", children: (0, import_i18n86.__)("JavaScript") })
                       ] }) }),
                       /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
                         import_components48.Button,
@@ -25012,6 +25012,17 @@ ${js}
                         }
                       ) })
                     ]
+                  }
+                ),
+                hasRestrictedContent && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                  import_components48.Notice,
+                  {
+                    status: "warning",
+                    isDismissible: false,
+                    className: "block-library-html__modal-notice",
+                    children: (0, import_i18n86.__)(
+                      "This block contains CSS or JavaScript that will be removed when you save because you do not have permission to use unfiltered HTML."
+                    )
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(
@@ -25041,7 +25052,7 @@ ${js}
                             )
                           }
                         ),
-                        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                        canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
                           Tabs.TabPanel,
                           {
                             tabId: "css",
@@ -25059,7 +25070,7 @@ ${js}
                             )
                           }
                         ),
-                        shouldShowJsTab && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                        canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
                           Tabs.TabPanel,
                           {
                             tabId: "js",
