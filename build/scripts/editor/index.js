@@ -5685,7 +5685,9 @@ var wp;
           order: "asc",
           _fields: "id,title,parent",
           ...fieldValue !== null && {
-            search: fieldValue
+            // Perform a search by relevance when the field is changed.
+            search: fieldValue,
+            orderby: "relevance"
           }
         };
         return {
@@ -35941,6 +35943,7 @@ var wp;
         };
         if (!!fieldValue) {
           query.search = fieldValue;
+          query.orderby = "relevance";
         }
         const parentPost = pageId ? getEntityRecord("postType", postTypeSlug, pageId) : null;
         return {
