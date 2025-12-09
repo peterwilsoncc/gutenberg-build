@@ -47634,7 +47634,6 @@ ${js}
         suggestions: authorsInfo.names,
         onChange: onAuthorChange,
         __experimentalShowHowTo: false,
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true
       }
     );
@@ -47765,8 +47764,7 @@ ${js}
         onInputChange: debouncedSearch,
         suggestions,
         onChange: onParentChange,
-        __experimentalShowHowTo: false,
-        __nextHasNoMarginBottom: true
+        __experimentalShowHowTo: false
       }
     );
   }
@@ -47913,7 +47911,6 @@ ${js}
         displayTransform: import_html_entities10.decodeEntities,
         onChange: onTermsChange,
         __experimentalShowHowTo: false,
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true
       }
     ) });
@@ -47982,7 +47979,6 @@ ${js}
         },
         __experimentalShowHowTo: false,
         __experimentalExpandOnFocus: true,
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true
       }
     );
@@ -62789,7 +62785,6 @@ ${declarations}
         suggestions,
         onChange: onTermChange,
         __experimentalShowHowTo: false,
-        __nextHasNoMarginBottom: true,
         ...props
       }
     );

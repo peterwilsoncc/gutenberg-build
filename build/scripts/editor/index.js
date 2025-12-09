@@ -1014,7 +1014,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment83 = REACT_FRAGMENT_TYPE;
+          var Fragment82 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1073,7 +1073,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment83;
+          exports.Fragment = Fragment82;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -39564,7 +39564,6 @@ var wp;
   var import_element112 = __toESM(require_element());
   var import_components145 = __toESM(require_components());
   var import_data136 = __toESM(require_data());
-  var import_deprecated9 = __toESM(require_deprecated());
   var import_core_data83 = __toESM(require_core_data());
   var import_compose32 = __toESM(require_compose());
   var import_a11y4 = __toESM(require_a11y());
@@ -39646,21 +39645,10 @@ var wp;
       (termName) => terms.find((term) => isSameTermName(term.name, termName))?.id
     ).filter((id) => id !== void 0);
   };
-  var Wrapper = ({ children, __nextHasNoMarginBottom }) => __nextHasNoMarginBottom ? /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(import_components145.__experimentalVStack, { spacing: 4, children }) : /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(import_element112.Fragment, { children });
-  function FlatTermSelector({ slug, __nextHasNoMarginBottom }) {
+  function FlatTermSelector({ slug }) {
     const [values, setValues] = (0, import_element112.useState)([]);
     const [search, setSearch] = (0, import_element112.useState)("");
     const debouncedSearch = (0, import_compose32.useDebounce)(setSearch, 500);
-    if (!__nextHasNoMarginBottom) {
-      (0, import_deprecated9.default)(
-        "Bottom margin styles for wp.editor.PostTaxonomiesFlatTermSelector",
-        {
-          since: "6.7",
-          version: "7.0",
-          hint: "Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version."
-        }
-      );
-    }
     const {
       terms,
       termIds,
@@ -39816,7 +39804,7 @@ var wp;
       (0, import_i18n155._x)("Remove %s", "term"),
       singularName
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(Wrapper, { __nextHasNoMarginBottom, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(import_components145.__experimentalVStack, { spacing: 4, children: [
       /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
         import_components145.FormTokenField,
         {
@@ -39831,8 +39819,7 @@ var wp;
             added: termAddedLabel,
             removed: termRemovedLabel,
             remove: removeTermLabel
-          },
-          __nextHasNoMarginBottom
+          }
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(MostUsedTerms, { taxonomy, onSelect: appendTerm })
@@ -39861,7 +39848,7 @@ var wp;
         ),
         tagLabel
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(flat_term_selector_default, { slug: "post_tag", __nextHasNoMarginBottom: true })
+      /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(flat_term_selector_default, { slug: "post_tag" })
     ] });
   };
   var MaybeTagsPanel = () => {
@@ -41477,10 +41464,10 @@ var wp;
   var import_i18n168 = __toESM(require_i18n());
   var import_data151 = __toESM(require_data());
   var import_element122 = __toESM(require_element());
-  var import_deprecated10 = __toESM(require_deprecated());
+  var import_deprecated9 = __toESM(require_deprecated());
   var import_jsx_runtime271 = __toESM(require_jsx_runtime());
   function PostSwitchToDraftButton() {
-    (0, import_deprecated10.default)("wp.editor.PostSwitchToDraftButton", {
+    (0, import_deprecated9.default)("wp.editor.PostSwitchToDraftButton", {
       since: "6.7",
       version: "6.9"
     });
@@ -41585,12 +41572,8 @@ var wp;
     );
     return visibleTaxonomies.map((taxonomy) => {
       const TaxonomyComponent = taxonomy.hierarchical ? hierarchical_term_selector_default : flat_term_selector_default;
-      const taxonomyComponentProps = {
-        slug: taxonomy.slug,
-        ...taxonomy.hierarchical ? {} : { __nextHasNoMarginBottom: true }
-      };
       return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_element123.Fragment, { children: taxonomyWrapper(
-        /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(TaxonomyComponent, { ...taxonomyComponentProps }),
+        /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(TaxonomyComponent, { slug: taxonomy.slug }),
         taxonomy
       ) }, `taxonomy-${taxonomy.slug}`);
     });
@@ -42572,14 +42555,14 @@ var wp;
   }
 
   // packages/editor/build-module/components/deprecated.js
-  var import_deprecated11 = __toESM(require_deprecated());
+  var import_deprecated10 = __toESM(require_deprecated());
   var import_element134 = __toESM(require_element());
   var import_block_editor63 = __toESM(require_block_editor());
   var import_server_side_render = __toESM(require_server_side_render());
   var import_jsx_runtime285 = __toESM(require_jsx_runtime());
   function deprecateComponent(name2, Wrapped, staticsToHoist = []) {
     const Component6 = (0, import_element134.forwardRef)((props, ref) => {
-      (0, import_deprecated11.default)("wp.editor." + name2, {
+      (0, import_deprecated10.default)("wp.editor." + name2, {
         since: "5.3",
         alternative: "wp.blockEditor." + name2,
         version: "6.2"
@@ -42596,7 +42579,7 @@ var wp;
   }
   function deprecateFunction(name2, func) {
     return (...args) => {
-      (0, import_deprecated11.default)("wp.editor." + name2, {
+      (0, import_deprecated10.default)("wp.editor." + name2, {
         since: "5.3",
         alternative: "wp.blockEditor." + name2,
         version: "6.2"
@@ -42792,7 +42775,7 @@ var wp;
   // packages/editor/build-module/hooks/media-upload.js
   var import_element135 = __toESM(require_element());
   var import_hooks48 = __toESM(require_hooks());
-  var import_deprecated12 = __toESM(require_deprecated());
+  var import_deprecated11 = __toESM(require_deprecated());
   var import_media_utils6 = __toESM(require_media_utils());
   var import_jsx_runtime286 = __toESM(require_jsx_runtime());
   var { MediaUploadModal: MediaUploadModalComponent } = unlock(
@@ -42851,7 +42834,7 @@ var wp;
       "editor.MediaUpload",
       "core/editor/components/media-upload",
       () => {
-        (0, import_deprecated12.default)("Extending MediaUpload as a class component", {
+        (0, import_deprecated11.default)("Extending MediaUpload as a class component", {
           since: "7.0",
           version: "7.2",
           hint: "MediaUpload will become a function component in WordPress 7.2 Please update any custom implementations to use function components instead."

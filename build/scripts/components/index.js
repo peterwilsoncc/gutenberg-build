@@ -45049,7 +45049,6 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose61 = __toESM(require_compose());
   var import_a11y6 = __toESM(require_a11y());
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal());
-  var import_deprecated20 = __toESM(require_deprecated());
 
   // packages/components/build-module/form-token-field/token.js
   var import_compose60 = __toESM(require_compose());
@@ -45165,16 +45164,8 @@ This message will only show in development mode. It won't appear in production. 
       __experimentalShowHowTo = true,
       __next40pxDefaultSize = false,
       __experimentalAutoSelectFirstMatch = false,
-      __nextHasNoMarginBottom = false,
       tokenizeOnBlur = false
     } = useDeprecated36pxDefaultSizeProp(props);
-    if (!__nextHasNoMarginBottom) {
-      (0, import_deprecated20.default)("Bottom margin styles for wp.components.FormTokenField", {
-        since: "6.7",
-        version: "7.0",
-        hint: "Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version."
-      });
-    }
     maybeWarnDeprecated36pxSize({
       componentName: "FormTokenField",
       size: void 0,
@@ -45636,12 +45627,10 @@ This message will only show in development mode. It won't appear in production. 
           onSelect: onSuggestionSelected,
           __experimentalRenderItem
         })]
-      }), !__nextHasNoMarginBottom && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(component_default6, {
-        marginBottom: 2
       }), __experimentalShowHowTo && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(StyledHelp, {
         id: `components-form-token-suggestions-howto-${instanceId}`,
         className: "components-form-token-field__help",
-        __nextHasNoMarginBottom,
+        __nextHasNoMarginBottom: true,
         children: tokenizeOnSpace ? (0, import_i18n59.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n59.__)("Separate with commas or the Enter key.")
       })]
     });
@@ -45650,7 +45639,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/index.js
   var import_element145 = __toESM(require_element());
-  var import_deprecated21 = __toESM(require_deprecated());
+  var import_deprecated20 = __toESM(require_deprecated());
   var import_i18n61 = __toESM(require_i18n());
 
   // packages/components/build-module/guide/page-control.js
@@ -45723,7 +45712,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [currentPage]);
     (0, import_element145.useEffect)(() => {
       if (import_element145.Children.count(children)) {
-        (0, import_deprecated21.default)("Passing children to <Guide>", {
+        (0, import_deprecated20.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
@@ -45803,11 +45792,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/page.js
   var import_element146 = __toESM(require_element());
-  var import_deprecated22 = __toESM(require_deprecated());
+  var import_deprecated21 = __toESM(require_deprecated());
   var import_jsx_runtime225 = __toESM(require_jsx_runtime());
   function GuidePage(props) {
     (0, import_element146.useEffect)(() => {
-      (0, import_deprecated22.default)("<GuidePage>", {
+      (0, import_deprecated21.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
       });
@@ -45818,7 +45807,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/button/deprecated.js
-  var import_deprecated23 = __toESM(require_deprecated());
+  var import_deprecated22 = __toESM(require_deprecated());
   var import_element147 = __toESM(require_element());
   var import_jsx_runtime226 = __toESM(require_jsx_runtime());
   function UnforwardedIconButton({
@@ -45828,7 +45817,7 @@ This message will only show in development mode. It won't appear in production. 
     tooltip,
     ...props
   }, ref) {
-    (0, import_deprecated23.default)("wp.components.IconButton", {
+    (0, import_deprecated22.default)("wp.components.IconButton", {
       since: "5.4",
       alternative: "wp.components.Button",
       version: "6.2"
@@ -46019,7 +46008,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_items_choice_default = MenuItemsChoice;
 
   // packages/components/build-module/navigation/index.js
-  var import_deprecated24 = __toESM(require_deprecated());
+  var import_deprecated23 = __toESM(require_deprecated());
   var import_element154 = __toESM(require_element());
   var import_i18n63 = __toESM(require_i18n());
 
@@ -46283,7 +46272,7 @@ This message will only show in development mode. It won't appear in production. 
     const [slideOrigin, setSlideOrigin] = (0, import_element154.useState)();
     const navigationTree = useCreateNavigationTree();
     const defaultSlideOrigin = (0, import_i18n63.isRTL)() ? "right" : "left";
-    (0, import_deprecated24.default)("wp.components.Navigation (and all subcomponents)", {
+    (0, import_deprecated23.default)("wp.components.Navigation (and all subcomponents)", {
       since: "6.8",
       version: "7.1",
       alternative: "wp.components.Navigator"
@@ -46648,7 +46637,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose65 = __toESM(require_compose());
   var import_i18n66 = __toESM(require_i18n());
   var import_element162 = __toESM(require_element());
-  var import_deprecated25 = __toESM(require_deprecated());
+  var import_deprecated24 = __toESM(require_deprecated());
 
   // packages/components/build-module/search-control/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__35() {
@@ -46695,7 +46684,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     if (onClose) {
-      (0, import_deprecated25.default)("`onClose` prop in wp.components.SearchControl", {
+      (0, import_deprecated24.default)("`onClose` prop in wp.components.SearchControl", {
         since: "6.8"
       });
     }
@@ -47461,7 +47450,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigator/navigator/component.js
-  var import_deprecated26 = __toESM(require_deprecated());
+  var import_deprecated25 = __toESM(require_deprecated());
   var import_jsx_runtime243 = __toESM(require_jsx_runtime());
   function addScreen({
     screens
@@ -47633,7 +47622,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         options: options2
       }),
       goToParent: (options2) => {
-        (0, import_deprecated26.default)(`wp.components.useNavigator().goToParent`, {
+        (0, import_deprecated25.default)(`wp.components.useNavigator().goToParent`, {
           since: "6.7",
           alternative: "wp.components.useNavigator().goBack"
         });
@@ -47943,10 +47932,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, "Navigator.BackButton");
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.js
-  var import_deprecated27 = __toESM(require_deprecated());
+  var import_deprecated26 = __toESM(require_deprecated());
   var import_jsx_runtime247 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
-    (0, import_deprecated27.default)("wp.components.NavigatorToParentButton", {
+    (0, import_deprecated26.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
@@ -48740,7 +48729,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         onChange: props.onCategoryChange
       }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(form_token_field_default, {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n74.__)("Categories"),
         value: props.selectedCategories && props.selectedCategories.map((item2) => ({
           id: item2.id,
@@ -48819,7 +48807,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.js
-  var import_deprecated28 = __toESM(require_deprecated());
+  var import_deprecated27 = __toESM(require_deprecated());
   var import_element183 = __toESM(require_element());
   var import_i18n75 = __toESM(require_i18n());
   var import_jsx_runtime261 = __toESM(require_jsx_runtime());
@@ -48844,7 +48832,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
-    (0, import_deprecated28.default)("wp.components.__experimentalRadioGroup", {
+    (0, import_deprecated27.default)("wp.components.__experimentalRadioGroup", {
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
@@ -50811,7 +50799,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/toggle-control/index.js
   var import_element196 = __toESM(require_element());
   var import_compose77 = __toESM(require_compose());
-  var import_deprecated29 = __toESM(require_deprecated());
+  var import_deprecated28 = __toESM(require_deprecated());
   var import_jsx_runtime275 = __toESM(require_jsx_runtime());
   function UnforwardedToggleControl({
     __nextHasNoMarginBottom,
@@ -50832,7 +50820,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       marginBottom: space(3)
     }, false ? "" : ";label:classes;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFnRCtCIiwiZmlsZSI6ImluZGV4LnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB0eXBlIHsgQ2hhbmdlRXZlbnQsIEZvcndhcmRlZFJlZiB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCBjbHN4IGZyb20gJ2Nsc3gnO1xuXG4vKipcbiAqIFdvcmRQcmVzcyBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgZm9yd2FyZFJlZiB9IGZyb20gJ0B3b3JkcHJlc3MvZWxlbWVudCc7XG5pbXBvcnQgeyB1c2VJbnN0YW5jZUlkIH0gZnJvbSAnQHdvcmRwcmVzcy9jb21wb3NlJztcbmltcG9ydCBkZXByZWNhdGVkIGZyb20gJ0B3b3JkcHJlc3MvZGVwcmVjYXRlZCc7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IEZsZXhCbG9jayB9IGZyb20gJy4uL2ZsZXgnO1xuaW1wb3J0IEZvcm1Ub2dnbGUgZnJvbSAnLi4vZm9ybS10b2dnbGUnO1xuaW1wb3J0IEJhc2VDb250cm9sIGZyb20gJy4uL2Jhc2UtY29udHJvbCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vY29udGV4dC93b3JkcHJlc3MtY29tcG9uZW50JztcbmltcG9ydCB0eXBlIHsgVG9nZ2xlQ29udHJvbFByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5pbXBvcnQgeyBIU3RhY2sgfSBmcm9tICcuLi9oLXN0YWNrJztcbmltcG9ydCB7IHVzZUN4IH0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5cbmZ1bmN0aW9uIFVuZm9yd2FyZGVkVG9nZ2xlQ29udHJvbChcblx0e1xuXHRcdF9fbmV4dEhhc05vTWFyZ2luQm90dG9tLFxuXHRcdGxhYmVsLFxuXHRcdGNoZWNrZWQsXG5cdFx0aGVscCxcblx0XHRjbGFzc05hbWUsXG5cdFx0b25DaGFuZ2UsXG5cdFx0ZGlzYWJsZWQsXG5cdH06IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzPCBUb2dnbGVDb250cm9sUHJvcHMsICdpbnB1dCcsIGZhbHNlID4sXG5cdHJlZjogRm9yd2FyZGVkUmVmPCBIVE1MSW5wdXRFbGVtZW50ID5cbikge1xuXHRmdW5jdGlvbiBvbkNoYW5nZVRvZ2dsZSggZXZlbnQ6IENoYW5nZUV2ZW50PCBIVE1MSW5wdXRFbGVtZW50ID4gKSB7XG5cdFx0b25DaGFuZ2UoIGV2ZW50LnRhcmdldC5jaGVja2VkICk7XG5cdH1cblx0Y29uc3QgaW5zdGFuY2VJZCA9IHVzZUluc3RhbmNlSWQoIFRvZ2dsZUNvbnRyb2wgKTtcblx0Y29uc3QgaWQgPSBgaW5zcGVjdG9yLXRvZ2dsZS1jb250cm9sLSR7IGluc3RhbmNlSWQgfWA7XG5cblx0Y29uc3QgY3ggPSB1c2VDeCgpO1xuXHRjb25zdCBjbGFzc2VzID0gY3goXG5cdFx0J2NvbXBvbmVudHMtdG9nZ2xlLWNvbnRyb2wnLFxuXHRcdGNsYXNzTmFtZSxcblx0XHQhIF9fbmV4dEhhc05vTWFyZ2luQm90dG9tICYmIGNzcyggeyBtYXJnaW5Cb3R0b206IHNwYWNlKCAzICkgfSApXG5cdCk7XG5cblx0aWYgKCAhIF9fbmV4dEhhc05vTWFyZ2luQm90dG9tICkge1xuXHRcdGRlcHJlY2F0ZWQoICdCb3R0b20gbWFyZ2luIHN0eWxlcyBmb3Igd3AuY29tcG9uZW50cy5Ub2dnbGVDb250cm9sJywge1xuXHRcdFx0c2luY2U6ICc2LjcnLFxuXHRcdFx0dmVyc2lvbjogJzcuMCcsXG5cdFx0XHRoaW50OiAnU2V0IHRoZSBgX19uZXh0SGFzTm9NYXJnaW5Cb3R0b21gIHByb3AgdG8gdHJ1ZSB0byBzdGFydCBvcHRpbmcgaW50byB0aGUgbmV3IHN0eWxlcywgd2hpY2ggd2lsbCBiZWNvbWUgdGhlIGRlZmF1bHQgaW4gYSBmdXR1cmUgdmVyc2lvbi4nLFxuXHRcdH0gKTtcblx0fVxuXG5cdGxldCBkZXNjcmliZWRCeSwgaGVscExhYmVsO1xuXHRpZiAoIGhlbHAgKSB7XG5cdFx0aWYgKCB0eXBlb2YgaGVscCA9PT0gJ2Z1bmN0aW9uJyApIHtcblx0XHRcdC8vIGBoZWxwYCBhcyBhIGZ1bmN0aW9uIHdvcmtzIG9ubHkgZm9yIGNvbnRyb2xsZWQgY29tcG9uZW50cyB3aGVyZVxuXHRcdFx0Ly8gYGNoZWNrZWRgIGlzIHBhc3NlZCBkb3duIGZyb20gcGFyZW50IGNvbXBvbmVudC4gVW5jb250cm9sbGVkXG5cdFx0XHQvLyBjb21wb25lbnQgY2FuIHNob3cgb25seSBhIHN0YXRpYyBoZWxwIGxhYmVsLlxuXHRcdFx0aWYgKCBjaGVja2VkICE9PSB1bmRlZmluZWQgKSB7XG5cdFx0XHRcdGhlbHBMYWJlbCA9IGhlbHAoIGNoZWNrZWQgKTtcblx0XHRcdH1cblx0XHR9IGVsc2Uge1xuXHRcdFx0aGVscExhYmVsID0gaGVscDtcblx0XHR9XG5cdFx0aWYgKCBoZWxwTGFiZWwgKSB7XG5cdFx0XHRkZXNjcmliZWRCeSA9IGlkICsgJ19faGVscCc7XG5cdFx0fVxuXHR9XG5cblx0cmV0dXJuIChcblx0XHQ8QmFzZUNvbnRyb2xcblx0XHRcdGlkPXsgaWQgfVxuXHRcdFx0aGVscD17XG5cdFx0XHRcdGhlbHBMYWJlbCAmJiAoXG5cdFx0XHRcdFx0PHNwYW4gY2xhc3NOYW1lPVwiY29tcG9uZW50cy10b2dnbGUtY29udHJvbF9faGVscFwiPlxuXHRcdFx0XHRcdFx0eyBoZWxwTGFiZWwgfVxuXHRcdFx0XHRcdDwvc3Bhbj5cblx0XHRcdFx0KVxuXHRcdFx0fVxuXHRcdFx0Y2xhc3NOYW1lPXsgY2xhc3NlcyB9XG5cdFx0XHRfX25leHRIYXNOb01hcmdpbkJvdHRvbVxuXHRcdD5cblx0XHRcdDxIU3RhY2sganVzdGlmeT1cImZsZXgtc3RhcnRcIiBzcGFjaW5nPXsgMiB9PlxuXHRcdFx0XHQ8Rm9ybVRvZ2dsZVxuXHRcdFx0XHRcdGlkPXsgaWQgfVxuXHRcdFx0XHRcdGNoZWNrZWQ9eyBjaGVja2VkIH1cblx0XHRcdFx0XHRvbkNoYW5nZT17IG9uQ2hhbmdlVG9nZ2xlIH1cblx0XHRcdFx0XHRhcmlhLWRlc2NyaWJlZGJ5PXsgZGVzY3JpYmVkQnkgfVxuXHRcdFx0XHRcdGRpc2FibGVkPXsgZGlzYWJsZWQgfVxuXHRcdFx0XHRcdHJlZj17IHJlZiB9XG5cdFx0XHRcdC8+XG5cdFx0XHRcdDxGbGV4QmxvY2tcblx0XHRcdFx0XHRhcz1cImxhYmVsXCJcblx0XHRcdFx0XHRodG1sRm9yPXsgaWQgfVxuXHRcdFx0XHRcdGNsYXNzTmFtZT17IGNsc3goICdjb21wb25lbnRzLXRvZ2dsZS1jb250cm9sX19sYWJlbCcsIHtcblx0XHRcdFx0XHRcdCdpcy1kaXNhYmxlZCc6IGRpc2FibGVkLFxuXHRcdFx0XHRcdH0gKSB9XG5cdFx0XHRcdD5cblx0XHRcdFx0XHR7IGxhYmVsIH1cblx0XHRcdFx0PC9GbGV4QmxvY2s+XG5cdFx0XHQ8L0hTdGFjaz5cblx0XHQ8L0Jhc2VDb250cm9sPlxuXHQpO1xufVxuXG4vKipcbiAqIFRvZ2dsZUNvbnRyb2wgaXMgdXNlZCB0byBnZW5lcmF0ZSBhIHRvZ2dsZSB1c2VyIGludGVyZmFjZS5cbiAqXG4gKiBgYGBqc3hcbiAqIGltcG9ydCB7IFRvZ2dsZUNvbnRyb2wgfSBmcm9tICdAd29yZHByZXNzL2NvbXBvbmVudHMnO1xuICogaW1wb3J0IHsgdXNlU3RhdGUgfSBmcm9tICdAd29yZHByZXNzL2VsZW1lbnQnO1xuICpcbiAqIGNvbnN0IE15VG9nZ2xlQ29udHJvbCA9ICgpID0+IHtcbiAqICAgY29uc3QgWyB2YWx1ZSwgc2V0VmFsdWUgXSA9IHVzZVN0YXRlKCBmYWxzZSApO1xuICpcbiAqICAgcmV0dXJuIChcbiAqICAgICA8VG9nZ2xlQ29udHJvbFxuICogICAgICAgX19uZXh0SGFzTm9NYXJnaW5Cb3R0b21cbiAqICAgICAgIGxhYmVsPVwiRml4ZWQgQmFja2dyb3VuZFwiXG4gKiAgICAgICBjaGVja2VkPXsgdmFsdWUgfVxuICogICAgICAgb25DaGFuZ2U9eyAoKSA9PiBzZXRWYWx1ZSggKCBzdGF0ZSApID0+ICEgc3RhdGUgKSB9XG4gKiAgICAgLz5cbiAqICAgKTtcbiAqIH07XG4gKiBgYGBcbiAqL1xuZXhwb3J0IGNvbnN0IFRvZ2dsZUNvbnRyb2wgPSBmb3J3YXJkUmVmKCBVbmZvcndhcmRlZFRvZ2dsZUNvbnRyb2wgKTtcblxuZXhwb3J0IGRlZmF1bHQgVG9nZ2xlQ29udHJvbDtcbiJdfQ== */"));
     if (!__nextHasNoMarginBottom) {
-      (0, import_deprecated29.default)("Bottom margin styles for wp.components.ToggleControl", {
+      (0, import_deprecated28.default)("Bottom margin styles for wp.components.ToggleControl", {
         since: "6.7",
         version: "7.0",
         hint: "Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version."
@@ -50885,7 +50873,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/index.js
   var import_element203 = __toESM(require_element());
-  var import_deprecated30 = __toESM(require_deprecated());
+  var import_deprecated29 = __toESM(require_deprecated());
 
   // packages/components/build-module/toolbar/toolbar-group/index.js
   var import_element201 = __toESM(require_element());
@@ -51165,7 +51153,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [isVariantDefined]);
     if (!label) {
-      (0, import_deprecated30.default)("Using Toolbar without label prop", {
+      (0, import_deprecated29.default)("Using Toolbar without label prop", {
         since: "5.6",
         alternative: "ToolbarGroup component",
         link: "https://developer.wordpress.org/block-editor/components/toolbar/"
@@ -52259,13 +52247,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/isolated-event-container/index.js
   var import_element216 = __toESM(require_element());
-  var import_deprecated31 = __toESM(require_deprecated());
+  var import_deprecated30 = __toESM(require_deprecated());
   var import_jsx_runtime294 = __toESM(require_jsx_runtime());
   function stopPropagation(event) {
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element216.forwardRef)((props, ref) => {
-    (0, import_deprecated31.default)("wp.components.IsolatedEventContainer", {
+    (0, import_deprecated30.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
@@ -52568,7 +52556,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-focus-return/index.js
   var import_element221 = __toESM(require_element());
   var import_compose83 = __toESM(require_compose());
-  var import_deprecated32 = __toESM(require_deprecated());
+  var import_deprecated31 = __toESM(require_deprecated());
   var import_jsx_runtime300 = __toESM(require_jsx_runtime());
   function isComponentLike(object) {
     return object instanceof import_element221.Component || typeof object === "function";
@@ -52601,7 +52589,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Provider3 = ({
     children
   }) => {
-    (0, import_deprecated32.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated31.default)("wp.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });
@@ -58486,7 +58474,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         getValidityTarget: () => validityTargetRef.current,
         children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(FormTokenField, {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           ...restProps
         })
       }), /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("input", {
