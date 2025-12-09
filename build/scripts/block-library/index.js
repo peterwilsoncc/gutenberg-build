@@ -4502,6 +4502,7 @@ var wp;
     usesContext: ["postId", "postType", "templateSlug"],
     supports: {
       html: false,
+      align: ["wide", "full"],
       spacing: {
         margin: true,
         padding: true
