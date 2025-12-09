@@ -31,15 +31,10 @@ var require_i18n = __commonJS({
   }
 });
 
-// routes/home/route.ts
+// routes/font-list/route.ts
 var import_i18n = __toESM(require_i18n());
 var route = {
-  title: () => (0, import_i18n.__)("Home"),
-  async canvas() {
-    return {
-      isPreview: true
-    };
-  }
+  title: () => (0, import_i18n.__)("Fonts")
 };
 export {
   route
