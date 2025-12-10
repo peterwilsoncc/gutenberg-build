@@ -33841,12 +33841,10 @@ var wp;
     };
     const handleLoad = () => setHasIframeLoaded(true);
     (0, import_element77.useLayoutEffect)(() => {
-      if (hasIframeLoaded && iframeRef?.current) {
-        if (goTo?.top) {
-          scrollToSection("top", iframeRef?.current);
-        }
+      if (hasIframeLoaded && iframeRef.current && goTo?.top) {
+        scrollToSection("top", iframeRef.current);
       }
-    }, [iframeRef?.current, goTo, scrollToSection, hasIframeLoaded]);
+    }, [goTo?.top, hasIframeLoaded]);
     return /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(
       import_block_editor38.__unstableIframe,
       {
