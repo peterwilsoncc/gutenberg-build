@@ -4242,10 +4242,18 @@ var wp;
     const isPublished = publishStatus.indexOf(post2.status) !== -1;
     if (error.code === "offline_error") {
       const messages2 = {
-        publish: (0, import_i18n.__)("Publishing failed because you were offline."),
-        private: (0, import_i18n.__)("Publishing failed because you were offline."),
-        future: (0, import_i18n.__)("Scheduling failed because you were offline."),
-        default: (0, import_i18n.__)("Updating failed because you were offline.")
+        publish: (0, import_i18n.__)(
+          "Publishing failed because you were offline. Please, verify your connection and try again."
+        ),
+        private: (0, import_i18n.__)(
+          "Publishing failed because you were offline. Please, verify your connection and try again."
+        ),
+        future: (0, import_i18n.__)(
+          "Scheduling failed because you were offline. Please, verify your connection and try again."
+        ),
+        default: (0, import_i18n.__)(
+          "Updating failed because you were offline. Please, verify your connection and try again."
+        )
       };
       const noticeMessage2 = !isPublished && edits.status in messages2 ? messages2[edits.status] : messages2.default;
       return [noticeMessage2, { id: "editor-save" }];
