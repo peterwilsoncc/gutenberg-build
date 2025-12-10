@@ -27616,7 +27616,9 @@ var wp;
         destinationIndex,
         onSelect,
         shouldFocusBlock,
-        selectBlockOnInsert
+        selectBlockOnInsert,
+        setLastFocus2,
+        registry
       ]
     );
     const onToggleInsertionPoint = (0, import_element58.useCallback)(
@@ -27647,7 +27649,8 @@ var wp;
         showInsertionPoint2,
         hideInsertionPoint2,
         destinationRootClientId,
-        destinationIndex
+        destinationIndex,
+        registry
       ]
     );
     return [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint];
