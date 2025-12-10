@@ -48018,6 +48018,7 @@ var wp;
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal());
   var import_data143 = __toESM(require_data());
   var import_preferences4 = __toESM(require_preferences());
+  var import_deprecated22 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/components/link-control/settings-drawer.js
   var import_components157 = __toESM(require_components());
@@ -48070,6 +48071,7 @@ var wp;
   // packages/block-editor/build-module/components/link-control/search-input.js
   var import_element164 = __toESM(require_element());
   var import_i18n151 = __toESM(require_i18n());
+  var import_deprecated21 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/components/link-control/search-results.js
   var import_i18n150 = __toESM(require_i18n());
@@ -48452,7 +48454,6 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/link-control/search-input.js
-  var import_deprecated21 = __toESM(require_deprecated());
   var import_jsx_runtime313 = __toESM(require_jsx_runtime());
   var noopSearchHandler = () => Promise.resolve([]);
   var noop13 = () => {
@@ -48519,7 +48520,7 @@ var wp;
           return;
         }
         if (allowDirectEntry || suggestion && Object.keys(suggestion).length >= 1) {
-          const { id, url, ...restLinkProps } = currentLink ?? {};
+          const { id, url, kind, type, ...restLinkProps } = currentLink ?? {};
           onSelect(
             // Some direct entries don't have types or IDs, and we still need to clear the previous ones.
             { ...restLinkProps, ...suggestion },
@@ -48942,7 +48943,6 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/link-control/index.js
-  var import_deprecated22 = __toESM(require_deprecated());
   var import_jsx_runtime316 = __toESM(require_jsx_runtime());
   var noop15 = () => {
   };
