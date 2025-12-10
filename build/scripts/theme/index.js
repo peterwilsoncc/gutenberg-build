@@ -2723,19 +2723,19 @@ var wp;
   var color_tokens_default = {
     "primary-bgFill1": ["bg-interactive-brand-strong"],
     "primary-fgFill": [
-      "fg-interactive-brand-strong-active",
-      "fg-interactive-brand-strong"
+      "fg-interactive-brand-strong",
+      "fg-interactive-brand-strong-active"
     ],
     "primary-bgFill2": ["bg-interactive-brand-strong-active"],
     "primary-surface2": ["bg-interactive-brand-active"],
     "primary-surface4": ["bg-interactive-brand-weak-active"],
     "primary-fgSurface3": [
-      "fg-interactive-brand-active",
-      "fg-interactive-brand"
+      "fg-interactive-brand",
+      "fg-interactive-brand-active"
     ],
     "primary-stroke3": [
-      "bg-thumb-brand-active",
       "bg-thumb-brand",
+      "bg-thumb-brand-active",
       "stroke-focus-brand",
       "stroke-interactive-brand",
       "stroke-surface-brand-strong"
@@ -2763,8 +2763,8 @@ var wp;
     "warning-stroke1": ["stroke-surface-warning"],
     "error-bgFill1": ["bg-interactive-error-strong"],
     "error-fgFill": [
-      "fg-interactive-error-strong-active",
-      "fg-interactive-error-strong"
+      "fg-interactive-error-strong",
+      "fg-interactive-error-strong-active"
     ],
     "error-bgFill2": ["bg-interactive-error-strong-active"],
     "error-surface2": [
@@ -2778,8 +2778,8 @@ var wp;
     "error-fgSurface4": ["fg-content-error"],
     "error-fgSurface3": [
       "fg-content-error-weak",
-      "fg-interactive-error-active",
-      "fg-interactive-error"
+      "fg-interactive-error",
+      "fg-interactive-error-active"
     ],
     "error-stroke3": [
       "stroke-interactive-error",
@@ -2809,8 +2809,8 @@ var wp;
     "bg-surface3": ["bg-surface-neutral-strong"],
     "bg-fgSurface4": [
       "fg-content-neutral",
-      "fg-interactive-neutral-active",
-      "fg-interactive-neutral"
+      "fg-interactive-neutral",
+      "fg-interactive-neutral-active"
     ],
     "bg-fgSurface3": [
       "fg-content-neutral-weak",
@@ -2845,8 +2845,8 @@ var wp;
     "bg-bgFillInverted2": ["bg-interactive-neutral-strong-active"],
     "bg-bgFillInverted1": ["bg-interactive-neutral-strong"],
     "bg-fgFillInverted": [
-      "fg-interactive-neutral-strong-active",
-      "fg-interactive-neutral-strong"
+      "fg-interactive-neutral-strong",
+      "fg-interactive-neutral-strong-active"
     ],
     "bg-surface1": ["bg-surface-neutral-weak"],
     "caution-surface2": ["bg-surface-caution-weak"],
