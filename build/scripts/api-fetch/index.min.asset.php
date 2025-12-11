@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-i18n', 'wp-url'), 'version' => '1765471253135');
+<?php return array('dependencies' => array('wp-i18n', 'wp-url'), 'version' => '1765476281001');
