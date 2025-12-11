@@ -11226,7 +11226,8 @@ var wp;
     reusableBlocksSelectKey,
     sectionRootClientIdKey,
     mediaEditKey,
-    getMediaSelectKey
+    getMediaSelectKey,
+    isIsolatedEditorKey
   } = unlock(import_block_editor7.privateApis);
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
     const isLargeViewport = (0, import_compose6.useViewportMatch)("medium");
@@ -11408,7 +11409,14 @@ var wp;
         template: postType2 === "wp_navigation" ? [["core/navigation", {}, []]] : settings.template,
         __experimentalSetIsInserterOpened: setIsInserterOpened2,
         [sectionRootClientIdKey]: sectionRootClientId,
-        editorTool: renderingMode2 === "post-only" && postType2 !== "wp_template" ? "edit" : void 0
+        editorTool: renderingMode2 === "post-only" && postType2 !== "wp_template" ? "edit" : void 0,
+        // When editing template parts, patterns, or navigation directly,
+        // we're in an isolated editing context (focused on that entity alone).
+        [isIsolatedEditorKey]: [
+          "wp_template_part",
+          "wp_block",
+          "wp_navigation"
+        ].includes(postType2)
       };
       return blockEditorSettings;
     }, [
