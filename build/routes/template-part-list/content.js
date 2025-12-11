@@ -2177,7 +2177,7 @@ function ColumnPrimary({
   renderItemLink,
   isItemClickable
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_components5.__experimentalHStack, { spacing: 3, justify: "flex-start", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_components5.__experimentalHStack, { spacing: 3, alignment: "flex-start", justify: "flex-start", children: [
     mediaField && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
       ItemClickWrapper,
       {
