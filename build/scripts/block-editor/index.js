@@ -1040,7 +1040,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment95 = REACT_FRAGMENT_TYPE;
+          var Fragment94 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo = REACT_MEMO_TYPE;
           var Portal = REACT_PORTAL_TYPE;
@@ -1099,7 +1099,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment95;
+          exports.Fragment = Fragment94;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal;
@@ -2074,10 +2074,10 @@ var wp;
         };
         return function(d2, b2) {
           extendStatics2(d2, b2);
-          function __211() {
+          function __210() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__211.prototype = b2.prototype, new __211());
+          d2.prototype = b2 === null ? Object.create(b2) : (__210.prototype = b2.prototype, new __210());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t3) {
@@ -15213,10 +15213,10 @@ var wp;
     if (typeof b2 !== "function" && b2 !== null)
       throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
     extendStatics(d2, b2);
-    function __211() {
+    function __210() {
       this.constructor = d2;
     }
-    d2.prototype = b2 === null ? Object.create(b2) : (__211.prototype = b2.prototype, new __211());
+    d2.prototype = b2 === null ? Object.create(b2) : (__210.prototype = b2.prototype, new __210());
   }
   var __assign = function() {
     __assign = Object.assign || function __assign2(t3) {
@@ -15996,16 +15996,6 @@ var wp;
     }
     const slug = value.match(/var:preset\|spacing\|(.+)/);
     return slug ? slug[1] : void 0;
-  }
-  function getSliderValueFromPreset(presetValue, spacingSizes) {
-    if (presetValue === void 0) {
-      return 0;
-    }
-    const slug = parseFloat(presetValue, 10) === 0 ? "0" : getSpacingPresetSlug(presetValue);
-    const sliderValue = spacingSizes.findIndex((spacingSize) => {
-      return String(spacingSize.slug) === slug;
-    });
-    return sliderValue !== -1 ? sliderValue : NaN;
   }
   function hasAxisSupport(sides, axis) {
     if (!sides || !sides.length) {
@@ -43843,7 +43833,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/border-radius-control/index.js
-  var import_components134 = __toESM(require_components());
+  var import_components135 = __toESM(require_components());
   var import_element148 = __toESM(require_element());
   var import_i18n122 = __toESM(require_i18n());
 
@@ -43921,101 +43911,411 @@ var wp;
     });
     return !!filteredValues.length;
   }
-  function isValuePreset(value) {
+
+  // packages/block-editor/build-module/components/preset-input-control/index.js
+  var import_components134 = __toESM(require_components());
+  var import_compose75 = __toESM(require_compose());
+  var import_i18n120 = __toESM(require_i18n());
+  var import_element147 = __toESM(require_element());
+
+  // packages/block-editor/build-module/components/preset-input-control/constants.js
+  var ICON_SIZE = 24;
+  var RANGE_CONTROL_MAX_SIZE2 = 8;
+  var CUSTOM_VALUE_SETTINGS = {
+    px: { max: 300, steps: 1 },
+    "%": { max: 100, steps: 1 },
+    vw: { max: 100, steps: 1 },
+    vh: { max: 100, steps: 1 },
+    em: { max: 10, steps: 0.1 },
+    rem: { max: 10, steps: 0.1 },
+    svw: { max: 100, steps: 1 },
+    lvw: { max: 100, steps: 1 },
+    dvw: { max: 100, steps: 1 },
+    svh: { max: 100, steps: 1 },
+    lvh: { max: 100, steps: 1 },
+    dvh: { max: 100, steps: 1 },
+    vi: { max: 100, steps: 1 },
+    svi: { max: 100, steps: 1 },
+    lvi: { max: 100, steps: 1 },
+    dvi: { max: 100, steps: 1 },
+    vb: { max: 100, steps: 1 },
+    svb: { max: 100, steps: 1 },
+    lvb: { max: 100, steps: 1 },
+    dvb: { max: 100, steps: 1 },
+    vmin: { max: 100, steps: 1 },
+    svmin: { max: 100, steps: 1 },
+    lvmin: { max: 100, steps: 1 },
+    dvmin: { max: 100, steps: 1 },
+    vmax: { max: 100, steps: 1 },
+    svmax: { max: 100, steps: 1 },
+    lvmax: { max: 100, steps: 1 },
+    dvmax: { max: 100, steps: 1 }
+  };
+
+  // packages/block-editor/build-module/components/preset-input-control/utils.js
+  var isValuePreset = (value, slug) => {
     if (!value?.includes) {
       return false;
     }
-    return value === "0" || value.includes("var:preset|border-radius|");
-  }
-  function getPresetSlug(value) {
+    return value === "0" || value.includes(`var:preset|${slug}|`);
+  };
+  function getPresetSlug(value, presetType) {
     if (!value) {
       return;
     }
     if (value === "0" || value === "default") {
       return value;
     }
-    const slug = value.match(/var:preset\|border-radius\|(.+)/);
+    const slug = value.match(
+      new RegExp(`var:preset\\|${presetType}\\|(.+)`)
+    );
     return slug ? slug[1] : void 0;
   }
-  function getSliderValueFromPreset2(presetValue, presets) {
+  function getSliderValueFromPreset(presetValue, presets, presetType) {
     if (presetValue === void 0) {
       return 0;
     }
-    const slug = parseFloat(presetValue, 10) === 0 ? "0" : getPresetSlug(presetValue);
+    const slug = parseFloat(presetValue, 10) === 0 ? "0" : getPresetSlug(presetValue, presetType);
     const sliderValue = presets.findIndex((size) => {
       return String(size.slug) === slug;
     });
     return sliderValue !== -1 ? sliderValue : NaN;
   }
-  function getCustomValueFromPreset2(value, presets) {
-    if (!isValuePreset(value)) {
+  function getCustomValueFromPreset2(value, presets, presetType) {
+    if (!isValuePreset(value, presetType)) {
       return value;
     }
-    const slug = parseFloat(value, 10) === 0 ? "0" : getPresetSlug(value);
-    const radiusSize = presets.find((size) => String(size.slug) === slug);
-    return radiusSize?.size;
+    const slug = parseFloat(value, 10) === 0 ? "0" : getPresetSlug(value, presetType);
+    const preset = presets.find((size) => String(size.slug) === slug);
+    return preset?.size;
   }
-  function getPresetValueFromControlValue(controlValue, controlType, presets) {
-    const size = parseInt(controlValue, 10);
-    if (controlType === "selectList") {
-      if (size === 0) {
-        return void 0;
-      }
-    } else if (size === 0) {
-      return "0";
-    }
-    return `var:preset|border-radius|${presets[controlValue]?.slug}`;
-  }
-  function getPresetValueFromCustomValue2(value, presets) {
-    if (!value || isValuePreset(value) || value === "0") {
+  function getPresetValueFromCustomValue2(value, spacingSizes, presetType) {
+    if (!value || isValuePreset(value, presetType) || value === "0") {
       return value;
     }
-    const spacingMatch = presets.find(
+    const spacingMatch = spacingSizes.find(
       (size) => String(size.size) === String(value)
     );
     if (spacingMatch?.slug) {
-      return `var:preset|border-radius|${spacingMatch.slug}`;
+      return `var:preset|${presetType}|${spacingMatch.slug}`;
     }
     return value;
   }
-  function convertPresetsToCustomValues(values, presets) {
-    if (!values || typeof values !== "object") {
-      return values;
-    }
-    const converted = {};
-    Object.keys(values).forEach((key) => {
-      const value = values[key];
-      if (isValuePreset(value)) {
-        const customValue = getCustomValueFromPreset2(value, presets);
-        converted[key] = customValue !== void 0 ? customValue : value;
-      } else {
-        converted[key] = value;
+
+  // packages/block-editor/build-module/components/preset-input-control/custom-value-controls.js
+  var import_components133 = __toESM(require_components());
+  var import_jsx_runtime280 = __toESM(require_jsx_runtime());
+  function CustomValueControls({
+    allowNegativeOnDrag,
+    ariaLabel,
+    allPlaceholder,
+    minValue,
+    parsedQuantity,
+    computedUnit,
+    units: units2,
+    isMixed,
+    step,
+    max,
+    showTooltip,
+    value,
+    minimumCustomValue,
+    onCustomValueChange,
+    onCustomValueSliderChange,
+    onUnitChange,
+    onMouseOut,
+    onMouseOver,
+    setMinValue
+  }) {
+    const unitControl = /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+      import_components133.__experimentalUnitControl,
+      {
+        className: "preset-input-control__unit-control",
+        disableUnits: isMixed,
+        hideLabelFromVision: true,
+        label: ariaLabel,
+        min: minValue,
+        onChange: onCustomValueChange,
+        onUnitChange,
+        onBlur: onMouseOut,
+        onFocus: onMouseOver,
+        onMouseOut,
+        onMouseOver,
+        size: "__unstable-large",
+        units: units2,
+        value: [parsedQuantity, computedUnit].join(""),
+        placeholder: allPlaceholder,
+        onDragStart: () => {
+          if (allowNegativeOnDrag && value?.charAt(0) === "-") {
+            setMinValue(0);
+          }
+        },
+        onDrag: () => {
+          if (allowNegativeOnDrag && value?.charAt(0) === "-") {
+            setMinValue(0);
+          }
+        },
+        onDragEnd: () => {
+          if (allowNegativeOnDrag) {
+            setMinValue(minimumCustomValue);
+          }
+        }
       }
-    });
-    return converted;
+    );
+    const wrappedUnitControl = showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components133.Tooltip, { text: ariaLabel, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)("div", { className: "preset-input-control__tooltip-wrapper", children: unitControl }) }) : unitControl;
+    return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(import_jsx_runtime280.Fragment, { children: [
+      wrappedUnitControl,
+      /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+        import_components133.RangeControl,
+        {
+          className: "preset-input-control__custom-value-range",
+          hideLabelFromVision: true,
+          initialPosition: 0,
+          label: ariaLabel,
+          max,
+          min: 0,
+          onBlur: onMouseOut,
+          onChange: onCustomValueSliderChange,
+          onFocus: onMouseOver,
+          onMouseOut,
+          onMouseOver,
+          step,
+          value: parsedQuantity,
+          withInputField: false,
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true
+        }
+      )
+    ] });
   }
 
-  // packages/block-editor/build-module/components/border-radius-control/single-input-control.js
-  var import_components133 = __toESM(require_components());
-  var import_i18n121 = __toESM(require_i18n());
-  var import_element147 = __toESM(require_element());
+  // packages/block-editor/build-module/components/preset-input-control/index.js
+  var import_jsx_runtime281 = __toESM(require_jsx_runtime());
+  function PresetInputControl({
+    allowNegativeOnDrag = false,
+    ariaLabel,
+    className: classNameProp,
+    customValueSettings = CUSTOM_VALUE_SETTINGS,
+    disableCustomValues,
+    icon,
+    isMixed,
+    value: valueProp,
+    minimumCustomValue,
+    onChange,
+    onMouseOut,
+    onMouseOver,
+    onUnitChange,
+    presets = [],
+    presetType,
+    selectedUnit,
+    showTooltip,
+    units: units2
+  }) {
+    const value = (0, import_element147.useMemo)(
+      () => getPresetValueFromCustomValue2(valueProp, presets, presetType),
+      [valueProp, presets, presetType]
+    );
+    const className = classNameProp ?? "preset-input-control";
+    const marks = presets.slice(1, presets.length - 1).map((_newValue, index) => ({
+      value: index + 1,
+      label: void 0
+    }));
+    const hasPresets = marks.length > 0;
+    const showRangeControl = presets.length <= RANGE_CONTROL_MAX_SIZE2;
+    const allPlaceholder = isMixed ? (0, import_i18n120.__)("Mixed") : null;
+    const [minValue, setMinValue] = (0, import_element147.useState)(minimumCustomValue);
+    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element147.useState)(
+      !disableCustomValues && value !== void 0 && !isValuePreset(value, presetType)
+    );
+    let currentValue = null;
+    const previousValue = (0, import_compose75.usePrevious)(value);
+    (0, import_element147.useEffect)(() => {
+      if (!!value && previousValue !== value && !isValuePreset(value, presetType) && showCustomValueControl !== true) {
+        setShowCustomValueControl(true);
+      }
+    }, [value, previousValue, presetType, showCustomValueControl]);
+    const showCustomValueInSelectList = !showRangeControl && !showCustomValueControl && value !== void 0 && (!isValuePreset(value, presetType) || isValuePreset(value, presetType) && isMixed);
+    let selectListOptions = presets;
+    if (showCustomValueInSelectList) {
+      selectListOptions = [
+        ...presets,
+        {
+          name: !isMixed ? (
+            // translators: %s: A custom measurement, e.g. a number followed by a unit like 12px.
+            (0, import_i18n120.sprintf)((0, import_i18n120.__)("Custom (%s)"), value)
+          ) : (0, import_i18n120.__)("Mixed"),
+          slug: "custom",
+          size: value
+        }
+      ];
+      currentValue = selectListOptions.length - 1;
+    } else if (!isMixed) {
+      currentValue = !showCustomValueControl ? getSliderValueFromPreset(value, presets, presetType) : getCustomValueFromPreset2(value, presets, presetType);
+    }
+    const options = selectListOptions.map((size, index) => ({
+      key: index,
+      name: size.name
+    }));
+    const resolvedPresetValue = isValuePreset(value, presetType) ? getCustomValueFromPreset2(value, presets, presetType) : value;
+    const [parsedQuantity, parsedUnit] = (0, import_components134.__experimentalParseQuantityAndUnitFromRawValue)(resolvedPresetValue);
+    const computedUnit = parsedUnit || selectedUnit || "px";
+    const unitConfig = units2?.find((item) => item.value === computedUnit);
+    const step = unitConfig?.step ?? customValueSettings[computedUnit]?.steps ?? 0.1;
+    const max = unitConfig?.max ?? customValueSettings[computedUnit]?.max ?? 10;
+    const handleCustomValueChange = (newValue) => {
+      const isNumeric = !isNaN(parseFloat(newValue));
+      const newCustomValue = isNumeric ? newValue : void 0;
+      if (newCustomValue !== void 0) {
+        onChange(newCustomValue);
+      }
+    };
+    const handleCustomValueSliderChange = (next) => {
+      onChange([next, computedUnit].join(""));
+    };
+    const customTooltipContent = (newValue) => value === void 0 ? void 0 : presets[newValue]?.name;
+    const getNewPresetValue = (next, controlType) => {
+      const newValue = parseInt(next, 10);
+      if (controlType === "selectList") {
+        if (newValue === 0 && presets[0]?.slug === "0") {
+          return "0";
+        }
+        if (newValue === 0) {
+          return void 0;
+        }
+      } else if (newValue === 0) {
+        return "0";
+      }
+      return `var:preset|${presetType}|${presets[next]?.slug}`;
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(
+      import_components134.__experimentalHStack,
+      {
+        className: `preset-input-control__wrapper ${className}__wrapper`,
+        children: [
+          icon && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+            import_components134.Icon,
+            {
+              className: "preset-input-control__icon",
+              icon,
+              size: ICON_SIZE
+            }
+          ),
+          (!hasPresets || showCustomValueControl) && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+            CustomValueControls,
+            {
+              allowNegativeOnDrag,
+              ariaLabel,
+              allPlaceholder,
+              minValue,
+              parsedQuantity,
+              computedUnit,
+              units: units2,
+              isMixed,
+              step,
+              max,
+              showTooltip,
+              value,
+              minimumCustomValue,
+              onCustomValueChange: handleCustomValueChange,
+              onCustomValueSliderChange: handleCustomValueSliderChange,
+              onUnitChange,
+              onMouseOut,
+              onMouseOver,
+              setMinValue
+            }
+          ),
+          hasPresets && showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+            import_components134.RangeControl,
+            {
+              "aria-valuenow": currentValue,
+              "aria-valuetext": presets[currentValue]?.name,
+              className: "preset-input-control__preset-range",
+              hideLabelFromVision: true,
+              initialPosition: 0,
+              label: ariaLabel,
+              max: presets.length - 1,
+              marks,
+              min: 0,
+              onBlur: onMouseOut,
+              onChange: (newValue) => onChange(getNewPresetValue(newValue)),
+              onFocus: onMouseOver,
+              onMouseDown: (event) => {
+                const nearStart = event?.nativeEvent?.offsetX < 35;
+                if (nearStart && value === void 0) {
+                  onChange("0");
+                }
+              },
+              onMouseOut,
+              onMouseOver,
+              renderTooltipContent: customTooltipContent,
+              step: 1,
+              value: currentValue,
+              withInputField: false,
+              __next40pxDefaultSize: true,
+              __nextHasNoMarginBottom: true
+            }
+          ),
+          hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+            import_components134.CustomSelectControl,
+            {
+              className: "preset-input-control__custom-select-control",
+              hideLabelFromVision: true,
+              label: ariaLabel,
+              onBlur: onMouseOut,
+              onChange: (selection2) => {
+                if (showCustomValueInSelectList && selection2.selectedItem.key === options.length - 1) {
+                  setShowCustomValueControl(true);
+                } else {
+                  onChange(
+                    getNewPresetValue(
+                      selection2.selectedItem.key,
+                      "selectList"
+                    )
+                  );
+                }
+              },
+              onFocus: onMouseOver,
+              onMouseOut,
+              onMouseOver,
+              options,
+              size: "__unstable-large",
+              value: (
+                // passing empty string as a fallback to continue using the
+                // component in controlled mode
+                options.find(
+                  (option) => option.key === currentValue
+                ) || ""
+              )
+            }
+          ),
+          hasPresets && !disableCustomValues && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+            import_components134.Button,
+            {
+              className: "preset-input-control__custom-toggle",
+              icon: settings_default,
+              iconSize: ICON_SIZE,
+              isPressed: showCustomValueControl,
+              label: showCustomValueControl ? (0, import_i18n120.__)("Use preset") : (0, import_i18n120.__)("Set custom value"),
+              onClick: () => {
+                setShowCustomValueControl(!showCustomValueControl);
+              },
+              size: "small"
+            }
+          )
+        ]
+      }
+    );
+  }
 
   // packages/block-editor/build-module/components/border-radius-control/constants.js
-  var import_i18n120 = __toESM(require_i18n());
-  var DEFAULT_VALUES2 = {
-    topLeft: void 0,
-    topRight: void 0,
-    bottomLeft: void 0,
-    bottomRight: void 0
-  };
-  var RANGE_CONTROL_MAX_SIZE2 = 8;
+  var import_i18n121 = __toESM(require_i18n());
+  var RANGE_CONTROL_MAX_SIZE3 = 8;
   var EMPTY_ARRAY9 = [];
   var CORNERS = {
-    all: (0, import_i18n120.__)("Border radius"),
-    topLeft: (0, import_i18n120.__)("Top left"),
-    topRight: (0, import_i18n120.__)("Top right"),
-    bottomLeft: (0, import_i18n120.__)("Bottom left"),
-    bottomRight: (0, import_i18n120.__)("Bottom right")
+    all: (0, import_i18n121.__)("Border radius"),
+    topLeft: (0, import_i18n121.__)("Top left"),
+    topRight: (0, import_i18n121.__)("Top right"),
+    bottomLeft: (0, import_i18n121.__)("Bottom left"),
+    bottomRight: (0, import_i18n121.__)("Bottom right")
   };
   var ICONS2 = {
     all: corner_all_default,
@@ -44025,223 +44325,9 @@ var wp;
     bottomRight: corner_bottom_right_default
   };
   var MIN_BORDER_RADIUS_VALUE = 0;
-  var MAX_BORDER_RADIUS_VALUES = {
-    px: 100,
-    em: 20,
-    rem: 20
-  };
-
-  // packages/block-editor/build-module/components/border-radius-control/single-input-control.js
-  var import_jsx_runtime280 = __toESM(require_jsx_runtime());
-  function SingleInputControl({
-    corner,
-    onChange,
-    selectedUnits,
-    setSelectedUnits,
-    values: valuesProp,
-    units: units2,
-    presets
-  }) {
-    const changeCornerValue = (validatedValue) => {
-      if (corner === "all") {
-        onChange({
-          topLeft: validatedValue,
-          topRight: validatedValue,
-          bottomLeft: validatedValue,
-          bottomRight: validatedValue
-        });
-      } else {
-        onChange({
-          ...values,
-          [corner]: validatedValue
-        });
-      }
-    };
-    const onChangeValue = (next) => {
-      if (!onChange) {
-        return;
-      }
-      const isNumeric = !isNaN(parseFloat(next));
-      const nextValue = isNumeric ? next : void 0;
-      changeCornerValue(nextValue);
-    };
-    const onChangeUnit = (next) => {
-      const newUnits = { ...selectedUnits };
-      if (corner === "all") {
-        newUnits.flat = next;
-        newUnits.topLeft = next;
-        newUnits.topRight = next;
-        newUnits.bottomLeft = next;
-        newUnits.bottomRight = next;
-      } else {
-        newUnits[corner] = next;
-      }
-      setSelectedUnits(newUnits);
-    };
-    const values = typeof valuesProp !== "string" ? valuesProp : {
-      topLeft: valuesProp,
-      topRight: valuesProp,
-      bottomLeft: valuesProp,
-      bottomRight: valuesProp
-    };
-    let value;
-    if (corner === "all") {
-      const convertedValues = convertPresetsToCustomValues(values, presets);
-      const customValue = getAllValue(convertedValues);
-      value = getPresetValueFromCustomValue2(customValue, presets);
-    } else {
-      value = getPresetValueFromCustomValue2(values[corner], presets);
-    }
-    const resolvedPresetValue = isValuePreset(value) ? getCustomValueFromPreset2(value, presets) : value;
-    const [parsedQuantity, parsedUnit] = (0, import_components133.__experimentalParseQuantityAndUnitFromRawValue)(resolvedPresetValue);
-    const computedUnit = value ? parsedUnit : selectedUnits[corner] || selectedUnits.flat || "px";
-    const unitConfig = units2 && units2.find((item) => item.value === computedUnit);
-    const step = unitConfig?.step || 1;
-    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element147.useState)(
-      value !== void 0 && !isValuePreset(value)
-    );
-    const showRangeControl = presets.length <= RANGE_CONTROL_MAX_SIZE2;
-    const presetIndex = getSliderValueFromPreset2(value, presets);
-    const rangeTooltip = (newValue) => value === void 0 ? void 0 : presets[newValue]?.name;
-    const marks = presets.slice(1, presets.length - 1).map((_newValue, index) => ({
-      value: index + 1,
-      label: void 0
-    }));
-    const hasPresets = marks.length > 0;
-    let options = [];
-    if (!showRangeControl) {
-      options = [
-        ...presets,
-        {
-          name: (0, import_i18n121.__)("Custom"),
-          slug: "custom",
-          size: resolvedPresetValue
-        }
-      ].map((size, index) => ({
-        key: index,
-        name: size.name
-      }));
-    }
-    const icon = ICONS2[corner];
-    const handleSliderChange = (next) => {
-      const val = next !== void 0 ? `${next}${computedUnit}` : void 0;
-      changeCornerValue(val);
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(import_components133.__experimentalHStack, { children: [
-      icon && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
-        import_components133.Icon,
-        {
-          className: "components-border-radius-control__icon",
-          icon,
-          size: 24
-        }
-      ),
-      (!hasPresets || showCustomValueControl) && /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)("div", { className: "components-border-radius-control__input-controls-wrapper", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components133.Tooltip, { text: CORNERS[corner], placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)("div", { className: "components-border-radius-control__tooltip-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
-          import_components133.__experimentalUnitControl,
-          {
-            className: "components-border-radius-control__unit-control",
-            "aria-label": CORNERS[corner],
-            value: [parsedQuantity, computedUnit].join(
-              ""
-            ),
-            onChange: onChangeValue,
-            onUnitChange: onChangeUnit,
-            size: "__unstable-large",
-            min: MIN_BORDER_RADIUS_VALUE,
-            units: units2
-          }
-        ) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
-          import_components133.RangeControl,
-          {
-            __next40pxDefaultSize: true,
-            label: (0, import_i18n121.__)("Border radius"),
-            hideLabelFromVision: true,
-            className: "components-border-radius-control__range-control",
-            value: parsedQuantity ?? "",
-            min: MIN_BORDER_RADIUS_VALUE,
-            max: MAX_BORDER_RADIUS_VALUES[computedUnit],
-            initialPosition: 0,
-            withInputField: false,
-            onChange: handleSliderChange,
-            step,
-            __nextHasNoMarginBottom: true
-          }
-        )
-      ] }),
-      hasPresets && showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
-        import_components133.RangeControl,
-        {
-          __next40pxDefaultSize: true,
-          className: "components-border-radius-control__range-control",
-          value: presetIndex,
-          onChange: (newSize) => {
-            changeCornerValue(
-              getPresetValueFromControlValue(
-                newSize,
-                "range",
-                presets
-              )
-            );
-          },
-          withInputField: false,
-          "aria-valuenow": presetIndex,
-          "aria-valuetext": presets[presetIndex]?.name,
-          renderTooltipContent: rangeTooltip,
-          min: 0,
-          max: presets.length - 1,
-          marks,
-          label: CORNERS[corner],
-          hideLabelFromVision: true,
-          __nextHasNoMarginBottom: true
-        }
-      ),
-      !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
-        import_components133.CustomSelectControl,
-        {
-          className: "components-border-radius-control__custom-select-control",
-          value: options.find(
-            (option) => option.key === presetIndex
-          ) || options[options.length - 1],
-          onChange: (selection2) => {
-            if (selection2.selectedItem.key === options.length - 1) {
-              setShowCustomValueControl(true);
-            } else {
-              changeCornerValue(
-                getPresetValueFromControlValue(
-                  selection2.selectedItem.key,
-                  "selectList",
-                  presets
-                )
-              );
-            }
-          },
-          options,
-          label: CORNERS[corner],
-          hideLabelFromVision: true,
-          size: "__unstable-large"
-        }
-      ),
-      hasPresets && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
-        import_components133.Button,
-        {
-          label: showCustomValueControl ? (0, import_i18n121.__)("Use border radius preset") : (0, import_i18n121.__)("Set custom border radius"),
-          icon: settings_default,
-          onClick: () => {
-            setShowCustomValueControl(!showCustomValueControl);
-          },
-          isPressed: showCustomValueControl,
-          size: "small",
-          className: "components-border-radius-control__custom-toggle",
-          iconSize: 24
-        }
-      )
-    ] });
-  }
 
   // packages/block-editor/build-module/components/border-radius-control/index.js
-  var import_jsx_runtime281 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime282 = __toESM(require_jsx_runtime());
   function useBorderRadiusSizes(presets) {
     const defaultSizes = presets?.default ?? EMPTY_ARRAY9;
     const customSizes = presets?.custom ?? EMPTY_ARRAY9;
@@ -44253,7 +44339,7 @@ var wp;
         ...themeSizes,
         ...defaultSizes
       ];
-      return sizes.length > RANGE_CONTROL_MAX_SIZE2 ? [
+      return sizes.length > RANGE_CONTROL_MAX_SIZE3 ? [
         {
           name: (0, import_i18n122.__)("Default"),
           slug: "default",
@@ -44263,56 +44349,138 @@ var wp;
       ] : sizes;
     }, [customSizes, themeSizes, defaultSizes]);
   }
+  function getCornerValue(values, corner) {
+    if (corner === "all") {
+      return getAllValue(values);
+    }
+    if (typeof values === "string") {
+      return values;
+    }
+    return values?.[corner];
+  }
+  function getCornerUnit(selectedUnits, corner) {
+    if (corner === "all") {
+      return selectedUnits.flat;
+    }
+    return selectedUnits[corner];
+  }
+  function createCornerChangeHandler(corner, values, onChange) {
+    return (newValue) => {
+      if (corner === "all") {
+        onChange({
+          topLeft: newValue,
+          topRight: newValue,
+          bottomLeft: newValue,
+          bottomRight: newValue
+        });
+      } else {
+        const currentValues = typeof values !== "string" ? values || {} : {
+          topLeft: values,
+          topRight: values,
+          bottomLeft: values,
+          bottomRight: values
+        };
+        onChange({
+          ...currentValues,
+          [corner]: newValue
+        });
+      }
+    };
+  }
+  function createCornerUnitChangeHandler(corner, selectedUnits, setSelectedUnits) {
+    return (newUnit) => {
+      const newUnits = { ...selectedUnits };
+      if (corner === "all") {
+        newUnits.flat = newUnit;
+        newUnits.topLeft = newUnit;
+        newUnits.topRight = newUnit;
+        newUnits.bottomLeft = newUnit;
+        newUnits.bottomRight = newUnit;
+      } else {
+        newUnits[corner] = newUnit;
+      }
+      setSelectedUnits(newUnits);
+    };
+  }
   function BorderRadiusControl({ onChange, values, presets }) {
     const [isLinked, setIsLinked] = (0, import_element148.useState)(
       !hasDefinedValues(values) || !hasMixedValues(values)
     );
     const options = useBorderRadiusSizes(presets);
     const [selectedUnits, setSelectedUnits] = (0, import_element148.useState)({
-      flat: typeof values === "string" ? (0, import_components134.__experimentalParseQuantityAndUnitFromRawValue)(values)[1] : void 0,
-      topLeft: (0, import_components134.__experimentalParseQuantityAndUnitFromRawValue)(values?.topLeft)[1],
-      topRight: (0, import_components134.__experimentalParseQuantityAndUnitFromRawValue)(values?.topRight)[1],
-      bottomLeft: (0, import_components134.__experimentalParseQuantityAndUnitFromRawValue)(values?.bottomLeft)[1],
-      bottomRight: (0, import_components134.__experimentalParseQuantityAndUnitFromRawValue)(
+      flat: typeof values === "string" ? (0, import_components135.__experimentalParseQuantityAndUnitFromRawValue)(values)[1] : void 0,
+      topLeft: (0, import_components135.__experimentalParseQuantityAndUnitFromRawValue)(values?.topLeft)[1],
+      topRight: (0, import_components135.__experimentalParseQuantityAndUnitFromRawValue)(values?.topRight)[1],
+      bottomLeft: (0, import_components135.__experimentalParseQuantityAndUnitFromRawValue)(values?.bottomLeft)[1],
+      bottomRight: (0, import_components135.__experimentalParseQuantityAndUnitFromRawValue)(
         values?.bottomRight
       )[1]
     });
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components134.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components135.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "em", "rem"]
     });
     const toggleLinked = () => setIsLinked(!isLinked);
-    return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)("fieldset", { className: "components-border-radius-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_components134.__experimentalHStack, { className: "components-border-radius-control__header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_components134.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n122.__)("Radius") }),
-        /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(LinkedButton, { onClick: toggleLinked, isLinked })
+    return /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)("fieldset", { className: "components-border-radius-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(import_components135.__experimentalHStack, { className: "components-border-radius-control__header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components135.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n122.__)("Radius") }),
+        /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(LinkedButton, { onClick: toggleLinked, isLinked })
       ] }),
-      isLinked ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_jsx_runtime281.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
-        SingleInputControl,
+      isLinked ? /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+        PresetInputControl,
         {
-          onChange,
-          selectedUnits,
-          setSelectedUnits,
-          values,
+          ariaLabel: CORNERS.all,
+          className: "components-border-radius-control",
+          icon: ICONS2.all,
+          minimumCustomValue: MIN_BORDER_RADIUS_VALUE,
+          onChange: createCornerChangeHandler(
+            "all",
+            values,
+            onChange
+          ),
+          onUnitChange: createCornerUnitChangeHandler(
+            "all",
+            selectedUnits,
+            setSelectedUnits
+          ),
+          presets: options,
+          presetType: "border-radius",
+          selectedUnit: getCornerUnit(selectedUnits, "all"),
+          showTooltip: true,
           units: units2,
-          corner: "all",
-          presets: options
+          value: getCornerValue(values, "all")
         }
-      ) }) : /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_components134.__experimentalVStack, { children: [
+      ) : /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components135.__experimentalVStack, { children: [
         "topLeft",
         "topRight",
         "bottomLeft",
         "bottomRight"
-      ].map((corner) => /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
-        SingleInputControl,
+      ].map((corner) => /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+        PresetInputControl,
         {
-          onChange,
-          selectedUnits,
-          setSelectedUnits,
-          values: values || DEFAULT_VALUES2,
+          ariaLabel: CORNERS[corner],
+          className: "components-border-radius-control",
+          icon: ICONS2[corner],
+          minimumCustomValue: MIN_BORDER_RADIUS_VALUE,
+          onChange: createCornerChangeHandler(
+            corner,
+            values,
+            onChange
+          ),
+          onUnitChange: createCornerUnitChangeHandler(
+            corner,
+            selectedUnits,
+            setSelectedUnits
+          ),
+          presets: options,
+          presetType: "border-radius",
+          selectedUnit: getCornerUnit(
+            selectedUnits,
+            corner
+          ),
+          showTooltip: true,
           units: units2,
-          corner,
-          presets: options
+          value: getCornerValue(values, corner)
         },
         corner
       )) })
@@ -44320,12 +44488,12 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/color-palette/index.js
-  var import_components135 = __toESM(require_components());
+  var import_components136 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/color-palette/with-color-context.js
-  var import_compose75 = __toESM(require_compose());
-  var import_jsx_runtime282 = __toESM(require_jsx_runtime());
-  var with_color_context_default = (0, import_compose75.createHigherOrderComponent)((WrappedComponent) => {
+  var import_compose76 = __toESM(require_compose());
+  var import_jsx_runtime283 = __toESM(require_jsx_runtime());
+  var with_color_context_default = (0, import_compose76.createHigherOrderComponent)((WrappedComponent) => {
     return (props) => {
       const [
         defaultColors,
@@ -44347,7 +44515,7 @@ var wp;
       ] : [...themeColors || [], ...customColors || []];
       const { colors: colors2 = _colors, disableCustomColors = !enableCustomColors } = props;
       const hasColorsToChoose = colors2 && colors2.length > 0 || !disableCustomColors;
-      return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
         WrappedComponent,
         {
           ...{
@@ -44362,13 +44530,13 @@ var wp;
   }, "withColorContext");
 
   // packages/block-editor/build-module/components/color-palette/index.js
-  var color_palette_default = with_color_context_default(import_components135.ColorPalette);
+  var color_palette_default = with_color_context_default(import_components136.ColorPalette);
 
   // packages/block-editor/build-module/components/colors-gradients/control.js
   var import_i18n123 = __toESM(require_i18n());
-  var import_components136 = __toESM(require_components());
-  var import_jsx_runtime283 = __toESM(require_jsx_runtime());
-  var { Tabs: Tabs3 } = unlock(import_components136.privateApis);
+  var import_components137 = __toESM(require_components());
+  var import_jsx_runtime284 = __toESM(require_jsx_runtime());
+  var { Tabs: Tabs3 } = unlock(import_components137.privateApis);
   var colorsAndGradientKeys = [
     "colors",
     "disableCustomColors",
@@ -44399,8 +44567,8 @@ var wp;
       return null;
     }
     const tabPanels = {
-      [TAB_IDS.color]: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-        import_components136.ColorPalette,
+      [TAB_IDS.color]: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+        import_components137.ColorPalette,
         {
           value: colorValue,
           onChange: canChooseAGradient ? (newColor) => {
@@ -44414,8 +44582,8 @@ var wp;
           headingLevel
         }
       ),
-      [TAB_IDS.gradient]: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-        import_components136.GradientPicker,
+      [TAB_IDS.gradient]: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+        import_components137.GradientPicker,
         {
           value: gradientValue,
           onChange: canChooseAColor ? (newGradient) => {
@@ -44429,27 +44597,27 @@ var wp;
         }
       )
     };
-    const renderPanelType = (type) => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { className: "block-editor-color-gradient-control__panel", children: tabPanels[type] });
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-      import_components136.BaseControl,
+    const renderPanelType = (type) => /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("div", { className: "block-editor-color-gradient-control__panel", children: tabPanels[type] });
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+      import_components137.BaseControl,
       {
         __nextHasNoMarginBottom: true,
         className: clsx_default(
           "block-editor-color-gradient-control",
           className
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("fieldset", { className: "block-editor-color-gradient-control__fieldset", children: /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_components136.__experimentalVStack, { spacing: 1, children: [
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("legend", { children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { className: "block-editor-color-gradient-control__color-indicator", children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components136.BaseControl.VisualLabel, { children: label }) }) }),
-          canChooseAColor && canChooseAGradient && /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("fieldset", { className: "block-editor-color-gradient-control__fieldset", children: /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(import_components137.__experimentalVStack, { spacing: 1, children: [
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("legend", { children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("div", { className: "block-editor-color-gradient-control__color-indicator", children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(import_components137.BaseControl.VisualLabel, { children: label }) }) }),
+          canChooseAColor && canChooseAGradient && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(
             Tabs3,
             {
               defaultTabId: gradientValue ? TAB_IDS.gradient : !!canChooseAColor && TAB_IDS.color,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(Tabs3.TabList, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(Tabs3.Tab, { tabId: TAB_IDS.color, children: (0, import_i18n123.__)("Color") }),
-                  /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(Tabs3.Tab, { tabId: TAB_IDS.gradient, children: (0, import_i18n123.__)("Gradient") })
+                /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(Tabs3.TabList, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(Tabs3.Tab, { tabId: TAB_IDS.color, children: (0, import_i18n123.__)("Color") }),
+                  /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(Tabs3.Tab, { tabId: TAB_IDS.gradient, children: (0, import_i18n123.__)("Gradient") })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
                   Tabs3.TabPanel,
                   {
                     tabId: TAB_IDS.color,
@@ -44458,7 +44626,7 @@ var wp;
                     children: tabPanels.color
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
                   Tabs3.TabPanel,
                   {
                     tabId: TAB_IDS.gradient,
@@ -44483,7 +44651,7 @@ var wp;
       "color.custom",
       "color.customGradient"
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
       ColorGradientControlInner,
       {
         colors: colors2,
@@ -44496,20 +44664,20 @@ var wp;
   }
   function ColorGradientControl(props) {
     if (colorsAndGradientKeys.every((key) => props.hasOwnProperty(key))) {
-      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(ColorGradientControlInner, { ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(ColorGradientControlInner, { ...props });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(ColorGradientControlSelect, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(ColorGradientControlSelect, { ...props });
   }
   var control_default = ColorGradientControl;
 
   // packages/block-editor/build-module/components/color-palette/control.js
-  var import_jsx_runtime284 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime285 = __toESM(require_jsx_runtime());
   function ColorPaletteControl({
     onChange,
     value,
     ...otherProps
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
       control_default,
       {
         ...otherProps,
@@ -44523,9 +44691,9 @@ var wp;
 
   // packages/block-editor/build-module/components/contrast-checker/index.js
   var import_i18n124 = __toESM(require_i18n());
-  var import_components137 = __toESM(require_components());
+  var import_components138 = __toESM(require_components());
   var import_a11y17 = __toESM(require_a11y());
-  var import_jsx_runtime285 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime286 = __toESM(require_jsx_runtime());
   k([names_default, a11y_default]);
   function ContrastChecker({
     backgroundColor,
@@ -44610,8 +44778,8 @@ var wp;
       return null;
     }
     (0, import_a11y17.speak)(speakMessage);
-    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)("div", { className: "block-editor-contrast-checker", children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
-      import_components137.Notice,
+    return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("div", { className: "block-editor-contrast-checker", children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+      import_components138.Notice,
       {
         spokenMessage: null,
         status: "warning",
@@ -44626,8 +44794,8 @@ var wp;
   var import_i18n125 = __toESM(require_i18n());
   var import_date = __toESM(require_date());
   var import_element149 = __toESM(require_element());
-  var import_components138 = __toESM(require_components());
-  var import_jsx_runtime286 = __toESM(require_jsx_runtime());
+  var import_components139 = __toESM(require_components());
+  var import_jsx_runtime287 = __toESM(require_jsx_runtime());
   var exampleDate = /* @__PURE__ */ new Date();
   exampleDate.setDate(20);
   exampleDate.setMonth(exampleDate.getMonth() - 3);
@@ -44639,16 +44807,16 @@ var wp;
     defaultFormat,
     onChange
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(
-      import_components138.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(
+      import_components139.__experimentalVStack,
       {
         as: "fieldset",
         spacing: 4,
         className: "block-editor-date-format-picker",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(import_components138.VisuallyHidden, { as: "legend", children: (0, import_i18n125.__)("Date format") }),
-          /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-            import_components138.ToggleControl,
+          /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(import_components139.VisuallyHidden, { as: "legend", children: (0, import_i18n125.__)("Date format") }),
+          /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+            import_components139.ToggleControl,
             {
               __nextHasNoMarginBottom: true,
               label: (0, import_i18n125.__)("Default format"),
@@ -44660,7 +44828,7 @@ var wp;
               onChange: (checked) => onChange(checked ? null : defaultFormat)
             }
           ),
-          format2 && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(NonDefaultControls, { format: format2, onChange })
+          format2 && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(NonDefaultControls, { format: format2, onChange })
         ]
       }
     );
@@ -44705,9 +44873,9 @@ var wp;
     const [isCustom, setIsCustom] = (0, import_element149.useState)(
       () => !!format2 && !suggestedOptions.some((option) => option.format === format2)
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(import_components138.__experimentalVStack, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-        import_components138.CustomSelectControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components139.__experimentalVStack, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+        import_components139.CustomSelectControl,
         {
           __next40pxDefaultSize: true,
           label: (0, import_i18n125.__)("Choose a format"),
@@ -44725,8 +44893,8 @@ var wp;
           }
         }
       ),
-      isCustom && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-        import_components138.TextControl,
+      isCustom && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+        import_components139.TextControl,
         {
           __next40pxDefaultSize: true,
           label: (0, import_i18n125.__)("Custom format"),
@@ -44736,8 +44904,8 @@ var wp;
               "Enter a date or time <Link>format string</Link>."
             ),
             {
-              Link: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                import_components138.ExternalLink,
+              Link: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+                import_components139.ExternalLink,
                 {
                   href: (0, import_i18n125.__)(
                     "https://wordpress.org/documentation/article/customize-date-and-time-format/"
@@ -44754,11 +44922,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/duotone-control/index.js
-  var import_components139 = __toESM(require_components());
+  var import_components140 = __toESM(require_components());
   var import_i18n126 = __toESM(require_i18n());
   var import_keycodes15 = __toESM(require_keycodes());
-  var import_compose76 = __toESM(require_compose());
-  var import_jsx_runtime287 = __toESM(require_jsx_runtime());
+  var import_compose77 = __toESM(require_compose());
+  var import_jsx_runtime288 = __toESM(require_jsx_runtime());
   function DuotoneControl({
     id: idProp,
     colorPalette,
@@ -44770,17 +44938,17 @@ var wp;
   }) {
     let toolbarIcon;
     if (value === "unset") {
-      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(import_components139.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" });
+      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components140.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" });
     } else if (value) {
-      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(import_components139.DuotoneSwatch, { values: value });
+      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components140.DuotoneSwatch, { values: value });
     } else {
-      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(icon_default, { icon: filter_default });
+      toolbarIcon = /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(icon_default, { icon: filter_default });
     }
     const actionLabel = (0, import_i18n126.__)("Apply duotone filter");
-    const id = (0, import_compose76.useInstanceId)(DuotoneControl, "duotone-control", idProp);
+    const id = (0, import_compose77.useInstanceId)(DuotoneControl, "duotone-control", idProp);
     const descriptionId = `${id}__description`;
-    return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-      import_components139.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+      import_components140.Dropdown,
       {
         popoverProps: {
           className: "block-editor-duotone-control__popover",
@@ -44793,8 +44961,8 @@ var wp;
               onToggle();
             }
           };
-          return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-            import_components139.ToolbarButton,
+          return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+            import_components140.ToolbarButton,
             {
               showTooltip: true,
               onClick: onToggle,
@@ -44806,12 +44974,12 @@ var wp;
             }
           );
         },
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components139.MenuGroup, { label: (0, import_i18n126.__)("Duotone"), children: [
-          /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("p", { children: (0, import_i18n126.__)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(import_components140.MenuGroup, { label: (0, import_i18n126.__)("Duotone"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("p", { children: (0, import_i18n126.__)(
             "Create a two-tone color effect without losing your original image."
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-            import_components139.DuotonePicker,
+          /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+            import_components140.DuotonePicker,
             {
               "aria-label": actionLabel,
               "aria-describedby": descriptionId,
@@ -44830,7 +44998,7 @@ var wp;
   var duotone_control_default = DuotoneControl;
 
   // packages/block-editor/build-module/components/font-appearance-control/index.js
-  var import_components140 = __toESM(require_components());
+  var import_components141 = __toESM(require_components());
   var import_deprecated16 = __toESM(require_deprecated());
   var import_element150 = __toESM(require_element());
   var import_i18n130 = __toESM(require_i18n());
@@ -45060,7 +45228,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/font-appearance-control/index.js
-  var import_jsx_runtime288 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime289 = __toESM(require_jsx_runtime());
   var getFontAppearanceLabel = (hasFontStyles, hasFontWeights) => {
     if (!hasFontStyles) {
       return (0, import_i18n130.__)("Font weight");
@@ -45166,8 +45334,8 @@ var wp;
         }
       );
     }
-    return hasStylesOrWeights && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-      import_components140.CustomSelectControl,
+    return hasStylesOrWeights && /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+      import_components141.CustomSelectControl,
       {
         ...otherProps,
         className: "components-font-appearance-control",
@@ -45183,10 +45351,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/font-family/index.js
-  var import_components141 = __toESM(require_components());
+  var import_components142 = __toESM(require_components());
   var import_deprecated17 = __toESM(require_deprecated());
   var import_i18n131 = __toESM(require_i18n());
-  var import_jsx_runtime289 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime290 = __toESM(require_jsx_runtime());
   function FontFamilyControl({
     /** Start opting into the larger default height that will become the default size in a future version. */
     __next40pxDefaultSize = false,
@@ -45225,8 +45393,8 @@ var wp;
       );
     }
     const selectedValue = options.find((option) => option.key === value) ?? "";
-    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-      import_components141.CustomSelectControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+      import_components142.CustomSelectControl,
       {
         __next40pxDefaultSize,
         __shouldNotWarnDeprecated36pxSize: true,
@@ -45241,10 +45409,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/letter-spacing-control/index.js
-  var import_components142 = __toESM(require_components());
+  var import_components143 = __toESM(require_components());
   var import_deprecated18 = __toESM(require_deprecated());
   var import_i18n132 = __toESM(require_i18n());
-  var import_jsx_runtime290 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime291 = __toESM(require_jsx_runtime());
   function LetterSpacingControl({
     __next40pxDefaultSize = false,
     value,
@@ -45253,7 +45421,7 @@ var wp;
     ...otherProps
   }) {
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components142.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components143.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "em", "rem"],
       defaultValues: { px: 2, em: 0.2, rem: 0.2 }
     });
@@ -45267,8 +45435,8 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-      import_components142.__experimentalUnitControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+      import_components143.__experimentalUnitControl,
       {
         __next40pxDefaultSize,
         __shouldNotWarnDeprecated36pxSize: true,
@@ -45284,8 +45452,8 @@ var wp;
 
   // packages/block-editor/build-module/components/text-decoration-control/index.js
   var import_i18n133 = __toESM(require_i18n());
-  var import_components143 = __toESM(require_components());
-  var import_jsx_runtime291 = __toESM(require_jsx_runtime());
+  var import_components144 = __toESM(require_components());
+  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
   var TEXT_DECORATIONS = [
     {
       label: (0, import_i18n133.__)("None"),
@@ -45308,8 +45476,8 @@ var wp;
     onChange,
     className
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-      import_components143.__experimentalToggleGroupControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+      import_components144.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
         __nextHasNoMarginBottom: true,
@@ -45324,8 +45492,8 @@ var wp;
           onChange(newValue === value ? void 0 : newValue);
         },
         children: TEXT_DECORATIONS.map((option) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-            import_components143.__experimentalToggleGroupControlOptionIcon,
+          return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+            import_components144.__experimentalToggleGroupControlOptionIcon,
             {
               value: option.value,
               icon: option.icon,
@@ -45340,8 +45508,8 @@ var wp;
 
   // packages/block-editor/build-module/components/text-transform-control/index.js
   var import_i18n134 = __toESM(require_i18n());
-  var import_components144 = __toESM(require_components());
-  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
+  var import_components145 = __toESM(require_components());
+  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
   var TEXT_TRANSFORMS = [
     {
       label: (0, import_i18n134.__)("None"),
@@ -45365,8 +45533,8 @@ var wp;
     }
   ];
   function TextTransformControl({ className, value, onChange }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
-      import_components144.__experimentalToggleGroupControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+      import_components145.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
         __nextHasNoMarginBottom: true,
@@ -45381,50 +45549,6 @@ var wp;
           onChange(newValue === value ? void 0 : newValue);
         },
         children: TEXT_TRANSFORMS.map((option) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
-            import_components144.__experimentalToggleGroupControlOptionIcon,
-            {
-              value: option.value,
-              icon: option.icon,
-              label: option.label
-            },
-            option.value
-          );
-        })
-      }
-    );
-  }
-
-  // packages/block-editor/build-module/components/writing-mode-control/index.js
-  var import_i18n135 = __toESM(require_i18n());
-  var import_components145 = __toESM(require_components());
-  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
-  var WRITING_MODES = [
-    {
-      label: (0, import_i18n135.__)("Horizontal"),
-      value: "horizontal-tb",
-      icon: text_horizontal_default
-    },
-    {
-      label: (0, import_i18n135.__)("Vertical"),
-      value: (0, import_i18n135.isRTL)() ? "vertical-lr" : "vertical-rl",
-      icon: text_vertical_default
-    }
-  ];
-  function WritingModeControl({ className, value, onChange }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
-      import_components145.__experimentalToggleGroupControl,
-      {
-        isDeselectable: true,
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0, import_i18n135.__)("Orientation"),
-        className: clsx_default("block-editor-writing-mode-control", className),
-        value,
-        onChange: (newValue) => {
-          onChange(newValue === value ? void 0 : newValue);
-        },
-        children: WRITING_MODES.map((option) => {
           return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
             import_components145.__experimentalToggleGroupControlOptionIcon,
             {
@@ -45439,11 +45563,55 @@ var wp;
     );
   }
 
-  // packages/block-editor/build-module/components/colors-gradients/dropdown.js
+  // packages/block-editor/build-module/components/writing-mode-control/index.js
+  var import_i18n135 = __toESM(require_i18n());
   var import_components146 = __toESM(require_components());
+  var import_jsx_runtime294 = __toESM(require_jsx_runtime());
+  var WRITING_MODES = [
+    {
+      label: (0, import_i18n135.__)("Horizontal"),
+      value: "horizontal-tb",
+      icon: text_horizontal_default
+    },
+    {
+      label: (0, import_i18n135.__)("Vertical"),
+      value: (0, import_i18n135.isRTL)() ? "vertical-lr" : "vertical-rl",
+      icon: text_vertical_default
+    }
+  ];
+  function WritingModeControl({ className, value, onChange }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+      import_components146.__experimentalToggleGroupControl,
+      {
+        isDeselectable: true,
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0, import_i18n135.__)("Orientation"),
+        className: clsx_default("block-editor-writing-mode-control", className),
+        value,
+        onChange: (newValue) => {
+          onChange(newValue === value ? void 0 : newValue);
+        },
+        children: WRITING_MODES.map((option) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+            import_components146.__experimentalToggleGroupControlOptionIcon,
+            {
+              value: option.value,
+              icon: option.icon,
+              label: option.label
+            },
+            option.value
+          );
+        })
+      }
+    );
+  }
+
+  // packages/block-editor/build-module/components/colors-gradients/dropdown.js
+  var import_components147 = __toESM(require_components());
   var import_element151 = __toESM(require_element());
   var import_i18n136 = __toESM(require_i18n());
-  var import_jsx_runtime294 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime295 = __toESM(require_jsx_runtime());
   var WithToolsPanelItem = ({ setting, children, panelId, ...props }) => {
     const clearValue = () => {
       if (setting.colorValue) {
@@ -45452,8 +45620,8 @@ var wp;
         setting.onGradientChange();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
-      import_components146.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+      import_components147.__experimentalToolsPanelItem,
       {
         hasValue: () => {
           return !!setting.colorValue || !!setting.gradientValue;
@@ -45469,16 +45637,16 @@ var wp;
       }
     );
   };
-  var LabeledColorIndicator = ({ colorValue, label }) => /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(import_components146.__experimentalHStack, { justify: "flex-start", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
-      import_components146.ColorIndicator,
+  var LabeledColorIndicator = ({ colorValue, label }) => /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_components147.__experimentalHStack, { justify: "flex-start", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+      import_components147.ColorIndicator,
       {
         className: "block-editor-panel-color-gradient-settings__color-indicator",
         colorValue
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
-      import_components146.FlexItem,
+    /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+      import_components147.FlexItem,
       {
         className: "block-editor-panel-color-gradient-settings__color-name",
         title: label,
@@ -45513,16 +45681,16 @@ var wp;
       }
     };
     const value = colorValue ?? gradientValue;
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(import_jsx_runtime294.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components146.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components147.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
         LabeledColorIndicator,
         {
           colorValue: value,
           label
         }
       ) }),
-      clearable && value && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
-        import_components146.Button,
+      clearable && value && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+        import_components147.Button,
         {
           __next40pxDefaultSize: true,
           label: (0, import_i18n136.__)("Reset"),
@@ -45558,7 +45726,7 @@ var wp;
         shift: true
       };
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_jsx_runtime294.Fragment, { children: settings2.map((setting, index) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_jsx_runtime295.Fragment, { children: settings2.map((setting, index) => {
       const controlProps = {
         clearable: false,
         colorValue: setting.colorValue,
@@ -45585,18 +45753,18 @@ var wp;
       };
       return setting && // If not in an `ItemGroup` wrap the dropdown in a
       // `ToolsPanelItem`
-      /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
         WithToolsPanelItem,
         {
           setting,
           ...props,
-          children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
-            import_components146.Dropdown,
+          children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+            import_components147.Dropdown,
             {
               popoverProps: popoverProps3,
               className: "block-editor-tools-panel-color-gradient-settings__dropdown",
               renderToggle: renderToggle(toggleSettings),
-              renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components146.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+              renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components147.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
                 control_default,
                 {
                   ...controlProps
@@ -45611,9 +45779,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/colors-gradients/panel-color-gradient-settings.js
-  var import_components147 = __toESM(require_components());
+  var import_components148 = __toESM(require_components());
   var import_data139 = __toESM(require_data());
-  var import_compose77 = __toESM(require_compose());
+  var import_compose78 = __toESM(require_compose());
 
   // packages/block-editor/build-module/components/colors-gradients/use-multiple-origin-colors-and-gradients.js
   var import_element152 = __toESM(require_element());
@@ -45729,7 +45897,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/colors-gradients/panel-color-gradient-settings.js
-  var import_jsx_runtime295 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime296 = __toESM(require_jsx_runtime());
   var colorsAndGradientKeys2 = [
     "colors",
     "disableCustomColors",
@@ -45749,15 +45917,15 @@ var wp;
     __experimentalIsRenderedInSidebar,
     enableAlpha
   }) => {
-    const panelId = (0, import_compose77.useInstanceId)(PanelColorGradientSettingsInner);
+    const panelId = (0, import_compose78.useInstanceId)(PanelColorGradientSettingsInner);
     const { batch } = (0, import_data139.useRegistry)();
     if ((!colors2 || colors2.length === 0) && (!gradients || gradients.length === 0) && disableCustomColors && disableCustomGradients && settings2?.every(
       (setting) => (!setting.colors || setting.colors.length === 0) && (!setting.gradients || setting.gradients.length === 0) && (setting.disableCustomColors === void 0 || setting.disableCustomColors) && (setting.disableCustomGradients === void 0 || setting.disableCustomGradients)
     )) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(
-      import_components147.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(
+      import_components148.__experimentalToolsPanel,
       {
         className: clsx_default(
           "block-editor-panel-color-gradient-settings",
@@ -45786,7 +45954,7 @@ var wp;
         __experimentalFirstVisibleItemClass: "first",
         __experimentalLastVisibleItemClass: "last",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
             ColorGradientSettingsDropdown,
             {
               settings: settings2,
@@ -45801,8 +45969,8 @@ var wp;
               }
             }
           ),
-          !!children && /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components147.__experimentalSpacer, { marginY: 4 }),
+          !!children && /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(import_jsx_runtime296.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_components148.__experimentalSpacer, { marginY: 4 }),
             " ",
             children
           ] })
@@ -45812,7 +45980,7 @@ var wp;
   };
   var PanelColorGradientSettingsSelect = (props) => {
     const colorGradientSettings = useMultipleOriginColorsAndGradients();
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
       PanelColorGradientSettingsInner,
       {
         ...{ ...colorGradientSettings, ...props }
@@ -45821,17 +45989,17 @@ var wp;
   };
   var PanelColorGradientSettings = (props) => {
     if (colorsAndGradientKeys2.every((key) => props.hasOwnProperty(key))) {
-      return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(PanelColorGradientSettingsInner, { ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(PanelColorGradientSettingsInner, { ...props });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(PanelColorGradientSettingsSelect, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(PanelColorGradientSettingsSelect, { ...props });
   };
   var panel_color_gradient_settings_default = PanelColorGradientSettings;
 
   // packages/block-editor/build-module/components/height-control/index.js
   var import_element153 = __toESM(require_element());
-  var import_components148 = __toESM(require_components());
+  var import_components149 = __toESM(require_components());
   var import_i18n138 = __toESM(require_i18n());
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime297 = __toESM(require_jsx_runtime());
   var RANGE_CONTROL_CUSTOM_SETTINGS = {
     px: { max: 1e3, step: 1 },
     "%": { max: 100, step: 1 },
@@ -45869,7 +46037,7 @@ var wp;
   }) {
     const customRangeValue = parseFloat(value);
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components148.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components149.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -45880,14 +46048,14 @@ var wp;
       ]
     });
     const selectedUnit = (0, import_element153.useMemo)(
-      () => (0, import_components148.__experimentalParseQuantityAndUnitFromRawValue)(value),
+      () => (0, import_components149.__experimentalParseQuantityAndUnitFromRawValue)(value),
       [value]
     )[1] || units2[0]?.value || "px";
     const handleSliderChange = (next) => {
       onChange([next, selectedUnit].join(""));
     };
     const handleUnitChange = (newUnit) => {
-      const [currentValue, currentUnit] = (0, import_components148.__experimentalParseQuantityAndUnitFromRawValue)(value);
+      const [currentValue, currentUnit] = (0, import_components149.__experimentalParseQuantityAndUnitFromRawValue)(value);
       if (["em", "rem"].includes(newUnit) && currentUnit === "px") {
         onChange((currentValue / 16).toFixed(2) + newUnit);
       } else if (["em", "rem"].includes(currentUnit) && newUnit === "px") {
@@ -45922,11 +46090,11 @@ var wp;
         onChange(100 + newUnit);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)("fieldset", { className: "block-editor-height-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_components148.BaseControl.VisualLabel, { as: "legend", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(import_components148.Flex, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_components148.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
-          import_components148.__experimentalUnitControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)("fieldset", { className: "block-editor-height-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_components149.BaseControl.VisualLabel, { as: "legend", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)(import_components149.Flex, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_components149.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
+          import_components149.__experimentalUnitControl,
           {
             value,
             units: units2,
@@ -45938,8 +46106,8 @@ var wp;
             hideLabelFromVision: true
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_components148.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_components148.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
-          import_components148.RangeControl,
+        /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_components149.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_components149.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
+          import_components149.RangeControl,
           {
             __next40pxDefaultSize: true,
             value: customRangeValue,
@@ -45958,7 +46126,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-editor/index.js
-  var import_components154 = __toESM(require_components());
+  var import_components155 = __toESM(require_components());
 
   // node_modules/react-easy-crop/index.module.js
   var React3 = __toESM(require_react());
@@ -47100,7 +47268,7 @@ var wp;
   }
 
   // packages/image-cropper/build-module/provider/index.js
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime298 = __toESM(require_jsx_runtime());
   var ImageCropperContext = (0, import_element155.createContext)({
     cropperState: {
       crop: { x: 0, y: 0 },
@@ -47131,7 +47299,7 @@ var wp;
         ...cropperApi
       };
     }, [cropperApi]);
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(ImageCropperContext.Provider, { value: contextValue, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(ImageCropperContext.Provider, { value: contextValue, children });
   }
   var useImageCropper = () => {
     const context = (0, import_element155.useContext)(ImageCropperContext);
@@ -47142,7 +47310,7 @@ var wp;
   };
 
   // packages/image-cropper/build-module/components/image-cropper/index.js
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime299 = __toESM(require_jsx_runtime());
   function ImageCropper({
     src,
     onLoad,
@@ -47165,7 +47333,7 @@ var wp;
       },
       [setCropperState]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
       Cropper,
       {
         classes: {
@@ -47201,7 +47369,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-editor/aspect-ratio-dropdown.js
-  var import_components149 = __toESM(require_components());
+  var import_components150 = __toESM(require_components());
   var import_i18n140 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/image-editor/constants.js
@@ -47484,7 +47652,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-editor/context.js
-  var import_jsx_runtime299 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime300 = __toESM(require_jsx_runtime());
   var ImageEditingContext = (0, import_element159.createContext)({});
   ImageEditingContext.displayName = "ImageEditingContext";
   var useImageEditingContext = () => (0, import_element159.useContext)(ImageEditingContext);
@@ -47516,11 +47684,11 @@ var wp;
       }),
       [transformImage, saveImage]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(ImageEditingContext.Provider, { value: providerValue, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(ImageEditingContext.Provider, { value: providerValue, children });
   }
 
   // packages/block-editor/build-module/components/image-editor/aspect-ratio-dropdown.js
-  var import_jsx_runtime300 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime301 = __toESM(require_jsx_runtime());
   function AspectRatioGroup({
     aspectRatios,
     isDisabled,
@@ -47528,8 +47696,8 @@ var wp;
     onClick,
     value
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components149.MenuGroup, { label, children: aspectRatios.map(({ name, slug, ratio }) => /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-      import_components149.MenuItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_components150.MenuGroup, { label, children: aspectRatios.map(({ name, slug, ratio }) => /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+      import_components150.MenuItem,
       {
         disabled: isDisabled,
         onClick: () => {
@@ -47563,15 +47731,15 @@ var wp;
       "dimensions.aspectRatios.theme",
       "dimensions.defaultAspectRatios"
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-      import_components149.DropdownMenu,
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+      import_components150.DropdownMenu,
       {
         icon: aspect_ratio_default,
         label: (0, import_i18n140.__)("Aspect Ratio"),
         popoverProps: POPOVER_PROPS7,
         toggleProps,
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_jsx_runtime301.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
             AspectRatioGroup,
             {
               isDisabled: isInProgress,
@@ -47591,7 +47759,7 @@ var wp;
               ]
             }
           ),
-          themeRatios?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+          themeRatios?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
             AspectRatioGroup,
             {
               label: (0, import_i18n140.__)("Theme"),
@@ -47604,7 +47772,7 @@ var wp;
               aspectRatios: themeRatios
             }
           ),
-          showDefaultRatios && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+          showDefaultRatios && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
             AspectRatioGroup,
             {
               label: (0, import_i18n140.__)("Landscape"),
@@ -47617,7 +47785,7 @@ var wp;
               aspectRatios: defaultRatios.map(presetRatioAsNumber).filter(({ ratio }) => ratio > 1)
             }
           ),
-          showDefaultRatios && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+          showDefaultRatios && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
             AspectRatioGroup,
             {
               label: (0, import_i18n140.__)("Portrait"),
@@ -47636,9 +47804,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-editor/cropper.js
-  var import_components150 = __toESM(require_components());
-  var import_compose78 = __toESM(require_compose());
-  var import_jsx_runtime301 = __toESM(require_jsx_runtime());
+  var import_components151 = __toESM(require_components());
+  var import_compose79 = __toESM(require_compose());
+  var import_jsx_runtime302 = __toESM(require_jsx_runtime());
   function ImageCropper2({
     url,
     width,
@@ -47648,12 +47816,12 @@ var wp;
     borderProps
   }) {
     const { isInProgress, editedUrl, rotation } = useImageEditingContext();
-    const [contentResizeListener, { width: clientWidth }] = (0, import_compose78.useResizeObserver)();
+    const [contentResizeListener, { width: clientWidth }] = (0, import_compose79.useResizeObserver)();
     let editedHeight = height || clientWidth * naturalHeight / naturalWidth;
     if (rotation % 180 === 90) {
       editedHeight = clientWidth * naturalWidth / naturalHeight;
     }
-    const area = /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(
+    const area = /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(
       "div",
       {
         className: clsx_default(
@@ -47669,30 +47837,30 @@ var wp;
           height: editedHeight
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ImageCropper, { src: editedUrl || url }),
-          isInProgress && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_components150.Spinner, {})
+          /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ImageCropper, { src: editedUrl || url }),
+          isInProgress && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(import_components151.Spinner, {})
         ]
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_jsx_runtime301.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(import_jsx_runtime302.Fragment, { children: [
       contentResizeListener,
       area
     ] });
   }
 
   // packages/block-editor/build-module/components/image-editor/zoom-dropdown.js
-  var import_components151 = __toESM(require_components());
+  var import_components152 = __toESM(require_components());
   var import_i18n141 = __toESM(require_i18n());
-  var import_jsx_runtime302 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime303 = __toESM(require_jsx_runtime());
   function ZoomDropdown() {
     const { isInProgress, zoom, setZoom } = useImageEditingContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-      import_components151.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
+      import_components152.Dropdown,
       {
         contentClassName: "wp-block-image__zoom",
         popoverProps: POPOVER_PROPS7,
-        renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-          import_components151.ToolbarButton,
+        renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
+          import_components152.ToolbarButton,
           {
             icon: search_default,
             label: (0, import_i18n141.__)("Zoom"),
@@ -47701,8 +47869,8 @@ var wp;
             disabled: isInProgress
           }
         ),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(import_components151.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-          import_components151.RangeControl,
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(import_components152.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
+          import_components152.RangeControl,
           {
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
@@ -47718,13 +47886,13 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-editor/rotation-button.js
-  var import_components152 = __toESM(require_components());
+  var import_components153 = __toESM(require_components());
   var import_i18n142 = __toESM(require_i18n());
-  var import_jsx_runtime303 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime304 = __toESM(require_jsx_runtime());
   function RotationButton() {
     const { isInProgress, rotateClockwise } = useImageEditingContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
-      import_components152.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
+      import_components153.ToolbarButton,
       {
         icon: rotate_right_default,
         label: (0, import_i18n142.__)("Rotate"),
@@ -47735,19 +47903,19 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-editor/form-controls.js
-  var import_components153 = __toESM(require_components());
+  var import_components154 = __toESM(require_components());
   var import_i18n143 = __toESM(require_i18n());
-  var import_jsx_runtime304 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime305 = __toESM(require_jsx_runtime());
   function FormControls() {
     const { isInProgress, apply, cancel } = useImageEditingContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime304.jsxs)(import_jsx_runtime304.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_components153.ToolbarButton, { onClick: apply, disabled: isInProgress, children: (0, import_i18n143.__)("Apply") }),
-      /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_components153.ToolbarButton, { onClick: cancel, children: (0, import_i18n143.__)("Cancel") })
+    return /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(import_jsx_runtime305.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(import_components154.ToolbarButton, { onClick: apply, disabled: isInProgress, children: (0, import_i18n143.__)("Apply") }),
+      /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(import_components154.ToolbarButton, { onClick: cancel, children: (0, import_i18n143.__)("Cancel") })
     ] });
   }
 
   // packages/block-editor/build-module/components/image-editor/index.js
-  var import_jsx_runtime305 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime306 = __toESM(require_jsx_runtime());
   function ImageEditor({
     id,
     url,
@@ -47759,7 +47927,7 @@ var wp;
     onFinishEditing,
     borderProps
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(ImageCropperProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(ImageCropperProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(
       ImageEditingProvider,
       {
         id,
@@ -47769,7 +47937,7 @@ var wp;
         onSaveImage,
         onFinishEditing,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
             ImageCropper2,
             {
               borderProps,
@@ -47780,18 +47948,18 @@ var wp;
               naturalWidth
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(block_controls_default, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(import_components154.ToolbarGroup, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(ZoomDropdown, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(import_components154.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(block_controls_default, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(import_components155.ToolbarGroup, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(ZoomDropdown, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(import_components155.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
                 AspectRatioDropdown,
                 {
                   toggleProps
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(RotationButton, {})
+              /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(RotationButton, {})
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(import_components154.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(FormControls, {}) })
+            /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(import_components155.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(FormControls, {}) })
           ] })
         ]
       }
@@ -47799,7 +47967,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-size-control/index.js
-  var import_components155 = __toESM(require_components());
+  var import_components156 = __toESM(require_components());
   var import_i18n144 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/image-size-control/use-dimension-handler.js
@@ -47852,7 +48020,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/image-size-control/index.js
-  var import_jsx_runtime306 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime());
   var IMAGE_SIZE_PRESETS = [25, 50, 75, 100];
   var noop12 = () => {
   };
@@ -47897,9 +48065,9 @@ var wp;
       );
       return currentWidth === scaledWidth && currentHeight === scaledHeight;
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(import_components155.__experimentalVStack, { className: "block-editor-image-size-control", spacing: "4", children: [
-      imageSizeOptions && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
-        import_components155.SelectControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)(import_components156.__experimentalVStack, { className: "block-editor-image-size-control", spacing: "4", children: [
+      imageSizeOptions && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
+        import_components156.SelectControl,
         {
           __nextHasNoMarginBottom: true,
           label: (0, import_i18n144.__)("Resolution"),
@@ -47910,10 +48078,10 @@ var wp;
           size: "__unstable-large"
         }
       ),
-      isResizable && /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(import_jsx_runtime306.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(import_components155.__experimentalHStack, { align: "baseline", spacing: "4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
-            import_components155.__experimentalNumberControl,
+      isResizable && /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)(import_jsx_runtime307.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)(import_components156.__experimentalHStack, { align: "baseline", spacing: "4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
+            import_components156.__experimentalNumberControl,
             {
               label: (0, import_i18n144.__)("Width"),
               value: currentWidth,
@@ -47922,8 +48090,8 @@ var wp;
               size: "__unstable-large"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
-            import_components155.__experimentalNumberControl,
+          /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
+            import_components156.__experimentalNumberControl,
             {
               label: (0, import_i18n144.__)("Height"),
               value: currentHeight,
@@ -47933,8 +48101,8 @@ var wp;
             }
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
-          import_components155.__experimentalToggleGroupControl,
+        /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
+          import_components156.__experimentalToggleGroupControl,
           {
             label: (0, import_i18n144.__)("Image size presets"),
             hideLabelFromVision: true,
@@ -47944,8 +48112,8 @@ var wp;
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
             children: IMAGE_SIZE_PRESETS.map((scale) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
-                import_components155.__experimentalToggleGroupControlOption,
+              return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
+                import_components156.__experimentalToggleGroupControlOption,
                 {
                   value: scale,
                   label: (0, import_i18n144.sprintf)(
@@ -47964,9 +48132,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/justify-content-control/ui.js
-  var import_components156 = __toESM(require_components());
+  var import_components157 = __toESM(require_components());
   var import_i18n145 = __toESM(require_i18n());
-  var import_jsx_runtime307 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime());
   var icons = {
     left: justify_left_default,
     center: justify_center_default,
@@ -48027,9 +48195,9 @@ var wp;
         onClick: () => handleClick("stretch")
       }
     ];
-    const UIComponent = isToolbar ? import_components156.ToolbarGroup : import_components156.ToolbarDropdownMenu;
+    const UIComponent = isToolbar ? import_components157.ToolbarGroup : import_components157.ToolbarDropdownMenu;
     const extraProps = isToolbar ? { isCollapsed: isCollapsed3 } : {};
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
       UIComponent,
       {
         icon,
@@ -48045,19 +48213,19 @@ var wp;
   var ui_default4 = JustifyContentUI;
 
   // packages/block-editor/build-module/components/justify-content-control/index.js
-  var import_jsx_runtime308 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime());
   var JustifyContentControl = (props) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ui_default4, { ...props, isToolbar: false });
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(ui_default4, { ...props, isToolbar: false });
   };
   var JustifyToolbar = (props) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ui_default4, { ...props, isToolbar: true });
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(ui_default4, { ...props, isToolbar: true });
   };
 
   // packages/block-editor/build-module/components/link-control/index.js
-  var import_components164 = __toESM(require_components());
+  var import_components165 = __toESM(require_components());
   var import_i18n155 = __toESM(require_i18n());
   var import_element168 = __toESM(require_element());
-  var import_compose82 = __toESM(require_compose());
+  var import_compose83 = __toESM(require_compose());
   var import_dom35 = __toESM(require_dom());
   var import_keycodes16 = __toESM(require_keycodes());
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal());
@@ -48066,20 +48234,20 @@ var wp;
   var import_deprecated22 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/components/link-control/settings-drawer.js
-  var import_components157 = __toESM(require_components());
-  var import_compose79 = __toESM(require_compose());
+  var import_components158 = __toESM(require_components());
+  var import_compose80 = __toESM(require_compose());
   var import_i18n146 = __toESM(require_i18n());
   var import_element161 = __toESM(require_element());
-  var import_jsx_runtime309 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime());
   function LinkSettingsDrawer({ children, settingsOpen, setSettingsOpen }) {
-    const prefersReducedMotion = (0, import_compose79.useReducedMotion)();
-    const MaybeAnimatePresence = prefersReducedMotion ? import_element161.Fragment : import_components157.__unstableAnimatePresence;
-    const MaybeMotionDiv = prefersReducedMotion ? "div" : import_components157.__unstableMotion.div;
-    const id = (0, import_compose79.useInstanceId)(LinkSettingsDrawer);
+    const prefersReducedMotion = (0, import_compose80.useReducedMotion)();
+    const MaybeAnimatePresence = prefersReducedMotion ? import_element161.Fragment : import_components158.__unstableAnimatePresence;
+    const MaybeMotionDiv = prefersReducedMotion ? "div" : import_components158.__unstableMotion.div;
+    const id = (0, import_compose80.useInstanceId)(LinkSettingsDrawer);
     const settingsDrawerId = `link-control-settings-drawer-${id}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime309.jsxs)(import_jsx_runtime309.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
-        import_components157.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)(import_jsx_runtime310.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+        import_components158.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-link-control__drawer-toggle",
@@ -48090,7 +48258,7 @@ var wp;
           children: (0, import_i18n146._x)("Advanced", "Additional link settings")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(MaybeAnimatePresence, { children: settingsOpen && /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(MaybeAnimatePresence, { children: settingsOpen && /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
         MaybeMotionDiv,
         {
           className: "block-editor-link-control__drawer",
@@ -48106,7 +48274,7 @@ var wp;
           transition: {
             duration: 0.1
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime309.jsx)("div", { className: "block-editor-link-control__drawer-inner", children })
+          children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("div", { className: "block-editor-link-control__drawer-inner", children })
         }
       ) })
     ] });
@@ -48120,13 +48288,13 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/search-results.js
   var import_i18n150 = __toESM(require_i18n());
-  var import_components160 = __toESM(require_components());
+  var import_components161 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/link-control/search-create-button.js
   var import_i18n147 = __toESM(require_i18n());
-  var import_components158 = __toESM(require_components());
+  var import_components159 = __toESM(require_components());
   var import_element162 = __toESM(require_element());
-  var import_jsx_runtime310 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime());
   var LinkControlSearchCreate = ({
     searchTerm,
     onClick,
@@ -48146,11 +48314,11 @@ var wp;
           (0, import_i18n147.__)("Create: <mark>%s</mark>"),
           searchTerm
         ),
-        { mark: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("mark", {}) }
+        { mark: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)("mark", {}) }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
-      import_components158.MenuItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
+      import_components159.MenuItem,
       {
         ...itemProps,
         iconPosition: "left",
@@ -48165,12 +48333,12 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/search-item.js
   var import_i18n148 = __toESM(require_i18n());
-  var import_components159 = __toESM(require_components());
+  var import_components160 = __toESM(require_components());
   var import_dom33 = __toESM(require_dom());
   var import_url5 = __toESM(require_url());
-  var import_compose80 = __toESM(require_compose());
+  var import_compose81 = __toESM(require_compose());
   var import_deprecated19 = __toESM(require_deprecated());
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime());
   var TYPES = {
     post: {
       icon: post_list_default,
@@ -48209,7 +48377,7 @@ var wp;
       }
     }
     if (icon) {
-      return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
         icon_default,
         {
           className: "block-editor-link-control__search-item-icon",
@@ -48241,7 +48409,7 @@ var wp;
     if (!url) {
       return url;
     }
-    return (0, import_compose80.pipe)(
+    return (0, import_compose81.pipe)(
       import_url5.safeDecodeURI,
       import_url5.getPath,
       defaultTo(""),
@@ -48259,18 +48427,18 @@ var wp;
     shouldShowType = false
   }) => {
     const info = isURL3 ? (0, import_i18n148.__)("Press ENTER to add this link") : getURLForDisplay(suggestion.url);
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
-      import_components159.MenuItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+      import_components160.MenuItem,
       {
         ...itemProps,
         info,
         iconPosition: "left",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(SearchItemIcon, { suggestion, isURL: isURL3 }),
+        icon: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(SearchItemIcon, { suggestion, isURL: isURL3 }),
         onClick,
         shortcut: shouldShowType && getVisualTypeName(suggestion),
         className: "block-editor-link-control__search-item",
-        children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
-          import_components159.TextHighlight,
+        children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+          import_components160.TextHighlight,
           {
             text: (0, import_dom33.__unstableStripHTML)(suggestion.title),
             highlight: searchTerm
@@ -48296,7 +48464,7 @@ var wp;
     (0, import_deprecated19.default)("wp.blockEditor.__experimentalLinkControlSearchItem", {
       since: "6.8"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(LinkControlSearchItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(LinkControlSearchItem, { ...props });
   };
 
   // packages/block-editor/build-module/components/link-control/constants.js
@@ -48321,7 +48489,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/search-results.js
   var import_deprecated20 = __toESM(require_deprecated());
-  var import_jsx_runtime312 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime());
   function LinkControlSearchResults({
     withCreateSuggestion,
     currentInputValue,
@@ -48349,15 +48517,15 @@ var wp;
       (0, import_i18n150.__)('Search results for "%s"'),
       currentInputValue
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)("div", { className: "block-editor-link-control__search-results-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)("div", { className: "block-editor-link-control__search-results-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
       "div",
       {
         ...suggestionsListProps,
         className: resultsListClasses,
         "aria-label": labelText,
-        children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(import_components160.MenuGroup, { children: suggestions.map((suggestion, index) => {
+        children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components161.MenuGroup, { children: suggestions.map((suggestion, index) => {
           if (shouldShowCreateSuggestion && CREATE_TYPE === suggestion.type) {
-            return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
               search_create_button_default,
               {
                 searchTerm: currentInputValue,
@@ -48375,7 +48543,7 @@ var wp;
           if (CREATE_TYPE === suggestion.type) {
             return null;
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
             search_item_default,
             {
               itemProps: buildSuggestionItemProps(
@@ -48407,7 +48575,7 @@ var wp;
     (0, import_deprecated20.default)("wp.blockEditor.__experimentalLinkControlSearchResults", {
       since: "6.8"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(LinkControlSearchResults, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(LinkControlSearchResults, { ...props });
   };
 
   // packages/block-editor/build-module/components/link-control/use-search-handler.js
@@ -48499,7 +48667,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/link-control/search-input.js
-  var import_jsx_runtime313 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime());
   var noopSearchHandler = () => Promise.resolve([]);
   var noop13 = () => {
   };
@@ -48515,7 +48683,7 @@ var wp;
       onChange = noop13,
       onSelect = noop13,
       showSuggestions = true,
-      renderSuggestions = (props) => /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(search_results_default2, { ...props }),
+      renderSuggestions = (props) => /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(search_results_default2, { ...props }),
       fetchSuggestions = null,
       allowDirectEntry = true,
       showInitialSuggestions = false,
@@ -48575,8 +48743,8 @@ var wp;
       };
       const _placeholder = placeholder ?? (0, import_i18n151.__)("Search or type URL");
       const label = hideLabelFromVision && placeholder !== "" ? _placeholder : (0, import_i18n151.__)("Link");
-      return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)("div", { className: "block-editor-link-control__search-input-container", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)("div", { className: "block-editor-link-control__search-input-container", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
           url_input_default,
           {
             disableSuggestions: currentLink?.url === value,
@@ -48614,13 +48782,13 @@ var wp;
     (0, import_deprecated21.default)("wp.blockEditor.__experimentalLinkControlSearchInput", {
       since: "6.8"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(LinkControlSearchInput, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(LinkControlSearchInput, { ...props });
   };
 
   // packages/block-editor/build-module/components/link-control/link-preview.js
   var import_i18n152 = __toESM(require_i18n());
-  var import_components162 = __toESM(require_components());
-  var import_compose81 = __toESM(require_compose());
+  var import_components163 = __toESM(require_components());
+  var import_compose82 = __toESM(require_compose());
   var import_url7 = __toESM(require_url());
   var import_dom34 = __toESM(require_dom());
   var import_data143 = __toESM(require_data());
@@ -48628,8 +48796,8 @@ var wp;
   var import_preferences3 = __toESM(require_preferences());
 
   // packages/block-editor/build-module/components/link-control/viewer-slot.js
-  var import_components161 = __toESM(require_components());
-  var { Slot: ViewerSlot, Fill: ViewerFill } = (0, import_components161.createSlotFill)(
+  var import_components162 = __toESM(require_components());
+  var { Slot: ViewerSlot, Fill: ViewerFill } = (0, import_components162.createSlotFill)(
     "BlockEditorLinkControlViewer"
   );
 
@@ -48701,7 +48869,7 @@ var wp;
   var use_rich_url_data_default = useRemoteUrlData;
 
   // packages/block-editor/build-module/components/link-control/link-preview.js
-  var import_jsx_runtime314 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime315 = __toESM(require_jsx_runtime());
   function filterTitleForDisplay(title) {
     return title.replace(/^[a-z\-.\+]+[0-9]*:(\/\/)?/i, "").replace(/^www\./i, "");
   }
@@ -48725,20 +48893,20 @@ var wp;
     const isUrlRedundant = !value?.url || filterTitleForDisplay(displayTitle) === displayURL;
     let icon;
     if (richData?.icon) {
-      icon = /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("img", { src: richData?.icon, alt: "" });
+      icon = /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("img", { src: richData?.icon, alt: "" });
     } else if (isEmptyURL) {
-      icon = /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(icon_default, { icon: info_default, size: 32 });
+      icon = /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(icon_default, { icon: info_default, size: 32 });
     } else {
-      icon = /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(icon_default, { icon: globe_default });
+      icon = /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(icon_default, { icon: globe_default });
     }
     const { createNotice } = (0, import_data143.useDispatch)(import_notices9.store);
-    const ref = (0, import_compose81.useCopyToClipboard)(value.url, () => {
+    const ref = (0, import_compose82.useCopyToClipboard)(value.url, () => {
       createNotice("info", (0, import_i18n152.__)("Link copied to clipboard."), {
         isDismissible: true,
         type: "snackbar"
       });
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
       "div",
       {
         role: "group",
@@ -48751,8 +48919,8 @@ var wp;
           "is-error": isEmptyURL,
           "is-url-title": displayTitle === displayURL
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)("div", { className: "block-editor-link-control__search-item-top", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("div", { className: "block-editor-link-control__search-item-top", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
             "span",
             {
               className: "block-editor-link-control__search-item-header",
@@ -48762,7 +48930,7 @@ var wp;
                 (0, import_i18n152.__)("Link information")
               ),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
                   "span",
                   {
                     className: clsx_default(
@@ -48774,22 +48942,22 @@ var wp;
                     children: icon
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("span", { className: "block-editor-link-control__search-item-details", children: !isEmptyURL ? /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(import_jsx_runtime314.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-                    import_components162.ExternalLink,
+                /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__search-item-details", children: !isEmptyURL ? /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(import_jsx_runtime315.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+                    import_components163.ExternalLink,
                     {
                       className: "block-editor-link-control__search-item-title",
                       href: value.url,
-                      children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(import_components162.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
+                      children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components163.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
                     }
                   ),
-                  !isUrlRedundant && /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("span", { className: "block-editor-link-control__search-item-info", children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(import_components162.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) })
-                ] }) : /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("span", { className: "block-editor-link-control__search-item-error-notice", children: (0, import_i18n152.__)("Link is empty") }) })
+                  !isUrlRedundant && /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__search-item-info", children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components163.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) })
+                ] }) : /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__search-item-error-notice", children: (0, import_i18n152.__)("Link is empty") }) })
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components162.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+            import_components163.Button,
             {
               icon: pencil_default,
               label: (0, import_i18n152.__)("Edit link"),
@@ -48798,8 +48966,8 @@ var wp;
               showTooltip: !showIconLabels
             }
           ),
-          hasUnlinkControl && /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components162.Button,
+          hasUnlinkControl && /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+            import_components163.Button,
             {
               icon: link_off_default,
               label: (0, import_i18n152.__)("Remove link"),
@@ -48808,8 +48976,8 @@ var wp;
               showTooltip: !showIconLabels
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components162.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+            import_components163.Button,
             {
               icon: copy_small_default,
               label: (0, import_i18n152.__)("Copy link"),
@@ -48820,7 +48988,7 @@ var wp;
               showTooltip: !showIconLabels
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ViewerSlot, { fillProps: value })
+          /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ViewerSlot, { fillProps: value })
         ] })
       }
     );
@@ -48828,8 +48996,8 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/settings.js
   var import_i18n153 = __toESM(require_i18n());
-  var import_components163 = __toESM(require_components());
-  var import_jsx_runtime315 = __toESM(require_jsx_runtime());
+  var import_components164 = __toESM(require_components());
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime());
   var noop14 = () => {
   };
   var LinkControlSettings = ({ value, onChange = noop14, settings: settings2 }) => {
@@ -48850,7 +49018,7 @@ var wp;
             value,
             onChange
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
             "div",
             {
               className: "block-editor-link-control__setting",
@@ -48861,8 +49029,8 @@ var wp;
         }
         return null;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-        import_components163.CheckboxControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
+        import_components164.CheckboxControl,
         {
           className: "block-editor-link-control__setting",
           label: setting.title,
@@ -48873,8 +49041,8 @@ var wp;
         setting.id
       );
     }).filter(Boolean);
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("fieldset", { className: "block-editor-link-control__settings", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components163.VisuallyHidden, { as: "legend", children: (0, import_i18n153.__)("Currently selected link settings") }),
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)("fieldset", { className: "block-editor-link-control__settings", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(import_components164.VisuallyHidden, { as: "legend", children: (0, import_i18n153.__)("Currently selected link settings") }),
       theSettings
     ] });
   };
@@ -48987,7 +49155,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/link-control/index.js
-  var import_jsx_runtime316 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime());
   var noop15 = () => {
   };
   var PREFERENCE_SCOPE = "core/block-editor";
@@ -49046,7 +49214,7 @@ var wp;
       createSetInternalSettingValueHandler
     ] = useInternalValue(value);
     const isEntity = handleEntities && !!internalControlValue?.id;
-    const baseId = (0, import_compose82.useInstanceId)(LinkControl, "link-control");
+    const baseId = (0, import_compose83.useInstanceId)(LinkControl, "link-control");
     const helpTextId = isEntity ? `${baseId}__help` : null;
     const valueHasChanges = value && !(0, import_is_shallow_equal3.isShallowEqualObjects)(internalControlValue, value);
     const [isEditingLink, setIsEditingLink] = (0, import_element168.useState)(
@@ -49165,21 +49333,21 @@ var wp;
       }
       return value;
     }, [value]);
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
       "div",
       {
         tabIndex: -1,
         ref: wrapperNode,
         className: "block-editor-link-control",
         children: [
-          isCreatingPage && /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)("div", { className: "block-editor-link-control__loading", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(import_components164.Spinner, {}),
+          isCreatingPage && /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)("div", { className: "block-editor-link-control__loading", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components165.Spinner, {}),
             " ",
             (0, import_i18n155.__)("Creating"),
             "\u2026"
           ] }),
-          isEditing && /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(import_jsx_runtime316.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(
+          isEditing && /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(import_jsx_runtime317.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
               "div",
               {
                 className: clsx_default({
@@ -49188,8 +49356,8 @@ var wp;
                   "has-actions": showActions
                 }),
                 children: [
-                  showTextControl && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-                    import_components164.TextControl,
+                  showTextControl && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+                    import_components165.TextControl,
                     {
                       ref: textInputRef,
                       className: "block-editor-link-control__field block-editor-link-control__text-content",
@@ -49200,7 +49368,7 @@ var wp;
                       __next40pxDefaultSize: true
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
                     search_input_default,
                     {
                       ref: searchInputRef,
@@ -49220,7 +49388,7 @@ var wp;
                       createSuggestionButtonText,
                       hideLabelFromVision: !showTextControl,
                       isEntity,
-                      suffix: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
+                      suffix: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
                         SearchSuffixControl,
                         {
                           isEntity,
@@ -49233,7 +49401,7 @@ var wp;
                       )
                     }
                   ),
-                  isEntity && helpTextId && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
+                  isEntity && helpTextId && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
                     "p",
                     {
                       id: helpTextId,
@@ -49248,8 +49416,8 @@ var wp;
                 ]
               }
             ),
-            errorMessage && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-              import_components164.Notice,
+            errorMessage && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+              import_components165.Notice,
               {
                 className: "block-editor-link-control__search-error",
                 status: "error",
@@ -49258,7 +49426,7 @@ var wp;
               }
             )
           ] }),
-          value && !isEditingLink && !isCreatingPage && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
+          value && !isEditingLink && !isCreatingPage && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
             LinkPreview,
             {
               value: previewValue,
@@ -49272,12 +49440,12 @@ var wp;
             },
             previewValue?.url
           ),
-          showSettings && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("div", { className: "block-editor-link-control__tools", children: !currentInputIsEmpty && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
+          showSettings && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("div", { className: "block-editor-link-control__tools", children: !currentInputIsEmpty && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
             settings_drawer_default,
             {
               settingsOpen: isSettingsOpen,
               setSettingsOpen: setSettingsOpenWithPreference,
-              children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
                 settings_default2,
                 {
                   value: internalControlValue,
@@ -49289,14 +49457,14 @@ var wp;
               )
             }
           ) }),
-          showActions && /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(
-            import_components164.__experimentalHStack,
+          showActions && /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
+            import_components165.__experimentalHStack,
             {
               justify: "right",
               className: "block-editor-link-control__search-actions",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-                  import_components164.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+                  import_components165.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "tertiary",
@@ -49304,8 +49472,8 @@ var wp;
                     children: (0, import_i18n155.__)("Cancel")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-                  import_components164.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+                  import_components165.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
@@ -49332,8 +49500,8 @@ var wp;
     helpTextId
   }) {
     if (isEntity) {
-      return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-        import_components164.Button,
+      return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+        import_components165.Button,
         {
           icon: link_off_default,
           onClick: onUnlink,
@@ -49347,8 +49515,8 @@ var wp;
     if (showActions) {
       return void 0;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(import_components164.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-      import_components164.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components165.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+      import_components165.Button,
       {
         onClick: isDisabled ? noop15 : onSubmit,
         label: (0, import_i18n155.__)("Submit"),
@@ -49366,7 +49534,7 @@ var wp;
       since: "6.8",
       alternative: "wp.blockEditor.LinkControl"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(LinkControl, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(LinkControl, { ...props });
   };
   DeprecatedExperimentalLinkControl.ViewerFill = LinkControl.ViewerFill;
   DeprecatedExperimentalLinkControl.DEFAULT_LINK_SETTINGS = LinkControl.DEFAULT_LINK_SETTINGS;
@@ -49374,7 +49542,7 @@ var wp;
 
   // packages/block-editor/build-module/components/line-height-control/index.js
   var import_i18n156 = __toESM(require_i18n());
-  var import_components165 = __toESM(require_components());
+  var import_components166 = __toESM(require_components());
   var import_deprecated23 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/components/line-height-control/utils.js
@@ -49387,7 +49555,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/line-height-control/index.js
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime());
   var LineHeightControl = ({
     /** Start opting into the larger default height that will become the default size in a future version. */
     __next40pxDefaultSize = false,
@@ -49443,8 +49611,8 @@ var wp;
         hint: "Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version."
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("div", { className: "block-editor-line-height-control", children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
-      import_components165.__experimentalNumberControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("div", { className: "block-editor-line-height-control", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+      import_components166.__experimentalNumberControl,
       {
         ...otherProps,
         __shouldNotWarnDeprecated36pxSize: true,
@@ -49467,10 +49635,10 @@ var wp;
   // packages/block-editor/build-module/components/media-replace-flow/index.js
   var import_i18n157 = __toESM(require_i18n());
   var import_a11y18 = __toESM(require_a11y());
-  var import_components166 = __toESM(require_components());
+  var import_components167 = __toESM(require_components());
   var import_data145 = __toESM(require_data());
   var import_keycodes17 = __toESM(require_keycodes());
-  var import_compose83 = __toESM(require_compose());
+  var import_compose84 = __toESM(require_compose());
   var import_dom36 = __toESM(require_dom());
   var import_notices10 = __toESM(require_notices());
   var import_element169 = __toESM(require_element());
@@ -49508,7 +49676,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/media-replace-flow/index.js
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime());
   var noop16 = () => {
   };
   var uniqueId = 0;
@@ -49607,8 +49775,8 @@ var wp;
       );
     };
     const gallery = multiple && onlyAllowsImages();
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-      import_components166.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+      import_components167.Dropdown,
       {
         popoverProps: popoverProps3,
         className,
@@ -49623,8 +49791,8 @@ var wp;
               children: name
             });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-            import_components166.ToolbarButton,
+          return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+            import_components167.ToolbarButton,
             {
               "aria-expanded": isOpen,
               "aria-haspopup": "true",
@@ -49634,10 +49802,10 @@ var wp;
             }
           );
         },
-        renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_components166.NavigableMenu, { className: "block-editor-media-replace-flow__media-upload-menu", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(check_default2, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+        renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(import_jsx_runtime319.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(import_components167.NavigableMenu, { className: "block-editor-media-replace-flow__media-upload-menu", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(check_default2, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
                 media_upload_default,
                 {
                   gallery,
@@ -49646,8 +49814,8 @@ var wp;
                   value: multiple ? mediaIds : mediaId,
                   onSelect: (media) => selectMedia(media, onClose),
                   allowedTypes,
-                  render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                    import_components166.MenuItem,
+                  render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+                    import_components167.MenuItem,
                     {
                       icon: media_default,
                       onClick: open,
@@ -49656,8 +49824,8 @@ var wp;
                   )
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                import_components166.FormFileUpload,
+              /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+                import_components167.FormFileUpload,
                 {
                   onChange: (event) => {
                     uploadFiles(event, onClose);
@@ -49665,8 +49833,8 @@ var wp;
                   accept: computedAccept,
                   multiple: !!multiple,
                   render: ({ openFileDialog }) => {
-                    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                      import_components166.MenuItem,
+                    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+                      import_components167.MenuItem,
                       {
                         icon: upload_default,
                         onClick: () => {
@@ -49679,8 +49847,8 @@ var wp;
                 }
               )
             ] }),
-            onToggleFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-              import_components166.MenuItem,
+            onToggleFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+              import_components167.MenuItem,
               {
                 icon: post_featured_image_default,
                 onClick: onToggleFeaturedImage,
@@ -49688,8 +49856,8 @@ var wp;
                 children: (0, import_i18n157.__)("Use featured image")
               }
             ),
-            mediaURL && onReset && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-              import_components166.MenuItem,
+            mediaURL && onReset && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+              import_components167.MenuItem,
               {
                 onClick: () => {
                   onReset();
@@ -49700,9 +49868,9 @@ var wp;
             ),
             typeof children === "function" ? children({ onClose }) : children
           ] }),
-          onSelectURL && /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)("form", { className: "block-editor-media-flow__url-input", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("span", { className: "block-editor-media-replace-flow__image-url-label", children: (0, import_i18n157.__)("Current media URL:") }),
-            /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+          onSelectURL && /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("form", { className: "block-editor-media-flow__url-input", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", { className: "block-editor-media-replace-flow__image-url-label", children: (0, import_i18n157.__)("Current media URL:") }),
+            /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
               link_control_default,
               {
                 value: { url: mediaURL },
@@ -49721,7 +49889,7 @@ var wp;
       }
     );
   };
-  var media_replace_flow_default = (0, import_compose83.compose)([
+  var media_replace_flow_default = (0, import_compose84.compose)([
     (0, import_data145.withDispatch)((dispatch) => {
       const { createNotice, removeNotice } = dispatch(import_notices10.store);
       return {
@@ -49729,11 +49897,11 @@ var wp;
         removeNotice
       };
     }),
-    (0, import_components166.withFilters)("editor.MediaReplaceFlow")
+    (0, import_components167.withFilters)("editor.MediaReplaceFlow")
   ])(MediaReplaceFlow);
 
   // packages/block-editor/build-module/components/media-placeholder/index.js
-  var import_components172 = __toESM(require_components());
+  var import_components173 = __toESM(require_components());
   var import_i18n162 = __toESM(require_i18n());
   var import_element172 = __toESM(require_element());
   var import_data147 = __toESM(require_data());
@@ -49742,30 +49910,30 @@ var wp;
   // packages/block-editor/build-module/components/url-popover/index.js
   var import_i18n161 = __toESM(require_i18n());
   var import_element171 = __toESM(require_element());
-  var import_components171 = __toESM(require_components());
+  var import_components172 = __toESM(require_components());
   var import_deprecated24 = __toESM(require_deprecated());
 
   // packages/block-editor/build-module/components/url-popover/link-viewer.js
   var import_i18n158 = __toESM(require_i18n());
-  var import_components168 = __toESM(require_components());
+  var import_components169 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/url-popover/link-viewer-url.js
-  var import_components167 = __toESM(require_components());
+  var import_components168 = __toESM(require_components());
   var import_url8 = __toESM(require_url());
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime());
   function LinkViewerURL({ url, urlLabel, className }) {
     const linkClassName = clsx_default(
       className,
       "block-editor-url-popover__link-viewer-url"
     );
     if (!url) {
-      return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", { className: linkClassName });
+      return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("span", { className: linkClassName });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_components167.ExternalLink, { className: linkClassName, href: url, children: urlLabel || (0, import_url8.filterURLForDisplay)((0, import_url8.safeDecodeURI)(url)) });
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_components168.ExternalLink, { className: linkClassName, href: url, children: urlLabel || (0, import_url8.filterURLForDisplay)((0, import_url8.safeDecodeURI)(url)) });
   }
 
   // packages/block-editor/build-module/components/url-popover/link-viewer.js
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime321 = __toESM(require_jsx_runtime());
   function LinkViewer({
     className,
     linkClassName,
@@ -49774,7 +49942,7 @@ var wp;
     urlLabel,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(
       "div",
       {
         className: clsx_default(
@@ -49783,7 +49951,7 @@ var wp;
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
             LinkViewerURL,
             {
               url,
@@ -49791,8 +49959,8 @@ var wp;
               className: linkClassName
             }
           ),
-          onEditLinkClick && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
-            import_components168.Button,
+          onEditLinkClick && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+            import_components169.Button,
             {
               icon: pencil_default,
               label: (0, import_i18n158.__)("Edit"),
@@ -49807,17 +49975,17 @@ var wp;
 
   // packages/block-editor/build-module/components/url-popover/link-editor.js
   var import_i18n160 = __toESM(require_i18n());
-  var import_components170 = __toESM(require_components());
+  var import_components171 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/url-input/index.js
   var import_i18n159 = __toESM(require_i18n());
   var import_element170 = __toESM(require_element());
   var import_keycodes18 = __toESM(require_keycodes());
-  var import_components169 = __toESM(require_components());
-  var import_compose84 = __toESM(require_compose());
+  var import_components170 = __toESM(require_components());
+  var import_compose85 = __toESM(require_compose());
   var import_data146 = __toESM(require_data());
   var import_url9 = __toESM(require_url());
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime322 = __toESM(require_jsx_runtime());
   var import_react4 = __toESM(require_react());
   function isFunction(maybeFunc) {
     return typeof maybeFunc === "function";
@@ -49833,7 +50001,7 @@ var wp;
       this.bindSuggestionNode = this.bindSuggestionNode.bind(this);
       this.autocompleteRef = props.autocompleteRef || (0, import_element170.createRef)();
       this.inputRef = props.inputRef || (0, import_element170.createRef)();
-      this.updateSuggestions = (0, import_compose84.debounce)(
+      this.updateSuggestions = (0, import_compose85.debounce)(
         this.updateSuggestions.bind(this),
         200
       );
@@ -50074,7 +50242,7 @@ var wp;
       };
     }
     render() {
-      return /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(import_jsx_runtime321.Fragment, { children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, { children: [
         this.renderControl(),
         this.renderSuggestions()
       ] });
@@ -50139,9 +50307,9 @@ var wp;
       if (renderControl) {
         return renderControl(controlProps, inputProps, loading);
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(import_components169.BaseControl, { __nextHasNoMarginBottom: true, ...controlProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components169.__experimentalInputControl, { ...inputProps, __next40pxDefaultSize: true }),
-        loading && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components169.Spinner, {})
+      return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_components170.BaseControl, { __nextHasNoMarginBottom: true, ...controlProps, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components170.__experimentalInputControl, { ...inputProps, __next40pxDefaultSize: true }),
+        loading && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components170.Spinner, {})
       ] });
     }
     renderSuggestions() {
@@ -50187,7 +50355,7 @@ var wp;
           currentInputValue: suggestionsValue
         });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components169.Popover, { placement: "bottom", focusOnMount: false, children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components170.Popover, { placement: "bottom", focusOnMount: false, children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
         "div",
         {
           ...suggestionsListProps,
@@ -50195,7 +50363,7 @@ var wp;
             [`${className}__suggestions`]: className
           }),
           children: suggestions.map((suggestion, index) => /* @__PURE__ */ (0, import_react4.createElement)(
-            import_components169.Button,
+            import_components170.Button,
             {
               __next40pxDefaultSize: true,
               ...buildSuggestionItemProps(suggestion, index),
@@ -50214,10 +50382,10 @@ var wp;
       ) });
     }
   };
-  var url_input_default = (0, import_compose84.compose)(
-    import_compose84.withSafeTimeout,
-    import_components169.withSpokenMessages,
-    import_compose84.withInstanceId,
+  var url_input_default = (0, import_compose85.compose)(
+    import_compose85.withSafeTimeout,
+    import_components170.withSpokenMessages,
+    import_compose85.withInstanceId,
     (0, import_data146.withSelect)((select3, props) => {
       if (isFunction(props.__experimentalFetchLinkSuggestions)) {
         return;
@@ -50230,7 +50398,7 @@ var wp;
   )(URLInput);
 
   // packages/block-editor/build-module/components/url-popover/link-editor.js
-  var import_jsx_runtime322 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime());
   function LinkEditor({
     autocompleteRef,
     className,
@@ -50238,7 +50406,7 @@ var wp;
     value,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(
       "form",
       {
         className: clsx_default(
@@ -50247,7 +50415,7 @@ var wp;
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
             url_input_default,
             {
               value,
@@ -50255,8 +50423,8 @@ var wp;
               autocompleteRef
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-            import_components170.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
+            import_components171.Button,
             {
               icon: keyboard_return_default,
               label: (0, import_i18n160.__)("Apply"),
@@ -50270,9 +50438,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/url-popover/index.js
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime324 = __toESM(require_jsx_runtime());
   var { __experimentalPopoverLegacyPositionToPlacement } = unlock(
-    import_components171.privateApis
+    import_components172.privateApis
   );
   var DEFAULT_PLACEMENT = "bottom";
   var URLPopover = (0, import_element171.forwardRef)(
@@ -50306,8 +50474,8 @@ var wp;
       const toggleSettingsVisibility = () => {
         setIsSettingsExpanded(!isSettingsExpanded);
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(
-        import_components171.Popover,
+      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
+        import_components172.Popover,
         {
           ref,
           role: "dialog",
@@ -50320,10 +50488,10 @@ var wp;
           variant: "toolbar",
           ...popoverProps3,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "block-editor-url-popover__input-container", children: /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("div", { className: "block-editor-url-popover__row", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", { className: "block-editor-url-popover__input-container", children: /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", { className: "block-editor-url-popover__row", children: [
               children,
-              !!renderSettings && /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
-                import_components171.Button,
+              !!renderSettings && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+                import_components172.Button,
                 {
                   className: "block-editor-url-popover__settings-toggle",
                   icon: chevron_down_default,
@@ -50334,8 +50502,8 @@ var wp;
                 }
               )
             ] }) }),
-            showSettings && /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "block-editor-url-popover__settings", children: renderSettings() }),
-            additionalControls && !showSettings && /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { className: "block-editor-url-popover__additional-controls", children: additionalControls })
+            showSettings && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", { className: "block-editor-url-popover__settings", children: renderSettings() }),
+            additionalControls && !showSettings && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", { className: "block-editor-url-popover__additional-controls", children: additionalControls })
           ]
         }
       );
@@ -50346,7 +50514,7 @@ var wp;
   var url_popover_default = URLPopover;
 
   // packages/block-editor/build-module/components/media-placeholder/index.js
-  var import_jsx_runtime324 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime325 = __toESM(require_jsx_runtime());
   var noop17 = () => {
   };
   var InsertFromURLPopover = ({
@@ -50355,13 +50523,13 @@ var wp;
     onSubmit,
     onClose,
     popoverAnchor
-  }) => /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(url_popover_default, { anchor: popoverAnchor, onClose, children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+  }) => /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(url_popover_default, { anchor: popoverAnchor, onClose, children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
     "form",
     {
       className: "block-editor-media-placeholder__url-input-form",
       onSubmit,
-      children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-        import_components172.__experimentalInputControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+        import_components173.__experimentalInputControl,
         {
           __next40pxDefaultSize: true,
           label: (0, import_i18n162.__)("URL"),
@@ -50370,8 +50538,8 @@ var wp;
           placeholder: (0, import_i18n162.__)("Paste or type URL"),
           onChange,
           value: src,
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(import_components172.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-            import_components172.Button,
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_components173.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+            import_components173.Button,
             {
               size: "small",
               icon: keyboard_return_default,
@@ -50400,9 +50568,9 @@ var wp;
         closeURLInput();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", { className: "block-editor-media-placeholder__url-input-container", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-        import_components172.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)("div", { className: "block-editor-media-placeholder__url-input-container", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+        import_components173.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-media-placeholder__button",
@@ -50414,7 +50582,7 @@ var wp;
           children: (0, import_i18n162.__)("Insert from URL")
         }
       ),
-      isURLInputVisible && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+      isURLInputVisible && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
         InsertFromURLPopover,
         {
           src,
@@ -50622,8 +50790,8 @@ var wp;
           "is-appender": isAppender
         }
       );
-      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
-        import_components172.Placeholder,
+      return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(
+        import_components173.Placeholder,
         {
           icon,
           label: title,
@@ -50645,8 +50813,8 @@ var wp;
       if (disableDropZone) {
         return null;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-        import_components172.DropZone,
+      return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+        import_components173.DropZone,
         {
           onFilesDrop: onFilesUpload,
           onDrop: handleBlocksDrop,
@@ -50666,8 +50834,8 @@ var wp;
       );
     };
     const renderCancelLink = () => {
-      return onCancel && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-        import_components172.Button,
+      return onCancel && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+        import_components173.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-media-placeholder__cancel-button",
@@ -50679,7 +50847,7 @@ var wp;
       );
     };
     const renderUrlSelectionUI = () => {
-      return onSelectURL && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+      return onSelectURL && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
         URLSelectionUI,
         {
           src,
@@ -50689,8 +50857,8 @@ var wp;
       );
     };
     const renderFeaturedImageToggle = () => {
-      return onToggleFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", { className: "block-editor-media-placeholder__url-input-container", children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-        import_components172.Button,
+      return onToggleFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", { className: "block-editor-media-placeholder__url-input-container", children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+        import_components173.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-media-placeholder__button",
@@ -50702,8 +50870,8 @@ var wp;
     };
     const renderMediaUploadChecked = () => {
       const defaultButton = ({ open }) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-          import_components172.Button,
+        return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+          import_components173.Button,
           {
             __next40pxDefaultSize: true,
             variant: "secondary",
@@ -50715,7 +50883,7 @@ var wp;
         );
       };
       const libraryButton = mediaLibraryButton ?? defaultButton;
-      const uploadMediaLibraryButton = /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+      const uploadMediaLibraryButton = /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
         media_upload_default,
         {
           addToGallery,
@@ -50729,18 +50897,18 @@ var wp;
         }
       );
       if (mediaUpload2 && isAppender) {
-        return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, { children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_jsx_runtime325.Fragment, { children: [
           renderDropZone(),
-          /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-            import_components172.FormFileUpload,
+          /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+            import_components173.FormFileUpload,
             {
               onChange: onUpload,
               accept: computedAccept,
               multiple: !!multiple,
               render: ({ openFileDialog }) => {
-                const content = /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-                    import_components172.Button,
+                const content = /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_jsx_runtime325.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+                    import_components173.Button,
                     {
                       __next40pxDefaultSize: true,
                       variant: "primary",
@@ -50764,13 +50932,13 @@ var wp;
         ] });
       }
       if (mediaUpload2) {
-        const content = /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, { children: [
+        const content = /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_jsx_runtime325.Fragment, { children: [
           renderDropZone(),
-          /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-            import_components172.FormFileUpload,
+          /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+            import_components173.FormFileUpload,
             {
-              render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
-                import_components172.Button,
+              render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+                import_components173.Button,
                 {
                   __next40pxDefaultSize: true,
                   onClick: openFileDialog,
@@ -50797,9 +50965,9 @@ var wp;
       return renderPlaceholder(uploadMediaLibraryButton);
     };
     if (disableMediaButtons) {
-      return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(check_default2, { children: renderDropZone() });
+      return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(check_default2, { children: renderDropZone() });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
       check_default2,
       {
         fallback: renderPlaceholder(renderUrlSelectionUI()),
@@ -50807,10 +50975,10 @@ var wp;
       }
     );
   }
-  var media_placeholder_default = (0, import_components172.withFilters)("editor.MediaPlaceholder")(MediaPlaceholder);
+  var media_placeholder_default = (0, import_components173.withFilters)("editor.MediaPlaceholder")(MediaPlaceholder);
 
   // packages/block-editor/build-module/components/panel-color-settings/index.js
-  var import_jsx_runtime325 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime326 = __toESM(require_jsx_runtime());
   var PanelColorSettings = ({ colorSettings, ...props }) => {
     const settings2 = colorSettings.map((setting) => {
       if (!setting) {
@@ -50823,7 +50991,7 @@ var wp;
         onColorChange: onChange
       };
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
       panel_color_gradient_settings_default,
       {
         settings: settings2,
@@ -50846,34 +51014,34 @@ var wp;
   var import_es65 = __toESM(require_es6());
   var import_element183 = __toESM(require_element());
   var import_data151 = __toESM(require_data());
-  var import_compose86 = __toESM(require_compose());
+  var import_compose87 = __toESM(require_compose());
   var import_rich_text15 = __toESM(require_rich_text());
-  var import_components176 = __toESM(require_components());
+  var import_components177 = __toESM(require_components());
   var import_blocks86 = __toESM(require_blocks());
   var import_deprecated29 = __toESM(require_deprecated());
   var import_i18n165 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/rich-text/format-toolbar-container.js
   var import_i18n164 = __toESM(require_i18n());
-  var import_components174 = __toESM(require_components());
+  var import_components175 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/rich-text/format-toolbar/index.js
   var import_i18n163 = __toESM(require_i18n());
-  var import_components173 = __toESM(require_components());
-  var import_jsx_runtime326 = __toESM(require_jsx_runtime());
+  var import_components174 = __toESM(require_components());
+  var import_jsx_runtime327 = __toESM(require_jsx_runtime());
   var POPOVER_PROPS8 = {
     placement: "bottom-start"
   };
   var FormatToolbar = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(import_jsx_runtime326.Fragment, { children: [
-      ["bold", "italic", "link", "unknown"].map((format2) => /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
-        import_components173.Slot,
+    return /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(import_jsx_runtime327.Fragment, { children: [
+      ["bold", "italic", "link", "unknown"].map((format2) => /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+        import_components174.Slot,
         {
           name: `RichText.ToolbarControls.${format2}`
         },
         format2
       )),
-      /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components173.Slot, { name: "RichText.ToolbarControls", children: (fills) => {
+      /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(import_components174.Slot, { name: "RichText.ToolbarControls", children: (fills) => {
         if (!fills.length) {
           return null;
         }
@@ -50881,8 +51049,8 @@ var wp;
         const hasActive = allProps.some(
           ({ isActive }) => isActive
         );
-        return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components173.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
-          import_components173.DropdownMenu,
+        return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(import_components174.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+          import_components174.DropdownMenu,
           {
             icon: chevron_down_default,
             label: (0, import_i18n163.__)("More"),
@@ -50909,22 +51077,22 @@ var wp;
   var format_toolbar_default = FormatToolbar;
 
   // packages/block-editor/build-module/components/rich-text/format-toolbar-container.js
-  var import_jsx_runtime327 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime328 = __toESM(require_jsx_runtime());
   function InlineToolbar({ popoverAnchor }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-      import_components174.Popover,
+    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
+      import_components175.Popover,
       {
         placement: "top",
         focusOnMount: false,
         anchor: popoverAnchor,
         className: "block-editor-rich-text__inline-format-toolbar",
         __unstableSlotName: "block-toolbar",
-        children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
           NavigableToolbar,
           {
             className: "block-editor-rich-text__inline-format-toolbar-group",
             "aria-label": (0, import_i18n164.__)("Format tools"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(import_components174.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(format_toolbar_default, {}) })
+            children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(import_components175.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(format_toolbar_default, {}) })
           }
         )
       }
@@ -50932,9 +51100,9 @@ var wp;
   }
   var FormatToolbarContainer = ({ inline, editableContentElement }) => {
     if (inline) {
-      return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(InlineToolbar, { popoverAnchor: editableContentElement });
+      return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(InlineToolbar, { popoverAnchor: editableContentElement });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(block_controls_default, { group: "inline", children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(format_toolbar_default, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(block_controls_default, { group: "inline", children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(format_toolbar_default, {}) });
   };
   var format_toolbar_container_default = FormatToolbarContainer;
 
@@ -51118,7 +51286,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/index.js
   var import_element176 = __toESM(require_element());
-  var import_compose85 = __toESM(require_compose());
+  var import_compose86 = __toESM(require_compose());
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/before-input-rules.js
   var import_rich_text6 = __toESM(require_rich_text());
@@ -51386,7 +51554,7 @@ var wp;
   // packages/block-editor/build-module/components/rich-text/utils.js
   var import_element175 = __toESM(require_element());
   var import_blocks82 = __toESM(require_blocks());
-  var import_jsx_runtime328 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime329 = __toESM(require_jsx_runtime());
   function addActiveFormats(value, activeFormats) {
     if (activeFormats?.length) {
       let index = value.formats.length;
@@ -51636,7 +51804,7 @@ var wp;
       () => allEventListeners.map((refEffect) => refEffect(propsRef)),
       [propsRef]
     );
-    return (0, import_compose85.useRefEffect)(
+    return (0, import_compose86.useRefEffect)(
       (element) => {
         if (!props.isSelected) {
           return;
@@ -51653,7 +51821,7 @@ var wp;
   // packages/block-editor/build-module/components/rich-text/format-edit.js
   var import_rich_text12 = __toESM(require_rich_text());
   var import_element177 = __toESM(require_element());
-  var import_jsx_runtime329 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime330 = __toESM(require_jsx_runtime());
   var import_react5 = __toESM(require_react());
   var DEFAULT_BLOCK_CONTEXT2 = {};
   var usesContextKey = Symbol("usesContext");
@@ -51685,7 +51853,7 @@ var wp;
     const isActive = activeFormat !== void 0;
     const activeObject = (0, import_rich_text12.getActiveObject)(value);
     const isObjectActive = activeObject !== void 0 && activeObject.type === name;
-    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
       EditFunction,
       {
         isActive,
@@ -51710,7 +51878,7 @@ var wp;
   var import_element178 = __toESM(require_element());
   var import_blocks84 = __toESM(require_blocks());
   var import_deprecated26 = __toESM(require_deprecated());
-  var import_jsx_runtime330 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime331 = __toESM(require_jsx_runtime());
   function valueToHTMLString(value, multiline) {
     if (rich_text_default.isEmpty(value)) {
       const multilineTag = getMultilineTag(multiline);
@@ -51737,8 +51905,8 @@ var wp;
     format: format2,
     ...props
   }) {
-    value = /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_element178.RawHTML, { children: valueToHTMLString(value, multiline) });
-    return Tag ? /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(Tag, { ...props, children: value }) : value;
+    value = /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_element178.RawHTML, { children: valueToHTMLString(value, multiline) });
+    return Tag ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(Tag, { ...props, children: value }) : value;
   }
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.js
@@ -51753,7 +51921,7 @@ var wp;
   var import_data150 = __toESM(require_data());
   var import_keycodes23 = __toESM(require_keycodes());
   var import_rich_text13 = __toESM(require_rich_text());
-  var import_jsx_runtime331 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime332 = __toESM(require_jsx_runtime());
   function RichTextMultiline({
     children,
     identifier,
@@ -51787,8 +51955,8 @@ var wp;
         )}</${multilineTagName}>`
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(TagName, { ref: forwardedRef, children: values.map((_value, index) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(TagName, { ref: forwardedRef, children: values.map((_value, index) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
         RichTextWrapper,
         {
           identifier: `${identifier}-${index}`,
@@ -51867,7 +52035,7 @@ var wp;
   var multiline_default = (0, import_element179.forwardRef)(RichTextMultiline);
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.js
-  var import_jsx_runtime332 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime333 = __toESM(require_jsx_runtime());
   function withDeprecations(Component7) {
     return (0, import_element180.forwardRef)((props, ref) => {
       let value = props.value;
@@ -51887,7 +52055,7 @@ var wp;
         );
       }
       const NewComponent = props.multiline ? multiline_default : Component7;
-      return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
         NewComponent,
         {
           ...props,
@@ -51922,9 +52090,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/rich-text/toolbar-button.js
-  var import_components175 = __toESM(require_components());
+  var import_components176 = __toESM(require_components());
   var import_keycodes25 = __toESM(require_keycodes());
-  var import_jsx_runtime333 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime334 = __toESM(require_jsx_runtime());
   function RichTextToolbarButton({
     name,
     shortcutType,
@@ -51939,7 +52107,7 @@ var wp;
     if (shortcutType && shortcutCharacter) {
       shortcut = import_keycodes25.displayShortcut[shortcutType](shortcutCharacter);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_components175.Fill, { name: fillName, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(import_components175.ToolbarButton, { ...props, shortcut }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(import_components176.Fill, { name: fillName, children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(import_components176.ToolbarButton, { ...props, shortcut }) });
   }
 
   // packages/block-editor/build-module/components/rich-text/input-event.js
@@ -51964,7 +52132,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/rich-text/index.js
-  var import_jsx_runtime334 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime335 = __toESM(require_jsx_runtime());
   var keyboardShortcutContext = (0, import_element183.createContext)();
   keyboardShortcutContext.displayName = "keyboardShortcutContext";
   var inputEventContext = (0, import_element183.createContext)();
@@ -52027,7 +52195,7 @@ var wp;
         alternative: 'block.json support key: "splitting"'
       });
     }
-    const instanceId = (0, import_compose86.useInstanceId)(RichTextWrapper);
+    const instanceId = (0, import_compose87.useInstanceId)(RichTextWrapper);
     const anchorRef = (0, import_element183.useRef)();
     const context = useBlockEditContext();
     const { clientId, isSelected: isBlockSelected2 } = context;
@@ -52253,10 +52421,10 @@ var wp;
       anchorRef.current?.focus();
     }
     const TagName = tagName;
-    return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(import_jsx_runtime334.Fragment, { children: [
-      isSelected && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(keyboardShortcutContext.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(inputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(import_components176.Popover.__unstableSlotNameProvider, { value: "__unstable-block-tools-after", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(import_jsx_runtime335.Fragment, { children: [
+      isSelected && /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(keyboardShortcutContext.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(inputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime335.jsxs)(import_components177.Popover.__unstableSlotNameProvider, { value: "__unstable-block-tools-after", children: [
         children && children({ value, onChange, onFocus }),
-        /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
           FormatEdit,
           {
             value,
@@ -52267,14 +52435,14 @@ var wp;
           }
         )
       ] }) }) }),
-      isSelected && hasFormats && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+      isSelected && hasFormats && /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
         format_toolbar_container_default,
         {
           inline: inlineToolbar,
           editableContentElement: anchorRef.current
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
         TagName,
         {
           role: "textbox",
@@ -52284,7 +52452,7 @@ var wp;
           draggable: void 0,
           "aria-label": bindingsLabel || props["aria-label"] || placeholder,
           ...autocompleteProps,
-          ref: (0, import_compose86.useMergeRefs)([
+          ref: (0, import_compose87.useMergeRefs)([
             // Rich text ref must be first because its focus listener
             // must be set up before any other ref calls .focus() on
             // mount.
@@ -52371,7 +52539,7 @@ var wp;
         readOnly,
         ...contentProps
       } = removeNativeProps(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
         Tag,
         {
           ref,
@@ -52382,7 +52550,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(PrivateRichText, { ref, ...props, readOnly: false });
+    return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(PrivateRichText, { ref, ...props, readOnly: false });
   });
   PublicForwardedRichTextContainer.Content = Content;
   PublicForwardedRichTextContainer.isEmpty = (value) => {
@@ -52391,23 +52559,23 @@ var wp;
   var rich_text_default = PublicForwardedRichTextContainer;
 
   // packages/block-editor/build-module/components/editable-text/index.js
-  var import_jsx_runtime335 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime336 = __toESM(require_jsx_runtime());
   var EditableText = (0, import_element184.forwardRef)((props, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(rich_text_default, { ref, ...props, __unstableDisableFormats: true });
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(rich_text_default, { ref, ...props, __unstableDisableFormats: true });
   });
   EditableText.Content = ({ value = "", tagName: Tag = "div", ...props }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(Tag, { ...props, children: value });
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(Tag, { ...props, children: value });
   };
   var editable_text_default = EditableText;
 
   // packages/block-editor/build-module/components/plain-text/index.js
-  var import_jsx_runtime336 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime337 = __toESM(require_jsx_runtime());
   var PlainText = (0, import_element185.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
     if (__experimentalVersion === 2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(editable_text_default, { ref, ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(editable_text_default, { ref, ...props });
     }
     const { className, onChange, ...remainingProps } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
       import_react_autosize_textarea2.default,
       {
         ref,
@@ -52422,19 +52590,19 @@ var wp;
   // packages/block-editor/build-module/components/responsive-block-control/index.js
   var import_i18n167 = __toESM(require_i18n());
   var import_element186 = __toESM(require_element());
-  var import_components178 = __toESM(require_components());
+  var import_components179 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/responsive-block-control/label.js
-  var import_compose87 = __toESM(require_compose());
-  var import_components177 = __toESM(require_components());
+  var import_compose88 = __toESM(require_compose());
+  var import_components178 = __toESM(require_components());
   var import_i18n166 = __toESM(require_i18n());
-  var import_jsx_runtime337 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime338 = __toESM(require_jsx_runtime());
   function ResponsiveBlockControlLabel({
     property,
     viewport,
     desc
   }) {
-    const instanceId = (0, import_compose87.useInstanceId)(ResponsiveBlockControlLabel);
+    const instanceId = (0, import_compose88.useInstanceId)(ResponsiveBlockControlLabel);
     const accessibleLabel = desc || (0, import_i18n166.sprintf)(
       /* translators: 1: property name. 2: viewport name. */
       (0, import_i18n166._x)(
@@ -52444,14 +52612,14 @@ var wp;
       property,
       viewport.label
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(import_jsx_runtime337.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime337.jsx)("span", { "aria-describedby": `rbc-desc-${instanceId}`, children: viewport.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_components177.VisuallyHidden, { as: "span", id: `rbc-desc-${instanceId}`, children: accessibleLabel })
+    return /* @__PURE__ */ (0, import_jsx_runtime338.jsxs)(import_jsx_runtime338.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime338.jsx)("span", { "aria-describedby": `rbc-desc-${instanceId}`, children: viewport.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_components178.VisuallyHidden, { as: "span", id: `rbc-desc-${instanceId}`, children: accessibleLabel })
     ] });
   }
 
   // packages/block-editor/build-module/components/responsive-block-control/index.js
-  var import_jsx_runtime338 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime339 = __toESM(require_jsx_runtime());
   function ResponsiveBlockControl(props) {
     const {
       title,
@@ -52492,7 +52660,7 @@ var wp;
       "Choose whether to use the same value for all screen sizes or a unique value for each screen size."
     );
     const defaultControl = renderDefaultControl(
-      /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
         ResponsiveBlockControlLabel,
         {
           property,
@@ -52502,8 +52670,8 @@ var wp;
       defaultLabel
     );
     const defaultResponsiveControls = () => {
-      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_element186.Fragment, { children: renderDefaultControl(
-        /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
+      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_element186.Fragment, { children: renderDefaultControl(
+        /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
           ResponsiveBlockControlLabel,
           {
             property,
@@ -52513,11 +52681,11 @@ var wp;
         viewport
       ) }, viewport.id));
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime338.jsxs)("fieldset", { className: "block-editor-responsive-block-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime338.jsx)("legend", { className: "block-editor-responsive-block-control__title", children: title }),
-      /* @__PURE__ */ (0, import_jsx_runtime338.jsxs)("div", { className: "block-editor-responsive-block-control__inner", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
-          import_components178.ToggleControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)("fieldset", { className: "block-editor-responsive-block-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime339.jsx)("legend", { className: "block-editor-responsive-block-control__title", children: title }),
+      /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)("div", { className: "block-editor-responsive-block-control__inner", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
+          import_components179.ToggleControl,
           {
             __nextHasNoMarginBottom: true,
             className: "block-editor-responsive-block-control__toggle",
@@ -52527,7 +52695,7 @@ var wp;
             help: toggleHelpText
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime338.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(
           "div",
           {
             className: clsx_default(
@@ -52548,22 +52716,22 @@ var wp;
   var responsive_block_control_default = ResponsiveBlockControl;
 
   // packages/block-editor/build-module/components/unit-control/index.js
-  var import_components179 = __toESM(require_components());
-  var import_jsx_runtime339 = __toESM(require_jsx_runtime());
+  var import_components180 = __toESM(require_components());
+  var import_jsx_runtime340 = __toESM(require_jsx_runtime());
   function UnitControl6({ units: unitsProp, ...props }) {
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components179.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components180.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["%", "px", "em", "rem", "vw"],
       units: unitsProp
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_components179.__experimentalUnitControl, { units: units2, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(import_components180.__experimentalUnitControl, { units: units2, ...props });
   }
 
   // packages/block-editor/build-module/components/url-input/button.js
   var import_i18n168 = __toESM(require_i18n());
   var import_element187 = __toESM(require_element());
-  var import_components180 = __toESM(require_components());
-  var import_jsx_runtime340 = __toESM(require_jsx_runtime());
+  var import_components181 = __toESM(require_components());
+  var import_jsx_runtime341 = __toESM(require_jsx_runtime());
   function URLInputButton({ url, onChange }) {
     const [expanded2, toggleExpanded] = (0, import_element187.useReducer)(
       (isExpanded) => !isExpanded,
@@ -52573,9 +52741,9 @@ var wp;
       event.preventDefault();
       toggleExpanded();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)("div", { className: "block-editor-url-input__button", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
-        import_components180.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)("div", { className: "block-editor-url-input__button", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+        import_components181.Button,
         {
           size: "compact",
           icon: link_default,
@@ -52585,14 +52753,14 @@ var wp;
           isPressed: !!url
         }
       ),
-      expanded2 && /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+      expanded2 && /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
         "form",
         {
           className: "block-editor-url-input__button-modal",
           onSubmit: submitLink,
-          children: /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)("div", { className: "block-editor-url-input__button-modal-line", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
-              import_components180.Button,
+          children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)("div", { className: "block-editor-url-input__button-modal-line", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+              import_components181.Button,
               {
                 __next40pxDefaultSize: true,
                 className: "block-editor-url-input__back",
@@ -52601,13 +52769,13 @@ var wp;
                 onClick: toggleExpanded
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
               url_input_default,
               {
                 value: url || "",
                 onChange,
-                suffix: /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(import_components180.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
-                  import_components180.Button,
+                suffix: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(import_components181.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+                  import_components181.Button,
                   {
                     size: "small",
                     icon: keyboard_return_default,
@@ -52628,9 +52796,9 @@ var wp;
   var import_i18n169 = __toESM(require_i18n());
   var import_element188 = __toESM(require_element());
   var import_dom37 = __toESM(require_dom());
-  var import_components181 = __toESM(require_components());
+  var import_components182 = __toESM(require_components());
   var import_url11 = __toESM(require_url());
-  var import_jsx_runtime341 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime342 = __toESM(require_jsx_runtime());
   var LINK_DESTINATION_NONE = "none";
   var LINK_DESTINATION_CUSTOM = "custom";
   var LINK_DESTINATION_MEDIA = "media";
@@ -52781,9 +52949,9 @@ var wp;
     const onSetLinkClass = (value) => {
       onChangeUrl({ linkClass: value });
     };
-    const advancedOptions = /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_components181.__experimentalVStack, { spacing: "3", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-        import_components181.ToggleControl,
+    const advancedOptions = /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(import_components182.__experimentalVStack, { spacing: "3", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+        import_components182.ToggleControl,
         {
           __nextHasNoMarginBottom: true,
           label: (0, import_i18n169.__)("Open in new tab"),
@@ -52791,8 +52959,8 @@ var wp;
           checked: linkTarget === "_blank"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-        import_components181.TextControl,
+      /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+        import_components182.TextControl,
         {
           __next40pxDefaultSize: true,
           label: (0, import_i18n169.__)("Link relation"),
@@ -52803,13 +52971,13 @@ var wp;
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
             {
-              a: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(import_components181.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+              a: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(import_components182.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
             }
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-        import_components181.TextControl,
+      /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+        import_components182.TextControl,
         {
           __next40pxDefaultSize: true,
           label: (0, import_i18n169.__)("Link CSS class"),
@@ -52826,14 +52994,14 @@ var wp;
     ) || {}).title;
     const PopoverChildren = () => {
       if (lightboxEnabled && showLightboxSetting && !url && !isEditingLink) {
-        return /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)("div", { className: "block-editor-url-popover__expand-on-click", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(icon_default, { icon: fullscreen_default }),
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)("div", { className: "text", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("p", { children: (0, import_i18n169.__)("Enlarge on click") }),
-            /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("p", { className: "description", children: (0, import_i18n169.__)("Scales the image with a lightbox effect") })
+        return /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)("div", { className: "block-editor-url-popover__expand-on-click", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(icon_default, { icon: fullscreen_default }),
+          /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)("div", { className: "text", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("p", { children: (0, import_i18n169.__)("Enlarge on click") }),
+            /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("p", { className: "description", children: (0, import_i18n169.__)("Scales the image with a lightbox effect") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-            import_components181.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+            import_components182.Button,
             {
               icon: link_off_default,
               label: (0, import_i18n169.__)("Disable enlarge on click"),
@@ -52845,7 +53013,7 @@ var wp;
           )
         ] });
       } else if (!url || isEditingLink) {
-        return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
           url_popover_default.LinkEditor,
           {
             className: "block-editor-format-toolbar__link-container-content",
@@ -52856,8 +53024,8 @@ var wp;
           }
         );
       } else if (url && !isEditingLink) {
-        return /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_jsx_runtime341.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(import_jsx_runtime342.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
             url_popover_default.LinkViewer,
             {
               className: "block-editor-format-toolbar__link-container-content",
@@ -52866,8 +53034,8 @@ var wp;
               urlLabel
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-            import_components181.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+            import_components182.Button,
             {
               icon: link_off_default,
               label: (0, import_i18n169.__)("Remove link"),
@@ -52881,9 +53049,9 @@ var wp;
         ] });
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_jsx_runtime341.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-        import_components181.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(import_jsx_runtime342.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+        import_components182.ToolbarButton,
         {
           icon: link_default,
           className: "components-toolbar__control",
@@ -52894,7 +53062,7 @@ var wp;
           isActive: !!url || lightboxEnabled && showLightboxSetting
         }
       ),
-      isOpen && /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
         url_popover_default,
         {
           ref: wrapperRef,
@@ -52902,9 +53070,9 @@ var wp;
           onFocusOutside: onFocusOutside(),
           onClose: closeLinkUI,
           renderSettings: hideLightboxPanel ? () => advancedOptions : null,
-          additionalControls: showLinkEditor && /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_components181.NavigableMenu, { children: [
-            getLinkDestinations().map((link) => /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-              import_components181.MenuItem,
+          additionalControls: showLinkEditor && /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(import_components182.NavigableMenu, { children: [
+            getLinkDestinations().map((link) => /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+              import_components182.MenuItem,
               {
                 icon: link.icon,
                 iconPosition: "left",
@@ -52917,8 +53085,8 @@ var wp;
               },
               link.linkDestination
             )),
-            showLightboxSetting && /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-              import_components181.MenuItem,
+            showLightboxSetting && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+              import_components182.MenuItem,
               {
                 className: "block-editor-url-popover__expand-on-click",
                 icon: fullscreen_default,
@@ -52948,7 +53116,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/spacing-sizes-control/index.js
-  var import_components184 = __toESM(require_components());
+  var import_components185 = __toESM(require_components());
   var import_element191 = __toESM(require_element());
   var import_i18n173 = __toESM(require_i18n());
 
@@ -52994,13 +53162,12 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/spacing-input-control.js
-  var import_components182 = __toESM(require_components());
-  var import_data152 = __toESM(require_data());
   var import_element190 = __toESM(require_element());
-  var import_compose88 = __toESM(require_compose());
+  var import_data152 = __toESM(require_data());
   var import_i18n171 = __toESM(require_i18n());
-  var import_jsx_runtime342 = __toESM(require_jsx_runtime());
-  var CUSTOM_VALUE_SETTINGS = {
+  var import_components183 = __toESM(require_components());
+  var import_jsx_runtime343 = __toESM(require_jsx_runtime());
+  var CUSTOM_VALUE_SETTINGS2 = {
     px: { max: 300, steps: 1 },
     "%": { max: 100, steps: 1 },
     vw: { max: 100, steps: 1 },
@@ -53041,88 +53208,25 @@ var wp;
     side,
     spacingSizes,
     type,
-    value
+    value,
+    ...restProps
   }) {
-    value = getPresetValueFromCustomValue(value, spacingSizes);
-    let selectListSizes = spacingSizes;
-    const showRangeControl = spacingSizes.length <= RANGE_CONTROL_MAX_SIZE;
     const disableCustomSpacingSizes = (0, import_data152.useSelect)((select3) => {
       const editorSettings = select3(store).getSettings();
       return editorSettings?.disableCustomSpacingSizes;
     });
-    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element190.useState)(
-      !disableCustomSpacingSizes && value !== void 0 && !isValueSpacingPreset(value)
-    );
-    const [minValue, setMinValue] = (0, import_element190.useState)(minimumCustomValue);
-    const previousValue = (0, import_compose88.usePrevious)(value);
-    if (!!value && previousValue !== value && !isValueSpacingPreset(value) && showCustomValueControl !== true) {
-      setShowCustomValueControl(true);
-    }
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components182.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components183.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "em", "rem"]
     });
-    let currentValue = null;
-    const showCustomValueInSelectList = !showRangeControl && !showCustomValueControl && value !== void 0 && (!isValueSpacingPreset(value) || isValueSpacingPreset(value) && isMixed);
-    if (showCustomValueInSelectList) {
-      selectListSizes = [
-        ...spacingSizes,
-        {
-          name: !isMixed ? (
-            // translators: %s: A custom measurement, e.g. a number followed by a unit like 12px.
-            (0, import_i18n171.sprintf)((0, import_i18n171.__)("Custom (%s)"), value)
-          ) : (0, import_i18n171.__)("Mixed"),
-          slug: "custom",
-          size: value
-        }
-      ];
-      currentValue = selectListSizes.length - 1;
-    } else if (!isMixed) {
-      currentValue = !showCustomValueControl ? getSliderValueFromPreset(value, spacingSizes) : getCustomValueFromPreset(value, spacingSizes);
-    }
-    const selectedUnit = (0, import_element190.useMemo)(
-      () => (0, import_components182.__experimentalParseQuantityAndUnitFromRawValue)(currentValue),
-      [currentValue]
-    )[1] || units2[0]?.value;
-    const setInitialValue = () => {
-      if (value === void 0) {
-        onChange("0");
-      }
-    };
-    const customTooltipContent = (newValue) => value === void 0 ? void 0 : spacingSizes[newValue]?.name;
-    const customRangeValue = parseFloat(currentValue, 10);
-    const getNewCustomValue = (newSize) => {
-      const isNumeric = !isNaN(parseFloat(newSize));
-      const nextValue = isNumeric ? newSize : void 0;
-      return nextValue;
-    };
-    const getNewPresetValue = (newSize, controlType) => {
-      const size = parseInt(newSize, 10);
-      if (controlType === "selectList") {
-        if (size === 0) {
-          return void 0;
-        }
-        if (size === 1) {
-          return "0";
-        }
-      } else if (size === 0) {
-        return "0";
-      }
-      return `var:preset|spacing|${spacingSizes[newSize]?.slug}`;
-    };
-    const handleCustomValueSliderChange = (next) => {
-      onChange([next, selectedUnit].join(""));
-    };
-    const allPlaceholder = isMixed ? (0, import_i18n171.__)("Mixed") : null;
-    const options = selectListSizes.map((size, index) => ({
-      key: index,
-      name: size.name
-    }));
-    const marks = spacingSizes.slice(1, spacingSizes.length - 1).map((_newValue, index) => ({
-      value: index + 1,
-      label: void 0
-    }));
-    const sideLabel = ALL_SIDES.includes(side) && showSideInLabel ? LABELS[side] : "";
+    const presets = (0, import_element190.useMemo)(() => {
+      return spacingSizes?.map((preset) => ({
+        name: preset.name,
+        slug: preset.slug,
+        size: preset.size
+      })) || [];
+    }, [spacingSizes]);
+    const sideLabel = (ALL_SIDES.includes(side) || ["vertical", "horizontal"].includes(side)) && showSideInLabel ? LABELS[side] : "";
     const typeLabel = showSideInLabel ? type?.toLowerCase() : type;
     const ariaLabel = (0, import_i18n171.sprintf)(
       // translators: 1: The side of the block being modified (top, bottom, left etc.). 2. Type of spacing being modified (padding, margin, etc).
@@ -53130,145 +53234,33 @@ var wp;
       sideLabel,
       typeLabel
     ).trim();
-    return /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(import_components182.__experimentalHStack, { className: "spacing-sizes-control__wrapper", children: [
-      icon && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
-        import_components182.Icon,
-        {
-          className: "spacing-sizes-control__icon",
-          icon,
-          size: 24
-        }
-      ),
-      showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(import_jsx_runtime342.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
-          import_components182.__experimentalUnitControl,
-          {
-            onMouseOver,
-            onMouseOut,
-            onFocus: onMouseOver,
-            onBlur: onMouseOut,
-            onChange: (newSize) => onChange(getNewCustomValue(newSize)),
-            value: currentValue,
-            units: units2,
-            min: minValue,
-            placeholder: allPlaceholder,
-            disableUnits: isMixed,
-            label: ariaLabel,
-            hideLabelFromVision: true,
-            className: "spacing-sizes-control__custom-value-input",
-            size: "__unstable-large",
-            onDragStart: () => {
-              if (value?.charAt(0) === "-") {
-                setMinValue(0);
-              }
-            },
-            onDrag: () => {
-              if (value?.charAt(0) === "-") {
-                setMinValue(0);
-              }
-            },
-            onDragEnd: () => {
-              setMinValue(minimumCustomValue);
-            }
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
-          import_components182.RangeControl,
-          {
-            __next40pxDefaultSize: true,
-            onMouseOver,
-            onMouseOut,
-            onFocus: onMouseOver,
-            onBlur: onMouseOut,
-            value: customRangeValue,
-            min: 0,
-            max: CUSTOM_VALUE_SETTINGS[selectedUnit]?.max ?? 10,
-            step: CUSTOM_VALUE_SETTINGS[selectedUnit]?.steps ?? 0.1,
-            withInputField: false,
-            onChange: handleCustomValueSliderChange,
-            className: "spacing-sizes-control__custom-value-range",
-            __nextHasNoMarginBottom: true,
-            label: ariaLabel,
-            hideLabelFromVision: true
-          }
-        )
-      ] }),
-      showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
-        import_components182.RangeControl,
-        {
-          __next40pxDefaultSize: true,
-          onMouseOver,
-          onMouseOut,
-          className: "spacing-sizes-control__range-control",
-          value: currentValue,
-          onChange: (newSize) => onChange(getNewPresetValue(newSize)),
-          onMouseDown: (event) => {
-            if (event?.nativeEvent?.offsetX < 35) {
-              setInitialValue();
-            }
-          },
-          withInputField: false,
-          "aria-valuenow": currentValue,
-          "aria-valuetext": spacingSizes[currentValue]?.name,
-          renderTooltipContent: customTooltipContent,
-          min: 0,
-          max: spacingSizes.length - 1,
-          marks,
-          label: ariaLabel,
-          hideLabelFromVision: true,
-          __nextHasNoMarginBottom: true,
-          onFocus: onMouseOver,
-          onBlur: onMouseOut
-        }
-      ),
-      !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
-        import_components182.CustomSelectControl,
-        {
-          className: "spacing-sizes-control__custom-select-control",
-          value: (
-            // passing empty string as a fallback to continue using the
-            // component in controlled mode
-            options.find(
-              (option) => option.key === currentValue
-            ) || ""
-          ),
-          onChange: (selection2) => {
-            onChange(
-              getNewPresetValue(
-                selection2.selectedItem.key,
-                "selectList"
-              )
-            );
-          },
-          options,
-          label: ariaLabel,
-          hideLabelFromVision: true,
-          size: "__unstable-large",
-          onMouseOver,
-          onMouseOut,
-          onFocus: onMouseOver,
-          onBlur: onMouseOut
-        }
-      ),
-      !disableCustomSpacingSizes && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
-        import_components182.Button,
-        {
-          label: showCustomValueControl ? (0, import_i18n171.__)("Use size preset") : (0, import_i18n171.__)("Set custom size"),
-          icon: settings_default,
-          onClick: () => {
-            setShowCustomValueControl(!showCustomValueControl);
-          },
-          isPressed: showCustomValueControl,
-          size: "small",
-          className: "spacing-sizes-control__custom-toggle",
-          iconSize: 24
-        }
-      )
-    ] });
+    const selectedUnit = units2[0]?.value || "px";
+    return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
+      PresetInputControl,
+      {
+        allowNegativeOnDrag: minimumCustomValue < 0,
+        ariaLabel,
+        className: "spacing-sizes-control",
+        customValueSettings: CUSTOM_VALUE_SETTINGS2,
+        disableCustomValues: disableCustomSpacingSizes,
+        icon,
+        isMixed,
+        minimumCustomValue,
+        onChange,
+        onMouseOut,
+        onMouseOver,
+        presets,
+        presetType: "spacing",
+        selectedUnit,
+        units: units2,
+        value,
+        ...restProps
+      }
+    );
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/axial.js
-  var import_jsx_runtime343 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime344 = __toESM(require_jsx_runtime());
   var groupedSides = ["vertical", "horizontal"];
   function AxialInputControls({
     minimumCustomValue,
@@ -53304,9 +53296,9 @@ var wp;
       onChange(nextValues);
     };
     const filteredSides = sides?.length ? groupedSides.filter((side) => hasAxisSupport(sides, side)) : groupedSides;
-    return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(import_jsx_runtime343.Fragment, { children: filteredSides.map((side) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(import_jsx_runtime344.Fragment, { children: filteredSides.map((side) => {
       const axisValue = side === "vertical" ? values.top : values.left;
-      return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
         SpacingInputControl,
         {
           icon: ICONS[side],
@@ -53327,7 +53319,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/separated.js
-  var import_jsx_runtime344 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime345 = __toESM(require_jsx_runtime());
   function SeparatedInputControls({
     minimumCustomValue,
     onChange,
@@ -53352,8 +53344,8 @@ var wp;
       nextValues[side] = next;
       onChange(nextValues);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(import_jsx_runtime344.Fragment, { children: filteredSides.map((side) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(import_jsx_runtime345.Fragment, { children: filteredSides.map((side) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
         SpacingInputControl,
         {
           icon: ICONS[side],
@@ -53374,8 +53366,8 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/single.js
-  var import_jsx_runtime345 = __toESM(require_jsx_runtime());
-  function SingleInputControl2({
+  var import_jsx_runtime346 = __toESM(require_jsx_runtime());
+  function SingleInputControl({
     minimumCustomValue,
     onChange,
     onMouseOut,
@@ -53399,7 +53391,7 @@ var wp;
       nextValues[currentSide] = next;
       onChange(nextValues);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
       SpacingInputControl,
       {
         label: LABELS[side],
@@ -53418,13 +53410,13 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/linked-button.js
-  var import_components183 = __toESM(require_components());
+  var import_components184 = __toESM(require_components());
   var import_i18n172 = __toESM(require_i18n());
-  var import_jsx_runtime346 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime347 = __toESM(require_jsx_runtime());
   function LinkedButton2({ isLinked, ...props }) {
     const label = isLinked ? (0, import_i18n172.__)("Unlink sides") : (0, import_i18n172.__)("Link sides");
-    return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
-      import_components183.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
+      import_components184.Button,
       {
         ...props,
         size: "small",
@@ -53436,7 +53428,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/index.js
-  var import_jsx_runtime347 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime348 = __toESM(require_jsx_runtime());
   function SpacingSizesControl({
     inputProps,
     label: labelProp,
@@ -53475,13 +53467,13 @@ var wp;
     };
     const renderControls = () => {
       if (view === VIEWS.axial) {
-        return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(AxialInputControls, { ...inputControlProps });
+        return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(AxialInputControls, { ...inputControlProps });
       }
       if (view === VIEWS.custom) {
-        return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(SeparatedInputControls, { ...inputControlProps });
+        return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(SeparatedInputControls, { ...inputControlProps });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
-        SingleInputControl2,
+      return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+        SingleInputControl,
         {
           side: view,
           ...inputControlProps,
@@ -53496,17 +53488,17 @@ var wp;
       labelProp,
       sideLabel
     ).trim();
-    return /* @__PURE__ */ (0, import_jsx_runtime347.jsxs)("fieldset", { className: "spacing-sizes-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime347.jsxs)(import_components184.__experimentalHStack, { className: "spacing-sizes-control__header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
-          import_components184.BaseControl.VisualLabel,
+    return /* @__PURE__ */ (0, import_jsx_runtime348.jsxs)("fieldset", { className: "spacing-sizes-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime348.jsxs)(import_components185.__experimentalHStack, { className: "spacing-sizes-control__header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+          import_components185.BaseControl.VisualLabel,
           {
             as: "legend",
             className: "spacing-sizes-control__label",
             children: label
           }
         ),
-        !hasOneSide && !hasOnlyAxialSides && /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
+        !hasOneSide && !hasOnlyAxialSides && /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
           LinkedButton2,
           {
             label: labelProp,
@@ -53515,7 +53507,7 @@ var wp;
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(import_components184.__experimentalVStack, { spacing: 0.5, children: renderControls() })
+      /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_components185.__experimentalVStack, { spacing: 0.5, children: renderControls() })
     ] });
   }
 
@@ -53587,15 +53579,15 @@ var wp;
   // packages/block-editor/build-module/components/block-inspector/index.js
   var import_i18n219 = __toESM(require_i18n());
   var import_blocks93 = __toESM(require_blocks());
-  var import_components240 = __toESM(require_components());
+  var import_components241 = __toESM(require_components());
   var import_data172 = __toESM(require_data());
 
   // packages/block-editor/build-module/components/block-inspector/edit-contents.js
-  var import_components185 = __toESM(require_components());
+  var import_components186 = __toESM(require_components());
   var import_i18n174 = __toESM(require_i18n());
   var import_data153 = __toESM(require_data());
   var import_blocks87 = __toESM(require_blocks());
-  var import_jsx_runtime348 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime349 = __toESM(require_jsx_runtime());
   function IsolatedEditButton({
     block,
     onNavigateToEntityRecord,
@@ -53620,8 +53612,8 @@ var wp;
         }
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_components185.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
-      import_components185.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(import_components186.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
+      import_components186.Button,
       {
         className: "block-editor-block-inspector-edit-contents__button",
         __next40pxDefaultSize: true,
@@ -53644,8 +53636,8 @@ var wp;
         stopEditingContentOnlySection2();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_components185.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
-      import_components185.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(import_components186.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
+      import_components186.Button,
       {
         className: "block-editor-block-inspector-edit-contents__button",
         __next40pxDefaultSize: true,
@@ -53680,7 +53672,7 @@ var wp;
     const isTemplatePartBlock = (0, import_blocks87.isTemplatePart)(block);
     const shouldUseIsolatedEditor = (isSyncedPattern || isTemplatePartBlock) && onNavigateToEntityRecord;
     if (shouldUseIsolatedEditor) {
-      return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
         IsolatedEditButton,
         {
           block,
@@ -53690,7 +53682,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
       InlineEditButton,
       {
         clientId,
@@ -53704,9 +53696,9 @@ var wp;
   // packages/block-editor/build-module/components/skip-to-selected-block/index.js
   var import_data154 = __toESM(require_data());
   var import_i18n175 = __toESM(require_i18n());
-  var import_components186 = __toESM(require_components());
+  var import_components187 = __toESM(require_components());
   var import_element193 = __toESM(require_element());
-  var import_jsx_runtime349 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime350 = __toESM(require_jsx_runtime());
   function SkipToSelectedBlock() {
     const selectedBlockClientId = (0, import_data154.useSelect)(
       (select3) => select3(store).getBlockSelectionStart(),
@@ -53717,8 +53709,8 @@ var wp;
     const onClick = () => {
       ref.current?.focus();
     };
-    return selectedBlockClientId ? /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
-      import_components186.Button,
+    return selectedBlockClientId ? /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+      import_components187.Button,
       {
         __next40pxDefaultSize: true,
         variant: "secondary",
@@ -53732,22 +53724,22 @@ var wp;
   // packages/block-editor/build-module/components/multi-selection-inspector/index.js
   var import_i18n176 = __toESM(require_i18n());
   var import_data155 = __toESM(require_data());
-  var import_components187 = __toESM(require_components());
-  var import_jsx_runtime350 = __toESM(require_jsx_runtime());
+  var import_components188 = __toESM(require_components());
+  var import_jsx_runtime351 = __toESM(require_jsx_runtime());
   function MultiSelectionInspector() {
     const selectedBlockCount = (0, import_data155.useSelect)(
       (select3) => select3(store).getSelectedBlockCount(),
       []
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(
-      import_components187.__experimentalHStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
+      import_components188.__experimentalHStack,
       {
         justify: "flex-start",
         spacing: 2,
         className: "block-editor-multi-selection-inspector__card",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(block_icon_default, { icon: copy_default, showColors: true }),
-          /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("div", { className: "block-editor-multi-selection-inspector__card-title", children: (0, import_i18n176.sprintf)(
+          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(block_icon_default, { icon: copy_default, showColors: true }),
+          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", { className: "block-editor-multi-selection-inspector__card-title", children: (0, import_i18n176.sprintf)(
             /* translators: %d: number of blocks */
             (0, import_i18n176._n)("%d Block", "%d Blocks", selectedBlockCount),
             selectedBlockCount
@@ -53758,7 +53750,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.js
-  var import_components238 = __toESM(require_components());
+  var import_components239 = __toESM(require_components());
   var import_element240 = __toESM(require_element());
   var import_preferences5 = __toESM(require_preferences());
   var import_data169 = __toESM(require_data());
@@ -53791,12 +53783,12 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/advanced-controls-panel.js
-  var import_components188 = __toESM(require_components());
+  var import_components189 = __toESM(require_components());
   var import_i18n178 = __toESM(require_i18n());
-  var import_jsx_runtime351 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime352 = __toESM(require_jsx_runtime());
   var AdvancedControls = () => {
-    const fills = (0, import_components188.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName);
-    const privateFills = (0, import_components188.__experimentalUseSlotFills)(
+    const fills = (0, import_components189.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName);
+    const privateFills = (0, import_components189.__experimentalUseSlotFills)(
       PrivateInspectorControlsAllowedBlocks.name
     );
     const hasFills = Boolean(fills && fills.length);
@@ -53804,15 +53796,15 @@ var wp;
     if (!hasFills && !hasPrivateFills) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
-      import_components188.PanelBody,
+    return /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(
+      import_components189.PanelBody,
       {
         className: "block-editor-block-inspector__advanced",
         title: (0, import_i18n178.__)("Advanced"),
         initialOpen: false,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(inspector_controls_default.Slot, { group: "advanced" }),
-          /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(PrivateInspectorControlsAllowedBlocks.Slot, {})
+          /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(inspector_controls_default.Slot, { group: "advanced" }),
+          /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(PrivateInspectorControlsAllowedBlocks.Slot, {})
         ]
       }
     );
@@ -53820,10 +53812,10 @@ var wp;
   var advanced_controls_panel_default = AdvancedControls;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/position-controls-panel.js
-  var import_components189 = __toESM(require_components());
+  var import_components190 = __toESM(require_components());
   var import_data156 = __toESM(require_data());
   var import_i18n179 = __toESM(require_i18n());
-  var import_jsx_runtime352 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime353 = __toESM(require_jsx_runtime());
   var PositionControlsPanel = () => {
     const { selectedClientIds, selectedBlocks, hasPositionAttribute } = (0, import_data156.useSelect)((select3) => {
       const { getBlocksByClientId: getBlocksByClientId2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = select3(store);
@@ -53865,54 +53857,54 @@ var wp;
       );
       updateBlockAttributes2(selectedClientIds, attributesByClientId, true);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
-      import_components189.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+      import_components190.__experimentalToolsPanel,
       {
         className: "block-editor-block-inspector__position",
         label: (0, import_i18n179.__)("Position"),
         resetAll: resetPosition,
         dropdownMenuProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
-          import_components189.__experimentalToolsPanelItem,
+        children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+          import_components190.__experimentalToolsPanelItem,
           {
             isShownByDefault: hasPositionAttribute,
             label: (0, import_i18n179.__)("Position"),
             hasValue: () => hasPositionAttribute,
             onDeselect: resetPosition,
-            children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(inspector_controls_default.Slot, { group: "position" })
+            children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(inspector_controls_default.Slot, { group: "position" })
           }
         )
       }
     );
   };
   var PositionControls = () => {
-    const fills = (0, import_components189.__experimentalUseSlotFills)(groups_default.position.name);
+    const fills = (0, import_components190.__experimentalUseSlotFills)(groups_default.position.name);
     const hasFills = Boolean(fills && fills.length);
     if (!hasFills) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(PositionControlsPanel, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(PositionControlsPanel, {});
   };
   var position_controls_panel_default = PositionControls;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/settings-tab.js
-  var import_jsx_runtime353 = __toESM(require_jsx_runtime());
-  var SettingsTab = ({ showAdvancedControls = false }) => /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(import_jsx_runtime353.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(inspector_controls_default.Slot, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(position_controls_panel_default, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(inspector_controls_default.Slot, { group: "bindings" }),
-    showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(advanced_controls_panel_default, {}) })
+  var import_jsx_runtime354 = __toESM(require_jsx_runtime());
+  var SettingsTab = ({ showAdvancedControls = false }) => /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(import_jsx_runtime354.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(inspector_controls_default.Slot, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(position_controls_panel_default, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(inspector_controls_default.Slot, { group: "bindings" }),
+    showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime354.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(advanced_controls_panel_default, {}) })
   ] });
   var settings_tab_default = SettingsTab;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/styles-tab.js
-  var import_components204 = __toESM(require_components());
+  var import_components205 = __toESM(require_components());
   var import_i18n195 = __toESM(require_i18n());
   var import_data164 = __toESM(require_data());
 
   // packages/block-editor/build-module/hooks/border.js
   var import_blocks89 = __toESM(require_blocks());
-  var import_components203 = __toESM(require_components());
+  var import_components204 = __toESM(require_components());
   var import_element206 = __toESM(require_element());
   var import_hooks11 = __toESM(require_hooks());
   var import_data161 = __toESM(require_data());
@@ -54154,15 +54146,15 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/typography-panel.js
-  var import_components191 = __toESM(require_components());
+  var import_components192 = __toESM(require_components());
   var import_i18n182 = __toESM(require_i18n());
   var import_element196 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/text-alignment-control/index.js
   var import_i18n181 = __toESM(require_i18n());
   var import_element195 = __toESM(require_element());
-  var import_components190 = __toESM(require_components());
-  var import_jsx_runtime354 = __toESM(require_jsx_runtime());
+  var import_components191 = __toESM(require_components());
+  var import_jsx_runtime355 = __toESM(require_jsx_runtime());
   var TEXT_ALIGNMENT_OPTIONS = [
     {
       label: (0, import_i18n181.__)("Align text left"),
@@ -54201,8 +54193,8 @@ var wp;
     if (!validOptions.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
-      import_components190.__experimentalToggleGroupControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+      import_components191.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
         __nextHasNoMarginBottom: true,
@@ -54217,8 +54209,8 @@ var wp;
           onChange(newValue === value ? void 0 : newValue);
         },
         children: validOptions.map((option) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
-            import_components190.__experimentalToggleGroupControlOptionIcon,
+          return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+            import_components191.__experimentalToggleGroupControlOptionIcon,
             {
               value: option.value,
               icon: option.icon,
@@ -54306,7 +54298,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/typography-panel.js
-  var import_jsx_runtime355 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime356 = __toESM(require_jsx_runtime());
   var MIN_TEXT_COLUMNS = 1;
   var MAX_TEXT_COLUMNS = 6;
   function useHasTypographyPanel(settings2) {
@@ -54384,8 +54376,8 @@ var wp;
       const updatedValue = resetAllFilter(value);
       onChange(updatedValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-      import_components191.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+      import_components192.__experimentalToolsPanel,
       {
         label: (0, import_i18n182.__)("Typography"),
         resetAll,
@@ -54617,7 +54609,7 @@ var wp;
         typography: {}
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(
       Wrapper,
       {
         resetAllFilter,
@@ -54625,15 +54617,15 @@ var wp;
         onChange,
         panelId,
         children: [
-          hasFontFamilyEnabled && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasFontFamilyEnabled && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n182.__)("Font"),
               hasValue: hasFontFamily,
               onDeselect: resetFontFamily,
               isShownByDefault: defaultControls.fontFamily,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 FontFamilyControl,
                 {
                   fontFamilies,
@@ -54644,16 +54636,16 @@ var wp;
               )
             }
           ),
-          hasFontSizeEnabled && !fitText && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasFontSizeEnabled && !fitText && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n182.__)("Size"),
               hasValue: hasFontSize,
               onDeselect: resetFontSize,
               isShownByDefault: defaultControls.fontSize,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-                import_components191.FontSizePicker,
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+                import_components192.FontSizePicker,
                 {
                   value: currentFontSizeSlug || fontSize,
                   valueMode: currentFontSizeSlug ? "slug" : "literal",
@@ -54667,8 +54659,8 @@ var wp;
               )
             }
           ),
-          hasAppearanceControl && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasAppearanceControl && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               className: "single-column",
               label: appearanceControlLabel,
@@ -54676,7 +54668,7 @@ var wp;
               onDeselect: resetFontAppearance,
               isShownByDefault: defaultControls.fontAppearance,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 FontAppearanceControl,
                 {
                   value: {
@@ -54692,8 +54684,8 @@ var wp;
               )
             }
           ),
-          hasLineHeightEnabled && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasLineHeightEnabled && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               className: "single-column",
               label: (0, import_i18n182.__)("Line height"),
@@ -54701,7 +54693,7 @@ var wp;
               onDeselect: resetLineHeight,
               isShownByDefault: defaultControls.lineHeight,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 line_height_control_default,
                 {
                   __unstableInputWidth: "auto",
@@ -54712,8 +54704,8 @@ var wp;
               )
             }
           ),
-          hasLetterSpacingControl && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasLetterSpacingControl && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               className: "single-column",
               label: (0, import_i18n182.__)("Letter spacing"),
@@ -54721,7 +54713,7 @@ var wp;
               onDeselect: resetLetterSpacing,
               isShownByDefault: defaultControls.letterSpacing,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 LetterSpacingControl,
                 {
                   value: letterSpacing,
@@ -54732,8 +54724,8 @@ var wp;
               )
             }
           ),
-          hasTextColumnsControl && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasTextColumnsControl && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               className: "single-column",
               label: (0, import_i18n182.__)("Columns"),
@@ -54741,8 +54733,8 @@ var wp;
               onDeselect: resetTextColumns,
               isShownByDefault: defaultControls.textColumns,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-                import_components191.__experimentalNumberControl,
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+                import_components192.__experimentalNumberControl,
                 {
                   label: (0, import_i18n182.__)("Columns"),
                   max: MAX_TEXT_COLUMNS,
@@ -54756,8 +54748,8 @@ var wp;
               )
             }
           ),
-          hasTextDecorationControl && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasTextDecorationControl && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               className: "single-column",
               label: (0, import_i18n182.__)("Decoration"),
@@ -54765,7 +54757,7 @@ var wp;
               onDeselect: resetTextDecoration,
               isShownByDefault: defaultControls.textDecoration,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 TextDecorationControl,
                 {
                   value: textDecoration,
@@ -54776,8 +54768,8 @@ var wp;
               )
             }
           ),
-          hasWritingModeControl && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasWritingModeControl && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               className: "single-column",
               label: (0, import_i18n182.__)("Orientation"),
@@ -54785,7 +54777,7 @@ var wp;
               onDeselect: resetWritingMode,
               isShownByDefault: defaultControls.writingMode,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 WritingModeControl,
                 {
                   value: writingMode,
@@ -54796,15 +54788,15 @@ var wp;
               )
             }
           ),
-          hasTextTransformControl && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
-            import_components191.__experimentalToolsPanelItem,
+          hasTextTransformControl && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+            import_components192.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n182.__)("Letter case"),
               hasValue: hasTextTransform,
               onDeselect: resetTextTransform,
               isShownByDefault: defaultControls.textTransform,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 TextTransformControl,
                 {
                   value: textTransform,
@@ -54817,8 +54809,8 @@ var wp;
               )
             }
           ),
-          hasTextAlignmentControl && /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(
-            import_components191.__experimentalToolsPanelItem,
+          hasTextAlignmentControl && /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(
+            import_components192.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n182.__)("Text alignment"),
               hasValue: hasTextAlign,
@@ -54826,7 +54818,7 @@ var wp;
               isShownByDefault: defaultControls.textAlign,
               panelId,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                   TextAlignmentControl,
                   {
                     value: textAlign,
@@ -54836,7 +54828,7 @@ var wp;
                     __nextHasNoMarginBottom: true
                   }
                 ),
-                textAlign === "justify" && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(import_components191.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n182.__)(
+                textAlign === "justify" && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(import_components192.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n182.__)(
                   "Justified text can reduce readability. For better accessibility, use left-aligned text instead."
                 ) }) })
               ]
@@ -54849,11 +54841,11 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/dimensions-panel.js
   var import_i18n185 = __toESM(require_i18n());
-  var import_components194 = __toESM(require_components());
+  var import_components195 = __toESM(require_components());
   var import_element198 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/child-layout-control/index.js
-  var import_components192 = __toESM(require_components());
+  var import_components193 = __toESM(require_components());
   var import_i18n183 = __toESM(require_i18n());
   var import_element197 = __toESM(require_element());
   var import_data159 = __toESM(require_data());
@@ -54878,7 +54870,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/child-layout-control/index.js
-  var import_jsx_runtime356 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime357 = __toESM(require_jsx_runtime());
   function helpText(selfStretch, parentLayout) {
     const { orientation = "horizontal" } = parentLayout;
     if (selfStretch === "fill") {
@@ -54904,7 +54896,7 @@ var wp;
     } = parentLayout ?? {};
     const parentLayoutType = parentType || defaultParentType;
     if (parentLayoutType === "flex") {
-      return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
         FlexControls,
         {
           childLayout,
@@ -54915,7 +54907,7 @@ var wp;
         }
       );
     } else if (parentLayoutType === "grid") {
-      return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
         GridControls,
         {
           childLayout,
@@ -54940,7 +54932,7 @@ var wp;
     const hasFlexValue = () => !!selfStretch;
     const flexResetLabel = orientation === "horizontal" ? (0, import_i18n183.__)("Width") : (0, import_i18n183.__)("Height");
     const [availableUnits] = useSettings("spacing.units");
-    const units2 = (0, import_components192.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components193.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || [
         "%",
         "px",
@@ -54964,10 +54956,10 @@ var wp;
         });
       }
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(
-      import_components192.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(
+      import_components193.__experimentalVStack,
       {
-        as: import_components192.__experimentalToolsPanelItem,
+        as: import_components193.__experimentalToolsPanelItem,
         spacing: 2,
         hasValue: hasFlexValue,
         label: flexResetLabel,
@@ -54975,8 +54967,8 @@ var wp;
         isShownByDefault,
         panelId,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(
-            import_components192.__experimentalToggleGroupControl,
+          /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(
+            import_components193.__experimentalToggleGroupControl,
             {
               __nextHasNoMarginBottom: true,
               size: "__unstable-large",
@@ -54992,8 +54984,8 @@ var wp;
               },
               isBlock: true,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-                  import_components192.__experimentalToggleGroupControlOption,
+                /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+                  import_components193.__experimentalToggleGroupControlOption,
                   {
                     value: "fit",
                     label: (0, import_i18n183._x)(
@@ -55003,8 +54995,8 @@ var wp;
                   },
                   "fit"
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-                  import_components192.__experimentalToggleGroupControlOption,
+                /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+                  import_components193.__experimentalToggleGroupControlOption,
                   {
                     value: "fill",
                     label: (0, import_i18n183._x)(
@@ -55014,8 +55006,8 @@ var wp;
                   },
                   "fill"
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-                  import_components192.__experimentalToggleGroupControlOption,
+                /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+                  import_components193.__experimentalToggleGroupControlOption,
                   {
                     value: "fixed",
                     label: (0, import_i18n183._x)(
@@ -55028,8 +55020,8 @@ var wp;
               ]
             }
           ),
-          selfStretch === "fixed" && /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-            import_components192.__experimentalUnitControl,
+          selfStretch === "fixed" && /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+            import_components193.__experimentalUnitControl,
             {
               size: "__unstable-large",
               units: units2,
@@ -55086,19 +55078,19 @@ var wp;
     };
     const maxColumnSpan = columnCount ? columnCount - (columnStart ?? 1) + 1 : void 0;
     const maxRowSpan = window.__experimentalEnableGridInteractivity && rowCount ? rowCount - (rowStart ?? 1) + 1 : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(import_jsx_runtime356.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(
-        import_components192.Flex,
+    return /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(import_jsx_runtime357.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(
+        import_components193.Flex,
         {
-          as: import_components192.__experimentalToolsPanelItem,
+          as: import_components193.__experimentalToolsPanelItem,
           hasValue: hasSpanValue,
           label: (0, import_i18n183.__)("Grid span"),
           onDeselect: resetGridSpans,
           isShownByDefault,
           panelId,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(import_components192.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-              import_components192.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_components193.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+              import_components193.__experimentalInputControl,
               {
                 size: "__unstable-large",
                 label: (0, import_i18n183.__)("Column span"),
@@ -55118,8 +55110,8 @@ var wp;
                 max: maxColumnSpan
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(import_components192.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-              import_components192.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_components193.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+              import_components193.__experimentalInputControl,
               {
                 size: "__unstable-large",
                 label: (0, import_i18n183.__)("Row span"),
@@ -55145,18 +55137,18 @@ var wp;
       window.__experimentalEnableGridInteractivity && // Use Flex with an explicit width on the FlexItem instead of HStack to
       // work around an issue in webkit where inputs with a max attribute are
       // sized incorrectly.
-      /* @__PURE__ */ (0, import_jsx_runtime356.jsxs)(
-        import_components192.Flex,
+      /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(
+        import_components193.Flex,
         {
-          as: import_components192.__experimentalToolsPanelItem,
+          as: import_components193.__experimentalToolsPanelItem,
           hasValue: hasStartValue,
           label: (0, import_i18n183.__)("Grid placement"),
           onDeselect: resetGridStarts,
           isShownByDefault: false,
           panelId,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(import_components192.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-              import_components192.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_components193.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+              import_components193.__experimentalInputControl,
               {
                 size: "__unstable-large",
                 label: (0, import_i18n183.__)("Column"),
@@ -55185,8 +55177,8 @@ var wp;
                 max: columnCount ? columnCount - (columnSpan ?? 1) + 1 : void 0
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(import_components192.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
-              import_components192.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_components193.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+              import_components193.__experimentalInputControl,
               {
                 size: "__unstable-large",
                 label: (0, import_i18n183.__)("Row"),
@@ -55222,9 +55214,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/aspect-ratio-tool.js
-  var import_components193 = __toESM(require_components());
+  var import_components194 = __toESM(require_components());
   var import_i18n184 = __toESM(require_i18n());
-  var import_jsx_runtime357 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime358 = __toESM(require_jsx_runtime());
   function AspectRatioTool({
     panelId,
     value,
@@ -55266,16 +55258,16 @@ var wp;
         hidden: true
       }
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
-      import_components193.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+      import_components194.__experimentalToolsPanelItem,
       {
         hasValue: hasValue ? hasValue : () => displayValue !== defaultValue,
         label: (0, import_i18n184.__)("Aspect ratio"),
         onDeselect: () => onChange(void 0),
         isShownByDefault,
         panelId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
-          import_components193.SelectControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+          import_components194.SelectControl,
           {
             label: (0, import_i18n184.__)("Aspect ratio"),
             value: displayValue,
@@ -55290,7 +55282,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/dimensions-panel.js
-  var import_jsx_runtime358 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime359 = __toESM(require_jsx_runtime());
   var AXIAL_SIDES = ["horizontal", "vertical"];
   function useHasDimensionsPanel(settings2) {
     const hasContentSize = useHasContentSize(settings2);
@@ -55395,8 +55387,8 @@ var wp;
       const updatedValue = resetAllFilter(value);
       onChange(updatedValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-      import_components194.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+      import_components195.__experimentalToolsPanel,
       {
         label: (0, import_i18n185.__)("Dimensions"),
         resetAll,
@@ -55450,7 +55442,7 @@ var wp;
       );
     };
     const showSpacingPresetsControl = useHasSpacingPresets(settings2);
-    const units2 = (0, import_components194.__experimentalUseCustomUnits)({
+    const units2 = (0, import_components195.__experimentalUseCustomUnits)({
       availableUnits: settings2?.spacing?.units || [
         "%",
         "px",
@@ -55619,7 +55611,7 @@ var wp;
       };
     }, []);
     const onMouseLeaveControls = () => onVisualize(false);
-    return /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)(
       Wrapper,
       {
         resetAllFilter,
@@ -55627,17 +55619,17 @@ var wp;
         onChange,
         panelId,
         children: [
-          (showContentSizeControl || showWideSizeControl) && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)("span", { className: "span-columns", children: (0, import_i18n185.__)("Set the width of the main content area.") }),
-          showContentSizeControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-            import_components194.__experimentalToolsPanelItem,
+          (showContentSizeControl || showWideSizeControl) && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)("span", { className: "span-columns", children: (0, import_i18n185.__)("Set the width of the main content area.") }),
+          showContentSizeControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+            import_components195.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n185.__)("Content width"),
               hasValue: hasUserSetContentSizeValue,
               onDeselect: resetContentSizeValue,
               isShownByDefault: defaultControls.contentSize ?? DEFAULT_CONTROLS4.contentSize,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-                import_components194.__experimentalUnitControl,
+              children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                import_components195.__experimentalUnitControl,
                 {
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n185.__)("Content width"),
@@ -55647,21 +55639,21 @@ var wp;
                     setContentSizeValue(nextContentSize);
                   },
                   units: units2,
-                  prefix: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_components194.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(icon_default, { icon: align_none_default }) })
+                  prefix: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(import_components195.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(icon_default, { icon: align_none_default }) })
                 }
               )
             }
           ),
-          showWideSizeControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-            import_components194.__experimentalToolsPanelItem,
+          showWideSizeControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+            import_components195.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n185.__)("Wide width"),
               hasValue: hasUserSetWideSizeValue,
               onDeselect: resetWideSizeValue,
               isShownByDefault: defaultControls.wideSize ?? DEFAULT_CONTROLS4.wideSize,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-                import_components194.__experimentalUnitControl,
+              children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                import_components195.__experimentalUnitControl,
                 {
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n185.__)("Wide width"),
@@ -55671,13 +55663,13 @@ var wp;
                     setWideSizeValue(nextWideSize);
                   },
                   units: units2,
-                  prefix: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_components194.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(icon_default, { icon: stretch_wide_default }) })
+                  prefix: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(import_components195.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(icon_default, { icon: stretch_wide_default }) })
                 }
               )
             }
           ),
-          showPaddingControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(
-            import_components194.__experimentalToolsPanelItem,
+          showPaddingControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)(
+            import_components195.__experimentalToolsPanelItem,
             {
               hasValue: hasPaddingValue,
               label: (0, import_i18n185.__)("Padding"),
@@ -55688,8 +55680,8 @@ var wp;
               }),
               panelId,
               children: [
-                !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-                  import_components194.BoxControl,
+                !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                  import_components195.BoxControl,
                   {
                     __next40pxDefaultSize: true,
                     values: paddingValues,
@@ -55705,7 +55697,7 @@ var wp;
                     }
                   }
                 ),
-                showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+                showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
                   SpacingSizesControl,
                   {
                     values: paddingValues,
@@ -55721,8 +55713,8 @@ var wp;
               ]
             }
           ),
-          showMarginControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(
-            import_components194.__experimentalToolsPanelItem,
+          showMarginControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)(
+            import_components195.__experimentalToolsPanelItem,
             {
               hasValue: hasMarginValue,
               label: (0, import_i18n185.__)("Margin"),
@@ -55733,8 +55725,8 @@ var wp;
               }),
               panelId,
               children: [
-                !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-                  import_components194.BoxControl,
+                !showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                  import_components195.BoxControl,
                   {
                     __next40pxDefaultSize: true,
                     values: marginValues,
@@ -55757,7 +55749,7 @@ var wp;
                     splitOnAxis: isAxialMargin
                   }
                 ),
-                showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+                showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
                   SpacingSizesControl,
                   {
                     values: marginValues,
@@ -55774,8 +55766,8 @@ var wp;
               ]
             }
           ),
-          showGapControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(
-            import_components194.__experimentalToolsPanelItem,
+          showGapControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)(
+            import_components195.__experimentalToolsPanelItem,
             {
               hasValue: hasGapValue,
               label: (0, import_i18n185.__)("Block spacing"),
@@ -55790,8 +55782,8 @@ var wp;
               }),
               panelId,
               children: [
-                !showSpacingPresetsControl && (isAxialGap ? /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-                  import_components194.BoxControl,
+                !showSpacingPresetsControl && (isAxialGap ? /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                  import_components195.BoxControl,
                   {
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n185.__)("Block spacing"),
@@ -55803,8 +55795,8 @@ var wp;
                     allowReset: false,
                     splitOnAxis: isAxialGap
                   }
-                ) : /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-                  import_components194.__experimentalUnitControl,
+                ) : /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                  import_components195.__experimentalUnitControl,
                   {
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n185.__)("Block spacing"),
@@ -55814,7 +55806,7 @@ var wp;
                     value: gapValue
                   }
                 )),
-                showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+                showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
                   SpacingSizesControl,
                   {
                     label: (0, import_i18n185.__)("Block spacing"),
@@ -55829,7 +55821,7 @@ var wp;
               ]
             }
           ),
-          showChildLayoutControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+          showChildLayoutControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
             ChildLayoutControl,
             {
               value: childLayout,
@@ -55839,15 +55831,15 @@ var wp;
               isShownByDefault: defaultControls.childLayout ?? DEFAULT_CONTROLS4.childLayout
             }
           ),
-          showMinHeightControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-            import_components194.__experimentalToolsPanelItem,
+          showMinHeightControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+            import_components195.__experimentalToolsPanelItem,
             {
               hasValue: hasMinHeightValue,
               label: (0, import_i18n185.__)("Minimum height"),
               onDeselect: resetMinHeightValue,
               isShownByDefault: defaultControls.minHeight ?? DEFAULT_CONTROLS4.minHeight,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
                 HeightControl,
                 {
                   label: (0, import_i18n185.__)("Minimum height"),
@@ -55857,15 +55849,15 @@ var wp;
               )
             }
           ),
-          showWidthControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-            import_components194.__experimentalToolsPanelItem,
+          showWidthControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+            import_components195.__experimentalToolsPanelItem,
             {
               hasValue: hasWidthValue,
               label: (0, import_i18n185.__)("Width"),
               onDeselect: resetWidthValue,
               isShownByDefault: defaultControls.width ?? DEFAULT_CONTROLS4.width,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
                 HeightControl,
                 {
                   label: (0, import_i18n185.__)("Width"),
@@ -55875,7 +55867,7 @@ var wp;
               )
             }
           ),
-          showAspectRatioControl && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+          showAspectRatioControl && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
             AspectRatioTool,
             {
               hasValue: hasAspectRatioValue,
@@ -55891,21 +55883,21 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/border-panel.js
-  var import_components196 = __toESM(require_components());
+  var import_components197 = __toESM(require_components());
   var import_element200 = __toESM(require_element());
   var import_i18n187 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/global-styles/shadow-panel-components.js
   var import_i18n186 = __toESM(require_i18n());
-  var import_components195 = __toESM(require_components());
+  var import_components196 = __toESM(require_components());
   var import_element199 = __toESM(require_element());
-  var import_jsx_runtime359 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime360 = __toESM(require_jsx_runtime());
   var EMPTY_ARRAY11 = [];
   function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings2 }) {
     const shadows = useShadowPresets(settings2);
-    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)("div", { className: "block-editor-global-styles__shadow-popover-container", children: /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)(import_components195.__experimentalVStack, { spacing: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(import_components195.__experimentalHeading, { level: 5, children: (0, import_i18n186.__)("Drop shadow") }),
-      /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: "block-editor-global-styles__shadow-popover-container", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(import_components196.__experimentalVStack, { spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components196.__experimentalHeading, { level: 5, children: (0, import_i18n186.__)("Drop shadow") }),
+      /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
         ShadowPresets,
         {
           presets: shadows,
@@ -55913,8 +55905,8 @@ var wp;
           onSelect: onShadowChange
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime359.jsx)("div", { className: "block-editor-global-styles__clear-shadow", children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-        import_components195.Button,
+      /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: "block-editor-global-styles__clear-shadow", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+        import_components196.Button,
         {
           __next40pxDefaultSize: true,
           variant: "tertiary",
@@ -55927,13 +55919,13 @@ var wp;
     ] }) });
   }
   function ShadowPresets({ presets, activeShadow, onSelect }) {
-    return !presets ? null : /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-      import_components195.Composite,
+    return !presets ? null : /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+      import_components196.Composite,
       {
         role: "listbox",
         className: "block-editor-global-styles__shadow__list",
         "aria-label": (0, import_i18n186.__)("Drop shadows"),
-        children: presets.map(({ name, slug, shadow }) => /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+        children: presets.map(({ name, slug, shadow }) => /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
           ShadowIndicator,
           {
             label: name,
@@ -55948,8 +55940,8 @@ var wp;
     );
   }
   function ShadowIndicator({ type, label, isActive, onSelect, shadow }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(import_components195.Tooltip, { text: label, children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-      import_components195.Composite.Item,
+    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components196.Tooltip, { text: label, children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+      import_components196.Composite.Item,
       {
         role: "option",
         "aria-label": label,
@@ -55957,7 +55949,7 @@ var wp;
         className: clsx_default("block-editor-global-styles__shadow__item", {
           "is-active": isActive
         }),
-        render: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
           "button",
           {
             className: clsx_default(
@@ -55969,7 +55961,7 @@ var wp;
             onClick: onSelect,
             style: { boxShadow: shadow },
             "aria-label": label,
-            children: isActive && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(icon_default, { icon: check_default })
+            children: isActive && /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(icon_default, { icon: check_default })
           }
         )
       }
@@ -55981,13 +55973,13 @@ var wp;
       offset: 36,
       shift: true
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-      import_components195.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+      import_components196.Dropdown,
       {
         popoverProps: popoverProps3,
         className: "block-editor-global-styles__shadow-dropdown",
         renderToggle: renderShadowToggle(shadow, onShadowChange),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(import_components195.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components196.__experimentalDropdownContentWrapper, { paddingSize: "medium", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
           ShadowPopoverContainer,
           {
             shadow,
@@ -56024,9 +56016,9 @@ var wp;
         ),
         label: (0, import_i18n186.__)("Remove")
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)(import_jsx_runtime359.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(import_components195.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime359.jsxs)(import_components195.__experimentalHStack, { justify: "flex-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(import_jsx_runtime360.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components196.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(import_components196.__experimentalHStack, { justify: "flex-start", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
             icon_default,
             {
               className: "block-editor-global-styles__toggle-icon",
@@ -56034,10 +56026,10 @@ var wp;
               size: 24
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(import_components195.FlexItem, { children: (0, import_i18n186.__)("Drop shadow") })
+          /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components196.FlexItem, { children: (0, import_i18n186.__)("Drop shadow") })
         ] }) }),
-        !!shadow && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-          import_components195.Button,
+        !!shadow && /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+          import_components196.Button,
           {
             __next40pxDefaultSize: true,
             size: "small",
@@ -56077,7 +56069,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/border-panel.js
-  var import_jsx_runtime360 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime361 = __toESM(require_jsx_runtime());
   function useHasBorderPanel(settings2) {
     const controls = Object.values(useHasBorderPanelControls(settings2));
     return controls.some(Boolean);
@@ -56121,8 +56113,8 @@ var wp;
       const updatedValue = resetAllFilter(value);
       onChange(updatedValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-      import_components196.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+      import_components197.__experimentalToolsPanel,
       {
         label,
         resetAll,
@@ -56163,7 +56155,7 @@ var wp;
       return colorObject ? "var:preset|color|" + colorObject.slug : colorValue;
     };
     const border = (0, import_element200.useMemo)(() => {
-      if ((0, import_components196.__experimentalHasSplitBorders)(inheritedValue?.border)) {
+      if ((0, import_components197.__experimentalHasSplitBorders)(inheritedValue?.border)) {
         const borderValue = { ...inheritedValue?.border };
         ["top", "right", "bottom", "left"].forEach((side) => {
           borderValue[side] = {
@@ -56232,7 +56224,7 @@ var wp;
     };
     const onBorderChange = (newBorder) => {
       const updatedBorder = { ...newBorder };
-      if ((0, import_components196.__experimentalHasSplitBorders)(updatedBorder)) {
+      if ((0, import_components197.__experimentalHasSplitBorders)(updatedBorder)) {
         ["top", "right", "bottom", "left"].forEach((side) => {
           if (updatedBorder[side]) {
             updatedBorder[side] = {
@@ -56260,7 +56252,7 @@ var wp;
       hasShadowControl,
       hasBorderControl
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(
       Wrapper,
       {
         resetAllFilter,
@@ -56269,16 +56261,16 @@ var wp;
         panelId,
         label,
         children: [
-          (showBorderWidth || showBorderColor) && /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-            import_components196.__experimentalToolsPanelItem,
+          (showBorderWidth || showBorderColor) && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+            import_components197.__experimentalToolsPanelItem,
             {
-              hasValue: () => (0, import_components196.__experimentalIsDefinedBorder)(value?.border),
+              hasValue: () => (0, import_components197.__experimentalIsDefinedBorder)(value?.border),
               label: (0, import_i18n187.__)("Border"),
               onDeselect: () => resetBorder(),
               isShownByDefault: showBorderByDefault,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-                import_components196.BorderBoxControl,
+              children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+                import_components197.BorderBoxControl,
                 {
                   colors: colors2,
                   enableAlpha: true,
@@ -56295,15 +56287,15 @@ var wp;
               )
             }
           ),
-          showBorderRadius && /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
-            import_components196.__experimentalToolsPanelItem,
+          showBorderRadius && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+            import_components197.__experimentalToolsPanelItem,
             {
               hasValue: hasBorderRadius,
               label: (0, import_i18n187.__)("Radius"),
               onDeselect: () => setBorderRadius(void 0),
               isShownByDefault: defaultControls.radius,
               panelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
                 BorderRadiusControl,
                 {
                   presets: settings2?.border?.radiusSizes,
@@ -56315,8 +56307,8 @@ var wp;
               )
             }
           ),
-          hasShadowControl && /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)(
-            import_components196.__experimentalToolsPanelItem,
+          hasShadowControl && /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(
+            import_components197.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n187.__)("Shadow"),
               hasValue: hasShadow,
@@ -56324,8 +56316,8 @@ var wp;
               isShownByDefault: defaultControls.shadow,
               panelId,
               children: [
-                hasBorderControl ? /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components196.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n187.__)("Shadow") }) : null,
-                /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+                hasBorderControl ? /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components197.BaseControl.VisualLabel, { as: "legend", children: (0, import_i18n187.__)("Shadow") }) : null,
+                /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
                   ShadowPopover,
                   {
                     shadow,
@@ -56342,10 +56334,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/color-panel.js
-  var import_components197 = __toESM(require_components());
+  var import_components198 = __toESM(require_components());
   var import_element201 = __toESM(require_element());
   var import_i18n188 = __toESM(require_i18n());
-  var import_jsx_runtime361 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime362 = __toESM(require_jsx_runtime());
   function useHasColorPanel(settings2) {
     const hasTextPanel = useHasTextPanel(settings2);
     const hasBackgroundPanel = useHasBackgroundColorPanel(settings2);
@@ -56395,8 +56387,8 @@ var wp;
       const updatedValue = resetAllFilter(value);
       onChange(updatedValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-      import_components197.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
+      import_components198.__experimentalToolsPanel,
       {
         label: label || (0, import_i18n188.__)("Elements"),
         resetAll,
@@ -56407,7 +56399,7 @@ var wp;
         __experimentalFirstVisibleItemClass: "first",
         __experimentalLastVisibleItemClass: "last",
         dropdownMenuProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)("div", { className: "color-block-support-panel__inner-wrapper", children })
+        children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)("div", { className: "color-block-support-panel__inner-wrapper", children })
       }
     );
   }
@@ -56424,10 +56416,10 @@ var wp;
     offset: 36,
     shift: true
   };
-  var { Tabs: Tabs4 } = unlock(import_components197.privateApis);
-  var LabeledColorIndicators = ({ indicators, label }) => /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(import_components197.__experimentalHStack, { justify: "flex-start", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components197.__experimentalZStack, { isLayered: false, offset: -8, children: indicators.map((indicator, index) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components197.Flex, { expanded: false, children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components197.ColorIndicator, { colorValue: indicator }) }, index)) }),
-    /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components197.FlexItem, { className: "block-editor-panel-color-gradient-settings__color-name", children: label })
+  var { Tabs: Tabs4 } = unlock(import_components198.privateApis);
+  var LabeledColorIndicators = ({ indicators, label }) => /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(import_components198.__experimentalHStack, { justify: "flex-start", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.__experimentalZStack, { isLayered: false, offset: -8, children: indicators.map((indicator, index) => /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.Flex, { expanded: false, children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.ColorIndicator, { colorValue: indicator }) }, index)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.FlexItem, { className: "block-editor-panel-color-gradient-settings__color-name", children: label })
   ] });
   function ColorPanelTab({
     isGradient,
@@ -56436,7 +56428,7 @@ var wp;
     setValue,
     colorGradientControlSettings
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
       control_default,
       {
         ...colorGradientControlSettings,
@@ -56465,8 +56457,8 @@ var wp;
     const currentTab = tabs.find((tab) => tab.userValue !== void 0);
     const { key: firstTabKey, ...firstTab } = tabs[0] ?? {};
     const colorGradientDropdownButtonRef = (0, import_element201.useRef)(void 0);
-    return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-      import_components197.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
+      import_components198.__experimentalToolsPanelItem,
       {
         className: "block-editor-tools-panel-color-gradient-settings__item",
         hasValue,
@@ -56474,8 +56466,8 @@ var wp;
         onDeselect: resetValue,
         isShownByDefault,
         panelId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-          import_components197.Dropdown,
+        children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
+          import_components198.Dropdown,
           {
             popoverProps,
             className: "block-editor-tools-panel-color-gradient-settings__dropdown",
@@ -56489,16 +56481,16 @@ var wp;
                 "aria-expanded": isOpen,
                 ref: colorGradientDropdownButtonRef
               };
-              return /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(import_jsx_runtime361.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components197.Button, { ...toggleProps, __next40pxDefaultSize: true, children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+              return /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(import_jsx_runtime362.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.Button, { ...toggleProps, __next40pxDefaultSize: true, children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
                   LabeledColorIndicators,
                   {
                     indicators,
                     label
                   }
                 ) }),
-                hasValue() && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-                  import_components197.Button,
+                hasValue() && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
+                  import_components198.Button,
                   {
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n188.__)("Reset"),
@@ -56516,8 +56508,8 @@ var wp;
                 )
               ] });
             },
-            renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components197.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: [
-              tabs.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+            renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)("div", { className: "block-editor-panel-color-gradient-settings__dropdown-content", children: [
+              tabs.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
                 ColorPanelTab,
                 {
                   ...firstTab,
@@ -56525,8 +56517,8 @@ var wp;
                 },
                 firstTabKey
               ),
-              tabs.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(Tabs4, { defaultTabId: currentTab?.key, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(Tabs4.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+              tabs.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(Tabs4, { defaultTabId: currentTab?.key, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(Tabs4.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
                   Tabs4.Tab,
                   {
                     tabId: tab.key,
@@ -56536,12 +56528,12 @@ var wp;
                 )) }),
                 tabs.map((tab) => {
                   const { key: tabKey, ...restTabProps } = tab;
-                  return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
                     Tabs4.TabPanel,
                     {
                       tabId: tabKey,
                       focusable: false,
-                      children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
                         ColorPanelTab,
                         {
                           ...restTabProps,
@@ -56935,7 +56927,7 @@ var wp;
         ].filter(Boolean)
       });
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(
       Wrapper,
       {
         resetAllFilter,
@@ -56946,7 +56938,7 @@ var wp;
         children: [
           items.map((item) => {
             const { key, ...restItem } = item;
-            return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
               ColorPanelDropdown,
               {
                 ...restItem,
@@ -56968,10 +56960,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/filters-panel.js
-  var import_components198 = __toESM(require_components());
+  var import_components199 = __toESM(require_components());
   var import_i18n189 = __toESM(require_i18n());
   var import_element202 = __toESM(require_element());
-  var import_jsx_runtime362 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime363 = __toESM(require_jsx_runtime());
   var EMPTY_ARRAY12 = [];
   function useMultiOriginColorPresets(settings2, { presetSetting, defaultSetting }) {
     const disableDefault = !settings2?.color?.[defaultSetting];
@@ -57005,8 +56997,8 @@ var wp;
       const updatedValue = resetAllFilter(value);
       onChange(updatedValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-      import_components198.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+      import_components199.__experimentalToolsPanel,
       {
         label: (0, import_i18n189._x)("Filters", "Name for applying graphical effects"),
         resetAll,
@@ -57026,9 +57018,9 @@ var wp;
     className: "block-editor-duotone-control__popover",
     headerTitle: (0, import_i18n189.__)("Duotone")
   };
-  var LabeledColorIndicator2 = ({ indicator, label }) => /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(import_components198.__experimentalHStack, { justify: "flex-start", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.__experimentalZStack, { isLayered: false, offset: -8, children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.Flex, { expanded: false, children: indicator === "unset" || !indicator ? /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" }) : /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.DuotoneSwatch, { values: indicator }) }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.FlexItem, { title: label, children: label })
+  var LabeledColorIndicator2 = ({ indicator, label }) => /* @__PURE__ */ (0, import_jsx_runtime363.jsxs)(import_components199.__experimentalHStack, { justify: "flex-start", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_components199.__experimentalZStack, { isLayered: false, offset: -8, children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_components199.Flex, { expanded: false, children: indicator === "unset" || !indicator ? /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_components199.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" }) : /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_components199.DuotoneSwatch, { values: indicator }) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_components199.FlexItem, { title: label, children: label })
   ] });
   var renderToggle2 = (duotone, resetDuotone) => ({ onToggle, isOpen }) => {
     const duotoneButtonRef = (0, import_element202.useRef)(void 0);
@@ -57052,16 +57044,16 @@ var wp;
       className: "block-editor-panel-duotone-settings__reset",
       label: (0, import_i18n189.__)("Reset")
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(import_jsx_runtime362.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime363.jsxs)(import_jsx_runtime363.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_components199.Button, { __next40pxDefaultSize: true, ...toggleProps, children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
         LabeledColorIndicator2,
         {
           indicator: duotone,
           label: (0, import_i18n189.__)("Duotone")
         }
       ) }),
-      duotone && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-        import_components198.Button,
+      duotone && /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+        import_components199.Button,
         {
           size: "small",
           icon: reset_default,
@@ -57110,33 +57102,33 @@ var wp;
         }
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
       Wrapper,
       {
         resetAllFilter,
         value,
         onChange,
         panelId,
-        children: hasDuotoneEnabled && /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-          import_components198.__experimentalToolsPanelItem,
+        children: hasDuotoneEnabled && /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+          import_components199.__experimentalToolsPanelItem,
           {
             label: (0, import_i18n189.__)("Duotone"),
             hasValue: hasDuotone,
             onDeselect: resetDuotone,
             isShownByDefault: defaultControls.duotone,
             panelId,
-            children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-              import_components198.Dropdown,
+            children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+              import_components199.Dropdown,
               {
                 popoverProps: popoverProps2,
                 className: "block-editor-global-styles-filters-panel__dropdown",
                 renderToggle: renderToggle2(duotone, resetDuotone),
-                renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components198.__experimentalDropdownContentWrapper, { paddingSize: "small", children: /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(import_components198.MenuGroup, { label: (0, import_i18n189.__)("Duotone"), children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime362.jsx)("p", { children: (0, import_i18n189.__)(
+                renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_components199.__experimentalDropdownContentWrapper, { paddingSize: "small", children: /* @__PURE__ */ (0, import_jsx_runtime363.jsxs)(import_components199.MenuGroup, { label: (0, import_i18n189.__)("Duotone"), children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime363.jsx)("p", { children: (0, import_i18n189.__)(
                     "Create a two-tone color effect without losing your original image."
                   ) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-                    import_components198.DuotonePicker,
+                  /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
+                    import_components199.DuotonePicker,
                     {
                       colorPalette,
                       duotonePalette,
@@ -57156,9 +57148,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/image-settings-panel.js
-  var import_components199 = __toESM(require_components());
+  var import_components200 = __toESM(require_components());
   var import_i18n190 = __toESM(require_i18n());
-  var import_jsx_runtime363 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime364 = __toESM(require_jsx_runtime());
   function useHasImageSettingsPanel(name, value, inheritedValue) {
     return name === "core/image" && inheritedValue?.lightbox?.allowEditing || !!value?.lightbox;
   }
@@ -57181,23 +57173,23 @@ var wp;
     if (inheritedValue?.lightbox?.enabled) {
       lightboxChecked = inheritedValue.lightbox.enabled;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_jsx_runtime363.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
-      import_components199.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(import_jsx_runtime364.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
+      import_components200.__experimentalToolsPanel,
       {
         label: (0, import_i18n190._x)("Settings", "Image settings"),
         resetAll: resetLightbox,
         panelId,
         dropdownMenuProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
-          import_components199.__experimentalToolsPanelItem,
+        children: /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
+          import_components200.__experimentalToolsPanelItem,
           {
             hasValue: () => !!value?.lightbox,
             label: (0, import_i18n190.__)("Enlarge on click"),
             onDeselect: resetLightbox,
             isShownByDefault: true,
             panelId,
-            children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
-              import_components199.ToggleControl,
+            children: /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
+              import_components200.ToggleControl,
               {
                 __nextHasNoMarginBottom: true,
                 label: (0, import_i18n190.__)("Enlarge on click"),
@@ -57212,10 +57204,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/advanced-panel.js
-  var import_components200 = __toESM(require_components());
+  var import_components201 = __toESM(require_components());
   var import_element203 = __toESM(require_element());
   var import_i18n191 = __toESM(require_i18n());
-  var import_jsx_runtime364 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime365 = __toESM(require_jsx_runtime());
   function AdvancedPanel({
     value,
     onChange,
@@ -57251,10 +57243,10 @@ var wp;
         transformed === null ? (0, import_i18n191.__)("There is an error with your CSS structure.") : null
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime364.jsxs)(import_components200.__experimentalVStack, { spacing: 3, children: [
-      cssError && /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(import_components200.Notice, { status: "error", onRemove: () => setCSSError(null), children: cssError }),
-      /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
-        import_components200.TextareaControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_components201.__experimentalVStack, { spacing: 3, children: [
+      cssError && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components201.Notice, { status: "error", onRemove: () => setCSSError(null), children: cssError }),
+      /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+        import_components201.TextareaControl,
         {
           label: (0, import_i18n191.__)("Additional CSS"),
           __nextHasNoMarginBottom: true,
@@ -57269,11 +57261,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/global-styles/background-panel.js
-  var import_components202 = __toESM(require_components());
+  var import_components203 = __toESM(require_components());
   var import_element205 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/background-image-control/index.js
-  var import_components201 = __toESM(require_components());
+  var import_components202 = __toESM(require_components());
   var import_i18n192 = __toESM(require_i18n());
   var import_notices11 = __toESM(require_notices());
   var import_url12 = __toESM(require_url());
@@ -57281,7 +57273,7 @@ var wp;
   var import_data160 = __toESM(require_data());
   var import_dom38 = __toESM(require_dom());
   var import_blob3 = __toESM(require_blob());
-  var import_jsx_runtime365 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime366 = __toESM(require_jsx_runtime());
   var IMAGE_BACKGROUND_TYPE = "image";
   var BACKGROUND_POPOVER_PROPS = {
     placement: "left-start",
@@ -57341,19 +57333,19 @@ var wp;
       }
     }, [isOpen, onToggleCallback]);
     const renderPreviewContent = () => {
-      return /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(
-        import_components201.__experimentalHStack,
+      return /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(
+        import_components202.__experimentalHStack,
         {
           justify: "flex-start",
           as: "span",
           className: "block-editor-global-styles-background-panel__inspector-preview-inner",
           children: [
-            imgUrl && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+            imgUrl && /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
               "span",
               {
                 className: "block-editor-global-styles-background-panel__inspector-image-indicator-wrapper",
                 "aria-hidden": true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
                   "span",
                   {
                     className: "block-editor-global-styles-background-panel__inspector-image-indicator",
@@ -57364,16 +57356,16 @@ var wp;
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_components201.FlexItem, { as: "span", style: imgUrl ? {} : { flexGrow: 1 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-                import_components201.__experimentalTruncate,
+            /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(import_components202.FlexItem, { as: "span", style: imgUrl ? {} : { flexGrow: 1 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+                import_components202.__experimentalTruncate,
                 {
                   numberOfLines: 1,
                   className: "block-editor-global-styles-background-panel__inspector-media-replace-title",
                   children: label
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components201.VisuallyHidden, { as: "span", children: imgUrl ? (0, import_i18n192.sprintf)(
+              /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components202.VisuallyHidden, { as: "span", children: imgUrl ? (0, import_i18n192.sprintf)(
                 /* translators: %s: file name */
                 (0, import_i18n192.__)("Background image: %s"),
                 filename || label
@@ -57383,7 +57375,7 @@ var wp;
         }
       );
     };
-    return as === "button" ? /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components201.Button, { __next40pxDefaultSize: true, ...restToggleProps, children: renderPreviewContent() }) : renderPreviewContent();
+    return as === "button" ? /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components202.Button, { __next40pxDefaultSize: true, ...restToggleProps, children: renderPreviewContent() }) : renderPreviewContent();
   }
   function BackgroundControlsPanel({
     label,
@@ -57399,8 +57391,8 @@ var wp;
       return;
     }
     const imgLabel = label || (0, import_url12.getFilename)(imgUrl) || (0, import_i18n192.__)("Add background image");
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-      import_components201.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+      import_components202.Dropdown,
       {
         popoverProps: BACKGROUND_POPOVER_PROPS,
         renderToggle: ({ onToggle, isOpen }) => {
@@ -57413,8 +57405,8 @@ var wp;
             ),
             isOpen
           };
-          return /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_jsx_runtime365.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(import_jsx_runtime366.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
               InspectorImagePreviewItem,
               {
                 imgUrl,
@@ -57425,8 +57417,8 @@ var wp;
                 onToggleCallback
               }
             ),
-            onReset && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-              import_components201.Button,
+            onReset && /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+              import_components202.Button,
               {
                 __next40pxDefaultSize: true,
                 label: (0, import_i18n192.__)("Reset"),
@@ -57444,8 +57436,8 @@ var wp;
             )
           ] });
         },
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-          import_components201.__experimentalDropdownContentWrapper,
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+          import_components202.__experimentalDropdownContentWrapper,
           {
             className: "block-editor-global-styles-background-panel__dropdown-content-wrapper",
             paddingSize: "medium",
@@ -57456,7 +57448,7 @@ var wp;
     );
   }
   function LoadingSpinner() {
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components201.Placeholder, { className: "block-editor-global-styles-background-panel__loading", children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components201.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components202.Placeholder, { className: "block-editor-global-styles-background-panel__loading", children: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components202.Spinner, {}) });
   }
   function BackgroundImageControls({
     onChange,
@@ -57546,9 +57538,9 @@ var wp;
     );
     const canRemove = !hasValue && hasBackgroundImageValue(inheritedValue);
     const imgLabel = title || (0, import_url12.getFilename)(url) || (0, import_i18n192.__)("Add background image");
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)("div", { className: "block-editor-global-styles-background-panel__image-tools-panel-item", children: [
-      isUploading2 && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(LoadingSpinner, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)("div", { className: "block-editor-global-styles-background-panel__image-tools-panel-item", children: [
+      isUploading2 && /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(LoadingSpinner, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
         media_replace_flow_default,
         {
           mediaId: id,
@@ -57561,7 +57553,7 @@ var wp;
               "block-editor-global-styles-background-panel__media-replace-popover": displayInPanel
             })
           },
-          name: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+          name: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
             InspectorImagePreviewItem,
             {
               imgUrl: url,
@@ -57569,14 +57561,14 @@ var wp;
               label: imgLabel
             }
           ),
-          renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components201.Button, { ...props, __next40pxDefaultSize: true }),
+          renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components202.Button, { ...props, __next40pxDefaultSize: true }),
           onError: onUploadError,
           onReset: () => {
             focusToggleButton(containerRef);
             onResetImage();
           },
-          children: canRemove && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-            import_components201.MenuItem,
+          children: canRemove && /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+            import_components202.MenuItem,
             {
               onClick: () => {
                 focusToggleButton(containerRef);
@@ -57588,8 +57580,8 @@ var wp;
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-        import_components201.DropZone,
+      /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+        import_components202.DropZone,
         {
           onFilesDrop: onFilesDrop2,
           label: (0, import_i18n192.__)("Drop to upload")
@@ -57667,9 +57659,9 @@ var wp;
       )
     );
     const backgroundPositionValue = !positionValue && isUploadedImage && "contain" === sizeValue ? defaultValues?.backgroundPosition : positionValue;
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_components201.__experimentalVStack, { spacing: 3, className: "single-column", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-        import_components201.FocalPointPicker,
+    return /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(import_components202.__experimentalVStack, { spacing: 3, className: "single-column", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+        import_components202.FocalPointPicker,
         {
           __nextHasNoMarginBottom: true,
           label: (0, import_i18n192.__)("Focal point"),
@@ -57678,8 +57670,8 @@ var wp;
           onChange: updateBackgroundPosition
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-        import_components201.ToggleControl,
+      /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+        import_components202.ToggleControl,
         {
           __nextHasNoMarginBottom: true,
           label: (0, import_i18n192.__)("Fixed background"),
@@ -57687,8 +57679,8 @@ var wp;
           onChange: toggleScrollWithPage
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(
-        import_components201.__experimentalToggleGroupControl,
+      /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(
+        import_components202.__experimentalToggleGroupControl,
         {
           __nextHasNoMarginBottom: true,
           size: "__unstable-large",
@@ -57700,8 +57692,8 @@ var wp;
             sizeValue || defaultValues?.backgroundSize
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-              import_components201.__experimentalToggleGroupControlOption,
+            /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+              import_components202.__experimentalToggleGroupControlOption,
               {
                 value: "cover",
                 label: (0, import_i18n192._x)(
@@ -57711,8 +57703,8 @@ var wp;
               },
               "cover"
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-              import_components201.__experimentalToggleGroupControlOption,
+            /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+              import_components202.__experimentalToggleGroupControlOption,
               {
                 value: "contain",
                 label: (0, import_i18n192._x)(
@@ -57722,8 +57714,8 @@ var wp;
               },
               "contain"
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-              import_components201.__experimentalToggleGroupControlOption,
+            /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+              import_components202.__experimentalToggleGroupControlOption,
               {
                 value: "auto",
                 label: (0, import_i18n192._x)(
@@ -57736,9 +57728,9 @@ var wp;
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_components201.__experimentalHStack, { justify: "flex-start", spacing: 2, as: "span", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-          import_components201.__experimentalUnitControl,
+      /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(import_components202.__experimentalHStack, { justify: "flex-start", spacing: 2, as: "span", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+          import_components202.__experimentalUnitControl,
           {
             "aria-label": (0, import_i18n192.__)("Background image width"),
             onChange: updateBackgroundSize,
@@ -57750,8 +57742,8 @@ var wp;
             disabled: currentValueForToggle !== "auto" || currentValueForToggle === void 0
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-          import_components201.ToggleControl,
+        /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+          import_components202.ToggleControl,
           {
             __nextHasNoMarginBottom: true,
             label: (0, import_i18n192.__)("Repeat"),
@@ -57807,7 +57799,7 @@ var wp;
     const shouldShowBackgroundImageControls = hasImageValue && "none" !== imageValue && (settings2?.background?.backgroundSize || settings2?.background?.backgroundPosition || settings2?.background?.backgroundRepeat);
     const [isDropDownOpen, setIsDropDownOpen] = (0, import_element204.useState)(false);
     const containerRef = (0, import_element204.useRef)();
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
       "div",
       {
         ref: containerRef,
@@ -57817,7 +57809,7 @@ var wp;
             "is-open": isDropDownOpen
           }
         ),
-        children: shouldShowBackgroundImageControls ? /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+        children: shouldShowBackgroundImageControls ? /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
           BackgroundControlsPanel,
           {
             label: title,
@@ -57827,8 +57819,8 @@ var wp;
             hasImageValue,
             onReset: resetBackground,
             containerRef,
-            children: /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_components201.__experimentalVStack, { spacing: 3, className: "single-column", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(import_components202.__experimentalVStack, { spacing: 3, className: "single-column", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
                 BackgroundImageControls,
                 {
                   onChange,
@@ -57844,7 +57836,7 @@ var wp;
                   containerRef
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
                 BackgroundSizeControls,
                 {
                   onChange,
@@ -57855,7 +57847,7 @@ var wp;
               )
             ] })
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
+        ) : /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
           BackgroundImageControls,
           {
             onChange,
@@ -57876,7 +57868,7 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/background-panel.js
   var import_i18n193 = __toESM(require_i18n());
-  var import_jsx_runtime366 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime367 = __toESM(require_jsx_runtime());
   var DEFAULT_CONTROLS8 = {
     backgroundImage: true
   };
@@ -57900,8 +57892,8 @@ var wp;
       const updatedValue = resetAllFilter(value);
       onChange(updatedValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
-      import_components202.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
+      import_components203.__experimentalToolsPanel,
       {
         label: headerLabel,
         resetAll,
@@ -57930,7 +57922,7 @@ var wp;
         background: {}
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
       Wrapper,
       {
         resetAllFilter,
@@ -57938,15 +57930,15 @@ var wp;
         onChange,
         panelId,
         headerLabel,
-        children: showBackgroundImageControl && /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
-          import_components202.__experimentalToolsPanelItem,
+        children: showBackgroundImageControl && /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
+          import_components203.__experimentalToolsPanelItem,
           {
             hasValue: () => !!value?.background,
             label: (0, import_i18n193.__)("Image"),
             onDeselect: resetBackground,
             isShownByDefault: defaultControls.backgroundImage,
             panelId,
-            children: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
               BackgroundImagePanel,
               {
                 value,
@@ -57965,7 +57957,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/border.js
   var import_i18n194 = __toESM(require_i18n());
-  var import_jsx_runtime367 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime368 = __toESM(require_jsx_runtime());
   var BORDER_SUPPORT_KEY2 = "__experimentalBorder";
   var SHADOW_SUPPORT_KEY = "shadow";
   var getColorByProperty = (colors2, property, value) => {
@@ -58002,7 +57994,7 @@ var wp;
     return null;
   }
   function styleToAttributes(style) {
-    if ((0, import_components203.__experimentalHasSplitBorders)(style?.border)) {
+    if ((0, import_components204.__experimentalHasSplitBorders)(style?.border)) {
       return {
         style,
         borderColor: void 0
@@ -58021,7 +58013,7 @@ var wp;
     };
   }
   function attributesToStyle(attributes) {
-    if ((0, import_components203.__experimentalHasSplitBorders)(attributes.style?.border)) {
+    if ((0, import_components204.__experimentalHasSplitBorders)(attributes.style?.border)) {
       return attributes.style;
     }
     return {
@@ -58044,7 +58036,7 @@ var wp;
       },
       [resetAllFilter]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(
       inspector_controls_default,
       {
         group: "border",
@@ -58085,7 +58077,7 @@ var wp;
         "__experimentalDefaultControls"
       ])
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(
       BorderPanel,
       {
         as: BordersInspectorControl,
@@ -58224,7 +58216,7 @@ var wp;
   var import_blocks90 = __toESM(require_blocks());
   var import_data162 = __toESM(require_data());
   var import_element207 = __toESM(require_element());
-  var import_jsx_runtime368 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime369 = __toESM(require_jsx_runtime());
   var BACKGROUND_SUPPORT_KEY = "background";
   var BACKGROUND_BLOCK_DEFAULT_VALUES2 = {
     backgroundSize: "cover",
@@ -58285,7 +58277,7 @@ var wp;
         }
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(inspector_controls_default, { group: "background", resetAllFilter, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(inspector_controls_default, { group: "background", resetAllFilter, children });
   }
   function BackgroundImagePanel3({
     clientId,
@@ -58330,7 +58322,7 @@ var wp;
       BACKGROUND_SUPPORT_KEY,
       "defaultControls"
     ]);
-    return /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
       BackgroundImagePanel2,
       {
         inheritedValue,
@@ -58352,7 +58344,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/contrast-checker.js
   var import_element208 = __toESM(require_element());
-  var import_jsx_runtime369 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime370 = __toESM(require_jsx_runtime());
   function getComputedValue(node, property) {
     return node.ownerDocument.defaultView.getComputedStyle(node).getPropertyValue(property);
   }
@@ -58401,7 +58393,7 @@ var wp;
         () => window.requestAnimationFrame(updateColors)
       );
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
       contrast_checker_default,
       {
         backgroundColor: colors2.backgroundColor,
@@ -58413,7 +58405,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/color.js
-  var import_jsx_runtime370 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime371 = __toESM(require_jsx_runtime());
   var COLOR_SUPPORT_KEY2 = "color";
   var hasColorSupport = (blockNameOrType) => {
     const colorSupport = (0, import_blocks91.getBlockSupport)(blockNameOrType, COLOR_SUPPORT_KEY2);
@@ -58537,7 +58529,7 @@ var wp;
       },
       [resetAllFilter]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
       inspector_controls_default,
       {
         group: "color",
@@ -58602,7 +58594,7 @@ var wp;
       "enableContrastChecker"
     ]);
     const Wrapper = asWrapper || ColorInspectorControl;
-    return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
       ColorPanel,
       {
         as: Wrapper,
@@ -58616,7 +58608,7 @@ var wp;
           COLOR_SUPPORT_KEY2,
           "enableContrastChecker"
         ]),
-        children: enableContrastChecking && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(BlockColorContrastChecker, { clientId })
+        children: enableContrastChecking && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(BlockColorContrastChecker, { clientId })
       }
     );
   }
@@ -58716,7 +58708,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/styles-tab.js
-  var import_jsx_runtime371 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime372 = __toESM(require_jsx_runtime());
   function SectionBlockColorControls({
     blockName,
     clientId,
@@ -58739,7 +58731,7 @@ var wp;
     const setAttributes = (newAttributes) => {
       updateBlockAttributes2(clientId, newAttributes);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
       ColorEdit,
       {
         clientId,
@@ -58765,9 +58757,9 @@ var wp;
     contentClientIds
   }) => {
     const borderPanelLabel = useBorderPanelLabel({ blockName });
-    return /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_jsx_runtime371.Fragment, { children: [
-      hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(import_components204.PanelBody, { title: (0, import_i18n195.__)("Styles"), children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(block_styles_default, { clientId }) }) }),
-      isSectionBlock2 && window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_jsx_runtime372.Fragment, { children: [
+      hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime372.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components205.PanelBody, { title: (0, import_i18n195.__)("Styles"), children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(block_styles_default, { clientId }) }) }),
+      isSectionBlock2 && window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
         SectionBlockColorControls,
         {
           blockName,
@@ -58775,8 +58767,8 @@ var wp;
           contentClientIds
         }
       ),
-      !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_jsx_runtime371.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+      !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_jsx_runtime372.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           inspector_controls_default.Slot,
           {
             group: "color",
@@ -58784,54 +58776,54 @@ var wp;
             className: "color-block-support-panel__inner-wrapper"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           inspector_controls_default.Slot,
           {
             group: "background",
             label: (0, import_i18n195.__)("Background image")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(inspector_controls_default.Slot, { group: "filter" }),
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(inspector_controls_default.Slot, { group: "filter" }),
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           inspector_controls_default.Slot,
           {
             group: "typography",
             label: (0, import_i18n195.__)("Typography")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           inspector_controls_default.Slot,
           {
             group: "dimensions",
             label: (0, import_i18n195.__)("Dimensions")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           inspector_controls_default.Slot,
           {
             group: "border",
             label: borderPanelLabel
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(inspector_controls_default.Slot, { group: "styles" })
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(inspector_controls_default.Slot, { group: "styles" })
       ] })
     ] });
   };
   var styles_tab_default = StylesTab;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/content-tab.js
-  var import_components237 = __toESM(require_components());
+  var import_components238 = __toESM(require_components());
   var import_i18n218 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/block-quick-navigation/index.js
   var import_data165 = __toESM(require_data());
-  var import_components205 = __toESM(require_components());
-  var import_jsx_runtime372 = __toESM(require_jsx_runtime());
+  var import_components206 = __toESM(require_components());
+  var import_jsx_runtime373 = __toESM(require_jsx_runtime());
   function BlockQuickNavigation({ clientIds, onSelect }) {
     if (!clientIds.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components205.__experimentalVStack, { spacing: 1, children: clientIds.map((clientId) => /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(import_components206.__experimentalVStack, { spacing: 1, children: clientIds.map((clientId) => /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(
       BlockQuickNavigationItem,
       {
         onSelect,
@@ -58860,8 +58852,8 @@ var wp;
       [clientId]
     );
     const { selectBlock: selectBlock2 } = (0, import_data165.useDispatch)(store);
-    return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-      import_components205.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(
+      import_components206.Button,
       {
         __next40pxDefaultSize: true,
         className: "block-editor-block-quick-navigation__item",
@@ -58872,9 +58864,9 @@ var wp;
             onSelect(clientId);
           }
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_components205.Flex, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components205.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(block_icon_default, { icon: blockInformation?.icon }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components205.FlexBlock, { style: { textAlign: "left" }, children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components205.__experimentalTruncate, { children: blockTitle }) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime373.jsxs)(import_components206.Flex, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(import_components206.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(block_icon_default, { icon: blockInformation?.icon }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(import_components206.FlexBlock, { style: { textAlign: "left" }, children: /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(import_components206.__experimentalTruncate, { children: blockTitle }) })
         ] })
       }
     );
@@ -58882,7 +58874,7 @@ var wp;
 
   // packages/block-editor/build-module/components/content-only-controls/index.js
   var import_blocks92 = __toESM(require_blocks());
-  var import_components236 = __toESM(require_components());
+  var import_components237 = __toESM(require_components());
   var import_data168 = __toESM(require_data());
   var import_i18n217 = __toESM(require_i18n());
 
@@ -58967,10 +58959,10 @@ var wp;
   // packages/dataviews/build-module/utils/operators.js
   var import_i18n197 = __toESM(require_i18n());
   var import_element211 = __toESM(require_element());
-  var import_jsx_runtime373 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime374 = __toESM(require_jsx_runtime());
   var filterTextWrappers = {
-    Name: /* @__PURE__ */ (0, import_jsx_runtime373.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
-    Value: /* @__PURE__ */ (0, import_jsx_runtime373.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
+    Name: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
+    Value: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
   };
   var OPERATORS = [
     {
@@ -61031,7 +61023,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/field-types/number.js
-  var import_jsx_runtime374 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime375 = __toESM(require_jsx_runtime());
   function getFormat(field) {
     const fieldFormat = field.format;
     return {
@@ -61055,7 +61047,7 @@ var wp;
   }
   function render({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if ([null, void 0].includes(value)) {
@@ -61119,7 +61111,7 @@ var wp;
 
   // packages/dataviews/build-module/field-types/integer.js
   var import_i18n199 = __toESM(require_i18n());
-  var import_jsx_runtime375 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime376 = __toESM(require_jsx_runtime());
   function getFormat2(field) {
     const fieldFormat = field.format;
     return {
@@ -61142,7 +61134,7 @@ var wp;
   }
   function render2({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if ([null, void 0].includes(value)) {
@@ -61205,7 +61197,7 @@ var wp;
   };
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
-  var import_components206 = __toESM(require_components());
+  var import_components207 = __toESM(require_components());
   var import_element212 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-controls/utils/get-custom-validity.js
@@ -61232,8 +61224,8 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/checkbox.js
-  var import_jsx_runtime376 = __toESM(require_jsx_runtime());
-  var { ValidatedCheckboxControl } = unlock3(import_components206.privateApis);
+  var import_jsx_runtime377 = __toESM(require_jsx_runtime());
+  var { ValidatedCheckboxControl } = unlock3(import_components207.privateApis);
   function Checkbox({
     field,
     onChange,
@@ -61247,7 +61239,7 @@ var wp;
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [data, getValue, onChange, setValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
@@ -61262,16 +61254,16 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/datetime.js
-  var import_components208 = __toESM(require_components());
+  var import_components209 = __toESM(require_components());
   var import_element214 = __toESM(require_element());
   var import_i18n201 = __toESM(require_i18n());
   var import_date3 = __toESM(require_date());
 
   // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
-  var import_components207 = __toESM(require_components());
+  var import_components208 = __toESM(require_components());
   var import_element213 = __toESM(require_element());
   var import_i18n200 = __toESM(require_i18n());
-  var import_jsx_runtime377 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime378 = __toESM(require_jsx_runtime());
   var TIME_UNITS_OPTIONS = {
     [OPERATOR_IN_THE_PAST]: [
       { value: "days", label: (0, import_i18n200.__)("Days") },
@@ -61316,17 +61308,17 @@ var wp;
       ),
       [onChange, setValue, data, relValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
-      import_components207.BaseControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
+      import_components208.BaseControl,
       {
         id,
         __nextHasNoMarginBottom: true,
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime377.jsxs)(import_components207.__experimentalHStack, { spacing: 2.5, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
-            import_components207.__experimentalNumberControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime378.jsxs)(import_components208.__experimentalHStack, { spacing: 2.5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
+            import_components208.__experimentalNumberControl,
             {
               __next40pxDefaultSize: true,
               className: "dataviews-controls__relative-date-number",
@@ -61337,8 +61329,8 @@ var wp;
               onChange: onChangeValue
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
-            import_components207.SelectControl,
+          /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
+            import_components208.SelectControl,
             {
               className: "dataviews-controls__relative-date-unit",
               __next40pxDefaultSize: true,
@@ -61356,8 +61348,8 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/datetime.js
-  var import_jsx_runtime378 = __toESM(require_jsx_runtime());
-  var { DateCalendar, ValidatedInputControl } = unlock3(import_components208.privateApis);
+  var import_jsx_runtime379 = __toESM(require_jsx_runtime());
+  var { DateCalendar, ValidatedInputControl } = unlock3(import_components209.privateApis);
   var formatDateTime = (date) => {
     if (!date) {
       return "";
@@ -61452,16 +61444,16 @@ var wp;
       l10n: { startOfWeek: startOfWeek2 }
     } = (0, import_date3.getSettings)();
     const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n201.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
-      import_components208.BaseControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+      import_components209.BaseControl,
       {
         __nextHasNoMarginBottom: true,
         id,
         label: displayLabel,
         help: description,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime378.jsxs)(import_components208.__experimentalVStack, { spacing: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(import_components209.__experimentalVStack, { spacing: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
             DateCalendar,
             {
               style: { width: "100%" },
@@ -61473,7 +61465,7 @@ var wp;
               weekStartsOn: startOfWeek2
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
             ValidatedInputControl,
             {
               ref: inputControlRef,
@@ -61502,7 +61494,7 @@ var wp;
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__datetime",
@@ -61514,7 +61506,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
       CalendarDateTimeControl,
       {
         data,
@@ -61527,12 +61519,12 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/date.js
-  var import_components209 = __toESM(require_components());
+  var import_components210 = __toESM(require_components());
   var import_element215 = __toESM(require_element());
   var import_i18n202 = __toESM(require_i18n());
   var import_date4 = __toESM(require_date());
-  var import_jsx_runtime379 = __toESM(require_jsx_runtime());
-  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components209.privateApis);
+  var import_jsx_runtime380 = __toESM(require_jsx_runtime());
+  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components210.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
@@ -61664,9 +61656,9 @@ var wp;
         setIsTouched(true);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)("div", { onBlur, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime380.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime379.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime380.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime380.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -61675,8 +61667,8 @@ var wp;
             customValidity.type === "valid" ? "is-valid" : void 0
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-              import_components209.Icon,
+            /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+              import_components210.Icon,
               {
                 className: "components-validated-control__indicator-icon",
                 icon: error_default,
@@ -61763,7 +61755,7 @@ var wp;
       timezone: { string: timezoneString }
     } = (0, import_date4.getSettings)();
     const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n202.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -61771,20 +61763,20 @@ var wp;
         inputRefs: validityTargetRef,
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-          import_components209.BaseControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+          import_components210.BaseControl,
           {
             __nextHasNoMarginBottom: true,
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(import_components209.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(import_components209.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime380.jsxs)(import_components210.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime380.jsxs)(import_components210.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_PRESETS.map((preset) => {
                   const isSelected = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                    import_components209.Button,
+                  return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+                    import_components210.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -61796,8 +61788,8 @@ var wp;
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                  import_components209.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+                  import_components210.Button,
                   {
                     className: "dataviews-controls__date-preset",
                     variant: "tertiary",
@@ -61809,8 +61801,8 @@ var wp;
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                import_components209.__experimentalInputControl,
+              /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+                import_components210.__experimentalInputControl,
                 {
                   __next40pxDefaultSize: true,
                   ref: validityTargetRef,
@@ -61822,7 +61814,7 @@ var wp;
                   required: !!field.isValid?.required
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
                 DateCalendar2,
                 {
                   style: { width: "100%" },
@@ -61940,7 +61932,7 @@ var wp;
     );
     const { timezone } = (0, import_date4.getSettings)();
     const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n202.__)("Required")})` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
       ValidatedDateControl,
       {
         field,
@@ -61948,20 +61940,20 @@ var wp;
         inputRefs: [fromInputRef, toInputRef],
         isTouched,
         setIsTouched,
-        children: /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-          import_components209.BaseControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+          import_components210.BaseControl,
           {
             __nextHasNoMarginBottom: true,
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(import_components209.__experimentalVStack, { spacing: 4, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(import_components209.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime380.jsxs)(import_components210.__experimentalVStack, { spacing: 4, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime380.jsxs)(import_components210.__experimentalHStack, { spacing: 2, wrap: true, justify: "flex-start", children: [
                 DATE_RANGE_PRESETS.map((preset) => {
                   const isSelected = selectedPresetId === preset.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                    import_components209.Button,
+                  return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+                    import_components210.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -61973,8 +61965,8 @@ var wp;
                     preset.id
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                  import_components209.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+                  import_components210.Button,
                   {
                     className: "dataviews-controls__date-preset",
                     variant: "tertiary",
@@ -61986,9 +61978,9 @@ var wp;
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)(import_components209.__experimentalHStack, { spacing: 2, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                  import_components209.__experimentalInputControl,
+              /* @__PURE__ */ (0, import_jsx_runtime380.jsxs)(import_components210.__experimentalHStack, { spacing: 2, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+                  import_components210.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: fromInputRef,
@@ -62000,8 +61992,8 @@ var wp;
                     required: !!field.isValid?.required
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                  import_components209.__experimentalInputControl,
+                /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+                  import_components210.__experimentalInputControl,
                   {
                     __next40pxDefaultSize: true,
                     ref: toInputRef,
@@ -62014,7 +62006,7 @@ var wp;
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
                 DateRangeCalendar,
                 {
                   style: { width: "100%" },
@@ -62041,7 +62033,7 @@ var wp;
     validity
   }) {
     if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-      return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
         RelativeDateControl,
         {
           className: "dataviews-controls__date",
@@ -62054,7 +62046,7 @@ var wp;
       );
     }
     if (operator === OPERATOR_BETWEEN) {
-      return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
         CalendarDateRangeControl,
         {
           data,
@@ -62065,7 +62057,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
       CalendarDateControl,
       {
         data,
@@ -62078,13 +62070,13 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/email.js
-  var import_components211 = __toESM(require_components());
+  var import_components212 = __toESM(require_components());
 
   // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
-  var import_components210 = __toESM(require_components());
+  var import_components211 = __toESM(require_components());
   var import_element216 = __toESM(require_element());
-  var import_jsx_runtime380 = __toESM(require_jsx_runtime());
-  var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components210.privateApis);
+  var import_jsx_runtime381 = __toESM(require_jsx_runtime());
+  var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components211.privateApis);
   function ValidatedText({
     data,
     field,
@@ -62106,7 +62098,7 @@ var wp;
       ),
       [data, setValue, onChange]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
       ValidatedInputControl2,
       {
         required: !!isValid2.required,
@@ -62129,34 +62121,8 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/email.js
-  var import_jsx_runtime381 = __toESM(require_jsx_runtime());
-  function Email({
-    data,
-    field,
-    onChange,
-    hideLabelFromVision,
-    validity
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
-      ValidatedText,
-      {
-        ...{
-          data,
-          field,
-          onChange,
-          hideLabelFromVision,
-          validity,
-          type: "email",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components211.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(import_components211.Icon, { icon: envelope_default }) })
-        }
-      }
-    );
-  }
-
-  // packages/dataviews/build-module/dataform-controls/telephone.js
-  var import_components212 = __toESM(require_components());
   var import_jsx_runtime382 = __toESM(require_jsx_runtime());
-  function Telephone({
+  function Email({
     data,
     field,
     onChange,
@@ -62172,17 +62138,17 @@ var wp;
           onChange,
           hideLabelFromVision,
           validity,
-          type: "tel",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(import_components212.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(import_components212.Icon, { icon: mobile_default }) })
+          type: "email",
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(import_components212.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(import_components212.Icon, { icon: envelope_default }) })
         }
       }
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/url.js
+  // packages/dataviews/build-module/dataform-controls/telephone.js
   var import_components213 = __toESM(require_components());
   var import_jsx_runtime383 = __toESM(require_jsx_runtime());
-  function Url({
+  function Telephone({
     data,
     field,
     onChange,
@@ -62198,19 +62164,45 @@ var wp;
           onChange,
           hideLabelFromVision,
           validity,
+          type: "tel",
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components213.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components213.Icon, { icon: mobile_default }) })
+        }
+      }
+    );
+  }
+
+  // packages/dataviews/build-module/dataform-controls/url.js
+  var import_components214 = __toESM(require_components());
+  var import_jsx_runtime384 = __toESM(require_jsx_runtime());
+  function Url({
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    validity
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+      ValidatedText,
+      {
+        ...{
+          data,
+          field,
+          onChange,
+          hideLabelFromVision,
+          validity,
           type: "url",
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components213.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components213.Icon, { icon: link_default }) })
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components214.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components214.Icon, { icon: link_default }) })
         }
       }
     );
   }
 
   // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
-  var import_components214 = __toESM(require_components());
+  var import_components215 = __toESM(require_components());
   var import_element217 = __toESM(require_element());
   var import_i18n203 = __toESM(require_i18n());
-  var import_jsx_runtime384 = __toESM(require_jsx_runtime());
-  var { ValidatedNumberControl } = unlock3(import_components214.privateApis);
+  var import_jsx_runtime385 = __toESM(require_jsx_runtime());
+  var { ValidatedNumberControl } = unlock3(import_components215.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
       return "";
@@ -62233,14 +62225,14 @@ var wp;
       (newValue) => onChange([min, toNumberOrEmpty(newValue)]),
       [onChange, min]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-      import_components214.BaseControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
+      import_components215.BaseControl,
       {
         __nextHasNoMarginBottom: true,
         help: (0, import_i18n203.__)("The max. value must be greater than the min. value."),
-        children: /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_components214.Flex, { direction: "row", gap: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-            import_components214.__experimentalNumberControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime385.jsxs)(import_components215.Flex, { direction: "row", gap: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
+            import_components215.__experimentalNumberControl,
             {
               label: (0, import_i18n203.__)("Min."),
               value: min,
@@ -62251,8 +62243,8 @@ var wp;
               step
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-            import_components214.__experimentalNumberControl,
+          /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
+            import_components215.__experimentalNumberControl,
             {
               label: (0, import_i18n203.__)("Max."),
               value: max,
@@ -62311,7 +62303,7 @@ var wp;
       )) {
         valueBetween = value;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
         BetweenControls,
         {
           value: valueBetween,
@@ -62321,7 +62313,7 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
       ValidatedNumberControl,
       {
         required: !!isValid2.required,
@@ -62340,23 +62332,23 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/integer.js
-  var import_jsx_runtime385 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime386 = __toESM(require_jsx_runtime());
   function Number2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(ValidatedNumber, { ...props, decimals: 0 });
+    return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(ValidatedNumber, { ...props, decimals: 0 });
   }
 
   // packages/dataviews/build-module/dataform-controls/number.js
-  var import_jsx_runtime386 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime387 = __toESM(require_jsx_runtime());
   function Number3(props) {
     const decimals = props.field.format?.decimals ?? 2;
-    return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(ValidatedNumber, { ...props, decimals });
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(ValidatedNumber, { ...props, decimals });
   }
 
   // packages/dataviews/build-module/dataform-controls/radio.js
-  var import_components215 = __toESM(require_components());
+  var import_components216 = __toESM(require_components());
   var import_element218 = __toESM(require_element());
-  var import_jsx_runtime387 = __toESM(require_jsx_runtime());
-  var { ValidatedRadioControl } = unlock3(import_components215.privateApis);
+  var import_jsx_runtime388 = __toESM(require_jsx_runtime());
+  var { ValidatedRadioControl } = unlock3(import_components216.privateApis);
   function Radio({
     data,
     field,
@@ -62375,9 +62367,9 @@ var wp;
       [data, onChange, setValue]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components215.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components216.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
@@ -62393,10 +62385,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/select.js
-  var import_components216 = __toESM(require_components());
+  var import_components217 = __toESM(require_components());
   var import_element219 = __toESM(require_element());
-  var import_jsx_runtime388 = __toESM(require_jsx_runtime());
-  var { ValidatedSelectControl } = unlock3(import_components216.privateApis);
+  var import_jsx_runtime389 = __toESM(require_jsx_runtime());
+  var { ValidatedSelectControl } = unlock3(import_components217.privateApis);
   function Select({
     data,
     field,
@@ -62416,9 +62408,9 @@ var wp;
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components216.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_components217.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
@@ -62438,7 +62430,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-controls/text.js
   var import_element220 = __toESM(require_element());
-  var import_jsx_runtime389 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime390 = __toESM(require_jsx_runtime());
   function Text8({
     data,
     field,
@@ -62448,7 +62440,7 @@ var wp;
     validity
   }) {
     const { prefix: prefix2, suffix } = config2 || {};
-    return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
       ValidatedText,
       {
         ...{
@@ -62465,10 +62457,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/toggle.js
-  var import_components217 = __toESM(require_components());
+  var import_components218 = __toESM(require_components());
   var import_element221 = __toESM(require_element());
-  var import_jsx_runtime390 = __toESM(require_jsx_runtime());
-  var { ValidatedToggleControl } = unlock3(import_components217.privateApis);
+  var import_jsx_runtime391 = __toESM(require_jsx_runtime());
+  var { ValidatedToggleControl } = unlock3(import_components218.privateApis);
   function Toggle({
     field,
     onChange,
@@ -62482,7 +62474,7 @@ var wp;
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [onChange, setValue, data, getValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
       ValidatedToggleControl,
       {
         required: !!isValid2.required,
@@ -62498,10 +62490,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/textarea.js
-  var import_components218 = __toESM(require_components());
+  var import_components219 = __toESM(require_components());
   var import_element222 = __toESM(require_element());
-  var import_jsx_runtime391 = __toESM(require_jsx_runtime());
-  var { ValidatedTextareaControl } = unlock3(import_components218.privateApis);
+  var import_jsx_runtime392 = __toESM(require_jsx_runtime());
+  var { ValidatedTextareaControl } = unlock3(import_components219.privateApis);
   function Textarea({
     data,
     field,
@@ -62517,7 +62509,7 @@ var wp;
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
       ValidatedTextareaControl,
       {
         required: !!isValid2.required,
@@ -62538,10 +62530,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/toggle-group.js
-  var import_components219 = __toESM(require_components());
+  var import_components220 = __toESM(require_components());
   var import_element223 = __toESM(require_element());
-  var import_jsx_runtime392 = __toESM(require_jsx_runtime());
-  var { ValidatedToggleGroupControl } = unlock3(import_components219.privateApis);
+  var import_jsx_runtime393 = __toESM(require_jsx_runtime());
+  var { ValidatedToggleGroupControl } = unlock3(import_components220.privateApis);
   function ToggleGroup({
     data,
     field,
@@ -62560,13 +62552,13 @@ var wp;
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(import_components219.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components220.Spinner, {});
     }
     if (elements.length === 0) {
       return null;
     }
     const selectedOption = elements.find((el) => el.value === value);
-    return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
@@ -62579,8 +62571,8 @@ var wp;
         onChange: onChangeControl,
         value,
         hideLabelFromVision,
-        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
-          import_components219.__experimentalToggleGroupControlOption,
+        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+          import_components220.__experimentalToggleGroupControlOption,
           {
             label: el.label,
             value: el.value
@@ -62592,10 +62584,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/array.js
-  var import_components220 = __toESM(require_components());
+  var import_components221 = __toESM(require_components());
   var import_element224 = __toESM(require_element());
-  var import_jsx_runtime393 = __toESM(require_jsx_runtime());
-  var { ValidatedFormTokenField } = unlock3(import_components220.privateApis);
+  var import_jsx_runtime394 = __toESM(require_jsx_runtime());
+  var { ValidatedFormTokenField } = unlock3(import_components221.privateApis);
   function ArrayControl({
     data,
     field,
@@ -62631,9 +62623,9 @@ var wp;
       [onChange, setValue, data]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components220.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_components221.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
@@ -62670,28 +62662,28 @@ var wp;
             const element = elements.find(
               (el) => el.value === item
             );
-            return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)("span", { children: element?.label || item });
+            return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)("span", { children: element?.label || item });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)("span", { children: item });
+          return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)("span", { children: item });
         }
       }
     );
   }
 
   // packages/dataviews/build-module/dataform-controls/color.js
-  var import_components221 = __toESM(require_components());
+  var import_components222 = __toESM(require_components());
   var import_element225 = __toESM(require_element());
-  var import_jsx_runtime394 = __toESM(require_jsx_runtime());
-  var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock3(import_components221.privateApis);
+  var import_jsx_runtime395 = __toESM(require_jsx_runtime());
+  var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock3(import_components222.privateApis);
   var ColorPicker = ({
     color,
     onColorChange
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
-    return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-      import_components221.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
+      import_components222.Dropdown,
       {
-        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_components221.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+        renderToggle: ({ onToggle, isOpen }) => /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components222.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
           "button",
           {
             type: "button",
@@ -62714,7 +62706,7 @@ var wp;
             "aria-label": "Open color picker"
           }
         ) }),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime394.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("div", { style: { padding: "16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
           Picker,
           {
             color: w(validColor),
@@ -62746,7 +62738,7 @@ var wp;
       },
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
       ValidatedInputControl3,
       {
         required: !!field.isValid?.required,
@@ -62758,7 +62750,7 @@ var wp;
         onChange: handleInputChange,
         hideLabelFromVision,
         type: "text",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
           ColorPicker,
           {
             color: value,
@@ -62770,10 +62762,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/password.js
-  var import_components222 = __toESM(require_components());
+  var import_components223 = __toESM(require_components());
   var import_element226 = __toESM(require_element());
   var import_i18n204 = __toESM(require_i18n());
-  var import_jsx_runtime395 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime396 = __toESM(require_jsx_runtime());
   function Password({
     data,
     field,
@@ -62785,7 +62777,7 @@ var wp;
     const toggleVisibility = (0, import_element226.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
       ValidatedText,
       {
         ...{
@@ -62795,8 +62787,8 @@ var wp;
           hideLabelFromVision,
           validity,
           type: isVisible ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components222.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-            import_components222.Button,
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components223.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+            import_components223.Button,
             {
               icon: isVisible ? unseen_default : seen_default,
               onClick: toggleVisibility,
@@ -62815,7 +62807,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-controls/index.js
-  var import_jsx_runtime396 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime397 = __toESM(require_jsx_runtime());
   var FORM_CONTROLS = {
     array: ArrayControl,
     checkbox: Checkbox,
@@ -62845,7 +62837,7 @@ var wp;
       return null;
     }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(BaseControlType, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(BaseControlType, { ...props, config: controlConfig });
     };
   }
   function getControl(field, fallback) {
@@ -62924,12 +62916,12 @@ var wp;
   var import_i18n205 = __toESM(require_i18n());
 
   // packages/dataviews/build-module/field-types/utils/render-default.js
-  var import_jsx_runtime397 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime398 = __toESM(require_jsx_runtime());
   function render3({
     item,
     field
   }) {
-    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(RenderFromElements, { item, field }) : field.getValue({ item });
   }
 
   // packages/dataviews/build-module/field-types/utils/sort-text.js
@@ -63051,10 +63043,10 @@ var wp;
   };
 
   // packages/dataviews/build-module/field-types/datetime.js
-  var import_jsx_runtime398 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime399 = __toESM(require_jsx_runtime());
   function render4({ item, field }) {
     if (field.elements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if (["", void 0, null].includes(value)) {
@@ -63108,7 +63100,7 @@ var wp;
 
   // packages/dataviews/build-module/field-types/date.js
   var import_date6 = __toESM(require_date());
-  var import_jsx_runtime399 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime400 = __toESM(require_jsx_runtime());
   function getFormat3(field) {
     const fieldFormat = field.format;
     return {
@@ -63118,7 +63110,7 @@ var wp;
   }
   function render5({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if (!value) {
@@ -63183,10 +63175,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/field-types/boolean.js
-  var import_jsx_runtime400 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime401 = __toESM(require_jsx_runtime());
   function render6({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(RenderFromElements, { item, field });
     }
     if (field.getValue({ item }) === true) {
       return (0, import_i18n206.__)("True");
@@ -63307,9 +63299,9 @@ var wp;
   };
 
   // packages/dataviews/build-module/field-types/password.js
-  var import_jsx_runtime401 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime402 = __toESM(require_jsx_runtime());
   function render8({ item, field }) {
-    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
+    return field.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(RenderFromElements, { item, field }) : "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
   }
   var password_default = {
     type: "password",
@@ -63364,17 +63356,17 @@ var wp;
 
   // packages/dataviews/build-module/field-types/color.js
   var import_i18n208 = __toESM(require_i18n());
-  var import_jsx_runtime402 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime403 = __toESM(require_jsx_runtime());
   function render9({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
     if (!value || !w(value).isValid()) {
       return value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime402.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime403.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
         "div",
         {
           style: {
@@ -63387,7 +63379,7 @@ var wp;
           }
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime402.jsx)("span", { children: value })
+      /* @__PURE__ */ (0, import_jsx_runtime403.jsx)("span", { children: value })
     ] });
   }
   function isValidCustom6(item, field) {
@@ -63628,7 +63620,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-context/index.js
   var import_element227 = __toESM(require_element());
-  var import_jsx_runtime403 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime404 = __toESM(require_jsx_runtime());
   var DataFormContext = (0, import_element227.createContext)({
     fields: []
   });
@@ -63637,20 +63629,20 @@ var wp;
     fields,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(DataFormContext.Provider, { value: { fields }, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(DataFormContext.Provider, { value: { fields }, children });
   }
   var dataform_context_default = DataFormContext;
 
   // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
-  var import_components231 = __toESM(require_components());
+  var import_components232 = __toESM(require_components());
   var import_element235 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-layouts/index.js
-  var import_components230 = __toESM(require_components());
+  var import_components231 = __toESM(require_components());
 
   // packages/dataviews/build-module/dataform-layouts/regular/index.js
   var import_element228 = __toESM(require_element());
-  var import_components223 = __toESM(require_components());
+  var import_components224 = __toESM(require_components());
 
   // packages/dataviews/build-module/dataform-layouts/normalize-form.js
   var DEFAULT_LAYOUT = {
@@ -63752,11 +63744,11 @@ var wp;
   var normalize_form_default = normalizeForm;
 
   // packages/dataviews/build-module/dataform-layouts/regular/index.js
-  var import_jsx_runtime404 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime405 = __toESM(require_jsx_runtime());
   function Header({ title }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(import_components223.__experimentalVStack, { className: "dataforms-layouts-regular__header", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime404.jsxs)(import_components223.__experimentalHStack, { alignment: "center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(import_components223.__experimentalHeading, { level: 2, size: 13, children: title }),
-      /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(import_components223.__experimentalSpacer, {})
+    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components224.__experimentalVStack, { className: "dataforms-layouts-regular__header", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime405.jsxs)(import_components224.__experimentalHStack, { alignment: "center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components224.__experimentalHeading, { level: 2, size: 13, children: title }),
+      /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components224.__experimentalSpacer, {})
     ] }) });
   }
   function FormRegularField({
@@ -63776,9 +63768,9 @@ var wp;
       [field]
     );
     if (!!field.children) {
-      return /* @__PURE__ */ (0, import_jsx_runtime404.jsxs)(import_jsx_runtime404.Fragment, { children: [
-        !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(Header, { title: field.label }),
-        /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime405.jsxs)(import_jsx_runtime405.Fragment, { children: [
+        !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(Header, { title: field.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
           DataFormLayout,
           {
             data,
@@ -63797,8 +63789,8 @@ var wp;
       return null;
     }
     if (labelPosition === "side") {
-      return /* @__PURE__ */ (0, import_jsx_runtime404.jsxs)(import_components223.__experimentalHStack, { className: "dataforms-layouts-regular__field", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime405.jsxs)(import_components224.__experimentalHStack, { className: "dataforms-layouts-regular__field", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
           "div",
           {
             className: clsx_default(
@@ -63808,13 +63800,13 @@ var wp;
             children: fieldDefinition.label
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime404.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime405.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
           fieldDefinition.render,
           {
             item: data,
             field: fieldDefinition
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+        ) : /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
           fieldDefinition.Edit,
           {
             data,
@@ -63827,16 +63819,16 @@ var wp;
         ) })
       ] });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime404.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(import_jsx_runtime404.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime404.jsxs)(import_jsx_runtime404.Fragment, { children: [
-      !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(import_components223.BaseControl.VisualLabel, { children: fieldDefinition.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_jsx_runtime405.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime405.jsxs)(import_jsx_runtime405.Fragment, { children: [
+      !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components224.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
         fieldDefinition.render,
         {
           item: data,
           field: fieldDefinition
         }
       )
-    ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+    ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
       fieldDefinition.Edit,
       {
         data,
@@ -63849,19 +63841,19 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-layouts/panel/index.js
-  var import_components227 = __toESM(require_components());
+  var import_components228 = __toESM(require_components());
   var import_element232 = __toESM(require_element());
 
   // packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
-  var import_components225 = __toESM(require_components());
+  var import_components226 = __toESM(require_components());
   var import_i18n210 = __toESM(require_i18n());
   var import_element229 = __toESM(require_element());
   var import_compose89 = __toESM(require_compose());
 
   // packages/dataviews/build-module/dataform-layouts/panel/summary-button.js
-  var import_components224 = __toESM(require_components());
+  var import_components225 = __toESM(require_components());
   var import_i18n209 = __toESM(require_i18n());
-  var import_jsx_runtime405 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime406 = __toESM(require_jsx_runtime());
   function SummaryButton({
     summaryFields,
     data,
@@ -63871,8 +63863,8 @@ var wp;
     onClick,
     "aria-expanded": ariaExpanded
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
-      import_components224.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
+      import_components225.Button,
       {
         className: "dataforms-layouts-panel__summary-button",
         size: "compact",
@@ -63891,7 +63883,7 @@ var wp;
           height: "auto",
           alignItems: "flex-start"
         } : void 0,
-        children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+        children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
           "div",
           {
             style: {
@@ -63901,11 +63893,11 @@ var wp;
               width: "100%",
               gap: "2px"
             },
-            children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+            children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
               "div",
               {
                 style: { width: "100%" },
-                children: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
                   summaryField.render,
                   {
                     item: data,
@@ -63916,7 +63908,7 @@ var wp;
               summaryField.id
             ))
           }
-        ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+        ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
           summaryField.render,
           {
             item: data,
@@ -63930,21 +63922,21 @@ var wp;
   var summary_button_default = SummaryButton;
 
   // packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
-  var import_jsx_runtime406 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime407 = __toESM(require_jsx_runtime());
   function DropdownHeader({
     title,
     onClose
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
-      import_components225.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
+      import_components226.__experimentalVStack,
       {
         className: "dataforms-layouts-panel__dropdown-header",
         spacing: 4,
-        children: /* @__PURE__ */ (0, import_jsx_runtime406.jsxs)(import_components225.__experimentalHStack, { alignment: "center", children: [
-          title && /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(import_components225.__experimentalHeading, { level: 2, size: 13, children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(import_components225.__experimentalSpacer, {}),
-          onClose && /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
-            import_components225.Button,
+        children: /* @__PURE__ */ (0, import_jsx_runtime407.jsxs)(import_components226.__experimentalHStack, { alignment: "center", children: [
+          title && /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(import_components226.__experimentalHeading, { level: 2, size: 13, children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(import_components226.__experimentalSpacer, {}),
+          onClose && /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
+            import_components226.Button,
             {
               label: (0, import_i18n210.__)("Close"),
               icon: close_small_default,
@@ -63998,8 +63990,8 @@ var wp;
       [popoverAnchor]
     );
     const focusOnMountRef = (0, import_compose89.useFocusOnMount)("firstInputElement");
-    return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
-      import_components225.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
+      import_components226.Dropdown,
       {
         contentClassName: "dataforms-layouts-panel__field-dropdown",
         popoverProps: popoverProps3,
@@ -64009,7 +64001,7 @@ var wp;
           variant: "tertiary",
           tooltipPosition: "middle left"
         },
-        renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
+        renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
           summary_button_default,
           {
             summaryFields,
@@ -64021,16 +64013,16 @@ var wp;
             "aria-expanded": isOpen
           }
         ),
-        renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime406.jsxs)(import_jsx_runtime406.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(DropdownHeader, { title: fieldLabel, onClose }),
-          /* @__PURE__ */ (0, import_jsx_runtime406.jsx)("div", { ref: focusOnMountRef, children: /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
+        renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime407.jsxs)(import_jsx_runtime407.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(DropdownHeader, { title: fieldLabel, onClose }),
+          /* @__PURE__ */ (0, import_jsx_runtime407.jsx)("div", { ref: focusOnMountRef, children: /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
             DataFormLayout,
             {
               data,
               form,
               onChange,
               validity: formValidity,
-              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
+              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
                 FieldLayout,
                 {
                   data,
@@ -64051,7 +64043,7 @@ var wp;
 
   // packages/dataviews/build-module/dataform-layouts/panel/modal.js
   var import_deepmerge2 = __toESM(require_cjs());
-  var import_components226 = __toESM(require_components());
+  var import_components227 = __toESM(require_components());
   var import_i18n212 = __toESM(require_i18n());
   var import_element231 = __toESM(require_element());
   var import_compose90 = __toESM(require_compose());
@@ -64521,7 +64513,7 @@ var wp;
   var use_form_validity_default = useFormValidity;
 
   // packages/dataviews/build-module/dataform-layouts/panel/modal.js
-  var import_jsx_runtime407 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime408 = __toESM(require_jsx_runtime());
   function ModalContent({
     data,
     field,
@@ -64572,8 +64564,8 @@ var wp;
       );
     };
     const focusOnMountRef = (0, import_compose90.useFocusOnMount)("firstInputElement");
-    return /* @__PURE__ */ (0, import_jsx_runtime407.jsxs)(
-      import_components226.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime408.jsxs)(
+      import_components227.Modal,
       {
         className: "dataforms-layouts-panel__modal",
         onRequestClose: onClose,
@@ -64581,14 +64573,14 @@ var wp;
         title: fieldLabel,
         size: "medium",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime407.jsx)("div", { ref: focusOnMountRef, children: /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime408.jsx)("div", { ref: focusOnMountRef, children: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
             DataFormLayout,
             {
               data: modalData,
               form,
               onChange: handleOnChange,
               validity,
-              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
+              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
                 FieldLayout,
                 {
                   data: modalData,
@@ -64601,15 +64593,15 @@ var wp;
               )
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime407.jsxs)(
-            import_components226.__experimentalHStack,
+          /* @__PURE__ */ (0, import_jsx_runtime408.jsxs)(
+            import_components227.__experimentalHStack,
             {
               className: "dataforms-layouts-panel__modal-footer",
               spacing: 3,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(import_components226.__experimentalSpacer, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
-                  import_components226.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(import_components227.__experimentalSpacer, {}),
+                /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
+                  import_components227.Button,
                   {
                     variant: "tertiary",
                     onClick: onClose,
@@ -64617,8 +64609,8 @@ var wp;
                     children: (0, import_i18n212.__)("Cancel")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
-                  import_components226.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
+                  import_components227.Button,
                   {
                     variant: "primary",
                     onClick: onApply,
@@ -64643,8 +64635,8 @@ var wp;
   }) {
     const [isOpen, setIsOpen] = (0, import_element231.useState)(false);
     const fieldLabel = !!field.children ? field.label : fieldDefinition?.label;
-    return /* @__PURE__ */ (0, import_jsx_runtime407.jsxs)(import_jsx_runtime407.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime408.jsxs)(import_jsx_runtime408.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
         summary_button_default,
         {
           summaryFields,
@@ -64656,7 +64648,7 @@ var wp;
           "aria-expanded": isOpen
         }
       ),
-      isOpen && /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
         ModalContent,
         {
           data,
@@ -64690,7 +64682,7 @@ var wp;
   };
 
   // packages/dataviews/build-module/dataform-layouts/panel/index.js
-  var import_jsx_runtime408 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime409 = __toESM(require_jsx_runtime());
   var getFieldDefinition = (field, fields) => {
     const fieldDefinition = fields.find((_field) => _field.id === field.id);
     if (!fieldDefinition) {
@@ -64744,7 +64736,7 @@ var wp;
       `dataforms-layouts-panel__field-label--label-position-${labelPosition}`
     );
     const fieldLabel = !!field.children ? field.label : fieldDefinition?.label;
-    const renderedControl = layout.openAs === "modal" ? /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
+    const renderedControl = layout.openAs === "modal" ? /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
       modal_default,
       {
         data,
@@ -64754,7 +64746,7 @@ var wp;
         summaryFields,
         fieldDefinition
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
       dropdown_default2,
       {
         data,
@@ -64768,8 +64760,8 @@ var wp;
       }
     );
     if (labelPosition === "top") {
-      return /* @__PURE__ */ (0, import_jsx_runtime408.jsxs)(import_components227.__experimentalVStack, { className: "dataforms-layouts-panel__field", spacing: 0, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_components228.__experimentalVStack, { className: "dataforms-layouts-panel__field", spacing: 0, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
           "div",
           {
             className: labelClassName,
@@ -64777,33 +64769,33 @@ var wp;
             children: fieldLabel
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime408.jsx)("div", { className: "dataforms-layouts-panel__field-control", children: renderedControl })
+        /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { className: "dataforms-layouts-panel__field-control", children: renderedControl })
       ] });
     }
     if (labelPosition === "none") {
-      return /* @__PURE__ */ (0, import_jsx_runtime408.jsx)("div", { className: "dataforms-layouts-panel__field", children: renderedControl });
+      return /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { className: "dataforms-layouts-panel__field", children: renderedControl });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime408.jsxs)(
-      import_components227.__experimentalHStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(
+      import_components228.__experimentalHStack,
       {
         ref: setPopoverAnchor,
         className: "dataforms-layouts-panel__field",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime408.jsx)("div", { className: labelClassName, children: fieldLabel }),
-          /* @__PURE__ */ (0, import_jsx_runtime408.jsx)("div", { className: "dataforms-layouts-panel__field-control", children: renderedControl })
+          /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { className: labelClassName, children: fieldLabel }),
+          /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { className: "dataforms-layouts-panel__field-control", children: renderedControl })
         ]
       }
     );
   }
 
   // packages/dataviews/build-module/dataform-layouts/card/index.js
-  var import_components228 = __toESM(require_components());
+  var import_components229 = __toESM(require_components());
   var import_element233 = __toESM(require_element());
-  var import_jsx_runtime409 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime410 = __toESM(require_jsx_runtime());
   var NonCollapsibleCardHeader = ({
     children,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(import_components228.CardHeader, { isBorderless: true, ...props, children: /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+  }) => /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components229.CardHeader, { isBorderless: true, ...props, children: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
     "div",
     {
       style: {
@@ -64827,8 +64819,8 @@ var wp;
       ({
         children,
         ...props
-      }) => /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(
-        import_components228.CardHeader,
+      }) => /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(
+        import_components229.CardHeader,
         {
           ...props,
           onClick: toggle,
@@ -64838,7 +64830,7 @@ var wp;
           },
           isBorderless: true,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
               "div",
               {
                 style: {
@@ -64850,8 +64842,8 @@ var wp;
                 children
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
-              import_components228.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
+              import_components229.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -64929,11 +64921,11 @@ var wp;
         inlineStart: "medium",
         inlineEnd: "medium"
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_components228.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
-        withHeader2 && /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: field.label }),
-          visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map(
-            (summaryField) => /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(import_components229.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
+        withHeader2 && /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime410.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: field.label }),
+          visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime410.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map(
+            (summaryField) => /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
               summaryField.render,
               {
                 item: data,
@@ -64945,14 +64937,14 @@ var wp;
         ] }),
         (isOpen || !withHeader2) && // If it doesn't have a header, keep it open.
         // Otherwise, the card will not be visible.
-        /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(
-          import_components228.CardBody,
+        /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(
+          import_components229.CardBody,
           {
             size: sizeCardBody2,
             className: "dataforms-layouts-card__field-control",
             children: [
-              field.description && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-              /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+              field.description && /* @__PURE__ */ (0, import_jsx_runtime410.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+              /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
                 DataFormLayout,
                 {
                   data,
@@ -64983,10 +64975,10 @@ var wp;
       inlineStart: "medium",
       inlineEnd: "medium"
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(import_components228.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
-      withHeader && /* @__PURE__ */ (0, import_jsx_runtime409.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: fieldDefinition.label }),
-        visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(import_components229.Card, { className: "dataforms-layouts-card__field", size: sizeCard, children: [
+      withHeader && /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(CardHeader, { className: "dataforms-layouts-card__field-header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime410.jsx)("span", { className: "dataforms-layouts-card__field-header-label", children: fieldDefinition.label }),
+        visibleSummaryFields.length > 0 && layout.withHeader && /* @__PURE__ */ (0, import_jsx_runtime410.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
           summaryField.render,
           {
             item: data,
@@ -64997,12 +64989,12 @@ var wp;
       ] }),
       (isOpen || !withHeader) && // If it doesn't have a header, keep it open.
       // Otherwise, the card will not be visible.
-      /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
-        import_components228.CardBody,
+      /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
+        import_components229.CardBody,
         {
           size: sizeCardBody,
           className: "dataforms-layouts-card__field-control",
-          children: /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
             RegularLayout,
             {
               data,
@@ -65018,15 +65010,15 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-layouts/row/index.js
-  var import_components229 = __toESM(require_components());
-  var import_jsx_runtime410 = __toESM(require_jsx_runtime());
+  var import_components230 = __toESM(require_components());
+  var import_jsx_runtime411 = __toESM(require_jsx_runtime());
   function Header2({ title }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components229.__experimentalVStack, { className: "dataforms-layouts-row__header", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(import_components229.__experimentalHStack, { alignment: "center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components229.__experimentalHeading, { level: 2, size: 13, children: title }),
-      /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components229.__experimentalSpacer, {})
+    return /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(import_components230.__experimentalVStack, { className: "dataforms-layouts-row__header", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(import_components230.__experimentalHStack, { alignment: "center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(import_components230.__experimentalHeading, { level: 2, size: 13, children: title }),
+      /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(import_components230.__experimentalSpacer, {})
     ] }) });
   }
-  var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_jsx_runtime410.Fragment, { children });
+  var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(import_jsx_runtime411.Fragment, { children });
   function FormRowField({
     data,
     field,
@@ -65040,9 +65032,9 @@ var wp;
         layout: DEFAULT_LAYOUT,
         fields: field.children
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
-        !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(Header2, { title: field.label }),
-        /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components229.__experimentalHStack, { alignment: layout.alignment, spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
+        !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(Header2, { title: field.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(import_components230.__experimentalHStack, { alignment: layout.alignment, spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
           DataFormLayout,
           {
             data,
@@ -65050,12 +65042,12 @@ var wp;
             onChange,
             validity: validity?.children,
             as: EMPTY_WRAPPER,
-            children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
+            children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
               "div",
               {
                 className: "dataforms-layouts-row__field-control",
                 style: layout.styles[childField.id],
-                children: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
                   FieldLayout,
                   {
                     data,
@@ -65076,7 +65068,7 @@ var wp;
     if (!RegularLayout) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_jsx_runtime410.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(import_jsx_runtime411.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
       RegularLayout,
       {
         data,
@@ -65090,7 +65082,7 @@ var wp;
   // packages/dataviews/build-module/dataform-layouts/details/index.js
   var import_element234 = __toESM(require_element());
   var import_i18n213 = __toESM(require_i18n());
-  var import_jsx_runtime411 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime412 = __toESM(require_jsx_runtime());
   function FormDetailsField({
     data,
     field,
@@ -65111,13 +65103,13 @@ var wp;
     const summaryField = summaryFieldId ? fields.find((fieldDef) => fieldDef.id === summaryFieldId) : void 0;
     let summaryContent;
     if (summaryField && summaryField.render) {
-      summaryContent = /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(summaryField.render, { item: data, field: summaryField });
+      summaryContent = /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(summaryField.render, { item: data, field: summaryField });
     } else {
       summaryContent = field.label || (0, import_i18n213.__)("More details");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)("details", { className: "dataforms-layouts-details__details", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime411.jsx)("summary", { className: "dataforms-layouts-details__summary", children: summaryContent }),
-      /* @__PURE__ */ (0, import_jsx_runtime411.jsx)("div", { className: "dataforms-layouts-details__content", children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime412.jsxs)("details", { className: "dataforms-layouts-details__details", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime412.jsx)("summary", { className: "dataforms-layouts-details__summary", children: summaryContent }),
+      /* @__PURE__ */ (0, import_jsx_runtime412.jsx)("div", { className: "dataforms-layouts-details__content", children: /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
         DataFormLayout,
         {
           data,
@@ -65129,22 +65121,22 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-layouts/index.js
-  var import_jsx_runtime412 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime413 = __toESM(require_jsx_runtime());
   var FORM_FIELD_LAYOUTS = [
     {
       type: "regular",
       component: FormRegularField,
-      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_components230.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children })
+      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(import_components231.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children })
     },
     {
       type: "panel",
       component: FormPanelField,
-      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_components230.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 2, children })
+      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(import_components231.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 2, children })
     },
     {
       type: "card",
       component: FormCardField,
-      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_components230.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 6, children })
+      wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(import_components231.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 6, children })
     },
     {
       type: "row",
@@ -65152,8 +65144,8 @@ var wp;
       wrapper: ({
         children,
         layout
-      }) => /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_components230.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime412.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
-        import_components230.__experimentalHStack,
+      }) => /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(import_components231.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime413.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
+        import_components231.__experimentalHStack,
         {
           spacing: 4,
           alignment: layout.alignment,
@@ -65171,8 +65163,8 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
-  var import_jsx_runtime413 = __toESM(require_jsx_runtime());
-  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(import_components231.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children });
+  var import_jsx_runtime414 = __toESM(require_jsx_runtime());
+  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components232.__experimentalVStack, { className: "dataforms-layouts__wrapper", spacing: 4, children });
   function DataFormLayout({
     data,
     form,
@@ -65188,7 +65180,7 @@ var wp;
       );
     }
     const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-    return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
       const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
       if (!FieldLayout) {
         return null;
@@ -65204,7 +65196,7 @@ var wp;
           validity?.[formField.id]
         );
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
         FieldLayout,
         {
           data,
@@ -65218,7 +65210,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform/index.js
-  var import_jsx_runtime414 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime415 = __toESM(require_jsx_runtime());
   function DataForm({
     data,
     form,
@@ -65234,7 +65226,7 @@ var wp;
     if (!form.fields) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(
       DataFormLayout,
       {
         data,
@@ -65249,7 +65241,7 @@ var wp;
   var import_element239 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/content-only-controls/fields-dropdown-menu.js
-  var import_components232 = __toESM(require_components());
+  var import_components233 = __toESM(require_components());
   var import_i18n214 = __toESM(require_i18n());
 
   // packages/block-editor/build-module/components/content-only-controls/use-inspector-popover-placement.js
@@ -65266,7 +65258,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/content-only-controls/fields-dropdown-menu.js
-  var import_jsx_runtime415 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime416 = __toESM(require_jsx_runtime());
   function FieldsDropdownMenu({
     fields,
     visibleFields,
@@ -65276,16 +65268,16 @@ var wp;
     if (!fields || fields.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(
-      import_components232.DropdownMenu,
+    return /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
+      import_components233.DropdownMenu,
       {
         icon: more_vertical_default,
         label: (0, import_i18n214.__)("Options"),
         popoverProps: popoverProps3,
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(import_components232.MenuGroup, { label: (0, import_i18n214.__)("Show / Hide"), children: fields.map((field) => {
+        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(import_components233.MenuGroup, { label: (0, import_i18n214.__)("Show / Hide"), children: fields.map((field) => {
           const isVisible = visibleFields.includes(field.id);
-          return /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(
-            import_components232.MenuItem,
+          return /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
+            import_components233.MenuItem,
             {
               isSelected: isVisible,
               onClick: () => {
@@ -65304,12 +65296,12 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/content-only-controls/rich-text/index.js
-  var import_components233 = __toESM(require_components());
+  var import_components234 = __toESM(require_components());
   var import_compose92 = __toESM(require_compose());
   var import_data166 = __toESM(require_data());
   var import_element237 = __toESM(require_element());
   var import_rich_text17 = __toESM(require_rich_text());
-  var import_jsx_runtime416 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime417 = __toESM(require_jsx_runtime());
   function RichTextControl({
     data,
     field,
@@ -65403,12 +65395,12 @@ var wp;
       __unstableBeforeSerialize: removeEditorOnlyFormats,
       __unstableAddInvisibleFormats: addInvisibleFormats
     });
-    const { baseControlProps, controlProps } = (0, import_components233.useBaseControlProps)({
+    const { baseControlProps, controlProps } = (0, import_components234.useBaseControlProps)({
       hideLabelFromVision: hideLabelFromVision ?? field.hideLabelFromVision,
       label: field.label
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime416.jsxs)(import_jsx_runtime416.Fragment, { children: [
-      isSelected && /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(keyboardShortcutContext.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(inputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime416.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime417.jsxs)(import_jsx_runtime417.Fragment, { children: [
+      isSelected && /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(keyboardShortcutContext.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(inputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
         FormatEdit,
         {
           value,
@@ -65419,7 +65411,7 @@ var wp;
           isVisible: false
         }
       ) }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(import_components233.BaseControl, { __nextHasNoMarginBottom: true, ...baseControlProps, children: /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(import_components234.BaseControl, { __nextHasNoMarginBottom: true, ...baseControlProps, children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
         "div",
         {
           className: "block-editor-content-only-controls__rich-text",
@@ -65454,10 +65446,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/content-only-controls/media/index.js
-  var import_components234 = __toESM(require_components());
+  var import_components235 = __toESM(require_components());
   var import_data167 = __toESM(require_data());
   var import_i18n215 = __toESM(require_i18n());
-  var import_jsx_runtime417 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime418 = __toESM(require_jsx_runtime());
   function MediaThumbnail({ data, field, attachment }) {
     const config2 = field.config || {};
     const { allowedTypes = [], multiple = false } = config2;
@@ -65465,7 +65457,7 @@ var wp;
       return "todo multiple";
     }
     if (attachment?.media_type === "image" || attachment?.poster) {
-      return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
         "img",
         {
           className: "block-editor-content-only-controls__media-thumbnail",
@@ -65480,7 +65472,7 @@ var wp;
       const value = field.getValue({ item: data });
       const url = value?.url;
       if (url) {
-        return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
           "img",
           {
             className: "block-editor-content-only-controls__media-thumbnail",
@@ -65502,10 +65494,10 @@ var wp;
         icon = media_default;
       }
       if (icon) {
-        return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(import_components234.Icon, { icon, size: 24 });
+        return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_components235.Icon, { icon, size: 24 });
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(import_components234.Icon, { icon: media_default, size: 24 });
+    return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_components235.Icon, { icon: media_default, size: 24 });
   }
   function Media({ data, field, onChange, config: config2 = {} }) {
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement({
@@ -65553,7 +65545,7 @@ var wp;
     } else {
       chooseItemLabel = (0, import_i18n215.__)("Choose a media item\u2026");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
       media_replace_flow_default,
       {
         className: "block-editor-content-only-controls__media-replace-flow",
@@ -65626,22 +65618,22 @@ var wp;
             updateAttributes(finalValue);
           }
         },
-        renderToggle: (buttonProps) => /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
-          import_components234.Button,
+        renderToggle: (buttonProps) => /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
+          import_components235.Button,
           {
             __next40pxDefaultSize: true,
             className: "block-editor-content-only-controls__media",
             ...buttonProps,
-            children: /* @__PURE__ */ (0, import_jsx_runtime417.jsxs)(
-              import_components234.__experimentalGrid,
+            children: /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(
+              import_components235.__experimentalGrid,
               {
                 rowGap: 0,
                 columnGap: 8,
                 templateColumns: "24px 1fr",
                 className: "block-editor-content-only-controls__media-row",
                 children: [
-                  url && /* @__PURE__ */ (0, import_jsx_runtime417.jsxs)(import_jsx_runtime417.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
+                  url && /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(import_jsx_runtime418.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
                       MediaThumbnail,
                       {
                         attachment,
@@ -65649,14 +65641,14 @@ var wp;
                         data
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime417.jsx)("span", {
+                    /* @__PURE__ */ (0, import_jsx_runtime418.jsx)("span", {
                       className: "block-editor-content-only-controls__media-title",
                       // TODO - truncate long titles or url smartly (e.g. show filename).
                       children: attachment?.title?.raw && attachment?.title?.raw !== "" ? attachment?.title?.raw : url
                     })
                   ] }),
-                  !url && /* @__PURE__ */ (0, import_jsx_runtime417.jsxs)(import_jsx_runtime417.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
+                  !url && /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(import_jsx_runtime418.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
                       "span",
                       {
                         className: "block-editor-content-only-controls__media-placeholder",
@@ -65666,7 +65658,7 @@ var wp;
                         }
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime417.jsx)("span", { className: "block-editor-content-only-controls__media-title", children: chooseItemLabel })
+                    /* @__PURE__ */ (0, import_jsx_runtime418.jsx)("span", { className: "block-editor-content-only-controls__media-title", children: chooseItemLabel })
                   ] })
                 ]
               }
@@ -65678,11 +65670,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/content-only-controls/link/index.js
-  var import_components235 = __toESM(require_components());
+  var import_components236 = __toESM(require_components());
   var import_element238 = __toESM(require_element());
   var import_i18n216 = __toESM(require_i18n());
   var import_url15 = __toESM(require_url());
-  var import_jsx_runtime418 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime419 = __toESM(require_jsx_runtime());
   var NEW_TAB_REL2 = "noreferrer noopener";
   var NEW_TAB_TARGET = "_blank";
   var NOFOLLOW_REL = "nofollow";
@@ -65733,51 +65725,51 @@ var wp;
       () => ({ url, opensInNewTab, nofollow }),
       [url, opensInNewTab, nofollow]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(import_jsx_runtime418.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
-        import_components235.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_jsx_runtime419.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+        import_components236.Button,
         {
           __next40pxDefaultSize: true,
           className: "block-editor-content-only-controls__link",
           onClick: () => {
             setIsLinkControlOpen(true);
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(
-            import_components235.__experimentalGrid,
+          children: /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(
+            import_components236.__experimentalGrid,
             {
               rowGap: 0,
               columnGap: 8,
               templateColumns: "24px 1fr",
               className: "block-editor-content-only-controls__link-row",
               children: [
-                url && /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(import_jsx_runtime418.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_components235.Icon, { icon: link_default, size: 24 }),
-                  /* @__PURE__ */ (0, import_jsx_runtime418.jsx)("span", { className: "block-editor-content-only-controls__link-title", children: url })
+                url && /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_jsx_runtime419.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components236.Icon, { icon: link_default, size: 24 }),
+                  /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("span", { className: "block-editor-content-only-controls__link-title", children: url })
                 ] }),
-                !url && /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(import_jsx_runtime418.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
-                    import_components235.Icon,
+                !url && /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_jsx_runtime419.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+                    import_components236.Icon,
                     {
                       icon: link_default,
                       size: 24,
                       style: { opacity: 0.3 }
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime418.jsx)("span", { className: "block-editor-content-only-controls__link-title", children: (0, import_i18n216.__)("Link") })
+                  /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("span", { className: "block-editor-content-only-controls__link-title", children: (0, import_i18n216.__)("Link") })
                 ] })
               ]
             }
           )
         }
       ),
-      isLinkControlOpen && /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
-        import_components235.Popover,
+      isLinkControlOpen && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+        import_components236.Popover,
         {
           onClose: () => {
             setIsLinkControlOpen(false);
           },
           ...popoverProps3 ?? {},
-          children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
             link_control_default,
             {
               value: linkValue,
@@ -65823,7 +65815,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/content-only-controls/index.js
-  var import_jsx_runtime419 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime420 = __toESM(require_jsx_runtime());
   var { fieldsKey, formKey } = unlock(import_blocks92.privateApis);
   var CONTROLS = {
     richtext: RichTextControl,
@@ -65837,7 +65829,7 @@ var wp;
       throw new Error(`Control type "${control}" not found`);
     }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(ControlComponent, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(ControlComponent, { ...props, config: controlConfig });
     };
   }
   function normalizeMediaValue(value, fieldDef) {
@@ -66025,13 +66017,13 @@ var wp;
     if (!blockTypeFields?.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)("div", { className: "block-editor-content-only-controls__fields-container", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { className: "block-editor-content-only-controls__fields-header", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_components236.__experimentalHStack, { spacing: 1, justify: "space-between", expanded: true, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_components236.__experimentalHStack, { spacing: 1, justify: "flex-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(block_icon_default, { icon: blockInformation?.icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { children: blockTitle })
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)("div", { className: "block-editor-content-only-controls__fields-container", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { className: "block-editor-content-only-controls__fields-header", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_components237.__experimentalHStack, { spacing: 1, justify: "space-between", expanded: true, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_components237.__experimentalHStack, { spacing: 1, justify: "flex-start", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(block_icon_default, { icon: blockInformation?.icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { children: blockTitle })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
           FieldsDropdownMenu,
           {
             fields: dataFormFields,
@@ -66040,7 +66032,7 @@ var wp;
           }
         )
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         DataForm,
         {
           data: attributes,
@@ -66059,17 +66051,17 @@ var wp;
       context: "list-view"
     });
     const blockInformation = useBlockDisplayInformation(clientId);
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { className: "block-editor-content-only-controls__button-panel", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
-      import_components236.Navigator.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { className: "block-editor-content-only-controls__button-panel", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
+      import_components237.Navigator.Button,
       {
         path: `/${clientId}`,
         className: "block-editor-content-only-controls__drill-down-button",
-        children: /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_components236.__experimentalHStack, { expanded: true, justify: "space-between", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_components236.__experimentalHStack, { justify: "flex-start", spacing: 1, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(block_icon_default, { icon: blockInformation?.icon }),
-            /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { children: blockTitle })
+        children: /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_components237.__experimentalHStack, { expanded: true, justify: "space-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_components237.__experimentalHStack, { justify: "flex-start", spacing: 1, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(block_icon_default, { icon: blockInformation?.icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { children: blockTitle })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components236.Icon, { icon: arrow_right_default })
+          /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_components237.Icon, { icon: arrow_right_default })
         ] })
       }
     ) });
@@ -66092,15 +66084,15 @@ var wp;
     if (!isRootContentBlock && !contentClientIds.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_jsx_runtime419.Fragment, { children: [
-      isNested && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { className: "block-editor-content-only-controls__button-panel", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components236.Navigator.BackButton, { className: "block-editor-content-only-controls__back-button", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_components236.__experimentalHStack, { expanded: true, spacing: 1, justify: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components236.Icon, { icon: arrow_left_default }),
-        /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { children: (0, import_i18n217.__)("Back") })
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_jsx_runtime420.Fragment, { children: [
+      isNested && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { className: "block-editor-content-only-controls__button-panel", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_components237.Navigator.BackButton, { className: "block-editor-content-only-controls__back-button", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_components237.__experimentalHStack, { expanded: true, spacing: 1, justify: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_components237.Icon, { icon: arrow_left_default }),
+        /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { children: (0, import_i18n217.__)("Back") })
       ] }) }) }),
-      isRootContentBlock && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(BlockFields, { clientId: rootClientId }),
+      isRootContentBlock && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(BlockFields, { clientId: rootClientId }),
       contentClientIds.map((clientId) => {
         if (parentClientIds?.[clientId]) {
-          return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
             DrillDownButton,
             {
               clientId
@@ -66108,7 +66100,7 @@ var wp;
             clientId
           );
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(BlockFields, { clientId }, clientId);
+        return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(BlockFields, { clientId }, clientId);
       })
     ] });
   }
@@ -66158,13 +66150,13 @@ var wp;
       },
       [rootClientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_components236.Navigator, { initialPath: "/", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
-        import_components236.Navigator.Screen,
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_components237.Navigator, { initialPath: "/", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
+        import_components237.Navigator.Screen,
         {
           path: "/",
           className: "block-editor-content-only-controls__screen",
-          children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
             ContentOnlyControlsScreen,
             {
               rootClientId: updatedRootClientId ?? rootClientId,
@@ -66174,12 +66166,12 @@ var wp;
           )
         }
       ),
-      Object.keys(nestedContentClientIds).map((clientId) => /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
-        import_components236.Navigator.Screen,
+      Object.keys(nestedContentClientIds).map((clientId) => /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
+        import_components237.Navigator.Screen,
         {
           path: `/${clientId}`,
           className: "block-editor-content-only-controls__screen",
-          children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
             ContentOnlyControlsScreen,
             {
               isNested: true,
@@ -66194,15 +66186,15 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/content-tab.js
-  var import_jsx_runtime420 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime421 = __toESM(require_jsx_runtime());
   var ContentTab = ({ rootClientId, contentClientIds }) => {
     if (!contentClientIds || contentClientIds.length === 0) {
       return null;
     }
     const shouldShowContentOnlyControls = window?.__experimentalContentOnlyPatternInsertion && window?.__experimentalContentOnlyInspectorFields;
-    return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_jsx_runtime420.Fragment, { children: [
-      !shouldShowContentOnlyControls && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_components237.PanelBody, { title: (0, import_i18n218.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(BlockQuickNavigation, { clientIds: contentClientIds }) }),
-      shouldShowContentOnlyControls && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(ContentOnlyControls, { rootClientId })
+    return /* @__PURE__ */ (0, import_jsx_runtime421.jsxs)(import_jsx_runtime421.Fragment, { children: [
+      !shouldShowContentOnlyControls && /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_components238.PanelBody, { title: (0, import_i18n218.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(BlockQuickNavigation, { clientIds: contentClientIds }) }),
+      shouldShowContentOnlyControls && /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(ContentOnlyControls, { rootClientId })
     ] });
   };
   var content_tab_default = ContentTab;
@@ -66215,8 +66207,8 @@ var wp;
   var use_is_list_view_tab_disabled_default = useIsListViewTabDisabled;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.js
-  var import_jsx_runtime421 = __toESM(require_jsx_runtime());
-  var { Tabs: Tabs5 } = unlock(import_components238.privateApis);
+  var import_jsx_runtime422 = __toESM(require_jsx_runtime());
+  var { Tabs: Tabs5 } = unlock(import_components239.privateApis);
   function InspectorControlsTabs({
     blockName,
     clientId,
@@ -66245,25 +66237,25 @@ var wp;
         }
       }
     }, [tabs, selectedTabId, initialTabName]);
-    return /* @__PURE__ */ (0, import_jsx_runtime421.jsx)("div", { className: "block-editor-block-inspector__tabs", children: /* @__PURE__ */ (0, import_jsx_runtime421.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)("div", { className: "block-editor-block-inspector__tabs", children: /* @__PURE__ */ (0, import_jsx_runtime422.jsxs)(
       Tabs5,
       {
         defaultTabId: initialTabName,
         selectedTabId,
         onSelect: setSelectedTabId,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(Tabs5.TabList, { children: tabs.map(
-            (tab) => showIconLabels ? /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(Tabs5.Tab, { tabId: tab.name, children: tab.title }, tab.name) : /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_components238.Tooltip, { text: tab.title, children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(Tabs5.TabList, { children: tabs.map(
+            (tab) => showIconLabels ? /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(Tabs5.Tab, { tabId: tab.name, children: tab.title }, tab.name) : /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(import_components239.Tooltip, { text: tab.title, children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
               Tabs5.Tab,
               {
                 tabId: tab.name,
                 "aria-label": tab.title,
-                children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_components238.Icon, { icon: tab.icon })
+                children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(import_components239.Icon, { icon: tab.icon })
               }
             ) }, tab.name)
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(Tabs5.TabPanel, { tabId: TAB_SETTINGS.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(settings_tab_default, { showAdvancedControls: !!blockName }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(Tabs5.TabPanel, { tabId: TAB_STYLES.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(Tabs5.TabPanel, { tabId: TAB_SETTINGS.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(settings_tab_default, { showAdvancedControls: !!blockName }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(Tabs5.TabPanel, { tabId: TAB_STYLES.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
             styles_tab_default,
             {
               blockName,
@@ -66273,14 +66265,14 @@ var wp;
               contentClientIds
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(Tabs5.TabPanel, { tabId: TAB_CONTENT.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(Tabs5.TabPanel, { tabId: TAB_CONTENT.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
             content_tab_default,
             {
               rootClientId: clientId,
               contentClientIds
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(Tabs5.TabPanel, { tabId: TAB_LIST_VIEW.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(inspector_controls_default.Slot, { group: "list" }) })
+          /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(Tabs5.TabPanel, { tabId: TAB_LIST_VIEW.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(inspector_controls_default.Slot, { group: "list" }) })
         ]
       },
       clientId
@@ -66288,7 +66280,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/use-inspector-controls-tabs.js
-  var import_components239 = __toESM(require_components());
+  var import_components240 = __toESM(require_components());
   var import_data170 = __toESM(require_data());
   var EMPTY_ARRAY14 = [];
   function getShowTabs(blockName, tabSettings = {}) {
@@ -66315,24 +66307,24 @@ var wp;
       effects: effectsGroup
     } = groups_default;
     const listViewDisabled = use_is_list_view_tab_disabled_default(blockName);
-    const listFills = (0, import_components239.__experimentalUseSlotFills)(listGroup.name);
+    const listFills = (0, import_components240.__experimentalUseSlotFills)(listGroup.name);
     const hasListFills = !listViewDisabled && !!listFills && listFills.length;
     const styleFills = [
-      ...(0, import_components239.__experimentalUseSlotFills)(borderGroup.name) || [],
-      ...(0, import_components239.__experimentalUseSlotFills)(colorGroup.name) || [],
-      ...(0, import_components239.__experimentalUseSlotFills)(dimensionsGroup.name) || [],
-      ...(0, import_components239.__experimentalUseSlotFills)(stylesGroup.name) || [],
-      ...(0, import_components239.__experimentalUseSlotFills)(typographyGroup.name) || [],
-      ...(0, import_components239.__experimentalUseSlotFills)(effectsGroup.name) || []
+      ...(0, import_components240.__experimentalUseSlotFills)(borderGroup.name) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(colorGroup.name) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(dimensionsGroup.name) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(stylesGroup.name) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(typographyGroup.name) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(effectsGroup.name) || []
     ];
     const hasStyleFills = styleFills.length;
     const advancedFills = [
-      ...(0, import_components239.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || [],
-      ...(0, import_components239.__experimentalUseSlotFills)(bindingsGroup.name) || []
+      ...(0, import_components240.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(bindingsGroup.name) || []
     ];
     const settingsFills = [
-      ...(0, import_components239.__experimentalUseSlotFills)(defaultGroup.name) || [],
-      ...(0, import_components239.__experimentalUseSlotFills)(positionGroup.name) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(defaultGroup.name) || [],
+      ...(0, import_components240.__experimentalUseSlotFills)(positionGroup.name) || [],
       ...hasListFills && hasStyleFills > 1 ? advancedFills : []
     ];
     const hasContentTab = !!(contentClientIds && contentClientIds.length > 0);
@@ -66382,9 +66374,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-inspector/index.js
-  var import_jsx_runtime422 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime423 = __toESM(require_jsx_runtime());
   function BlockStylesPanel({ clientId }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(import_components240.PanelBody, { title: (0, import_i18n219.__)("Styles"), children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(block_styles_default, { clientId }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_components241.PanelBody, { title: (0, import_i18n219.__)("Styles"), children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(block_styles_default, { clientId }) });
   }
   function StyleInspectorSlots({
     blockName,
@@ -66394,10 +66386,10 @@ var wp;
     showBindingsControls = true
   }) {
     const borderPanelLabel = useBorderPanelLabel({ blockName });
-    return /* @__PURE__ */ (0, import_jsx_runtime422.jsxs)(import_jsx_runtime422.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(inspector_controls_default.Slot, {}),
-      showListControls && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(inspector_controls_default.Slot, { group: "list" }),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(import_jsx_runtime423.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(inspector_controls_default.Slot, {}),
+      showListControls && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(inspector_controls_default.Slot, { group: "list" }),
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         inspector_controls_default.Slot,
         {
           group: "color",
@@ -66405,32 +66397,32 @@ var wp;
           className: "color-block-support-panel__inner-wrapper"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         inspector_controls_default.Slot,
         {
           group: "background",
           label: (0, import_i18n219.__)("Background image")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         inspector_controls_default.Slot,
         {
           group: "typography",
           label: (0, import_i18n219.__)("Typography")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         inspector_controls_default.Slot,
         {
           group: "dimensions",
           label: (0, import_i18n219.__)("Dimensions")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(inspector_controls_default.Slot, { group: "border", label: borderPanelLabel }),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(inspector_controls_default.Slot, { group: "styles" }),
-      showPositionControls && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(position_controls_panel_default, {}),
-      showBindingsControls && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(inspector_controls_default.Slot, { group: "bindings" }),
-      showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(advanced_controls_panel_default, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(inspector_controls_default.Slot, { group: "border", label: borderPanelLabel }),
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(inspector_controls_default.Slot, { group: "styles" }),
+      showPositionControls && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(position_controls_panel_default, {}),
+      showBindingsControls && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(inspector_controls_default.Slot, { group: "bindings" }),
+      showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(advanced_controls_panel_default, {}) })
     ] });
   }
   function BlockInspector() {
@@ -66522,9 +66514,9 @@ var wp;
     const blockInspectorAnimationSettings = useBlockInspectorAnimationSettings(blockType);
     const hasSelectedBlocks = selectedBlockCount > 1;
     if (hasSelectedBlocks && !isSectionBlockInSelection) {
-      return /* @__PURE__ */ (0, import_jsx_runtime422.jsxs)("div", { className: "block-editor-block-inspector", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(MultiSelectionInspector, {}),
-        hasMultipleTabs ? /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(InspectorControlsTabs, { tabs: availableTabs }) : /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)("div", { className: "block-editor-block-inspector", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(MultiSelectionInspector, {}),
+        hasMultipleTabs ? /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(InspectorControlsTabs, { tabs: availableTabs }) : /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
           StyleInspectorSlots,
           {
             blockName: renderedBlockName,
@@ -66536,18 +66528,18 @@ var wp;
       ] });
     }
     if (hasSelectedBlocks && isSectionBlockInSelection) {
-      return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)("div", { className: "block-editor-block-inspector", children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(MultiSelectionInspector, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)("div", { className: "block-editor-block-inspector", children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(MultiSelectionInspector, {}) });
     }
     const isRenderedBlockUnregistered = renderedBlockName === (0, import_blocks93.getUnregisteredTypeHandlerName)();
     const shouldShowWarning = !blockType || !renderedBlockClientId || isRenderedBlockUnregistered;
     if (shouldShowWarning) {
-      return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)("span", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n219.__)("No block selected.") });
+      return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)("span", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n219.__)("No block selected.") });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
       BlockInspectorSingleBlockWrapper,
       {
         animate: blockInspectorAnimationSettings,
-        wrapper: (children) => /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+        wrapper: (children) => /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
           AnimatedContainer,
           {
             blockInspectorAnimationSettings,
@@ -66555,7 +66547,7 @@ var wp;
             children
           }
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
           BlockInspectorSingleBlock,
           {
             renderedBlockClientId,
@@ -66580,8 +66572,8 @@ var wp;
     children
   }) => {
     const animationOrigin = blockInspectorAnimationSettings && blockInspectorAnimationSettings.enterDirection === "leftToRight" ? -50 : 50;
-    return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
-      import_components240.__unstableMotion.div,
+    return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
+      import_components241.__unstableMotion.div,
       {
         animate: {
           x: 0,
@@ -66626,8 +66618,8 @@ var wp;
     const isBlockSynced = blockInformation.isSynced;
     const shouldShowTabs = !isBlockSynced && hasMultipleTabs;
     const isSectionBlockSelected = window?.__experimentalContentOnlyPatternInsertion && selectedBlockClientId === renderedBlockClientId;
-    return /* @__PURE__ */ (0, import_jsx_runtime422.jsxs)("div", { className: "block-editor-block-inspector", children: [
-      hasParentChildBlockCards && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)("div", { className: "block-editor-block-inspector", children: [
+      hasParentChildBlockCards && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         block_card_default,
         {
           ...parentBlockInformation,
@@ -66635,7 +66627,7 @@ var wp;
           parentClientId: editedContentOnlySection2
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         block_card_default,
         {
           ...blockInformation,
@@ -66645,9 +66637,9 @@ var wp;
           clientId: renderedBlockClientId
         }
       ),
-      window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(EditContents, { clientId: renderedBlockClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(block_variation_transforms_default, { blockClientId: renderedBlockClientId }),
-      shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+      window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(EditContents, { clientId: renderedBlockClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(block_variation_transforms_default, { blockClientId: renderedBlockClientId }),
+      shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
         InspectorControlsTabs,
         {
           hasBlockStyles,
@@ -66658,35 +66650,35 @@ var wp;
           contentClientIds
         }
       ),
-      !shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime422.jsxs)(import_jsx_runtime422.Fragment, { children: [
-        hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(BlockStylesPanel, { clientId: renderedBlockClientId }),
-        /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+      !shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(import_jsx_runtime423.Fragment, { children: [
+        hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(BlockStylesPanel, { clientId: renderedBlockClientId }),
+        /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
           content_tab_default,
           {
             rootClientId: renderedBlockClientId,
             contentClientIds
           }
         ),
-        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
+        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
           StyleInspectorSlots,
           {
             blockName,
             showListControls: true
           }
         ),
-        isSectionBlock2 && isBlockSynced && isSectionBlockSelected && /* @__PURE__ */ (0, import_jsx_runtime422.jsxs)(import_jsx_runtime422.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(inspector_controls_default.Slot, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(advanced_controls_panel_default, {})
+        isSectionBlock2 && isBlockSynced && isSectionBlockSelected && /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(import_jsx_runtime423.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(inspector_controls_default.Slot, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(advanced_controls_panel_default, {})
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(SkipToSelectedBlock, {}, "back")
+      /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(SkipToSelectedBlock, {}, "back")
     ] });
   };
   var block_inspector_default = BlockInspector;
 
   // packages/block-editor/build-module/components/copy-handler/index.js
   var import_deprecated31 = __toESM(require_deprecated());
-  var import_jsx_runtime423 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime424 = __toESM(require_jsx_runtime());
   var __unstableUseClipboardHandler = () => {
     (0, import_deprecated31.default)("__unstableUseClipboardHandler", {
       alternative: "BlockCanvas or WritingFlow",
@@ -66701,13 +66693,13 @@ var wp;
       since: "6.4",
       version: "6.7"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)("div", { ...props, ref: useClipboardHandler() });
+    return /* @__PURE__ */ (0, import_jsx_runtime424.jsx)("div", { ...props, ref: useClipboardHandler() });
   }
 
   // packages/block-editor/build-module/components/inserter/library.js
   var import_data173 = __toESM(require_data());
   var import_element241 = __toESM(require_element());
-  var import_jsx_runtime424 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime425 = __toESM(require_jsx_runtime());
   var noop19 = () => {
   };
   function InserterLibrary({
@@ -66735,7 +66727,7 @@ var wp;
       },
       [clientId, rootClientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
       PrivateInserterMenu,
       {
         onSelect,
@@ -66757,7 +66749,7 @@ var wp;
   }
   var PrivateInserterLibrary = (0, import_element241.forwardRef)(InserterLibrary);
   function PublicInserterLibrary(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
       PrivateInserterLibrary,
       {
         ...props,
@@ -66783,7 +66775,7 @@ var wp;
   var import_dom39 = __toESM(require_dom());
   var import_data174 = __toESM(require_data());
   var import_keycodes26 = __toESM(require_keycodes());
-  var import_jsx_runtime425 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime426 = __toESM(require_jsx_runtime());
   var isIE = window.navigator.userAgent.indexOf("Trident") !== -1;
   var arrowKeyCodes = /* @__PURE__ */ new Set([import_keycodes26.UP, import_keycodes26.DOWN, import_keycodes26.LEFT, import_keycodes26.RIGHT]);
   var initialTriggerPercentage = 0.75;
@@ -66934,7 +66926,7 @@ var wp;
     );
   }
   function Typewriter({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime425.jsx)("div", { ref: useTypewriter(), className: "block-editor__typewriter", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)("div", { ref: useTypewriter(), className: "block-editor__typewriter", children });
   }
   var TypewriterOrIEBypass = isIE ? (props) => props.children : Typewriter;
   var typewriter_default = TypewriterOrIEBypass;
@@ -66942,7 +66934,7 @@ var wp;
   // packages/block-editor/build-module/components/recursion-provider/index.js
   var import_element242 = __toESM(require_element());
   var import_deprecated33 = __toESM(require_deprecated());
-  var import_jsx_runtime426 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime427 = __toESM(require_jsx_runtime());
   var RenderedRefsContext = (0, import_element242.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
   function addToBlockType(renderedBlocks, blockName, uniqueId2) {
@@ -66961,7 +66953,7 @@ var wp;
       () => addToBlockType(previouslyRenderedBlocks, blockName, uniqueId2),
       [previouslyRenderedBlocks, blockName, uniqueId2]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
   }
   function useHasRecursion(uniqueId2, blockName = "") {
     const previouslyRenderedBlocks = (0, import_element242.useContext)(RenderedRefsContext);
@@ -66974,7 +66966,7 @@ var wp;
       since: "6.5",
       alternative: "wp.blockEditor.RecursionProvider"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(RecursionProvider, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(RecursionProvider, { ...props });
   };
   var DeprecatedExperimentalUseHasRecursion = (...args) => {
     (0, import_deprecated33.default)("wp.blockEditor.__experimentalUseHasRecursion", {
@@ -66985,25 +66977,25 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/publish-date-time-picker/index.js
-  var import_components242 = __toESM(require_components());
+  var import_components243 = __toESM(require_components());
   var import_i18n221 = __toESM(require_i18n());
   var import_element243 = __toESM(require_element());
   var import_date8 = __toESM(require_date());
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.js
-  var import_components241 = __toESM(require_components());
+  var import_components242 = __toESM(require_components());
   var import_i18n220 = __toESM(require_i18n());
-  var import_jsx_runtime427 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime428 = __toESM(require_jsx_runtime());
   function InspectorPopoverHeader({
     title,
     help,
     actions = [],
     onClose
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_components241.__experimentalVStack, { className: "block-editor-inspector-popover-header", spacing: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime427.jsxs)(import_components241.__experimentalHStack, { alignment: "center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-          import_components241.__experimentalHeading,
+    return /* @__PURE__ */ (0, import_jsx_runtime428.jsxs)(import_components242.__experimentalVStack, { className: "block-editor-inspector-popover-header", spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime428.jsxs)(import_components242.__experimentalHStack, { alignment: "center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
+          import_components242.__experimentalHeading,
           {
             className: "block-editor-inspector-popover-header__heading",
             level: 2,
@@ -67011,9 +67003,9 @@ var wp;
             children: title
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_components241.__experimentalSpacer, {}),
-        actions.map(({ label, icon, onClick }) => /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-          import_components241.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_components242.__experimentalSpacer, {}),
+        actions.map(({ label, icon, onClick }) => /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
+          import_components242.Button,
           {
             size: "small",
             className: "block-editor-inspector-popover-header__action",
@@ -67025,8 +67017,8 @@ var wp;
           },
           label
         )),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
-          import_components241.Button,
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
+          import_components242.Button,
           {
             size: "small",
             className: "block-editor-inspector-popover-header__action",
@@ -67036,12 +67028,12 @@ var wp;
           }
         )
       ] }),
-      help && /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_components241.__experimentalText, { children: help })
+      help && /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_components242.__experimentalText, { children: help })
     ] });
   }
 
   // packages/block-editor/build-module/components/publish-date-time-picker/index.js
-  var import_jsx_runtime428 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime429 = __toESM(require_jsx_runtime());
   function PublishDateTimePicker({
     onClose,
     onChange,
@@ -67058,9 +67050,9 @@ var wp;
       currentTime: isCompact ? currentDate : void 0,
       ...additionalProps
     };
-    const DatePickerComponent = isCompact ? import_components242.TimePicker : import_components242.DateTimePicker;
-    return /* @__PURE__ */ (0, import_jsx_runtime428.jsxs)("div", { ref, className: "block-editor-publish-date-time-picker", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
+    const DatePickerComponent = isCompact ? import_components243.TimePicker : import_components243.DateTimePicker;
+    return /* @__PURE__ */ (0, import_jsx_runtime429.jsxs)("div", { ref, className: "block-editor-publish-date-time-picker", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
         InspectorPopoverHeader,
         {
           title: title || (0, import_i18n221.__)("Publish"),
@@ -67073,12 +67065,12 @@ var wp;
           onClose
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(DatePickerComponent, { ...datePickerProps })
+      /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(DatePickerComponent, { ...datePickerProps })
     ] });
   }
   var PrivatePublishDateTimePicker = (0, import_element243.forwardRef)(PublishDateTimePicker);
   function PublicPublishDateTimePicker(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
       PrivatePublishDateTimePicker,
       {
         ...props,
@@ -67130,7 +67122,7 @@ var wp;
   var tool_selector_default = (0, import_element245.forwardRef)(ToolSelector);
 
   // packages/block-editor/build-module/hooks/utils.js
-  var import_jsx_runtime429 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime430 = __toESM(require_jsx_runtime());
   var cleanEmptyObject = (object) => {
     if (object === null || typeof object !== "object" || Array.isArray(object)) {
       return object;
@@ -67547,7 +67539,7 @@ var wp;
                 neededProps[key] = props.attributes[key];
               }
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
               Edit4,
               {
                 name: props.name,
@@ -67560,7 +67552,7 @@ var wp;
               i2
             );
           }),
-          /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(OriginalBlockEdit, { ...props }, "edit")
+          /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(OriginalBlockEdit, { ...props }, "edit")
         ];
       },
       "withBlockEditHooks"
@@ -67615,7 +67607,7 @@ var wp;
             ) {
               return null;
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
               BlockPropsPure,
               {
                 index: i2,
@@ -67628,7 +67620,7 @@ var wp;
               i2
             );
           }),
-          /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
             BlockListBlock2,
             {
               ...props,
@@ -67716,7 +67708,7 @@ var wp;
   // packages/block-editor/build-module/hooks/align.js
   var import_hooks16 = __toESM(require_hooks());
   var import_blocks96 = __toESM(require_blocks());
-  var import_jsx_runtime430 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime431 = __toESM(require_jsx_runtime());
   var ALL_ALIGNMENTS = ["left", "center", "right", "wide", "full"];
   var WIDE_ALIGNMENTS = ["wide", "full"];
   function getValidAlignments(blockAlign, hasWideBlockSupport = true, hasWideEnabled = true) {
@@ -67780,7 +67772,7 @@ var wp;
       }
       setAttributes({ align: nextAlign });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
       BlockAlignmentControl,
       {
         value: align,
@@ -67850,14 +67842,14 @@ var wp;
   var import_blocks99 = __toESM(require_blocks());
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.js
-  var import_components249 = __toESM(require_components());
+  var import_components250 = __toESM(require_components());
   var import_i18n224 = __toESM(require_i18n());
   var import_element250 = __toESM(require_element());
   var import_data179 = __toESM(require_data());
   var import_blocks98 = __toESM(require_blocks());
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.js
-  var import_components248 = __toESM(require_components());
+  var import_components249 = __toESM(require_components());
   var import_element249 = __toESM(require_element());
   var import_i18n223 = __toESM(require_i18n());
   var import_data178 = __toESM(require_data());
@@ -67865,7 +67857,7 @@ var wp;
   // packages/block-editor/build-module/components/block-manager/index.js
   var import_blocks97 = __toESM(require_blocks());
   var import_data177 = __toESM(require_data());
-  var import_components247 = __toESM(require_components());
+  var import_components248 = __toESM(require_components());
   var import_i18n222 = __toESM(require_i18n());
   var import_element248 = __toESM(require_element());
   var import_compose96 = __toESM(require_compose());
@@ -67874,26 +67866,26 @@ var wp;
   // packages/block-editor/build-module/components/block-manager/category.js
   var import_element247 = __toESM(require_element());
   var import_compose95 = __toESM(require_compose());
-  var import_components246 = __toESM(require_components());
+  var import_components247 = __toESM(require_components());
 
   // packages/block-editor/build-module/components/block-manager/checklist.js
-  var import_components245 = __toESM(require_components());
-  var import_jsx_runtime431 = __toESM(require_jsx_runtime());
+  var import_components246 = __toESM(require_components());
+  var import_jsx_runtime432 = __toESM(require_jsx_runtime());
   function BlockTypesChecklist({ blockTypes, value, onItemChange }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)("ul", { className: "block-editor-block-manager__checklist", children: blockTypes.map((blockType) => /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("ul", { className: "block-editor-block-manager__checklist", children: blockTypes.map((blockType) => /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
       "li",
       {
         className: "block-editor-block-manager__checklist-item",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-            import_components245.CheckboxControl,
+          /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+            import_components246.CheckboxControl,
             {
               label: blockType.title,
               checked: value.includes(blockType.name),
               onChange: (...args) => onItemChange(blockType, ...args)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(block_icon_default, { icon: blockType.icon })
+          /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(block_icon_default, { icon: blockType.icon })
         ]
       },
       blockType.name
@@ -67902,7 +67894,7 @@ var wp;
   var checklist_default = BlockTypesChecklist;
 
   // packages/block-editor/build-module/components/block-manager/category.js
-  var import_jsx_runtime432 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime433 = __toESM(require_jsx_runtime());
   function BlockManagerCategory({
     title,
     blockTypes,
@@ -67958,24 +67950,24 @@ var wp;
     const titleId = "block-editor-block-manager__category-title-" + instanceId;
     const isAllChecked = checkedBlockNames.length === blockTypes.length;
     const isIndeterminate = !isAllChecked && checkedBlockNames.length > 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(
       "div",
       {
         role: "group",
         "aria-labelledby": titleId,
         className: "block-editor-block-manager__category",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-            import_components246.CheckboxControl,
+          /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
+            import_components247.CheckboxControl,
             {
               checked: isAllChecked,
               onChange: toggleAllVisible,
               className: "block-editor-block-manager__category-title",
               indeterminate: isIndeterminate,
-              label: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)("span", { id: titleId, children: title })
+              label: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)("span", { id: titleId, children: title })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
             checklist_default,
             {
               blockTypes,
@@ -67990,7 +67982,7 @@ var wp;
   var category_default2 = BlockManagerCategory;
 
   // packages/block-editor/build-module/components/block-manager/index.js
-  var import_jsx_runtime433 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime434 = __toESM(require_jsx_runtime());
   function BlockManager({
     blockTypes,
     selectedBlockTypes,
@@ -68022,9 +68014,9 @@ var wp;
       );
       debouncedSpeak(resultsFoundMessage);
     }, [filteredBlockTypes?.length, search, debouncedSpeak]);
-    return /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(import_components247.__experimentalVStack, { className: "block-editor-block-manager__content", spacing: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
-        import_components247.SearchControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(import_components248.__experimentalVStack, { className: "block-editor-block-manager__content", spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
+        import_components248.SearchControl,
         {
           __nextHasNoMarginBottom: true,
           label: (0, import_i18n222.__)("Search for a block"),
@@ -68034,8 +68026,8 @@ var wp;
           className: "block-editor-block-manager__search"
         }
       ),
-      showSelectAll && /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
-        import_components247.CheckboxControl,
+      showSelectAll && /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
+        import_components248.CheckboxControl,
         {
           className: "block-editor-block-manager__select-all",
           label: (0, import_i18n222.__)("Select all"),
@@ -68050,7 +68042,7 @@ var wp;
           indeterminate: isIndeterminate
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(
         "div",
         {
           tabIndex: "0",
@@ -68058,8 +68050,8 @@ var wp;
           "aria-label": (0, import_i18n222.__)("Available block types"),
           className: "block-editor-block-manager__results",
           children: [
-            filteredBlockTypes.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime433.jsx)("p", { className: "block-editor-block-manager__no-results", children: (0, import_i18n222.__)("No blocks found.") }),
-            categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
+            filteredBlockTypes.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime434.jsx)("p", { className: "block-editor-block-manager__no-results", children: (0, import_i18n222.__)("No blocks found.") }),
+            categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
               category_default2,
               {
                 title: category.title,
@@ -68071,7 +68063,7 @@ var wp;
               },
               category.slug
             )),
-            /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
               category_default2,
               {
                 title: (0, import_i18n222.__)("Uncategorized"),
@@ -68089,7 +68081,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.js
-  var import_jsx_runtime434 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime435 = __toESM(require_jsx_runtime());
   function BlockAllowedBlocksModal({
     clientId,
     blockTypes,
@@ -68108,16 +68100,16 @@ var wp;
       });
       onClose();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
-      import_components248.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
+      import_components249.Modal,
       {
         title: (0, import_i18n223.__)("Manage allowed blocks"),
         onRequestClose: onClose,
         overlayClassName: "block-editor-block-allowed-blocks-modal",
         focusOnMount: "firstContentElement",
         size: "medium",
-        children: /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(
-          import_components248.__experimentalVStack,
+        children: /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(
+          import_components249.__experimentalVStack,
           {
             as: "form",
             onSubmit: (e2) => {
@@ -68126,10 +68118,10 @@ var wp;
             },
             spacing: "4",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_components248.__experimentalText, { children: (0, import_i18n223.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(import_components249.__experimentalText, { children: (0, import_i18n223.__)(
                 "Select which blocks can be added inside this container."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
                 BlockManager,
                 {
                   blockTypes,
@@ -68139,15 +68131,15 @@ var wp;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(
-                import_components248.Flex,
+              /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(
+                import_components249.Flex,
                 {
                   className: "block-editor-block-allowed-blocks-modal__actions",
                   justify: "flex-end",
                   expanded: false,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_components248.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
-                      import_components248.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(import_components249.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
+                      import_components249.Button,
                       {
                         variant: "tertiary",
                         onClick: onClose,
@@ -68155,8 +68147,8 @@ var wp;
                         children: (0, import_i18n223.__)("Cancel")
                       }
                     ) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_components248.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
-                      import_components248.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(import_components249.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
+                      import_components249.Button,
                       {
                         variant: "primary",
                         type: "submit",
@@ -68175,7 +68167,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.js
-  var import_jsx_runtime435 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime436 = __toESM(require_jsx_runtime());
   function BlockAllowedBlocksControl({ clientId }) {
     const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element250.useState)(false);
     const { blockTypes, selectedBlockNames } = (0, import_data179.useSelect)(
@@ -68197,18 +68189,18 @@ var wp;
     const selectedBlockTypes = selectedBlockNames === void 0 ? filteredBlockTypes : filteredBlockTypes.filter(
       (blockType) => selectedBlockNames.includes(blockType.name)
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)("div", { className: "block-editor-block-allowed-blocks-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(
-        import_components249.BaseControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime436.jsxs)("div", { className: "block-editor-block-allowed-blocks-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime436.jsxs)(
+        import_components250.BaseControl,
         {
           help: (0, import_i18n224.__)(
             "Specify which blocks are allowed inside this container."
           ),
           __nextHasNoMarginBottom: true,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(import_components249.BaseControl.VisualLabel, { children: (0, import_i18n224.__)("Allowed Blocks") }),
-            /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
-              import_components249.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(import_components250.BaseControl.VisualLabel, { children: (0, import_i18n224.__)("Allowed Blocks") }),
+            /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
+              import_components250.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
@@ -68222,7 +68214,7 @@ var wp;
           ]
         }
       ),
-      isBlockControlOpened && /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
+      isBlockControlOpened && /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
         BlockAllowedBlocksModal,
         {
           clientId,
@@ -68235,14 +68227,14 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/allowed-blocks.js
-  var import_jsx_runtime436 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime437 = __toESM(require_jsx_runtime());
   function BlockEditAllowedBlocksControlPure({ clientId }) {
     const blockEditingMode = useBlockEditingMode();
     const isContentOnly = blockEditingMode === "contentOnly";
     if (isContentOnly) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(PrivateInspectorControlsAllowedBlocks.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(BlockAllowedBlocksControl, { clientId }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(PrivateInspectorControlsAllowedBlocks.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(BlockAllowedBlocksControl, { clientId }) });
   }
   var allowed_blocks_default = {
     edit: BlockEditAllowedBlocksControlPure,
@@ -68320,11 +68312,11 @@ var wp;
 
   // packages/block-editor/build-module/hooks/anchor.js
   var import_hooks19 = __toESM(require_hooks());
-  var import_components250 = __toESM(require_components());
+  var import_components251 = __toESM(require_components());
   var import_i18n225 = __toESM(require_i18n());
   var import_blocks100 = __toESM(require_blocks());
   var import_element251 = __toESM(require_element());
-  var import_jsx_runtime437 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime438 = __toESM(require_jsx_runtime());
   var ANCHOR_REGEX = /[\s#]/g;
   var ANCHOR_SCHEMA = {
     type: "string",
@@ -68350,20 +68342,20 @@ var wp;
       return null;
     }
     const isWeb = import_element251.Platform.OS === "web";
-    return /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
-      import_components250.TextControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
+      import_components251.TextControl,
       {
         __next40pxDefaultSize: true,
         className: "html-anchor-control",
         label: (0, import_i18n225.__)("HTML anchor"),
-        help: /* @__PURE__ */ (0, import_jsx_runtime437.jsxs)(import_jsx_runtime437.Fragment, { children: [
+        help: /* @__PURE__ */ (0, import_jsx_runtime438.jsxs)(import_jsx_runtime438.Fragment, { children: [
           (0, import_i18n225.__)(
             "Enter a word or two \u2014 without spaces \u2014 to make a unique web address just for this block, called an \u201Canchor\u201D. Then, you\u2019ll be able to link directly to this section of your page."
           ),
-          isWeb && /* @__PURE__ */ (0, import_jsx_runtime437.jsxs)(import_jsx_runtime437.Fragment, { children: [
+          isWeb && /* @__PURE__ */ (0, import_jsx_runtime438.jsxs)(import_jsx_runtime438.Fragment, { children: [
             " ",
-            /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
-              import_components250.ExternalLink,
+            /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
+              import_components251.ExternalLink,
               {
                 href: (0, import_i18n225.__)(
                   "https://wordpress.org/documentation/article/page-jumps/"
@@ -68440,10 +68432,10 @@ var wp;
 
   // packages/block-editor/build-module/hooks/custom-class-name.js
   var import_hooks21 = __toESM(require_hooks());
-  var import_components252 = __toESM(require_components());
+  var import_components253 = __toESM(require_components());
   var import_i18n226 = __toESM(require_i18n());
   var import_blocks102 = __toESM(require_blocks());
-  var import_jsx_runtime438 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime439 = __toESM(require_jsx_runtime());
   function addAttribute6(settings2) {
     if ((0, import_blocks102.hasBlockSupport)(settings2, "customClassName", true)) {
       settings2.attributes = {
@@ -68460,8 +68452,8 @@ var wp;
     if (blockEditingMode !== "default") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
-      import_components252.TextControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
+      import_components253.TextControl,
       {
         __next40pxDefaultSize: true,
         autoComplete: "off",
@@ -68566,16 +68558,16 @@ var wp;
 
   // packages/block-editor/build-module/hooks/line-height.js
   var import_blocks104 = __toESM(require_blocks());
-  var import_jsx_runtime439 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime440 = __toESM(require_jsx_runtime());
   var LINE_HEIGHT_SUPPORT_KEY2 = "typography.lineHeight";
 
   // packages/block-editor/build-module/hooks/font-family.js
   var import_hooks23 = __toESM(require_hooks());
   var import_blocks105 = __toESM(require_blocks());
   var import_token_list2 = __toESM(require_token_list());
-  var import_components254 = __toESM(require_components());
+  var import_components255 = __toESM(require_components());
   var FONT_FAMILY_SUPPORT_KEY2 = "typography.__experimentalFontFamily";
-  var { kebabCase: kebabCase5 } = unlock(import_components254.privateApis);
+  var { kebabCase: kebabCase5 } = unlock(import_components255.privateApis);
   function addAttributes3(settings2) {
     if (!(0, import_blocks105.hasBlockSupport)(settings2, FONT_FAMILY_SUPPORT_KEY2)) {
       return settings2;
@@ -68630,7 +68622,7 @@ var wp;
   var import_hooks24 = __toESM(require_hooks());
   var import_blocks106 = __toESM(require_blocks());
   var import_token_list3 = __toESM(require_token_list());
-  var import_jsx_runtime440 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime441 = __toESM(require_jsx_runtime());
   var FONT_SIZE_SUPPORT_KEY2 = "typography.fontSize";
   function addAttributes4(settings2) {
     if (!(0, import_blocks106.hasBlockSupport)(settings2, FONT_SIZE_SUPPORT_KEY2)) {
@@ -68745,7 +68737,7 @@ var wp;
   // packages/block-editor/build-module/hooks/text-align.js
   var import_i18n227 = __toESM(require_i18n());
   var import_blocks107 = __toESM(require_blocks());
-  var import_jsx_runtime441 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime442 = __toESM(require_jsx_runtime());
   var TEXT_ALIGN_SUPPORT_KEY2 = "typography.textAlign";
   var TEXT_ALIGNMENT_OPTIONS2 = [
     {
@@ -68804,7 +68796,7 @@ var wp;
       };
       setAttributes({ style: cleanEmptyObject(newStyle) });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(block_controls_default, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(block_controls_default, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
       AlignmentControl,
       {
         value: style?.typography?.textAlign,
@@ -69069,7 +69061,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/typography.js
-  var import_jsx_runtime442 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime443 = __toESM(require_jsx_runtime());
   function omit(object, keys) {
     return Object.fromEntries(
       Object.entries(object).filter(([key]) => !keys.includes(key))
@@ -69137,7 +69129,7 @@ var wp;
       },
       [resetAllFilter]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
       inspector_controls_default,
       {
         group: "typography",
@@ -69182,7 +69174,7 @@ var wp;
       TYPOGRAPHY_SUPPORT_KEY,
       "__experimentalDefaultControls"
     ]);
-    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
       TypographyPanel,
       {
         as: TypographyInspectorControl,
@@ -69205,7 +69197,7 @@ var wp;
   // packages/block-editor/build-module/hooks/spacing-visualizer.js
   var import_element254 = __toESM(require_element());
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal());
-  var import_jsx_runtime443 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime444 = __toESM(require_jsx_runtime());
   function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
     const blockElement = useBlockElement(clientId);
     const [style, updateStyle] = (0, import_element254.useReducer)(
@@ -69248,12 +69240,12 @@ var wp;
     if (!isActive && !forceShow) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
       cover_default,
       {
         clientId,
         __unstablePopoverSlot: "block-toolbar",
-        children: /* @__PURE__ */ (0, import_jsx_runtime443.jsx)("div", { className: "block-editor__spacing-visualizer", style })
+        children: /* @__PURE__ */ (0, import_jsx_runtime444.jsx)("div", { className: "block-editor__spacing-visualizer", style })
       }
     );
   }
@@ -69261,7 +69253,7 @@ var wp;
     return element.ownerDocument.defaultView.getComputedStyle(element).getPropertyValue(property);
   }
   function MarginVisualizer({ clientId, value, forceShow }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
       SpacingVisualizer,
       {
         clientId,
@@ -69287,7 +69279,7 @@ var wp;
     );
   }
   function PaddingVisualizer({ clientId, value, forceShow }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
       SpacingVisualizer,
       {
         clientId,
@@ -69310,7 +69302,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/dimensions.js
-  var import_jsx_runtime444 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime445 = __toESM(require_jsx_runtime());
   var DIMENSIONS_SUPPORT_KEY = "dimensions";
   var SPACING_SUPPORT_KEY2 = "spacing";
   function useVisualizer() {
@@ -69339,7 +69331,7 @@ var wp;
       },
       [resetAllFilter]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
       inspector_controls_default,
       {
         group: "dimensions",
@@ -69380,8 +69372,8 @@ var wp;
       ...defaultDimensionsControls,
       ...defaultSpacingControls
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime444.jsxs)(import_jsx_runtime444.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime445.jsxs)(import_jsx_runtime445.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
         DimensionsPanel,
         {
           as: DimensionsInspectorControl,
@@ -69393,7 +69385,7 @@ var wp;
           onVisualize: setVisualizedProperty
         }
       ),
-      !!settings2?.spacing?.padding && visualizedProperty === "padding" && /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
+      !!settings2?.spacing?.padding && visualizedProperty === "padding" && /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
         PaddingVisualizer,
         {
           forceShow: visualizedProperty === "padding",
@@ -69401,7 +69393,7 @@ var wp;
           value
         }
       ),
-      !!settings2?.spacing?.margin && visualizedProperty === "margin" && /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
+      !!settings2?.spacing?.margin && visualizedProperty === "margin" && /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
         MarginVisualizer,
         {
           forceShow: visualizedProperty === "margin",
@@ -69454,7 +69446,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/style.js
-  var import_jsx_runtime445 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime446 = __toESM(require_jsx_runtime());
   var styleSupportKeys2 = [
     ...TYPOGRAPHY_SUPPORT_KEYS2,
     BORDER_SUPPORT_KEY2,
@@ -69589,12 +69581,12 @@ var wp;
     if (blockEditingMode !== "default") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime445.jsxs)(import_jsx_runtime445.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(ColorEdit, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(BackgroundImagePanel3, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(TypographyPanel2, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(BorderPanel2, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(DimensionsPanel2, { ...passedProps })
+    return /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(import_jsx_runtime446.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(ColorEdit, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(BackgroundImagePanel3, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(TypographyPanel2, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(BorderPanel2, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(DimensionsPanel2, { ...passedProps })
     ] });
   }
   var style_default = {
@@ -69772,7 +69764,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/duotone.js
-  var import_jsx_runtime446 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime447 = __toESM(require_jsx_runtime());
   var EMPTY_ARRAY15 = [];
   var isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
   k([names_default]);
@@ -69837,8 +69829,8 @@ var wp;
       return null;
     }
     const duotonePresetOrColors = duotoneStyle === "unset" || Array.isArray(duotoneStyle) ? duotoneStyle : getColorsFromDuotonePreset(duotoneStyle, duotonePalette);
-    return /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(import_jsx_runtime446.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(inspector_controls_default, { group: "filter", children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime447.jsxs)(import_jsx_runtime447.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(inspector_controls_default, { group: "filter", children: /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
         FiltersPanel,
         {
           value: { filter: { duotone: duotonePresetOrColors } },
@@ -69856,7 +69848,7 @@ var wp;
           settings: settings2
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
         duotone_control_default,
         {
           duotonePalette,
@@ -70013,11 +70005,11 @@ var wp;
   var import_hooks29 = __toESM(require_hooks());
   var import_blocks114 = __toESM(require_blocks());
   var import_data183 = __toESM(require_data());
-  var import_components257 = __toESM(require_components());
+  var import_components258 = __toESM(require_components());
   var import_i18n228 = __toESM(require_i18n());
-  var import_jsx_runtime447 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime448 = __toESM(require_jsx_runtime());
   var layoutBlockSupportKey = "layout";
-  var { kebabCase: kebabCase6 } = unlock(import_components257.privateApis);
+  var { kebabCase: kebabCase6 } = unlock(import_components258.privateApis);
   function hasLayoutBlockSupport(blockName) {
     return (0, import_blocks114.hasBlockSupport)(blockName, "layout") || (0, import_blocks114.hasBlockSupport)(blockName, "__experimentalLayout");
   }
@@ -70128,10 +70120,10 @@ var wp;
     const hasContentSizeOrLegacySettings = !!inherit || !!contentSize;
     const onChangeType = (newType) => setAttributes({ layout: { type: newType } });
     const onChangeLayout = (newLayout) => setAttributes({ layout: newLayout });
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsxs)(import_jsx_runtime447.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime447.jsxs)(import_components257.PanelBody, { title: (0, import_i18n228.__)("Layout"), children: [
-        showInheritToggle && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(import_jsx_runtime447.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
-          import_components257.ToggleControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsxs)(import_jsx_runtime448.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime448.jsxs)(import_components258.PanelBody, { title: (0, import_i18n228.__)("Layout"), children: [
+        showInheritToggle && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(import_jsx_runtime448.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+          import_components258.ToggleControl,
           {
             __nextHasNoMarginBottom: true,
             label: (0, import_i18n228.__)("Inner blocks use content width"),
@@ -70148,14 +70140,14 @@ var wp;
             )
           }
         ) }),
-        !inherit && allowSwitching && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+        !inherit && allowSwitching && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
           LayoutTypeSwitcher,
           {
             type: blockLayoutType,
             onChange: onChangeType
           }
         ),
-        layoutType && layoutType.name !== "default" && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+        layoutType && layoutType.name !== "default" && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
           layoutType.inspectorControls,
           {
             layout: usedLayout,
@@ -70165,7 +70157,7 @@ var wp;
             clientId
           }
         ),
-        constrainedType && displayControlsForLegacyLayouts && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+        constrainedType && displayControlsForLegacyLayouts && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
           constrainedType.inspectorControls,
           {
             layout: usedLayout,
@@ -70176,7 +70168,7 @@ var wp;
           }
         )
       ] }) }),
-      !inherit && layoutType && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+      !inherit && layoutType && /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
         layoutType.toolBarControls,
         {
           layout: usedLayout,
@@ -70197,8 +70189,8 @@ var wp;
     }
   };
   function LayoutTypeSwitcher({ type, onChange }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
-      import_components257.__experimentalToggleGroupControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+      import_components258.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
         isBlock: true,
@@ -70209,8 +70201,8 @@ var wp;
         value: type,
         onChange,
         children: getLayoutTypes().map(({ name, label }) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
-            import_components257.__experimentalToggleGroupControlOption,
+          return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+            import_components258.__experimentalToggleGroupControlOption,
             {
               value: name,
               label
@@ -70265,7 +70257,7 @@ var wp;
       layoutClasses
     );
     useStyleOverride({ css });
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
       BlockListBlock2,
       {
         ...props,
@@ -70299,7 +70291,7 @@ var wp;
         [blockSupportsLayout, clientId]
       );
       if (!extraProps) {
-        return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
           BlockListBlock2,
           {
             ...props,
@@ -70307,7 +70299,7 @@ var wp;
           }
         );
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
         BlockWithLayoutStyles,
         {
           block: BlockListBlock2,
@@ -70447,7 +70439,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.js
-  var import_jsx_runtime448 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime449 = __toESM(require_jsx_runtime());
   function GridVisualizer({ clientId, contentRef, parentLayout }) {
     const isDistractionFree = (0, import_data184.useSelect)(
       (select3) => select3(store).getSettings().isDistractionFree,
@@ -70458,7 +70450,7 @@ var wp;
       return null;
     }
     const isManualGrid = parentLayout?.isManualPlacement && window.__experimentalEnableGridInteractivity;
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
       GridVisualizerGrid,
       {
         gridClientId: clientId,
@@ -70499,7 +70491,7 @@ var wp;
           document.removeEventListener("dragend", onGlobalDragEnd);
         };
       }, []);
-      return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
         cover_default,
         {
           className: clsx_default("block-editor-grid-visualizer", {
@@ -70507,19 +70499,19 @@ var wp;
           }),
           clientId: gridClientId,
           __unstablePopoverSlot: "__unstable-block-tools-after",
-          children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
             "div",
             {
               ref,
               className: "block-editor-grid-visualizer__grid",
               style: gridInfo.style,
-              children: isManualGrid ? /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+              children: isManualGrid ? /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
                 ManualGridVisualizer,
                 {
                   gridClientId,
                   gridInfo
                 }
-              ) : Array.from({ length: gridInfo.numItems }, (_, i2) => /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+              ) : Array.from({ length: gridInfo.numItems }, (_, i2) => /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
                 GridVisualizerCell,
                 {
                   color: gridInfo.currentColor
@@ -70573,12 +70565,12 @@ var wp;
           (rect) => rect.contains(column, row)
         );
         const isHighlighted = highlightedRect?.contains(column, row) ?? false;
-        return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
           GridVisualizerCell,
           {
             color: gridInfo.currentColor,
             className: isHighlighted && "is-highlighted",
-            children: isCellOccupied ? /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+            children: isCellOccupied ? /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
               GridVisualizerDropZone,
               {
                 column,
@@ -70587,7 +70579,7 @@ var wp;
                 gridInfo,
                 setHighlightedRect
               }
-            ) : /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+            ) : /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
               GridVisualizerAppender,
               {
                 column,
@@ -70604,7 +70596,7 @@ var wp;
     );
   }
   function GridVisualizerCell({ color, children, className }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
       "div",
       {
         className: clsx_default(
@@ -70700,7 +70692,7 @@ var wp;
     gridInfo,
     setHighlightedRect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
       "div",
       {
         className: "block-editor-grid-visualizer__drop-zone",
@@ -70730,7 +70722,7 @@ var wp;
       gridClientId,
       gridInfo.numColumns
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
       button_block_appender_default,
       {
         rootClientId: gridClientId,
@@ -70795,9 +70787,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.js
-  var import_components259 = __toESM(require_components());
+  var import_components260 = __toESM(require_components());
   var import_element259 = __toESM(require_element());
-  var import_jsx_runtime449 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime450 = __toESM(require_jsx_runtime());
   function GridItemResizer({
     clientId,
     bounds,
@@ -70810,7 +70802,7 @@ var wp;
     if (!blockElement || !rootBlockElement) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
       GridItemResizerInner,
       {
         clientId,
@@ -70874,15 +70866,15 @@ var wp;
         alignItems: alignment[resizeDirection]
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
       cover_default,
       {
         className: "block-editor-grid-item-resizer",
         clientId,
         __unstablePopoverSlot: "__unstable-block-tools-after",
         additionalStyles: styles,
-        children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
-          import_components259.ResizableBox,
+        children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+          import_components260.ResizableBox,
           {
             className: "block-editor-grid-item-resizer__box",
             size: {
@@ -70953,10 +70945,10 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/grid-item-movers.js
   var import_i18n229 = __toESM(require_i18n());
-  var import_components260 = __toESM(require_components());
+  var import_components261 = __toESM(require_components());
   var import_data185 = __toESM(require_data());
   var import_compose101 = __toESM(require_compose());
-  var import_jsx_runtime450 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime451 = __toESM(require_jsx_runtime());
   function GridItemMovers({
     layout,
     parentLayout,
@@ -70977,8 +70969,8 @@ var wp;
       gridClientId,
       columnCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(block_controls_default, { group: "parent", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)(import_components260.ToolbarGroup, { className: "block-editor-grid-item-mover__move-button-container", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-left", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(block_controls_default, { group: "parent", children: /* @__PURE__ */ (0, import_jsx_runtime451.jsxs)(import_components261.ToolbarGroup, { className: "block-editor-grid-item-mover__move-button-container", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-left", children: /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
         GridItemMover,
         {
           icon: (0, import_i18n229.isRTL)() ? chevron_right_default : chevron_left_default,
@@ -71002,8 +70994,8 @@ var wp;
           }
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)("div", { className: "block-editor-grid-item-mover__move-vertical-button-container", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsxs)("div", { className: "block-editor-grid-item-mover__move-vertical-button-container", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
           GridItemMover,
           {
             className: "is-up-button",
@@ -71028,7 +71020,7 @@ var wp;
             }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
           GridItemMover,
           {
             className: "is-down-button",
@@ -71054,7 +71046,7 @@ var wp;
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-right", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-right", children: /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
         GridItemMover,
         {
           icon: (0, import_i18n229.isRTL)() ? chevron_left_default : chevron_right_default,
@@ -71090,9 +71082,9 @@ var wp;
   }) {
     const instanceId = (0, import_compose101.useInstanceId)(GridItemMover);
     const descriptionId = `block-editor-grid-item-mover-button__description-${instanceId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)(import_jsx_runtime450.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
-        import_components260.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime451.jsxs)(import_jsx_runtime451.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
+        import_components261.ToolbarButton,
         {
           className: clsx_default(
             "block-editor-grid-item-mover-button",
@@ -71106,7 +71098,7 @@ var wp;
           accessibleWhenDisabled: true
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(import_components260.VisuallyHidden, { id: descriptionId, children: description })
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(import_components261.VisuallyHidden, { id: descriptionId, children: description })
     ] });
   }
 
@@ -71305,7 +71297,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/layout-child.js
-  var import_jsx_runtime451 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime452 = __toESM(require_jsx_runtime());
   var LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
   function useBlockPropsChildLayoutStyles({ style }) {
     const shouldRenderChildLayoutStyles = (0, import_data187.useSelect)((select3) => {
@@ -71426,7 +71418,7 @@ var wp;
     if (parentLayoutType !== "grid") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
       GridTools,
       {
         clientId,
@@ -71482,8 +71474,8 @@ var wp;
         }
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime451.jsxs)(import_jsx_runtime451.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime452.jsxs)(import_jsx_runtime452.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
         GridVisualizer,
         {
           clientId: rootClientId,
@@ -71491,7 +71483,7 @@ var wp;
           parentLayout
         }
       ),
-      allowSizingOnChildren && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
+      allowSizingOnChildren && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
         GridItemResizer,
         {
           clientId,
@@ -71500,7 +71492,7 @@ var wp;
           parentLayout
         }
       ),
-      isManualPlacement && window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
+      isManualPlacement && window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
         GridItemMovers,
         {
           layout: style?.layout,
@@ -71522,11 +71514,11 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/content-lock-ui.js
-  var import_components261 = __toESM(require_components());
+  var import_components262 = __toESM(require_components());
   var import_data188 = __toESM(require_data());
   var import_i18n230 = __toESM(require_i18n());
   var import_element262 = __toESM(require_element());
-  var import_jsx_runtime452 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime453 = __toESM(require_jsx_runtime());
   function ContentLockControlsPure({ clientId }) {
     const { templateLock, isLockedByParent, isEditingContentOnlySection } = (0, import_data188.useSelect)(
       (select3) => {
@@ -71553,7 +71545,7 @@ var wp;
     if (window?.__experimentalContentOnlyPatternInsertion || !isContentLocked && !isEditingContentOnlySection) {
       return null;
     }
-    return isEditingContentOnlySection && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(import_components261.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n230.__)("Done") }) });
+    return isEditingContentOnlySection && /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_components262.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n230.__)("Done") }) });
   }
   var content_lock_ui_default = {
     edit: ContentLockControlsPure,
@@ -71630,10 +71622,10 @@ var wp;
   // packages/block-editor/build-module/hooks/block-hooks.js
   var import_i18n231 = __toESM(require_i18n());
   var import_element263 = __toESM(require_element());
-  var import_components263 = __toESM(require_components());
+  var import_components264 = __toESM(require_components());
   var import_blocks116 = __toESM(require_blocks());
   var import_data189 = __toESM(require_data());
-  var import_jsx_runtime453 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime454 = __toESM(require_jsx_runtime());
   var EMPTY_OBJECT4 = {};
   function BlockHooksControlPure({
     name,
@@ -71750,23 +71742,23 @@ var wp;
           break;
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(
-      import_components263.PanelBody,
+    return /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime454.jsxs)(
+      import_components264.PanelBody,
       {
         className: "block-editor-hooks__block-hooks",
         title: (0, import_i18n231.__)("Plugins"),
         initialOpen: true,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("p", { className: "block-editor-hooks__block-hooks-helptext", children: (0, import_i18n231.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("p", { className: "block-editor-hooks__block-hooks-helptext", children: (0, import_i18n231.__)(
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(import_element263.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("h3", { children: vendor }),
+            return /* @__PURE__ */ (0, import_jsx_runtime454.jsxs)(import_element263.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("h3", { children: vendor }),
               groupedHookedBlocks[vendor].map((block) => {
                 const checked = block.name in hookedBlockClientIds;
-                return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(
-                  import_components263.ToggleControl,
+                return /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
+                  import_components264.ToggleControl,
                   {
                     __nextHasNoMarginBottom: true,
                     checked,
@@ -71806,11 +71798,11 @@ var wp;
   // packages/block-editor/build-module/hooks/block-bindings.js
   var import_i18n232 = __toESM(require_i18n());
   var import_blocks117 = __toESM(require_blocks());
-  var import_components265 = __toESM(require_components());
+  var import_components266 = __toESM(require_components());
   var import_data190 = __toESM(require_data());
   var import_element264 = __toESM(require_element());
   var import_compose104 = __toESM(require_compose());
-  var import_jsx_runtime454 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime455 = __toESM(require_jsx_runtime());
   var useToolsPanelDropdownMenuProps2 = () => {
     const isMobile = (0, import_compose104.useViewportMatch)("medium", "<");
     return !isMobile ? {
@@ -71850,8 +71842,8 @@ var wp;
     if (bindings === void 0 && !hasCompatibleFields) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(inspector_controls_default, { group: "bindings", children: /* @__PURE__ */ (0, import_jsx_runtime454.jsxs)(
-      import_components265.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(inspector_controls_default, { group: "bindings", children: /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(
+      import_components266.__experimentalToolsPanel,
       {
         label: (0, import_i18n232.__)("Attributes"),
         resetAll: () => {
@@ -71860,7 +71852,7 @@ var wp;
         dropdownMenuProps,
         className: "block-editor-bindings__panel",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_components265.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_components266.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
             BlockBindingsAttributeControl,
             {
               attribute,
@@ -71869,7 +71861,7 @@ var wp;
             },
             attribute
           )) }),
-          /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_components265.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("p", { children: (0, import_i18n232.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_components266.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime455.jsx)("p", { children: (0, import_i18n232.__)(
             "Attributes connected to custom fields or other dynamic data."
           ) }) })
         ]
@@ -71921,7 +71913,7 @@ var wp;
   var import_compose105 = __toESM(require_compose());
   var import_hooks32 = __toESM(require_hooks());
   var import_data191 = __toESM(require_data());
-  var import_jsx_runtime455 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime456 = __toESM(require_jsx_runtime());
   function GridLayoutSync(props) {
     useGridLayoutSync(props);
   }
@@ -71941,25 +71933,25 @@ var wp;
       },
       [clientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(import_jsx_runtime455.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(GridLayoutSync, { clientId }),
-      isVisible && /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(GridVisualizer, { clientId, parentLayout: layout })
+    return /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(import_jsx_runtime456.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(GridLayoutSync, { clientId }),
+      isVisible && /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(GridVisualizer, { clientId, parentLayout: layout })
     ] });
   }
   var addGridVisualizerToBlockEdit = (0, import_compose105.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       if (props.attributes.layout?.type !== "grid") {
-        return /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(BlockEdit2, { ...props }, "edit");
+        return /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(BlockEdit2, { ...props }, "edit");
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)(import_jsx_runtime455.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(import_jsx_runtime456.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
           GridTools2,
           {
             clientId: props.clientId,
             layout: props.attributes.layout
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(BlockEdit2, { ...props }, "edit")
+        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(BlockEdit2, { ...props }, "edit")
       ] });
     },
     "addGridVisualizerToBlockEdit"
@@ -72094,8 +72086,8 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-typography-props.js
-  var import_components266 = __toESM(require_components());
-  var { kebabCase: kebabCase7 } = unlock(import_components266.privateApis);
+  var import_components267 = __toESM(require_components());
+  var { kebabCase: kebabCase7 } = unlock(import_components267.privateApis);
   function getTypographyClassesAndStyles(attributes, settings2) {
     let typographyStyles = attributes?.style?.typography || {};
     typographyStyles = {
@@ -72196,7 +72188,7 @@ var wp;
   var import_element267 = __toESM(require_element());
   var import_blocks119 = __toESM(require_blocks());
   var import_rich_text21 = __toESM(require_rich_text());
-  var import_jsx_runtime456 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime457 = __toESM(require_jsx_runtime());
   function addValuesForElement(element, values, innerBlocks) {
     if (null === element || void 0 === element || false === element) {
       return;
@@ -72252,7 +72244,7 @@ var wp;
         // Instead of letting save elements use `useInnerBlocksProps.save`,
         // force them to use InnerBlocks.Content instead so we can intercept
         // a single component.
-        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(inner_blocks_default.Content, {})
+        /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(inner_blocks_default.Content, {})
       );
       addValuesForElement(saveElement, values, innerBlocks);
     }
@@ -72268,20 +72260,20 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/resizable-box-popover/index.js
-  var import_components267 = __toESM(require_components());
-  var import_jsx_runtime457 = __toESM(require_jsx_runtime());
+  var import_components268 = __toESM(require_components());
+  var import_jsx_runtime458 = __toESM(require_jsx_runtime());
   function ResizableBoxPopover({
     clientId,
     resizableBoxProps,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
       cover_default,
       {
         clientId,
         __unstablePopoverSlot: "block-toolbar",
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(import_components267.ResizableBox, { ...resizableBoxProps })
+        children: /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(import_components268.ResizableBox, { ...resizableBoxProps })
       }
     );
   }
@@ -72289,9 +72281,9 @@ var wp;
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.js
   var import_element268 = __toESM(require_element());
   var import_data192 = __toESM(require_data());
-  var import_components268 = __toESM(require_components());
+  var import_components269 = __toESM(require_components());
   var import_i18n233 = __toESM(require_i18n());
-  var import_jsx_runtime458 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime459 = __toESM(require_jsx_runtime());
   function BlockRemovalWarningModal({ rules }) {
     const { clientIds, selectPrevious, message: message2 } = (0, import_data192.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
@@ -72319,17 +72311,17 @@ var wp;
       );
       clearBlockRemovalPrompt2();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime458.jsxs)(
-      import_components268.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime459.jsxs)(
+      import_components269.Modal,
       {
         title: (0, import_i18n233.__)("Be careful!"),
         onRequestClose: clearBlockRemovalPrompt2,
         size: "medium",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime458.jsx)("p", { children: message2 }),
-          /* @__PURE__ */ (0, import_jsx_runtime458.jsxs)(import_components268.__experimentalHStack, { justify: "right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
-              import_components268.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime459.jsx)("p", { children: message2 }),
+          /* @__PURE__ */ (0, import_jsx_runtime459.jsxs)(import_components269.__experimentalHStack, { justify: "right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+              import_components269.Button,
               {
                 variant: "tertiary",
                 onClick: clearBlockRemovalPrompt2,
@@ -72337,8 +72329,8 @@ var wp;
                 children: (0, import_i18n233.__)("Cancel")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
-              import_components268.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+              import_components269.Button,
               {
                 variant: "primary",
                 onClick: onConfirmRemoval,
@@ -72356,10 +72348,10 @@ var wp;
   var import_element270 = __toESM(require_element());
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.js
-  var import_components269 = __toESM(require_components());
+  var import_components270 = __toESM(require_components());
   var import_element269 = __toESM(require_element());
   var import_i18n234 = __toESM(require_i18n());
-  var import_jsx_runtime459 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime460 = __toESM(require_jsx_runtime());
   var DEFAULT_SCALE_OPTIONS = [
     {
       value: "fill",
@@ -72406,16 +72398,16 @@ var wp;
         return acc;
       }, {});
     }, [options]);
-    return /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
-      import_components269.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
+      import_components270.__experimentalToolsPanelItem,
       {
         label: (0, import_i18n234.__)("Scale"),
         isShownByDefault,
         hasValue: () => displayValue !== defaultValue,
         onDeselect: () => onChange(defaultValue),
         panelId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
-          import_components269.__experimentalToggleGroupControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
+          import_components270.__experimentalToggleGroupControl,
           {
             __nextHasNoMarginBottom: true,
             label: (0, import_i18n234.__)("Scale"),
@@ -72424,8 +72416,8 @@ var wp;
             value: displayValue,
             onChange,
             size: "__unstable-large",
-            children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
-              import_components269.__experimentalToggleGroupControlOption,
+            children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
+              import_components270.__experimentalToggleGroupControlOption,
               {
                 ...option
               },
@@ -72438,9 +72430,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/width-height-tool.js
-  var import_components270 = __toESM(require_components());
+  var import_components271 = __toESM(require_components());
   var import_i18n235 = __toESM(require_i18n());
-  var import_jsx_runtime460 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime461 = __toESM(require_jsx_runtime());
   function WidthHeightTool({
     panelId,
     value = {},
@@ -72460,9 +72452,9 @@ var wp;
       }
       onChange(nextValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime460.jsxs)(import_jsx_runtime460.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
-        import_components270.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime461.jsxs)(import_jsx_runtime461.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+        import_components271.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
           label: (0, import_i18n235.__)("Width"),
@@ -72470,8 +72462,8 @@ var wp;
           hasValue: () => width !== "",
           onDeselect: onDimensionChange("width"),
           panelId,
-          children: /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
-            import_components270.__experimentalUnitControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+            import_components271.__experimentalUnitControl,
             {
               label: (0, import_i18n235.__)("Width"),
               placeholder: (0, import_i18n235.__)("Auto"),
@@ -72485,8 +72477,8 @@ var wp;
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
-        import_components270.__experimentalToolsPanelItem,
+      /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+        import_components271.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
           label: (0, import_i18n235.__)("Height"),
@@ -72494,8 +72486,8 @@ var wp;
           hasValue: () => height !== "",
           onDeselect: onDimensionChange("height"),
           panelId,
-          children: /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
-            import_components270.__experimentalUnitControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+            import_components271.__experimentalUnitControl,
             {
               label: (0, import_i18n235.__)("Height"),
               placeholder: (0, import_i18n235.__)("Auto"),
@@ -72513,7 +72505,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/index.js
-  var import_jsx_runtime461 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime462 = __toESM(require_jsx_runtime());
   function DimensionsTool({
     panelId,
     value = {},
@@ -72539,8 +72531,8 @@ var wp;
     const [lastAspectRatio, setLastAspectRatio] = (0, import_element270.useState)(aspectRatio);
     const aspectRatioValue = width && height ? "custom" : lastAspectRatio;
     const showScaleControl = aspectRatio || width && height;
-    return /* @__PURE__ */ (0, import_jsx_runtime461.jsxs)(import_jsx_runtime461.Fragment, { children: [
-      tools.includes("aspectRatio") && /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime462.jsxs)(import_jsx_runtime462.Fragment, { children: [
+      tools.includes("aspectRatio") && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
         AspectRatioTool,
         {
           panelId,
@@ -72571,7 +72563,7 @@ var wp;
           }
         }
       ),
-      tools.includes("widthHeight") && /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+      tools.includes("widthHeight") && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
         WidthHeightTool,
         {
           panelId,
@@ -72609,7 +72601,7 @@ var wp;
           }
         }
       ),
-      tools.includes("scale") && showScaleControl && /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+      tools.includes("scale") && showScaleControl && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
         ScaleTool,
         {
           panelId,
@@ -72634,9 +72626,9 @@ var wp;
   var dimensions_tool_default = DimensionsTool;
 
   // packages/block-editor/build-module/components/resolution-tool/index.js
-  var import_components271 = __toESM(require_components());
+  var import_components272 = __toESM(require_components());
   var import_i18n236 = __toESM(require_i18n());
-  var import_jsx_runtime462 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime463 = __toESM(require_jsx_runtime());
   var DEFAULT_SIZE_OPTIONS = [
     {
       label: (0, import_i18n236._x)("Thumbnail", "Image size option for resolution control"),
@@ -72665,8 +72657,8 @@ var wp;
     resetAllFilter
   }) {
     const displayValue = value ?? defaultValue;
-    return /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
-      import_components271.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+      import_components272.__experimentalToolsPanelItem,
       {
         hasValue: () => displayValue !== defaultValue,
         label: (0, import_i18n236.__)("Resolution"),
@@ -72674,8 +72666,8 @@ var wp;
         isShownByDefault,
         panelId,
         resetAllFilter,
-        children: /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
-          import_components271.SelectControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+          import_components272.SelectControl,
           {
             __nextHasNoMarginBottom: true,
             label: (0, import_i18n236.__)("Resolution"),
@@ -72692,7 +72684,7 @@ var wp;
 
   // packages/block-editor/build-module/components/html-element-control/index.js
   var import_i18n238 = __toESM(require_i18n());
-  var import_components272 = __toESM(require_components());
+  var import_components273 = __toESM(require_components());
   var import_data193 = __toESM(require_data());
 
   // packages/block-editor/build-module/components/html-element-control/messages.js
@@ -72731,7 +72723,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/html-element-control/index.js
-  var import_jsx_runtime463 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime464 = __toESM(require_jsx_runtime());
   function HTMLElementControl({
     tagName,
     onChange,
@@ -72776,9 +72768,9 @@ var wp;
       }
       return option;
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_components272.__experimentalVStack, { spacing: 2, className: "block-editor-html-element-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
-        import_components272.SelectControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(import_components273.__experimentalVStack, { spacing: 2, className: "block-editor-html-element-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+        import_components273.SelectControl,
         {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
@@ -72789,7 +72781,7 @@ var wp;
           help: htmlElementMessages[tagName]
         }
       ),
-      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(import_components272.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n238.__)(
+      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(import_components273.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n238.__)(
         "Multiple <main> elements detected. The duplicate may be in your content or template. This is not valid HTML and may cause accessibility issues. Please change this HTML element."
       ) })
     ] });
