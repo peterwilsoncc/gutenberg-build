@@ -56416,9 +56416,7 @@ var wp;
   var popoverProps = {
     placement: "left-start",
     offset: 36,
-    shift: true,
-    flip: true,
-    resize: false
+    shift: true
   };
   var { Tabs: Tabs4 } = unlock(import_components197.privateApis);
   var LabeledColorIndicators = ({ indicators, label }) => /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(import_components197.__experimentalHStack, { justify: "flex-start", children: [
