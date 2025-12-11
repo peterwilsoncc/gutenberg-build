@@ -8256,7 +8256,7 @@ var wp;
         didMountRef.current = false;
       };
     }, []);
-    function focus() {
+    function focus2() {
       const editor = window.tinymce.get(`editor-${clientId}`);
       if (editor) {
         editor.focus();
@@ -8272,7 +8272,7 @@ var wp;
         {
           id: `toolbar-${clientId}`,
           className: "block-library-classic__toolbar",
-          onClick: focus,
+          onClick: focus2,
           "data-placeholder": (0, import_i18n21.__)("Classic"),
           onKeyDown: onToolbarKeyDown
         },
@@ -36748,8 +36748,10 @@ ${js}
     const postType = type || "page";
     const [addingBlock, setAddingBlock] = (0, import_element72.useState)(false);
     const [addingPage, setAddingPage] = (0, import_element72.useState)(false);
-    const [focusAddBlockButton, setFocusAddBlockButton] = (0, import_element72.useState)(false);
-    const [focusAddPageButton, setFocusAddPageButton] = (0, import_element72.useState)(false);
+    const [shouldFocusPane, setShouldFocusPane] = (0, import_element72.useState)(null);
+    const linkControlWrapperRef = (0, import_element72.useRef)();
+    const addPageButtonRef = (0, import_element72.useRef)();
+    const addBlockButtonRef = (0, import_element72.useRef)();
     const permissions = (0, import_core_data39.useResourcePermissions)({
       kind: "postType",
       name: postType
@@ -36772,6 +36774,7 @@ ${js}
     const handlePageCreated = (pageLink) => {
       props.onChange(pageLink);
       setAddingPage(false);
+      setShouldFocusPane(true);
     };
     const dialogTitleId = (0, import_compose29.useInstanceId)(
       LinkUI,
@@ -36781,6 +36784,20 @@ ${js}
       LinkUI,
       "link-ui-link-control__description"
     );
+    (0, import_element72.useEffect)(() => {
+      if (shouldFocusPane && linkControlWrapperRef.current) {
+        if (shouldFocusPane?.current) {
+          shouldFocusPane.current.focus();
+        } else {
+          const tabbableElements = import_dom5.focus.tabbable.find(
+            linkControlWrapperRef.current
+          );
+          const nextFocusTarget = tabbableElements[0] || linkControlWrapperRef.current;
+          nextFocusTarget.focus();
+        }
+        setShouldFocusPane(false);
+      }
+    }, [shouldFocusPane]);
     const blockEditingMode = (0, import_block_editor147.useBlockEditingMode)();
     return /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)(
       import_components82.Popover,
@@ -36794,6 +36811,7 @@ ${js}
           !addingBlock && !addingPage && /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)(
             "div",
             {
+              ref: linkControlWrapperRef,
               role: "dialog",
               "aria-labelledby": dialogTitleId,
               "aria-describedby": dialogDescriptionId,
@@ -36819,6 +36837,7 @@ ${js}
                     onRemove: props.onRemove,
                     onCancel: props.onCancel,
                     handleEntities: isBoundEntityAvailable,
+                    forceIsEditingLink: link?.url ? false : void 0,
                     renderControlBottom: () => {
                       if (link?.url?.length) {
                         return null;
@@ -36826,15 +36845,13 @@ ${js}
                       return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
                         LinkUITools,
                         {
-                          focusAddBlockButton,
-                          focusAddPageButton,
+                          addPageButtonRef,
+                          addBlockButtonRef,
                           setAddingBlock: () => {
                             setAddingBlock(true);
-                            setFocusAddBlockButton(false);
                           },
                           setAddingPage: () => {
                             setAddingPage(true);
-                            setFocusAddPageButton(false);
                           },
                           canAddPage: permissions?.canCreate && type === "page",
                           canAddBlock: blockEditingMode === "default"
@@ -36852,8 +36869,7 @@ ${js}
               clientId: props.clientId,
               onBack: () => {
                 setAddingBlock(false);
-                setFocusAddBlockButton(true);
-                setFocusAddPageButton(false);
+                setShouldFocusPane(addBlockButtonRef);
               },
               onBlockInsert: props?.onBlockInsert
             }
@@ -36864,8 +36880,7 @@ ${js}
               postType,
               onBack: () => {
                 setAddingPage(false);
-                setFocusAddPageButton(true);
-                setFocusAddBlockButton(false);
+                setShouldFocusPane(addPageButtonRef);
               },
               onPageCreated: handlePageCreated,
               initialTitle: link?.url || ""
@@ -36877,26 +36892,14 @@ ${js}
   }
   var LinkUI = (0, import_element72.forwardRef)(UnforwardedLinkUI);
   var LinkUITools = ({
+    addPageButtonRef,
+    addBlockButtonRef,
     setAddingBlock,
     setAddingPage,
-    focusAddBlockButton,
-    focusAddPageButton,
     canAddPage,
     canAddBlock
   }) => {
     const blockInserterAriaRole = "listbox";
-    const addBlockButtonRef = (0, import_element72.useRef)();
-    const addPageButtonRef = (0, import_element72.useRef)();
-    (0, import_element72.useEffect)(() => {
-      if (focusAddBlockButton) {
-        addBlockButtonRef.current?.focus();
-      }
-    }, [focusAddBlockButton]);
-    (0, import_element72.useEffect)(() => {
-      if (focusAddPageButton) {
-        addPageButtonRef.current?.focus();
-      }
-    }, [focusAddPageButton]);
     if (!canAddPage && !canAddBlock) {
       return null;
     }
