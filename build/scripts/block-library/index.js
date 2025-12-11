@@ -49500,9 +49500,9 @@ ${js}
     const allPatterns = usePatterns(clientId, blockNameForPatterns);
     const rootBlockPatterns = (0, import_element101.useMemo)(() => {
       return allPatterns.filter((pattern) => {
-        return pattern.blocks?.[0]?.name === blockNameForPatterns;
+        return pattern.blocks?.[0]?.name === "core/query";
       });
-    }, [allPatterns, blockNameForPatterns]);
+    }, [allPatterns]);
     return rootBlockPatterns;
   }
   function PatternSelection({
