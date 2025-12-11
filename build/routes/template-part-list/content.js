@@ -1248,7 +1248,6 @@ function DataViewsSelectionCheckbox({
     import_components.CheckboxControl,
     {
       className: "dataviews-selection-checkbox",
-      __nextHasNoMarginBottom: true,
       "aria-label": selectionLabel,
       "aria-disabled": disabled,
       checked,
@@ -1589,7 +1588,6 @@ function BulkSelectionCheckbox({
     import_components3.CheckboxControl,
     {
       className: "dataviews-view-table-selection-checkbox",
-      __nextHasNoMarginBottom: true,
       checked: areAllSelected,
       indeterminate: !areAllSelected && !!selectedItems.length,
       onChange: () => {

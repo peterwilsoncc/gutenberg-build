@@ -3213,7 +3213,6 @@ function LibraryFontVariant({
       {
         checked: isInstalled,
         onChange: handleToggleActivation,
-        __nextHasNoMarginBottom: true,
         id: checkboxId
       }
     ),
@@ -3550,8 +3549,7 @@ function InstalledFonts() {
                     label: (0, import_i18n13.__)("Select all"),
                     checked: isSelectAllChecked,
                     onChange: toggleSelectAll,
-                    indeterminate: isIndeterminate,
-                    __nextHasNoMarginBottom: true
+                    indeterminate: isIndeterminate
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 8 }),
@@ -3770,7 +3768,6 @@ function CollectionFontVariant({
       {
         checked: selected,
         onChange: handleToggleActivation,
-        __nextHasNoMarginBottom: true,
         id: checkboxId
       }
     ),
@@ -4079,8 +4076,7 @@ function FontCollection({ slug }) {
                   label: (0, import_i18n15.__)("Select all"),
                   checked: isSelectAllChecked,
                   onChange: toggleSelectAll,
-                  indeterminate: isIndeterminate,
-                  __nextHasNoMarginBottom: true
+                  indeterminate: isIndeterminate
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(

@@ -36947,7 +36947,6 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime170 = __toESM(require_jsx_runtime());
   function CheckboxControl(props) {
     const {
-      __nextHasNoMarginBottom,
       label,
       className,
       heading,
@@ -36978,8 +36977,7 @@ This message will only show in development mode. It won't appear in production. 
     const id3 = (0, import_compose42.useInstanceId)(CheckboxControl, "inspector-checkbox-control", idProp);
     const onChangeValue = (event) => onChange(event.target.checked);
     return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(base_control_default, {
-      __nextHasNoMarginBottom,
-      __associatedWPComponentName: "CheckboxControl",
+      __nextHasNoMarginBottom: true,
       label: heading,
       id: id3,
       help: help && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("span", {
@@ -58446,10 +58444,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(checkbox_control_default, {
-        __nextHasNoMarginBottom: true,
-        ...restProps
-      })
+      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+        checkbox_control_default,
+        {
+          ...restProps
+        }
+      )
     });
   };
   var ValidatedCheckboxControl = (0, import_element247.forwardRef)(UnforwardedValidatedCheckboxControl);

@@ -1830,7 +1830,6 @@ var wp;
       import_components.CheckboxControl,
       {
         className: "dataviews-selection-checkbox",
-        __nextHasNoMarginBottom: true,
         "aria-label": selectionLabel,
         "aria-disabled": disabled,
         checked,
@@ -2146,7 +2145,6 @@ var wp;
       import_components3.CheckboxControl,
       {
         className: "dataviews-view-table-selection-checkbox",
-        __nextHasNoMarginBottom: true,
         checked: areAllSelected,
         indeterminate: !areAllSelected && !!selectedItems.length,
         onChange: () => {
@@ -4606,7 +4604,6 @@ var wp;
       import_components16.CheckboxControl,
       {
         className: "dataviews-view-table-selection-checkbox",
-        __nextHasNoMarginBottom: true,
         checked: areAllSelected,
         indeterminate: !areAllSelected && !!selectedItems.length,
         onChange: () => {

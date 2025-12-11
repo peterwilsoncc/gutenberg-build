@@ -4752,7 +4752,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
           import_components9.CheckboxControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n12.__)("Show on homepage"),
             checked: showOnHomePage,
             onChange: (value) => setAttributes({ showOnHomePage: value }),
@@ -4764,7 +4763,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
           import_components9.CheckboxControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n12.__)("Prefer taxonomy terms"),
             checked: prefersTaxonomy,
             onChange: (value) => setAttributes({ prefersTaxonomy: value }),
@@ -36335,7 +36333,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
                 import_components79.CheckboxControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n125.__)("Open in new tab"),
                   checked: opensInNewTab,
                   onChange: (value) => setAttributes({ opensInNewTab: value })

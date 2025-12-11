@@ -5910,7 +5910,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
             import_components8.CheckboxControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n21.__)("Password protected"),
               help: (0, import_i18n21.__)("Only visible to those who know the password"),
               checked: showPassword,
@@ -6068,7 +6067,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
       import_components10.CheckboxControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n26.__)("Enable pingbacks & trackbacks"),
         checked: pingStatus === "open",
         onChange: onTogglePingback,
@@ -13237,7 +13235,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components26.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
                 import_components26.CheckboxControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   checked: showStartPatterns,
                   label: (0, import_i18n54.__)(
                     "Always show starter patterns for new pages"
@@ -16853,7 +16850,6 @@ var wp;
         {
           checked: isInstalled,
           onChange: handleToggleActivation,
-          __nextHasNoMarginBottom: true,
           id: checkboxId
         }
       ),
@@ -17190,8 +17186,7 @@ var wp;
                       label: (0, import_i18n73.__)("Select all"),
                       checked: isSelectAllChecked,
                       onChange: toggleSelectAll,
-                      indeterminate: isIndeterminate,
-                      __nextHasNoMarginBottom: true
+                      indeterminate: isIndeterminate
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_components53.__experimentalSpacer, { margin: 8 }),
@@ -17410,7 +17405,6 @@ var wp;
         {
           checked: selected,
           onChange: handleToggleActivation,
-          __nextHasNoMarginBottom: true,
           id: checkboxId
         }
       ),
@@ -17719,8 +17713,7 @@ var wp;
                     label: (0, import_i18n75.__)("Select all"),
                     checked: isSelectAllChecked,
                     onChange: toggleSelectAll,
-                    indeterminate: isIndeterminate,
-                    __nextHasNoMarginBottom: true
+                    indeterminate: isIndeterminate
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components56.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
@@ -35220,7 +35213,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_components105.PanelRow, { children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
         import_components105.CheckboxControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_html_entities12.decodeEntities)(entityRecordTitle) || (0, import_i18n121.__)("Untitled"),
           checked,
           onChange,
@@ -37552,7 +37544,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
       import_components130.CheckboxControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n139.__)("Enable pingbacks & trackbacks"),
         checked: pingStatus === "open",
         onChange: onTogglePingback,
@@ -38679,7 +38670,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(check_default6, { children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
       import_components141.CheckboxControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n148.__)("Pending review"),
         checked: status === "pending",
         onChange: togglePendingStatus
@@ -40202,7 +40192,6 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(
                 import_components149.CheckboxControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   checked: terms.indexOf(term.id) !== -1,
                   onChange: () => {
                     const termId = parseInt(term.id, 10);
@@ -40965,7 +40954,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("div", { className: "editor-post-publish-panel__footer", children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
           import_components154.CheckboxControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n163.__)("Always show pre-publish checks."),
             checked: isPublishSidebarEnabled2,
             onChange: onTogglePublishSidebar
@@ -41073,8 +41061,7 @@ var wp;
         label: (0, import_i18n164.__)("Sticky"),
         help: (0, import_i18n164.__)("Pin this post to the top of the blog."),
         checked: postSticky,
-        onChange: () => editPost2({ sticky: !postSticky }),
-        __nextHasNoMarginBottom: true
+        onChange: () => editPost2({ sticky: !postSticky })
       }
     ) });
   }
@@ -41259,7 +41246,6 @@ var wp;
                       /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
                         import_components156.CheckboxControl,
                         {
-                          __nextHasNoMarginBottom: true,
                           label: (0, import_i18n165.__)(
                             "Password protected"
                           ),

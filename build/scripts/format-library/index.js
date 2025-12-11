@@ -760,7 +760,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
           import_components2.CheckboxControl,
           {
-            __nextHasNoMarginBottom: true,
             label: setting.title,
             onChange: handleCheckboxChange,
             checked: isSettingActive || hasValue,

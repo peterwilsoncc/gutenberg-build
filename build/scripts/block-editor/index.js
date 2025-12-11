@@ -35123,7 +35123,6 @@ var wp;
                       /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
                         import_components84.CheckboxControl,
                         {
-                          __nextHasNoMarginBottom: true,
                           className: "block-editor-block-lock-modal__options-all",
                           label: (0, import_i18n76.__)("Lock all"),
                           checked: isAllChecked,
@@ -35145,7 +35144,6 @@ var wp;
                               /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
                                 import_components84.CheckboxControl,
                                 {
-                                  __nextHasNoMarginBottom: true,
                                   label: (0, import_i18n76.__)("Lock editing"),
                                   checked: !!lock4.edit,
                                   onChange: (edit) => setLock((prevLock) => ({
@@ -35166,7 +35164,6 @@ var wp;
                               /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
                                 import_components84.CheckboxControl,
                                 {
-                                  __nextHasNoMarginBottom: true,
                                   label: (0, import_i18n76.__)("Lock movement"),
                                   checked: lock4.move,
                                   onChange: (move) => setLock((prevLock) => ({
@@ -35187,7 +35184,6 @@ var wp;
                               /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
                                 import_components84.CheckboxControl,
                                 {
-                                  __nextHasNoMarginBottom: true,
                                   label: (0, import_i18n76.__)("Lock removal"),
                                   checked: lock4.remove,
                                   onChange: (remove5) => setLock((prevLock) => ({
@@ -48851,7 +48847,6 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
         import_components163.CheckboxControl,
         {
-          __nextHasNoMarginBottom: true,
           className: "block-editor-link-control__setting",
           label: setting.title,
           onChange: handleSettingChange(setting),
@@ -67879,7 +67874,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
             import_components245.CheckboxControl,
             {
-              __nextHasNoMarginBottom: true,
               label: blockType.title,
               checked: value.includes(blockType.name),
               onChange: (...args) => onItemChange(blockType, ...args)
@@ -67960,7 +67954,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
             import_components246.CheckboxControl,
             {
-              __nextHasNoMarginBottom: true,
               checked: isAllChecked,
               onChange: toggleAllVisible,
               className: "block-editor-block-manager__category-title",
@@ -68040,8 +68033,7 @@ var wp;
               onChange(blockTypes);
             }
           },
-          indeterminate: isIndeterminate,
-          __nextHasNoMarginBottom: true
+          indeterminate: isIndeterminate
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(
