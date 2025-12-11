@@ -6069,6 +6069,7 @@ var wp;
     "contentSize",
     "wideSize",
     "blockGap",
+    "textAlign",
     "textDecoration",
     "textTransform",
     "letterSpacing"

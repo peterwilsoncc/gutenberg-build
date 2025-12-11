@@ -54056,11 +54056,8 @@ var wp;
         }
       });
       updatedSettings.shadow = supportedStyles.includes("shadow") ? updatedSettings.shadow : false;
-      if (element) {
-        updatedSettings.typography.textAlign = false;
-      }
       return updatedSettings;
-    }, [parentSettings, supportedStyles, supports, element]);
+    }, [parentSettings, supportedStyles, supports]);
   }
   function useColorsPerOrigin(settings2) {
     const customColors = settings2?.color?.palette?.custom;
