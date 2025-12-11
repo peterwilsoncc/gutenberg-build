@@ -1755,7 +1755,6 @@ var wp;
                 import_components5.TextControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: title13,
                   value: lang,
                   onChange: (val) => setLang(val),
@@ -1870,7 +1869,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
             import_components6.TextControl,
             {
-              __nextHasNoMarginBottom: true,
               __next40pxDefaultSize: true,
               hideLabelFromVision: true,
               label: (0, import_i18n17.__)("LaTeX math syntax"),

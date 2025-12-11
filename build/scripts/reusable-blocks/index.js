@@ -357,7 +357,6 @@ var wp;
                   import_components.TextControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n2.__)("Name"),
                     value: title,
                     onChange: setTitle,

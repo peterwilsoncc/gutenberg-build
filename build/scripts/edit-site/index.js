@@ -20939,7 +20939,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
             import_components85.TextControl,
             {
-              __nextHasNoMarginBottom: true,
               __next40pxDefaultSize: true,
               value: editedMenuTitle,
               placeholder: (0, import_i18n72.__)("Navigation title"),
@@ -40990,7 +40989,6 @@ If there's a particular need for this, please submit a feature request at https:
         import_components159.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n141.__)("Name"),
           value: title,
           onChange: setTitle,
@@ -42805,7 +42803,6 @@ If there's a particular need for this, please submit a feature request at https:
         import_components164.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n147.__)("Name"),
           value: title,
           onChange: setTitle,
@@ -43713,7 +43710,6 @@ If there's a particular need for this, please submit a feature request at https:
             import_components169.TextControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n151.__)("Title"),
               onChange: setTitle,
               placeholder: (0, import_i18n151.__)("No title"),

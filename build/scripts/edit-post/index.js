@@ -1568,7 +1568,6 @@ var wp;
                   onChange: setTitle,
                   placeholder: (0, import_i18n4.__)("My pattern"),
                   className: "patterns-create-modal__name-input",
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true
                 }
               ),

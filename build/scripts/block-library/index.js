@@ -4728,7 +4728,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
                   import_components9.TextControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     autoComplete: "off",
                     label: (0, import_i18n12.__)("Separator"),
@@ -6639,7 +6638,6 @@ var wp;
           import_components10.TextControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n13.__)("Link relation"),
             help: (0, import_element11.createInterpolateElement)(
               (0, import_i18n13.__)(
@@ -14975,7 +14973,6 @@ var wp;
               placeholder: (0, import_i18n49.__)(
                 "Enter YouTube, Vimeo, or other video URL"
               ),
-              __nextHasNoMarginBottom: true,
               help: (0, import_i18n49.__)(
                 "Add a background video to the cover block that will autoplay in a loop."
               )
@@ -17202,7 +17199,6 @@ var wp;
         import_components35.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n55.__)("Name attribute"),
           value: name117 || "",
           onChange: (newName) => setAttributes({ name: newName }),
@@ -19786,7 +19782,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
                   import_components43.TextControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     autoComplete: "off",
                     label: (0, import_i18n67.__)("Email for form submissions"),
@@ -19832,7 +19827,6 @@ ${url}
           import_components43.TextControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             autoComplete: "off",
             label: (0, import_i18n67.__)("Form action"),
             value: action,
@@ -20499,7 +20493,6 @@ ${url}
         import_components44.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           autoComplete: "off",
           label: (0, import_i18n69.__)("Name"),
           value: name117,
@@ -26746,7 +26739,6 @@ ${js}
             {
               __next40pxDefaultSize: true,
               className: "wp-block-image__toolbar_content_textarea",
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n89.__)("Title attribute"),
               value: attributes3.title || "",
               onChange: (value) => setAttributes({
@@ -27254,7 +27246,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(import_block_editor110.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
         import_components50.TextControl,
         {
-          __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           label: (0, import_i18n89.__)("Title attribute"),
           value: title || "",
@@ -29846,7 +29837,6 @@ ${js}
         import_components54.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n94.__)("Start value"),
           type: "number",
           onChange: (value) => {
@@ -29923,7 +29913,6 @@ ${js}
                 import_components54.TextControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n94.__)("Start value"),
                   type: "number",
                   onChange: (value) => {
@@ -34561,7 +34550,6 @@ ${js}
       import_components66.TextControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n112.__)("Menu name"),
         value: title,
         onChange: updateTitle
@@ -36228,7 +36216,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
                 import_components79.TextControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n125.__)("Text"),
                   value: label ? (0, import_dom4.__unstableStripHTML)(label) : "",
@@ -36373,7 +36360,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
                 import_components79.TextControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n125.__)("Rel attribute"),
                   value: rel || "",
@@ -36567,7 +36553,6 @@ ${js}
             import_components81.TextControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n127.__)("Title"),
               onChange: setTitle,
               placeholder: (0, import_i18n127.__)("No title"),
@@ -42847,7 +42832,6 @@ ${js}
               import_components96.TextControl,
               {
                 __next40pxDefaultSize: true,
-                __nextHasNoMarginBottom: true,
                 value: commentId,
                 onChange: (val) => setCommentIdInput(parseInt(val))
               }
@@ -45152,7 +45136,6 @@ ${js}
                   import_components102.TextControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n161.__)("Link relation"),
                     help: (0, import_element91.createInterpolateElement)(
                       (0, import_i18n161.__)(
@@ -46254,7 +46237,6 @@ ${js}
         import_components105.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           autoComplete: "off",
           label: (0, import_i18n166.__)("Separator"),
           value: separator || "",
@@ -46891,7 +46873,6 @@ ${js}
                       import_components107.TextControl,
                       {
                         __next40pxDefaultSize: true,
-                        __nextHasNoMarginBottom: true,
                         label: (0, import_i18n169.__)("Link relation"),
                         help: (0, import_element94.createInterpolateElement)(
                           (0, import_i18n169.__)(
@@ -49301,7 +49282,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
                   import_components118.TextControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n184.__)("Keyword"),
                     value: querySearch,
@@ -53366,7 +53346,6 @@ ${js}
         import_components134.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n207.__)("Link relation"),
           help: (0, import_element108.createInterpolateElement)(
             (0, import_i18n207.__)(
@@ -56087,7 +56066,6 @@ ${js}
             import_components141.TextControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               className: "wp-block-social-link__toolbar_content_text",
               label: (0, import_i18n217.__)("Text"),
               help: (0, import_i18n217.__)(
@@ -56121,7 +56099,6 @@ ${js}
                 import_components141.TextControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n217.__)("Text"),
                   help: (0, import_i18n217.__)(
                     "The text is visible when enabled from the parent Social Icons block."
@@ -56139,7 +56116,6 @@ ${js}
         import_components141.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n217.__)("Link relation"),
           help: (0, import_element113.createInterpolateElement)(
             (0, import_i18n217.__)(
@@ -59350,7 +59326,6 @@ ${js}
                 /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(
                   import_components148.TextControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     type: "number",
                     label: (0, import_i18n226.__)("Column count"),
@@ -59363,7 +59338,6 @@ ${js}
                 /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(
                   import_components148.TextControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     type: "number",
                     label: (0, import_i18n226.__)("Row count"),
@@ -61593,7 +61567,6 @@ ${declarations}
               value: title,
               onChange: setTitle,
               placeholder: (0, import_i18n233.__)("Custom Template Part"),
-              __nextHasNoMarginBottom: true,
               __next40pxDefaultSize: true
             }
           ),
@@ -62057,7 +62030,6 @@ ${declarations}
           import_components157.TextControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n237.__)("Title"),
             value: title,
             onChange: (value) => {
@@ -65189,7 +65161,6 @@ ${declarations}
               import_components174.TextControl,
               {
                 __next40pxDefaultSize: true,
-                __nextHasNoMarginBottom: true,
                 onChange: (newLabel) => setTrackState((prevTrackState) => ({
                   ...prevTrackState,
                   label: newLabel
@@ -65203,7 +65174,6 @@ ${declarations}
               import_components174.TextControl,
               {
                 __next40pxDefaultSize: true,
-                __nextHasNoMarginBottom: true,
                 onChange: (newSrcLang) => setTrackState((prevTrackState) => ({
                   ...prevTrackState,
                   srcLang: newSrcLang

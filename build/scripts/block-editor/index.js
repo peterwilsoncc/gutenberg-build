@@ -35482,7 +35482,6 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
                 import_components89.TextControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   value: editedBlockName ?? blockName,
                   label: (0, import_i18n81.__)("Name"),
@@ -44711,7 +44710,6 @@ var wp;
         import_components138.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n125.__)("Custom format"),
           hideLabelFromVision: true,
           help: (0, import_element149.createInterpolateElement)(
@@ -49174,7 +49172,6 @@ var wp;
                   showTextControl && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
                     import_components164.TextControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       ref: textInputRef,
                       className: "block-editor-link-control__field block-editor-link-control__text-content",
                       label: (0, import_i18n155.__)("Text"),
@@ -52779,7 +52776,6 @@ var wp;
         import_components181.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n169.__)("Link relation"),
           value: rel ?? "",
           onChange: onSetLinkRel,
@@ -52797,7 +52793,6 @@ var wp;
         import_components181.TextControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n169.__)("Link CSS class"),
           value: linkClass || "",
           onChange: onSetLinkClass
@@ -68339,7 +68334,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
       import_components250.TextControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         className: "html-anchor-control",
         label: (0, import_i18n225.__)("HTML anchor"),
@@ -68450,7 +68444,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
       import_components252.TextControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         autoComplete: "off",
         label: (0, import_i18n226.__)("Additional CSS class(es)"),

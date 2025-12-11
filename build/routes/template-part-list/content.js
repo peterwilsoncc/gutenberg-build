@@ -16117,7 +16117,6 @@ function CreateTemplatePartModalContents({
           import_components52.TextControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n42.__)("Name"),
             value: title,
             onChange: setTitle,

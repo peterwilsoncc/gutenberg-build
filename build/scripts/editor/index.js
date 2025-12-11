@@ -5927,7 +5927,6 @@ var wp;
               placeholder: (0, import_i18n21.__)("Use a secure password"),
               type: "text",
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               maxLength: 255
             }
           ) })
@@ -6642,7 +6641,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
           import_components14.TextControl,
           {
-            __nextHasNoMarginBottom: true,
             __next40pxDefaultSize: true,
             label: (0, import_i18n36.__)("Name"),
             value: title,
@@ -8070,7 +8068,6 @@ var wp;
             import_components19.TextControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n45.__)("Name"),
               value: title,
               onChange: setTitle,
@@ -36268,7 +36265,6 @@ var wp;
                 import_components112.TextControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n128.__)("Name"),
                   value: title,
                   onChange: setTitle,
@@ -39164,7 +39160,6 @@ var wp;
             type: "text",
             id: `editor-post-visibility__password-input-${instanceId}`,
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             maxLength: 255
           }
         )
@@ -40279,7 +40274,6 @@ var wp;
           import_components149.TextControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             className: "editor-post-taxonomies__hierarchical-terms-input",
             label: newTermLabel,
             value: formName,
@@ -40815,7 +40809,6 @@ var wp;
             import_components153.TextControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               className: "post-publish-panel__postpublish-post-address",
               readOnly: true,
               label: (0, import_i18n162.sprintf)(
@@ -41272,7 +41265,6 @@ var wp;
                           type: "text",
                           id: passwordInputId,
                           __next40pxDefaultSize: true,
-                          __nextHasNoMarginBottom: true,
                           maxLength: 255
                         }
                       ) })

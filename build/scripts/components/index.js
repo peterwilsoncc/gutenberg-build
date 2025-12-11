@@ -50657,7 +50657,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime271 = __toESM(require_jsx_runtime());
   function UnforwardedTextControl(props, ref) {
     const {
-      __nextHasNoMarginBottom,
+      // @ts-expect-error - Prevent passing this to `input`.
+      __nextHasNoMarginBottom: _,
       __next40pxDefaultSize = false,
       label,
       hideLabelFromVision,
@@ -50677,8 +50678,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __next40pxDefaultSize
     });
     return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(base_control_default, {
-      __nextHasNoMarginBottom,
-      __associatedWPComponentName: "TextControl",
+      __nextHasNoMarginBottom: true,
       label,
       hideLabelFromVision,
       id: id3,
@@ -58637,7 +58637,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(text_control_default, {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         ref: mergedRefs,
         ...restProps
       })

@@ -17560,7 +17560,6 @@ function AddCustomGenericTemplateModalContent({
     import_components55.TextControl,
     {
       __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
       label: (0, import_i18n50.__)("Name"),
       value: title,
       onChange: setTitle,
