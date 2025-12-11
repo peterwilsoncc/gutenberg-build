@@ -418,14 +418,14 @@ var page_default = Page;
 
 // routes/font-list/stage.tsx
 var import_i18n46 = __toESM(require_i18n());
-var import_components62 = __toESM(require_components());
+var import_components63 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 var import_core_data12 = __toESM(require_core_data());
 var import_data13 = __toESM(require_data());
 var import_element34 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/global-styles-ui.js
-var import_components61 = __toESM(require_components());
+var import_components62 = __toESM(require_components());
 var import_blocks5 = __toESM(require_blocks());
 var import_data12 = __toESM(require_data());
 var import_block_editor13 = __toESM(require_block_editor());
@@ -2174,33 +2174,37 @@ var {
 
 // packages/global-styles-ui/build-module/screen-typography.js
 var import_i18n21 = __toESM(require_i18n());
-var import_components34 = __toESM(require_components());
+var import_components35 = __toESM(require_components());
 var import_element21 = __toESM(require_element());
 
-// packages/global-styles-ui/build-module/typography-elements.js
-var import_i18n8 = __toESM(require_i18n());
+// packages/global-styles-ui/build-module/screen-body.js
 var import_components16 = __toESM(require_components());
 var import_jsx_runtime24 = __toESM(require_jsx_runtime());
 
-// packages/global-styles-ui/build-module/variations/variations-typography.js
-var import_components19 = __toESM(require_components());
-
-// packages/global-styles-ui/build-module/preview-typography.js
+// packages/global-styles-ui/build-module/typography-elements.js
+var import_i18n8 = __toESM(require_i18n());
 var import_components17 = __toESM(require_components());
 var import_jsx_runtime25 = __toESM(require_jsx_runtime());
+
+// packages/global-styles-ui/build-module/variations/variations-typography.js
+var import_components20 = __toESM(require_components());
+
+// packages/global-styles-ui/build-module/preview-typography.js
+var import_components18 = __toESM(require_components());
+var import_jsx_runtime26 = __toESM(require_jsx_runtime());
 var StylesPreviewTypography = ({
   variation,
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
     preview_wrapper_default,
     {
       label: variation.title,
       isFocused,
       withHoverView,
-      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-        import_components17.__experimentalHStack,
+      children: ({ ratio, key }) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+        import_components18.__experimentalHStack,
         {
           spacing: 10 * ratio,
           justify: "center",
@@ -2208,7 +2212,7 @@ var StylesPreviewTypography = ({
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
             PreviewTypography,
             {
               variation,
@@ -2224,11 +2228,11 @@ var StylesPreviewTypography = ({
 var preview_typography_default = StylesPreviewTypography;
 
 // packages/global-styles-ui/build-module/variations/variation.js
-var import_components18 = __toESM(require_components());
+var import_components19 = __toESM(require_components());
 var import_element11 = __toESM(require_element());
 var import_keycodes = __toESM(require_keycodes());
 var import_i18n9 = __toESM(require_i18n());
-var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+var import_jsx_runtime27 = __toESM(require_jsx_runtime());
 function Variation({
   variation,
   children,
@@ -2275,7 +2279,7 @@ function Variation({
       variation?.description
     );
   }
-  const content = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+  const content = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
     "div",
     {
       className: clsx_default("global-styles-ui-variations_item", {
@@ -2289,7 +2293,7 @@ function Variation({
       "aria-current": isActive,
       onFocus: () => setIsFocused(true),
       onBlur: () => setIsFocused(false),
-      children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
         "div",
         {
           className: clsx_default("global-styles-ui-variations_item-preview", {
@@ -2300,11 +2304,11 @@ function Variation({
       )
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_components18.Tooltip, { text: variation?.title, children: content }) : content });
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_components19.Tooltip, { text: variation?.title, children: content }) : content });
 }
 
 // packages/global-styles-ui/build-module/variations/variations-typography.js
-var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+var import_jsx_runtime28 = __toESM(require_jsx_runtime());
 var propertiesToFilter = ["typography"];
 function TypographyVariations({
   title,
@@ -2314,23 +2318,23 @@ function TypographyVariations({
   if (typographyVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_components19.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-      import_components19.__experimentalGrid,
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(import_components20.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      import_components20.__experimentalGrid,
       {
         columns: 3,
         gap,
         className: "global-styles-ui-style-variations-container",
         children: typographyVariations.map(
           (variation, index) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
               Variation,
               {
                 variation,
                 properties: propertiesToFilter,
                 showTooltip: true,
-                children: () => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+                children: () => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
                   preview_typography_default,
                   {
                     variation
@@ -2348,7 +2352,7 @@ function TypographyVariations({
 
 // packages/global-styles-ui/build-module/font-families.js
 var import_i18n19 = __toESM(require_i18n());
-var import_components32 = __toESM(require_components());
+var import_components33 = __toESM(require_components());
 var import_element20 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/font-library/context.js
@@ -2401,7 +2405,7 @@ async function fetchInstallFontFace(fontFamilyId, data, registry) {
 }
 
 // packages/global-styles-ui/build-module/font-library/utils/index.js
-var import_components20 = __toESM(require_components());
+var import_components21 = __toESM(require_components());
 
 // packages/global-styles-ui/build-module/font-library/utils/constants.js
 var import_i18n10 = __toESM(require_i18n());
@@ -2424,7 +2428,7 @@ var FONT_STYLES = {
 
 // packages/global-styles-ui/build-module/font-library/utils/index.js
 var { File } = window;
-var { kebabCase } = unlock(import_components20.privateApis);
+var { kebabCase } = unlock(import_components21.privateApis);
 function setUIValuesNeeded(font2, extraValues = {}) {
   if (!font2.name && (font2.fontFamily || font2.slug)) {
     font2.name = font2.fontFamily || font2.slug;
@@ -2698,7 +2702,7 @@ function toggleFont(font2, face, initialfonts = []) {
 }
 
 // packages/global-styles-ui/build-module/font-library/context.js
-var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+var import_jsx_runtime29 = __toESM(require_jsx_runtime());
 var FontLibraryContext = (0, import_element12.createContext)(
   {}
 );
@@ -3004,7 +3008,7 @@ function FontLibraryProvider({ children }) {
     loadFontFaceInBrowser(fontFace, src, "document");
     loadedFontUrls.add(src);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
     FontLibraryContext.Provider,
     {
       value: {
@@ -3033,12 +3037,12 @@ var context_default = FontLibraryProvider;
 
 // packages/global-styles-ui/build-module/font-library/modal.js
 var import_i18n17 = __toESM(require_i18n());
-var import_components30 = __toESM(require_components());
+var import_components31 = __toESM(require_components());
 var import_core_data8 = __toESM(require_core_data());
 var import_data8 = __toESM(require_data());
 
 // packages/global-styles-ui/build-module/font-library/installed-fonts.js
-var import_components24 = __toESM(require_components());
+var import_components25 = __toESM(require_components());
 var import_core_data6 = __toESM(require_core_data());
 var import_data7 = __toESM(require_data());
 var import_element15 = __toESM(require_element());
@@ -3046,12 +3050,12 @@ var import_i18n13 = __toESM(require_i18n());
 
 // packages/global-styles-ui/build-module/font-library/font-card.js
 var import_i18n12 = __toESM(require_i18n());
-var import_components22 = __toESM(require_components());
+var import_components23 = __toESM(require_components());
 
 // packages/global-styles-ui/build-module/font-library/font-demo.js
-var import_components21 = __toESM(require_components());
+var import_components22 = __toESM(require_components());
 var import_element13 = __toESM(require_element());
-var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+var import_jsx_runtime30 = __toESM(require_jsx_runtime());
 function getPreviewUrl(fontFace) {
   if (fontFace.preview) {
     return fontFace.preview;
@@ -3115,7 +3119,7 @@ function FontDemo({ font: font2, text }) {
     };
     loadAsset();
   }, [fontFace, isIntersecting, loadFontFaceAsset, isPreviewImage]);
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { ref, children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { ref, children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
     "img",
     {
       src: previewUrl,
@@ -3123,8 +3127,8 @@ function FontDemo({ font: font2, text }) {
       alt: text,
       className: "font-library__font-variant_demo-image"
     }
-  ) : /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
-    import_components21.__experimentalText,
+  ) : /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+    import_components22.__experimentalText,
     {
       style: textDemoStyle,
       className: "font-library__font-variant_demo-text",
@@ -3135,7 +3139,7 @@ function FontDemo({ font: font2, text }) {
 var font_demo_default = FontDemo;
 
 // packages/global-styles-ui/build-module/font-library/font-card.js
-var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+var import_jsx_runtime31 = __toESM(require_jsx_runtime());
 function FontCard({
   font: font2,
   onClick,
@@ -3146,9 +3150,9 @@ function FontCard({
   const style = {
     cursor: !!onClick ? "pointer" : "default"
   };
-  const navigator = (0, import_components22.useNavigator)();
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
-    import_components22.Button,
+  const navigator = (0, import_components23.useNavigator)();
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    import_components23.Button,
     {
       __next40pxDefaultSize: true,
       onClick: () => {
@@ -3159,10 +3163,10 @@ function FontCard({
       },
       style,
       className: "font-library__font-card",
-      children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_components22.Flex, { justify: "space-between", wrap: false, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(font_demo_default, { font: font2 }),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_components22.Flex, { justify: "flex-end", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components22.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components22.__experimentalText, { className: "font-library__font-card__count", children: variantsText || (0, import_i18n12.sprintf)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_components23.Flex, { justify: "space-between", wrap: false, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(font_demo_default, { font: font2 }),
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_components23.Flex, { justify: "flex-end", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_components23.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_components23.__experimentalText, { className: "font-library__font-card__count", children: variantsText || (0, import_i18n12.sprintf)(
             /* translators: %d: Number of font variants. */
             (0, import_i18n12._n)(
               "%d variant",
@@ -3171,7 +3175,7 @@ function FontCard({
             ),
             variantsCount
           ) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components22.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(icon_default, { icon: (0, import_i18n12.isRTL)() ? chevron_left_default : chevron_right_default }) })
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_components23.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(icon_default, { icon: (0, import_i18n12.isRTL)() ? chevron_left_default : chevron_right_default }) })
         ] })
       ] })
     }
@@ -3181,8 +3185,8 @@ var font_card_default = FontCard;
 
 // packages/global-styles-ui/build-module/font-library/library-font-variant.js
 var import_element14 = __toESM(require_element());
-var import_components23 = __toESM(require_components());
-var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+var import_components24 = __toESM(require_components());
+var import_jsx_runtime32 = __toESM(require_jsx_runtime());
 function LibraryFontVariant({
   face,
   font: font2
@@ -3203,9 +3207,9 @@ function LibraryFontVariant({
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
   const checkboxId = (0, import_element14.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_components23.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
-      import_components23.CheckboxControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+      import_components24.CheckboxControl,
       {
         checked: isInstalled,
         onChange: handleToggleActivation,
@@ -3213,7 +3217,7 @@ function LibraryFontVariant({
         id: checkboxId
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
       font_demo_default,
       {
         font: face,
@@ -3259,7 +3263,7 @@ function sortFontFaces(faces) {
 }
 
 // packages/global-styles-ui/build-module/font-library/installed-fonts.js
-var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+var import_jsx_runtime33 = __toESM(require_jsx_runtime());
 function InstalledFonts() {
   const {
     baseCustomFonts,
@@ -3391,40 +3395,40 @@ function InstalledFonts() {
     }
   };
   const hasFonts = baseThemeFonts.length > 0 || baseCustomFonts.length > 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.ProgressBar, {}) }),
-    !isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
-        import_components24.Navigator,
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.ProgressBar, {}) }),
+    !isResolvingLibrary && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+        import_components25.Navigator,
         {
           initialPath: libraryFontSelected ? "/fontFamily" : "/",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.__experimentalVStack, { spacing: "8", children: [
-              notice && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-                import_components24.Notice,
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.Navigator.Screen, { path: "/", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.__experimentalVStack, { spacing: "8", children: [
+              notice && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+                import_components25.Notice,
                 {
                   status: notice.type,
                   onRemove: () => setNotice(null),
                   children: notice.message
                 }
               ),
-              !hasFonts && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.__experimentalText, { as: "p", children: (0, import_i18n13.__)("No fonts installed.") }),
-              baseThemeFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.__experimentalVStack, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h2", {
+              !hasFonts && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalText, { as: "p", children: (0, import_i18n13.__)("No fonts installed.") }),
+              baseThemeFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.__experimentalVStack, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h2", {
                   className: "font-library__fonts-title",
                   /* translators: Heading for a list of fonts provided by the theme. */
                   children: (0, import_i18n13._x)("Theme", "font source")
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
-                    children: baseThemeFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                    children: baseThemeFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                           font_card_default,
                           {
                             font: font2,
@@ -3446,22 +3450,22 @@ function InstalledFonts() {
                   }
                 )
               ] }),
-              baseCustomFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.__experimentalVStack, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h2", {
+              baseCustomFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.__experimentalVStack, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h2", {
                   className: "font-library__fonts-title",
                   /* translators: Heading for a list of fonts installed by the user. */
                   children: (0, import_i18n13._x)("Custom", "font source")
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
-                    children: baseCustomFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                    children: baseCustomFonts.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                           font_card_default,
                           {
                             font: font2,
@@ -3484,8 +3488,8 @@ function InstalledFonts() {
                 )
               ] })
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.Navigator.Screen, { path: "/fontFamily", children: [
-              libraryFontSelected && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.Navigator.Screen, { path: "/fontFamily", children: [
+              libraryFontSelected && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                 ConfirmDeleteDialog,
                 {
                   font: libraryFontSelected,
@@ -3496,9 +3500,9 @@ function InstalledFonts() {
                   handleSetLibraryFontSelected
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.Flex, { justify: "flex-start", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-                  import_components24.Navigator.BackButton,
+              /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.Flex, { justify: "flex-start", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+                  import_components25.Navigator.BackButton,
                   {
                     icon: (0, import_i18n13.isRTL)() ? chevron_right_default : chevron_left_default,
                     size: "small",
@@ -3511,8 +3515,8 @@ function InstalledFonts() {
                     label: (0, import_i18n13.__)("Back")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-                  import_components24.__experimentalHeading,
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+                  import_components25.__experimentalHeading,
                   {
                     level: 2,
                     size: 13,
@@ -3521,26 +3525,26 @@ function InstalledFonts() {
                   }
                 )
               ] }),
-              notice && /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.__experimentalSpacer, { margin: 1 }),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-                  import_components24.Notice,
+              notice && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 1 }),
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+                  import_components25.Notice,
                   {
                     status: notice.type,
                     onRemove: () => setNotice(null),
                     children: notice.message
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.__experimentalSpacer, { margin: 1 })
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 1 })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.__experimentalText, { children: (0, import_i18n13.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalText, { children: (0, import_i18n13.__)(
                 "Choose font variants. Keep in mind that too many variants could make your site slower."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.__experimentalVStack, { spacing: 0, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-                  import_components24.CheckboxControl,
+              /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.__experimentalVStack, { spacing: 0, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+                  import_components25.CheckboxControl,
                   {
                     className: "font-library__select-all",
                     label: (0, import_i18n13.__)("Select all"),
@@ -3550,19 +3554,19 @@ function InstalledFonts() {
                     __nextHasNoMarginBottom: true
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.__experimentalSpacer, { margin: 8 }),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 8 }),
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                   "ul",
                   {
                     role: "list",
                     className: "font-library__fonts-list",
                     children: libraryFontSelected && getFontFacesToDisplay(
                       libraryFontSelected
-                    ).map((face, i2) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                    ).map((face, i2) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                           library_font_variant_default,
                           {
                             font: libraryFontSelected,
@@ -3580,10 +3584,10 @@ function InstalledFonts() {
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_components24.__experimentalHStack, { justify: "flex-end", className: "font-library__footer", children: [
-        isInstalling && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_components24.ProgressBar, {}),
-        shouldDisplayDeleteButton && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-          import_components24.Button,
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.__experimentalHStack, { justify: "flex-end", className: "font-library__footer", children: [
+        isInstalling && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.ProgressBar, {}),
+        shouldDisplayDeleteButton && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+          import_components25.Button,
           {
             __next40pxDefaultSize: true,
             isDestructive: true,
@@ -3592,8 +3596,8 @@ function InstalledFonts() {
             children: (0, import_i18n13.__)("Delete")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-          import_components24.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+          import_components25.Button,
           {
             __next40pxDefaultSize: true,
             variant: "primary",
@@ -3615,7 +3619,7 @@ function ConfirmDeleteDialog({
   uninstallFontFamily,
   handleSetLibraryFontSelected
 }) {
-  const navigator = (0, import_components24.useNavigator)();
+  const navigator = (0, import_components25.useNavigator)();
   const handleConfirmUninstall = async () => {
     setNotice(null);
     setIsOpen(false);
@@ -3637,8 +3641,8 @@ function ConfirmDeleteDialog({
   const handleCancelUninstall = () => {
     setIsOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-    import_components24.__experimentalConfirmDialog,
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+    import_components25.__experimentalConfirmDialog,
     {
       isOpen,
       cancelButtonText: (0, import_i18n13.__)("Cancel"),
@@ -3660,7 +3664,7 @@ var installed_fonts_default = InstalledFonts;
 
 // packages/global-styles-ui/build-module/font-library/font-collection.js
 var import_element17 = __toESM(require_element());
-var import_components27 = __toESM(require_components());
+var import_components28 = __toESM(require_components());
 var import_compose3 = __toESM(require_compose());
 var import_i18n15 = __toESM(require_i18n());
 var import_core_data7 = __toESM(require_core_data());
@@ -3707,8 +3711,8 @@ function isFontFontFaceInOutline(slug, face, outline) {
 
 // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.js
 var import_i18n14 = __toESM(require_i18n());
-var import_components25 = __toESM(require_components());
-var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+var import_components26 = __toESM(require_components());
+var import_jsx_runtime34 = __toESM(require_jsx_runtime());
 function GoogleFontsConfirmDialog() {
   const handleConfirm = () => {
     window.localStorage.setItem(
@@ -3717,19 +3721,19 @@ function GoogleFontsConfirmDialog() {
     );
     window.dispatchEvent(new Event("storage"));
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "font-library__google-fonts-confirm", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.Card, { children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_components25.CardBody, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalHeading, { level: 2, children: (0, import_i18n14.__)("Connect to Google Fonts") }),
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 6 }),
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalText, { as: "p", children: (0, import_i18n14.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "font-library__google-fonts-confirm", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_components26.Card, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_components26.CardBody, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_components26.__experimentalHeading, { level: 2, children: (0, import_i18n14.__)("Connect to Google Fonts") }),
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_components26.__experimentalSpacer, { margin: 6 }),
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_components26.__experimentalText, { as: "p", children: (0, import_i18n14.__)(
       "To install fonts from Google you must give permission to connect directly to Google servers. The fonts you install will be downloaded from Google and stored on your site. Your site will then use these locally-hosted fonts."
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 3 }),
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalText, { as: "p", children: (0, import_i18n14.__)(
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_components26.__experimentalSpacer, { margin: 3 }),
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_components26.__experimentalText, { as: "p", children: (0, import_i18n14.__)(
       "You can alternatively upload files directly on the Upload tab."
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components25.__experimentalSpacer, { margin: 6 }),
-    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-      import_components25.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_components26.__experimentalSpacer, { margin: 6 }),
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+      import_components26.Button,
       {
         __next40pxDefaultSize: true,
         variant: "primary",
@@ -3743,8 +3747,8 @@ var google_fonts_confirm_dialog_default = GoogleFontsConfirmDialog;
 
 // packages/global-styles-ui/build-module/font-library/collection-font-variant.js
 var import_element16 = __toESM(require_element());
-var import_components26 = __toESM(require_components());
-var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+var import_components27 = __toESM(require_components());
+var import_jsx_runtime35 = __toESM(require_jsx_runtime());
 function CollectionFontVariant({
   face,
   font: font2,
@@ -3760,9 +3764,9 @@ function CollectionFontVariant({
   };
   const displayName = font2.name + " " + getFontFaceVariantName(face);
   const checkboxId = (0, import_element16.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_components26.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
-      import_components26.CheckboxControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "font-library__font-card", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.Flex, { justify: "flex-start", align: "center", gap: "1rem", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+      import_components27.CheckboxControl,
       {
         checked: selected,
         onChange: handleToggleActivation,
@@ -3770,7 +3774,7 @@ function CollectionFontVariant({
         id: checkboxId
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("label", { htmlFor: checkboxId, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
       font_demo_default,
       {
         font: face,
@@ -3783,7 +3787,7 @@ function CollectionFontVariant({
 var collection_font_variant_default = CollectionFontVariant;
 
 // packages/global-styles-ui/build-module/font-library/font-collection.js
-var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+var import_jsx_runtime36 = __toESM(require_jsx_runtime());
 var DEFAULT_CATEGORY = {
   slug: "all",
   name: (0, import_i18n15._x)("All", "font categories")
@@ -3926,14 +3930,14 @@ function FontCollection({ slug }) {
     return sortFontFaces(fontFamily.fontFace);
   };
   if (renderConfirmDialog) {
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(google_fonts_confirm_dialog_default, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(google_fonts_confirm_dialog_default, {});
   }
   const ActionsComponent = () => {
     if (slug !== "google-fonts" || renderConfirmDialog || selectedFont) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-      import_components27.DropdownMenu,
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      import_components28.DropdownMenu,
       {
         icon: more_vertical_default,
         label: (0, import_i18n15.__)("Actions"),
@@ -3949,27 +3953,27 @@ function FontCollection({ slug }) {
       }
     );
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    isLoading && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.ProgressBar, {}) }),
-    !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
-        import_components27.Navigator,
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    isLoading && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "font-library__loading", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.ProgressBar, {}) }),
+    !isLoading && selectedCollection && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+        import_components28.Navigator,
         {
           initialPath: "/",
           className: "font-library__tabpanel-layout",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.Navigator.Screen, { path: "/", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.__experimentalHStack, { justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.__experimentalVStack, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
-                  /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalText, { children: selectedCollection.description })
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components28.Navigator.Screen, { path: "/", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components28.__experimentalHStack, { justify: "space-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components28.__experimentalVStack, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
+                  /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalText, { children: selectedCollection.description })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(ActionsComponent, {})
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ActionsComponent, {})
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                  import_components27.SearchControl,
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components28.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_components28.SearchControl,
                   {
                     value: filters.search,
                     placeholder: (0, import_i18n15.__)("Font name\u2026"),
@@ -3979,15 +3983,15 @@ function FontCollection({ slug }) {
                     hideLabelFromVision: false
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                  import_components27.SelectControl,
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_components28.SelectControl,
                   {
                     __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n15.__)("Category"),
                     value: filters.category,
                     onChange: handleCategoryFilter,
-                    children: categories && categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                    children: categories && categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                       "option",
                       {
                         value: category.slug,
@@ -3998,20 +4002,20 @@ function FontCollection({ slug }) {
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalSpacer, { margin: 4 }),
-              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalText, { children: (0, import_i18n15.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalSpacer, { margin: 4 }),
+              !!selectedCollection?.font_families?.length && !fonts.length && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalText, { children: (0, import_i18n15.__)(
                 "No fonts found. Try with a different search term."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "font-library__fonts-grid__main", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "font-library__fonts-grid__main", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                 "ul",
                 {
                   role: "list",
                   className: "font-library__fonts-list",
-                  children: items.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                  children: items.map((font2) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                     "li",
                     {
                       className: "font-library__fonts-list-item",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                         font_card_default,
                         {
                           font: font2.font_family_settings,
@@ -4029,10 +4033,10 @@ function FontCollection({ slug }) {
                 }
               ) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.Navigator.Screen, { path: "/fontFamily", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.Flex, { justify: "flex-start", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                  import_components27.Navigator.BackButton,
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components28.Navigator.Screen, { path: "/fontFamily", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components28.Flex, { justify: "flex-start", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_components28.Navigator.BackButton,
                   {
                     icon: (0, import_i18n15.isRTL)() ? chevron_right_default : chevron_left_default,
                     size: "small",
@@ -4043,8 +4047,8 @@ function FontCollection({ slug }) {
                     label: (0, import_i18n15.__)("Back")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                  import_components27.__experimentalHeading,
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_components28.__experimentalHeading,
                   {
                     level: 2,
                     size: 13,
@@ -4053,23 +4057,23 @@ function FontCollection({ slug }) {
                   }
                 )
               ] }),
-              notice && /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalSpacer, { margin: 1 }),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                  import_components27.Notice,
+              notice && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalSpacer, { margin: 1 }),
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_components28.Notice,
                   {
                     status: notice.type,
                     onRemove: () => setNotice(null),
                     children: notice.message
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalSpacer, { margin: 1 })
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalSpacer, { margin: 1 })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalText, { children: (0, import_i18n15.__)("Select font variants to install.") }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalSpacer, { margin: 4 }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                import_components27.CheckboxControl,
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalText, { children: (0, import_i18n15.__)("Select font variants to install.") }),
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalSpacer, { margin: 4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                import_components28.CheckboxControl,
                 {
                   className: "font-library__select-all",
                   label: (0, import_i18n15.__)("Select all"),
@@ -4079,17 +4083,17 @@ function FontCollection({ slug }) {
                   __nextHasNoMarginBottom: true
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                 "ul",
                 {
                   role: "list",
                   className: "font-library__fonts-list",
                   children: selectedFont && getSortedFontFaces(selectedFont).map(
-                    (face, i2) => /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                    (face, i2) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                           collection_font_variant_default,
                           {
                             font: selectedFont,
@@ -4109,18 +4113,18 @@ function FontCollection({ slug }) {
                   )
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_components27.__experimentalSpacer, { margin: 16 })
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components28.__experimentalSpacer, { margin: 16 })
             ] })
           ]
         }
       ),
-      selectedFont && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-        import_components27.Flex,
+      selectedFont && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+        import_components28.Flex,
         {
           justify: "flex-end",
           className: "font-library__footer",
-          children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-            import_components27.Button,
+          children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            import_components28.Button,
             {
               __next40pxDefaultSize: true,
               variant: "primary",
@@ -4133,16 +4137,16 @@ function FontCollection({ slug }) {
           )
         }
       ),
-      !selectedFont && /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
-        import_components27.__experimentalHStack,
+      !selectedFont && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+        import_components28.__experimentalHStack,
         {
           expanded: false,
           className: "font-library__footer",
           justify: "end",
           spacing: 6,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-              import_components27.__experimentalHStack,
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+              import_components28.__experimentalHStack,
               {
                 justify: "flex-start",
                 expanded: false,
@@ -4159,9 +4163,9 @@ function FontCollection({ slug }) {
                     totalPages
                   ),
                   {
-                    div: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { "aria-hidden": true }),
-                    CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                      import_components27.SelectControl,
+                    div: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { "aria-hidden": true }),
+                    CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                      import_components28.SelectControl,
                       {
                         "aria-label": (0, import_i18n15.__)(
                           "Current page"
@@ -4187,9 +4191,9 @@ function FontCollection({ slug }) {
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_components27.__experimentalHStack, { expanded: false, spacing: 1, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                import_components27.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components28.__experimentalHStack, { expanded: false, spacing: 1, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                import_components28.Button,
                 {
                   onClick: () => setPage(page - 1),
                   disabled: page === 1,
@@ -4201,8 +4205,8 @@ function FontCollection({ slug }) {
                   tooltipPosition: "top"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
-                import_components27.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                import_components28.Button,
                 {
                   onClick: () => setPage(page + 1),
                   disabled: page === totalPages,
@@ -4225,7 +4229,7 @@ var font_collection_default = FontCollection;
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.js
 var import_i18n16 = __toESM(require_i18n());
-var import_components29 = __toESM(require_components());
+var import_components30 = __toESM(require_components());
 var import_element18 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/font-library/lib/unbrotli.js
@@ -14315,8 +14319,8 @@ var LongVertMetric = class {
 var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
 
 // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.js
-var import_components28 = __toESM(require_components());
-var { kebabCase: kebabCase2 } = unlock(import_components28.privateApis);
+var import_components29 = __toESM(require_components());
+var { kebabCase: kebabCase2 } = unlock(import_components29.privateApis);
 function makeFamiliesFromFaces(fontFaces) {
   const fontFamiliesObject = fontFaces.reduce(
     (acc, item) => {
@@ -14337,7 +14341,7 @@ function makeFamiliesFromFaces(fontFaces) {
 }
 
 // packages/global-styles-ui/build-module/font-library/upload-fonts.js
-var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+var import_jsx_runtime37 = __toESM(require_jsx_runtime());
 function UploadFonts() {
   const { installFonts } = (0, import_element18.useContext)(FontLibraryContext);
   const [isUploading, setIsUploading] = (0, import_element18.useState)(false);
@@ -14459,32 +14463,32 @@ function UploadFonts() {
     }
     setIsUploading(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components29.DropZone, { onFilesDrop: handleDropZone }),
-    /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_components29.__experimentalVStack, { className: "font-library__local-fonts", children: [
-      notice && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
-        import_components29.Notice,
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.DropZone, { onFilesDrop: handleDropZone }),
+    /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_components30.__experimentalVStack, { className: "font-library__local-fonts", children: [
+      notice && /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
+        import_components30.Notice,
         {
           status: notice.type,
           __unstableHTML: true,
           onRemove: () => setNotice(null),
           children: [
             notice.message,
-            notice.errors && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("ul", { children: notice.errors.map((error, index) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("li", { children: error }, index)) })
+            notice.errors && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("ul", { children: notice.errors.map((error, index) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("li", { children: error }, index)) })
           ]
         }
       ),
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components29.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "font-library__upload-area", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components29.ProgressBar, {}) }) }),
-      !isUploading && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
-        import_components29.FormFileUpload,
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "font-library__upload-area", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.ProgressBar, {}) }) }),
+      !isUploading && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+        import_components30.FormFileUpload,
         {
           accept: ALLOWED_FILE_EXTENSIONS.map(
             (ext) => `.${ext}`
           ).join(","),
           multiple: true,
           onChange: onFilesUpload,
-          render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
-            import_components29.Button,
+          render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+            import_components30.Button,
             {
               __next40pxDefaultSize: true,
               className: "font-library__upload-area",
@@ -14494,8 +14498,8 @@ function UploadFonts() {
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components29.__experimentalSpacer, { margin: 2 }),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components29.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n16.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.__experimentalSpacer, { margin: 2 }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n16.__)(
         "Uploaded fonts appear in your library and can be used in your theme. Supported formats: .ttf, .otf, .woff, and .woff2."
       ) })
     ] })
@@ -14504,8 +14508,8 @@ function UploadFonts() {
 var upload_fonts_default = UploadFonts;
 
 // packages/global-styles-ui/build-module/font-library/modal.js
-var import_jsx_runtime37 = __toESM(require_jsx_runtime());
-var { Tabs } = unlock(import_components30.privateApis);
+var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+var { Tabs } = unlock(import_components31.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
   title: (0, import_i18n17._x)("Library", "Font library")
@@ -14517,36 +14521,36 @@ var UPLOAD_TAB = {
 
 // packages/global-styles-ui/build-module/font-family-item.js
 var import_i18n18 = __toESM(require_i18n());
-var import_components31 = __toESM(require_components());
+var import_components32 = __toESM(require_components());
 var import_element19 = __toESM(require_element());
-var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+var import_jsx_runtime39 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/font-families.js
-var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+var import_jsx_runtime40 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.js
 var import_i18n20 = __toESM(require_i18n());
-var import_components33 = __toESM(require_components());
-var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+var import_components34 = __toESM(require_components());
+var import_jsx_runtime41 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/screen-typography.js
-var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+var import_jsx_runtime42 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/screen-typography-element.js
 var import_i18n22 = __toESM(require_i18n());
-var import_components35 = __toESM(require_components());
+var import_components36 = __toESM(require_components());
 var import_element22 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/typography-panel.js
 var import_block_editor5 = __toESM(require_block_editor());
-var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+var import_jsx_runtime43 = __toESM(require_jsx_runtime());
 var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock(import_block_editor5.privateApis);
 
 // packages/global-styles-ui/build-module/typography-preview.js
-var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+var import_jsx_runtime44 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/screen-typography-element.js
-var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+var import_jsx_runtime45 = __toESM(require_jsx_runtime());
 var elements = {
   text: {
     description: (0, import_i18n22.__)("Manage the fonts used on the site."),
@@ -14572,47 +14576,47 @@ var elements = {
 
 // packages/global-styles-ui/build-module/screen-colors.js
 var import_i18n24 = __toESM(require_i18n());
-var import_components38 = __toESM(require_components());
+var import_components39 = __toESM(require_components());
 var import_block_editor6 = __toESM(require_block_editor());
 
 // packages/global-styles-ui/build-module/palette.js
-var import_components37 = __toESM(require_components());
+var import_components38 = __toESM(require_components());
 var import_i18n23 = __toESM(require_i18n());
 var import_element23 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/color-indicator-wrapper.js
-var import_components36 = __toESM(require_components());
-var import_jsx_runtime45 = __toESM(require_jsx_runtime());
-
-// packages/global-styles-ui/build-module/palette.js
+var import_components37 = __toESM(require_components());
 var import_jsx_runtime46 = __toESM(require_jsx_runtime());
 
-// packages/global-styles-ui/build-module/screen-colors.js
+// packages/global-styles-ui/build-module/palette.js
 var import_jsx_runtime47 = __toESM(require_jsx_runtime());
+
+// packages/global-styles-ui/build-module/screen-colors.js
+var import_jsx_runtime48 = __toESM(require_jsx_runtime());
 var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock(
   import_block_editor6.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-color-palette.js
 var import_i18n27 = __toESM(require_i18n());
-var import_components43 = __toESM(require_components());
+var import_components44 = __toESM(require_components());
 
 // packages/global-styles-ui/build-module/color-palette-panel.js
 var import_compose4 = __toESM(require_compose());
-var import_components41 = __toESM(require_components());
+var import_components42 = __toESM(require_components());
 var import_i18n25 = __toESM(require_i18n());
 
 // packages/global-styles-ui/build-module/variations/variations-color.js
-var import_components40 = __toESM(require_components());
+var import_components41 = __toESM(require_components());
 
 // packages/global-styles-ui/build-module/preview-colors.js
-var import_components39 = __toESM(require_components());
+var import_components40 = __toESM(require_components());
 
 // packages/global-styles-ui/build-module/preset-colors.js
-var import_jsx_runtime48 = __toESM(require_jsx_runtime());
+var import_jsx_runtime49 = __toESM(require_jsx_runtime());
 function PresetColors() {
   const { paletteColors } = useStylesPreviewColors();
-  return paletteColors.slice(0, 4).map(({ slug, color }, index) => /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+  return paletteColors.slice(0, 4).map(({ slug, color }, index) => /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
     "div",
     {
       style: {
@@ -14626,7 +14630,7 @@ function PresetColors() {
 }
 
 // packages/global-styles-ui/build-module/preview-colors.js
-var import_jsx_runtime49 = __toESM(require_jsx_runtime());
+var import_jsx_runtime50 = __toESM(require_jsx_runtime());
 var firstFrameVariants2 = {
   start: {
     scale: 1,
@@ -14642,22 +14646,22 @@ var StylesPreviewColors = ({
   isFocused,
   withHoverView
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
     preview_wrapper_default,
     {
       label,
       isFocused,
       withHoverView,
-      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
-        import_components39.__unstableMotion.div,
+      children: ({ key }) => /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+        import_components40.__unstableMotion.div,
         {
           variants: firstFrameVariants2,
           style: {
             height: "100%",
             overflow: "hidden"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
-            import_components39.__experimentalHStack,
+          children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+            import_components40.__experimentalHStack,
             {
               spacing: 0,
               justify: "center",
@@ -14665,7 +14669,7 @@ var StylesPreviewColors = ({
                 height: "100%",
                 overflow: "hidden"
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(PresetColors, {})
+              children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(PresetColors, {})
             }
           )
         },
@@ -14677,7 +14681,7 @@ var StylesPreviewColors = ({
 var preview_colors_default = StylesPreviewColors;
 
 // packages/global-styles-ui/build-module/variations/variations-color.js
-var import_jsx_runtime50 = __toESM(require_jsx_runtime());
+var import_jsx_runtime51 = __toESM(require_jsx_runtime());
 var propertiesToFilter2 = ["color"];
 function ColorVariations({
   title,
@@ -14687,16 +14691,16 @@ function ColorVariations({
   if (colorVariations?.length <= 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(import_components40.__experimentalVStack, { spacing: 3, children: [
-    title && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Subtitle, { level: 3, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_components40.__experimentalGrid, { gap, children: colorVariations.map((variation, index) => /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(import_components41.__experimentalVStack, { spacing: 3, children: [
+    title && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Subtitle, { level: 3, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_components41.__experimentalGrid, { gap, children: colorVariations.map((variation, index) => /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
       Variation,
       {
         variation,
         isPill: true,
         properties: propertiesToFilter2,
         showTooltip: true,
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(preview_colors_default, {})
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(preview_colors_default, {})
       },
       index
     )) })
@@ -14704,54 +14708,54 @@ function ColorVariations({
 }
 
 // packages/global-styles-ui/build-module/color-palette-panel.js
-var import_jsx_runtime51 = __toESM(require_jsx_runtime());
+var import_jsx_runtime52 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/gradients-palette-panel.js
 var import_compose5 = __toESM(require_compose());
-var import_components42 = __toESM(require_components());
+var import_components43 = __toESM(require_components());
 var import_i18n26 = __toESM(require_i18n());
-var import_jsx_runtime52 = __toESM(require_jsx_runtime());
+var import_jsx_runtime53 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/screen-color-palette.js
-var import_jsx_runtime53 = __toESM(require_jsx_runtime());
-var { Tabs: Tabs2 } = unlock(import_components43.privateApis);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime());
+var { Tabs: Tabs2 } = unlock(import_components44.privateApis);
 
 // packages/global-styles-ui/build-module/screen-background.js
 var import_i18n28 = __toESM(require_i18n());
 var import_block_editor8 = __toESM(require_block_editor());
-var import_components44 = __toESM(require_components());
+var import_components45 = __toESM(require_components());
 
 // packages/global-styles-ui/build-module/background-panel.js
 var import_block_editor7 = __toESM(require_block_editor());
-var import_jsx_runtime54 = __toESM(require_jsx_runtime());
+var import_jsx_runtime55 = __toESM(require_jsx_runtime());
 var { BackgroundPanel: StylesBackgroundPanel2 } = unlock(
   import_block_editor7.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-background.js
-var import_jsx_runtime55 = __toESM(require_jsx_runtime());
+var import_jsx_runtime56 = __toESM(require_jsx_runtime());
 var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock(import_block_editor8.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.js
-var import_components46 = __toESM(require_components());
+var import_components47 = __toESM(require_components());
 var import_i18n30 = __toESM(require_i18n());
 var import_element24 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.js
-var import_components45 = __toESM(require_components());
+var import_components46 = __toESM(require_components());
 var import_i18n29 = __toESM(require_i18n());
-var import_jsx_runtime56 = __toESM(require_jsx_runtime());
+var import_jsx_runtime57 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/shadows-panel.js
-var import_jsx_runtime57 = __toESM(require_jsx_runtime());
-var { Menu } = unlock(import_components46.privateApis);
+var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+var { Menu } = unlock(import_components47.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.js
-var import_components47 = __toESM(require_components());
+var import_components48 = __toESM(require_components());
 var import_i18n31 = __toESM(require_i18n());
 var import_element25 = __toESM(require_element());
-var import_jsx_runtime58 = __toESM(require_jsx_runtime());
-var { Menu: Menu2 } = unlock(import_components47.privateApis);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime());
+var { Menu: Menu2 } = unlock(import_components48.privateApis);
 var customShadowMenuItems = [
   {
     label: (0, import_i18n31.__)("Rename"),
@@ -14770,7 +14774,7 @@ var presetShadowMenuItems = [
 ];
 
 // packages/global-styles-ui/build-module/screen-shadows.js
-var import_jsx_runtime59 = __toESM(require_jsx_runtime());
+var import_jsx_runtime60 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/screen-layout.js
 var import_i18n32 = __toESM(require_i18n());
@@ -14779,30 +14783,30 @@ var import_block_editor10 = __toESM(require_block_editor());
 // packages/global-styles-ui/build-module/dimensions-panel.js
 var import_block_editor9 = __toESM(require_block_editor());
 var import_element26 = __toESM(require_element());
-var import_jsx_runtime60 = __toESM(require_jsx_runtime());
+var import_jsx_runtime61 = __toESM(require_jsx_runtime());
 var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.js
-var import_jsx_runtime61 = __toESM(require_jsx_runtime());
+var import_jsx_runtime62 = __toESM(require_jsx_runtime());
 var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock(
   import_block_editor10.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-style-variations.js
-var import_components50 = __toESM(require_components());
+var import_components51 = __toESM(require_components());
 var import_i18n35 = __toESM(require_i18n());
 
 // packages/global-styles-ui/build-module/style-variations-content.js
 var import_i18n34 = __toESM(require_i18n());
-var import_components49 = __toESM(require_components());
+var import_components50 = __toESM(require_components());
 
 // packages/global-styles-ui/build-module/style-variations-container.js
 var import_core_data9 = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
 var import_element27 = __toESM(require_element());
-var import_components48 = __toESM(require_components());
+var import_components49 = __toESM(require_components());
 var import_i18n33 = __toESM(require_i18n());
-var import_jsx_runtime62 = __toESM(require_jsx_runtime());
+var import_jsx_runtime63 = __toESM(require_jsx_runtime());
 function StyleVariationsContainer({
   gap = 2
 }) {
@@ -14868,14 +14872,14 @@ function StyleVariationsContainer({
   if (!fullStyleVariations || fullStyleVariations.length < 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
-    import_components48.__experimentalGrid,
+  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    import_components49.__experimentalGrid,
     {
       columns: 2,
       className: "global-styles-ui-style-variations-container",
       gap,
       children: themeVariations.map(
-        (variation, index) => /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+        (variation, index) => /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
           preview_styles_default,
           {
             label: variation?.title,
@@ -14891,21 +14895,21 @@ function StyleVariationsContainer({
 var style_variations_container_default = StyleVariationsContainer;
 
 // packages/global-styles-ui/build-module/style-variations-content.js
-var import_jsx_runtime63 = __toESM(require_jsx_runtime());
+var import_jsx_runtime64 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/screen-style-variations.js
-var import_jsx_runtime64 = __toESM(require_jsx_runtime());
+var import_jsx_runtime65 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/screen-css.js
 var import_i18n36 = __toESM(require_i18n());
-var import_components51 = __toESM(require_components());
+var import_components52 = __toESM(require_components());
 var import_block_editor11 = __toESM(require_block_editor());
-var import_jsx_runtime65 = __toESM(require_jsx_runtime());
+var import_jsx_runtime66 = __toESM(require_jsx_runtime());
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock(import_block_editor11.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.js
 var import_i18n39 = __toESM(require_i18n());
-var import_components54 = __toESM(require_components());
+var import_components55 = __toESM(require_components());
 var import_element29 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.js
@@ -14915,70 +14919,70 @@ var import_element28 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.js
 var import_i18n37 = __toESM(require_i18n());
-var import_components52 = __toESM(require_components());
+var import_components53 = __toESM(require_components());
 var import_date = __toESM(require_date());
 var import_core_data11 = __toESM(require_core_data());
 var import_data11 = __toESM(require_data());
 var import_keycodes2 = __toESM(require_keycodes());
-var import_jsx_runtime66 = __toESM(require_jsx_runtime());
+var import_jsx_runtime67 = __toESM(require_jsx_runtime());
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/pagination/index.js
-var import_components53 = __toESM(require_components());
+var import_components54 = __toESM(require_components());
 var import_i18n38 = __toESM(require_i18n());
-var import_jsx_runtime67 = __toESM(require_jsx_runtime());
-
-// packages/global-styles-ui/build-module/screen-revisions/index.js
 var import_jsx_runtime68 = __toESM(require_jsx_runtime());
 
-// packages/global-styles-ui/build-module/font-sizes/font-sizes.js
-var import_i18n41 = __toESM(require_i18n());
-var import_components56 = __toESM(require_components());
-var import_element30 = __toESM(require_element());
-
-// packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.js
-var import_components55 = __toESM(require_components());
-var import_i18n40 = __toESM(require_i18n());
+// packages/global-styles-ui/build-module/screen-revisions/index.js
 var import_jsx_runtime69 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+var import_i18n41 = __toESM(require_i18n());
+var import_components57 = __toESM(require_components());
+var import_element30 = __toESM(require_element());
+
+// packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.js
+var import_components56 = __toESM(require_components());
+var import_i18n40 = __toESM(require_i18n());
 var import_jsx_runtime70 = __toESM(require_jsx_runtime());
-var { Menu: Menu3 } = unlock(import_components56.privateApis);
+
+// packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+var import_jsx_runtime71 = __toESM(require_jsx_runtime());
+var { Menu: Menu3 } = unlock(import_components57.privateApis);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.js
 var import_i18n45 = __toESM(require_i18n());
-var import_components60 = __toESM(require_components());
+var import_components61 = __toESM(require_components());
 var import_element32 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.js
 var import_block_editor12 = __toESM(require_block_editor());
 var import_i18n42 = __toESM(require_i18n());
-var import_jsx_runtime71 = __toESM(require_jsx_runtime());
-
-// packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.js
-var import_components57 = __toESM(require_components());
-var import_i18n43 = __toESM(require_i18n());
 var import_jsx_runtime72 = __toESM(require_jsx_runtime());
 
-// packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.js
+// packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.js
 var import_components58 = __toESM(require_components());
-var import_i18n44 = __toESM(require_i18n());
-var import_element31 = __toESM(require_element());
+var import_i18n43 = __toESM(require_i18n());
 var import_jsx_runtime73 = __toESM(require_jsx_runtime());
 
-// packages/global-styles-ui/build-module/size-control/index.js
+// packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.js
 var import_components59 = __toESM(require_components());
+var import_i18n44 = __toESM(require_i18n());
+var import_element31 = __toESM(require_element());
 var import_jsx_runtime74 = __toESM(require_jsx_runtime());
 
-// packages/global-styles-ui/build-module/font-sizes/font-size.js
+// packages/global-styles-ui/build-module/size-control/index.js
+var import_components60 = __toESM(require_components());
 var import_jsx_runtime75 = __toESM(require_jsx_runtime());
-var { Menu: Menu4 } = unlock(import_components60.privateApis);
+
+// packages/global-styles-ui/build-module/font-sizes/font-size.js
+var import_jsx_runtime76 = __toESM(require_jsx_runtime());
+var { Menu: Menu4 } = unlock(import_components61.privateApis);
 
 // packages/global-styles-ui/build-module/global-styles-ui.js
-var import_jsx_runtime76 = __toESM(require_jsx_runtime());
+var import_jsx_runtime77 = __toESM(require_jsx_runtime());
 
 // packages/global-styles-ui/build-module/with-global-styles-provider.js
-var import_jsx_runtime77 = __toESM(require_jsx_runtime());
+var import_jsx_runtime78 = __toESM(require_jsx_runtime());
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
     value,
@@ -14986,13 +14990,13 @@ function withGlobalStylesProvider(Component) {
     onChange,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
       GlobalStylesProvider,
       {
         value,
         baseValue,
         onChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(Component, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Component, { ...props })
       }
     );
   };
@@ -15008,7 +15012,7 @@ var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
 // packages/global-styles-ui/build-module/font-library/font-library.js
-var import_jsx_runtime78 = __toESM(require_jsx_runtime());
+var import_jsx_runtime79 = __toESM(require_jsx_runtime());
 function FontLibrary({
   value,
   baseValue,
@@ -15018,21 +15022,21 @@ function FontLibrary({
   let content;
   switch (activeTab) {
     case "upload-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(upload_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(upload_fonts_default, {});
       break;
     case "installed-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(installed_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(installed_fonts_default, {});
       break;
     default:
-      content = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(font_collection_default, { slug: activeTab });
+      content = /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(font_collection_default, { slug: activeTab });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
     GlobalStylesProvider,
     {
       value,
       baseValue,
       onChange,
-      children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(context_default, { children: content })
+      children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(context_default, { children: content })
     }
   );
 }
@@ -15655,7 +15659,7 @@ button.font-library__upload-area {
 
 .global-styles-ui-block-types-search {
   margin-bottom: 10px;
-  padding: 0 20px;
+  padding: 0 16px;
 }
 
 .global-styles-ui-screen-typography__font-variants-count {
@@ -15674,16 +15678,8 @@ button.font-library__upload-area {
   row-gap: 12px;
 }
 
-.global-styles-ui-screen-header {
-  margin-bottom: 12px;
-}
-
 .global-styles-ui-header {
   margin-bottom: 0 !important;
-}
-
-.global-styles-ui-header__description {
-  margin: 12px 0 !important;
 }
 
 .global-styles-ui-subtitle {
@@ -15835,12 +15831,10 @@ button.font-library__upload-area {
   height: 100%;
 }
 
-.global-styles-ui-sidebar__navigator-screen.components-navigator-screen {
+.global-styles-ui-sidebar__navigator-screen {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 24px;
-  outline: none;
 }
 
 .global-styles-ui-sidebar__navigator-screen .single-column {
@@ -15886,7 +15880,7 @@ button.font-library__upload-area {
 document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
 
 // routes/font-list/stage.tsx
-var { Tabs: Tabs3 } = unlock2(import_components62.privateApis);
+var { Tabs: Tabs3 } = unlock2(import_components63.privateApis);
 var { useGlobalStyles } = unlock2(import_editor.privateApis);
 function FontLibraryPage() {
   const { records: collections = [] } = (0, import_core_data12.useEntityRecords)("root", "fontCollection", {
