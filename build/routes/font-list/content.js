@@ -2742,12 +2742,12 @@ function FontLibraryProvider({ children }) {
       return;
     }
     const updatedGlobalStyles = globalStyles.record;
-    setImmutably2(
+    const finalGlobalStyles = setImmutably2(
       updatedGlobalStyles ?? {},
       ["settings", "typography", "fontFamilies"],
       fonts
     );
-    await saveEntityRecord("root", "globalStyles", updatedGlobalStyles);
+    await saveEntityRecord("root", "globalStyles", finalGlobalStyles);
   };
   const [modalTabOpen, setModalTabOpen] = (0, import_element12.useState)("");
   const [libraryFontSelected, setLibraryFontSelected] = (0, import_element12.useState)(void 0);
