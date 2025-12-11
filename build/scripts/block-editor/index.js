@@ -12268,7 +12268,9 @@ var wp;
       },
       innerBlocks: variation.innerBlocks,
       keywords: variation.keywords || item.keywords,
-      frecency: calculateFrecency(time, count)
+      frecency: calculateFrecency(time, count),
+      // Pass through search-only flag for block-scope variations.
+      isSearchOnly: variation.isSearchOnly
     };
   };
   var calculateFrecency = (time, count) => {
@@ -12312,6 +12314,22 @@ var wp;
       blockType.name,
       "inserter"
     );
+    const blockVariations = (0, import_blocks6.getBlockVariations)(blockType.name, "block");
+    const inserterVariationNames = new Set(
+      inserterVariations.map((variation) => variation.name)
+    );
+    const allVariations = [
+      ...inserterVariations,
+      ...blockVariations.filter(
+        (variation) => !inserterVariationNames.has(variation.name)
+      ).map((variation) => ({
+        ...variation,
+        isSearchOnly: true,
+        // Block-scope `isDefault` is for the placeholder picker,
+        // not for the inserter, so don't carry it over.
+        isDefault: false
+      }))
+    ];
     return {
       ...blockItemBase,
       initialAttributes: {},
@@ -12320,7 +12338,7 @@ var wp;
       keywords: blockType.keywords,
       parent: blockType.parent,
       ancestor: blockType.ancestor,
-      variations: inserterVariations,
+      variations: allVariations,
       example: blockType.example,
       utility: 1
       // Deprecated.
@@ -27053,6 +27071,9 @@ var wp;
     const itemsRemaining = [];
     for (const item of items) {
       if (item.category === "reusable") {
+        continue;
+      }
+      if (item.isSearchOnly) {
         continue;
       }
       if (item.isAllowedInCurrentRoot) {
@@ -43701,13 +43722,11 @@ var wp;
           (v2) => v2.name !== "stretchy-paragraph"
         );
       } else if (blockName === "core/heading") {
-        if (activeBlockVariation?.name === "stretchy-heading" || unfilteredVariations.every(
-          (v2) => ["heading", "stretchy-heading"].includes(v2.name)
-        )) {
+        if (activeBlockVariation?.name === "stretchy-heading") {
           return [];
         }
         return unfilteredVariations.filter(
-          (v2) => v2.name !== "stretchy-heading"
+          (variation) => variation.name !== "stretchy-heading"
         );
       }
       return unfilteredVariations;
