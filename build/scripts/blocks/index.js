@@ -10042,6 +10042,29 @@ ${p3}`
     return false;
   }
 
+  // packages/blocks/build-module/api/raw-handling/heading-transformer.js
+  function headingTransformer(node) {
+    if (node.nodeType !== node.ELEMENT_NODE) {
+      return;
+    }
+    if (node.tagName === "P" && node.getAttribute("role") === "heading" && node.hasAttribute("aria-level")) {
+      const level = parseInt(node.getAttribute("aria-level"), 10);
+      if (level >= 1 && level <= 6) {
+        const headingTag = `H${level}`;
+        const newHeading = node.ownerDocument.createElement(headingTag);
+        Array.from(node.attributes).forEach((attr2) => {
+          if (attr2.name !== "role" && attr2.name !== "aria-level") {
+            newHeading.setAttribute(attr2.name, attr2.value);
+          }
+        });
+        while (node.firstChild) {
+          newHeading.appendChild(node.firstChild);
+        }
+        node.parentNode.replaceChild(newHeading, node);
+      }
+    }
+  }
+
   // packages/blocks/build-module/api/raw-handling/paste-handler.js
   var log = (...args) => window?.console?.log?.(...args);
   function filterInlineHTML(HTML) {
@@ -10129,7 +10152,8 @@ ${p3}`
         iframeRemover,
         figureContentReducer,
         blockquoteNormaliser(),
-        divNormaliser
+        divNormaliser,
+        headingTransformer
       ];
       const schema = {
         ...blockContentSchema,
