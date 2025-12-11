@@ -36947,6 +36947,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime170 = __toESM(require_jsx_runtime());
   function CheckboxControl(props) {
     const {
+      // @ts-expect-error - Prevent passing this to `input`.
+      __nextHasNoMarginBottom: _,
       label,
       className: className2,
       heading,

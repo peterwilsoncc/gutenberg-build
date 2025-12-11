@@ -20452,7 +20452,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
                   import_components44.CheckboxControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n69.__)("Inline label"),
                     checked: inlineLabel,
                     onChange: (newVal) => {
@@ -20474,7 +20473,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
                   import_components44.CheckboxControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n69.__)("Required"),
                     checked: required,
                     onChange: (newVal) => {
@@ -36562,7 +36560,6 @@ ${js}
           /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
             import_components81.CheckboxControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n127.__)("Publish immediately"),
               help: (0, import_i18n127.__)(
                 "If unchecked, the page will be created as a draft."
