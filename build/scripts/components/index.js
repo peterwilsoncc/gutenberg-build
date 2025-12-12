@@ -2082,7 +2082,6 @@ var wp;
     __experimentalBorderControl: () => component_default21,
     __experimentalBoxControl: () => box_control_default,
     __experimentalConfirmDialog: () => component_default37,
-    __experimentalDimensionControl: () => dimension_control_default,
     __experimentalDivider: () => component_default30,
     __experimentalDropdownContentWrapper: () => dropdown_content_wrapper_default,
     __experimentalElevation: () => component_default25,
@@ -43293,104 +43292,6 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/date-time/index.js
   var date_time_default2 = date_time_default;
 
-  // packages/components/build-module/dimension-control/index.js
-  var import_i18n47 = __toESM(require_i18n());
-
-  // packages/components/build-module/dimension-control/sizes.js
-  var import_i18n46 = __toESM(require_i18n());
-  var findSizeBySlug = (sizes, slug) => sizes.find((size3) => slug === size3.slug);
-  var sizes_default = [{
-    name: (0, import_i18n46._x)("None", "Size of a UI element"),
-    slug: "none"
-  }, {
-    name: (0, import_i18n46._x)("Small", "Size of a UI element"),
-    slug: "small"
-  }, {
-    name: (0, import_i18n46._x)("Medium", "Size of a UI element"),
-    slug: "medium"
-  }, {
-    name: (0, import_i18n46._x)("Large", "Size of a UI element"),
-    slug: "large"
-  }, {
-    name: (0, import_i18n46._x)("Extra Large", "Size of a UI element"),
-    slug: "xlarge"
-  }];
-
-  // packages/components/build-module/dimension-control/index.js
-  var import_deprecated16 = __toESM(require_deprecated());
-  var import_jsx_runtime199 = __toESM(require_jsx_runtime());
-  var CONTEXT_VALUE2 = {
-    BaseControl: {
-      // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
-      // via the context system to override the value set by SelectControl.
-      _overrides: {
-        __associatedWPComponentName: "DimensionControl"
-      }
-    }
-  };
-  function DimensionControl(props) {
-    const {
-      __next40pxDefaultSize = false,
-      __nextHasNoMarginBottom = false,
-      label,
-      value,
-      sizes = sizes_default,
-      icon,
-      onChange,
-      className: className2 = ""
-    } = props;
-    (0, import_deprecated16.default)("wp.components.DimensionControl", {
-      since: "6.7",
-      version: "7.0"
-    });
-    maybeWarnDeprecated36pxSize({
-      componentName: "DimensionControl",
-      __next40pxDefaultSize,
-      size: void 0
-    });
-    const onChangeSpacingSize = (val) => {
-      const theSize = findSizeBySlug(sizes, val);
-      if (!theSize || value === theSize.slug) {
-        onChange?.(void 0);
-      } else if (typeof onChange === "function") {
-        onChange(theSize.slug);
-      }
-    };
-    const formatSizesAsOptions = (theSizes) => {
-      const options2 = theSizes.map(({
-        name,
-        slug
-      }) => ({
-        label: name,
-        value: slug
-      }));
-      return [{
-        label: (0, import_i18n47.__)("Default"),
-        value: ""
-      }, ...options2];
-    };
-    const selectLabel = /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(import_jsx_runtime199.Fragment, {
-      children: [icon && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(icon_default3, {
-        icon
-      }), label]
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(ContextSystemProvider, {
-      value: CONTEXT_VALUE2,
-      children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(select_control_default, {
-        __next40pxDefaultSize,
-        __shouldNotWarnDeprecated36pxSize: true,
-        __nextHasNoMarginBottom,
-        className: clsx_default(className2, "block-editor-dimension-control"),
-        label: selectLabel,
-        hideLabelFromVision: false,
-        value,
-        onChange: onChangeSpacingSize,
-        options: formatSizesAsOptions(sizes)
-      })
-    });
-  }
-  var dimension_control_default = DimensionControl;
-
   // packages/components/build-module/disabled/index.js
   var import_element132 = __toESM(require_element());
 
@@ -43409,7 +43310,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/disabled/index.js
-  var import_jsx_runtime200 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime199 = __toESM(require_jsx_runtime());
   var Context = (0, import_element132.createContext)(false);
   Context.displayName = "DisabledContext";
   var {
@@ -43423,9 +43324,9 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     const cx3 = useCx();
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(Provider2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(Provider2, {
       value: isDisabled,
-      children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", {
         // @ts-ignore Reason: inert is a recent HTML attribute
         inert: isDisabled ? "true" : void 0,
         className: isDisabled ? cx3(disabledStyles3, className2, "components-disabled") : void 0,
@@ -43440,7 +43341,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/disclosure/index.js
   var import_element133 = __toESM(require_element());
-  var import_jsx_runtime201 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime200 = __toESM(require_jsx_runtime());
   var UnforwardedDisclosureContent = ({
     visible,
     children,
@@ -43449,7 +43350,7 @@ This message will only show in development mode. It won't appear in production. 
     const disclosure = useDisclosureStore({
       open: visible
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(DisclosureContent, {
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(DisclosureContent, {
       store: disclosure,
       ref,
       ...props,
@@ -43461,7 +43362,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/draggable/index.js
   var import_compose54 = __toESM(require_compose());
   var import_element134 = __toESM(require_element());
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime201 = __toESM(require_jsx_runtime());
   var dragImageClass = "components-draggable__invisible-drag-image";
   var cloneWrapperClass = "components-draggable__clone";
   var clonePadding = 0;
@@ -43573,11 +43474,11 @@ This message will only show in development mode. It won't appear in production. 
     (0, import_element134.useEffect)(() => () => {
       cleanupRef.current();
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(import_jsx_runtime202.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, {
       children: [children({
         onDraggableStart: start,
         onDraggableEnd: end
-      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
+      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("div", {
         className: "components-draggable-drag-component-root",
         style: {
           display: "none"
@@ -43590,11 +43491,11 @@ This message will only show in development mode. It won't appear in production. 
   var draggable_default = Draggable;
 
   // packages/components/build-module/drop-zone/index.js
-  var import_i18n48 = __toESM(require_i18n());
+  var import_i18n46 = __toESM(require_i18n());
   var import_element135 = __toESM(require_element());
   var import_dom31 = __toESM(require_dom());
   var import_compose55 = __toESM(require_compose());
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime());
   function DropZoneComponent({
     className: className2,
     icon = upload_default,
@@ -43657,20 +43558,20 @@ This message will only show in development mode. It won't appear in production. 
       "is-dragging-over-document": isDraggingOverDocument,
       "is-dragging-over-element": isDraggingOverElement
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
       ...restProps,
       ref,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
         className: "components-drop-zone__content",
-        children: /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)("div", {
           className: "components-drop-zone__content-inner",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime203.jsx)(icon_default2, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime202.jsx)(icon_default2, {
             icon,
             className: "components-drop-zone__content-icon"
-          }), /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("span", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("span", {
             className: "components-drop-zone__content-text",
-            children: label ? label : (0, import_i18n48.__)("Drop files to upload")
+            children: label ? label : (0, import_i18n46.__)("Drop files to upload")
           })]
         })
       })
@@ -43679,11 +43580,11 @@ This message will only show in development mode. It won't appear in production. 
   var drop_zone_default = DropZoneComponent;
 
   // packages/components/build-module/drop-zone/provider.js
-  var import_deprecated17 = __toESM(require_deprecated());
+  var import_deprecated16 = __toESM(require_deprecated());
   function DropZoneProvider({
     children
   }) {
-    (0, import_deprecated17.default)("wp.components.DropZoneProvider", {
+    (0, import_deprecated16.default)("wp.components.DropZoneProvider", {
       since: "5.8",
       hint: "wp.component.DropZone no longer needs a provider. wp.components.DropZoneProvider is safe to remove from your code."
     });
@@ -43693,13 +43594,13 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/duotone-picker/duotone-picker.js
   var import_es62 = __toESM(require_es6());
   var import_element137 = __toESM(require_element());
-  var import_i18n50 = __toESM(require_i18n());
+  var import_i18n48 = __toESM(require_i18n());
 
   // packages/components/build-module/duotone-picker/color-list-picker/index.js
   var import_element136 = __toESM(require_element());
-  var import_i18n49 = __toESM(require_i18n());
+  var import_i18n47 = __toESM(require_i18n());
   var import_compose56 = __toESM(require_compose());
-  var import_jsx_runtime204 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime());
   function ColorOption({
     label,
     value,
@@ -43712,28 +43613,28 @@ This message will only show in development mode. It won't appear in production. 
     const idRoot = (0, import_compose56.useInstanceId)(ColorOption, "color-list-picker-option");
     const labelId = `${idRoot}__label`;
     const contentId = `${idRoot}__content`;
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(import_jsx_runtime204.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime204.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(import_jsx_runtime203.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime203.jsx)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-color-list-picker__swatch-button",
         id: labelId,
         onClick: () => setIsOpen((prev2) => !prev2),
         "aria-expanded": isOpen,
         "aria-controls": contentId,
-        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(color_indicator_default, {
+        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(color_indicator_default, {
           colorValue: value,
           className: "components-color-list-picker__swatch-color"
-        }) : /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(icon_default3, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(icon_default3, {
           icon: swatch_default
         }),
         text: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", {
         role: "group",
         id: contentId,
         "aria-labelledby": labelId,
         "aria-hidden": !isOpen,
-        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(color_palette_default, {
-          "aria-label": (0, import_i18n49.__)("Color options"),
+        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(color_palette_default, {
+          "aria-label": (0, import_i18n47.__)("Color options"),
           className: "components-color-list-picker__color-picker",
           colors,
           value,
@@ -43753,9 +43654,9 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha,
     onChange
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", {
       className: "components-color-list-picker",
-      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(ColorOption, {
+      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(ColorOption, {
         label,
         value: value[index2],
         colors,
@@ -43812,7 +43713,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/custom-duotone-bar.js
-  var import_jsx_runtime205 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime204 = __toESM(require_jsx_runtime());
   var PLACEHOLDER_VALUES = ["#333", "#CCC"];
   function CustomDuotoneBar({
     value,
@@ -43822,7 +43723,7 @@ This message will only show in development mode. It won't appear in production. 
     const values = hasGradient ? value : PLACEHOLDER_VALUES;
     const background2 = getGradientFromCSSColors(values);
     const controlPoints = getColorStopsFromColors(values);
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(CustomGradientBar, {
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(CustomGradientBar, {
       disableInserter: true,
       background: background2,
       hasGradient,
@@ -43835,7 +43736,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/duotone-picker.js
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime205 = __toESM(require_jsx_runtime());
   function DuotonePicker({
     asButtons,
     loop,
@@ -43853,8 +43754,8 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const [defaultDark, defaultLight] = (0, import_element137.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
     const isUnset = value === "unset";
-    const unsetOptionLabel = (0, import_i18n50.__)("Unset");
-    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2.Option, {
+    const unsetOptionLabel = (0, import_i18n48.__)("Unset");
+    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(circular_option_picker_default2.Option, {
       value: "unset",
       isSelected: isUnset,
       tooltipText: unsetOptionLabel,
@@ -43873,18 +43774,18 @@ This message will only show in development mode. It won't appear in production. 
         background: getGradientFromCSSColors(colors, "135deg"),
         color: "transparent"
       };
-      const tooltipText = name !== null && name !== void 0 ? name : (0, import_i18n50.sprintf)(
+      const tooltipText = name !== null && name !== void 0 ? name : (0, import_i18n48.sprintf)(
         // translators: %s: duotone code e.g: "dark-grayscale" or "7f7f7f-ffffff".
-        (0, import_i18n50.__)("Duotone code: %s"),
+        (0, import_i18n48.__)("Duotone code: %s"),
         slug
       );
-      const label = name ? (0, import_i18n50.sprintf)(
+      const label = name ? (0, import_i18n48.sprintf)(
         // translators: %s: The name of the option e.g: "Dark grayscale".
-        (0, import_i18n50.__)("Duotone: %s"),
+        (0, import_i18n48.__)("Duotone: %s"),
         name
       ) : tooltipText;
       const isSelected2 = (0, import_es62.default)(colors, value);
-      return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2.Option, {
+      return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(circular_option_picker_default2.Option, {
         value: colors,
         isSelected: isSelected2,
         "aria-label": label,
@@ -43900,26 +43801,26 @@ This message will only show in development mode. It won't appear in production. 
       labelProps
     } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
     const options2 = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(circular_option_picker_default2, {
       ...otherProps,
       ...metaProps,
       ...labelProps,
       options: options2,
-      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(circular_option_picker_default2.ButtonAction, {
+      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(circular_option_picker_default2.ButtonAction, {
         onClick: () => onChange(void 0),
         accessibleWhenDisabled: true,
         disabled: !value,
-        children: (0, import_i18n50.__)("Clear")
+        children: (0, import_i18n48.__)("Clear")
       }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(component_default6, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(component_default6, {
         paddingTop: options2.length === 0 ? 0 : 4,
-        children: /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(component_default18, {
           spacing: 3,
-          children: [!disableCustomColors && !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(CustomDuotoneBar, {
+          children: [!disableCustomColors && !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(CustomDuotoneBar, {
             value: isUnset ? void 0 : value,
             onChange
-          }), !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(color_list_picker_default, {
-            labels: [(0, import_i18n50.__)("Shadows"), (0, import_i18n50.__)("Highlights")],
+          }), !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(color_list_picker_default, {
+            labels: [(0, import_i18n48.__)("Shadows"), (0, import_i18n48.__)("Highlights")],
             colors: colorPalette,
             value: isUnset ? void 0 : value,
             disableCustomColors,
@@ -43942,22 +43843,22 @@ This message will only show in development mode. It won't appear in production. 
   var duotone_picker_default = DuotonePicker;
 
   // packages/components/build-module/duotone-picker/duotone-swatch.js
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime());
   function DuotoneSwatch({
     values
   }) {
-    return values ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(color_indicator_default, {
+    return values ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(color_indicator_default, {
       colorValue: getGradientFromCSSColors(values, "135deg")
-    }) : /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(icon_default3, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(icon_default3, {
       icon: swatch_default
     });
   }
   var duotone_swatch_default = DuotoneSwatch;
 
   // packages/components/build-module/external-link/index.js
-  var import_i18n51 = __toESM(require_i18n());
+  var import_i18n49 = __toESM(require_i18n());
   var import_element138 = __toESM(require_element());
-  var import_jsx_runtime208 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime());
   function UnforwardedExternalLink(props, ref) {
     const {
       href,
@@ -43979,7 +43880,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     return (
       /* eslint-disable react/jsx-no-target-blank */
-      /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)("a", {
+      /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)("a", {
         ...additionalProps,
         className: classes,
         href,
@@ -43987,16 +43888,16 @@ This message will only show in development mode. It won't appear in production. 
         target: "_blank",
         rel: optimizedRel,
         ref,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime208.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime207.jsx)("span", {
           className: "components-external-link__contents",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime208.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime207.jsx)("span", {
           className: "components-external-link__icon",
           "aria-label": (
             /* translators: accessibility text */
-            (0, import_i18n51.__)("(opens in a new tab)")
+            (0, import_i18n49.__)("(opens in a new tab)")
           ),
-          children: (0, import_i18n51.isRTL)() ? "\u2196" : "\u2197"
+          children: (0, import_i18n49.isRTL)() ? "\u2196" : "\u2197"
         })]
       })
     );
@@ -44005,13 +43906,13 @@ This message will only show in development mode. It won't appear in production. 
   var external_link_default = ExternalLink;
 
   // packages/components/build-module/focal-point-picker/index.js
-  var import_i18n53 = __toESM(require_i18n());
+  var import_i18n51 = __toESM(require_i18n());
   var import_element139 = __toESM(require_element());
   var import_compose57 = __toESM(require_compose());
-  var import_deprecated18 = __toESM(require_deprecated());
+  var import_deprecated17 = __toESM(require_deprecated());
 
   // packages/components/build-module/focal-point-picker/controls.js
-  var import_i18n52 = __toESM(require_i18n());
+  var import_i18n50 = __toESM(require_i18n());
 
   // packages/components/build-module/focal-point-picker/utils.js
   var INITIAL_BOUNDS = {
@@ -44169,7 +44070,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/focal-point-picker/controls.js
-  var import_jsx_runtime209 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime208 = __toESM(require_jsx_runtime());
   var TEXTCONTROL_MIN = 0;
   var TEXTCONTROL_MAX = 100;
   var noop13 = () => {
@@ -44197,20 +44098,20 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(ControlWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(ControlWrapper, {
       className: "focal-point-picker__controls",
       __nextHasNoMarginBottom,
       hasHelpText,
       gap: 4,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime209.jsx)(FocalPointUnitControl, {
-        label: (0, import_i18n52.__)("Left"),
-        "aria-label": (0, import_i18n52.__)("Focal point left position"),
+      children: [/* @__PURE__ */ (0, import_jsx_runtime208.jsx)(FocalPointUnitControl, {
+        label: (0, import_i18n50.__)("Left"),
+        "aria-label": (0, import_i18n50.__)("Focal point left position"),
         value: [valueX, "%"].join(""),
         onChange: (next2) => handleChange(next2, "x"),
         dragDirection: "e"
-      }), /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(FocalPointUnitControl, {
-        label: (0, import_i18n52.__)("Top"),
-        "aria-label": (0, import_i18n52.__)("Focal point top position"),
+      }), /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(FocalPointUnitControl, {
+        label: (0, import_i18n50.__)("Top"),
+        "aria-label": (0, import_i18n50.__)("Focal point top position"),
         value: [valueY, "%"].join(""),
         onChange: (next2) => handleChange(next2, "y"),
         dragDirection: "s"
@@ -44218,7 +44119,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function FocalPointUnitControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(StyledUnitControl2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(StyledUnitControl2, {
       __next40pxDefaultSize: true,
       className: "focal-point-picker__controls-position-unit-control",
       labelPosition: "top",
@@ -44247,7 +44148,7 @@ This message will only show in development mode. It won't appear in production. 
 			`, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZvY2FsLXBvaW50LXN0eWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQVV1QyIsImZpbGUiOiJmb2NhbC1wb2ludC1zdHlsZS50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09ORklHIH0gZnJvbSAnLi4vLi4vdXRpbHMnO1xuXG5leHBvcnQgY29uc3QgUG9pbnRlckNpcmNsZSA9IHN0eWxlZC5kaXZgXG5cdGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xuXHRjdXJzb3I6IGdyYWI7XG5cdGhlaWdodDogNDBweDtcblx0bWFyZ2luOiAtMjBweCAwIDAgLTIwcHg7XG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cdHdpZHRoOiA0MHB4O1xuXHR3aWxsLWNoYW5nZTogdHJhbnNmb3JtO1xuXHR6LWluZGV4OiAxMDAwMDtcblx0YmFja2dyb3VuZDogcmdiYSggMjU1LCAyNTUsIDI1NSwgMC40ICk7XG5cdGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoIDI1NSwgMjU1LCAyNTUsIDAuNCApO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzUm91bmQgfTtcblx0YmFja2Ryb3AtZmlsdGVyOiBibHVyKCAxNnB4ICkgc2F0dXJhdGUoIDE4MCUgKTtcblx0Ym94LXNoYWRvdzogcmdiKCAwIDAgMCAvIDEwJSApIDBweCAwcHggOHB4O1xuXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdHRyYW5zaXRpb246IHRyYW5zZm9ybSAxMDBtcyBsaW5lYXI7XG5cdH1cblxuXHQkeyAoIHsgaXNEcmFnZ2luZyB9OiB7IGlzRHJhZ2dpbmc6IGJvb2xlYW4gfSApID0+XG5cdFx0aXNEcmFnZ2luZyAmJlxuXHRcdGBcblx0XHRcdGJveC1zaGFkb3c6IHJnYiggMCAwIDAgLyAxMiUgKSAwcHggMHB4IDEwcHg7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlKCAxLjEgKTtcblx0XHRcdGN1cnNvcjogZ3JhYmJpbmc7XG5cdFx0XHRgIH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/focal-point-picker/focal-point.js
-  var import_jsx_runtime210 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime209 = __toESM(require_jsx_runtime());
   function FocalPoint({
     left = "50%",
     top = "50%",
@@ -44257,7 +44158,7 @@ This message will only show in development mode. It won't appear in production. 
       left,
       top
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(PointerCircle, {
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(PointerCircle, {
       ...props,
       className: "components-focal-point-picker__icon_container",
       style: style2
@@ -44265,31 +44166,31 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/grid.js
-  var import_jsx_runtime211 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime210 = __toESM(require_jsx_runtime());
   function FocalPointPickerGrid({
     bounds,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(GridView, {
+    return /* @__PURE__ */ (0, import_jsx_runtime210.jsxs)(GridView, {
       ...props,
       className: "components-focal-point-picker__grid",
       style: {
         width: bounds.width,
         height: bounds.height
       },
-      children: [/* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineX, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime210.jsx)(GridLineX, {
         style: {
           top: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineX, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(GridLineX, {
         style: {
           top: "66%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(GridLineY, {
         style: {
           left: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(GridLineY, {
         style: {
           left: "66%"
         }
@@ -44298,7 +44199,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/media.js
-  var import_jsx_runtime212 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime211 = __toESM(require_jsx_runtime());
   function Media2({
     alt,
     autoPlay,
@@ -44311,14 +44212,14 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     if (!src) {
-      return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(MediaPlaceholder, {
+      return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(MediaPlaceholder, {
         className: "components-focal-point-picker__media components-focal-point-picker__media--placeholder",
         ref: mediaRef,
         ...props
       });
     }
     const isVideo = isVideoType(src);
-    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("video", {
+    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime211.jsx)("video", {
       ...props,
       autoPlay,
       className: "components-focal-point-picker__media components-focal-point-picker__media--video",
@@ -44327,7 +44228,7 @@ This message will only show in development mode. It won't appear in production. 
       onLoadedData: onLoad,
       ref: mediaRef,
       src
-    }) : /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("img", {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime211.jsx)("img", {
       ...props,
       alt,
       className: "components-focal-point-picker__media components-focal-point-picker__media--image",
@@ -44338,7 +44239,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/index.js
-  var import_jsx_runtime213 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime212 = __toESM(require_jsx_runtime());
   var GRID_OVERLAY_TIMEOUT = 600;
   function FocalPointPicker({
     __nextHasNoMarginBottom,
@@ -44362,7 +44263,7 @@ This message will only show in development mode. It won't appear in production. 
     const [point, setPoint] = (0, import_element139.useState)(valueProp);
     const [showGridOverlay, setShowGridOverlay] = (0, import_element139.useState)(false);
     if (!__nextHasNoMarginBottom) {
-      (0, import_deprecated18.default)("Bottom margin styles for wp.components.FocalPointPicker", {
+      (0, import_deprecated17.default)("Bottom margin styles for wp.components.FocalPointPicker", {
         since: "6.7",
         version: "7.0",
         hint: "Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version."
@@ -44495,16 +44396,16 @@ This message will only show in development mode. It won't appear in production. 
       }, GRID_OVERLAY_TIMEOUT);
       return () => window.clearTimeout(timeout);
     }, [x2, y3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(Container2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(Container2, {
       ...restProps,
       as: "fieldset",
       className: classes,
-      children: [!!label && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Label4, {
+      children: [!!label && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Label4, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(MediaWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(MediaWrapper, {
         className: "components-focal-point-picker-wrapper",
-        children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(MediaContainer, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(MediaContainer, {
           className: "components-focal-point-picker",
           onKeyDown: arrowKeyStep,
           onMouseDown: startDrag,
@@ -44516,20 +44417,20 @@ This message will only show in development mode. It won't appear in production. 
           ref: dragAreaRef,
           role: "button",
           tabIndex: -1,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime213.jsx)(FocalPointPickerGrid, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime212.jsx)(FocalPointPickerGrid, {
             bounds,
             showOverlay: showGridOverlay
-          }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Media2, {
-            alt: (0, import_i18n53.__)("Media preview"),
+          }), /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Media2, {
+            alt: (0, import_i18n51.__)("Media preview"),
             autoPlay,
             onLoad: refUpdateBounds.current,
             src: url
-          }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(FocalPoint, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(FocalPoint, {
             ...focalPointPosition,
             isDragging: isDragging2
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(FocalPointPickerControls, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(FocalPointPickerControls, {
         __nextHasNoMarginBottom,
         hasHelpText: !!help,
         point: {
@@ -44539,7 +44440,7 @@ This message will only show in development mode. It won't appear in production. 
         onChange: (value) => {
           onChange?.(getFinalValue(value));
         }
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(StyledHelp, {
         __nextHasNoMarginBottom,
         children: help
       })]
@@ -44549,25 +44450,25 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/focusable-iframe/index.js
   var import_compose58 = __toESM(require_compose());
-  var import_deprecated19 = __toESM(require_deprecated());
-  var import_jsx_runtime214 = __toESM(require_jsx_runtime());
+  var import_deprecated18 = __toESM(require_deprecated());
+  var import_jsx_runtime213 = __toESM(require_jsx_runtime());
   function FocusableIframe({
     iframeRef,
     ...props
   }) {
     const ref = (0, import_compose58.useMergeRefs)([iframeRef, (0, import_compose58.useFocusableIframe)()]);
-    (0, import_deprecated19.default)("wp.components.FocusableIframe", {
+    (0, import_deprecated18.default)("wp.components.FocusableIframe", {
       since: "5.9",
       alternative: "wp.compose.useFocusableIframe"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("iframe", {
       ref,
       ...props
     });
   }
 
   // packages/components/build-module/font-size-picker/index.js
-  var import_i18n57 = __toESM(require_i18n());
+  var import_i18n55 = __toESM(require_i18n());
   var import_element141 = __toESM(require_element());
   var import_compose59 = __toESM(require_compose());
 
@@ -44623,7 +44524,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.js
-  var import_i18n54 = __toESM(require_i18n());
+  var import_i18n52 = __toESM(require_i18n());
   var import_element140 = __toESM(require_element());
 
   // packages/components/build-module/font-size-picker/utils.js
@@ -44642,10 +44543,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.js
-  var import_jsx_runtime215 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime214 = __toESM(require_jsx_runtime());
   var DEFAULT_OPTION = {
     key: "default",
-    name: (0, import_i18n54.__)("Default"),
+    name: (0, import_i18n52.__)("Default"),
     value: void 0
   };
   var FontSizePickerSelect = (props) => {
@@ -44679,15 +44580,15 @@ This message will only show in development mode. It won't appear in production. 
       }
       return (_options$find = options2.find((option) => option.value === value)) !== null && _options$find !== void 0 ? _options$find : DEFAULT_OPTION;
     }, [value, valueMode, options2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(StyledCustomSelectControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(StyledCustomSelectControl, {
       __next40pxDefaultSize,
       __shouldNotWarnDeprecated36pxSize: true,
       className: "components-font-size-picker__select",
-      label: (0, import_i18n54.__)("Font size"),
+      label: (0, import_i18n52.__)("Font size"),
       hideLabelFromVision: true,
-      describedBy: (0, import_i18n54.sprintf)(
+      describedBy: (0, import_i18n52.sprintf)(
         // translators: %s: Currently selected font size.
-        (0, import_i18n54.__)("Currently selected font size: %s"),
+        (0, import_i18n52.__)("Currently selected font size: %s"),
         selectedOption.name
       ),
       options: options2,
@@ -44705,26 +44606,26 @@ This message will only show in development mode. It won't appear in production. 
   var font_size_picker_select_default = FontSizePickerSelect;
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.js
-  var import_i18n56 = __toESM(require_i18n());
+  var import_i18n54 = __toESM(require_i18n());
 
   // packages/components/build-module/font-size-picker/constants.js
-  var import_i18n55 = __toESM(require_i18n());
+  var import_i18n53 = __toESM(require_i18n());
   var T_SHIRT_ABBREVIATIONS = [
     /* translators: S stands for 'small' and is a size label. */
-    (0, import_i18n55.__)("S"),
+    (0, import_i18n53.__)("S"),
     /* translators: M stands for 'medium' and is a size label. */
-    (0, import_i18n55.__)("M"),
+    (0, import_i18n53.__)("M"),
     /* translators: L stands for 'large' and is a size label. */
-    (0, import_i18n55.__)("L"),
+    (0, import_i18n53.__)("L"),
     /* translators: XL stands for 'extra large' and is a size label. */
-    (0, import_i18n55.__)("XL"),
+    (0, import_i18n53.__)("XL"),
     /* translators: XXL stands for 'extra extra large' and is a size label. */
-    (0, import_i18n55.__)("XXL")
+    (0, import_i18n53.__)("XXL")
   ];
-  var T_SHIRT_NAMES = [(0, import_i18n55.__)("Small"), (0, import_i18n55.__)("Medium"), (0, import_i18n55.__)("Large"), (0, import_i18n55.__)("Extra Large"), (0, import_i18n55.__)("Extra Extra Large")];
+  var T_SHIRT_NAMES = [(0, import_i18n53.__)("Small"), (0, import_i18n53.__)("Medium"), (0, import_i18n53.__)("Large"), (0, import_i18n53.__)("Extra Large"), (0, import_i18n53.__)("Extra Extra Large")];
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.js
-  var import_jsx_runtime216 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime215 = __toESM(require_jsx_runtime());
   var FontSizePickerToggleGroup = (props) => {
     const {
       fontSizes,
@@ -44748,11 +44649,11 @@ This message will only show in development mode. It won't appear in production. 
       const fontSizeBySize = fontSizes.find((fontSize) => fontSize.size === value);
       return fontSizeBySize?.slug;
     })();
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default12, {
+    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default12, {
       __nextHasNoMarginBottom: true,
       __next40pxDefaultSize,
       __shouldNotWarnDeprecated36pxSize: true,
-      label: (0, import_i18n56.__)("Font size"),
+      label: (0, import_i18n54.__)("Font size"),
       hideLabelFromVision: true,
       value: currentValue,
       onChange: (newSlug) => {
@@ -44767,7 +44668,7 @@ This message will only show in development mode. It won't appear in production. 
       },
       isBlock: true,
       size: size3,
-      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default14, {
+      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default14, {
         value: fontSize.slug,
         label: T_SHIRT_ABBREVIATIONS[index2],
         "aria-label": fontSize.name || T_SHIRT_NAMES[index2],
@@ -44778,7 +44679,7 @@ This message will only show in development mode. It won't appear in production. 
   var font_size_picker_toggle_group_default = FontSizePickerToggleGroup;
 
   // packages/components/build-module/font-size-picker/index.js
-  var import_jsx_runtime217 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime216 = __toESM(require_jsx_runtime());
   var DEFAULT_UNITS = ["px", "em", "rem", "vw", "vh"];
   var MAX_TOGGLE_GROUP_SIZES = 5;
   var UnforwardedFontSizePicker = (props, ref) => {
@@ -44829,26 +44730,26 @@ This message will only show in development mode. It won't appear in production. 
       __next40pxDefaultSize,
       size: size3
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(Container3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(Container3, {
       ref,
       className: "components-font-size-picker",
       "aria-labelledby": labelId,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default6, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(Header2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default6, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(Header2, {
           className: "components-font-size-picker__header",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)(HeaderLabel, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime216.jsx)(HeaderLabel, {
             id: labelId,
-            children: (0, import_i18n57.__)("Font size")
-          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(HeaderToggle, {
-            label: currentPickerType === "custom" ? (0, import_i18n57.__)("Use size preset") : (0, import_i18n57.__)("Set custom size"),
+            children: (0, import_i18n55.__)("Font size")
+          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(HeaderToggle, {
+            label: currentPickerType === "custom" ? (0, import_i18n55.__)("Use size preset") : (0, import_i18n55.__)("Set custom size"),
             icon: settings_default,
             onClick: () => setUserRequestedCustom(!userRequestedCustom),
             isPressed: currentPickerType === "custom",
             size: "small"
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("div", {
-        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(font_size_picker_select_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)("div", {
+        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(font_size_picker_select_default, {
           __next40pxDefaultSize,
           fontSizes,
           value,
@@ -44863,7 +44764,7 @@ This message will only show in development mode. It won't appear in production. 
             }
           },
           onSelectCustom: () => setUserRequestedCustom(true)
-        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(font_size_picker_toggle_group_default, {
+        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(font_size_picker_toggle_group_default, {
           fontSizes,
           value,
           valueMode,
@@ -44876,14 +44777,14 @@ This message will only show in development mode. It won't appear in production. 
               onChange?.(hasUnits2 ? newValue : Number(newValue), selectedItem);
             }
           }
-        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(component_default3, {
+        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(component_default3, {
           className: "components-font-size-picker__custom-size-control",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default4, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(unit_control_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(unit_control_default, {
               __next40pxDefaultSize,
               __shouldNotWarnDeprecated36pxSize: true,
-              label: (0, import_i18n57.__)("Font size"),
+              label: (0, import_i18n55.__)("Font size"),
               labelPosition: "top",
               hideLabelFromVision: true,
               value: hasUnits2 ? `${valueQuantity !== null && valueQuantity !== void 0 ? valueQuantity : ""}${valueUnit !== null && valueUnit !== void 0 ? valueUnit : ""}` : resolvedValueForControls,
@@ -44899,17 +44800,17 @@ This message will only show in development mode. It won't appear in production. 
               units: hasUnits2 ? units : [],
               min: 0
             })
-          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default4, {
+          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default6, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default6, {
               marginX: 2,
               marginBottom: 0,
-              children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(range_control_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(range_control_default, {
                 __nextHasNoMarginBottom: true,
                 __next40pxDefaultSize,
                 __shouldNotWarnDeprecated36pxSize: true,
                 className: "components-font-size-picker__custom-input",
-                label: (0, import_i18n57.__)("Font size"),
+                label: (0, import_i18n55.__)("Font size"),
                 hideLabelFromVision: true,
                 value: valueQuantity,
                 initialPosition: fallbackFontSize,
@@ -44929,8 +44830,8 @@ This message will only show in development mode. It won't appear in production. 
                 step: isValueUnitRelative ? 0.1 : 1
               })
             })
-          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(component_default4, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(Button3, {
+          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(component_default4, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Button3, {
               disabled: isDisabled,
               accessibleWhenDisabled: true,
               onClick: () => {
@@ -44939,7 +44840,7 @@ This message will only show in development mode. It won't appear in production. 
               variant: "secondary",
               __next40pxDefaultSize: true,
               size: size3 === "__unstable-large" || props.__next40pxDefaultSize ? "default" : "small",
-              children: (0, import_i18n57.__)("Reset")
+              children: (0, import_i18n55.__)("Reset")
             })
           })]
         })]
@@ -44951,7 +44852,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-file-upload/index.js
   var import_element142 = __toESM(require_element());
-  var import_jsx_runtime218 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime217 = __toESM(require_jsx_runtime());
   function FormFileUpload({
     accept,
     children,
@@ -44975,15 +44876,15 @@ This message will only show in development mode. It won't appear in production. 
     }
     const ui = render ? render({
       openFileDialog
-    }) : /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(button_default, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(button_default, {
       onClick: openFileDialog,
       ...props,
       children
     });
     const compatAccept = accept?.includes("audio/*") ? `${accept}, audio/mp3, audio/x-m4a, audio/x-m4b, audio/x-m4p, audio/x-wav, audio/webm` : accept;
-    return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("div", {
       className: "components-form-file-upload",
-      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("input", {
+      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("input", {
         type: "file",
         ref,
         multiple,
@@ -45001,7 +44902,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-toggle/index.js
   var import_element143 = __toESM(require_element());
-  var import_jsx_runtime219 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime218 = __toESM(require_jsx_runtime());
   var noop14 = () => {
   };
   function UnforwardedFormToggle(props, ref) {
@@ -45018,9 +44919,9 @@ This message will only show in development mode. It won't appear in production. 
       "is-checked": checked,
       "is-disabled": disabled
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)("span", {
       className: wrapperClasses,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)("input", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime218.jsx)("input", {
         className: "components-form-toggle__input",
         id: id3,
         type: "checkbox",
@@ -45033,9 +44934,9 @@ This message will only show in development mode. It won't appear in production. 
         },
         ...additionalProps,
         ref
-      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("span", {
         className: "components-form-toggle__track"
-      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("span", {
         className: "components-form-toggle__thumb"
       })]
     });
@@ -45045,15 +44946,15 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/index.js
   var import_element144 = __toESM(require_element());
-  var import_i18n59 = __toESM(require_i18n());
+  var import_i18n57 = __toESM(require_i18n());
   var import_compose61 = __toESM(require_compose());
   var import_a11y6 = __toESM(require_a11y());
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal());
 
   // packages/components/build-module/form-token-field/token.js
   var import_compose60 = __toESM(require_compose());
-  var import_i18n58 = __toESM(require_i18n());
-  var import_jsx_runtime220 = __toESM(require_jsx_runtime());
+  var import_i18n56 = __toESM(require_i18n());
+  var import_jsx_runtime219 = __toESM(require_jsx_runtime());
   var noop15 = () => {
   };
   function Token({
@@ -45082,29 +44983,29 @@ This message will only show in development mode. It won't appear in production. 
       value
     });
     const transformedValue = displayTransform(value);
-    const termPositionAndCount = (0, import_i18n58.sprintf)(
+    const termPositionAndCount = (0, import_i18n56.sprintf)(
       /* translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
-      (0, import_i18n58.__)("%1$s (%2$d of %3$d)"),
+      (0, import_i18n56.__)("%1$s (%2$d of %3$d)"),
       transformedValue,
       termPosition,
       termsCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("span", {
       className: tokenClasses,
       onMouseEnter,
       onMouseLeave,
       title,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("span", {
         className: "components-form-token-field__token-text",
         id: `components-form-token-field__token-text-${instanceId}`,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime220.jsx)(component_default2, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default2, {
           as: "span",
           children: termPositionAndCount
-        }), /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("span", {
           "aria-hidden": "true",
           children: transformedValue
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(button_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(button_default, {
         className: "components-form-token-field__remove-token",
         size: "small",
         icon: close_small_default,
@@ -45129,7 +45030,7 @@ This message will only show in development mode. It won't appear in production. 
   })("padding:7px;", boxSizingReset, " ", deprecatedPaddings, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE0QnVEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgRmxleCB9IGZyb20gJy4uL2ZsZXgnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgeyBib3hTaXppbmdSZXNldCB9IGZyb20gJy4uL3V0aWxzJztcblxudHlwZSBUb2tlbnNBbmRJbnB1dFdyYXBwZXJQcm9wcyA9IHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplOiBib29sZWFuO1xuXHRoYXNUb2tlbnM6IGJvb2xlYW47XG59O1xuXG5jb25zdCBkZXByZWNhdGVkUGFkZGluZ3MgPSAoIHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplLFxuXHRoYXNUb2tlbnMsXG59OiBUb2tlbnNBbmRJbnB1dFdyYXBwZXJQcm9wcyApID0+XG5cdCEgX19uZXh0NDBweERlZmF1bHRTaXplICYmXG5cdGNzc2Bcblx0XHRwYWRkaW5nLXRvcDogJHsgc3BhY2UoIGhhc1Rva2VucyA/IDEgOiAwLjUgKSB9O1xuXHRcdHBhZGRpbmctYm90dG9tOiAkeyBzcGFjZSggaGFzVG9rZW5zID8gMSA6IDAuNSApIH07XG5cdGA7XG5cbmV4cG9ydCBjb25zdCBUb2tlbnNBbmRJbnB1dFdyYXBwZXJGbGV4ID0gc3R5bGVkKCBGbGV4IClgXG5cdHBhZGRpbmc6IDdweDtcblx0JHsgYm94U2l6aW5nUmVzZXQgfVxuXG5cdCR7IGRlcHJlY2F0ZWRQYWRkaW5ncyB9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/form-token-field/index.js
-  var import_jsx_runtime221 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime220 = __toESM(require_jsx_runtime());
   var identity3 = (value) => value;
   function FormTokenField(props) {
     const {
@@ -45137,7 +45038,7 @@ This message will only show in development mode. It won't appear in production. 
       autoComplete,
       maxLength,
       placeholder,
-      label = (0, import_i18n59.__)("Add item"),
+      label = (0, import_i18n57.__)("Add item"),
       className: className2,
       suggestions = [],
       maxSuggestions = 100,
@@ -45153,10 +45054,10 @@ This message will only show in development mode. It won't appear in production. 
       disabled = false,
       tokenizeOnSpace = false,
       messages = {
-        added: (0, import_i18n59.__)("Item added."),
-        removed: (0, import_i18n59.__)("Item removed."),
-        remove: (0, import_i18n59.__)("Remove item"),
-        __experimentalInvalid: (0, import_i18n59.__)("Invalid item")
+        added: (0, import_i18n57.__)("Item added."),
+        removed: (0, import_i18n57.__)("Item removed."),
+        remove: (0, import_i18n57.__)("Remove item"),
+        __experimentalInvalid: (0, import_i18n57.__)("Invalid item")
       },
       __experimentalRenderItem,
       __experimentalExpandOnFocus = false,
@@ -45527,11 +45428,11 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
       if (inputHasMinimumChars) {
-        const message3 = hasMatchingSuggestions ? (0, import_i18n59.sprintf)(
+        const message3 = hasMatchingSuggestions ? (0, import_i18n57.sprintf)(
           /* translators: %d: number of results. */
-          (0, import_i18n59._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions2.length),
+          (0, import_i18n57._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions2.length),
           matchingSuggestions2.length
-        ) : (0, import_i18n59.__)("No results.");
+        ) : (0, import_i18n57.__)("No results.");
         debouncedSpeak(message3, "assertive");
       }
     }
@@ -45545,8 +45446,8 @@ This message will only show in development mode. It won't appear in production. 
       const status = typeof token2 !== "string" ? token2.status : void 0;
       const termPosition = index2 + 1;
       const termsCount = tokens.length;
-      return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(component_default4, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Token, {
+      return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(component_default4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(Token, {
           value: _value,
           status,
           title: typeof token2 !== "string" ? token2.title : void 0,
@@ -45574,7 +45475,7 @@ This message will only show in development mode. It won't appear in production. 
         isExpanded,
         selectedSuggestionIndex
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(token_input_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(token_input_default, {
         ...inputProps,
         onChange: !(maxLength && value.length >= maxLength) ? onInputChangeHandler : void 0,
         ref: input
@@ -45596,19 +45497,19 @@ This message will only show in development mode. It won't appear in production. 
         onFocus: onFocusHandler
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("div", {
       ...tokenFieldProps,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(StyledLabel, {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(StyledLabel, {
         htmlFor: `components-form-token-input-${instanceId}`,
         className: "components-form-token-field__label",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("div", {
         ref: tokensAndInput,
         className: classes,
         tabIndex: -1,
         onMouseDown: onContainerTouched,
         onTouchStart: onContainerTouched,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime221.jsx)(TokensAndInputWrapperFlex, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime220.jsx)(TokensAndInputWrapperFlex, {
           justify: "flex-start",
           align: "center",
           gap: 1,
@@ -45616,7 +45517,7 @@ This message will only show in development mode. It won't appear in production. 
           __next40pxDefaultSize,
           hasTokens: !!value.length,
           children: renderTokensAndInput()
-        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(suggestions_list_default, {
+        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(suggestions_list_default, {
           instanceId,
           match: saveTransform(incompleteTokenValue),
           displayTransform,
@@ -45627,11 +45528,11 @@ This message will only show in development mode. It won't appear in production. 
           onSelect: onSuggestionSelected,
           __experimentalRenderItem
         })]
-      }), __experimentalShowHowTo && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(StyledHelp, {
+      }), __experimentalShowHowTo && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(StyledHelp, {
         id: `components-form-token-suggestions-howto-${instanceId}`,
         className: "components-form-token-field__help",
         __nextHasNoMarginBottom: true,
-        children: tokenizeOnSpace ? (0, import_i18n59.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n59.__)("Separate with commas or the Enter key.")
+        children: tokenizeOnSpace ? (0, import_i18n57.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n57.__)("Separate with commas or the Enter key.")
       })]
     });
   }
@@ -45639,21 +45540,21 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/index.js
   var import_element145 = __toESM(require_element());
-  var import_deprecated20 = __toESM(require_deprecated());
-  var import_i18n61 = __toESM(require_i18n());
+  var import_deprecated19 = __toESM(require_deprecated());
+  var import_i18n59 = __toESM(require_i18n());
 
   // packages/components/build-module/guide/page-control.js
-  var import_i18n60 = __toESM(require_i18n());
+  var import_i18n58 = __toESM(require_i18n());
 
   // packages/components/build-module/guide/icons.js
   var import_primitives33 = __toESM(require_primitives());
-  var import_jsx_runtime222 = __toESM(require_jsx_runtime());
-  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_primitives33.SVG, {
+  var import_jsx_runtime221 = __toESM(require_jsx_runtime());
+  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(import_primitives33.SVG, {
     width: "8",
     height: "8",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
-    children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_primitives33.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(import_primitives33.Circle, {
       cx: "4",
       cy: "4",
       r: "4"
@@ -45661,26 +45562,26 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/guide/page-control.js
-  var import_jsx_runtime223 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime222 = __toESM(require_jsx_runtime());
   function PageControl({
     currentPage,
     numberOfPages,
     setCurrentPage
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("ul", {
+    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("ul", {
       className: "components-guide__page-control",
-      "aria-label": (0, import_i18n60.__)("Guide controls"),
+      "aria-label": (0, import_i18n58.__)("Guide controls"),
       children: Array.from({
         length: numberOfPages
-      }).map((_, page) => /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("li", {
+      }).map((_, page) => /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("li", {
         // Set aria-current="step" on the active page, see https://www.w3.org/TR/wai-aria-1.1/#aria-current
         "aria-current": page === currentPage ? "step" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(button_default, {
           size: "small",
-          icon: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(PageControlIcon, {}),
-          "aria-label": (0, import_i18n60.sprintf)(
+          icon: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(PageControlIcon, {}),
+          "aria-label": (0, import_i18n58.sprintf)(
             /* translators: 1: current page number 2: total number of pages */
-            (0, import_i18n60.__)("Page %1$d of %2$d"),
+            (0, import_i18n58.__)("Page %1$d of %2$d"),
             page + 1,
             numberOfPages
           ),
@@ -45691,14 +45592,14 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/guide/index.js
-  var import_jsx_runtime224 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime223 = __toESM(require_jsx_runtime());
   function Guide({
     children,
     className: className2,
     contentLabel,
-    finishButtonText = (0, import_i18n61.__)("Finish"),
-    nextButtonText = (0, import_i18n61.__)("Next"),
-    previousButtonText = (0, import_i18n61.__)("Previous"),
+    finishButtonText = (0, import_i18n59.__)("Finish"),
+    nextButtonText = (0, import_i18n59.__)("Next"),
+    previousButtonText = (0, import_i18n59.__)("Previous"),
     onFinish,
     pages = []
   }) {
@@ -45712,7 +45613,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [currentPage]);
     (0, import_element145.useEffect)(() => {
       if (import_element145.Children.count(children)) {
-        (0, import_deprecated20.default)("Passing children to <Guide>", {
+        (0, import_deprecated19.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
@@ -45739,7 +45640,7 @@ This message will only show in development mode. It won't appear in production. 
     if (pages.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(modal_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(modal_default, {
       className: clsx_default("components-guide", className2),
       contentLabel,
       isDismissible: pages.length > 1,
@@ -45754,30 +45655,30 @@ This message will only show in development mode. It won't appear in production. 
         }
       },
       ref,
-      children: /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)("div", {
         className: "components-guide__container",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime224.jsxs)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime223.jsxs)("div", {
           className: "components-guide__page",
-          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(PageControl, {
+          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(PageControl, {
             currentPage,
             numberOfPages: pages.length,
             setCurrentPage
           }), pages[currentPage].content]
-        }), /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)("div", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)("div", {
           className: "components-guide__footer",
-          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(button_default, {
             className: "components-guide__back-button",
             variant: "tertiary",
             onClick: goBack,
             __next40pxDefaultSize: true,
             children: previousButtonText
-          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(button_default, {
             className: "components-guide__forward-button",
             variant: "primary",
             onClick: goForward,
             __next40pxDefaultSize: true,
             children: nextButtonText
-          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(button_default, {
             className: "components-guide__finish-button",
             variant: "primary",
             onClick: onFinish,
@@ -45792,24 +45693,24 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/page.js
   var import_element146 = __toESM(require_element());
-  var import_deprecated21 = __toESM(require_deprecated());
-  var import_jsx_runtime225 = __toESM(require_jsx_runtime());
+  var import_deprecated20 = __toESM(require_deprecated());
+  var import_jsx_runtime224 = __toESM(require_jsx_runtime());
   function GuidePage(props) {
     (0, import_element146.useEffect)(() => {
-      (0, import_deprecated21.default)("<GuidePage>", {
+      (0, import_deprecated20.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
       });
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)("div", {
       ...props
     });
   }
 
   // packages/components/build-module/button/deprecated.js
-  var import_deprecated22 = __toESM(require_deprecated());
+  var import_deprecated21 = __toESM(require_deprecated());
   var import_element147 = __toESM(require_element());
-  var import_jsx_runtime226 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime225 = __toESM(require_jsx_runtime());
   function UnforwardedIconButton({
     label,
     labelPosition,
@@ -45817,12 +45718,12 @@ This message will only show in development mode. It won't appear in production. 
     tooltip,
     ...props
   }, ref) {
-    (0, import_deprecated22.default)("wp.components.IconButton", {
+    (0, import_deprecated21.default)("wp.components.IconButton", {
       since: "5.4",
       alternative: "wp.components.Button",
       version: "6.2"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(button_default, {
       ...props,
       ref,
       tooltipPosition: labelPosition,
@@ -45836,7 +45737,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/keyboard-shortcuts/index.js
   var import_element148 = __toESM(require_element());
   var import_compose62 = __toESM(require_compose());
-  var import_jsx_runtime227 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime226 = __toESM(require_jsx_runtime());
   function KeyboardShortcut({
     target,
     callback,
@@ -45858,7 +45759,7 @@ This message will only show in development mode. It won't appear in production. 
     eventName
   }) {
     const target = (0, import_element148.useRef)(null);
-    const element = Object.entries(shortcuts !== null && shortcuts !== void 0 ? shortcuts : {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(KeyboardShortcut, {
+    const element = Object.entries(shortcuts !== null && shortcuts !== void 0 ? shortcuts : {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(KeyboardShortcut, {
       shortcut,
       callback,
       bindGlobal,
@@ -45866,11 +45767,11 @@ This message will only show in development mode. It won't appear in production. 
       target
     }, shortcut));
     if (!import_element148.Children.count(children)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(import_jsx_runtime227.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(import_jsx_runtime226.Fragment, {
         children: element
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("div", {
       ref: target,
       children: [element, children]
     });
@@ -45880,7 +45781,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/menu-group/index.js
   var import_element149 = __toESM(require_element());
   var import_compose63 = __toESM(require_compose());
-  var import_jsx_runtime228 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime227 = __toESM(require_jsx_runtime());
   function MenuGroup3(props) {
     const {
       children,
@@ -45896,14 +45797,14 @@ This message will only show in development mode. It won't appear in production. 
     const classNames = clsx_default(className2, "components-menu-group", {
       "has-hidden-separator": hideSeparator
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)("div", {
       className: classNames,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("div", {
         className: "components-menu-group__label",
         id: labelId,
         "aria-hidden": "true",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("div", {
         role: "group",
         "aria-labelledby": label ? labelId : void 0,
         children
@@ -45914,7 +45815,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/menu-item/index.js
   var import_element150 = __toESM(require_element());
-  var import_jsx_runtime229 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime228 = __toESM(require_jsx_runtime());
   function UnforwardedMenuItem(props, ref) {
     let {
       children,
@@ -45930,12 +45831,12 @@ This message will only show in development mode. It won't appear in production. 
     } = props;
     className2 = clsx_default("components-menu-item__button", className2);
     if (info) {
-      children = /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)("span", {
+      children = /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)("span", {
         className: "components-menu-item__info-wrapper",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime229.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime228.jsx)("span", {
           className: "components-menu-item__item",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("span", {
           className: "components-menu-item__info",
           children: info
         })]
@@ -45948,7 +45849,7 @@ This message will only show in development mode. It won't appear in production. 
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(button_default, {
       size: "compact",
       ref,
       "aria-checked": role === "menuitemcheckbox" || role === "menuitemradio" ? isSelected2 : void 0,
@@ -45957,13 +45858,13 @@ This message will only show in development mode. It won't appear in production. 
       className: className2,
       accessibleWhenDisabled: true,
       ...buttonProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime229.jsx)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime228.jsx)("span", {
         className: "components-menu-item__item",
         children
-      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(shortcut_default, {
+      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(shortcut_default, {
         className: "components-menu-item__shortcut",
         shortcut
-      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(icon_default3, {
+      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(icon_default3, {
         icon
       }), suffix]
     });
@@ -45972,7 +45873,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_item_default = MenuItem3;
 
   // packages/components/build-module/menu-items-choice/index.js
-  var import_jsx_runtime230 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime229 = __toESM(require_jsx_runtime());
   var noop16 = () => {
   };
   function MenuItemsChoice({
@@ -45981,10 +45882,10 @@ This message will only show in development mode. It won't appear in production. 
     onSelect,
     value
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_jsx_runtime230.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(import_jsx_runtime229.Fragment, {
       children: choices.map((item2) => {
         const isSelected2 = value === item2.value;
-        return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(menu_item_default, {
           role: "menuitemradio",
           disabled: item2.disabled,
           icon: isSelected2 ? check_default : null,
@@ -46008,9 +45909,9 @@ This message will only show in development mode. It won't appear in production. 
   var menu_items_choice_default = MenuItemsChoice;
 
   // packages/components/build-module/navigation/index.js
-  var import_deprecated23 = __toESM(require_deprecated());
+  var import_deprecated22 = __toESM(require_deprecated());
   var import_element154 = __toESM(require_element());
-  var import_i18n63 = __toESM(require_i18n());
+  var import_i18n61 = __toESM(require_i18n());
 
   // packages/components/build-module/navigation/constants.js
   var ROOT_MENU = "root";
@@ -46044,7 +45945,7 @@ This message will only show in development mode. It won't appear in production. 
   var useNavigationContext = () => (0, import_element151.useContext)(NavigationContext);
 
   // packages/components/build-module/navigation/styles/navigation-styles.js
-  var import_i18n62 = __toESM(require_i18n());
+  var import_i18n60 = __toESM(require_i18n());
   function _EMOTION_STRINGIFIED_CSS_ERROR__34() {
     return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
   }
@@ -46113,7 +46014,7 @@ This message will only show in development mode. It won't appear in production. 
   } : {
     target: "eeiismy5",
     label: "GroupTitleUI"
-  })("min-height:", space(12), ";align-items:center;color:inherit;display:flex;justify-content:space-between;margin-bottom:", space(2), ";padding:", () => (0, import_i18n62.isRTL)() ? `${space(1)} ${space(4)} ${space(1)} ${space(2)}` : `${space(1)} ${space(2)} ${space(1)} ${space(4)}`, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFpRzZDIiwiZmlsZSI6Im5hdmlnYXRpb24tc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGlzUlRMIH0gZnJvbSAnQHdvcmRwcmVzcy9pMThuJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBIZWFkaW5nIH0gZnJvbSAnLi4vLi4vaGVhZGluZyc7XG5pbXBvcnQgeyBydGwsIENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgTmF2aWdhdGlvblVJID0gc3R5bGVkLmRpdmBcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdHBhZGRpbmc6IDAgJHsgc3BhY2UoIDQgKSB9O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVVSSA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCA2ICkgfTtcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR1bCB7XG5cdFx0cGFkZGluZzogMDtcblx0XHRtYXJnaW46IDA7XG5cdFx0bGlzdC1zdHlsZTogbm9uZTtcblx0fVxuXHQuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19iYWNrLWJ1dHRvbiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0LmNvbXBvbmVudHMtbmF2aWdhdGlvbl9fZ3JvdXAgKyAuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19ncm91cCB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudUJhY2tCdXR0b25VSSA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYuaXMtdGVydGlhcnkge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblxuXHRcdCY6aG92ZXI6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdH1cblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlVUkgPSBzdHlsZWQuZGl2YFxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogMTAwJTtcbmA7XG5cbmV4cG9ydCBjb25zdCBNZW51VGl0bGVTZWFyY2hDb250cm9sV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbjogMTFweCAwOyAvLyBub24taWRlYWwgaGFyZGNvZGluZyB0byBtYWludGFpbiBzYW1lIGhlaWdodCBhcyBIZWFkaW5nLCBjb3VsZCBiZSBpbXByb3ZlZFxuXHRwYWRkaW5nOiAxcHg7IC8vIHNvIHRoZSBmb2N1cyBib3JkZXIgZG9lc24ndCBnZXQgY3V0IG9mZiBieSB0aGUgb3ZlcmZsb3cgaGlkZGVuIG9uIE1lbnVUaXRsZVVJXG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlQWN0aW9uc1VJID0gc3R5bGVkLnNwYW5gXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9OyAvLyAyNHB4LCBzYW1lIGhlaWdodCBhcyB0aGUgYnV0dG9ucyBpbnNpZGVcblxuXHQuY29tcG9uZW50cy1idXR0b24uaXMtc21hbGwge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblx0XHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAxICkgfTsgLy8gQXZvaWQgaGlkaW5nIHRoZSBmb2N1cyBvdXRsaW5lXG5cdFx0cGFkZGluZzogMDtcblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogbm9uZTtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHR9XG5cdFx0Jjpob3Zlcjpub3QoIDpkaXNhYmxlZCApIHtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBUaXRsZVVJID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMiApIH07XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZzogJHsgKCkgPT5cblx0XHRpc1JUTCgpXG5cdFx0XHQ/IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDQgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZSggMiApIH1gXG5cdFx0XHQ6IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZShcblx0XHRcdFx0XHQ0XG5cdFx0XHQgICkgfWAgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFzZVVJID0gc3R5bGVkLmxpYFxuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Y29sb3I6IGluaGVyaXQ7XG5cdG1hcmdpbi1ib3R0b206IDA7XG5cblx0PiBidXR0b24sXG5cdD4gYS5jb21wb25lbnRzLWJ1dHRvbixcblx0PiBhIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHRvcGFjaXR5OiAwLjc7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCA0ICkgfTsgLyogOHB4IDE2cHggKi9cblx0XHQkeyBydGwoIHsgdGV4dEFsaWduOiAnbGVmdCcgfSwgeyB0ZXh0QWxpZ246ICdyaWdodCcgfSApIH1cblxuXHRcdCY6aG92ZXIsXG5cdFx0Jjpmb2N1czpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTphY3RpdmUsXG5cdFx0JjphY3RpdmU6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6YWN0aXZlIHtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQmLmlzLWFjdGl2ZSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblxuXHRcdD4gYnV0dG9uLFxuXHRcdC5jb21wb25lbnRzLWJ1dHRvbjpob3Zlcixcblx0XHQ+IGEge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQ+IHN2ZyBwYXRoIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDYwMCBdIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVUkgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRoZWlnaHQ6IGF1dG87XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogMDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDEuNSApIH0gJHsgc3BhY2UoIDQgKSB9O1xuXHRmb250LXdlaWdodDogNDAwO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0d2lkdGg6IDEwMCU7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRvcGFjaXR5OiAwLjc7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUljb25VSSA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFkZ2VVSSA9IHN0eWxlZC5zcGFuYFxuXHRtYXJnaW4tbGVmdDogJHsgKCkgPT4gKCBpc1JUTCgpID8gJzAnIDogc3BhY2UoIDIgKSApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgKCkgPT4gKCBpc1JUTCgpID8gc3BhY2UoIDIgKSA6ICcwJyApIH07XG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRwYWRkaW5nOiAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDMgKSB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRAa2V5ZnJhbWVzIGZhZGUtaW4ge1xuXHRcdGZyb20ge1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHR9XG5cdFx0dG8ge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRhbmltYXRpb246IGZhZGUtaW4gMjUwbXMgZWFzZS1vdXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVGl0bGVVSSA9IHN0eWxlZCggVGV4dCApYFxuXHQkeyAoKSA9PiAoIGlzUlRMKCkgPyAnbWFyZ2luLWxlZnQ6IGF1dG87JyA6ICdtYXJnaW4tcmlnaHQ6IGF1dG87JyApIH1cblx0Zm9udC1zaXplOiAxNHB4O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuIl19 */"));
+  })("min-height:", space(12), ";align-items:center;color:inherit;display:flex;justify-content:space-between;margin-bottom:", space(2), ";padding:", () => (0, import_i18n60.isRTL)() ? `${space(1)} ${space(4)} ${space(1)} ${space(2)}` : `${space(1)} ${space(2)} ${space(1)} ${space(4)}`, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFpRzZDIiwiZmlsZSI6Im5hdmlnYXRpb24tc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGlzUlRMIH0gZnJvbSAnQHdvcmRwcmVzcy9pMThuJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBIZWFkaW5nIH0gZnJvbSAnLi4vLi4vaGVhZGluZyc7XG5pbXBvcnQgeyBydGwsIENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgTmF2aWdhdGlvblVJID0gc3R5bGVkLmRpdmBcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdHBhZGRpbmc6IDAgJHsgc3BhY2UoIDQgKSB9O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVVSSA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCA2ICkgfTtcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR1bCB7XG5cdFx0cGFkZGluZzogMDtcblx0XHRtYXJnaW46IDA7XG5cdFx0bGlzdC1zdHlsZTogbm9uZTtcblx0fVxuXHQuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19iYWNrLWJ1dHRvbiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0LmNvbXBvbmVudHMtbmF2aWdhdGlvbl9fZ3JvdXAgKyAuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19ncm91cCB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudUJhY2tCdXR0b25VSSA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYuaXMtdGVydGlhcnkge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblxuXHRcdCY6aG92ZXI6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdH1cblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlVUkgPSBzdHlsZWQuZGl2YFxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogMTAwJTtcbmA7XG5cbmV4cG9ydCBjb25zdCBNZW51VGl0bGVTZWFyY2hDb250cm9sV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbjogMTFweCAwOyAvLyBub24taWRlYWwgaGFyZGNvZGluZyB0byBtYWludGFpbiBzYW1lIGhlaWdodCBhcyBIZWFkaW5nLCBjb3VsZCBiZSBpbXByb3ZlZFxuXHRwYWRkaW5nOiAxcHg7IC8vIHNvIHRoZSBmb2N1cyBib3JkZXIgZG9lc24ndCBnZXQgY3V0IG9mZiBieSB0aGUgb3ZlcmZsb3cgaGlkZGVuIG9uIE1lbnVUaXRsZVVJXG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlQWN0aW9uc1VJID0gc3R5bGVkLnNwYW5gXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9OyAvLyAyNHB4LCBzYW1lIGhlaWdodCBhcyB0aGUgYnV0dG9ucyBpbnNpZGVcblxuXHQuY29tcG9uZW50cy1idXR0b24uaXMtc21hbGwge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblx0XHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAxICkgfTsgLy8gQXZvaWQgaGlkaW5nIHRoZSBmb2N1cyBvdXRsaW5lXG5cdFx0cGFkZGluZzogMDtcblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogbm9uZTtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHR9XG5cdFx0Jjpob3Zlcjpub3QoIDpkaXNhYmxlZCApIHtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBUaXRsZVVJID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMiApIH07XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZzogJHsgKCkgPT5cblx0XHRpc1JUTCgpXG5cdFx0XHQ/IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDQgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZSggMiApIH1gXG5cdFx0XHQ6IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZShcblx0XHRcdFx0XHQ0XG5cdFx0XHQgICkgfWAgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFzZVVJID0gc3R5bGVkLmxpYFxuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Y29sb3I6IGluaGVyaXQ7XG5cdG1hcmdpbi1ib3R0b206IDA7XG5cblx0PiBidXR0b24sXG5cdD4gYS5jb21wb25lbnRzLWJ1dHRvbixcblx0PiBhIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHRvcGFjaXR5OiAwLjc7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCA0ICkgfTsgLyogOHB4IDE2cHggKi9cblx0XHQkeyBydGwoIHsgdGV4dEFsaWduOiAnbGVmdCcgfSwgeyB0ZXh0QWxpZ246ICdyaWdodCcgfSApIH1cblxuXHRcdCY6aG92ZXIsXG5cdFx0Jjpmb2N1czpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTphY3RpdmUsXG5cdFx0JjphY3RpdmU6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6YWN0aXZlIHtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQmLmlzLWFjdGl2ZSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblxuXHRcdD4gYnV0dG9uLFxuXHRcdC5jb21wb25lbnRzLWJ1dHRvbjpob3Zlcixcblx0XHQ+IGEge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQ+IHN2ZyBwYXRoIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDYwMCBdIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVUkgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRoZWlnaHQ6IGF1dG87XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogMDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDEuNSApIH0gJHsgc3BhY2UoIDQgKSB9O1xuXHRmb250LXdlaWdodDogNDAwO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0d2lkdGg6IDEwMCU7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRvcGFjaXR5OiAwLjc7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUljb25VSSA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFkZ2VVSSA9IHN0eWxlZC5zcGFuYFxuXHRtYXJnaW4tbGVmdDogJHsgKCkgPT4gKCBpc1JUTCgpID8gJzAnIDogc3BhY2UoIDIgKSApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgKCkgPT4gKCBpc1JUTCgpID8gc3BhY2UoIDIgKSA6ICcwJyApIH07XG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRwYWRkaW5nOiAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDMgKSB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRAa2V5ZnJhbWVzIGZhZGUtaW4ge1xuXHRcdGZyb20ge1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHR9XG5cdFx0dG8ge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRhbmltYXRpb246IGZhZGUtaW4gMjUwbXMgZWFzZS1vdXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVGl0bGVVSSA9IHN0eWxlZCggVGV4dCApYFxuXHQkeyAoKSA9PiAoIGlzUlRMKCkgPyAnbWFyZ2luLWxlZnQ6IGF1dG87JyA6ICdtYXJnaW4tcmlnaHQ6IGF1dG87JyApIH1cblx0Zm9udC1zaXplOiAxNHB4O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuIl19 */"));
   var ItemBaseUI = /* @__PURE__ */ emotion_styled_base_browser_esm_default("li", false ? {
     target: "eeiismy4"
   } : {
@@ -46141,13 +46042,13 @@ This message will only show in development mode. It won't appear in production. 
   } : {
     target: "eeiismy1",
     label: "ItemBadgeUI"
-  })("margin-left:", () => (0, import_i18n62.isRTL)() ? "0" : space(2), ";margin-right:", () => (0, import_i18n62.isRTL)() ? space(2) : "0", ";display:inline-flex;padding:", space(1), " ", space(3), ";border-radius:", config_values_default.radiusSmall, ";@keyframes fade-in{from{opacity:0;}to{opacity:1;}}@media not ( prefers-reduced-motion ){animation:fade-in 250ms ease-out;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEwS3NDIiwiZmlsZSI6Im5hdmlnYXRpb24tc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGlzUlRMIH0gZnJvbSAnQHdvcmRwcmVzcy9pMThuJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBIZWFkaW5nIH0gZnJvbSAnLi4vLi4vaGVhZGluZyc7XG5pbXBvcnQgeyBydGwsIENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgTmF2aWdhdGlvblVJID0gc3R5bGVkLmRpdmBcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdHBhZGRpbmc6IDAgJHsgc3BhY2UoIDQgKSB9O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVVSSA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCA2ICkgfTtcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR1bCB7XG5cdFx0cGFkZGluZzogMDtcblx0XHRtYXJnaW46IDA7XG5cdFx0bGlzdC1zdHlsZTogbm9uZTtcblx0fVxuXHQuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19iYWNrLWJ1dHRvbiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0LmNvbXBvbmVudHMtbmF2aWdhdGlvbl9fZ3JvdXAgKyAuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19ncm91cCB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudUJhY2tCdXR0b25VSSA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYuaXMtdGVydGlhcnkge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblxuXHRcdCY6aG92ZXI6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdH1cblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlVUkgPSBzdHlsZWQuZGl2YFxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogMTAwJTtcbmA7XG5cbmV4cG9ydCBjb25zdCBNZW51VGl0bGVTZWFyY2hDb250cm9sV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbjogMTFweCAwOyAvLyBub24taWRlYWwgaGFyZGNvZGluZyB0byBtYWludGFpbiBzYW1lIGhlaWdodCBhcyBIZWFkaW5nLCBjb3VsZCBiZSBpbXByb3ZlZFxuXHRwYWRkaW5nOiAxcHg7IC8vIHNvIHRoZSBmb2N1cyBib3JkZXIgZG9lc24ndCBnZXQgY3V0IG9mZiBieSB0aGUgb3ZlcmZsb3cgaGlkZGVuIG9uIE1lbnVUaXRsZVVJXG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlQWN0aW9uc1VJID0gc3R5bGVkLnNwYW5gXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9OyAvLyAyNHB4LCBzYW1lIGhlaWdodCBhcyB0aGUgYnV0dG9ucyBpbnNpZGVcblxuXHQuY29tcG9uZW50cy1idXR0b24uaXMtc21hbGwge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblx0XHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAxICkgfTsgLy8gQXZvaWQgaGlkaW5nIHRoZSBmb2N1cyBvdXRsaW5lXG5cdFx0cGFkZGluZzogMDtcblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogbm9uZTtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHR9XG5cdFx0Jjpob3Zlcjpub3QoIDpkaXNhYmxlZCApIHtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBUaXRsZVVJID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMiApIH07XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZzogJHsgKCkgPT5cblx0XHRpc1JUTCgpXG5cdFx0XHQ/IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDQgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZSggMiApIH1gXG5cdFx0XHQ6IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZShcblx0XHRcdFx0XHQ0XG5cdFx0XHQgICkgfWAgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFzZVVJID0gc3R5bGVkLmxpYFxuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Y29sb3I6IGluaGVyaXQ7XG5cdG1hcmdpbi1ib3R0b206IDA7XG5cblx0PiBidXR0b24sXG5cdD4gYS5jb21wb25lbnRzLWJ1dHRvbixcblx0PiBhIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHRvcGFjaXR5OiAwLjc7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCA0ICkgfTsgLyogOHB4IDE2cHggKi9cblx0XHQkeyBydGwoIHsgdGV4dEFsaWduOiAnbGVmdCcgfSwgeyB0ZXh0QWxpZ246ICdyaWdodCcgfSApIH1cblxuXHRcdCY6aG92ZXIsXG5cdFx0Jjpmb2N1czpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTphY3RpdmUsXG5cdFx0JjphY3RpdmU6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6YWN0aXZlIHtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQmLmlzLWFjdGl2ZSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblxuXHRcdD4gYnV0dG9uLFxuXHRcdC5jb21wb25lbnRzLWJ1dHRvbjpob3Zlcixcblx0XHQ+IGEge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQ+IHN2ZyBwYXRoIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDYwMCBdIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVUkgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRoZWlnaHQ6IGF1dG87XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogMDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDEuNSApIH0gJHsgc3BhY2UoIDQgKSB9O1xuXHRmb250LXdlaWdodDogNDAwO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0d2lkdGg6IDEwMCU7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRvcGFjaXR5OiAwLjc7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUljb25VSSA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFkZ2VVSSA9IHN0eWxlZC5zcGFuYFxuXHRtYXJnaW4tbGVmdDogJHsgKCkgPT4gKCBpc1JUTCgpID8gJzAnIDogc3BhY2UoIDIgKSApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgKCkgPT4gKCBpc1JUTCgpID8gc3BhY2UoIDIgKSA6ICcwJyApIH07XG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRwYWRkaW5nOiAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDMgKSB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRAa2V5ZnJhbWVzIGZhZGUtaW4ge1xuXHRcdGZyb20ge1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHR9XG5cdFx0dG8ge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRhbmltYXRpb246IGZhZGUtaW4gMjUwbXMgZWFzZS1vdXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVGl0bGVVSSA9IHN0eWxlZCggVGV4dCApYFxuXHQkeyAoKSA9PiAoIGlzUlRMKCkgPyAnbWFyZ2luLWxlZnQ6IGF1dG87JyA6ICdtYXJnaW4tcmlnaHQ6IGF1dG87JyApIH1cblx0Zm9udC1zaXplOiAxNHB4O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuIl19 */"));
+  })("margin-left:", () => (0, import_i18n60.isRTL)() ? "0" : space(2), ";margin-right:", () => (0, import_i18n60.isRTL)() ? space(2) : "0", ";display:inline-flex;padding:", space(1), " ", space(3), ";border-radius:", config_values_default.radiusSmall, ";@keyframes fade-in{from{opacity:0;}to{opacity:1;}}@media not ( prefers-reduced-motion ){animation:fade-in 250ms ease-out;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEwS3NDIiwiZmlsZSI6Im5hdmlnYXRpb24tc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGlzUlRMIH0gZnJvbSAnQHdvcmRwcmVzcy9pMThuJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBIZWFkaW5nIH0gZnJvbSAnLi4vLi4vaGVhZGluZyc7XG5pbXBvcnQgeyBydGwsIENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgTmF2aWdhdGlvblVJID0gc3R5bGVkLmRpdmBcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdHBhZGRpbmc6IDAgJHsgc3BhY2UoIDQgKSB9O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVVSSA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCA2ICkgfTtcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR1bCB7XG5cdFx0cGFkZGluZzogMDtcblx0XHRtYXJnaW46IDA7XG5cdFx0bGlzdC1zdHlsZTogbm9uZTtcblx0fVxuXHQuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19iYWNrLWJ1dHRvbiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0LmNvbXBvbmVudHMtbmF2aWdhdGlvbl9fZ3JvdXAgKyAuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19ncm91cCB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudUJhY2tCdXR0b25VSSA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYuaXMtdGVydGlhcnkge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblxuXHRcdCY6aG92ZXI6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdH1cblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlVUkgPSBzdHlsZWQuZGl2YFxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogMTAwJTtcbmA7XG5cbmV4cG9ydCBjb25zdCBNZW51VGl0bGVTZWFyY2hDb250cm9sV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbjogMTFweCAwOyAvLyBub24taWRlYWwgaGFyZGNvZGluZyB0byBtYWludGFpbiBzYW1lIGhlaWdodCBhcyBIZWFkaW5nLCBjb3VsZCBiZSBpbXByb3ZlZFxuXHRwYWRkaW5nOiAxcHg7IC8vIHNvIHRoZSBmb2N1cyBib3JkZXIgZG9lc24ndCBnZXQgY3V0IG9mZiBieSB0aGUgb3ZlcmZsb3cgaGlkZGVuIG9uIE1lbnVUaXRsZVVJXG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlQWN0aW9uc1VJID0gc3R5bGVkLnNwYW5gXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9OyAvLyAyNHB4LCBzYW1lIGhlaWdodCBhcyB0aGUgYnV0dG9ucyBpbnNpZGVcblxuXHQuY29tcG9uZW50cy1idXR0b24uaXMtc21hbGwge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblx0XHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAxICkgfTsgLy8gQXZvaWQgaGlkaW5nIHRoZSBmb2N1cyBvdXRsaW5lXG5cdFx0cGFkZGluZzogMDtcblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogbm9uZTtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHR9XG5cdFx0Jjpob3Zlcjpub3QoIDpkaXNhYmxlZCApIHtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBUaXRsZVVJID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMiApIH07XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZzogJHsgKCkgPT5cblx0XHRpc1JUTCgpXG5cdFx0XHQ/IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDQgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZSggMiApIH1gXG5cdFx0XHQ6IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZShcblx0XHRcdFx0XHQ0XG5cdFx0XHQgICkgfWAgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFzZVVJID0gc3R5bGVkLmxpYFxuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Y29sb3I6IGluaGVyaXQ7XG5cdG1hcmdpbi1ib3R0b206IDA7XG5cblx0PiBidXR0b24sXG5cdD4gYS5jb21wb25lbnRzLWJ1dHRvbixcblx0PiBhIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHRvcGFjaXR5OiAwLjc7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCA0ICkgfTsgLyogOHB4IDE2cHggKi9cblx0XHQkeyBydGwoIHsgdGV4dEFsaWduOiAnbGVmdCcgfSwgeyB0ZXh0QWxpZ246ICdyaWdodCcgfSApIH1cblxuXHRcdCY6aG92ZXIsXG5cdFx0Jjpmb2N1czpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTphY3RpdmUsXG5cdFx0JjphY3RpdmU6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6YWN0aXZlIHtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQmLmlzLWFjdGl2ZSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblxuXHRcdD4gYnV0dG9uLFxuXHRcdC5jb21wb25lbnRzLWJ1dHRvbjpob3Zlcixcblx0XHQ+IGEge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQ+IHN2ZyBwYXRoIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDYwMCBdIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVUkgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRoZWlnaHQ6IGF1dG87XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogMDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDEuNSApIH0gJHsgc3BhY2UoIDQgKSB9O1xuXHRmb250LXdlaWdodDogNDAwO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0d2lkdGg6IDEwMCU7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRvcGFjaXR5OiAwLjc7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUljb25VSSA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFkZ2VVSSA9IHN0eWxlZC5zcGFuYFxuXHRtYXJnaW4tbGVmdDogJHsgKCkgPT4gKCBpc1JUTCgpID8gJzAnIDogc3BhY2UoIDIgKSApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgKCkgPT4gKCBpc1JUTCgpID8gc3BhY2UoIDIgKSA6ICcwJyApIH07XG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRwYWRkaW5nOiAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDMgKSB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRAa2V5ZnJhbWVzIGZhZGUtaW4ge1xuXHRcdGZyb20ge1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHR9XG5cdFx0dG8ge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRhbmltYXRpb246IGZhZGUtaW4gMjUwbXMgZWFzZS1vdXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVGl0bGVVSSA9IHN0eWxlZCggVGV4dCApYFxuXHQkeyAoKSA9PiAoIGlzUlRMKCkgPyAnbWFyZ2luLWxlZnQ6IGF1dG87JyA6ICdtYXJnaW4tcmlnaHQ6IGF1dG87JyApIH1cblx0Zm9udC1zaXplOiAxNHB4O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuIl19 */"));
   var ItemTitleUI = /* @__PURE__ */ emotion_styled_base_browser_esm_default(component_default8, false ? {
     target: "eeiismy0"
   } : {
     target: "eeiismy0",
     label: "ItemTitleUI"
-  })(() => (0, import_i18n62.isRTL)() ? "margin-left: auto;" : "margin-right: auto;", " font-size:14px;line-height:20px;color:inherit;" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUErTHlDIiwiZmlsZSI6Im5hdmlnYXRpb24tc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGlzUlRMIH0gZnJvbSAnQHdvcmRwcmVzcy9pMThuJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBIZWFkaW5nIH0gZnJvbSAnLi4vLi4vaGVhZGluZyc7XG5pbXBvcnQgeyBydGwsIENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgTmF2aWdhdGlvblVJID0gc3R5bGVkLmRpdmBcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdHBhZGRpbmc6IDAgJHsgc3BhY2UoIDQgKSB9O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVVSSA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCA2ICkgfTtcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR1bCB7XG5cdFx0cGFkZGluZzogMDtcblx0XHRtYXJnaW46IDA7XG5cdFx0bGlzdC1zdHlsZTogbm9uZTtcblx0fVxuXHQuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19iYWNrLWJ1dHRvbiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0LmNvbXBvbmVudHMtbmF2aWdhdGlvbl9fZ3JvdXAgKyAuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19ncm91cCB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudUJhY2tCdXR0b25VSSA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYuaXMtdGVydGlhcnkge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblxuXHRcdCY6aG92ZXI6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdH1cblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlVUkgPSBzdHlsZWQuZGl2YFxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogMTAwJTtcbmA7XG5cbmV4cG9ydCBjb25zdCBNZW51VGl0bGVTZWFyY2hDb250cm9sV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbjogMTFweCAwOyAvLyBub24taWRlYWwgaGFyZGNvZGluZyB0byBtYWludGFpbiBzYW1lIGhlaWdodCBhcyBIZWFkaW5nLCBjb3VsZCBiZSBpbXByb3ZlZFxuXHRwYWRkaW5nOiAxcHg7IC8vIHNvIHRoZSBmb2N1cyBib3JkZXIgZG9lc24ndCBnZXQgY3V0IG9mZiBieSB0aGUgb3ZlcmZsb3cgaGlkZGVuIG9uIE1lbnVUaXRsZVVJXG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlQWN0aW9uc1VJID0gc3R5bGVkLnNwYW5gXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9OyAvLyAyNHB4LCBzYW1lIGhlaWdodCBhcyB0aGUgYnV0dG9ucyBpbnNpZGVcblxuXHQuY29tcG9uZW50cy1idXR0b24uaXMtc21hbGwge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblx0XHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAxICkgfTsgLy8gQXZvaWQgaGlkaW5nIHRoZSBmb2N1cyBvdXRsaW5lXG5cdFx0cGFkZGluZzogMDtcblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogbm9uZTtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHR9XG5cdFx0Jjpob3Zlcjpub3QoIDpkaXNhYmxlZCApIHtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBUaXRsZVVJID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMiApIH07XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZzogJHsgKCkgPT5cblx0XHRpc1JUTCgpXG5cdFx0XHQ/IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDQgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZSggMiApIH1gXG5cdFx0XHQ6IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZShcblx0XHRcdFx0XHQ0XG5cdFx0XHQgICkgfWAgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFzZVVJID0gc3R5bGVkLmxpYFxuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Y29sb3I6IGluaGVyaXQ7XG5cdG1hcmdpbi1ib3R0b206IDA7XG5cblx0PiBidXR0b24sXG5cdD4gYS5jb21wb25lbnRzLWJ1dHRvbixcblx0PiBhIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHRvcGFjaXR5OiAwLjc7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCA0ICkgfTsgLyogOHB4IDE2cHggKi9cblx0XHQkeyBydGwoIHsgdGV4dEFsaWduOiAnbGVmdCcgfSwgeyB0ZXh0QWxpZ246ICdyaWdodCcgfSApIH1cblxuXHRcdCY6aG92ZXIsXG5cdFx0Jjpmb2N1czpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTphY3RpdmUsXG5cdFx0JjphY3RpdmU6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6YWN0aXZlIHtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQmLmlzLWFjdGl2ZSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblxuXHRcdD4gYnV0dG9uLFxuXHRcdC5jb21wb25lbnRzLWJ1dHRvbjpob3Zlcixcblx0XHQ+IGEge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQ+IHN2ZyBwYXRoIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDYwMCBdIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVUkgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRoZWlnaHQ6IGF1dG87XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogMDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDEuNSApIH0gJHsgc3BhY2UoIDQgKSB9O1xuXHRmb250LXdlaWdodDogNDAwO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0d2lkdGg6IDEwMCU7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRvcGFjaXR5OiAwLjc7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUljb25VSSA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFkZ2VVSSA9IHN0eWxlZC5zcGFuYFxuXHRtYXJnaW4tbGVmdDogJHsgKCkgPT4gKCBpc1JUTCgpID8gJzAnIDogc3BhY2UoIDIgKSApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgKCkgPT4gKCBpc1JUTCgpID8gc3BhY2UoIDIgKSA6ICcwJyApIH07XG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRwYWRkaW5nOiAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDMgKSB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRAa2V5ZnJhbWVzIGZhZGUtaW4ge1xuXHRcdGZyb20ge1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHR9XG5cdFx0dG8ge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRhbmltYXRpb246IGZhZGUtaW4gMjUwbXMgZWFzZS1vdXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVGl0bGVVSSA9IHN0eWxlZCggVGV4dCApYFxuXHQkeyAoKSA9PiAoIGlzUlRMKCkgPyAnbWFyZ2luLWxlZnQ6IGF1dG87JyA6ICdtYXJnaW4tcmlnaHQ6IGF1dG87JyApIH1cblx0Zm9udC1zaXplOiAxNHB4O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuIl19 */"));
+  })(() => (0, import_i18n60.isRTL)() ? "margin-left: auto;" : "margin-right: auto;", " font-size:14px;line-height:20px;color:inherit;" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUErTHlDIiwiZmlsZSI6Im5hdmlnYXRpb24tc3R5bGVzLnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBXb3JkUHJlc3MgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGlzUlRMIH0gZnJvbSAnQHdvcmRwcmVzcy9pMThuJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgQ09MT1JTIH0gZnJvbSAnLi4vLi4vdXRpbHMvY29sb3JzLXZhbHVlcyc7XG5pbXBvcnQgQnV0dG9uIGZyb20gJy4uLy4uL2J1dHRvbic7XG5pbXBvcnQgeyBUZXh0IH0gZnJvbSAnLi4vLi4vdGV4dCc7XG5pbXBvcnQgeyBIZWFkaW5nIH0gZnJvbSAnLi4vLi4vaGVhZGluZyc7XG5pbXBvcnQgeyBydGwsIENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vLi4vdXRpbHMvc3BhY2UnO1xuXG5leHBvcnQgY29uc3QgTmF2aWdhdGlvblVJID0gc3R5bGVkLmRpdmBcblx0d2lkdGg6IDEwMCU7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdHBhZGRpbmc6IDAgJHsgc3BhY2UoIDQgKSB9O1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVVSSA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCA2ICkgfTtcblx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR1bCB7XG5cdFx0cGFkZGluZzogMDtcblx0XHRtYXJnaW46IDA7XG5cdFx0bGlzdC1zdHlsZTogbm9uZTtcblx0fVxuXHQuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19iYWNrLWJ1dHRvbiB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0LmNvbXBvbmVudHMtbmF2aWdhdGlvbl9fZ3JvdXAgKyAuY29tcG9uZW50cy1uYXZpZ2F0aW9uX19ncm91cCB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudUJhY2tCdXR0b25VSSA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYuaXMtdGVydGlhcnkge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblxuXHRcdCY6aG92ZXI6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdH1cblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlVUkgPSBzdHlsZWQuZGl2YFxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXHR3aWR0aDogMTAwJTtcbmA7XG5cbmV4cG9ydCBjb25zdCBNZW51VGl0bGVTZWFyY2hDb250cm9sV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdG1hcmdpbjogMTFweCAwOyAvLyBub24taWRlYWwgaGFyZGNvZGluZyB0byBtYWludGFpbiBzYW1lIGhlaWdodCBhcyBIZWFkaW5nLCBjb3VsZCBiZSBpbXByb3ZlZFxuXHRwYWRkaW5nOiAxcHg7IC8vIHNvIHRoZSBmb2N1cyBib3JkZXIgZG9lc24ndCBnZXQgY3V0IG9mZiBieSB0aGUgb3ZlcmZsb3cgaGlkZGVuIG9uIE1lbnVUaXRsZVVJXG5gO1xuXG5leHBvcnQgY29uc3QgTWVudVRpdGxlQWN0aW9uc1VJID0gc3R5bGVkLnNwYW5gXG5cdGhlaWdodDogJHsgc3BhY2UoIDYgKSB9OyAvLyAyNHB4LCBzYW1lIGhlaWdodCBhcyB0aGUgYnV0dG9ucyBpbnNpZGVcblxuXHQuY29tcG9uZW50cy1idXR0b24uaXMtc21hbGwge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdG9wYWNpdHk6IDAuNztcblx0XHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAxICkgfTsgLy8gQXZvaWQgaGlkaW5nIHRoZSBmb2N1cyBvdXRsaW5lXG5cdFx0cGFkZGluZzogMDtcblxuXHRcdCY6YWN0aXZlOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0YmFja2dyb3VuZDogbm9uZTtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHR9XG5cdFx0Jjpob3Zlcjpub3QoIDpkaXNhYmxlZCApIHtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0XHRvcGFjaXR5OiAxO1xuXHRcdFx0Y29sb3I6IGluaGVyaXQ7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBUaXRsZVVJID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdG1pbi1oZWlnaHQ6ICR7IHNwYWNlKCAxMiApIH07XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdG1hcmdpbi1ib3R0b206ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZzogJHsgKCkgPT5cblx0XHRpc1JUTCgpXG5cdFx0XHQ/IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDQgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZSggMiApIH1gXG5cdFx0XHQ6IGAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAxICkgfSAkeyBzcGFjZShcblx0XHRcdFx0XHQ0XG5cdFx0XHQgICkgfWAgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFzZVVJID0gc3R5bGVkLmxpYFxuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Y29sb3I6IGluaGVyaXQ7XG5cdG1hcmdpbi1ib3R0b206IDA7XG5cblx0PiBidXR0b24sXG5cdD4gYS5jb21wb25lbnRzLWJ1dHRvbixcblx0PiBhIHtcblx0XHR3aWR0aDogMTAwJTtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0XHRvcGFjaXR5OiAwLjc7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCA0ICkgfTsgLyogOHB4IDE2cHggKi9cblx0XHQkeyBydGwoIHsgdGV4dEFsaWduOiAnbGVmdCcgfSwgeyB0ZXh0QWxpZ246ICdyaWdodCcgfSApIH1cblxuXHRcdCY6aG92ZXIsXG5cdFx0Jjpmb2N1czpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTphY3RpdmUsXG5cdFx0JjphY3RpdmU6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6YWN0aXZlIHtcblx0XHRcdGNvbG9yOiBpbmhlcml0O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQmLmlzLWFjdGl2ZSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblxuXHRcdD4gYnV0dG9uLFxuXHRcdC5jb21wb25lbnRzLWJ1dHRvbjpob3Zlcixcblx0XHQ+IGEge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnRJbnZlcnRlZCB9O1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHQ+IHN2ZyBwYXRoIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLmdyYXlbIDYwMCBdIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVUkgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRoZWlnaHQ6IGF1dG87XG5cdG1pbi1oZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogMDtcblx0cGFkZGluZzogJHsgc3BhY2UoIDEuNSApIH0gJHsgc3BhY2UoIDQgKSB9O1xuXHRmb250LXdlaWdodDogNDAwO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0d2lkdGg6IDEwMCU7XG5cdGNvbG9yOiBpbmhlcml0O1xuXHRvcGFjaXR5OiAwLjc7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUljb25VSSA9IHN0eWxlZC5zcGFuYFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQmFkZ2VVSSA9IHN0eWxlZC5zcGFuYFxuXHRtYXJnaW4tbGVmdDogJHsgKCkgPT4gKCBpc1JUTCgpID8gJzAnIDogc3BhY2UoIDIgKSApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgKCkgPT4gKCBpc1JUTCgpID8gc3BhY2UoIDIgKSA6ICcwJyApIH07XG5cdGRpc3BsYXk6IGlubGluZS1mbGV4O1xuXHRwYWRkaW5nOiAkeyBzcGFjZSggMSApIH0gJHsgc3BhY2UoIDMgKSB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRAa2V5ZnJhbWVzIGZhZGUtaW4ge1xuXHRcdGZyb20ge1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHR9XG5cdFx0dG8ge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRhbmltYXRpb246IGZhZGUtaW4gMjUwbXMgZWFzZS1vdXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtVGl0bGVVSSA9IHN0eWxlZCggVGV4dCApYFxuXHQkeyAoKSA9PiAoIGlzUlRMKCkgPyAnbWFyZ2luLWxlZnQ6IGF1dG87JyA6ICdtYXJnaW4tcmlnaHQ6IGF1dG87JyApIH1cblx0Zm9udC1zaXplOiAxNHB4O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0Y29sb3I6IGluaGVyaXQ7XG5gO1xuIl19 */"));
 
   // packages/components/build-module/navigation/use-create-navigation-tree.js
   var import_element153 = __toESM(require_element());
@@ -46258,7 +46159,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigation/index.js
-  var import_jsx_runtime231 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime230 = __toESM(require_jsx_runtime());
   var noop18 = () => {
   };
   function Navigation({
@@ -46271,8 +46172,8 @@ This message will only show in development mode. It won't appear in production. 
     const [menu2, setMenu] = (0, import_element154.useState)(activeMenu);
     const [slideOrigin, setSlideOrigin] = (0, import_element154.useState)();
     const navigationTree = useCreateNavigationTree();
-    const defaultSlideOrigin = (0, import_i18n63.isRTL)() ? "right" : "left";
-    (0, import_deprecated23.default)("wp.components.Navigation (and all subcomponents)", {
+    const defaultSlideOrigin = (0, import_i18n61.isRTL)() ? "right" : "left";
+    (0, import_deprecated22.default)("wp.components.Navigation (and all subcomponents)", {
       since: "6.8",
       version: "7.1",
       alternative: "wp.components.Navigator"
@@ -46307,13 +46208,13 @@ This message will only show in development mode. It won't appear in production. 
       type: "slide-in",
       origin: slideOrigin
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(NavigationUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(NavigationUI, {
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)("div", {
         className: animateClassName ? clsx_default({
           [animateClassName]: isMountedRef.current && slideOrigin
         }) : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(NavigationContext.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(NavigationContext.Provider, {
           value: context,
           children
         })
@@ -46324,8 +46225,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigation/back-button/index.js
   var import_element155 = __toESM(require_element());
-  var import_i18n64 = __toESM(require_i18n());
-  var import_jsx_runtime232 = __toESM(require_jsx_runtime());
+  var import_i18n62 = __toESM(require_i18n());
+  var import_jsx_runtime231 = __toESM(require_jsx_runtime());
   function UnforwardedNavigationBackButton({
     backButtonLabel,
     className: className2,
@@ -46343,22 +46244,22 @@ This message will only show in development mode. It won't appear in production. 
       if (typeof onClick === "function") {
         onClick(event);
       }
-      const animationDirection = (0, import_i18n64.isRTL)() ? "left" : "right";
+      const animationDirection = (0, import_i18n62.isRTL)() ? "left" : "right";
       if (parentMenu && !event.defaultPrevented) {
         setActiveMenu(parentMenu, animationDirection);
       }
     };
-    const icon = (0, import_i18n64.isRTL)() ? chevron_right_default : chevron_left_default;
-    return /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(MenuBackButtonUI, {
+    const icon = (0, import_i18n62.isRTL)() ? chevron_right_default : chevron_left_default;
+    return /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(MenuBackButtonUI, {
       __next40pxDefaultSize: true,
       className: classes,
       href,
       variant: "tertiary",
       ref,
       onClick: handleOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime232.jsx)(icon_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime231.jsx)(icon_default2, {
         icon
-      }), backButtonLabel || parentMenuTitle || (0, import_i18n64.__)("Back")]
+      }), backButtonLabel || parentMenuTitle || (0, import_i18n62.__)("Back")]
     });
   }
   var NavigationBackButton = (0, import_element155.forwardRef)(UnforwardedNavigationBackButton);
@@ -46376,7 +46277,7 @@ This message will only show in development mode. It won't appear in production. 
   var useNavigationGroupContext = () => (0, import_element156.useContext)(NavigationGroupContext);
 
   // packages/components/build-module/navigation/group/index.js
-  var import_jsx_runtime233 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime232 = __toESM(require_jsx_runtime());
   var uniqueId = 0;
   function NavigationGroup({
     children,
@@ -46393,23 +46294,23 @@ This message will only show in development mode. It won't appear in production. 
       group: groupId
     };
     if (!Object.values(items).some((item2) => item2.group === groupId && item2._isVisible)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NavigationGroupContext.Provider, {
+      return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(NavigationGroupContext.Provider, {
         value: context,
         children
       });
     }
     const groupTitleId = `components-navigation__group-title-${groupId}`;
     const classes = clsx_default("components-navigation__group", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NavigationGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(NavigationGroupContext.Provider, {
       value: context,
-      children: /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)("li", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)("li", {
         className: classes,
-        children: [title && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(GroupTitleUI, {
+        children: [title && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(GroupTitleUI, {
           className: "components-navigation__group-title",
           id: groupTitleId,
           level: 3,
           children: title
-        }), /* @__PURE__ */ (0, import_jsx_runtime233.jsx)("ul", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("ul", {
           "aria-labelledby": groupTitleId,
           role: "group",
           children
@@ -46420,21 +46321,21 @@ This message will only show in development mode. It won't appear in production. 
   var group_default = NavigationGroup;
 
   // packages/components/build-module/navigation/item/index.js
-  var import_i18n65 = __toESM(require_i18n());
+  var import_i18n63 = __toESM(require_i18n());
 
   // packages/components/build-module/navigation/item/base-content.js
-  var import_jsx_runtime234 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime233 = __toESM(require_jsx_runtime());
   function NavigationItemBaseContent(props) {
     const {
       badge,
       title
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_jsx_runtime234.Fragment, {
-      children: [title && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(ItemTitleUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(import_jsx_runtime233.Fragment, {
+      children: [title && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(ItemTitleUI, {
         className: "components-navigation__item-title",
         as: "span",
         children: title
-      }), badge && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(ItemBadgeUI, {
+      }), badge && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(ItemBadgeUI, {
         className: "components-navigation__item-badge",
         children: badge
       })]
@@ -46493,7 +46394,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigation/item/base.js
-  var import_jsx_runtime235 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime234 = __toESM(require_jsx_runtime());
   var uniqueId2 = 0;
   function NavigationItemBase(props) {
     const {
@@ -46512,7 +46413,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     const classes = clsx_default("components-navigation__item", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(ItemBaseUI, {
+    return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(ItemBaseUI, {
       className: classes,
       ...restProps,
       children
@@ -46520,7 +46421,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigation/item/index.js
-  var import_jsx_runtime236 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime235 = __toESM(require_jsx_runtime());
   var noop19 = () => {
   };
   function NavigationItem(props) {
@@ -46558,7 +46459,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       onClick(event);
     };
-    const navigationIcon = (0, import_i18n65.isRTL)() ? chevron_left_default : chevron_right_default;
+    const navigationIcon = (0, import_i18n63.isRTL)() ? chevron_left_default : chevron_right_default;
     const baseProps = children ? props : {
       ...props,
       onClick: void 0
@@ -46571,19 +46472,19 @@ This message will only show in development mode. It won't appear in production. 
       "aria-current": isActive ? "page" : void 0,
       ...restProps
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(NavigationItemBase, {
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(NavigationItemBase, {
       ...baseProps,
       className: classes,
-      children: children || /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(ItemUI, {
+      children: children || /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(ItemUI, {
         ...itemProps,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(ItemIconUI, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(icon_default2, {
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(ItemIconUI, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(icon_default2, {
             icon
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(NavigationItemBaseContent, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(NavigationItemBaseContent, {
           title,
           badge
-        }), navigateToMenu && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(icon_default2, {
+        }), navigateToMenu && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(icon_default2, {
           icon: navigationIcon
         })]
       })
@@ -46617,17 +46518,17 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigation/menu/menu-title.js
   var import_element164 = __toESM(require_element());
-  var import_i18n68 = __toESM(require_i18n());
+  var import_i18n66 = __toESM(require_i18n());
 
   // packages/components/build-module/navigation/menu/menu-title-search.js
   var import_element163 = __toESM(require_element());
-  var import_i18n67 = __toESM(require_i18n());
+  var import_i18n65 = __toESM(require_i18n());
 
   // packages/components/build-module/higher-order/with-spoken-messages/index.js
   var import_compose64 = __toESM(require_compose());
   var import_a11y7 = __toESM(require_a11y());
-  var import_jsx_runtime237 = __toESM(require_jsx_runtime());
-  var with_spoken_messages_default = (0, import_compose64.createHigherOrderComponent)((Component9) => (props) => /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(Component9, {
+  var import_jsx_runtime236 = __toESM(require_jsx_runtime());
+  var with_spoken_messages_default = (0, import_compose64.createHigherOrderComponent)((Component9) => (props) => /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(Component9, {
     ...props,
     speak: import_a11y7.speak,
     debouncedSpeak: (0, import_compose64.useDebounce)(import_a11y7.speak, 500)
@@ -46635,9 +46536,9 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/search-control/index.js
   var import_compose65 = __toESM(require_compose());
-  var import_i18n66 = __toESM(require_i18n());
+  var import_i18n64 = __toESM(require_i18n());
   var import_element162 = __toESM(require_element());
-  var import_deprecated24 = __toESM(require_deprecated());
+  var import_deprecated23 = __toESM(require_deprecated());
 
   // packages/components/build-module/search-control/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__35() {
@@ -46673,7 +46574,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/search-control/index.js
-  var import_jsx_runtime238 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime237 = __toESM(require_jsx_runtime());
   function SuffixItem({
     searchRef,
     value,
@@ -46684,7 +46585,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     if (onClose) {
-      (0, import_deprecated24.default)("`onClose` prop in wp.components.SearchControl", {
+      (0, import_deprecated23.default)("`onClose` prop in wp.components.SearchControl", {
         since: "6.8"
       });
     }
@@ -46692,12 +46593,12 @@ This message will only show in development mode. It won't appear in production. 
       onChange("");
       searchRef.current?.focus();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(InputControlSuffixWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(InputControlSuffixWrapper, {
       variant: "control",
-      children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(button_default, {
         size: "small",
         icon: close_small_default,
-        label: onClose ? (0, import_i18n66.__)("Close search") : (0, import_i18n66.__)("Reset search"),
+        label: onClose ? (0, import_i18n64.__)("Close search") : (0, import_i18n64.__)("Reset search"),
         onClick: onClose !== null && onClose !== void 0 ? onClose : onReset
       })
     });
@@ -46707,8 +46608,8 @@ This message will only show in development mode. It won't appear in production. 
     className: className2,
     onChange,
     value,
-    label = (0, import_i18n66.__)("Search"),
-    placeholder = (0, import_i18n66.__)("Search"),
+    label = (0, import_i18n64.__)("Search"),
+    placeholder = (0, import_i18n64.__)("Search"),
     hideLabelFromVision = true,
     onClose,
     size: size3 = "default",
@@ -46731,9 +46632,9 @@ This message will only show in development mode. It won't appear in production. 
         __associatedWPComponentName: "SearchControl"
       }
     }), [__nextHasNoMarginBottom]);
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(ContextSystemProvider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(StyledInputControl, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(StyledInputControl, {
         __next40pxDefaultSize: true,
         id: instanceId,
         hideLabelFromVision,
@@ -46746,14 +46647,14 @@ This message will only show in development mode. It won't appear in production. 
         autoComplete: "off",
         placeholder,
         value: value !== null && value !== void 0 ? value : "",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(InputControlPrefixWrapper, {
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(InputControlPrefixWrapper, {
           variant: "icon",
-          children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(StyledIcon, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(StyledIcon, {
             icon: search_default,
             fill: "currentColor"
           })
         }),
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(SuffixItem, {
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(SuffixItem, {
           searchRef,
           value,
           onChange,
@@ -46767,7 +46668,7 @@ This message will only show in development mode. It won't appear in production. 
   var search_control_default = SearchControl;
 
   // packages/components/build-module/navigation/menu/menu-title-search.js
-  var import_jsx_runtime239 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime238 = __toESM(require_jsx_runtime());
   function MenuTitleSearch({
     debouncedSpeak,
     onCloseSearch,
@@ -46797,9 +46698,9 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       const count = Object.values(items).filter((item2) => item2._isVisible).length;
-      const resultsFoundMessage = (0, import_i18n67.sprintf)(
+      const resultsFoundMessage = (0, import_i18n65.sprintf)(
         /* translators: %d: number of results. */
-        (0, import_i18n67._n)("%d result found.", "%d results found.", count),
+        (0, import_i18n65._n)("%d result found.", "%d results found.", count),
         count
       );
       debouncedSpeak(resultsFoundMessage);
@@ -46815,13 +46716,13 @@ This message will only show in development mode. It won't appear in production. 
       }
     };
     const inputId = `components-navigation__menu-title-search-${menu2}`;
-    const placeholder = (0, import_i18n67.sprintf)(
+    const placeholder = (0, import_i18n65.sprintf)(
       /* translators: placeholder for menu search box. %s: menu title */
-      (0, import_i18n67.__)("Search %s"),
+      (0, import_i18n65.__)("Search %s"),
       title?.toLowerCase() || ""
     ).trim();
-    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(MenuTitleSearchControlWrapper, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(search_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(MenuTitleSearchControlWrapper, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(search_control_default, {
         __nextHasNoMarginBottom: true,
         className: "components-navigation__menu-search-input",
         id: inputId,
@@ -46837,7 +46738,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_title_search_default = with_spoken_messages_default(MenuTitleSearch);
 
   // packages/components/build-module/navigation/menu/menu-title.js
-  var import_jsx_runtime240 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime239 = __toESM(require_jsx_runtime());
   function NavigationMenuTitle({
     hasSearch,
     onSearch,
@@ -46860,34 +46761,34 @@ This message will only show in development mode. It won't appear in production. 
       }, SEARCH_FOCUS_DELAY);
     };
     const menuTitleId = `components-navigation__menu-title-${menu2}`;
-    const searchButtonLabel = (0, import_i18n68.sprintf)((0, import_i18n68.__)("Search in %s"), title);
-    return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(MenuTitleUI, {
+    const searchButtonLabel = (0, import_i18n66.sprintf)((0, import_i18n66.__)("Search in %s"), title);
+    return /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(MenuTitleUI, {
       className: "components-navigation__menu-title",
-      children: [!isSearching && /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(GroupTitleUI, {
+      children: [!isSearching && /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(GroupTitleUI, {
         as: "h2",
         className: "components-navigation__menu-title-heading",
         level: 3,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime240.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime239.jsx)("span", {
           id: menuTitleId,
           children: title
-        }), (hasSearch || titleAction) && /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(MenuTitleActionsUI, {
-          children: [titleAction, hasSearch && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(button_default, {
+        }), (hasSearch || titleAction) && /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(MenuTitleActionsUI, {
+          children: [titleAction, hasSearch && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(button_default, {
             size: "small",
             variant: "tertiary",
             label: searchButtonLabel,
             onClick: () => setIsSearching(true),
             ref: searchButtonRef,
-            children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(icon_default2, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(icon_default2, {
               icon: search_default
             })
           })]
         })]
-      }), isSearching && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", {
+      }), isSearching && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", {
         className: getAnimateClassName({
           type: "slide-in",
           origin: "left"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(menu_title_search_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_title_search_default, {
           onCloseSearch,
           onSearch,
           search,
@@ -46898,8 +46799,8 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigation/menu/search-no-results-found.js
-  var import_i18n69 = __toESM(require_i18n());
-  var import_jsx_runtime241 = __toESM(require_jsx_runtime());
+  var import_i18n67 = __toESM(require_i18n());
+  var import_jsx_runtime240 = __toESM(require_jsx_runtime());
   function NavigationSearchNoResultsFound({
     search
   }) {
@@ -46912,15 +46813,15 @@ This message will only show in development mode. It won't appear in production. 
     if (!search || !!resultsCount) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(ItemBaseUI, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(ItemUI, {
-        children: [(0, import_i18n69.__)("No results found."), " "]
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(ItemBaseUI, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(ItemUI, {
+        children: [(0, import_i18n67.__)("No results found."), " "]
       })
     });
   }
 
   // packages/components/build-module/navigation/menu/index.js
-  var import_jsx_runtime242 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime241 = __toESM(require_jsx_runtime());
   function NavigationMenu(props) {
     const {
       backButtonLabel,
@@ -46946,7 +46847,7 @@ This message will only show in development mode. It won't appear in production. 
       search: uncontrolledSearch
     };
     if (activeMenu !== menu2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationMenuContext.Provider, {
+      return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(NavigationMenuContext.Provider, {
         value: context,
         children
       });
@@ -46956,24 +46857,24 @@ This message will only show in development mode. It won't appear in production. 
     const onSearch = isControlledSearch ? setControlledSearch : setUncontrolledSearch;
     const menuTitleId = `components-navigation__menu-title-${menu2}`;
     const classes = clsx_default("components-navigation__menu", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationMenuContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(NavigationMenuContext.Provider, {
       value: context,
-      children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(MenuUI, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(MenuUI, {
         className: classes,
-        children: [(parentMenu || onBackButtonClick) && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(back_button_default, {
+        children: [(parentMenu || onBackButtonClick) && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(back_button_default, {
           backButtonLabel,
           parentMenu,
           onClick: onBackButtonClick
-        }), title && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationMenuTitle, {
+        }), title && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(NavigationMenuTitle, {
           hasSearch,
           onSearch,
           search,
           title,
           titleAction
-        }), /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(menu_default2, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)("ul", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(menu_default2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)("ul", {
             "aria-labelledby": menuTitleId,
-            children: [children, search && !isSearchDebouncing && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigationSearchNoResultsFound, {
+            children: [children, search && !isSearchDebouncing && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(NavigationSearchNoResultsFound, {
               search
             })]
           })
@@ -47450,8 +47351,8 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigator/navigator/component.js
-  var import_deprecated25 = __toESM(require_deprecated());
-  var import_jsx_runtime243 = __toESM(require_jsx_runtime());
+  var import_deprecated24 = __toESM(require_deprecated());
+  var import_jsx_runtime242 = __toESM(require_jsx_runtime());
   function addScreen({
     screens
   }, screen) {
@@ -47622,7 +47523,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         options: options2
       }),
       goToParent: (options2) => {
-        (0, import_deprecated25.default)(`wp.components.useNavigator().goToParent`, {
+        (0, import_deprecated24.default)(`wp.components.useNavigator().goToParent`, {
           since: "6.7",
           alternative: "wp.components.useNavigator().goBack"
         });
@@ -47655,11 +47556,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [currentLocation, matchedPath, methods]);
     const cx3 = useCx();
     const classes = (0, import_element167.useMemo)(() => cx3(navigatorWrapper, className2), [className2, cx3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(component_default, {
       ref: forwardedRef,
       className: classes,
       ...otherProps,
-      children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(NavigatorContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(NavigatorContext.Provider, {
         value: navigatorContextValue,
         children
       })
@@ -47677,7 +47578,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.js
   var import_element168 = __toESM(require_element());
   var import_compose66 = __toESM(require_compose());
-  var import_i18n70 = __toESM(require_i18n());
+  var import_i18n68 = __toESM(require_i18n());
   var ANIMATION_TIMEOUT_MARGIN = 1.2;
   var isEnterAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_IN" && animationName === ANIMATION_END_NAMES[animationDirection].in;
   var isExitAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_OUT" && animationName === ANIMATION_END_NAMES[animationDirection].out;
@@ -47687,7 +47588,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     isBack,
     onAnimationEnd
   }) {
-    const isRTL23 = (0, import_i18n70.isRTL)();
+    const isRTL23 = (0, import_i18n68.isRTL)();
     const prefersReducedMotion2 = (0, import_compose66.useReducedMotion)();
     const [animationStatus, setAnimationStatus] = (0, import_element168.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
@@ -47751,7 +47652,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-screen/component.js
-  var import_jsx_runtime244 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime243 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
       true ? (0, import_warning8.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
@@ -47824,7 +47725,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       elementToFocus.focus();
     }, [skipAnimationAndFocusRestoration, isMatch, isBack, focusTargetSelector, skipFocus]);
     const mergedWrapperRef = (0, import_compose67.useMergeRefs)([forwardedRef, wrapperRef]);
-    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(component_default, {
+    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(component_default, {
       ref: mergedWrapperRef,
       className: classes,
       ...screenProps,
@@ -47887,10 +47788,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-button/component.js
-  var import_jsx_runtime245 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime244 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorButton(props, forwardedRef) {
     const navigatorButtonProps = useNavigatorButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorButtonProps
     });
@@ -47921,10 +47822,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-back-button/component.js
-  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime245 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorBackButton(props, forwardedRef) {
     const navigatorBackButtonProps = useNavigatorBackButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorBackButtonProps
     });
@@ -47932,14 +47833,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, "Navigator.BackButton");
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.js
-  var import_deprecated26 = __toESM(require_deprecated());
-  var import_jsx_runtime247 = __toESM(require_jsx_runtime());
+  var import_deprecated25 = __toESM(require_deprecated());
+  var import_jsx_runtime246 = __toESM(require_jsx_runtime());
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
-    (0, import_deprecated26.default)("wp.components.NavigatorToParentButton", {
+    (0, import_deprecated25.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(NavigatorBackButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(NavigatorBackButton, {
       ref: forwardedRef,
       ...props
     });
@@ -48061,10 +47962,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/notice/index.js
-  var import_i18n71 = __toESM(require_i18n());
+  var import_i18n69 = __toESM(require_i18n());
   var import_element173 = __toESM(require_element());
   var import_a11y8 = __toESM(require_a11y());
-  var import_jsx_runtime248 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime247 = __toESM(require_jsx_runtime());
   var noop20 = () => {
   };
   function useSpokenMessage(message3, politeness) {
@@ -48089,14 +47990,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function getStatusLabel(status) {
     switch (status) {
       case "warning":
-        return (0, import_i18n71.__)("Warning notice");
+        return (0, import_i18n69.__)("Warning notice");
       case "info":
-        return (0, import_i18n71.__)("Information notice");
+        return (0, import_i18n69.__)("Information notice");
       case "error":
-        return (0, import_i18n71.__)("Error notice");
+        return (0, import_i18n69.__)("Error notice");
       // The default will also catch the 'success' status.
       default:
-        return (0, import_i18n71.__)("Notice");
+        return (0, import_i18n69.__)("Notice");
     }
   }
   function Notice({
@@ -48119,7 +48020,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       "is-dismissible": isDismissible
     });
     if (__unstableHTML && typeof children === "string") {
-      children = /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(import_element173.RawHTML, {
+      children = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_element173.RawHTML, {
         children
       });
     }
@@ -48127,13 +48028,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onDismiss();
       onRemove();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)("div", {
       className: classes,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime248.jsx)(component_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime247.jsx)(component_default2, {
         children: getStatusLabel(status)
-      }), /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)("div", {
         className: "components-notice__content",
-        children: [children, actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {
+        children: [children, actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("div", {
           className: "components-notice__actions",
           children: actions.map(({
             className: buttonCustomClasses,
@@ -48151,7 +48052,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             if (typeof computedVariant === "undefined" && isPrimary) {
               computedVariant = "primary";
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(button_default, {
+            return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(button_default, {
               __next40pxDefaultSize: true,
               href: url,
               variant: computedVariant,
@@ -48161,11 +48062,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             }, index2);
           })
         })]
-      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(button_default, {
+      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(button_default, {
         size: "small",
         className: "components-notice__dismiss",
         icon: close_default,
-        label: (0, import_i18n71.__)("Close"),
+        label: (0, import_i18n69.__)("Close"),
         onClick: onDismissNotice
       })]
     });
@@ -48174,7 +48075,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/notice/list.js
   var import_react126 = __toESM(require_react());
-  var import_jsx_runtime249 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime248 = __toESM(require_jsx_runtime());
   var noop21 = () => {
   };
   function NoticeList({
@@ -48185,7 +48086,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const removeNotice = (id3) => () => onRemove(id3);
     className2 = clsx_default("components-notice-list", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
       className: className2,
       children: [children, [...notices].reverse().map((notice) => {
         const {
@@ -48206,14 +48107,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element174 = __toESM(require_element());
 
   // packages/components/build-module/panel/header.js
-  var import_jsx_runtime250 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime249 = __toESM(require_jsx_runtime());
   function PanelHeader({
     label,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)("div", {
       className: "components-panel__header",
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("h2", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("h2", {
         children: label
       }), children]
     });
@@ -48221,17 +48122,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var header_default = PanelHeader;
 
   // packages/components/build-module/panel/index.js
-  var import_jsx_runtime251 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime250 = __toESM(require_jsx_runtime());
   function UnforwardedPanel({
     header,
     className: className2,
     children
   }, ref) {
     const classNames = clsx_default(className2, "components-panel");
-    return /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)("div", {
       className: classNames,
       ref,
-      children: [header && /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(header_default, {
+      children: [header && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(header_default, {
         label: header
       }), children]
     });
@@ -48242,7 +48143,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/panel/body.js
   var import_compose68 = __toESM(require_compose());
   var import_element175 = __toESM(require_element());
-  var import_jsx_runtime252 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime251 = __toESM(require_jsx_runtime());
   var noop22 = () => {
   };
   function UnforwardedPanelBody(props, ref) {
@@ -48283,10 +48184,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const classes = clsx_default("components-panel__body", className2, {
       "is-opened": isOpened
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)("div", {
       className: classes,
       ref: (0, import_compose68.useMergeRefs)([nodeRef, ref]),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)(PanelBodyTitle, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime251.jsx)(PanelBodyTitle, {
         icon,
         isOpened: Boolean(isOpened),
         onClick: handleOnToggle,
@@ -48306,21 +48207,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!title) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("h2", {
+    return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)("h2", {
       className: "components-panel__body-title",
-      children: /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-panel__body-toggle",
         "aria-expanded": isOpened,
         ref,
         ...props,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime251.jsx)("span", {
           "aria-hidden": "true",
-          children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(icon_default3, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(icon_default3, {
             className: "components-panel__arrow",
             icon: isOpened ? chevron_up_default : chevron_down_default
           })
-        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(icon_default3, {
+        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(icon_default3, {
           icon,
           className: "components-panel__icon",
           size: 20
@@ -48333,12 +48234,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/panel/row.js
   var import_element176 = __toESM(require_element());
-  var import_jsx_runtime253 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime252 = __toESM(require_jsx_runtime());
   function UnforwardedPanelRow({
     className: className2,
     children
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", {
       className: clsx_default("components-panel__row", className2),
       ref,
       children
@@ -48352,14 +48253,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_primitives34 = __toESM(require_primitives());
   var import_element177 = __toESM(require_element());
   var import_a11y9 = __toESM(require_a11y());
-  var import_jsx_runtime254 = __toESM(require_jsx_runtime());
-  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_primitives34.SVG, {
+  var import_jsx_runtime253 = __toESM(require_jsx_runtime());
+  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_primitives34.SVG, {
     className: "components-placeholder__illustration",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 60 60",
     preserveAspectRatio: "none",
-    children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_primitives34.Path, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_primitives34.Path, {
       vectorEffect: "non-scaling-stroke",
       d: "M60 60 0 0"
     })
@@ -48397,21 +48298,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         (0, import_a11y9.speak)(instructions);
       }
     }, [instructions]);
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("div", {
       ...additionalProps,
       className: classes,
-      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
+      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
         className: "components-placeholder__preview",
         children: preview
-      }), /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("div", {
         className: "components-placeholder__label",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime254.jsx)(icon_default3, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)(icon_default3, {
           icon
         }), label]
-      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
+      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
         className: "components-placeholder__instructions",
         children: instructions
-      }), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
         className: fieldsetClasses,
         children
       })]
@@ -48420,11 +48321,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var placeholder_default = Placeholder;
 
   // packages/components/build-module/progress-bar/index.js
-  var import_i18n73 = __toESM(require_i18n());
+  var import_i18n71 = __toESM(require_i18n());
   var import_element178 = __toESM(require_element());
 
   // packages/components/build-module/progress-bar/styles.js
-  var import_i18n72 = __toESM(require_i18n());
+  var import_i18n70 = __toESM(require_i18n());
   function _EMOTION_STRINGIFIED_CSS_ERROR__37() {
     return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
   }
@@ -48466,7 +48367,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     animationDuration: "1.5s",
     animationTimingFunction: "ease-in-out",
     animationIterationCount: "infinite",
-    animationName: animateProgressBar((0, import_i18n72.isRTL)()),
+    animationName: animateProgressBar((0, import_i18n70.isRTL)()),
     width: `${INDETERMINATE_TRACK_WIDTH}%`
   }, false ? "" : ";label:Indicator;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEwRUsiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgY3NzLCBrZXlmcmFtZXMgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5cbi8qKlxuICogV29yZFByZXNzIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBpc1JUTCB9IGZyb20gJ0B3b3JkcHJlc3MvaTE4bic7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IENPTE9SUywgQ09ORklHIH0gZnJvbSAnLi4vdXRpbHMnO1xuXG5mdW5jdGlvbiBhbmltYXRlUHJvZ3Jlc3NCYXIoIGlzUnRsID0gZmFsc2UgKSB7XG5cdGNvbnN0IGFuaW1hdGlvbkRpcmVjdGlvbiA9IGlzUnRsID8gJ3JpZ2h0JyA6ICdsZWZ0JztcblxuXHRyZXR1cm4ga2V5ZnJhbWVzKCB7XG5cdFx0JzAlJzoge1xuXHRcdFx0WyBhbmltYXRpb25EaXJlY3Rpb24gXTogJy01MCUnLFxuXHRcdH0sXG5cdFx0JzEwMCUnOiB7XG5cdFx0XHRbIGFuaW1hdGlvbkRpcmVjdGlvbiBdOiAnMTAwJScsXG5cdFx0fSxcblx0fSApO1xufVxuXG4vLyBXaWR0aCBvZiB0aGUgaW5kaWNhdG9yIGZvciB0aGUgaW5kZXRlcm1pbmF0ZSBwcm9ncmVzcyBiYXJcbmV4cG9ydCBjb25zdCBJTkRFVEVSTUlOQVRFX1RSQUNLX1dJRFRIID0gNTA7XG5cbmV4cG9ydCBjb25zdCBUcmFjayA9IHN0eWxlZC5kaXZgXG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0b3ZlcmZsb3c6IGhpZGRlbjtcblx0aGVpZ2h0OiAkeyBDT05GSUcuYm9yZGVyV2lkdGhGb2N1cyB9O1xuXHQvKiBUZXh0IGNvbG9yIGF0IDEwJSBvcGFjaXR5ICovXG5cdGJhY2tncm91bmQtY29sb3I6IGNvbG9yLW1peChcblx0XHRpbiBzcmdiLFxuXHRcdCR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH0sXG5cdFx0dHJhbnNwYXJlbnQgOTAlXG5cdCk7XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNGdWxsIH07XG5cblx0Ly8gV2luZG93cyBoaWdoIGNvbnRyYXN0IG1vZGUuXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0b3V0bGluZS1vZmZzZXQ6IDJweDtcblxuXHQ6d2hlcmUoICYgKSB7XG5cdFx0d2lkdGg6IDE2MHB4O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgSW5kaWNhdG9yID0gc3R5bGVkLmRpdjwge1xuXHRpc0luZGV0ZXJtaW5hdGU6IGJvb2xlYW47XG59ID5gXG5cdGRpc3BsYXk6IGlubGluZS1ibG9jaztcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHR0b3A6IDA7XG5cdGhlaWdodDogMTAwJTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c0Z1bGwgfTtcblx0LyogVGV4dCBjb2xvciBhdCA5MCUgb3BhY2l0eSAqL1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoXG5cdFx0aW4gc3JnYixcblx0XHQkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9LFxuXHRcdHRyYW5zcGFyZW50IDEwJVxuXHQpO1xuXG5cdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdG91dGxpbmUtb2Zmc2V0OiAtMnB4O1xuXG5cdCR7ICggeyBpc0luZGV0ZXJtaW5hdGUgfSApID0+XG5cdFx0aXNJbmRldGVybWluYXRlXG5cdFx0XHQ/IGNzcygge1xuXHRcdFx0XHRcdGFuaW1hdGlvbkR1cmF0aW9uOiAnMS41cycsXG5cdFx0XHRcdFx0YW5pbWF0aW9uVGltaW5nRnVuY3Rpb246ICdlYXNlLWluLW91dCcsXG5cdFx0XHRcdFx0YW5pbWF0aW9uSXRlcmF0aW9uQ291bnQ6ICdpbmZpbml0ZScsXG5cdFx0XHRcdFx0YW5pbWF0aW9uTmFtZTogYW5pbWF0ZVByb2dyZXNzQmFyKCBpc1JUTCgpICksXG5cdFx0XHRcdFx0d2lkdGg6IGAkeyBJTkRFVEVSTUlOQVRFX1RSQUNLX1dJRFRIIH0lYCxcblx0XHRcdCAgfSApXG5cdFx0XHQ6IGNzcygge1xuXHRcdFx0XHRcdHdpZHRoOiAndmFyKC0taW5kaWNhdG9yLXdpZHRoKScsXG5cdFx0XHRcdFx0dHJhbnNpdGlvbjogJ3dpZHRoIDAuNHMgZWFzZS1pbi1vdXQnLFxuXHRcdFx0ICB9ICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBQcm9ncmVzc0VsZW1lbnQgPSBzdHlsZWQucHJvZ3Jlc3NgXG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0dG9wOiAwO1xuXHRsZWZ0OiAwO1xuXHRvcGFjaXR5OiAwO1xuXHR3aWR0aDogMTAwJTtcblx0aGVpZ2h0OiAxMDAlO1xuYDtcbiJdfQ== */") : _ref10, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF1REciLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgY3NzLCBrZXlmcmFtZXMgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5cbi8qKlxuICogV29yZFByZXNzIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBpc1JUTCB9IGZyb20gJ0B3b3JkcHJlc3MvaTE4bic7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IENPTE9SUywgQ09ORklHIH0gZnJvbSAnLi4vdXRpbHMnO1xuXG5mdW5jdGlvbiBhbmltYXRlUHJvZ3Jlc3NCYXIoIGlzUnRsID0gZmFsc2UgKSB7XG5cdGNvbnN0IGFuaW1hdGlvbkRpcmVjdGlvbiA9IGlzUnRsID8gJ3JpZ2h0JyA6ICdsZWZ0JztcblxuXHRyZXR1cm4ga2V5ZnJhbWVzKCB7XG5cdFx0JzAlJzoge1xuXHRcdFx0WyBhbmltYXRpb25EaXJlY3Rpb24gXTogJy01MCUnLFxuXHRcdH0sXG5cdFx0JzEwMCUnOiB7XG5cdFx0XHRbIGFuaW1hdGlvbkRpcmVjdGlvbiBdOiAnMTAwJScsXG5cdFx0fSxcblx0fSApO1xufVxuXG4vLyBXaWR0aCBvZiB0aGUgaW5kaWNhdG9yIGZvciB0aGUgaW5kZXRlcm1pbmF0ZSBwcm9ncmVzcyBiYXJcbmV4cG9ydCBjb25zdCBJTkRFVEVSTUlOQVRFX1RSQUNLX1dJRFRIID0gNTA7XG5cbmV4cG9ydCBjb25zdCBUcmFjayA9IHN0eWxlZC5kaXZgXG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0b3ZlcmZsb3c6IGhpZGRlbjtcblx0aGVpZ2h0OiAkeyBDT05GSUcuYm9yZGVyV2lkdGhGb2N1cyB9O1xuXHQvKiBUZXh0IGNvbG9yIGF0IDEwJSBvcGFjaXR5ICovXG5cdGJhY2tncm91bmQtY29sb3I6IGNvbG9yLW1peChcblx0XHRpbiBzcmdiLFxuXHRcdCR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH0sXG5cdFx0dHJhbnNwYXJlbnQgOTAlXG5cdCk7XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNGdWxsIH07XG5cblx0Ly8gV2luZG93cyBoaWdoIGNvbnRyYXN0IG1vZGUuXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0b3V0bGluZS1vZmZzZXQ6IDJweDtcblxuXHQ6d2hlcmUoICYgKSB7XG5cdFx0d2lkdGg6IDE2MHB4O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgSW5kaWNhdG9yID0gc3R5bGVkLmRpdjwge1xuXHRpc0luZGV0ZXJtaW5hdGU6IGJvb2xlYW47XG59ID5gXG5cdGRpc3BsYXk6IGlubGluZS1ibG9jaztcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHR0b3A6IDA7XG5cdGhlaWdodDogMTAwJTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c0Z1bGwgfTtcblx0LyogVGV4dCBjb2xvciBhdCA5MCUgb3BhY2l0eSAqL1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoXG5cdFx0aW4gc3JnYixcblx0XHQkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9LFxuXHRcdHRyYW5zcGFyZW50IDEwJVxuXHQpO1xuXG5cdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdG91dGxpbmUtb2Zmc2V0OiAtMnB4O1xuXG5cdCR7ICggeyBpc0luZGV0ZXJtaW5hdGUgfSApID0+XG5cdFx0aXNJbmRldGVybWluYXRlXG5cdFx0XHQ/IGNzcygge1xuXHRcdFx0XHRcdGFuaW1hdGlvbkR1cmF0aW9uOiAnMS41cycsXG5cdFx0XHRcdFx0YW5pbWF0aW9uVGltaW5nRnVuY3Rpb246ICdlYXNlLWluLW91dCcsXG5cdFx0XHRcdFx0YW5pbWF0aW9uSXRlcmF0aW9uQ291bnQ6ICdpbmZpbml0ZScsXG5cdFx0XHRcdFx0YW5pbWF0aW9uTmFtZTogYW5pbWF0ZVByb2dyZXNzQmFyKCBpc1JUTCgpICksXG5cdFx0XHRcdFx0d2lkdGg6IGAkeyBJTkRFVEVSTUlOQVRFX1RSQUNLX1dJRFRIIH0lYCxcblx0XHRcdCAgfSApXG5cdFx0XHQ6IGNzcygge1xuXHRcdFx0XHRcdHdpZHRoOiAndmFyKC0taW5kaWNhdG9yLXdpZHRoKScsXG5cdFx0XHRcdFx0dHJhbnNpdGlvbjogJ3dpZHRoIDAuNHMgZWFzZS1pbi1vdXQnLFxuXHRcdFx0ICB9ICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBQcm9ncmVzc0VsZW1lbnQgPSBzdHlsZWQucHJvZ3Jlc3NgXG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0dG9wOiAwO1xuXHRsZWZ0OiAwO1xuXHRvcGFjaXR5OiAwO1xuXHR3aWR0aDogMTAwJTtcblx0aGVpZ2h0OiAxMDAlO1xuYDtcbiJdfQ== */"));
   var ProgressElement = /* @__PURE__ */ emotion_styled_base_browser_esm_default("progress", false ? {
@@ -48485,7 +48386,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/progress-bar/index.js
-  var import_jsx_runtime255 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime254 = __toESM(require_jsx_runtime());
   function UnforwardedProgressBar(props, ref) {
     const {
       className: className2,
@@ -48493,17 +48394,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...progressProps
     } = props;
     const isIndeterminate = !Number.isFinite(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(Track2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(Track2, {
       className: className2,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime255.jsx)(Indicator, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime254.jsx)(Indicator, {
         style: {
           "--indicator-width": !isIndeterminate ? `${value}%` : void 0
         },
         isIndeterminate
-      }), /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(ProgressElement, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(ProgressElement, {
         max: 100,
         value,
-        "aria-label": (0, import_i18n73.__)("Loading \u2026"),
+        "aria-label": (0, import_i18n71.__)("Loading \u2026"),
         ref,
         ...progressProps
       })]
@@ -48513,7 +48414,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var progress_bar_default = ProgressBar;
 
   // packages/components/build-module/query-controls/index.js
-  var import_i18n74 = __toESM(require_i18n());
+  var import_i18n72 = __toESM(require_i18n());
 
   // packages/components/build-module/query-controls/terms.js
   var ensureParentsAreDefined = (terms) => {
@@ -48554,8 +48455,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tree-select/index.js
   var import_element179 = __toESM(require_element());
   var import_html_entities = __toESM(require_html_entities());
-  var import_jsx_runtime256 = __toESM(require_jsx_runtime());
-  var CONTEXT_VALUE3 = {
+  var import_jsx_runtime255 = __toESM(require_jsx_runtime());
+  var CONTEXT_VALUE2 = {
     BaseControl: {
       // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
       // via the context system to override the value set by SelectControl.
@@ -48590,9 +48491,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: restProps.size,
       __next40pxDefaultSize: restProps.__next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(ContextSystemProvider, {
-      value: CONTEXT_VALUE3,
-      children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(SelectControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(ContextSystemProvider, {
+      value: CONTEXT_VALUE2,
+      children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(SelectControl, {
         __shouldNotWarnDeprecated36pxSize: true,
         label,
         options: options2,
@@ -48605,7 +48506,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var tree_select_default = TreeSelect;
 
   // packages/components/build-module/query-controls/author-select.js
-  var import_jsx_runtime257 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime256 = __toESM(require_jsx_runtime());
   function AuthorSelect({
     __next40pxDefaultSize,
     label,
@@ -48618,7 +48519,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const termsTree = buildTermsTree(authorList);
-    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -48631,7 +48532,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/query-controls/category-select.js
   var import_element180 = __toESM(require_element());
-  var import_jsx_runtime258 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime257 = __toESM(require_jsx_runtime());
   function CategorySelect({
     __next40pxDefaultSize,
     label,
@@ -48644,7 +48545,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const termsTree = (0, import_element180.useMemo)(() => {
       return buildTermsTree(categoriesList);
     }, [categoriesList]);
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -48657,7 +48558,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/query-controls/index.js
-  var import_jsx_runtime259 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime258 = __toESM(require_jsx_runtime());
   var DEFAULT_MIN_ITEMS = 1;
   var DEFAULT_MAX_ITEMS = 100;
   var MAX_CATEGORIES_SUGGESTIONS = 20;
@@ -48668,18 +48569,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return "categorySuggestions" in props;
   }
   var defaultOrderByOptions = [{
-    label: (0, import_i18n74.__)("Newest to oldest"),
+    label: (0, import_i18n72.__)("Newest to oldest"),
     value: "date/desc"
   }, {
-    label: (0, import_i18n74.__)("Oldest to newest"),
+    label: (0, import_i18n72.__)("Oldest to newest"),
     value: "date/asc"
   }, {
     /* translators: Label for ordering posts by title in ascending order. */
-    label: (0, import_i18n74.__)("A \u2192 Z"),
+    label: (0, import_i18n72.__)("A \u2192 Z"),
     value: "title/asc"
   }, {
     /* translators: Label for ordering posts by title in descending order. */
-    label: (0, import_i18n74.__)("Z \u2192 A"),
+    label: (0, import_i18n72.__)("Z \u2192 A"),
     value: "title/desc"
   }];
   function QueryControls({
@@ -48699,13 +48600,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     // but instead are destructured inline where necessary.
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(component_default18, {
       spacing: "4",
       className: "components-query-controls",
-      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(select_control_default, {
+      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(select_control_default, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
-        label: (0, import_i18n74.__)("Order by"),
+        label: (0, import_i18n72.__)("Order by"),
         value: orderBy === void 0 || order === void 0 ? void 0 : `${orderBy}/${order}`,
         options: orderByOptions,
         onChange: (value) => {
@@ -48720,16 +48621,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             onOrderByChange(newOrderBy);
           }
         }
-      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(CategorySelect, {
+      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(CategorySelect, {
         __next40pxDefaultSize: true,
         categoriesList: props.categoriesList,
-        label: (0, import_i18n74.__)("Category"),
-        noOptionLabel: (0, import_i18n74._x)("All", "categories"),
+        label: (0, import_i18n72.__)("Category"),
+        noOptionLabel: (0, import_i18n72._x)("All", "categories"),
         selectedCategoryId: props.selectedCategoryId,
         onChange: props.onCategoryChange
-      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(form_token_field_default, {
+      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(form_token_field_default, {
         __next40pxDefaultSize: true,
-        label: (0, import_i18n74.__)("Categories"),
+        label: (0, import_i18n72.__)("Categories"),
         value: props.selectedCategories && props.selectedCategories.map((item2) => ({
           id: item2.id,
           // Keeping the fallback to `item.value` for legacy reasons,
@@ -48741,17 +48642,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         suggestions: Object.keys(props.categorySuggestions),
         onChange: props.onCategoryChange,
         maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
-      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(AuthorSelect, {
+      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(AuthorSelect, {
         __next40pxDefaultSize: true,
         authorList,
-        label: (0, import_i18n74.__)("Author"),
-        noOptionLabel: (0, import_i18n74._x)("All", "authors"),
+        label: (0, import_i18n72.__)("Author"),
+        noOptionLabel: (0, import_i18n72._x)("All", "authors"),
         selectedAuthorId,
         onChange: onAuthorChange
-      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(range_control_default, {
+      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(range_control_default, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
-        label: (0, import_i18n74.__)("Number of items"),
+        label: (0, import_i18n72.__)("Number of items"),
         value: numberOfItems,
         onChange: onNumberOfItemsChange,
         min: minItems,
@@ -48774,7 +48675,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   RadioGroupContext.displayName = "RadioGroupContext";
 
   // packages/components/build-module/radio-group/radio.js
-  var import_jsx_runtime260 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime259 = __toESM(require_jsx_runtime());
   function UnforwardedRadio({
     value,
     children,
@@ -48791,12 +48692,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: void 0,
       __next40pxDefaultSize: props.__next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(Radio, {
+    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(Radio, {
       disabled,
       store,
       ref,
       value,
-      render: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(button_default, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(button_default, {
         variant: isChecked ? "primary" : "secondary",
         ...props
       }),
@@ -48807,10 +48708,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.js
-  var import_deprecated27 = __toESM(require_deprecated());
+  var import_deprecated26 = __toESM(require_deprecated());
   var import_element183 = __toESM(require_element());
-  var import_i18n75 = __toESM(require_i18n());
-  var import_jsx_runtime261 = __toESM(require_jsx_runtime());
+  var import_i18n73 = __toESM(require_i18n());
+  var import_jsx_runtime260 = __toESM(require_jsx_runtime());
   function UnforwardedRadioGroup({
     label,
     checked,
@@ -48826,21 +48727,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setValue: (newValue) => {
         onChange?.(newValue !== null && newValue !== void 0 ? newValue : void 0);
       },
-      rtl: (0, import_i18n75.isRTL)()
+      rtl: (0, import_i18n73.isRTL)()
     });
     const contextValue = (0, import_element183.useMemo)(() => ({
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
-    (0, import_deprecated27.default)("wp.components.__experimentalRadioGroup", {
+    (0, import_deprecated26.default)("wp.components.__experimentalRadioGroup", {
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(RadioGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(RadioGroupContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(RadioGroup, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(RadioGroup, {
         store: radioStore,
-        render: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(button_group_default, {
+        render: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(button_group_default, {
           __shouldNotWarnDeprecated: true,
           children
         }),
@@ -48855,7 +48756,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/radio-control/index.js
   var import_compose70 = __toESM(require_compose());
-  var import_jsx_runtime262 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime261 = __toESM(require_jsx_runtime());
   function generateOptionDescriptionId(radioGroupId, index2) {
     return `${radioGroupId}-${index2}-option-description`;
   }
@@ -48883,24 +48784,24 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!options2?.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("fieldset", {
+    return /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("fieldset", {
       id: id3,
       className: clsx_default(className2, "components-radio-control"),
       "aria-describedby": !!help ? generateHelpId(id3) : void 0,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(component_default2, {
         as: "legend",
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(base_control_default.VisualLabel, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(component_default18, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(component_default18, {
         spacing: 3,
         className: clsx_default("components-radio-control__group-wrapper", {
           "has-help": !!help
         }),
-        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("div", {
+        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", {
           className: "components-radio-control__option",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime262.jsx)("input", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime261.jsx)("input", {
             id: generateOptionId(id3, index2),
             className: "components-radio-control__input",
             type: "radio",
@@ -48914,18 +48815,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
               onClick?.(event);
             },
             ...additionalProps
-          }), /* @__PURE__ */ (0, import_jsx_runtime262.jsx)("label", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("label", {
             className: "components-radio-control__label",
             htmlFor: generateOptionId(id3, index2),
             children: option.label
-          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(StyledHelp, {
+          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(StyledHelp, {
             __nextHasNoMarginBottom: true,
             id: generateOptionDescriptionId(id3, index2),
             className: "components-radio-control__option-description",
             children: option.description
           }) : null]
         }, generateOptionId(id3, index2)))
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(StyledHelp, {
         __nextHasNoMarginBottom: true,
         id: generateHelpId(id3),
         className: "components-base-control__help",
@@ -48954,10 +48855,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     return function(d3, b3) {
       extendStatics(d3, b3);
-      function __68() {
+      function __67() {
         this.constructor = d3;
       }
-      d3.prototype = b3 === null ? Object.create(b3) : (__68.prototype = b3.prototype, new __68());
+      d3.prototype = b3 === null ? Object.create(b3) : (__67.prototype = b3.prototype, new __67());
     };
   })();
   var __assign2 = function() {
@@ -49067,10 +48968,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     return function(d3, b3) {
       extendStatics(d3, b3);
-      function __68() {
+      function __67() {
         this.constructor = d3;
       }
-      d3.prototype = b3 === null ? Object.create(b3) : (__68.prototype = b3.prototype, new __68());
+      d3.prototype = b3 === null ? Object.create(b3) : (__67.prototype = b3.prototype, new __67());
     };
   })();
   var __assign3 = function() {
@@ -49781,7 +49682,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.js
   var import_element185 = __toESM(require_element());
-  var import_i18n76 = __toESM(require_i18n());
+  var import_i18n74 = __toESM(require_i18n());
 
   // packages/components/build-module/resizable-box/resize-tooltip/utils.js
   var import_element184 = __toESM(require_element());
@@ -49948,7 +49849,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("&&&{color:", COLORS.theme.foregroundInverted, ";display:block;font-size:13px;line-height:1.4;white-space:nowrap;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE2Q3VDIiwiZmlsZSI6InJlc2l6ZS10b29sdGlwLnN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgZm9udCwgQ09MT1JTLCBDT05GSUcgfSBmcm9tICcuLi8uLi8uLi91dGlscyc7XG5cbmV4cG9ydCBjb25zdCBSb290ID0gc3R5bGVkLmRpdmBcblx0Ym90dG9tOiAwO1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRsZWZ0OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0cG9zaXRpb246IGFic29sdXRlO1xuXHRyaWdodDogMDtcblx0dG9wOiAwO1xuYDtcblxuZXhwb3J0IGNvbnN0IFRvb2x0aXBXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXHRvcGFjaXR5OiAwO1xuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcblx0dHJhbnNpdGlvbjogb3BhY2l0eSAxMjBtcyBsaW5lYXI7XG5gO1xuXG5leHBvcnQgY29uc3QgVG9vbHRpcCA9IHN0eWxlZC5kaXZgXG5cdGJhY2tncm91bmQ6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRmb250LWZhbWlseTogJHsgZm9udCggJ2RlZmF1bHQuZm9udEZhbWlseScgKSB9O1xuXHRmb250LXNpemU6IDEycHg7XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdHBhZGRpbmc6IDRweCA4cHg7XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcbmA7XG5cbi8vIFRPRE86IFJlc29sdmUgbmVlZCB0byB1c2UgJiYmIHRvIGluY3JlYXNlIHNwZWNpZmljaXR5XG4vLyBodHRwczovL2dpdGh1Yi5jb20vV29yZFByZXNzL2d1dGVuYmVyZy9pc3N1ZXMvMTg0ODNcblxuZXhwb3J0IGNvbnN0IExhYmVsVGV4dCA9IHN0eWxlZCggVGV4dCApYFxuXHQmJiYge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZEludmVydGVkIH07XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0Zm9udC1zaXplOiAxM3B4O1xuXHRcdGxpbmUtaGVpZ2h0OiAxLjQ7XG5cdFx0d2hpdGUtc3BhY2U6IG5vd3JhcDtcblx0fVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.js
-  var import_jsx_runtime263 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime262 = __toESM(require_jsx_runtime());
   var CORNER_OFFSET = 4;
   var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
   function Label3({
@@ -49985,20 +49886,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...style2,
         position: "absolute",
         top: CORNER_OFFSET,
-        right: (0, import_i18n76.isRTL)() ? void 0 : CORNER_OFFSET,
-        left: (0, import_i18n76.isRTL)() ? CORNER_OFFSET : void 0
+        right: (0, import_i18n74.isRTL)() ? void 0 : CORNER_OFFSET,
+        left: (0, import_i18n74.isRTL)() ? CORNER_OFFSET : void 0
       };
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(TooltipWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(TooltipWrapper, {
       "aria-hidden": "true",
       className: "components-resizable-tooltip__tooltip-wrapper",
       ref,
       style: style2,
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(Tooltip4, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Tooltip4, {
         className: "components-resizable-tooltip__tooltip",
         style: labelStyle,
-        children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(LabelText, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(LabelText, {
           as: "span",
           children: label
         })
@@ -50009,7 +49910,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var label_default = ForwardedComponent3;
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.js
-  var import_jsx_runtime264 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime263 = __toESM(require_jsx_runtime());
   var noop24 = () => {
   };
   function ResizeTooltip({
@@ -50038,12 +49939,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const classes = clsx_default("components-resize-tooltip", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(Root4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime263.jsxs)(Root4, {
       "aria-hidden": "true",
       className: classes,
       ref,
       ...props,
-      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(label_default, {
+      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(label_default, {
         "aria-hidden": props["aria-hidden"],
         label,
         position: position2,
@@ -50056,7 +49957,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var resize_tooltip_default = ForwardedComponent4;
 
   // packages/components/build-module/resizable-box/index.js
-  var import_jsx_runtime265 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime264 = __toESM(require_jsx_runtime());
   var HANDLE_CLASS_NAME = "components-resizable-box__handle";
   var SIDE_HANDLE_CLASS_NAME = "components-resizable-box__side-handle";
   var CORNER_HANDLE_CLASS_NAME = "components-resizable-box__corner-handle";
@@ -50096,16 +49997,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     __experimentalTooltipProps: tooltipProps = {},
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)(Resizable, {
+    return /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(Resizable, {
       className: clsx_default("components-resizable-box__container", showHandle && "has-show-handle", className2),
-      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("div", {
+      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("div", {
         tabIndex: -1
       }, key)])),
       handleClasses: HANDLE_CLASSES,
       handleStyles: HANDLE_STYLES,
       ref,
       ...props,
-      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(resize_tooltip_default, {
+      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(resize_tooltip_default, {
         ...tooltipProps
       })]
     });
@@ -50115,7 +50016,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/responsive-wrapper/index.js
   var import_element188 = __toESM(require_element());
-  var import_jsx_runtime266 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime265 = __toESM(require_jsx_runtime());
   function ResponsiveWrapper({
     naturalWidth,
     naturalHeight,
@@ -50130,9 +50031,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (naturalWidth && naturalHeight) {
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(TagName59, {
+    return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(TagName59, {
       className: "components-responsive-wrapper",
-      children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("div", {
         children: (0, import_element188.cloneElement)(children, {
           className: clsx_default("components-responsive-wrapper__content", children.props.className),
           style: {
@@ -50148,7 +50049,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/sandbox/index.js
   var import_element189 = __toESM(require_element());
   var import_compose72 = __toESM(require_compose());
-  var import_jsx_runtime267 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime266 = __toESM(require_jsx_runtime());
   var observeAndResizeJS = function() {
     const {
       MutationObserver: MutationObserver2
@@ -50245,34 +50146,34 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       if (!forceRerender && null !== contentDocument?.body.getAttribute("data-resizable-iframe-connected")) {
         return;
       }
-      const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("html", {
+      const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)("html", {
         lang: ownerDocument.documentElement.lang,
         className: type,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("head", {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsx)("title", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime266.jsxs)("head", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime266.jsx)("title", {
             children: title
-          }), /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("style", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("style", {
             dangerouslySetInnerHTML: {
               __html: style
             }
-          }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("style", {
+          }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("style", {
             dangerouslySetInnerHTML: {
               __html: rules
             }
           }, i3))]
-        }), /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("body", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)("body", {
           "data-resizable-iframe-connected": "data-resizable-iframe-connected",
           className: type,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsx)("div", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", {
             dangerouslySetInnerHTML: {
               __html: html
             }
-          }), /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("script", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("script", {
             type: "text/javascript",
             dangerouslySetInnerHTML: {
               __html: `(${observeAndResizeJS.toString()})();`
             }
-          }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("script", {
+          }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("script", {
             src
           }, src))]
         })]
@@ -50319,7 +50220,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     (0, import_element189.useEffect)(() => {
       trySandBox(true);
     }, [html, type]);
-    return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("iframe", {
       ref: (0, import_compose72.useMergeRefs)([ref, (0, import_compose72.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -50335,9 +50236,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/snackbar/index.js
   var import_a11y10 = __toESM(require_a11y());
   var import_element190 = __toESM(require_element());
-  var import_i18n77 = __toESM(require_i18n());
+  var import_i18n75 = __toESM(require_i18n());
   var import_warning9 = __toESM(require_warning());
-  var import_jsx_runtime268 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime267 = __toESM(require_jsx_runtime());
   var NOTICE_TIMEOUT = 6e3;
   function useSpokenMessage2(message3, politeness) {
     const spokenMessage = typeof message3 === "string" ? message3 : (0, import_element190.renderToString)(message3);
@@ -50407,18 +50308,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const snackbarContentClassnames = clsx_default("components-snackbar__content", {
       "components-snackbar__content-with-icon": !!icon
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("div", {
       ref,
       className: classes,
       onClick: !explicitDismiss ? dismissMe : void 0,
       tabIndex: 0,
       role: !explicitDismiss ? "button" : void 0,
       onKeyPress: !explicitDismiss ? dismissMe : void 0,
-      "aria-label": !explicitDismiss ? (0, import_i18n77.__)("Dismiss this notice") : void 0,
+      "aria-label": !explicitDismiss ? (0, import_i18n75.__)("Dismiss this notice") : void 0,
       "data-testid": "snackbar",
-      children: /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("div", {
         className: snackbarContentClassnames,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("div", {
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("div", {
           className: "components-snackbar__icon",
           children: icon
         }), children, actions.map(({
@@ -50426,21 +50327,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           onClick,
           url,
           openInNewTab = false
-        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(external_link_default, {
+        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(external_link_default, {
           href: url,
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(button_default, {
+        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(button_default, {
           __next40pxDefaultSize: true,
           href: url,
           variant: "link",
           onClick: (event) => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
-        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("span", {
+        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("span", {
           role: "button",
-          "aria-label": (0, import_i18n77.__)("Dismiss this notice"),
+          "aria-label": (0, import_i18n75.__)("Dismiss this notice"),
           tabIndex: 0,
           className: "components-snackbar__dismiss-button",
           onClick: dismissMe,
@@ -50456,7 +50357,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/snackbar/list.js
   var import_compose73 = __toESM(require_compose());
   var import_element191 = __toESM(require_element());
-  var import_jsx_runtime269 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime268 = __toESM(require_jsx_runtime());
   var SNACKBAR_VARIANTS = {
     init: {
       height: 0,
@@ -50498,26 +50399,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const isReducedMotion = (0, import_compose73.useReducedMotion)();
     className2 = clsx_default("components-snackbar-list", className2);
     const removeNotice = (notice) => () => onRemove?.(notice.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)("div", {
       className: className2,
       tabIndex: -1,
       ref: listRef,
       "data-testid": "snackbar-list",
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(AnimatePresence, {
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(AnimatePresence, {
         children: notices.map((notice) => {
           const {
             content,
             ...restNotice
           } = notice;
-          return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(motion.div, {
+          return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(motion.div, {
             layout: !isReducedMotion,
             initial: "init",
             animate: "open",
             exit: "exit",
             variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
-            children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", {
+            children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("div", {
               className: "components-snackbar-list__notice-container",
-              children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(snackbar_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(snackbar_default, {
                 ...restNotice,
                 onRemove: removeNotice(notice),
                 listRef,
@@ -50534,8 +50435,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tab-panel/index.js
   var import_element192 = __toESM(require_element());
   var import_compose74 = __toESM(require_compose());
-  var import_i18n78 = __toESM(require_i18n());
-  var import_jsx_runtime270 = __toESM(require_jsx_runtime());
+  var import_i18n76 = __toESM(require_i18n());
+  var import_jsx_runtime269 = __toESM(require_jsx_runtime());
   var extractTabName = (id3) => {
     if (typeof id3 === "undefined" || id3 === null) {
       return;
@@ -50577,7 +50478,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       orientation,
       selectOnMove,
       defaultSelectedId: prependInstanceId(initialTabName),
-      rtl: (0, import_i18n78.isRTL)()
+      rtl: (0, import_i18n76.isRTL)()
     });
     const selectedTabName = extractTabName(useStoreState(tabStore, "selectedId"));
     const setTabStoreSelectedId = (0, import_element192.useCallback)((tabName) => {
@@ -50618,21 +50519,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setTabStoreSelectedId(firstEnabledTab.name);
       }
     }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)("div", {
       className: className2,
       ref,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime270.jsx)(TabList, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime269.jsx)(TabList, {
         store: tabStore,
         className: "components-tab-panel__tabs",
         children: tabs.map((tab) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(Tab, {
+          return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(Tab, {
             id: prependInstanceId(tab.name),
             className: clsx_default("components-tab-panel__tabs-item", tab.className, {
               [activeClass]: tab.name === selectedTabName
             }),
             disabled: tab.disabled,
             "aria-controls": `${prependInstanceId(tab.name)}-view`,
-            render: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(button_default, {
+            render: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(button_default, {
               __next40pxDefaultSize: true,
               icon: tab.icon,
               label: tab.icon && tab.title,
@@ -50641,7 +50542,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: !tab.icon && tab.title
           }, tab.name);
         })
-      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(TabPanel, {
+      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(TabPanel, {
         id: `${prependInstanceId(selectedTab.name)}-view`,
         store: tabStore,
         tabId: prependInstanceId(selectedTab.name),
@@ -50656,7 +50557,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/text-control/index.js
   var import_compose75 = __toESM(require_compose());
   var import_element193 = __toESM(require_element());
-  var import_jsx_runtime271 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime270 = __toESM(require_jsx_runtime());
   function UnforwardedTextControl(props, ref) {
     const {
       // @ts-expect-error - Prevent passing this to `input`.
@@ -50679,14 +50580,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: void 0,
       __next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(base_control_default, {
       __nextHasNoMarginBottom: true,
       label,
       hideLabelFromVision,
       id: id3,
       help,
       className: className2,
-      children: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("input", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("input", {
         className: clsx_default("components-text-control__input", {
           "is-next-40px-default-size": __next40pxDefaultSize
         }),
@@ -50718,7 +50619,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("width:100%;display:block;font-family:", font("default.fontFamily"), ";line-height:20px;background:", COLORS.theme.background, ";color:", COLORS.theme.foreground, ";resize:vertical;padding:9px 11px;min-height:38px;", inputStyleNeutral, ";font-size:", font("mobileTextMinFontSize"), ";", breakpoint("small"), "{font-size:", font("default.fontSize"), ";}&:focus{", inputStyleFocus, ";}&::-webkit-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}.is-dark-theme &{&::-webkit-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRleHRhcmVhLWNvbnRyb2wtc3R5bGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQWtDNkMiLCJmaWxlIjoidGV4dGFyZWEtY29udHJvbC1zdHlsZXMudHMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEV4dGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgc3R5bGVkIGZyb20gJ0BlbW90aW9uL3N0eWxlZCc7XG5pbXBvcnQgeyBjc3MgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IGZvbnQgfSBmcm9tICcuLi8uLi91dGlscy9mb250JztcbmltcG9ydCB7IENPTE9SUyB9IGZyb20gJy4uLy4uL3V0aWxzL2NvbG9ycy12YWx1ZXMnO1xuaW1wb3J0IHsgQ09ORklHIH0gZnJvbSAnLi4vLi4vdXRpbHMnO1xuaW1wb3J0IHsgYnJlYWtwb2ludCB9IGZyb20gJy4uLy4uL3V0aWxzL2JyZWFrcG9pbnQnO1xuXG5jb25zdCBpbnB1dFN0eWxlTmV1dHJhbCA9IGNzc2Bcblx0Ym94LXNoYWRvdzogMCAwIDAgdHJhbnNwYXJlbnQ7XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXHRib3JkZXI6ICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9IHNvbGlkICR7IENPTE9SUy51aS5ib3JkZXIgfTtcblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uOiBib3gtc2hhZG93IDAuMXMgbGluZWFyO1xuXHR9XG5gO1xuXG5jb25zdCBpbnB1dFN0eWxlRm9jdXMgPSBjc3NgXG5cdGJvcmRlci1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRib3gtc2hhZG93OiAwIDAgMFxuXHRcdGNhbGMoICR7IENPTkZJRy5ib3JkZXJXaWR0aEZvY3VzIH0gLSAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSApXG5cdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXG5cdC8vIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlIHdpbGwgc2hvdyB0aGlzIG91dGxpbmUsIGJ1dCBub3QgdGhlIGJveC1zaGFkb3cuXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcbmA7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRUZXh0YXJlYSA9IHN0eWxlZC50ZXh0YXJlYWBcblx0d2lkdGg6IDEwMCU7XG5cdGRpc3BsYXk6IGJsb2NrO1xuXHRmb250LWZhbWlseTogJHsgZm9udCggJ2RlZmF1bHQuZm9udEZhbWlseScgKSB9O1xuXHRsaW5lLWhlaWdodDogMjBweDtcblx0YmFja2dyb3VuZDogJHsgQ09MT1JTLnRoZW1lLmJhY2tncm91bmQgfTtcblx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdHJlc2l6ZTogdmVydGljYWw7XG5cblx0Ly8gVmVydGljYWwgcGFkZGluZyBpcyB0byBtYXRjaCB0aGUgc3RhbmRhcmQgNDBweCBjb250cm9sIGhlaWdodCB3aGVuIHJvd3M9MSxcblx0Ly8gaW4gY29uanVuY3Rpb24gd2l0aCB0aGUgMjBweCBsaW5lLWhlaWdodC5cblx0Ly8gXCJTdGFuZGFyZFwiIG1ldHJpY3MgYXJlIDEwcHggMTJweCwgYnV0IHN1YnRyYWN0cyAxcHggZWFjaCB0byBhY2NvdW50IGZvciB0aGUgYm9yZGVyIHdpZHRoLlxuXHRwYWRkaW5nOiA5cHggMTFweDtcblxuXHQvLyBNYXRjaGluZyB0aGUgMjBweCBsaW5lLWhlaWdodCArIHRoZSA5cHggdG9wIGFuZCBib3R0b20gcGFkZGluZy5cblx0bWluLWhlaWdodDogMzhweDtcblxuXHQkeyBpbnB1dFN0eWxlTmV1dHJhbCB9O1xuXG5cdC8qIEZvbnRzIHNtYWxsZXIgdGhhbiAxNnB4IGNhdXNlcyBtb2JpbGUgc2FmYXJpIHRvIHpvb20uICovXG5cdGZvbnQtc2l6ZTogJHsgZm9udCggJ21vYmlsZVRleHRNaW5Gb250U2l6ZScgKSB9O1xuXG5cdCR7IGJyZWFrcG9pbnQoICdzbWFsbCcgKSB9IHtcblx0XHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdH1cblxuXHQmOmZvY3VzIHtcblx0XHQkeyBpbnB1dFN0eWxlRm9jdXMgfVxuXHR9XG5cblx0Ly8gVXNlIG9wYWNpdHkgdG8gd29yayBpbiB2YXJpb3VzIGVkaXRvciBzdHlsZXMuXG5cdCY6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHR9XG5cblx0Jjo6LW1vei1wbGFjZWhvbGRlciB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS5kYXJrR3JheVBsYWNlaG9sZGVyIH07XG5cdH1cblxuXHQmOi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS5kYXJrR3JheVBsYWNlaG9sZGVyIH07XG5cdH1cblxuXHQuaXMtZGFyay10aGVtZSAmIHtcblx0XHQmOjotd2Via2l0LWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkubGlnaHRHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOjotbW96LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkubGlnaHRHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmxpZ2h0R3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXHR9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/textarea-control/index.js
-  var import_jsx_runtime272 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime271 = __toESM(require_jsx_runtime());
   function UnforwardedTextareaControl(props, ref) {
     const {
       __nextHasNoMarginBottom,
@@ -50735,7 +50636,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const id3 = `inspector-textarea-control-${instanceId}`;
     const onChangeValue = (event) => onChange(event.target.value);
     const classes = clsx_default("components-textarea-control", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(base_control_default, {
       __nextHasNoMarginBottom,
       __associatedWPComponentName: "TextareaControl",
       label,
@@ -50743,7 +50644,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       id: id3,
       help,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(StyledTextarea, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(StyledTextarea, {
         className: "components-textarea-control__input",
         id: id3,
         rows,
@@ -50760,7 +50661,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/text-highlight/index.js
   var import_element195 = __toESM(require_element());
-  var import_jsx_runtime273 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime272 = __toESM(require_jsx_runtime());
   var TextHighlight = (props) => {
     const {
       text = "",
@@ -50768,28 +50669,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = props;
     const trimmedHighlightText = highlight.trim();
     if (!trimmedHighlightText) {
-      return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_jsx_runtime273.Fragment, {
+      return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_jsx_runtime272.Fragment, {
         children: text
       });
     }
     const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
     return (0, import_element195.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
-      mark: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)("mark", {})
+      mark: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("mark", {})
     });
   };
   var text_highlight_default = TextHighlight;
 
   // packages/components/build-module/tip/index.js
-  var import_jsx_runtime274 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime273 = __toESM(require_jsx_runtime());
   function Tip(props) {
     const {
       children
     } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)("div", {
       className: "components-tip",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime274.jsx)(icon_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime273.jsx)(icon_default2, {
         icon: tip_default
-      }), /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("p", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime273.jsx)("p", {
         children
       })]
     });
@@ -50799,8 +50700,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/toggle-control/index.js
   var import_element196 = __toESM(require_element());
   var import_compose77 = __toESM(require_compose());
-  var import_deprecated28 = __toESM(require_deprecated());
-  var import_jsx_runtime275 = __toESM(require_jsx_runtime());
+  var import_deprecated27 = __toESM(require_deprecated());
+  var import_jsx_runtime274 = __toESM(require_jsx_runtime());
   function UnforwardedToggleControl({
     __nextHasNoMarginBottom,
     label,
@@ -50820,7 +50721,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       marginBottom: space(3)
     }, false ? "" : ";label:classes;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFnRCtCIiwiZmlsZSI6ImluZGV4LnRzeCIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB0eXBlIHsgQ2hhbmdlRXZlbnQsIEZvcndhcmRlZFJlZiB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCBjbHN4IGZyb20gJ2Nsc3gnO1xuXG4vKipcbiAqIFdvcmRQcmVzcyBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgZm9yd2FyZFJlZiB9IGZyb20gJ0B3b3JkcHJlc3MvZWxlbWVudCc7XG5pbXBvcnQgeyB1c2VJbnN0YW5jZUlkIH0gZnJvbSAnQHdvcmRwcmVzcy9jb21wb3NlJztcbmltcG9ydCBkZXByZWNhdGVkIGZyb20gJ0B3b3JkcHJlc3MvZGVwcmVjYXRlZCc7XG5cbi8qKlxuICogSW50ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCB7IEZsZXhCbG9jayB9IGZyb20gJy4uL2ZsZXgnO1xuaW1wb3J0IEZvcm1Ub2dnbGUgZnJvbSAnLi4vZm9ybS10b2dnbGUnO1xuaW1wb3J0IEJhc2VDb250cm9sIGZyb20gJy4uL2Jhc2UtY29udHJvbCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vY29udGV4dC93b3JkcHJlc3MtY29tcG9uZW50JztcbmltcG9ydCB0eXBlIHsgVG9nZ2xlQ29udHJvbFByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5pbXBvcnQgeyBIU3RhY2sgfSBmcm9tICcuLi9oLXN0YWNrJztcbmltcG9ydCB7IHVzZUN4IH0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5cbmZ1bmN0aW9uIFVuZm9yd2FyZGVkVG9nZ2xlQ29udHJvbChcblx0e1xuXHRcdF9fbmV4dEhhc05vTWFyZ2luQm90dG9tLFxuXHRcdGxhYmVsLFxuXHRcdGNoZWNrZWQsXG5cdFx0aGVscCxcblx0XHRjbGFzc05hbWUsXG5cdFx0b25DaGFuZ2UsXG5cdFx0ZGlzYWJsZWQsXG5cdH06IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzPCBUb2dnbGVDb250cm9sUHJvcHMsICdpbnB1dCcsIGZhbHNlID4sXG5cdHJlZjogRm9yd2FyZGVkUmVmPCBIVE1MSW5wdXRFbGVtZW50ID5cbikge1xuXHRmdW5jdGlvbiBvbkNoYW5nZVRvZ2dsZSggZXZlbnQ6IENoYW5nZUV2ZW50PCBIVE1MSW5wdXRFbGVtZW50ID4gKSB7XG5cdFx0b25DaGFuZ2UoIGV2ZW50LnRhcmdldC5jaGVja2VkICk7XG5cdH1cblx0Y29uc3QgaW5zdGFuY2VJZCA9IHVzZUluc3RhbmNlSWQoIFRvZ2dsZUNvbnRyb2wgKTtcblx0Y29uc3QgaWQgPSBgaW5zcGVjdG9yLXRvZ2dsZS1jb250cm9sLSR7IGluc3RhbmNlSWQgfWA7XG5cblx0Y29uc3QgY3ggPSB1c2VDeCgpO1xuXHRjb25zdCBjbGFzc2VzID0gY3goXG5cdFx0J2NvbXBvbmVudHMtdG9nZ2xlLWNvbnRyb2wnLFxuXHRcdGNsYXNzTmFtZSxcblx0XHQhIF9fbmV4dEhhc05vTWFyZ2luQm90dG9tICYmIGNzcyggeyBtYXJnaW5Cb3R0b206IHNwYWNlKCAzICkgfSApXG5cdCk7XG5cblx0aWYgKCAhIF9fbmV4dEhhc05vTWFyZ2luQm90dG9tICkge1xuXHRcdGRlcHJlY2F0ZWQoICdCb3R0b20gbWFyZ2luIHN0eWxlcyBmb3Igd3AuY29tcG9uZW50cy5Ub2dnbGVDb250cm9sJywge1xuXHRcdFx0c2luY2U6ICc2LjcnLFxuXHRcdFx0dmVyc2lvbjogJzcuMCcsXG5cdFx0XHRoaW50OiAnU2V0IHRoZSBgX19uZXh0SGFzTm9NYXJnaW5Cb3R0b21gIHByb3AgdG8gdHJ1ZSB0byBzdGFydCBvcHRpbmcgaW50byB0aGUgbmV3IHN0eWxlcywgd2hpY2ggd2lsbCBiZWNvbWUgdGhlIGRlZmF1bHQgaW4gYSBmdXR1cmUgdmVyc2lvbi4nLFxuXHRcdH0gKTtcblx0fVxuXG5cdGxldCBkZXNjcmliZWRCeSwgaGVscExhYmVsO1xuXHRpZiAoIGhlbHAgKSB7XG5cdFx0aWYgKCB0eXBlb2YgaGVscCA9PT0gJ2Z1bmN0aW9uJyApIHtcblx0XHRcdC8vIGBoZWxwYCBhcyBhIGZ1bmN0aW9uIHdvcmtzIG9ubHkgZm9yIGNvbnRyb2xsZWQgY29tcG9uZW50cyB3aGVyZVxuXHRcdFx0Ly8gYGNoZWNrZWRgIGlzIHBhc3NlZCBkb3duIGZyb20gcGFyZW50IGNvbXBvbmVudC4gVW5jb250cm9sbGVkXG5cdFx0XHQvLyBjb21wb25lbnQgY2FuIHNob3cgb25seSBhIHN0YXRpYyBoZWxwIGxhYmVsLlxuXHRcdFx0aWYgKCBjaGVja2VkICE9PSB1bmRlZmluZWQgKSB7XG5cdFx0XHRcdGhlbHBMYWJlbCA9IGhlbHAoIGNoZWNrZWQgKTtcblx0XHRcdH1cblx0XHR9IGVsc2Uge1xuXHRcdFx0aGVscExhYmVsID0gaGVscDtcblx0XHR9XG5cdFx0aWYgKCBoZWxwTGFiZWwgKSB7XG5cdFx0XHRkZXNjcmliZWRCeSA9IGlkICsgJ19faGVscCc7XG5cdFx0fVxuXHR9XG5cblx0cmV0dXJuIChcblx0XHQ8QmFzZUNvbnRyb2xcblx0XHRcdGlkPXsgaWQgfVxuXHRcdFx0aGVscD17XG5cdFx0XHRcdGhlbHBMYWJlbCAmJiAoXG5cdFx0XHRcdFx0PHNwYW4gY2xhc3NOYW1lPVwiY29tcG9uZW50cy10b2dnbGUtY29udHJvbF9faGVscFwiPlxuXHRcdFx0XHRcdFx0eyBoZWxwTGFiZWwgfVxuXHRcdFx0XHRcdDwvc3Bhbj5cblx0XHRcdFx0KVxuXHRcdFx0fVxuXHRcdFx0Y2xhc3NOYW1lPXsgY2xhc3NlcyB9XG5cdFx0XHRfX25leHRIYXNOb01hcmdpbkJvdHRvbVxuXHRcdD5cblx0XHRcdDxIU3RhY2sganVzdGlmeT1cImZsZXgtc3RhcnRcIiBzcGFjaW5nPXsgMiB9PlxuXHRcdFx0XHQ8Rm9ybVRvZ2dsZVxuXHRcdFx0XHRcdGlkPXsgaWQgfVxuXHRcdFx0XHRcdGNoZWNrZWQ9eyBjaGVja2VkIH1cblx0XHRcdFx0XHRvbkNoYW5nZT17IG9uQ2hhbmdlVG9nZ2xlIH1cblx0XHRcdFx0XHRhcmlhLWRlc2NyaWJlZGJ5PXsgZGVzY3JpYmVkQnkgfVxuXHRcdFx0XHRcdGRpc2FibGVkPXsgZGlzYWJsZWQgfVxuXHRcdFx0XHRcdHJlZj17IHJlZiB9XG5cdFx0XHRcdC8+XG5cdFx0XHRcdDxGbGV4QmxvY2tcblx0XHRcdFx0XHRhcz1cImxhYmVsXCJcblx0XHRcdFx0XHRodG1sRm9yPXsgaWQgfVxuXHRcdFx0XHRcdGNsYXNzTmFtZT17IGNsc3goICdjb21wb25lbnRzLXRvZ2dsZS1jb250cm9sX19sYWJlbCcsIHtcblx0XHRcdFx0XHRcdCdpcy1kaXNhYmxlZCc6IGRpc2FibGVkLFxuXHRcdFx0XHRcdH0gKSB9XG5cdFx0XHRcdD5cblx0XHRcdFx0XHR7IGxhYmVsIH1cblx0XHRcdFx0PC9GbGV4QmxvY2s+XG5cdFx0XHQ8L0hTdGFjaz5cblx0XHQ8L0Jhc2VDb250cm9sPlxuXHQpO1xufVxuXG4vKipcbiAqIFRvZ2dsZUNvbnRyb2wgaXMgdXNlZCB0byBnZW5lcmF0ZSBhIHRvZ2dsZSB1c2VyIGludGVyZmFjZS5cbiAqXG4gKiBgYGBqc3hcbiAqIGltcG9ydCB7IFRvZ2dsZUNvbnRyb2wgfSBmcm9tICdAd29yZHByZXNzL2NvbXBvbmVudHMnO1xuICogaW1wb3J0IHsgdXNlU3RhdGUgfSBmcm9tICdAd29yZHByZXNzL2VsZW1lbnQnO1xuICpcbiAqIGNvbnN0IE15VG9nZ2xlQ29udHJvbCA9ICgpID0+IHtcbiAqICAgY29uc3QgWyB2YWx1ZSwgc2V0VmFsdWUgXSA9IHVzZVN0YXRlKCBmYWxzZSApO1xuICpcbiAqICAgcmV0dXJuIChcbiAqICAgICA8VG9nZ2xlQ29udHJvbFxuICogICAgICAgX19uZXh0SGFzTm9NYXJnaW5Cb3R0b21cbiAqICAgICAgIGxhYmVsPVwiRml4ZWQgQmFja2dyb3VuZFwiXG4gKiAgICAgICBjaGVja2VkPXsgdmFsdWUgfVxuICogICAgICAgb25DaGFuZ2U9eyAoKSA9PiBzZXRWYWx1ZSggKCBzdGF0ZSApID0+ICEgc3RhdGUgKSB9XG4gKiAgICAgLz5cbiAqICAgKTtcbiAqIH07XG4gKiBgYGBcbiAqL1xuZXhwb3J0IGNvbnN0IFRvZ2dsZUNvbnRyb2wgPSBmb3J3YXJkUmVmKCBVbmZvcndhcmRlZFRvZ2dsZUNvbnRyb2wgKTtcblxuZXhwb3J0IGRlZmF1bHQgVG9nZ2xlQ29udHJvbDtcbiJdfQ== */"));
     if (!__nextHasNoMarginBottom) {
-      (0, import_deprecated28.default)("Bottom margin styles for wp.components.ToggleControl", {
+      (0, import_deprecated27.default)("Bottom margin styles for wp.components.ToggleControl", {
         since: "6.7",
         version: "7.0",
         hint: "Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version."
@@ -50839,25 +50740,25 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         describedBy = id3 + "__help";
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(base_control_default, {
       id: id3,
-      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)("span", {
+      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("span", {
         className: "components-toggle-control__help",
         children: helpLabel
       }),
       className: classes,
       __nextHasNoMarginBottom: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)(component_default9, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(component_default9, {
         justify: "flex-start",
         spacing: 2,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime275.jsx)(form_toggle_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime274.jsx)(form_toggle_default, {
           id: id3,
           checked,
           onChange: onChangeToggle,
           "aria-describedby": describedBy,
           disabled,
           ref
-        }), /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(component_default5, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(component_default5, {
           as: "label",
           htmlFor: id3,
           className: clsx_default("components-toggle-control__label", {
@@ -50873,7 +50774,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/index.js
   var import_element203 = __toESM(require_element());
-  var import_deprecated29 = __toESM(require_deprecated());
+  var import_deprecated28 = __toESM(require_deprecated());
 
   // packages/components/build-module/toolbar/toolbar-group/index.js
   var import_element201 = __toESM(require_element());
@@ -50892,7 +50793,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_context_default = ToolbarContext;
 
   // packages/components/build-module/toolbar/toolbar-item/index.js
-  var import_jsx_runtime276 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime275 = __toESM(require_jsx_runtime());
   function UnforwardedToolbarItem({
     children,
     as: Component9,
@@ -50911,7 +50812,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     if (!accessibleToolbarStore) {
       if (Component9) {
-        return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(Component9, {
+        return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(Component9, {
           ...allProps,
           children
         });
@@ -50921,10 +50822,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       return children(allProps);
     }
-    const render = isRenderProp ? children : Component9 && /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(Component9, {
+    const render = isRenderProp ? children : Component9 && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(Component9, {
       children
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(ToolbarItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(ToolbarItem, {
       accessibleWhenDisabled: true,
       ...allProps,
       store: accessibleToolbarStore,
@@ -50935,18 +50836,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_item_default = ToolbarItem22;
 
   // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.js
-  var import_jsx_runtime277 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime276 = __toESM(require_jsx_runtime());
   var ToolbarButtonContainer = ({
     children,
     className: className2
-  }) => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("div", {
     className: className2,
     children
   });
   var toolbar_button_container_default = ToolbarButtonContainer;
 
   // packages/components/build-module/toolbar/toolbar-button/index.js
-  var import_jsx_runtime278 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime277 = __toESM(require_jsx_runtime());
   function useDeprecatedProps6({
     isDisabled,
     ...otherProps
@@ -50968,9 +50869,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useDeprecatedProps6(props);
     const accessibleToolbarState = (0, import_element199.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(toolbar_button_container_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(toolbar_button_container_default, {
         className: containerClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(button_default, {
           ref,
           icon: restProps.icon,
           size: "compact",
@@ -50993,12 +50894,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(toolbar_item_default, {
       className: clsx_default("components-toolbar-button", className2),
       ...extraProps,
       ...restProps,
       ref,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(button_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(button_default, {
         size: "compact",
         label: title,
         isPressed: isActive,
@@ -51011,12 +50912,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_button_default = ToolbarButton;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.js
-  var import_jsx_runtime279 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime278 = __toESM(require_jsx_runtime());
   var ToolbarGroupContainer = ({
     className: className2,
     children,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("div", {
     className: className2,
     ...props,
     children
@@ -51025,14 +50926,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.js
   var import_element200 = __toESM(require_element());
-  var import_jsx_runtime280 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime279 = __toESM(require_jsx_runtime());
   function ToolbarGroupCollapsed({
     controls = [],
     toggleProps,
     ...props
   }) {
     const accessibleToolbarState = (0, import_element200.useContext)(toolbar_context_default);
-    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(dropdown_menu_default, {
+    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(dropdown_menu_default, {
       controls,
       toggleProps: {
         ...internalToggleProps,
@@ -51041,7 +50942,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...props
     });
     if (accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(toolbar_item_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(toolbar_item_default, {
         ...toggleProps,
         children: renderDropdownMenu
       });
@@ -51051,7 +50952,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
 
   // packages/components/build-module/toolbar/toolbar-group/index.js
-  var import_jsx_runtime281 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime280 = __toESM(require_jsx_runtime());
   function isNestedArray(arr) {
     return Array.isArray(arr) && Array.isArray(arr[0]);
   }
@@ -51080,7 +50981,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       controlSets = [controls];
     }
     if (isCollapsed2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(toolbar_group_collapsed_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(toolbar_group_collapsed_default, {
         label: title,
         controls: controlSets,
         className: finalClassName,
@@ -51088,10 +50989,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(toolbar_group_container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(toolbar_group_container_default, {
       className: finalClassName,
       ...props,
-      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(toolbar_button_default, {
+      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(toolbar_button_default, {
         containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
         ...control
       }, [indexOfSet, indexOfControl].join()))), children]
@@ -51101,21 +51002,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/toolbar-container.js
   var import_element202 = __toESM(require_element());
-  var import_i18n79 = __toESM(require_i18n());
-  var import_jsx_runtime282 = __toESM(require_jsx_runtime());
+  var import_i18n77 = __toESM(require_i18n());
+  var import_jsx_runtime281 = __toESM(require_jsx_runtime());
   function UnforwardedToolbarContainer({
     label,
     ...props
   }, ref) {
     const toolbarStore = useToolbarStore({
       focusLoop: true,
-      rtl: (0, import_i18n79.isRTL)()
+      rtl: (0, import_i18n77.isRTL)()
     });
     return (
       // This will provide state for `ToolbarButton`'s
-      /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(toolbar_context_default.Provider, {
+      /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(toolbar_context_default.Provider, {
         value: toolbarStore,
-        children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(Toolbar, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(Toolbar, {
           ref,
           "aria-label": label,
           store: toolbarStore,
@@ -51128,7 +51029,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var toolbar_container_default = ToolbarContainer2;
 
   // packages/components/build-module/toolbar/toolbar/index.js
-  var import_jsx_runtime283 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime282 = __toESM(require_jsx_runtime());
   function UnforwardedToolbar({
     className: className2,
     label,
@@ -51153,7 +51054,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [isVariantDefined]);
     if (!label) {
-      (0, import_deprecated29.default)("Using Toolbar without label prop", {
+      (0, import_deprecated28.default)("Using Toolbar without label prop", {
         since: "5.6",
         alternative: "ToolbarGroup component",
         link: "https://developer.wordpress.org/block-editor/components/toolbar/"
@@ -51162,16 +51063,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         title: _title,
         ...restProps
       } = props;
-      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(toolbar_group_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(toolbar_group_default, {
         isCollapsed: false,
         ...restProps,
         className: className2
       });
     }
     const finalClassName = clsx_default("components-accessible-toolbar", className2, variant && `is-${variant}`);
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(ContextSystemProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(ContextSystemProvider, {
       value: contextSystemValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(toolbar_container_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(toolbar_container_default, {
         className: finalClassName,
         label,
         ref,
@@ -51184,18 +51085,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.js
   var import_element204 = __toESM(require_element());
-  var import_jsx_runtime284 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime283 = __toESM(require_jsx_runtime());
   function UnforwardedToolbarDropdownMenu(props, ref) {
     const accessibleToolbarState = (0, import_element204.useContext)(toolbar_context_default);
     if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(dropdown_menu_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(dropdown_menu_default, {
         ...props
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(toolbar_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(toolbar_item_default, {
       ref,
       ...props.toggleProps,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(dropdown_menu_default, {
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(dropdown_menu_default, {
         ...props,
         popoverProps: {
           ...props.popoverProps
@@ -51209,7 +51110,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.js
   var import_a11y11 = __toESM(require_a11y());
-  var import_i18n80 = __toESM(require_i18n());
+  var import_i18n78 = __toESM(require_i18n());
 
   // packages/components/build-module/tools-panel/tools-panel-header/hook.js
   var import_element206 = __toESM(require_element());
@@ -51337,7 +51238,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.js
-  var import_jsx_runtime285 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime284 = __toESM(require_jsx_runtime());
   var DefaultControlsGroup = ({
     itemClassName,
     items,
@@ -51346,26 +51247,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(ResetLabel, {
+    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(ResetLabel, {
       "aria-hidden": true,
-      children: (0, import_i18n80.__)("Reset")
+      children: (0, import_i18n78.__)("Reset")
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_jsx_runtime285.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(import_jsx_runtime284.Fragment, {
       children: items.map(([label, hasValue]) => {
         if (hasValue) {
-          return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
+          return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_item_default, {
             className: itemClassName,
             role: "menuitem",
-            label: (0, import_i18n80.sprintf)(
+            label: (0, import_i18n78.sprintf)(
               // translators: %s: The name of the control being reset e.g. "Padding".
-              (0, import_i18n80.__)("Reset %s"),
+              (0, import_i18n78.__)("Reset %s"),
               label
             ),
             onClick: () => {
               toggleItem(label);
-              (0, import_a11y11.speak)((0, import_i18n80.sprintf)(
+              (0, import_a11y11.speak)((0, import_i18n78.sprintf)(
                 // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n80.__)("%s reset to default"),
+                (0, import_i18n78.__)("%s reset to default"),
                 label
               ), "assertive");
             },
@@ -51373,7 +51274,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: label
           }, label);
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_item_default, {
           icon: check_default,
           className: itemClassName,
           role: "menuitemcheckbox",
@@ -51391,32 +51292,32 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!items.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_jsx_runtime285.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(import_jsx_runtime284.Fragment, {
       children: items.map(([label, isSelected2]) => {
-        const itemLabel = isSelected2 ? (0, import_i18n80.sprintf)(
+        const itemLabel = isSelected2 ? (0, import_i18n78.sprintf)(
           // translators: %s: The name of the control being hidden and reset e.g. "Padding".
-          (0, import_i18n80.__)("Hide and reset %s"),
+          (0, import_i18n78.__)("Hide and reset %s"),
           label
-        ) : (0, import_i18n80.sprintf)(
+        ) : (0, import_i18n78.sprintf)(
           // translators: %s: The name of the control to display e.g. "Padding".
-          (0, import_i18n80._x)("Show %s", "input control"),
+          (0, import_i18n78._x)("Show %s", "input control"),
           label
         );
-        return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_item_default, {
           icon: isSelected2 ? check_default : null,
           isSelected: isSelected2,
           label: itemLabel,
           onClick: () => {
             if (isSelected2) {
-              (0, import_a11y11.speak)((0, import_i18n80.sprintf)(
+              (0, import_a11y11.speak)((0, import_i18n78.sprintf)(
                 // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n80.__)("%s hidden and reset to default"),
+                (0, import_i18n78.__)("%s hidden and reset to default"),
                 label
               ), "assertive");
             } else {
-              (0, import_a11y11.speak)((0, import_i18n80.sprintf)(
+              (0, import_a11y11.speak)((0, import_i18n78.sprintf)(
                 // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n80.__)("%s is now visible"),
+                (0, import_i18n78.__)("%s is now visible"),
                 label
               ), "assertive");
             }
@@ -51449,21 +51350,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const defaultItems = Object.entries(menuItems?.default || {});
     const optionalItems = Object.entries(menuItems?.optional || {});
     const dropDownMenuIcon = areAllOptionalControlsHidden ? plus_default : more_vertical_default;
-    const dropDownMenuLabelText = (0, import_i18n80.sprintf)(
+    const dropDownMenuLabelText = (0, import_i18n78.sprintf)(
       // translators: %s: The name of the tool e.g. "Color" or "Typography".
-      (0, import_i18n80._x)("%s options", "Button label to reveal tool panel options"),
+      (0, import_i18n78._x)("%s options", "Button label to reveal tool panel options"),
       labelText
     );
-    const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n80.__)("All options are currently hidden") : void 0;
+    const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n78.__)("All options are currently hidden") : void 0;
     const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected2]) => isSelected2);
-    return /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(component_default9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(component_default9, {
       ...headerProps,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime285.jsx)(component_default19, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime284.jsx)(component_default19, {
         level: headingLevel,
         className: headingClassName,
         children: labelText
-      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(dropdown_menu_default, {
+      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(dropdown_menu_default, {
         ...dropdownMenuProps,
         icon: dropDownMenuIcon,
         label: dropDownMenuLabelText,
@@ -51474,28 +51375,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           size: "small",
           description: dropdownMenuDescriptionText
         },
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(import_jsx_runtime285.Fragment, {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(menu_group_default, {
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(import_jsx_runtime284.Fragment, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(menu_group_default, {
             label: labelText,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime285.jsx)(DefaultControlsGroup, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime284.jsx)(DefaultControlsGroup, {
               items: defaultItems,
               toggleItem,
               itemClassName: defaultControlsItemClassName
-            }), /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(OptionalControlsGroup, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(OptionalControlsGroup, {
               items: optionalItems,
               toggleItem
             })]
-          }), /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_group_default, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(menu_item_default, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_group_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_item_default, {
               "aria-disabled": !canResetAll,
               variant: "tertiary",
               onClick: () => {
                 if (canResetAll) {
                   resetAll();
-                  (0, import_a11y11.speak)((0, import_i18n80.__)("All options reset"), "assertive");
+                  (0, import_a11y11.speak)((0, import_i18n78.__)("All options reset"), "assertive");
                 }
               },
-              children: (0, import_i18n80.__)("Reset all")
+              children: (0, import_i18n78.__)("Reset all")
             })
           })]
         })
@@ -51784,7 +51685,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel/component.js
-  var import_jsx_runtime286 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime285 = __toESM(require_jsx_runtime());
   var UnconnectedToolsPanel = (props, forwardedRef) => {
     const {
       children,
@@ -51796,13 +51697,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       dropdownMenuProps,
       ...toolsPanelProps
     } = useToolsPanel(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(component_default22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(component_default22, {
       ...toolsPanelProps,
       columns: 2,
       ref: forwardedRef,
-      children: /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(ToolsPanelContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(ToolsPanelContext.Provider, {
         value: panelContext,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime286.jsx)(component_default38, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime285.jsx)(component_default38, {
           label,
           resetAll: resetAllItems,
           toggleItem,
@@ -51915,7 +51816,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-item/component.js
-  var import_jsx_runtime287 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime286 = __toESM(require_jsx_runtime());
   var UnconnectedToolsPanelItem = (props, forwardedRef) => {
     const {
       children,
@@ -51924,12 +51825,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...toolsPanelItemProps
     } = useToolsPanelItem(props);
     if (!isShown) {
-      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(component_default, {
+      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(component_default, {
         ...toolsPanelItemProps,
         ref: forwardedRef
       }) : null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(component_default, {
       ...toolsPanelItemProps,
       ref: forwardedRef,
       children
@@ -51954,7 +51855,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
   // packages/components/build-module/tree-grid/roving-tab-index.js
-  var import_jsx_runtime288 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime287 = __toESM(require_jsx_runtime());
   function RovingTabIndex({
     children
   }) {
@@ -51963,18 +51864,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       lastFocusedElement,
       setLastFocusedElement
     }), [lastFocusedElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(RovingTabIndexProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(RovingTabIndexProvider, {
       value: providerValue,
       children
     });
   }
 
   // packages/components/build-module/tree-grid/index.js
-  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
 
   // packages/components/build-module/tree-grid/row.js
   var import_element211 = __toESM(require_element());
-  var import_jsx_runtime289 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime288 = __toESM(require_jsx_runtime());
   function UnforwardedTreeGridRow({
     children,
     level,
@@ -51983,7 +51884,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     isExpanded,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)("tr", {
+    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("tr", {
       ...props,
       ref,
       role: "row",
@@ -52005,7 +51906,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tree-grid/roving-tab-index-item.js
   var import_element212 = __toESM(require_element());
-  var import_jsx_runtime290 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime289 = __toESM(require_jsx_runtime());
   var RovingTabIndexItem = (0, import_element212.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
     as: Component9,
@@ -52038,7 +51939,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!Component9) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(Component9, {
+    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(Component9, {
       ...allProps,
       children
     });
@@ -52046,12 +51947,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var roving_tab_index_item_default = RovingTabIndexItem;
 
   // packages/components/build-module/tree-grid/item.js
-  var import_jsx_runtime291 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime290 = __toESM(require_jsx_runtime());
   function UnforwardedTreeGridItem({
     children,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(roving_tab_index_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(roving_tab_index_item_default, {
       ref,
       ...props,
       children
@@ -52061,21 +51962,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var item_default3 = TreeGridItem;
 
   // packages/components/build-module/tree-grid/cell.js
-  var import_jsx_runtime292 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime291 = __toESM(require_jsx_runtime());
   function UnforwardedTreeGridCell({
     children,
     withoutGridItem = false,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("td", {
       ...props,
       role: "gridcell",
-      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_jsx_runtime292.Fragment, {
+      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(import_jsx_runtime291.Fragment, {
         children: typeof children === "function" ? children({
           ...props,
           ref
         }) : children
-      }) : /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(item_default3, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(item_default3, {
         ref,
         children
       })
@@ -52226,16 +52127,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         event.preventDefault();
       }
     }, [onExpandRow, onCollapseRow, onFocusRow]);
-    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(RovingTabIndex, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(RovingTabIndex, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("div", {
         role: "application",
         "aria-label": applicationAriaLabel,
-        children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("table", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("table", {
           ...props,
           role: "treegrid",
           onKeyDown,
           ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("tbody", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("tbody", {
             children
           })
         })
@@ -52247,16 +52148,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/isolated-event-container/index.js
   var import_element216 = __toESM(require_element());
-  var import_deprecated30 = __toESM(require_deprecated());
-  var import_jsx_runtime294 = __toESM(require_jsx_runtime());
+  var import_deprecated29 = __toESM(require_deprecated());
+  var import_jsx_runtime293 = __toESM(require_jsx_runtime());
   function stopPropagation(event) {
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element216.forwardRef)((props, ref) => {
-    (0, import_deprecated30.default)("wp.components.IsolatedEventContainer", {
+    (0, import_deprecated29.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("div", {
       ...props,
       ref,
       onMouseDown: stopPropagation
@@ -52307,7 +52208,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   ) : void 0, ";}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFzQkciLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG5leHBvcnQgY29uc3QgWlN0YWNrQ2hpbGRWaWV3ID0gc3R5bGVkLmRpdjwge1xuXHRvZmZzZXRBbW91bnQ6IG51bWJlcjtcblx0ekluZGV4OiBudW1iZXI7XG59ID5gXG5cdCY6bm90KCA6Zmlyc3Qtb2YtdHlwZSApIHtcblx0XHQkeyAoIHsgb2Zmc2V0QW1vdW50IH0gKSA9PlxuXHRcdFx0Y3NzKCB7XG5cdFx0XHRcdG1hcmdpbklubGluZVN0YXJ0OiBvZmZzZXRBbW91bnQsXG5cdFx0XHR9ICkgfTtcblx0fVxuXG5cdCR7ICggeyB6SW5kZXggfSApID0+IGNzcyggeyB6SW5kZXggfSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgWlN0YWNrVmlldyA9IHN0eWxlZC5kaXY8IHtcblx0aXNMYXllcmVkOiBib29sZWFuO1xufSA+YFxuXHRkaXNwbGF5OiBpbmxpbmUtZ3JpZDtcblx0Z3JpZC1hdXRvLWZsb3c6IGNvbHVtbjtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXG5cdCYgPiAkeyBaU3RhY2tDaGlsZFZpZXcgfSB7XG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdGp1c3RpZnktc2VsZjogc3RhcnQ7XG5cblx0XHQkeyAoIHsgaXNMYXllcmVkIH0gKSA9PlxuXHRcdFx0aXNMYXllcmVkXG5cdFx0XHRcdD8gLy8gV2hlbiBgaXNMYXllcmVkYCBpcyB0cnVlLCBhbGwgaXRlbXMgb3ZlcmxhcCBpbiB0aGUgc2FtZSBncmlkIGNlbGxcblx0XHRcdFx0ICBjc3MoIHsgZ3JpZFJvd1N0YXJ0OiAxLCBncmlkQ29sdW1uU3RhcnQ6IDEgfSApXG5cdFx0XHRcdDogdW5kZWZpbmVkIH07XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/z-stack/component.js
-  var import_jsx_runtime295 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime294 = __toESM(require_jsx_runtime());
   function UnconnectedZStack(props, forwardedRef) {
     const {
       children,
@@ -52323,13 +52224,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       const zIndex = isReversed ? childrenLastIndex - index2 : index2;
       const offsetAmount = isLayered ? offset3 * index2 : offset3;
       const key = (0, import_element217.isValidElement)(child) ? child.key : index2;
-      return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ZStackChildView, {
+      return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(ZStackChildView, {
         offsetAmount,
         zIndex,
         children: child
       }, key);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ZStackView, {
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(ZStackView, {
       ...otherProps,
       className: className2,
       isLayered,
@@ -52344,7 +52245,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element218 = __toESM(require_element());
   var import_compose79 = __toESM(require_compose());
   var import_keycodes3 = __toESM(require_keycodes());
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime295 = __toESM(require_jsx_runtime());
   var defaultShortcuts = {
     previous: [{
       modifier: "ctrlShift",
@@ -52419,22 +52320,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var navigate_regions_default = (0, import_compose79.createHigherOrderComponent)((Component9) => ({
     shortcuts,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("div", {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime295.jsx)("div", {
     ...useNavigateRegions(shortcuts),
-    children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(Component9, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(Component9, {
       ...props
     })
   }), "navigateRegions");
 
   // packages/components/build-module/higher-order/with-constrained-tabbing/index.js
   var import_compose80 = __toESM(require_compose());
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime296 = __toESM(require_jsx_runtime());
   var withConstrainedTabbing = (0, import_compose80.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
     const ref = (0, import_compose80.useConstrainedTabbing)();
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("div", {
       ref,
       tabIndex: -1,
-      children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(WrappedComponent, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(WrappedComponent, {
         ...props
       })
     });
@@ -52445,7 +52346,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_es63 = __toESM(require_es6());
   var import_element219 = __toESM(require_element());
   var import_compose81 = __toESM(require_compose());
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime297 = __toESM(require_jsx_runtime());
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose81.createHigherOrderComponent)((WrappedComponent) => {
     return class extends import_element219.Component {
       constructor(props) {
@@ -52485,11 +52386,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
       render() {
-        const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(WrappedComponent, {
+        const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(WrappedComponent, {
           ...this.props,
           ...this.state.fallbackStyles
         });
-        return this.props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)("div", {
+        return this.props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)("div", {
           ref: this.bindRef,
           children: [" ", wrappedComponent, " "]
         });
@@ -52501,7 +52402,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element220 = __toESM(require_element());
   var import_hooks11 = __toESM(require_hooks());
   var import_compose82 = __toESM(require_compose());
-  var import_jsx_runtime299 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime298 = __toESM(require_jsx_runtime());
   var ANIMATION_FRAME_PERIOD = 16;
   function withFilters(hookName) {
     return (0, import_compose82.createHigherOrderComponent)((OriginalComponent) => {
@@ -52532,7 +52433,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
         render() {
-          return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(FilteredComponent, {
+          return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(FilteredComponent, {
             ...this.props
           });
         }
@@ -52556,8 +52457,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-focus-return/index.js
   var import_element221 = __toESM(require_element());
   var import_compose83 = __toESM(require_compose());
-  var import_deprecated31 = __toESM(require_deprecated());
-  var import_jsx_runtime300 = __toESM(require_jsx_runtime());
+  var import_deprecated30 = __toESM(require_deprecated());
+  var import_jsx_runtime299 = __toESM(require_jsx_runtime());
   function isComponentLike(object) {
     return object instanceof import_element221.Component || typeof object === "function";
   }
@@ -52569,9 +52470,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       } = {}) => (WrappedComponent) => {
         const WithFocusReturn = (props) => {
           const ref = (0, import_compose83.useFocusReturn)(onFocusReturn);
-          return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("div", {
+          return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", {
             ref,
-            children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(WrappedComponent, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(WrappedComponent, {
               ...props
             })
           });
@@ -52589,7 +52490,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Provider3 = ({
     children
   }) => {
-    (0, import_deprecated31.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated30.default)("wp.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });
@@ -52599,7 +52500,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-notices/index.js
   var import_element222 = __toESM(require_element());
   var import_compose84 = __toESM(require_compose());
-  var import_jsx_runtime301 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime300 = __toESM(require_jsx_runtime());
   var with_notices_default = (0, import_compose84.createHigherOrderComponent)((OriginalComponent) => {
     function Component9(props, ref) {
       const [noticeList, setNoticeList] = (0, import_element222.useState)([]);
@@ -52631,16 +52532,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props,
         noticeList,
         noticeOperations,
-        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(list_default, {
+        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(list_default, {
           className: "components-with-notices-ui",
           notices: noticeList,
           onRemove: noticeOperations.removeNotice
         })
       };
-      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(OriginalComponent, {
+      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(OriginalComponent, {
         ...propsOut,
         ref
-      }) : /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(OriginalComponent, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(OriginalComponent, {
         ...propsOut
       });
     }
@@ -52657,7 +52558,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/index.js
   var import_element235 = __toESM(require_element());
-  var import_i18n81 = __toESM(require_i18n());
+  var import_i18n79 = __toESM(require_i18n());
 
   // packages/components/build-module/menu/context.js
   var import_element223 = __toESM(require_element());
@@ -52796,7 +52697,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("font-size:", font("helpText.fontSize"), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";overflow-wrap:anywhere;[data-active-item]:not( [data-focus-visible] ) *:not( ", PopoverInnerWrapper, " ) &,[aria-disabled='true'] *:not( ", PopoverInnerWrapper, " ) &{color:inherit;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEwWDhDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIGZvbnQsIHJ0bCwgQ09ORklHIH0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgSWNvbiBmcm9tICcuLi9pY29uJztcbmltcG9ydCB7IFRydW5jYXRlIH0gZnJvbSAnLi4vdHJ1bmNhdGUnO1xuaW1wb3J0IHR5cGUgeyBDb250ZXh0UHJvcHMgfSBmcm9tICcuL3R5cGVzJztcblxuY29uc3QgQU5JTUFUSU9OX1BBUkFNUyA9IHtcblx0U0NBTEVfQU1PVU5UX09VVEVSOiAwLjgyLFxuXHRTQ0FMRV9BTU9VTlRfQ09OVEVOVDogMC45LFxuXHREVVJBVElPTjoge1xuXHRcdElOOiAnNDAwbXMnLFxuXHRcdE9VVDogJzIwMG1zJyxcblx0fSxcblx0RUFTSU5HOiAnY3ViaWMtYmV6aWVyKDAuMzMsIDAsIDAsIDEpJyxcbn07XG5cbmNvbnN0IENPTlRFTlRfV1JBUFBFUl9QQURESU5HID0gc3BhY2UoIDEgKTtcbmNvbnN0IElURU1fUEFERElOR19CTE9DSyA9IHNwYWNlKCAxICk7XG5jb25zdCBJVEVNX1BBRERJTkdfSU5MSU5FID0gc3BhY2UoIDMgKTtcblxuLy8gVE9ETzpcbi8vIC0gYm9yZGVyIGNvbG9yIGFuZCBkaXZpZGVyIGNvbG9yIGFyZSBkaWZmZXJlbnQgZnJvbSBDT0xPUlMudGhlbWUgdmFyaWFibGVzXG4vLyAtIGxpZ2h0ZXIgdGV4dCBjb2xvciBpcyBub3QgZGVmaW5lZCBpbiBDT0xPUlMudGhlbWUsIHNob3VsZCBpdCBiZT9cbi8vIC0gbGlnaHRlciBiYWNrZ3JvdW5kIGNvbG9yIGlzIG5vdCBkZWZpbmVkIGluIENPTE9SUy50aGVtZSwgc2hvdWxkIGl0IGJlP1xuY29uc3QgREVGQVVMVF9CT1JERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgMzAwIF07XG5jb25zdCBESVZJREVSX0NPTE9SID0gQ09MT1JTLnRoZW1lLmdyYXlbIDIwMCBdO1xuY29uc3QgTElHSFRFUl9URVhUX0NPTE9SID0gQ09MT1JTLnRoZW1lLmdyYXlbIDcwMCBdO1xuY29uc3QgTElHSFRfQkFDS0dST1VORF9DT0xPUiA9IENPTE9SUy50aGVtZS5ncmF5WyAxMDAgXTtcbmNvbnN0IFRPT0xCQVJfVkFSSUFOVF9CT1JERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZDtcbmNvbnN0IERFRkFVTFRfQk9YX1NIQURPVyA9IGAwIDAgMCAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSAkeyBERUZBVUxUX0JPUkRFUl9DT0xPUiB9LCAkeyBDT05GSUcuZWxldmF0aW9uTWVkaXVtIH1gO1xuY29uc3QgVE9PTEJBUl9WQVJJQU5UX0JPWF9TSEFET1cgPSBgMCAwIDAgJHsgQ09ORklHLmJvcmRlcldpZHRoIH0gJHsgVE9PTEJBUl9WQVJJQU5UX0JPUkRFUl9DT0xPUiB9YDtcblxuY29uc3QgR1JJRF9URU1QTEFURV9DT0xTID0gJ21pbm1heCggMCwgbWF4LWNvbnRlbnQgKSAxZnInO1xuXG5leHBvcnQgY29uc3QgUG9wb3Zlck91dGVyV3JhcHBlciA9IHN0eWxlZC5kaXY8XG5cdFBpY2s8IENvbnRleHRQcm9wcywgJ3ZhcmlhbnQnID5cbj5gXG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMudWkuYmFja2dyb3VuZCB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzTWVkaXVtIH07XG5cdCR7ICggcHJvcHMgKSA9PiBjc3NgXG5cdFx0Ym94LXNoYWRvdzogJHsgcHJvcHMudmFyaWFudCA9PT0gJ3Rvb2xiYXInXG5cdFx0XHQ/IFRPT0xCQVJfVkFSSUFOVF9CT1hfU0hBRE9XXG5cdFx0XHQ6IERFRkFVTFRfQk9YX1NIQURPVyB9O1xuXHRgIH1cblxuXHRvdmVyZmxvdzogaGlkZGVuO1xuXG5cdC8qIE9wZW4vY2xvc2UgYW5pbWF0aW9uIChvdXRlciB3cmFwcGVyKSAqL1xuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIG9wYWNpdHk7XG5cdFx0dHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246ICR7IEFOSU1BVElPTl9QQVJBTVMuRUFTSU5HIH07XG5cdFx0dHJhbnNpdGlvbi1kdXJhdGlvbjogJHsgQU5JTUFUSU9OX1BBUkFNUy5EVVJBVElPTi5JTiB9O1xuXHRcdHdpbGwtY2hhbmdlOiB0cmFuc2Zvcm0sIG9wYWNpdHk7XG5cblx0XHQvKiBSZWdhcmRsZXNzIG9mIHRoZSBzaWRlLCBmYWRlIGluIGFuZCBvdXQuICovXG5cdFx0b3BhY2l0eTogMDtcblx0XHQmOmhhcyggW2RhdGEtZW50ZXJdICkge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cblx0XHQmOmhhcyggW2RhdGEtbGVhdmVdICkge1xuXHRcdFx0dHJhbnNpdGlvbi1kdXJhdGlvbjogJHsgQU5JTUFUSU9OX1BBUkFNUy5EVVJBVElPTi5PVVQgfTtcblx0XHR9XG5cblx0XHQvKiBGb3IgbWVudXMgb3BlbmluZyBvbiB0b3AgYW5kIGJvdHRvbSBzaWRlLCBhbmltYXRlIHRoZSBzY2FsZSBZIHRvby4gKi9cblx0XHQmOmhhcyggW2RhdGEtc2lkZT0nYm90dG9tJ10gKSxcblx0XHQmOmhhcyggW2RhdGEtc2lkZT0ndG9wJ10gKSB7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlWSggJHsgQU5JTUFUSU9OX1BBUkFNUy5TQ0FMRV9BTU9VTlRfT1VURVIgfSApO1xuXHRcdH1cblx0XHQmOmhhcyggW2RhdGEtc2lkZT0nYm90dG9tJ10gKSB7XG5cdFx0XHR0cmFuc2Zvcm0tb3JpZ2luOiB0b3A7XG5cdFx0fVxuXHRcdCY6aGFzKCBbZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdHRyYW5zZm9ybS1vcmlnaW46IGJvdHRvbTtcblx0XHR9XG5cdFx0JjpoYXMoIFtkYXRhLWVudGVyXVtkYXRhLXNpZGU9J2JvdHRvbSddICksXG5cdFx0JjpoYXMoIFtkYXRhLWVudGVyXVtkYXRhLXNpZGU9J3RvcCddICksXG5cdFx0LyogRG8gbm90IGFuaW1hdGUgdGhlIHNjYWxlWSB3aGVuIGNsb3NpbmcgdGhlIG1lbnUgKi9cblx0XHQmOmhhcyggW2RhdGEtbGVhdmVdW2RhdGEtc2lkZT0nYm90dG9tJ10gKSxcblx0XHQmOmhhcyggW2RhdGEtbGVhdmVdW2RhdGEtc2lkZT0ndG9wJ10gKSB7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlWSggMSApO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFBvcG92ZXJJbm5lcldyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdC8qIFNhbWUgYXMgcG9wb3ZlciBjb21wb25lbnQgKi9cblx0LyogVE9ETzogaXMgdGhlcmUgYSB3YXkgdG8gcmVhZCB0aGUgc2FzcyB2YXJpYWJsZT8gKi9cblx0ei1pbmRleDogMTAwMDAwMDtcblxuXHRkaXNwbGF5OiBncmlkO1xuXHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6ICR7IEdSSURfVEVNUExBVEVfQ09MUyB9O1xuXHRncmlkLXRlbXBsYXRlLXJvd3M6IGF1dG87XG5cblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0bWluLXdpZHRoOiAxNjBweDtcblx0bWF4LXdpZHRoOiAzMjBweDtcblx0bWF4LWhlaWdodDogdmFyKCAtLXBvcG92ZXItYXZhaWxhYmxlLWhlaWdodCApO1xuXG5cdHBhZGRpbmc6ICR7IENPTlRFTlRfV1JBUFBFUl9QQURESU5HIH07XG5cblx0b3ZlcnNjcm9sbC1iZWhhdmlvcjogY29udGFpbjtcblx0b3ZlcmZsb3c6IGF1dG87XG5cblx0LyogT25seSB2aXNpYmxlIGluIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlICovXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudCAhaW1wb3J0YW50O1xuXG5cdC8qIE9wZW4vY2xvc2UgYW5pbWF0aW9uIChpbm5lciBjb250ZW50IHdyYXBwZXIpICovXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdHRyYW5zaXRpb246IGluaGVyaXQ7XG5cdFx0dHJhbnNmb3JtLW9yaWdpbjogaW5oZXJpdDtcblxuXHRcdC8qXG5cdFx0ICogRm9yIG1lbnVzIG9wZW5pbmcgb24gdG9wIGFuZCBib3R0b20gc2lkZSwgYW5pbWF0ZSB0aGUgc2NhbGUgWSB0b28uXG5cdFx0ICogVGhlIGNvbnRlbnQgc2NhbGVzIGF0IGEgZGlmZmVyZW50IHJhdGUgdGhhbiB0aGUgb3V0ZXIgY29udGFpbmVyOlxuXHRcdCAqIC0gZmlyc3QsIGNvdW50ZXIgdGhlIG91dGVyIHNjYWxlIGZhY3RvciBieSBkb2luZyBcIjEgLyBzY2FsZUFtb3VudE91dGVyXCJcblx0XHQgKiAtIHRoZW4sIGFwcGx5IHRoZSBjb250ZW50IHNjYWxlIGZhY3Rvci5cblx0XHQgKi9cblx0XHQmW2RhdGEtc2lkZT0nYm90dG9tJ10sXG5cdFx0JltkYXRhLXNpZGU9J3RvcCddIHtcblx0XHRcdHRyYW5zZm9ybTogc2NhbGVZKFxuXHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdDEgLyAkeyBBTklNQVRJT05fUEFSQU1TLlNDQUxFX0FNT1VOVF9PVVRFUiB9ICpcblx0XHRcdFx0XHRcdCR7IEFOSU1BVElPTl9QQVJBTVMuU0NBTEVfQU1PVU5UX0NPTlRFTlQgfVxuXHRcdFx0XHQpXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmW2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0nYm90dG9tJ10sXG5cdFx0JltkYXRhLWVudGVyXVtkYXRhLXNpZGU9J3RvcCddLFxuXHRcdC8qIERvIG5vdCBhbmltYXRlIHRoZSBzY2FsZVkgd2hlbiBjbG9zaW5nIHRoZSBtZW51ICovXG5cdFx0JltkYXRhLWxlYXZlXVtkYXRhLXNpZGU9J2JvdHRvbSddLFxuXHRcdCZbZGF0YS1sZWF2ZV1bZGF0YS1zaWRlPSd0b3AnXSB7XG5cdFx0XHR0cmFuc2Zvcm06IHNjYWxlWSggMSApO1xuXHRcdH1cblx0fVxuYDtcblxuY29uc3QgYmFzZUl0ZW0gPSBjc3NgXG5cdGFsbDogdW5zZXQ7XG5cblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRtaW4taGVpZ2h0OiAkeyBzcGFjZSggOCApIH07XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cblx0LyogT2NjdXB5IHRoZSB3aWR0aCBvZiBhbGwgZ3JpZCBjb2x1bW5zIChpZS4gZnVsbCB3aWR0aCkgKi9cblx0Z3JpZC1jb2x1bW46IDEgLyAtMTtcblxuXHRkaXNwbGF5OiBncmlkO1xuXHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6ICR7IEdSSURfVEVNUExBVEVfQ09MUyB9O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXG5cdEBzdXBwb3J0cyAoIGdyaWQtdGVtcGxhdGUtY29sdW1uczogc3ViZ3JpZCApIHtcblx0XHQvKlxuXHRcdCAqIERlZmluZSBhIGdyaWQgbGF5b3V0IHdoaWNoIGluaGVyaXRzIHRoZSBzYW1lIGNvbHVtbnMgY29uZmlndXJhdGlvblxuXHRcdCAqIGZyb20gdGhlIHBhcmVudCBsYXlvdXQgKGllLiBzdWJncmlkKS4gVGhpcyBhbGxvd3MgdGhlIG1lbnVcblx0XHQgKiB0byBzeW5jaHJvbml6ZSB0aGUgaW5kZW50YXRpb24gb2YgYWxsIGl0cyBpdGVtcy5cblx0XHQgKi9cblx0XHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHN1YmdyaWQ7XG5cdH1cblxuXHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdGZvbnQtZmFtaWx5OiBpbmhlcml0O1xuXHRmb250LXdlaWdodDogbm9ybWFsO1xuXHRsaW5lLWhlaWdodDogMjBweDtcblxuXHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH07XG5cblx0cGFkZGluZy1ibG9jazogJHsgSVRFTV9QQURESU5HX0JMT0NLIH07XG5cdHBhZGRpbmctaW5saW5lOiAkeyBJVEVNX1BBRERJTkdfSU5MSU5FIH07XG5cblx0Lypcblx0ICogTWFrZSBzdXJlIHRoYXQsIHdoZW4gYW4gaXRlbSBpcyBzY3JvbGxlZCBpbnRvIHZpZXcgKGVnLiB3aGlsZSB1c2luZyB0aGVcblx0ICoga2V5Ym9hcmQgdG8gbW92ZSBmb2N1cyksIHRoZSB3aG9sZSBpdGVtIGNvbWVzIGludG8gdmlld1xuXHQgKi9cblx0c2Nyb2xsLW1hcmdpbjogJHsgQ09OVEVOVF9XUkFQUEVSX1BBRERJTkcgfTtcblxuXHR1c2VyLXNlbGVjdDogbm9uZTtcblx0b3V0bGluZTogbm9uZTtcblxuXHQmW2FyaWEtZGlzYWJsZWQ9J3RydWUnXSB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS50ZXh0RGlzYWJsZWQgfTtcblx0XHRjdXJzb3I6IG5vdC1hbGxvd2VkO1xuXHR9XG5cblx0LyogQWN0aXZlIGl0ZW0gKGluY2x1ZGluZyBob3ZlcikgKi9cblx0JltkYXRhLWFjdGl2ZS1pdGVtXTpub3QoIFtkYXRhLWZvY3VzLXZpc2libGVdICk6bm90KFxuXHRcdFx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXVxuXHRcdCkge1xuXHRcdGJhY2tncm91bmQtY29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudEludmVydGVkIH07XG5cdH1cblxuXHQvKiBLZXlib2FyZCBmb2N1cyAoZm9jdXMtdmlzaWJsZSkgKi9cblx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHRib3gtc2hhZG93OiAwIDAgMCAxLjVweCAkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cblx0XHQvKiBPbmx5IHZpc2libGUgaW4gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgKi9cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdH1cblxuXHQvKiBBY3RpdmUgKGllLiBwcmVzc2VkLCBtb3VzZSBkb3duKSAqL1xuXHQmOmFjdGl2ZSxcblx0JltkYXRhLWFjdGl2ZV0ge1xuXHRcdC8qIFRPRE86IHNob3VsZCB0aGVyZSBiZSBhIHZpc3VhbCBhY3RpdmUgc3RhdGU/ICovXG5cdH1cblxuXHQvKiBXaGVuIHRoZSBpdGVtIGlzIHRoZSB0cmlnZ2VyIG9mIGFuIG9wZW4gc3VibWVudSAqL1xuXHQkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH06bm90KDpmb2N1cykgJjpub3QoOmZvY3VzKVthcmlhLWV4cGFuZGVkPVwidHJ1ZVwiXSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgTElHSFRfQkFDS0dST1VORF9DT0xPUiB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9O1xuXHR9XG5cblx0c3ZnIHtcblx0XHRmaWxsOiBjdXJyZW50Q29sb3I7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVJdGVtIClgXG5cdCR7IGJhc2VJdGVtIH07XG5gO1xuXG5leHBvcnQgY29uc3QgQ2hlY2tib3hJdGVtID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVJdGVtQ2hlY2tib3ggKWBcblx0JHsgYmFzZUl0ZW0gfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBSYWRpb0l0ZW0gPSBzdHlsZWQoIEFyaWFraXQuTWVudUl0ZW1SYWRpbyApYFxuXHQkeyBiYXNlSXRlbSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1QcmVmaXhXcmFwcGVyID0gc3R5bGVkLnNwYW5gXG5cdC8qIEFsd2F5cyBvY2N1cHkgdGhlIGZpcnN0IGNvbHVtbiwgZXZlbiB3aGVuIGF1dG8tY29sbGFwc2luZyAqL1xuXHRncmlkLWNvbHVtbjogMTtcblxuXHQvKlxuXHQgKiBFdmVuIHdoZW4gdGhlIGl0ZW0gaXMgbm90IGNoZWNrZWQsIG9jY3VweSB0aGUgc2FtZSBzY3JlZW4gc3BhY2UgdG8gYXZvaWRcblx0ICogdGhlIHNwYWNlIGNvbGxhcHNpZGUgd2hlbiBubyBpdGVtcyBhcmUgY2hlY2tlZC5cblx0ICovXG5cdCR7IENoZWNrYm94SXRlbSB9ID4gJixcblx0JHsgUmFkaW9JdGVtIH0gPiAmIHtcblx0XHQvKiBTYW1lIHdpZHRoIGFzIHRoZSBjaGVjayBpY29ucyAqL1xuXHRcdG1pbi13aWR0aDogJHsgc3BhY2UoIDYgKSB9O1xuXHR9XG5cblx0JHsgQ2hlY2tib3hJdGVtIH0gPiAmLFxuXHQkeyBSYWRpb0l0ZW0gfSA+ICYsXG5cdCY6bm90KCA6ZW1wdHkgKSB7XG5cdFx0bWFyZ2luLWlubGluZS1lbmQ6ICR7IHNwYWNlKCAyICkgfTtcblx0fVxuXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXG5cdGNvbG9yOiAkeyBMSUdIVEVSX1RFWFRfQ09MT1IgfTtcblxuXHQvKlxuXHQqIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgYWN0aXZlLCBleGNlcHQgd2hlbiBpdCdzIGEgbm9uLWZvY3VzZWQvaG92ZXJlZFxuXHQqIHN1Ym1lbnUgdHJpZ2dlciAoaW4gdGhhdCBjYXNlLCBjb2xvciBzaG91bGQgbm90IGJlIGluaGVyaXRlZClcblx0Ki9cblx0W2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSA+ICYsXG5cdC8qIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgZGlzYWJsZWQgKi9cblx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXSA+ICYge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUNvbnRlbnRXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0Lypcblx0ICogQWx3YXlzIG9jY3VweSB0aGUgc2Vjb25kIGNvbHVtbiwgc2luY2UgdGhlIGZpcnN0IGNvbHVtblxuXHQgKiBpcyB0YWtlbiBieSB0aGUgcHJlZml4IHdyYXBwZXIgKHdoZW4gZGlzcGxheWVkKS5cblx0ICovXG5cdGdyaWQtY29sdW1uOiAyO1xuXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2Vlbjtcblx0Z2FwOiAkeyBzcGFjZSggMyApIH07XG5cblx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUNoaWxkcmVuV3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdGZsZXg6IDE7XG5cblx0ZGlzcGxheTogaW5saW5lLWZsZXg7XG5cdGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG5cdGdhcDogJHsgc3BhY2UoIDEgKSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1TdWZmaXhXcmFwcGVyID0gc3R5bGVkLnNwYW5gXG5cdGZsZXg6IDAgMSBmaXQtY29udGVudDtcblx0bWluLXdpZHRoOiAwO1xuXHR3aWR0aDogZml0LWNvbnRlbnQ7XG5cblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cdGdhcDogJHsgc3BhY2UoIDMgKSB9O1xuXG5cdGNvbG9yOiAkeyBMSUdIVEVSX1RFWFRfQ09MT1IgfTtcblxuXHQvKlxuXHQgKiBXaGVuIHRoZSBwYXJlbnQgbWVudSBpdGVtIGlzIGFjdGl2ZSwgZXhjZXB0IHdoZW4gaXQncyBhIG5vbi1mb2N1c2VkL2hvdmVyZWRcblx0ICogc3VibWVudSB0cmlnZ2VyIChpbiB0aGF0IGNhc2UsIGNvbG9yIHNob3VsZCBub3QgYmUgaW5oZXJpdGVkKVxuXHQgKi9cblx0W2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSAqOm5vdCgkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH0pICYsXG5cdC8qIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgZGlzYWJsZWQgKi9cblx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXSAqOm5vdCgkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH0pICYge1xuXHRcdGNvbG9yOiBpbmhlcml0O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXAgPSBzdHlsZWQoIEFyaWFraXQuTWVudUdyb3VwIClgXG5cdC8qIElnbm9yZSB0aGlzIGVsZW1lbnQgd2hlbiBjYWxjdWxhdGluZyB0aGUgbGF5b3V0LiBVc2VmdWwgZm9yIHN1YmdyaWQgKi9cblx0ZGlzcGxheTogY29udGVudHM7XG5gO1xuXG5leHBvcnQgY29uc3QgR3JvdXBMYWJlbCA9IHN0eWxlZCggQXJpYWtpdC5NZW51R3JvdXBMYWJlbCApYFxuXHQvKiBPY2N1cHkgdGhlIHdpZHRoIG9mIGFsbCBncmlkIGNvbHVtbnMgKGllLiBmdWxsIHdpZHRoKSAqL1xuXHRncmlkLWNvbHVtbjogMSAvIC0xO1xuXG5cdHBhZGRpbmctYmxvY2stc3RhcnQ6ICR7IHNwYWNlKCAzICkgfTtcblx0cGFkZGluZy1ibG9jay1lbmQ6ICR7IHNwYWNlKCAyICkgfTtcblx0cGFkZGluZy1pbmxpbmU6ICR7IElURU1fUEFERElOR19JTkxJTkUgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBTZXBhcmF0b3IgPSBzdHlsZWQoIEFyaWFraXQuTWVudVNlcGFyYXRvciApPFxuXHRQaWNrPCBDb250ZXh0UHJvcHMsICd2YXJpYW50JyA+XG4+YFxuXHQvKiBPY2N1cHkgdGhlIHdpZHRoIG9mIGFsbCBncmlkIGNvbHVtbnMgKGllLiBmdWxsIHdpZHRoKSAqL1xuXHRncmlkLWNvbHVtbjogMSAvIC0xO1xuXG5cdGJvcmRlcjogbm9uZTtcblx0aGVpZ2h0OiAkeyBDT05GSUcuYm9yZGVyV2lkdGggfTtcblx0YmFja2dyb3VuZC1jb2xvcjogJHsgKCBwcm9wcyApID0+XG5cdFx0cHJvcHMudmFyaWFudCA9PT0gJ3Rvb2xiYXInXG5cdFx0XHQ/IFRPT0xCQVJfVkFSSUFOVF9CT1JERVJfQ09MT1Jcblx0XHRcdDogRElWSURFUl9DT0xPUiB9O1xuXHQvKiBBbGlnbiB3aXRoIG1lbnUgaXRlbXMnIGNvbnRlbnQgKi9cblx0bWFyZ2luLWJsb2NrOiAkeyBzcGFjZSggMiApIH07XG5cdG1hcmdpbi1pbmxpbmU6ICR7IElURU1fUEFERElOR19JTkxJTkUgfTtcblxuXHQvKiBPbmx5IHZpc2libGUgaW4gV2luZG93cyBIaWdoIENvbnRyYXN0IG1vZGUgKi9cblx0b3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50O1xuYDtcblxuZXhwb3J0IGNvbnN0IFN1Ym1lbnVDaGV2cm9uSWNvbiA9IHN0eWxlZCggSWNvbiApYFxuXHR3aWR0aDogJHsgc3BhY2UoIDEuNSApIH07XG5cdCR7IHJ0bChcblx0XHR7XG5cdFx0XHR0cmFuc2Zvcm06IGBzY2FsZVgoMSlgLFxuXHRcdH0sXG5cdFx0e1xuXHRcdFx0dHJhbnNmb3JtOiBgc2NhbGVYKC0xKWAsXG5cdFx0fVxuXHQpIH07XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbUxhYmVsID0gc3R5bGVkKCBUcnVuY2F0ZSApYFxuXHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdGxpbmUtaGVpZ2h0OiAyMHB4O1xuXHRjb2xvcjogaW5oZXJpdDtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtSGVscFRleHQgPSBzdHlsZWQoIFRydW5jYXRlIClgXG5cdGZvbnQtc2l6ZTogJHsgZm9udCggJ2hlbHBUZXh0LmZvbnRTaXplJyApIH07XG5cdGxpbmUtaGVpZ2h0OiAxNnB4O1xuXHRjb2xvcjogJHsgTElHSFRFUl9URVhUX0NPTE9SIH07XG5cdG92ZXJmbG93LXdyYXA6IGFueXdoZXJlO1xuXG5cdFtkYXRhLWFjdGl2ZS1pdGVtXTpub3QoIFtkYXRhLWZvY3VzLXZpc2libGVdIClcblx0XHQqOm5vdCggJHsgUG9wb3ZlcklubmVyV3JhcHBlciB9IClcblx0XHQmLFxuXHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICo6bm90KCAkeyBQb3BvdmVySW5uZXJXcmFwcGVyIH0gKSAmIHtcblx0XHRjb2xvcjogaW5oZXJpdDtcblx0fVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/menu/item.js
-  var import_jsx_runtime302 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime301 = __toESM(require_jsx_runtime());
   var Item22 = (0, import_element224.forwardRef)(function Item32({
     prefix: prefix2,
     suffix,
@@ -52811,19 +52712,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       throw new Error("Menu.Item can only be rendered inside a Menu component");
     }
     const computedStore = store !== null && store !== void 0 ? store : menuContext.store;
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(Item3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(Item3, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       hideOnClick,
       store: computedStore,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemPrefixWrapper, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ItemPrefixWrapper, {
         children: prefix2
-      }), /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -52832,7 +52733,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/checkbox-item.js
   var import_element225 = __toESM(require_element());
-  var import_jsx_runtime303 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime302 = __toESM(require_jsx_runtime());
   var CheckboxItem2 = (0, import_element225.forwardRef)(function CheckboxItem3({
     suffix,
     children,
@@ -52844,28 +52745,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.CheckboxItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(CheckboxItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(CheckboxItem, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       hideOnClick,
       store: menuContext.store,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime303.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(MenuItemCheck, {
         store: menuContext.store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(icon_default2, {
           icon: check_default,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -52875,11 +52776,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/menu/radio-item.js
   var import_element226 = __toESM(require_element());
   var import_primitives35 = __toESM(require_primitives());
-  var import_jsx_runtime304 = __toESM(require_jsx_runtime());
-  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_primitives35.SVG, {
+  var import_jsx_runtime303 = __toESM(require_jsx_runtime());
+  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(import_primitives35.SVG, {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_primitives35.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(import_primitives35.Circle, {
       cx: 12,
       cy: 12,
       r: 3
@@ -52896,28 +52797,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.RadioItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime304.jsxs)(RadioItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(RadioItem, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       hideOnClick,
       store: menuContext.store,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime304.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime303.jsx)(MenuItemCheck, {
         store: menuContext.store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(icon_default2, {
           icon: radioCheck,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime304.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime304.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -52926,13 +52827,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/group.js
   var import_element227 = __toESM(require_element());
-  var import_jsx_runtime305 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime304 = __toESM(require_jsx_runtime());
   var Group22 = (0, import_element227.forwardRef)(function Group32(props, ref) {
     const menuContext = (0, import_element227.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Group can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(Group3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(Group3, {
       ref,
       ...props,
       store: menuContext.store
@@ -52941,17 +52842,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/group-label.js
   var import_element228 = __toESM(require_element());
-  var import_jsx_runtime306 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime305 = __toESM(require_jsx_runtime());
   var GroupLabel22 = (0, import_element228.forwardRef)(function Group4(props, ref) {
     const menuContext = (0, import_element228.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.GroupLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(GroupLabel3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(GroupLabel3, {
       ref,
       render: (
         // @ts-expect-error The `children` prop is passed
-        /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(component_default8, {
+        /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(component_default8, {
           upperCase: true,
           variant: "muted",
           size: "11px",
@@ -52966,13 +52867,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/separator.js
   var import_element229 = __toESM(require_element());
-  var import_jsx_runtime307 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime306 = __toESM(require_jsx_runtime());
   var Separator22 = (0, import_element229.forwardRef)(function Separator32(props, ref) {
     const menuContext = (0, import_element229.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Separator can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(Separator3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(Separator3, {
       ref,
       ...props,
       store: menuContext.store,
@@ -52982,13 +52883,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item-label.js
   var import_element230 = __toESM(require_element());
-  var import_jsx_runtime308 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime());
   var ItemLabel2 = (0, import_element230.forwardRef)(function ItemLabel3(props, ref) {
     const menuContext = (0, import_element230.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ItemLabel, {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(ItemLabel, {
       numberOfLines: 1,
       ref,
       ...props
@@ -52997,13 +52898,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item-help-text.js
   var import_element231 = __toESM(require_element());
-  var import_jsx_runtime309 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime());
   var ItemHelpText2 = (0, import_element231.forwardRef)(function ItemHelpText3(props, ref) {
     const menuContext = (0, import_element231.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemHelpText can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(ItemHelpText, {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ItemHelpText, {
       numberOfLines: 2,
       ref,
       ...props
@@ -53012,7 +52913,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/trigger-button.js
   var import_element232 = __toESM(require_element());
-  var import_jsx_runtime310 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime());
   var TriggerButton = (0, import_element232.forwardRef)(function TriggerButton2({
     children,
     disabled = false,
@@ -53025,7 +52926,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (menuContext.store.parent) {
       throw new Error("Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead.");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(MenuButton, {
       ref,
       ...props,
       disabled,
@@ -53036,7 +52937,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/submenu-trigger-item.js
   var import_element233 = __toESM(require_element());
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime());
   var SubmenuTriggerItem = (0, import_element233.forwardRef)(function SubmenuTriggerItem2({
     suffix,
     ...otherProps
@@ -53045,19 +52946,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store.parent) {
       throw new Error("Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(MenuButton, {
       ref,
       accessibleWhenDisabled: true,
       store: menuContext.store,
-      render: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(Item22, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(Item22, {
         ...otherProps,
         // The menu item needs to register and be part of the parent menu.
         // Without specifying the store explicitly, the `Item` component
         // would otherwise read the store via context and pick up the one from
         // the sub-menu `Menu` component.
         store: menuContext.store.parent,
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(import_jsx_runtime311.Fragment, {
-          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(SubmenuChevronIcon, {
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)(import_jsx_runtime310.Fragment, {
+          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(SubmenuChevronIcon, {
             "aria-hidden": "true",
             icon: chevron_right_small_default,
             size: 24,
@@ -53070,7 +52971,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/popover.js
   var import_element234 = __toESM(require_element());
-  var import_jsx_runtime312 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime());
   var Popover4 = (0, import_element234.forwardRef)(function Popover22({
     gutter,
     children,
@@ -53094,7 +52995,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.Popover can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(Menu, {
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(Menu, {
       ...otherProps,
       ref,
       modal,
@@ -53111,9 +53012,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         // container scales with a different factor than its contents.
         // The {...renderProps} are passed to the inner wrapper, so that the
         // menu element is the direct parent of the menu item elements.
-        /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(PopoverOuterWrapper, {
+        /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(PopoverOuterWrapper, {
           variant: menuContext.variant,
-          children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(PopoverInnerWrapper, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(PopoverInnerWrapper, {
             ...renderProps
           })
         })
@@ -53123,7 +53024,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/index.js
-  var import_jsx_runtime313 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime());
   var UnconnectedMenu = (props) => {
     const {
       children,
@@ -53135,7 +53036,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       variant
     } = useContextSystem(props, "Menu");
     const parentContext = (0, import_element235.useContext)(Context2);
-    const rtl2 = (0, import_i18n81.isRTL)();
+    const rtl2 = (0, import_i18n79.isRTL)();
     let computedPlacement = placement !== null && placement !== void 0 ? placement : parentContext?.store ? "right-start" : "bottom-start";
     if (rtl2) {
       if (/right/.test(computedPlacement)) {
@@ -53159,7 +53060,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store: menuStore,
       variant
     }), [menuStore, variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(Context2.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(Context2.Provider, {
       value: contextValue,
       children
     });
@@ -53379,7 +53280,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/theme/index.js
-  var import_jsx_runtime314 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime());
   function Theme({
     accent,
     background: background2,
@@ -53391,7 +53292,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       accent,
       background: background2
     })), className2), [accent, background2, className2, cx3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(Wrapper6, {
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(Wrapper6, {
       className: classes,
       ...props
     });
@@ -53401,7 +53302,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/index.js
   var import_compose87 = __toESM(require_compose());
   var import_element242 = __toESM(require_element());
-  var import_i18n82 = __toESM(require_i18n());
+  var import_i18n80 = __toESM(require_i18n());
 
   // packages/components/build-module/tabs/context.js
   var import_element237 = __toESM(require_element());
@@ -53457,7 +53358,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("&:focus{box-shadow:none;outline:none;}&[data-focus-visible]{box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFnUmtEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRywgZm9udCB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IEljb24gZnJvbSAnLi4vaWNvbic7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRUYWJMaXN0ID0gc3R5bGVkKCBBcmlha2l0LlRhYkxpc3QgKWBcblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IHN0cmV0Y2g7XG5cdG92ZXJmbG93LXg6IGF1dG87XG5cblx0JlthcmlhLW9yaWVudGF0aW9uPSd2ZXJ0aWNhbCddIHtcblx0XHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR9XG5cblx0OndoZXJlKCBbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICkge1xuXHRcdHdpZHRoOiBmaXQtY29udGVudDtcblx0fVxuXG5cdC0tZGlyZWN0aW9uLWZhY3RvcjogMTtcblx0LS1kaXJlY3Rpb24tc3RhcnQ6IGxlZnQ7XG5cdC0tZGlyZWN0aW9uLWVuZDogcmlnaHQ7XG5cdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1sZWZ0LCAwICk7XG5cdCY6ZGlyKCBydGwgKSB7XG5cdFx0LS1kaXJlY3Rpb24tZmFjdG9yOiAtMTtcblx0XHQtLWRpcmVjdGlvbi1zdGFydDogcmlnaHQ7XG5cdFx0LS1kaXJlY3Rpb24tZW5kOiBsZWZ0O1xuXHRcdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1yaWdodCwgMCApO1xuXHR9XG5cblx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0JltkYXRhLWluZGljYXRvci1hbmltYXRlZF06OmJlZm9yZSB7XG5cdFx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIGJvcmRlci1yYWRpdXMsIGJvcmRlci1ibG9jaztcblx0XHRcdHRyYW5zaXRpb24tZHVyYXRpb246IDAuMnM7XG5cdFx0XHR0cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogZWFzZS1vdXQ7XG5cdFx0fVxuXHR9XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0Jjo6YmVmb3JlIHtcblx0XHRjb250ZW50OiAnJztcblx0XHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdFx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdFx0dHJhbnNmb3JtLW9yaWdpbjogdmFyKCAtLWRpcmVjdGlvbi1zdGFydCApIHRvcDtcblxuXHRcdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRvdXRsaW5lLW9mZnNldDogLTFweDtcblx0fVxuXG5cdC8qIFVzaW5nIGEgbGFyZ2UgdmFsdWUgdG8gYXZvaWQgYW50aWFsaWFzaW5nIHJvdW5kaW5nIGlzc3Vlc1xuXHRcdFx0d2hlbiBzY2FsaW5nIGluIHRoZSB0cmFuc2Zvcm0sIHNlZTogaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzUyMTU5MTIzICovXG5cdC0tYW50aWFsaWFzaW5nLWZhY3RvcjogMTAwO1xuXHQmW2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSB7XG5cdFx0LS1mYWRlLXdpZHRoOiA2NHB4O1xuXHRcdC0tZmFkZS1ncmFkaWVudC1iYXNlOiB0cmFuc3BhcmVudCAwJSwgYmxhY2sgdmFyKCAtLWZhZGUtd2lkdGggKTtcblx0XHQtLWZhZGUtZ3JhZGllbnQtY29tcG9zZWQ6IHZhciggLS1mYWRlLWdyYWRpZW50LWJhc2UgKSwgYmxhY2sgNjAlLFxuXHRcdFx0dHJhbnNwYXJlbnQgNTAlO1xuXHRcdCYuaXMtb3ZlcmZsb3dpbmctZmlyc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHR0byB2YXIoIC0tZGlyZWN0aW9uLWVuZCApLFxuXHRcdFx0XHR2YXIoIC0tZmFkZS1ncmFkaWVudC1iYXNlIClcblx0XHRcdCk7XG5cdFx0fVxuXHRcdCYuaXMtb3ZlcmZsb3dpbmctbGFzdCB7XG5cdFx0XHRtYXNrLWltYWdlOiBsaW5lYXItZ3JhZGllbnQoXG5cdFx0XHRcdHRvIHZhciggLS1kaXJlY3Rpb24tc3RhcnQgKSxcblx0XHRcdFx0dmFyKCAtLWZhZGUtZ3JhZGllbnQtYmFzZSApXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmLmlzLW92ZXJmbG93aW5nLWZpcnN0LmlzLW92ZXJmbG93aW5nLWxhc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHRcdHRvIHJpZ2h0LFxuXHRcdFx0XHRcdHZhciggLS1mYWRlLWdyYWRpZW50LWNvbXBvc2VkIClcblx0XHRcdFx0KSxcblx0XHRcdFx0bGluZWFyLWdyYWRpZW50KCB0byBsZWZ0LCB2YXIoIC0tZmFkZS1ncmFkaWVudC1jb21wb3NlZCApICk7XG5cdFx0fVxuXG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdGJvdHRvbTogMDtcblx0XHRcdGhlaWdodDogMDtcblx0XHRcdHdpZHRoOiBjYWxjKCB2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApICogMXB4ICk7XG5cdFx0XHR0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1zdGFydCApICogdmFyKCAtLWRpcmVjdGlvbi1mYWN0b3IgKSAqXG5cdFx0XHRcdFx0XHRcdDFweFxuXHRcdFx0XHRcdClcblx0XHRcdFx0KVxuXHRcdFx0XHRzY2FsZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC13aWR0aCwgMCApIC9cblx0XHRcdFx0XHRcdFx0dmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKVxuXHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdGJvcmRlci1ib3R0b206IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKSBzb2xpZFxuXHRcdFx0XHQkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdFx0fVxuXHR9XG5cdCZbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSB7XG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdC8qIEFkanVzdGluZyB0aGUgYm9yZGVyIHJhZGl1cyB0byBtYXRjaCB0aGUgc2NhbGluZyBpbiB0aGUgeSBheGlzLiAqL1xuXHRcdFx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH0gL1xuXHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdCR7IENPTkZJRy5yYWRpdXNTbWFsbCB9IC9cblx0XHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdFx0dmFyKCAtLXNlbGVjdGVkLWhlaWdodCwgMCApIC9cblx0XHRcdFx0XHRcdFx0XHR2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApXG5cdFx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHR0b3A6IDA7XG5cdFx0XHRsZWZ0OiAwO1xuXHRcdFx0d2lkdGg6IDEwMCU7XG5cdFx0XHRoZWlnaHQ6IGNhbGMoIHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yICkgKiAxcHggKTtcblx0XHRcdHRyYW5zZm9ybTogdHJhbnNsYXRlWSggY2FsYyggdmFyKCAtLXNlbGVjdGVkLXRvcCwgMCApICogMXB4ICkgKVxuXHRcdFx0XHRzY2FsZVkoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHRiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoXG5cdFx0XHRcdGluIHNyZ2IsXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfSxcblx0XHRcdFx0dHJhbnNwYXJlbnQgOTYlXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmW2RhdGEtc2VsZWN0LW9uLW1vdmU9J3RydWUnXTpoYXMoXG5cdFx0XHRcdDppcyggOmZvY3VzLXZpc2libGUsIFtkYXRhLWZvY3VzLXZpc2libGVdIClcblx0XHRcdCk6OmJlZm9yZSB7XG5cdFx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdFx0Ym9yZGVyOiB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzICkgc29saWRcblx0XHRcdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdFx0LyogQWRqdXN0aW5nIHRoZSBib3JkZXIgd2lkdGggdG8gbWF0Y2ggdGhlIHNjYWxpbmcgaW4gdGhlIHkgYXhpcy4gKi9cblx0XHRcdGJvcmRlci1ibG9jay13aWR0aDogY2FsYyhcblx0XHRcdFx0dmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cywgMXB4ICkgL1xuXHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHQpO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYiA9IHN0eWxlZCggQXJpYWtpdC5UYWIgKWBcblx0JiB7XG5cdFx0LyogUmVzZXRzICovXG5cdFx0Ym9yZGVyLXJhZGl1czogMDtcblx0XHRiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcblx0XHRib3JkZXI6IG5vbmU7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblxuXHRcdGZsZXg6IDEgMCBhdXRvO1xuXHRcdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5cdFx0ZGlzcGxheTogZmxleDtcblx0XHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRcdGN1cnNvcjogcG9pbnRlcjtcblx0XHRsaW5lLWhlaWdodDogMS4yOyAvLyBDaGFyYWN0ZXJzIGluIHNvbWUgbGFuZ3VhZ2VzIChlLmcuIEphcGFuZXNlKSBtYXkgaGF2ZSBhIG5hdGl2ZSBoaWdoZXIgbGluZS1oZWlnaHQuXG5cdFx0Zm9udC13ZWlnaHQ6IDQwMDtcblx0XHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cblx0XHQmW2FyaWEtZGlzYWJsZWQ9J3RydWUnXSB7XG5cdFx0XHRjdXJzb3I6IGRlZmF1bHQ7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLnRleHREaXNhYmxlZCB9O1xuXHRcdH1cblxuXHRcdCY6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6aXMoIDpob3ZlciwgW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdH1cblxuXHRcdCY6Zm9jdXM6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRib3gtc2hhZG93OiBub25lO1xuXHRcdFx0b3V0bGluZTogbm9uZTtcblx0XHR9XG5cblx0XHQvLyBGb2N1cyBpbmRpY2F0b3IuXG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdCY6OmFmdGVyIHtcblx0XHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXG5cdFx0XHQvLyBEcmF3IHRoZSBpbmRpY2F0b3IuXG5cdFx0XHQvLyBPdXRsaW5lIHdvcmtzIGZvciBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZSBhcyB3ZWxsLlxuXHRcdFx0b3V0bGluZTogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApIHNvbGlkXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdFx0XHQvLyBBbmltYXRpb25cblx0XHRcdG9wYWNpdHk6IDA7XG5cblx0XHRcdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFx0XHR0cmFuc2l0aW9uOiBvcGFjaXR5IDAuMXMgbGluZWFyO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdCZbZGF0YS1mb2N1cy12aXNpYmxlXTo6YWZ0ZXIge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdHBhZGRpbmctaW5saW5lOiAkeyBzcGFjZSggNCApIH07XG5cdFx0aGVpZ2h0OiAkeyBzcGFjZSggMTIgKSB9O1xuXHRcdHNjcm9sbC1tYXJnaW46IDI0cHg7XG5cblx0XHQmOjphZnRlciB7XG5cdFx0XHRjb250ZW50OiAnJztcblx0XHRcdGluc2V0OiAkeyBzcGFjZSggMyApIH07XG5cdFx0fVxuXHR9XG5cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAzICkgfTtcblx0XHRtaW4taGVpZ2h0OiAkeyBzcGFjZSggMTAgKSB9O1xuXG5cdFx0JlthcmlhLXNlbGVjdGVkPSd0cnVlJ10ge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGZpbGw6IGN1cnJlbnRDb2xvcjtcblx0XHR9XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ11bZGF0YS1zZWxlY3Qtb24tbW92ZT0nZmFsc2UnXSAmOjphZnRlciB7XG5cdFx0Y29udGVudDogJyc7XG5cdFx0aW5zZXQ6IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKTtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoaWxkcmVuID0gc3R5bGVkLnNwYW5gXG5cdGZsZXgtZ3JvdzogMTtcblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXG5cdFthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBzdGFydDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoZXZyb24gPSBzdHlsZWQoIEljb24gKWBcblx0ZmxleC1zaHJpbms6IDA7XG5cdG1hcmdpbi1pbmxpbmUtZW5kOiAkeyBzcGFjZSggLTEgKSB9O1xuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdGRpc3BsYXk6IG5vbmU7XG5cdH1cblx0b3BhY2l0eTogMDtcblx0W3JvbGU9J3RhYiddOmlzKCBbYXJpYS1zZWxlY3RlZD0ndHJ1ZSddLCBbZGF0YS1mb2N1cy12aXNpYmxlXSwgOmhvdmVyICkgJiB7XG5cdFx0b3BhY2l0eTogMTtcblx0fVxuXHQvLyBUaGUgY2hldnJvbiBpcyB0cmFuc2l0aW9uZWQgaW50byBleGlzdGVuY2Ugd2hlbiBzZWxlY3RPbk1vdmUgaXMgZW5hYmxlZCxcblx0Ly8gYmVjYXVzZSBvdGhlcndpc2UgaXQgbG9va3MgamFycmluZywgYXMgaXQgc2hvd3MgdXAgb3V0c2lkZSBvZiB0aGUgZm9jdXNcblx0Ly8gaW5kaWNhdG9yIHRoYXQncyBiZWluZyBhbmltYXRlZCBhdCB0aGUgc2FtZSB0aW1lLlxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRbZGF0YS1zZWxlY3Qtb24tbW92ZT0ndHJ1ZSddXG5cdFx0XHRbcm9sZT0ndGFiJ106aXMoIFthcmlhLXNlbGVjdGVkPSd0cnVlJ10sICApXG5cdFx0XHQmIHtcblx0XHRcdHRyYW5zaXRpb246IG9wYWNpdHkgMC4xNXMgMC4xNXMgbGluZWFyO1xuXHRcdH1cblx0fVxuXHQmOmRpciggcnRsICkge1xuXHRcdHJvdGF0ZTogMTgwZGVnO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiUGFuZWwgPSBzdHlsZWQoIEFyaWFraXQuVGFiUGFuZWwgKWBcblx0Jjpmb2N1cyB7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRvdXRsaW5lOiBub25lO1xuXHR9XG5cblx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHRib3gtc2hhZG93OiAwIDAgMCB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzIClcblx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdFx0b3V0bGluZS1vZmZzZXQ6IDA7XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/tabs/tab.js
-  var import_jsx_runtime315 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime());
   var Tab3 = (0, import_element238.forwardRef)(function Tab23({
     children,
     tabId,
@@ -53475,16 +53376,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(Tab22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(Tab22, {
       ref,
       store,
       id: instancedTabId,
       disabled,
       render,
       ...otherProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsx)(TabChildren, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime314.jsx)(TabChildren, {
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(TabChevron, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(TabChevron, {
         icon: chevron_right_default
       })]
     });
@@ -53549,7 +53450,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tabs/tablist.js
-  var import_jsx_runtime316 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime315 = __toESM(require_jsx_runtime());
   var DEFAULT_SCROLL_MARGIN = 24;
   function useScrollRectIntoView(parent, rect, {
     margin = DEFAULT_SCROLL_MARGIN
@@ -53624,12 +53525,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       true ? (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(StyledTabList, {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(StyledTabList, {
       ref: refs,
       store,
       render: (props) => {
         var _props$tabIndex;
-        return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("div", {
+        return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", {
           ...props,
           // Fallback to -1 to prevent browsers from making the tablist
           // tabbable when it is a scrolling container.
@@ -53647,7 +53548,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tabs/tabpanel.js
   var import_element241 = __toESM(require_element());
   var import_warning14 = __toESM(require_warning());
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime());
   var TabPanel3 = (0, import_element241.forwardRef)(function TabPanel24({
     children,
     tabId,
@@ -53665,7 +53566,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = context;
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(TabPanel23, {
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(TabPanel23, {
       ref,
       store,
       id: `${instancedTabId}-view`,
@@ -53677,7 +53578,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/index.js
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime());
   function externalToInternalTabId(externalId, instanceId) {
     return externalId && `${instanceId}-${externalId}`;
   }
@@ -53709,7 +53610,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         onActiveTabIdChange?.(internalToExternalTabId(newActiveId, instanceId));
       },
       activeId: externalToInternalTabId(activeTabId, instanceId),
-      rtl: (0, import_i18n82.isRTL)()
+      rtl: (0, import_i18n80.isRTL)()
     });
     const {
       items,
@@ -53733,7 +53634,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store,
       instanceId
     }), [store, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(TabsContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(TabsContext.Provider, {
       value: contextValue,
       children
     });
@@ -53774,7 +53675,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/components");
 
   // packages/components/build-module/badge/index.js
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime());
   function contextBasedIcon(intent = "default") {
     switch (intent) {
       case "info":
@@ -53797,20 +53698,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("span", {
       className: clsx_default("components-badge", className2, {
         [`is-${intent}`]: intent,
         "has-icon": hasIcon
       }),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)("span", {
         className: "components-badge__flex-wrapper",
-        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(icon_default3, {
+        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(icon_default3, {
           icon,
           size: 16,
           fill: "currentColor",
           className: "components-badge__icon"
-        }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("span", {
           className: "components-badge__content",
           children
         })]
@@ -57832,9 +57733,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element244 = __toESM(require_element());
 
   // packages/components/build-module/calendar/utils/day-cell.js
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime());
   var PreviewDashStartAndEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57842,13 +57743,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.7677",
       strokeDashoffset: "3.2",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("path", {
         d: "M29.5,0.5 h-27 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h27 a2,2 0 0 0 2,-2 v-27 a2,2 0 0 0 -2,-2"
       })
     });
   };
   var PreviewDashStart = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57856,13 +57757,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("path", {
         d: "M32,0.5 h-29.5 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h30"
       })
     });
   };
   var PreviewDashMiddle = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57870,12 +57771,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.9 4",
       strokeDashoffset: "2",
       strokeWidth: "1",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime320.jsx)("line", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime319.jsx)("line", {
         x1: "0",
         y1: "0.5",
         x2: "100",
         y2: "0.5"
-      }), /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("line", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("line", {
         x1: "0",
         y1: "31.5",
         x2: "100",
@@ -57884,7 +57785,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
   };
   var PreviewDashEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -57892,7 +57793,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("path", {
         d: "M0,0.5 h29.5 a2,2 0 0 1 2,2 v27 a2,2 0 0 1 -2,2 h-29.5"
       })
     });
@@ -57914,9 +57815,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (modifiers.preview) {
       PreviewDash = PreviewDashMiddle;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("td", {
       ...tdProps,
-      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(PreviewDash, {}), children]
+      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(PreviewDash, {}), children]
     });
   }
 
@@ -57984,7 +57885,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/calendar/utils/use-localization-props.js
-  var import_i18n83 = __toESM(require_i18n());
+  var import_i18n81 = __toESM(require_i18n());
   var import_element243 = __toESM(require_element());
   function isLocaleRTL(localeCode) {
     const localeObj = new Intl.Locale(localeCode);
@@ -58039,7 +57940,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         timeZone
       });
       return {
-        "aria-label": mode2 === "single" ? (0, import_i18n83.__)("Date calendar") : (0, import_i18n83.__)("Date range calendar"),
+        "aria-label": mode2 === "single" ? (0, import_i18n81.__)("Date calendar") : (0, import_i18n81.__)("Date range calendar"),
         labels: {
           /**
            * The label for the month grid.
@@ -58055,18 +57956,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             const formattedDate = fullDateFormatter.format(date);
             let label = formattedDate;
             if (modifiers?.today) {
-              label = (0, import_i18n83.sprintf)(
+              label = (0, import_i18n81.sprintf)(
                 // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-                (0, import_i18n83.__)("Today, %s"),
+                (0, import_i18n81.__)("Today, %s"),
                 formattedDate
               );
             }
             return label;
           },
           /** The label for the "next month" button. */
-          labelNext: () => (0, import_i18n83.__)("Go to the Next Month"),
+          labelNext: () => (0, import_i18n81.__)("Go to the Next Month"),
           /** The label for the "previous month" button. */
-          labelPrevious: () => (0, import_i18n83.__)("Go to the Previous Month"),
+          labelPrevious: () => (0, import_i18n81.__)("Go to the Previous Month"),
           /**
            * The label for the day button.
            * @param date
@@ -58076,16 +57977,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             const formattedDate = fullDateFormatter.format(date);
             let label = formattedDate;
             if (modifiers?.today) {
-              label = (0, import_i18n83.sprintf)(
+              label = (0, import_i18n81.sprintf)(
                 // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-                (0, import_i18n83.__)("Today, %s"),
+                (0, import_i18n81.__)("Today, %s"),
                 formattedDate
               );
             }
             if (modifiers?.selected) {
-              label = (0, import_i18n83.sprintf)(
+              label = (0, import_i18n81.sprintf)(
                 // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-                (0, import_i18n83.__)("%s, selected"),
+                (0, import_i18n81.__)("%s, selected"),
                 formattedDate
               );
             }
@@ -58113,7 +58014,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/calendar/date-calendar/index.js
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime());
   var DateCalendar = ({
     defaultSelected,
     selected: selectedProp,
@@ -58136,7 +58037,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: selectedProp,
       onChange
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -58149,7 +58050,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/calendar/date-range-calendar/index.js
   var import_element245 = __toESM(require_element());
-  var import_jsx_runtime322 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime321 = __toESM(require_jsx_runtime());
   function usePreviewRange({
     selected,
     hoveredDate,
@@ -58257,7 +58158,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         preview_end: previewRange?.to
       };
     }, [previewRange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -58281,11 +58182,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element247 = __toESM(require_element());
 
   // packages/components/build-module/validated-form-controls/control-with-error.js
-  var import_i18n84 = __toESM(require_i18n());
+  var import_i18n82 = __toESM(require_i18n());
   var import_element246 = __toESM(require_element());
 
   // packages/components/build-module/validated-form-controls/validity-indicator.js
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime322 = __toESM(require_jsx_runtime());
   function ValidityIndicator({
     type,
     message: message3
@@ -58294,11 +58195,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       valid: published_default,
       invalid: error_default
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("p", {
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)("p", {
       className: clsx_default("components-validated-control__indicator", `is-${type}`),
-      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(spinner_default, {
+      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(spinner_default, {
         className: "components-validated-control__indicator-spinner"
-      }) : /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(icon_default3, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(icon_default3, {
         className: "components-validated-control__indicator-icon",
         icon: ICON[type],
         size: 16,
@@ -58308,16 +58209,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/validated-form-controls/control-with-error.js
-  var import_jsx_runtime324 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime());
   function appendRequiredIndicator(label, required, markWhenOptional) {
     if (required && !markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, {
-        children: [label, " ", `(${(0, import_i18n84.__)("Required")})`]
+      return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(import_jsx_runtime323.Fragment, {
+        children: [label, " ", `(${(0, import_i18n82.__)("Required")})`]
       });
     }
     if (!required && markWhenOptional) {
-      return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, {
-        children: [label, " ", `(${(0, import_i18n84.__)("Optional")})`]
+      return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(import_jsx_runtime323.Fragment, {
+        children: [label, " ", `(${(0, import_i18n82.__)("Optional")})`]
       });
     }
     return label;
@@ -58423,27 +58324,27 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     const message3 = () => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ValidityIndicator, {
           type: "invalid",
           message: errorMessage
         });
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ValidityIndicator, {
           type: statusMessage.type,
           message: statusMessage.message
         });
       }
       return null;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("div", {
       className,
       ref: forwardedRef,
       onBlur,
       children: [(0, import_element246.cloneElement)(children, {
         label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
         required
-      }), /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", {
         "aria-live": "polite",
         children: showMessage && message3()
       })]
@@ -58452,7 +58353,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var ControlWithError = (0, import_element246.forwardRef)(UnforwardedControlWithError);
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.js
-  var import_jsx_runtime325 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime324 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedCheckboxControl = ({
     required,
     customValidity,
@@ -58461,13 +58362,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element247.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
         checkbox_control_default,
         {
           ...restProps
@@ -58479,7 +58380,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/form-token-field.js
   var import_element248 = __toESM(require_element());
-  var import_jsx_runtime326 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime325 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedFormTokenField = ({
     required,
     customValidity,
@@ -58487,19 +58388,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element248.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(FormTokenField, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(FormTokenField, {
           __next40pxDefaultSize: true,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -58519,7 +58420,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/input-control.js
   var import_element249 = __toESM(require_element());
   var import_compose89 = __toESM(require_compose());
-  var import_jsx_runtime327 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime326 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedInputControl = ({
     required,
     customValidity,
@@ -58528,12 +58429,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element249.useRef)(null);
     const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(input_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
@@ -58545,7 +58446,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/number-control.js
   var import_element250 = __toESM(require_element());
   var import_compose90 = __toESM(require_compose());
-  var import_jsx_runtime328 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime327 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedNumberControl = ({
     required,
     customValidity,
@@ -58554,12 +58455,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element250.useRef)(null);
     const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(number_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(number_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
@@ -58571,7 +58472,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/radio-control.js
   var import_compose91 = __toESM(require_compose());
   var import_element251 = __toESM(require_element());
-  var import_jsx_runtime329 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime328 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedRadioControl = ({
     required,
     customValidity,
@@ -58580,13 +58481,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element251.useRef)(null);
     const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="radio"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(radio_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(radio_control_default, {
         ...restProps
       })
     });
@@ -58596,7 +58497,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/select-control.js
   var import_element252 = __toESM(require_element());
   var import_compose92 = __toESM(require_compose());
-  var import_jsx_runtime330 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime329 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedSelectControl = ({
     required,
     customValidity,
@@ -58605,12 +58506,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element252.useRef)(null);
     const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(select_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(select_control_default, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         ref: mergedRefs,
@@ -58623,7 +58524,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/text-control.js
   var import_compose93 = __toESM(require_compose());
   var import_element253 = __toESM(require_element());
-  var import_jsx_runtime331 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime330 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedTextControl = ({
     required,
     customValidity,
@@ -58632,12 +58533,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element253.useRef)(null);
     const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(text_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(text_control_default, {
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
@@ -58649,7 +58550,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/textarea-control.js
   var import_element254 = __toESM(require_element());
   var import_compose94 = __toESM(require_compose());
-  var import_jsx_runtime332 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime331 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
@@ -58658,12 +58559,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element254.useRef)(null);
     const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(textarea_control_default, {
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
         ...restProps
@@ -58675,7 +58576,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/toggle-control.js
   var import_element255 = __toESM(require_element());
   var import_compose95 = __toESM(require_compose());
-  var import_jsx_runtime333 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime332 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedToggleControl = ({
     required,
     customValidity,
@@ -58689,12 +58590,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         validityTargetRef.current.required = required !== null && required !== void 0 ? required : false;
       }
     }, [required]);
-    return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(toggle_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(toggle_control_default, {
         __nextHasNoMarginBottom: true,
         ref: mergedRefs,
         ...restProps
@@ -58705,7 +58606,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/toggle-group-control.js
   var import_element256 = __toESM(require_element());
-  var import_jsx_runtime334 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime333 = __toESM(require_jsx_runtime());
   var UnforwardedValidatedToggleGroupControl = ({
     required,
     customValidity,
@@ -58714,20 +58615,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element256.useRef)(null);
     const nameAttr = (0, import_element256.useId)();
-    return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime334.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime333.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(component_default12, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(component_default12, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           ref: forwardedRef,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime334.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime333.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "radio",
         ref: validityTargetRef,
