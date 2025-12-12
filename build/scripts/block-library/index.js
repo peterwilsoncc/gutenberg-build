@@ -15917,7 +15917,11 @@ var wp;
       [
         "core/paragraph",
         {
-          align: "center",
+          style: {
+            typography: {
+              textAlign: "center"
+            }
+          },
           placeholder: (0, import_i18n52.__)("Write title\u2026"),
           ...attributes3
         }
@@ -17015,7 +17019,11 @@ var wp;
           name: "core/paragraph",
           attributes: {
             content: `<strong>${(0, import_i18n54.__)("Snow Patrol")}</strong>`,
-            align: "center"
+            style: {
+              typography: {
+                textAlign: "center"
+              }
+            }
           }
         }
       ]
@@ -24225,7 +24233,11 @@ ${url}
         {
           name: "core/paragraph",
           attributes: {
-            align: "center",
+            style: {
+              typography: {
+                textAlign: "center"
+              }
+            },
             content: (0, import_i18n79.__)(
               "In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing."
             )
