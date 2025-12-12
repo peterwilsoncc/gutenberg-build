@@ -226,27 +226,3 @@ if ( ! function_exists( 'font_library_wp_admin_render_page' ) ) {
 // Hook the enqueue function to admin_enqueue_scripts
 add_action( 'admin_enqueue_scripts', 'font_library_wp_admin_enqueue_scripts' );
 
-if ( ! function_exists( 'font_library_wp_admin_register_page' ) ) {
-	/**
-	 * Register the font-library-wp-admin base page handler.
-	 * This is hidden from the menu but provides the page callback for URL routing.
-	 * Visible menu items should use the full URL pattern with query parameters.
-	 *
-	 * Example:
-	 * $url = admin_url( 'admin.php?page=font-library-wp-admin&p=' . urlencode( '/your/route' ) );
-	 * add_menu_page( 'Title', 'Menu', 'capability', $url, '', 'icon', 10 );
-	 */
-	function font_library_wp_admin_register_page() {
-		add_submenu_page(
-			'nothing-font-library',                                 // Hidden page (no parent)
-			__( 'Fonts', 'gutenberg' ),           // Page title
-			__( 'Fonts', 'gutenberg' ),           // Menu title (not visible)
-			'read',                                                   // Minimum capability
-			'font-library-wp-admin',                                // Menu slug for URL routing
-			'font_library_wp_admin_render_page'          // Callback function
-		);
-	}
-}
-
-// Hook the registration to admin_menu
-add_action( 'admin_menu', 'font_library_wp_admin_register_page' );

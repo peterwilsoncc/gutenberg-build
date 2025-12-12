@@ -226,27 +226,3 @@ if ( ! function_exists( 'gutenberg_boot_wp_admin_render_page' ) ) {
 // Hook the enqueue function to admin_enqueue_scripts
 add_action( 'admin_enqueue_scripts', 'gutenberg_boot_wp_admin_enqueue_scripts' );
 
-if ( ! function_exists( 'gutenberg_boot_wp_admin_register_page' ) ) {
-	/**
-	 * Register the gutenberg-boot-wp-admin base page handler.
-	 * This is hidden from the menu but provides the page callback for URL routing.
-	 * Visible menu items should use the full URL pattern with query parameters.
-	 *
-	 * Example:
-	 * $url = admin_url( 'admin.php?page=gutenberg-boot-wp-admin&p=' . urlencode( '/your/route' ) );
-	 * add_menu_page( 'Title', 'Menu', 'capability', $url, '', 'icon', 10 );
-	 */
-	function gutenberg_boot_wp_admin_register_page() {
-		add_submenu_page(
-			'nothing-gutenberg-boot',                                 // Hidden page (no parent)
-			__( 'Site Editor', 'gutenberg' ),           // Page title
-			__( 'Site Editor', 'gutenberg' ),           // Menu title (not visible)
-			'read',                                                   // Minimum capability
-			'gutenberg-boot-wp-admin',                                // Menu slug for URL routing
-			'gutenberg_boot_wp_admin_render_page'          // Callback function
-		);
-	}
-}
-
-// Hook the registration to admin_menu
-add_action( 'admin_menu', 'gutenberg_boot_wp_admin_register_page' );

@@ -22,6 +22,13 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'fonts-home',
+		'path'        => '/',
+		'page'        => 'font-library',
+		'has_route'   => true,
+		'has_content' => false,
+	),
+	array(
 		'name'        => 'home',
 		'path'        => '/',
 		'page'        => 'gutenberg-boot',
