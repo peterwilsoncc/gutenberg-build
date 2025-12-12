@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('react-jsx-runtime', 'wp-compose', 'wp-deprecated', 'wp-element', 'wp-hooks', 'wp-is-shallow-equal', 'wp-primitives'), 'version' => '1765506833598');
+<?php return array('dependencies' => array('react-jsx-runtime', 'wp-compose', 'wp-deprecated', 'wp-element', 'wp-hooks', 'wp-is-shallow-equal', 'wp-primitives'), 'version' => '1765507612560');

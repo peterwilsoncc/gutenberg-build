@@ -2211,11 +2211,19 @@ var wp;
   var import_element10 = __toESM(require_element());
   var import_data23 = __toESM(require_data());
   var import_editor16 = __toESM(require_editor());
+  var { useGenerateBlockPath } = unlock(import_editor16.privateApis);
   function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRenderingMode) {
+    const generateBlockPath = useGenerateBlockPath();
     const [postHistory, dispatch2] = (0, import_element10.useReducer)(
-      (historyState, { type, post: post2, previousRenderingMode: previousRenderingMode2 }) => {
+      (historyState, { type, post: post2, previousRenderingMode: previousRenderingMode2, selectedBlockPath: selectedBlockPath2 }) => {
         if (type === "push") {
-          return [...historyState, { post: post2, previousRenderingMode: previousRenderingMode2 }];
+          const updatedHistory = [...historyState];
+          const currentIndex = updatedHistory.length - 1;
+          updatedHistory[currentIndex] = {
+            ...updatedHistory[currentIndex],
+            selectedBlockPath: selectedBlockPath2
+          };
+          return [...updatedHistory, { post: post2, previousRenderingMode: previousRenderingMode2 }];
         }
         if (type === "pop") {
           if (historyState.length > 1) {
@@ -2230,23 +2238,32 @@ var wp;
         }
       ]
     );
-    const { post, previousRenderingMode } = postHistory[postHistory.length - 1];
+    const { post, previousRenderingMode, selectedBlockPath } = postHistory[postHistory.length - 1];
     const { getRenderingMode } = (0, import_data23.useSelect)(import_editor16.store);
     const { setRenderingMode } = (0, import_data23.useDispatch)(import_editor16.store);
     const onNavigateToEntityRecord = (0, import_element10.useCallback)(
       (params) => {
+        const blockPath = params.selectedBlockClientId ? generateBlockPath(params.selectedBlockClientId) : null;
         dispatch2({
           type: "push",
           post: { postId: params.postId, postType: params.postType },
           // Save the current rendering mode so we can restore it when navigating back.
-          previousRenderingMode: getRenderingMode()
+          previousRenderingMode: getRenderingMode(),
+          selectedBlockPath: blockPath
         });
         setRenderingMode(defaultRenderingMode);
       },
-      [getRenderingMode, setRenderingMode, defaultRenderingMode]
+      [
+        getRenderingMode,
+        setRenderingMode,
+        defaultRenderingMode,
+        generateBlockPath
+      ]
     );
     const onNavigateToPreviousEntityRecord = (0, import_element10.useCallback)(() => {
-      dispatch2({ type: "pop" });
+      dispatch2({
+        type: "pop"
+      });
       if (previousRenderingMode) {
         setRenderingMode(previousRenderingMode);
       }
@@ -2254,7 +2271,9 @@ var wp;
     return {
       currentPost: post,
       onNavigateToEntityRecord,
-      onNavigateToPreviousEntityRecord: postHistory.length > 1 ? onNavigateToPreviousEntityRecord : void 0
+      onNavigateToPreviousEntityRecord: postHistory.length > 1 ? onNavigateToPreviousEntityRecord : void 0,
+      // Return the selected block path from the current history item
+      previousSelectedBlockPath: selectedBlockPath
     };
   }
 
@@ -2547,7 +2566,8 @@ var wp;
     const {
       currentPost: { postId: currentPostId, postType: currentPostType },
       onNavigateToEntityRecord,
-      onNavigateToPreviousEntityRecord
+      onNavigateToPreviousEntityRecord,
+      previousSelectedBlockPath
     } = useNavigateToEntityRecord(
       initialPostId,
       initialPostType,
@@ -2722,6 +2742,7 @@ var wp;
               disableIframe: !shouldIframe,
               autoFocus: !isWelcomeGuideVisible,
               onActionPerformed,
+              initialSelection: previousSelectedBlockPath,
               extraSidebarPanels: showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(MetaBoxes, { location: "side" }),
               extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
                 MetaBoxesMain,
