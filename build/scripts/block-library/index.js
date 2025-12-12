@@ -49567,7 +49567,7 @@ ${js}
       return null;
     }
     const buttonLabel = hasInnerBlocks ? (0, import_i18n187.__)("Change design") : (0, import_i18n187.__)("Choose pattern");
-    return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_components121.ToolbarGroup, { className: "wp-block-template-part__block-control-group", children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_components121.__experimentalDropdownContentWrapper, { children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_components121.__experimentalDropdownContentWrapper, { children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
       import_components121.Dropdown,
       {
         contentClassName: "block-editor-block-settings-menu__popover",
@@ -49592,7 +49592,7 @@ ${js}
           }
         )
       }
-    ) }) });
+    ) });
   }
 
   // packages/block-library/build-module/query/edit/query-content.js
@@ -49670,7 +49670,7 @@ ${js}
       setAttributes
     ]);
     return /* @__PURE__ */ (0, import_jsx_runtime377.jsxs)(import_jsx_runtime377.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_block_editor198.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_block_editor198.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
         QueryToolbar,
         {
           clientId,
