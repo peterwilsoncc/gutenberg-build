@@ -2821,6 +2821,12 @@ var wp;
         "aria-setsize": infiniteScrollEnabled ? paginationInfo.totalItems : void 0,
         "aria-posinset": posinset,
         role: infiniteScrollEnabled ? "article" : void 0,
+        onMouseDown: (event) => {
+          const isMetaClick = (0, import_keycodes.isAppleOS)() ? event.metaKey : event.ctrlKey;
+          if (event.button === 0 && isMetaClick && window.navigator.userAgent.toLowerCase().includes("firefox")) {
+            event?.preventDefault();
+          }
+        },
         onClick: (event) => {
           if (!hasPossibleBulkAction) {
             return;
