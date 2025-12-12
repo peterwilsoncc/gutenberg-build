@@ -13710,7 +13710,7 @@ var wp;
     }
     if (selectionA.clientId === selectionB.clientId && attributeKeyA === attributeKeyB && selectionA.offset === selectionB.offset) {
       if (blocks2.length) {
-        if ((0, import_blocks7.isUnmodifiedDefaultBlock)(blockA)) {
+        if ((0, import_blocks7.isUnmodifiedDefaultBlock)(blockA, "content")) {
           dispatch.replaceBlocks(
             [selectionA.clientId],
             blocks2,
