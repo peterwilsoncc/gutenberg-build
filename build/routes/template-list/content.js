@@ -17886,7 +17886,7 @@ function NewTemplate() {
       variant: "primary",
       onClick: () => setShowModal(true),
       label: postType.labels.add_new_item,
-      __next40pxDefaultSize: true
+      size: "compact"
     },
     postType.labels.add_new_item
   ), showModal && /* @__PURE__ */ React.createElement(NewTemplateModal, { onClose: () => setShowModal(false) }));

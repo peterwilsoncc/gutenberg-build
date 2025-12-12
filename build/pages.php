@@ -6,7 +6,7 @@
  * @package gutenberg
  */
 
-require_once __DIR__ . '/pages/gutenberg-boot/page.php';
-require_once __DIR__ . '/pages/gutenberg-boot/page-wp-admin.php';
+require_once __DIR__ . '/pages/site-editor/page.php';
+require_once __DIR__ . '/pages/site-editor/page-wp-admin.php';
 require_once __DIR__ . '/pages/font-library/page.php';
 require_once __DIR__ . '/pages/font-library/page-wp-admin.php';
