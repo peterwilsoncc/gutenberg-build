@@ -48907,11 +48907,11 @@ var wp;
       });
     });
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-      "div",
+      import_components163.Flex,
       {
         role: "group",
         "aria-label": (0, import_i18n152.__)("Manage link"),
-        className: clsx_default("block-editor-link-control__search-item", {
+        className: clsx_default("block-editor-link-control__preview", {
           "is-current": true,
           "is-rich": hasRichData,
           "is-fetching": !!isFetching,
@@ -48919,40 +48919,50 @@ var wp;
           "is-error": isEmptyURL,
           "is-url-title": displayTitle === displayURL
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("div", { className: "block-editor-link-control__search-item-top", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(import_components163.Flex, { gap: 0, children: [
           /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
-            "span",
+            import_components163.Flex,
             {
-              className: "block-editor-link-control__search-item-header",
+              className: "block-editor-link-control__link-information",
               role: "figure",
               "aria-label": (
                 /* translators: Accessibility text for the link preview when editing a link. */
                 (0, import_i18n152.__)("Link information")
               ),
+              justify: "start",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-                  "span",
+                  import_components163.Flex,
                   {
                     className: clsx_default(
-                      "block-editor-link-control__search-item-icon",
+                      "block-editor-link-control__preview-icon",
                       {
                         "is-image": richData?.icon
                       }
                     ),
+                    justify: "center",
                     children: icon
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__search-item-details", children: !isEmptyURL ? /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(import_jsx_runtime315.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
-                    import_components163.ExternalLink,
-                    {
-                      className: "block-editor-link-control__search-item-title",
-                      href: value.url,
-                      children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components163.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
-                    }
-                  ),
-                  !isUrlRedundant && /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__search-item-info", children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components163.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) })
-                ] }) : /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__search-item-error-notice", children: (0, import_i18n152.__)("Link is empty") }) })
+                /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+                  import_components163.Flex,
+                  {
+                    className: "block-editor-link-control__preview-details",
+                    direction: "column",
+                    gap: 1,
+                    children: !isEmptyURL ? /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(import_jsx_runtime315.Fragment, { children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+                        import_components163.ExternalLink,
+                        {
+                          className: "block-editor-link-control__preview-title",
+                          href: value.url,
+                          children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components163.__experimentalTruncate, { numberOfLines: 1, children: displayTitle })
+                        }
+                      ),
+                      !isUrlRedundant && /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__preview-info", children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components163.__experimentalTruncate, { numberOfLines: 1, children: displayURL }) })
+                    ] }) : /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { className: "block-editor-link-control__preview-error-notice", children: (0, import_i18n152.__)("Link is empty") })
+                  }
+                )
               ]
             }
           ),
