@@ -416,7 +416,6 @@ var wp;
                 import_components.TextareaControl,
                 {
                   label: (0, import_i18n3.__)("Alternative text"),
-                  __nextHasNoMarginBottom: true,
                   value: editedAlt,
                   onChange: (newAlt) => {
                     setEditedAlt(newAlt);

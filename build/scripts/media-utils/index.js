@@ -16235,8 +16235,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: field.label,
           value: data.alt_text || "",
           onChange: (value) => onChange({ alt_text: value }),
-          rows: 2,
-          __nextHasNoMarginBottom: true
+          rows: 2
         }
       );
     },
@@ -16278,8 +16277,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: field.label,
           value: getRawContent(data.caption) || "",
           onChange: (value) => onChange({ caption: value }),
-          rows: 2,
-          __nextHasNoMarginBottom: true
+          rows: 2
         }
       );
     },
@@ -16305,8 +16303,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: field.label,
           value: getRawContent(data.description) || "",
           onChange: (value) => onChange({ description: value }),
-          rows: 5,
-          __nextHasNoMarginBottom: true
+          rows: 5
         }
       );
     },

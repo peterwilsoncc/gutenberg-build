@@ -37717,7 +37717,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { className: "editor-post-excerpt", children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
       import_components132.TextareaControl,
       {
-        __nextHasNoMarginBottom: true,
         label,
         hideLabelFromVision,
         className: "editor-post-excerpt__textarea",
@@ -41971,8 +41970,7 @@ var wp;
         hideLabelFromVision: true,
         autoComplete: "off",
         dir: "auto",
-        rows: 1,
-        __nextHasNoMarginBottom: true
+        rows: 1
       }
     );
   }

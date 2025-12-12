@@ -50622,7 +50622,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime271 = __toESM(require_jsx_runtime());
   function UnforwardedTextareaControl(props, ref) {
     const {
-      __nextHasNoMarginBottom,
+      // @ts-expect-error - Prevent passing this to `textarea`.
+      __nextHasNoMarginBottom: _,
       label,
       hideLabelFromVision,
       value,
@@ -50637,8 +50638,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const onChangeValue = (event) => onChange(event.target.value);
     const classes = clsx_default("components-textarea-control", className2);
     return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(base_control_default, {
-      __nextHasNoMarginBottom,
-      __associatedWPComponentName: "TextareaControl",
+      __nextHasNoMarginBottom: true,
       label,
       hideLabelFromVision,
       id: id3,
@@ -58565,7 +58565,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(textarea_control_default, {
-        __nextHasNoMarginBottom: true,
         ref: mergedRefs,
         ...restProps
       })

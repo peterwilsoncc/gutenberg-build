@@ -57262,7 +57262,6 @@ var wp;
         import_components201.TextareaControl,
         {
           label: (0, import_i18n191.__)("Additional CSS"),
-          __nextHasNoMarginBottom: true,
           value: customCSS,
           onChange: (newValue) => handleOnChange(newValue),
           onBlur: handleOnBlur,

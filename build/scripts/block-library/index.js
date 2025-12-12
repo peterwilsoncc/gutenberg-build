@@ -14683,7 +14683,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
                   import_components31.TextareaControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n48.__)("Alternative text"),
                     value: alt,
                     onChange: (newAlt) => setAttributes({ alt: newAlt }),
@@ -26774,8 +26773,7 @@ ${js}
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("br", {}),
                 (0, import_i18n89.__)("Leave empty if decorative.")
-              ] }),
-              __nextHasNoMarginBottom: true
+              ] })
             }
           ) })
         }
@@ -27278,8 +27276,7 @@ ${js}
                       (0, import_i18n89.__)(
                         "Leave empty if decorative."
                       )
-                    ] }),
-                    __nextHasNoMarginBottom: true
+                    ] })
                   }
                 )
               }
@@ -30476,7 +30473,6 @@ ${js}
             /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
               import_components56.TextareaControl,
               {
-                __nextHasNoMarginBottom: true,
                 __next40pxDefaultSize: true,
                 label: (0, import_i18n97.__)("LaTeX math syntax"),
                 hideLabelFromVision: true,
@@ -32866,7 +32862,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
                 import_components60.TextareaControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n103.__)("Alternative text"),
                   value: mediaAlt,
                   onChange: onMediaAltChange,
@@ -36403,7 +36398,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
                 import_components79.TextareaControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n125.__)("Description"),
                   value: description || "",
                   onChange: (descriptionValue) => {
