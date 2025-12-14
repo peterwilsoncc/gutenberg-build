@@ -14511,12 +14511,13 @@ var wp;
                   block.name,
                   attributeName
                 );
-                if (isRichText && "string" === typeof attributeValue) {
-                  const blockYText = currentAttributes.get(
-                    attributeName
-                  );
+                if (isRichText && "string" === typeof attributeValue && currentAttributes.has(attributeName) && currentAttributes.get(
+                  attributeName
+                ) instanceof yjs_exports.Text) {
                   mergeRichTextUpdate(
-                    blockYText,
+                    currentAttributes.get(
+                      attributeName
+                    ),
                     attributeValue,
                     lastSelection2
                   );
