@@ -14757,7 +14757,7 @@ var wp;
             const currentDateIsFloating = ["draft", "auto-draft", "pending"].includes(
               ymap.get("status")
             ) && (null === currentValue || editedRecord.modified === currentValue);
-            if (!newValue && currentDateIsFloating) {
+            if (currentDateIsFloating) {
               return false;
             }
             return haveValuesChanged(currentValue, newValue);
