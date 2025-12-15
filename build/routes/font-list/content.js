@@ -488,6 +488,7 @@ var VALID_SETTINGS = [
   "dimensions.aspectRatio",
   "dimensions.minHeight",
   "dimensions.width",
+  "dimensions.dimensionSizes",
   "layout.contentSize",
   "layout.definitions",
   "layout.wideSize",
@@ -809,6 +810,12 @@ var PRESET_METADATA = [
     path: ["border", "radiusSizes"],
     valueKey: "size",
     cssVarInfix: "border-radius",
+    classes: []
+  },
+  {
+    path: ["dimensions", "dimensionSizes"],
+    valueKey: "size",
+    cssVarInfix: "dimension",
     classes: []
   }
 ];
