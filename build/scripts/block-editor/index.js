@@ -57684,7 +57684,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
         import_components202.FocalPointPicker,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n192.__)("Focal point"),
           url: imageValue,
           value: backgroundPositionToCoords(backgroundPositionValue),

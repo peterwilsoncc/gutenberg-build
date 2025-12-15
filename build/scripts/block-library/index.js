@@ -14651,7 +14651,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
                   import_components31.FocalPointPicker,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n48.__)("Focal point"),
                     url,
                     value: focalPoint,
@@ -32841,7 +32840,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
                 import_components60.FocalPointPicker,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n103.__)("Focal point"),
                   url: useFeaturedImage && featuredImageURL ? featuredImageURL : mediaUrl,
                   value: focalPoint,
