@@ -16012,10 +16012,10 @@ function filterSortAndPaginate(data, view, fields) {
     });
   }
   const sortByField = view.sort?.field ? _fields.find((field) => {
-    return field.id === view.sort?.field;
+    return field.enableSorting !== false && field.id === view.sort?.field;
   }) : null;
   const groupByField = view.groupBy?.field ? _fields.find((field) => {
-    return field.id === view.groupBy?.field;
+    return field.enableSorting !== false && field.id === view.groupBy?.field;
   }) : null;
   if (sortByField || groupByField) {
     filteredData.sort((a2, b2) => {
