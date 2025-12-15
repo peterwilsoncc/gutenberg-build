@@ -16282,7 +16282,6 @@ var wp;
       import_components11.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n11.__)("Justification"),
         value: justifyContent,
         onChange: onJustificationChange,
@@ -16328,7 +16327,6 @@ var wp;
       import_components11.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         className: "block-editor-hooks__flex-layout-orientation-controls",
         label: (0, import_i18n11.__)("Orientation"),
         value: orientation,
@@ -16549,7 +16547,6 @@ var wp;
               import_components13.__experimentalToggleGroupControl,
               {
                 __next40pxDefaultSize: true,
-                __nextHasNoMarginBottom: true,
                 label: (0, import_i18n13.__)("Justification"),
                 value: justifyContent,
                 onChange: onJustificationChange,
@@ -17042,7 +17039,6 @@ var wp;
       import_components15.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n14.__)("Grid item position"),
         value: gridPlacement,
         onChange: onChangeType,
@@ -43649,7 +43645,6 @@ var wp;
         hideLabelFromVision: true,
         onChange: onSelectVariation,
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         children: variations.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
           import_components129.__experimentalToggleGroupControlOptionIcon,
           {
@@ -45479,7 +45474,6 @@ var wp;
       import_components144.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n133.__)("Decoration"),
         className: clsx_default(
@@ -45536,7 +45530,6 @@ var wp;
       import_components145.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n134.__)("Letter case"),
         className: clsx_default(
@@ -45583,7 +45576,6 @@ var wp;
       import_components146.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n135.__)("Orientation"),
         className: clsx_default("block-editor-writing-mode-control", className),
@@ -48109,7 +48101,6 @@ var wp;
             value: selectedValue,
             isBlock: true,
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             children: IMAGE_SIZE_PRESETS.map((scale) => {
               return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
                 import_components156.__experimentalToggleGroupControlOption,
@@ -54206,7 +54197,6 @@ var wp;
       import_components191.__experimentalToggleGroupControl,
       {
         isDeselectable: true,
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n181.__)("Text alignment"),
         className: clsx_default(
@@ -54992,7 +54982,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(
             import_components193.__experimentalToggleGroupControl,
             {
-              __nextHasNoMarginBottom: true,
               size: "__unstable-large",
               label: childLayoutOrientation(parentLayout),
               value: selfStretch || "fit",
@@ -57702,7 +57691,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime366.jsxs)(
         import_components202.__experimentalToggleGroupControl,
         {
-          __nextHasNoMarginBottom: true,
           size: "__unstable-large",
           label: (0, import_i18n192.__)("Size"),
           value: currentValueForToggle,
@@ -62584,7 +62572,6 @@ var wp;
         required: !!field.isValid?.required,
         customValidity: getCustomValidity(isValid2, validity),
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         isBlock: true,
         label: field.label,
         help: selectedOption?.description || field.description,
@@ -70215,7 +70202,6 @@ var wp;
         __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n228.__)("Layout type"),
-        __nextHasNoMarginBottom: true,
         hideLabelFromVision: true,
         isAdaptiveWidth: true,
         value: type,
@@ -72429,7 +72415,6 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
           import_components270.__experimentalToggleGroupControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n234.__)("Scale"),
             isBlock: true,
             help: scaleHelp[displayValue],

@@ -27868,7 +27868,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
       import_components111.__experimentalToggleGroupControl,
       {
-        __nextHasNoMarginBottom: true,
         size: "__unstable-large",
         label: (0, import_i18n101.__)("Density"),
         value: view.layout?.density || "balanced",
@@ -35603,7 +35602,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components122.__experimentalToggleGroupControl,
       {
         className: "dataviews-view-config__sort-direction",
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n114.__)("Order"),
@@ -35648,7 +35646,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       import_components122.__experimentalToggleGroupControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         isBlock: true,
         label: (0, import_i18n114.__)("Items per page"),
@@ -37137,7 +37134,6 @@ If there's a particular need for this, please submit a feature request at https:
         required: !!field.isValid?.required,
         customValidity: getCustomValidity(isValid2, validity),
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         isBlock: true,
         label: field.label,
         help: selectedOption?.description || field.description,

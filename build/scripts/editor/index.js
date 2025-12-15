@@ -28501,7 +28501,6 @@ var wp;
           onChange: (value) => setHeadingLevel(value),
           isBlock: true,
           size: "__unstable-large",
-          __nextHasNoMarginBottom: true,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
               import_components64.__experimentalToggleGroupControlOption,
@@ -29733,7 +29732,6 @@ var wp;
         import_components76.__experimentalToggleGroupControl,
         {
           label: (0, import_i18n91.__)("Shadow Type"),
-          __nextHasNoMarginBottom: true,
           value: shadowObj.inset ? "inset" : "outset",
           isBlock: true,
           onChange: (value) => onShadowChange("inset", value === "inset"),

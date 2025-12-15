@@ -30495,6 +30495,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/component.js
   var import_element63 = __toESM(require_element());
+  var import_compose28 = __toESM(require_compose());
 
   // packages/components/build-module/toggle-group-control/toggle-group-control/styles.js
   function _EMOTION_STRINGIFIED_CSS_ERROR__10() {
@@ -30786,9 +30787,6 @@ This message will only show in development mode. It won't appear in production. 
     return indicatorPosition;
   }
 
-  // packages/components/build-module/toggle-group-control/toggle-group-control/component.js
-  var import_compose28 = __toESM(require_compose());
-
   // packages/components/build-module/utils/hooks/use-animated-offset-rect.js
   var import_compose27 = __toESM(require_compose());
   var import_element62 = __toESM(require_element());
@@ -30844,7 +30842,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime117 = __toESM(require_jsx_runtime());
   function UnconnectedToggleGroupControl(props, forwardedRef) {
     const {
-      __nextHasNoMarginBottom = false,
+      __nextHasNoMarginBottom: _,
+      // Prevent passing this to the internal component
       __next40pxDefaultSize = false,
       __shouldNotWarnDeprecated36pxSize,
       className: className2,
@@ -30886,8 +30885,7 @@ This message will only show in development mode. It won't appear in production. 
     });
     return /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(base_control_default, {
       help,
-      __nextHasNoMarginBottom,
-      __associatedWPComponentName: "ToggleGroupControl",
+      __nextHasNoMarginBottom: true,
       children: [!hideLabelFromVision && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(VisualLabelWrapper, {
         children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(base_control_default.VisualLabel, {
           children: label
@@ -31146,7 +31144,6 @@ This message will only show in development mode. It won't appear in production. 
     ...restProps
   }, forwardedRef) {
     return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(component_default12, {
-      __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: true,
       ref: forwardedRef,
       isDeselectable: true,
@@ -43009,7 +43006,6 @@ This message will only show in development mode. It won't appear in production. 
           })]
         }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(component_default12, {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           isBlock: true,
           label: (0, import_i18n44.__)("Select AM or PM"),
           hideLabelFromVision: true,
@@ -44626,7 +44622,6 @@ This message will only show in development mode. It won't appear in production. 
       return fontSizeBySize?.slug;
     })();
     return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default12, {
-      __nextHasNoMarginBottom: true,
       __next40pxDefaultSize,
       __shouldNotWarnDeprecated36pxSize: true,
       label: (0, import_i18n54.__)("Font size"),
@@ -58598,7 +58593,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
         children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(component_default12, {
-          __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           ref: forwardedRef,
           ...restProps

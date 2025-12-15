@@ -1034,7 +1034,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
                   import_components.__experimentalToggleGroupControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     isBlock: true,
                     label: (0, import_i18n.__)("Icon Position"),
@@ -6389,7 +6388,6 @@ var wp;
                 onChange: (newWidth) => setAttributes({ width: newWidth }),
                 isBlock: true,
                 __next40pxDefaultSize: true,
-                __nextHasNoMarginBottom: true,
                 children: [25, 50, 75, 100].map((widthValue) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
                     import_components10.__experimentalToggleGroupControlOption,
@@ -11820,7 +11818,6 @@ var wp;
       import_components27.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n41.__)("Arrow"),
         value,
         onChange,
@@ -29122,7 +29119,6 @@ ${js}
                     import_components53.__experimentalToggleGroupControl,
                     {
                       className: "editor-latest-posts-image-alignment-control",
-                      __nextHasNoMarginBottom: true,
                       __next40pxDefaultSize: true,
                       label: (0, import_i18n93.__)("Image alignment"),
                       value: featuredImageAlign || "none",
@@ -34835,7 +34831,6 @@ ${js}
             import_components69.__experimentalToggleGroupControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               className: "wp-block-navigation__overlay-menu-icon-toggle-group",
               label: (0, import_i18n114.__)("Icon"),
               value: icon,
@@ -35027,7 +35022,6 @@ ${js}
       import_components71.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n116.__)("Overlay Visibility"),
         "aria-label": (0, import_i18n116.__)("Configure overlay visibility"),
         value: overlayMenu,
@@ -35075,7 +35069,6 @@ ${js}
         import_components72.__experimentalToggleGroupControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           className: "wp-block-navigation__overlay-menu-icon-toggle-group",
           label: (0, import_i18n117.__)("Icon"),
           value: icon,
@@ -40039,7 +40032,6 @@ ${js}
                   onChange: (value) => setAttributes({ displayMode: value }),
                   isBlock: true,
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
                       import_components89.__experimentalToggleGroupControlOption,
@@ -44864,7 +44856,6 @@ ${js}
             import_components100.__experimentalToggleGroupControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: scaleLabel,
               value: scale,
               help: scaleHelp[scale],
@@ -45600,7 +45591,6 @@ ${js}
                   import_components103.__experimentalToggleGroupControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n163.__)("Arrow"),
                     value: arrow,
                     onChange: (value) => {
@@ -49217,7 +49207,6 @@ ${js}
                     import_components118.__experimentalToggleGroupControl,
                     {
                       __next40pxDefaultSize: true,
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n186.__)("Query type"),
                       isBlock: true,
                       onChange: (value) => {
@@ -49283,7 +49272,6 @@ ${js}
                 ) : /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(
                   import_components118.__experimentalToggleGroupControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     isBlock: true,
                     value: postType,
@@ -50866,7 +50854,6 @@ ${js}
       import_components124.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n195.__)("Arrow"),
         value,
         onChange,
@@ -63621,7 +63608,6 @@ ${declarations}
       import_components166.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label,
         isBlock: true,
         onChange: (newValue) => {
