@@ -7532,7 +7532,6 @@ var wp;
             !(hasPatternOverrides && hasParentPattern) && Object.keys(keptAttributes).length
           ) {
             if (hasPatternOverrides) {
-              delete keptAttributes.caption;
               delete keptAttributes.href;
             }
             setAttributes(keptAttributes);
