@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('react', 'react-dom', 'wp-escape-html'), 'version' => '1765882047252');
+<?php return array('dependencies' => array('react', 'react-dom', 'wp-escape-html'), 'version' => '1765882357603');
