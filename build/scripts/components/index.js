@@ -36946,7 +36946,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime170 = __toESM(require_jsx_runtime());
   function CheckboxControl(props) {
     const {
-      // @ts-expect-error - Prevent passing this to `input`.
+      // Prevent passing this to `input`.
       __nextHasNoMarginBottom: _,
       label,
       className: className2,
@@ -50560,7 +50560,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime270 = __toESM(require_jsx_runtime());
   function UnforwardedTextControl(props, ref) {
     const {
-      // @ts-expect-error - Prevent passing this to `input`.
+      // Prevent passing this to `input`.
       __nextHasNoMarginBottom: _,
       __next40pxDefaultSize = false,
       label,
@@ -50622,7 +50622,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime271 = __toESM(require_jsx_runtime());
   function UnforwardedTextareaControl(props, ref) {
     const {
-      // @ts-expect-error - Prevent passing this to `textarea`.
+      // Prevent passing this to `textarea`.
       __nextHasNoMarginBottom: _,
       label,
       hideLabelFromVision,
