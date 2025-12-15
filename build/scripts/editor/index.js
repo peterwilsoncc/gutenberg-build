@@ -31217,8 +31217,7 @@ var wp;
                     "Scale the font size dynamically to fit the screen or viewport."
                   ),
                   checked: isFluid,
-                  onChange: handleFluidChange,
-                  __nextHasNoMarginBottom: true
+                  onChange: handleFluidChange
                 }
               ),
               isFluid && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
@@ -31229,8 +31228,7 @@ var wp;
                     "Set custom min and max values for the fluid font size."
                   ),
                   checked: isCustomFluid,
-                  onChange: handleCustomFluidValues,
-                  __nextHasNoMarginBottom: true
+                  onChange: handleCustomFluidValues
                 }
               ),
               isCustomFluid && /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(import_jsx_runtime179.Fragment, { children: [

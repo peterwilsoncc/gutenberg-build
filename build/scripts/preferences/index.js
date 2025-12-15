@@ -361,7 +361,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
         import_components2.ToggleControl,
         {
-          __nextHasNoMarginBottom: true,
           help,
           label,
           checked: isChecked,

@@ -982,7 +982,6 @@ var wp;
                   import_components.ToggleControl,
                   {
                     isBlock: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n.__)("Auto-close"),
                     onChange: (value) => {
                       setAttributes({
@@ -1008,7 +1007,6 @@ var wp;
                   import_components.ToggleControl,
                   {
                     isBlock: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n.__)("Show icon"),
                     onChange: (value) => {
                       setAttributes({
@@ -1370,7 +1368,6 @@ var wp;
                 import_components2.ToggleControl,
                 {
                   label: (0, import_i18n3.__)("Open by default"),
-                  __nextHasNoMarginBottom: true,
                   onChange: (value) => {
                     setAttributes({
                       openByDefault: value
@@ -3032,7 +3029,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
                   import_components3.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n5.__)("Display as dropdown"),
                     checked: displayAsDropdown,
                     onChange: () => setAttributes({
@@ -3052,7 +3048,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
                   import_components3.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n5.__)("Show label"),
                     checked: showLabel,
                     onChange: () => setAttributes({
@@ -3072,7 +3067,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
                   import_components3.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n5.__)("Show post counts"),
                     checked: showPostCounts,
                     onChange: () => setAttributes({
@@ -3405,7 +3399,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
                 import_components5.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n8.__)("Link to user profile"),
                   onChange: () => setAttributes({ isLink: !attributes3.isLink }),
                   checked: attributes3.isLink
@@ -3423,7 +3416,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
                 import_components5.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n8.__)("Open in new tab"),
                   onChange: (value) => setAttributes({
                     linkTarget: value ? "_blank" : "_self"
@@ -4205,7 +4197,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
                   import_components8.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n10.__)("Autoplay"),
                     onChange: toggleAttribute("autoplay"),
                     checked: !!autoplay,
@@ -4226,7 +4217,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
                   import_components8.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n10.__)("Loop"),
                     onChange: toggleAttribute("loop"),
                     checked: !!loop
@@ -4717,7 +4707,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
                   import_components9.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n12.__)("Show home breadcrumb"),
                     onChange: (value) => setAttributes({ showHomeItem: value }),
                     checked: showHomeItem
@@ -4737,7 +4726,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
                   import_components9.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n12.__)("Show current breadcrumb"),
                     onChange: (value) => setAttributes({ showCurrentItem: value }),
                     checked: showCurrentItem
@@ -7769,7 +7757,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components12.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n17.__)("Display as dropdown"),
                     checked: displayAsDropdown,
                     onChange: toggleAttribute("displayAsDropdown")
@@ -7787,7 +7774,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components12.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     className: "wp-block-categories__indentation",
                     label: (0, import_i18n17.__)("Show label"),
                     checked: showLabel,
@@ -7806,7 +7792,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components12.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n17.__)("Show post counts"),
                     checked: showPostCounts,
                     onChange: toggleAttribute("showPostCounts")
@@ -7824,7 +7809,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components12.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n17.__)("Show only top level terms"),
                     checked: showOnlyTopLevel,
                     onChange: toggleAttribute(
@@ -7844,7 +7828,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components12.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n17.__)("Show empty terms"),
                     checked: showEmpty,
                     onChange: toggleAttribute("showEmpty")
@@ -7862,7 +7845,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components12.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n17.__)("Show hierarchy"),
                     checked: showHierarchy,
                     onChange: toggleAttribute("showHierarchy")
@@ -9207,7 +9189,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
                 import_components17.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n25.__)("Stack on mobile"),
                   checked: isStackedOnMobile,
                   onChange: () => setAttributes({
@@ -10546,7 +10527,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
                 import_components22.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n33.__)("Link to authors URL"),
                   onChange: () => setAttributes({ isLink: !isLink }),
                   checked: isLink
@@ -10566,7 +10546,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
                 import_components22.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n33.__)("Open in new tab"),
                   onChange: (value) => setAttributes({
                     linkTarget: value ? "_blank" : "_self"
@@ -10901,7 +10880,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
                 import_components24.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n35.__)("Link to comment"),
                   onChange: () => setAttributes({ isLink: !isLink }),
                   checked: isLink
@@ -11095,7 +11073,6 @@ var wp;
             children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
               import_components25.ToggleControl,
               {
-                __nextHasNoMarginBottom: true,
                 label: (0, import_i18n36.__)("Open in new tab"),
                 onChange: (value) => setAttributes({
                   linkTarget: value ? "_blank" : "_self"
@@ -12335,7 +12312,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
                 import_components29.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n45.__)("Show post title"),
                   checked: showPostTitle,
                   onChange: (value) => setAttributes({ showPostTitle: value })
@@ -12353,7 +12329,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
                 import_components29.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n45.__)("Show comments count"),
                   checked: showCommentsCount,
                   onChange: (value) => setAttributes({ showCommentsCount: value })
@@ -14607,7 +14582,6 @@ var wp;
                   children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
                     import_components31.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n48.__)("Fixed background"),
                       checked: !!hasParallax,
                       onChange: toggleParallax
@@ -14627,7 +14601,6 @@ var wp;
                   children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
                     import_components31.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n48.__)("Repeated background"),
                       checked: isRepeated,
                       onChange: toggleIsRepeated
@@ -17216,7 +17189,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
                 import_components35.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n55.__)("Open by default"),
                   checked: showContent,
                   onChange: () => setAttributes({
@@ -17433,7 +17405,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
                 import_components36.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n57.__)("Resize for smaller devices"),
                   checked: allowResponsive,
                   help: getResponsiveHelp,
@@ -18875,7 +18846,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
                   import_components41.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n63.__)("Show inline embed"),
                     help: displayPreview ? (0, import_i18n63.__)(
                       "Note: Most phone and tablet browsers won't display embedded PDFs."
@@ -18954,7 +18924,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
                   import_components41.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n63.__)("Open in new tab"),
                     checked: openInNewWindow,
                     onChange: changeOpenInNewWindow
@@ -18972,7 +18941,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
                   import_components41.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n63.__)("Show download button"),
                     checked: showDownloadButton,
                     onChange: changeShowDownloadButton
@@ -22832,7 +22800,6 @@ ${url}
                   children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     import_components45.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n75.__)("Crop images to fit"),
                       checked: !!imageCrop,
                       onChange: toggleImageCrop
@@ -22850,7 +22817,6 @@ ${url}
                   children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     import_components45.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n75.__)("Randomize order"),
                       checked: !!randomOrder,
                       onChange: toggleRandomOrder
@@ -22868,7 +22834,6 @@ ${url}
                   children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     import_components45.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n75.__)("Open images in new tab"),
                       checked: linkTarget === "_blank",
                       onChange: toggleOpenInNewTab
@@ -22947,7 +22912,6 @@ ${url}
           /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components45.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n75.__)("Crop images to fit"),
               checked: !!imageCrop,
               onChange: toggleImageCrop
@@ -22956,7 +22920,6 @@ ${url}
           /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components45.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n75.__)("Randomize order"),
               checked: !!randomOrder,
               onChange: toggleRandomOrder
@@ -22965,7 +22928,6 @@ ${url}
           hasLinkTo && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components45.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n75.__)("Open images in new tab"),
               checked: linkTarget === "_blank",
               onChange: toggleOpenInNewTab
@@ -28463,7 +28425,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
                   import_components52.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n92.__)("Display avatar"),
                     checked: displayAvatar,
                     onChange: () => setAttributes({
@@ -28483,7 +28444,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
                   import_components52.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n92.__)("Display date"),
                     checked: displayDate,
                     onChange: () => setAttributes({ displayDate: !displayDate })
@@ -28920,7 +28880,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
                   import_components53.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n93.__)("Display post content"),
                     checked: displayPostContent,
                     onChange: (value) => setAttributes({ displayPostContent: value })
@@ -29002,7 +28961,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
                   import_components53.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n93.__)("Display author name"),
                     checked: displayAuthor,
                     onChange: (value) => setAttributes({ displayAuthor: value })
@@ -29020,7 +28978,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
                   import_components53.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n93.__)("Display post date"),
                     checked: displayPostDate,
                     onChange: (value) => setAttributes({ displayPostDate: value })
@@ -29055,7 +29012,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
                   import_components53.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n93.__)("Display featured image"),
                     checked: displayFeaturedImage,
                     onChange: (value) => setAttributes({ displayFeaturedImage: value })
@@ -29154,7 +29110,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
                     import_components53.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n93.__)("Add link to featured image"),
                       checked: addLinkToFeaturedImage,
                       onChange: (value) => setAttributes({
@@ -29900,7 +29855,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
         import_components54.ToggleControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n94.__)("Reverse order"),
           checked: reversed || false,
           onChange: (value) => {
@@ -29987,7 +29941,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
                 import_components54.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n94.__)("Reverse order"),
                   checked: reversed || false,
                   onChange: (value) => {
@@ -31266,7 +31219,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
                   import_components58.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n100.__)("Display login as form"),
                     checked: displayLoginAsForm,
                     onChange: () => setAttributes({
@@ -31286,7 +31238,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
                   import_components58.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n100.__)("Redirect to current URL"),
                     checked: redirectToCurrent,
                     onChange: () => setAttributes({
@@ -32796,7 +32747,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
                 import_components60.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n103.__)("Stack on mobile"),
                   checked: isStackedOnMobile,
                   onChange: () => setAttributes({
@@ -32816,7 +32766,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
                 import_components60.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n103.__)("Crop image to fill"),
                   checked: !!imageFill,
                   onChange: () => setAttributes({
@@ -33667,7 +33616,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
                 import_components62.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n106.__)(
                     "Hide the excerpt on the full content page"
                   ),
@@ -34809,7 +34757,6 @@ ${js}
           children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
             import_components69.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n114.__)("Show icon button"),
               help: (0, import_i18n114.__)(
                 "Configure the visual appearance of the button that toggles the overlay menu."
@@ -35056,7 +35003,6 @@ ${js}
       /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
         import_components72.ToggleControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n117.__)("Show icon button"),
           help: (0, import_i18n117.__)(
             "Configure the visual appearance of the button that toggles the overlay menu."
@@ -37694,7 +37640,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
                     import_components85.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       checked: openSubmenusOnClick,
                       onChange: (value) => {
                         setAttributes({
@@ -37723,7 +37668,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
                     import_components85.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       checked: showSubmenuIcon,
                       onChange: (value) => {
                         setAttributes({
@@ -41775,7 +41719,6 @@ ${js}
         children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
           import_components93.ToggleControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n145.__)("Drop cap"),
             checked: !!dropCap,
             onChange: () => setAttributes({ dropCap: !dropCap }),
@@ -42336,7 +42279,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
                   import_components94.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n149.__)("Show avatar"),
                     checked: showAvatar,
                     onChange: () => setAttributes({
@@ -42380,7 +42322,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
                   import_components94.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n149.__)("Show bio"),
                     checked: !!showBio,
                     onChange: () => setAttributes({ showBio: !showBio })
@@ -42398,7 +42339,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
                   import_components94.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n149.__)("Link author name to author page"),
                     checked: isLink,
                     onChange: () => setAttributes({ isLink: !isLink })
@@ -42416,7 +42356,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
                   import_components94.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n149.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
                       linkTarget: value ? "_blank" : "_self"
@@ -42656,7 +42595,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
                   import_components95.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n151.__)("Link to author archive"),
                     onChange: () => setAttributes({ isLink: !isLink }),
                     checked: isLink
@@ -42674,7 +42612,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
                   import_components95.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n151.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
                       linkTarget: value ? "_blank" : "_self"
@@ -43949,7 +43886,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
                   import_components98.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: postType?.labels.singular_name ? (0, import_i18n157.sprintf)(
                       // translators: %s: Name of the post type e.g: "post".
                       (0, import_i18n157.__)("Link to %s"),
@@ -44473,7 +44409,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
                   import_components99.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n159.__)("Show link on new line"),
                     checked: showMoreOnNewLine,
                     onChange: (newShowMoreOnNewLine) => setAttributes({
@@ -45193,7 +45128,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                   import_components102.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: postType?.labels.singular_name ? (0, import_i18n162.sprintf)(
                       // translators: %s: Name of the post type e.g: "post".
                       (0, import_i18n162.__)("Link to %s"),
@@ -45217,7 +45151,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                   import_components102.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n162.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
                       linkTarget: value ? "_blank" : "_self"
@@ -45543,7 +45476,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
                   import_components103.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n163.__)("Display the title as a link"),
                     help: (0, import_i18n163.__)(
                       "If you have entered a custom label, it will be prepended before the title."
@@ -45568,7 +45500,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
                   import_components103.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n163.__)(
                       "Include the label as part of the link"
                     ),
@@ -46648,7 +46579,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                 import_components106.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n168.__)("Display as range"),
                   checked: !!displayAsRange,
                   onChange: () => setAttributes({
@@ -46943,7 +46873,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
                     import_components107.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n170.__)("Make title a link"),
                       onChange: () => setAttributes({ isLink: !isLink }),
                       checked: isLink
@@ -46964,7 +46893,6 @@ ${js}
                     children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
                       import_components107.ToggleControl,
                       {
-                        __nextHasNoMarginBottom: true,
                         label: (0, import_i18n170.__)("Open in new tab"),
                         onChange: (value) => setAttributes({
                           linkTarget: value ? "_blank" : "_self"
@@ -48451,7 +48379,6 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_jsx_runtime363.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
       import_components108.ToggleControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n176.__)("Reload full page"),
         help,
         checked: !enhancedPagination,
@@ -50905,7 +50832,6 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
       import_components125.ToggleControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n196.__)("Show label text"),
         help: (0, import_i18n196.__)('Make label text visible, e.g. "Next Page".'),
         onChange,
@@ -51676,7 +51602,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
                   import_components128.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n201.__)("Show archive type in title"),
                     onChange: () => setAttributes({
                       showPrefix: !showPrefix
@@ -51711,7 +51636,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
                   import_components128.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n201.__)("Show search term in title"),
                     onChange: () => setAttributes({
                       showSearchTerm: !showSearchTerm
@@ -51760,7 +51684,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
                   import_components128.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n201.__)("Show post type label"),
                     onChange: () => setAttributes({
                       showPrefix: !showPrefix
@@ -53161,7 +53084,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
                 import_components133.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n207.__)("Open in new tab"),
                   onChange: (value) => setAttributes({
                     linkTarget: value ? "_blank" : "_self"
@@ -53456,7 +53378,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
                   import_components134.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n209.__)("Display author"),
                     checked: displayAuthor,
                     onChange: toggleAttribute("displayAuthor")
@@ -53474,7 +53395,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
                   import_components134.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n209.__)("Display date"),
                     checked: displayDate,
                     onChange: toggleAttribute("displayDate")
@@ -53492,7 +53412,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
                   import_components134.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n209.__)("Display excerpt"),
                     checked: displayExcerpt,
                     onChange: toggleAttribute("displayExcerpt")
@@ -53554,7 +53473,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
                   import_components134.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n209.__)("Open links in new tab"),
                     checked: openInNewTab,
                     onChange: (value) => setAttributes({ openInNewTab: value })
@@ -53985,7 +53903,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
                 import_components135.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   checked: showLabel,
                   label: (0, import_i18n210.__)("Show label"),
                   onChange: (value) => setAttributes({
@@ -54039,7 +53956,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
                 import_components135.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   checked: buttonUseIcon,
                   label: (0, import_i18n210.__)("Use button with icon"),
                   onChange: (value) => setAttributes({
@@ -54956,7 +54872,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
                   import_components138.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n215.__)("Link image to home"),
                     onChange: () => setAttributes({ isLink: !isLink }),
                     checked: isLink
@@ -54974,7 +54889,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
                   import_components138.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n215.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
                       linkTarget: value ? "_blank" : "_self"
@@ -54997,7 +54911,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
                   import_components138.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n215.__)("Use as Site Icon"),
                     onChange: (value) => {
                       setAttributes({ shouldSyncIcon: value });
@@ -55745,7 +55658,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
                   import_components140.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n217.__)("Make title link to home"),
                     onChange: () => setAttributes({ isLink: !isLink }),
                     checked: isLink
@@ -55763,7 +55675,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
                   import_components140.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n217.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
                       linkTarget: value ? "_blank" : "_self"
@@ -57025,7 +56936,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
                   import_components142.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n222.__)("Show text"),
                     checked: showLabels,
                     onChange: () => setAttributes({ showLabels: !showLabels })
@@ -57043,7 +56953,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
                   import_components142.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n222.__)("Open links in new tab"),
                     checked: openInNewTab,
                     onChange: () => setAttributes({
@@ -57914,8 +57823,7 @@ ${js}
             },
             help: (0, import_i18n225.__)(
               "If toggled, this tab will be selected when the page loads."
-            ),
-            __nextHasNoMarginBottom: true
+            )
           }
         )
       ] }) })
@@ -59465,7 +59373,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
                   import_components148.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n228.__)("Fixed width table cells"),
                     checked: !!hasFixedLayout,
                     onChange: onChangeFixedLayout
@@ -59484,7 +59391,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
                     import_components148.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n228.__)("Header section"),
                       checked: !!(head && head.length),
                       onChange: onToggleHeaderSection
@@ -59502,7 +59408,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
                     import_components148.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n228.__)("Footer section"),
                       checked: !!(foot && foot.length),
                       onChange: onToggleFooterSection
@@ -60454,7 +60359,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
                 import_components149.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n230.__)("Only include current page"),
                   checked: onlyIncludeCurrentPage,
                   onChange: (value) => setAttributes({ onlyIncludeCurrentPage: value }),
@@ -60839,8 +60743,7 @@ ${declarations}
             checked: "vertical" === orientation,
             onChange: () => setAttributes({
               orientation: "vertical" === orientation ? "horizontal" : "vertical"
-            }),
-            __nextHasNoMarginBottom: true
+            })
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
@@ -61489,7 +61392,6 @@ ${declarations}
               children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
                 import_components152.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n233.__)("Show tag counts"),
                   checked: showTagCounts,
                   onChange: () => setAttributes({ showTagCounts: !showTagCounts })
@@ -63407,7 +63309,6 @@ ${declarations}
               children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
                 import_components161.ToggleControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n243.__)("Make term name a link"),
                   onChange: () => setAttributes({ isLink: !isLink }),
                   checked: isLink
@@ -63576,7 +63477,6 @@ ${declarations}
     return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
       import_components164.ToggleControl,
       {
-        __nextHasNoMarginBottom: true,
         checked: !value,
         onChange: (showEmpty) => onChange(!showEmpty),
         ...props
@@ -63588,15 +63488,7 @@ ${declarations}
   var import_components165 = __toESM(require_components());
   var import_jsx_runtime499 = __toESM(require_jsx_runtime());
   function NestedTermsControl({ value, onChange, ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
-      import_components165.ToggleControl,
-      {
-        __nextHasNoMarginBottom: true,
-        checked: value,
-        onChange,
-        ...props
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_components165.ToggleControl, { checked: value, onChange, ...props });
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.js
@@ -65167,7 +65059,6 @@ ${declarations}
           children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components173.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n254.__)("Autoplay"),
               onChange: toggleFactory.autoplay,
               checked: !!autoplay,
@@ -65188,7 +65079,6 @@ ${declarations}
           children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components173.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n254.__)("Loop"),
               onChange: toggleFactory.loop,
               checked: !!loop
@@ -65208,7 +65098,6 @@ ${declarations}
           children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components173.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n254.__)("Muted"),
               onChange: toggleFactory.muted,
               checked: !!muted,
@@ -65230,7 +65119,6 @@ ${declarations}
           children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components173.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n254.__)("Playback controls"),
               onChange: toggleFactory.controls,
               checked: !!controls
@@ -65250,7 +65138,6 @@ ${declarations}
           children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components173.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n254.__)("Play inline"),
               onChange: toggleFactory.playsInline,
               checked: !!playsInline,
@@ -65426,7 +65313,6 @@ ${declarations}
               import_components174.ToggleControl,
               {
                 __next40pxDefaultSize: true,
-                __nextHasNoMarginBottom: true,
                 label: (0, import_i18n255.__)("Set as default track"),
                 checked: isDefaultTrack,
                 disabled: !allowSettingDefault,

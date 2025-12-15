@@ -16306,7 +16306,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
       import_components11.ToggleControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n11.__)("Allow to wrap to multiple lines"),
         onChange: (value) => {
           onChange({
@@ -35216,7 +35215,6 @@ var wp;
                 hasTemplateLock && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
                   import_components84.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     className: "block-editor-block-lock-modal__template-lock",
                     label: (0, import_i18n76.__)("Apply to all blocks inside"),
                     checked: applyTemplateLock,
@@ -44819,7 +44817,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
             import_components139.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n125.__)("Default format"),
               help: `${(0, import_i18n125.__)("Example:")}  ${(0, import_date.dateI18n)(
                 defaultFormat,
@@ -52809,7 +52806,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
           import_components180.ToggleControl,
           {
-            __nextHasNoMarginBottom: true,
             className: "block-editor-responsive-block-control__toggle",
             label: toggleControlLabel,
             checked: !isResponsive,
@@ -53075,7 +53071,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
         import_components183.ToggleControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n170.__)("Open in new tab"),
           onChange: onSetNewTab,
           checked: linkTarget === "_blank"
@@ -57324,7 +57319,6 @@ var wp;
             children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
               import_components201.ToggleControl,
               {
-                __nextHasNoMarginBottom: true,
                 label: (0, import_i18n191.__)("Enlarge on click"),
                 checked: lightboxChecked,
                 onChange: onChangeLightbox
@@ -57804,7 +57798,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
         import_components203.ToggleControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n193.__)("Fixed background"),
           checked: attachmentValue === "fixed",
           onChange: toggleScrollWithPage
@@ -57875,7 +57868,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
           import_components203.ToggleControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n193.__)("Repeat"),
             checked: repeatCheckedValue,
             onChange: toggleIsRepeated,
@@ -70255,7 +70247,6 @@ var wp;
         showInheritToggle && /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_jsx_runtime449.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
           import_components259.ToggleControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n229.__)("Inner blocks use content width"),
             checked: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings,
             onChange: () => setAttributes({
@@ -71889,7 +71880,6 @@ var wp;
                 return /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
                   import_components265.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     checked,
                     label: block.title,
                     onChange: () => {

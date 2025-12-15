@@ -13152,7 +13152,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
       import_components29.ToggleControl,
       {
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n37.__)("Enable infinite scroll"),
         help: (0, import_i18n37.__)(
           "Automatically load more content as you scroll, instead of showing pagination links."

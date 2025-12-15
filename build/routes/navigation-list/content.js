@@ -12780,7 +12780,6 @@ function InfiniteScrollToggle() {
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     import_components32.ToggleControl,
     {
-      __nextHasNoMarginBottom: true,
       label: (0, import_i18n31.__)("Enable infinite scroll"),
       help: (0, import_i18n31.__)(
         "Automatically load more content as you scroll, instead of showing pagination links."

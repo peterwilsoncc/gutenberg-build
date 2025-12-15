@@ -366,7 +366,6 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                   import_components.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n2._x)("Synced", "pattern (singular)"),
                     help: (0, import_i18n2.__)(
                       "Sync this pattern across multiple locations."
