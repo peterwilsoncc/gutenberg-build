@@ -8678,6 +8678,7 @@ var wp;
     "color.text",
     "custom",
     "dimensions.aspectRatio",
+    "dimensions.height",
     "dimensions.minHeight",
     "dimensions.width",
     "dimensions.dimensionSizes",
@@ -29843,6 +29844,7 @@ var wp;
     padding: true,
     margin: true,
     blockGap: true,
+    height: true,
     minHeight: true,
     width: true,
     childLayout: false

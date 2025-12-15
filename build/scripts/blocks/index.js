@@ -5097,6 +5097,11 @@ var wp;
       support: ["dimensions", "minHeight"],
       useEngine: true
     },
+    height: {
+      value: ["dimensions", "height"],
+      support: ["dimensions", "height"],
+      useEngine: true
+    },
     width: {
       value: ["dimensions", "width"],
       support: ["dimensions", "width"],

@@ -290,6 +290,17 @@ var wp;
   var color_default = [text_default, gradient_default, background_default];
 
   // packages/style-engine/build-module/styles/dimensions/index.js
+  var height = {
+    name: "height",
+    generate: (style, options) => {
+      return generateRule(
+        style,
+        options,
+        ["dimensions", "height"],
+        "height"
+      );
+    }
+  };
   var minHeight = {
     name: "minHeight",
     generate: (style, options) => {
@@ -323,7 +334,7 @@ var wp;
       );
     }
   };
-  var dimensions_default = [minHeight, aspectRatio, width2];
+  var dimensions_default = [height, minHeight, aspectRatio, width2];
 
   // packages/style-engine/build-module/styles/background/index.js
   var backgroundImage = {
