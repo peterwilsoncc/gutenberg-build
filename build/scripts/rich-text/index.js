@@ -2544,6 +2544,7 @@ var wp;
     const _valueRef = (0, import_element6.useRef)(value);
     const recordRef = (0, import_element6.useRef)();
     function setRecordFromProps() {
+      const activeFormats = recordRef.current?.activeFormats;
       _valueRef.current = value;
       recordRef.current = value;
       if (!(value instanceof RichTextData)) {
@@ -2552,7 +2553,8 @@ var wp;
       recordRef.current = {
         text: recordRef.current.text,
         formats: recordRef.current.formats,
-        replacements: recordRef.current.replacements
+        replacements: recordRef.current.replacements,
+        activeFormats
       };
       if (disableFormats) {
         recordRef.current.formats = Array(value.length);
