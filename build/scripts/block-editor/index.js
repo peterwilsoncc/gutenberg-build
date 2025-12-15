@@ -2074,10 +2074,10 @@ var wp;
         };
         return function(d2, b2) {
           extendStatics2(d2, b2);
-          function __210() {
+          function __211() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__210.prototype = b2.prototype, new __210());
+          d2.prototype = b2 === null ? Object.create(b2) : (__211.prototype = b2.prototype, new __211());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t3) {
@@ -15212,10 +15212,10 @@ var wp;
     if (typeof b2 !== "function" && b2 !== null)
       throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
     extendStatics(d2, b2);
-    function __210() {
+    function __211() {
       this.constructor = d2;
     }
-    d2.prototype = b2 === null ? Object.create(b2) : (__210.prototype = b2.prototype, new __210());
+    d2.prototype = b2 === null ? Object.create(b2) : (__211.prototype = b2.prototype, new __211());
   }
   var __assign = function() {
     __assign = Object.assign || function __assign2(t3) {
@@ -72808,6 +72808,172 @@ var wp;
     ] });
   }
 
+  // packages/block-editor/build-module/components/link-picker/link-picker.js
+  var import_components275 = __toESM(require_components());
+  var import_element271 = __toESM(require_element());
+  var import_i18n239 = __toESM(require_i18n());
+
+  // packages/block-editor/build-module/components/link-picker/link-preview.js
+  var import_components274 = __toESM(require_components());
+  var import_jsx_runtime465 = __toESM(require_jsx_runtime());
+  var { Badge: Badge3 } = unlock(import_components274.privateApis);
+  function LinkPreview2({ title, url, image, badges }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(import_components274.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(import_components274.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(import_components274.__experimentalHStack, { alignment: "top", children: [
+        image && /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(import_components274.FlexItem, { className: "link-preview-button__image-container", children: /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
+          "img",
+          {
+            className: "link-preview-button__image",
+            src: image,
+            alt: ""
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(
+          import_components274.__experimentalVStack,
+          {
+            className: "link-preview-button__details",
+            alignment: "topLeft",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
+                import_components274.__experimentalTruncate,
+                {
+                  numberOfLines: 1,
+                  className: "link-preview-button__title",
+                  children: title
+                }
+              ),
+              url && /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
+                import_components274.__experimentalTruncate,
+                {
+                  numberOfLines: 1,
+                  className: "link-preview-button__hint",
+                  children: url
+                }
+              ),
+              badges && badges.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
+                import_components274.__experimentalHStack,
+                {
+                  className: "link-preview-button__badges",
+                  alignment: "left",
+                  children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
+                    Badge3,
+                    {
+                      intent: badge.intent,
+                      children: badge.label
+                    },
+                    `${badge.label}|${badge.intent}`
+                  ))
+                }
+              )
+            ]
+          }
+        )
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(icon_default, { icon: chevron_down_default, className: "link-preview-button__icon" })
+    ] });
+  }
+
+  // packages/block-editor/build-module/components/link-picker/link-picker.js
+  var import_jsx_runtime466 = __toESM(require_jsx_runtime());
+  function LinkPicker({
+    preview,
+    onSelect,
+    suggestionsQuery,
+    label,
+    help
+  }) {
+    const [isOpen, setIsOpen] = (0, import_element271.useState)(false);
+    const instanceId = (0, import_element271.useId)();
+    const dialogTitleId = `link-picker-title-${instanceId}`;
+    const dialogDescriptionId = `link-picker-description-${instanceId}`;
+    const anchorRef = (0, import_element271.useRef)(null);
+    const { baseControlProps, controlProps } = (0, import_components275.useBaseControlProps)({
+      help,
+      __nextHasNoMarginBottom: true
+    });
+    const handleChange = (newValue) => {
+      setIsOpen(false);
+      if (newValue) {
+        const suggestion = {
+          url: newValue.url,
+          kind: newValue.kind,
+          type: newValue.type,
+          id: newValue.id,
+          title: newValue.title
+        };
+        onSelect(suggestion);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime466.jsxs)(import_components275.BaseControl, { ...baseControlProps, __nextHasNoMarginBottom: true, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(import_components275.BaseControl.VisualLabel, { children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime466.jsxs)(
+        import_components275.Button,
+        {
+          ref: anchorRef,
+          onClick: () => setIsOpen(!isOpen),
+          "aria-haspopup": "dialog",
+          "aria-expanded": isOpen,
+          "aria-describedby": controlProps["aria-describedby"],
+          variant: "secondary",
+          __next40pxDefaultSize: true,
+          className: "link-preview-button",
+          children: [
+            label && /* @__PURE__ */ (0, import_jsx_runtime466.jsxs)(import_components275.VisuallyHidden, { children: [
+              label,
+              ":"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
+              LinkPreview2,
+              {
+                title: preview.title || (0, import_i18n239.__)("Add link"),
+                url: preview.url,
+                image: preview.image,
+                badges: preview.badges
+              }
+            )
+          ]
+        }
+      ),
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
+        import_components275.Popover,
+        {
+          anchor: anchorRef.current,
+          onClose: () => setIsOpen(false),
+          placement: "left-start",
+          offset: 36,
+          shift: true,
+          children: /* @__PURE__ */ (0, import_jsx_runtime466.jsxs)(
+            "div",
+            {
+              role: "dialog",
+              "aria-labelledby": dialogTitleId,
+              "aria-describedby": dialogDescriptionId,
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime466.jsxs)(import_components275.VisuallyHidden, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime466.jsx)("h2", { id: dialogTitleId, children: (0, import_i18n239.__)("Select a link") }),
+                  /* @__PURE__ */ (0, import_jsx_runtime466.jsx)("p", { id: dialogDescriptionId, children: (0, import_i18n239.__)(
+                    "Search for and add a link to the navigation item."
+                  ) })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
+                  link_control_default,
+                  {
+                    value: null,
+                    onChange: handleChange,
+                    suggestionsQuery,
+                    showInitialSuggestions: true,
+                    forceIsEditingLink: true,
+                    settings: []
+                  }
+                )
+              ]
+            }
+          )
+        }
+      )
+    ] });
+  }
+
   // packages/block-editor/build-module/private-apis.js
   var privateApis12 = {};
   lock(privateApis12, {
@@ -72859,7 +73025,9 @@ var wp;
     essentialFormatKey,
     isIsolatedEditorKey,
     useBlockElement,
-    useBlockElementRef
+    useBlockElementRef,
+    LinkPicker,
+    useRemoteUrlData: use_rich_url_data_default
   });
   return __toCommonJS(index_exports);
 })();
