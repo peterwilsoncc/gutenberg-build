@@ -48734,10 +48734,14 @@ var wp;
       }, {});
       const compare = {};
       const result = [];
+      const commentIdToBlockClientId = Object.keys(
+        blocksWithComments
+      ).reduce((mapping, clientId) => {
+        mapping[blocksWithComments[clientId]] = clientId;
+        return mapping;
+      }, {});
       threads.forEach((item) => {
-        const itemBlock = Object.keys(blocksWithComments).find(
-          (key) => blocksWithComments[key] === item.id
-        );
+        const itemBlock = commentIdToBlockClientId[item.id];
         compare[item.id] = {
           ...item,
           reply: [],
