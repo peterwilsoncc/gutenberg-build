@@ -46555,7 +46555,8 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function UnforwardedSearchControl({
-    __nextHasNoMarginBottom = false,
+    __nextHasNoMarginBottom: _,
+    // Prevent passing to internal component
     className: className2,
     onChange,
     value,
@@ -46572,47 +46573,33 @@ This message will only show in development mode. It won't appear in production. 
     } = restProps;
     const searchRef = (0, import_element162.useRef)(null);
     const instanceId = (0, import_compose65.useInstanceId)(SearchControl, "components-search-control");
-    const contextValue = (0, import_element162.useMemo)(() => ({
-      BaseControl: {
-        // Overrides the underlying BaseControl `__nextHasNoMarginBottom` via the context system
-        // to provide backwards compatible margin for SearchControl.
-        // (In a standard InputControl, the BaseControl `__nextHasNoMarginBottom` is always set to true.)
-        _overrides: {
-          __nextHasNoMarginBottom
-        },
-        __associatedWPComponentName: "SearchControl"
-      }
-    }), [__nextHasNoMarginBottom]);
-    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(ContextSystemProvider, {
-      value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(StyledInputControl, {
-        __next40pxDefaultSize: true,
-        id: instanceId,
-        hideLabelFromVision,
-        label,
-        ref: (0, import_compose65.useMergeRefs)([searchRef, forwardedRef]),
-        type: "search",
-        size: size3,
-        className: clsx_default("components-search-control", className2),
-        onChange: (nextValue) => onChange(nextValue !== null && nextValue !== void 0 ? nextValue : ""),
-        autoComplete: "off",
-        placeholder,
-        value: value !== null && value !== void 0 ? value : "",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(InputControlPrefixWrapper, {
-          variant: "icon",
-          children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(StyledIcon, {
-            icon: search_default,
-            fill: "currentColor"
-          })
-        }),
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(SuffixItem, {
-          searchRef,
-          value,
-          onChange,
-          onClose
-        }),
-        ...filteredRestProps
-      })
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(StyledInputControl, {
+      __next40pxDefaultSize: true,
+      id: instanceId,
+      hideLabelFromVision,
+      label,
+      ref: (0, import_compose65.useMergeRefs)([searchRef, forwardedRef]),
+      type: "search",
+      size: size3,
+      className: clsx_default("components-search-control", className2),
+      onChange: (nextValue) => onChange(nextValue !== null && nextValue !== void 0 ? nextValue : ""),
+      autoComplete: "off",
+      placeholder,
+      value: value !== null && value !== void 0 ? value : "",
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(InputControlPrefixWrapper, {
+        variant: "icon",
+        children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(StyledIcon, {
+          icon: search_default,
+          fill: "currentColor"
+        })
+      }),
+      suffix: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(SuffixItem, {
+        searchRef,
+        value,
+        onChange,
+        onClose
+      }),
+      ...filteredRestProps
     });
   }
   var SearchControl = (0, import_element162.forwardRef)(UnforwardedSearchControl);
@@ -46674,7 +46661,6 @@ This message will only show in development mode. It won't appear in production. 
     ).trim();
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(MenuTitleSearchControlWrapper, {
       children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(search_control_default, {
-        __nextHasNoMarginBottom: true,
         className: "components-navigation__menu-search-input",
         id: inputId,
         onChange: (value) => onSearch?.(value),

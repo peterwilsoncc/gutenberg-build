@@ -35419,7 +35419,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components120.SearchControl,
       {
         className: "dataviews-search",
-        __nextHasNoMarginBottom: true,
         onChange: setSearch,
         value: search,
         label: searchLabel,
@@ -42145,7 +42144,6 @@ If there's a particular need for this, please submit a feature request at https:
       showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
         import_components158.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           onChange: setSearch,
           value: search,
           label: labels.search_items,
@@ -44015,7 +44013,6 @@ If there's a particular need for this, please submit a feature request at https:
       showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
         import_components163.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           onChange: setSearch,
           value: search,
           label: labels.search_items,

@@ -27094,7 +27094,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("div", { className: baseClassName, children: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
       import_components38.SearchControl,
       {
-        __nextHasNoMarginBottom: true,
         onChange: setSearchValue,
         value: searchValue,
         label: (0, import_i18n40.__)("Search"),
@@ -28958,7 +28957,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
         import_components50.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           className: `${baseCssClass}-search`,
           onChange: setSearch,
           value: search,
@@ -29473,7 +29471,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
           import_components56.SearchControl,
           {
-            __nextHasNoMarginBottom: true,
             className: "block-editor-inserter__search",
             onChange: (value) => {
               if (hoveredItem) {
@@ -29749,7 +29746,6 @@ var wp;
           showSearch && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(
             import_components57.SearchControl,
             {
-              __nextHasNoMarginBottom: true,
               className: "block-editor-inserter__search",
               value: filterValue,
               onChange: (value) => {
@@ -68154,7 +68150,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
         import_components249.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n223.__)("Search for a block"),
           placeholder: (0, import_i18n223.__)("Search for a block"),
           value: search,

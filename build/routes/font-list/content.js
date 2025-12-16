@@ -3984,7 +3984,6 @@ function FontCollection({ slug }) {
                     placeholder: (0, import_i18n15.__)("Font name\u2026"),
                     label: (0, import_i18n15.__)("Search"),
                     onChange: debouncedUpdateSearchInput,
-                    __nextHasNoMarginBottom: true,
                     hideLabelFromVision: false
                   }
                 ),

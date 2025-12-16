@@ -12615,7 +12615,6 @@ var DataViewsSearch = (0, import_element34.memo)(function Search({ label }) {
     import_components29.SearchControl,
     {
       className: "dataviews-search",
-      __nextHasNoMarginBottom: true,
       onChange: setSearch,
       value: search,
       label: searchLabel,

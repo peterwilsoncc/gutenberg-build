@@ -15366,7 +15366,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
         import_components40.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           className: "global-styles-ui-block-types-search",
           onChange: setFilterValue,
           value: filterValue,
@@ -17634,7 +17633,6 @@ var wp;
                       placeholder: (0, import_i18n75.__)("Font name\u2026"),
                       label: (0, import_i18n75.__)("Search"),
                       onChange: debouncedUpdateSearchInput,
-                      __nextHasNoMarginBottom: true,
                       hideLabelFromVision: false
                     }
                   ),
@@ -36953,7 +36951,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
         import_components122.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           onChange: setSearchValue,
           value: searchValue,
           label: (0, import_i18n130.__)("Search"),
@@ -40241,7 +40238,6 @@ var wp;
         import_components149.SearchControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: filterLabel,
           placeholder: filterLabel,
           value: filterValue,

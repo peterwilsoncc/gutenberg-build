@@ -49656,7 +49656,6 @@ ${js}
       showSearch && /* @__PURE__ */ (0, import_jsx_runtime373.jsx)("div", { className: "block-library-query-pattern__selection-search", children: /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(
         import_components120.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           onChange: setSearchValue,
           value: searchValue,
           label: (0, import_i18n188.__)("Search"),
@@ -61885,7 +61884,6 @@ ${declarations}
       /* @__PURE__ */ (0, import_jsx_runtime485.jsx)("div", { className: "block-library-template-part__selection-search", children: /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
         import_components155.SearchControl,
         {
-          __nextHasNoMarginBottom: true,
           onChange: setSearchValue,
           value: searchValue,
           label: (0, import_i18n237.__)("Search"),

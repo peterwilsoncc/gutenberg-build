@@ -12780,7 +12780,6 @@ var DataViewsSearch = (0, import_element34.memo)(function Search({ label }) {
     import_components29.SearchControl,
     {
       className: "dataviews-search",
-      __nextHasNoMarginBottom: true,
       onChange: setSearch,
       value: search,
       label: searchLabel,
@@ -17272,7 +17271,6 @@ function SuggestionList({
   return /* @__PURE__ */ React.createElement(React.Fragment, null, showSearchControl && /* @__PURE__ */ React.createElement(
     import_components54.SearchControl,
     {
-      __nextHasNoMarginBottom: true,
       onChange: setSearch,
       value: search,
       label: labels.search_items,

@@ -13097,7 +13097,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components28.SearchControl,
       {
         className: "dataviews-search",
-        __nextHasNoMarginBottom: true,
         onChange: setSearch,
         value: search,
         label: searchLabel,
