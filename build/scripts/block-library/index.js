@@ -871,12 +871,12 @@ var wp;
     }, [getSettings2]);
   }
   function useDefaultAvatar() {
-    const { avatarURL: defaultAvatarUrl } = (0, import_data.useSelect)((select9) => {
+    const avatarURL = (0, import_data.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor.store);
       const { __experimentalDiscussionSettings } = getSettings2();
-      return __experimentalDiscussionSettings;
-    });
-    return defaultAvatarUrl;
+      return __experimentalDiscussionSettings?.avatarURL ?? "";
+    }, []);
+    return avatarURL;
   }
   function useToolsPanelDropdownMenuProps() {
     const isMobile = (0, import_compose.useViewportMatch)("medium", "<");
@@ -9909,8 +9909,9 @@ var wp;
       postId
     );
     const isSiteEditor = postType === void 0 || postId === void 0;
-    const { defaultCommentStatus } = (0, import_data18.useSelect)(
-      (select9) => select9(import_block_editor41.store).getSettings().__experimentalDiscussionSettings
+    const defaultCommentStatus = (0, import_data18.useSelect)(
+      (select9) => select9(import_block_editor41.store).getSettings().__experimentalDiscussionSettings?.defaultCommentStatus,
+      []
     );
     const postTypeSupportsComments = (0, import_data18.useSelect)(
       (select9) => postType ? !!select9(import_core_data7.store).getPostType(postType)?.supports.comments : false
@@ -9958,8 +9959,9 @@ var wp;
   function PostCommentsPlaceholder({ postType, postId }) {
     let [postTitle] = (0, import_core_data8.useEntityProp)("postType", postType, "title", postId);
     postTitle = postTitle || (0, import_i18n30.__)("Post Title");
-    const { avatarURL } = (0, import_data19.useSelect)(
-      (select9) => select9(import_block_editor42.store).getSettings().__experimentalDiscussionSettings
+    const avatarURL = (0, import_data19.useSelect)(
+      (select9) => select9(import_block_editor42.store).getSettings().__experimentalDiscussionSettings?.avatarURL,
+      []
     );
     return /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)("div", { className: "wp-block-comments__legacy-placeholder", inert: "true", children: [
       /* @__PURE__ */ (0, import_jsx_runtime190.jsx)("h3", {
@@ -10317,11 +10319,10 @@ var wp;
     const blockProps = (0, import_block_editor46.useBlockProps)();
     const spacingProps = (0, import_block_editor46.__experimentalGetSpacingClassesAndStyles)(attributes3);
     const maxSizeBuffer = Math.floor(maxSize * 2.5);
-    const { avatarURL } = (0, import_data20.useSelect)((select9) => {
-      const { getSettings: getSettings2 } = select9(import_block_editor46.store);
-      const { __experimentalDiscussionSettings } = getSettings2();
-      return __experimentalDiscussionSettings;
-    });
+    const avatarURL = (0, import_data20.useSelect)((select9) => {
+      const { __experimentalDiscussionSettings } = select9(import_block_editor46.store).getSettings();
+      return __experimentalDiscussionSettings?.avatarURL;
+    }, []);
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(import_block_editor46.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(import_components21.PanelBody, { title: (0, import_i18n32.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
       import_components21.RangeControl,
       {
@@ -11304,8 +11305,8 @@ var wp;
     } = (0, import_data22.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor52.store);
       const { __experimentalDiscussionSettings } = getSettings2();
-      return __experimentalDiscussionSettings;
-    });
+      return __experimentalDiscussionSettings ?? {};
+    }, []);
     const perPage = pageComments ? Math.min(commentsPerPage, MAX_COMMENTS_PER_PAGE) : MAX_COMMENTS_PER_PAGE;
     const page = useDefaultPageIndex({
       defaultPage,
@@ -11524,8 +11525,8 @@ var wp;
       pageComments
     } = (0, import_data23.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor53.store);
-      return getSettings2().__experimentalDiscussionSettings;
-    });
+      return getSettings2().__experimentalDiscussionSettings ?? {};
+    }, []);
     const commentQuery = useCommentQueryArgs({
       postId
     });
@@ -12244,8 +12245,8 @@ var wp;
       pageComments
     } = (0, import_data25.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor60.store);
-      return getSettings2().__experimentalDiscussionSettings;
-    });
+      return getSettings2().__experimentalDiscussionSettings ?? {};
+    }, []);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     (0, import_element19.useEffect)(() => {
       if (isSiteEditor) {
