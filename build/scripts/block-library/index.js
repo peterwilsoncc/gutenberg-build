@@ -29478,7 +29478,7 @@ ${js}
     const type = listElement.getAttribute("type");
     const listAttributes = {
       ordered: "OL" === listElement.tagName,
-      anchor: listElement.id === "" ? void 0 : listElement.id,
+      anchor: listElement.id ? listElement.id : void 0,
       start: listElement.getAttribute("start") ? parseInt(listElement.getAttribute("start"), 10) : void 0,
       reversed: listElement.hasAttribute("reversed") ? true : void 0,
       type: type && LIST_STYLES[type] ? LIST_STYLES[type] : void 0
@@ -54470,7 +54470,7 @@ ${js}
         // Transform to Spacer.
         transform: ({ anchor }) => {
           return (0, import_blocks98.createBlock)("core/spacer", {
-            anchor: anchor || ""
+            anchor: anchor || void 0
           });
         }
       }
@@ -57762,7 +57762,7 @@ ${js}
         // Transform to Separator.
         transform: ({ anchor }) => {
           return (0, import_blocks105.createBlock)("core/separator", {
-            anchor: anchor || ""
+            anchor: anchor || void 0
           });
         }
       }

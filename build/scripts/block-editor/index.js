@@ -68452,12 +68452,6 @@ var wp;
   var import_element252 = __toESM(require_element());
   var import_jsx_runtime439 = __toESM(require_jsx_runtime());
   var ANCHOR_REGEX = /[\s#]/g;
-  var ANCHOR_SCHEMA = {
-    type: "string",
-    source: "attribute",
-    attribute: "id",
-    selector: "*"
-  };
   function addAttribute4(settings2) {
     if ("type" in (settings2.attributes?.anchor ?? {})) {
       return settings2;
@@ -68465,7 +68459,9 @@ var wp;
     if ((0, import_blocks100.hasBlockSupport)(settings2, "anchor")) {
       settings2.attributes = {
         ...settings2.attributes,
-        anchor: ANCHOR_SCHEMA
+        anchor: {
+          type: "string"
+        }
       };
     }
     return settings2;
@@ -68504,7 +68500,7 @@ var wp;
         onChange: (nextValue) => {
           nextValue = nextValue.replace(ANCHOR_REGEX, "-");
           setAttributes({
-            anchor: nextValue
+            anchor: nextValue !== "" ? nextValue : void 0
           });
         },
         autoCapitalize: "none",

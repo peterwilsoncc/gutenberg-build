@@ -8982,33 +8982,43 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return modifiedBlockAttributes;
   }
 
-  // packages/blocks/build-module/api/parser/fix-aria-label.js
+  // packages/blocks/build-module/api/parser/fix-global-attribute.js
+  function getHTMLRootElement(innerHTML, dataAttribute, attributeSchema) {
+    const parsed = parseWithAttributeSchema(
+      `<div ${dataAttribute}>${innerHTML}</div>`,
+      attributeSchema
+    );
+    return parsed;
+  }
+  function fixGlobalAttribute(blockAttributes, blockType, innerHTML, supportKey, dataAttribute, attributeSchema) {
+    if (!hasBlockSupport(blockType, supportKey, false)) {
+      return blockAttributes;
+    }
+    const modifiedBlockAttributes = { ...blockAttributes };
+    const attributeValue = getHTMLRootElement(
+      innerHTML,
+      dataAttribute,
+      attributeSchema
+    );
+    if (attributeValue) {
+      modifiedBlockAttributes[supportKey] = attributeValue;
+    }
+    return modifiedBlockAttributes;
+  }
+
+  // packages/blocks/build-module/api/parser/apply-built-in-validation-fixes.js
   var ARIA_LABEL_ATTR_SCHEMA = {
     type: "string",
     source: "attribute",
     selector: "[data-aria-label] > *",
     attribute: "aria-label"
   };
-  function getHTMLRootElementAriaLabel(innerHTML) {
-    const parsed = parseWithAttributeSchema(
-      `<div data-aria-label>${innerHTML}</div>`,
-      ARIA_LABEL_ATTR_SCHEMA
-    );
-    return parsed;
-  }
-  function fixAriaLabel(blockAttributes, blockType, innerHTML) {
-    if (!hasBlockSupport(blockType, "ariaLabel", false)) {
-      return blockAttributes;
-    }
-    const modifiedBlockAttributes = { ...blockAttributes };
-    const ariaLabel = getHTMLRootElementAriaLabel(innerHTML);
-    if (ariaLabel) {
-      modifiedBlockAttributes.ariaLabel = ariaLabel;
-    }
-    return modifiedBlockAttributes;
-  }
-
-  // packages/blocks/build-module/api/parser/apply-built-in-validation-fixes.js
+  var ANCHOR_ATTR_SCHEMA = {
+    type: "string",
+    source: "attribute",
+    selector: "[data-anchor] > *",
+    attribute: "id"
+  };
   function applyBuiltInValidationFixes(block, blockType) {
     const { attributes, originalContent } = block;
     let updatedBlockAttributes = attributes;
@@ -9017,10 +9027,21 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
       blockType,
       originalContent
     );
-    updatedBlockAttributes = fixAriaLabel(
+    updatedBlockAttributes = fixGlobalAttribute(
       updatedBlockAttributes,
       blockType,
-      originalContent
+      originalContent,
+      "ariaLabel",
+      "data-aria-label",
+      ARIA_LABEL_ATTR_SCHEMA
+    );
+    updatedBlockAttributes = fixGlobalAttribute(
+      updatedBlockAttributes,
+      blockType,
+      originalContent,
+      "anchor",
+      "data-anchor",
+      ANCHOR_ATTR_SCHEMA
     );
     return {
       ...block,
