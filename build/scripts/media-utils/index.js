@@ -5541,7 +5541,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
       import_components19.RangeControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         showTooltip: false,
         label: (0, import_i18n24.__)("Preview size"),

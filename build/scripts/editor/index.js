@@ -31027,7 +31027,6 @@ var wp;
         import_components88.RangeControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label,
           hideLabelFromVision: true,
           value: valueQuantity,

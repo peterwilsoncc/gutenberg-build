@@ -3374,7 +3374,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
                 import_components5.RangeControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n8.__)("Image size"),
                   onChange: (newSize) => setAttributes({
@@ -9163,7 +9162,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
               import_components17.RangeControl,
               {
-                __nextHasNoMarginBottom: true,
                 __next40pxDefaultSize: true,
                 label: (0, import_i18n25.__)("Columns"),
                 value: count,
@@ -10325,7 +10323,6 @@ var wp;
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(import_block_editor46.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(import_components21.PanelBody, { title: (0, import_i18n32.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
       import_components21.RangeControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n32.__)("Image size"),
         onChange: (newWidth) => setAttributes({
@@ -14733,7 +14730,6 @@ var wp;
             children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
               import_components31.RangeControl,
               {
-                __nextHasNoMarginBottom: true,
                 label: (0, import_i18n48.__)("Overlay opacity"),
                 value: dimRatio,
                 onChange: (newDimRatio) => updateDimRatio(newDimRatio),
@@ -18866,7 +18862,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
                   import_components41.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n63.__)("Height in pixels"),
                     min: MIN_PREVIEW_HEIGHT,
@@ -22749,7 +22744,6 @@ ${url}
                   children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     import_components45.RangeControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n75.__)("Columns"),
                       value: columns ? columns : defaultColumnsNumber(
                         images.length
@@ -22871,7 +22865,6 @@ ${url}
           images.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components45.RangeControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n75.__)("Columns"),
               value: columns ? columns : defaultColumnsNumber(images.length),
               onChange: setColumnsNumber,
@@ -28487,7 +28480,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
                   import_components52.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n92.__)("Number of comments"),
                     value: commentsToShow,
@@ -28927,7 +28919,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
                   import_components53.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n93.__)("Max number of words"),
                     value: excerptLength,
@@ -29182,7 +29173,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
                   import_components53.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n93.__)("Columns"),
                     value: columns,
@@ -32726,7 +32716,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
                 import_components60.RangeControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n103.__)("Media width"),
                   value: temporaryMediaWidth || mediaWidth,
@@ -44580,7 +44569,6 @@ ${js}
                   import_components99.RangeControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n160.__)("Max number of words"),
                     value: excerptLength,
                     onChange: (value) => {
@@ -45017,7 +45005,6 @@ ${js}
           children: /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
             import_components101.RangeControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n162.__)("Overlay opacity"),
               value: dimRatio,
               onChange: (newDimRatio) => setAttributes({
@@ -49085,7 +49072,6 @@ ${js}
       import_components115.RangeControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n184.__)("Items per page"),
         min: MIN_POSTS_PER_PAGE,
         max: MAX_POSTS_PER_PAGE,
@@ -51337,7 +51323,6 @@ ${js}
                 import_components127.RangeControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n200.__)("Number of links"),
                   help: (0, import_i18n200.__)(
                     "Specify how many links can appear before and after the current page number. Links to the first, current and last page are always visible."
@@ -53507,7 +53492,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
                   import_components134.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n210.__)("Number of items"),
                     value: itemsToShow,
@@ -53580,7 +53564,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
                   import_components134.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n210.__)("Max number of words in excerpt"),
                     value: excerptLength,
@@ -53602,7 +53585,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
                   import_components134.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n210.__)("Columns"),
                     value: columns,
@@ -54997,7 +54979,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
                   import_components138.RangeControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n216.__)("Image width"),
                     onChange: (newWidth) => setAttributes({ width: newWidth }),
@@ -61521,7 +61502,6 @@ ${declarations}
               children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
                 import_components152.RangeControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n234.__)("Number of tags"),
                   value: numberOfTags,
@@ -63608,7 +63588,6 @@ ${declarations}
     return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
       import_components167.RangeControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         value,
         min: 0,
@@ -64456,7 +64435,6 @@ ${declarations}
       /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_block_editor269.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_components172.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
         import_components172.RangeControl,
         {
-          __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           label: (0, import_i18n252.__)("Columns"),
           value: columns,

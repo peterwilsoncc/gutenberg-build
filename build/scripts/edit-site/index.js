@@ -27823,7 +27823,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
       import_components110.RangeControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         showTooltip: false,
         label: (0, import_i18n100.__)("Preview size"),

@@ -16922,7 +16922,6 @@ var wp;
           import_components15.RangeControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             onChange: handleSliderChange,
             value: quantity || 0,
             min: 0,
@@ -16989,7 +16988,6 @@ var wp;
           import_components15.RangeControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             value: columnCount ?? 1,
             onChange: (value) => onChange({
               ...layout,
@@ -44080,8 +44078,7 @@ var wp;
           step,
           value: parsedQuantity,
           withInputField: false,
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true
+          __next40pxDefaultSize: true
         }
       )
     ] });
@@ -46226,7 +46223,6 @@ var wp;
             step: RANGE_CONTROL_CUSTOM_SETTINGS[selectedUnit]?.step ?? 0.1,
             withInputField: false,
             onChange: handleSliderChange,
-            __nextHasNoMarginBottom: true,
             label,
             hideLabelFromVision: true
           }
@@ -47983,7 +47979,6 @@ var wp;
           import_components153.RangeControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n142.__)("Zoom"),
             min: MIN_ZOOM3,
             max: MAX_ZOOM3,
