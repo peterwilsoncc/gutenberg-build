@@ -12172,7 +12172,7 @@ var wp;
   var WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
 
   // packages/sync/build-module/utils.js
-  function createYjsDoc(documentMeta) {
+  function createYjsDoc(documentMeta = {}) {
     const metaMap = new Map(
       Object.entries(documentMeta)
     );
@@ -12189,9 +12189,10 @@ var wp;
   function deserializeCrdtDoc(serializedCrdtDoc) {
     try {
       const { document: document2 } = JSON.parse(serializedCrdtDoc);
-      const docMetaMap = /* @__PURE__ */ new Map();
-      docMetaMap.set(CRDT_DOC_META_PERSISTENCE_KEY, true);
-      const ydoc = createYjsDoc({ meta: docMetaMap });
+      const docMeta = {
+        [CRDT_DOC_META_PERSISTENCE_KEY]: true
+      };
+      const ydoc = createYjsDoc(docMeta);
       const yupdate = fromBase64(document2);
       applyUpdateV2(ydoc, yupdate);
       ydoc.clientID = Math.floor(Math.random() * 1e9);
