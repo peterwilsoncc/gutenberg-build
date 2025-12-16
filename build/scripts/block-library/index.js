@@ -36311,7 +36311,7 @@ ${js}
           type: updatedLink.type,
           id: updatedLink.id
         };
-        if (!attributes3.url || !attributes3.label) {
+        if (!attributes3.label || attributes3.label === "") {
           attrs.title = updatedLink.title;
         }
         const willBeCustomLink = !updatedLink.id && hasUrlBinding;
