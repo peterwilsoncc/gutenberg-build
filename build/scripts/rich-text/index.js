@@ -81,6 +81,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/dom
+  var require_dom = __commonJS({
+    "package-external:@wordpress/dom"(exports, module) {
+      module.exports = window.wp.dom;
+    }
+  });
+
   // package-external:@wordpress/keycodes
   var require_keycodes = __commonJS({
     "package-external:@wordpress/keycodes"(exports, module) {
@@ -1745,6 +1752,7 @@ var wp;
   // packages/rich-text/build-module/component/use-anchor.js
   var import_compose = __toESM(require_compose());
   var import_element2 = __toESM(require_element());
+  var import_dom = __toESM(require_dom());
   function getFormatElement(range, editableContentElement, tagName, className) {
     let element = range.startContainer;
     if (element.nodeType === element.TEXT_NODE && range.startOffset === element.length && element.nextSibling) {
@@ -1777,7 +1785,7 @@ var wp;
     return {
       contextElement: editableContentElement,
       getBoundingClientRect() {
-        return editableContentElement.contains(range.startContainer) ? range.getBoundingClientRect() : editableContentElement.getBoundingClientRect();
+        return editableContentElement.contains(range.startContainer) ? (0, import_dom.getRectangleFromRange)(range) : editableContentElement.getBoundingClientRect();
       }
     };
   }

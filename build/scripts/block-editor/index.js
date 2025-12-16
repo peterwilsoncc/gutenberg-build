@@ -52316,6 +52316,7 @@ var wp;
     }
     const instanceId = (0, import_compose87.useInstanceId)(RichTextWrapper);
     const anchorRef = (0, import_element184.useRef)();
+    const [anchorElement, setAnchorElement] = (0, import_element184.useState)(null);
     const context = useBlockEditContext();
     const { clientId, isSelected: isBlockSelected2 } = context;
     const blockBindings = context[blockBindingsKey];
@@ -52558,7 +52559,7 @@ var wp;
         format_toolbar_container_default,
         {
           inline: inlineToolbar,
-          editableContentElement: anchorRef.current
+          editableContentElement: anchorElement
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
@@ -52603,7 +52604,8 @@ var wp;
               keyboardShortcuts,
               inputEvents
             }),
-            anchorRef
+            anchorRef,
+            setAnchorElement
           ]),
           contentEditable: !shouldDisableEditing,
           suppressContentEditableWarning: true,
