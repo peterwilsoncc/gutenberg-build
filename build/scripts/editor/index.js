@@ -5773,7 +5773,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
       import_components7.ComboboxControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n18.__)("Parent"),
         help: (0, import_i18n18.__)("Choose a parent page."),
@@ -36045,7 +36044,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
       import_components111.ComboboxControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         className: "editor-page-attributes__parent",
         label: (0, import_i18n127.__)("Parent"),
@@ -37346,7 +37344,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
       import_components126.ComboboxControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n135.__)("Author"),
         options: authorOptions,

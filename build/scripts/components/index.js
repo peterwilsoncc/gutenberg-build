@@ -39279,7 +39279,6 @@ This message will only show in development mode. It won't appear in production. 
   function ComboboxControl(props) {
     var _currentOption$label;
     const {
-      __nextHasNoMarginBottom = false,
       __next40pxDefaultSize = false,
       value: valueProp,
       label,
@@ -39435,8 +39434,7 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(DetectOutside, {
       onFocusOutside,
       children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(base_control_default, {
-        __nextHasNoMarginBottom,
-        __associatedWPComponentName: "ComboboxControl",
+        __nextHasNoMarginBottom: true,
         className: clsx_default(className2, "components-combobox-control"),
         label,
         id: `components-form-token-input-${instanceId}`,
