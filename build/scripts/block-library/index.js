@@ -59211,21 +59211,24 @@ ${js}
     function onChangeFixedLayout() {
       setAttributes({ hasFixedLayout: !hasFixedLayout });
     }
-    function onChange(content) {
-      if (!selectedCell) {
-        return;
-      }
-      setAttributes(
-        updateSelectedCell(
-          attributes3,
-          selectedCell,
-          (cellAttributes) => ({
-            ...cellAttributes,
-            content
-          })
-        )
-      );
-    }
+    const onChange = (0, import_element118.useCallback)(
+      function(content) {
+        if (!selectedCell) {
+          return;
+        }
+        setAttributes(
+          updateSelectedCell(
+            attributes3,
+            selectedCell,
+            (cellAttributes) => ({
+              ...cellAttributes,
+              content
+            })
+          )
+        );
+      },
+      [attributes3, selectedCell, setAttributes]
+    );
     function onChangeColumnAlignment(align) {
       if (!selectedCell) {
         return;
@@ -59374,47 +59377,27 @@ ${js}
         onClick: onDeleteColumn
       }
     ];
-    const renderedSections = sections.map((name117) => /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(TSection, { name: name117, children: attributes3[name117].map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime473.jsx)("tr", { children: cells.map(
-      ({
-        content,
-        tag: CellTag,
-        scope,
-        align,
-        colspan,
-        rowspan
-      }, columnIndex) => /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
-        CellTag,
+    const renderedSections = sections.map((name117) => /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(TSection, { name: name117, children: attributes3[name117].map(({ cells }, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime473.jsx)("tr", { children: cells.map((cellProps, columnIndex) => {
+      const isSelected = selectedCell?.sectionName === name117 && selectedCell?.rowIndex === rowIndex && selectedCell?.columnIndex === columnIndex;
+      return /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
+        Cell,
         {
-          scope: CellTag === "th" ? scope : void 0,
-          colSpan: colspan,
-          rowSpan: rowspan,
-          className: clsx_default(
-            {
-              [`has-text-align-${align}`]: align
-            },
-            "wp-block-table__cell-content"
+          name: name117,
+          rowIndex,
+          columnIndex,
+          onChange: (
+            // Only pass the `onChange` handler to the selectedCell.
+            // Cell components are memoized, so it's best to avoid
+            // passing in a value that will cause all cells to re-render
+            // whenever it changes.
+            isSelected ? onChange : void 0
           ),
-          children: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
-            import_block_editor243.RichText,
-            {
-              value: content,
-              onChange,
-              onFocus: () => {
-                setSelectedCell({
-                  sectionName: name117,
-                  rowIndex,
-                  columnIndex,
-                  type: "cell"
-                });
-              },
-              "aria-label": cellAriaLabel[name117],
-              placeholder: placeholder[name117]
-            }
-          )
+          setSelectedCell,
+          ...cellProps
         },
         columnIndex
-      )
-    ) }, rowIndex)) }, name117));
+      );
+    }) }, rowIndex)) }, name117));
     const isEmpty = !sections.length;
     return /* @__PURE__ */ (0, import_jsx_runtime473.jsxs)("figure", { ...(0, import_block_editor243.useBlockProps)({ ref: tableRef }), children: [
       !isEmpty && blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime473.jsxs)(import_jsx_runtime473.Fragment, { children: [
@@ -59587,6 +59570,51 @@ ${js}
       )
     ] });
   }
+  var Cell = (0, import_element118.memo)(function({
+    tag: CellTag,
+    name: name117,
+    scope,
+    colspan,
+    rowspan,
+    rowIndex,
+    columnIndex,
+    align,
+    content,
+    onChange,
+    setSelectedCell
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
+      CellTag,
+      {
+        scope: CellTag === "th" ? scope : void 0,
+        colSpan: colspan,
+        rowSpan: rowspan,
+        className: clsx_default(
+          {
+            [`has-text-align-${align}`]: align
+          },
+          "wp-block-table__cell-content"
+        ),
+        children: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)(
+          import_block_editor243.RichText,
+          {
+            value: content,
+            onChange,
+            onFocus: () => {
+              setSelectedCell({
+                sectionName: name117,
+                rowIndex,
+                columnIndex,
+                type: "cell"
+              });
+            },
+            "aria-label": cellAriaLabel[name117],
+            placeholder: placeholder[name117]
+          }
+        )
+      }
+    );
+  });
   var edit_default32 = TableEdit;
 
   // packages/block-library/build-module/table/block.json

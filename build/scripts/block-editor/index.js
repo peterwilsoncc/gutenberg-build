@@ -52282,16 +52282,20 @@ var wp;
     const anchorRef = (0, import_element184.useRef)();
     const [anchorElement, setAnchorElement] = (0, import_element184.useState)(null);
     const context = useBlockEditContext();
-    const { clientId, isSelected: isBlockSelected2 } = context;
+    const { clientId, isSelected: isBlockSelected2, name: blockName } = context;
     const blockBindings = context[blockBindingsKey];
     const blockContext = (0, import_element184.useContext)(block_context_default);
-    const { bindableAttributes } = (0, import_element184.useContext)(PrivateBlockContext);
     const registry = (0, import_data151.useRegistry)();
     const selector3 = (select3) => {
       if (!isBlockSelected2) {
         return { isSelected: false };
       }
-      const { getSelectionStart: getSelectionStart22, getSelectionEnd: getSelectionEnd22, getBlockEditingMode: getBlockEditingMode2 } = select3(store);
+      const {
+        getSelectionStart: getSelectionStart22,
+        getSelectionEnd: getSelectionEnd22,
+        getBlockEditingMode: getBlockEditingMode2,
+        getSettings: getSettings7
+      } = select3(store);
       const selectionStart2 = getSelectionStart22();
       const selectionEnd2 = getSelectionEnd22();
       let isSelected2;
@@ -52300,15 +52304,24 @@ var wp;
       } else if (originalIsSelected) {
         isSelected2 = selectionStart2.clientId === clientId;
       }
+      const { __experimentalBlockBindingsSupportedAttributes } = getSettings7();
       return {
         selectionStart: isSelected2 ? selectionStart2.offset : void 0,
         selectionEnd: isSelected2 ? selectionEnd2.offset : void 0,
         isSelected: isSelected2,
-        isContentOnly: getBlockEditingMode2(clientId) === "contentOnly"
+        isContentOnly: getBlockEditingMode2(clientId) === "contentOnly",
+        bindableAttributes: __experimentalBlockBindingsSupportedAttributes?.[blockName]
       };
     };
-    const { selectionStart, selectionEnd, isSelected, isContentOnly } = (0, import_data151.useSelect)(selector3, [
+    const {
+      selectionStart,
+      selectionEnd,
+      isSelected,
+      isContentOnly,
+      bindableAttributes
+    } = (0, import_data151.useSelect)(selector3, [
       clientId,
+      blockName,
       identifier,
       instanceId,
       originalIsSelected,
