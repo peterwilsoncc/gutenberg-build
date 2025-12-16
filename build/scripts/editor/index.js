@@ -20845,8 +20845,8 @@ var wp;
                                 ringbuffer,
                                 ringbuffer_size
                               );
-                              for (var _x41 = 0; _x41 < copy_dst - ringbuffer_end; _x41++)
-                                ringbuffer[_x41] = ringbuffer[ringbuffer_end + _x41];
+                              for (var _x40 = 0; _x40 < copy_dst - ringbuffer_end; _x40++)
+                                ringbuffer[_x40] = ringbuffer[ringbuffer_end + _x40];
                             }
                           } else {
                             throw new Error(
@@ -43507,6 +43507,7 @@ var wp;
   var import_block_editor81 = __toESM(require_block_editor());
   var import_compose57 = __toESM(require_compose());
   var import_element151 = __toESM(require_element());
+  var import_html_entities26 = __toESM(require_html_entities());
 
   // packages/editor/build-module/components/header/index.js
   var import_block_editor73 = __toESM(require_block_editor());
@@ -45480,7 +45481,7 @@ var wp;
       isDistractionFree,
       isPreviewMode,
       showBlockBreadcrumbs,
-      documentLabel,
+      postTypeLabel,
       stylesPath: stylesPath2,
       showStylebook: showStylebook2
     } = (0, import_data199.useSelect)((select5) => {
@@ -45490,7 +45491,6 @@ var wp;
         select5(store)
       );
       const editorSettings2 = getEditorSettings2();
-      const postTypeLabel = getPostTypeLabel2();
       let _mode = select5(store).getEditorMode();
       if (!editorSettings2.richEditingEnabled && _mode === "visual") {
         _mode = "text";
@@ -45505,10 +45505,7 @@ var wp;
         isDistractionFree: get("core", "distractionFree"),
         isPreviewMode: editorSettings2.isPreviewMode,
         showBlockBreadcrumbs: get("core", "showBlockBreadcrumbs"),
-        documentLabel: (
-          // translators: Default label for the Document in the Block Breadcrumb.
-          postTypeLabel || (0, import_i18n197._x)("Document", "noun, breadcrumb")
-        ),
+        postTypeLabel: getPostTypeLabel2(),
         stylesPath: getStylesPath2(),
         showStylebook: getShowStylebook2()
       };
@@ -45572,7 +45569,12 @@ var wp;
             children
           ] })
         ] }),
-        footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(import_block_editor81.BlockBreadcrumb, { rootLabelText: documentLabel }),
+        footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+          import_block_editor81.BlockBreadcrumb,
+          {
+            rootLabelText: postTypeLabel ? (0, import_html_entities26.decodeEntities)(postTypeLabel) : void 0
+          }
+        ),
         actions: !isPreviewMode ? customSavePanel || /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
           SavePublishPanels,
           {
@@ -45643,16 +45645,16 @@ var wp;
   var import_notices27 = __toESM(require_notices());
 
   // packages/editor/build-module/utils/get-item-title.js
-  var import_html_entities26 = __toESM(require_html_entities());
+  var import_html_entities27 = __toESM(require_html_entities());
   function getItemTitle2(item) {
     if (typeof item.title === "string") {
-      return (0, import_html_entities26.decodeEntities)(item.title);
+      return (0, import_html_entities27.decodeEntities)(item.title);
     }
     if (item.title && "rendered" in item.title) {
-      return (0, import_html_entities26.decodeEntities)(item.title.rendered);
+      return (0, import_html_entities27.decodeEntities)(item.title.rendered);
     }
     if (item.title && "raw" in item.title) {
-      return (0, import_html_entities26.decodeEntities)(item.title.raw);
+      return (0, import_html_entities27.decodeEntities)(item.title.raw);
     }
     return "";
   }
@@ -46394,7 +46396,7 @@ var wp;
   var import_compose58 = __toESM(require_compose());
   var import_data209 = __toESM(require_data());
   var import_core_data112 = __toESM(require_core_data());
-  var import_html_entities27 = __toESM(require_html_entities());
+  var import_html_entities28 = __toESM(require_html_entities());
   var import_components195 = __toESM(require_components());
   var import_element159 = __toESM(require_element());
   var import_block_editor83 = __toESM(require_block_editor());
@@ -46444,7 +46446,7 @@ var wp;
         title: newValue
       });
     };
-    const decodedTitle = (0, import_html_entities27.decodeEntities)(postsPageTitle);
+    const decodedTitle = (0, import_html_entities28.decodeEntities)(postsPageTitle);
     return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(post_panel_row_default, { label: (0, import_i18n205.__)("Blog title"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
       import_components195.Dropdown,
       {
@@ -46907,6 +46909,7 @@ var wp;
   var import_i18n209 = __toESM(require_i18n());
   var import_data215 = __toESM(require_data());
   var import_element163 = __toESM(require_element());
+  var import_html_entities29 = __toESM(require_html_entities());
 
   // packages/editor/build-module/components/sidebar/constants.js
   var sidebars = {
@@ -46918,15 +46921,14 @@ var wp;
   var import_jsx_runtime328 = __toESM(require_jsx_runtime());
   var { Tabs: Tabs4 } = unlock(import_components200.privateApis);
   var SidebarHeader = (_, ref) => {
-    const { documentLabel } = (0, import_data215.useSelect)((select5) => {
-      const { getPostTypeLabel: getPostTypeLabel2 } = select5(store);
-      return {
-        documentLabel: (
-          // translators: Default label for the Document sidebar tab, not selected.
-          getPostTypeLabel2() || (0, import_i18n209._x)("Document", "noun, panel")
-        )
-      };
-    }, []);
+    const postTypeLabel = (0, import_data215.useSelect)(
+      (select5) => select5(store).getPostTypeLabel(),
+      []
+    );
+    const documentLabel = postTypeLabel ? (0, import_html_entities29.decodeEntities)(postTypeLabel) : (
+      // translators: Default label for the Document sidebar tab, not selected.
+      (0, import_i18n209._x)("Document", "noun, panel")
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime328.jsxs)(Tabs4.TabList, { ref, children: [
       /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
         Tabs4.Tab,
@@ -48697,7 +48699,7 @@ var wp;
   var import_data221 = __toESM(require_data());
   var import_block_editor92 = __toESM(require_block_editor());
   var import_notices29 = __toESM(require_notices());
-  var import_html_entities28 = __toESM(require_html_entities());
+  var import_html_entities30 = __toESM(require_html_entities());
   var { useBlockElement, cleanEmptyObject: cleanEmptyObject4 } = unlock(import_block_editor92.privateApis);
   function useBlockComments(postId2) {
     const [commentLastUpdated, reflowComments] = (0, import_element169.useReducer)(
@@ -48803,7 +48805,7 @@ var wp;
     const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = (0, import_data221.useSelect)(import_block_editor92.store);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data221.useDispatch)(import_block_editor92.store);
     const onError = (error) => {
-      const errorMessage = error.message && error.code !== "unknown_error" ? (0, import_html_entities28.decodeEntities)(error.message) : (0, import_i18n216.__)("An error occurred while performing an update.");
+      const errorMessage = error.message && error.code !== "unknown_error" ? (0, import_html_entities30.decodeEntities)(error.message) : (0, import_i18n216.__)("An error occurred while performing an update.");
       createNotice("error", errorMessage, {
         type: "snackbar",
         isDismissible: true

@@ -17754,7 +17754,7 @@ var wp;
         hasSelection: !!getSelectionStart2().clientId
       };
     }, []);
-    const rootLabel = rootLabelText || (0, import_i18n20.__)("Document");
+    const rootLabel = rootLabelText || (0, import_i18n20._x)("Document", "noun, breadcrumb");
     const blockRef = (0, import_element22.useRef)();
     useBlockElementRef(clientId, blockRef);
     return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
