@@ -2789,19 +2789,12 @@ var wp;
     const { paginationInfo } = (0, import_element9.useContext)(dataviews_context_default);
     const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
     const isSelected2 = hasPossibleBulkAction && selection.includes(id);
-    const [isHovered, setIsHovered] = (0, import_element9.useState)(false);
     const {
       showTitle = true,
       showMedia = true,
       showDescription = true,
       infiniteScrollEnabled
     } = view;
-    const handleMouseEnter = () => {
-      setIsHovered(true);
-    };
-    const handleMouseLeave = () => {
-      setIsHovered(false);
-    };
     const isTouchDeviceRef = (0, import_element9.useRef)(false);
     const columns = view.fields ?? [];
     const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
@@ -2810,11 +2803,8 @@ var wp;
       {
         className: clsx_default("dataviews-view-table__row", {
           "is-selected": hasPossibleBulkAction && isSelected2,
-          "is-hovered": isHovered,
           "has-bulk-actions": hasPossibleBulkAction
         }),
-        onMouseEnter: handleMouseEnter,
-        onMouseLeave: handleMouseLeave,
         onTouchStart: () => {
           isTouchDeviceRef.current = true;
         },
@@ -2831,20 +2821,11 @@ var wp;
           if (!hasPossibleBulkAction) {
             return;
           }
-          if (!isTouchDeviceRef.current && document.getSelection()?.type !== "Range") {
-            if ((0, import_keycodes.isAppleOS)() ? event.metaKey : event.ctrlKey) {
-              onChangeSelection(
-                selection.includes(id) ? selection.filter(
-                  (itemId) => id !== itemId
-                ) : [...selection, id]
-              );
-            } else {
-              onChangeSelection(
-                selection.includes(id) ? selection.filter(
-                  (itemId) => id !== itemId
-                ) : [id]
-              );
-            }
+          const isModifierKeyPressed = (0, import_keycodes.isAppleOS)() ? event.metaKey : event.ctrlKey;
+          if (isModifierKeyPressed && !isTouchDeviceRef.current && document.getSelection()?.type !== "Range") {
+            onChangeSelection(
+              selection.includes(id) ? selection.filter((itemId) => id !== itemId) : [...selection, id]
+            );
           }
         },
         children: [
