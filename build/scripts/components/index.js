@@ -48427,15 +48427,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element179 = __toESM(require_element());
   var import_html_entities = __toESM(require_html_entities());
   var import_jsx_runtime255 = __toESM(require_jsx_runtime());
-  var CONTEXT_VALUE2 = {
-    BaseControl: {
-      // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
-      // via the context system to override the value set by SelectControl.
-      _overrides: {
-        __associatedWPComponentName: "TreeSelect"
-      }
-    }
-  };
   function getSelectOptions(tree, level = 0) {
     return tree.flatMap((treeNode) => [{
       value: treeNode.id,
@@ -48444,6 +48435,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
   function TreeSelect(props) {
     const {
+      __nextHasNoMarginBottom: _,
+      // Prevent passing to internal component
       label,
       noOptionLabel,
       onChange,
@@ -48462,16 +48455,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: restProps.size,
       __next40pxDefaultSize: restProps.__next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(ContextSystemProvider, {
-      value: CONTEXT_VALUE2,
-      children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(SelectControl, {
-        __shouldNotWarnDeprecated36pxSize: true,
-        label,
-        options: options2,
-        onChange,
-        value: selectedId,
-        ...restProps
-      })
+    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(SelectControl, {
+      __shouldNotWarnDeprecated36pxSize: true,
+      label,
+      options: options2,
+      onChange,
+      value: selectedId,
+      ...restProps,
+      __nextHasNoMarginBottom: true
     });
   }
   var tree_select_default = TreeSelect;
@@ -48496,7 +48487,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onChange: onChangeProp,
       tree: termsTree,
       selectedId: selectedAuthorId !== void 0 ? String(selectedAuthorId) : void 0,
-      __nextHasNoMarginBottom: true,
       __next40pxDefaultSize
     });
   }
@@ -48523,7 +48513,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       tree: termsTree,
       selectedId: selectedCategoryId !== void 0 ? String(selectedCategoryId) : void 0,
       ...props,
-      __nextHasNoMarginBottom: true,
       __next40pxDefaultSize
     });
   }

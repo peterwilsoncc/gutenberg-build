@@ -40305,7 +40305,6 @@ var wp;
           import_components149.TreeSelect,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: parentSelectLabel,
             noOptionLabel: noParentOption,
             onChange: onChangeFormParent,
