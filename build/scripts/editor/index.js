@@ -13280,9 +13280,10 @@ var wp;
         "core",
         "enableChoosePatternModal"
       );
+      const currentPostType = getCurrentPostType2();
       return {
         postId: getCurrentPostId2(),
-        enabled: choosePatternModalEnabled && TEMPLATE_POST_TYPE !== getCurrentPostType2()
+        enabled: choosePatternModalEnabled && TEMPLATE_POST_TYPE !== currentPostType && TEMPLATE_PART_POST_TYPE !== currentPostType
       };
     }, []);
     (0, import_element33.useEffect)(() => {
