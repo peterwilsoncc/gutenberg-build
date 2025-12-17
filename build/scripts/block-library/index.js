@@ -41774,7 +41774,7 @@ ${js}
     });
     const lastUpdatedAlignRef = (0, import_element83.useRef)();
     (0, import_element83.useEffect)(() => {
-      if (align === lastUpdatedAlignRef.current) {
+      if (align === "full" || align === "wide" || align === lastUpdatedAlignRef.current) {
         return;
       }
       lastUpdatedAlignRef.current = align;
@@ -41936,6 +41936,7 @@ ${js}
       }
     },
     supports: {
+      align: ["wide", "full"],
       splitting: true,
       anchor: true,
       className: false,
