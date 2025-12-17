@@ -4,7 +4,7 @@ import { store, getElement, getContext } from "@wordpress/interactivity";
 // packages/block-editor/build-module/utils/fit-text-utils.js
 function findOptimalFontSize(textElement, applyFontSize) {
   const alreadyHasScrollableHeight = textElement.scrollHeight > textElement.clientHeight;
-  let minSize = 5;
+  let minSize = 0;
   let maxSize = 2400;
   let bestSize = minSize;
   const computedStyle = window.getComputedStyle(textElement);
