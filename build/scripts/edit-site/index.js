@@ -21460,9 +21460,13 @@ var wp;
       });
     }, [mergedConfig]);
     const defaultEditorSettings = (0, import_element50.useMemo)(() => {
+      const nonGlobalStyles = (settings2?.styles ?? []).filter(
+        (style) => !style.isGlobalStyles
+      );
       return {
         ...settings2,
         styles: [
+          ...nonGlobalStyles,
           ...globalStyles,
           {
             // Forming a "block formatting context" to prevent margin collapsing.
