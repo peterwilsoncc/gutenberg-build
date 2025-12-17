@@ -198,7 +198,7 @@ if ( ! function_exists( 'site_editor_wp_admin_enqueue_scripts' ) ) {
 			// Dummy script module to ensure dependencies are loaded
 			wp_register_script_module(
 				'site-editor-wp-admin',
-				'data:text/javascript,',
+				plugins_url( 'build', dirname( __FILE__ ) ) . '/pages/site-editor/loader.js',
 				$boot_dependencies
 			);
 

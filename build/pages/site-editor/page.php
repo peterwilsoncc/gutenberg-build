@@ -213,7 +213,7 @@ if ( ! function_exists( 'site_editor_render_page' ) ) {
 			// Dummy script module to ensure dependencies are loaded
 			wp_register_script_module(
 				'site-editor',
-				'data:text/javascript,',
+				plugins_url( 'build', dirname( __FILE__ ) ) . '/pages/site-editor/loader.js',
 				$boot_dependencies
 			);
 

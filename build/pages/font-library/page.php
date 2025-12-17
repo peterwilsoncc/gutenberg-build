@@ -213,7 +213,7 @@ if ( ! function_exists( 'font_library_render_page' ) ) {
 			// Dummy script module to ensure dependencies are loaded
 			wp_register_script_module(
 				'font-library',
-				'data:text/javascript,',
+				plugins_url( 'build', dirname( __FILE__ ) ) . '/pages/font-library/loader.js',
 				$boot_dependencies
 			);
 

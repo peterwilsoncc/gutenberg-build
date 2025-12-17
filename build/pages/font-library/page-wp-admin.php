@@ -198,7 +198,7 @@ if ( ! function_exists( 'font_library_wp_admin_enqueue_scripts' ) ) {
 			// Dummy script module to ensure dependencies are loaded
 			wp_register_script_module(
 				'font-library-wp-admin',
-				'data:text/javascript,',
+				plugins_url( 'build', dirname( __FILE__ ) ) . '/pages/font-library/loader.js',
 				$boot_dependencies
 			);
 
