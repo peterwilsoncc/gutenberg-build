@@ -35082,14 +35082,20 @@ ${js}
       onNavigateToEntityRecord,
       createErrorNotice
     ]);
-    const isEditButtonDisabled = !overlay || !hasResolved || !selectedTemplatePart || !onNavigateToEntityRecord || isResolving;
     const isCreateButtonDisabled = isResolving || isCreating;
     const helpText = (0, import_element65.useMemo)(() => {
       if (overlayTemplateParts.length === 0 && hasResolved) {
         return (0, import_i18n116.__)("No overlays found.");
       }
-      return (0, import_i18n116.__)("Select an overlay to use for the navigation.");
+      return (0, import_i18n116.__)("Select an overlay for navigation.");
     }, [overlayTemplateParts.length, hasResolved]);
+    const editButtonLabel = (0, import_element65.useMemo)(() => {
+      return selectedTemplatePart ? (0, import_i18n116.sprintf)(
+        /* translators: %s: Overlay title. */
+        (0, import_i18n116.__)("Edit overlay: %s"),
+        selectedTemplatePart.title?.rendered ? (0, import_html_entities4.decodeEntities)(selectedTemplatePart.title.rendered) : selectedTemplatePart.slug
+      ) : (0, import_i18n116.__)("Edit overlay");
+    }, [selectedTemplatePart]);
     return /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)("div", { className: "wp-block-navigation__overlay-selector", children: [
       /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
         import_components70.Button,
@@ -35105,38 +35111,36 @@ ${js}
           className: "wp-block-navigation__overlay-create-button"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
-        import_components70.SelectControl,
-        {
-          __next40pxDefaultSize: true,
-          label: (0, import_i18n116.__)("Overlay template"),
-          value: overlay || "",
-          options: options2,
-          onChange: handleSelectChange,
-          disabled: isResolving,
-          accessibleWhenDisabled: true,
-          help: helpText
-        }
-      ),
-      overlay && (!hasResolved || selectedTemplatePart) && /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
-        import_components70.Button,
-        {
-          __next40pxDefaultSize: true,
-          variant: "secondary",
-          onClick: handleEditClick,
-          disabled: isEditButtonDisabled,
-          accessibleWhenDisabled: true,
-          "aria-label": selectedTemplatePart ? (0, import_i18n116.sprintf)(
-            /* translators: %s: Overlay title. */
-            (0, import_i18n116.__)("Edit overlay: %s"),
-            selectedTemplatePart.title?.rendered ? (0, import_html_entities4.decodeEntities)(
-              selectedTemplatePart.title.rendered
-            ) : selectedTemplatePart.slug
-          ) : (0, import_i18n116.__)("Edit overlay"),
-          className: "wp-block-navigation__overlay-edit-button",
-          children: (0, import_i18n116.__)("Edit")
-        }
-      )
+      /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)(import_components70.__experimentalHStack, { alignment: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_components70.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
+          import_components70.SelectControl,
+          {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0, import_i18n116.__)("Overlay template"),
+            value: overlay || "",
+            options: options2,
+            onChange: handleSelectChange,
+            disabled: isResolving,
+            accessibleWhenDisabled: true,
+            help: helpText
+          }
+        ) }),
+        overlay && hasResolved && selectedTemplatePart && /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_components70.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
+          import_components70.Button,
+          {
+            __next40pxDefaultSize: true,
+            variant: "secondary",
+            onClick: handleEditClick,
+            disabled: !onNavigateToEntityRecord,
+            accessibleWhenDisabled: true,
+            label: editButtonLabel,
+            showTooltip: true,
+            className: "wp-block-navigation__overlay-edit-button",
+            children: (0, import_i18n116.__)("Edit")
+          }
+        ) })
+      ] })
     ] });
   }
 
