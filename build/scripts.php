@@ -75,7 +75,7 @@ if ( ! function_exists( 'gutenberg_register_package_scripts' ) ) {
 			gutenberg_override_script(
 				$scripts,
 				$script_data['handle'],
-				plugins_url( 'build/scripts/' . $script_data['path'] . $extension, $plugin_dir ),
+				plugins_url( 'build', dirname( __FILE__ ) ) . '/scripts/' . $script_data['path'] . $extension,
 				$dependencies,
 				$version,
 				true

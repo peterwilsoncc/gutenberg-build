@@ -59,7 +59,7 @@ if ( ! function_exists( 'gutenberg_register_package_styles' ) ) {
 			gutenberg_override_style(
 				$styles,
 				$style_data['handle'],
-				plugins_url( 'build/styles/' . $style_data['path'] . '.css', $plugin_dir ),
+				plugins_url( 'build', dirname( __FILE__ ) ) . '/styles/' . $style_data['path'] . '.css',
 				$style_data['dependencies'],
 				$default_version
 			);

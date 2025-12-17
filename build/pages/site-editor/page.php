@@ -152,7 +152,7 @@ if ( ! function_exists( 'site_editor_render_page' ) ) {
 		$routes = get_site_editor_routes();
 
 		// Get boot module asset file for dependencies
-		$asset_file = plugin_dir_path( __FILE__ ) . '../../modules/boot/index.min.asset.php';
+		$asset_file = __DIR__ . '/../../modules/boot/index.min.asset.php';
 		if ( file_exists( $asset_file ) ) {
 			$asset = require $asset_file;
 
@@ -213,7 +213,7 @@ if ( ! function_exists( 'site_editor_render_page' ) ) {
 			// Dummy script module to ensure dependencies are loaded
 			wp_register_script_module(
 				'site-editor',
-				plugin_dir_url( __FILE__ ) . 'loader.js',
+				'data:text/javascript,',
 				$boot_dependencies
 			);
 

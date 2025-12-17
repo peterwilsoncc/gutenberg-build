@@ -19,7 +19,7 @@ if ( ! function_exists( 'gutenberg_register_script_modules' ) ) {
 		}
 
 		$modules = require $modules_file;
-		$base_url = plugins_url( 'build/modules/', dirname( __FILE__ ) );
+		$base_url = plugins_url( 'build', dirname( __FILE__ ) ) . '/modules/';
 		$extension = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.js' : '.min.js';
 
 		foreach ( $modules as $module ) {
