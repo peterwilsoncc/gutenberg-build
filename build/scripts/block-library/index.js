@@ -59191,8 +59191,8 @@ ${js}
           return;
         }
         setAttributes(
-          updateSelectedCell(
-            attributes3,
+          (currentAttributes) => updateSelectedCell(
+            currentAttributes,
             selectedCell,
             (cellAttributes) => ({
               ...cellAttributes,
@@ -59201,7 +59201,7 @@ ${js}
           )
         );
       },
-      [attributes3, selectedCell, setAttributes]
+      [selectedCell, setAttributes]
     );
     function onChangeColumnAlignment(align) {
       if (!selectedCell) {
