@@ -31507,7 +31507,8 @@ This message will only show in development mode. It won't appear in production. 
       suffix,
       variant = "default",
       __next40pxDefaultSize = false,
-      __nextHasNoMarginBottom = false,
+      __nextHasNoMarginBottom: _,
+      // Prevent passing to internal component
       __shouldNotWarnDeprecated36pxSize,
       ...restProps
     } = useDeprecated36pxDefaultSizeProp(props);
@@ -31544,8 +31545,7 @@ This message will only show in development mode. It won't appear in production. 
       help,
       id: id3,
       className: classes,
-      __nextHasNoMarginBottom,
-      __associatedWPComponentName: "SelectControl",
+      __nextHasNoMarginBottom: true,
       children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(StyledInputBase, {
         disabled,
         hideLabelFromVision,
@@ -32961,7 +32961,6 @@ This message will only show in development mode. It won't appear in production. 
         children: [/* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(AuxiliaryColorArtefactHStackHeader, {
           justify: "space-between",
           children: [/* @__PURE__ */ (0, import_jsx_runtime138.jsx)(SelectControl2, {
-            __nextHasNoMarginBottom: true,
             size: "compact",
             options,
             value: colorType,
@@ -37968,7 +37967,6 @@ This message will only show in development mode. It won't appear in production. 
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(select_control_default, {
-      __nextHasNoMarginBottom: true,
       className: "components-custom-gradient-picker__type-picker",
       label: (0, import_i18n33.__)("Type"),
       labelPosition: "top",
@@ -43126,7 +43124,6 @@ This message will only show in development mode. It won't appear in production. 
         label: (0, import_i18n45.__)("Month"),
         hideLabelFromVision: true,
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         value: month,
         options: monthOptions,
         onChange: (value) => {
@@ -48444,8 +48441,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       options: options2,
       onChange,
       value: selectedId,
-      ...restProps,
-      __nextHasNoMarginBottom: true
+      ...restProps
     });
   }
   var tree_select_default = TreeSelect;
@@ -48547,7 +48543,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       spacing: "4",
       className: "components-query-controls",
       children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(select_control_default, {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n72.__)("Order by"),
         value: orderBy === void 0 || order === void 0 ? void 0 : `${orderBy}/${order}`,
@@ -58441,7 +58436,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(select_control_default, {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps

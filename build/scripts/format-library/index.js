@@ -1766,7 +1766,6 @@ var wp;
                 import_components5.SelectControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n16.__)("Text direction"),
                   value: dir,
                   options: [

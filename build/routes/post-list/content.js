@@ -4157,7 +4157,6 @@ function DataViewsPagination() {
                       });
                     },
                     size: "small",
-                    __nextHasNoMarginBottom: true,
                     variant: "minimal"
                   }
                 )
@@ -12001,7 +12000,6 @@ function OperatorSelector({
             },
             size: "small",
             variant: "minimal",
-            __nextHasNoMarginBottom: true,
             hideLabelFromVision: true
           }
         )
@@ -12751,7 +12749,6 @@ function SortFieldControl() {
   return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
     import_components31.SelectControl,
     {
-      __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: true,
       label: (0, import_i18n32.__)("Sort by"),
       value: view.sort?.field,
@@ -13087,7 +13084,6 @@ function RelativeDateControl({
           {
             className: "dataviews-controls__relative-date-unit",
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n33.__)("Unit"),
             value: unit,
             options,
@@ -14174,7 +14170,6 @@ function Select({
       options: elements,
       onChange: onChangeControl,
       __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
       hideLabelFromVision,
       multiple: isMultiple
     }

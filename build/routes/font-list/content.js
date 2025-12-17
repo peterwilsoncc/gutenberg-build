@@ -3991,7 +3991,6 @@ function FontCollection({ slug }) {
                 /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
                   import_components28.SelectControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n15.__)("Category"),
                     value: filters.category,
@@ -4187,7 +4186,6 @@ function FontCollection({ slug }) {
                           parseInt(newPage)
                         ),
                         size: "small",
-                        __nextHasNoMarginBottom: true,
                         variant: "minimal"
                       }
                     )

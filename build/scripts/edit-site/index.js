@@ -26951,7 +26951,6 @@ var wp;
                         });
                       },
                       size: "small",
-                      __nextHasNoMarginBottom: true,
                       variant: "minimal"
                     }
                   )
@@ -34805,7 +34804,6 @@ If there's a particular need for this, please submit a feature request at https:
               },
               size: "small",
               variant: "minimal",
-              __nextHasNoMarginBottom: true,
               hideLabelFromVision: true
             }
           )
@@ -35555,7 +35553,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       import_components122.SelectControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n114.__)("Sort by"),
         value: view.sort?.field,
@@ -35891,7 +35888,6 @@ If there's a particular need for this, please submit a feature request at https:
             {
               className: "dataviews-controls__relative-date-unit",
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n115.__)("Unit"),
               value: unit,
               options,
@@ -36978,7 +36974,6 @@ If there's a particular need for this, please submit a feature request at https:
         options: elements2,
         onChange: onChangeControl,
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         hideLabelFromVision,
         multiple: isMultiple
       }

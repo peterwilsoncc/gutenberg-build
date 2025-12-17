@@ -231,7 +231,6 @@ var wp;
       import_components.SelectControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         label: (0, import_i18n.__)("Legacy widget"),
         value: selectedId ?? "",
         options: [

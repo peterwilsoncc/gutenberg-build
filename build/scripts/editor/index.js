@@ -17641,7 +17641,6 @@ var wp;
                   /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     import_components56.SelectControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       __next40pxDefaultSize: true,
                       label: (0, import_i18n75.__)("Category"),
                       value: filters.category,
@@ -17837,7 +17836,6 @@ var wp;
                             parseInt(newPage)
                           ),
                           size: "small",
-                          __nextHasNoMarginBottom: true,
                           variant: "minimal"
                         }
                       )
@@ -36501,7 +36499,6 @@ var wp;
         import_components113.SelectControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           hideLabelFromVision: true,
           label: (0, import_i18n129.__)("Template"),
           value: selectedOption?.value ?? "",
@@ -37373,7 +37370,6 @@ var wp;
       import_components127.SelectControl,
       {
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         className: "post-author-selector",
         label: (0, import_i18n136.__)("Author"),
         options: authorOptions,

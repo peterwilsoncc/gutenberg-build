@@ -3087,7 +3087,6 @@ var wp;
                   import_components3.SelectControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n5.__)("Group by"),
                     options: [
                       { label: (0, import_i18n5.__)("Year"), value: "yearly" },
@@ -4235,7 +4234,6 @@ var wp;
                   import_components8.SelectControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n10._x)(
                       "Preload",
                       "noun; Audio block parameter"
@@ -7730,7 +7728,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components12.SelectControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n17.__)("Taxonomy"),
                     options: taxonomies.map((t2) => ({
@@ -18900,7 +18897,6 @@ ${url}
                   import_components41.SelectControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n63.__)("Link to"),
                     value: textLinkHref,
                     options: linkDestinationOptions,
@@ -19739,7 +19735,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
                   import_components43.SelectControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n67.__)("Submissions method"),
                     options: [
@@ -19806,7 +19801,6 @@ ${url}
           import_components43.SelectControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n67.__)("Method"),
             options: [
               { label: "Get", value: "get" },
@@ -22770,7 +22764,6 @@ ${url}
                   children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     import_components45.SelectControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n75.__)("Resolution"),
                       help: (0, import_i18n75.__)(
                         "Select the size of the source images."
@@ -22846,7 +22839,6 @@ ${url}
                     import_components45.SelectControl,
                     {
                       __next40pxDefaultSize: true,
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n75.__)("Aspect ratio"),
                       help: (0, import_i18n75.__)(
                         "Set a consistent aspect ratio for all images in the gallery."
@@ -22878,7 +22870,6 @@ ${url}
           imageSizeOptions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components45.SelectControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n75.__)("Resolution"),
               help: (0, import_i18n75.__)(
                 "Select the size of the source images."
@@ -22893,7 +22884,6 @@ ${url}
           /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components45.SelectControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n75.__)("Link"),
               value: linkTo,
               onChange: setLinkTo,
@@ -22929,7 +22919,6 @@ ${url}
           aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components45.SelectControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n75.__)("Aspect Ratio"),
               help: (0, import_i18n75.__)(
                 "Set a consistent aspect ratio for all images in the gallery."
@@ -28441,7 +28430,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
                   import_components52.SelectControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n92.__)("Display content"),
                     value: displayContent,
@@ -29804,7 +29792,6 @@ ${js}
         import_components54.SelectControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n94.__)("List style"),
           options: LIST_STYLE_OPTIONS,
           value: type,
@@ -29868,7 +29855,6 @@ ${js}
                 import_components54.SelectControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n94.__)("List style"),
                   options: LIST_STYLE_OPTIONS,
                   value: type || "decimal",
@@ -35123,7 +35109,6 @@ ${js}
         import_components70.SelectControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n116.__)("Overlay template"),
           value: overlay || "",
           options: options2,
@@ -42393,7 +42378,6 @@ ${js}
                   import_components94.SelectControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n149.__)("Avatar size"),
                     value: avatarSize,
                     options: avatarSizes,
@@ -44806,7 +44790,6 @@ ${js}
             import_components100.SelectControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n160.__)("Aspect ratio"),
               value: aspectRatio,
               options: aspectRatioOptions,
@@ -45666,7 +45649,6 @@ ${js}
         import_components103.SelectControl,
         {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n163.__)("Filter by taxonomy"),
           value: taxonomy,
           options: getTaxonomyOptions(),
@@ -48525,7 +48507,6 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
       import_components109.SelectControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n177.__)("Order by"),
         value: `${orderBy}/${order}`,
@@ -49002,7 +48983,6 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime367.jsx)(
       import_components114.SelectControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         label: (0, import_i18n182.__)("Sticky posts"),
         options: stickyOptions,
@@ -49279,7 +49259,6 @@ ${js}
                 children: postTypesSelectOptions.length > 2 ? /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
                   import_components118.SelectControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     __next40pxDefaultSize: true,
                     options: postTypesSelectOptions,
                     value: postType,
@@ -54016,7 +53995,6 @@ ${js}
                 {
                   value: buttonPosition,
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n210.__)("Button position"),
                   onChange: (value) => {
                     setAttributes({
@@ -54105,7 +54083,6 @@ ${js}
                     },
                     isBlock: true,
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     children: PERCENTAGE_WIDTHS.map((widthValue) => {
                       return /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
                         import_components135.__experimentalToggleGroupControlOption,
@@ -54329,8 +54306,7 @@ ${js}
         ) : (0, import_i18n213.__)(
           "The <div> element should only be used if the block is a design element with no semantic meaning."
         ),
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true
+        __next40pxDefaultSize: true
       }
     );
   };
@@ -56999,7 +56975,6 @@ ${js}
                   import_components142.SelectControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n222.__)("Icon size"),
                     onChange: (newSize) => {
                       setAttributes({
@@ -57893,8 +57868,7 @@ ${js}
                 anchor: slugFromLabel(value, blockIndex)
               });
             },
-            __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true
+            __next40pxDefaultSize: true
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(
@@ -60495,7 +60469,6 @@ ${js}
               children: /* @__PURE__ */ (0, import_jsx_runtime476.jsx)(
                 import_components149.SelectControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n230.__)("Include headings down to level"),
                   value: maxLevel || "",
@@ -60874,7 +60847,6 @@ ${declarations}
                 metadata: { ...metadata, name: value }
               });
             },
-            __nextHasNoMarginBottom: true,
             __next40pxDefaultSize: true
           }
         )
@@ -61416,7 +61388,6 @@ ${declarations}
               children: /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
                 import_components152.SelectControl,
                 {
-                  __nextHasNoMarginBottom: true,
                   __next40pxDefaultSize: true,
                   label: (0, import_i18n233.__)("Taxonomy"),
                   options: getTaxonomyOptions(),
@@ -62125,8 +62096,7 @@ ${declarations}
           options: options2,
           onChange: (value) => setSelectedSidebar(value),
           disabled: !options2.length,
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true
+          __next40pxDefaultSize: true
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
@@ -62204,7 +62174,6 @@ ${declarations}
           import_components157.SelectControl,
           {
             __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n239.__)("Area"),
             labelPosition: "top",
             options: areaOptions,
@@ -63459,7 +63428,6 @@ ${declarations}
     return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
       import_components162.SelectControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         options: taxonomyOptions,
         value,
@@ -63477,7 +63445,6 @@ ${declarations}
     return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
       import_components163.SelectControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         options: [
           {
@@ -65197,7 +65164,6 @@ ${declarations}
             import_components173.SelectControl,
             {
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n254.__)("Preload"),
               value: preload,
               onChange: onChangePreload,
@@ -65333,7 +65299,6 @@ ${declarations}
               import_components174.SelectControl,
               {
                 __next40pxDefaultSize: true,
-                __nextHasNoMarginBottom: true,
                 className: "block-library-video-tracks-editor__single-track-editor-kind-select",
                 options: KIND_OPTIONS,
                 value: kind,

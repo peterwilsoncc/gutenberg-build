@@ -48140,7 +48140,6 @@ var wp;
       imageSizeOptions && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
         import_components157.SelectControl,
         {
-          __nextHasNoMarginBottom: true,
           label: (0, import_i18n145.__)("Resolution"),
           value: slug,
           options: imageSizeOptions,
@@ -55367,8 +55366,7 @@ var wp;
             value: displayValue,
             options: options ?? aspectRatioOptions,
             onChange,
-            size: "__unstable-large",
-            __nextHasNoMarginBottom: true
+            size: "__unstable-large"
           }
         )
       }
@@ -61466,7 +61464,6 @@ var wp;
             {
               className: "dataviews-controls__relative-date-unit",
               __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n201.__)("Unit"),
               value: unit,
               options,
@@ -62553,7 +62550,6 @@ var wp;
         options: elements,
         onChange: onChangeControl,
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         hideLabelFromVision,
         multiple: isMultiple
       }
@@ -72861,7 +72857,6 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
           import_components274.SelectControl,
           {
-            __nextHasNoMarginBottom: true,
             label: (0, import_i18n238.__)("Resolution"),
             value: displayValue,
             options,
@@ -72964,7 +72959,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
         import_components275.SelectControl,
         {
-          __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           label: (0, import_i18n240.__)("HTML element"),
           options: modifiedOptions,
