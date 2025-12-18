@@ -149,7 +149,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState23({
+          cachedValue = useState24({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -187,7 +187,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React4 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState23 = React4.useState, useEffect17 = React4.useEffect, useLayoutEffect2 = React4.useLayoutEffect, useDebugValue = React4.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React4 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState24 = React4.useState, useEffect17 = React4.useEffect, useLayoutEffect2 = React4.useLayoutEffect, useDebugValue = React4.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React4.useSyncExternalStore ? React4.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -1514,7 +1514,7 @@ var wp;
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/index.js
-  var import_element53 = __toESM(require_element());
+  var import_element54 = __toESM(require_element());
   var import_i18n57 = __toESM(require_i18n());
   var import_core_data2 = __toESM(require_core_data());
   var import_data7 = __toESM(require_data());
@@ -6755,13 +6755,13 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React3.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState23 = React3.useCallback(
+    const useState24 = React3.useCallback(
       (keyOrSelector) => useStoreState(store, keyOrSelector),
       [store]
     );
     const memoizedStore = React3.useMemo(
-      () => __spreadProps(__spreadValues({}, store), { useState: useState23 }),
-      [store, useState23]
+      () => __spreadProps(__spreadValues({}, store), { useState: useState24 }),
+      [store, useState24]
     );
     const updateStore = useEvent(() => {
       setStore((store2) => createStore2(__spreadValues(__spreadValues({}, props), store2.getState())));
@@ -16411,6 +16411,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data6 = __toESM(require_data());
   var import_core_data = __toESM(require_core_data());
   var import_components53 = __toESM(require_components());
+  var import_element53 = __toESM(require_element());
   var import_url5 = __toESM(require_url());
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.js
@@ -16446,47 +16447,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/media_thumbnail/view.js
   var import_jsx_runtime106 = __toESM(require_jsx_runtime());
-  function MediaThumbnailView({
+  function FallbackView({
     item,
-    config
+    filename
   }) {
-    const _featuredMedia = (0, import_data6.useSelect)(
-      (select) => {
-        if (!item.featured_media) {
-          return;
-        }
-        return select(import_core_data.store).getEntityRecord(
-          "postType",
-          "attachment",
-          item.featured_media
-        );
-      },
-      [item.featured_media]
-    );
-    const featuredMedia = item.featured_media ? _featuredMedia : item;
-    if (!featuredMedia) {
-      return null;
-    }
-    const filename = (0, import_url5.getFilename)(featuredMedia.source_url || "");
-    if (
-      // Ensure the featured media is an image.
-      getMediaTypeFromMimeType(featuredMedia.mime_type).type === "image"
-    ) {
-      return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
-        "img",
-        {
-          className: "dataviews-media-field__media-thumbnail--image",
-          src: featuredMedia.source_url,
-          srcSet: featuredMedia?.media_details?.sizes ? Object.values(
-            featuredMedia.media_details.sizes
-          ).map(
-            (size) => `${size.source_url} ${size.width}w`
-          ).join(", ") : void 0,
-          sizes: config?.sizes || "100vw",
-          alt: featuredMedia.alt_text || featuredMedia.title.raw
-        }
-      ) });
-    }
     return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(
       import_components53.__experimentalVStack,
       {
@@ -16505,6 +16469,48 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           !!filename && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components53.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
         ]
+      }
+    ) });
+  }
+  function MediaThumbnailView({
+    item,
+    config
+  }) {
+    const [imageError, setImageError] = (0, import_element53.useState)(false);
+    const _featuredMedia = (0, import_data6.useSelect)(
+      (select) => {
+        if (!item.featured_media) {
+          return;
+        }
+        return select(import_core_data.store).getEntityRecord(
+          "postType",
+          "attachment",
+          item.featured_media
+        );
+      },
+      [item.featured_media]
+    );
+    const featuredMedia = item.featured_media ? _featuredMedia : item;
+    if (!featuredMedia) {
+      return null;
+    }
+    const filename = (0, import_url5.getFilename)(featuredMedia.source_url || "");
+    if (imageError || getMediaTypeFromMimeType(featuredMedia.mime_type).type !== "image") {
+      return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+      "img",
+      {
+        className: "dataviews-media-field__media-thumbnail--image",
+        src: featuredMedia.source_url,
+        srcSet: featuredMedia?.media_details?.sizes ? Object.values(
+          featuredMedia.media_details.sizes
+        ).map(
+          (size) => `${size.source_url} ${size.width}w`
+        ).join(", ") : void 0,
+        sizes: config?.sizes || "100vw",
+        alt: featuredMedia.alt_text || featuredMedia.title.raw,
+        onError: () => setImageError(true)
       }
     ) });
   }
@@ -16560,13 +16566,13 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = (0, import_i18n57.__)("Search media")
   }) {
-    const [selection, setSelection] = (0, import_element53.useState)(() => {
+    const [selection, setSelection] = (0, import_element54.useState)(() => {
       if (!value) {
         return [];
       }
       return Array.isArray(value) ? value.map(String) : [String(value)];
     });
-    const [view, setView] = (0, import_element53.useState)(() => ({
+    const [view, setView] = (0, import_element54.useState)(() => ({
       type: LAYOUT_PICKER_GRID2,
       fields: [],
       showTitle: false,
@@ -16577,7 +16583,7 @@ If there's a particular need for this, please submit a feature request at https:
       perPage: 20,
       filters: []
     }));
-    const queryArgs = (0, import_element53.useMemo)(() => {
+    const queryArgs = (0, import_element54.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "media_type") {
@@ -16613,7 +16619,7 @@ If there's a particular need for this, please submit a feature request at https:
       totalItems,
       totalPages
     } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
-    const fields = (0, import_element53.useMemo)(
+    const fields = (0, import_element54.useMemo)(
       () => [
         {
           id: "title",
@@ -16637,7 +16643,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       []
     );
-    const actions = (0, import_element53.useMemo)(
+    const actions = (0, import_element54.useMemo)(
       () => [
         {
           id: "select",
@@ -16667,11 +16673,11 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [multiple, onSelect, selection]
     );
-    const handleModalClose = (0, import_element53.useCallback)(() => {
+    const handleModalClose = (0, import_element54.useCallback)(() => {
       onClose?.();
     }, [onClose]);
     const handleUpload = onUpload || uploadMedia;
-    const handleFileSelect = (0, import_element53.useCallback)(
+    const handleFileSelect = (0, import_element54.useCallback)(
       (event) => {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -16684,14 +16690,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowedTypes, handleUpload]
     );
-    const paginationInfo = (0, import_element53.useMemo)(
+    const paginationInfo = (0, import_element54.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const defaultLayouts = (0, import_element53.useMemo)(
+    const defaultLayouts = (0, import_element54.useMemo)(
       () => ({
         [LAYOUT_PICKER_GRID2]: {
           fields: [],
@@ -16704,7 +16710,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       []
     );
-    const acceptTypes = (0, import_element53.useMemo)(() => {
+    const acceptTypes = (0, import_element54.useMemo)(() => {
       if (allowedTypes.includes("*")) {
         return void 0;
       }
