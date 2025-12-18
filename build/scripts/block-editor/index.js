@@ -22210,7 +22210,7 @@ var wp;
           getBlockAttributes: getBlockAttributes3,
           canRemoveBlock: canRemoveBlock2,
           canMoveBlock: canMoveBlock2,
-          getSettings: getSettings7,
+          getSettings: getSettings8,
           getEditedContentOnlySection: getEditedContentOnlySection2,
           getBlockEditingMode: getBlockEditingMode2,
           getBlockName: getBlockName2,
@@ -22244,7 +22244,7 @@ var wp;
           supportsLayout,
           isPreviewMode: isPreviewMode2,
           __experimentalBlockBindingsSupportedAttributes
-        } = getSettings7();
+        } = getSettings8();
         const bindableAttributes2 = __experimentalBlockBindingsSupportedAttributes?.[blockName];
         const hasLightBlockWrapper = blockType?.apiVersion > 1;
         const previewContext = {
@@ -24189,7 +24189,7 @@ var wp;
     const {
       getMultiSelectedBlocksStartClientId: getMultiSelectedBlocksStartClientId2,
       getMultiSelectedBlocksEndClientId: getMultiSelectedBlocksEndClientId2,
-      getSettings: getSettings7,
+      getSettings: getSettings8,
       hasMultiSelection: hasMultiSelection2,
       __unstableIsFullySelected: __unstableIsFullySelected2
     } = (0, import_data36.useSelect)(store);
@@ -24251,7 +24251,7 @@ var wp;
           verticalRect = (0, import_dom10.computeCaretRect)(defaultView);
         }
         const isReverseDir = (0, import_dom10.isRTL)(target) ? !isReverse : isReverse;
-        const { keepCaretInsideBlock } = getSettings7();
+        const { keepCaretInsideBlock } = getSettings8();
         if (shiftKey) {
           if (isClosestTabbableABlock(target, isReverse) && isNavEdge(target, isReverse)) {
             node.contentEditable = true;
@@ -24960,7 +24960,7 @@ var wp;
       getBlocksByClientId: getBlocksByClientId2,
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
       hasMultiSelection: hasMultiSelection2,
-      getSettings: getSettings7,
+      getSettings: getSettings8,
       getBlockName: getBlockName2,
       __unstableIsFullySelected: __unstableIsFullySelected2,
       __unstableIsSelectionCollapsed: __unstableIsSelectionCollapsed2,
@@ -25038,7 +25038,7 @@ var wp;
           const {
             __experimentalCanUserUseUnfilteredHTML: canUserUseUnfilteredHTML,
             mediaUpload: mediaUpload2
-          } = getSettings7();
+          } = getSettings8();
           const isInternal = event.clipboardData.getData("rich-text") === "true";
           if (isInternal) {
             return;
@@ -25591,8 +25591,8 @@ var wp;
     ...props
   }) {
     const { resolvedAssets, isPreviewMode } = (0, import_data45.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
-      const settings2 = getSettings7();
+      const { getSettings: getSettings8 } = select3(store);
+      const settings2 = getSettings8();
       return {
         resolvedAssets: settings2.__unstableResolvedAssets,
         isPreviewMode: settings2.isPreviewMode
@@ -27633,13 +27633,13 @@ var wp;
     );
     const { patternCategories, patterns, userPatternCategories } = (0, import_data51.useSelect)(
       (select3) => {
-        const { getSettings: getSettings7, __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2 } = unlock(
+        const { getSettings: getSettings8, __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2 } = unlock(
           select3(store)
         );
         const {
           __experimentalUserPatternCategories,
           __experimentalBlockPatternCategories
-        } = getSettings7();
+        } = getSettings8();
         return {
           patterns: __experimentalGetAllowedPatterns2(
             rootClientId,
@@ -28671,14 +28671,14 @@ var wp;
       [media, category.mediaType]
     );
     const { createErrorNotice, createSuccessNotice } = (0, import_data52.useDispatch)(import_notices5.store);
-    const { getSettings: getSettings7, getBlock: getBlock2 } = (0, import_data52.useSelect)(store);
+    const { getSettings: getSettings8, getBlock: getBlock2 } = (0, import_data52.useSelect)(store);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data52.useDispatch)(store);
     const onMediaInsert = (0, import_element68.useCallback)(
       (previewBlock) => {
         if (isInserting) {
           return;
         }
-        const settings2 = getSettings7();
+        const settings2 = getSettings8();
         const clonedBlock = (0, import_blocks34.cloneBlock)(previewBlock);
         const { id, url, caption } = clonedBlock.attributes;
         if (!id && !settings2.mediaUpload) {
@@ -28740,7 +28740,7 @@ var wp;
       },
       [
         isInserting,
-        getSettings7,
+        getSettings8,
         onClick,
         createSuccessNotice,
         updateBlockAttributes2,
@@ -28982,8 +28982,8 @@ var wp;
   var import_data54 = __toESM(require_data());
   function MediaUploadCheck({ fallback = null, children }) {
     const hasUploadPermissions = (0, import_data54.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
-      return !!getSettings7().mediaUpload;
+      const { getSettings: getSettings8 } = select3(store);
+      return !!getSettings8().mediaUpload;
     }, []);
     return hasUploadPermissions ? children : fallback;
   }
@@ -29710,8 +29710,8 @@ var wp;
     );
     const { setInserterIsOpened, insertionIndex } = (0, import_data58.useSelect)(
       (select3) => {
-        const { getSettings: getSettings7, getBlockIndex: getBlockIndex2, getBlockCount: getBlockCount2 } = select3(store);
-        const settings2 = getSettings7();
+        const { getSettings: getSettings8, getBlockIndex: getBlockIndex2, getBlockCount: getBlockCount2 } = select3(store);
+        const settings2 = getSettings8();
         const index = getBlockIndex2(clientId);
         const blockCount = getBlockCount2();
         return {
@@ -30099,12 +30099,12 @@ var wp;
       (select3) => {
         const {
           getBlockCount: getBlockCount2,
-          getSettings: getSettings7,
+          getSettings: getSettings8,
           getTemplateLock: getTemplateLock2,
           getBlockAttributes: getBlockAttributes3
         } = select3(store);
         const isEmpty4 = !getBlockCount2(rootClientId);
-        const { bodyPlaceholder } = getSettings7();
+        const { bodyPlaceholder } = getSettings8();
         return {
           showPrompt: isEmpty4,
           isLocked: !!getTemplateLock2(rootClientId),
@@ -30740,7 +30740,7 @@ var wp;
         isBlockBeingDragged: isBlockBeingDragged2,
         getPreviousBlockClientId: getPreviousBlockClientId2,
         getNextBlockClientId: getNextBlockClientId2,
-        getSettings: getSettings7,
+        getSettings: getSettings8,
         isZoomOut: isZoomOut2
       } = unlock(select3(store));
       const insertionPoint2 = getBlockInsertionPoint2();
@@ -30756,7 +30756,7 @@ var wp;
       while (isBlockBeingDragged2(_nextClientId)) {
         _nextClientId = getNextBlockClientId2(_nextClientId);
       }
-      const settings2 = getSettings7();
+      const settings2 = getSettings8();
       return {
         previousClientId: _previousClientId,
         nextClientId: _nextClientId,
@@ -30947,7 +30947,7 @@ var wp;
       getBlockIndex: getBlockIndex2,
       isMultiSelecting: isMultiSelecting3,
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
-      getSettings: getSettings7,
+      getSettings: getSettings8,
       getTemplateLock: getTemplateLock2,
       __unstableIsWithinBlockOverlay: __unstableIsWithinBlockOverlay2,
       getBlockEditingMode: getBlockEditingMode2,
@@ -31012,7 +31012,7 @@ var wp;
           if (!clientId || __unstableIsWithinBlockOverlay2(clientId) || !!getParentSectionBlock2(clientId)) {
             return;
           }
-          if (getSelectedBlockClientIds2().includes(clientId) && orientation === "vertical" && !captureToolbars && !getSettings7().hasFixedToolbar) {
+          if (getSelectedBlockClientIds2().includes(clientId) && orientation === "vertical" && !captureToolbars && !getSettings8().hasFixedToolbar) {
             return;
           }
           const elementRect = element.getBoundingClientRect();
@@ -31052,9 +31052,9 @@ var wp;
   var import_compose50 = __toESM(require_compose());
   var import_jsx_runtime198 = __toESM(require_jsx_runtime());
   function useBlockSelectionClearer() {
-    const { getSettings: getSettings7, hasSelectedBlock: hasSelectedBlock2, hasMultiSelection: hasMultiSelection2 } = (0, import_data66.useSelect)(store);
+    const { getSettings: getSettings8, hasSelectedBlock: hasSelectedBlock2, hasMultiSelection: hasMultiSelection2 } = (0, import_data66.useSelect)(store);
     const { clearSelectedBlock: clearSelectedBlock2 } = (0, import_data66.useDispatch)(store);
-    const { clearBlockSelection: isEnabled } = getSettings7();
+    const { clearBlockSelection: isEnabled } = getSettings8();
     return (0, import_compose50.useRefEffect)(
       (node) => {
         if (!isEnabled) {
@@ -31381,9 +31381,9 @@ var wp;
       }
     };
   }
-  function onFilesDrop(targetRootClientId, getSettings7, updateBlockAttributes2, canInsertBlockType2, insertOrReplaceBlocks) {
+  function onFilesDrop(targetRootClientId, getSettings8, updateBlockAttributes2, canInsertBlockType2, insertOrReplaceBlocks) {
     return (files) => {
-      if (!getSettings7().mediaUpload) {
+      if (!getSettings8().mediaUpload) {
         return;
       }
       const transformation = (0, import_blocks39.findTransform)(
@@ -31415,7 +31415,7 @@ var wp;
       getClientIdsOfDescendants: getClientIdsOfDescendants2,
       getBlockOrder: getBlockOrder2,
       getBlocksByClientId: getBlocksByClientId2,
-      getSettings: getSettings7,
+      getSettings: getSettings8,
       getBlock: getBlock2
     } = (0, import_data70.useSelect)(store);
     const { getGroupingBlockName } = (0, import_data70.useSelect)(import_blocks39.store);
@@ -31546,7 +31546,7 @@ var wp;
     );
     const _onFilesDrop = onFilesDrop(
       targetRootClientId,
-      getSettings7,
+      getSettings8,
       updateBlockAttributes2,
       canInsertBlockType2,
       insertOrReplaceBlocks
@@ -32394,12 +32394,12 @@ var wp;
     const { isOutlineMode, isFocusMode, editedContentOnlySection: editedContentOnlySection2 } = (0, import_data75.useSelect)(
       (select3) => {
         const {
-          getSettings: getSettings7,
+          getSettings: getSettings8,
           isTyping: isTyping3,
           hasBlockSpotlight: hasBlockSpotlight3,
           getEditedContentOnlySection: getEditedContentOnlySection2
         } = unlock(select3(store));
-        const { outlineMode, focusMode } = getSettings7();
+        const { outlineMode, focusMode } = getSettings8();
         return {
           isOutlineMode: outlineMode && !isTyping3(),
           isFocusMode: focusMode || hasBlockSpotlight3(),
@@ -32506,7 +32506,7 @@ var wp;
     } = (0, import_data75.useSelect)(
       (select3) => {
         const {
-          getSettings: getSettings7,
+          getSettings: getSettings8,
           getBlockOrder: getBlockOrder2,
           getSelectedBlockClientIds: getSelectedBlockClientIds2,
           __unstableGetVisibleBlocks: __unstableGetVisibleBlocks2,
@@ -32519,7 +32519,7 @@ var wp;
           canInsertBlockType: canInsertBlockType2
         } = unlock(select3(store));
         const _order = getBlockOrder2(rootClientId);
-        if (getSettings7().isPreviewMode) {
+        if (getSettings8().isPreviewMode) {
           return {
             order: _order,
             selectedBlocks: EMPTY_ARRAY7,
@@ -35321,12 +35321,12 @@ var wp;
   function BlockModeToggle({ clientId, onToggle = noop8 }) {
     const { blockType, mode: mode2, enabled } = (0, import_data94.useSelect)(
       (select3) => {
-        const { getBlock: getBlock2, getBlockMode: getBlockMode2, getSettings: getSettings7 } = select3(store);
+        const { getBlock: getBlock2, getBlockMode: getBlockMode2, getSettings: getSettings8 } = select3(store);
         const block = getBlock2(clientId);
         return {
           mode: getBlockMode2(clientId),
           blockType: block ? (0, import_blocks55.getBlockType)(block.name) : null,
-          enabled: getSettings7().codeEditingEnabled && !!block?.isValid
+          enabled: getSettings8().codeEditingEnabled && !!block?.isValid
         };
       },
       [clientId]
@@ -35750,10 +35750,10 @@ var wp;
     } = useContentOnlySectionEdit(clientId);
     const { block, onNavigateToEntityRecord } = (0, import_data100.useSelect)(
       (select3) => {
-        const { getBlock: getBlock2, getSettings: getSettings7 } = select3(store);
+        const { getBlock: getBlock2, getSettings: getSettings8 } = select3(store);
         return {
           block: getBlock2(clientId),
-          onNavigateToEntityRecord: getSettings7().onNavigateToEntityRecord
+          onNavigateToEntityRecord: getSettings8().onNavigateToEntityRecord
         };
       },
       [clientId]
@@ -39795,7 +39795,7 @@ var wp;
       insertionPointVisible
     } = (0, import_data118.useSelect)((select3) => {
       const {
-        getSettings: getSettings7,
+        getSettings: getSettings8,
         getBlockOrder: getBlockOrder2,
         getSelectionStart: getSelectionStart2,
         getSelectedBlockClientId: getSelectedBlockClientId2,
@@ -39808,7 +39808,7 @@ var wp;
         hasSelection: !!getSelectionStart2().clientId,
         blockOrder: getBlockOrder2(root),
         sectionRootClientId: root,
-        setInserterIsOpened: getSettings7().__experimentalSetIsInserterOpened,
+        setInserterIsOpened: getSettings8().__experimentalSetIsInserterOpened,
         selectedBlockClientId: getSelectedBlockClientId2(),
         blockInsertionPoint: getBlockInsertionPoint2(),
         insertionPointVisible: isBlockInsertionPointVisible2()
@@ -39871,7 +39871,7 @@ var wp;
         getFirstMultiSelectedBlockClientId: getFirstMultiSelectedBlockClientId2,
         getBlock: getBlock2,
         getBlockMode: getBlockMode2,
-        getSettings: getSettings7,
+        getSettings: getSettings8,
         isTyping: isTyping3,
         isBlockInterfaceHidden: isBlockInterfaceHidden3
       } = unlock(select3(store));
@@ -39880,7 +39880,7 @@ var wp;
       const hasSelectedBlock2 = !!clientId && !!block;
       const isEmptyDefaultBlock = hasSelectedBlock2 && (0, import_blocks73.isUnmodifiedDefaultBlock)(block, "content") && getBlockMode2(clientId) !== "html";
       const _showEmptyBlockSideInserter = clientId && !isTyping3() && isEmptyDefaultBlock;
-      const _showBlockToolbarPopover = !isBlockInterfaceHidden3() && !getSettings7().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock2 && !isEmptyDefaultBlock;
+      const _showBlockToolbarPopover = !isBlockInterfaceHidden3() && !getSettings8().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock2 && !isEmptyDefaultBlock;
       return {
         showEmptyBlockSideInserter: _showEmptyBlockSideInserter,
         showBlockToolbarPopover: _showBlockToolbarPopover
@@ -39894,7 +39894,7 @@ var wp;
     const {
       getSelectedBlockClientId: getSelectedBlockClientId2,
       getFirstMultiSelectedBlockClientId: getFirstMultiSelectedBlockClientId2,
-      getSettings: getSettings7,
+      getSettings: getSettings8,
       isTyping: isTyping3,
       isDragging: isDragging3,
       isZoomOut: isZoomOut2
@@ -39902,7 +39902,7 @@ var wp;
     const clientId = getSelectedBlockClientId2() || getFirstMultiSelectedBlockClientId2();
     return {
       clientId,
-      hasFixedToolbar: getSettings7().hasFixedToolbar,
+      hasFixedToolbar: getSettings8().hasFixedToolbar,
       isTyping: isTyping3(),
       isZoomOutMode: isZoomOut2(),
       isDragging: isDragging3()
@@ -41195,14 +41195,14 @@ var wp;
     const pasteStyles = usePasteStyles();
     const { block, blockName, allowRightClickOverrides, isBlockHidden: isBlockHidden2 } = (0, import_data126.useSelect)(
       (select3) => {
-        const { getBlock: getBlock2, getBlockName: getBlockName2, getSettings: getSettings7 } = select3(store);
+        const { getBlock: getBlock2, getBlockName: getBlockName2, getSettings: getSettings8 } = select3(store);
         const { isBlockHidden: _isBlockHidden } = unlock(
           select3(store)
         );
         return {
           block: getBlock2(clientId),
           blockName: getBlockName2(clientId),
-          allowRightClickOverrides: getSettings7().allowRightClickOverrides,
+          allowRightClickOverrides: getSettings8().allowRightClickOverrides,
           isBlockHidden: _isBlockHidden(clientId)
         };
       },
@@ -42546,7 +42546,7 @@ var wp;
       getBlocksByClientId: getBlocksByClientId2,
       getPreviousBlockClientId: getPreviousBlockClientId2,
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
-      getSettings: getSettings7,
+      getSettings: getSettings8,
       canInsertBlockType: canInsertBlockType2,
       canRemoveBlocks: canRemoveBlocks2
     } = (0, import_data133.useSelect)(store);
@@ -42620,7 +42620,7 @@ var wp;
         } else if (event.type === "paste") {
           const {
             __experimentalCanUserUseUnfilteredHTML: canUserUseUnfilteredHTML
-          } = getSettings7();
+          } = getSettings8();
           const blocks2 = getPasteBlocks(
             event,
             canUserUseUnfilteredHTML
@@ -48699,11 +48699,11 @@ var wp;
   function useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggestion) {
     const { fetchSearchSuggestions, pageOnFront, pageForPosts } = (0, import_data141.useSelect)(
       (select3) => {
-        const { getSettings: getSettings7 } = select3(store);
+        const { getSettings: getSettings8 } = select3(store);
         return {
-          pageOnFront: getSettings7().pageOnFront,
-          pageForPosts: getSettings7().pageForPosts,
-          fetchSearchSuggestions: getSettings7().__experimentalFetchLinkSuggestions
+          pageOnFront: getSettings8().pageOnFront,
+          pageForPosts: getSettings8().pageForPosts,
+          fetchSearchSuggestions: getSettings8().__experimentalFetchLinkSuggestions
         };
       },
       []
@@ -48898,9 +48898,9 @@ var wp;
       isFetching: false
     });
     const { fetchRichUrlData } = (0, import_data142.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
+      const { getSettings: getSettings8 } = select3(store);
       return {
-        fetchRichUrlData: getSettings7().__experimentalFetchRichUrlData
+        fetchRichUrlData: getSettings8().__experimentalFetchRichUrlData
       };
     }, []);
     (0, import_element166.useEffect)(() => {
@@ -49780,8 +49780,8 @@ var wp;
     className
   }) => {
     const { mediaUpload: mediaUpload2, allowedMimeTypes } = (0, import_data145.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
-      const settings2 = getSettings7();
+      const { getSettings: getSettings8 } = select3(store);
+      const settings2 = getSettings8();
       return {
         mediaUpload: settings2.mediaUpload,
         allowedMimeTypes: settings2.allowedMimeTypes
@@ -50465,9 +50465,9 @@ var wp;
       if (isFunction(props.__experimentalFetchLinkSuggestions)) {
         return;
       }
-      const { getSettings: getSettings7 } = select3(store);
+      const { getSettings: getSettings8 } = select3(store);
       return {
-        __experimentalFetchLinkSuggestions: getSettings7().__experimentalFetchLinkSuggestions
+        __experimentalFetchLinkSuggestions: getSettings8().__experimentalFetchLinkSuggestions
       };
     })
   )(URLInput);
@@ -50704,8 +50704,8 @@ var wp;
       });
     }
     const { mediaUpload: mediaUpload2, allowedMimeTypes } = (0, import_data147.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
-      const settings2 = getSettings7();
+      const { getSettings: getSettings8 } = select3(store);
+      const settings2 = getSettings8();
       return {
         mediaUpload: settings2.mediaUpload,
         allowedMimeTypes: settings2.allowedMimeTypes
@@ -51604,8 +51604,8 @@ var wp;
         return;
       }
       const { registry } = props.current;
-      const { didAutomaticChange: didAutomaticChange2, getSettings: getSettings7 } = registry.select(store);
-      const { __experimentalUndo } = getSettings7();
+      const { didAutomaticChange: didAutomaticChange2, getSettings: getSettings8 } = registry.select(store);
+      const { __experimentalUndo } = getSettings8();
       if (!__experimentalUndo) {
         return;
       }
@@ -53736,10 +53736,10 @@ var wp;
     } = useContentOnlySectionEdit(clientId);
     const { block, onNavigateToEntityRecord } = (0, import_data153.useSelect)(
       (select3) => {
-        const { getBlock: getBlock2, getSettings: getSettings7 } = select3(store);
+        const { getBlock: getBlock2, getSettings: getSettings8 } = select3(store);
         return {
           block: getBlock2(clientId),
-          onNavigateToEntityRecord: getSettings7().onNavigateToEntityRecord
+          onNavigateToEntityRecord: getSettings8().onNavigateToEntityRecord
         };
       },
       [clientId]
@@ -57591,7 +57591,7 @@ var wp;
     containerRef
   }) {
     const [isUploading2, setIsUploading] = (0, import_element205.useState)(false);
-    const { getSettings: getSettings7 } = (0, import_data160.useSelect)(store);
+    const { getSettings: getSettings8 } = (0, import_data160.useSelect)(store);
     const { id, title, url } = style?.background?.backgroundImage || {
       ...inheritedValue?.background?.backgroundImage
     };
@@ -57650,7 +57650,7 @@ var wp;
       focusToggleButton(containerRef);
     };
     const onFilesDrop2 = (filesList) => {
-      getSettings7().mediaUpload({
+      getSettings8().mediaUpload({
         allowedTypes: [IMAGE_BACKGROUND_TYPE],
         filesList,
         onFileChange([image]) {
@@ -57889,8 +57889,8 @@ var wp;
     defaultValues = {}
   }) {
     const { globalStyles, _links } = (0, import_data160.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
-      const _settings = getSettings7();
+      const { getSettings: getSettings8 } = select3(store);
+      const _settings = getSettings8();
       return {
         globalStyles: _settings[globalStylesDataKey],
         _links: _settings[globalStylesLinksDataKey]
@@ -58413,8 +58413,8 @@ var wp;
   }) {
     const { style, inheritedValue } = (0, import_data162.useSelect)(
       (select3) => {
-        const { getBlockAttributes: getBlockAttributes3, getSettings: getSettings7 } = select3(store);
-        const _settings = getSettings7();
+        const { getBlockAttributes: getBlockAttributes3, getSettings: getSettings8 } = select3(store);
+        const _settings = getSettings8();
         return {
           style: getBlockAttributes3(clientId)?.style,
           /*
@@ -61564,9 +61564,10 @@ var wp;
       },
       [onChangeCallback]
     );
+    const { format: fieldFormat } = field;
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date3.getSettings)().l10n.startOfWeek;
     const {
-      timezone: { string: timezoneString },
-      l10n: { startOfWeek: startOfWeek2 }
+      timezone: { string: timezoneString }
     } = (0, import_date3.getSettings)();
     const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n202.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
@@ -61587,7 +61588,7 @@ var wp;
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
               timeZone: timezoneString || void 0,
-              weekStartsOn: startOfWeek2
+              weekStartsOn
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
@@ -63166,6 +63167,7 @@ var wp;
   };
 
   // packages/dataviews/build-module/field-types/datetime.js
+  var import_date6 = __toESM(require_date());
   var import_jsx_runtime400 = __toESM(require_jsx_runtime());
   function render4({ item, field }) {
     if (field.elements) {
@@ -63175,18 +63177,26 @@ var wp;
     if (["", void 0, null].includes(value)) {
       return null;
     }
-    try {
-      const dateValue = parseDateTime(value);
-      return dateValue?.toLocaleString();
-    } catch (error) {
-      return null;
+    let format2;
+    if (field.type !== "datetime") {
+      format2 = getFormat3({});
+    } else {
+      format2 = field.format;
     }
+    return (0, import_date6.dateI18n)(format2.datetime, (0, import_date6.getDate)(value));
   }
   var sort = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
     const timeB = new Date(b2).getTime();
     return direction === "asc" ? timeA - timeB : timeB - timeA;
   };
+  function getFormat3(field) {
+    const fieldFormat = field.format;
+    return {
+      datetime: fieldFormat?.datetime !== void 0 && typeof fieldFormat.datetime === "string" ? fieldFormat.datetime : (0, import_date6.getSettings)().formats.datetime,
+      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
+    };
+  }
   var datetime_default = {
     type: "datetime",
     render: render4,
@@ -63214,7 +63224,7 @@ var wp;
       OPERATOR_IN_THE_PAST,
       OPERATOR_OVER
     ],
-    getFormat: () => ({}),
+    getFormat: getFormat3,
     validate: {
       required: isValidRequired,
       elements: isValidElements
@@ -63222,13 +63232,13 @@ var wp;
   };
 
   // packages/dataviews/build-module/field-types/date.js
-  var import_date6 = __toESM(require_date());
+  var import_date7 = __toESM(require_date());
   var import_jsx_runtime401 = __toESM(require_jsx_runtime());
-  function getFormat3(field) {
+  function getFormat4(field) {
     const fieldFormat = field.format;
     return {
-      date: fieldFormat?.date !== void 0 && typeof fieldFormat.date === "string" ? fieldFormat.date : (0, import_date6.getSettings)().formats.date,
-      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
+      date: fieldFormat?.date !== void 0 && typeof fieldFormat.date === "string" ? fieldFormat.date : (0, import_date7.getSettings)().formats.date,
+      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date7.getSettings)().l10n.startOfWeek
     };
   }
   function render5({ item, field }) {
@@ -63236,16 +63246,16 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
-    if (!value) {
+    if (["", void 0, null].includes(value)) {
       return "";
     }
     let format2;
     if (field.type !== "date") {
-      format2 = getFormat3({});
+      format2 = getFormat4({});
     } else {
       format2 = field.format;
     }
-    return (0, import_date6.dateI18n)(format2.date, (0, import_date6.getDate)(value));
+    return (0, import_date7.dateI18n)(format2.date, (0, import_date7.getDate)(value));
   }
   var sort2 = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
@@ -63281,7 +63291,7 @@ var wp;
       OPERATOR_OVER,
       OPERATOR_BETWEEN
     ],
-    getFormat: getFormat3,
+    getFormat: getFormat4,
     validate: {
       required: isValidRequired,
       elements: isValidElements
@@ -67103,7 +67113,7 @@ var wp;
   var import_components244 = __toESM(require_components());
   var import_i18n222 = __toESM(require_i18n());
   var import_element244 = __toESM(require_element());
-  var import_date8 = __toESM(require_date());
+  var import_date9 = __toESM(require_date());
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.js
   var import_components243 = __toESM(require_components());
@@ -67167,7 +67177,7 @@ var wp;
     ...additionalProps
   }, ref) {
     const datePickerProps = {
-      startOfWeek: (0, import_date8.getSettings)().l10n.startOfWeek,
+      startOfWeek: (0, import_date9.getSettings)().l10n.startOfWeek,
       onChange,
       currentDate: isCompact ? void 0 : currentDate,
       currentTime: isCompact ? currentDate : void 0,
@@ -70351,9 +70361,9 @@ var wp;
     const settings2 = useBlockSettings(blockName);
     const { layout: layoutSettings } = settings2;
     const { themeSupportsLayout } = (0, import_data183.useSelect)((select3) => {
-      const { getSettings: getSettings7 } = select3(store);
+      const { getSettings: getSettings8 } = select3(store);
       return {
-        themeSupportsLayout: getSettings7().supportsLayout
+        themeSupportsLayout: getSettings8().supportsLayout
       };
     }, []);
     const blockEditingMode = useBlockEditingMode();
@@ -70549,10 +70559,10 @@ var wp;
           if (!blockSupportsLayout) {
             return;
           }
-          const { getSettings: getSettings7, getBlockSettings: getBlockSettings2 } = unlock(
+          const { getSettings: getSettings8, getBlockSettings: getBlockSettings2 } = unlock(
             select3(store)
           );
-          const { disableLayoutStyles } = getSettings7();
+          const { disableLayoutStyles } = getSettings8();
           if (disableLayoutStyles) {
             return;
           }

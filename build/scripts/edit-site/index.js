@@ -2378,11 +2378,11 @@ var wp;
   var SiteHub = (0, import_element5.memo)(
     (0, import_element5.forwardRef)(({ isTransparent }, ref) => {
       const { dashboardLink, homeUrl, siteTitle } = (0, import_data5.useSelect)((select3) => {
-        const { getSettings: getSettings6 } = unlock(select3(store));
+        const { getSettings: getSettings7 } = unlock(select3(store));
         const { getEntityRecord } = select3(import_core_data4.store);
         const _site = getEntityRecord("root", "site");
         return {
-          dashboardLink: getSettings6().__experimentalDashboardLink,
+          dashboardLink: getSettings7().__experimentalDashboardLink,
           homeUrl: getEntityRecord("root", "__unstableBase")?.home,
           siteTitle: !_site?.title && !!_site?.url ? (0, import_url.filterURLForDisplay)(_site?.url) : _site?.title
         };
@@ -2470,11 +2470,11 @@ var wp;
         isBlockTheme,
         isClassicThemeWithStyleBookSupport: isClassicThemeWithStyleBookSupport2
       } = (0, import_data5.useSelect)((select3) => {
-        const { getSettings: getSettings6 } = unlock(select3(store));
+        const { getSettings: getSettings7 } = unlock(select3(store));
         const { getEntityRecord, getCurrentTheme } = select3(import_core_data4.store);
         const _site = getEntityRecord("root", "site");
         const currentTheme = getCurrentTheme();
-        const settings2 = getSettings6();
+        const settings2 = getSettings7();
         const supportsEditorStyles = currentTheme?.theme_supports["editor-styles"];
         const hasThemeJson = settings2.supportsLayout;
         return {
@@ -6636,11 +6636,11 @@ var wp;
   }) {
     const { dashboardLink, dashboardLinkText, previewingThemeName } = (0, import_data16.useSelect)(
       (select3) => {
-        const { getSettings: getSettings6 } = unlock(select3(store));
+        const { getSettings: getSettings7 } = unlock(select3(store));
         const currentlyPreviewingThemeId = currentlyPreviewingTheme();
         return {
-          dashboardLink: getSettings6().__experimentalDashboardLink,
-          dashboardLinkText: getSettings6().__experimentalDashboardLinkText,
+          dashboardLink: getSettings7().__experimentalDashboardLink,
+          dashboardLinkText: getSettings7().__experimentalDashboardLinkText,
           // Do not call `getTheme` with null, it will cause a request to
           // the server.
           previewingThemeName: currentlyPreviewingThemeId ? select3(import_core_data13.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
@@ -21446,10 +21446,10 @@ var wp;
     const [onNavigateToEntityRecord, initialBlockSelection] = useNavigateToEntityRecord();
     const { merged: mergedConfig } = useGlobalStyles2();
     const { settings: settings2, currentPostIsTrashed } = (0, import_data36.useSelect)((select3) => {
-      const { getSettings: getSettings6 } = select3(store);
+      const { getSettings: getSettings7 } = select3(store);
       const { getCurrentPostAttribute } = select3(import_editor13.store);
       return {
-        settings: getSettings6(),
+        settings: getSettings7(),
         currentPostIsTrashed: getCurrentPostAttribute("status") === "trash"
       };
     }, []);
@@ -22746,9 +22746,9 @@ var wp;
   };
   function NavigationMenuEditor({ navigationMenuId }) {
     const { storedSettings } = (0, import_data49.useSelect)((select3) => {
-      const { getSettings: getSettings6 } = unlock(select3(store));
+      const { getSettings: getSettings7 } = unlock(select3(store));
       return {
-        storedSettings: getSettings6()
+        storedSettings: getSettings7()
       };
     }, []);
     const blocks = (0, import_element61.useMemo)(() => {
@@ -23278,8 +23278,8 @@ var wp;
   var import_data53 = __toESM(require_data());
   function useDefaultPatternCategories() {
     const blockPatternCategories = (0, import_data53.useSelect)((select3) => {
-      const { getSettings: getSettings6 } = unlock(select3(store));
-      const settings2 = getSettings6();
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      const settings2 = getSettings7();
       return settings2.__experimentalAdditionalBlockPatternCategories ?? settings2.__experimentalBlockPatternCategories;
     });
     const restBlockPatternCategories = (0, import_data53.useSelect)(
@@ -23302,8 +23302,8 @@ var wp;
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.js
   function useThemePatterns() {
     const blockPatterns = (0, import_data54.useSelect)((select3) => {
-      const { getSettings: getSettings6 } = unlock(select3(store));
-      return getSettings6().__experimentalAdditionalBlockPatterns ?? getSettings6().__experimentalBlockPatterns;
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      return getSettings7().__experimentalAdditionalBlockPatterns ?? getSettings7().__experimentalBlockPatterns;
     });
     const restBlockPatterns = (0, import_data54.useSelect)(
       (select3) => select3(import_core_data39.store).getBlockPatterns()
@@ -23467,9 +23467,9 @@ var wp;
   );
   var selectThemePatterns = (0, import_data55.createSelector)(
     (select3) => {
-      const { getSettings: getSettings6 } = unlock(select3(store));
+      const { getSettings: getSettings7 } = unlock(select3(store));
       const { isResolving: isResolvingSelector } = select3(import_core_data40.store);
-      const settings2 = getSettings6();
+      const settings2 = getSettings7();
       const blockPatterns = settings2.__experimentalAdditionalBlockPatterns ?? settings2.__experimentalBlockPatterns;
       const restBlockPatterns = select3(import_core_data40.store).getBlockPatterns();
       const patterns = [
@@ -34857,7 +34857,10 @@ If there's a particular need for this, please submit a feature request at https:
         try {
           const dateValue = parseDateTime(label);
           if (dateValue !== null) {
-            label = dateValue.toLocaleString();
+            label = (0, import_date3.dateI18n)(
+              field.format.datetime,
+              (0, import_date3.getDate)(label)
+            );
           }
         } catch (e2) {
           label = filterInView.value;
@@ -35995,9 +35998,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
+    const { format: fieldFormat } = field;
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
     const {
-      timezone: { string: timezoneString },
-      l10n: { startOfWeek: startOfWeek2 }
+      timezone: { string: timezoneString }
     } = (0, import_date4.getSettings)();
     const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n116.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
@@ -36018,7 +36022,7 @@ If there's a particular need for this, please submit a feature request at https:
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
               timeZone: timezoneString || void 0,
-              weekStartsOn: startOfWeek2
+              weekStartsOn
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
@@ -37597,6 +37601,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/datetime.js
+  var import_date7 = __toESM(require_date());
   var import_jsx_runtime252 = __toESM(require_jsx_runtime());
   function render4({ item, field }) {
     if (field.elements) {
@@ -37606,18 +37611,26 @@ If there's a particular need for this, please submit a feature request at https:
     if (["", void 0, null].includes(value)) {
       return null;
     }
-    try {
-      const dateValue = parseDateTime(value);
-      return dateValue?.toLocaleString();
-    } catch (error) {
-      return null;
+    let format2;
+    if (field.type !== "datetime") {
+      format2 = getFormat3({});
+    } else {
+      format2 = field.format;
     }
+    return (0, import_date7.dateI18n)(format2.datetime, (0, import_date7.getDate)(value));
   }
   var sort = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
     const timeB = new Date(b2).getTime();
     return direction === "asc" ? timeA - timeB : timeB - timeA;
   };
+  function getFormat3(field) {
+    const fieldFormat = field.format;
+    return {
+      datetime: fieldFormat?.datetime !== void 0 && typeof fieldFormat.datetime === "string" ? fieldFormat.datetime : (0, import_date7.getSettings)().formats.datetime,
+      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date7.getSettings)().l10n.startOfWeek
+    };
+  }
   var datetime_default = {
     type: "datetime",
     render: render4,
@@ -37645,7 +37658,7 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IN_THE_PAST,
       OPERATOR_OVER
     ],
-    getFormat: () => ({}),
+    getFormat: getFormat3,
     validate: {
       required: isValidRequired,
       elements: isValidElements
@@ -37653,13 +37666,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/date.js
-  var import_date7 = __toESM(require_date());
+  var import_date8 = __toESM(require_date());
   var import_jsx_runtime253 = __toESM(require_jsx_runtime());
-  function getFormat3(field) {
+  function getFormat4(field) {
     const fieldFormat = field.format;
     return {
-      date: fieldFormat?.date !== void 0 && typeof fieldFormat.date === "string" ? fieldFormat.date : (0, import_date7.getSettings)().formats.date,
-      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date7.getSettings)().l10n.startOfWeek
+      date: fieldFormat?.date !== void 0 && typeof fieldFormat.date === "string" ? fieldFormat.date : (0, import_date8.getSettings)().formats.date,
+      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date8.getSettings)().l10n.startOfWeek
     };
   }
   function render5({ item, field }) {
@@ -37667,16 +37680,16 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
-    if (!value) {
+    if (["", void 0, null].includes(value)) {
       return "";
     }
     let format2;
     if (field.type !== "date") {
-      format2 = getFormat3({});
+      format2 = getFormat4({});
     } else {
       format2 = field.format;
     }
-    return (0, import_date7.dateI18n)(format2.date, (0, import_date7.getDate)(value));
+    return (0, import_date8.dateI18n)(format2.date, (0, import_date8.getDate)(value));
   }
   var sort2 = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
@@ -37712,7 +37725,7 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_OVER,
       OPERATOR_BETWEEN
     ],
-    getFormat: getFormat3,
+    getFormat: getFormat4,
     validate: {
       required: isValidRequired,
       elements: isValidElements
@@ -40006,7 +40019,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/utils/filter-sort-and-paginate.js
   var import_remove_accents2 = __toESM(require_remove_accents());
   var import_deprecated4 = __toESM(require_deprecated());
-  var import_date9 = __toESM(require_date());
+  var import_date10 = __toESM(require_date());
   function normalizeSearchInput2(input = "") {
     return (0, import_remove_accents2.default)(input.trim().toLowerCase());
   }
@@ -40103,15 +40116,15 @@ If there's a particular need for this, please submit a feature request at https:
               return filter.value !== field.getValue({ item });
             });
           } else if (filter.operator === OPERATOR_ON && filter.value !== void 0) {
-            const filterDate = (0, import_date9.getDate)(filter.value);
+            const filterDate = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldDate = (0, import_date9.getDate)(field.getValue({ item }));
+              const fieldDate = (0, import_date10.getDate)(field.getValue({ item }));
               return filterDate.getTime() === fieldDate.getTime();
             });
           } else if (filter.operator === OPERATOR_NOT_ON && filter.value !== void 0) {
-            const filterDate = (0, import_date9.getDate)(filter.value);
+            const filterDate = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldDate = (0, import_date9.getDate)(field.getValue({ item }));
+              const fieldDate = (0, import_date10.getDate)(field.getValue({ item }));
               return filterDate.getTime() !== fieldDate.getTime();
             });
           } else if (filter.operator === OPERATOR_LESS_THAN && filter.value !== void 0) {
@@ -40156,33 +40169,33 @@ If there's a particular need for this, please submit a feature request at https:
               );
             });
           } else if (filter.operator === OPERATOR_BEFORE2 && filter.value !== void 0) {
-            const filterValue = (0, import_date9.getDate)(filter.value);
+            const filterValue = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date9.getDate)(
+              const fieldValue = (0, import_date10.getDate)(
                 field.getValue({ item })
               );
               return fieldValue < filterValue;
             });
           } else if (filter.operator === OPERATOR_AFTER2 && filter.value !== void 0) {
-            const filterValue = (0, import_date9.getDate)(filter.value);
+            const filterValue = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date9.getDate)(
+              const fieldValue = (0, import_date10.getDate)(
                 field.getValue({ item })
               );
               return fieldValue > filterValue;
             });
           } else if (filter.operator === OPERATOR_BEFORE_INC && filter.value !== void 0) {
-            const filterValue = (0, import_date9.getDate)(filter.value);
+            const filterValue = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date9.getDate)(
+              const fieldValue = (0, import_date10.getDate)(
                 field.getValue({ item })
               );
               return fieldValue <= filterValue;
             });
           } else if (filter.operator === OPERATOR_AFTER_INC && filter.value !== void 0) {
-            const filterValue = (0, import_date9.getDate)(filter.value);
+            const filterValue = (0, import_date10.getDate)(filter.value);
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date9.getDate)(
+              const fieldValue = (0, import_date10.getDate)(
                 field.getValue({ item })
               );
               return fieldValue >= filterValue;
@@ -40201,7 +40214,7 @@ If there's a particular need for this, please submit a feature request at https:
               filter.value.unit
             );
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date9.getDate)(
+              const fieldValue = (0, import_date10.getDate)(
                 field.getValue({ item })
               );
               return fieldValue >= targetDate && fieldValue <= /* @__PURE__ */ new Date();
@@ -40212,7 +40225,7 @@ If there's a particular need for this, please submit a feature request at https:
               filter.value.unit
             );
             filteredData = filteredData.filter((item) => {
-              const fieldValue = (0, import_date9.getDate)(
+              const fieldValue = (0, import_date10.getDate)(
                 field.getValue({ item })
               );
               return fieldValue < targetDate;
@@ -40454,8 +40467,8 @@ If there's a particular need for this, please submit a feature request at https:
   function usePatternSettings() {
     const { merged: mergedConfig } = useGlobalStyles3();
     const storedSettings = (0, import_data64.useSelect)((select3) => {
-      const { getSettings: getSettings6 } = unlock(select3(store));
-      return getSettings6();
+      const { getSettings: getSettings7 } = unlock(select3(store));
+      return getSettings7();
     }, []);
     const settingsBlockPatterns = storedSettings.__experimentalAdditionalBlockPatterns ?? // WP 6.0
     storedSettings.__experimentalBlockPatterns;

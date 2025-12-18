@@ -1727,10 +1727,10 @@ var wp;
       startOfWeek: 0
     },
     formats: {
-      time: "g: i a",
+      time: "g:i a",
       date: "F j, Y",
-      datetime: "F j, Y g: i a",
-      datetimeAbbreviated: "M j, Y g: i a"
+      datetime: "F j, Y g:i a",
+      datetimeAbbreviated: "M j, Y g:i a"
     },
     timezone: { offset: 0, offsetFormatted: "0", string: "", abbr: "" }
   };

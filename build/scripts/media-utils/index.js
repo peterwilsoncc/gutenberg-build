@@ -12561,7 +12561,10 @@ If there's a particular need for this, please submit a feature request at https:
         try {
           const dateValue = parseDateTime(label);
           if (dateValue !== null) {
-            label = dateValue.toLocaleString();
+            label = (0, import_date2.dateI18n)(
+              field.format.datetime,
+              (0, import_date2.getDate)(label)
+            );
           }
         } catch (e2) {
           label = filterInView.value;
@@ -13669,9 +13672,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
+    const { format: fieldFormat } = field;
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date3.getSettings)().l10n.startOfWeek;
     const {
-      timezone: { string: timezoneString },
-      l10n: { startOfWeek: startOfWeek2 }
+      timezone: { string: timezoneString }
     } = (0, import_date3.getSettings)();
     const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n40.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
@@ -13692,7 +13696,7 @@ If there's a particular need for this, please submit a feature request at https:
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
               timeZone: timezoneString || void 0,
-              weekStartsOn: startOfWeek2
+              weekStartsOn
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
@@ -15429,6 +15433,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/datetime.js
+  var import_date6 = __toESM(require_date());
   var import_jsx_runtime96 = __toESM(require_jsx_runtime());
   function render4({ item, field }) {
     if (field.elements) {
@@ -15438,18 +15443,26 @@ If there's a particular need for this, please submit a feature request at https:
     if (["", void 0, null].includes(value)) {
       return null;
     }
-    try {
-      const dateValue = parseDateTime(value);
-      return dateValue?.toLocaleString();
-    } catch (error) {
-      return null;
+    let format2;
+    if (field.type !== "datetime") {
+      format2 = getFormat3({});
+    } else {
+      format2 = field.format;
     }
+    return (0, import_date6.dateI18n)(format2.datetime, (0, import_date6.getDate)(value));
   }
   var sort = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
     const timeB = new Date(b2).getTime();
     return direction === "asc" ? timeA - timeB : timeB - timeA;
   };
+  function getFormat3(field) {
+    const fieldFormat = field.format;
+    return {
+      datetime: fieldFormat?.datetime !== void 0 && typeof fieldFormat.datetime === "string" ? fieldFormat.datetime : (0, import_date6.getSettings)().formats.datetime,
+      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
+    };
+  }
   var datetime_default = {
     type: "datetime",
     render: render4,
@@ -15477,7 +15490,7 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IN_THE_PAST,
       OPERATOR_OVER
     ],
-    getFormat: () => ({}),
+    getFormat: getFormat3,
     validate: {
       required: isValidRequired,
       elements: isValidElements
@@ -15485,13 +15498,13 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/date.js
-  var import_date6 = __toESM(require_date());
+  var import_date7 = __toESM(require_date());
   var import_jsx_runtime97 = __toESM(require_jsx_runtime());
-  function getFormat3(field) {
+  function getFormat4(field) {
     const fieldFormat = field.format;
     return {
-      date: fieldFormat?.date !== void 0 && typeof fieldFormat.date === "string" ? fieldFormat.date : (0, import_date6.getSettings)().formats.date,
-      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date6.getSettings)().l10n.startOfWeek
+      date: fieldFormat?.date !== void 0 && typeof fieldFormat.date === "string" ? fieldFormat.date : (0, import_date7.getSettings)().formats.date,
+      weekStartsOn: fieldFormat?.weekStartsOn !== void 0 && DAYS_OF_WEEK.includes(fieldFormat?.weekStartsOn) ? fieldFormat.weekStartsOn : (0, import_date7.getSettings)().l10n.startOfWeek
     };
   }
   function render5({ item, field }) {
@@ -15499,16 +15512,16 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(RenderFromElements, { item, field });
     }
     const value = field.getValue({ item });
-    if (!value) {
+    if (["", void 0, null].includes(value)) {
       return "";
     }
     let format2;
     if (field.type !== "date") {
-      format2 = getFormat3({});
+      format2 = getFormat4({});
     } else {
       format2 = field.format;
     }
-    return (0, import_date6.dateI18n)(format2.date, (0, import_date6.getDate)(value));
+    return (0, import_date7.dateI18n)(format2.date, (0, import_date7.getDate)(value));
   }
   var sort2 = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
@@ -15544,7 +15557,7 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_OVER,
       OPERATOR_BETWEEN
     ],
-    getFormat: getFormat3,
+    getFormat: getFormat4,
     validate: {
       required: isValidRequired,
       elements: isValidElements
