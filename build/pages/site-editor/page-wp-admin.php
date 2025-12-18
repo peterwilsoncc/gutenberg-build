@@ -128,8 +128,16 @@ if ( ! function_exists( 'site_editor_wp_admin_enqueue_scripts' ) ) {
 	 * @param string $hook_suffix The current admin page.
 	 */
 	function site_editor_wp_admin_enqueue_scripts( $hook_suffix ) {
-		// Only enqueue on our page
-		if ( ! isset( $_GET['page'] ) || 'site-editor-wp-admin' !== $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// Check all possible ways this page can be accessed:
+		// 1. Menu page via admin.php?page=site-editor-wp-admin (plugin)
+		// 2. Direct file via site-editor.php (Core) - screen ID will be 'site-editor'
+		$current_screen = get_current_screen();
+		$is_our_page = (
+			( isset( $_GET['page'] ) && 'site-editor-wp-admin' === $_GET['page'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			( $current_screen && 'site-editor' === $current_screen->id )
+		);
+
+		if ( ! $is_our_page ) {
 			return;
 		}
 
