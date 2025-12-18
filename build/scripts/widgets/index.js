@@ -1223,11 +1223,11 @@ var wp;
   var import_jsx_runtime12 = __toESM(require_jsx_runtime());
   function Edit2(props) {
     const { clientId } = props;
-    const { innerBlocks } = (0, import_data4.useSelect)(
-      (select2) => select2(import_block_editor4.store).getBlock(clientId),
+    const hasInnerBlocks = (0, import_data4.useSelect)(
+      (select2) => select2(import_block_editor4.store).getBlockCount(clientId) > 0,
       [clientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { ...(0, import_block_editor4.useBlockProps)({ className: "widget" }), children: innerBlocks.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(PlaceholderContent, { ...props }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(PreviewContent, { ...props }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { ...(0, import_block_editor4.useBlockProps)({ className: "widget" }), children: !hasInnerBlocks ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(PlaceholderContent, { ...props }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(PreviewContent, { ...props }) });
   }
   function PlaceholderContent({ clientId }) {
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
