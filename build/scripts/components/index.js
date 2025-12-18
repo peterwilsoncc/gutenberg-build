@@ -28670,6 +28670,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_keycodes = __toESM(require_keycodes());
 
   // packages/components/build-module/autocomplete/autocompleter-ui.js
+  var import_react_dom6 = __toESM(require_react_dom());
   var import_element52 = __toESM(require_element());
   var import_rich_text = __toESM(require_rich_text());
   var import_compose20 = __toESM(require_compose());
@@ -29911,7 +29912,6 @@ This message will only show in development mode. It won't appear in production. 
   var popover_default = Popover3;
 
   // packages/components/build-module/autocomplete/autocompleter-ui.js
-  var import_react_dom6 = __toESM(require_react_dom());
   var import_jsx_runtime111 = __toESM(require_jsx_runtime());
   function ListBox({
     items,
@@ -30003,6 +30003,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_jsx_runtime111.Fragment, {
         children: [/* @__PURE__ */ (0, import_jsx_runtime111.jsx)(popover_default, {
+          offset: 8,
           focusOnMount: false,
           onClose: onReset,
           placement: "top-start",
