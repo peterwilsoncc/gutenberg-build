@@ -30983,11 +30983,7 @@ var wp;
   var import_components88 = __toESM(require_components());
   var import_jsx_runtime178 = __toESM(require_jsx_runtime());
   var DEFAULT_UNITS = ["px", "em", "rem", "vw", "vh"];
-  function SizeControl({
-    // Do not allow manipulation of margin bottom
-    __nextHasNoMarginBottom,
-    ...props
-  }) {
+  function SizeControl(props) {
     const { baseControlProps } = (0, import_components88.useBaseControlProps)(props);
     const { value, onChange, fallbackValue, disabled, label } = props;
     const units = (0, import_components88.__experimentalUseCustomUnits)({
@@ -31005,7 +31001,7 @@ var wp;
         onChange?.(void 0);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components88.BaseControl, { ...baseControlProps, __nextHasNoMarginBottom: true, children: /* @__PURE__ */ (0, import_jsx_runtime178.jsxs)(import_components88.Flex, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components88.BaseControl, { ...baseControlProps, children: /* @__PURE__ */ (0, import_jsx_runtime178.jsxs)(import_components88.Flex, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components88.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
         import_components88.__experimentalUnitControl,
         {
@@ -43331,7 +43327,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(
       import_components170.BaseControl,
       {
-        __nextHasNoMarginBottom: true,
         className: "editor-push-changes-to-global-styles-control",
         help: (0, import_i18n183.sprintf)(
           // translators: %s: Title of the block e.g. 'Heading'.

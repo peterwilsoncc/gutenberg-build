@@ -150,17 +150,17 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/deprecated
-  var require_deprecated = __commonJS({
-    "package-external:@wordpress/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
-    }
-  });
-
   // package-external:@wordpress/keycodes
   var require_keycodes = __commonJS({
     "package-external:@wordpress/keycodes"(exports, module) {
       module.exports = window.wp.keycodes;
+    }
+  });
+
+  // package-external:@wordpress/deprecated
+  var require_deprecated = __commonJS({
+    "package-external:@wordpress/deprecated"(exports, module) {
+      module.exports = window.wp.deprecated;
     }
   });
 
@@ -6205,6 +6205,16 @@ var wp;
   ];
   var deprecated_default3 = deprecated;
 
+  // packages/block-library/build-module/button/edit.js
+  var import_i18n13 = __toESM(require_i18n());
+  var import_element11 = __toESM(require_element());
+  var import_components10 = __toESM(require_components());
+  var import_block_editor21 = __toESM(require_block_editor());
+  var import_keycodes = __toESM(require_keycodes());
+  var import_blocks7 = __toESM(require_blocks());
+  var import_compose6 = __toESM(require_compose());
+  var import_data9 = __toESM(require_data());
+
   // packages/block-library/build-module/button/constants.js
   var NEW_TAB_REL = "noreferrer noopener";
   var NEW_TAB_TARGET = "_blank";
@@ -6282,14 +6292,6 @@ var wp;
   }
 
   // packages/block-library/build-module/button/edit.js
-  var import_i18n13 = __toESM(require_i18n());
-  var import_element11 = __toESM(require_element());
-  var import_components10 = __toESM(require_components());
-  var import_block_editor21 = __toESM(require_block_editor());
-  var import_keycodes = __toESM(require_keycodes());
-  var import_blocks7 = __toESM(require_blocks());
-  var import_compose6 = __toESM(require_compose());
-  var import_data9 = __toESM(require_data());
   var import_jsx_runtime167 = __toESM(require_jsx_runtime());
   var { HTMLElementControl } = unlock(import_block_editor21.privateApis);
   var LINK_SETTINGS = [
@@ -6363,7 +6365,6 @@ var wp;
             isShownByDefault: true,
             hasValue: () => !!selectedWidth,
             onDeselect: () => setAttributes({ width: void 0 }),
-            __nextHasNoMarginBottom: true,
             children: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
               import_components10.__experimentalToggleGroupControl,
               {

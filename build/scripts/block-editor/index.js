@@ -33105,32 +33105,25 @@ var wp;
     };
     const selectedOption = value ? options.find((option) => option.value === value) || DEFAULT_OPTION : DEFAULT_OPTION;
     return import_element93.Platform.select({
-      web: options.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(inspector_controls_default, { group: "position", children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
-        import_components70.BaseControl,
+      web: options.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(inspector_controls_default, { group: "position", children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(import_components70.BaseControl, { help: stickyHelpText, children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
+        import_components70.CustomSelectControl,
         {
-          __nextHasNoMarginBottom: true,
-          help: stickyHelpText,
-          children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
-            import_components70.CustomSelectControl,
-            {
-              __next40pxDefaultSize: true,
-              label: (0, import_i18n67.__)("Position"),
-              hideLabelFromVision: true,
-              describedBy: (0, import_i18n67.sprintf)(
-                // translators: %s: Currently selected position.
-                (0, import_i18n67.__)("Currently selected position: %s"),
-                selectedOption.name
-              ),
-              options,
-              value: selectedOption,
-              onChange: ({ selectedItem }) => {
-                onChangeType(selectedItem.value);
-              },
-              size: "__unstable-large"
-            }
-          )
+          __next40pxDefaultSize: true,
+          label: (0, import_i18n67.__)("Position"),
+          hideLabelFromVision: true,
+          describedBy: (0, import_i18n67.sprintf)(
+            // translators: %s: Currently selected position.
+            (0, import_i18n67.__)("Currently selected position: %s"),
+            selectedOption.name
+          ),
+          options,
+          value: selectedOption,
+          onChange: ({ selectedItem }) => {
+            onChangeType(selectedItem.value);
+          },
+          size: "__unstable-large"
         }
-      ) }) : null,
+      ) }) }) : null,
       native: null
     });
   }
@@ -44208,8 +44201,7 @@ var wp;
               step: 1,
               value: currentValue,
               withInputField: false,
-              __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true
+              __next40pxDefaultSize: true
             }
           ),
           hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
@@ -44559,7 +44551,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
       import_components137.BaseControl,
       {
-        __nextHasNoMarginBottom: true,
         className: clsx_default(
           "block-editor-color-gradient-control",
           className
@@ -50382,7 +50373,7 @@ var wp;
       if (renderControl) {
         return renderControl(controlProps, inputProps, loading);
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(import_components171.BaseControl, { __nextHasNoMarginBottom: true, ...controlProps, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(import_components171.BaseControl, { ...controlProps, children: [
         /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(import_components171.__experimentalInputControl, { ...inputProps, __next40pxDefaultSize: true }),
         loading && /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(import_components171.Spinner, {})
       ] });
@@ -54872,8 +54863,7 @@ var wp;
                 {
                   value: writingMode,
                   onChange: setWritingMode,
-                  size: "__unstable-large",
-                  __nextHasNoMarginBottom: true
+                  size: "__unstable-large"
                 }
               )
             }
@@ -54893,8 +54883,7 @@ var wp;
                   onChange: setTextTransform,
                   showNone: true,
                   isBlock: true,
-                  size: "__unstable-large",
-                  __nextHasNoMarginBottom: true
+                  size: "__unstable-large"
                 }
               )
             }
@@ -54914,8 +54903,7 @@ var wp;
                     value: textAlign,
                     onChange: setTextAlign,
                     options: ["left", "center", "right", "justify"],
-                    size: "__unstable-large",
-                    __nextHasNoMarginBottom: true
+                    size: "__unstable-large"
                   }
                 ),
                 textAlign === "justify" && /* @__PURE__ */ (0, import_jsx_runtime357.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_components193.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n183.__)(
@@ -61438,7 +61426,6 @@ var wp;
       import_components209.BaseControl,
       {
         id,
-        __nextHasNoMarginBottom: true,
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
@@ -61573,7 +61560,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(
       import_components210.BaseControl,
       {
-        __nextHasNoMarginBottom: true,
         id,
         label: displayLabel,
         help: description,
@@ -61892,7 +61878,6 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
           import_components211.BaseControl,
           {
-            __nextHasNoMarginBottom: true,
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
@@ -62069,7 +62054,6 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime381.jsx)(
           import_components211.BaseControl,
           {
-            __nextHasNoMarginBottom: true,
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
@@ -62354,7 +62338,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
       import_components216.BaseControl,
       {
-        __nextHasNoMarginBottom: true,
         help: (0, import_i18n204.__)("The max. value must be greater than the min. value."),
         children: /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(import_components216.Flex, { direction: "row", gap: 4, children: [
           /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
@@ -62605,7 +62588,6 @@ var wp;
         required: !!isValid2.required,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
-        __nextHasNoMarginBottom: true,
         label,
         help: description,
         checked: getValue({ item: data }),
@@ -62648,7 +62630,6 @@ var wp;
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         hideLabelFromVision
       }
     );
@@ -65544,7 +65525,7 @@ var wp;
           isVisible: false
         }
       ) }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_components235.BaseControl, { __nextHasNoMarginBottom: true, ...baseControlProps, children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_components235.BaseControl, { ...baseControlProps, children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
         "div",
         {
           className: "block-editor-content-only-controls__rich-text",
@@ -68337,7 +68318,6 @@ var wp;
           help: (0, import_i18n225.__)(
             "Specify which blocks are allowed inside this container."
           ),
-          __nextHasNoMarginBottom: true,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components251.BaseControl.VisualLabel, { children: (0, import_i18n225.__)("Allowed Blocks") }),
             /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
@@ -69214,7 +69194,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
             import_components259.ToggleControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n230.__)("Fit text"),
               checked: fitText,
               onChange: () => {
@@ -73147,8 +73126,7 @@ var wp;
     const dialogDescriptionId = `link-picker-description-${instanceId}`;
     const anchorRef = (0, import_element273.useRef)(null);
     const { baseControlProps, controlProps } = (0, import_components278.useBaseControlProps)({
-      help,
-      __nextHasNoMarginBottom: true
+      help
     });
     const handleChange = (newValue) => {
       setIsOpen(false);
@@ -73163,7 +73141,7 @@ var wp;
         onSelect(suggestion);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime469.jsxs)(import_components278.BaseControl, { ...baseControlProps, __nextHasNoMarginBottom: true, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime469.jsxs)(import_components278.BaseControl, { ...baseControlProps, children: [
       /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(import_components278.BaseControl.VisualLabel, { children: label }),
       /* @__PURE__ */ (0, import_jsx_runtime469.jsxs)(
         import_components278.Button,

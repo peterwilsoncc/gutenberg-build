@@ -1381,7 +1381,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_block_editor6.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
         import_components9.BaseControl,
         {
-          __nextHasNoMarginBottom: true,
           id: controlId,
           label: (0, import_i18n10.__)("Overrides"),
           help: helpText,

@@ -13546,7 +13546,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components32.BaseControl,
       {
         id,
-        __nextHasNoMarginBottom: true,
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
@@ -13681,7 +13680,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       import_components33.BaseControl,
       {
-        __nextHasNoMarginBottom: true,
         id,
         label: displayLabel,
         help: description,
@@ -14000,7 +13998,6 @@ If there's a particular need for this, please submit a feature request at https:
         children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
           import_components34.BaseControl,
           {
-            __nextHasNoMarginBottom: true,
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
@@ -14177,7 +14174,6 @@ If there's a particular need for this, please submit a feature request at https:
         children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
           import_components34.BaseControl,
           {
-            __nextHasNoMarginBottom: true,
             id,
             className: "dataviews-controls__date",
             label: displayLabel,
@@ -14462,7 +14458,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
       import_components39.BaseControl,
       {
-        __nextHasNoMarginBottom: true,
         help: (0, import_i18n42.__)("The max. value must be greater than the min. value."),
         children: /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(import_components39.Flex, { direction: "row", gap: 4, children: [
           /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
@@ -14713,7 +14708,6 @@ If there's a particular need for this, please submit a feature request at https:
         required: !!isValid2.required,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
-        __nextHasNoMarginBottom: true,
         label,
         help: description,
         checked: getValue({ item: data }),
@@ -14756,7 +14750,6 @@ If there's a particular need for this, please submit a feature request at https:
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
         __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
         hideLabelFromVision
       }
     );

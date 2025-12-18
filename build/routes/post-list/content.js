@@ -13064,7 +13064,6 @@ function RelativeDateControl({
     import_components33.BaseControl,
     {
       id,
-      __nextHasNoMarginBottom: true,
       className: clsx_default(className, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
@@ -13199,7 +13198,6 @@ function CalendarDateTimeControl({
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     import_components34.BaseControl,
     {
-      __nextHasNoMarginBottom: true,
       id,
       label: displayLabel,
       help: description,
@@ -13518,7 +13516,6 @@ function CalendarDateControl({
       children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
         import_components35.BaseControl,
         {
-          __nextHasNoMarginBottom: true,
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
@@ -13695,7 +13692,6 @@ function CalendarDateRangeControl({
       children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
         import_components35.BaseControl,
         {
-          __nextHasNoMarginBottom: true,
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
@@ -13980,7 +13976,6 @@ function BetweenControls({
   return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
     import_components40.BaseControl,
     {
-      __nextHasNoMarginBottom: true,
       help: (0, import_i18n36.__)("The max. value must be greater than the min. value."),
       children: /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(import_components40.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
@@ -14231,7 +14226,6 @@ function Toggle({
       required: !!isValid2.required,
       customValidity: getCustomValidity(isValid2, validity),
       hidden: hideLabelFromVision,
-      __nextHasNoMarginBottom: true,
       label,
       help: description,
       checked: getValue({ item: data }),
@@ -14274,7 +14268,6 @@ function Textarea({
       minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
       maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
       __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
       hideLabelFromVision
     }
   );
