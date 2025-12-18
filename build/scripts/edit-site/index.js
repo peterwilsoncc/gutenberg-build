@@ -38728,7 +38728,8 @@ If there's a particular need for this, please submit a feature request at https:
     labelPosition = "side",
     summaryFields,
     fieldDefinition,
-    popoverAnchor
+    popoverAnchor,
+    onOpen
   }) {
     const fieldLabel = !!field.children ? field.label : fieldDefinition?.label;
     const form = (0, import_element118.useMemo)(
@@ -38781,7 +38782,12 @@ If there's a particular need for this, please submit a feature request at https:
             labelPosition,
             fieldLabel,
             disabled: fieldDefinition.readOnly === true,
-            onClick: onToggle,
+            onClick: () => {
+              if (!isOpen && onOpen) {
+                onOpen();
+              }
+              onToggle();
+            },
             "aria-expanded": isOpen
           }
         ),
@@ -39403,7 +39409,8 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     labelPosition,
     summaryFields,
-    fieldDefinition
+    fieldDefinition,
+    onOpen
   }) {
     const [isOpen, setIsOpen] = (0, import_element120.useState)(false);
     const fieldLabel = !!field.children ? field.label : fieldDefinition?.label;
@@ -39416,7 +39423,12 @@ If there's a particular need for this, please submit a feature request at https:
           labelPosition,
           fieldLabel,
           disabled: fieldDefinition.readOnly === true,
-          onClick: () => setIsOpen(true),
+          onClick: () => {
+            if (onOpen) {
+              onOpen();
+            }
+            setIsOpen(true);
+          },
           "aria-expanded": isOpen
         }
       ),
@@ -39455,6 +39467,38 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/dataform-layouts/panel/index.js
   var import_jsx_runtime263 = __toESM(require_jsx_runtime());
+  function getFirstValidationError(validity) {
+    if (!validity) {
+      return void 0;
+    }
+    const validityRules = Object.keys(validity).filter(
+      (key) => key !== "children"
+    );
+    for (const key of validityRules) {
+      const rule = validity[key];
+      if (rule === void 0) {
+        continue;
+      }
+      if (rule.type === "invalid") {
+        if (rule.message) {
+          return rule.message;
+        }
+        if (key === "required") {
+          return "A required field is empty";
+        }
+        return "Unidentified validation error";
+      }
+    }
+    if (validity.children) {
+      for (const childValidity of Object.values(validity.children)) {
+        const childError = getFirstValidationError(childValidity);
+        if (childError) {
+          return childError;
+        }
+      }
+    }
+    return void 0;
+  }
   var getFieldDefinition = (field, fields) => {
     const fieldDefinition = fields.find((_field) => _field.id === field.id);
     if (!fieldDefinition) {
@@ -39498,16 +39542,32 @@ If there's a particular need for this, please submit a feature request at https:
     const [popoverAnchor, setPopoverAnchor] = (0, import_element121.useState)(
       null
     );
+    const [touched, setTouched] = (0, import_element121.useState)(false);
+    const handleOpen = () => setTouched(true);
     const { fieldDefinition, summaryFields } = getFieldDefinitionAndSummaryFields(layout, field, fields);
     if (!fieldDefinition) {
       return null;
     }
     const labelPosition = layout.labelPosition;
+    const errorMessage = getFirstValidationError(validity);
+    const showError = touched && !!errorMessage;
     const labelClassName = clsx_default(
       "dataforms-layouts-panel__field-label",
-      `dataforms-layouts-panel__field-label--label-position-${labelPosition}`
+      `dataforms-layouts-panel__field-label--label-position-${labelPosition}`,
+      { "has-error": showError }
     );
     const fieldLabel = !!field.children ? field.label : fieldDefinition?.label;
+    const labelContent = showError ? /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_components145.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime263.jsxs)(
+      import_components145.__experimentalHStack,
+      {
+        className: "dataforms-layouts-panel__field-label-error-content",
+        justify: "flex-start",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_components145.Icon, { icon: error_default, size: 16 }),
+          /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_jsx_runtime263.Fragment, { children: fieldLabel })
+        ]
+      }
+    ) }) : fieldLabel;
     const renderedControl = layout.openAs === "modal" ? /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
       modal_default2,
       {
@@ -39516,7 +39576,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange,
         labelPosition,
         summaryFields,
-        fieldDefinition
+        fieldDefinition,
+        onOpen: handleOpen
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
       dropdown_default,
@@ -39528,7 +39589,8 @@ If there's a particular need for this, please submit a feature request at https:
         labelPosition,
         summaryFields,
         fieldDefinition,
-        popoverAnchor
+        popoverAnchor,
+        onOpen: handleOpen
       }
     );
     if (labelPosition === "top") {
@@ -39538,14 +39600,24 @@ If there's a particular need for this, please submit a feature request at https:
           {
             className: labelClassName,
             style: { paddingBottom: 0 },
-            children: fieldLabel
+            children: labelContent
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("div", { className: "dataforms-layouts-panel__field-control", children: renderedControl })
       ] });
     }
     if (labelPosition === "none") {
-      return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("div", { className: "dataforms-layouts-panel__field", children: renderedControl });
+      return /* @__PURE__ */ (0, import_jsx_runtime263.jsxs)(import_components145.__experimentalHStack, { className: "dataforms-layouts-panel__field dataforms-layouts-panel__field--label-position-none", children: [
+        showError && /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_components145.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
+          import_components145.Icon,
+          {
+            className: "dataforms-layouts-panel__field-label-error-content",
+            icon: error_default,
+            size: 16
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("div", { className: "dataforms-layouts-panel__field-control", children: renderedControl })
+      ] });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsxs)(
       import_components145.__experimentalHStack,
@@ -39553,7 +39625,7 @@ If there's a particular need for this, please submit a feature request at https:
         ref: setPopoverAnchor,
         className: "dataforms-layouts-panel__field",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("div", { className: labelClassName, children: fieldLabel }),
+          /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("div", { className: labelClassName, children: labelContent }),
           /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("div", { className: "dataforms-layouts-panel__field-control", children: renderedControl })
         ]
       }
