@@ -2578,14 +2578,17 @@ function Root() {
           }
         ) }),
         !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Sidebar, {}) }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "boot-layout__surfaces", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(UserThemeProvider, { color: { bg: "#ffffff" }, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Outlet, {}) }),
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(UserThemeProvider, { color: { bg: "#ffffff" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Outlet, {}),
           (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
             "div",
             {
-              className: clsx_default("boot-layout__canvas", {
-                "has-mobile-drawer": canvas?.isPreview && isMobileViewport
-              }),
+              className: clsx_default(
+                "boot-layout__canvas",
+                {
+                  "has-mobile-drawer": canvas?.isPreview && isMobileViewport
+                }
+              ),
               children: [
                 canvas?.isPreview && isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "boot-layout__mobile-sidebar-drawer", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
                   import_components14.Button,
@@ -2610,7 +2613,7 @@ function Root() {
               ]
             }
           )
-        ] })
+        ] }) })
       ]
     }
   ) }) }) });
@@ -3048,8 +3051,8 @@ function RootSinglePage() {
         /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_commands3.CommandMenu, {}),
         /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SavePanel, {}),
         /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_editor5.EditorSnackbars, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "boot-layout__surfaces", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(UserThemeProvider, { color: { bg: "#ffffff" }, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Outlet2, {}) }),
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(UserThemeProvider, { color: { bg: "#ffffff" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Outlet2, {}),
           (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
             CanvasRenderer,
             {
@@ -3057,7 +3060,7 @@ function RootSinglePage() {
               routeContentModule
             }
           ) })
-        ] })
+        ] }) })
       ]
     }
   ) }) });
