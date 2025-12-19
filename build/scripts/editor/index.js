@@ -14179,6 +14179,7 @@ var wp;
         if (typeof window !== "undefined" && window.__experimentalTemplateActivate) {
           removeNotice("template-activate-notice");
         }
+        return () => setEditedPost2(null, null);
       }, [post2.type, post2.id, setEditedPost2, removeNotice]);
       (0, import_element37.useEffect)(() => {
         updateEditorSettings2(settings);
