@@ -2004,11 +2004,11 @@ var wp;
   }
   function buildMoment(dateValue, timezone = "") {
     const dateMoment = (0, import_moment.default)(dateValue);
-    if (timezone && !isUTCOffset(timezone)) {
-      return dateMoment.tz(timezone);
-    }
-    if (timezone && isUTCOffset(timezone)) {
-      return dateMoment.utcOffset(timezone);
+    if (timezone !== "") {
+      return isUTCOffset(timezone) ? dateMoment.utcOffset(timezone) : (
+        // A false isUTCOffset() guarantees that timezone is a string.
+        dateMoment.tz(timezone)
+      );
     }
     if (settings.timezone.string) {
       return dateMoment.tz(settings.timezone.string);
