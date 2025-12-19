@@ -69,7 +69,7 @@ var wp;
   });
 
   // packages/keyboard-shortcuts/build-module/store/index.js
-  var import_data2 = __toESM(require_data());
+  var import_data2 = __toESM(require_data(), 1);
 
   // packages/keyboard-shortcuts/build-module/store/reducer.js
   function reducer(state = {}, action) {
@@ -132,8 +132,8 @@ var wp;
     getShortcutKeyCombination: () => getShortcutKeyCombination,
     getShortcutRepresentation: () => getShortcutRepresentation
   });
-  var import_data = __toESM(require_data());
-  var import_keycodes = __toESM(require_keycodes());
+  var import_data = __toESM(require_data(), 1);
+  var import_keycodes = __toESM(require_keycodes(), 1);
   var EMPTY_ARRAY = [];
   var FORMATTING_METHODS = {
     display: import_keycodes.displayShortcut,
@@ -195,11 +195,11 @@ var wp;
   (0, import_data2.register)(store);
 
   // packages/keyboard-shortcuts/build-module/hooks/use-shortcut.js
-  var import_element2 = __toESM(require_element());
+  var import_element2 = __toESM(require_element(), 1);
 
   // packages/keyboard-shortcuts/build-module/hooks/use-shortcut-event-match.js
-  var import_data3 = __toESM(require_data());
-  var import_keycodes2 = __toESM(require_keycodes());
+  var import_data3 = __toESM(require_data(), 1);
+  var import_keycodes2 = __toESM(require_keycodes(), 1);
   function useShortcutEventMatch() {
     const { getAllShortcutKeyCombinations: getAllShortcutKeyCombinations2 } = (0, import_data3.useSelect)(
       store
@@ -215,7 +215,7 @@ var wp;
   }
 
   // packages/keyboard-shortcuts/build-module/context.js
-  var import_element = __toESM(require_element());
+  var import_element = __toESM(require_element(), 1);
   var globalShortcuts = /* @__PURE__ */ new Set();
   var globalListener = (event) => {
     for (const keyboardShortcut of globalShortcuts) {
@@ -263,8 +263,8 @@ var wp;
   }
 
   // packages/keyboard-shortcuts/build-module/components/shortcut-provider.js
-  var import_element3 = __toESM(require_element());
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_element3 = __toESM(require_element(), 1);
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var { Provider } = context;
   function ShortcutProvider(props) {
     const [keyboardShortcuts] = (0, import_element3.useState)(() => /* @__PURE__ */ new Set());

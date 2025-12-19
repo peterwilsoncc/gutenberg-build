@@ -144,10 +144,10 @@ var wp;
   });
 
   // packages/patterns/build-module/store/index.js
-  var import_data2 = __toESM(require_data());
+  var import_data2 = __toESM(require_data(), 1);
 
   // packages/patterns/build-module/store/reducer.js
-  var import_data = __toESM(require_data());
+  var import_data = __toESM(require_data(), 1);
   function isEditingPattern(state = {}, action) {
     if (action?.type === "SET_EDITING_PATTERN") {
       return {
@@ -169,9 +169,9 @@ var wp;
     createPatternFromFile: () => createPatternFromFile,
     setEditingPattern: () => setEditingPattern
   });
-  var import_blocks = __toESM(require_blocks());
-  var import_core_data = __toESM(require_core_data());
-  var import_block_editor = __toESM(require_block_editor());
+  var import_blocks = __toESM(require_blocks(), 1);
+  var import_core_data = __toESM(require_core_data(), 1);
+  var import_block_editor = __toESM(require_block_editor(), 1);
 
   // packages/patterns/build-module/constants.js
   var PATTERN_TYPES = {
@@ -288,7 +288,7 @@ var wp;
   }
 
   // packages/patterns/build-module/lock-unlock.js
-  var import_private_apis = __toESM(require_private_apis());
+  var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/patterns"
@@ -306,11 +306,11 @@ var wp;
   unlock(store).registerPrivateSelectors(selectors_exports);
 
   // packages/patterns/build-module/components/overrides-panel.js
-  var import_block_editor2 = __toESM(require_block_editor());
-  var import_components = __toESM(require_components());
-  var import_data3 = __toESM(require_data());
-  var import_element = __toESM(require_element());
-  var import_i18n = __toESM(require_i18n());
+  var import_block_editor2 = __toESM(require_block_editor(), 1);
+  var import_components = __toESM(require_components(), 1);
+  var import_data3 = __toESM(require_data(), 1);
+  var import_element = __toESM(require_element(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
 
   // packages/patterns/build-module/api/index.js
   function isOverridableBlock(block) {
@@ -330,7 +330,7 @@ var wp;
   }
 
   // packages/patterns/build-module/components/overrides-panel.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var { BlockQuickNavigation } = unlock(import_block_editor2.privateApis);
   function OverridesPanel() {
     const allClientIds = (0, import_data3.useSelect)(
@@ -352,20 +352,20 @@ var wp;
   }
 
   // packages/patterns/build-module/components/create-pattern-modal.js
-  var import_components3 = __toESM(require_components());
-  var import_i18n3 = __toESM(require_i18n());
-  var import_element4 = __toESM(require_element());
-  var import_data5 = __toESM(require_data());
-  var import_notices = __toESM(require_notices());
-  var import_core_data3 = __toESM(require_core_data());
+  var import_components3 = __toESM(require_components(), 1);
+  var import_i18n3 = __toESM(require_i18n(), 1);
+  var import_element4 = __toESM(require_element(), 1);
+  var import_data5 = __toESM(require_data(), 1);
+  var import_notices = __toESM(require_notices(), 1);
+  var import_core_data3 = __toESM(require_core_data(), 1);
 
   // packages/patterns/build-module/components/category-selector.js
-  var import_i18n2 = __toESM(require_i18n());
-  var import_element2 = __toESM(require_element());
-  var import_components2 = __toESM(require_components());
-  var import_compose = __toESM(require_compose());
-  var import_html_entities = __toESM(require_html_entities());
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_i18n2 = __toESM(require_i18n(), 1);
+  var import_element2 = __toESM(require_element(), 1);
+  var import_components2 = __toESM(require_components(), 1);
+  var import_compose = __toESM(require_compose(), 1);
+  var import_html_entities = __toESM(require_html_entities(), 1);
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   var unescapeString = (arg) => {
     return (0, import_html_entities.decodeEntities)(arg);
   };
@@ -413,9 +413,9 @@ var wp;
   }
 
   // packages/patterns/build-module/private-hooks.js
-  var import_data4 = __toESM(require_data());
-  var import_core_data2 = __toESM(require_core_data());
-  var import_element3 = __toESM(require_element());
+  var import_data4 = __toESM(require_data(), 1);
+  var import_core_data2 = __toESM(require_core_data(), 1);
+  var import_element3 = __toESM(require_element(), 1);
   function useAddPatternCategory() {
     const { saveEntityRecord, invalidateResolution } = (0, import_data4.useDispatch)(import_core_data2.store);
     const { corePatternCategories, userPatternCategories } = (0, import_data4.useSelect)(
@@ -475,7 +475,7 @@ var wp;
   }
 
   // packages/patterns/build-module/components/create-pattern-modal.js
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   function CreatePatternModal({
     className = "patterns-menu-items__convert-modal",
     modalTitle,
@@ -620,11 +620,11 @@ var wp;
   }
 
   // packages/patterns/build-module/components/duplicate-pattern-modal.js
-  var import_core_data4 = __toESM(require_core_data());
-  var import_data6 = __toESM(require_data());
-  var import_i18n4 = __toESM(require_i18n());
-  var import_notices2 = __toESM(require_notices());
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+  var import_core_data4 = __toESM(require_core_data(), 1);
+  var import_data6 = __toESM(require_data(), 1);
+  var import_i18n4 = __toESM(require_i18n(), 1);
+  var import_notices2 = __toESM(require_notices(), 1);
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   function getTermLabels(pattern, categories) {
     if (pattern.type !== PATTERN_TYPES.user) {
       return categories.core?.filter(
@@ -694,14 +694,14 @@ var wp;
   }
 
   // packages/patterns/build-module/components/rename-pattern-modal.js
-  var import_components4 = __toESM(require_components());
-  var import_core_data5 = __toESM(require_core_data());
-  var import_data7 = __toESM(require_data());
-  var import_element5 = __toESM(require_element());
-  var import_html_entities2 = __toESM(require_html_entities());
-  var import_i18n5 = __toESM(require_i18n());
-  var import_notices3 = __toESM(require_notices());
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+  var import_components4 = __toESM(require_components(), 1);
+  var import_core_data5 = __toESM(require_core_data(), 1);
+  var import_data7 = __toESM(require_data(), 1);
+  var import_element5 = __toESM(require_element(), 1);
+  var import_html_entities2 = __toESM(require_html_entities(), 1);
+  var import_i18n5 = __toESM(require_i18n(), 1);
+  var import_notices3 = __toESM(require_notices(), 1);
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
   function RenamePatternModal({
     onClose,
     onError,
@@ -802,25 +802,25 @@ var wp;
   }
 
   // packages/patterns/build-module/components/index.js
-  var import_block_editor5 = __toESM(require_block_editor());
+  var import_block_editor5 = __toESM(require_block_editor(), 1);
 
   // packages/patterns/build-module/components/pattern-convert-button.js
-  var import_blocks2 = __toESM(require_blocks());
-  var import_block_editor3 = __toESM(require_block_editor());
-  var import_element6 = __toESM(require_element());
-  var import_components5 = __toESM(require_components());
+  var import_blocks2 = __toESM(require_blocks(), 1);
+  var import_block_editor3 = __toESM(require_block_editor(), 1);
+  var import_element6 = __toESM(require_element(), 1);
+  var import_components5 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/symbol.js
-  var import_primitives = __toESM(require_primitives());
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+  var import_primitives = __toESM(require_primitives(), 1);
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   var symbol_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
   // packages/patterns/build-module/components/pattern-convert-button.js
-  var import_data8 = __toESM(require_data());
-  var import_core_data6 = __toESM(require_core_data());
-  var import_i18n6 = __toESM(require_i18n());
-  var import_notices4 = __toESM(require_notices());
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+  var import_data8 = __toESM(require_data(), 1);
+  var import_core_data6 = __toESM(require_core_data(), 1);
+  var import_i18n6 = __toESM(require_i18n(), 1);
+  var import_notices4 = __toESM(require_notices(), 1);
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   function PatternConvertButton({
     clientIds,
     rootClientId,
@@ -948,14 +948,14 @@ var wp;
   }
 
   // packages/patterns/build-module/components/patterns-manage-button.js
-  var import_components6 = __toESM(require_components());
-  var import_i18n7 = __toESM(require_i18n());
-  var import_blocks3 = __toESM(require_blocks());
-  var import_data9 = __toESM(require_data());
-  var import_block_editor4 = __toESM(require_block_editor());
-  var import_url = __toESM(require_url());
-  var import_core_data7 = __toESM(require_core_data());
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+  var import_components6 = __toESM(require_components(), 1);
+  var import_i18n7 = __toESM(require_i18n(), 1);
+  var import_blocks3 = __toESM(require_blocks(), 1);
+  var import_data9 = __toESM(require_data(), 1);
+  var import_block_editor4 = __toESM(require_block_editor(), 1);
+  var import_url = __toESM(require_url(), 1);
+  var import_core_data7 = __toESM(require_core_data(), 1);
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   function PatternsManageButton({ clientId }) {
     const {
       attributes,
@@ -1033,7 +1033,7 @@ var wp;
   var patterns_manage_button_default = PatternsManageButton;
 
   // packages/patterns/build-module/components/index.js
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
   function PatternsMenuItems({ rootClientId }) {
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_block_editor5.BlockSettingsMenuControls, { children: ({ selectedClientIds, onClose }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
@@ -1054,15 +1054,15 @@ var wp;
   }
 
   // packages/patterns/build-module/components/rename-pattern-category-modal.js
-  var import_components7 = __toESM(require_components());
-  var import_core_data8 = __toESM(require_core_data());
-  var import_data10 = __toESM(require_data());
-  var import_element7 = __toESM(require_element());
-  var import_html_entities3 = __toESM(require_html_entities());
-  var import_i18n8 = __toESM(require_i18n());
-  var import_notices5 = __toESM(require_notices());
-  var import_a11y = __toESM(require_a11y());
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
+  var import_components7 = __toESM(require_components(), 1);
+  var import_core_data8 = __toESM(require_core_data(), 1);
+  var import_data10 = __toESM(require_data(), 1);
+  var import_element7 = __toESM(require_element(), 1);
+  var import_html_entities3 = __toESM(require_html_entities(), 1);
+  var import_i18n8 = __toESM(require_i18n(), 1);
+  var import_notices5 = __toESM(require_notices(), 1);
+  var import_a11y = __toESM(require_a11y(), 1);
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   function RenamePatternCategoryModal({
     category,
     existingCategories,
@@ -1198,17 +1198,17 @@ var wp;
   }
 
   // packages/patterns/build-module/components/pattern-overrides-controls.js
-  var import_element9 = __toESM(require_element());
-  var import_block_editor6 = __toESM(require_block_editor());
-  var import_components9 = __toESM(require_components());
-  var import_i18n10 = __toESM(require_i18n());
+  var import_element9 = __toESM(require_element(), 1);
+  var import_block_editor6 = __toESM(require_block_editor(), 1);
+  var import_components9 = __toESM(require_components(), 1);
+  var import_i18n10 = __toESM(require_i18n(), 1);
 
   // packages/patterns/build-module/components/allow-overrides-modal.js
-  var import_components8 = __toESM(require_components());
-  var import_i18n9 = __toESM(require_i18n());
-  var import_element8 = __toESM(require_element());
-  var import_a11y2 = __toESM(require_a11y());
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime());
+  var import_components8 = __toESM(require_components(), 1);
+  var import_i18n9 = __toESM(require_i18n(), 1);
+  var import_element8 = __toESM(require_element(), 1);
+  var import_a11y2 = __toESM(require_a11y(), 1);
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   function AllowOverridesModal({
     placeholder,
     initialName = "",
@@ -1341,7 +1341,7 @@ var wp;
   }
 
   // packages/patterns/build-module/components/pattern-overrides-controls.js
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   function PatternOverridesControls({
     attributes,
     setAttributes,
@@ -1427,11 +1427,11 @@ var wp;
   var pattern_overrides_controls_default = PatternOverridesControls;
 
   // packages/patterns/build-module/components/reset-overrides-control.js
-  var import_block_editor7 = __toESM(require_block_editor());
-  var import_components10 = __toESM(require_components());
-  var import_data11 = __toESM(require_data());
-  var import_i18n11 = __toESM(require_i18n());
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
+  var import_block_editor7 = __toESM(require_block_editor(), 1);
+  var import_components10 = __toESM(require_components(), 1);
+  var import_data11 = __toESM(require_data(), 1);
+  var import_i18n11 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var CONTENT = "content";
   function ResetOverridesControl(props) {
     const name = props.attributes.metadata?.name;

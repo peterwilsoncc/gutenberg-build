@@ -76,8 +76,8 @@ var wp;
   });
 
   // packages/list-reusable-blocks/build-module/index.js
-  var import_element2 = __toESM(require_element());
-  var import_i18n3 = __toESM(require_i18n());
+  var import_element2 = __toESM(require_element(), 1);
+  var import_i18n3 = __toESM(require_i18n(), 1);
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
@@ -138,8 +138,8 @@ var wp;
   }
 
   // packages/list-reusable-blocks/build-module/utils/export.js
-  var import_api_fetch = __toESM(require_api_fetch());
-  var import_blob = __toESM(require_blob());
+  var import_api_fetch = __toESM(require_api_fetch(), 1);
+  var import_blob = __toESM(require_blob(), 1);
   async function exportReusableBlock(id) {
     const postType = await (0, import_api_fetch.default)({ path: `/wp/v2/types/wp_block` });
     const post = await (0, import_api_fetch.default)({
@@ -164,18 +164,18 @@ var wp;
   var export_default = exportReusableBlock;
 
   // packages/list-reusable-blocks/build-module/components/import-dropdown/index.js
-  var import_compose2 = __toESM(require_compose());
-  var import_i18n2 = __toESM(require_i18n());
-  var import_components2 = __toESM(require_components());
+  var import_compose2 = __toESM(require_compose(), 1);
+  var import_i18n2 = __toESM(require_i18n(), 1);
+  var import_components2 = __toESM(require_components(), 1);
 
   // packages/list-reusable-blocks/build-module/components/import-form/index.js
-  var import_element = __toESM(require_element());
-  var import_compose = __toESM(require_compose());
-  var import_i18n = __toESM(require_i18n());
-  var import_components = __toESM(require_components());
+  var import_element = __toESM(require_element(), 1);
+  var import_compose = __toESM(require_compose(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
+  var import_components = __toESM(require_components(), 1);
 
   // packages/list-reusable-blocks/build-module/utils/import.js
-  var import_api_fetch2 = __toESM(require_api_fetch());
+  var import_api_fetch2 = __toESM(require_api_fetch(), 1);
 
   // packages/list-reusable-blocks/build-module/utils/file.js
   function readTextFile(file) {
@@ -216,7 +216,7 @@ var wp;
   var import_default = importReusableBlock;
 
   // packages/list-reusable-blocks/build-module/components/import-form/index.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function ImportForm({ instanceId, onUpload }) {
     const inputId = "list-reusable-blocks-import-form-" + instanceId;
     const formRef = (0, import_element.useRef)();
@@ -298,7 +298,7 @@ var wp;
   var import_form_default = (0, import_compose.withInstanceId)(ImportForm);
 
   // packages/list-reusable-blocks/build-module/components/import-dropdown/index.js
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   function ImportDropdown({ onUpload }) {
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       import_components2.Dropdown,
@@ -323,7 +323,7 @@ var wp;
   var import_dropdown_default = ImportDropdown;
 
   // packages/list-reusable-blocks/build-module/index.js
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   document.body.addEventListener("click", (event) => {
     if (!event.target.classList.contains("wp-list-reusable-blocks__export")) {
       return;

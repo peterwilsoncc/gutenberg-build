@@ -624,7 +624,7 @@ var wp;
   }
 
   // packages/dom/build-module/dom/is-number-input.js
-  var import_deprecated = __toESM(require_deprecated());
+  var import_deprecated = __toESM(require_deprecated(), 1);
   function isNumberInput(node) {
     (0, import_deprecated.default)("wp.dom.isNumberInput", {
       since: "6.1",

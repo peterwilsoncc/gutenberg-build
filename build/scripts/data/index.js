@@ -437,7 +437,7 @@ var wp;
   });
 
   // packages/data/build-module/registry.js
-  var import_deprecated2 = __toESM(require_deprecated());
+  var import_deprecated2 = __toESM(require_deprecated(), 1);
 
   // node_modules/redux/dist/redux.mjs
   var $$observable = /* @__PURE__ */ (() => typeof Symbol === "function" && Symbol.observable || "@@observable")();
@@ -677,9 +677,9 @@ var wp;
   }
 
   // packages/data/build-module/redux-store/index.js
-  var import_equivalent_key_map2 = __toESM(require_equivalent_key_map());
-  var import_redux_routine = __toESM(require_redux_routine());
-  var import_compose = __toESM(require_compose());
+  var import_equivalent_key_map2 = __toESM(require_equivalent_key_map(), 1);
+  var import_redux_routine = __toESM(require_redux_routine(), 1);
+  var import_compose = __toESM(require_compose(), 1);
 
   // packages/data/build-module/redux-store/combine-reducers.js
   function combineReducers(reducers) {
@@ -767,7 +767,7 @@ var wp;
   };
 
   // packages/data/build-module/lock-unlock.js
-  var import_private_apis = __toESM(require_private_apis());
+  var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/data"
@@ -828,7 +828,7 @@ var wp;
   }
 
   // packages/data/build-module/redux-store/metadata/reducer.js
-  var import_equivalent_key_map = __toESM(require_equivalent_key_map());
+  var import_equivalent_key_map = __toESM(require_equivalent_key_map(), 1);
 
   // packages/data/build-module/redux-store/metadata/utils.js
   var onSubKey = (actionProperty) => (reducer) => (state = {}, action) => {
@@ -967,7 +967,7 @@ var wp;
     hasStartedResolution: () => hasStartedResolution,
     isResolving: () => isResolving
   });
-  var import_deprecated = __toESM(require_deprecated());
+  var import_deprecated = __toESM(require_deprecated(), 1);
 
   // node_modules/rememo/rememo.js
   var LEAF_KEY = {};
@@ -2013,7 +2013,7 @@ var wp;
   }
 
   // packages/data/build-module/plugins/persistence/index.js
-  var import_deepmerge = __toESM(require_cjs());
+  var import_deepmerge = __toESM(require_cjs(), 1);
 
   // packages/data/build-module/plugins/persistence/storage/object.js
   var objectStorage;
@@ -2152,18 +2152,18 @@ var wp;
   var persistence_default = persistencePlugin;
 
   // packages/data/build-module/components/with-select/index.js
-  var import_compose2 = __toESM(require_compose());
+  var import_compose2 = __toESM(require_compose(), 1);
 
   // packages/data/build-module/components/use-select/index.js
-  var import_priority_queue = __toESM(require_priority_queue());
-  var import_element5 = __toESM(require_element());
-  var import_is_shallow_equal = __toESM(require_is_shallow_equal());
+  var import_priority_queue = __toESM(require_priority_queue(), 1);
+  var import_element5 = __toESM(require_element(), 1);
+  var import_is_shallow_equal = __toESM(require_is_shallow_equal(), 1);
 
   // packages/data/build-module/components/registry-provider/use-registry.js
-  var import_element2 = __toESM(require_element());
+  var import_element2 = __toESM(require_element(), 1);
 
   // packages/data/build-module/components/registry-provider/context.js
-  var import_element = __toESM(require_element());
+  var import_element = __toESM(require_element(), 1);
   var Context = (0, import_element.createContext)(default_registry_default);
   Context.displayName = "RegistryProviderContext";
   var { Consumer, Provider } = Context;
@@ -2176,10 +2176,10 @@ var wp;
   }
 
   // packages/data/build-module/components/async-mode-provider/use-async-mode.js
-  var import_element4 = __toESM(require_element());
+  var import_element4 = __toESM(require_element(), 1);
 
   // packages/data/build-module/components/async-mode-provider/context.js
-  var import_element3 = __toESM(require_element());
+  var import_element3 = __toESM(require_element(), 1);
   var Context2 = (0, import_element3.createContext)(false);
   Context2.displayName = "AsyncModeContext";
   var { Consumer: Consumer2, Provider: Provider2 } = Context2;
@@ -2280,7 +2280,7 @@ var wp;
         if (true) {
           if (!didWarnUnstableReference) {
             const secondMapResult = mapSelect(select3, registry);
-            if (!(0, import_is_shallow_equal.default)(mapResult, secondMapResult)) {
+            if (!(0, import_is_shallow_equal.isShallowEqual)(mapResult, secondMapResult)) {
               warnOnUnstableReference(mapResult, secondMapResult);
               didWarnUnstableReference = true;
             }
@@ -2294,7 +2294,7 @@ var wp;
         } else {
           subscriber.updateStores(listeningStores.current);
         }
-        if (!(0, import_is_shallow_equal.default)(lastMapResult, mapResult)) {
+        if (!(0, import_is_shallow_equal.isShallowEqual)(lastMapResult, mapResult)) {
           lastMapResult = mapResult;
         }
         lastMapSelect = mapSelect;
@@ -2346,7 +2346,7 @@ var wp;
   }
 
   // packages/data/build-module/components/with-select/index.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var withSelect = (mapSelectToProps) => (0, import_compose2.createHigherOrderComponent)(
     (WrappedComponent) => (0, import_compose2.pure)((ownProps) => {
       const mapSelect = (select3, registry) => mapSelectToProps(select3, ownProps, registry);
@@ -2358,7 +2358,7 @@ var wp;
   var with_select_default = withSelect;
 
   // packages/data/build-module/components/with-dispatch/index.js
-  var import_compose4 = __toESM(require_compose());
+  var import_compose4 = __toESM(require_compose(), 1);
 
   // packages/data/build-module/components/use-dispatch/use-dispatch.js
   var useDispatch = (storeNameOrDescriptor) => {
@@ -2368,8 +2368,8 @@ var wp;
   var use_dispatch_default = useDispatch;
 
   // packages/data/build-module/components/use-dispatch/use-dispatch-with-map.js
-  var import_element6 = __toESM(require_element());
-  var import_compose3 = __toESM(require_compose());
+  var import_element6 = __toESM(require_element(), 1);
+  var import_compose3 = __toESM(require_compose(), 1);
   var useDispatchWithMap = (dispatchMap, deps) => {
     const registry = useRegistry();
     const currentDispatchMapRef = (0, import_element6.useRef)(dispatchMap);
@@ -2401,7 +2401,7 @@ var wp;
   var use_dispatch_with_map_default = useDispatchWithMap;
 
   // packages/data/build-module/components/with-dispatch/index.js
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   var withDispatch = (mapDispatchToProps) => (0, import_compose4.createHigherOrderComponent)(
     (WrappedComponent) => (ownProps) => {
       const mapDispatch = (dispatch3, registry) => mapDispatchToProps(dispatch3, ownProps, registry);
@@ -2413,8 +2413,8 @@ var wp;
   var with_dispatch_default = withDispatch;
 
   // packages/data/build-module/components/with-registry/index.js
-  var import_compose5 = __toESM(require_compose());
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+  var import_compose5 = __toESM(require_compose(), 1);
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var withRegistry = (0, import_compose5.createHigherOrderComponent)(
     (OriginalComponent) => (props) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(RegistryConsumer, { children: (registry) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OriginalComponent, { ...props, registry }) }),
     "withRegistry"

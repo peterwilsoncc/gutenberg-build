@@ -95,7 +95,7 @@ var require_private_apis = __commonJS({
 });
 
 // packages/workflow/build-module/index.js
-var import_element3 = __toESM(require_element());
+var import_element3 = __toESM(require_element(), 1);
 
 // node_modules/cmdk/dist/chunk-NZJY6EH4.mjs
 var U = 1;
@@ -3284,14 +3284,14 @@ function B2({ asChild: r, children: o }, n) {
 var Te = { position: "absolute", width: "1px", height: "1px", padding: "0", margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", borderWidth: "0" };
 
 // packages/workflow/build-module/components/workflow-menu.js
-var import_data = __toESM(require_data());
-var import_element2 = __toESM(require_element());
-var import_i18n = __toESM(require_i18n());
-var import_components = __toESM(require_components());
-var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts());
+var import_data = __toESM(require_data(), 1);
+var import_element2 = __toESM(require_element(), 1);
+var import_i18n = __toESM(require_i18n(), 1);
+var import_components = __toESM(require_components(), 1);
+var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 
 // packages/icons/build-module/icon/index.js
-var import_element = __toESM(require_element());
+var import_element = __toESM(require_element(), 1);
 var icon_default = (0, import_element.forwardRef)(
   ({ icon, size = 24, ...props }, ref) => {
     return (0, import_element.cloneElement)(icon, {
@@ -3304,22 +3304,22 @@ var icon_default = (0, import_element.forwardRef)(
 );
 
 // packages/icons/build-module/library/search.js
-var import_primitives = __toESM(require_primitives());
-var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+var import_primitives = __toESM(require_primitives(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 var search_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
 // packages/workflow/build-module/components/workflow-menu.js
 import { executeAbility, store as abilitiesStore } from "@wordpress/abilities";
 
 // packages/workflow/build-module/lock-unlock.js
-var import_private_apis = __toESM(require_private_apis());
+var import_private_apis = __toESM(require_private_apis(), 1);
 var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/workflows"
 );
 
 // packages/workflow/build-module/components/workflow-menu.js
-var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 var css = `/**
  * Typography
  */

@@ -63,9 +63,9 @@ var wp;
     select: () => select,
     syncSelect: () => syncSelect
   });
-  var import_api_fetch = __toESM(require_api_fetch());
-  var import_data = __toESM(require_data());
-  var import_deprecated = __toESM(require_deprecated());
+  var import_api_fetch = __toESM(require_api_fetch(), 1);
+  var import_data = __toESM(require_data(), 1);
+  var import_deprecated = __toESM(require_deprecated(), 1);
   function apiFetch(request) {
     return {
       type: "API_FETCH",

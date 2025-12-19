@@ -116,7 +116,7 @@ var wp;
   });
 
   // packages/reusable-blocks/build-module/store/index.js
-  var import_data2 = __toESM(require_data());
+  var import_data2 = __toESM(require_data(), 1);
 
   // packages/reusable-blocks/build-module/store/actions.js
   var actions_exports = {};
@@ -126,9 +126,9 @@ var wp;
     __experimentalDeleteReusableBlock: () => __experimentalDeleteReusableBlock,
     __experimentalSetEditingReusableBlock: () => __experimentalSetEditingReusableBlock
   });
-  var import_block_editor = __toESM(require_block_editor());
-  var import_blocks = __toESM(require_blocks());
-  var import_i18n = __toESM(require_i18n());
+  var import_block_editor = __toESM(require_block_editor(), 1);
+  var import_blocks = __toESM(require_blocks(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
   var __experimentalConvertBlockToStatic = (clientId) => ({ registry }) => {
     const oldBlock = registry.select(import_block_editor.store).getBlock(clientId);
     const reusableBlock = registry.select("core").getEditedEntityRecord(
@@ -192,7 +192,7 @@ var wp;
   }
 
   // packages/reusable-blocks/build-module/store/reducer.js
-  var import_data = __toESM(require_data());
+  var import_data = __toESM(require_data(), 1);
   function isEditingReusableBlock(state = {}, action) {
     if (action?.type === "SET_EDITING_REUSABLE_BLOCK") {
       return {
@@ -225,25 +225,25 @@ var wp;
   (0, import_data2.register)(store);
 
   // packages/reusable-blocks/build-module/components/reusable-blocks-menu-items/index.js
-  var import_block_editor4 = __toESM(require_block_editor());
+  var import_block_editor4 = __toESM(require_block_editor(), 1);
 
   // packages/reusable-blocks/build-module/components/reusable-blocks-menu-items/reusable-block-convert-button.js
-  var import_blocks2 = __toESM(require_blocks());
-  var import_block_editor2 = __toESM(require_block_editor());
-  var import_element = __toESM(require_element());
-  var import_components = __toESM(require_components());
+  var import_blocks2 = __toESM(require_blocks(), 1);
+  var import_block_editor2 = __toESM(require_block_editor(), 1);
+  var import_element = __toESM(require_element(), 1);
+  var import_components = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/symbol.js
-  var import_primitives = __toESM(require_primitives());
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_primitives = __toESM(require_primitives(), 1);
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var symbol_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
   // packages/reusable-blocks/build-module/components/reusable-blocks-menu-items/reusable-block-convert-button.js
-  var import_data3 = __toESM(require_data());
-  var import_i18n2 = __toESM(require_i18n());
-  var import_notices = __toESM(require_notices());
-  var import_core_data = __toESM(require_core_data());
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_data3 = __toESM(require_data(), 1);
+  var import_i18n2 = __toESM(require_i18n(), 1);
+  var import_notices = __toESM(require_notices(), 1);
+  var import_core_data = __toESM(require_core_data(), 1);
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   function ReusableBlockConvertButton({
     clientIds,
     rootClientId,
@@ -410,14 +410,14 @@ var wp;
   }
 
   // packages/reusable-blocks/build-module/components/reusable-blocks-menu-items/reusable-blocks-manage-button.js
-  var import_components2 = __toESM(require_components());
-  var import_i18n3 = __toESM(require_i18n());
-  var import_blocks3 = __toESM(require_blocks());
-  var import_data4 = __toESM(require_data());
-  var import_block_editor3 = __toESM(require_block_editor());
-  var import_url = __toESM(require_url());
-  var import_core_data2 = __toESM(require_core_data());
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+  var import_components2 = __toESM(require_components(), 1);
+  var import_i18n3 = __toESM(require_i18n(), 1);
+  var import_blocks3 = __toESM(require_blocks(), 1);
+  var import_data4 = __toESM(require_data(), 1);
+  var import_block_editor3 = __toESM(require_block_editor(), 1);
+  var import_url = __toESM(require_url(), 1);
+  var import_core_data2 = __toESM(require_core_data(), 1);
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   function ReusableBlocksManageButton({ clientId }) {
     const { canRemove, isVisible, managePatternsUrl } = (0, import_data4.useSelect)(
       (select) => {
@@ -458,7 +458,7 @@ var wp;
   var reusable_blocks_manage_button_default = ReusableBlocksManageButton;
 
   // packages/reusable-blocks/build-module/components/reusable-blocks-menu-items/index.js
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   function ReusableBlocksMenuItems({ rootClientId }) {
     return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_block_editor4.BlockSettingsMenuControls, { children: ({ onClose, selectedClientIds }) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(

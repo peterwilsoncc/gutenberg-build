@@ -830,7 +830,7 @@ var wp;
   }
 
   // packages/url/build-module/clean-for-slug.js
-  var import_remove_accents = __toESM(require_remove_accents());
+  var import_remove_accents = __toESM(require_remove_accents(), 1);
   function cleanForSlug(string) {
     if (!string) {
       return "";

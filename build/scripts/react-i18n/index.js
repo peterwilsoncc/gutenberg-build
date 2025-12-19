@@ -60,9 +60,9 @@ var wp;
     useI18n: () => useI18n,
     withI18n: () => withI18n
   });
-  var import_element = __toESM(require_element());
-  var import_i18n = __toESM(require_i18n());
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_element = __toESM(require_element(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function makeContextValue(i18n) {
     return {
       __: i18n.__.bind(i18n),

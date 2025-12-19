@@ -66,11 +66,11 @@ var wp;
   });
 
   // packages/annotations/build-module/format/index.js
-  var import_rich_text2 = __toESM(require_rich_text());
+  var import_rich_text2 = __toESM(require_rich_text(), 1);
 
   // packages/annotations/build-module/format/annotation.js
-  var import_i18n = __toESM(require_i18n());
-  var import_rich_text = __toESM(require_rich_text());
+  var import_i18n = __toESM(require_i18n(), 1);
+  var import_rich_text = __toESM(require_rich_text(), 1);
 
   // packages/annotations/build-module/store/constants.js
   var STORE_NAME = "core/annotations";
@@ -196,8 +196,8 @@ var wp;
   (0, import_rich_text2.registerFormatType)(name, settings);
 
   // packages/annotations/build-module/block/index.js
-  var import_hooks = __toESM(require_hooks());
-  var import_data = __toESM(require_data());
+  var import_hooks = __toESM(require_hooks(), 1);
+  var import_data = __toESM(require_data(), 1);
   var addAnnotationClassName = (OriginalComponent) => {
     return (0, import_data.withSelect)((select, { clientId, className }) => {
       const annotations2 = select(STORE_NAME).__experimentalGetAnnotationsForBlock(
@@ -217,7 +217,7 @@ var wp;
   );
 
   // packages/annotations/build-module/store/index.js
-  var import_data3 = __toESM(require_data());
+  var import_data3 = __toESM(require_data(), 1);
 
   // packages/annotations/build-module/store/reducer.js
   function filterWithReference(collection, predicate) {
@@ -308,7 +308,7 @@ var wp;
     __experimentalGetAnnotationsForBlock: () => __experimentalGetAnnotationsForBlock,
     __experimentalGetAnnotationsForRichText: () => __experimentalGetAnnotationsForRichText
   });
-  var import_data2 = __toESM(require_data());
+  var import_data2 = __toESM(require_data(), 1);
   var EMPTY_ARRAY = [];
   var __experimentalGetAnnotationsForBlock = (0, import_data2.createSelector)(
     (state, blockClientId) => {

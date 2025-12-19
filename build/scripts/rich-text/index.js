@@ -130,10 +130,10 @@ var wp;
   });
 
   // packages/rich-text/build-module/store/index.js
-  var import_data3 = __toESM(require_data());
+  var import_data3 = __toESM(require_data(), 1);
 
   // packages/rich-text/build-module/store/reducer.js
-  var import_data = __toESM(require_data());
+  var import_data = __toESM(require_data(), 1);
   function formatTypes(state = {}, action) {
     switch (action.type) {
       case "ADD_FORMAT_TYPES":
@@ -167,7 +167,7 @@ var wp;
     getFormatTypeForClassName: () => getFormatTypeForClassName,
     getFormatTypes: () => getFormatTypes
   });
-  var import_data2 = __toESM(require_data());
+  var import_data2 = __toESM(require_data(), 1);
   var getFormatTypes = (0, import_data2.createSelector)(
     (state) => Object.values(state.formatTypes),
     (state) => [state.formatTypes]
@@ -345,7 +345,7 @@ var wp;
   }
 
   // packages/rich-text/build-module/create.js
-  var import_data5 = __toESM(require_data());
+  var import_data5 = __toESM(require_data(), 1);
 
   // packages/rich-text/build-module/create-element.js
   function createElement({ implementation }, html) {
@@ -361,7 +361,7 @@ var wp;
   var ZWNBSP = "\uFEFF";
 
   // packages/rich-text/build-module/to-html-string.js
-  var import_escape_html = __toESM(require_escape_html());
+  var import_escape_html = __toESM(require_escape_html(), 1);
 
   // packages/rich-text/build-module/get-active-formats.js
   function getActiveFormats(value, EMPTY_ACTIVE_FORMATS3 = []) {
@@ -408,7 +408,7 @@ var wp;
   }
 
   // packages/rich-text/build-module/get-format-type.js
-  var import_data4 = __toESM(require_data());
+  var import_data4 = __toESM(require_data(), 1);
   function getFormatType2(name) {
     return (0, import_data4.select)(store).getFormatType(name);
   }
@@ -1207,7 +1207,7 @@ var wp;
   }
 
   // packages/rich-text/build-module/register-format-type.js
-  var import_data6 = __toESM(require_data());
+  var import_data6 = __toESM(require_data(), 1);
   function registerFormatType(name, settings) {
     settings = {
       name,
@@ -1686,8 +1686,8 @@ var wp;
   }
 
   // packages/rich-text/build-module/toggle-format.js
-  var import_a11y = __toESM(require_a11y());
-  var import_i18n = __toESM(require_i18n());
+  var import_a11y = __toESM(require_a11y(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
   function toggleFormat(value, format) {
     if (getActiveFormat(value, format.type)) {
       if (format.title) {
@@ -1702,7 +1702,7 @@ var wp;
   }
 
   // packages/rich-text/build-module/unregister-format-type.js
-  var import_data7 = __toESM(require_data());
+  var import_data7 = __toESM(require_data(), 1);
   function unregisterFormatType(name) {
     const oldFormat = (0, import_data7.select)(store).getFormatType(name);
     if (!oldFormat) {
@@ -1714,8 +1714,8 @@ var wp;
   }
 
   // packages/rich-text/build-module/component/use-anchor-ref.js
-  var import_element = __toESM(require_element());
-  var import_deprecated = __toESM(require_deprecated());
+  var import_element = __toESM(require_element(), 1);
+  var import_deprecated = __toESM(require_deprecated(), 1);
   function useAnchorRef({ ref, value, settings = {} }) {
     (0, import_deprecated.default)("`useAnchorRef` hook", {
       since: "6.1",
@@ -1750,9 +1750,9 @@ var wp;
   }
 
   // packages/rich-text/build-module/component/use-anchor.js
-  var import_compose = __toESM(require_compose());
-  var import_element2 = __toESM(require_element());
-  var import_dom = __toESM(require_dom());
+  var import_compose = __toESM(require_compose(), 1);
+  var import_element2 = __toESM(require_element(), 1);
+  var import_dom = __toESM(require_dom(), 1);
   function getFormatElement(range, editableContentElement, tagName, className) {
     let element = range.startContainer;
     if (element.nodeType === element.TEXT_NODE && range.startOffset === element.length && element.nextSibling) {
@@ -1861,12 +1861,12 @@ var wp;
   }
 
   // packages/rich-text/build-module/component/index.js
-  var import_element6 = __toESM(require_element());
-  var import_compose3 = __toESM(require_compose());
-  var import_data8 = __toESM(require_data());
+  var import_element6 = __toESM(require_element(), 1);
+  var import_compose3 = __toESM(require_compose(), 1);
+  var import_data8 = __toESM(require_data(), 1);
 
   // packages/rich-text/build-module/component/use-default-style.js
-  var import_element3 = __toESM(require_element());
+  var import_element3 = __toESM(require_element(), 1);
   var whiteSpace = "pre-wrap";
   var minWidth = "1px";
   function useDefaultStyle() {
@@ -2038,7 +2038,7 @@ var wp;
   };
 
   // packages/rich-text/build-module/component/use-boundary-style.js
-  var import_element4 = __toESM(require_element());
+  var import_element4 = __toESM(require_element(), 1);
   function useBoundaryStyle({ record }) {
     const ref = (0, import_element4.useRef)();
     const { activeFormats = [], replacements, start } = record.current;
@@ -2074,8 +2074,8 @@ var wp;
   }
 
   // packages/rich-text/build-module/component/event-listeners/index.js
-  var import_element5 = __toESM(require_element());
-  var import_compose2 = __toESM(require_compose());
+  var import_element5 = __toESM(require_element(), 1);
+  var import_compose2 = __toESM(require_compose(), 1);
 
   // packages/rich-text/build-module/component/event-listeners/copy-handler.js
   var copy_handler_default = (props) => (element) => {
@@ -2139,7 +2139,7 @@ var wp;
   };
 
   // packages/rich-text/build-module/component/event-listeners/format-boundaries.js
-  var import_keycodes = __toESM(require_keycodes());
+  var import_keycodes = __toESM(require_keycodes(), 1);
   var EMPTY_ACTIVE_FORMATS = [];
   var format_boundaries_default = (props) => (element) => {
     function onKeyDown(event) {
@@ -2210,7 +2210,7 @@ var wp;
   };
 
   // packages/rich-text/build-module/component/event-listeners/delete.js
-  var import_keycodes2 = __toESM(require_keycodes());
+  var import_keycodes2 = __toESM(require_keycodes(), 1);
   var delete_default = (props) => (element) => {
     function onKeyDown(event) {
       const { keyCode } = event;

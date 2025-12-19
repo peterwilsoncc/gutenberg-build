@@ -93,13 +93,13 @@ var wp;
     DotTip: () => dot_tip_default,
     store: () => store
   });
-  var import_deprecated = __toESM(require_deprecated());
+  var import_deprecated = __toESM(require_deprecated(), 1);
 
   // packages/nux/build-module/store/index.js
-  var import_data3 = __toESM(require_data());
+  var import_data3 = __toESM(require_data(), 1);
 
   // packages/nux/build-module/store/reducer.js
-  var import_data = __toESM(require_data());
+  var import_data = __toESM(require_data(), 1);
   function guides(state = [], action) {
     switch (action.type) {
       case "TRIGGER_GUIDE":
@@ -169,7 +169,7 @@ var wp;
     getAssociatedGuide: () => getAssociatedGuide,
     isTipVisible: () => isTipVisible
   });
-  var import_data2 = __toESM(require_data());
+  var import_data2 = __toESM(require_data(), 1);
   var getAssociatedGuide = (0, import_data2.createSelector)(
     (state, tipId) => {
       for (const tipIds of state.guides) {
@@ -220,19 +220,19 @@ var wp;
   });
 
   // packages/nux/build-module/components/dot-tip/index.js
-  var import_compose = __toESM(require_compose());
-  var import_components = __toESM(require_components());
-  var import_i18n = __toESM(require_i18n());
-  var import_data4 = __toESM(require_data());
-  var import_element = __toESM(require_element());
+  var import_compose = __toESM(require_compose(), 1);
+  var import_components = __toESM(require_components(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
+  var import_data4 = __toESM(require_data(), 1);
+  var import_element = __toESM(require_element(), 1);
 
   // packages/icons/build-module/library/close.js
-  var import_primitives = __toESM(require_primitives());
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_primitives = __toESM(require_primitives(), 1);
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var close_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
 
   // packages/nux/build-module/components/dot-tip/index.js
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   function onClick(event) {
     event.stopPropagation();
   }

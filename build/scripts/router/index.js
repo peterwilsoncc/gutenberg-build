@@ -964,10 +964,10 @@ var wp;
   }
 
   // packages/router/build-module/router.js
-  var import_element = __toESM(require_element());
-  var import_url = __toESM(require_url());
-  var import_compose = __toESM(require_compose());
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_element = __toESM(require_element(), 1);
+  var import_url = __toESM(require_url(), 1);
+  var import_compose = __toESM(require_compose(), 1);
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var history = createBrowserHistory();
   var RoutesContext = (0, import_element.createContext)(null);
   RoutesContext.displayName = "RoutesContext";
@@ -1132,9 +1132,9 @@ var wp;
   }
 
   // packages/router/build-module/link.js
-  var import_element2 = __toESM(require_element());
-  var import_url2 = __toESM(require_url());
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_element2 = __toESM(require_element(), 1);
+  var import_url2 = __toESM(require_url(), 1);
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   function useLink(to2, options = {}) {
     const history2 = useHistory();
     const { pathArg, beforeNavigate } = (0, import_element2.useContext)(ConfigContext);
@@ -1167,7 +1167,7 @@ var wp;
   }
 
   // packages/router/build-module/lock-unlock.js
-  var import_private_apis = __toESM(require_private_apis());
+  var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/router"

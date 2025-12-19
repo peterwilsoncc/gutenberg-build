@@ -4584,7 +4584,7 @@ var wp;
   });
 
   // packages/blocks/build-module/store/index.js
-  var import_data5 = __toESM(require_data());
+  var import_data5 = __toESM(require_data(), 1);
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
@@ -4658,8 +4658,8 @@ var wp;
   }
 
   // packages/blocks/build-module/store/reducer.js
-  var import_data2 = __toESM(require_data());
-  var import_i18n3 = __toESM(require_i18n());
+  var import_data2 = __toESM(require_data(), 1);
+  var import_i18n3 = __toESM(require_i18n(), 1);
 
   // node_modules/colord/index.mjs
   var r = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
@@ -4873,11 +4873,11 @@ var wp;
   }
 
   // packages/blocks/build-module/api/utils.js
-  var import_element = __toESM(require_element());
-  var import_i18n2 = __toESM(require_i18n());
-  var import_dom = __toESM(require_dom());
-  var import_rich_text = __toESM(require_rich_text());
-  var import_deprecated = __toESM(require_deprecated());
+  var import_element = __toESM(require_element(), 1);
+  var import_i18n2 = __toESM(require_i18n(), 1);
+  var import_dom = __toESM(require_dom(), 1);
+  var import_rich_text = __toESM(require_rich_text(), 1);
+  var import_deprecated = __toESM(require_deprecated(), 1);
 
   // packages/blocks/build-module/api/constants.js
   var BLOCK_ICON_DEFAULT = "block-default";
@@ -5180,9 +5180,9 @@ var wp;
   };
 
   // packages/blocks/build-module/api/registration.js
-  var import_data = __toESM(require_data());
-  var import_i18n = __toESM(require_i18n());
-  var import_warning = __toESM(require_warning());
+  var import_data = __toESM(require_data(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
+  var import_warning = __toESM(require_warning(), 1);
 
   // packages/blocks/build-module/api/i18n-block.json
   var i18n_block_default = {
@@ -5204,7 +5204,7 @@ var wp;
   };
 
   // packages/blocks/build-module/lock-unlock.js
-  var import_private_apis = __toESM(require_private_apis());
+  var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/blocks"
@@ -6018,10 +6018,10 @@ var wp;
     hasChildBlocksWithInserterSupport: () => hasChildBlocksWithInserterSupport2,
     isMatchingSearchTerm: () => isMatchingSearchTerm
   });
-  var import_remove_accents = __toESM(require_remove_accents());
-  var import_data4 = __toESM(require_data());
-  var import_rich_text2 = __toESM(require_rich_text());
-  var import_deprecated3 = __toESM(require_deprecated());
+  var import_remove_accents = __toESM(require_remove_accents(), 1);
+  var import_data4 = __toESM(require_data(), 1);
+  var import_rich_text2 = __toESM(require_rich_text(), 1);
+  var import_deprecated3 = __toESM(require_deprecated(), 1);
 
   // packages/blocks/build-module/store/utils.js
   var getValueFromObjectPath = (object, path, defaultValue) => {
@@ -6055,8 +6055,8 @@ var wp;
     getUnprocessedBlockTypes: () => getUnprocessedBlockTypes,
     hasContentRoleAttribute: () => hasContentRoleAttribute
   });
-  var import_data3 = __toESM(require_data());
-  var import_deprecated2 = __toESM(require_deprecated());
+  var import_data3 = __toESM(require_data(), 1);
+  var import_deprecated2 = __toESM(require_deprecated(), 1);
   var ROOT_BLOCK_SUPPORTS = [
     "background",
     "backgroundColor",
@@ -6378,7 +6378,7 @@ var wp;
     setUnregisteredFallbackBlockName: () => setUnregisteredFallbackBlockName,
     updateCategory: () => updateCategory
   });
-  var import_deprecated5 = __toESM(require_deprecated());
+  var import_deprecated5 = __toESM(require_deprecated(), 1);
 
   // node_modules/is-plain-object/dist/is-plain-object.mjs
   function isObject3(o3) {
@@ -6398,10 +6398,10 @@ var wp;
   }
 
   // packages/blocks/build-module/store/process-block-type.js
-  var import_react_is = __toESM(require_react_is());
-  var import_deprecated4 = __toESM(require_deprecated());
-  var import_hooks = __toESM(require_hooks());
-  var import_warning2 = __toESM(require_warning());
+  var import_react_is = __toESM(require_react_is(), 1);
+  var import_deprecated4 = __toESM(require_deprecated(), 1);
+  var import_hooks = __toESM(require_hooks(), 1);
+  var import_warning2 = __toESM(require_warning(), 1);
   var LEGACY_CATEGORY_MAPPING = {
     common: "text",
     formatting: "text",
@@ -6779,7 +6779,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   var v4_default = v4;
 
   // packages/blocks/build-module/api/factory.js
-  var import_hooks2 = __toESM(require_hooks());
+  var import_hooks2 = __toESM(require_hooks(), 1);
   function createBlock(name, attributes = {}, innerBlocks = []) {
     if (!isBlockRegistered(name)) {
       return createBlock("core/missing", {
@@ -7057,15 +7057,15 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   );
 
   // packages/blocks/build-module/api/parser/index.js
-  var import_block_serialization_default_parser = __toESM(require_block_serialization_default_parser());
-  var import_autop2 = __toESM(require_autop());
+  var import_block_serialization_default_parser = __toESM(require_block_serialization_default_parser(), 1);
+  var import_autop2 = __toESM(require_autop(), 1);
 
   // packages/blocks/build-module/api/serializer.js
-  var import_element2 = __toESM(require_element());
-  var import_hooks3 = __toESM(require_hooks());
-  var import_is_shallow_equal = __toESM(require_is_shallow_equal());
-  var import_autop = __toESM(require_autop());
-  var import_deprecated6 = __toESM(require_deprecated());
+  var import_element2 = __toESM(require_element(), 1);
+  var import_hooks3 = __toESM(require_hooks(), 1);
+  var import_is_shallow_equal = __toESM(require_is_shallow_equal(), 1);
+  var import_autop = __toESM(require_autop(), 1);
+  var import_deprecated6 = __toESM(require_deprecated(), 1);
 
   // packages/blocks/build-module/api/parser/serialize-raw-block.js
   function serializeRawBlock(rawBlock, options = {}) {
@@ -7087,7 +7087,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/serializer.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function getBlockDefaultClassName(blockName) {
     const className = "wp-block-" + blockName.replace(/\//, "-").replace(/^core-/, "");
     return (0, import_hooks3.applyFilters)(
@@ -7145,7 +7145,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
         blockType,
         attributes
       );
-      if (!(0, import_is_shallow_equal.default)(props, element.props)) {
+      if (!(0, import_is_shallow_equal.isShallowEqual)(props, element.props)) {
         element = (0, import_element2.cloneElement)(element, props);
       }
     }
@@ -8002,9 +8002,9 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   );
 
   // packages/blocks/build-module/api/validation/index.js
-  var import_es6 = __toESM(require_es6());
-  var import_deprecated7 = __toESM(require_deprecated());
-  var import_html_entities = __toESM(require_html_entities());
+  var import_es6 = __toESM(require_es6(), 1);
+  var import_deprecated7 = __toESM(require_deprecated(), 1);
+  var import_html_entities = __toESM(require_html_entities(), 1);
 
   // packages/blocks/build-module/api/validation/logger.js
   function createLogger() {
@@ -8622,18 +8622,18 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/parser/get-block-attributes.js
-  var import_hooks4 = __toESM(require_hooks());
-  var import_rich_text4 = __toESM(require_rich_text());
+  var import_hooks4 = __toESM(require_hooks(), 1);
+  var import_rich_text4 = __toESM(require_rich_text(), 1);
 
   // packages/blocks/build-module/api/matchers.js
-  var import_rich_text3 = __toESM(require_rich_text());
+  var import_rich_text3 = __toESM(require_rich_text(), 1);
 
   // packages/blocks/build-module/api/node.js
-  var import_deprecated9 = __toESM(require_deprecated());
+  var import_deprecated9 = __toESM(require_deprecated(), 1);
 
   // packages/blocks/build-module/api/children.js
-  var import_element3 = __toESM(require_element());
-  var import_deprecated8 = __toESM(require_deprecated());
+  var import_element3 = __toESM(require_element(), 1);
+  var import_deprecated8 = __toESM(require_deprecated(), 1);
   function getSerializeCapableElement(children) {
     return children;
   }
@@ -9242,11 +9242,11 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/index.js
-  var import_deprecated10 = __toESM(require_deprecated());
-  var import_dom12 = __toESM(require_dom());
+  var import_deprecated10 = __toESM(require_deprecated(), 1);
+  var import_dom12 = __toESM(require_dom(), 1);
 
   // packages/blocks/build-module/api/raw-handling/html-to-blocks.js
-  var import_element4 = __toESM(require_element());
+  var import_element4 = __toESM(require_element(), 1);
 
   // packages/blocks/build-module/api/raw-handling/get-raw-transforms.js
   function getRawTransforms() {
@@ -9295,7 +9295,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/normalise-blocks.js
-  var import_dom2 = __toESM(require_dom());
+  var import_dom2 = __toESM(require_dom(), 1);
   function normaliseBlocks(HTML, options = {}) {
     const decuDoc = document.implementation.createHTMLDocument("");
     const accuDoc = document.implementation.createHTMLDocument("");
@@ -9346,7 +9346,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/special-comment-converter.js
-  var import_dom3 = __toESM(require_dom());
+  var import_dom3 = __toESM(require_dom(), 1);
   function specialCommentConverter(node, doc) {
     if (node.nodeType !== node.COMMENT_NODE) {
       return;
@@ -9412,7 +9412,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/list-reducer.js
-  var import_dom4 = __toESM(require_dom());
+  var import_dom4 = __toESM(require_dom(), 1);
   function isList(node) {
     return node.nodeName === "OL" || node.nodeName === "UL";
   }
@@ -9462,7 +9462,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/figure-content-reducer.js
-  var import_dom5 = __toESM(require_dom());
+  var import_dom5 = __toESM(require_dom(), 1);
   function isFigureContent(node, schema) {
     const tag = node.nodeName.toLowerCase();
     if (tag === "figcaption" || (0, import_dom5.isTextContent)(node)) {
@@ -9501,7 +9501,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/shortcode-converter.js
-  var import_shortcode = __toESM(require_shortcode());
+  var import_shortcode = __toESM(require_shortcode(), 1);
   var castArray = (maybeArray) => Array.isArray(maybeArray) ? maybeArray : [maybeArray];
   var beforeLineRegexp = /(\n|<p>)\s*$/;
   var afterLineRegexp = /^\s*(\n|<\/p>)/;
@@ -9592,7 +9592,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   var shortcode_converter_default = segmentHTMLToShortcodeBlock;
 
   // packages/blocks/build-module/api/raw-handling/utils.js
-  var import_dom6 = __toESM(require_dom());
+  var import_dom6 = __toESM(require_dom(), 1);
   function getBlockContentSchemaFromTransforms(transforms, context) {
     const phrasingContentSchema = (0, import_dom6.getPhrasingContentSchema)(context);
     const schemaArgs = { phrasingContentSchema, isPaste: context === "paste" };
@@ -9712,10 +9712,10 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/paste-handler.js
-  var import_dom11 = __toESM(require_dom());
+  var import_dom11 = __toESM(require_dom(), 1);
 
   // packages/blocks/build-module/api/raw-handling/comment-remover.js
-  var import_dom7 = __toESM(require_dom());
+  var import_dom7 = __toESM(require_dom(), 1);
   function commentRemover(node) {
     if (node.nodeType === node.COMMENT_NODE) {
       (0, import_dom7.remove)(node);
@@ -9723,7 +9723,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/is-inline-content.js
-  var import_dom8 = __toESM(require_dom());
+  var import_dom8 = __toESM(require_dom(), 1);
   function isInline(node, contextTag) {
     if ((0, import_dom8.isTextContent)(node)) {
       return true;
@@ -9756,7 +9756,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/phrasing-content-reducer.js
-  var import_dom9 = __toESM(require_dom());
+  var import_dom9 = __toESM(require_dom(), 1);
   function phrasingContentReducer(node, doc) {
     if (node.nodeName === "SPAN" && node.style) {
       const {
@@ -9874,7 +9874,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/image-corrector.js
-  var import_blob = __toESM(require_blob());
+  var import_blob = __toESM(require_blob(), 1);
   function imageCorrector(node) {
     if (node.nodeName !== "IMG") {
       return;
@@ -9918,7 +9918,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
 
   // packages/blocks/build-module/api/raw-handling/markdown-converter.js
-  var import_showdown = __toESM(require_showdown());
+  var import_showdown = __toESM(require_showdown(), 1);
   var converter = new import_showdown.default.Converter({
     noHeaderId: true,
     tables: true,
@@ -9953,7 +9953,7 @@ ${p3}`
   }
 
   // packages/blocks/build-module/api/raw-handling/google-docs-uid-remover.js
-  var import_dom10 = __toESM(require_dom());
+  var import_dom10 = __toESM(require_dom(), 1);
   function googleDocsUIdRemover(node) {
     if (!node.id || node.id.indexOf("docs-internal-guid-") !== 0) {
       return;
@@ -10250,7 +10250,7 @@ ${p3}`
   }
 
   // packages/blocks/build-module/api/categories.js
-  var import_data6 = __toESM(require_data());
+  var import_data6 = __toESM(require_data(), 1);
   function getCategories2() {
     return (0, import_data6.select)(store).getCategories();
   }
@@ -10262,7 +10262,7 @@ ${p3}`
   }
 
   // packages/blocks/build-module/api/templates.js
-  var import_element5 = __toESM(require_element());
+  var import_element5 = __toESM(require_element(), 1);
   function doBlocksMatchTemplate(blocks = [], template = []) {
     return blocks.length === template.length && template.every(([name, , innerBlocksTemplate], index) => {
       const block = blocks[index];
@@ -10332,7 +10332,7 @@ ${p3}`
   lock(privateApis, { isContentBlock, fieldsKey, formKey });
 
   // packages/blocks/build-module/deprecated.js
-  var import_deprecated11 = __toESM(require_deprecated());
+  var import_deprecated11 = __toESM(require_deprecated(), 1);
   function withBlockContentContext(OriginalComponent) {
     (0, import_deprecated11.default)("wp.blocks.withBlockContentContext", {
       since: "6.1"

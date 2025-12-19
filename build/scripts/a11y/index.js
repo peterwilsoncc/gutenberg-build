@@ -52,7 +52,7 @@ var wp;
     setup: () => setup,
     speak: () => speak
   });
-  var import_dom_ready = __toESM(require_dom_ready());
+  var import_dom_ready = __toESM(require_dom_ready(), 1);
 
   // packages/a11y/build-module/script/add-container.js
   function addContainer(ariaLive = "polite") {
@@ -74,7 +74,7 @@ var wp;
   }
 
   // packages/a11y/build-module/script/add-intro-text.js
-  var import_i18n = __toESM(require_i18n());
+  var import_i18n = __toESM(require_i18n(), 1);
   function addIntroText() {
     const introText = document.createElement("p");
     introText.id = "a11y-speak-intro-text";

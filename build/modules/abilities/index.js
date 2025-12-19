@@ -7116,14 +7116,14 @@ var require_dist2 = __commonJS({
 });
 
 // packages/abilities/build-module/api.js
-var import_data4 = __toESM(require_data());
-var import_i18n2 = __toESM(require_i18n());
+var import_data4 = __toESM(require_data(), 1);
+var import_i18n2 = __toESM(require_i18n(), 1);
 
 // packages/abilities/build-module/store/index.js
-var import_data3 = __toESM(require_data());
+var import_data3 = __toESM(require_data(), 1);
 
 // packages/abilities/build-module/store/reducer.js
-var import_data = __toESM(require_data());
+var import_data = __toESM(require_data(), 1);
 
 // packages/abilities/build-module/store/constants.js
 var STORE_NAME = "core/abilities";
@@ -7222,7 +7222,7 @@ __export(actions_exports, {
   unregisterAbility: () => unregisterAbility,
   unregisterAbilityCategory: () => unregisterAbilityCategory
 });
-var import_i18n = __toESM(require_i18n());
+var import_i18n = __toESM(require_i18n(), 1);
 function filterAnnotations(sourceAnnotations, allowedKeys) {
   const annotations = {};
   if (sourceAnnotations) {
@@ -7387,7 +7387,7 @@ __export(selectors_exports, {
   getAbilityCategories: () => getAbilityCategories,
   getAbilityCategory: () => getAbilityCategory
 });
-var import_data2 = __toESM(require_data());
+var import_data2 = __toESM(require_data(), 1);
 var getAbilities = (0, import_data2.createSelector)(
   (state, { category } = {}) => {
     const abilities = Object.values(state.abilitiesByName);
@@ -7425,8 +7425,8 @@ var store = (0, import_data3.createReduxStore)(STORE_NAME, {
 (0, import_data3.register)(store);
 
 // packages/abilities/build-module/validation.js
-var import_ajv_draft_04 = __toESM(require_dist());
-var import_ajv_formats = __toESM(require_dist2());
+var import_ajv_draft_04 = __toESM(require_dist(), 1);
+var import_ajv_formats = __toESM(require_dist2(), 1);
 var ajv = new import_ajv_draft_04.default({
   coerceTypes: false,
   // No type coercion - AI should send proper JSON

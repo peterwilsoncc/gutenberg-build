@@ -59,17 +59,17 @@ var wp;
   });
 
   // packages/theme/build-module/lock-unlock.js
-  var import_private_apis = __toESM(require_private_apis());
+  var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/theme"
   );
 
   // packages/theme/build-module/theme-provider.js
-  var import_element3 = __toESM(require_element());
+  var import_element3 = __toESM(require_element(), 1);
 
   // packages/theme/build-module/context.js
-  var import_element = __toESM(require_element());
+  var import_element = __toESM(require_element(), 1);
   var ThemeContext = (0, import_element.createContext)({
     resolvedSettings: {
       color: {}
@@ -2711,7 +2711,7 @@ var wp;
   }
 
   // packages/theme/build-module/use-theme-provider-styles.js
-  var import_element2 = __toESM(require_element());
+  var import_element2 = __toESM(require_element(), 1);
 
   // packages/theme/build-module/color-ramps/lib/register-color-spaces.js
   ColorSpace.register(srgb_default);
@@ -3902,7 +3902,7 @@ var wp;
   }
 
   // packages/theme/build-module/theme-provider.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var css = `.style-module__root__26kw6 {
 	display: contents;
 }

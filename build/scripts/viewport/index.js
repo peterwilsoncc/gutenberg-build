@@ -61,11 +61,11 @@ var wp;
   });
 
   // packages/viewport/build-module/listener.js
-  var import_compose = __toESM(require_compose());
-  var import_data2 = __toESM(require_data());
+  var import_compose = __toESM(require_compose(), 1);
+  var import_data2 = __toESM(require_data(), 1);
 
   // packages/viewport/build-module/store/index.js
-  var import_data = __toESM(require_data());
+  var import_data = __toESM(require_data(), 1);
 
   // packages/viewport/build-module/store/reducer.js
   function reducer(state = {}, action) {
@@ -141,11 +141,11 @@ var wp;
   var listener_default = addDimensionsEventListener;
 
   // packages/viewport/build-module/if-viewport-matches.js
-  var import_compose3 = __toESM(require_compose());
+  var import_compose3 = __toESM(require_compose(), 1);
 
   // packages/viewport/build-module/with-viewport-match.js
-  var import_compose2 = __toESM(require_compose());
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_compose2 = __toESM(require_compose(), 1);
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var withViewportMatch = (queries) => {
     const queryEntries = Object.entries(queries);
     const useViewPortQueriesResult = () => Object.fromEntries(

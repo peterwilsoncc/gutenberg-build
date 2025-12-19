@@ -231,7 +231,7 @@ var wp;
   });
 
   // packages/priority-queue/build-module/request-idle-callback.js
-  var import_requestidlecallback = __toESM(require_requestidlecallback());
+  var import_requestidlecallback = __toESM(require_requestidlecallback(), 1);
   function createRequestIdleCallback() {
     if (typeof window === "undefined") {
       return (callback) => {

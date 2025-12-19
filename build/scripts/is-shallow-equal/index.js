@@ -23,6 +23,7 @@ var wp;
   var index_exports = {};
   __export(index_exports, {
     default: () => isShallowEqual,
+    isShallowEqual: () => isShallowEqual,
     isShallowEqualArrays: () => isShallowEqualArrays,
     isShallowEqualObjects: () => isShallowEqualObjects
   });

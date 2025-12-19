@@ -51,7 +51,7 @@ var wp;
   __export(index_exports, {
     default: () => index_default
   });
-  var import_i18n3 = __toESM(require_i18n());
+  var import_i18n3 = __toESM(require_i18n(), 1);
 
   // packages/api-fetch/build-module/middlewares/nonce.js
   function createNonceMiddleware(nonce) {
@@ -123,7 +123,7 @@ var wp;
   var root_url_default = createRootURLMiddleware;
 
   // packages/api-fetch/build-module/middlewares/preloading.js
-  var import_url = __toESM(require_url());
+  var import_url = __toESM(require_url(), 1);
   function createPreloadingMiddleware(preloadedData) {
     const cache = Object.fromEntries(
       Object.entries(preloadedData).map(([path, data]) => [
@@ -194,7 +194,7 @@ var wp;
   var preloading_default = createPreloadingMiddleware;
 
   // packages/api-fetch/build-module/middlewares/fetch-all-middleware.js
-  var import_url2 = __toESM(require_url());
+  var import_url2 = __toESM(require_url(), 1);
   var modifyQuery = ({ path, url, ...options }, queryArgs) => ({
     ...options,
     url: url && (0, import_url2.addQueryArgs)(url, queryArgs),
@@ -280,7 +280,7 @@ var wp;
   var http_v1_default = httpV1Middleware;
 
   // packages/api-fetch/build-module/middlewares/user-locale.js
-  var import_url3 = __toESM(require_url());
+  var import_url3 = __toESM(require_url(), 1);
   var userLocaleMiddleware = (options, next) => {
     if (typeof options.url === "string" && !(0, import_url3.hasQueryArg)(options.url, "_locale")) {
       options.url = (0, import_url3.addQueryArgs)(options.url, { _locale: "user" });
@@ -293,10 +293,10 @@ var wp;
   var user_locale_default = userLocaleMiddleware;
 
   // packages/api-fetch/build-module/middlewares/media-upload.js
-  var import_i18n2 = __toESM(require_i18n());
+  var import_i18n2 = __toESM(require_i18n(), 1);
 
   // packages/api-fetch/build-module/utils/response.js
-  var import_i18n = __toESM(require_i18n());
+  var import_i18n = __toESM(require_i18n(), 1);
   async function parseJsonAndNormalizeError(response) {
     try {
       return await response.json();
@@ -381,7 +381,7 @@ var wp;
   var media_upload_default = mediaUploadMiddleware;
 
   // packages/api-fetch/build-module/middlewares/theme-preview.js
-  var import_url4 = __toESM(require_url());
+  var import_url4 = __toESM(require_url(), 1);
   var createThemePreviewMiddleware = (themePath) => (options, next) => {
     if (typeof options.url === "string") {
       const wpThemePreview = (0, import_url4.getQueryArg)(

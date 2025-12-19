@@ -5491,7 +5491,7 @@ function useCanGoBack() {
 }
 
 // packages/route/build-module/lock-unlock.js
-var import_private_apis = __toESM(require_private_apis());
+var import_private_apis = __toESM(require_private_apis(), 1);
 var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/route"

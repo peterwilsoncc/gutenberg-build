@@ -45,7 +45,7 @@ var wp;
     default: () => deprecated,
     logged: () => logged
   });
-  var import_hooks = __toESM(require_hooks());
+  var import_hooks = __toESM(require_hooks(), 1);
   var logged = /* @__PURE__ */ Object.create(null);
   function deprecated(feature, options = {}) {
     const { since, version, alternative, plugin, link, hint } = options;

@@ -70,7 +70,7 @@ var wp;
     rawShortcut: () => rawShortcut,
     shortcutAriaLabel: () => shortcutAriaLabel
   });
-  var import_i18n = __toESM(require_i18n());
+  var import_i18n = __toESM(require_i18n(), 1);
 
   // packages/keycodes/build-module/platform.js
   function isAppleOS(_window) {

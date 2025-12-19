@@ -135,7 +135,7 @@ var wp;
   });
 
   // packages/element/build-module/react.js
-  var import_react = __toESM(require_react());
+  var import_react = __toESM(require_react(), 1);
   function concatChildren(...childrenArguments) {
     return childrenArguments.reduce(
       (accumulator, children, i) => {
@@ -333,8 +333,8 @@ var wp;
   var create_interpolate_element_default = createInterpolateElement;
 
   // packages/element/build-module/react-platform.js
-  var import_react_dom = __toESM(require_react_dom());
-  var import_client = __toESM(require_client());
+  var import_react_dom = __toESM(require_react_dom(), 1);
+  var import_client = __toESM(require_client(), 1);
 
   // packages/element/build-module/utils.js
   var isEmptyElement = (element) => {
@@ -442,7 +442,7 @@ var wp;
   }
 
   // packages/element/build-module/serialize.js
-  var import_escape_html = __toESM(require_escape_html());
+  var import_escape_html = __toESM(require_escape_html(), 1);
 
   // packages/element/build-module/raw-html.js
   function RawHTML({

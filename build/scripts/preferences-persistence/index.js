@@ -46,7 +46,7 @@ var wp;
   });
 
   // packages/preferences-persistence/build-module/create/index.js
-  var import_api_fetch = __toESM(require_api_fetch());
+  var import_api_fetch = __toESM(require_api_fetch(), 1);
 
   // packages/preferences-persistence/build-module/create/debounce-async.js
   function debounceAsync(func, delayMS) {

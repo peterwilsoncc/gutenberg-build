@@ -102,15 +102,15 @@ var require_block_editor = __commonJS({
 });
 
 // packages/lazy-editor/build-module/components/editor/index.js
-var import_editor = __toESM(require_editor());
-var import_core_data5 = __toESM(require_core_data());
-var import_data6 = __toESM(require_data());
-var import_components = __toESM(require_components());
-var import_element4 = __toESM(require_element());
+var import_editor = __toESM(require_editor(), 1);
+var import_core_data5 = __toESM(require_core_data(), 1);
+var import_data6 = __toESM(require_data(), 1);
+var import_components = __toESM(require_components(), 1);
+var import_element4 = __toESM(require_element(), 1);
 
 // packages/lazy-editor/build-module/hooks/use-styles-id.js
-var import_core_data = __toESM(require_core_data());
-var import_data = __toESM(require_data());
+var import_core_data = __toESM(require_core_data(), 1);
+var import_data = __toESM(require_data(), 1);
 function useStylesId({ templateId } = {}) {
   const { globalStylesId, stylesId } = (0, import_data.useSelect)(
     (select2) => {
@@ -241,7 +241,7 @@ function getSetting(globalStyles, path, blockName) {
 }
 
 // packages/global-styles-engine/build-module/utils/common.js
-var import_style_engine = __toESM(require_style_engine());
+var import_style_engine = __toESM(require_style_engine(), 1);
 
 // packages/global-styles-engine/build-module/utils/fluid.js
 var DEFAULT_MAXIMUM_VIEWPORT_WIDTH = "1600px";
@@ -610,9 +610,9 @@ function getResolvedValue(ruleValue, tree) {
 }
 
 // packages/global-styles-engine/build-module/core/render.js
-var import_blocks = __toESM(require_blocks());
-var import_style_engine2 = __toESM(require_style_engine());
-var import_data2 = __toESM(require_data());
+var import_blocks = __toESM(require_blocks(), 1);
+var import_style_engine2 = __toESM(require_style_engine(), 1);
+var import_data2 = __toESM(require_data(), 1);
 
 // packages/global-styles-engine/build-module/core/selectors.js
 function getBlockSelector(blockType, target = "root", options = {}) {
@@ -2057,14 +2057,14 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
 }
 
 // packages/lazy-editor/build-module/hooks/use-editor-settings.js
-var import_core_data3 = __toESM(require_core_data());
-var import_element2 = __toESM(require_element());
-var import_data4 = __toESM(require_data());
+var import_core_data3 = __toESM(require_core_data(), 1);
+var import_element2 = __toESM(require_element(), 1);
+var import_data4 = __toESM(require_data(), 1);
 
 // packages/lazy-editor/build-module/hooks/use-global-styles.js
-var import_core_data2 = __toESM(require_core_data());
-var import_data3 = __toESM(require_data());
-var import_element = __toESM(require_element());
+var import_core_data2 = __toESM(require_core_data(), 1);
+var import_data3 = __toESM(require_data(), 1);
+var import_element = __toESM(require_element(), 1);
 function useUserGlobalStyles(id) {
   const { userGlobalStyles } = (0, import_data3.useSelect)(
     (select2) => {
@@ -2115,7 +2115,7 @@ function useUserGlobalStyles(id) {
 }
 
 // packages/lazy-editor/build-module/lock-unlock.js
-var import_private_apis = __toESM(require_private_apis());
+var import_private_apis = __toESM(require_private_apis(), 1);
 var { unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/lazy-editor"
@@ -2371,9 +2371,9 @@ async function loadAssets(scriptsData, inlineScripts, stylesData, inlineStyles, 
 var index_default = loadAssets;
 
 // packages/lazy-editor/build-module/hooks/use-editor-assets.js
-var import_core_data4 = __toESM(require_core_data());
-var import_element3 = __toESM(require_element());
-var import_data5 = __toESM(require_data());
+var import_core_data4 = __toESM(require_core_data(), 1);
+var import_element3 = __toESM(require_element(), 1);
+var import_data5 = __toESM(require_data(), 1);
 var loadAssetsPromise;
 async function loadEditorAssets() {
   const load = async () => {
@@ -2415,7 +2415,7 @@ function useEditorAssets() {
 }
 
 // packages/lazy-editor/build-module/components/editor/index.js
-var import_jsx_runtime = __toESM(require_jsx_runtime());
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 var { Editor: PrivateEditor, BackButton } = unlock(import_editor.privateApis);
 function Editor({
   postType,
@@ -2490,12 +2490,12 @@ function Editor({
 }
 
 // packages/lazy-editor/build-module/components/preview/index.js
-var import_i18n = __toESM(require_i18n());
-var import_element5 = __toESM(require_element());
-var import_block_editor = __toESM(require_block_editor());
-var import_editor2 = __toESM(require_editor());
-var import_blocks2 = __toESM(require_blocks());
-var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+var import_i18n = __toESM(require_i18n(), 1);
+var import_element5 = __toESM(require_element(), 1);
+var import_block_editor = __toESM(require_block_editor(), 1);
+var import_editor2 = __toESM(require_editor(), 1);
+var import_blocks2 = __toESM(require_blocks(), 1);
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 var css = `/**
  * SCSS Variables.
  *

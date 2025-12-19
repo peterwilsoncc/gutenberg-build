@@ -627,7 +627,7 @@ var wp;
   }
 
   // packages/redux-routine/build-module/runtime.js
-  var import_rungen = __toESM(require_dist());
+  var import_rungen = __toESM(require_dist(), 1);
 
   // node_modules/is-promise/index.mjs
   function isPromise(obj) {

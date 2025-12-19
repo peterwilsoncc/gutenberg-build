@@ -3042,16 +3042,16 @@ var wp;
     useEntityRecords: () => useEntityRecords,
     useResourcePermissions: () => use_resource_permissions_default
   });
-  var import_data11 = __toESM(require_data());
+  var import_data11 = __toESM(require_data(), 1);
 
   // packages/core-data/build-module/reducer.js
-  var import_es64 = __toESM(require_es6());
-  var import_compose2 = __toESM(require_compose());
-  var import_data3 = __toESM(require_data());
-  var import_undo_manager2 = __toESM(require_undo_manager());
+  var import_es64 = __toESM(require_es6(), 1);
+  var import_compose2 = __toESM(require_compose(), 1);
+  var import_data3 = __toESM(require_data(), 1);
+  var import_undo_manager2 = __toESM(require_undo_manager(), 1);
 
   // packages/core-data/build-module/utils/conservative-map-item.js
-  var import_es6 = __toESM(require_es6());
+  var import_es6 = __toESM(require_es6(), 1);
   function conservativeMapItem(item, nextItem) {
     if (!item) {
       return nextItem;
@@ -3248,11 +3248,11 @@ var wp;
   }
 
   // packages/core-data/build-module/queried-data/selectors.js
-  var import_equivalent_key_map = __toESM(require_equivalent_key_map());
-  var import_data = __toESM(require_data());
+  var import_equivalent_key_map = __toESM(require_equivalent_key_map(), 1);
+  var import_data = __toESM(require_data(), 1);
 
   // packages/core-data/build-module/queried-data/get-query-parts.js
-  var import_url = __toESM(require_url());
+  var import_url = __toESM(require_url(), 1);
   function getQueryParts(query) {
     const parts = {
       stableKey: "",
@@ -3367,8 +3367,8 @@ var wp;
   }
 
   // packages/core-data/build-module/queried-data/reducer.js
-  var import_data2 = __toESM(require_data());
-  var import_compose = __toESM(require_compose());
+  var import_data2 = __toESM(require_data(), 1);
+  var import_compose = __toESM(require_compose(), 1);
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
@@ -3458,9 +3458,9 @@ var wp;
   }
 
   // packages/core-data/build-module/entities.js
-  var import_api_fetch = __toESM(require_api_fetch());
-  var import_blocks3 = __toESM(require_blocks());
-  var import_i18n = __toESM(require_i18n());
+  var import_api_fetch = __toESM(require_api_fetch(), 1);
+  var import_blocks3 = __toESM(require_blocks(), 1);
+  var import_i18n = __toESM(require_i18n(), 1);
 
   // node_modules/yjs/dist/yjs.mjs
   var yjs_exports = {};
@@ -12217,7 +12217,7 @@ var wp;
   }
 
   // packages/sync/build-module/providers/index.js
-  var import_hooks = __toESM(require_hooks());
+  var import_hooks = __toESM(require_hooks(), 1);
 
   // node_modules/lib0/indexeddb.js
   var rtop = (request) => create4((resolve2, reject2) => {
@@ -12609,7 +12609,7 @@ var wp;
   };
 
   // packages/sync/build-module/providers/y-webrtc/y-webrtc.js
-  var import_simplepeer_min = __toESM(require_simplepeer_min());
+  var import_simplepeer_min = __toESM(require_simplepeer_min(), 1);
 
   // node_modules/y-protocols/sync.js
   var messageYjsSyncStep1 = 0;
@@ -13588,7 +13588,7 @@ var wp;
   };
 
   // packages/sync/build-module/providers/webrtc-http-stream-signaling.js
-  var import_url2 = __toESM(require_url());
+  var import_url2 = __toESM(require_url(), 1);
   function setupSignalEventHandlers(signalCon, url) {
     signalCon.on("connect", () => {
       log(`connected (${url})`);
@@ -14307,8 +14307,8 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/crdt.js
-  var import_es63 = __toESM(require_es6());
-  var import_blocks2 = __toESM(require_blocks());
+  var import_es63 = __toESM(require_es6(), 1);
+  var import_blocks2 = __toESM(require_blocks(), 1);
 
   // node_modules/uuid/dist/esm-browser/rng.js
   var getRandomValues2;
@@ -14359,9 +14359,9 @@ var wp;
   var v4_default = v4;
 
   // packages/core-data/build-module/utils/crdt-blocks.js
-  var import_es62 = __toESM(require_es6());
-  var import_rich_text = __toESM(require_rich_text());
-  var import_blocks = __toESM(require_blocks());
+  var import_es62 = __toESM(require_es6(), 1);
+  var import_rich_text = __toESM(require_rich_text(), 1);
+  var import_blocks = __toESM(require_blocks(), 1);
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
   function makeBlockAttributesSerializable(attributes) {
     const newAttributes = { ...attributes };
@@ -15824,9 +15824,9 @@ var wp;
     isRequestingEmbedPreview: () => isRequestingEmbedPreview,
     isSavingEntityRecord: () => isSavingEntityRecord
   });
-  var import_data5 = __toESM(require_data());
-  var import_url3 = __toESM(require_url());
-  var import_deprecated2 = __toESM(require_deprecated());
+  var import_data5 = __toESM(require_data(), 1);
+  var import_url3 = __toESM(require_url(), 1);
+  var import_deprecated2 = __toESM(require_deprecated(), 1);
 
   // packages/core-data/build-module/name.js
   var STORE_NAME = "core";
@@ -15846,17 +15846,17 @@ var wp;
     getTemplateId: () => getTemplateId,
     getUndoManager: () => getUndoManager
   });
-  var import_data4 = __toESM(require_data());
+  var import_data4 = __toESM(require_data(), 1);
 
   // packages/core-data/build-module/lock-unlock.js
-  var import_private_apis = __toESM(require_private_apis());
+  var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/core-data"
   );
 
   // packages/core-data/build-module/utils/log-entity-deprecation.js
-  var import_deprecated = __toESM(require_deprecated());
+  var import_deprecated = __toESM(require_deprecated(), 1);
   var loggedAlready = false;
   function logEntityDeprecation(kind, name, functionName, {
     alternativeFunctionName,
@@ -16592,13 +16592,13 @@ var wp;
     saveEntityRecord: () => saveEntityRecord,
     undo: () => undo
   });
-  var import_es65 = __toESM(require_es6());
-  var import_api_fetch3 = __toESM(require_api_fetch());
-  var import_url4 = __toESM(require_url());
-  var import_deprecated3 = __toESM(require_deprecated());
+  var import_es65 = __toESM(require_es6(), 1);
+  var import_api_fetch3 = __toESM(require_api_fetch(), 1);
+  var import_url4 = __toESM(require_url(), 1);
+  var import_deprecated3 = __toESM(require_deprecated(), 1);
 
   // packages/core-data/build-module/batch/default-processor.js
-  var import_api_fetch2 = __toESM(require_api_fetch());
+  var import_api_fetch2 = __toESM(require_api_fetch(), 1);
   var maxItems = null;
   function chunk(arr, chunkSize) {
     const tmp = [...arr];
@@ -17345,7 +17345,7 @@ var wp;
     receiveEditorSettings: () => receiveEditorSettings,
     receiveRegisteredPostMeta: () => receiveRegisteredPostMeta
   });
-  var import_api_fetch4 = __toESM(require_api_fetch());
+  var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   function receiveRegisteredPostMeta(postType, registeredPostMeta2) {
     return {
       type: "RECEIVE_REGISTERED_POST_META",
@@ -17468,18 +17468,18 @@ var wp;
     getThemeSupports: () => getThemeSupports2,
     getUserPatternCategories: () => getUserPatternCategories2
   });
-  var import_url7 = __toESM(require_url());
-  var import_html_entities2 = __toESM(require_html_entities());
-  var import_api_fetch8 = __toESM(require_api_fetch());
+  var import_url7 = __toESM(require_url(), 1);
+  var import_html_entities2 = __toESM(require_html_entities(), 1);
+  var import_api_fetch8 = __toESM(require_api_fetch(), 1);
 
   // packages/core-data/build-module/fetch/index.js
-  var import_api_fetch7 = __toESM(require_api_fetch());
+  var import_api_fetch7 = __toESM(require_api_fetch(), 1);
 
   // packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.js
-  var import_api_fetch5 = __toESM(require_api_fetch());
-  var import_url5 = __toESM(require_url());
-  var import_html_entities = __toESM(require_html_entities());
-  var import_i18n2 = __toESM(require_i18n());
+  var import_api_fetch5 = __toESM(require_api_fetch(), 1);
+  var import_url5 = __toESM(require_url(), 1);
+  var import_html_entities = __toESM(require_html_entities(), 1);
+  var import_i18n2 = __toESM(require_i18n(), 1);
   async function fetchLinkSuggestions(search, searchOptions = {}, editorSettings2 = {}) {
     const searchOptionsToUse = searchOptions.isInitialSuggestions && searchOptions.initialSuggestionsSearchOptions ? {
       ...searchOptions,
@@ -17624,8 +17624,8 @@ var wp;
   }
 
   // packages/core-data/build-module/fetch/__experimental-fetch-url-data.js
-  var import_api_fetch6 = __toESM(require_api_fetch());
-  var import_url6 = __toESM(require_url());
+  var import_api_fetch6 = __toESM(require_api_fetch(), 1);
+  var import_url6 = __toESM(require_url(), 1);
   var CACHE = /* @__PURE__ */ new Map();
   var fetchUrlData = async (url, options = {}) => {
     const endpoint = "/wp-block-editor/v1/url-details";
@@ -18582,15 +18582,15 @@ var wp;
   var dynamicSelectors;
 
   // packages/core-data/build-module/entity-provider.js
-  var import_element2 = __toESM(require_element());
+  var import_element2 = __toESM(require_element(), 1);
 
   // packages/core-data/build-module/entity-context.js
-  var import_element = __toESM(require_element());
+  var import_element = __toESM(require_element(), 1);
   var EntityContext = (0, import_element.createContext)({});
   EntityContext.displayName = "EntityContext";
 
   // packages/core-data/build-module/entity-provider.js
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function EntityProvider({ kind, type: name, id: id2, children }) {
     const parent = (0, import_element2.useContext)(EntityContext);
     const childContext = (0, import_element2.useMemo)(
@@ -18607,12 +18607,12 @@ var wp;
   }
 
   // packages/core-data/build-module/hooks/use-entity-record.js
-  var import_data7 = __toESM(require_data());
-  var import_deprecated4 = __toESM(require_deprecated());
-  var import_element3 = __toESM(require_element());
+  var import_data7 = __toESM(require_data(), 1);
+  var import_deprecated4 = __toESM(require_deprecated(), 1);
+  var import_element3 = __toESM(require_element(), 1);
 
   // packages/core-data/build-module/hooks/use-query-select.js
-  var import_data6 = __toESM(require_data());
+  var import_data6 = __toESM(require_data(), 1);
 
   // node_modules/memize/dist/index.js
   function memize(fn, options) {
@@ -18821,10 +18821,10 @@ var wp;
   }
 
   // packages/core-data/build-module/hooks/use-entity-records.js
-  var import_url8 = __toESM(require_url());
-  var import_deprecated5 = __toESM(require_deprecated());
-  var import_data8 = __toESM(require_data());
-  var import_element4 = __toESM(require_element());
+  var import_url8 = __toESM(require_url(), 1);
+  var import_deprecated5 = __toESM(require_deprecated(), 1);
+  var import_data8 = __toESM(require_data(), 1);
+  var import_element4 = __toESM(require_element(), 1);
   var EMPTY_ARRAY = [];
   function useEntityRecords(kind, name, queryArgs = {}, options = { enabled: true }) {
     const queryAsString = (0, import_url8.addQueryArgs)("", queryArgs);
@@ -18929,8 +18929,8 @@ var wp;
   }
 
   // packages/core-data/build-module/hooks/use-resource-permissions.js
-  var import_deprecated6 = __toESM(require_deprecated());
-  var import_warning = __toESM(require_warning());
+  var import_deprecated6 = __toESM(require_deprecated(), 1);
+  var import_warning = __toESM(require_warning(), 1);
   function useResourcePermissions(resource, id2) {
     const isEntity = typeof resource === "object";
     const resourceAsString = isEntity ? JSON.stringify(resource) : resource;
@@ -18999,22 +18999,22 @@ var wp;
   }
 
   // packages/core-data/build-module/hooks/use-entity-block-editor.js
-  var import_element6 = __toESM(require_element());
-  var import_data9 = __toESM(require_data());
-  var import_blocks4 = __toESM(require_blocks());
+  var import_element6 = __toESM(require_element(), 1);
+  var import_data9 = __toESM(require_data(), 1);
+  var import_blocks4 = __toESM(require_blocks(), 1);
 
   // packages/core-data/build-module/hooks/use-entity-id.js
-  var import_element5 = __toESM(require_element());
+  var import_element5 = __toESM(require_element(), 1);
   function useEntityId(kind, name) {
     const context = (0, import_element5.useContext)(EntityContext);
     return context?.[kind]?.[name];
   }
 
   // packages/core-data/build-module/footnotes/index.js
-  var import_rich_text2 = __toESM(require_rich_text());
+  var import_rich_text2 = __toESM(require_rich_text(), 1);
 
   // packages/core-data/build-module/footnotes/get-rich-text-values-cached.js
-  var import_block_editor = __toESM(require_block_editor());
+  var import_block_editor = __toESM(require_block_editor(), 1);
   var unlockedApis;
   var cache = /* @__PURE__ */ new WeakMap();
   function getRichTextValuesCached(block) {
@@ -19239,8 +19239,8 @@ var wp;
   }
 
   // packages/core-data/build-module/hooks/use-entity-prop.js
-  var import_element7 = __toESM(require_element());
-  var import_data10 = __toESM(require_data());
+  var import_element7 = __toESM(require_element(), 1);
+  var import_data10 = __toESM(require_data(), 1);
   function useEntityProp(kind, name, prop, _id) {
     const providerId = useEntityId(kind, name);
     const id2 = _id ?? providerId;

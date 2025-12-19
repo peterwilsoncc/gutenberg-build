@@ -540,7 +540,7 @@ var wp;
   };
 
   // packages/i18n/build-module/default-i18n.js
-  var import_hooks = __toESM(require_hooks());
+  var import_hooks = __toESM(require_hooks(), 1);
   var i18n = createI18n(void 0, void 0, import_hooks.defaultHooks);
   var default_i18n_default = i18n;
   var getLocaleData = i18n.getLocaleData.bind(i18n);

@@ -46,7 +46,7 @@ var wp;
   });
 
   // packages/notices/build-module/store/index.js
-  var import_data = __toESM(require_data());
+  var import_data = __toESM(require_data(), 1);
 
   // packages/notices/build-module/store/utils/on-sub-key.js
   var onSubKey = (actionProperty) => (reducer) => (state = {}, action) => {
