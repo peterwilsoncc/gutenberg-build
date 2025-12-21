@@ -1492,9 +1492,37 @@ var getNodesWithStyles = (tree, blockSelectors) => {
   }
   Object.entries(import_blocks.__EXPERIMENTAL_ELEMENTS).forEach(([name, selector]) => {
     if (tree.styles?.elements?.[name]) {
+      const elementStyles = tree.styles?.elements?.[name] ?? {};
+      const finalSelector = selector;
+      let textIndentStyles = null;
+      if (name === "text" && elementStyles?.typography?.textIndent) {
+        textIndentStyles = {
+          typography: {
+            textIndent: elementStyles.typography.textIndent
+          }
+        };
+        const stylesWithoutTextIndent = { ...elementStyles };
+        if (stylesWithoutTextIndent.typography) {
+          const { textIndent, ...restTypography } = stylesWithoutTextIndent.typography;
+          stylesWithoutTextIndent.typography = restTypography;
+        }
+        if (Object.keys(stylesWithoutTextIndent).length > 0) {
+          nodes.push({
+            styles: stylesWithoutTextIndent,
+            selector: finalSelector,
+            skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]
+          });
+        }
+        nodes.push({
+          styles: textIndentStyles,
+          selector: "p + p",
+          skipSelectorWrapper: true
+        });
+        return;
+      }
       nodes.push({
-        styles: tree.styles?.elements?.[name] ?? {},
-        selector,
+        styles: elementStyles,
+        selector: finalSelector,
         // Top level elements that don't use a class name should not receive the
         // `:root :where()` wrapper to maintain backwards compatibility.
         skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]

@@ -10450,9 +10450,37 @@ var wp;
     }
     Object.entries(import_blocks8.__EXPERIMENTAL_ELEMENTS).forEach(([name2, selector]) => {
       if (tree.styles?.elements?.[name2]) {
+        const elementStyles = tree.styles?.elements?.[name2] ?? {};
+        const finalSelector = selector;
+        let textIndentStyles = null;
+        if (name2 === "text" && elementStyles?.typography?.textIndent) {
+          textIndentStyles = {
+            typography: {
+              textIndent: elementStyles.typography.textIndent
+            }
+          };
+          const stylesWithoutTextIndent = { ...elementStyles };
+          if (stylesWithoutTextIndent.typography) {
+            const { textIndent, ...restTypography } = stylesWithoutTextIndent.typography;
+            stylesWithoutTextIndent.typography = restTypography;
+          }
+          if (Object.keys(stylesWithoutTextIndent).length > 0) {
+            nodes.push({
+              styles: stylesWithoutTextIndent,
+              selector: finalSelector,
+              skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name2]
+            });
+          }
+          nodes.push({
+            styles: textIndentStyles,
+            selector: "p + p",
+            skipSelectorWrapper: true
+          });
+          return;
+        }
         nodes.push({
-          styles: tree.styles?.elements?.[name2] ?? {},
-          selector,
+          styles: elementStyles,
+          selector: finalSelector,
           // Top level elements that don't use a class name should not receive the
           // `:root :where()` wrapper to maintain backwards compatibility.
           skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name2]
@@ -15671,7 +15699,8 @@ var wp;
           inheritedValue: inheritedStyle,
           value: style,
           onChange: setStyle2,
-          settings
+          settings,
+          isGlobalStyles: true
         }
       ),
       hasDimensionsPanel && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
