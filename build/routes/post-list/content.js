@@ -16175,6 +16175,10 @@ var css = `/**
 /**
  * Reset the WP Admin page styles for Gutenberg-like pages.
  */
+/**
+ * Creates a checkerboard pattern background to indicate transparency.
+ * @param {String} $size - The size of the squares in the checkerboard pattern. Default is 12px.
+ */
 :root {
   --wp-block-synced-color: #7a00df;
   --wp-block-synced-color--rgb: 122, 0, 223;
