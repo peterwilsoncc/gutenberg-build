@@ -4488,9 +4488,8 @@ var wp;
     apiVersion: 3,
     name: "core/breadcrumbs",
     title: "Breadcrumbs",
-    __experimental: true,
     category: "theme",
-    description: "Display a breadcrumb trail for hierarchical post types or based on taxonomy terms.",
+    description: "Display a breadcrumb trail showing the path to the current page.",
     textdomain: "default",
     attributes: {
       prefersTaxonomy: {
@@ -4575,6 +4574,7 @@ var wp;
   function BreadcrumbEdit({
     attributes: attributes3,
     setAttributes,
+    name: name117,
     context: { postId, postType, templateSlug }
   }) {
     const {
@@ -4632,7 +4632,7 @@ var wp;
     const { content } = (0, import_server_side_render2.useServerSideRender)({
       attributes: attributes3,
       skipBlockSupportAttributes: true,
-      block: "core/breadcrumbs",
+      block: name117,
       urlQueryArgs: { post_id: postId, invalidationKey }
     });
     if (isLoading) {
@@ -66487,10 +66487,10 @@ ${declarations}
       terms_query_exports,
       term_template_exports,
       query_title_exports,
-      post_author_biography_exports
+      post_author_biography_exports,
+      breadcrumbs_exports
     ];
     if (window?.__experimentalEnableBlockExperiments) {
-      blocks.push(breadcrumbs_exports);
       blocks.push(tab_exports);
       blocks.push(tabs_exports);
     }
