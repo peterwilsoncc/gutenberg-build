@@ -16644,6 +16644,13 @@ If there's a particular need for this, please submit a feature request at https:
     } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
     const fields = (0, import_element54.useMemo)(
       () => [
+        // Media field definitions from @wordpress/media-fields
+        // Cast is safe because RestAttachment has the same properties as Attachment
+        {
+          ...media_thumbnail_default,
+          enableHiding: false
+          // Within the modal, the thumbnail should always be shown.
+        },
         {
           id: "title",
           type: "text",
@@ -16653,9 +16660,6 @@ If there's a particular need for this, please submit a feature request at https:
             return titleValue || (0, import_i18n57.__)("(no title)");
           }
         },
-        // Media field definitions from @wordpress/media-fields
-        // Cast is safe because RestAttachment has the same properties as Attachment
-        media_thumbnail_default,
         alt_text_default,
         caption_default,
         description_default,
