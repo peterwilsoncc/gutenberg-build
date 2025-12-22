@@ -14412,7 +14412,7 @@ function UploadFonts() {
   };
   return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "font-library__tabpanel-layout", children: [
     /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.DropZone, { onFilesDrop: handleDropZone }),
-    /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_components30.__experimentalVStack, { className: "font-library__local-fonts", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_components30.__experimentalVStack, { className: "font-library__local-fonts", justify: "start", children: [
       notice && /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
         import_components30.Notice,
         {
@@ -14445,7 +14445,6 @@ function UploadFonts() {
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.__experimentalSpacer, { margin: 2 }),
       /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components30.__experimentalText, { className: "font-library__upload-area__text", children: (0, import_i18n16.__)(
         "Uploaded fonts appear in your library and can be used in your theme. Supported formats: .ttf, .otf, .woff, and .woff2."
       ) })
