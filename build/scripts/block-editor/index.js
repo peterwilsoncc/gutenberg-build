@@ -11147,7 +11147,7 @@ var wp;
   }
   var isBlockHidden = (state, clientId) => {
     const blockName = getBlockName(state, clientId);
-    if (!(0, import_blocks4.hasBlockSupport)(state, blockName, "visibility", true)) {
+    if (!(0, import_blocks4.hasBlockSupport)(blockName, "visibility", true)) {
       return false;
     }
     const attributes = state.blocks.attributes.get(clientId);
