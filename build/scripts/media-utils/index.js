@@ -3114,7 +3114,7 @@ var wp;
                   {
                     colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + (hasBulkActions ? 1 : 0) + (actions?.length ? 1 : 0),
                     className: "dataviews-view-table__group-header-cell",
-                    children: (0, import_i18n14.sprintf)(
+                    children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n14.sprintf)(
                       // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                       (0, import_i18n14.__)("%1$s: %2$s"),
                       groupField.label,
@@ -3621,7 +3621,7 @@ var wp;
       children: [
         hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components10.__experimentalVStack, { spacing: 4, children: Array.from(dataByGroup.entries()).map(
           ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_components10.__experimentalVStack, { spacing: 2, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h3", { className: "dataviews-view-grid__group-header", children: (0, import_i18n17.sprintf)(
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n17.sprintf)(
               // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
               (0, import_i18n17.__)("%1$s: %2$s"),
               groupField.label,
@@ -4083,7 +4083,7 @@ var wp;
               className: clsx_default("dataviews-view-list", className),
               children: Array.from(dataByGroup.entries()).map(
                 ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_components11.__experimentalVStack, { spacing: 2, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h3", { className: "dataviews-view-list__group-header", children: (0, import_i18n18.sprintf)(
+                  /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n18.sprintf)(
                     // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                     (0, import_i18n18.__)("%1$s: %2$s"),
                     groupField.label,
@@ -4165,9 +4165,10 @@ var wp;
     groupName,
     groupData,
     groupField,
+    showLabel = true,
     children
   }) {
-    const groupHeader = (0, import_element13.createInterpolateElement)(
+    const groupHeader = showLabel ? (0, import_element13.createInterpolateElement)(
       // translators: %s: The label of the field e.g. "Status".
       (0, import_i18n19.sprintf)((0, import_i18n19.__)("%s: <groupName />"), groupField.label).trim(),
       {
@@ -4179,7 +4180,7 @@ var wp;
           }
         )
       }
-    );
+    ) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(groupField.render, { item: groupData[0], field: groupField });
     return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
       import_components12.__experimentalVStack,
       {
@@ -4418,6 +4419,7 @@ var wp;
             groupName,
             groupData,
             groupField,
+            showLabel: view.groupBy?.showLabel !== false,
             children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
               ActivityItems,
               {
@@ -4894,6 +4896,7 @@ var wp;
   function GridGroup({
     groupName,
     groupField,
+    showLabel = true,
     children
   }) {
     const headerId = (0, import_compose6.useInstanceId)(
@@ -4912,12 +4915,12 @@ var wp;
             {
               className: "dataviews-view-picker-grid-group__header",
               id: headerId,
-              children: (0, import_i18n22.sprintf)(
+              children: showLabel ? (0, import_i18n22.sprintf)(
                 // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                 (0, import_i18n22.__)("%1$s: %2$s"),
                 groupField.label,
                 groupName
-              )
+              ) : groupName
             }
           ),
           children
@@ -5000,6 +5003,7 @@ var wp;
                 {
                   groupName,
                   groupField,
+                  showLabel: view.groupBy?.showLabel !== false,
                   children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
                     GridItems,
                     {
@@ -5411,7 +5415,7 @@ var wp;
                             colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + 1,
                             className: "dataviews-view-table__group-header-cell",
                             role: "presentation",
-                            children: (0, import_i18n23.sprintf)(
+                            children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n23.sprintf)(
                               // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                               (0, import_i18n23.__)("%1$s: %2$s"),
                               groupField.label,
