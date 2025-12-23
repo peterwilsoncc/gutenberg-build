@@ -5398,6 +5398,7 @@ var wp;
     data,
     field,
     onChange,
+    hideLabelFromVision,
     allowedTypes = ["image"],
     multiple
   }) {
@@ -5442,7 +5443,7 @@ var wp;
         render: ({ open }) => {
           const addButtonLabel = attachments?.length ? (0, import_i18n13.__)("Add files") : field.placeholder || (0, import_i18n13.__)("Choose file");
           return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_components5.__experimentalVStack, { spacing: 2, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.VisuallyHidden, { as: "label", children: field.label }),
+            field.label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.VisuallyHidden, { as: "legend", children: field.label }) : /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.BaseControl.VisualLabel, { as: "legend", children: field.label })),
             !!attachments?.length && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalVStack, { spacing: 2, children: attachments.map((attachment) => /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
               "div",
               {

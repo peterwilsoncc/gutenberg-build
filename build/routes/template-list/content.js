@@ -18172,6 +18172,7 @@ fieldset.fields__media-edit {
   border: 0;
   padding: 0;
   margin: 0;
+  width: 100%;
 }
 
 fieldset.fields__media-edit .fields__media-edit-row {

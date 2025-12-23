@@ -45604,7 +45604,8 @@ If there's a particular need for this, please submit a feature request at https:
           {
             id: "featured_media",
             layout: {
-              type: "regular"
+              type: "regular",
+              labelPosition: "none"
             }
           },
           {
