@@ -7393,6 +7393,7 @@ var wp;
       interactivity: {
         clientNavigation: true
       },
+      listView: true,
       contentRole: true
     },
     editorStyle: "wp-block-buttons-editor",
@@ -30185,7 +30186,8 @@ ${js}
       __experimentalSlashInserter: true,
       interactivity: {
         clientNavigation: true
-      }
+      },
+      listView: true
     },
     selectors: {
       border: ".wp-block-list:not(.wp-block-list .wp-block-list)"
@@ -57228,7 +57230,8 @@ ${js}
           style: true
         }
       },
-      contentRole: true
+      contentRole: true,
+      listView: true
     },
     styles: [
       { name: "default", label: "Default", isDefault: true },
