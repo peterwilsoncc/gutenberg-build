@@ -16696,7 +16696,7 @@ If there's a particular need for this, please submit a feature request at https:
               "attachment",
               selectedPostsQuery
             );
-            const transformedPosts = selectedPosts?.map(transformAttachment);
+            const transformedPosts = (selectedPosts ?? []).map(transformAttachment).filter(Boolean);
             const selectedItems = multiple ? transformedPosts : transformedPosts?.[0];
             onSelect(selectedItems);
           }

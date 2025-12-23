@@ -2822,11 +2822,15 @@ function FontLibraryProvider({ children }) {
         let isANewFontFamily = false;
         const fontFamilyRecords = await (0, import_data6.resolveSelect)(
           import_core_data5.store
-        ).getEntityRecords("postType", "wp_font_family", {
-          slug: fontFamilyToInstall.slug,
-          per_page: 1,
-          _embed: true
-        });
+        ).getEntityRecords(
+          "postType",
+          "wp_font_family",
+          {
+            slug: fontFamilyToInstall.slug,
+            per_page: 1,
+            _embed: true
+          }
+        );
         const fontFamilyPost = fontFamilyRecords && fontFamilyRecords.length > 0 ? fontFamilyRecords[0] : null;
         let installedFontFamily = fontFamilyPost ? {
           id: fontFamilyPost.id,
@@ -2860,6 +2864,7 @@ function FontLibraryProvider({ children }) {
         let unsuccessfullyInstalledFontFaces = [];
         if (fontFamilyToInstall?.fontFace?.length ?? 0 > 0) {
           const response = await batchInstallFontFaces(
+            // @ts-expect-error - Type mismatch: WpFontFamily.id can be number | string, but batchInstallFontFaces expects only string.
             installedFontFamily.id,
             makeFontFacesFormData(
               fontFamilyToInstall
@@ -2896,6 +2901,7 @@ function FontLibraryProvider({ children }) {
       );
       if (fontFamiliesToActivate.length > 0) {
         const activeFonts = activateCustomFontFamilies(
+          // @ts-expect-error - Type mismatch: items may have id as number | string, but FontFamily.id should be string | undefined.
           fontFamiliesToActivate
         );
         await saveFontFamilies(activeFonts);

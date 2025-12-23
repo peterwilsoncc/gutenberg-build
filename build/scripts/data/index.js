@@ -2434,7 +2434,9 @@ var wp;
   // packages/data/build-module/index.js
   var defaultRegistry = default_registry_default;
   var combineReducers2 = combineReducers;
-  var resolveSelect2 = (storeNameOrDescriptor) => defaultRegistry.resolveSelect(storeNameOrDescriptor);
+  function resolveSelect2(storeNameOrDescriptor) {
+    return defaultRegistry.resolveSelect(storeNameOrDescriptor);
+  }
   var suspendSelect = (storeNameOrDescriptor) => defaultRegistry.suspendSelect(storeNameOrDescriptor);
   var subscribe = (listener, storeNameOrDescriptor) => defaultRegistry.subscribe(listener, storeNameOrDescriptor);
   var registerGenericStore = defaultRegistry.registerGenericStore;
