@@ -59613,11 +59613,11 @@ var wp;
   ];
   var getAllOperatorNames = () => OPERATORS.map((op) => op.name);
 
-  // packages/dataviews/build-module/dataform-controls/checkbox.js
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.js
   var import_components209 = __toESM(require_components(), 1);
   var import_element216 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/dataform-controls/utils/get-custom-validity.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.js
   function getCustomValidity(isValid2, validity) {
     let customValidity;
     if (isValid2?.required && validity?.required) {
@@ -59640,7 +59640,7 @@ var wp;
     return customValidity;
   }
 
-  // packages/dataviews/build-module/dataform-controls/checkbox.js
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.js
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedCheckboxControl } = unlock3(import_components209.privateApis);
   function Checkbox({
@@ -61299,13 +61299,13 @@ var wp;
     return addYears(date, -amount, options);
   }
 
-  // packages/dataviews/build-module/dataform-controls/datetime.js
+  // packages/dataviews/build-module/components/dataform-controls/datetime.js
   var import_components211 = __toESM(require_components(), 1);
   var import_element218 = __toESM(require_element(), 1);
   var import_i18n201 = __toESM(require_i18n(), 1);
   var import_date3 = __toESM(require_date(), 1);
 
-  // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.js
   var import_components210 = __toESM(require_components(), 1);
   var import_element217 = __toESM(require_element(), 1);
   var import_i18n200 = __toESM(require_i18n(), 1);
@@ -61401,7 +61401,7 @@ var wp;
     return parsed && isValid(parsed) ? parsed : null;
   }
 
-  // packages/dataviews/build-module/dataform-controls/datetime.js
+  // packages/dataviews/build-module/components/dataform-controls/datetime.js
   var import_jsx_runtime379 = __toESM(require_jsx_runtime(), 1);
   var { DateCalendar, ValidatedInputControl } = unlock3(import_components211.privateApis);
   var formatDateTime = (date) => {
@@ -61572,7 +61572,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/date.js
+  // packages/dataviews/build-module/components/dataform-controls/date.js
   var import_components212 = __toESM(require_components(), 1);
   var import_element219 = __toESM(require_element(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
@@ -62141,10 +62141,10 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/email.js
+  // packages/dataviews/build-module/components/dataform-controls/email.js
   var import_components214 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.js
   var import_components213 = __toESM(require_components(), 1);
   var import_element220 = __toESM(require_element(), 1);
   var import_jsx_runtime381 = __toESM(require_jsx_runtime(), 1);
@@ -62192,7 +62192,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/email.js
+  // packages/dataviews/build-module/components/dataform-controls/email.js
   var import_jsx_runtime382 = __toESM(require_jsx_runtime(), 1);
   function Email({
     data,
@@ -62217,7 +62217,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/telephone.js
+  // packages/dataviews/build-module/components/dataform-controls/telephone.js
   var import_components215 = __toESM(require_components(), 1);
   var import_jsx_runtime383 = __toESM(require_jsx_runtime(), 1);
   function Telephone({
@@ -62243,7 +62243,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/url.js
+  // packages/dataviews/build-module/components/dataform-controls/url.js
   var import_components216 = __toESM(require_components(), 1);
   var import_jsx_runtime384 = __toESM(require_jsx_runtime(), 1);
   function Url({
@@ -62269,7 +62269,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.js
   var import_components217 = __toESM(require_components(), 1);
   var import_element221 = __toESM(require_element(), 1);
   var import_i18n203 = __toESM(require_i18n(), 1);
@@ -62402,19 +62402,19 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/integer.js
+  // packages/dataviews/build-module/components/dataform-controls/integer.js
   var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
   function Integer(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(ValidatedNumber, { ...props });
   }
 
-  // packages/dataviews/build-module/dataform-controls/number.js
+  // packages/dataviews/build-module/components/dataform-controls/number.js
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
   function Number2(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(ValidatedNumber, { ...props });
   }
 
-  // packages/dataviews/build-module/dataform-controls/radio.js
+  // packages/dataviews/build-module/components/dataform-controls/radio.js
   var import_components218 = __toESM(require_components(), 1);
   var import_element222 = __toESM(require_element(), 1);
   var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
@@ -62454,7 +62454,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/select.js
+  // packages/dataviews/build-module/components/dataform-controls/select.js
   var import_components219 = __toESM(require_components(), 1);
   var import_element223 = __toESM(require_element(), 1);
   var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
@@ -62497,7 +62497,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/text.js
+  // packages/dataviews/build-module/components/dataform-controls/text.js
   var import_element224 = __toESM(require_element(), 1);
   var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
   function Text8({
@@ -62525,7 +62525,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/toggle.js
+  // packages/dataviews/build-module/components/dataform-controls/toggle.js
   var import_components220 = __toESM(require_components(), 1);
   var import_element225 = __toESM(require_element(), 1);
   var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
@@ -62557,7 +62557,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/textarea.js
+  // packages/dataviews/build-module/components/dataform-controls/textarea.js
   var import_components221 = __toESM(require_components(), 1);
   var import_element226 = __toESM(require_element(), 1);
   var import_jsx_runtime392 = __toESM(require_jsx_runtime(), 1);
@@ -62596,7 +62596,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/toggle-group.js
+  // packages/dataviews/build-module/components/dataform-controls/toggle-group.js
   var import_components222 = __toESM(require_components(), 1);
   var import_element227 = __toESM(require_element(), 1);
   var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
@@ -62649,7 +62649,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/array.js
+  // packages/dataviews/build-module/components/dataform-controls/array.js
   var import_components223 = __toESM(require_components(), 1);
   var import_element228 = __toESM(require_element(), 1);
   var import_jsx_runtime394 = __toESM(require_jsx_runtime(), 1);
@@ -62736,7 +62736,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/color.js
+  // packages/dataviews/build-module/components/dataform-controls/color.js
   var import_components224 = __toESM(require_components(), 1);
   var import_element229 = __toESM(require_element(), 1);
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
@@ -62827,7 +62827,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/password.js
+  // packages/dataviews/build-module/components/dataform-controls/password.js
   var import_components225 = __toESM(require_components(), 1);
   var import_element230 = __toESM(require_element(), 1);
   var import_i18n204 = __toESM(require_i18n(), 1);
@@ -62872,7 +62872,7 @@ var wp;
     return Array.isArray(field.elements) && field.elements.length > 0 || typeof field.getElements === "function";
   }
 
-  // packages/dataviews/build-module/dataform-controls/index.js
+  // packages/dataviews/build-module/components/dataform-controls/index.js
   var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
   var FORM_CONTROLS = {
     array: ArrayControl,
@@ -63957,7 +63957,7 @@ var wp;
     });
   }
 
-  // packages/dataviews/build-module/components/dataform/index.js
+  // packages/dataviews/build-module/dataform/index.js
   var import_element240 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-context/index.js
@@ -63975,14 +63975,14 @@ var wp;
   }
   var dataform_context_default = DataFormContext;
 
-  // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
+  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.js
   var import_element239 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/regular/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/regular/index.js
   var import_element232 = __toESM(require_element(), 1);
   var import_components226 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/normalize-form.js
+  // packages/dataviews/build-module/components/dataform-layouts/normalize-form.js
   var DEFAULT_LAYOUT = {
     type: "regular",
     labelPosition: "top"
@@ -64081,7 +64081,7 @@ var wp;
   }
   var normalize_form_default = normalizeForm;
 
-  // packages/dataviews/build-module/dataform-layouts/regular/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/regular/index.js
   var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
   function Header({ title }) {
     return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
@@ -64191,17 +64191,17 @@ var wp;
     ) });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/panel/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/index.js
   var import_components230 = __toESM(require_components(), 1);
   var import_element236 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.js
   var import_components228 = __toESM(require_components(), 1);
   var import_i18n212 = __toESM(require_i18n(), 1);
   var import_element233 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/panel/summary-button.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.js
   var import_components227 = __toESM(require_components(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
@@ -64272,7 +64272,7 @@ var wp;
   }
   var summary_button_default = SummaryButton;
 
-  // packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.js
   var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
     title,
@@ -64399,7 +64399,7 @@ var wp;
   }
   var dropdown_default2 = PanelDropdown;
 
-  // packages/dataviews/build-module/dataform-layouts/panel/modal.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.js
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_components229 = __toESM(require_components(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
@@ -64870,7 +64870,7 @@ var wp;
   }
   var use_form_validity_default = useFormValidity;
 
-  // packages/dataviews/build-module/dataform-layouts/panel/modal.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.js
   var import_jsx_runtime404 = __toESM(require_jsx_runtime(), 1);
   function ModalContent({
     data,
@@ -65027,7 +65027,7 @@ var wp;
   }
   var modal_default = PanelModal;
 
-  // packages/dataviews/build-module/dataform-layouts/get-summary-fields.js
+  // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.js
   function extractSummaryIds(summary) {
     if (Array.isArray(summary)) {
       return summary.map(
@@ -65046,7 +65046,7 @@ var wp;
     return [];
   };
 
-  // packages/dataviews/build-module/dataform-layouts/panel/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/index.js
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
   function getFirstValidationError(validity) {
     if (!validity) {
@@ -65232,7 +65232,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataform-layouts/card/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/card/index.js
   var import_components231 = __toESM(require_components(), 1);
   var import_element237 = __toESM(require_element(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
@@ -65453,7 +65453,7 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/row/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/row/index.js
   var import_components232 = __toESM(require_components(), 1);
   var import_jsx_runtime407 = __toESM(require_jsx_runtime(), 1);
   function Header2({ title }) {
@@ -65528,7 +65528,7 @@ var wp;
     ) }) });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/details/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/details/index.js
   var import_element238 = __toESM(require_element(), 1);
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_jsx_runtime408 = __toESM(require_jsx_runtime(), 1);
@@ -65569,7 +65569,7 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/index.js
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
   var FORM_FIELD_LAYOUTS = [
     {
@@ -65644,7 +65644,7 @@ var wp;
     return FORM_FIELD_LAYOUTS.find((layout) => layout.type === type);
   }
 
-  // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
+  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.js
   var import_jsx_runtime410 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "md", children });
   function DataFormLayout({
@@ -65691,7 +65691,7 @@ var wp;
     }) });
   }
 
-  // packages/dataviews/build-module/components/dataform/index.js
+  // packages/dataviews/build-module/dataform/index.js
   var import_jsx_runtime411 = __toESM(require_jsx_runtime(), 1);
   function DataForm({
     data,

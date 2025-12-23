@@ -23858,7 +23858,7 @@ var wp;
   var import_element136 = __toESM(require_element(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
 
-  // packages/dataviews/build-module/components/dataviews/index.js
+  // packages/dataviews/build-module/dataviews/index.js
   var import_element118 = __toESM(require_element(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
 
@@ -23992,10 +23992,10 @@ var wp;
   DataViewsContext.displayName = "DataViewsContext";
   var dataviews_context_default = DataViewsContext;
 
-  // packages/dataviews/build-module/dataviews-layouts/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/index.js
   var import_i18n102 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/dataviews-layouts/table/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/index.js
   var import_i18n90 = __toESM(require_i18n(), 1);
   var import_components97 = __toESM(require_components(), 1);
   var import_element75 = __toESM(require_element(), 1);
@@ -24611,7 +24611,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/table/column-header-menu.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.js
   var import_i18n87 = __toESM(require_i18n(), 1);
   var import_components95 = __toESM(require_components(), 1);
   var import_element71 = __toESM(require_element(), 1);
@@ -24628,7 +24628,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/table/column-header-menu.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.js
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu6 } = unlock3(import_components95.privateApis);
   function WithMenuSeparators({ children }) {
@@ -24863,7 +24863,7 @@ var wp;
   var ColumnHeaderMenu = _HeaderMenu;
   var column_header_menu_default = ColumnHeaderMenu;
 
-  // packages/dataviews/build-module/dataviews-layouts/utils/item-click-wrapper.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.js
   var import_element72 = __toESM(require_element(), 1);
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
   function getClickableItemProps({
@@ -24936,7 +24936,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", { ...clickProps, ...extraProps, children });
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/table/column-primary.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/column-primary.js
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
   function ColumnPrimary({
     item,
@@ -25006,7 +25006,7 @@ var wp;
   }
   var column_primary_default = ColumnPrimary;
 
-  // packages/dataviews/build-module/dataviews-layouts/table/use-is-horizontal-scroll-end.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/use-is-horizontal-scroll-end.js
   var import_compose14 = __toESM(require_compose(), 1);
   var import_element73 = __toESM(require_element(), 1);
   var import_i18n88 = __toESM(require_i18n(), 1);
@@ -25053,7 +25053,7 @@ var wp;
     return isHorizontalScrollEnd;
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/utils/get-data-by-group.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/get-data-by-group.js
   function getDataByGroup(data, groupByField) {
     return data.reduce((groups, item) => {
       const groupName = groupByField.getValue({ item });
@@ -25202,7 +25202,7 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/table/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/index.js
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   function TableColumnField({
     item,
@@ -25646,18 +25646,18 @@ var wp;
   }
   var table_default = ViewTable;
 
-  // packages/dataviews/build-module/dataviews-layouts/grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/index.js
   var import_components100 = __toESM(require_components(), 1);
   var import_i18n93 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/dataviews-layouts/grid/composite-grid.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.js
   var import_components99 = __toESM(require_components(), 1);
   var import_i18n92 = __toESM(require_i18n(), 1);
   var import_compose15 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_element77 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/dataviews-layouts/grid/preview-size-picker.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.js
   var import_components98 = __toESM(require_components(), 1);
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_element76 = __toESM(require_element(), 1);
@@ -25706,7 +25706,7 @@ var wp;
     }, [context.containerWidth, view.layout?.previewSize]);
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/grid/composite-grid.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.js
   var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   var { Badge } = unlock3(import_components99.privateApis);
   function chunk(array, size) {
@@ -26040,7 +26040,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/index.js
   var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
   function ViewGrid({
     actions,
@@ -26129,7 +26129,7 @@ var wp;
   }
   var grid_default = ViewGrid;
 
-  // packages/dataviews/build-module/dataviews-layouts/list/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/list/index.js
   var import_compose16 = __toESM(require_compose(), 1);
   var import_components101 = __toESM(require_components(), 1);
   var import_element78 = __toESM(require_element(), 1);
@@ -26655,10 +26655,10 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/activity/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/index.js
   var import_components103 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/dataviews-layouts/activity/activity-group.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.js
   var import_i18n95 = __toESM(require_i18n(), 1);
   var import_element79 = __toESM(require_element(), 1);
   var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
@@ -26696,7 +26696,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/activity/activity-item.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.js
   var import_components102 = __toESM(require_components(), 1);
   var import_element80 = __toESM(require_element(), 1);
   var import_data60 = __toESM(require_data(), 1);
@@ -26863,7 +26863,7 @@ var wp;
   }
   var activity_item_default = ActivityItem;
 
-  // packages/dataviews/build-module/dataviews-layouts/activity/activity-items.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-items.js
   var import_react4 = __toESM(require_react(), 1);
   function isDefined3(item) {
     return !!item;
@@ -26893,7 +26893,7 @@ var wp;
     });
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/activity/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/index.js
   var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
   function ViewActivity(props) {
     const { empty, data, fields, isLoading, view, className } = props;
@@ -26948,13 +26948,13 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/picker-grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.js
   var import_components106 = __toESM(require_components(), 1);
   var import_i18n98 = __toESM(require_i18n(), 1);
   var import_compose17 = __toESM(require_compose(), 1);
   var import_element84 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-picker/footer.js
+  // packages/dataviews/build-module/components/dataviews-picker-footer/index.js
   var import_components105 = __toESM(require_components(), 1);
   var import_data61 = __toESM(require_data(), 1);
   var import_element82 = __toESM(require_element(), 1);
@@ -27076,7 +27076,7 @@ var wp;
   }
   var dataviews_pagination_default = (0, import_element81.memo)(DataViewsPagination);
 
-  // packages/dataviews/build-module/components/dataviews-picker/footer.js
+  // packages/dataviews/build-module/components/dataviews-picker-footer/index.js
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   function useIsMultiselectPicker(actions) {
     return (0, import_element82.useMemo)(() => {
@@ -27084,7 +27084,7 @@ var wp;
     }, [actions]);
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/utils/grid-items.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.js
   var import_element83 = __toESM(require_element(), 1);
   var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   var GridItems = (0, import_element83.forwardRef)(({ className, previewSize, ...props }, ref) => {
@@ -27101,7 +27101,7 @@ var wp;
     );
   });
 
-  // packages/dataviews/build-module/dataviews-layouts/picker-grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.js
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   var { Badge: Badge2 } = unlock3(import_components106.privateApis);
   function GridItem3({
@@ -27481,7 +27481,7 @@ var wp;
   }
   var picker_grid_default = ViewPickerGrid;
 
-  // packages/dataviews/build-module/dataviews-layouts/picker-table/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/picker-table/index.js
   var import_i18n99 = __toESM(require_i18n(), 1);
   var import_components107 = __toESM(require_components(), 1);
   var import_element85 = __toESM(require_element(), 1);
@@ -27860,7 +27860,7 @@ var wp;
   }
   var picker_table_default = ViewPickerTable;
 
-  // packages/dataviews/build-module/dataviews-layouts/utils/preview-size-picker.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/preview-size-picker.js
   var import_components108 = __toESM(require_components(), 1);
   var import_i18n100 = __toESM(require_i18n(), 1);
   var import_element86 = __toESM(require_element(), 1);
@@ -27932,7 +27932,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/table/density-picker.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/density-picker.js
   var import_components109 = __toESM(require_components(), 1);
   var import_i18n101 = __toESM(require_i18n(), 1);
   var import_element87 = __toESM(require_element(), 1);
@@ -27989,7 +27989,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/dataviews-layouts/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/index.js
   var VIEW_LAYOUTS = [
     {
       type: LAYOUT_TABLE2,
@@ -33970,11 +33970,11 @@ If there's a particular need for this, please submit a feature request at https:
   var DataViewsViewConfig = (0, import_element102.memo)(_DataViewsViewConfig);
   var dataviews_view_config_default = DataViewsViewConfig;
 
-  // packages/dataviews/build-module/dataform-controls/checkbox.js
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.js
   var import_components119 = __toESM(require_components(), 1);
   var import_element103 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/dataform-controls/utils/get-custom-validity.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.js
   function getCustomValidity(isValid2, validity) {
     let customValidity;
     if (isValid2?.required && validity?.required) {
@@ -33997,7 +33997,7 @@ If there's a particular need for this, please submit a feature request at https:
     return customValidity;
   }
 
-  // packages/dataviews/build-module/dataform-controls/checkbox.js
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.js
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedCheckboxControl } = unlock3(import_components119.privateApis);
   function Checkbox({
@@ -35666,13 +35666,13 @@ If there's a particular need for this, please submit a feature request at https:
     return addYears(date, -amount, options);
   }
 
-  // packages/dataviews/build-module/dataform-controls/datetime.js
+  // packages/dataviews/build-module/components/dataform-controls/datetime.js
   var import_components121 = __toESM(require_components(), 1);
   var import_element105 = __toESM(require_element(), 1);
   var import_i18n114 = __toESM(require_i18n(), 1);
   var import_date3 = __toESM(require_date(), 1);
 
-  // packages/dataviews/build-module/dataform-controls/utils/relative-date-control.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.js
   var import_components120 = __toESM(require_components(), 1);
   var import_element104 = __toESM(require_element(), 1);
   var import_i18n113 = __toESM(require_i18n(), 1);
@@ -35768,7 +35768,7 @@ If there's a particular need for this, please submit a feature request at https:
     return parsed && isValid(parsed) ? parsed : null;
   }
 
-  // packages/dataviews/build-module/dataform-controls/datetime.js
+  // packages/dataviews/build-module/components/dataform-controls/datetime.js
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
   var { DateCalendar, ValidatedInputControl } = unlock3(import_components121.privateApis);
   var formatDateTime = (date) => {
@@ -35939,7 +35939,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/date.js
+  // packages/dataviews/build-module/components/dataform-controls/date.js
   var import_components122 = __toESM(require_components(), 1);
   var import_element106 = __toESM(require_element(), 1);
   var import_i18n115 = __toESM(require_i18n(), 1);
@@ -36508,10 +36508,10 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/email.js
+  // packages/dataviews/build-module/components/dataform-controls/email.js
   var import_components124 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/dataform-controls/utils/validated-input.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.js
   var import_components123 = __toESM(require_components(), 1);
   var import_element107 = __toESM(require_element(), 1);
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
@@ -36559,7 +36559,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/email.js
+  // packages/dataviews/build-module/components/dataform-controls/email.js
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   function Email({
     data,
@@ -36584,7 +36584,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/telephone.js
+  // packages/dataviews/build-module/components/dataform-controls/telephone.js
   var import_components125 = __toESM(require_components(), 1);
   var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   function Telephone({
@@ -36610,7 +36610,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/url.js
+  // packages/dataviews/build-module/components/dataform-controls/url.js
   var import_components126 = __toESM(require_components(), 1);
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   function Url({
@@ -36636,7 +36636,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/utils/validated-number.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.js
   var import_components127 = __toESM(require_components(), 1);
   var import_element108 = __toESM(require_element(), 1);
   var import_i18n116 = __toESM(require_i18n(), 1);
@@ -36769,19 +36769,19 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/integer.js
+  // packages/dataviews/build-module/components/dataform-controls/integer.js
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   function Integer(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(ValidatedNumber, { ...props });
   }
 
-  // packages/dataviews/build-module/dataform-controls/number.js
+  // packages/dataviews/build-module/components/dataform-controls/number.js
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   function Number2(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(ValidatedNumber, { ...props });
   }
 
-  // packages/dataviews/build-module/dataform-controls/radio.js
+  // packages/dataviews/build-module/components/dataform-controls/radio.js
   var import_components128 = __toESM(require_components(), 1);
   var import_element109 = __toESM(require_element(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
@@ -36821,7 +36821,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/select.js
+  // packages/dataviews/build-module/components/dataform-controls/select.js
   var import_components129 = __toESM(require_components(), 1);
   var import_element110 = __toESM(require_element(), 1);
   var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
@@ -36864,7 +36864,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/text.js
+  // packages/dataviews/build-module/components/dataform-controls/text.js
   var import_element111 = __toESM(require_element(), 1);
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
   function Text13({
@@ -36892,7 +36892,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/toggle.js
+  // packages/dataviews/build-module/components/dataform-controls/toggle.js
   var import_components130 = __toESM(require_components(), 1);
   var import_element112 = __toESM(require_element(), 1);
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
@@ -36924,7 +36924,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/textarea.js
+  // packages/dataviews/build-module/components/dataform-controls/textarea.js
   var import_components131 = __toESM(require_components(), 1);
   var import_element113 = __toESM(require_element(), 1);
   var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
@@ -36963,7 +36963,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/toggle-group.js
+  // packages/dataviews/build-module/components/dataform-controls/toggle-group.js
   var import_components132 = __toESM(require_components(), 1);
   var import_element114 = __toESM(require_element(), 1);
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
@@ -37016,7 +37016,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/array.js
+  // packages/dataviews/build-module/components/dataform-controls/array.js
   var import_components133 = __toESM(require_components(), 1);
   var import_element115 = __toESM(require_element(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
@@ -37103,7 +37103,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/color.js
+  // packages/dataviews/build-module/components/dataform-controls/color.js
   var import_components134 = __toESM(require_components(), 1);
   var import_element116 = __toESM(require_element(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
@@ -37194,7 +37194,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-controls/password.js
+  // packages/dataviews/build-module/components/dataform-controls/password.js
   var import_components135 = __toESM(require_components(), 1);
   var import_element117 = __toESM(require_element(), 1);
   var import_i18n117 = __toESM(require_i18n(), 1);
@@ -37239,7 +37239,7 @@ If there's a particular need for this, please submit a feature request at https:
     return Array.isArray(field.elements) && field.elements.length > 0 || typeof field.getElements === "function";
   }
 
-  // packages/dataviews/build-module/dataform-controls/index.js
+  // packages/dataviews/build-module/components/dataform-controls/index.js
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
   var FORM_CONTROLS = {
     array: ArrayControl,
@@ -38324,7 +38324,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // packages/dataviews/build-module/components/dataviews/index.js
+  // packages/dataviews/build-module/dataviews/index.js
   var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
   var defaultGetItemId = (item) => item.id;
   var defaultIsItemClickable = () => true;
@@ -38530,7 +38530,7 @@ If there's a particular need for this, please submit a feature request at https:
   DataViewsSubComponents.Footer = DataViewsFooter;
   var dataviews_default = DataViewsSubComponents;
 
-  // packages/dataviews/build-module/components/dataform/index.js
+  // packages/dataviews/build-module/dataform/index.js
   var import_element128 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-context/index.js
@@ -38548,14 +38548,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var dataform_context_default = DataFormContext;
 
-  // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
+  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.js
   var import_element127 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/regular/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/regular/index.js
   var import_element120 = __toESM(require_element(), 1);
   var import_components136 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/normalize-form.js
+  // packages/dataviews/build-module/components/dataform-layouts/normalize-form.js
   var DEFAULT_LAYOUT = {
     type: "regular",
     labelPosition: "top"
@@ -38654,7 +38654,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var normalize_form_default = normalizeForm;
 
-  // packages/dataviews/build-module/dataform-layouts/regular/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/regular/index.js
   var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
   function Header2({ title }) {
     return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
@@ -38764,17 +38764,17 @@ If there's a particular need for this, please submit a feature request at https:
     ) });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/panel/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/index.js
   var import_components140 = __toESM(require_components(), 1);
   var import_element124 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.js
   var import_components138 = __toESM(require_components(), 1);
   var import_i18n125 = __toESM(require_i18n(), 1);
   var import_element121 = __toESM(require_element(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/dataform-layouts/panel/summary-button.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.js
   var import_components137 = __toESM(require_components(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
@@ -38845,7 +38845,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var summary_button_default = SummaryButton;
 
-  // packages/dataviews/build-module/dataform-layouts/panel/dropdown.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.js
   var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
     title,
@@ -38972,7 +38972,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var dropdown_default = PanelDropdown;
 
-  // packages/dataviews/build-module/dataform-layouts/panel/modal.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.js
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components139 = __toESM(require_components(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
@@ -39443,7 +39443,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var use_form_validity_default = useFormValidity;
 
-  // packages/dataviews/build-module/dataform-layouts/panel/modal.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.js
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   function ModalContent({
     data,
@@ -39600,7 +39600,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var modal_default2 = PanelModal;
 
-  // packages/dataviews/build-module/dataform-layouts/get-summary-fields.js
+  // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.js
   function extractSummaryIds(summary) {
     if (Array.isArray(summary)) {
       return summary.map(
@@ -39619,7 +39619,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [];
   };
 
-  // packages/dataviews/build-module/dataform-layouts/panel/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/index.js
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   function getFirstValidationError(validity) {
     if (!validity) {
@@ -39805,7 +39805,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/dataform-layouts/card/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/card/index.js
   var import_components141 = __toESM(require_components(), 1);
   var import_element125 = __toESM(require_element(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
@@ -40026,7 +40026,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/row/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/row/index.js
   var import_components142 = __toESM(require_components(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   function Header3({ title }) {
@@ -40101,7 +40101,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) }) });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/details/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/details/index.js
   var import_element126 = __toESM(require_element(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
@@ -40142,7 +40142,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/dataviews/build-module/dataform-layouts/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/index.js
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
   var FORM_FIELD_LAYOUTS = [
     {
@@ -40217,7 +40217,7 @@ If there's a particular need for this, please submit a feature request at https:
     return FORM_FIELD_LAYOUTS.find((layout) => layout.type === type);
   }
 
-  // packages/dataviews/build-module/dataform-layouts/data-form-layout.js
+  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.js
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "md", children });
   function DataFormLayout({
@@ -40264,7 +40264,7 @@ If there's a particular need for this, please submit a feature request at https:
     }) });
   }
 
-  // packages/dataviews/build-module/components/dataform/index.js
+  // packages/dataviews/build-module/dataform/index.js
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
   function DataForm({
     data,
