@@ -1622,6 +1622,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
       "button",
       {
+        type: "button",
         className: "wp-block-accordion-heading__toggle",
         style: spacingProps.style,
         children: [
@@ -1882,7 +1883,126 @@ var wp;
       ) });
     }
   };
-  var deprecated_default = [v1];
+  var v2 = {
+    attributes: {
+      openByDefault: {
+        type: "boolean",
+        default: false
+      },
+      title: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: ".wp-block-accordion-heading__toggle-title",
+        role: "content"
+      },
+      level: {
+        type: "number"
+      },
+      iconPosition: {
+        type: "string",
+        enum: ["left", "right"],
+        default: "right"
+      },
+      showIcon: {
+        type: "boolean",
+        default: true
+      }
+    },
+    supports: {
+      anchor: true,
+      color: {
+        background: true,
+        gradients: true
+      },
+      align: false,
+      interactivity: true,
+      spacing: {
+        padding: true,
+        __experimentalDefaultControls: {
+          padding: true
+        },
+        __experimentalSkipSerialization: true,
+        __experimentalSelector: ".wp-block-accordion-heading__toggle"
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      typography: {
+        __experimentalSkipSerialization: [
+          "textDecoration",
+          "letterSpacing"
+        ],
+        fontSize: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true,
+          fontFamily: true
+        }
+      },
+      shadow: true,
+      visibility: false,
+      lock: false
+    },
+    save({ attributes: attributes3 }) {
+      const { level, title, iconPosition, showIcon } = attributes3;
+      const TagName2 = "h" + (level || 3);
+      const typographyProps = (0, import_block_editor8.getTypographyClassesAndStyles)(attributes3);
+      const blockProps = import_block_editor8.useBlockProps.save();
+      const spacingProps = (0, import_block_editor8.__experimentalGetSpacingClassesAndStyles)(attributes3);
+      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        "button",
+        {
+          className: "wp-block-accordion-heading__toggle",
+          style: spacingProps.style,
+          children: [
+            showIcon && iconPosition === "left" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              "span",
+              {
+                className: "wp-block-accordion-heading__toggle-icon",
+                "aria-hidden": "true",
+                children: "+"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              import_block_editor8.RichText.Content,
+              {
+                className: "wp-block-accordion-heading__toggle-title",
+                tagName: "span",
+                value: title,
+                style: {
+                  letterSpacing: typographyProps.style.letterSpacing,
+                  textDecoration: typographyProps.style.textDecoration
+                }
+              }
+            ),
+            showIcon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              "span",
+              {
+                className: "wp-block-accordion-heading__toggle-icon",
+                "aria-hidden": "true",
+                children: "+"
+              }
+            )
+          ]
+        }
+      ) });
+    }
+  };
+  var deprecated_default = [v1, v2];
 
   // packages/block-library/build-module/accordion-heading/index.js
   var { name: name3 } = block_default3;
@@ -10425,7 +10545,7 @@ var wp;
   }
 
   // packages/block-library/build-module/comment-author-name/deprecated.js
-  var v2 = {
+  var v22 = {
     attributes: {
       isLink: {
         type: "boolean",
@@ -10515,7 +10635,7 @@ var wp;
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default8 = [v2, v15];
+  var deprecated_default8 = [v22, v15];
 
   // packages/block-library/build-module/comment-author-name/index.js
   var { name: name19 } = block_default20;
@@ -14017,7 +14137,7 @@ var wp;
       ];
     }
   };
-  var v22 = {
+  var v23 = {
     attributes: {
       ...blockAttributes2,
       title: {
@@ -14156,7 +14276,7 @@ var wp;
       ];
     }
   };
-  var deprecated_default11 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v22, v17];
+  var deprecated_default11 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v23, v17];
 
   // packages/block-library/build-module/cover/edit/index.js
   var import_core_data16 = __toESM(require_core_data(), 1);
@@ -18302,7 +18422,7 @@ ${url}
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes3 } = block_default7;
-  var v23 = {
+  var v24 = {
     attributes: blockAttributes3,
     save({ attributes: attributes3 }) {
       const { url, caption, type, providerNameSlug } = attributes3;
@@ -18340,7 +18460,7 @@ ${url}
       ] });
     }
   };
-  var deprecated5 = [v23, v18];
+  var deprecated5 = [v24, v18];
   var deprecated_default12 = deprecated5;
 
   // packages/block-library/build-module/embed/index.js
@@ -18481,7 +18601,7 @@ ${url}
       ] });
     }
   };
-  var v24 = {
+  var v25 = {
     attributes: {
       id: {
         type: "number"
@@ -18686,7 +18806,7 @@ ${url}
       ] });
     }
   };
-  var deprecated6 = [v32, v24, v19];
+  var deprecated6 = [v32, v25, v19];
   var deprecated_default13 = deprecated6;
 
   // packages/block-library/build-module/file/edit.js
@@ -20101,7 +20221,7 @@ ${url}
   var getNameFromLabelV1 = (content) => {
     return (0, import_remove_accents.default)((0, import_dom.__unstableStripHTML)(content)).replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase().replace(/(^-+)|(-+$)/g, "");
   };
-  var v25 = {
+  var v26 = {
     attributes: {
       type: {
         type: "string",
@@ -20307,7 +20427,7 @@ ${url}
       );
     }
   };
-  var deprecated7 = [v25, v111];
+  var deprecated7 = [v26, v111];
   var deprecated_default15 = deprecated7;
 
   // packages/block-library/build-module/form-input/edit.js
@@ -21682,7 +21802,7 @@ ${url}
       return runV2Migration(attributes3);
     }
   };
-  var v26 = {
+  var v27 = {
     attributes: {
       images: {
         type: "array",
@@ -21883,7 +22003,7 @@ ${url}
       return runV2Migration(attributes3);
     }
   };
-  var deprecated_default16 = [v72, v62, v52, v42, v33, v26, v113];
+  var deprecated_default16 = [v72, v62, v52, v42, v33, v27, v113];
 
   // packages/block-library/build-module/gallery/edit.js
   var import_components45 = __toESM(require_components(), 1);
@@ -24203,7 +24323,7 @@ ${url}
       );
     }
   };
-  var v27 = {
+  var v28 = {
     attributes: {
       ...blockAttributes4,
       customTextColor: {
@@ -24364,7 +24484,7 @@ ${url}
       return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(TagName2, { ...import_block_editor101.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(import_block_editor101.RichText.Content, { value: content }) });
     }
   };
-  var deprecated9 = [v53, v43, v34, v27, v114];
+  var deprecated9 = [v53, v43, v34, v28, v114];
   var deprecated_default18 = deprecated9;
 
   // packages/block-library/build-module/heading/edit.js
@@ -25520,7 +25640,7 @@ ${js}
       );
     }
   };
-  var v28 = {
+  var v29 = {
     attributes: {
       url: {
         type: "string",
@@ -26460,7 +26580,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("figure", { ...import_block_editor109.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var deprecated_default19 = [v82, v73, v63, v54, v44, v35, v28, v115];
+  var deprecated_default19 = [v82, v73, v63, v54, v44, v35, v29, v115];
 
   // packages/block-library/build-module/image/edit.js
   var import_blob12 = __toESM(require_blob(), 1);
@@ -29496,7 +29616,7 @@ ${js}
     },
     migrate: migrateToListV2
   };
-  var v29 = {
+  var v210 = {
     attributes: {
       ordered: {
         type: "boolean",
@@ -29655,7 +29775,7 @@ ${js}
       );
     }
   };
-  var deprecated_default22 = [v36, v29, v117, v0];
+  var deprecated_default22 = [v36, v210, v117, v0];
 
   // packages/block-library/build-module/list/edit.js
   var import_block_editor117 = __toESM(require_block_editor(), 1);
@@ -32012,7 +32132,7 @@ ${js}
       ] });
     }
   };
-  var v210 = {
+  var v211 = {
     attributes: {
       ...v0Attributes,
       backgroundColor: {
@@ -32152,7 +32272,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default24 = [v74, v64, v55, v45, v37, v210, v119];
+  var deprecated_default24 = [v74, v64, v55, v45, v37, v211, v119];
 
   // packages/block-library/build-module/media-text/edit.js
   var import_i18n103 = __toESM(require_i18n(), 1);
@@ -44003,7 +44123,7 @@ ${js}
       return attributes3?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes3?.metadata?.bindings?.datetime?.args?.key;
     }
   };
-  var v211 = {
+  var v212 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -44132,7 +44252,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default27 = [v38, v211, v120];
+  var deprecated_default27 = [v38, v212, v120];
 
   // packages/block-library/build-module/post-date/variations.js
   var import_i18n158 = __toESM(require_i18n(), 1);
@@ -47532,7 +47652,7 @@ ${js}
       };
     }
   };
-  var v212 = {
+  var v213 = {
     attributes: blockAttributes6,
     save({ attributes: attributes3 }) {
       const {
@@ -47674,7 +47794,7 @@ ${js}
       };
     }
   };
-  var deprecated_default29 = [v57, v47, v39, v212, v123, v02];
+  var deprecated_default29 = [v57, v47, v39, v213, v123, v02];
 
   // packages/block-library/build-module/pullquote/edit.js
   var import_i18n173 = __toESM(require_i18n(), 1);
@@ -50222,7 +50342,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_block_editor204.InnerBlocks.Content, {});
     }
   };
-  var v213 = {
+  var v214 = {
     attributes: {
       queryId: {
         type: "number"
@@ -50528,7 +50648,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v66, v58, v48, v310, v213, v124];
+  var deprecated14 = [v66, v58, v48, v310, v214, v124];
   var deprecated_default30 = deprecated14;
 
   // packages/block-library/build-module/query/index.js
@@ -52169,7 +52289,7 @@ ${js}
       return migrateTextAlign3(...migrateToQuoteV2(attributes3));
     }
   };
-  var v214 = {
+  var v215 = {
     attributes: {
       value: {
         type: "string",
@@ -52291,7 +52411,7 @@ ${js}
       );
     }
   };
-  var deprecated_default33 = [v49, v311, v214, v126, v03];
+  var deprecated_default33 = [v49, v311, v215, v126, v03];
 
   // packages/block-library/build-module/quote/edit.js
   var import_i18n204 = __toESM(require_i18n(), 1);
@@ -52857,7 +52977,7 @@ ${js}
 
   // packages/block-library/build-module/block/deprecated.js
   var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
-  var v215 = {
+  var v216 = {
     attributes: {
       ref: {
         type: "number"
@@ -52959,7 +53079,7 @@ ${js}
       };
     }
   };
-  var deprecated_default34 = [v215, v127];
+  var deprecated_default34 = [v216, v127];
 
   // packages/block-library/build-module/block/index.js
   var { name: name90 } = block_default89;
@@ -58616,7 +58736,7 @@ ${js}
       attribute: "data-align"
     }
   };
-  var v216 = {
+  var v217 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -58859,7 +58979,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default40 = [v410, v312, v216, v131];
+  var deprecated_default40 = [v410, v312, v217, v131];
 
   // packages/block-library/build-module/table/edit.js
   var import_element118 = __toESM(require_element(), 1);
@@ -64510,7 +64630,7 @@ ${declarations}
       );
     }
   };
-  var v217 = {
+  var v218 = {
     attributes: {
       content: {
         type: "string",
@@ -64550,7 +64670,7 @@ ${declarations}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default41 = [v217, v133];
+  var deprecated_default41 = [v218, v133];
 
   // packages/block-library/build-module/verse/edit.js
   var import_i18n252 = __toESM(require_i18n(), 1);
