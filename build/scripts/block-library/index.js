@@ -10272,9 +10272,6 @@ var wp;
       linkTarget: {
         type: "string",
         default: "_self"
-      },
-      textAlign: {
-        type: "string"
       }
     },
     usesContext: ["commentId"],
@@ -10296,6 +10293,7 @@ var wp;
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -10332,17 +10330,15 @@ var wp;
   var import_core_data10 = __toESM(require_core_data(), 1);
   var import_components22 = __toESM(require_components(), 1);
   var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
-  function Edit7({
-    attributes: { isLink, linkTarget, textAlign },
-    context: { commentId },
-    setAttributes
-  }) {
+  function Edit7(props) {
+    const {
+      attributes: { isLink, linkTarget },
+      context: { commentId },
+      setAttributes
+    } = props;
+    useDeprecatedTextAlign(props);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const blockProps = (0, import_block_editor47.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+    const blockProps = (0, import_block_editor47.useBlockProps)();
     let displayName = (0, import_data22.useSelect)(
       (select9) => {
         const { getEntityRecord } = select9(import_core_data10.store);
@@ -10356,13 +10352,6 @@ var wp;
       },
       [commentId]
     );
-    const blockControls = /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(import_block_editor47.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
-      import_block_editor47.AlignmentControl,
-      {
-        value: textAlign,
-        onChange: (newAlign) => setAttributes({ textAlign: newAlign })
-      }
-    ) });
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(import_block_editor47.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
       import_components22.__experimentalToolsPanel,
       {
@@ -10431,12 +10420,66 @@ var wp;
     ) : displayName;
     return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(import_jsx_runtime195.Fragment, { children: [
       inspectorControls,
-      blockControls,
       /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { ...blockProps, children: displayAuthor })
     ] });
   }
 
   // packages/block-library/build-module/comment-author-name/deprecated.js
+  var v2 = {
+    attributes: {
+      isLink: {
+        type: "boolean",
+        default: true
+      },
+      linkTarget: {
+        type: "string",
+        default: "_self"
+      },
+      textAlign: {
+        type: "string"
+      }
+    },
+    usesContext: ["commentId"],
+    supports: {
+      html: false,
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      color: {
+        gradients: true,
+        link: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
+    save() {
+      return null;
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes3) {
+      return !!attributes3.textAlign || !!attributes3.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    }
+  };
   var v15 = {
     attributes: {
       isLink: {
@@ -10472,7 +10515,7 @@ var wp;
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default8 = [v15];
+  var deprecated_default8 = [v2, v15];
 
   // packages/block-library/build-module/comment-author-name/index.js
   var { name: name19 } = block_default20;
@@ -13974,7 +14017,7 @@ var wp;
       ];
     }
   };
-  var v2 = {
+  var v22 = {
     attributes: {
       ...blockAttributes2,
       title: {
@@ -14113,7 +14156,7 @@ var wp;
       ];
     }
   };
-  var deprecated_default11 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v2, v17];
+  var deprecated_default11 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v22, v17];
 
   // packages/block-library/build-module/cover/edit/index.js
   var import_core_data16 = __toESM(require_core_data(), 1);
@@ -18259,7 +18302,7 @@ ${url}
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes3 } = block_default7;
-  var v22 = {
+  var v23 = {
     attributes: blockAttributes3,
     save({ attributes: attributes3 }) {
       const { url, caption, type, providerNameSlug } = attributes3;
@@ -18297,7 +18340,7 @@ ${url}
       ] });
     }
   };
-  var deprecated5 = [v22, v18];
+  var deprecated5 = [v23, v18];
   var deprecated_default12 = deprecated5;
 
   // packages/block-library/build-module/embed/index.js
@@ -18438,7 +18481,7 @@ ${url}
       ] });
     }
   };
-  var v23 = {
+  var v24 = {
     attributes: {
       id: {
         type: "number"
@@ -18643,7 +18686,7 @@ ${url}
       ] });
     }
   };
-  var deprecated6 = [v32, v23, v19];
+  var deprecated6 = [v32, v24, v19];
   var deprecated_default13 = deprecated6;
 
   // packages/block-library/build-module/file/edit.js
@@ -20058,7 +20101,7 @@ ${url}
   var getNameFromLabelV1 = (content) => {
     return (0, import_remove_accents.default)((0, import_dom.__unstableStripHTML)(content)).replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase().replace(/(^-+)|(-+$)/g, "");
   };
-  var v24 = {
+  var v25 = {
     attributes: {
       type: {
         type: "string",
@@ -20264,7 +20307,7 @@ ${url}
       );
     }
   };
-  var deprecated7 = [v24, v111];
+  var deprecated7 = [v25, v111];
   var deprecated_default15 = deprecated7;
 
   // packages/block-library/build-module/form-input/edit.js
@@ -21639,7 +21682,7 @@ ${url}
       return runV2Migration(attributes3);
     }
   };
-  var v25 = {
+  var v26 = {
     attributes: {
       images: {
         type: "array",
@@ -21840,7 +21883,7 @@ ${url}
       return runV2Migration(attributes3);
     }
   };
-  var deprecated_default16 = [v72, v62, v52, v42, v33, v25, v113];
+  var deprecated_default16 = [v72, v62, v52, v42, v33, v26, v113];
 
   // packages/block-library/build-module/gallery/edit.js
   var import_components45 = __toESM(require_components(), 1);
@@ -24160,7 +24203,7 @@ ${url}
       );
     }
   };
-  var v26 = {
+  var v27 = {
     attributes: {
       ...blockAttributes4,
       customTextColor: {
@@ -24321,7 +24364,7 @@ ${url}
       return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(TagName2, { ...import_block_editor101.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(import_block_editor101.RichText.Content, { value: content }) });
     }
   };
-  var deprecated9 = [v53, v43, v34, v26, v114];
+  var deprecated9 = [v53, v43, v34, v27, v114];
   var deprecated_default18 = deprecated9;
 
   // packages/block-library/build-module/heading/edit.js
@@ -25477,7 +25520,7 @@ ${js}
       );
     }
   };
-  var v27 = {
+  var v28 = {
     attributes: {
       url: {
         type: "string",
@@ -26417,7 +26460,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("figure", { ...import_block_editor109.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var deprecated_default19 = [v82, v73, v63, v54, v44, v35, v27, v115];
+  var deprecated_default19 = [v82, v73, v63, v54, v44, v35, v28, v115];
 
   // packages/block-library/build-module/image/edit.js
   var import_blob12 = __toESM(require_blob(), 1);
@@ -29453,7 +29496,7 @@ ${js}
     },
     migrate: migrateToListV2
   };
-  var v28 = {
+  var v29 = {
     attributes: {
       ordered: {
         type: "boolean",
@@ -29612,7 +29655,7 @@ ${js}
       );
     }
   };
-  var deprecated_default22 = [v36, v28, v117, v0];
+  var deprecated_default22 = [v36, v29, v117, v0];
 
   // packages/block-library/build-module/list/edit.js
   var import_block_editor117 = __toESM(require_block_editor(), 1);
@@ -31969,7 +32012,7 @@ ${js}
       ] });
     }
   };
-  var v29 = {
+  var v210 = {
     attributes: {
       ...v0Attributes,
       backgroundColor: {
@@ -32109,7 +32152,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default24 = [v74, v64, v55, v45, v37, v29, v119];
+  var deprecated_default24 = [v74, v64, v55, v45, v37, v210, v119];
 
   // packages/block-library/build-module/media-text/edit.js
   var import_i18n103 = __toESM(require_i18n(), 1);
@@ -43960,7 +44003,7 @@ ${js}
       return attributes3?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes3?.metadata?.bindings?.datetime?.args?.key;
     }
   };
-  var v210 = {
+  var v211 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -44089,7 +44132,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default27 = [v38, v210, v120];
+  var deprecated_default27 = [v38, v211, v120];
 
   // packages/block-library/build-module/post-date/variations.js
   var import_i18n158 = __toESM(require_i18n(), 1);
@@ -47489,7 +47532,7 @@ ${js}
       };
     }
   };
-  var v211 = {
+  var v212 = {
     attributes: blockAttributes6,
     save({ attributes: attributes3 }) {
       const {
@@ -47631,7 +47674,7 @@ ${js}
       };
     }
   };
-  var deprecated_default29 = [v57, v47, v39, v211, v123, v02];
+  var deprecated_default29 = [v57, v47, v39, v212, v123, v02];
 
   // packages/block-library/build-module/pullquote/edit.js
   var import_i18n173 = __toESM(require_i18n(), 1);
@@ -50166,7 +50209,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime380.jsx)(import_block_editor203.InnerBlocks.Content, {});
     }
   };
-  var v212 = {
+  var v213 = {
     attributes: {
       queryId: {
         type: "number"
@@ -50472,7 +50515,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v66, v58, v48, v310, v212, v124];
+  var deprecated14 = [v66, v58, v48, v310, v213, v124];
   var deprecated_default30 = deprecated14;
 
   // packages/block-library/build-module/query/index.js
@@ -52113,7 +52156,7 @@ ${js}
       return migrateTextAlign3(...migrateToQuoteV2(attributes3));
     }
   };
-  var v213 = {
+  var v214 = {
     attributes: {
       value: {
         type: "string",
@@ -52235,7 +52278,7 @@ ${js}
       );
     }
   };
-  var deprecated_default33 = [v49, v311, v213, v126, v03];
+  var deprecated_default33 = [v49, v311, v214, v126, v03];
 
   // packages/block-library/build-module/quote/edit.js
   var import_i18n204 = __toESM(require_i18n(), 1);
@@ -52801,7 +52844,7 @@ ${js}
 
   // packages/block-library/build-module/block/deprecated.js
   var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
-  var v214 = {
+  var v215 = {
     attributes: {
       ref: {
         type: "number"
@@ -52903,7 +52946,7 @@ ${js}
       };
     }
   };
-  var deprecated_default34 = [v214, v127];
+  var deprecated_default34 = [v215, v127];
 
   // packages/block-library/build-module/block/index.js
   var { name: name90 } = block_default89;
@@ -58560,7 +58603,7 @@ ${js}
       attribute: "data-align"
     }
   };
-  var v215 = {
+  var v216 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -58803,7 +58846,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default40 = [v410, v312, v215, v131];
+  var deprecated_default40 = [v410, v312, v216, v131];
 
   // packages/block-library/build-module/table/edit.js
   var import_element118 = __toESM(require_element(), 1);
@@ -64454,7 +64497,7 @@ ${declarations}
       );
     }
   };
-  var v216 = {
+  var v217 = {
     attributes: {
       content: {
         type: "string",
@@ -64494,7 +64537,7 @@ ${declarations}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default41 = [v216, v133];
+  var deprecated_default41 = [v217, v133];
 
   // packages/block-library/build-module/verse/edit.js
   var import_i18n252 = __toESM(require_i18n(), 1);
