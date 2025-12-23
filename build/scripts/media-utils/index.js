@@ -16757,6 +16757,7 @@ If there's a particular need for this, please submit a feature request at https:
         onRequestClose: handleModalClose,
         isDismissible,
         className: modalClass,
+        overlayClassName: "media-upload-modal",
         size: "fill",
         headerActions: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
           import_components54.FormFileUpload,
