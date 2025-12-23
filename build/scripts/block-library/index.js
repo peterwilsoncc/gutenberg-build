@@ -7030,7 +7030,15 @@ var wp;
     merge: (a2, { text = "" }) => ({
       ...a2,
       text: (a2.text || "") + text
-    })
+    }),
+    __experimentalLabel(attributes3, { context }) {
+      const { text } = attributes3;
+      const customName = attributes3?.metadata?.name;
+      const hasContent = text?.trim().length > 0;
+      if (context === "list-view" && (customName || hasContent)) {
+        return customName || text;
+      }
+    }
   };
   if (window.__experimentalContentOnlyInspectorFields) {
     settings9[fieldsKey2] = [
