@@ -1276,12 +1276,8 @@ var wp;
 
   // packages/block-library/build-module/accordion-item/edit.js
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-  function Edit2({
-    attributes: attributes3,
-    clientId,
-    setAttributes,
-    context
-  }) {
+  var TEMPLATE = [["core/accordion-heading"], ["core/accordion-panel"]];
+  function Edit2({ attributes: attributes3, clientId, setAttributes }) {
     const { openByDefault } = attributes3;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const { isSelected, getBlockOrder } = (0, import_data3.useSelect)(
@@ -1318,20 +1314,8 @@ var wp;
         "is-open": openByDefault || isSelected
       })
     });
-    const headingLevel = context && context["core/accordion-heading-level"];
     const innerBlocksProps = (0, import_block_editor4.useInnerBlocksProps)(blockProps, {
-      template: [
-        [
-          "core/accordion-heading",
-          headingLevel ? { level: headingLevel } : {}
-        ],
-        [
-          "core/accordion-panel",
-          {
-            openByDefault
-          }
-        ]
-      ],
+      template: TEMPLATE,
       templateLock: "all",
       directInsert: true,
       templateInsertUpdatesSelection: true
@@ -1343,11 +1327,6 @@ var wp;
           label: (0, import_i18n3.__)("Settings"),
           resetAll: () => {
             setAttributes({ openByDefault: false });
-            if (contentBlockClientId) {
-              updateBlockAttributes(contentBlockClientId, {
-                openByDefault: false
-              });
-            }
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
@@ -1358,11 +1337,6 @@ var wp;
               hasValue: () => !!openByDefault,
               onDeselect: () => {
                 setAttributes({ openByDefault: false });
-                if (contentBlockClientId) {
-                  updateBlockAttributes(contentBlockClientId, {
-                    openByDefault: false
-                  });
-                }
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
                 import_components2.ToggleControl,
@@ -1372,14 +1346,6 @@ var wp;
                     setAttributes({
                       openByDefault: value
                     });
-                    if (contentBlockClientId) {
-                      updateBlockAttributes(
-                        contentBlockClientId,
-                        {
-                          openByDefault: value
-                        }
-                      );
-                    }
                   },
                   checked: openByDefault,
                   help: (0, import_i18n3.__)(
@@ -1466,6 +1432,9 @@ var wp;
         type: "boolean",
         default: false
       }
+    },
+    providesContext: {
+      "core/accordion-open-by-default": "openByDefault"
     },
     textdomain: "default",
     style: "wp-block-accordion-item"
@@ -2026,8 +1995,9 @@ var wp;
   // packages/block-library/build-module/accordion-panel/edit.js
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-  function Edit4({ attributes: attributes3 }) {
-    const { allowedBlocks, templateLock, openByDefault, isSelected } = attributes3;
+  function Edit4({ attributes: attributes3, context }) {
+    const { allowedBlocks, templateLock, isSelected } = attributes3;
+    const openByDefault = context["core/accordion-open-by-default"];
     const blockProps = (0, import_block_editor9.useBlockProps)({
       "aria-hidden": !isSelected && !openByDefault,
       role: "region"
@@ -2060,6 +2030,7 @@ var wp;
     category: "design",
     description: "Contains the hidden or revealed content beneath the heading.",
     parent: ["core/accordion-item"],
+    usesContext: ["core/accordion-open-by-default"],
     supports: {
       html: false,
       color: {
@@ -2113,10 +2084,6 @@ var wp;
       templateLock: {
         type: ["string", "boolean"],
         enum: ["all", "insert", "contentOnly", false],
-        default: false
-      },
-      openByDefault: {
-        type: "boolean",
         default: false
       },
       isSelected: {
@@ -10091,7 +10058,7 @@ var wp;
   }
 
   // packages/block-library/build-module/comments/edit/template.js
-  var TEMPLATE = [
+  var TEMPLATE2 = [
     ["core/comments-title"],
     [
       "core/comment-template",
@@ -10170,7 +10137,7 @@ var wp;
     ["core/comments-pagination"],
     ["core/post-comments-form"]
   ];
-  var template_default = TEMPLATE;
+  var template_default = TEMPLATE2;
 
   // packages/block-library/build-module/comments/edit/index.js
   var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
@@ -11405,7 +11372,7 @@ var wp;
 
   // packages/block-library/build-module/comment-template/edit.js
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE2 = [
+  var TEMPLATE3 = [
     ["core/avatar"],
     ["core/comment-author-name"],
     ["core/comment-date"],
@@ -11458,7 +11425,7 @@ var wp;
   }) {
     const { children, ...innerBlocksProps } = (0, import_block_editor53.useInnerBlocksProps)(
       {},
-      { template: TEMPLATE2 }
+      { template: TEMPLATE3 }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)("li", { ...innerBlocksProps, children: [
       comment.commentId === (activeCommentId || firstCommentId) ? children : null,
@@ -11872,7 +11839,7 @@ var wp;
 
   // packages/block-library/build-module/comments-pagination/edit.js
   var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE3 = [
+  var TEMPLATE4 = [
     ["core/comments-pagination-previous"],
     ["core/comments-pagination-numbers"],
     ["core/comments-pagination-next"]
@@ -11895,7 +11862,7 @@ var wp;
     const blockProps = (0, import_block_editor56.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const innerBlocksProps = (0, import_block_editor56.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE3
+      template: TEMPLATE4
     });
     const pageComments = (0, import_data25.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor56.store);
@@ -17162,7 +17129,7 @@ var wp;
   var import_data30 = __toESM(require_data(), 1);
   var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
   var { withIgnoreIMEEvents } = unlock(import_components35.privateApis);
-  var TEMPLATE4 = [
+  var TEMPLATE5 = [
     [
       "core/paragraph",
       {
@@ -17174,7 +17141,7 @@ var wp;
     const { name: name117, showContent, summary, allowedBlocks, placeholder: placeholder2 } = attributes3;
     const blockProps = (0, import_block_editor70.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor70.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE4,
+      template: TEMPLATE5,
       __experimentalCaptureToolbars: true,
       allowedBlocks
     });
@@ -19698,7 +19665,7 @@ ${url}
 
   // packages/block-library/build-module/form/edit.js
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE5 = [
+  var TEMPLATE6 = [
     formSubmissionNotificationSuccess,
     formSubmissionNotificationError,
     [
@@ -19750,7 +19717,7 @@ ${url}
       [clientId]
     );
     const innerBlocksProps = (0, import_block_editor82.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE5,
+      template: TEMPLATE6,
       renderAppender: hasInnerBlocks ? void 0 : import_block_editor82.InnerBlocks.ButtonBlockAppender
     });
     return /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(import_jsx_runtime233.Fragment, { children: [
@@ -20834,7 +20801,7 @@ ${url}
   var import_i18n71 = __toESM(require_i18n(), 1);
   var import_block_editor88 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE6 = [
+  var TEMPLATE7 = [
     [
       "core/buttons",
       {},
@@ -20853,7 +20820,7 @@ ${url}
   var Edit14 = () => {
     const blockProps = (0, import_block_editor88.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor88.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE6,
+      template: TEMPLATE7,
       templateLock: "all"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", { className: "wp-block-form-submit-wrapper", ...innerBlocksProps });
@@ -20908,7 +20875,7 @@ ${url}
   var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_data35 = __toESM(require_data(), 1);
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE7 = [
+  var TEMPLATE8 = [
     [
       "core/paragraph",
       {
@@ -20936,7 +20903,7 @@ ${url}
       [clientId]
     );
     const innerBlocksProps = (0, import_block_editor90.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE7,
+      template: TEMPLATE8,
       renderAppender: hasInnerBlocks ? void 0 : import_block_editor90.InnerBlocks.ButtonBlockAppender
     });
     return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
@@ -29975,7 +29942,7 @@ ${js}
   var DEFAULT_BLOCK4 = {
     name: "core/list-item"
   };
-  var TEMPLATE8 = [["core/list-item"]];
+  var TEMPLATE9 = [["core/list-item"]];
   var NATIVE_MARGIN_SPACING = 8;
   function useMigrateOnLoad(attributes3, clientId) {
     const registry = (0, import_data47.useRegistry)();
@@ -30042,7 +30009,7 @@ ${js}
     const innerBlocksProps = (0, import_block_editor117.useInnerBlocksProps)(blockProps, {
       defaultBlock: DEFAULT_BLOCK4,
       directInsert: true,
-      template: TEMPLATE8,
+      template: TEMPLATE9,
       templateLock: false,
       templateInsertUpdatesSelection: true,
       ...import_element48.Platform.isNative && {
@@ -31358,7 +31325,7 @@ ${js}
   var WIDTH_CONSTRAINT_PERCENTAGE = 15;
   var LINK_DESTINATION_MEDIA3 = "media";
   var LINK_DESTINATION_ATTACHMENT3 = "attachment";
-  var TEMPLATE9 = [
+  var TEMPLATE10 = [
     [
       "core/paragraph",
       {
@@ -32848,7 +32815,7 @@ ${js}
     });
     const innerBlocksProps = (0, import_block_editor133.useInnerBlocksProps)(
       { className: "wp-block-media-text__content" },
-      { template: TEMPLATE9, allowedBlocks }
+      { template: TEMPLATE10, allowedBlocks }
     );
     const blockEditingMode = (0, import_block_editor133.useBlockEditingMode)();
     return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_jsx_runtime281.Fragment, { children: [
@@ -42975,7 +42942,7 @@ ${js}
   var import_element85 = __toESM(require_element(), 1);
   var import_block_editor174 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE10 = [
+  var TEMPLATE11 = [
     ["core/avatar"],
     ["core/comment-author-name"],
     ["core/comment-date"],
@@ -42987,7 +42954,7 @@ ${js}
     const [commentIdInput, setCommentIdInput] = (0, import_element85.useState)(commentId);
     const blockProps = (0, import_block_editor174.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor174.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE10
+      template: TEMPLATE11
     });
     if (!commentId) {
       return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime338.jsxs)(
@@ -45907,7 +45874,7 @@ ${js}
   var import_components104 = __toESM(require_components(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
   var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE11 = [
+  var TEMPLATE12 = [
     ["core/post-title"],
     [
       "core/post-date",
@@ -45927,7 +45894,7 @@ ${js}
   function PostTemplateInnerBlocks({ classList }) {
     const innerBlocksProps = (0, import_block_editor187.useInnerBlocksProps)(
       { className: clsx_default("wp-block-post", classList) },
-      { template: TEMPLATE11, __unstableDisableLayoutClassNames: true }
+      { template: TEMPLATE12, __unstableDisableLayoutClassNames: true }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("li", { ...innerBlocksProps });
   }
@@ -49779,7 +49746,7 @@ ${js}
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl6 } = unlock(import_block_editor200.privateApis);
   var DEFAULTS_POSTS_PER_PAGE = 3;
-  var TEMPLATE12 = [["core/post-template"]];
+  var TEMPLATE13 = [["core/post-template"]];
   function QueryContent({
     attributes: attributes3,
     setAttributes,
@@ -49801,7 +49768,7 @@ ${js}
     const instanceId = (0, import_compose42.useInstanceId)(QueryContent);
     const blockProps = (0, import_block_editor200.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor200.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE12
+      template: TEMPLATE13
     });
     const { postsPerPage } = (0, import_data111.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor200.store);
@@ -50774,7 +50741,7 @@ ${js}
   var import_block_editor205 = __toESM(require_block_editor(), 1);
   var import_i18n193 = __toESM(require_i18n(), 1);
   var import_jsx_runtime381 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE13 = [
+  var TEMPLATE14 = [
     [
       "core/paragraph",
       {
@@ -50787,7 +50754,7 @@ ${js}
   function QueryNoResultsEdit() {
     const blockProps = (0, import_block_editor205.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor205.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE13
+      template: TEMPLATE14
     });
     return /* @__PURE__ */ (0, import_jsx_runtime381.jsx)("div", { ...innerBlocksProps });
   }
@@ -50975,7 +50942,7 @@ ${js}
 
   // packages/block-library/build-module/query-pagination/edit.js
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE14 = [
+  var TEMPLATE15 = [
     ["core/query-pagination-previous"],
     ["core/query-pagination-numbers"],
     ["core/query-pagination-next"]
@@ -51002,7 +50969,7 @@ ${js}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockProps = (0, import_block_editor207.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor207.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE14
+      template: TEMPLATE15
     });
     (0, import_element105.useEffect)(() => {
       if (paginationArrow === "none" && !showLabel) {
@@ -52432,7 +52399,7 @@ ${js}
   var import_deprecated36 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
   var isWebPlatform2 = import_element106.Platform.OS === "web";
-  var TEMPLATE15 = [["core/paragraph", {}]];
+  var TEMPLATE16 = [["core/paragraph", {}]];
   var useMigrateOnLoad2 = (attributes3, clientId) => {
     const registry = (0, import_data117.useRegistry)();
     const { updateBlockAttributes, replaceInnerBlocks } = (0, import_data117.useDispatch)(import_block_editor216.store);
@@ -52470,7 +52437,7 @@ ${js}
       ...!isWebPlatform2 && { style: style2 }
     });
     const innerBlocksProps = (0, import_block_editor216.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE15,
+      template: TEMPLATE16,
       templateInsertUpdatesSelection: true,
       __experimentalCaptureToolbars: true,
       renderAppender: false,
@@ -58052,7 +58019,7 @@ ${js}
 
   // packages/block-library/build-module/tab/edit.js
   var import_jsx_runtime469 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE16 = [
+  var TEMPLATE17 = [
     [
       "core/paragraph",
       {
@@ -58196,7 +58163,7 @@ ${js}
         }
       },
       {
-        template: TEMPLATE16
+        template: TEMPLATE17
       }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(import_jsx_runtime469.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime469.jsxs)("div", { ...blockProps, children: [
@@ -63985,7 +63952,7 @@ ${declarations}
 
   // packages/block-library/build-module/terms-query/edit/terms-query-content.js
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE17 = [["core/term-template"]];
+  var TEMPLATE18 = [["core/term-template"]];
   function TermsQueryContent({
     attributes: attributes3,
     setAttributes,
@@ -63995,7 +63962,7 @@ ${declarations}
     const { tagName: TagName2 } = attributes3;
     const blockProps = (0, import_block_editor264.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor264.useInnerBlocksProps)(blockProps, {
-      template: TEMPLATE17
+      template: TEMPLATE18
     });
     const setQuery = (0, import_element131.useCallback)(
       (newQuery) => setAttributes((prevAttributes) => ({
@@ -64231,11 +64198,11 @@ ${declarations}
   var import_block_editor268 = __toESM(require_block_editor(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE18 = [["core/term-name"]];
+  var TEMPLATE19 = [["core/term-name"]];
   function TermTemplateInnerBlocks({ classList }) {
     const innerBlocksProps = (0, import_block_editor268.useInnerBlocksProps)(
       { className: clsx_default("wp-block-term", classList) },
-      { template: TEMPLATE18, __unstableDisableLayoutClassNames: true }
+      { template: TEMPLATE19, __unstableDisableLayoutClassNames: true }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime508.jsx)("li", { ...innerBlocksProps });
   }
