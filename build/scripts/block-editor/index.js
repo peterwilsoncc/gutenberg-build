@@ -65263,6 +65263,9 @@ var wp;
   function useCardHeader(layout) {
     const { isOpened, isCollapsible } = layout;
     const [isOpen, setIsOpen] = (0, import_element237.useState)(isOpened);
+    (0, import_element237.useEffect)(() => {
+      setIsOpen(isOpened);
+    }, [isOpened]);
     const toggle = (0, import_element237.useCallback)(() => {
       setIsOpen((prev) => !prev);
     }, []);

@@ -459,7 +459,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect45(
+          useEffect46(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -485,7 +485,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React6 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState68 = React6.useState, useEffect45 = React6.useEffect, useLayoutEffect7 = React6.useLayoutEffect, useDebugValue = React6.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React6 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState68 = React6.useState, useEffect46 = React6.useEffect, useLayoutEffect7 = React6.useLayoutEffect, useDebugValue = React6.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React6.useSyncExternalStore ? React6.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -39829,6 +39829,9 @@ If there's a particular need for this, please submit a feature request at https:
   function useCardHeader(layout) {
     const { isOpened, isCollapsible } = layout;
     const [isOpen, setIsOpen] = (0, import_element125.useState)(isOpened);
+    (0, import_element125.useEffect)(() => {
+      setIsOpen(isOpened);
+    }, [isOpened]);
     const toggle = (0, import_element125.useCallback)(() => {
       setIsOpen((prev) => !prev);
     }, []);
