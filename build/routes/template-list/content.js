@@ -785,7 +785,7 @@ var require_url = __commonJS({
   }
 });
 
-// routes/template-list/stage.tsx
+// routes/template-list/stage-activation.tsx
 import {
   useParams,
   useNavigate as useNavigate2,
@@ -1392,12 +1392,12 @@ function DataViewsSelectionCheckbox({
   selection,
   onChangeSelection,
   item,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   titleField,
   disabled,
   ...extraProps
 }) {
-  const id = getItemId2(item);
+  const id = getItemId3(item);
   const checked = !disabled && selection.includes(id);
   const selectionLabel = titleField?.getValue?.({ item }) || (0, import_i18n2.__)("(no title)");
   return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
@@ -1727,7 +1727,7 @@ function BulkSelectionCheckbox({
   onChangeSelection,
   data,
   actions,
-  getItemId: getItemId2
+  getItemId: getItemId3
 }) {
   const selectableItems = (0, import_element7.useMemo)(() => {
     return data.filter((item) => {
@@ -1737,7 +1737,7 @@ function BulkSelectionCheckbox({
     });
   }, [data, actions]);
   const selectedItems = data.filter(
-    (item) => selection.includes(getItemId2(item)) && selectableItems.includes(item)
+    (item) => selection.includes(getItemId3(item)) && selectableItems.includes(item)
   );
   const areAllSelected = selectedItems.length === selectableItems.length;
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
@@ -1751,7 +1751,7 @@ function BulkSelectionCheckbox({
           onChangeSelection([]);
         } else {
           onChangeSelection(
-            selectableItems.map((item) => getItemId2(item))
+            selectableItems.map((item) => getItemId3(item))
           );
         }
       },
@@ -1834,7 +1834,7 @@ function ActionButton({
     action.id
   );
 }
-function renderFooterContent(data, actions, getItemId2, selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection) {
+function renderFooterContent(data, actions, getItemId3, selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection) {
   const message2 = selectedItems.length > 0 ? (0, import_i18n4.sprintf)(
     /* translators: %d: number of items. */
     (0, import_i18n4._n)(
@@ -1863,7 +1863,7 @@ function renderFooterContent(data, actions, getItemId2, selection, actionsToShow
             onChangeSelection,
             data,
             actions,
-            getItemId: getItemId2
+            getItemId: getItemId3
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 }),
@@ -1913,7 +1913,7 @@ function FooterContent({
   actions,
   onChangeSelection,
   data,
-  getItemId: getItemId2
+  getItemId: getItemId3
 }) {
   const [actionInProgress, setActionInProgress] = (0, import_element7.useState)(
     null
@@ -1933,9 +1933,9 @@ function FooterContent({
   }, [data, bulkActions]);
   const selectedItems = (0, import_element7.useMemo)(() => {
     return data.filter(
-      (item) => selection.includes(getItemId2(item)) && selectableItems.includes(item)
+      (item) => selection.includes(getItemId3(item)) && selectableItems.includes(item)
     );
-  }, [selection, data, getItemId2, selectableItems]);
+  }, [selection, data, getItemId3, selectableItems]);
   const actionsToShow = (0, import_element7.useMemo)(
     () => actions.filter((action) => {
       return action.supportsBulk && (!isMobile || action.icon) && selectedItems.some(
@@ -1951,7 +1951,7 @@ function FooterContent({
     return renderFooterContent(
       data,
       actions,
-      getItemId2,
+      getItemId3,
       selection,
       actionsToShow,
       selectedItems,
@@ -1963,7 +1963,7 @@ function FooterContent({
     footerContentRef.current = renderFooterContent(
       data,
       actions,
-      getItemId2,
+      getItemId3,
       selection,
       actionsToShow,
       selectedItems,
@@ -1980,7 +1980,7 @@ function BulkActionsFooter() {
     selection,
     actions = EMPTY_ARRAY,
     onChangeSelection,
-    getItemId: getItemId2
+    getItemId: getItemId3
   } = (0, import_element7.useContext)(dataviews_context_default);
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     FooterContent,
@@ -1989,7 +1989,7 @@ function BulkActionsFooter() {
       onChangeSelection,
       data,
       actions,
-      getItemId: getItemId2
+      getItemId: getItemId3
     }
   );
 }
@@ -2615,7 +2615,7 @@ function TableRow({
   mediaField,
   descriptionField: descriptionField2,
   selection,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   isItemClickable,
   onClickItem,
   renderItemLink,
@@ -2672,7 +2672,7 @@ function TableRow({
             item,
             selection,
             onChangeSelection,
-            getItemId: getItemId2,
+            getItemId: getItemId3,
             titleField,
             disabled: !hasPossibleBulkAction
           }
@@ -2738,7 +2738,7 @@ function ViewTable({
   actions,
   data,
   fields,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   getItemLevel,
   isLoading = false,
   onChangeView,
@@ -2875,7 +2875,7 @@ function ViewTable({
                     onChangeSelection,
                     data,
                     actions,
-                    getItemId: getItemId2
+                    getItemId: getItemId3
                   }
                 )
               }
@@ -2968,20 +2968,20 @@ function ViewTable({
                   hasBulkActions,
                   actions,
                   fields,
-                  id: getItemId2(item) || index.toString(),
+                  id: getItemId3(item) || index.toString(),
                   view,
                   titleField,
                   mediaField,
                   descriptionField: descriptionField2,
                   selection,
-                  getItemId: getItemId2,
+                  getItemId: getItemId3,
                   onChangeSelection,
                   onClickItem,
                   renderItemLink,
                   isItemClickable,
                   isActionsColumnSticky: !isHorizontalScrollEnd
                 },
-                getItemId2(item)
+                getItemId3(item)
               ))
             ] }, `group-${groupName}`)
           ) : /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("tbody", { children: hasData && data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
@@ -2992,13 +2992,13 @@ function ViewTable({
               hasBulkActions,
               actions,
               fields,
-              id: getItemId2(item) || index.toString(),
+              id: getItemId3(item) || index.toString(),
               view,
               titleField,
               mediaField,
               descriptionField: descriptionField2,
               selection,
-              getItemId: getItemId2,
+              getItemId: getItemId3,
               onChangeSelection,
               onClickItem,
               renderItemLink,
@@ -3006,7 +3006,7 @@ function ViewTable({
               isActionsColumnSticky: !isHorizontalScrollEnd,
               posinset: isInfiniteScroll ? index + 1 : void 0
             },
-            getItemId2(item)
+            getItemId3(item)
           )) })
         ]
       }
@@ -3106,7 +3106,7 @@ var GridItem = (0, import_element14.forwardRef)(function GridItem2({
   onClickItem,
   isItemClickable,
   renderItemLink,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   item,
   actions,
   mediaField,
@@ -3120,7 +3120,7 @@ var GridItem = (0, import_element14.forwardRef)(function GridItem2({
 }, ref) {
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const hasBulkAction = useHasAPossibleBulkAction(actions, item);
-  const id = getItemId2(item);
+  const id = getItemId3(item);
   const instanceId = (0, import_compose4.useInstanceId)(GridItem2);
   const isSelected2 = selection.includes(id);
   const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
@@ -3195,7 +3195,7 @@ var GridItem = (0, import_element14.forwardRef)(function GridItem2({
             item,
             selection,
             onChangeSelection,
-            getItemId: getItemId2,
+            getItemId: getItemId3,
             titleField,
             disabled: !hasBulkAction
           }
@@ -3322,7 +3322,7 @@ function CompositeGrid({
   onClickItem,
   isItemClickable,
   renderItemLink,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   actions
 }) {
   const { paginationInfo, resizeObserverRef } = (0, import_element14.useContext)(dataviews_context_default);
@@ -3398,7 +3398,7 @@ function CompositeGrid({
                     onClickItem,
                     isItemClickable,
                     renderItemLink,
-                    getItemId: getItemId2,
+                    getItemId: getItemId3,
                     item,
                     actions,
                     mediaField,
@@ -3413,7 +3413,7 @@ function CompositeGrid({
                   }
                 )
               },
-              getItemId2(item)
+              getItemId3(item)
             );
           })
         },
@@ -3429,7 +3429,7 @@ function ViewGrid({
   actions,
   data,
   fields,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   isLoading,
   onChangeSelection,
   onClickItem,
@@ -3454,7 +3454,7 @@ function ViewGrid({
     onClickItem,
     isItemClickable,
     renderItemLink,
-    getItemId: getItemId2,
+    getItemId: getItemId3,
     actions
   };
   return /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(import_jsx_runtime50.Fragment, {
@@ -3835,7 +3835,7 @@ function ViewList(props) {
     actions,
     data,
     fields,
-    getItemId: getItemId2,
+    getItemId: getItemId3,
     isLoading,
     onChangeSelection,
     selection,
@@ -3845,7 +3845,7 @@ function ViewList(props) {
   } = props;
   const baseId = (0, import_compose5.useInstanceId)(ViewList, "view-list");
   const selectedItem = data?.findLast(
-    (item) => selection.includes(getItemId2(item))
+    (item) => selection.includes(getItemId3(item))
   );
   const titleField = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
@@ -3853,10 +3853,10 @@ function ViewList(props) {
     (field) => field.id === view.descriptionField
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields.find((f2) => fieldId === f2.id)).filter(isDefined2);
-  const onSelect = (item) => onChangeSelection([getItemId2(item)]);
+  const onSelect = (item) => onChangeSelection([getItemId3(item)]);
   const generateCompositeItemIdPrefix = (0, import_element15.useCallback)(
-    (item) => `${baseId}-${getItemId2(item)}`,
-    [baseId, getItemId2]
+    (item) => `${baseId}-${getItemId3(item)}`,
+    [baseId, getItemId3]
   );
   const isActiveCompositeItem = (0, import_element15.useCallback)(
     (item, idToCheck) => {
@@ -4252,7 +4252,7 @@ function isDefined3(item) {
   return !!item;
 }
 function ActivityItems(props) {
-  const { data, fields, getItemId: getItemId2, view } = props;
+  const { data, fields, getItemId: getItemId3, view } = props;
   const titleField = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
   const descriptionField2 = fields.find(
@@ -4264,7 +4264,7 @@ function ActivityItems(props) {
       activity_item_default,
       {
         ...props,
-        key: getItemId2(item),
+        key: getItemId3(item),
         item,
         mediaField,
         titleField,
@@ -4492,7 +4492,7 @@ function GridItem3({
   multiselect,
   selection,
   onChangeSelection,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   item,
   mediaField,
   titleField,
@@ -4504,7 +4504,7 @@ function GridItem3({
   setsize
 }) {
   const { showTitle = true, showMedia = true, showDescription = true } = view;
-  const id = getItemId2(item);
+  const id = getItemId3(item);
   const isSelected2 = selection.includes(id);
   const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
     mediaField.render,
@@ -4545,7 +4545,7 @@ function GridItem3({
             item,
             selection,
             onChangeSelection,
-            getItemId: getItemId2,
+            getItemId: getItemId3,
             titleField,
             disabled: false,
             "aria-hidden": true,
@@ -4682,7 +4682,7 @@ function ViewPickerGrid({
   actions,
   data,
   fields,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   isLoading,
   onChangeSelection,
   selection,
@@ -4772,7 +4772,7 @@ function ViewPickerGrid({
                           multiselect: isMultiselect,
                           selection,
                           onChangeSelection,
-                          getItemId: getItemId2,
+                          getItemId: getItemId3,
                           item,
                           mediaField,
                           titleField,
@@ -4785,7 +4785,7 @@ function ViewPickerGrid({
                           posinset: posInSet,
                           setsize: setSize
                         },
-                        getItemId2(item)
+                        getItemId3(item)
                       );
                     })
                   }
@@ -4829,7 +4829,7 @@ function ViewPickerGrid({
                 multiselect: isMultiselect,
                 selection,
                 onChangeSelection,
-                getItemId: getItemId2,
+                getItemId: getItemId3,
                 item,
                 mediaField,
                 titleField,
@@ -4842,7 +4842,7 @@ function ViewPickerGrid({
                 posinset,
                 setsize: setSize
               },
-              getItemId2(item)
+              getItemId3(item)
             );
           })
         }
@@ -4894,7 +4894,7 @@ function TableRow2({
   mediaField,
   descriptionField: descriptionField2,
   selection,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   onChangeSelection,
   multiselect,
   posinset
@@ -4958,7 +4958,7 @@ function TableRow2({
                 item,
                 selection,
                 onChangeSelection,
-                getItemId: getItemId2,
+                getItemId: getItemId3,
                 titleField,
                 disabled: false,
                 "aria-hidden": true,
@@ -5010,7 +5010,7 @@ function ViewPickerTable({
   actions,
   data,
   fields,
-  getItemId: getItemId2,
+  getItemId: getItemId3,
   isLoading = false,
   onChangeView,
   onChangeSelection,
@@ -5094,7 +5094,7 @@ function ViewPickerTable({
                     onChangeSelection,
                     data,
                     actions,
-                    getItemId: getItemId2
+                    getItemId: getItemId3
                   }
                 ) }),
                 hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("th", { children: titleField && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
@@ -5180,17 +5180,17 @@ function ViewPickerTable({
                     {
                       item,
                       fields,
-                      id: getItemId2(item) || index.toString(),
+                      id: getItemId3(item) || index.toString(),
                       view,
                       titleField,
                       mediaField,
                       descriptionField: descriptionField2,
                       selection,
-                      getItemId: getItemId2,
+                      getItemId: getItemId3,
                       onChangeSelection,
                       multiselect: isMultiselect
                     },
-                    getItemId2(item)
+                    getItemId3(item)
                   ))
                 ]
               },
@@ -5207,18 +5207,18 @@ function ViewPickerTable({
                 {
                   item,
                   fields,
-                  id: getItemId2(item) || index.toString(),
+                  id: getItemId3(item) || index.toString(),
                   view,
                   titleField,
                   mediaField,
                   descriptionField: descriptionField2,
                   selection,
-                  getItemId: getItemId2,
+                  getItemId: getItemId3,
                   onChangeSelection,
                   multiselect: isMultiselect,
                   posinset: index + 1
                 },
-                getItemId2(item)
+                getItemId3(item)
               ))
             }
           )
@@ -10902,7 +10902,7 @@ function DataViewsLayout({ className }) {
     actions = [],
     data,
     fields,
-    getItemId: getItemId2,
+    getItemId: getItemId3,
     getItemLevel,
     isLoading,
     view,
@@ -10926,7 +10926,7 @@ function DataViewsLayout({ className }) {
       actions,
       data,
       fields,
-      getItemId: getItemId2,
+      getItemId: getItemId3,
       getItemLevel,
       isLoading,
       onChangeView,
@@ -15921,7 +15921,7 @@ function DataViews({
   searchLabel = void 0,
   actions = EMPTY_ARRAY5,
   data,
-  getItemId: getItemId2 = defaultGetItemId,
+  getItemId: getItemId3 = defaultGetItemId,
   getItemLevel,
   isLoading = false,
   paginationInfo,
@@ -15963,9 +15963,9 @@ function DataViews({
   const _fields = (0, import_element55.useMemo)(() => normalizeFields(fields), [fields]);
   const _selection = (0, import_element55.useMemo)(() => {
     return selection.filter(
-      (id) => data.some((item) => getItemId2(item) === id)
+      (id) => data.some((item) => getItemId3(item) === id)
     );
-  }, [selection, data, getItemId2]);
+  }, [selection, data, getItemId3]);
   const filters = use_filters_default(_fields, view);
   const hasPrimaryOrLockedFilters = (0, import_element55.useMemo)(
     () => (filters || []).some(
@@ -16031,7 +16031,7 @@ function DataViews({
         onChangeSelection: setSelectionWithChange,
         openedFilter,
         setOpenedFilter,
-        getItemId: getItemId2,
+        getItemId: getItemId3,
         getItemLevel,
         isItemClickable,
         onClickItem,
@@ -16429,7 +16429,7 @@ function Page({
 Page.SidebarToggleFill = SidebarToggleFill;
 var page_default2 = Page;
 
-// routes/template-list/stage.tsx
+// routes/template-list/stage-activation.tsx
 var import_core_data9 = __toESM(require_core_data());
 var import_components52 = __toESM(require_components());
 var import_data13 = __toESM(require_data());
@@ -16487,6 +16487,26 @@ function getDefaultView(activeView) {
   }
   return {
     ...DEFAULT_VIEW,
+    filters: [
+      {
+        field: "author",
+        operator: "isAny",
+        value: [activeView]
+      }
+    ]
+  };
+}
+function getDefaultViewLegacy(activeView) {
+  if (activeView === "all" || !activeView) {
+    return {
+      ...DEFAULT_VIEW,
+      fields: ["author"]
+      // Remove 'active' and 'slug' fields
+    };
+  }
+  return {
+    ...DEFAULT_VIEW,
+    fields: ["author"],
     filters: [
       {
         field: "author",
@@ -18761,13 +18781,13 @@ var css3 = `/**
 }`;
 document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css3));
 
-// routes/template-list/stage.tsx
+// routes/template-list/stage-activation.tsx
 var { usePostActions, templateTitleField } = unlock2(import_editor.privateApis);
 var { Tabs } = unlock2(import_components52.privateApis);
 function getItemId(item) {
   return item.id.toString();
 }
-function TemplateList() {
+function TemplateListActivation() {
   const invalidate = useInvalidate2();
   const { activeView = "active" } = useParams({
     from: "/templates/list/$activeView"
@@ -19032,6 +19052,296 @@ function TemplateList() {
       )
     )
   );
+}
+var stageActivation = TemplateListActivation;
+
+// routes/template-list/stage-legacy.tsx
+import {
+  useParams as useParams2,
+  useNavigate as useNavigate3,
+  useSearch as useSearch2,
+  useInvalidate as useInvalidate3
+} from "@wordpress/route";
+var import_core_data11 = __toESM(require_core_data());
+var import_components53 = __toESM(require_components());
+var import_data14 = __toESM(require_data());
+var import_element66 = __toESM(require_element());
+var import_editor2 = __toESM(require_editor());
+var import_i18n53 = __toESM(require_i18n());
+
+// routes/template-list/use-templates-legacy.ts
+var import_element65 = __toESM(require_element());
+var import_core_data10 = __toESM(require_core_data());
+var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions4 } = unlock2(import_core_data10.privateApis);
+function useTemplatesLegacy(activeView = "all") {
+  const { records, isResolving } = useEntityRecordsWithPermissions4(
+    "postType",
+    "wp_template",
+    {
+      per_page: -1
+    }
+  );
+  const filteredRecords = (0, import_element65.useMemo)(() => {
+    if (!records) {
+      return [];
+    }
+    if (activeView === "all") {
+      return records;
+    }
+    return records.filter(
+      (record) => record.author_text === activeView
+    );
+  }, [records, activeView]);
+  return {
+    records: filteredRecords,
+    isLoading: isResolving,
+    allRecords: records || []
+    // For building author tabs
+  };
+}
+
+// routes/template-list/stage-legacy.tsx
+var { usePostActions: usePostActions2, templateTitleField: templateTitleField2 } = unlock2(import_editor2.privateApis);
+var { Tabs: Tabs2 } = unlock2(import_components53.privateApis);
+function getItemId2(item) {
+  return item.id.toString();
+}
+function TemplateListLegacy() {
+  const invalidate = useInvalidate3();
+  const { activeView = "all" } = useParams2({
+    from: "/templates/list/$activeView"
+  });
+  const navigate = useNavigate3();
+  const searchParams = useSearch2({ from: "/templates/list/$activeView" });
+  const postTypeObject = (0, import_data14.useSelect)(
+    (select2) => select2(import_core_data11.store).getPostType("wp_template"),
+    []
+  );
+  const defaultView = (0, import_element66.useMemo)(() => {
+    return getDefaultViewLegacy(activeView);
+  }, [activeView]);
+  const handleQueryParamsChange = (0, import_element66.useCallback)(
+    (params) => {
+      navigate({
+        search: {
+          ...searchParams,
+          ...params
+        }
+      });
+    },
+    [searchParams, navigate]
+  );
+  const { view, isModified, updateView, resetToDefault } = useView({
+    kind: "postType",
+    name: "wp_template",
+    slug: activeView,
+    defaultView,
+    queryParams: searchParams,
+    onChangeQueryParams: handleQueryParamsChange
+  });
+  const onReset = () => {
+    resetToDefault();
+    invalidate();
+  };
+  const onChangeView = (newView) => {
+    updateView(newView);
+    if (newView.type !== view.type) {
+      invalidate();
+    }
+  };
+  const { records, isLoading, allRecords } = useTemplatesLegacy(activeView);
+  const users = (0, import_data14.useSelect)(
+    (select2) => {
+      const { getUser } = select2(import_core_data11.store);
+      return records.reduce((acc, record) => {
+        if (record.author_text) {
+          if (!acc[record.author_text]) {
+            acc[record.author_text] = record.author_text;
+          }
+        } else if (record.author) {
+          if (!acc[record.author]) {
+            acc[record.author] = getUser(record.author);
+          }
+        }
+        return acc;
+      }, {});
+    },
+    [records]
+  );
+  const fields = (0, import_element66.useMemo)(() => {
+    const elements = [];
+    for (const author in users) {
+      elements.push({
+        value: users[author]?.id ?? author,
+        label: users[author]?.name ?? author
+      });
+    }
+    return [
+      previewField,
+      templateTitleField2,
+      descriptionField,
+      {
+        ...authorField,
+        elements
+      }
+    ];
+  }, [users]);
+  const { data: posts, paginationInfo } = (0, import_element66.useMemo)(() => {
+    return filterSortAndPaginate(records, view, fields);
+  }, [records, view, fields]);
+  const cleanupDeletedPostIdsFromUrl = (0, import_element66.useCallback)(
+    (deletedItems) => {
+      const deletedIds = deletedItems.map(
+        (item) => item.id.toString()
+      );
+      const currentPostIds = searchParams.postIds || [];
+      const remainingPostIds = currentPostIds.filter(
+        (id) => !deletedIds.includes(id)
+      );
+      if (remainingPostIds.length !== currentPostIds.length) {
+        navigate({
+          search: {
+            ...searchParams,
+            postIds: remainingPostIds.length > 0 ? remainingPostIds : void 0
+          }
+        });
+      } else {
+        invalidate();
+      }
+    },
+    [invalidate, searchParams, navigate]
+  );
+  const onActionPerformed = (0, import_element66.useCallback)(
+    (actionId, items) => {
+      if (actionId === "move-to-trash" || actionId === "permanently-delete") {
+        cleanupDeletedPostIdsFromUrl(items);
+      }
+      if (actionId === "duplicate-post") {
+        navigate({
+          to: `/templates/list/all`
+        });
+      }
+    },
+    [cleanupDeletedPostIdsFromUrl, navigate]
+  );
+  const postTypeActions = usePostActions2({
+    postType: "wp_template",
+    context: "list",
+    onActionPerformed
+  });
+  const actions = (0, import_element66.useMemo)(() => {
+    return postTypeActions?.flatMap((action) => {
+      if (action.id === "view-post-revisions") {
+        return [];
+      }
+      return [action];
+    });
+  }, [postTypeActions]);
+  const tabs = (0, import_element66.useMemo)(() => {
+    const baseTabs = [
+      {
+        slug: "all",
+        label: (0, import_i18n53.__)("All templates"),
+        icon: layout_default
+      }
+    ];
+    const authorMap = /* @__PURE__ */ new Map();
+    allRecords.forEach((record) => {
+      if (record.author_text && !authorMap.has(record.author_text)) {
+        authorMap.set(record.author_text, {
+          slug: record.author_text,
+          label: record.author_text
+        });
+      }
+    });
+    const authorTabs = Array.from(authorMap.values());
+    return [...baseTabs, ...authorTabs];
+  }, [allRecords]);
+  const handleTabChange = (0, import_element66.useCallback)(
+    (viewSlug) => {
+      navigate({
+        to: `/templates/list/${viewSlug}`
+      });
+    },
+    [navigate]
+  );
+  if (!postTypeObject) {
+    return null;
+  }
+  const selection = searchParams.postIds ?? [];
+  if (view.type === "list" && selection.length === 0 && posts?.length > 0) {
+    selection.push(posts[0].id.toString());
+  }
+  if (view.type === "list") {
+    selection.splice(1);
+  }
+  return /* @__PURE__ */ React.createElement(
+    page_default2,
+    {
+      title: (0, import_i18n53.__)("Templates"),
+      className: "template-page",
+      actions: /* @__PURE__ */ React.createElement(React.Fragment, null, isModified && /* @__PURE__ */ React.createElement(
+        import_components53.Button,
+        {
+          variant: "tertiary",
+          size: "compact",
+          onClick: onReset
+        },
+        (0, import_i18n53.__)("Reset view")
+      ), /* @__PURE__ */ React.createElement(add_new_template_default, null)),
+      hasPadding: false
+    },
+    tabs.length > 1 && /* @__PURE__ */ React.createElement("div", { className: "routes-template-list__tabs-wrapper" }, /* @__PURE__ */ React.createElement(
+      Tabs2,
+      {
+        onSelect: handleTabChange,
+        selectedTabId: activeView ?? "all"
+      },
+      /* @__PURE__ */ React.createElement(Tabs2.TabList, null, tabs.map((tab) => /* @__PURE__ */ React.createElement(Tabs2.Tab, { tabId: tab.slug, key: tab.slug }, tab.label)))
+    )),
+    /* @__PURE__ */ React.createElement(
+      dataviews_default,
+      {
+        data: posts,
+        fields,
+        view,
+        onChangeView,
+        actions,
+        isLoading,
+        paginationInfo,
+        defaultLayouts: DEFAULT_LAYOUTS,
+        getItemId: getItemId2,
+        selection,
+        onChangeSelection: (items) => {
+          navigate({
+            search: {
+              ...searchParams,
+              postIds: items.length > 0 ? items : void 0,
+              edit: items.length === 0 ? void 0 : searchParams.edit
+            }
+          });
+        },
+        isItemClickable: () => true,
+        onClickItem: (item) => {
+          navigate({
+            to: `/types/wp_template/edit/${encodeURIComponent(
+              item.id
+            )}`
+          });
+        }
+      }
+    )
+  );
+}
+var stageLegacy = TemplateListLegacy;
+
+// routes/template-list/stage.tsx
+function TemplateList() {
+  const isTemplateActivateEnabled = typeof window !== "undefined" && window.__experimentalTemplateActivate;
+  if (isTemplateActivateEnabled) {
+    return /* @__PURE__ */ React.createElement(stageActivation, null);
+  }
+  return /* @__PURE__ */ React.createElement(stageLegacy, null);
 }
 var stage = TemplateList;
 export {
