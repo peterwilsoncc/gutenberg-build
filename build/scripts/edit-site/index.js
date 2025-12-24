@@ -24985,7 +24985,7 @@ var wp;
                 className: "dataviews-view-table__cell-content-wrapper dataviews-title-field",
                 children: [
                   level !== void 0 && level > 0 && /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)("span", { className: "dataviews-view-table__level", children: [
-                    "\u2014".repeat(level),
+                    Array(level).fill("\u2014").join(" "),
                     "\xA0"
                   ] }),
                   /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(titleField.render, { item, field: titleField })
