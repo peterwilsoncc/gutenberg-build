@@ -127,6 +127,9 @@ if ( ! function_exists( 'site_editor_render_page' ) ) {
 	 * Call this function from add_menu_page or add_submenu_page.
 	 */
 	function site_editor_render_page() {
+		// Load build constants
+		$build_constants = require __DIR__ . '/../../constants.php';
+
 		// Set current screen
 		set_current_screen();
 
@@ -213,7 +216,7 @@ if ( ! function_exists( 'site_editor_render_page' ) ) {
 			// Dummy script module to ensure dependencies are loaded
 			wp_register_script_module(
 				'site-editor',
-				plugins_url( 'build', dirname( __FILE__ ) ) . '/pages/site-editor/loader.js',
+				$build_constants['build_url'] . 'pages/site-editor/loader.js',
 				$boot_dependencies
 			);
 
