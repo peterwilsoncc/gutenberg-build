@@ -3048,6 +3048,7 @@ var wp;
       }
     },
     supports: {
+      anchor: true,
       align: true,
       __experimentalBorder: {
         radius: true,
@@ -3258,6 +3259,7 @@ var wp;
     },
     usesContext: ["postType", "postId", "commentId"],
     supports: {
+      anchor: true,
       html: false,
       align: true,
       alignWide: false,
@@ -3886,6 +3888,7 @@ var wp;
       }
     },
     supports: {
+      anchor: true,
       align: true,
       spacing: {
         margin: true
@@ -4613,6 +4616,7 @@ var wp;
     },
     usesContext: ["postId", "postType", "templateSlug"],
     supports: {
+      anchor: true,
       html: false,
       align: ["wide", "full"],
       spacing: {
@@ -7441,6 +7445,7 @@ var wp;
       }
     },
     supports: {
+      anchor: true,
       align: true,
       html: false,
       color: {
@@ -7618,6 +7623,7 @@ var wp;
     },
     usesContext: ["enhancedPagination"],
     supports: {
+      anchor: true,
       align: true,
       html: false,
       spacing: {
@@ -9685,6 +9691,7 @@ var wp;
       }
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       color: {
@@ -10375,6 +10382,7 @@ var wp;
     },
     usesContext: ["commentId"],
     supports: {
+      anchor: true,
       html: false,
       spacing: {
         margin: true,
@@ -10652,6 +10660,7 @@ var wp;
       }
     },
     supports: {
+      anchor: true,
       color: {
         gradients: true,
         link: true,
@@ -10777,6 +10786,7 @@ var wp;
     },
     usesContext: ["commentId"],
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -10989,6 +10999,7 @@ var wp;
       }
     },
     supports: {
+      anchor: true,
       html: false,
       color: {
         link: true,
@@ -11135,6 +11146,7 @@ var wp;
       }
     },
     supports: {
+      anchor: true,
       color: {
         gradients: true,
         link: true,
@@ -11237,6 +11249,7 @@ var wp;
     textdomain: "default",
     usesContext: ["postId"],
     supports: {
+      anchor: true,
       align: true,
       html: false,
       reusable: false,
@@ -11617,6 +11630,7 @@ var wp;
     },
     usesContext: ["postId", "comments/paginationArrow"],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       color: {
@@ -11742,6 +11756,7 @@ var wp;
       "comments/paginationArrow": "paginationArrow"
     },
     supports: {
+      anchor: true,
       align: true,
       reusable: false,
       html: false,
@@ -11951,6 +11966,7 @@ var wp;
     },
     usesContext: ["postId", "comments/paginationArrow"],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       color: {
@@ -12058,6 +12074,7 @@ var wp;
     textdomain: "default",
     usesContext: ["postId"],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       color: {
@@ -12167,7 +12184,7 @@ var wp;
       }
     },
     supports: {
-      anchor: false,
+      anchor: true,
       align: true,
       html: false,
       __experimentalBorder: {
@@ -24915,6 +24932,7 @@ ${url}
       "style"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       typography: {
@@ -28323,6 +28341,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       align: true,
       color: {
         gradients: true,
@@ -28627,6 +28646,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       align: true,
       html: false,
       color: {
@@ -30461,6 +30481,7 @@ ${js}
     keywords: ["equation", "formula", "latex", "mathematics"],
     textdomain: "default",
     supports: {
+      anchor: true,
       html: false,
       __experimentalBorder: {
         color: true,
@@ -31258,6 +31279,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       className: true,
       color: {
         background: true,
@@ -33639,6 +33661,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       customClassName: false,
       className: false,
       html: false,
@@ -33840,6 +33863,7 @@ ${js}
       maxNestingLevel: "maxNestingLevel"
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       ariaLabel: true,
       contentRole: true,
@@ -38729,6 +38753,7 @@ ${js}
       "style"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       __experimentalSlashInserter: true,
@@ -39526,6 +39551,7 @@ ${js}
       "style"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       typography: {
@@ -40007,6 +40033,7 @@ ${js}
     parent: ["core/post-content"],
     textdomain: "default",
     supports: {
+      anchor: true,
       customClassName: false,
       className: false,
       html: false,
@@ -40551,6 +40578,7 @@ ${js}
       "openSubmenusOnClick"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       typography: {
@@ -41124,6 +41152,7 @@ ${js}
       "openSubmenusOnClick"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       lock: false,
@@ -42154,6 +42183,7 @@ ${js}
     },
     usesContext: ["postType", "postId", "queryId"],
     supports: {
+      anchor: true,
       html: false,
       spacing: {
         margin: true,
@@ -42573,6 +42603,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       html: false,
       spacing: {
         margin: true,
@@ -42791,6 +42822,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       spacing: {
         margin: true,
         padding: true
@@ -43041,6 +43073,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -43184,6 +43217,7 @@ ${js}
     },
     usesContext: ["postId", "postType"],
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -43309,6 +43343,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       html: false,
       color: {
         link: true,
@@ -43493,6 +43528,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       layout: true,
@@ -43772,6 +43808,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -44325,6 +44362,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -44656,6 +44694,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       align: ["left", "right", "center", "wide", "full"],
       color: {
         text: false,
@@ -45452,6 +45491,7 @@ ${js}
     },
     usesContext: ["postType"],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       color: {
@@ -45818,6 +45858,7 @@ ${js}
       "postType"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       align: ["wide", "full"],
@@ -46224,6 +46265,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -46508,6 +46550,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       color: {
         gradients: true,
         __experimentalDefaultControls: {
@@ -46780,6 +46823,7 @@ ${js}
       viewportWidth: 350
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       color: {
@@ -48137,6 +48181,7 @@ ${js}
       enhancedPagination: "enhancedPagination"
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       layout: true,
@@ -50714,6 +50759,7 @@ ${js}
     textdomain: "default",
     usesContext: ["queryId", "query"],
     supports: {
+      anchor: true,
       align: true,
       reusable: false,
       html: false,
@@ -50828,6 +50874,7 @@ ${js}
       showLabel: "showLabel"
     },
     supports: {
+      anchor: true,
       align: true,
       reusable: false,
       html: false,
@@ -51103,6 +51150,7 @@ ${js}
       "enhancedPagination"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       color: {
@@ -51212,6 +51260,7 @@ ${js}
     },
     usesContext: ["queryId", "query", "enhancedPagination"],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       color: {
@@ -51353,6 +51402,7 @@ ${js}
       "enhancedPagination"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       color: {
@@ -51483,6 +51533,7 @@ ${js}
     },
     usesContext: ["query"],
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       color: {
@@ -51951,6 +52002,7 @@ ${js}
     },
     usesContext: ["queryId", "query"],
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       spacing: {
@@ -53115,6 +53167,7 @@ ${js}
     },
     usesContext: ["postId"],
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -53289,6 +53342,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       align: true,
       html: false,
       interactivity: {
@@ -53685,6 +53739,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       align: ["left", "center", "right"],
       color: {
         gradients: true,
@@ -54691,6 +54746,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       html: false,
       align: true,
       alignWide: false,
@@ -55383,6 +55439,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       color: {
@@ -55600,6 +55657,7 @@ ${js}
       viewportWidth: 500
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       color: {
@@ -56432,6 +56490,7 @@ ${js}
       "iconBackgroundColorValue"
     ],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       interactivity: {
@@ -60152,6 +60211,7 @@ ${js}
       }
     },
     supports: {
+      anchor: true,
       ariaLabel: true,
       html: false,
       color: {
@@ -61297,6 +61357,7 @@ ${declarations}
       { name: "outline", label: "Outline" }
     ],
     supports: {
+      anchor: true,
       html: false,
       align: true,
       spacing: {
@@ -62758,6 +62819,7 @@ ${declarations}
       }
     },
     supports: {
+      anchor: true,
       html: false,
       color: {
         gradients: true,
@@ -62970,6 +63032,7 @@ ${declarations}
       }
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       color: {
@@ -63161,6 +63224,7 @@ ${declarations}
       }
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       color: {
@@ -63413,6 +63477,7 @@ ${declarations}
       termQuery: "termQuery"
     },
     supports: {
+      anchor: true,
       align: ["wide", "full"],
       html: false,
       layout: true,
@@ -64142,6 +64207,7 @@ ${declarations}
     textdomain: "default",
     usesContext: ["termQuery"],
     supports: {
+      anchor: true,
       reusable: false,
       html: false,
       align: ["wide", "full"],
@@ -66030,6 +66096,7 @@ ${declarations}
     textdomain: "default",
     usesContext: ["postId", "postType"],
     supports: {
+      anchor: true,
       __experimentalBorder: {
         radius: true,
         color: true,
