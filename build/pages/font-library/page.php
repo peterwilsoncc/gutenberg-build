@@ -147,6 +147,11 @@ if ( ! function_exists( 'font_library_render_page' ) ) {
 		// Fire init action for extensions to register routes and menu items
 		do_action( 'font-library_init' );
 
+		// Enqueue command palette assets for boot-based pages
+		if ( function_exists( 'wp_enqueue_command_palette_assets' ) ) {
+			wp_enqueue_command_palette_assets();
+		}
+
 		// Preload REST API data
 		font_library_preload_data();
 

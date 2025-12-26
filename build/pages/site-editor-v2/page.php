@@ -147,6 +147,11 @@ if ( ! function_exists( 'site_editor_v2_render_page' ) ) {
 		// Fire init action for extensions to register routes and menu items
 		do_action( 'site-editor-v2_init' );
 
+		// Enqueue command palette assets for boot-based pages
+		if ( function_exists( 'wp_enqueue_command_palette_assets' ) ) {
+			wp_enqueue_command_palette_assets();
+		}
+
 		// Preload REST API data
 		site_editor_v2_preload_data();
 

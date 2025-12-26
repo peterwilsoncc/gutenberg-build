@@ -70,13 +70,6 @@ var require_core_data = __commonJS({
   }
 });
 
-// package-external:@wordpress/commands
-var require_commands = __commonJS({
-  "package-external:@wordpress/commands"(exports, module) {
-    module.exports = window.wp.commands;
-  }
-});
-
 // package-external:@wordpress/editor
 var require_editor = __commonJS({
   "package-external:@wordpress/editor"(exports, module) {
@@ -109,6 +102,13 @@ var require_html_entities = __commonJS({
 var require_keycodes = __commonJS({
   "package-external:@wordpress/keycodes"(exports, module) {
     module.exports = window.wp.keycodes;
+  }
+});
+
+// package-external:@wordpress/commands
+var require_commands = __commonJS({
+  "package-external:@wordpress/commands"(exports, module) {
+    module.exports = window.wp.commands;
   }
 });
 
@@ -271,7 +271,6 @@ import {
 } from "@wordpress/route";
 
 // packages/boot/build-module/components/root/index.js
-var import_commands2 = __toESM(require_commands(), 1);
 var import_editor4 = __toESM(require_editor(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_components15 = __toESM(require_components(), 1);
@@ -2558,7 +2557,6 @@ function Root() {
         "has-full-canvas": isFullScreen
       }),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_commands2.CommandMenu, {}),
         /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(SavePanel, {}),
         /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_editor4.EditorSnackbars, {}),
         isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
@@ -2785,8 +2783,8 @@ function Router({
 }
 
 // packages/boot/build-module/components/root/single-page.js
-var import_commands3 = __toESM(require_commands(), 1);
 var import_editor5 = __toESM(require_editor(), 1);
+var import_components16 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
 var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 var css11 = `/**
@@ -3077,15 +3075,17 @@ function RootSinglePage() {
   const routeContentModule = currentMatch?.loaderData?.routeContentModule;
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(UserThemeProvider, { isRoot: true, color: { bg: "#f8f8f8" }, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(UserThemeProvider, { color: { bg: "#1d2327" }, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_components16.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(UserThemeProvider, { isRoot: true, color: { bg: "#f8f8f8" }, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(UserThemeProvider, { color: { bg: "#1d2327" }, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
     "div",
     {
-      className: clsx_default("boot-layout boot-layout--single-page", {
-        "has-canvas": !!canvas || canvas === null,
-        "has-full-canvas": isFullScreen
-      }),
+      className: clsx_default(
+        "boot-layout boot-layout--single-page",
+        {
+          "has-canvas": !!canvas || canvas === null,
+          "has-full-canvas": isFullScreen
+        }
+      ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_commands3.CommandMenu, {}),
         /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SavePanel, {}),
         /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_editor5.EditorSnackbars, {}),
         /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(UserThemeProvider, { color: { bg: "#ffffff" }, children: [
@@ -3100,7 +3100,7 @@ function RootSinglePage() {
         ] }) })
       ]
     }
-  ) }) });
+  ) }) }) });
 }
 
 // packages/boot/build-module/components/app/index.js
