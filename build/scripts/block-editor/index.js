@@ -32638,6 +32638,7 @@ var wp;
   var InspectorControlsListView = (0, import_components65.createSlotFill)("InspectorControlsListView");
   var InspectorControlsStyles = (0, import_components65.createSlotFill)("InspectorControlsStyles");
   var InspectorControlsEffects = (0, import_components65.createSlotFill)("InspectorControlsEffects");
+  var InspectorControlsContent = (0, import_components65.createSlotFill)("InspectorControlsContent");
   var groups = {
     default: InspectorControlsDefault,
     advanced: InspectorControlsAdvanced,
@@ -32645,6 +32646,7 @@ var wp;
     bindings: InspectorControlsBindings,
     border: InspectorControlsBorder,
     color: InspectorControlsColor,
+    content: InspectorControlsContent,
     dimensions: InspectorControlsDimensions,
     effects: InspectorControlsEffects,
     filter: InspectorControlsFilter,
@@ -49765,6 +49767,7 @@ var wp;
     multiple = false,
     addToGallery,
     handleUpload = true,
+    variant,
     popoverProps: popoverProps3,
     renderToggle: renderToggle3,
     className
@@ -49840,12 +49843,19 @@ var wp;
       );
     };
     const gallery = multiple && onlyAllowsImages();
+    const mergedPopoverProps = {
+      ...popoverProps3,
+      variant
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
       import_components168.Dropdown,
       {
-        popoverProps: popoverProps3,
+        popoverProps: mergedPopoverProps,
         className,
-        contentClassName: "block-editor-media-replace-flow__options",
+        contentClassName: clsx_default(
+          "block-editor-media-replace-flow__options",
+          variant && `is-variant-${variant}`
+        ),
         renderToggle: ({ isOpen, onToggle }) => {
           if (renderToggle3) {
             return renderToggle3({
@@ -66749,13 +66759,16 @@ var wp;
               contentClientIds
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(Tabs5.TabPanel, { tabId: TAB_CONTENT.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
-            content_tab_default,
-            {
-              rootClientId: clientId,
-              contentClientIds
-            }
-          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime418.jsxs)(Tabs5.TabPanel, { tabId: TAB_CONTENT.name, focusable: false, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(inspector_controls_default.Slot, { group: "content" }),
+            /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
+              content_tab_default,
+              {
+                rootClientId: clientId,
+                contentClientIds
+              }
+            )
+          ] }),
           /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(Tabs5.TabPanel, { tabId: TAB_LIST_VIEW.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(inspector_controls_default.Slot, { group: "list" }) })
         ]
       },
@@ -66782,6 +66795,7 @@ var wp;
       bindings: bindingsGroup,
       border: borderGroup,
       color: colorGroup,
+      content: contentGroup,
       default: defaultGroup,
       dimensions: dimensionsGroup,
       list: listGroup,
@@ -66792,6 +66806,8 @@ var wp;
     } = groups_default;
     const listFills = (0, import_components240.__experimentalUseSlotFills)(listGroup.name);
     const hasListFills = !!listFills && listFills.length;
+    const contentFills = (0, import_components240.__experimentalUseSlotFills)(contentGroup.name);
+    const hasContentFills = !!contentFills && contentFills.length;
     const styleFills = [
       ...(0, import_components240.__experimentalUseSlotFills)(borderGroup.name) || [],
       ...(0, import_components240.__experimentalUseSlotFills)(colorGroup.name) || [],
@@ -66810,14 +66826,16 @@ var wp;
       ...(0, import_components240.__experimentalUseSlotFills)(positionGroup.name) || [],
       ...hasListFills && hasStyleFills > 1 ? advancedFills : []
     ];
-    const hasContentTab = !!(contentClientIds && contentClientIds.length > 0);
-    if (hasListFills && !isSectionBlock2) {
+    const hasContentTab = hasContentFills || !!(contentClientIds && contentClientIds.length > 0);
+    const hasListTab = hasListFills && !isSectionBlock2;
+    if (hasListTab) {
       tabs.push(TAB_LIST_VIEW);
     }
     if (hasContentTab) {
       tabs.push(TAB_CONTENT);
     }
-    if (settingsFills.length && !isSectionBlock2) {
+    if ((settingsFills.length || // Advanded fills who up in settings tab if available or they blend into the default tab, if there's only one tab.
+    advancedFills.length && (hasContentTab || hasListTab)) && !isSectionBlock2) {
       tabs.push(TAB_SETTINGS);
     }
     if (hasBlockStyles || hasStyleFills) {
