@@ -52780,6 +52780,15 @@ ${js}
     from: [
       {
         type: "block",
+        blocks: ["core/verse"],
+        transform: ({ content }) => {
+          return (0, import_blocks94.createBlock)("core/quote", {}, [
+            (0, import_blocks94.createBlock)("core/paragraph", { content })
+          ]);
+        }
+      },
+      {
+        type: "block",
         blocks: ["core/pullquote"],
         transform: ({
           value,
@@ -52862,6 +52871,32 @@ ${js}
       }
     ],
     to: [
+      {
+        type: "block",
+        blocks: ["core/verse"],
+        isMatch: ({}, block) => {
+          return block.innerBlocks.every((innerBlock) => {
+            if (innerBlock.name === "core/paragraph") {
+              return true;
+            }
+            const converted = (0, import_blocks94.switchToBlockType)(
+              innerBlock,
+              "core/paragraph"
+            );
+            return converted !== null;
+          });
+        },
+        transform: ({}, innerBlocks) => {
+          const paragraphs = innerBlocks.flatMap((innerBlock) => {
+            if (innerBlock.name === "core/paragraph") {
+              return innerBlock;
+            }
+            return (0, import_blocks94.switchToBlockType)(innerBlock, "core/paragraph") || [];
+          });
+          const content = paragraphs.map(({ attributes: attributes3 }) => attributes3.content || "").filter(Boolean).join("<br>");
+          return (0, import_blocks94.createBlock)("core/verse", { content });
+        }
+      },
       {
         type: "block",
         blocks: ["core/paragraph"],
