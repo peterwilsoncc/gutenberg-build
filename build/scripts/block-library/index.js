@@ -772,6 +772,2995 @@ var wp;
     }
   });
 
+  // node_modules/html-dom-parser/node_modules/domelementtype/lib/index.js
+  var require_lib = __commonJS({
+    "node_modules/html-dom-parser/node_modules/domelementtype/lib/index.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.Doctype = exports.CDATA = exports.Tag = exports.Style = exports.Script = exports.Comment = exports.Directive = exports.Text = exports.Root = exports.isTag = exports.ElementType = void 0;
+      var ElementType;
+      (function(ElementType2) {
+        ElementType2["Root"] = "root";
+        ElementType2["Text"] = "text";
+        ElementType2["Directive"] = "directive";
+        ElementType2["Comment"] = "comment";
+        ElementType2["Script"] = "script";
+        ElementType2["Style"] = "style";
+        ElementType2["Tag"] = "tag";
+        ElementType2["CDATA"] = "cdata";
+        ElementType2["Doctype"] = "doctype";
+      })(ElementType = exports.ElementType || (exports.ElementType = {}));
+      function isTag(elem) {
+        return elem.type === ElementType.Tag || elem.type === ElementType.Script || elem.type === ElementType.Style;
+      }
+      exports.isTag = isTag;
+      exports.Root = ElementType.Root;
+      exports.Text = ElementType.Text;
+      exports.Directive = ElementType.Directive;
+      exports.Comment = ElementType.Comment;
+      exports.Script = ElementType.Script;
+      exports.Style = ElementType.Style;
+      exports.Tag = ElementType.Tag;
+      exports.CDATA = ElementType.CDATA;
+      exports.Doctype = ElementType.Doctype;
+    }
+  });
+
+  // node_modules/html-dom-parser/node_modules/domhandler/lib/node.js
+  var require_node = __commonJS({
+    "node_modules/html-dom-parser/node_modules/domhandler/lib/node.js"(exports) {
+      "use strict";
+      var __extends = exports && exports.__extends || /* @__PURE__ */ (function() {
+        var extendStatics = function(d2, b2) {
+          extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
+            d3.__proto__ = b3;
+          } || function(d3, b3) {
+            for (var p2 in b3) if (Object.prototype.hasOwnProperty.call(b3, p2)) d3[p2] = b3[p2];
+          };
+          return extendStatics(d2, b2);
+        };
+        return function(d2, b2) {
+          if (typeof b2 !== "function" && b2 !== null)
+            throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
+          extendStatics(d2, b2);
+          function __257() {
+            this.constructor = d2;
+          }
+          d2.prototype = b2 === null ? Object.create(b2) : (__257.prototype = b2.prototype, new __257());
+        };
+      })();
+      var __assign2 = exports && exports.__assign || function() {
+        __assign2 = Object.assign || function(t2) {
+          for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+            s2 = arguments[i2];
+            for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+              t2[p2] = s2[p2];
+          }
+          return t2;
+        };
+        return __assign2.apply(this, arguments);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.cloneNode = exports.hasChildren = exports.isDocument = exports.isDirective = exports.isComment = exports.isText = exports.isCDATA = exports.isTag = exports.Element = exports.Document = exports.CDATA = exports.NodeWithChildren = exports.ProcessingInstruction = exports.Comment = exports.Text = exports.DataNode = exports.Node = void 0;
+      var domelementtype_1 = require_lib();
+      var Node = (
+        /** @class */
+        (function() {
+          function Node2() {
+            this.parent = null;
+            this.prev = null;
+            this.next = null;
+            this.startIndex = null;
+            this.endIndex = null;
+          }
+          Object.defineProperty(Node2.prototype, "parentNode", {
+            // Read-write aliases for properties
+            /**
+             * Same as {@link parent}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.parent;
+            },
+            set: function(parent) {
+              this.parent = parent;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Node2.prototype, "previousSibling", {
+            /**
+             * Same as {@link prev}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.prev;
+            },
+            set: function(prev) {
+              this.prev = prev;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Node2.prototype, "nextSibling", {
+            /**
+             * Same as {@link next}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.next;
+            },
+            set: function(next) {
+              this.next = next;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Node2.prototype.cloneNode = function(recursive) {
+            if (recursive === void 0) {
+              recursive = false;
+            }
+            return cloneNode(this, recursive);
+          };
+          return Node2;
+        })()
+      );
+      exports.Node = Node;
+      var DataNode = (
+        /** @class */
+        (function(_super) {
+          __extends(DataNode2, _super);
+          function DataNode2(data) {
+            var _this = _super.call(this) || this;
+            _this.data = data;
+            return _this;
+          }
+          Object.defineProperty(DataNode2.prototype, "nodeValue", {
+            /**
+             * Same as {@link data}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.data;
+            },
+            set: function(data) {
+              this.data = data;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return DataNode2;
+        })(Node)
+      );
+      exports.DataNode = DataNode;
+      var Text2 = (
+        /** @class */
+        (function(_super) {
+          __extends(Text3, _super);
+          function Text3() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.Text;
+            return _this;
+          }
+          Object.defineProperty(Text3.prototype, "nodeType", {
+            get: function() {
+              return 3;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Text3;
+        })(DataNode)
+      );
+      exports.Text = Text2;
+      var Comment2 = (
+        /** @class */
+        (function(_super) {
+          __extends(Comment3, _super);
+          function Comment3() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.Comment;
+            return _this;
+          }
+          Object.defineProperty(Comment3.prototype, "nodeType", {
+            get: function() {
+              return 8;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Comment3;
+        })(DataNode)
+      );
+      exports.Comment = Comment2;
+      var ProcessingInstruction2 = (
+        /** @class */
+        (function(_super) {
+          __extends(ProcessingInstruction3, _super);
+          function ProcessingInstruction3(name117, data) {
+            var _this = _super.call(this, data) || this;
+            _this.name = name117;
+            _this.type = domelementtype_1.ElementType.Directive;
+            return _this;
+          }
+          Object.defineProperty(ProcessingInstruction3.prototype, "nodeType", {
+            get: function() {
+              return 1;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return ProcessingInstruction3;
+        })(DataNode)
+      );
+      exports.ProcessingInstruction = ProcessingInstruction2;
+      var NodeWithChildren = (
+        /** @class */
+        (function(_super) {
+          __extends(NodeWithChildren2, _super);
+          function NodeWithChildren2(children) {
+            var _this = _super.call(this) || this;
+            _this.children = children;
+            return _this;
+          }
+          Object.defineProperty(NodeWithChildren2.prototype, "firstChild", {
+            // Aliases
+            /** First child of the node. */
+            get: function() {
+              var _a;
+              return (_a = this.children[0]) !== null && _a !== void 0 ? _a : null;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(NodeWithChildren2.prototype, "lastChild", {
+            /** Last child of the node. */
+            get: function() {
+              return this.children.length > 0 ? this.children[this.children.length - 1] : null;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(NodeWithChildren2.prototype, "childNodes", {
+            /**
+             * Same as {@link children}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.children;
+            },
+            set: function(children) {
+              this.children = children;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return NodeWithChildren2;
+        })(Node)
+      );
+      exports.NodeWithChildren = NodeWithChildren;
+      var CDATA = (
+        /** @class */
+        (function(_super) {
+          __extends(CDATA2, _super);
+          function CDATA2() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.CDATA;
+            return _this;
+          }
+          Object.defineProperty(CDATA2.prototype, "nodeType", {
+            get: function() {
+              return 4;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return CDATA2;
+        })(NodeWithChildren)
+      );
+      exports.CDATA = CDATA;
+      var Document = (
+        /** @class */
+        (function(_super) {
+          __extends(Document2, _super);
+          function Document2() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.Root;
+            return _this;
+          }
+          Object.defineProperty(Document2.prototype, "nodeType", {
+            get: function() {
+              return 9;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Document2;
+        })(NodeWithChildren)
+      );
+      exports.Document = Document;
+      var Element2 = (
+        /** @class */
+        (function(_super) {
+          __extends(Element3, _super);
+          function Element3(name117, attribs, children, type) {
+            if (children === void 0) {
+              children = [];
+            }
+            if (type === void 0) {
+              type = name117 === "script" ? domelementtype_1.ElementType.Script : name117 === "style" ? domelementtype_1.ElementType.Style : domelementtype_1.ElementType.Tag;
+            }
+            var _this = _super.call(this, children) || this;
+            _this.name = name117;
+            _this.attribs = attribs;
+            _this.type = type;
+            return _this;
+          }
+          Object.defineProperty(Element3.prototype, "nodeType", {
+            get: function() {
+              return 1;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Element3.prototype, "tagName", {
+            // DOM Level 1 aliases
+            /**
+             * Same as {@link name}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.name;
+            },
+            set: function(name117) {
+              this.name = name117;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Element3.prototype, "attributes", {
+            get: function() {
+              var _this = this;
+              return Object.keys(this.attribs).map(function(name117) {
+                var _a, _b;
+                return {
+                  name: name117,
+                  value: _this.attribs[name117],
+                  namespace: (_a = _this["x-attribsNamespace"]) === null || _a === void 0 ? void 0 : _a[name117],
+                  prefix: (_b = _this["x-attribsPrefix"]) === null || _b === void 0 ? void 0 : _b[name117]
+                };
+              });
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Element3;
+        })(NodeWithChildren)
+      );
+      exports.Element = Element2;
+      function isTag(node) {
+        return (0, domelementtype_1.isTag)(node);
+      }
+      exports.isTag = isTag;
+      function isCDATA(node) {
+        return node.type === domelementtype_1.ElementType.CDATA;
+      }
+      exports.isCDATA = isCDATA;
+      function isText(node) {
+        return node.type === domelementtype_1.ElementType.Text;
+      }
+      exports.isText = isText;
+      function isComment(node) {
+        return node.type === domelementtype_1.ElementType.Comment;
+      }
+      exports.isComment = isComment;
+      function isDirective(node) {
+        return node.type === domelementtype_1.ElementType.Directive;
+      }
+      exports.isDirective = isDirective;
+      function isDocument(node) {
+        return node.type === domelementtype_1.ElementType.Root;
+      }
+      exports.isDocument = isDocument;
+      function hasChildren(node) {
+        return Object.prototype.hasOwnProperty.call(node, "children");
+      }
+      exports.hasChildren = hasChildren;
+      function cloneNode(node, recursive) {
+        if (recursive === void 0) {
+          recursive = false;
+        }
+        var result;
+        if (isText(node)) {
+          result = new Text2(node.data);
+        } else if (isComment(node)) {
+          result = new Comment2(node.data);
+        } else if (isTag(node)) {
+          var children = recursive ? cloneChildren(node.children) : [];
+          var clone_1 = new Element2(node.name, __assign2({}, node.attribs), children);
+          children.forEach(function(child) {
+            return child.parent = clone_1;
+          });
+          if (node.namespace != null) {
+            clone_1.namespace = node.namespace;
+          }
+          if (node["x-attribsNamespace"]) {
+            clone_1["x-attribsNamespace"] = __assign2({}, node["x-attribsNamespace"]);
+          }
+          if (node["x-attribsPrefix"]) {
+            clone_1["x-attribsPrefix"] = __assign2({}, node["x-attribsPrefix"]);
+          }
+          result = clone_1;
+        } else if (isCDATA(node)) {
+          var children = recursive ? cloneChildren(node.children) : [];
+          var clone_2 = new CDATA(children);
+          children.forEach(function(child) {
+            return child.parent = clone_2;
+          });
+          result = clone_2;
+        } else if (isDocument(node)) {
+          var children = recursive ? cloneChildren(node.children) : [];
+          var clone_3 = new Document(children);
+          children.forEach(function(child) {
+            return child.parent = clone_3;
+          });
+          if (node["x-mode"]) {
+            clone_3["x-mode"] = node["x-mode"];
+          }
+          result = clone_3;
+        } else if (isDirective(node)) {
+          var instruction = new ProcessingInstruction2(node.name, node.data);
+          if (node["x-name"] != null) {
+            instruction["x-name"] = node["x-name"];
+            instruction["x-publicId"] = node["x-publicId"];
+            instruction["x-systemId"] = node["x-systemId"];
+          }
+          result = instruction;
+        } else {
+          throw new Error("Not implemented yet: ".concat(node.type));
+        }
+        result.startIndex = node.startIndex;
+        result.endIndex = node.endIndex;
+        if (node.sourceCodeLocation != null) {
+          result.sourceCodeLocation = node.sourceCodeLocation;
+        }
+        return result;
+      }
+      exports.cloneNode = cloneNode;
+      function cloneChildren(childs) {
+        var children = childs.map(function(child) {
+          return cloneNode(child, true);
+        });
+        for (var i2 = 1; i2 < children.length; i2++) {
+          children[i2].prev = children[i2 - 1];
+          children[i2 - 1].next = children[i2];
+        }
+        return children;
+      }
+    }
+  });
+
+  // node_modules/html-dom-parser/node_modules/domhandler/lib/index.js
+  var require_lib2 = __commonJS({
+    "node_modules/html-dom-parser/node_modules/domhandler/lib/index.js"(exports) {
+      "use strict";
+      var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o2, m2, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m2, k2);
+        if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
+          desc = { enumerable: true, get: function() {
+            return m2[k2];
+          } };
+        }
+        Object.defineProperty(o2, k22, desc);
+      }) : (function(o2, m2, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o2[k22] = m2[k2];
+      }));
+      var __exportStar = exports && exports.__exportStar || function(m2, exports2) {
+        for (var p2 in m2) if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p2)) __createBinding(exports2, m2, p2);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.DomHandler = void 0;
+      var domelementtype_1 = require_lib();
+      var node_js_1 = require_node();
+      __exportStar(require_node(), exports);
+      var defaultOpts = {
+        withStartIndices: false,
+        withEndIndices: false,
+        xmlMode: false
+      };
+      var DomHandler = (
+        /** @class */
+        (function() {
+          function DomHandler2(callback, options2, elementCB) {
+            this.dom = [];
+            this.root = new node_js_1.Document(this.dom);
+            this.done = false;
+            this.tagStack = [this.root];
+            this.lastNode = null;
+            this.parser = null;
+            if (typeof options2 === "function") {
+              elementCB = options2;
+              options2 = defaultOpts;
+            }
+            if (typeof callback === "object") {
+              options2 = callback;
+              callback = void 0;
+            }
+            this.callback = callback !== null && callback !== void 0 ? callback : null;
+            this.options = options2 !== null && options2 !== void 0 ? options2 : defaultOpts;
+            this.elementCB = elementCB !== null && elementCB !== void 0 ? elementCB : null;
+          }
+          DomHandler2.prototype.onparserinit = function(parser) {
+            this.parser = parser;
+          };
+          DomHandler2.prototype.onreset = function() {
+            this.dom = [];
+            this.root = new node_js_1.Document(this.dom);
+            this.done = false;
+            this.tagStack = [this.root];
+            this.lastNode = null;
+            this.parser = null;
+          };
+          DomHandler2.prototype.onend = function() {
+            if (this.done)
+              return;
+            this.done = true;
+            this.parser = null;
+            this.handleCallback(null);
+          };
+          DomHandler2.prototype.onerror = function(error) {
+            this.handleCallback(error);
+          };
+          DomHandler2.prototype.onclosetag = function() {
+            this.lastNode = null;
+            var elem = this.tagStack.pop();
+            if (this.options.withEndIndices) {
+              elem.endIndex = this.parser.endIndex;
+            }
+            if (this.elementCB)
+              this.elementCB(elem);
+          };
+          DomHandler2.prototype.onopentag = function(name117, attribs) {
+            var type = this.options.xmlMode ? domelementtype_1.ElementType.Tag : void 0;
+            var element = new node_js_1.Element(name117, attribs, void 0, type);
+            this.addNode(element);
+            this.tagStack.push(element);
+          };
+          DomHandler2.prototype.ontext = function(data) {
+            var lastNode = this.lastNode;
+            if (lastNode && lastNode.type === domelementtype_1.ElementType.Text) {
+              lastNode.data += data;
+              if (this.options.withEndIndices) {
+                lastNode.endIndex = this.parser.endIndex;
+              }
+            } else {
+              var node = new node_js_1.Text(data);
+              this.addNode(node);
+              this.lastNode = node;
+            }
+          };
+          DomHandler2.prototype.oncomment = function(data) {
+            if (this.lastNode && this.lastNode.type === domelementtype_1.ElementType.Comment) {
+              this.lastNode.data += data;
+              return;
+            }
+            var node = new node_js_1.Comment(data);
+            this.addNode(node);
+            this.lastNode = node;
+          };
+          DomHandler2.prototype.oncommentend = function() {
+            this.lastNode = null;
+          };
+          DomHandler2.prototype.oncdatastart = function() {
+            var text = new node_js_1.Text("");
+            var node = new node_js_1.CDATA([text]);
+            this.addNode(node);
+            text.parent = node;
+            this.lastNode = text;
+          };
+          DomHandler2.prototype.oncdataend = function() {
+            this.lastNode = null;
+          };
+          DomHandler2.prototype.onprocessinginstruction = function(name117, data) {
+            var node = new node_js_1.ProcessingInstruction(name117, data);
+            this.addNode(node);
+          };
+          DomHandler2.prototype.handleCallback = function(error) {
+            if (typeof this.callback === "function") {
+              this.callback(error, this.dom);
+            } else if (error) {
+              throw error;
+            }
+          };
+          DomHandler2.prototype.addNode = function(node) {
+            var parent = this.tagStack[this.tagStack.length - 1];
+            var previousSibling = parent.children[parent.children.length - 1];
+            if (this.options.withStartIndices) {
+              node.startIndex = this.parser.startIndex;
+            }
+            if (this.options.withEndIndices) {
+              node.endIndex = this.parser.endIndex;
+            }
+            parent.children.push(node);
+            if (previousSibling) {
+              node.prev = previousSibling;
+              previousSibling.next = node;
+            }
+            node.parent = parent;
+            this.lastNode = null;
+          };
+          return DomHandler2;
+        })()
+      );
+      exports.DomHandler = DomHandler;
+      exports.default = DomHandler;
+    }
+  });
+
+  // node_modules/html-dom-parser/lib/client/constants.js
+  var require_constants = __commonJS({
+    "node_modules/html-dom-parser/lib/client/constants.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.CARRIAGE_RETURN_PLACEHOLDER_REGEX = exports.CARRIAGE_RETURN_PLACEHOLDER = exports.CARRIAGE_RETURN_REGEX = exports.CARRIAGE_RETURN = exports.CASE_SENSITIVE_TAG_NAMES_MAP = exports.CASE_SENSITIVE_TAG_NAMES = void 0;
+      exports.CASE_SENSITIVE_TAG_NAMES = [
+        "animateMotion",
+        "animateTransform",
+        "clipPath",
+        "feBlend",
+        "feColorMatrix",
+        "feComponentTransfer",
+        "feComposite",
+        "feConvolveMatrix",
+        "feDiffuseLighting",
+        "feDisplacementMap",
+        "feDropShadow",
+        "feFlood",
+        "feFuncA",
+        "feFuncB",
+        "feFuncG",
+        "feFuncR",
+        "feGaussianBlur",
+        "feImage",
+        "feMerge",
+        "feMergeNode",
+        "feMorphology",
+        "feOffset",
+        "fePointLight",
+        "feSpecularLighting",
+        "feSpotLight",
+        "feTile",
+        "feTurbulence",
+        "foreignObject",
+        "linearGradient",
+        "radialGradient",
+        "textPath"
+      ];
+      exports.CASE_SENSITIVE_TAG_NAMES_MAP = exports.CASE_SENSITIVE_TAG_NAMES.reduce(function(accumulator, tagName) {
+        accumulator[tagName.toLowerCase()] = tagName;
+        return accumulator;
+      }, {});
+      exports.CARRIAGE_RETURN = "\r";
+      exports.CARRIAGE_RETURN_REGEX = new RegExp(exports.CARRIAGE_RETURN, "g");
+      exports.CARRIAGE_RETURN_PLACEHOLDER = "__HTML_DOM_PARSER_CARRIAGE_RETURN_PLACEHOLDER_".concat(Date.now(), "__");
+      exports.CARRIAGE_RETURN_PLACEHOLDER_REGEX = new RegExp(exports.CARRIAGE_RETURN_PLACEHOLDER, "g");
+    }
+  });
+
+  // node_modules/html-dom-parser/lib/client/utilities.js
+  var require_utilities = __commonJS({
+    "node_modules/html-dom-parser/lib/client/utilities.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.formatAttributes = formatAttributes;
+      exports.escapeSpecialCharacters = escapeSpecialCharacters;
+      exports.revertEscapedCharacters = revertEscapedCharacters;
+      exports.formatDOM = formatDOM;
+      var domhandler_1 = require_lib2();
+      var constants_1 = require_constants();
+      function getCaseSensitiveTagName(tagName) {
+        return constants_1.CASE_SENSITIVE_TAG_NAMES_MAP[tagName];
+      }
+      function formatAttributes(attributes3) {
+        var map = {};
+        var index = 0;
+        var attributesLength = attributes3.length;
+        for (; index < attributesLength; index++) {
+          var attribute = attributes3[index];
+          map[attribute.name] = attribute.value;
+        }
+        return map;
+      }
+      function formatTagName(tagName) {
+        tagName = tagName.toLowerCase();
+        var caseSensitiveTagName = getCaseSensitiveTagName(tagName);
+        if (caseSensitiveTagName) {
+          return caseSensitiveTagName;
+        }
+        return tagName;
+      }
+      function escapeSpecialCharacters(html) {
+        return html.replace(constants_1.CARRIAGE_RETURN_REGEX, constants_1.CARRIAGE_RETURN_PLACEHOLDER);
+      }
+      function revertEscapedCharacters(text) {
+        return text.replace(constants_1.CARRIAGE_RETURN_PLACEHOLDER_REGEX, constants_1.CARRIAGE_RETURN);
+      }
+      function formatDOM(nodes, parent, directive) {
+        if (parent === void 0) {
+          parent = null;
+        }
+        var domNodes = [];
+        var current;
+        var index = 0;
+        var nodesLength = nodes.length;
+        for (; index < nodesLength; index++) {
+          var node = nodes[index];
+          switch (node.nodeType) {
+            case 1: {
+              var tagName = formatTagName(node.nodeName);
+              current = new domhandler_1.Element(tagName, formatAttributes(node.attributes));
+              current.children = formatDOM(
+                // template children are on content
+                tagName === "template" ? node.content.childNodes : node.childNodes,
+                current
+              );
+              break;
+            }
+            case 3:
+              current = new domhandler_1.Text(revertEscapedCharacters(node.nodeValue));
+              break;
+            case 8:
+              current = new domhandler_1.Comment(node.nodeValue);
+              break;
+            default:
+              continue;
+          }
+          var prev = domNodes[index - 1] || null;
+          if (prev) {
+            prev.next = current;
+          }
+          current.parent = parent;
+          current.prev = prev;
+          current.next = null;
+          domNodes.push(current);
+        }
+        if (directive) {
+          current = new domhandler_1.ProcessingInstruction(directive.substring(0, directive.indexOf(" ")).toLowerCase(), directive);
+          current.next = domNodes[0] || null;
+          current.parent = parent;
+          domNodes.unshift(current);
+          if (domNodes[1]) {
+            domNodes[1].prev = domNodes[0];
+          }
+        }
+        return domNodes;
+      }
+    }
+  });
+
+  // node_modules/html-dom-parser/lib/client/domparser.js
+  var require_domparser = __commonJS({
+    "node_modules/html-dom-parser/lib/client/domparser.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.default = domparser;
+      var utilities_1 = require_utilities();
+      var HTML = "html";
+      var HEAD = "head";
+      var BODY = "body";
+      var FIRST_TAG_REGEX = /<([a-zA-Z]+[0-9]?)/;
+      var HEAD_TAG_REGEX = /<head[^]*>/i;
+      var BODY_TAG_REGEX = /<body[^]*>/i;
+      var parseFromDocument = function(html, tagName) {
+        throw new Error("This browser does not support `document.implementation.createHTMLDocument`");
+      };
+      var parseFromString = function(html, tagName) {
+        throw new Error("This browser does not support `DOMParser.prototype.parseFromString`");
+      };
+      var DOMParser = typeof window === "object" && window.DOMParser;
+      if (typeof DOMParser === "function") {
+        domParser_1 = new DOMParser();
+        mimeType_1 = "text/html";
+        parseFromString = function(html, tagName) {
+          if (tagName) {
+            html = "<".concat(tagName, ">").concat(html, "</").concat(tagName, ">");
+          }
+          return domParser_1.parseFromString(html, mimeType_1);
+        };
+        parseFromDocument = parseFromString;
+      }
+      var domParser_1;
+      var mimeType_1;
+      if (typeof document === "object" && document.implementation) {
+        htmlDocument_1 = document.implementation.createHTMLDocument();
+        parseFromDocument = function(html, tagName) {
+          if (tagName) {
+            var element = htmlDocument_1.documentElement.querySelector(tagName);
+            if (element) {
+              element.innerHTML = html;
+            }
+            return htmlDocument_1;
+          }
+          htmlDocument_1.documentElement.innerHTML = html;
+          return htmlDocument_1;
+        };
+      }
+      var htmlDocument_1;
+      var template = typeof document === "object" && document.createElement("template");
+      var parseFromTemplate;
+      if (template && template.content) {
+        parseFromTemplate = function(html) {
+          template.innerHTML = html;
+          return template.content.childNodes;
+        };
+      }
+      function domparser(html) {
+        var _a, _b;
+        html = (0, utilities_1.escapeSpecialCharacters)(html);
+        var match = html.match(FIRST_TAG_REGEX);
+        var firstTagName = match && match[1] ? match[1].toLowerCase() : "";
+        switch (firstTagName) {
+          case HTML: {
+            var doc = parseFromString(html);
+            if (!HEAD_TAG_REGEX.test(html)) {
+              var element = doc.querySelector(HEAD);
+              (_a = element === null || element === void 0 ? void 0 : element.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(element);
+            }
+            if (!BODY_TAG_REGEX.test(html)) {
+              var element = doc.querySelector(BODY);
+              (_b = element === null || element === void 0 ? void 0 : element.parentNode) === null || _b === void 0 ? void 0 : _b.removeChild(element);
+            }
+            return doc.querySelectorAll(HTML);
+          }
+          case HEAD:
+          case BODY: {
+            var elements = parseFromDocument(html).querySelectorAll(firstTagName);
+            if (BODY_TAG_REGEX.test(html) && HEAD_TAG_REGEX.test(html)) {
+              return elements[0].parentNode.childNodes;
+            }
+            return elements;
+          }
+          // low-level tag or text
+          default: {
+            if (parseFromTemplate) {
+              return parseFromTemplate(html);
+            }
+            var element = parseFromDocument(html, BODY).querySelector(BODY);
+            return element.childNodes;
+          }
+        }
+      }
+    }
+  });
+
+  // node_modules/html-dom-parser/lib/client/html-to-dom.js
+  var require_html_to_dom = __commonJS({
+    "node_modules/html-dom-parser/lib/client/html-to-dom.js"(exports) {
+      "use strict";
+      var __importDefault = exports && exports.__importDefault || function(mod) {
+        return mod && mod.__esModule ? mod : { "default": mod };
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.default = HTMLDOMParser;
+      var domparser_1 = __importDefault(require_domparser());
+      var utilities_1 = require_utilities();
+      var DIRECTIVE_REGEX = /<(![a-zA-Z\s]+)>/;
+      function HTMLDOMParser(html) {
+        if (typeof html !== "string") {
+          throw new TypeError("First argument must be a string");
+        }
+        if (!html) {
+          return [];
+        }
+        var match = html.match(DIRECTIVE_REGEX);
+        var directive = match ? match[1] : void 0;
+        return (0, utilities_1.formatDOM)((0, domparser_1.default)(html), null, directive);
+      }
+    }
+  });
+
+  // node_modules/react-property/lib/possibleStandardNamesOptimized.js
+  var require_possibleStandardNamesOptimized = __commonJS({
+    "node_modules/react-property/lib/possibleStandardNamesOptimized.js"(exports) {
+      var SAME = 0;
+      exports.SAME = SAME;
+      var CAMELCASE = 1;
+      exports.CAMELCASE = CAMELCASE;
+      exports.possibleStandardNames = {
+        accept: 0,
+        acceptCharset: 1,
+        "accept-charset": "acceptCharset",
+        accessKey: 1,
+        action: 0,
+        allowFullScreen: 1,
+        alt: 0,
+        as: 0,
+        async: 0,
+        autoCapitalize: 1,
+        autoComplete: 1,
+        autoCorrect: 1,
+        autoFocus: 1,
+        autoPlay: 1,
+        autoSave: 1,
+        capture: 0,
+        cellPadding: 1,
+        cellSpacing: 1,
+        challenge: 0,
+        charSet: 1,
+        checked: 0,
+        children: 0,
+        cite: 0,
+        class: "className",
+        classID: 1,
+        className: 1,
+        cols: 0,
+        colSpan: 1,
+        content: 0,
+        contentEditable: 1,
+        contextMenu: 1,
+        controls: 0,
+        controlsList: 1,
+        coords: 0,
+        crossOrigin: 1,
+        dangerouslySetInnerHTML: 1,
+        data: 0,
+        dateTime: 1,
+        default: 0,
+        defaultChecked: 1,
+        defaultValue: 1,
+        defer: 0,
+        dir: 0,
+        disabled: 0,
+        disablePictureInPicture: 1,
+        disableRemotePlayback: 1,
+        download: 0,
+        draggable: 0,
+        encType: 1,
+        enterKeyHint: 1,
+        for: "htmlFor",
+        form: 0,
+        formMethod: 1,
+        formAction: 1,
+        formEncType: 1,
+        formNoValidate: 1,
+        formTarget: 1,
+        frameBorder: 1,
+        headers: 0,
+        height: 0,
+        hidden: 0,
+        high: 0,
+        href: 0,
+        hrefLang: 1,
+        htmlFor: 1,
+        httpEquiv: 1,
+        "http-equiv": "httpEquiv",
+        icon: 0,
+        id: 0,
+        innerHTML: 1,
+        inputMode: 1,
+        integrity: 0,
+        is: 0,
+        itemID: 1,
+        itemProp: 1,
+        itemRef: 1,
+        itemScope: 1,
+        itemType: 1,
+        keyParams: 1,
+        keyType: 1,
+        kind: 0,
+        label: 0,
+        lang: 0,
+        list: 0,
+        loop: 0,
+        low: 0,
+        manifest: 0,
+        marginWidth: 1,
+        marginHeight: 1,
+        max: 0,
+        maxLength: 1,
+        media: 0,
+        mediaGroup: 1,
+        method: 0,
+        min: 0,
+        minLength: 1,
+        multiple: 0,
+        muted: 0,
+        name: 0,
+        noModule: 1,
+        nonce: 0,
+        noValidate: 1,
+        open: 0,
+        optimum: 0,
+        pattern: 0,
+        placeholder: 0,
+        playsInline: 1,
+        poster: 0,
+        preload: 0,
+        profile: 0,
+        radioGroup: 1,
+        readOnly: 1,
+        referrerPolicy: 1,
+        rel: 0,
+        required: 0,
+        reversed: 0,
+        role: 0,
+        rows: 0,
+        rowSpan: 1,
+        sandbox: 0,
+        scope: 0,
+        scoped: 0,
+        scrolling: 0,
+        seamless: 0,
+        selected: 0,
+        shape: 0,
+        size: 0,
+        sizes: 0,
+        span: 0,
+        spellCheck: 1,
+        src: 0,
+        srcDoc: 1,
+        srcLang: 1,
+        srcSet: 1,
+        start: 0,
+        step: 0,
+        style: 0,
+        summary: 0,
+        tabIndex: 1,
+        target: 0,
+        title: 0,
+        type: 0,
+        useMap: 1,
+        value: 0,
+        width: 0,
+        wmode: 0,
+        wrap: 0,
+        about: 0,
+        accentHeight: 1,
+        "accent-height": "accentHeight",
+        accumulate: 0,
+        additive: 0,
+        alignmentBaseline: 1,
+        "alignment-baseline": "alignmentBaseline",
+        allowReorder: 1,
+        alphabetic: 0,
+        amplitude: 0,
+        arabicForm: 1,
+        "arabic-form": "arabicForm",
+        ascent: 0,
+        attributeName: 1,
+        attributeType: 1,
+        autoReverse: 1,
+        azimuth: 0,
+        baseFrequency: 1,
+        baselineShift: 1,
+        "baseline-shift": "baselineShift",
+        baseProfile: 1,
+        bbox: 0,
+        begin: 0,
+        bias: 0,
+        by: 0,
+        calcMode: 1,
+        capHeight: 1,
+        "cap-height": "capHeight",
+        clip: 0,
+        clipPath: 1,
+        "clip-path": "clipPath",
+        clipPathUnits: 1,
+        clipRule: 1,
+        "clip-rule": "clipRule",
+        color: 0,
+        colorInterpolation: 1,
+        "color-interpolation": "colorInterpolation",
+        colorInterpolationFilters: 1,
+        "color-interpolation-filters": "colorInterpolationFilters",
+        colorProfile: 1,
+        "color-profile": "colorProfile",
+        colorRendering: 1,
+        "color-rendering": "colorRendering",
+        contentScriptType: 1,
+        contentStyleType: 1,
+        cursor: 0,
+        cx: 0,
+        cy: 0,
+        d: 0,
+        datatype: 0,
+        decelerate: 0,
+        descent: 0,
+        diffuseConstant: 1,
+        direction: 0,
+        display: 0,
+        divisor: 0,
+        dominantBaseline: 1,
+        "dominant-baseline": "dominantBaseline",
+        dur: 0,
+        dx: 0,
+        dy: 0,
+        edgeMode: 1,
+        elevation: 0,
+        enableBackground: 1,
+        "enable-background": "enableBackground",
+        end: 0,
+        exponent: 0,
+        externalResourcesRequired: 1,
+        fill: 0,
+        fillOpacity: 1,
+        "fill-opacity": "fillOpacity",
+        fillRule: 1,
+        "fill-rule": "fillRule",
+        filter: 0,
+        filterRes: 1,
+        filterUnits: 1,
+        floodOpacity: 1,
+        "flood-opacity": "floodOpacity",
+        floodColor: 1,
+        "flood-color": "floodColor",
+        focusable: 0,
+        fontFamily: 1,
+        "font-family": "fontFamily",
+        fontSize: 1,
+        "font-size": "fontSize",
+        fontSizeAdjust: 1,
+        "font-size-adjust": "fontSizeAdjust",
+        fontStretch: 1,
+        "font-stretch": "fontStretch",
+        fontStyle: 1,
+        "font-style": "fontStyle",
+        fontVariant: 1,
+        "font-variant": "fontVariant",
+        fontWeight: 1,
+        "font-weight": "fontWeight",
+        format: 0,
+        from: 0,
+        fx: 0,
+        fy: 0,
+        g1: 0,
+        g2: 0,
+        glyphName: 1,
+        "glyph-name": "glyphName",
+        glyphOrientationHorizontal: 1,
+        "glyph-orientation-horizontal": "glyphOrientationHorizontal",
+        glyphOrientationVertical: 1,
+        "glyph-orientation-vertical": "glyphOrientationVertical",
+        glyphRef: 1,
+        gradientTransform: 1,
+        gradientUnits: 1,
+        hanging: 0,
+        horizAdvX: 1,
+        "horiz-adv-x": "horizAdvX",
+        horizOriginX: 1,
+        "horiz-origin-x": "horizOriginX",
+        ideographic: 0,
+        imageRendering: 1,
+        "image-rendering": "imageRendering",
+        in2: 0,
+        in: 0,
+        inlist: 0,
+        intercept: 0,
+        k1: 0,
+        k2: 0,
+        k3: 0,
+        k4: 0,
+        k: 0,
+        kernelMatrix: 1,
+        kernelUnitLength: 1,
+        kerning: 0,
+        keyPoints: 1,
+        keySplines: 1,
+        keyTimes: 1,
+        lengthAdjust: 1,
+        letterSpacing: 1,
+        "letter-spacing": "letterSpacing",
+        lightingColor: 1,
+        "lighting-color": "lightingColor",
+        limitingConeAngle: 1,
+        local: 0,
+        markerEnd: 1,
+        "marker-end": "markerEnd",
+        markerHeight: 1,
+        markerMid: 1,
+        "marker-mid": "markerMid",
+        markerStart: 1,
+        "marker-start": "markerStart",
+        markerUnits: 1,
+        markerWidth: 1,
+        mask: 0,
+        maskContentUnits: 1,
+        maskUnits: 1,
+        mathematical: 0,
+        mode: 0,
+        numOctaves: 1,
+        offset: 0,
+        opacity: 0,
+        operator: 0,
+        order: 0,
+        orient: 0,
+        orientation: 0,
+        origin: 0,
+        overflow: 0,
+        overlinePosition: 1,
+        "overline-position": "overlinePosition",
+        overlineThickness: 1,
+        "overline-thickness": "overlineThickness",
+        paintOrder: 1,
+        "paint-order": "paintOrder",
+        panose1: 0,
+        "panose-1": "panose1",
+        pathLength: 1,
+        patternContentUnits: 1,
+        patternTransform: 1,
+        patternUnits: 1,
+        pointerEvents: 1,
+        "pointer-events": "pointerEvents",
+        points: 0,
+        pointsAtX: 1,
+        pointsAtY: 1,
+        pointsAtZ: 1,
+        prefix: 0,
+        preserveAlpha: 1,
+        preserveAspectRatio: 1,
+        primitiveUnits: 1,
+        property: 0,
+        r: 0,
+        radius: 0,
+        refX: 1,
+        refY: 1,
+        renderingIntent: 1,
+        "rendering-intent": "renderingIntent",
+        repeatCount: 1,
+        repeatDur: 1,
+        requiredExtensions: 1,
+        requiredFeatures: 1,
+        resource: 0,
+        restart: 0,
+        result: 0,
+        results: 0,
+        rotate: 0,
+        rx: 0,
+        ry: 0,
+        scale: 0,
+        security: 0,
+        seed: 0,
+        shapeRendering: 1,
+        "shape-rendering": "shapeRendering",
+        slope: 0,
+        spacing: 0,
+        specularConstant: 1,
+        specularExponent: 1,
+        speed: 0,
+        spreadMethod: 1,
+        startOffset: 1,
+        stdDeviation: 1,
+        stemh: 0,
+        stemv: 0,
+        stitchTiles: 1,
+        stopColor: 1,
+        "stop-color": "stopColor",
+        stopOpacity: 1,
+        "stop-opacity": "stopOpacity",
+        strikethroughPosition: 1,
+        "strikethrough-position": "strikethroughPosition",
+        strikethroughThickness: 1,
+        "strikethrough-thickness": "strikethroughThickness",
+        string: 0,
+        stroke: 0,
+        strokeDasharray: 1,
+        "stroke-dasharray": "strokeDasharray",
+        strokeDashoffset: 1,
+        "stroke-dashoffset": "strokeDashoffset",
+        strokeLinecap: 1,
+        "stroke-linecap": "strokeLinecap",
+        strokeLinejoin: 1,
+        "stroke-linejoin": "strokeLinejoin",
+        strokeMiterlimit: 1,
+        "stroke-miterlimit": "strokeMiterlimit",
+        strokeWidth: 1,
+        "stroke-width": "strokeWidth",
+        strokeOpacity: 1,
+        "stroke-opacity": "strokeOpacity",
+        suppressContentEditableWarning: 1,
+        suppressHydrationWarning: 1,
+        surfaceScale: 1,
+        systemLanguage: 1,
+        tableValues: 1,
+        targetX: 1,
+        targetY: 1,
+        textAnchor: 1,
+        "text-anchor": "textAnchor",
+        textDecoration: 1,
+        "text-decoration": "textDecoration",
+        textLength: 1,
+        textRendering: 1,
+        "text-rendering": "textRendering",
+        to: 0,
+        transform: 0,
+        typeof: 0,
+        u1: 0,
+        u2: 0,
+        underlinePosition: 1,
+        "underline-position": "underlinePosition",
+        underlineThickness: 1,
+        "underline-thickness": "underlineThickness",
+        unicode: 0,
+        unicodeBidi: 1,
+        "unicode-bidi": "unicodeBidi",
+        unicodeRange: 1,
+        "unicode-range": "unicodeRange",
+        unitsPerEm: 1,
+        "units-per-em": "unitsPerEm",
+        unselectable: 0,
+        vAlphabetic: 1,
+        "v-alphabetic": "vAlphabetic",
+        values: 0,
+        vectorEffect: 1,
+        "vector-effect": "vectorEffect",
+        version: 0,
+        vertAdvY: 1,
+        "vert-adv-y": "vertAdvY",
+        vertOriginX: 1,
+        "vert-origin-x": "vertOriginX",
+        vertOriginY: 1,
+        "vert-origin-y": "vertOriginY",
+        vHanging: 1,
+        "v-hanging": "vHanging",
+        vIdeographic: 1,
+        "v-ideographic": "vIdeographic",
+        viewBox: 1,
+        viewTarget: 1,
+        visibility: 0,
+        vMathematical: 1,
+        "v-mathematical": "vMathematical",
+        vocab: 0,
+        widths: 0,
+        wordSpacing: 1,
+        "word-spacing": "wordSpacing",
+        writingMode: 1,
+        "writing-mode": "writingMode",
+        x1: 0,
+        x2: 0,
+        x: 0,
+        xChannelSelector: 1,
+        xHeight: 1,
+        "x-height": "xHeight",
+        xlinkActuate: 1,
+        "xlink:actuate": "xlinkActuate",
+        xlinkArcrole: 1,
+        "xlink:arcrole": "xlinkArcrole",
+        xlinkHref: 1,
+        "xlink:href": "xlinkHref",
+        xlinkRole: 1,
+        "xlink:role": "xlinkRole",
+        xlinkShow: 1,
+        "xlink:show": "xlinkShow",
+        xlinkTitle: 1,
+        "xlink:title": "xlinkTitle",
+        xlinkType: 1,
+        "xlink:type": "xlinkType",
+        xmlBase: 1,
+        "xml:base": "xmlBase",
+        xmlLang: 1,
+        "xml:lang": "xmlLang",
+        xmlns: 0,
+        "xml:space": "xmlSpace",
+        xmlnsXlink: 1,
+        "xmlns:xlink": "xmlnsXlink",
+        xmlSpace: 1,
+        y1: 0,
+        y2: 0,
+        y: 0,
+        yChannelSelector: 1,
+        z: 0,
+        zoomAndPan: 1
+      };
+    }
+  });
+
+  // node_modules/react-property/lib/index.js
+  var require_lib3 = __commonJS({
+    "node_modules/react-property/lib/index.js"(exports) {
+      "use strict";
+      var RESERVED = 0;
+      var STRING = 1;
+      var BOOLEANISH_STRING = 2;
+      var BOOLEAN = 3;
+      var OVERLOADED_BOOLEAN = 4;
+      var NUMERIC = 5;
+      var POSITIVE_NUMERIC = 6;
+      function getPropertyInfo(name117) {
+        return properties.hasOwnProperty(name117) ? properties[name117] : null;
+      }
+      function PropertyInfoRecord(name117, type, mustUseProperty, attributeName, attributeNamespace, sanitizeURL, removeEmptyString) {
+        this.acceptsBooleans = type === BOOLEANISH_STRING || type === BOOLEAN || type === OVERLOADED_BOOLEAN;
+        this.attributeName = attributeName;
+        this.attributeNamespace = attributeNamespace;
+        this.mustUseProperty = mustUseProperty;
+        this.propertyName = name117;
+        this.type = type;
+        this.sanitizeURL = sanitizeURL;
+        this.removeEmptyString = removeEmptyString;
+      }
+      var properties = {};
+      var reservedProps = [
+        "children",
+        "dangerouslySetInnerHTML",
+        // TODO: This prevents the assignment of defaultValue to regular
+        // elements (not just inputs). Now that ReactDOMInput assigns to the
+        // defaultValue property -- do we need this?
+        "defaultValue",
+        "defaultChecked",
+        "innerHTML",
+        "suppressContentEditableWarning",
+        "suppressHydrationWarning",
+        "style"
+      ];
+      reservedProps.forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          RESERVED,
+          false,
+          // mustUseProperty
+          name117,
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        ["acceptCharset", "accept-charset"],
+        ["className", "class"],
+        ["htmlFor", "for"],
+        ["httpEquiv", "http-equiv"]
+      ].forEach(([name117, attributeName]) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          STRING,
+          false,
+          // mustUseProperty
+          attributeName,
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      ["contentEditable", "draggable", "spellCheck", "value"].forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          BOOLEANISH_STRING,
+          false,
+          // mustUseProperty
+          name117.toLowerCase(),
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        "autoReverse",
+        "externalResourcesRequired",
+        "focusable",
+        "preserveAlpha"
+      ].forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          BOOLEANISH_STRING,
+          false,
+          // mustUseProperty
+          name117,
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        "allowFullScreen",
+        "async",
+        // Note: there is a special case that prevents it from being written to the DOM
+        // on the client side because the browsers are inconsistent. Instead we call focus().
+        "autoFocus",
+        "autoPlay",
+        "controls",
+        "default",
+        "defer",
+        "disabled",
+        "disablePictureInPicture",
+        "disableRemotePlayback",
+        "formNoValidate",
+        "hidden",
+        "loop",
+        "noModule",
+        "noValidate",
+        "open",
+        "playsInline",
+        "readOnly",
+        "required",
+        "reversed",
+        "scoped",
+        "seamless",
+        // Microdata
+        "itemScope"
+      ].forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          BOOLEAN,
+          false,
+          // mustUseProperty
+          name117.toLowerCase(),
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        "checked",
+        // Note: `option.selected` is not updated if `select.multiple` is
+        // disabled with `removeAttribute`. We have special logic for handling this.
+        "multiple",
+        "muted",
+        "selected"
+        // NOTE: if you add a camelCased prop to this list,
+        // you'll need to set attributeName to name.toLowerCase()
+        // instead in the assignment below.
+      ].forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          BOOLEAN,
+          true,
+          // mustUseProperty
+          name117,
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        "capture",
+        "download"
+        // NOTE: if you add a camelCased prop to this list,
+        // you'll need to set attributeName to name.toLowerCase()
+        // instead in the assignment below.
+      ].forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          OVERLOADED_BOOLEAN,
+          false,
+          // mustUseProperty
+          name117,
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        "cols",
+        "rows",
+        "size",
+        "span"
+        // NOTE: if you add a camelCased prop to this list,
+        // you'll need to set attributeName to name.toLowerCase()
+        // instead in the assignment below.
+      ].forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          POSITIVE_NUMERIC,
+          false,
+          // mustUseProperty
+          name117,
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      ["rowSpan", "start"].forEach((name117) => {
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          NUMERIC,
+          false,
+          // mustUseProperty
+          name117.toLowerCase(),
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      var CAMELIZE = /[\-\:]([a-z])/g;
+      var capitalize2 = (token) => token[1].toUpperCase();
+      [
+        "accent-height",
+        "alignment-baseline",
+        "arabic-form",
+        "baseline-shift",
+        "cap-height",
+        "clip-path",
+        "clip-rule",
+        "color-interpolation",
+        "color-interpolation-filters",
+        "color-profile",
+        "color-rendering",
+        "dominant-baseline",
+        "enable-background",
+        "fill-opacity",
+        "fill-rule",
+        "flood-color",
+        "flood-opacity",
+        "font-family",
+        "font-size",
+        "font-size-adjust",
+        "font-stretch",
+        "font-style",
+        "font-variant",
+        "font-weight",
+        "glyph-name",
+        "glyph-orientation-horizontal",
+        "glyph-orientation-vertical",
+        "horiz-adv-x",
+        "horiz-origin-x",
+        "image-rendering",
+        "letter-spacing",
+        "lighting-color",
+        "marker-end",
+        "marker-mid",
+        "marker-start",
+        "overline-position",
+        "overline-thickness",
+        "paint-order",
+        "panose-1",
+        "pointer-events",
+        "rendering-intent",
+        "shape-rendering",
+        "stop-color",
+        "stop-opacity",
+        "strikethrough-position",
+        "strikethrough-thickness",
+        "stroke-dasharray",
+        "stroke-dashoffset",
+        "stroke-linecap",
+        "stroke-linejoin",
+        "stroke-miterlimit",
+        "stroke-opacity",
+        "stroke-width",
+        "text-anchor",
+        "text-decoration",
+        "text-rendering",
+        "underline-position",
+        "underline-thickness",
+        "unicode-bidi",
+        "unicode-range",
+        "units-per-em",
+        "v-alphabetic",
+        "v-hanging",
+        "v-ideographic",
+        "v-mathematical",
+        "vector-effect",
+        "vert-adv-y",
+        "vert-origin-x",
+        "vert-origin-y",
+        "word-spacing",
+        "writing-mode",
+        "xmlns:xlink",
+        "x-height"
+        // NOTE: if you add a camelCased prop to this list,
+        // you'll need to set attributeName to name.toLowerCase()
+        // instead in the assignment below.
+      ].forEach((attributeName) => {
+        const name117 = attributeName.replace(CAMELIZE, capitalize2);
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          STRING,
+          false,
+          // mustUseProperty
+          attributeName,
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        "xlink:actuate",
+        "xlink:arcrole",
+        "xlink:role",
+        "xlink:show",
+        "xlink:title",
+        "xlink:type"
+        // NOTE: if you add a camelCased prop to this list,
+        // you'll need to set attributeName to name.toLowerCase()
+        // instead in the assignment below.
+      ].forEach((attributeName) => {
+        const name117 = attributeName.replace(CAMELIZE, capitalize2);
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          STRING,
+          false,
+          // mustUseProperty
+          attributeName,
+          "http://www.w3.org/1999/xlink",
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      [
+        "xml:base",
+        "xml:lang",
+        "xml:space"
+        // NOTE: if you add a camelCased prop to this list,
+        // you'll need to set attributeName to name.toLowerCase()
+        // instead in the assignment below.
+      ].forEach((attributeName) => {
+        const name117 = attributeName.replace(CAMELIZE, capitalize2);
+        properties[name117] = new PropertyInfoRecord(
+          name117,
+          STRING,
+          false,
+          // mustUseProperty
+          attributeName,
+          "http://www.w3.org/XML/1998/namespace",
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      ["tabIndex", "crossOrigin"].forEach((attributeName) => {
+        properties[attributeName] = new PropertyInfoRecord(
+          attributeName,
+          STRING,
+          false,
+          // mustUseProperty
+          attributeName.toLowerCase(),
+          // attributeName
+          null,
+          // attributeNamespace
+          false,
+          // sanitizeURL
+          false
+          // removeEmptyString
+        );
+      });
+      var xlinkHref = "xlinkHref";
+      properties[xlinkHref] = new PropertyInfoRecord(
+        "xlinkHref",
+        STRING,
+        false,
+        // mustUseProperty
+        "xlink:href",
+        "http://www.w3.org/1999/xlink",
+        true,
+        // sanitizeURL
+        false
+        // removeEmptyString
+      );
+      ["src", "href", "action", "formAction"].forEach((attributeName) => {
+        properties[attributeName] = new PropertyInfoRecord(
+          attributeName,
+          STRING,
+          false,
+          // mustUseProperty
+          attributeName.toLowerCase(),
+          // attributeName
+          null,
+          // attributeNamespace
+          true,
+          // sanitizeURL
+          true
+          // removeEmptyString
+        );
+      });
+      var {
+        CAMELCASE,
+        SAME,
+        possibleStandardNames: possibleStandardNamesOptimized
+      } = require_possibleStandardNamesOptimized();
+      var ATTRIBUTE_NAME_START_CHAR = ":A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
+      var ATTRIBUTE_NAME_CHAR = ATTRIBUTE_NAME_START_CHAR + "\\-.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040";
+      var isCustomAttribute = RegExp.prototype.test.bind(
+        // eslint-disable-next-line no-misleading-character-class
+        new RegExp("^(data|aria)-[" + ATTRIBUTE_NAME_CHAR + "]*$")
+      );
+      var possibleStandardNames = Object.keys(
+        possibleStandardNamesOptimized
+      ).reduce((accumulator, standardName) => {
+        const propName = possibleStandardNamesOptimized[standardName];
+        if (propName === SAME) {
+          accumulator[standardName] = standardName;
+        } else if (propName === CAMELCASE) {
+          accumulator[standardName.toLowerCase()] = standardName;
+        } else {
+          accumulator[standardName] = propName;
+        }
+        return accumulator;
+      }, {});
+      exports.BOOLEAN = BOOLEAN;
+      exports.BOOLEANISH_STRING = BOOLEANISH_STRING;
+      exports.NUMERIC = NUMERIC;
+      exports.OVERLOADED_BOOLEAN = OVERLOADED_BOOLEAN;
+      exports.POSITIVE_NUMERIC = POSITIVE_NUMERIC;
+      exports.RESERVED = RESERVED;
+      exports.STRING = STRING;
+      exports.getPropertyInfo = getPropertyInfo;
+      exports.isCustomAttribute = isCustomAttribute;
+      exports.possibleStandardNames = possibleStandardNames;
+    }
+  });
+
+  // vendor-external:react
+  var require_react = __commonJS({
+    "vendor-external:react"(exports, module) {
+      module.exports = window.React;
+    }
+  });
+
+  // node_modules/inline-style-parser/cjs/index.js
+  var require_cjs = __commonJS({
+    "node_modules/inline-style-parser/cjs/index.js"(exports, module) {
+      "use strict";
+      var COMMENT_REGEX = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g;
+      var NEWLINE_REGEX = /\n/g;
+      var WHITESPACE_REGEX = /^\s*/;
+      var PROPERTY_REGEX = /^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/;
+      var COLON_REGEX = /^:\s*/;
+      var VALUE_REGEX = /^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/;
+      var SEMICOLON_REGEX = /^[;\s]*/;
+      var TRIM_REGEX = /^\s+|\s+$/g;
+      var NEWLINE = "\n";
+      var FORWARD_SLASH = "/";
+      var ASTERISK = "*";
+      var EMPTY_STRING = "";
+      var TYPE_COMMENT = "comment";
+      var TYPE_DECLARATION = "declaration";
+      function index(style2, options2) {
+        if (typeof style2 !== "string") {
+          throw new TypeError("First argument must be a string");
+        }
+        if (!style2) return [];
+        options2 = options2 || {};
+        var lineno = 1;
+        var column = 1;
+        function updatePosition(str) {
+          var lines = str.match(NEWLINE_REGEX);
+          if (lines) lineno += lines.length;
+          var i2 = str.lastIndexOf(NEWLINE);
+          column = ~i2 ? str.length - i2 : column + str.length;
+        }
+        function position() {
+          var start = { line: lineno, column };
+          return function(node) {
+            node.position = new Position(start);
+            whitespace();
+            return node;
+          };
+        }
+        function Position(start) {
+          this.start = start;
+          this.end = { line: lineno, column };
+          this.source = options2.source;
+        }
+        Position.prototype.content = style2;
+        function error(msg) {
+          var err = new Error(
+            options2.source + ":" + lineno + ":" + column + ": " + msg
+          );
+          err.reason = msg;
+          err.filename = options2.source;
+          err.line = lineno;
+          err.column = column;
+          err.source = style2;
+          if (options2.silent) ;
+          else {
+            throw err;
+          }
+        }
+        function match(re) {
+          var m2 = re.exec(style2);
+          if (!m2) return;
+          var str = m2[0];
+          updatePosition(str);
+          style2 = style2.slice(str.length);
+          return m2;
+        }
+        function whitespace() {
+          match(WHITESPACE_REGEX);
+        }
+        function comments(rules) {
+          var c2;
+          rules = rules || [];
+          while (c2 = comment()) {
+            if (c2 !== false) {
+              rules.push(c2);
+            }
+          }
+          return rules;
+        }
+        function comment() {
+          var pos = position();
+          if (FORWARD_SLASH != style2.charAt(0) || ASTERISK != style2.charAt(1)) return;
+          var i2 = 2;
+          while (EMPTY_STRING != style2.charAt(i2) && (ASTERISK != style2.charAt(i2) || FORWARD_SLASH != style2.charAt(i2 + 1))) {
+            ++i2;
+          }
+          i2 += 2;
+          if (EMPTY_STRING === style2.charAt(i2 - 1)) {
+            return error("End of comment missing");
+          }
+          var str = style2.slice(2, i2 - 2);
+          column += 2;
+          updatePosition(str);
+          style2 = style2.slice(i2);
+          column += 2;
+          return pos({
+            type: TYPE_COMMENT,
+            comment: str
+          });
+        }
+        function declaration() {
+          var pos = position();
+          var prop = match(PROPERTY_REGEX);
+          if (!prop) return;
+          comment();
+          if (!match(COLON_REGEX)) return error("property missing ':'");
+          var val = match(VALUE_REGEX);
+          var ret = pos({
+            type: TYPE_DECLARATION,
+            property: trim(prop[0].replace(COMMENT_REGEX, EMPTY_STRING)),
+            value: val ? trim(val[0].replace(COMMENT_REGEX, EMPTY_STRING)) : EMPTY_STRING
+          });
+          match(SEMICOLON_REGEX);
+          return ret;
+        }
+        function declarations() {
+          var decls = [];
+          comments(decls);
+          var decl;
+          while (decl = declaration()) {
+            if (decl !== false) {
+              decls.push(decl);
+              comments(decls);
+            }
+          }
+          return decls;
+        }
+        whitespace();
+        return declarations();
+      }
+      function trim(str) {
+        return str ? str.replace(TRIM_REGEX, EMPTY_STRING) : EMPTY_STRING;
+      }
+      module.exports = index;
+    }
+  });
+
+  // node_modules/style-to-object/cjs/index.js
+  var require_cjs2 = __commonJS({
+    "node_modules/style-to-object/cjs/index.js"(exports) {
+      "use strict";
+      var __importDefault = exports && exports.__importDefault || function(mod) {
+        return mod && mod.__esModule ? mod : { "default": mod };
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.default = StyleToObject;
+      var inline_style_parser_1 = __importDefault(require_cjs());
+      function StyleToObject(style2, iterator) {
+        let styleObject = null;
+        if (!style2 || typeof style2 !== "string") {
+          return styleObject;
+        }
+        const declarations = (0, inline_style_parser_1.default)(style2);
+        const hasIterator = typeof iterator === "function";
+        declarations.forEach((declaration) => {
+          if (declaration.type !== "declaration") {
+            return;
+          }
+          const { property, value } = declaration;
+          if (hasIterator) {
+            iterator(property, value, declaration);
+          } else if (value) {
+            styleObject = styleObject || {};
+            styleObject[property] = value;
+          }
+        });
+        return styleObject;
+      }
+    }
+  });
+
+  // node_modules/style-to-js/cjs/utilities.js
+  var require_utilities2 = __commonJS({
+    "node_modules/style-to-js/cjs/utilities.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.camelCase = void 0;
+      var CUSTOM_PROPERTY_REGEX = /^--[a-zA-Z0-9_-]+$/;
+      var HYPHEN_REGEX = /-([a-z])/g;
+      var NO_HYPHEN_REGEX = /^[^-]+$/;
+      var VENDOR_PREFIX_REGEX = /^-(webkit|moz|ms|o|khtml)-/;
+      var MS_VENDOR_PREFIX_REGEX = /^-(ms)-/;
+      var skipCamelCase = function(property) {
+        return !property || NO_HYPHEN_REGEX.test(property) || CUSTOM_PROPERTY_REGEX.test(property);
+      };
+      var capitalize2 = function(match, character) {
+        return character.toUpperCase();
+      };
+      var trimHyphen = function(match, prefix) {
+        return "".concat(prefix, "-");
+      };
+      var camelCase = function(property, options2) {
+        if (options2 === void 0) {
+          options2 = {};
+        }
+        if (skipCamelCase(property)) {
+          return property;
+        }
+        property = property.toLowerCase();
+        if (options2.reactCompat) {
+          property = property.replace(MS_VENDOR_PREFIX_REGEX, trimHyphen);
+        } else {
+          property = property.replace(VENDOR_PREFIX_REGEX, trimHyphen);
+        }
+        return property.replace(HYPHEN_REGEX, capitalize2);
+      };
+      exports.camelCase = camelCase;
+    }
+  });
+
+  // node_modules/style-to-js/cjs/index.js
+  var require_cjs3 = __commonJS({
+    "node_modules/style-to-js/cjs/index.js"(exports, module) {
+      "use strict";
+      var __importDefault = exports && exports.__importDefault || function(mod) {
+        return mod && mod.__esModule ? mod : { "default": mod };
+      };
+      var style_to_object_1 = __importDefault(require_cjs2());
+      var utilities_1 = require_utilities2();
+      function StyleToJS(style2, options2) {
+        var output = {};
+        if (!style2 || typeof style2 !== "string") {
+          return output;
+        }
+        (0, style_to_object_1.default)(style2, function(property, value) {
+          if (property && value) {
+            output[(0, utilities_1.camelCase)(property, options2)] = value;
+          }
+        });
+        return output;
+      }
+      StyleToJS.default = StyleToJS;
+      module.exports = StyleToJS;
+    }
+  });
+
+  // node_modules/html-react-parser/lib/utilities.js
+  var require_utilities3 = __commonJS({
+    "node_modules/html-react-parser/lib/utilities.js"(exports) {
+      "use strict";
+      var __importDefault = exports && exports.__importDefault || function(mod) {
+        return mod && mod.__esModule ? mod : { "default": mod };
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.returnFirstArg = exports.canTextBeChildOfNode = exports.ELEMENTS_WITH_NO_TEXT_CHILDREN = exports.PRESERVE_CUSTOM_ATTRIBUTES = void 0;
+      exports.isCustomComponent = isCustomComponent;
+      exports.setStyleProp = setStyleProp;
+      var react_1 = require_react();
+      var style_to_js_1 = __importDefault(require_cjs3());
+      var RESERVED_SVG_MATHML_ELEMENTS = /* @__PURE__ */ new Set([
+        "annotation-xml",
+        "color-profile",
+        "font-face",
+        "font-face-src",
+        "font-face-uri",
+        "font-face-format",
+        "font-face-name",
+        "missing-glyph"
+      ]);
+      function isCustomComponent(tagName, props) {
+        if (!tagName.includes("-")) {
+          return Boolean(props && typeof props.is === "string");
+        }
+        if (RESERVED_SVG_MATHML_ELEMENTS.has(tagName)) {
+          return false;
+        }
+        return true;
+      }
+      var styleOptions = {
+        reactCompat: true
+      };
+      function setStyleProp(style2, props) {
+        if (typeof style2 !== "string") {
+          return;
+        }
+        if (!style2.trim()) {
+          props.style = {};
+          return;
+        }
+        try {
+          props.style = (0, style_to_js_1.default)(style2, styleOptions);
+        } catch (error) {
+          props.style = {};
+        }
+      }
+      exports.PRESERVE_CUSTOM_ATTRIBUTES = Number(react_1.version.split(".")[0]) >= 16;
+      exports.ELEMENTS_WITH_NO_TEXT_CHILDREN = /* @__PURE__ */ new Set([
+        "tr",
+        "tbody",
+        "thead",
+        "tfoot",
+        "colgroup",
+        "table",
+        "head",
+        "html",
+        "frameset"
+      ]);
+      var canTextBeChildOfNode = function(node) {
+        return !exports.ELEMENTS_WITH_NO_TEXT_CHILDREN.has(node.name);
+      };
+      exports.canTextBeChildOfNode = canTextBeChildOfNode;
+      var returnFirstArg = function(arg) {
+        return arg;
+      };
+      exports.returnFirstArg = returnFirstArg;
+    }
+  });
+
+  // node_modules/html-react-parser/lib/attributes-to-props.js
+  var require_attributes_to_props = __commonJS({
+    "node_modules/html-react-parser/lib/attributes-to-props.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.default = attributesToProps2;
+      var react_property_1 = require_lib3();
+      var utilities_1 = require_utilities3();
+      var UNCONTROLLED_COMPONENT_ATTRIBUTES = ["checked", "value"];
+      var UNCONTROLLED_COMPONENT_NAMES = ["input", "select", "textarea"];
+      var valueOnlyInputs = {
+        reset: true,
+        submit: true
+      };
+      function attributesToProps2(attributes3, nodeName) {
+        if (attributes3 === void 0) {
+          attributes3 = {};
+        }
+        var props = {};
+        var isInputValueOnly = Boolean(attributes3.type && valueOnlyInputs[attributes3.type]);
+        for (var attributeName in attributes3) {
+          var attributeValue = attributes3[attributeName];
+          if ((0, react_property_1.isCustomAttribute)(attributeName)) {
+            props[attributeName] = attributeValue;
+            continue;
+          }
+          var attributeNameLowerCased = attributeName.toLowerCase();
+          var propName = getPropName(attributeNameLowerCased);
+          if (propName) {
+            var propertyInfo = (0, react_property_1.getPropertyInfo)(propName);
+            if (UNCONTROLLED_COMPONENT_ATTRIBUTES.includes(propName) && UNCONTROLLED_COMPONENT_NAMES.includes(nodeName) && !isInputValueOnly) {
+              propName = getPropName("default" + attributeNameLowerCased);
+            }
+            props[propName] = attributeValue;
+            switch (propertyInfo && propertyInfo.type) {
+              case react_property_1.BOOLEAN:
+                props[propName] = true;
+                break;
+              case react_property_1.OVERLOADED_BOOLEAN:
+                if (attributeValue === "") {
+                  props[propName] = true;
+                }
+                break;
+            }
+            continue;
+          }
+          if (utilities_1.PRESERVE_CUSTOM_ATTRIBUTES) {
+            props[attributeName] = attributeValue;
+          }
+        }
+        (0, utilities_1.setStyleProp)(attributes3.style, props);
+        return props;
+      }
+      function getPropName(attributeName) {
+        return react_property_1.possibleStandardNames[attributeName];
+      }
+    }
+  });
+
+  // node_modules/html-react-parser/lib/dom-to-react.js
+  var require_dom_to_react = __commonJS({
+    "node_modules/html-react-parser/lib/dom-to-react.js"(exports) {
+      "use strict";
+      var __importDefault = exports && exports.__importDefault || function(mod) {
+        return mod && mod.__esModule ? mod : { "default": mod };
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.default = domToReact2;
+      var react_1 = require_react();
+      var attributes_to_props_1 = __importDefault(require_attributes_to_props());
+      var utilities_1 = require_utilities3();
+      var React = {
+        cloneElement: react_1.cloneElement,
+        createElement: react_1.createElement,
+        isValidElement: react_1.isValidElement
+      };
+      function domToReact2(nodes, options2) {
+        if (options2 === void 0) {
+          options2 = {};
+        }
+        var reactElements = [];
+        var hasReplace = typeof options2.replace === "function";
+        var transform = options2.transform || utilities_1.returnFirstArg;
+        var _a = options2.library || React, cloneElement2 = _a.cloneElement, createElement2 = _a.createElement, isValidElement = _a.isValidElement;
+        var nodesLength = nodes.length;
+        for (var index = 0; index < nodesLength; index++) {
+          var node = nodes[index];
+          if (hasReplace) {
+            var replaceElement = options2.replace(node, index);
+            if (isValidElement(replaceElement)) {
+              if (nodesLength > 1) {
+                replaceElement = cloneElement2(replaceElement, {
+                  key: replaceElement.key || index
+                });
+              }
+              reactElements.push(transform(replaceElement, node, index));
+              continue;
+            }
+          }
+          if (node.type === "text") {
+            var isWhitespace = !node.data.trim().length;
+            if (isWhitespace && node.parent && !(0, utilities_1.canTextBeChildOfNode)(node.parent)) {
+              continue;
+            }
+            if (options2.trim && isWhitespace) {
+              continue;
+            }
+            reactElements.push(transform(node.data, node, index));
+            continue;
+          }
+          var element = node;
+          var props = {};
+          if (skipAttributesToProps(element)) {
+            (0, utilities_1.setStyleProp)(element.attribs.style, element.attribs);
+            props = element.attribs;
+          } else if (element.attribs) {
+            props = (0, attributes_to_props_1.default)(element.attribs, element.name);
+          }
+          var children = void 0;
+          switch (node.type) {
+            case "script":
+            case "style":
+              if (node.children[0]) {
+                props.dangerouslySetInnerHTML = {
+                  __html: node.children[0].data
+                };
+              }
+              break;
+            case "tag":
+              if (node.name === "textarea" && node.children[0]) {
+                props.defaultValue = node.children[0].data;
+              } else if (node.children && node.children.length) {
+                children = domToReact2(node.children, options2);
+              }
+              break;
+            // skip all other cases (e.g., comment)
+            default:
+              continue;
+          }
+          if (nodesLength > 1) {
+            props.key = index;
+          }
+          reactElements.push(transform(createElement2(node.name, props, children), node, index));
+        }
+        return reactElements.length === 1 ? reactElements[0] : reactElements;
+      }
+      function skipAttributesToProps(node) {
+        return utilities_1.PRESERVE_CUSTOM_ATTRIBUTES && node.type === "tag" && (0, utilities_1.isCustomComponent)(node.name, node.attribs);
+      }
+    }
+  });
+
+  // node_modules/html-react-parser/node_modules/domelementtype/lib/index.js
+  var require_lib4 = __commonJS({
+    "node_modules/html-react-parser/node_modules/domelementtype/lib/index.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.Doctype = exports.CDATA = exports.Tag = exports.Style = exports.Script = exports.Comment = exports.Directive = exports.Text = exports.Root = exports.isTag = exports.ElementType = void 0;
+      var ElementType;
+      (function(ElementType2) {
+        ElementType2["Root"] = "root";
+        ElementType2["Text"] = "text";
+        ElementType2["Directive"] = "directive";
+        ElementType2["Comment"] = "comment";
+        ElementType2["Script"] = "script";
+        ElementType2["Style"] = "style";
+        ElementType2["Tag"] = "tag";
+        ElementType2["CDATA"] = "cdata";
+        ElementType2["Doctype"] = "doctype";
+      })(ElementType = exports.ElementType || (exports.ElementType = {}));
+      function isTag(elem) {
+        return elem.type === ElementType.Tag || elem.type === ElementType.Script || elem.type === ElementType.Style;
+      }
+      exports.isTag = isTag;
+      exports.Root = ElementType.Root;
+      exports.Text = ElementType.Text;
+      exports.Directive = ElementType.Directive;
+      exports.Comment = ElementType.Comment;
+      exports.Script = ElementType.Script;
+      exports.Style = ElementType.Style;
+      exports.Tag = ElementType.Tag;
+      exports.CDATA = ElementType.CDATA;
+      exports.Doctype = ElementType.Doctype;
+    }
+  });
+
+  // node_modules/html-react-parser/node_modules/domhandler/lib/node.js
+  var require_node2 = __commonJS({
+    "node_modules/html-react-parser/node_modules/domhandler/lib/node.js"(exports) {
+      "use strict";
+      var __extends = exports && exports.__extends || /* @__PURE__ */ (function() {
+        var extendStatics = function(d2, b2) {
+          extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
+            d3.__proto__ = b3;
+          } || function(d3, b3) {
+            for (var p2 in b3) if (Object.prototype.hasOwnProperty.call(b3, p2)) d3[p2] = b3[p2];
+          };
+          return extendStatics(d2, b2);
+        };
+        return function(d2, b2) {
+          if (typeof b2 !== "function" && b2 !== null)
+            throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
+          extendStatics(d2, b2);
+          function __257() {
+            this.constructor = d2;
+          }
+          d2.prototype = b2 === null ? Object.create(b2) : (__257.prototype = b2.prototype, new __257());
+        };
+      })();
+      var __assign2 = exports && exports.__assign || function() {
+        __assign2 = Object.assign || function(t2) {
+          for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+            s2 = arguments[i2];
+            for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+              t2[p2] = s2[p2];
+          }
+          return t2;
+        };
+        return __assign2.apply(this, arguments);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.cloneNode = exports.hasChildren = exports.isDocument = exports.isDirective = exports.isComment = exports.isText = exports.isCDATA = exports.isTag = exports.Element = exports.Document = exports.CDATA = exports.NodeWithChildren = exports.ProcessingInstruction = exports.Comment = exports.Text = exports.DataNode = exports.Node = void 0;
+      var domelementtype_1 = require_lib4();
+      var Node = (
+        /** @class */
+        (function() {
+          function Node2() {
+            this.parent = null;
+            this.prev = null;
+            this.next = null;
+            this.startIndex = null;
+            this.endIndex = null;
+          }
+          Object.defineProperty(Node2.prototype, "parentNode", {
+            // Read-write aliases for properties
+            /**
+             * Same as {@link parent}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.parent;
+            },
+            set: function(parent) {
+              this.parent = parent;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Node2.prototype, "previousSibling", {
+            /**
+             * Same as {@link prev}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.prev;
+            },
+            set: function(prev) {
+              this.prev = prev;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Node2.prototype, "nextSibling", {
+            /**
+             * Same as {@link next}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.next;
+            },
+            set: function(next) {
+              this.next = next;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Node2.prototype.cloneNode = function(recursive) {
+            if (recursive === void 0) {
+              recursive = false;
+            }
+            return cloneNode(this, recursive);
+          };
+          return Node2;
+        })()
+      );
+      exports.Node = Node;
+      var DataNode = (
+        /** @class */
+        (function(_super) {
+          __extends(DataNode2, _super);
+          function DataNode2(data) {
+            var _this = _super.call(this) || this;
+            _this.data = data;
+            return _this;
+          }
+          Object.defineProperty(DataNode2.prototype, "nodeValue", {
+            /**
+             * Same as {@link data}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.data;
+            },
+            set: function(data) {
+              this.data = data;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return DataNode2;
+        })(Node)
+      );
+      exports.DataNode = DataNode;
+      var Text2 = (
+        /** @class */
+        (function(_super) {
+          __extends(Text3, _super);
+          function Text3() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.Text;
+            return _this;
+          }
+          Object.defineProperty(Text3.prototype, "nodeType", {
+            get: function() {
+              return 3;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Text3;
+        })(DataNode)
+      );
+      exports.Text = Text2;
+      var Comment2 = (
+        /** @class */
+        (function(_super) {
+          __extends(Comment3, _super);
+          function Comment3() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.Comment;
+            return _this;
+          }
+          Object.defineProperty(Comment3.prototype, "nodeType", {
+            get: function() {
+              return 8;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Comment3;
+        })(DataNode)
+      );
+      exports.Comment = Comment2;
+      var ProcessingInstruction2 = (
+        /** @class */
+        (function(_super) {
+          __extends(ProcessingInstruction3, _super);
+          function ProcessingInstruction3(name117, data) {
+            var _this = _super.call(this, data) || this;
+            _this.name = name117;
+            _this.type = domelementtype_1.ElementType.Directive;
+            return _this;
+          }
+          Object.defineProperty(ProcessingInstruction3.prototype, "nodeType", {
+            get: function() {
+              return 1;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return ProcessingInstruction3;
+        })(DataNode)
+      );
+      exports.ProcessingInstruction = ProcessingInstruction2;
+      var NodeWithChildren = (
+        /** @class */
+        (function(_super) {
+          __extends(NodeWithChildren2, _super);
+          function NodeWithChildren2(children) {
+            var _this = _super.call(this) || this;
+            _this.children = children;
+            return _this;
+          }
+          Object.defineProperty(NodeWithChildren2.prototype, "firstChild", {
+            // Aliases
+            /** First child of the node. */
+            get: function() {
+              var _a;
+              return (_a = this.children[0]) !== null && _a !== void 0 ? _a : null;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(NodeWithChildren2.prototype, "lastChild", {
+            /** Last child of the node. */
+            get: function() {
+              return this.children.length > 0 ? this.children[this.children.length - 1] : null;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(NodeWithChildren2.prototype, "childNodes", {
+            /**
+             * Same as {@link children}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.children;
+            },
+            set: function(children) {
+              this.children = children;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return NodeWithChildren2;
+        })(Node)
+      );
+      exports.NodeWithChildren = NodeWithChildren;
+      var CDATA = (
+        /** @class */
+        (function(_super) {
+          __extends(CDATA2, _super);
+          function CDATA2() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.CDATA;
+            return _this;
+          }
+          Object.defineProperty(CDATA2.prototype, "nodeType", {
+            get: function() {
+              return 4;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return CDATA2;
+        })(NodeWithChildren)
+      );
+      exports.CDATA = CDATA;
+      var Document = (
+        /** @class */
+        (function(_super) {
+          __extends(Document2, _super);
+          function Document2() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.type = domelementtype_1.ElementType.Root;
+            return _this;
+          }
+          Object.defineProperty(Document2.prototype, "nodeType", {
+            get: function() {
+              return 9;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Document2;
+        })(NodeWithChildren)
+      );
+      exports.Document = Document;
+      var Element2 = (
+        /** @class */
+        (function(_super) {
+          __extends(Element3, _super);
+          function Element3(name117, attribs, children, type) {
+            if (children === void 0) {
+              children = [];
+            }
+            if (type === void 0) {
+              type = name117 === "script" ? domelementtype_1.ElementType.Script : name117 === "style" ? domelementtype_1.ElementType.Style : domelementtype_1.ElementType.Tag;
+            }
+            var _this = _super.call(this, children) || this;
+            _this.name = name117;
+            _this.attribs = attribs;
+            _this.type = type;
+            return _this;
+          }
+          Object.defineProperty(Element3.prototype, "nodeType", {
+            get: function() {
+              return 1;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Element3.prototype, "tagName", {
+            // DOM Level 1 aliases
+            /**
+             * Same as {@link name}.
+             * [DOM spec](https://dom.spec.whatwg.org)-compatible alias.
+             */
+            get: function() {
+              return this.name;
+            },
+            set: function(name117) {
+              this.name = name117;
+            },
+            enumerable: false,
+            configurable: true
+          });
+          Object.defineProperty(Element3.prototype, "attributes", {
+            get: function() {
+              var _this = this;
+              return Object.keys(this.attribs).map(function(name117) {
+                var _a, _b;
+                return {
+                  name: name117,
+                  value: _this.attribs[name117],
+                  namespace: (_a = _this["x-attribsNamespace"]) === null || _a === void 0 ? void 0 : _a[name117],
+                  prefix: (_b = _this["x-attribsPrefix"]) === null || _b === void 0 ? void 0 : _b[name117]
+                };
+              });
+            },
+            enumerable: false,
+            configurable: true
+          });
+          return Element3;
+        })(NodeWithChildren)
+      );
+      exports.Element = Element2;
+      function isTag(node) {
+        return (0, domelementtype_1.isTag)(node);
+      }
+      exports.isTag = isTag;
+      function isCDATA(node) {
+        return node.type === domelementtype_1.ElementType.CDATA;
+      }
+      exports.isCDATA = isCDATA;
+      function isText(node) {
+        return node.type === domelementtype_1.ElementType.Text;
+      }
+      exports.isText = isText;
+      function isComment(node) {
+        return node.type === domelementtype_1.ElementType.Comment;
+      }
+      exports.isComment = isComment;
+      function isDirective(node) {
+        return node.type === domelementtype_1.ElementType.Directive;
+      }
+      exports.isDirective = isDirective;
+      function isDocument(node) {
+        return node.type === domelementtype_1.ElementType.Root;
+      }
+      exports.isDocument = isDocument;
+      function hasChildren(node) {
+        return Object.prototype.hasOwnProperty.call(node, "children");
+      }
+      exports.hasChildren = hasChildren;
+      function cloneNode(node, recursive) {
+        if (recursive === void 0) {
+          recursive = false;
+        }
+        var result;
+        if (isText(node)) {
+          result = new Text2(node.data);
+        } else if (isComment(node)) {
+          result = new Comment2(node.data);
+        } else if (isTag(node)) {
+          var children = recursive ? cloneChildren(node.children) : [];
+          var clone_1 = new Element2(node.name, __assign2({}, node.attribs), children);
+          children.forEach(function(child) {
+            return child.parent = clone_1;
+          });
+          if (node.namespace != null) {
+            clone_1.namespace = node.namespace;
+          }
+          if (node["x-attribsNamespace"]) {
+            clone_1["x-attribsNamespace"] = __assign2({}, node["x-attribsNamespace"]);
+          }
+          if (node["x-attribsPrefix"]) {
+            clone_1["x-attribsPrefix"] = __assign2({}, node["x-attribsPrefix"]);
+          }
+          result = clone_1;
+        } else if (isCDATA(node)) {
+          var children = recursive ? cloneChildren(node.children) : [];
+          var clone_2 = new CDATA(children);
+          children.forEach(function(child) {
+            return child.parent = clone_2;
+          });
+          result = clone_2;
+        } else if (isDocument(node)) {
+          var children = recursive ? cloneChildren(node.children) : [];
+          var clone_3 = new Document(children);
+          children.forEach(function(child) {
+            return child.parent = clone_3;
+          });
+          if (node["x-mode"]) {
+            clone_3["x-mode"] = node["x-mode"];
+          }
+          result = clone_3;
+        } else if (isDirective(node)) {
+          var instruction = new ProcessingInstruction2(node.name, node.data);
+          if (node["x-name"] != null) {
+            instruction["x-name"] = node["x-name"];
+            instruction["x-publicId"] = node["x-publicId"];
+            instruction["x-systemId"] = node["x-systemId"];
+          }
+          result = instruction;
+        } else {
+          throw new Error("Not implemented yet: ".concat(node.type));
+        }
+        result.startIndex = node.startIndex;
+        result.endIndex = node.endIndex;
+        if (node.sourceCodeLocation != null) {
+          result.sourceCodeLocation = node.sourceCodeLocation;
+        }
+        return result;
+      }
+      exports.cloneNode = cloneNode;
+      function cloneChildren(childs) {
+        var children = childs.map(function(child) {
+          return cloneNode(child, true);
+        });
+        for (var i2 = 1; i2 < children.length; i2++) {
+          children[i2].prev = children[i2 - 1];
+          children[i2 - 1].next = children[i2];
+        }
+        return children;
+      }
+    }
+  });
+
+  // node_modules/html-react-parser/node_modules/domhandler/lib/index.js
+  var require_lib5 = __commonJS({
+    "node_modules/html-react-parser/node_modules/domhandler/lib/index.js"(exports) {
+      "use strict";
+      var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o2, m2, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        var desc = Object.getOwnPropertyDescriptor(m2, k2);
+        if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
+          desc = { enumerable: true, get: function() {
+            return m2[k2];
+          } };
+        }
+        Object.defineProperty(o2, k22, desc);
+      }) : (function(o2, m2, k2, k22) {
+        if (k22 === void 0) k22 = k2;
+        o2[k22] = m2[k2];
+      }));
+      var __exportStar = exports && exports.__exportStar || function(m2, exports2) {
+        for (var p2 in m2) if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p2)) __createBinding(exports2, m2, p2);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.DomHandler = void 0;
+      var domelementtype_1 = require_lib4();
+      var node_js_1 = require_node2();
+      __exportStar(require_node2(), exports);
+      var defaultOpts = {
+        withStartIndices: false,
+        withEndIndices: false,
+        xmlMode: false
+      };
+      var DomHandler = (
+        /** @class */
+        (function() {
+          function DomHandler2(callback, options2, elementCB) {
+            this.dom = [];
+            this.root = new node_js_1.Document(this.dom);
+            this.done = false;
+            this.tagStack = [this.root];
+            this.lastNode = null;
+            this.parser = null;
+            if (typeof options2 === "function") {
+              elementCB = options2;
+              options2 = defaultOpts;
+            }
+            if (typeof callback === "object") {
+              options2 = callback;
+              callback = void 0;
+            }
+            this.callback = callback !== null && callback !== void 0 ? callback : null;
+            this.options = options2 !== null && options2 !== void 0 ? options2 : defaultOpts;
+            this.elementCB = elementCB !== null && elementCB !== void 0 ? elementCB : null;
+          }
+          DomHandler2.prototype.onparserinit = function(parser) {
+            this.parser = parser;
+          };
+          DomHandler2.prototype.onreset = function() {
+            this.dom = [];
+            this.root = new node_js_1.Document(this.dom);
+            this.done = false;
+            this.tagStack = [this.root];
+            this.lastNode = null;
+            this.parser = null;
+          };
+          DomHandler2.prototype.onend = function() {
+            if (this.done)
+              return;
+            this.done = true;
+            this.parser = null;
+            this.handleCallback(null);
+          };
+          DomHandler2.prototype.onerror = function(error) {
+            this.handleCallback(error);
+          };
+          DomHandler2.prototype.onclosetag = function() {
+            this.lastNode = null;
+            var elem = this.tagStack.pop();
+            if (this.options.withEndIndices) {
+              elem.endIndex = this.parser.endIndex;
+            }
+            if (this.elementCB)
+              this.elementCB(elem);
+          };
+          DomHandler2.prototype.onopentag = function(name117, attribs) {
+            var type = this.options.xmlMode ? domelementtype_1.ElementType.Tag : void 0;
+            var element = new node_js_1.Element(name117, attribs, void 0, type);
+            this.addNode(element);
+            this.tagStack.push(element);
+          };
+          DomHandler2.prototype.ontext = function(data) {
+            var lastNode = this.lastNode;
+            if (lastNode && lastNode.type === domelementtype_1.ElementType.Text) {
+              lastNode.data += data;
+              if (this.options.withEndIndices) {
+                lastNode.endIndex = this.parser.endIndex;
+              }
+            } else {
+              var node = new node_js_1.Text(data);
+              this.addNode(node);
+              this.lastNode = node;
+            }
+          };
+          DomHandler2.prototype.oncomment = function(data) {
+            if (this.lastNode && this.lastNode.type === domelementtype_1.ElementType.Comment) {
+              this.lastNode.data += data;
+              return;
+            }
+            var node = new node_js_1.Comment(data);
+            this.addNode(node);
+            this.lastNode = node;
+          };
+          DomHandler2.prototype.oncommentend = function() {
+            this.lastNode = null;
+          };
+          DomHandler2.prototype.oncdatastart = function() {
+            var text = new node_js_1.Text("");
+            var node = new node_js_1.CDATA([text]);
+            this.addNode(node);
+            text.parent = node;
+            this.lastNode = text;
+          };
+          DomHandler2.prototype.oncdataend = function() {
+            this.lastNode = null;
+          };
+          DomHandler2.prototype.onprocessinginstruction = function(name117, data) {
+            var node = new node_js_1.ProcessingInstruction(name117, data);
+            this.addNode(node);
+          };
+          DomHandler2.prototype.handleCallback = function(error) {
+            if (typeof this.callback === "function") {
+              this.callback(error, this.dom);
+            } else if (error) {
+              throw error;
+            }
+          };
+          DomHandler2.prototype.addNode = function(node) {
+            var parent = this.tagStack[this.tagStack.length - 1];
+            var previousSibling = parent.children[parent.children.length - 1];
+            if (this.options.withStartIndices) {
+              node.startIndex = this.parser.startIndex;
+            }
+            if (this.options.withEndIndices) {
+              node.endIndex = this.parser.endIndex;
+            }
+            parent.children.push(node);
+            if (previousSibling) {
+              node.prev = previousSibling;
+              previousSibling.next = node;
+            }
+            node.parent = parent;
+            this.lastNode = null;
+          };
+          return DomHandler2;
+        })()
+      );
+      exports.DomHandler = DomHandler;
+      exports.default = DomHandler;
+    }
+  });
+
+  // node_modules/html-react-parser/lib/index.js
+  var require_lib6 = __commonJS({
+    "node_modules/html-react-parser/lib/index.js"(exports) {
+      "use strict";
+      var __importDefault = exports && exports.__importDefault || function(mod) {
+        return mod && mod.__esModule ? mod : { "default": mod };
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.htmlToDOM = exports.domToReact = exports.attributesToProps = exports.Text = exports.ProcessingInstruction = exports.Element = exports.Comment = void 0;
+      exports.default = HTMLReactParser2;
+      var html_dom_parser_1 = __importDefault(require_html_to_dom());
+      exports.htmlToDOM = html_dom_parser_1.default;
+      var attributes_to_props_1 = __importDefault(require_attributes_to_props());
+      exports.attributesToProps = attributes_to_props_1.default;
+      var dom_to_react_1 = __importDefault(require_dom_to_react());
+      exports.domToReact = dom_to_react_1.default;
+      var domhandler_1 = require_lib5();
+      Object.defineProperty(exports, "Comment", { enumerable: true, get: function() {
+        return domhandler_1.Comment;
+      } });
+      Object.defineProperty(exports, "Element", { enumerable: true, get: function() {
+        return domhandler_1.Element;
+      } });
+      Object.defineProperty(exports, "ProcessingInstruction", { enumerable: true, get: function() {
+        return domhandler_1.ProcessingInstruction;
+      } });
+      Object.defineProperty(exports, "Text", { enumerable: true, get: function() {
+        return domhandler_1.Text;
+      } });
+      var domParserOptions = { lowerCaseAttributeNames: false };
+      function HTMLReactParser2(html, options2) {
+        if (typeof html !== "string") {
+          throw new TypeError("First argument must be a string");
+        }
+        if (!html) {
+          return [];
+        }
+        return (0, dom_to_react_1.default)((0, html_dom_parser_1.default)(html, (options2 === null || options2 === void 0 ? void 0 : options2.htmlparser2) || domParserOptions), options2);
+      }
+    }
+  });
+
   // package-external:@wordpress/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
@@ -61520,14 +64509,47 @@ ${declarations}
   var import_data134 = __toESM(require_data(), 1);
   var import_i18n234 = __toESM(require_i18n(), 1);
   var import_block_editor254 = __toESM(require_block_editor(), 1);
-  var import_server_side_render6 = __toESM(require_server_side_render(), 1);
   var import_core_data78 = __toESM(require_core_data(), 1);
+  var import_server_side_render6 = __toESM(require_server_side_render(), 1);
+  var import_compose51 = __toESM(require_compose(), 1);
+
+  // node_modules/html-react-parser/esm/index.mjs
+  var import_lib = __toESM(require_lib6(), 1);
+  var import_lib2 = __toESM(require_lib6(), 1);
+  var esm_default = import_lib.default.default || import_lib.default;
+
+  // packages/block-library/build-module/utils/html-renderer.js
+  var import_dom9 = __toESM(require_dom(), 1);
   var import_jsx_runtime483 = __toESM(require_jsx_runtime(), 1);
+  var HtmlRenderer = ({ wrapperProps = {}, html = "" }) => {
+    const options2 = {
+      replace: ({ name: name117, type, attribs, parent, children }) => {
+        if (type === "tag" && name117) {
+          const parsedProps = (0, import_lib2.attributesToProps)(attribs || {});
+          const TagName2 = name117;
+          if (!parent) {
+            const mergedProps = {
+              ...parsedProps,
+              ...wrapperProps
+            };
+            return /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(TagName2, { ...mergedProps, children: (0, import_lib2.domToReact)(children, options2) });
+          }
+        }
+      }
+    };
+    const sanitizedContent = (0, import_dom9.safeHTML)(html);
+    const parsedContent = esm_default(sanitizedContent, options2);
+    return parsedContent;
+  };
+  var html_renderer_default = HtmlRenderer;
+
+  // packages/block-library/build-module/tag-cloud/edit.js
+  var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
   var MIN_TAGS = 1;
   var MAX_TAGS = 100;
   var MIN_FONT_SIZE = 0.1;
   var MAX_FONT_SIZE = 100;
-  function TagCloudEdit({ attributes: attributes3, setAttributes }) {
+  function TagCloudEdit({ attributes: attributes3, setAttributes, name: name117 }) {
     const {
       taxonomy,
       showTagCounts,
@@ -61575,14 +64597,7 @@ ${declarations}
       });
       setAttributes(updateObj);
     };
-    const serverSideAttributes = {
-      ...attributes3,
-      style: {
-        ...attributes3?.style,
-        border: void 0
-      }
-    };
-    const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(import_block_editor254.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime483.jsxs)(
+    const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_block_editor254.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(
       import_components153.__experimentalToolsPanel,
       {
         label: (0, import_i18n234.__)("Settings"),
@@ -61597,14 +64612,14 @@ ${declarations}
         },
         dropdownMenuProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
             import_components153.__experimentalToolsPanelItem,
             {
               hasValue: () => taxonomy !== "post_tag",
               label: (0, import_i18n234.__)("Taxonomy"),
               onDeselect: () => setAttributes({ taxonomy: "post_tag" }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
                 import_components153.SelectControl,
                 {
                   __next40pxDefaultSize: true,
@@ -61616,7 +64631,7 @@ ${declarations}
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
             import_components153.__experimentalToolsPanelItem,
             {
               hasValue: () => smallestFontSize !== "8pt" || largestFontSize !== "22pt",
@@ -61626,8 +64641,8 @@ ${declarations}
                 largestFontSize: "22pt"
               }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime483.jsxs)(import_components153.Flex, { gap: 4, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(import_components153.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_components153.Flex, { gap: 4, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
                   import_components153.__experimentalUnitControl,
                   {
                     label: (0, import_i18n234.__)("Smallest size"),
@@ -61644,7 +64659,7 @@ ${declarations}
                     size: "__unstable-large"
                   }
                 ) }),
-                /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(import_components153.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
                   import_components153.__experimentalUnitControl,
                   {
                     label: (0, import_i18n234.__)("Largest size"),
@@ -61664,14 +64679,14 @@ ${declarations}
               ] })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
             import_components153.__experimentalToolsPanelItem,
             {
               hasValue: () => numberOfTags !== 45,
               label: (0, import_i18n234.__)("Number of tags"),
               onDeselect: () => setAttributes({ numberOfTags: 45 }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
                 import_components153.RangeControl,
                 {
                   __next40pxDefaultSize: true,
@@ -61685,14 +64700,14 @@ ${declarations}
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
             import_components153.__experimentalToolsPanelItem,
             {
               hasValue: () => showTagCounts !== false,
               label: (0, import_i18n234.__)("Show tag counts"),
               onDeselect: () => setAttributes({ showTagCounts: false }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
                 import_components153.ToggleControl,
                 {
                   label: (0, import_i18n234.__)("Show tag counts"),
@@ -61705,16 +64720,25 @@ ${declarations}
         ]
       }
     ) });
-    return /* @__PURE__ */ (0, import_jsx_runtime483.jsxs)(import_jsx_runtime483.Fragment, { children: [
+    const { content, status, error } = (0, import_server_side_render6.useServerSideRender)({
+      attributes: attributes3,
+      skipBlockSupportAttributes: true,
+      block: name117
+    });
+    const disabledRef = (0, import_compose51.useDisabled)();
+    const blockProps = (0, import_block_editor254.useBlockProps)({ ref: disabledRef });
+    if (status === "loading") {
+      return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.Spinner, {}) });
+    }
+    if (status === "error") {
+      return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)("p", { children: [
+        "Error: ",
+        error
+      ] }) });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
       inspectorControls,
-      /* @__PURE__ */ (0, import_jsx_runtime483.jsx)("div", { ...(0, import_block_editor254.useBlockProps)(), children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(import_components153.Disabled, { children: /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
-        import_server_side_render6.default,
-        {
-          skipBlockSupportAttributes: true,
-          block: "core/tag-cloud",
-          attributes: serverSideAttributes
-        }
-      ) }) })
+      /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
     ] });
   }
   var edit_default34 = TagCloudEdit;
@@ -61893,14 +64917,14 @@ ${declarations}
   var import_element122 = __toESM(require_element(), 1);
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_components154 = __toESM(require_components(), 1);
-  var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime485 = __toESM(require_jsx_runtime(), 1);
   function TitleModal({ areaLabel, onClose, onSubmit }) {
     const [title, setTitle] = (0, import_element122.useState)("");
     const submitForCreation = (event) => {
       event.preventDefault();
       onSubmit(title);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
       import_components154.Modal,
       {
         title: (0, import_i18n236.sprintf)(
@@ -61911,8 +64935,8 @@ ${declarations}
         onRequestClose: onClose,
         focusOnMount: "firstContentElement",
         size: "small",
-        children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("form", { onSubmit: submitForCreation, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_components154.__experimentalVStack, { spacing: "5", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime485.jsx)("form", { onSubmit: submitForCreation, children: /* @__PURE__ */ (0, import_jsx_runtime485.jsxs)(import_components154.__experimentalVStack, { spacing: "5", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
             import_components154.TextControl,
             {
               label: (0, import_i18n236.__)("Name"),
@@ -61922,8 +64946,8 @@ ${declarations}
               __next40pxDefaultSize: true
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_components154.__experimentalHStack, { justify: "right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime485.jsxs)(import_components154.__experimentalHStack, { justify: "right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
               import_components154.Button,
               {
                 __next40pxDefaultSize: true,
@@ -61935,7 +64959,7 @@ ${declarations}
                 children: (0, import_i18n236.__)("Cancel")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
               import_components154.Button,
               {
                 variant: "primary",
@@ -61953,7 +64977,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/template-part/edit/placeholder.js
-  var import_jsx_runtime485 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime486 = __toESM(require_jsx_runtime(), 1);
   function TemplatePartPlaceholder({
     area,
     clientId,
@@ -61985,7 +65009,7 @@ ${declarations}
       area,
       setAttributes
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime485.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime486.jsxs)(
       import_components155.Placeholder,
       {
         icon: getTemplatePartIcon(areaObject.icon),
@@ -62000,8 +65024,8 @@ ${declarations}
           areaObject.label.toLowerCase()
         ),
         children: [
-          isResolving && /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(import_components155.Spinner, {}),
-          !isResolving && !!(templateParts.length || blockPatterns.length) && /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
+          isResolving && /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(import_components155.Spinner, {}),
+          !isResolving && !!(templateParts.length || blockPatterns.length) && /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
             import_components155.Button,
             {
               __next40pxDefaultSize: true,
@@ -62010,7 +65034,7 @@ ${declarations}
               children: (0, import_i18n237.__)("Choose")
             }
           ),
-          !isResolving && isBlockBasedTheme && canCreateTemplatePart && /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
+          !isResolving && isBlockBasedTheme && canCreateTemplatePart && /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
             import_components155.Button,
             {
               __next40pxDefaultSize: true,
@@ -62021,7 +65045,7 @@ ${declarations}
               children: (0, import_i18n237.__)("Start blank")
             }
           ),
-          showTitleModal && /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
+          showTitleModal && /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
             TitleModal,
             {
               areaLabel: areaObject.label,
@@ -62056,7 +65080,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/template-part/edit/selection-modal.js
-  var import_jsx_runtime486 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime487 = __toESM(require_jsx_runtime(), 1);
   function TemplatePartSelectionModal({
     setAttributes,
     onClose,
@@ -62100,8 +65124,8 @@ ${declarations}
     };
     const hasTemplateParts = !!filteredTemplateParts.length;
     const hasBlockPatterns = !!filteredBlockPatterns.length;
-    return /* @__PURE__ */ (0, import_jsx_runtime486.jsxs)("div", { className: "block-library-template-part__selection-content", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime486.jsx)("div", { className: "block-library-template-part__selection-search", children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)("div", { className: "block-library-template-part__selection-content", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("div", { className: "block-library-template-part__selection-search", children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
         import_components156.SearchControl,
         {
           onChange: setSearchValue,
@@ -62110,9 +65134,9 @@ ${declarations}
           placeholder: (0, import_i18n238.__)("Search")
         }
       ) }),
-      hasTemplateParts && /* @__PURE__ */ (0, import_jsx_runtime486.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime486.jsx)("h2", { children: (0, import_i18n238.__)("Existing template parts") }),
-        /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(
+      hasTemplateParts && /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("h2", { children: (0, import_i18n238.__)("Existing template parts") }),
+        /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
           import_block_editor256.__experimentalBlockPatternsList,
           {
             blockPatterns: filteredTemplateParts,
@@ -62122,7 +65146,7 @@ ${declarations}
           }
         )
       ] }),
-      !hasTemplateParts && !hasBlockPatterns && /* @__PURE__ */ (0, import_jsx_runtime486.jsx)(import_components156.__experimentalHStack, { alignment: "center", children: /* @__PURE__ */ (0, import_jsx_runtime486.jsx)("p", { children: (0, import_i18n238.__)("No results found.") }) })
+      !hasTemplateParts && !hasBlockPatterns && /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components156.__experimentalHStack, { alignment: "center", children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("p", { children: (0, import_i18n238.__)("No results found.") }) })
     ] });
   }
 
@@ -62217,7 +65241,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/template-part/edit/import-controls.js
-  var import_jsx_runtime487 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime488 = __toESM(require_jsx_runtime(), 1);
   var SIDEBARS_QUERY = {
     per_page: -1,
     _fields: "id,name,description,status,widgets"
@@ -62258,7 +65282,7 @@ ${declarations}
       ];
     }, [sidebars]);
     if (!hasResolved) {
-      return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components157.__experimentalSpacer, { marginBottom: "0" });
+      return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components157.__experimentalSpacer, { marginBottom: "0" });
     }
     if (hasResolved && !options2.length) {
       return null;
@@ -62305,8 +65329,8 @@ ${declarations}
       }
       setIsBusy(false);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components157.__experimentalSpacer, { marginBottom: "4", children: /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components157.__experimentalHStack, { as: "form", onSubmit: createFromWidgets, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components157.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components157.__experimentalSpacer, { marginBottom: "4", children: /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_components157.__experimentalHStack, { as: "form", onSubmit: createFromWidgets, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components157.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
         import_components157.SelectControl,
         {
           label: (0, import_i18n239.__)("Import widget area"),
@@ -62317,14 +65341,14 @@ ${declarations}
           __next40pxDefaultSize: true
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
         import_components157.FlexItem,
         {
           style: {
             marginBottom: "8px",
             marginTop: "auto"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
             import_components157.Button,
             {
               __next40pxDefaultSize: true,
@@ -62341,7 +65365,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/template-part/edit/advanced-controls.js
-  var import_jsx_runtime488 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime489 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl7 } = unlock(import_block_editor257.privateApis);
   function TemplatePartAdvancedControls({
     tagName,
@@ -62374,9 +65398,9 @@ ${declarations}
         value: _area
       })
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_jsx_runtime488.Fragment, { children: [
-      isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime488.jsxs)(import_jsx_runtime488.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)(import_jsx_runtime489.Fragment, { children: [
+      isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime489.jsxs)(import_jsx_runtime489.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
           import_components158.TextControl,
           {
             __next40pxDefaultSize: true,
@@ -62388,7 +65412,7 @@ ${declarations}
             onFocus: (event) => event.target.select()
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
           import_components158.SelectControl,
           {
             __next40pxDefaultSize: true,
@@ -62400,7 +65424,7 @@ ${declarations}
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
         HTMLElementControl7,
         {
           tagName: tagName || "",
@@ -62425,7 +65449,7 @@ ${declarations}
           ]
         }
       ),
-      !hasInnerBlocks && /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+      !hasInnerBlocks && /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
         TemplatePartImportControls,
         {
           area,
@@ -62441,7 +65465,7 @@ ${declarations}
   var import_data140 = __toESM(require_data(), 1);
   var import_element126 = __toESM(require_element(), 1);
   var import_blocks113 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime489 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
   function useRenderAppender(hasInnerBlocks) {
     const blockEditingMode = (0, import_block_editor258.useBlockEditingMode)();
     if (blockEditingMode === "contentOnly") {
@@ -62508,7 +65532,7 @@ ${declarations}
       renderAppender: false,
       layout: useLayout(layout)
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(TagName2, { ...innerBlocksProps });
+    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(TagName2, { ...innerBlocksProps });
   }
   function EditableTemplatePartInnerBlocks({
     postId: id,
@@ -62540,7 +65564,7 @@ ${declarations}
         postType: "wp_template_part"
       })
     } : {};
-    return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(TagName2, { ...innerBlocksProps, ...customProps });
+    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(TagName2, { ...innerBlocksProps, ...customProps });
   }
   function TemplatePartInnerBlocks({
     postId: id,
@@ -62570,7 +65594,7 @@ ${declarations}
       return null;
     }
     const TemplatePartInnerBlocksComponent = canEditTemplatePart ? EditableTemplatePartInnerBlocks : NonEditableTemplatePartPreview;
-    return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
       TemplatePartInnerBlocksComponent,
       {
         postId: id,
@@ -62583,7 +65607,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/template-part/edit/index.js
-  var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
   function ReplaceButton({
     isEntityAvailable,
     area,
@@ -62600,7 +65624,7 @@ ${declarations}
     if (!canReplace) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
       import_components159.MenuItem,
       {
         onClick: () => {
@@ -62618,7 +65642,7 @@ ${declarations}
     if (!canReplace) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_components159.PanelBody, { title: (0, import_i18n241.__)("Design"), children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components159.PanelBody, { title: (0, import_i18n241.__)("Design"), children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
       import_block_editor259.__experimentalBlockPatternsList,
       {
         label: (0, import_i18n241.__)("Templates"),
@@ -62710,7 +65734,7 @@ ${declarations}
       );
     };
     if (!hasInnerBlocks && (slug && !theme || slug && isMissing)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor259.Warning, { children: (0, import_i18n241.sprintf)(
+      return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor259.Warning, { children: (0, import_i18n241.sprintf)(
         /* translators: %s: Template part slug. */
         (0, import_i18n241.__)(
           "Template part has been deleted or is unavailable: %s"
@@ -62719,11 +65743,11 @@ ${declarations}
       ) }) });
     }
     if (isEntityAvailable && hasAlreadyRendered) {
-      return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor259.Warning, { children: (0, import_i18n241.__)("Block cannot be rendered inside itself.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor259.Warning, { children: (0, import_i18n241.__)("Block cannot be rendered inside itself.") }) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime490.jsxs)(import_jsx_runtime490.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime490.jsxs)(import_block_editor259.RecursionProvider, { uniqueId: templatePartId, children: [
-        isEntityAvailable && onNavigateToEntityRecord && canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor259.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_jsx_runtime491.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_block_editor259.RecursionProvider, { uniqueId: templatePartId, children: [
+        isEntityAvailable && onNavigateToEntityRecord && canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor259.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
           import_components159.ToolbarButton,
           {
             onClick: () => {
@@ -62735,7 +65759,7 @@ ${declarations}
             children: window?.__experimentalContentOnlyPatternInsertion ? (0, import_i18n241.__)("Edit section") : (0, import_i18n241.__)("Edit")
           }
         ) }),
-        canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor259.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+        canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor259.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
           TemplatePartAdvancedControls,
           {
             tagName,
@@ -62747,7 +65771,7 @@ ${declarations}
             clientId
           }
         ) }),
-        isPlaceholder && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+        isPlaceholder && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
           TemplatePartPlaceholder,
           {
             area: attributes3.area,
@@ -62757,11 +65781,11 @@ ${declarations}
             onOpenSelectionModal: () => setIsTemplatePartSelectionOpen(true)
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor259.BlockSettingsMenuControls, { children: ({ selectedClientIds }) => {
+        /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor259.BlockSettingsMenuControls, { children: ({ selectedClientIds }) => {
           if (!(selectedClientIds.length === 1 && clientId === selectedClientIds[0])) {
             return null;
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
             ReplaceButton,
             {
               ...{
@@ -62775,7 +65799,7 @@ ${declarations}
             }
           );
         } }),
-        /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_block_editor259.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_block_editor259.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
           TemplatesList,
           {
             area,
@@ -62784,7 +65808,7 @@ ${declarations}
             onSelect: (pattern) => onPatternSelect(pattern)
           }
         ) }),
-        isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+        isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
           TemplatePartInnerBlocks,
           {
             tagName: TagName2,
@@ -62794,9 +65818,9 @@ ${declarations}
             layout
           }
         ),
-        !isPlaceholder && !isResolved && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(import_components159.Spinner, {}) })
+        !isPlaceholder && !isResolved && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components159.Spinner, {}) })
       ] }),
-      isTemplatePartSelectionOpen && /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+      isTemplatePartSelectionOpen && /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
         import_components159.Modal,
         {
           overlayClassName: "block-editor-template-part__selection-modal",
@@ -62807,7 +65831,7 @@ ${declarations}
           ),
           onRequestClose: () => setIsTemplatePartSelectionOpen(false),
           isFullScreen: true,
-          children: /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
             TemplatePartSelectionModal,
             {
               templatePartId,
@@ -62993,12 +66017,12 @@ ${declarations}
 
   // packages/block-library/build-module/term-count/icons.js
   var import_components160 = __toESM(require_components(), 1);
-  var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
-  var bareNumber = /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.Path, { d: "M 10 6 L 9.609375 9 L 7 9 L 7 10.5 L 9.4121094 10.5 L 9.0878906 13 L 7 13 L 7 14.5 L 8.890625 14.5 L 8.5 17.5 L 10 17.5 L 10.390625 14.5 L 12.890625 14.5 L 12.5 17.5 L 14 17.5 L 14.390625 14.5 L 17 14.5 L 17 13 L 14.587891 13 L 14.912109 10.5 L 17 10.5 L 17 9 L 15.109375 9 L 15.5 6 L 14 6 L 13.609375 9 L 11.109375 9 L 11.5 6 L 10 6 z M 10.912109 10.5 L 13.412109 10.5 L 13.087891 13 L 10.587891 13 L 10.912109 10.5 z" }) });
-  var numberInParenthesis = /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,3 c 0,0 1.5,4.004036 1.5,9 0,4.995964 -1.5,9 -1.5,9 H 20 c 0,0 1.5,-4.004036 1.5,-9 C 21.5,7.004036 20,3 20,3 Z M 5.5,21 C 5.5,21 4,16.995964 4,12 4,7.0040356 5.5,3 5.5,3 H 4 c 0,0 -1.5,4.004036 -1.5,9 0,4.995964 1.5,9 1.5,9 z" }) });
-  var numberInSquareBrackets = /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.Path, { d: "M 21.5,21 V 3 H 18 v 1.5 h 2 v 15 H 18 V 21 Z M 2.5,3 V 21 H 6 V 19.5 H 4 V 4.5 H 6 V 3 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
-  var numberInCurlyBrackets = /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,21 c 1.104567,0 2,-0.895433 2,-2 v -4 c 0,-1.104567 0.895433,-2 2,-2 v -2 c -1.104567,0 -2,-0.895433 -2,-2 V 5 c 0,-1.104567 -0.895433,-2 -2,-2 H 17 v 1.5 h 1.5 A 0.5,0.5 0 0 1 19,5 v 5 c 0,1.104567 0.895433,2 2,2 -1.104567,0 -2,0.895433 -2,2 v 5 c 0,0.276142 -0.223858,0.5 -0.5,0.5 H 17 V 21 Z M 5.5,3 c -1.1045668,0 -2,0.8954327 -2,2 v 4 c 0,1.104567 -0.8954332,2 -2,2 v 2 c 1.1045668,0 2,0.895433 2,2 v 4 c 0,1.104567 0.8954332,2 2,2 H 7 V 19.5 H 5.5 A 0.5,0.5 0 0 1 5,19 V 14 C 5,12.895433 4.1045668,12 3,12 4.1045668,12 5,11.104567 5,10 V 5 C 5,4.7238579 5.2238579,4.5 5.5,4.5 H 7 V 3 Z" }) });
-  var numberInAngleBrackets = /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(import_components160.Path, { d: "M 18.970703,16.53125 23.5,12 18.970703,7.46875 17.910156,8.53125 21.378906,12 17.910156,15.46875 Z M 5.0292969,7.46875 0.5,12 5.0292969,16.53125 6.0898438,15.46875 2.6210938,12 6.0898438,8.53125 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
+  var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
+  var bareNumber = /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.Path, { d: "M 10 6 L 9.609375 9 L 7 9 L 7 10.5 L 9.4121094 10.5 L 9.0878906 13 L 7 13 L 7 14.5 L 8.890625 14.5 L 8.5 17.5 L 10 17.5 L 10.390625 14.5 L 12.890625 14.5 L 12.5 17.5 L 14 17.5 L 14.390625 14.5 L 17 14.5 L 17 13 L 14.587891 13 L 14.912109 10.5 L 17 10.5 L 17 9 L 15.109375 9 L 15.5 6 L 14 6 L 13.609375 9 L 11.109375 9 L 11.5 6 L 10 6 z M 10.912109 10.5 L 13.412109 10.5 L 13.087891 13 L 10.587891 13 L 10.912109 10.5 z" }) });
+  var numberInParenthesis = /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,3 c 0,0 1.5,4.004036 1.5,9 0,4.995964 -1.5,9 -1.5,9 H 20 c 0,0 1.5,-4.004036 1.5,-9 C 21.5,7.004036 20,3 20,3 Z M 5.5,21 C 5.5,21 4,16.995964 4,12 4,7.0040356 5.5,3 5.5,3 H 4 c 0,0 -1.5,4.004036 -1.5,9 0,4.995964 1.5,9 1.5,9 z" }) });
+  var numberInSquareBrackets = /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.Path, { d: "M 21.5,21 V 3 H 18 v 1.5 h 2 v 15 H 18 V 21 Z M 2.5,3 V 21 H 6 V 19.5 H 4 V 4.5 H 6 V 3 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
+  var numberInCurlyBrackets = /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,21 c 1.104567,0 2,-0.895433 2,-2 v -4 c 0,-1.104567 0.895433,-2 2,-2 v -2 c -1.104567,0 -2,-0.895433 -2,-2 V 5 c 0,-1.104567 -0.895433,-2 -2,-2 H 17 v 1.5 h 1.5 A 0.5,0.5 0 0 1 19,5 v 5 c 0,1.104567 0.895433,2 2,2 -1.104567,0 -2,0.895433 -2,2 v 5 c 0,0.276142 -0.223858,0.5 -0.5,0.5 H 17 V 21 Z M 5.5,3 c -1.1045668,0 -2,0.8954327 -2,2 v 4 c 0,1.104567 -0.8954332,2 -2,2 v 2 c 1.1045668,0 2,0.895433 2,2 v 4 c 0,1.104567 0.8954332,2 2,2 H 7 V 19.5 H 5.5 A 0.5,0.5 0 0 1 5,19 V 14 C 5,12.895433 4.1045668,12 3,12 4.1045668,12 5,11.104567 5,10 V 5 C 5,4.7238579 5.2238579,4.5 5.5,4.5 H 7 V 3 Z" }) });
+  var numberInAngleBrackets = /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_components160.Path, { d: "M 18.970703,16.53125 23.5,12 18.970703,7.46875 17.910156,8.53125 21.378906,12 17.910156,15.46875 Z M 5.0292969,7.46875 0.5,12 5.0292969,16.53125 6.0898438,15.46875 2.6210938,12 6.0898438,8.53125 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
 
   // packages/block-library/build-module/term-count/use-term-count.js
   var import_core_data87 = __toESM(require_core_data(), 1);
@@ -63057,7 +66081,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/term-count/edit.js
-  var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
   var BRACKET_TYPES = {
     none: { label: (0, import_i18n242.__)("No brackets"), icon: bareNumber },
     round: {
@@ -63109,8 +66133,8 @@ ${declarations}
       const { before = "", after = "" } = BRACKET_TYPES[type] || {};
       return `${before}${count}${after}`;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(import_jsx_runtime492.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(import_block_editor260.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime493.jsxs)(import_jsx_runtime493.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_block_editor260.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
         import_components161.ToolbarDropdownMenu,
         {
           icon: BRACKET_TYPES[bracketType]?.icon ?? bareNumber,
@@ -63118,7 +66142,7 @@ ${declarations}
           controls: bracketTypeControls
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime492.jsx)("div", { ...blockProps, children: formatTermCount(termCount, bracketType) })
+      /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("div", { ...blockProps, children: formatTermCount(termCount, bracketType) })
     ] });
   }
 
@@ -63268,7 +66292,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/term-description/edit.js
-  var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
   function TermDescriptionEdit({
     attributes: attributes3,
     setAttributes,
@@ -63283,8 +66307,8 @@ ${declarations}
       }),
       style: mergedStyle
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime493.jsxs)(import_jsx_runtime493.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_block_editor261.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_block_editor261.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
         import_block_editor261.AlignmentControl,
         {
           value: textAlign,
@@ -63293,12 +66317,12 @@ ${declarations}
           }
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("div", { ...blockProps, children: termDescription ? /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)("div", { ...blockProps, children: termDescription ? /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
         "div",
         {
           dangerouslySetInnerHTML: { __html: termDescription }
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("div", { className: "wp-block-term-description__placeholder", children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)("span", { children: (0, import_i18n243.__)("Term Description") }) }) })
+      ) : /* @__PURE__ */ (0, import_jsx_runtime494.jsx)("div", { className: "wp-block-term-description__placeholder", children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)("span", { children: (0, import_i18n243.__)("Term Description") }) }) })
     ] });
   }
 
@@ -63467,7 +66491,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/term-name/edit.js
-  var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
   function TermNameEdit({
     attributes: attributes3,
     setAttributes,
@@ -63485,7 +66509,7 @@ ${declarations}
     const TagName2 = level === 0 ? "p" : `h${level}`;
     let termNameDisplay = termName2;
     if (isLink) {
-      termNameDisplay = /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+      termNameDisplay = /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
         "a",
         {
           href: "#term-name-pseudo-link",
@@ -63494,9 +66518,9 @@ ${declarations}
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_block_editor262.BlockControls, { group: "block", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime495.jsxs)(import_jsx_runtime495.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime495.jsxs)(import_block_editor262.BlockControls, { group: "block", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
           import_block_editor262.HeadingLevelDropdown,
           {
             value: level,
@@ -63506,7 +66530,7 @@ ${declarations}
             }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
           import_block_editor262.AlignmentControl,
           {
             value: textAlign,
@@ -63516,7 +66540,7 @@ ${declarations}
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_block_editor262.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(import_block_editor262.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
         import_components162.__experimentalToolsPanel,
         {
           label: (0, import_i18n244.__)("Settings"),
@@ -63526,14 +66550,14 @@ ${declarations}
             });
           },
           dropdownMenuProps,
-          children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
             import_components162.__experimentalToolsPanelItem,
             {
               hasValue: () => !!isLink,
               label: (0, import_i18n244.__)("Make term name a link"),
               onDeselect: () => setAttributes({ isLink: false }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
                 import_components162.ToggleControl,
                 {
                   label: (0, import_i18n244.__)("Make term name a link"),
@@ -63545,7 +66569,7 @@ ${declarations}
           )
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(TagName2, { ...blockProps, children: termNameDisplay })
+      /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(TagName2, { ...blockProps, children: termNameDisplay })
     ] });
   }
 
@@ -63640,14 +66664,14 @@ ${declarations}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/taxonomy-control.js
   var import_components163 = __toESM(require_components(), 1);
-  var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
   function TaxonomyControl({ value, onChange, ...props }) {
     const taxonomies = usePublicTaxonomies();
     const taxonomyOptions = taxonomies.map((taxonomy) => ({
       label: taxonomy.name,
       value: taxonomy.slug
     }));
-    return /* @__PURE__ */ (0, import_jsx_runtime495.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
       import_components163.SelectControl,
       {
         __next40pxDefaultSize: true,
@@ -63662,9 +66686,9 @@ ${declarations}
   // packages/block-library/build-module/terms-query/edit/inspector-controls/order-control.js
   var import_i18n245 = __toESM(require_i18n(), 1);
   var import_components164 = __toESM(require_components(), 1);
-  var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   function OrderControl2({ orderBy, order, onChange, ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
       import_components164.SelectControl,
       {
         __next40pxDefaultSize: true,
@@ -63698,9 +66722,9 @@ ${declarations}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/empty-terms-control.js
   var import_components165 = __toESM(require_components(), 1);
-  var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   function EmptyTermsControl({ value, onChange, ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime497.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
       import_components165.ToggleControl,
       {
         checked: !value,
@@ -63712,17 +66736,17 @@ ${declarations}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/nested-terms-control.js
   var import_components166 = __toESM(require_components(), 1);
-  var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
   function NestedTermsControl({ value, onChange, ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_components166.ToggleControl, { checked: value, onChange, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_components166.ToggleControl, { checked: value, onChange, ...props });
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.js
   var import_components167 = __toESM(require_components(), 1);
   var import_i18n246 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
   function InheritControl({ value, onChange, label }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
       import_components167.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
@@ -63738,14 +66762,14 @@ ${declarations}
         ) : (0, import_i18n246.__)("Display terms based on specific criteria."),
         value: value ? "default" : "custom",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
             import_components167.__experimentalToggleGroupControlOption,
             {
               value: "default",
               label: (0, import_i18n246.__)("Default")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(import_components167.__experimentalToggleGroupControlOption, { value: "custom", label: (0, import_i18n246.__)("Custom") })
+          /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_components167.__experimentalToggleGroupControlOption, { value: "custom", label: (0, import_i18n246.__)("Custom") })
         ]
       }
     );
@@ -63754,9 +66778,9 @@ ${declarations}
   // packages/block-library/build-module/terms-query/edit/inspector-controls/max-terms-control.js
   var import_i18n247 = __toESM(require_i18n(), 1);
   var import_components168 = __toESM(require_components(), 1);
-  var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
   function MaxTermsControl({ value, onChange, ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
       import_components168.RangeControl,
       {
         __next40pxDefaultSize: true,
@@ -63775,14 +66799,14 @@ ${declarations}
   // packages/block-library/build-module/terms-query/edit/inspector-controls/advanced-controls.js
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_block_editor263 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl8 } = unlock(import_block_editor263.privateApis);
   function AdvancedControls({
     TagName: TagName2,
     setAttributes,
     clientId
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_block_editor263.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(import_block_editor263.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
       HTMLElementControl8,
       {
         tagName: TagName2,
@@ -63803,9 +66827,9 @@ ${declarations}
   var import_data148 = __toESM(require_data(), 1);
   var import_core_data91 = __toESM(require_core_data(), 1);
   var import_element129 = __toESM(require_element(), 1);
-  var import_compose51 = __toESM(require_compose(), 1);
+  var import_compose52 = __toESM(require_compose(), 1);
   var import_html_entities18 = __toESM(require_html_entities(), 1);
-  var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY6 = [];
   var BASE_QUERY3 = {
     order: "asc",
@@ -63821,7 +66845,7 @@ ${declarations}
     const [search, setSearch] = (0, import_element129.useState)("");
     const [value, setValue] = (0, import_element129.useState)(EMPTY_ARRAY6);
     const [suggestions, setSuggestions] = (0, import_element129.useState)(EMPTY_ARRAY6);
-    const debouncedSearch = (0, import_compose51.useDebounce)(setSearch, 250);
+    const debouncedSearch = (0, import_compose52.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data148.useSelect)(
       (select9) => {
         if (!search) {
@@ -63915,7 +66939,7 @@ ${declarations}
       setSuggestions(EMPTY_ARRAY6);
       onChange(ids);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime502.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
       import_components169.FormTokenField,
       {
         __next40pxDefaultSize: true,
@@ -63930,7 +66954,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/index.js
-  var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
   function TermsQueryInspectorControls({
     attributes: attributes3,
     setQuery,
@@ -63965,8 +66989,8 @@ ${declarations}
     const nestedTermsControlLabel = (0, import_i18n249.__)("Show nested terms");
     const maxTermsControlLabel = (0, import_i18n249.__)("Max terms");
     const includeControlLabel = (0, import_i18n249.__)("Selected terms");
-    return /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_jsx_runtime503.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_block_editor264.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_block_editor264.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(
         import_components170.__experimentalToolsPanel,
         {
           label: (0, import_i18n249.__)("Settings"),
@@ -63986,14 +67010,14 @@ ${declarations}
           },
           dropdownMenuProps,
           children: [
-            displayInheritControl && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            displayInheritControl && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_components170.__experimentalToolsPanelItem,
               {
                 hasValue: () => inherit !== false,
                 label: queryTypeControlLabel,
                 onDeselect: () => setQuery({ inherit: false }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   InheritControl,
                   {
                     label: queryTypeControlLabel,
@@ -64003,7 +67027,7 @@ ${declarations}
                 )
               }
             ),
-            !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_components170.__experimentalToolsPanelItem,
               {
                 hasValue: () => taxonomy !== "category",
@@ -64012,7 +67036,7 @@ ${declarations}
                   setQuery({ taxonomy: "category" });
                 },
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   TaxonomyControl,
                   {
                     label: taxonomyControlLabel,
@@ -64025,14 +67049,14 @@ ${declarations}
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_components170.__experimentalToolsPanelItem,
               {
                 hasValue: () => orderBy !== "name" || order !== "asc",
                 label: orderByControlLabel,
                 onDeselect: () => setQuery({ orderBy: "name", order: "asc" }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   OrderControl2,
                   {
                     label: orderByControlLabel,
@@ -64051,7 +67075,7 @@ ${declarations}
                 )
               }
             ),
-            !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_components170.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!include?.length,
@@ -64062,7 +67086,7 @@ ${declarations}
                   order: "asc"
                 }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   IncludeControl,
                   {
                     label: includeControlLabel,
@@ -64073,14 +67097,14 @@ ${declarations}
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_components170.__experimentalToolsPanelItem,
               {
                 hasValue: () => hideEmpty !== true,
                 label: emptyTermsControlLabel,
                 onDeselect: () => setQuery({ hideEmpty: true }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   EmptyTermsControl,
                   {
                     label: emptyTermsControlLabel,
@@ -64090,14 +67114,14 @@ ${declarations}
                 )
               }
             ),
-            displayShowNestedControl && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            displayShowNestedControl && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_components170.__experimentalToolsPanelItem,
               {
                 hasValue: () => showNested !== false,
                 label: nestedTermsControlLabel,
                 onDeselect: () => setQuery({ showNested: false }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   NestedTermsControl,
                   {
                     label: nestedTermsControlLabel,
@@ -64111,14 +67135,14 @@ ${declarations}
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
               import_components170.__experimentalToolsPanelItem,
               {
                 hasValue: () => perPage !== 10,
                 label: maxTermsControlLabel,
                 onDeselect: () => setQuery({ perPage: 10 }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
                   MaxTermsControl,
                   {
                     label: maxTermsControlLabel,
@@ -64131,7 +67155,7 @@ ${declarations}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
         AdvancedControls,
         {
           TagName: TagName2,
@@ -64143,7 +67167,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/terms-query/edit/terms-query-content.js
-  var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE18 = [["core/term-template"]];
   function TermsQueryContent({
     attributes: attributes3,
@@ -64162,8 +67186,8 @@ ${declarations}
       })),
       [setAttributes]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime505.jsxs)(import_jsx_runtime505.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
         TermsQueryInspectorControls,
         {
           attributes: attributes3,
@@ -64173,7 +67197,7 @@ ${declarations}
           templateSlug: context?.templateSlug
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(TagName2, { ...innerBlocksProps })
+      /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(TagName2, { ...innerBlocksProps })
     ] });
   }
 
@@ -64181,7 +67205,7 @@ ${declarations}
   var import_data149 = __toESM(require_data(), 1);
   var import_blocks115 = __toESM(require_blocks(), 1);
   var import_block_editor266 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   function TermsQueryPlaceholder({
     attributes: attributes3,
     clientId,
@@ -64209,7 +67233,7 @@ ${declarations}
     const label = activeBlockVariation?.title || blockType?.title;
     const { replaceInnerBlocks } = (0, import_data149.useDispatch)(import_block_editor266.store);
     const blockProps = (0, import_block_editor266.useBlockProps)();
-    return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
       import_block_editor266.__experimentalBlockVariationPicker,
       {
         icon,
@@ -64231,32 +67255,32 @@ ${declarations}
   }
 
   // packages/block-library/build-module/terms-query/edit/index.js
-  var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
   var TermsQueryEdit = (props) => {
     const hasInnerBlocks = (0, import_data150.useSelect)(
       (select9) => !!select9(import_block_editor267.store).getBlocks(props.clientId).length,
       [props.clientId]
     );
     const Component = hasInnerBlocks ? TermsQueryContent : TermsQueryPlaceholder;
-    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(Component, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(Component, { ...props });
   };
   var edit_default35 = TermsQueryEdit;
 
   // packages/block-library/build-module/terms-query/save.js
   var import_block_editor268 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
   function save50({ attributes: { tagName: Tag = "div" } }) {
     const blockProps = import_block_editor268.useBlockProps.save();
     const innerBlocksProps = import_block_editor268.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(Tag, { ...innerBlocksProps });
+    return /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(Tag, { ...innerBlocksProps });
   }
 
   // packages/block-library/build-module/terms-query/variations.js
   var import_i18n250 = __toESM(require_i18n(), 1);
   var import_components171 = __toESM(require_components(), 1);
-  var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
-  var titleDate2 = /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(import_components171.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(import_components171.Path, { d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z" }) });
-  var titleExcerpt2 = /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(import_components171.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(import_components171.Path, { d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z" }) });
+  var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
+  var titleDate2 = /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(import_components171.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(import_components171.Path, { d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z" }) });
+  var titleExcerpt2 = /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(import_components171.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(import_components171.Path, { d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z" }) });
   var termName = [
     "core/term-name",
     {
@@ -64390,14 +67414,14 @@ ${declarations}
   var import_i18n251 = __toESM(require_i18n(), 1);
   var import_block_editor269 = __toESM(require_block_editor(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
-  var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE19 = [["core/term-name"]];
   function TermTemplateInnerBlocks({ classList }) {
     const innerBlocksProps = (0, import_block_editor269.useInnerBlocksProps)(
       { className: clsx_default("wp-block-term", classList) },
       { template: TEMPLATE19, __unstableDisableLayoutClassNames: true }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("li", { ...innerBlocksProps });
+    return /* @__PURE__ */ (0, import_jsx_runtime510.jsx)("li", { ...innerBlocksProps });
   }
   function TermTemplateBlockPreview({
     blocks,
@@ -64418,7 +67442,7 @@ ${declarations}
     const style2 = {
       display: isHidden ? "none" : void 0
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
       "li",
       {
         ...blockPreviewProps,
@@ -64489,10 +67513,10 @@ ${declarations}
       [terms, taxonomy]
     );
     if (!terms) {
-      return /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("ul", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("li", { className: "wp-block-term term-loading", children: /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("div", { className: "term-loading-placeholder" }) }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime510.jsx)("ul", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)("li", { className: "wp-block-term term-loading", children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)("div", { className: "term-loading-placeholder" }) }) });
     }
     if (!terms.length) {
-      return /* @__PURE__ */ (0, import_jsx_runtime509.jsxs)("p", { ...blockProps, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)("p", { ...blockProps, children: [
         " ",
         (0, import_i18n251.__)("No terms found.")
       ] });
@@ -64500,8 +67524,8 @@ ${declarations}
     const setDisplayLayout = (newDisplayLayout) => setAttributes((prevAttributes) => ({
       layout: { ...prevAttributes.layout, ...newDisplayLayout }
     }));
-    return /* @__PURE__ */ (0, import_jsx_runtime509.jsxs)(import_jsx_runtime509.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(import_block_editor269.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(import_jsx_runtime510.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(import_block_editor269.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
         import_components172.ToolbarGroup,
         {
           controls: [
@@ -64529,18 +67553,18 @@ ${declarations}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("ul", { ...blockProps, children: blockContexts?.map((blockContext) => /* @__PURE__ */ (0, import_jsx_runtime509.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime510.jsx)("ul", { ...blockProps, children: blockContexts?.map((blockContext) => /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(
         import_block_editor269.BlockContextProvider,
         {
           value: blockContext,
           children: [
-            blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
+            blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
               TermTemplateInnerBlocks,
               {
                 classList: blockContext.classList
               }
             ) : null,
-            /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
               MemoizedTermTemplateBlockPreview,
               {
                 blocks,
@@ -64559,9 +67583,9 @@ ${declarations}
 
   // packages/block-library/build-module/term-template/save.js
   var import_block_editor270 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime511 = __toESM(require_jsx_runtime(), 1);
   function TermTemplateSave() {
-    return /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(import_block_editor270.InnerBlocks.Content, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(import_block_editor270.InnerBlocks.Content, {});
   }
 
   // packages/block-library/build-module/term-template/index.js
@@ -64588,15 +67612,15 @@ ${declarations}
   var import_components173 = __toESM(require_components(), 1);
   var import_block_editor271 = __toESM(require_block_editor(), 1);
   var import_deprecated46 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime511 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime512 = __toESM(require_jsx_runtime(), 1);
   function TextColumnsEdit({ attributes: attributes3, setAttributes }) {
     const { width, content, columns } = attributes3;
     (0, import_deprecated46.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime511.jsxs)(import_jsx_runtime511.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(import_block_editor271.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime512.jsxs)(import_jsx_runtime512.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_block_editor271.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
         import_block_editor271.BlockAlignmentToolbar,
         {
           value: width,
@@ -64604,7 +67628,7 @@ ${declarations}
           controls: ["center", "wide", "full"]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(import_block_editor271.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(import_components173.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_block_editor271.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(import_components173.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
         import_components173.RangeControl,
         {
           __next40pxDefaultSize: true,
@@ -64616,18 +67640,18 @@ ${declarations}
           required: true
         }
       ) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
         "div",
         {
           ...(0, import_block_editor271.useBlockProps)({
             className: `align${width} columns-${columns}`
           }),
           children: Array.from({ length: columns }).map((_, index) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
               "div",
               {
                 className: "wp-block-column",
-                children: /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
                   import_block_editor271.RichText,
                   {
                     tagName: "p",
@@ -64701,16 +67725,16 @@ ${declarations}
 
   // packages/block-library/build-module/text-columns/save.js
   var import_block_editor272 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime512 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
   function save51({ attributes: attributes3 }) {
     const { width, content, columns } = attributes3;
-    return /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
       "div",
       {
         ...import_block_editor272.useBlockProps.save({
           className: `align${width} columns-${columns}`
         }),
-        children: Array.from({ length: columns }).map((_, index) => /* @__PURE__ */ (0, import_jsx_runtime512.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
+        children: Array.from({ length: columns }).map((_, index) => /* @__PURE__ */ (0, import_jsx_runtime513.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
           import_block_editor272.RichText.Content,
           {
             tagName: "p",
@@ -64776,7 +67800,7 @@ ${declarations}
 
   // packages/block-library/build-module/verse/deprecated.js
   var import_block_editor273 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime514 = __toESM(require_jsx_runtime(), 1);
   var v133 = {
     attributes: {
       content: {
@@ -64791,7 +67815,7 @@ ${declarations}
     },
     save({ attributes: attributes3 }) {
       const { textAlign, content } = attributes3;
-      return /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
         import_block_editor273.RichText.Content,
         {
           tagName: "pre",
@@ -64834,7 +67858,7 @@ ${declarations}
       const className = clsx_default({
         [`has-text-align-${textAlign}`]: textAlign
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime513.jsx)("pre", { ...import_block_editor273.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor273.RichText.Content, { value: content }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime514.jsx)("pre", { ...import_block_editor273.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(import_block_editor273.RichText.Content, { value: content }) });
     },
     migrate: migrate_font_family_default,
     isEligible({ style: style2 }) {
@@ -64847,7 +67871,7 @@ ${declarations}
   var import_i18n253 = __toESM(require_i18n(), 1);
   var import_block_editor274 = __toESM(require_block_editor(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime514 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
   function VerseEdit({
     attributes: attributes3,
     setAttributes,
@@ -64863,8 +67887,8 @@ ${declarations}
       }),
       style: style2
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(import_jsx_runtime514.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(import_block_editor274.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime515.jsxs)(import_jsx_runtime515.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(import_block_editor274.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
         import_block_editor274.AlignmentToolbar,
         {
           value: textAlign,
@@ -64873,7 +67897,7 @@ ${declarations}
           }
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
         import_block_editor274.RichText,
         {
           tagName: "pre",
@@ -64981,13 +68005,13 @@ ${declarations}
 
   // packages/block-library/build-module/verse/save.js
   var import_block_editor275 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime516 = __toESM(require_jsx_runtime(), 1);
   function save52({ attributes: attributes3 }) {
     const { textAlign, content } = attributes3;
     const className = clsx_default({
       [`has-text-align-${textAlign}`]: textAlign
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime515.jsx)("pre", { ...import_block_editor275.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(import_block_editor275.RichText.Content, { value: content }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)("pre", { ...import_block_editor275.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_block_editor275.RichText.Content, { value: content }) });
   }
 
   // packages/block-library/build-module/verse/transforms.js
@@ -65168,16 +68192,16 @@ ${declarations}
   };
 
   // packages/block-library/build-module/video/tracks.js
-  var import_jsx_runtime516 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime517 = __toESM(require_jsx_runtime(), 1);
   function Tracks({ tracks = [] }) {
     return tracks.map((track) => {
       const { id, ...trackAttrs } = track;
-      return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)("track", { ...trackAttrs }, id ?? trackAttrs.src);
+      return /* @__PURE__ */ (0, import_jsx_runtime517.jsx)("track", { ...trackAttrs }, id ?? trackAttrs.src);
     });
   }
 
   // packages/block-library/build-module/video/deprecated.js
-  var import_jsx_runtime517 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default114;
   var v134 = {
     attributes: blockAttributes7,
@@ -65194,8 +68218,8 @@ ${declarations}
         playsInline,
         tracks
       } = attributes3;
-      return /* @__PURE__ */ (0, import_jsx_runtime517.jsxs)("figure", { ...import_block_editor276.useBlockProps.save(), children: [
-        src && /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)("figure", { ...import_block_editor276.useBlockProps.save(), children: [
+        src && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
           "video",
           {
             autoPlay: autoplay,
@@ -65206,10 +68230,10 @@ ${declarations}
             preload: preload !== "metadata" ? preload : void 0,
             src,
             playsInline,
-            children: /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(Tracks, { tracks })
+            children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(Tracks, { tracks })
           }
         ),
-        !import_block_editor276.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(import_block_editor276.RichText.Content, { tagName: "figcaption", value: caption })
+        !import_block_editor276.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_block_editor276.RichText.Content, { tagName: "figcaption", value: caption })
       ] });
     }
   };
@@ -65229,7 +68253,7 @@ ${declarations}
   var import_i18n255 = __toESM(require_i18n(), 1);
   var import_components174 = __toESM(require_components(), 1);
   var import_element132 = __toESM(require_element(), 1);
-  var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime519 = __toESM(require_jsx_runtime(), 1);
   var options = [
     { value: "auto", label: (0, import_i18n255.__)("Auto") },
     { value: "metadata", label: (0, import_i18n255.__)("Metadata") },
@@ -65271,8 +68295,8 @@ ${declarations}
     const onChangePreload = (0, import_element132.useCallback)((value) => {
       setAttributes({ preload: value });
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_jsx_runtime518.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_jsx_runtime519.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         import_components174.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n255.__)("Autoplay"),
@@ -65281,7 +68305,7 @@ ${declarations}
           onDeselect: () => {
             setAttributes({ autoplay: false, muted: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components174.ToggleControl,
             {
               label: (0, import_i18n255.__)("Autoplay"),
@@ -65292,7 +68316,7 @@ ${declarations}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         import_components174.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n255.__)("Loop"),
@@ -65301,7 +68325,7 @@ ${declarations}
           onDeselect: () => {
             setAttributes({ loop: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components174.ToggleControl,
             {
               label: (0, import_i18n255.__)("Loop"),
@@ -65311,7 +68335,7 @@ ${declarations}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         import_components174.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n255.__)("Muted"),
@@ -65320,7 +68344,7 @@ ${declarations}
           onDeselect: () => {
             setAttributes({ muted: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components174.ToggleControl,
             {
               label: (0, import_i18n255.__)("Muted"),
@@ -65332,7 +68356,7 @@ ${declarations}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         import_components174.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n255.__)("Playback controls"),
@@ -65341,7 +68365,7 @@ ${declarations}
           onDeselect: () => {
             setAttributes({ controls: true });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components174.ToggleControl,
             {
               label: (0, import_i18n255.__)("Playback controls"),
@@ -65351,7 +68375,7 @@ ${declarations}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         import_components174.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n255.__)("Play inline"),
@@ -65360,7 +68384,7 @@ ${declarations}
           onDeselect: () => {
             setAttributes({ playsInline: false });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components174.ToggleControl,
             {
               label: (0, import_i18n255.__)("Play inline"),
@@ -65374,7 +68398,7 @@ ${declarations}
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         import_components174.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n255.__)("Preload"),
@@ -65383,7 +68407,7 @@ ${declarations}
           onDeselect: () => {
             setAttributes({ preload: "metadata" });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components174.SelectControl,
             {
               __next40pxDefaultSize: true,
@@ -65407,7 +68431,7 @@ ${declarations}
   var import_data152 = __toESM(require_data(), 1);
   var import_element133 = __toESM(require_element(), 1);
   var import_url20 = __toESM(require_url(), 1);
-  var import_jsx_runtime519 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime520 = __toESM(require_jsx_runtime(), 1);
   var { Badge: Badge2 } = unlock(import_components175.privateApis);
   var ALLOWED_TYPES = ["text/vtt"];
   var DEFAULT_KIND = "subtitles";
@@ -65427,15 +68451,15 @@ ${declarations}
   };
   function TrackList({ tracks, onEditPress }) {
     const content = tracks.map((track, index) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(
         import_components175.__experimentalHStack,
         {
           className: "block-library-video-tracks-editor__track-list-track",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)("span", { children: track.label }),
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_components175.__experimentalHStack, { justify: "flex-end", children: [
-              track.default && /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(Badge2, { children: (0, import_i18n256.__)("Default") }),
-              /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)("span", { children: track.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_components175.__experimentalHStack, { justify: "flex-end", children: [
+              track.default && /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(Badge2, { children: (0, import_i18n256.__)("Default") }),
+              /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                 import_components175.Button,
                 {
                   __next40pxDefaultSize: true,
@@ -65455,7 +68479,7 @@ ${declarations}
         track.id ?? track.src
       );
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
       import_components175.MenuGroup,
       {
         label: (0, import_i18n256.__)("Text tracks"),
@@ -65477,20 +68501,20 @@ ${declarations}
     });
     const { src, label, srcLang, kind, default: isDefaultTrack } = trackState;
     const fileName = src.startsWith("blob:") ? "" : (0, import_url20.getFilename)(src) || "";
-    return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(
       import_components175.__experimentalVStack,
       {
         className: "block-library-video-tracks-editor__single-track-editor",
         spacing: "4",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime519.jsx)("span", { className: "block-library-video-tracks-editor__single-track-editor-edit-track-label", children: (0, import_i18n256.__)("Edit track") }),
-          /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime520.jsx)("span", { className: "block-library-video-tracks-editor__single-track-editor-edit-track-label", children: (0, import_i18n256.__)("Edit track") }),
+          /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)("span", { children: [
             (0, import_i18n256.__)("File"),
             ": ",
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)("b", { children: fileName })
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)("b", { children: fileName })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_components175.__experimentalGrid, { columns: 2, gap: 4, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_components175.__experimentalGrid, { columns: 2, gap: 4, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
               import_components175.TextControl,
               {
                 __next40pxDefaultSize: true,
@@ -65503,7 +68527,7 @@ ${declarations}
                 help: (0, import_i18n256.__)("Title of track")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
               import_components175.TextControl,
               {
                 __next40pxDefaultSize: true,
@@ -65517,8 +68541,8 @@ ${declarations}
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_components175.__experimentalVStack, { spacing: "4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_components175.__experimentalVStack, { spacing: "4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
               import_components175.SelectControl,
               {
                 __next40pxDefaultSize: true,
@@ -65532,7 +68556,7 @@ ${declarations}
                 }))
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
               import_components175.ToggleControl,
               {
                 __next40pxDefaultSize: true,
@@ -65545,8 +68569,8 @@ ${declarations}
                 }))
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_components175.__experimentalHStack, { className: "block-library-video-tracks-editor__single-track-editor-buttons-container", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_components175.__experimentalHStack, { className: "block-library-video-tracks-editor__single-track-editor-buttons-container", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                 import_components175.Button,
                 {
                   __next40pxDefaultSize: true,
@@ -65556,7 +68580,7 @@ ${declarations}
                   children: (0, import_i18n256.__)("Remove track")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                 import_components175.Button,
                 {
                   __next40pxDefaultSize: true,
@@ -65625,7 +68649,7 @@ ${declarations}
     if (!mediaUpload) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
       import_components175.Dropdown,
       {
         contentClassName: "block-library-video-tracks-editor",
@@ -65640,7 +68664,7 @@ ${declarations}
             }
             onToggle();
           };
-          return /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(import_components175.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_components175.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
             import_components175.ToolbarButton,
             {
               "aria-expanded": isOpen,
@@ -65652,7 +68676,7 @@ ${declarations}
         },
         renderContent: () => {
           if (trackBeingEdited !== null) {
-            return /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
               SingleTrackEditor,
               {
                 track: tracks[trackBeingEdited],
@@ -65674,35 +68698,35 @@ ${declarations}
               }
             );
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_jsx_runtime519.Fragment, { children: [
-            tracks.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)("div", { className: "block-library-video-tracks-editor__tracks-informative-message", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime519.jsx)("h2", { className: "block-library-video-tracks-editor__tracks-informative-message-title", children: (0, import_i18n256.__)("Text tracks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime519.jsx)("p", { className: "block-library-video-tracks-editor__tracks-informative-message-description", children: (0, import_i18n256.__)(
+          return /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_jsx_runtime520.Fragment, { children: [
+            tracks.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)("div", { className: "block-library-video-tracks-editor__tracks-informative-message", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime520.jsx)("h2", { className: "block-library-video-tracks-editor__tracks-informative-message-title", children: (0, import_i18n256.__)("Text tracks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime520.jsx)("p", { className: "block-library-video-tracks-editor__tracks-informative-message-description", children: (0, import_i18n256.__)(
                 "Tracks can be subtitles, captions, chapters, or descriptions. They help make your content more accessible to a wider range of users."
               ) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_components175.NavigableMenu, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_components175.NavigableMenu, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                 TrackList,
                 {
                   tracks,
                   onEditPress: setTrackBeingEdited
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                 import_components175.MenuGroup,
                 {
                   className: "block-library-video-tracks-editor__add-tracks-container",
                   label: (0, import_i18n256.__)("Add tracks"),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_block_editor277.MediaUploadCheck, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_block_editor277.MediaUploadCheck, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                       import_block_editor277.MediaUpload,
                       {
                         onSelect: handleTrackSelect,
                         allowedTypes: ALLOWED_TYPES,
                         value: tracks.map(({ id }) => id),
                         multiple: true,
-                        render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+                        render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                           import_components175.MenuItem,
                           {
                             icon: media_default,
@@ -65712,14 +68736,14 @@ ${declarations}
                         )
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                       import_components175.FormFileUpload,
                       {
                         onChange: uploadFiles,
                         accept: ".vtt,text/vtt",
                         multiple: true,
                         render: ({ openFileDialog }) => {
-                          return /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
+                          return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
                             import_components175.MenuItem,
                             {
                               icon: upload_default,
@@ -65741,7 +68765,7 @@ ${declarations}
   }
 
   // packages/block-library/build-module/video/edit.js
-  var import_jsx_runtime520 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime521 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES8 = ["video"];
   function VideoEdit({
     isSelected: isSingleSelected,
@@ -65816,7 +68840,7 @@ ${declarations}
       createErrorNotice(message, { type: "snackbar" });
     }
     const placeholder2 = (content) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
         import_components176.Placeholder,
         {
           className: "block-editor-media-placeholder",
@@ -65837,10 +68861,10 @@ ${declarations}
       className: classes
     });
     if (!src && !temporaryURL) {
-      return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime521.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
         import_block_editor278.MediaPlaceholder,
         {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_block_editor278.BlockIcon, { icon: video_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_block_editor278.BlockIcon, { icon: video_default }),
           onSelect: onSelectVideo,
           onSelectURL,
           accept: "video/*",
@@ -65851,9 +68875,9 @@ ${declarations}
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_jsx_runtime520.Fragment, { children: [
-      isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_jsx_runtime520.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_block_editor278.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)(import_jsx_runtime521.Fragment, { children: [
+      isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)(import_jsx_runtime521.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_block_editor278.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
           TracksEditor,
           {
             tracks,
@@ -65862,7 +68886,7 @@ ${declarations}
             }
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_block_editor278.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_block_editor278.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
           import_block_editor278.MediaReplaceFlow,
           {
             mediaId: id,
@@ -65877,7 +68901,7 @@ ${declarations}
           }
         ) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_block_editor278.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_block_editor278.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)(
         import_components176.__experimentalToolsPanel,
         {
           label: (0, import_i18n257.__)("Settings"),
@@ -65894,14 +68918,14 @@ ${declarations}
           },
           dropdownMenuProps,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
               edit_common_settings_default,
               {
                 setAttributes,
                 attributes: attributes3
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
               poster_image_default,
               {
                 poster,
@@ -65913,19 +68937,19 @@ ${declarations}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)("figure", { ...blockProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_components176.Disabled, { isDisabled: !isSingleSelected, children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)("figure", { ...blockProps, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_components176.Disabled, { isDisabled: !isSingleSelected, children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
           "video",
           {
             controls,
             poster,
             src: src || temporaryURL,
             ref: videoPlayer,
-            children: /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(Tracks, { tracks })
+            children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(Tracks, { tracks })
           }
         ) }),
-        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(import_components176.Spinner, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
+        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_components176.Spinner, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
           Caption,
           {
             attributes: attributes3,
@@ -65943,7 +68967,7 @@ ${declarations}
 
   // packages/block-library/build-module/video/save.js
   var import_block_editor279 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime521 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
   function save53({ attributes: attributes3 }) {
     const {
       autoplay,
@@ -65957,8 +68981,8 @@ ${declarations}
       playsInline,
       tracks
     } = attributes3;
-    return /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)("figure", { ...import_block_editor279.useBlockProps.save(), children: [
-      src && /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime522.jsxs)("figure", { ...import_block_editor279.useBlockProps.save(), children: [
+      src && /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
         "video",
         {
           autoPlay: autoplay,
@@ -65969,10 +68993,10 @@ ${declarations}
           preload: preload !== "metadata" ? preload : void 0,
           src,
           playsInline,
-          children: /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(Tracks, { tracks })
+          children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(Tracks, { tracks })
         }
       ),
-      !import_block_editor279.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
+      !import_block_editor279.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
         import_block_editor279.RichText.Content,
         {
           className: (0, import_block_editor279.__experimentalGetElementClassName)("caption"),
@@ -66126,7 +69150,7 @@ ${declarations}
   var import_core_data93 = __toESM(require_core_data(), 1);
   var import_i18n259 = __toESM(require_i18n(), 1);
   var import_components177 = __toESM(require_components(), 1);
-  var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime523 = __toESM(require_jsx_runtime(), 1);
   function FootnotesEdit({ context: { postType, postId } }) {
     const [meta, updateMeta] = (0, import_core_data93.useEntityProp)(
       "postType",
@@ -66138,10 +69162,10 @@ ${declarations}
     const footnotes = meta?.footnotes ? JSON.parse(meta.footnotes) : [];
     const blockProps = (0, import_block_editor280.useBlockProps)();
     if (!footnotesSupported) {
-      return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
         import_components177.Placeholder,
         {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_block_editor280.BlockIcon, { icon: format_list_numbered_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_block_editor280.BlockIcon, { icon: format_list_numbered_default }),
           label: (0, import_i18n259.__)("Footnotes"),
           instructions: (0, import_i18n259.__)(
             "Footnotes are not supported here. Add this block to post or page content."
@@ -66150,10 +69174,10 @@ ${declarations}
       ) });
     }
     if (!footnotes.length) {
-      return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
         import_components177.Placeholder,
         {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_block_editor280.BlockIcon, { icon: format_list_numbered_default }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_block_editor280.BlockIcon, { icon: format_list_numbered_default }),
           label: (0, import_i18n259.__)("Footnotes"),
           instructions: (0, import_i18n259.__)(
             "Footnotes found in blocks within this document will be displayed here."
@@ -66161,9 +69185,9 @@ ${declarations}
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)("ol", { ...blockProps, children: footnotes.map(({ id, content }) => (
+    return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("ol", { ...blockProps, children: footnotes.map(({ id, content }) => (
       /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
-      /* @__PURE__ */ (0, import_jsx_runtime522.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(
         "li",
         {
           onMouseDown: (event) => {
@@ -66173,7 +69197,7 @@ ${declarations}
             }
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
               import_block_editor280.RichText,
               {
                 id,
@@ -66201,7 +69225,7 @@ ${declarations}
               }
             ),
             " ",
-            /* @__PURE__ */ (0, import_jsx_runtime522.jsx)("a", { href: `#${id}-link`, children: "\u21A9\uFE0E" })
+            /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("a", { href: `#${id}-link`, children: "\u21A9\uFE0E" })
           ]
         },
         id
@@ -66331,7 +69355,7 @@ ${declarations}
   var import_data154 = __toESM(require_data(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_blocks122 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime523 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   var { usesContextKey } = unlock(import_block_editor281.privateApis);
   var formatName = "core/footnote";
   var POST_CONTENT_BLOCK_NAME = "core/post-content";
@@ -66445,7 +69469,7 @@ ${declarations}
           selectionChange(fnBlock.clientId, id, 0, 0);
         });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
         import_block_editor281.RichTextToolbarButton,
         {
           icon: format_list_numbered_default,
@@ -66589,7 +69613,7 @@ ${declarations}
   });
 
   // packages/block-library/build-module/index.js
-  var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime525 = __toESM(require_jsx_runtime(), 1);
   var getAllBlocks = () => {
     const blocks = [
       // Common blocks are grouped at the top to prioritize their display
@@ -66751,16 +69775,16 @@ ${declarations}
               attributes: attributes3
             });
             if (status === "loading") {
-              return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)("div", { ...blockProps, children: (0, import_i18n262.__)("Loading\u2026") });
+              return /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("div", { ...blockProps, children: (0, import_i18n262.__)("Loading\u2026") });
             }
             if (status === "error") {
-              return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)("div", { ...blockProps, children: (0, import_i18n262.sprintf)(
+              return /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("div", { ...blockProps, children: (0, import_i18n262.sprintf)(
                 /* translators: %s: error message describing the problem */
                 (0, import_i18n262.__)("Error loading block: %s"),
                 error
               ) });
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(
               "div",
               {
                 ...blockProps,
