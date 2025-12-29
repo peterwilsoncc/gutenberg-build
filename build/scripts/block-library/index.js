@@ -64500,8 +64500,7 @@ ${declarations}
           style: true
         }
       }
-    },
-    editorStyle: "wp-block-tag-cloud-editor"
+    }
   };
 
   // packages/block-library/build-module/tag-cloud/edit.js
@@ -64731,10 +64730,11 @@ ${declarations}
       return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.Spinner, {}) });
     }
     if (status === "error") {
-      return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)("p", { children: [
-        "Error: ",
+      return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("p", { children: (0, import_i18n234.sprintf)(
+        /* translators: %s: error message returned when rendering the block. */
+        (0, import_i18n234.__)("Error: %s"),
         error
-      ] }) });
+      ) }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
       inspectorControls,
