@@ -43726,7 +43726,7 @@ var wp;
       return null;
     }
     const baseClass = "block-editor-block-variation-transforms";
-    const showButtons = variations.length > 5;
+    const showButtons = variations.length > 6;
     const ButtonComponent = showButtons ? VariationsButtons : VariationsToggleGroupControl;
     const Component7 = hasUniqueIcons ? ButtonComponent : VariationsDropdown;
     return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
