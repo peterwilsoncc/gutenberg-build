@@ -7529,7 +7529,7 @@ If there's a particular need for this, please submit a feature request at https:
             const ignoreCrossAxisOverflow = checkCrossAxis === "alignment" ? initialSideAxis !== getSideAxis(nextPlacement) : false;
             if (!ignoreCrossAxisOverflow || // We leave the current main axis only if every placement on that axis
             // overflows the main axis.
-            overflowsData.every((d3) => d3.overflows[0] > 0 && getSideAxis(d3.placement) === initialSideAxis)) {
+            overflowsData.every((d3) => getSideAxis(d3.placement) === initialSideAxis ? d3.overflows[0] > 0 : true)) {
               return {
                 data: {
                   index: nextIndex,
@@ -8139,15 +8139,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return rect.left + leftScroll;
   }
-  function getHTMLOffset(documentElement, scroll, ignoreScrollbarX) {
-    if (ignoreScrollbarX === void 0) {
-      ignoreScrollbarX = false;
-    }
+  function getHTMLOffset(documentElement, scroll) {
     const htmlRect = documentElement.getBoundingClientRect();
-    const x2 = htmlRect.left + scroll.scrollLeft - (ignoreScrollbarX ? 0 : (
-      // RTL <body> scrollbar.
-      getWindowScrollBarX(documentElement, htmlRect)
-    ));
+    const x2 = htmlRect.left + scroll.scrollLeft - getWindowScrollBarX(documentElement, htmlRect);
     const y3 = htmlRect.top + scroll.scrollTop;
     return {
       x: x2,
@@ -8185,7 +8179,7 @@ If there's a particular need for this, please submit a feature request at https:
         offsets.y = offsetRect.y + offsetParent.clientTop;
       }
     }
-    const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll, true) : createCoords(0);
+    const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : createCoords(0);
     return {
       width: rect.width * scale2.x,
       height: rect.height * scale2.y,
@@ -8214,6 +8208,7 @@ If there's a particular need for this, please submit a feature request at https:
       y: y3
     };
   }
+  var SCROLLBAR_MAX = 25;
   function getViewportRect(element, strategy) {
     const win = getWindow2(element);
     const html = getDocumentElement(element);
@@ -8230,6 +8225,19 @@ If there's a particular need for this, please submit a feature request at https:
         x2 = visualViewport.offsetLeft;
         y3 = visualViewport.offsetTop;
       }
+    }
+    const windowScrollbarX = getWindowScrollBarX(html);
+    if (windowScrollbarX <= 0) {
+      const doc = html.ownerDocument;
+      const body = doc.body;
+      const bodyStyles = getComputedStyle(body);
+      const bodyMarginInline = doc.compatMode === "CSS1Compat" ? parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight) || 0 : 0;
+      const clippingStableScrollbarWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
+      if (clippingStableScrollbarWidth <= SCROLLBAR_MAX) {
+        width -= clippingStableScrollbarWidth;
+      }
+    } else if (windowScrollbarX <= SCROLLBAR_MAX) {
+      width += windowScrollbarX;
     }
     return {
       width,

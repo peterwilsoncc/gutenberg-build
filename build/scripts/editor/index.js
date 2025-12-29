@@ -1954,14 +1954,14 @@ var wp;
   // node_modules/computed-style/dist/computedStyle.commonjs.js
   var require_computedStyle_commonjs = __commonJS({
     "node_modules/computed-style/dist/computedStyle.commonjs.js"(exports, module) {
-      var computedStyle = function(el, prop, getComputedStyle2) {
-        getComputedStyle2 = window.getComputedStyle;
+      var computedStyle = function(el, prop, getComputedStyle3) {
+        getComputedStyle3 = window.getComputedStyle;
         return (
           // If we have getComputedStyle
-          (getComputedStyle2 ? (
+          (getComputedStyle3 ? (
             // Query it
             // TODO: From CSS-Query notes, we might need (node, null) for FF
-            getComputedStyle2(el)
+            getComputedStyle3(el)
           ) : (
             // Otherwise, we are in IE and use currentStyle
             el.currentStyle
@@ -47850,7 +47850,7 @@ var wp;
       overflowX,
       overflowY,
       display
-    } = getComputedStyle(element);
+    } = getComputedStyle2(element);
     return /auto|scroll|overlay|hidden|clip/.test(overflow + overflowY + overflowX) && !invalidOverflowDisplayValues.has(display);
   }
   var tableElements = /* @__PURE__ */ new Set(["table", "td", "th"]);
@@ -47872,7 +47872,7 @@ var wp;
   var containValues = ["paint", "layout", "strict", "content"];
   function isContainingBlock(elementOrCss) {
     const webkit = isWebKit();
-    const css = isElement(elementOrCss) ? getComputedStyle(elementOrCss) : elementOrCss;
+    const css = isElement(elementOrCss) ? getComputedStyle2(elementOrCss) : elementOrCss;
     return transformProperties.some((value) => css[value] ? css[value] !== "none" : false) || (css.containerType ? css.containerType !== "normal" : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== "none" : false) || !webkit && (css.filter ? css.filter !== "none" : false) || willChangeValues.some((value) => (css.willChange || "").includes(value)) || containValues.some((value) => (css.contain || "").includes(value));
   }
   function getContainingBlock(element) {
@@ -47895,7 +47895,7 @@ var wp;
   function isLastTraversableNode(node) {
     return lastTraversableNodeNames.has(getNodeName(node));
   }
-  function getComputedStyle(element) {
+  function getComputedStyle2(element) {
     return getWindow(element).getComputedStyle(element);
   }
   function getNodeScroll(element) {
@@ -47956,7 +47956,7 @@ var wp;
 
   // node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs
   function getCssDimensions(element) {
-    const css = getComputedStyle(element);
+    const css = getComputedStyle2(element);
     let width = parseFloat(css.width) || 0;
     let height = parseFloat(css.height) || 0;
     const hasOffset = isHTMLElement(element);
@@ -48052,7 +48052,7 @@ var wp;
       while (currentIFrame && offsetParent && offsetWin !== currentWin) {
         const iframeScale = getScale(currentIFrame);
         const iframeRect = currentIFrame.getBoundingClientRect();
-        const css = getComputedStyle(currentIFrame);
+        const css = getComputedStyle2(currentIFrame);
         const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
         const top = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
         x2 *= iframeScale.x;
@@ -48079,15 +48079,9 @@ var wp;
     }
     return rect.left + leftScroll;
   }
-  function getHTMLOffset(documentElement, scroll, ignoreScrollbarX) {
-    if (ignoreScrollbarX === void 0) {
-      ignoreScrollbarX = false;
-    }
+  function getHTMLOffset(documentElement, scroll) {
     const htmlRect = documentElement.getBoundingClientRect();
-    const x2 = htmlRect.left + scroll.scrollLeft - (ignoreScrollbarX ? 0 : (
-      // RTL <body> scrollbar.
-      getWindowScrollBarX(documentElement, htmlRect)
-    ));
+    const x2 = htmlRect.left + scroll.scrollLeft - getWindowScrollBarX(documentElement, htmlRect);
     const y3 = htmlRect.top + scroll.scrollTop;
     return {
       x: x2,
@@ -48125,7 +48119,7 @@ var wp;
         offsets.y = offsetRect.y + offsetParent.clientTop;
       }
     }
-    const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll, true) : createCoords(0);
+    const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : createCoords(0);
     return {
       width: rect.width * scale.x,
       height: rect.height * scale.y,
@@ -48144,7 +48138,7 @@ var wp;
     const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
     let x2 = -scroll.scrollLeft + getWindowScrollBarX(element);
     const y3 = -scroll.scrollTop;
-    if (getComputedStyle(body).direction === "rtl") {
+    if (getComputedStyle2(body).direction === "rtl") {
       x2 += max(html.clientWidth, body.clientWidth) - width;
     }
     return {
@@ -48154,6 +48148,7 @@ var wp;
       y: y3
     };
   }
+  var SCROLLBAR_MAX = 25;
   function getViewportRect(element, strategy) {
     const win = getWindow(element);
     const html = getDocumentElement(element);
@@ -48170,6 +48165,19 @@ var wp;
         x2 = visualViewport.offsetLeft;
         y3 = visualViewport.offsetTop;
       }
+    }
+    const windowScrollbarX = getWindowScrollBarX(html);
+    if (windowScrollbarX <= 0) {
+      const doc = html.ownerDocument;
+      const body = doc.body;
+      const bodyStyles = getComputedStyle(body);
+      const bodyMarginInline = doc.compatMode === "CSS1Compat" ? parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight) || 0 : 0;
+      const clippingStableScrollbarWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
+      if (clippingStableScrollbarWidth <= SCROLLBAR_MAX) {
+        width -= clippingStableScrollbarWidth;
+      }
+    } else if (windowScrollbarX <= SCROLLBAR_MAX) {
+      width += windowScrollbarX;
     }
     return {
       width,
@@ -48219,7 +48227,7 @@ var wp;
     if (parentNode === stopNode || !isElement(parentNode) || isLastTraversableNode(parentNode)) {
       return false;
     }
-    return getComputedStyle(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
+    return getComputedStyle2(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
   }
   function getClippingElementAncestors(element, cache) {
     const cachedResult = cache.get(element);
@@ -48228,10 +48236,10 @@ var wp;
     }
     let result = getOverflowAncestors(element, [], false).filter((el) => isElement(el) && getNodeName(el) !== "body");
     let currentContainingBlockComputedStyle = null;
-    const elementIsFixed = getComputedStyle(element).position === "fixed";
+    const elementIsFixed = getComputedStyle2(element).position === "fixed";
     let currentNode = elementIsFixed ? getParentNode(element) : element;
     while (isElement(currentNode) && !isLastTraversableNode(currentNode)) {
-      const computedStyle = getComputedStyle(currentNode);
+      const computedStyle = getComputedStyle2(currentNode);
       const currentNodeIsContaining = isContainingBlock(currentNode);
       if (!currentNodeIsContaining && computedStyle.position === "fixed") {
         currentContainingBlockComputedStyle = null;
@@ -48321,10 +48329,10 @@ var wp;
     };
   }
   function isStaticPositioned(element) {
-    return getComputedStyle(element).position === "static";
+    return getComputedStyle2(element).position === "static";
   }
   function getTrueOffsetParent(element, polyfill) {
-    if (!isHTMLElement(element) || getComputedStyle(element).position === "fixed") {
+    if (!isHTMLElement(element) || getComputedStyle2(element).position === "fixed") {
       return null;
     }
     if (polyfill) {
@@ -48375,7 +48383,7 @@ var wp;
     };
   };
   function isRTL17(element) {
-    return getComputedStyle(element).direction === "rtl";
+    return getComputedStyle2(element).direction === "rtl";
   }
   var platform = {
     convertOffsetParentRelativeRectToViewportRelativeRect,
