@@ -2074,10 +2074,10 @@ var wp;
         };
         return function(d2, b2) {
           extendStatics2(d2, b2);
-          function __217() {
+          function __218() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__217.prototype = b2.prototype, new __217());
+          d2.prototype = b2 === null ? Object.create(b2) : (__218.prototype = b2.prototype, new __218());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t3) {
@@ -2338,12 +2338,12 @@ var wp;
         }
         showSourceCode(color) {
           if (!this.source) return "";
-          let css2 = this.source;
+          let css3 = this.source;
           if (color == null) color = pico.isColorSupported;
           if (terminalHighlight) {
-            if (color) css2 = terminalHighlight(css2);
+            if (color) css3 = terminalHighlight(css3);
           }
-          let lines = css2.split(/\r?\n/);
+          let lines = css3.split(/\r?\n/);
           let start2 = Math.max(this.line - 3, 0);
           let end = Math.min(this.line + 2, lines.length);
           let maxWidth = String(end).length;
@@ -2399,9 +2399,9 @@ var wp;
         }
       }
       var PreviousMap = class {
-        constructor(css2, opts) {
+        constructor(css3, opts) {
           if (opts.map === false) return;
-          this.loadAnnotation(css2);
+          this.loadAnnotation(css3);
           this.inline = this.startWith(this.annotation, "data:");
           let prev = opts.map ? opts.map.prev : void 0;
           let text = this.loadMap(opts.from, prev);
@@ -2438,13 +2438,13 @@ var wp;
           if (typeof map !== "object") return false;
           return typeof map.mappings === "string" || typeof map._mappings === "string" || Array.isArray(map.sections);
         }
-        loadAnnotation(css2) {
-          let comments = css2.match(/\/\*\s*# sourceMappingURL=/gm);
+        loadAnnotation(css3) {
+          let comments = css3.match(/\/\*\s*# sourceMappingURL=/gm);
           if (!comments) return;
-          let start2 = css2.lastIndexOf(comments.pop());
-          let end = css2.indexOf("*/", start2);
+          let start2 = css3.lastIndexOf(comments.pop());
+          let end = css3.indexOf("*/", start2);
           if (start2 > -1 && end > -1) {
-            this.annotation = this.getAnnotationURL(css2.substring(start2, end));
+            this.annotation = this.getAnnotationURL(css3.substring(start2, end));
           }
         }
         loadFile(path) {
@@ -2517,11 +2517,11 @@ var wp;
       var sourceMapAvailable = Boolean(SourceMapConsumer && SourceMapGenerator);
       var pathAvailable = Boolean(resolve && isAbsolute);
       var Input = class {
-        constructor(css2, opts = {}) {
-          if (css2 === null || typeof css2 === "undefined" || typeof css2 === "object" && !css2.toString) {
-            throw new Error(`PostCSS received ${css2} instead of CSS string`);
+        constructor(css3, opts = {}) {
+          if (css3 === null || typeof css3 === "undefined" || typeof css3 === "object" && !css3.toString) {
+            throw new Error(`PostCSS received ${css3} instead of CSS string`);
           }
-          this.css = css2.toString();
+          this.css = css3.toString();
           if (this.css[0] === "\uFEFF" || this.css[0] === "\uFFFE") {
             this.hasBOM = true;
             this.css = this.css.slice(1);
@@ -4142,11 +4142,11 @@ var wp;
       var RE_BAD_BRACKET = /.[\r\n"'(/\\]/;
       var RE_HEX_ESCAPE = /[\da-f]/i;
       module.exports = function tokenizer(input, options = {}) {
-        let css2 = input.css.valueOf();
+        let css3 = input.css.valueOf();
         let ignore = options.ignoreErrors;
         let code, next, quote, content, escape;
         let escaped, escapePos, prev, n2, currentToken;
-        let length = css2.length;
+        let length = css3.length;
         let pos = 0;
         let buffer = [];
         let returned = [];
@@ -4163,7 +4163,7 @@ var wp;
           if (returned.length) return returned.pop();
           if (pos >= length) return;
           let ignoreUnclosed = opts ? opts.ignoreUnclosed : false;
-          code = css2.charCodeAt(pos);
+          code = css3.charCodeAt(pos);
           switch (code) {
             case NEWLINE:
             case SPACE3:
@@ -4173,9 +4173,9 @@ var wp;
               next = pos;
               do {
                 next += 1;
-                code = css2.charCodeAt(next);
+                code = css3.charCodeAt(next);
               } while (code === SPACE3 || code === NEWLINE || code === TAB4 || code === CR || code === FEED);
-              currentToken = ["space", css2.slice(pos, next)];
+              currentToken = ["space", css3.slice(pos, next)];
               pos = next - 1;
               break;
             }
@@ -4192,12 +4192,12 @@ var wp;
             }
             case OPEN_PARENTHESES: {
               prev = buffer.length ? buffer.pop()[1] : "";
-              n2 = css2.charCodeAt(pos + 1);
+              n2 = css3.charCodeAt(pos + 1);
               if (prev === "url" && n2 !== SINGLE_QUOTE && n2 !== DOUBLE_QUOTE && n2 !== SPACE3 && n2 !== NEWLINE && n2 !== TAB4 && n2 !== FEED && n2 !== CR) {
                 next = pos;
                 do {
                   escaped = false;
-                  next = css2.indexOf(")", next + 1);
+                  next = css3.indexOf(")", next + 1);
                   if (next === -1) {
                     if (ignore || ignoreUnclosed) {
                       next = pos;
@@ -4207,16 +4207,16 @@ var wp;
                     }
                   }
                   escapePos = next;
-                  while (css2.charCodeAt(escapePos - 1) === BACKSLASH) {
+                  while (css3.charCodeAt(escapePos - 1) === BACKSLASH) {
                     escapePos -= 1;
                     escaped = !escaped;
                   }
                 } while (escaped);
-                currentToken = ["brackets", css2.slice(pos, next + 1), pos, next];
+                currentToken = ["brackets", css3.slice(pos, next + 1), pos, next];
                 pos = next;
               } else {
-                next = css2.indexOf(")", pos + 1);
-                content = css2.slice(pos, next + 1);
+                next = css3.indexOf(")", pos + 1);
+                content = css3.slice(pos, next + 1);
                 if (next === -1 || RE_BAD_BRACKET.test(content)) {
                   currentToken = ["(", "(", pos];
                 } else {
@@ -4232,7 +4232,7 @@ var wp;
               next = pos;
               do {
                 escaped = false;
-                next = css2.indexOf(quote, next + 1);
+                next = css3.indexOf(quote, next + 1);
                 if (next === -1) {
                   if (ignore || ignoreUnclosed) {
                     next = pos + 1;
@@ -4242,71 +4242,71 @@ var wp;
                   }
                 }
                 escapePos = next;
-                while (css2.charCodeAt(escapePos - 1) === BACKSLASH) {
+                while (css3.charCodeAt(escapePos - 1) === BACKSLASH) {
                   escapePos -= 1;
                   escaped = !escaped;
                 }
               } while (escaped);
-              currentToken = ["string", css2.slice(pos, next + 1), pos, next];
+              currentToken = ["string", css3.slice(pos, next + 1), pos, next];
               pos = next;
               break;
             }
             case AT: {
               RE_AT_END.lastIndex = pos + 1;
-              RE_AT_END.test(css2);
+              RE_AT_END.test(css3);
               if (RE_AT_END.lastIndex === 0) {
-                next = css2.length - 1;
+                next = css3.length - 1;
               } else {
                 next = RE_AT_END.lastIndex - 2;
               }
-              currentToken = ["at-word", css2.slice(pos, next + 1), pos, next];
+              currentToken = ["at-word", css3.slice(pos, next + 1), pos, next];
               pos = next;
               break;
             }
             case BACKSLASH: {
               next = pos;
               escape = true;
-              while (css2.charCodeAt(next + 1) === BACKSLASH) {
+              while (css3.charCodeAt(next + 1) === BACKSLASH) {
                 next += 1;
                 escape = !escape;
               }
-              code = css2.charCodeAt(next + 1);
+              code = css3.charCodeAt(next + 1);
               if (escape && code !== SLASH && code !== SPACE3 && code !== NEWLINE && code !== TAB4 && code !== CR && code !== FEED) {
                 next += 1;
-                if (RE_HEX_ESCAPE.test(css2.charAt(next))) {
-                  while (RE_HEX_ESCAPE.test(css2.charAt(next + 1))) {
+                if (RE_HEX_ESCAPE.test(css3.charAt(next))) {
+                  while (RE_HEX_ESCAPE.test(css3.charAt(next + 1))) {
                     next += 1;
                   }
-                  if (css2.charCodeAt(next + 1) === SPACE3) {
+                  if (css3.charCodeAt(next + 1) === SPACE3) {
                     next += 1;
                   }
                 }
               }
-              currentToken = ["word", css2.slice(pos, next + 1), pos, next];
+              currentToken = ["word", css3.slice(pos, next + 1), pos, next];
               pos = next;
               break;
             }
             default: {
-              if (code === SLASH && css2.charCodeAt(pos + 1) === ASTERISK) {
-                next = css2.indexOf("*/", pos + 2) + 1;
+              if (code === SLASH && css3.charCodeAt(pos + 1) === ASTERISK) {
+                next = css3.indexOf("*/", pos + 2) + 1;
                 if (next === 0) {
                   if (ignore || ignoreUnclosed) {
-                    next = css2.length;
+                    next = css3.length;
                   } else {
                     unclosed("comment");
                   }
                 }
-                currentToken = ["comment", css2.slice(pos, next + 1), pos, next];
+                currentToken = ["comment", css3.slice(pos, next + 1), pos, next];
                 pos = next;
               } else {
                 RE_WORD_END.lastIndex = pos + 1;
-                RE_WORD_END.test(css2);
+                RE_WORD_END.test(css3);
                 if (RE_WORD_END.lastIndex === 0) {
-                  next = css2.length - 1;
+                  next = css3.length - 1;
                 } else {
                   next = RE_WORD_END.lastIndex - 2;
                 }
-                currentToken = ["word", css2.slice(pos, next + 1), pos, next];
+                currentToken = ["word", css3.slice(pos, next + 1), pos, next];
                 buffer.push(currentToken);
                 pos = next;
               }
@@ -5030,8 +5030,8 @@ var wp;
       var Container = require_container();
       var Parser = require_parser();
       var Input = require_input();
-      function parse4(css2, opts) {
-        let input = new Input(css2, opts);
+      function parse4(css3, opts) {
+        let input = new Input(css3, opts);
         let parser = new Parser(input);
         try {
           parser.parse();
@@ -5142,24 +5142,24 @@ var wp;
       var parse4 = require_parse();
       var Result = require_result();
       var NoWorkResult = class {
-        constructor(processor, css2, opts) {
-          css2 = css2.toString();
+        constructor(processor, css3, opts) {
+          css3 = css3.toString();
           this.stringified = false;
           this._processor = processor;
-          this._css = css2;
+          this._css = css3;
           this._opts = opts;
           this._map = void 0;
           let root;
           let str = stringify2;
           this.result = new Result(this._processor, root, this._opts);
-          this.result.css = css2;
+          this.result.css = css3;
           let self = this;
           Object.defineProperty(this.result, "root", {
             get() {
               return self.root;
             }
           });
-          let map = new MapGenerator(str, root, this._opts, css2);
+          let map = new MapGenerator(str, root, this._opts, css3);
           if (map.isMap()) {
             let [generatedCSS, generatedMap] = map.generate();
             if (generatedCSS) {
@@ -5375,18 +5375,18 @@ var wp;
       }
       var postcss = {};
       var LazyResult = class _LazyResult {
-        constructor(processor, css2, opts) {
+        constructor(processor, css3, opts) {
           this.stringified = false;
           this.processed = false;
           let root;
-          if (typeof css2 === "object" && css2 !== null && (css2.type === "root" || css2.type === "document")) {
-            root = cleanMarks(css2);
-          } else if (css2 instanceof _LazyResult || css2 instanceof Result) {
-            root = cleanMarks(css2.root);
-            if (css2.map) {
+          if (typeof css3 === "object" && css3 !== null && (css3.type === "root" || css3.type === "document")) {
+            root = cleanMarks(css3);
+          } else if (css3 instanceof _LazyResult || css3 instanceof Result) {
+            root = cleanMarks(css3.root);
+            if (css3.map) {
               if (typeof opts.map === "undefined") opts.map = {};
               if (!opts.map.inline) opts.map.inline = false;
-              opts.map.prev = css2.map;
+              opts.map.prev = css3.map;
             }
           } else {
             let parser = parse4;
@@ -5394,7 +5394,7 @@ var wp;
             if (opts.parser) parser = opts.parser;
             if (parser.parse) parser = parser.parse;
             try {
-              root = parser(css2, opts);
+              root = parser(css3, opts);
             } catch (error) {
               this.processed = true;
               this.error = error;
@@ -5791,11 +5791,11 @@ var wp;
           }
           return normalized;
         }
-        process(css2, opts = {}) {
+        process(css3, opts = {}) {
           if (!this.plugins.length && !opts.parser && !opts.stringifier && !opts.syntax) {
-            return new NoWorkResult(this, css2, opts);
+            return new NoWorkResult(this, css3, opts);
           } else {
-            return new LazyResult(this, css2, opts);
+            return new LazyResult(this, css3, opts);
           }
         }
         use(plugin) {
@@ -6993,7 +6993,7 @@ var wp;
   // packages/block-editor/build-module/hooks/utils.js
   var import_blocks95 = __toESM(require_blocks(), 1);
   var import_element250 = __toESM(require_element(), 1);
-  var import_data176 = __toESM(require_data(), 1);
+  var import_data177 = __toESM(require_data(), 1);
   var import_compose94 = __toESM(require_compose(), 1);
   var import_hooks13 = __toESM(require_hooks(), 1);
 
@@ -15188,10 +15188,10 @@ var wp;
     if (typeof b2 !== "function" && b2 !== null)
       throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
     extendStatics(d2, b2);
-    function __217() {
+    function __218() {
       this.constructor = d2;
     }
-    d2.prototype = b2 === null ? Object.create(b2) : (__217.prototype = b2.prototype, new __217());
+    d2.prototype = b2 === null ? Object.create(b2) : (__218.prototype = b2.prototype, new __218());
   }
   var __assign = function() {
     __assign = Object.assign || function __assign2(t3) {
@@ -17057,13 +17057,13 @@ var wp;
   function useLayout() {
     return (0, import_element17.useContext)(Layout);
   }
-  function LayoutStyle({ layout = {}, css: css2, ...props }) {
+  function LayoutStyle({ layout = {}, css: css3, ...props }) {
     const layoutType = getLayoutType(layout.type);
     const [blockGapSupport] = useSettings("spacing.blockGap");
     const hasBlockGapSupport = blockGapSupport !== null;
     if (layoutType) {
-      if (css2) {
-        return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("style", { children: css2 });
+      if (css3) {
+        return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("style", { children: css3 });
       }
       const layoutStyle = layoutType.getLayoutStyle?.({
         hasBlockGapSupport,
@@ -26015,9 +26015,9 @@ var wp;
     );
     return stringify(tokenized);
   }
-  function transformStyle({ css: css2, ignoredSelectors = [], baseURL }, wrapperSelector = "", transformOptions) {
+  function transformStyle({ css: css3, ignoredSelectors = [], baseURL }, wrapperSelector = "", transformOptions) {
     if (!wrapperSelector && !baseURL) {
-      return css2;
+      return css3;
     }
     try {
       const excludedSelectors = [
@@ -26046,7 +26046,7 @@ var wp;
           }),
           baseURL && (0, import_postcss_urlrebase.default)({ rootUrl: baseURL })
         ].filter(Boolean)
-      ).process(css2, {}).css;
+      ).process(css3, {}).css;
     } catch (error) {
       if (error instanceof import_css_syntax_error.default) {
         console.warn(
@@ -26069,12 +26069,12 @@ var wp;
       cacheByWrapperSelector.set(wrapperSelector, cache);
     }
     return styles.map((style) => {
-      let css2 = cache.get(style);
-      if (!css2) {
-        css2 = transformStyle(style, wrapperSelector, transformOptions);
-        cache.set(style, css2);
+      let css3 = cache.get(style);
+      if (!css3) {
+        css3 = transformStyle(style, wrapperSelector, transformOptions);
+        cache.set(style, css3);
       }
-      return css2;
+      return css3;
     });
   };
   var transform_styles_default = transformStyles;
@@ -26143,7 +26143,7 @@ var wp;
           ref: useDarkThemeBodyClassName(transformedStyles, scope)
         }
       ),
-      transformedStyles.map((css2, index) => /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("style", { children: css2 }, index)),
+      transformedStyles.map((css3, index) => /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("style", { children: css3 }, index)),
       /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
         import_components29.SVG,
         {
@@ -33141,19 +33141,19 @@ var wp;
     const allowPositionStyles = hasPositionBlockSupport && !isPositionDisabled;
     const id = (0, import_compose57.useInstanceId)(POSITION_BLOCK_PROPS_REFERENCE);
     const positionSelector = `.wp-container-${id}.wp-container-${id}`;
-    let css2;
+    let css3;
     if (allowPositionStyles) {
-      css2 = getPositionCSS({
+      css3 = getPositionCSS({
         selector: positionSelector,
         style
       }) || "";
     }
     const className = clsx_default({
-      [`wp-container-${id}`]: allowPositionStyles && !!css2,
+      [`wp-container-${id}`]: allowPositionStyles && !!css3,
       // Only attach a container class if there is generated CSS to be attached.
-      [`is-position-${style?.position?.type}`]: allowPositionStyles && !!css2 && !!style?.position?.type
+      [`is-position-${style?.position?.type}`]: allowPositionStyles && !!css3 && !!style?.position?.type
     });
-    useStyleOverride({ css: css2 });
+    useStyleOverride({ css: css3 });
     return { className };
   }
 
@@ -38230,12 +38230,12 @@ var wp;
     });
     return result;
   };
-  function processCSSNesting(css2, blockSelector) {
+  function processCSSNesting(css3, blockSelector) {
     let processedCSS = "";
-    if (!css2 || css2.trim() === "") {
+    if (!css3 || css3.trim() === "") {
       return processedCSS;
     }
-    const parts = css2.split("&");
+    const parts = css3.split("&");
     parts.forEach((part) => {
       if (!part || part.trim() === "") {
         return;
@@ -53546,7 +53546,7 @@ var wp;
     onMouseOver,
     showSideInLabel = true,
     sides = ALL_SIDES,
-    useSelect: useSelect168,
+    useSelect: useSelect169,
     values
   }) {
     const spacingSizes = useSpacingSizes();
@@ -53570,7 +53570,7 @@ var wp;
       sides,
       spacingSizes,
       type: labelProp,
-      useSelect: useSelect168,
+      useSelect: useSelect169,
       values: inputValues
     };
     const renderControls = () => {
@@ -53685,10 +53685,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-inspector/index.js
-  var import_i18n222 = __toESM(require_i18n(), 1);
+  var import_i18n223 = __toESM(require_i18n(), 1);
   var import_blocks94 = __toESM(require_blocks(), 1);
-  var import_components240 = __toESM(require_components(), 1);
-  var import_data172 = __toESM(require_data(), 1);
+  var import_components241 = __toESM(require_components(), 1);
+  var import_data173 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/block-inspector/edit-contents.js
   var import_components187 = __toESM(require_components(), 1);
@@ -66902,8 +66902,99 @@ var wp;
     );
   }
 
-  // packages/block-editor/build-module/components/block-inspector/index.js
+  // packages/block-editor/build-module/components/block-visibility/block-visibility-info.js
+  var import_components240 = __toESM(require_components(), 1);
+  var import_data172 = __toESM(require_data(), 1);
+  var import_i18n222 = __toESM(require_i18n(), 1);
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
+  var css2 = `/**
+ * SCSS Variables.
+ *
+ * Please use variables from this sheet to ensure consistency across the UI.
+ * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
+ * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
+ */
+/**
+ * Colors
+ */
+/**
+ * Fonts & basic variables.
+ */
+/**
+ * Typography
+ */
+/**
+ * Grid System.
+ * https://make.wordpress.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-wordpress/
+ */
+/**
+ * Radius scale.
+ */
+/**
+ * Elevation scale.
+ */
+/**
+ * Dimensions.
+ */
+/**
+ * Mobile specific styles
+ */
+/**
+ * Editor styles.
+ */
+/**
+ * Block & Editor UI.
+ */
+/**
+ * Block paddings.
+ */
+/**
+ * React Native specific.
+ * These variables do not appear to be used anywhere else.
+ */
+.block-editor-block-visibility-info {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin: 0 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvcnVubmVyL3dvcmsvZ3V0ZW5iZXJnL2d1dGVuYmVyZy9wYWNrYWdlcy9ibG9jay1lZGl0b3Ivc3JjL2NvbXBvbmVudHMvYmxvY2stdmlzaWJpbGl0eSIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vbm9kZV9tb2R1bGVzL0B3b3JkcHJlc3MvYmFzZS1zdHlsZXMvX3ZhcmlhYmxlcy5zY3NzIiwiLi4vLi4vLi4vLi4vLi4vbm9kZV9tb2R1bGVzL0B3b3JkcHJlc3MvYmFzZS1zdHlsZXMvX2NvbG9ycy5zY3NzIiwic3R5bGVzLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUNBQTtBQUFBO0FBQUE7QURVQTtBQUFBO0FBQUE7QUFPQTtBQUFBO0FBQUE7QUE2QkE7QUFBQTtBQUFBO0FBQUE7QUFpQkE7QUFBQTtBQUFBO0FBV0E7QUFBQTtBQUFBO0FBZ0JBO0FBQUE7QUFBQTtBQXlCQTtBQUFBO0FBQUE7QUFLQTtBQUFBO0FBQUE7QUFlQTtBQUFBO0FBQUE7QUFtQkE7QUFBQTtBQUFBO0FBU0E7QUFBQTtBQUFBO0FBQUE7QUVqS0E7RUFDQyxhRmlEYztFRWhEZCxnQkZnRGM7RUUvQ2Q7RUFDQTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIFNDU1MgVmFyaWFibGVzLlxuICpcbiAqIFBsZWFzZSB1c2UgdmFyaWFibGVzIGZyb20gdGhpcyBzaGVldCB0byBlbnN1cmUgY29uc2lzdGVuY3kgYWNyb3NzIHRoZSBVSS5cbiAqIERvbid0IGFkZCB0byB0aGlzIHNoZWV0IHVubGVzcyB5b3UncmUgcHJldHR5IHN1cmUgdGhlIHZhbHVlIHdpbGwgYmUgcmV1c2VkIGluIG1hbnkgcGxhY2VzLlxuICogRm9yIGV4YW1wbGUsIGRvbid0IGFkZCBydWxlcyB0byB0aGlzIHNoZWV0IHRoYXQgYWZmZWN0IGJsb2NrIHZpc3VhbHMuIEl0J3MgcHVyZWx5IGZvciBVSS5cbiAqL1xuXG5AdXNlIFwiLi9jb2xvcnNcIjtcblxuLyoqXG4gKiBGb250cyAmIGJhc2ljIHZhcmlhYmxlcy5cbiAqL1xuXG4kZGVmYXVsdC1mb250OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsXCJTZWdvZSBVSVwiLCBSb2JvdG8sIE94eWdlbi1TYW5zLCBVYnVudHUsIENhbnRhcmVsbCxcIkhlbHZldGljYSBOZXVlXCIsIHNhbnMtc2VyaWY7IC8vIFRvZG86IGRlcHJlY2F0ZSBpbiBmYXZvciBvZiAkZmFtaWx5IHZhcmlhYmxlc1xuJGRlZmF1bHQtbGluZS1oZWlnaHQ6IDEuNDsgLy8gVG9kbzogZGVwcmVjYXRlIGluIGZhdm9yIG9mICRsaW5lLWhlaWdodCB0b2tlbnNcblxuLyoqXG4gKiBUeXBvZ3JhcGh5XG4gKi9cblxuLy8gU2l6ZXNcbiRmb250LXNpemUteC1zbWFsbDogMTFweDtcbiRmb250LXNpemUtc21hbGw6IDEycHg7XG4kZm9udC1zaXplLW1lZGl1bTogMTNweDtcbiRmb250LXNpemUtbGFyZ2U6IDE1cHg7XG4kZm9udC1zaXplLXgtbGFyZ2U6IDIwcHg7XG4kZm9udC1zaXplLTJ4LWxhcmdlOiAzMnB4O1xuXG4vLyBMaW5lIGhlaWdodHNcbiRmb250LWxpbmUtaGVpZ2h0LXgtc21hbGw6IDE2cHg7XG4kZm9udC1saW5lLWhlaWdodC1zbWFsbDogMjBweDtcbiRmb250LWxpbmUtaGVpZ2h0LW1lZGl1bTogMjRweDtcbiRmb250LWxpbmUtaGVpZ2h0LWxhcmdlOiAyOHB4O1xuJGZvbnQtbGluZS1oZWlnaHQteC1sYXJnZTogMzJweDtcbiRmb250LWxpbmUtaGVpZ2h0LTJ4LWxhcmdlOiA0MHB4O1xuXG4vLyBXZWlnaHRzXG4kZm9udC13ZWlnaHQtcmVndWxhcjogNDAwO1xuJGZvbnQtd2VpZ2h0LW1lZGl1bTogNDk5OyAvLyBlbnN1cmVzIGZhbGxiYWNrIHRvIDQwMCAoaW5zdGVhZCBvZiA2MDApXG5cbi8vIEZhbWlsaWVzXG4kZm9udC1mYW1pbHktaGVhZGluZ3M6IC1hcHBsZS1zeXN0ZW0sIFwic3lzdGVtLXVpXCIsIFwiU2Vnb2UgVUlcIiwgUm9ib3RvLCBPeHlnZW4tU2FucywgVWJ1bnR1LCBDYW50YXJlbGwsIFwiSGVsdmV0aWNhIE5ldWVcIiwgc2Fucy1zZXJpZjtcbiRmb250LWZhbWlseS1ib2R5OiAtYXBwbGUtc3lzdGVtLCBcInN5c3RlbS11aVwiLCBcIlNlZ29lIFVJXCIsIFJvYm90bywgT3h5Z2VuLVNhbnMsIFVidW50dSwgQ2FudGFyZWxsLCBcIkhlbHZldGljYSBOZXVlXCIsIHNhbnMtc2VyaWY7XG4kZm9udC1mYW1pbHktbW9ubzogTWVubG8sIENvbnNvbGFzLCBtb25hY28sIG1vbm9zcGFjZTtcblxuLyoqXG4gKiBHcmlkIFN5c3RlbS5cbiAqIGh0dHBzOi8vbWFrZS53b3JkcHJlc3Mub3JnL2Rlc2lnbi8yMDE5LzEwLzMxL3Byb3Bvc2FsLWEtY29uc2lzdGVudC1zcGFjaW5nLXN5c3RlbS1mb3Itd29yZHByZXNzL1xuICovXG5cbiRncmlkLXVuaXQ6IDhweDtcbiRncmlkLXVuaXQtMDU6IDAuNSAqICRncmlkLXVuaXQ7XHQvLyA0cHhcbiRncmlkLXVuaXQtMTA6IDEgKiAkZ3JpZC11bml0O1x0XHQvLyA4cHhcbiRncmlkLXVuaXQtMTU6IDEuNSAqICRncmlkLXVuaXQ7XHQvLyAxMnB4XG4kZ3JpZC11bml0LTIwOiAyICogJGdyaWQtdW5pdDtcdFx0Ly8gMTZweFxuJGdyaWQtdW5pdC0zMDogMyAqICRncmlkLXVuaXQ7XHRcdC8vIDI0cHhcbiRncmlkLXVuaXQtNDA6IDQgKiAkZ3JpZC11bml0O1x0XHQvLyAzMnB4XG4kZ3JpZC11bml0LTUwOiA1ICogJGdyaWQtdW5pdDtcdFx0Ly8gNDBweFxuJGdyaWQtdW5pdC02MDogNiAqICRncmlkLXVuaXQ7XHRcdC8vIDQ4cHhcbiRncmlkLXVuaXQtNzA6IDcgKiAkZ3JpZC11bml0O1x0XHQvLyA1NnB4XG4kZ3JpZC11bml0LTgwOiA4ICogJGdyaWQtdW5pdDtcdFx0Ly8gNjRweFxuXG4vKipcbiAqIFJhZGl1cyBzY2FsZS5cbiAqL1xuXG4kcmFkaXVzLXgtc21hbGw6IDFweDsgICAvLyBBcHBsaWVkIHRvIGVsZW1lbnRzIGxpa2UgYnV0dG9ucyBuZXN0ZWQgd2l0aGluIHByaW1pdGl2ZXMgbGlrZSBpbnB1dHMuXG4kcmFkaXVzLXNtYWxsOiAycHg7ICAgICAvLyBBcHBsaWVkIHRvIG1vc3QgcHJpbWl0aXZlcy5cbiRyYWRpdXMtbWVkaXVtOiA0cHg7ICAgIC8vIEFwcGxpZWQgdG8gY29udGFpbmVycyB3aXRoIHNtYWxsZXIgcGFkZGluZy5cbiRyYWRpdXMtbGFyZ2U6IDhweDsgICAgIC8vIEFwcGxpZWQgdG8gY29udGFpbmVycyB3aXRoIGxhcmdlciBwYWRkaW5nLlxuJHJhZGl1cy1mdWxsOiA5OTk5cHg7ICAgLy8gRm9yIHBpbGxzLlxuJHJhZGl1cy1yb3VuZDogNTAlOyAgICAgLy8gRm9yIGNpcmNsZXMgYW5kIG92YWxzLlxuXG4vKipcbiAqIEVsZXZhdGlvbiBzY2FsZS5cbiAqL1xuXG4vLyBGb3Igc2VjdGlvbnMgYW5kIGNvbnRhaW5lcnMgdGhhdCBncm91cCByZWxhdGVkIGNvbnRlbnQgYW5kIGNvbnRyb2xzLCB3aGljaCBtYXkgb3ZlcmxhcCBvdGhlciBjb250ZW50LiBFeGFtcGxlOiBQcmV2aWV3IEZyYW1lLlxuJGVsZXZhdGlvbi14LXNtYWxsOiAwIDFweCAxcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAzKSwgMCAxcHggMnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMiksIDAgM3B4IDNweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpLCAwIDRweCA0cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAxKTtcblxuLy8gRm9yIGNvbXBvbmVudHMgdGhhdCBwcm92aWRlIGNvbnRleHR1YWwgZmVlZGJhY2sgd2l0aG91dCBiZWluZyBpbnRydXNpdmUuIEdlbmVyYWxseSBub24taW50ZXJydXB0aXZlLiBFeGFtcGxlOiBUb29sdGlwcywgU25hY2tiYXIuXG4kZWxldmF0aW9uLXNtYWxsOiAwIDFweCAycHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA1KSwgMCAycHggM3B4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNCksIDAgNnB4IDZweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDMpLCAwIDhweCA4cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKTtcblxuLy8gRm9yIGNvbXBvbmVudHMgdGhhdCBvZmZlciBhZGRpdGlvbmFsIGFjdGlvbnMuIEV4YW1wbGU6IE1lbnVzLCBDb21tYW5kIFBhbGV0dGVcbiRlbGV2YXRpb24tbWVkaXVtOiAwIDJweCAzcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjA1KSwgMCA0cHggNXB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNCksIDAgMTJweCAxMnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMyksIDAgMTZweCAxNnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMik7XG5cbi8vIEZvciBjb21wb25lbnRzIHRoYXQgY29uZmlybSBkZWNpc2lvbnMgb3IgaGFuZGxlIG5lY2Vzc2FyeSBpbnRlcnJ1cHRpb25zLiBFeGFtcGxlOiBNb2RhbHMuXG4kZWxldmF0aW9uLWxhcmdlOiAwIDVweCAxNXB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wOCksIDAgMTVweCAyN3B4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNyksIDAgMzBweCAzNnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNCksIDAgNTBweCA0M3B4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMik7XG5cbi8qKlxuICogRGltZW5zaW9ucy5cbiAqL1xuXG4kaWNvbi1zaXplOiAyNHB4O1xuJGJ1dHRvbi1zaXplOiAzNnB4O1xuJGJ1dHRvbi1zaXplLW5leHQtZGVmYXVsdC00MHB4OiA0MHB4OyAvLyB0cmFuc2l0aW9uYXJ5IHZhcmlhYmxlIGZvciBuZXh0IGRlZmF1bHQgYnV0dG9uIHNpemVcbiRidXR0b24tc2l6ZS1zbWFsbDogMjRweDtcbiRidXR0b24tc2l6ZS1jb21wYWN0OiAzMnB4O1xuJGhlYWRlci1oZWlnaHQ6IDY0cHg7XG4kcGFuZWwtaGVhZGVyLWhlaWdodDogJGdyaWQtdW5pdC02MDtcbiRuYXYtc2lkZWJhci13aWR0aDogMzAwcHg7XG4kYWRtaW4tYmFyLWhlaWdodDogMzJweDtcbiRhZG1pbi1iYXItaGVpZ2h0LWJpZzogNDZweDtcbiRhZG1pbi1zaWRlYmFyLXdpZHRoOiAxNjBweDtcbiRhZG1pbi1zaWRlYmFyLXdpZHRoLWJpZzogMTkwcHg7XG4kYWRtaW4tc2lkZWJhci13aWR0aC1jb2xsYXBzZWQ6IDM2cHg7XG4kbW9kYWwtbWluLXdpZHRoOiAzNTBweDtcbiRtb2RhbC13aWR0aC1zbWFsbDogMzg0cHg7XG4kbW9kYWwtd2lkdGgtbWVkaXVtOiA1MTJweDtcbiRtb2RhbC13aWR0aC1sYXJnZTogODQwcHg7XG4kc3Bpbm5lci1zaXplOiAxNnB4O1xuJGNhbnZhcy1wYWRkaW5nOiAkZ3JpZC11bml0LTIwO1xuJHBhbGV0dGUtbWF4LWhlaWdodDogMzY4cHg7XG5cbi8qKlxuICogTW9iaWxlIHNwZWNpZmljIHN0eWxlc1xuICovXG4kbW9iaWxlLXRleHQtbWluLWZvbnQtc2l6ZTogMTZweDsgLy8gQW55IGZvbnQgc2l6ZSBiZWxvdyAxNnB4IHdpbGwgY2F1c2UgTW9iaWxlIFNhZmFyaSB0byBcInpvb20gaW5cIi5cblxuLyoqXG4gKiBFZGl0b3Igc3R5bGVzLlxuICovXG5cbiRzaWRlYmFyLXdpZHRoOiAyODBweDtcbiRjb250ZW50LXdpZHRoOiA4NDBweDtcbiR3aWRlLWNvbnRlbnQtd2lkdGg6IDExMDBweDtcbiR3aWRnZXQtYXJlYS13aWR0aDogNzAwcHg7XG4kc2Vjb25kYXJ5LXNpZGViYXItd2lkdGg6IDM1MHB4O1xuJGVkaXRvci1mb250LXNpemU6IDE2cHg7XG4kZGVmYXVsdC1ibG9jay1tYXJnaW46IDI4cHg7IC8vIFRoaXMgdmFsdWUgcHJvdmlkZXMgYSBjb25zaXN0ZW50LCBjb250aWd1b3VzIHNwYWNpbmcgYmV0d2VlbiBibG9ja3MuXG4kdGV4dC1lZGl0b3ItZm9udC1zaXplOiAxNXB4O1xuJGVkaXRvci1saW5lLWhlaWdodDogMS44O1xuJGVkaXRvci1odG1sLWZvbnQ6ICRmb250LWZhbWlseS1tb25vO1xuXG4vKipcbiAqIEJsb2NrICYgRWRpdG9yIFVJLlxuICovXG5cbiRibG9jay10b29sYmFyLWhlaWdodDogJGdyaWQtdW5pdC02MDtcbiRib3JkZXItd2lkdGg6IDFweDtcbiRib3JkZXItd2lkdGgtZm9jdXMtZmFsbGJhY2s6IDJweDsgLy8gVGhpcyBleGlzdHMgYXMgYSBmYWxsYmFjaywgYW5kIGlzIGlkZWFsbHkgb3ZlcnJpZGRlbiBieSB2YXIoLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMpIHVubGVzcyBpbiBzb21lIFNBU1MgbWF0aCBjYXNlcy5cbiRib3JkZXItd2lkdGgtdGFiOiAxLjVweDtcbiRoZWxwdGV4dC1mb250LXNpemU6IDEycHg7XG4kcmFkaW8taW5wdXQtc2l6ZTogMTZweDtcbiRyYWRpby1pbnB1dC1zaXplLXNtOiAyNHB4OyAvLyBXaWR0aCAmIGhlaWdodCBmb3Igc21hbGwgdmlld3BvcnRzLlxuXG4vLyBEZXByZWNhdGVkLCBwbGVhc2UgYXZvaWQgdXNpbmcgdGhlc2UuXG4kYmxvY2stcGFkZGluZzogMTRweDsgLy8gVXNlZCB0byBkZWZpbmUgc3BhY2UgYmV0d2VlbiBibG9jayBmb290cHJpbnQgYW5kIHN1cnJvdW5kaW5nIGJvcmRlcnMuXG4kcmFkaXVzLWJsb2NrLXVpOiAkcmFkaXVzLXNtYWxsO1xuJHNoYWRvdy1wb3BvdmVyOiAkZWxldmF0aW9uLXgtc21hbGw7XG4kc2hhZG93LW1vZGFsOiAkZWxldmF0aW9uLWxhcmdlO1xuJGRlZmF1bHQtZm9udC1zaXplOiAkZm9udC1zaXplLW1lZGl1bTtcblxuLyoqXG4gKiBCbG9jayBwYWRkaW5ncy5cbiAqL1xuXG4vLyBQYWRkaW5nIGZvciBibG9ja3Mgd2l0aCBhIGJhY2tncm91bmQgY29sb3IgKGUuZy4gcGFyYWdyYXBoIG9yIGdyb3VwKS5cbiRibG9jay1iZy1wYWRkaW5nLS12OiAxLjI1ZW07XG4kYmxvY2stYmctcGFkZGluZy0taDogMi4zNzVlbTtcblxuXG4vKipcbiAqIFJlYWN0IE5hdGl2ZSBzcGVjaWZpYy5cbiAqIFRoZXNlIHZhcmlhYmxlcyBkbyBub3QgYXBwZWFyIHRvIGJlIHVzZWQgYW55d2hlcmUgZWxzZS5cbiAqL1xuXG4vLyBEaW1lbnNpb25zLlxuJG1vYmlsZS1oZWFkZXItdG9vbGJhci1oZWlnaHQ6IDQ0cHg7XG4kbW9iaWxlLWhlYWRlci10b29sYmFyLWV4cGFuZGVkLWhlaWdodDogNTJweDtcbiRtb2JpbGUtZmxvYXRpbmctdG9vbGJhci1oZWlnaHQ6IDQ0cHg7XG4kbW9iaWxlLWZsb2F0aW5nLXRvb2xiYXItbWFyZ2luOiA4cHg7XG4kbW9iaWxlLWNvbG9yLXN3YXRjaDogNDhweDtcblxuLy8gQmxvY2sgVUkuXG4kbW9iaWxlLWJsb2NrLXRvb2xiYXItaGVpZ2h0OiA0NHB4O1xuJGRpbW1lZC1vcGFjaXR5OiAxO1xuJGJsb2NrLWVkZ2UtdG8tY29udGVudDogMTZweDtcbiRzb2xpZC1ib3JkZXItc3BhY2U6IDEycHg7XG4kZGFzaGVkLWJvcmRlci1zcGFjZTogNnB4O1xuJGJsb2NrLXNlbGVjdGVkLW1hcmdpbjogM3B4O1xuJGJsb2NrLXNlbGVjdGVkLWJvcmRlci13aWR0aDogMXB4O1xuJGJsb2NrLXNlbGVjdGVkLXBhZGRpbmc6IDA7XG4kYmxvY2stc2VsZWN0ZWQtY2hpbGQtbWFyZ2luOiA1cHg7XG4kYmxvY2stc2VsZWN0ZWQtdG8tY29udGVudDogJGJsb2NrLWVkZ2UtdG8tY29udGVudCAtICRibG9jay1zZWxlY3RlZC1tYXJnaW4gLSAkYmxvY2stc2VsZWN0ZWQtYm9yZGVyLXdpZHRoO1xuIiwiLyoqXG4gKiBDb2xvcnNcbiAqL1xuXG4vLyBXb3JkUHJlc3MgZ3JheXMuXG4kYmxhY2s6ICMwMDA7XHRcdFx0Ly8gVXNlIG9ubHkgd2hlbiB5b3UgdHJ1bHkgbmVlZCBwdXJlIGJsYWNrLiBGb3IgVUksIHVzZSAkZ3JheS05MDAuXG4kZ3JheS05MDA6ICMxZTFlMWU7XG4kZ3JheS04MDA6ICMyZjJmMmY7XG4kZ3JheS03MDA6ICM3NTc1NzU7XHRcdC8vIE1lZXRzIDQuNjoxICg0LjU6MSBpcyBtaW5pbXVtKSB0ZXh0IGNvbnRyYXN0IGFnYWluc3Qgd2hpdGUuXG4kZ3JheS02MDA6ICM5NDk0OTQ7XHRcdC8vIE1lZXRzIDM6MSBVSSBvciBsYXJnZSB0ZXh0IGNvbnRyYXN0IGFnYWluc3Qgd2hpdGUuXG4kZ3JheS00MDA6ICNjY2M7XG4kZ3JheS0zMDA6ICNkZGQ7XHRcdC8vIFVzZWQgZm9yIG1vc3QgYm9yZGVycy5cbiRncmF5LTIwMDogI2UwZTBlMDtcdFx0Ly8gVXNlZCBzcGFyaW5nbHkgZm9yIGxpZ2h0IGJvcmRlcnMuXG4kZ3JheS0xMDA6ICNmMGYwZjA7XHRcdC8vIFVzZWQgZm9yIGxpZ2h0IGdyYXkgYmFja2dyb3VuZHMuXG4kd2hpdGU6ICNmZmY7XG5cbi8vIE9wYWNpdGllcyAmIGFkZGl0aW9uYWwgY29sb3JzLlxuJGRhcmstZ3JheS1wbGFjZWhvbGRlcjogcmdiYSgkZ3JheS05MDAsIDAuNjIpO1xuJG1lZGl1bS1ncmF5LXBsYWNlaG9sZGVyOiByZ2JhKCRncmF5LTkwMCwgMC41NSk7XG4kbGlnaHQtZ3JheS1wbGFjZWhvbGRlcjogcmdiYSgkd2hpdGUsIDAuNjUpO1xuXG4vLyBBbGVydCBjb2xvcnMuXG4kYWxlcnQteWVsbG93OiAjZjBiODQ5O1xuJGFsZXJ0LXJlZDogI2NjMTgxODtcbiRhbGVydC1ncmVlbjogIzRhYjg2NjtcblxuLy8gRGVwcmVjYXRlZCwgcGxlYXNlIGF2b2lkIHVzaW5nIHRoZXNlLlxuJGRhcmstdGhlbWUtZm9jdXM6ICR3aGl0ZTtcdC8vIEZvY3VzIGNvbG9yIHdoZW4gdGhlIHRoZW1lIGlzIGRhcmsuXG4iLCJAdXNlIFwiQHdvcmRwcmVzcy9iYXNlLXN0eWxlcy92YXJpYWJsZXNcIiBhcyAqO1xuXG4uYmxvY2stZWRpdG9yLWJsb2NrLXZpc2liaWxpdHktaW5mbyB7XG5cdHBhZGRpbmctdG9wOiAkZ3JpZC11bml0LTA1O1xuXHRwYWRkaW5nLWJvdHRvbTogJGdyaWQtdW5pdC0wNTtcblx0bWFyZ2luOiAwICRncmlkLXVuaXQtMjAgJGdyaWQtdW5pdC0yMDtcblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0anVzdGlmeS1jb250ZW50OiBzdGFydDtcbn1cbiJdfQ== */`;
+  document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css2));
+  var { Badge: Badge3 } = unlock(import_components240.privateApis);
+  function BlockVisibilityInfo({ clientId }) {
+    const { isBlockHidden: isBlockHidden2, hasHiddenParent } = (0, import_data172.useSelect)(
+      (select3) => {
+        if (!clientId) {
+          return { isBlockHidden: false, hasHiddenParent: false };
+        }
+        const { isBlockHidden: _isBlockHidden, getBlockParents: getBlockParents2 } = unlock(
+          select3(store)
+        );
+        const blockHidden = _isBlockHidden(clientId);
+        const parents = getBlockParents2(clientId);
+        const parentHidden = parents.some(
+          (parentId) => _isBlockHidden(parentId)
+        );
+        return {
+          isBlockHidden: blockHidden,
+          hasHiddenParent: parentHidden
+        };
+      },
+      [clientId]
+    );
+    if (!(isBlockHidden2 || hasHiddenParent)) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(Badge3, { className: "block-editor-block-visibility-info", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_components240.__experimentalHStack, { spacing: 2, justify: "start", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components240.Icon, { icon: unseen_default }),
+      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components240.__experimentalText, { children: isBlockHidden2 ? (0, import_i18n222.__)("Block is hidden") : (0, import_i18n222.__)("Parent block is hidden") })
+    ] }) });
+  }
+
+  // packages/block-editor/build-module/components/block-inspector/index.js
+  var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
   function StyleInspectorSlots({
     blockName,
     showAdvancedControls = true,
@@ -66912,43 +67003,43 @@ var wp;
     showBindingsControls = true
   }) {
     const borderPanelLabel = useBorderPanelLabel({ blockName });
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_jsx_runtime419.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(inspector_controls_default.Slot, {}),
-      showListControls && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(inspector_controls_default.Slot, { group: "list" }),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_jsx_runtime420.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(inspector_controls_default.Slot, {}),
+      showListControls && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(inspector_controls_default.Slot, { group: "list" }),
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         inspector_controls_default.Slot,
         {
           group: "color",
-          label: (0, import_i18n222.__)("Color"),
+          label: (0, import_i18n223.__)("Color"),
           className: "color-block-support-panel__inner-wrapper"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         inspector_controls_default.Slot,
         {
           group: "background",
-          label: (0, import_i18n222.__)("Background image")
+          label: (0, import_i18n223.__)("Background image")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         inspector_controls_default.Slot,
         {
           group: "typography",
-          label: (0, import_i18n222.__)("Typography")
+          label: (0, import_i18n223.__)("Typography")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         inspector_controls_default.Slot,
         {
           group: "dimensions",
-          label: (0, import_i18n222.__)("Dimensions")
+          label: (0, import_i18n223.__)("Dimensions")
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(inspector_controls_default.Slot, { group: "border", label: borderPanelLabel }),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(inspector_controls_default.Slot, { group: "styles" }),
-      showPositionControls && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(position_controls_panel_default, {}),
-      showBindingsControls && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(inspector_controls_default.Slot, { group: "bindings" }),
-      showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(advanced_controls_panel_default, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(inspector_controls_default.Slot, { group: "border", label: borderPanelLabel }),
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(inspector_controls_default.Slot, { group: "styles" }),
+      showPositionControls && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(position_controls_panel_default, {}),
+      showBindingsControls && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(inspector_controls_default.Slot, { group: "bindings" }),
+      showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(advanced_controls_panel_default, {}) })
     ] });
   }
   function BlockInspector() {
@@ -66962,7 +67053,7 @@ var wp;
       isSectionBlockInSelection,
       hasBlockStyles,
       editedContentOnlySection: editedContentOnlySection2
-    } = (0, import_data172.useSelect)((select3) => {
+    } = (0, import_data173.useSelect)((select3) => {
       const {
         getSelectedBlockClientId: getSelectedBlockClientId2,
         getSelectedBlockClientIds: getSelectedBlockClientIds2,
@@ -66999,7 +67090,7 @@ var wp;
         editedContentOnlySection: getEditedContentOnlySection2()
       };
     }, []);
-    const contentClientIds = (0, import_data172.useSelect)(
+    const contentClientIds = (0, import_data173.useSelect)(
       (select3) => {
         if (!isSectionBlock2 || !renderedBlockClientId) {
           return [];
@@ -67040,9 +67131,9 @@ var wp;
     const blockInspectorAnimationSettings = useBlockInspectorAnimationSettings(blockType);
     const hasSelectedBlocks = selectedBlockCount > 1;
     if (hasSelectedBlocks && !isSectionBlockInSelection) {
-      return /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)("div", { className: "block-editor-block-inspector", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(MultiSelectionInspector, {}),
-        hasMultipleTabs ? /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(InspectorControlsTabs, { tabs: availableTabs }) : /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)("div", { className: "block-editor-block-inspector", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(MultiSelectionInspector, {}),
+        hasMultipleTabs ? /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(InspectorControlsTabs, { tabs: availableTabs }) : /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
           StyleInspectorSlots,
           {
             blockName: renderedBlockName,
@@ -67054,18 +67145,18 @@ var wp;
       ] });
     }
     if (hasSelectedBlocks && isSectionBlockInSelection) {
-      return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("div", { className: "block-editor-block-inspector", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(MultiSelectionInspector, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { className: "block-editor-block-inspector", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(MultiSelectionInspector, {}) });
     }
     const isRenderedBlockUnregistered = renderedBlockName === (0, import_blocks94.getUnregisteredTypeHandlerName)();
     const shouldShowWarning = !blockType || !renderedBlockClientId || isRenderedBlockUnregistered;
     if (shouldShowWarning) {
-      return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)("span", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n222.__)("No block selected.") });
+      return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("span", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n223.__)("No block selected.") });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
       BlockInspectorSingleBlockWrapper,
       {
         animate: blockInspectorAnimationSettings,
-        wrapper: (children) => /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+        wrapper: (children) => /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
           AnimatedContainer,
           {
             blockInspectorAnimationSettings,
@@ -67073,7 +67164,7 @@ var wp;
             children
           }
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
           BlockInspectorSingleBlock,
           {
             renderedBlockClientId,
@@ -67098,8 +67189,8 @@ var wp;
     children
   }) => {
     const animationOrigin = blockInspectorAnimationSettings && blockInspectorAnimationSettings.enterDirection === "leftToRight" ? -50 : 50;
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
-      import_components240.__unstableMotion.div,
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
+      import_components241.__unstableMotion.div,
       {
         animate: {
           x: 0,
@@ -67144,8 +67235,8 @@ var wp;
     const isBlockSynced = blockInformation.isSynced;
     const shouldShowTabs = !isBlockSynced && hasMultipleTabs;
     const isSectionBlockSelected = window?.__experimentalContentOnlyPatternInsertion && selectedBlockClientId === renderedBlockClientId;
-    return /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)("div", { className: "block-editor-block-inspector", children: [
-      hasParentChildBlockCards && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)("div", { className: "block-editor-block-inspector", children: [
+      hasParentChildBlockCards && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         block_card_default,
         {
           ...parentBlockInformation,
@@ -67153,7 +67244,7 @@ var wp;
           parentClientId: editedContentOnlySection2
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         block_card_default,
         {
           ...blockInformation,
@@ -67163,9 +67254,10 @@ var wp;
           clientId: renderedBlockClientId
         }
       ),
-      window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(EditContents, { clientId: renderedBlockClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(block_variation_transforms_default, { blockClientId: renderedBlockClientId }),
-      shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(BlockVisibilityInfo, { clientId: renderedBlockClientId }),
+      window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(EditContents, { clientId: renderedBlockClientId }),
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(block_variation_transforms_default, { blockClientId: renderedBlockClientId }),
+      shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
         InspectorControlsTabs,
         {
           hasBlockStyles,
@@ -67176,35 +67268,35 @@ var wp;
           contentClientIds
         }
       ),
-      !shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_jsx_runtime419.Fragment, { children: [
-        hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(block_styles_default, { clientId: renderedBlockClientId }),
-        /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+      !shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_jsx_runtime420.Fragment, { children: [
+        hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(block_styles_default, { clientId: renderedBlockClientId }),
+        /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
           content_tab_default,
           {
             rootClientId: renderedBlockClientId,
             contentClientIds
           }
         ),
-        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
+        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
           StyleInspectorSlots,
           {
             blockName,
             showListControls: true
           }
         ),
-        isSectionBlock2 && isBlockSynced && isSectionBlockSelected && /* @__PURE__ */ (0, import_jsx_runtime419.jsxs)(import_jsx_runtime419.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(inspector_controls_default.Slot, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(advanced_controls_panel_default, {})
+        isSectionBlock2 && isBlockSynced && isSectionBlockSelected && /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_jsx_runtime420.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(inspector_controls_default.Slot, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(advanced_controls_panel_default, {})
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(SkipToSelectedBlock, {}, "back")
+      /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(SkipToSelectedBlock, {}, "back")
     ] });
   };
   var block_inspector_default = BlockInspector;
 
   // packages/block-editor/build-module/components/copy-handler/index.js
   var import_deprecated32 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime421 = __toESM(require_jsx_runtime(), 1);
   var __unstableUseClipboardHandler = () => {
     (0, import_deprecated32.default)("__unstableUseClipboardHandler", {
       alternative: "BlockCanvas or WritingFlow",
@@ -67219,13 +67311,13 @@ var wp;
       since: "6.4",
       version: "6.7"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { ...props, ref: useClipboardHandler() });
+    return /* @__PURE__ */ (0, import_jsx_runtime421.jsx)("div", { ...props, ref: useClipboardHandler() });
   }
 
   // packages/block-editor/build-module/components/inserter/library.js
-  var import_data173 = __toESM(require_data(), 1);
+  var import_data174 = __toESM(require_data(), 1);
   var import_element245 = __toESM(require_element(), 1);
-  var import_jsx_runtime421 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime422 = __toESM(require_jsx_runtime(), 1);
   var noop19 = () => {
   };
   function InserterLibrary({
@@ -67243,7 +67335,7 @@ var wp;
     shouldFocusBlock = false,
     onClose
   }, ref) {
-    const { destinationRootClientId } = (0, import_data173.useSelect)(
+    const { destinationRootClientId } = (0, import_data174.useSelect)(
       (select3) => {
         const { getBlockRootClientId: getBlockRootClientId2 } = select3(store);
         const _rootClientId = rootClientId || getBlockRootClientId2(clientId) || void 0;
@@ -67253,7 +67345,7 @@ var wp;
       },
       [clientId, rootClientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
       PrivateInserterMenu,
       {
         onSelect,
@@ -67275,7 +67367,7 @@ var wp;
   }
   var PrivateInserterLibrary = (0, import_element245.forwardRef)(InserterLibrary);
   function PublicInserterLibrary(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
       PrivateInserterLibrary,
       {
         ...props,
@@ -67299,14 +67391,14 @@ var wp;
   // packages/block-editor/build-module/components/typewriter/index.js
   var import_compose93 = __toESM(require_compose(), 1);
   var import_dom39 = __toESM(require_dom(), 1);
-  var import_data174 = __toESM(require_data(), 1);
+  var import_data175 = __toESM(require_data(), 1);
   var import_keycodes26 = __toESM(require_keycodes(), 1);
-  var import_jsx_runtime422 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
   var isIE = window.navigator.userAgent.indexOf("Trident") !== -1;
   var arrowKeyCodes = /* @__PURE__ */ new Set([import_keycodes26.UP, import_keycodes26.DOWN, import_keycodes26.LEFT, import_keycodes26.RIGHT]);
   var initialTriggerPercentage = 0.75;
   function useTypewriter() {
-    const hasSelectedBlock2 = (0, import_data174.useSelect)(
+    const hasSelectedBlock2 = (0, import_data175.useSelect)(
       (select3) => select3(store).hasSelectedBlock(),
       []
     );
@@ -67452,7 +67544,7 @@ var wp;
     );
   }
   function Typewriter({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)("div", { ref: useTypewriter(), className: "block-editor__typewriter", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)("div", { ref: useTypewriter(), className: "block-editor__typewriter", children });
   }
   var TypewriterOrIEBypass = isIE ? (props) => props.children : Typewriter;
   var typewriter_default = TypewriterOrIEBypass;
@@ -67460,7 +67552,7 @@ var wp;
   // packages/block-editor/build-module/components/recursion-provider/index.js
   var import_element246 = __toESM(require_element(), 1);
   var import_deprecated34 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
   var RenderedRefsContext = (0, import_element246.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
   function addToBlockType(renderedBlocks, blockName, uniqueId2) {
@@ -67479,7 +67571,7 @@ var wp;
       () => addToBlockType(previouslyRenderedBlocks, blockName, uniqueId2),
       [previouslyRenderedBlocks, blockName, uniqueId2]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
   }
   function useHasRecursion(uniqueId2, blockName = "") {
     const previouslyRenderedBlocks = (0, import_element246.useContext)(RenderedRefsContext);
@@ -67492,7 +67584,7 @@ var wp;
       since: "6.5",
       alternative: "wp.blockEditor.RecursionProvider"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(RecursionProvider, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(RecursionProvider, { ...props });
   };
   var DeprecatedExperimentalUseHasRecursion = (...args) => {
     (0, import_deprecated34.default)("wp.blockEditor.__experimentalUseHasRecursion", {
@@ -67503,25 +67595,25 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/publish-date-time-picker/index.js
-  var import_components242 = __toESM(require_components(), 1);
-  var import_i18n224 = __toESM(require_i18n(), 1);
+  var import_components243 = __toESM(require_components(), 1);
+  var import_i18n225 = __toESM(require_i18n(), 1);
   var import_element247 = __toESM(require_element(), 1);
   var import_date9 = __toESM(require_date(), 1);
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.js
-  var import_components241 = __toESM(require_components(), 1);
-  var import_i18n223 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
+  var import_components242 = __toESM(require_components(), 1);
+  var import_i18n224 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime425 = __toESM(require_jsx_runtime(), 1);
   function InspectorPopoverHeader({
     title,
     help,
     actions = [],
     onClose
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime424.jsxs)(import_components241.__experimentalVStack, { className: "block-editor-inspector-popover-header", spacing: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime424.jsxs)(import_components241.__experimentalHStack, { alignment: "center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
-          import_components241.__experimentalHeading,
+    return /* @__PURE__ */ (0, import_jsx_runtime425.jsxs)(import_components242.__experimentalVStack, { className: "block-editor-inspector-popover-header", spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime425.jsxs)(import_components242.__experimentalHStack, { alignment: "center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
+          import_components242.__experimentalHeading,
           {
             className: "block-editor-inspector-popover-header__heading",
             level: 2,
@@ -67529,9 +67621,9 @@ var wp;
             children: title
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components241.__experimentalSpacer, {}),
-        actions.map(({ label, icon, onClick }) => /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
-          import_components241.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(import_components242.__experimentalSpacer, {}),
+        actions.map(({ label, icon, onClick }) => /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
+          import_components242.Button,
           {
             size: "small",
             className: "block-editor-inspector-popover-header__action",
@@ -67543,23 +67635,23 @@ var wp;
           },
           label
         )),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
-          import_components241.Button,
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
+          import_components242.Button,
           {
             size: "small",
             className: "block-editor-inspector-popover-header__action",
-            label: (0, import_i18n223.__)("Close"),
+            label: (0, import_i18n224.__)("Close"),
             icon: close_small_default,
             onClick: onClose
           }
         )
       ] }),
-      help && /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components241.__experimentalText, { children: help })
+      help && /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(import_components242.__experimentalText, { children: help })
     ] });
   }
 
   // packages/block-editor/build-module/components/publish-date-time-picker/index.js
-  var import_jsx_runtime425 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime426 = __toESM(require_jsx_runtime(), 1);
   function PublishDateTimePicker({
     onClose,
     onChange,
@@ -67576,27 +67668,27 @@ var wp;
       currentTime: isCompact ? currentDate : void 0,
       ...additionalProps
     };
-    const DatePickerComponent = isCompact ? import_components242.TimePicker : import_components242.DateTimePicker;
-    return /* @__PURE__ */ (0, import_jsx_runtime425.jsxs)("div", { ref, className: "block-editor-publish-date-time-picker", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
+    const DatePickerComponent = isCompact ? import_components243.TimePicker : import_components243.DateTimePicker;
+    return /* @__PURE__ */ (0, import_jsx_runtime426.jsxs)("div", { ref, className: "block-editor-publish-date-time-picker", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
         InspectorPopoverHeader,
         {
-          title: title || (0, import_i18n224.__)("Publish"),
+          title: title || (0, import_i18n225.__)("Publish"),
           actions: showPopoverHeaderActions ? [
             {
-              label: (0, import_i18n224.__)("Now"),
+              label: (0, import_i18n225.__)("Now"),
               onClick: () => onChange?.(null)
             }
           ] : void 0,
           onClose
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(DatePickerComponent, { ...datePickerProps })
+      /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(DatePickerComponent, { ...datePickerProps })
     ] });
   }
   var PrivatePublishDateTimePicker = (0, import_element247.forwardRef)(PublishDateTimePicker);
   function PublicPublishDateTimePicker(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
       PrivatePublishDateTimePicker,
       {
         ...props,
@@ -67609,13 +67701,13 @@ var wp;
   var publish_date_time_picker_default = (0, import_element247.forwardRef)(PublicPublishDateTimePicker);
 
   // packages/block-editor/build-module/components/block-editing-mode/index.js
-  var import_data175 = __toESM(require_data(), 1);
+  var import_data176 = __toESM(require_data(), 1);
   var import_element248 = __toESM(require_element(), 1);
   function useBlockEditingMode(mode2) {
     const context = useBlockEditContext();
     const { clientId = "" } = context;
-    const { setBlockEditingMode: setBlockEditingMode2, unsetBlockEditingMode: unsetBlockEditingMode2 } = (0, import_data175.useDispatch)(store);
-    const globalBlockEditingMode = (0, import_data175.useSelect)(
+    const { setBlockEditingMode: setBlockEditingMode2, unsetBlockEditingMode: unsetBlockEditingMode2 } = (0, import_data176.useDispatch)(store);
+    const globalBlockEditingMode = (0, import_data176.useSelect)(
       (select3) => (
         // Avoid adding the subscription if not needed!
         clientId ? null : select3(store).getBlockEditingMode()
@@ -67648,7 +67740,7 @@ var wp;
   var tool_selector_default = (0, import_element249.forwardRef)(ToolSelector);
 
   // packages/block-editor/build-module/hooks/utils.js
-  var import_jsx_runtime426 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
   var cleanEmptyObject = (object) => {
     if (object === null || typeof object !== "object" || Array.isArray(object)) {
       return object;
@@ -67705,30 +67797,30 @@ var wp;
     return skipSerialization;
   }
   var pendingStyleOverrides = /* @__PURE__ */ new WeakMap();
-  function useStyleOverride({ id, css: css2 }) {
-    return usePrivateStyleOverride({ id, css: css2 });
+  function useStyleOverride({ id, css: css3 }) {
+    return usePrivateStyleOverride({ id, css: css3 });
   }
   function usePrivateStyleOverride({
     id,
-    css: css2,
+    css: css3,
     assets,
     __unstableType,
     variation,
     clientId
   } = {}) {
     const { setStyleOverride: setStyleOverride2, deleteStyleOverride: deleteStyleOverride2 } = unlock(
-      (0, import_data176.useDispatch)(store)
+      (0, import_data177.useDispatch)(store)
     );
-    const registry = (0, import_data176.useRegistry)();
+    const registry = (0, import_data177.useRegistry)();
     const fallbackId = (0, import_element250.useId)();
     (0, import_element250.useEffect)(() => {
-      if (!css2 && !assets) {
+      if (!css3 && !assets) {
         return;
       }
       const _id = id || fallbackId;
       const override = {
         id,
-        css: css2,
+        css: css3,
         assets,
         __unstableType,
         variation,
@@ -67761,7 +67853,7 @@ var wp;
       };
     }, [
       id,
-      css2,
+      css3,
       clientId,
       assets,
       __unstableType,
@@ -68078,7 +68170,7 @@ var wp;
                 neededProps[key] = props.attributes[key];
               }
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
               Edit4,
               {
                 name: props.name,
@@ -68091,7 +68183,7 @@ var wp;
               i2
             );
           }),
-          /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(OriginalBlockEdit, { ...props }, "edit")
+          /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(OriginalBlockEdit, { ...props }, "edit")
         ];
       },
       "withBlockEditHooks"
@@ -68146,7 +68238,7 @@ var wp;
             ) {
               return null;
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
               BlockPropsPure,
               {
                 index: i2,
@@ -68159,7 +68251,7 @@ var wp;
               i2
             );
           }),
-          /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
             BlockListBlock2,
             {
               ...props,
@@ -68247,7 +68339,7 @@ var wp;
   // packages/block-editor/build-module/hooks/align.js
   var import_hooks16 = __toESM(require_hooks(), 1);
   var import_blocks97 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime428 = __toESM(require_jsx_runtime(), 1);
   var ALL_ALIGNMENTS = ["left", "center", "right", "wide", "full"];
   var WIDE_ALIGNMENTS = ["wide", "full"];
   function getValidAlignments(blockAlign, hasWideBlockSupport = true, hasWideEnabled = true) {
@@ -68311,7 +68403,7 @@ var wp;
       }
       setAttributes({ align: nextAlign });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
       BlockAlignmentControl,
       {
         value: align,
@@ -68381,23 +68473,23 @@ var wp;
   var import_blocks100 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.js
-  var import_components249 = __toESM(require_components(), 1);
-  var import_i18n227 = __toESM(require_i18n(), 1);
+  var import_components250 = __toESM(require_components(), 1);
+  var import_i18n228 = __toESM(require_i18n(), 1);
   var import_element254 = __toESM(require_element(), 1);
-  var import_data179 = __toESM(require_data(), 1);
+  var import_data180 = __toESM(require_data(), 1);
   var import_blocks99 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.js
-  var import_components248 = __toESM(require_components(), 1);
+  var import_components249 = __toESM(require_components(), 1);
   var import_element253 = __toESM(require_element(), 1);
-  var import_i18n226 = __toESM(require_i18n(), 1);
-  var import_data178 = __toESM(require_data(), 1);
+  var import_i18n227 = __toESM(require_i18n(), 1);
+  var import_data179 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/block-manager/index.js
   var import_blocks98 = __toESM(require_blocks(), 1);
-  var import_data177 = __toESM(require_data(), 1);
-  var import_components247 = __toESM(require_components(), 1);
-  var import_i18n225 = __toESM(require_i18n(), 1);
+  var import_data178 = __toESM(require_data(), 1);
+  var import_components248 = __toESM(require_components(), 1);
+  var import_i18n226 = __toESM(require_i18n(), 1);
   var import_element252 = __toESM(require_element(), 1);
   var import_compose96 = __toESM(require_compose(), 1);
   var import_a11y19 = __toESM(require_a11y(), 1);
@@ -68405,26 +68497,26 @@ var wp;
   // packages/block-editor/build-module/components/block-manager/category.js
   var import_element251 = __toESM(require_element(), 1);
   var import_compose95 = __toESM(require_compose(), 1);
-  var import_components246 = __toESM(require_components(), 1);
+  var import_components247 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-manager/checklist.js
-  var import_components245 = __toESM(require_components(), 1);
-  var import_jsx_runtime428 = __toESM(require_jsx_runtime(), 1);
+  var import_components246 = __toESM(require_components(), 1);
+  var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
   function BlockTypesChecklist({ blockTypes, value, onItemChange }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)("ul", { className: "block-editor-block-manager__checklist", children: blockTypes.map((blockType) => /* @__PURE__ */ (0, import_jsx_runtime428.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)("ul", { className: "block-editor-block-manager__checklist", children: blockTypes.map((blockType) => /* @__PURE__ */ (0, import_jsx_runtime429.jsxs)(
       "li",
       {
         className: "block-editor-block-manager__checklist-item",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
-            import_components245.CheckboxControl,
+          /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
+            import_components246.CheckboxControl,
             {
               label: blockType.title,
               checked: value.includes(blockType.name),
               onChange: (...args) => onItemChange(blockType, ...args)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(block_icon_default, { icon: blockType.icon })
+          /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(block_icon_default, { icon: blockType.icon })
         ]
       },
       blockType.name
@@ -68433,7 +68525,7 @@ var wp;
   var checklist_default = BlockTypesChecklist;
 
   // packages/block-editor/build-module/components/block-manager/category.js
-  var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
   function BlockManagerCategory({
     title,
     blockTypes,
@@ -68489,24 +68581,24 @@ var wp;
     const titleId = "block-editor-block-manager__category-title-" + instanceId;
     const isAllChecked = checkedBlockNames.length === blockTypes.length;
     const isIndeterminate = !isAllChecked && checkedBlockNames.length > 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime429.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime430.jsxs)(
       "div",
       {
         role: "group",
         "aria-labelledby": titleId,
         className: "block-editor-block-manager__category",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
-            import_components246.CheckboxControl,
+          /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
+            import_components247.CheckboxControl,
             {
               checked: isAllChecked,
               onChange: toggleAllVisible,
               className: "block-editor-block-manager__category-title",
               indeterminate: isIndeterminate,
-              label: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)("span", { id: titleId, children: title })
+              label: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)("span", { id: titleId, children: title })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
             checklist_default,
             {
               blockTypes,
@@ -68521,7 +68613,7 @@ var wp;
   var category_default2 = BlockManagerCategory;
 
   // packages/block-editor/build-module/components/block-manager/index.js
-  var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime431 = __toESM(require_jsx_runtime(), 1);
   function BlockManager({
     blockTypes,
     selectedBlockTypes,
@@ -68530,7 +68622,7 @@ var wp;
   }) {
     const debouncedSpeak = (0, import_compose96.useDebounce)(import_a11y19.speak, 500);
     const [search, setSearch] = (0, import_element252.useState)("");
-    const { categories, isMatchingSearchTerm } = (0, import_data177.useSelect)((select3) => {
+    const { categories, isMatchingSearchTerm } = (0, import_data178.useSelect)((select3) => {
       return {
         categories: select3(import_blocks98.store).getCategories(),
         isMatchingSearchTerm: select3(import_blocks98.store).isMatchingSearchTerm
@@ -68546,29 +68638,29 @@ var wp;
         return;
       }
       const count = filteredBlockTypes.length;
-      const resultsFoundMessage = (0, import_i18n225.sprintf)(
+      const resultsFoundMessage = (0, import_i18n226.sprintf)(
         /* translators: %d: number of results. */
-        (0, import_i18n225._n)("%d result found.", "%d results found.", count),
+        (0, import_i18n226._n)("%d result found.", "%d results found.", count),
         count
       );
       debouncedSpeak(resultsFoundMessage);
     }, [filteredBlockTypes?.length, search, debouncedSpeak]);
-    return /* @__PURE__ */ (0, import_jsx_runtime430.jsxs)(import_components247.__experimentalVStack, { className: "block-editor-block-manager__content", spacing: 4, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
-        import_components247.SearchControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(import_components248.__experimentalVStack, { className: "block-editor-block-manager__content", spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
+        import_components248.SearchControl,
         {
-          label: (0, import_i18n225.__)("Search for a block"),
-          placeholder: (0, import_i18n225.__)("Search for a block"),
+          label: (0, import_i18n226.__)("Search for a block"),
+          placeholder: (0, import_i18n226.__)("Search for a block"),
           value: search,
           onChange: (nextSearch) => setSearch(nextSearch),
           className: "block-editor-block-manager__search"
         }
       ),
-      showSelectAll && /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
-        import_components247.CheckboxControl,
+      showSelectAll && /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
+        import_components248.CheckboxControl,
         {
           className: "block-editor-block-manager__select-all",
-          label: (0, import_i18n225.__)("Select all"),
+          label: (0, import_i18n226.__)("Select all"),
           checked: isAllChecked,
           onChange: () => {
             if (isAllChecked) {
@@ -68580,16 +68672,16 @@ var wp;
           indeterminate: isIndeterminate
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime430.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(
         "div",
         {
           tabIndex: "0",
           role: "region",
-          "aria-label": (0, import_i18n225.__)("Available block types"),
+          "aria-label": (0, import_i18n226.__)("Available block types"),
           className: "block-editor-block-manager__results",
           children: [
-            filteredBlockTypes.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime430.jsx)("p", { className: "block-editor-block-manager__no-results", children: (0, import_i18n225.__)("No blocks found.") }),
-            categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
+            filteredBlockTypes.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime431.jsx)("p", { className: "block-editor-block-manager__no-results", children: (0, import_i18n226.__)("No blocks found.") }),
+            categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
               category_default2,
               {
                 title: category.title,
@@ -68601,10 +68693,10 @@ var wp;
               },
               category.slug
             )),
-            /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
               category_default2,
               {
-                title: (0, import_i18n225.__)("Uncategorized"),
+                title: (0, import_i18n226.__)("Uncategorized"),
                 blockTypes: filteredBlockTypes.filter(
                   ({ category }) => !category
                 ),
@@ -68619,7 +68711,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.js
-  var import_jsx_runtime431 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime432 = __toESM(require_jsx_runtime(), 1);
   function BlockAllowedBlocksModal({
     clientId,
     blockTypes,
@@ -68627,7 +68719,7 @@ var wp;
     onClose
   }) {
     const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element253.useState)(selectedBlockTypes);
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data178.useDispatch)(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data179.useDispatch)(store);
     const handleSubmit = () => {
       const isFullySelected = currentSelectedBlockTypes.length === blockTypes.length;
       const newBlockNames = currentSelectedBlockTypes.map(
@@ -68638,16 +68730,16 @@ var wp;
       });
       onClose();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-      import_components248.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+      import_components249.Modal,
       {
-        title: (0, import_i18n226.__)("Manage allowed blocks"),
+        title: (0, import_i18n227.__)("Manage allowed blocks"),
         onRequestClose: onClose,
         overlayClassName: "block-editor-block-allowed-blocks-modal",
         focusOnMount: "firstContentElement",
         size: "medium",
-        children: /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(
-          import_components248.__experimentalVStack,
+        children: /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
+          import_components249.__experimentalVStack,
           {
             as: "form",
             onSubmit: (e2) => {
@@ -68656,10 +68748,10 @@ var wp;
             },
             spacing: "4",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_components248.__experimentalText, { children: (0, import_i18n226.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components249.__experimentalText, { children: (0, import_i18n227.__)(
                 "Select which blocks can be added inside this container."
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
                 BlockManager,
                 {
                   blockTypes,
@@ -68669,29 +68761,29 @@ var wp;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(
-                import_components248.Flex,
+              /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
+                import_components249.Flex,
                 {
                   className: "block-editor-block-allowed-blocks-modal__actions",
                   justify: "flex-end",
                   expanded: false,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_components248.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-                      import_components248.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components249.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+                      import_components249.Button,
                       {
                         variant: "tertiary",
                         onClick: onClose,
                         __next40pxDefaultSize: true,
-                        children: (0, import_i18n226.__)("Cancel")
+                        children: (0, import_i18n227.__)("Cancel")
                       }
                     ) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_components248.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-                      import_components248.Button,
+                    /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components249.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+                      import_components249.Button,
                       {
                         variant: "primary",
                         type: "submit",
                         __next40pxDefaultSize: true,
-                        children: (0, import_i18n226.__)("Apply")
+                        children: (0, import_i18n227.__)("Apply")
                       }
                     ) })
                   ]
@@ -68705,10 +68797,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.js
-  var import_jsx_runtime432 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
   function BlockAllowedBlocksControl({ clientId }) {
     const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element254.useState)(false);
-    const { blockTypes, selectedBlockNames } = (0, import_data179.useSelect)(
+    const { blockTypes, selectedBlockNames } = (0, import_data180.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
         return {
@@ -68727,17 +68819,17 @@ var wp;
     const selectedBlockTypes = selectedBlockNames === void 0 ? filteredBlockTypes : filteredBlockTypes.filter(
       (blockType) => selectedBlockNames.includes(blockType.name)
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)("div", { className: "block-editor-block-allowed-blocks-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(
-        import_components249.BaseControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)("div", { className: "block-editor-block-allowed-blocks-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(
+        import_components250.BaseControl,
         {
-          help: (0, import_i18n227.__)(
+          help: (0, import_i18n228.__)(
             "Specify which blocks are allowed inside this container."
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components249.BaseControl.VisualLabel, { children: (0, import_i18n227.__)("Allowed Blocks") }),
-            /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-              import_components249.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_components250.BaseControl.VisualLabel, { children: (0, import_i18n228.__)("Allowed Blocks") }),
+            /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
+              import_components250.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
@@ -68745,13 +68837,13 @@ var wp;
                   setIsBlockControlOpened(true);
                 },
                 className: "block-editor-block-allowed-blocks-control__button",
-                children: (0, import_i18n227.__)("Manage allowed blocks")
+                children: (0, import_i18n228.__)("Manage allowed blocks")
               }
             )
           ]
         }
       ),
-      isBlockControlOpened && /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+      isBlockControlOpened && /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
         BlockAllowedBlocksModal,
         {
           clientId,
@@ -68764,14 +68856,14 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/allowed-blocks.js
-  var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
   function BlockEditAllowedBlocksControlPure({ clientId }) {
     const blockEditingMode = useBlockEditingMode();
     const isContentOnly = blockEditingMode === "contentOnly";
     if (isContentOnly) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(PrivateInspectorControlsAllowedBlocks.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(BlockAllowedBlocksControl, { clientId }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(PrivateInspectorControlsAllowedBlocks.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(BlockAllowedBlocksControl, { clientId }) });
   }
   var allowed_blocks_default = {
     edit: BlockEditAllowedBlocksControlPure,
@@ -68849,11 +68941,11 @@ var wp;
 
   // packages/block-editor/build-module/hooks/anchor.js
   var import_hooks19 = __toESM(require_hooks(), 1);
-  var import_components250 = __toESM(require_components(), 1);
-  var import_i18n228 = __toESM(require_i18n(), 1);
+  var import_components251 = __toESM(require_components(), 1);
+  var import_i18n229 = __toESM(require_i18n(), 1);
   var import_blocks101 = __toESM(require_blocks(), 1);
   var import_element255 = __toESM(require_element(), 1);
-  var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime435 = __toESM(require_jsx_runtime(), 1);
   var ANCHOR_REGEX = /[\s#]/g;
   function addAttribute4(settings2) {
     if ("type" in (settings2.attributes?.anchor ?? {})) {
@@ -68875,31 +68967,31 @@ var wp;
       return null;
     }
     const isWeb = import_element255.Platform.OS === "web";
-    return /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
-      import_components250.TextControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
+      import_components251.TextControl,
       {
         __next40pxDefaultSize: true,
         className: "html-anchor-control",
-        label: (0, import_i18n228.__)("HTML anchor"),
-        help: /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(import_jsx_runtime434.Fragment, { children: [
-          (0, import_i18n228.__)(
+        label: (0, import_i18n229.__)("HTML anchor"),
+        help: /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(import_jsx_runtime435.Fragment, { children: [
+          (0, import_i18n229.__)(
             "Enter a word or two \u2014 without spaces \u2014 to make a unique web address just for this block, called an \u201Canchor\u201D. Then, you\u2019ll be able to link directly to this section of your page."
           ),
-          isWeb && /* @__PURE__ */ (0, import_jsx_runtime434.jsxs)(import_jsx_runtime434.Fragment, { children: [
+          isWeb && /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(import_jsx_runtime435.Fragment, { children: [
             " ",
-            /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
-              import_components250.ExternalLink,
+            /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
+              import_components251.ExternalLink,
               {
-                href: (0, import_i18n228.__)(
+                href: (0, import_i18n229.__)(
                   "https://wordpress.org/documentation/article/page-jumps/"
                 ),
-                children: (0, import_i18n228.__)("Learn more about anchors")
+                children: (0, import_i18n229.__)("Learn more about anchors")
               }
             )
           ] })
         ] }),
         value: anchor || "",
-        placeholder: !isWeb ? (0, import_i18n228.__)("Add an anchor") : null,
+        placeholder: !isWeb ? (0, import_i18n229.__)("Add an anchor") : null,
         onChange: (nextValue) => {
           nextValue = nextValue.replace(ANCHOR_REGEX, "-");
           setAttributes({
@@ -68965,10 +69057,10 @@ var wp;
 
   // packages/block-editor/build-module/hooks/custom-class-name.js
   var import_hooks21 = __toESM(require_hooks(), 1);
-  var import_components252 = __toESM(require_components(), 1);
-  var import_i18n229 = __toESM(require_i18n(), 1);
+  var import_components253 = __toESM(require_components(), 1);
+  var import_i18n230 = __toESM(require_i18n(), 1);
   var import_blocks103 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime435 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
   function addAttribute6(settings2) {
     if ((0, import_blocks103.hasBlockSupport)(settings2, "customClassName", true)) {
       settings2.attributes = {
@@ -68985,19 +69077,19 @@ var wp;
     if (blockEditingMode !== "default") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
-      import_components252.TextControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(inspector_controls_default, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
+      import_components253.TextControl,
       {
         __next40pxDefaultSize: true,
         autoComplete: "off",
-        label: (0, import_i18n229.__)("Additional CSS class(es)"),
+        label: (0, import_i18n230.__)("Additional CSS class(es)"),
         value: className || "",
         onChange: (nextValue) => {
           setAttributes({
             className: nextValue !== "" ? nextValue : void 0
           });
         },
-        help: (0, import_i18n229.__)("Separate multiple classes with spaces.")
+        help: (0, import_i18n230.__)("Separate multiple classes with spaces.")
       }
     ) });
   }
@@ -69087,20 +69179,20 @@ var wp;
   // packages/block-editor/build-module/hooks/typography.js
   var import_blocks110 = __toESM(require_blocks(), 1);
   var import_element258 = __toESM(require_element(), 1);
-  var import_data181 = __toESM(require_data(), 1);
+  var import_data182 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/hooks/line-height.js
   var import_blocks105 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime437 = __toESM(require_jsx_runtime(), 1);
   var LINE_HEIGHT_SUPPORT_KEY2 = "typography.lineHeight";
 
   // packages/block-editor/build-module/hooks/font-family.js
   var import_hooks23 = __toESM(require_hooks(), 1);
   var import_blocks106 = __toESM(require_blocks(), 1);
   var import_token_list2 = __toESM(require_token_list(), 1);
-  var import_components254 = __toESM(require_components(), 1);
+  var import_components255 = __toESM(require_components(), 1);
   var FONT_FAMILY_SUPPORT_KEY2 = "typography.__experimentalFontFamily";
-  var { kebabCase: kebabCase5 } = unlock(import_components254.privateApis);
+  var { kebabCase: kebabCase5 } = unlock(import_components255.privateApis);
   function addAttributes3(settings2) {
     if (!(0, import_blocks106.hasBlockSupport)(settings2, FONT_FAMILY_SUPPORT_KEY2)) {
       return settings2;
@@ -69155,7 +69247,7 @@ var wp;
   var import_hooks24 = __toESM(require_hooks(), 1);
   var import_blocks107 = __toESM(require_blocks(), 1);
   var import_token_list3 = __toESM(require_token_list(), 1);
-  var import_jsx_runtime437 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
   var FONT_SIZE_SUPPORT_KEY2 = "typography.fontSize";
   function addAttributes4(settings2) {
     if (!(0, import_blocks107.hasBlockSupport)(settings2, FONT_SIZE_SUPPORT_KEY2)) {
@@ -69268,24 +69360,24 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/text-align.js
-  var import_i18n230 = __toESM(require_i18n(), 1);
+  var import_i18n231 = __toESM(require_i18n(), 1);
   var import_blocks108 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime439 = __toESM(require_jsx_runtime(), 1);
   var TEXT_ALIGN_SUPPORT_KEY2 = "typography.textAlign";
   var TEXT_ALIGNMENT_OPTIONS2 = [
     {
       icon: align_left_default,
-      title: (0, import_i18n230.__)("Align text left"),
+      title: (0, import_i18n231.__)("Align text left"),
       align: "left"
     },
     {
       icon: align_center_default,
-      title: (0, import_i18n230.__)("Align text center"),
+      title: (0, import_i18n231.__)("Align text center"),
       align: "center"
     },
     {
       icon: align_right_default,
-      title: (0, import_i18n230.__)("Align text right"),
+      title: (0, import_i18n231.__)("Align text right"),
       align: "right"
     }
   ];
@@ -69329,7 +69421,7 @@ var wp;
       };
       setAttributes({ style: cleanEmptyObject(newStyle) });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(block_controls_default, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(block_controls_default, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
       AlignmentControl,
       {
         value: style?.typography?.textAlign,
@@ -69390,9 +69482,9 @@ var wp;
   var import_hooks25 = __toESM(require_hooks(), 1);
   var import_blocks109 = __toESM(require_blocks(), 1);
   var import_element257 = __toESM(require_element(), 1);
-  var import_data180 = __toESM(require_data(), 1);
-  var import_i18n232 = __toESM(require_i18n(), 1);
-  var import_components257 = __toESM(require_components(), 1);
+  var import_data181 = __toESM(require_data(), 1);
+  var import_i18n233 = __toESM(require_i18n(), 1);
+  var import_components258 = __toESM(require_components(), 1);
   var import_compose97 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/utils/fit-text-utils.js
@@ -69435,19 +69527,19 @@ var wp;
 
   // packages/block-editor/build-module/components/fit-text-size-warning/index.js
   var import_element256 = __toESM(require_element(), 1);
-  var import_i18n231 = __toESM(require_i18n(), 1);
-  var import_components256 = __toESM(require_components(), 1);
+  var import_i18n232 = __toESM(require_i18n(), 1);
+  var import_components257 = __toESM(require_components(), 1);
   var import_a11y20 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime439 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
   function FitTextSizeWarning() {
-    const message2 = (0, import_i18n231.__)(
+    const message2 = (0, import_i18n232.__)(
       "The text may be too small to read. Consider using a larger container or less text."
     );
     (0, import_element256.useEffect)(() => {
       (0, import_a11y20.speak)(message2);
     }, [message2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime439.jsx)("div", { className: "block-editor-fit-text-size-warning", children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-      import_components256.Notice,
+    return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)("div", { className: "block-editor-fit-text-size-warning", children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
+      import_components257.Notice,
       {
         spokenMessage: null,
         status: "warning",
@@ -69458,7 +69550,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/fit-text.js
-  var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT3 = {};
   var MIN_FONT_SIZE_FOR_WARNING = 6;
   var FIT_TEXT_SUPPORT_KEY = "typography.fitText";
@@ -69483,7 +69575,7 @@ var wp;
     const [fontSize, setFontSize] = (0, import_element257.useState)(null);
     const hasFitTextSupport2 = (0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
-    const { blockAttributes, parentId } = (0, import_data180.useSelect)(
+    const { blockAttributes, parentId } = (0, import_data181.useSelect)(
       (select3) => {
         if (!clientId || !hasFitTextSupport2 || !fitText) {
           return EMPTY_OBJECT3;
@@ -69598,19 +69690,19 @@ var wp;
     if (!(0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(
-      import_components257.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(inspector_controls_default, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime441.jsxs)(
+      import_components258.__experimentalToolsPanelItem,
       {
         hasValue: () => fitText,
-        label: (0, import_i18n232.__)("Fit text"),
+        label: (0, import_i18n233.__)("Fit text"),
         onDeselect: () => setAttributes({ fitText: void 0 }),
         resetAllFilter: () => ({ fitText: void 0 }),
         panelId: clientId,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-            import_components257.ToggleControl,
+          /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
+            import_components258.ToggleControl,
             {
-              label: (0, import_i18n232.__)("Fit text"),
+              label: (0, import_i18n233.__)("Fit text"),
               checked: fitText,
               onChange: () => {
                 const newFitText = !fitText || void 0;
@@ -69631,7 +69723,7 @@ var wp;
                 }
                 setAttributes(updates);
               },
-              help: fitText ? (0, import_i18n232.__)("Text will resize to fit its container.") : (0, import_i18n232.__)(
+              help: fitText ? (0, import_i18n233.__)("Text will resize to fit its container.") : (0, import_i18n233.__)(
                 "The text will resize to fit its container, resetting other font size settings."
               )
             }
@@ -69675,7 +69767,7 @@ var wp;
     const { name, attributes, clientId, isSelected, setAttributes } = props;
     const { fitText } = attributes;
     const { fontSize } = useFitText({ fitText, name, clientId });
-    return isSelected && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
+    return isSelected && /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
       FitTextControl,
       {
         clientId,
@@ -69684,7 +69776,7 @@ var wp;
         name,
         fontSize: attributes.fontSize,
         style: attributes.style,
-        warning: fontSize < MIN_FONT_SIZE_FOR_WARNING && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(FitTextSizeWarning, {})
+        warning: fontSize < MIN_FONT_SIZE_FOR_WARNING && /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(FitTextSizeWarning, {})
       }
     );
   }
@@ -69694,11 +69786,11 @@ var wp;
       const { fitText } = attributes;
       const supportsFitText = (0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
       if (!supportsFitText) {
-        return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(BlockEdit2, { ...props });
+        return /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(BlockEdit2, { ...props });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_jsx_runtime440.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(BlockEdit2, { ...props }),
-        fitText && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime441.jsxs)(import_jsx_runtime441.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(BlockEdit2, { ...props }),
+        fitText && /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
           FitTextEdit,
           {
             clientId,
@@ -69709,7 +69801,7 @@ var wp;
             isSelected
           }
         ),
-        !fitText && isSelected && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
+        !fitText && isSelected && /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
           FitTextControl,
           {
             clientId,
@@ -69737,7 +69829,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/typography.js
-  var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime442 = __toESM(require_jsx_runtime(), 1);
   function omit(object, keys) {
     return Object.fromEntries(
       Object.entries(object).filter(([key]) => !keys.includes(key))
@@ -69807,7 +69899,7 @@ var wp;
       },
       [resetAllFilter]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
       inspector_controls_default,
       {
         group: "typography",
@@ -69818,7 +69910,7 @@ var wp;
   }
   function TypographyPanel2({ clientId, name, setAttributes, settings: settings2 }) {
     const isEnabled = useHasTypographyPanel(settings2);
-    const { style, fontFamily, fontSize, fitText } = (0, import_data181.useSelect)(
+    const { style, fontFamily, fontSize, fitText } = (0, import_data182.useSelect)(
       (select3) => {
         if (!isEnabled) {
           return {};
@@ -69857,7 +69949,7 @@ var wp;
       TYPOGRAPHY_SUPPORT_KEY,
       "__experimentalDefaultControls"
     ]);
-    return /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
       TypographyPanel,
       {
         as: TypographyInspectorControl,
@@ -69872,14 +69964,14 @@ var wp;
 
   // packages/block-editor/build-module/hooks/dimensions.js
   var import_element260 = __toESM(require_element(), 1);
-  var import_data182 = __toESM(require_data(), 1);
+  var import_data183 = __toESM(require_data(), 1);
   var import_blocks111 = __toESM(require_blocks(), 1);
   var import_deprecated36 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.js
   var import_element259 = __toESM(require_element(), 1);
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
-  var import_jsx_runtime442 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
   function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
     const blockElement = useBlockElement(clientId);
     const [style, updateStyle] = (0, import_element259.useReducer)(
@@ -69922,12 +70014,12 @@ var wp;
     if (!isActive && !forceShow) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
       cover_default,
       {
         clientId,
         __unstablePopoverSlot: "block-toolbar",
-        children: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("div", { className: "block-editor__spacing-visualizer", style })
+        children: /* @__PURE__ */ (0, import_jsx_runtime443.jsx)("div", { className: "block-editor__spacing-visualizer", style })
       }
     );
   }
@@ -69935,7 +70027,7 @@ var wp;
     return element.ownerDocument.defaultView.getComputedStyle(element).getPropertyValue(property);
   }
   function MarginVisualizer({ clientId, value, forceShow }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
       SpacingVisualizer,
       {
         clientId,
@@ -69961,7 +70053,7 @@ var wp;
     );
   }
   function PaddingVisualizer({ clientId, value, forceShow }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
       SpacingVisualizer,
       {
         clientId,
@@ -69984,13 +70076,13 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/dimensions.js
-  var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
   var DIMENSIONS_SUPPORT_KEY = "dimensions";
   var SPACING_SUPPORT_KEY2 = "spacing";
   function useVisualizer() {
     const [property, setProperty] = (0, import_element260.useState)(false);
     const { hideBlockInterface: hideBlockInterface2, showBlockInterface: showBlockInterface2 } = unlock(
-      (0, import_data182.useDispatch)(store)
+      (0, import_data183.useDispatch)(store)
     );
     (0, import_element260.useEffect)(() => {
       if (!property) {
@@ -70013,7 +70105,7 @@ var wp;
       },
       [resetAllFilter]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
       inspector_controls_default,
       {
         group: "dimensions",
@@ -70024,7 +70116,7 @@ var wp;
   }
   function DimensionsPanel2({ clientId, name, setAttributes, settings: settings2 }) {
     const isEnabled = useHasDimensionsPanel(settings2);
-    const value = (0, import_data182.useSelect)(
+    const value = (0, import_data183.useSelect)(
       (select3) => {
         if (!isEnabled) {
           return void 0;
@@ -70054,8 +70146,8 @@ var wp;
       ...defaultDimensionsControls,
       ...defaultSpacingControls
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime443.jsxs)(import_jsx_runtime443.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsxs)(import_jsx_runtime444.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
         DimensionsPanel,
         {
           as: DimensionsInspectorControl,
@@ -70067,7 +70159,7 @@ var wp;
           onVisualize: setVisualizedProperty
         }
       ),
-      !!settings2?.spacing?.padding && visualizedProperty === "padding" && /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
+      !!settings2?.spacing?.padding && visualizedProperty === "padding" && /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
         PaddingVisualizer,
         {
           forceShow: visualizedProperty === "padding",
@@ -70075,7 +70167,7 @@ var wp;
           value
         }
       ),
-      !!settings2?.spacing?.margin && visualizedProperty === "margin" && /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
+      !!settings2?.spacing?.margin && visualizedProperty === "margin" && /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
         MarginVisualizer,
         {
           forceShow: visualizedProperty === "margin",
@@ -70129,7 +70221,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/style.js
-  var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime445 = __toESM(require_jsx_runtime(), 1);
   var styleSupportKeys2 = [
     ...TYPOGRAPHY_SUPPORT_KEYS2,
     BORDER_SUPPORT_KEY2,
@@ -70264,12 +70356,12 @@ var wp;
     if (blockEditingMode !== "default") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime444.jsxs)(import_jsx_runtime444.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(ColorEdit, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(BackgroundImagePanel3, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(TypographyPanel2, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(BorderPanel2, { ...passedProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(DimensionsPanel2, { ...passedProps })
+    return /* @__PURE__ */ (0, import_jsx_runtime445.jsxs)(import_jsx_runtime445.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(ColorEdit, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(BackgroundImagePanel3, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(TypographyPanel2, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(BorderPanel2, { ...passedProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(DimensionsPanel2, { ...passedProps })
     ] });
   }
   var style_default2 = {
@@ -70447,7 +70539,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/duotone.js
-  var import_jsx_runtime445 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY16 = [];
   var isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
   k([names_default]);
@@ -70512,8 +70604,8 @@ var wp;
       return null;
     }
     const duotonePresetOrColors = duotoneStyle === "unset" || Array.isArray(duotoneStyle) ? duotoneStyle : getColorsFromDuotonePreset(duotoneStyle, duotonePalette);
-    return /* @__PURE__ */ (0, import_jsx_runtime445.jsxs)(import_jsx_runtime445.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(inspector_controls_default, { group: "filter", children: /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(import_jsx_runtime446.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(inspector_controls_default, { group: "filter", children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
         FiltersPanel,
         {
           value: { filter: { duotone: duotonePresetOrColors } },
@@ -70531,7 +70623,7 @@ var wp;
           settings: settings2
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(block_controls_default, { group: "block", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
         duotone_control_default,
         {
           duotonePalette,
@@ -70687,12 +70779,12 @@ var wp;
   var import_compose100 = __toESM(require_compose(), 1);
   var import_hooks29 = __toESM(require_hooks(), 1);
   var import_blocks115 = __toESM(require_blocks(), 1);
-  var import_data183 = __toESM(require_data(), 1);
-  var import_components259 = __toESM(require_components(), 1);
-  var import_i18n233 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
+  var import_data184 = __toESM(require_data(), 1);
+  var import_components260 = __toESM(require_components(), 1);
+  var import_i18n234 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
   var layoutBlockSupportKey = "layout";
-  var { kebabCase: kebabCase6 } = unlock(import_components259.privateApis);
+  var { kebabCase: kebabCase6 } = unlock(import_components260.privateApis);
   function hasLayoutBlockSupport(blockName) {
     return (0, import_blocks115.hasBlockSupport)(blockName, "layout") || (0, import_blocks115.hasBlockSupport)(blockName, "__experimentalLayout");
   }
@@ -70708,7 +70800,7 @@ var wp;
       const compoundClassName = `wp-block-${fullBlockName}-${baseClassName}`;
       layoutClassnames.push(baseClassName, compoundClassName);
     }
-    const hasGlobalPadding = (0, import_data183.useSelect)(
+    const hasGlobalPadding = (0, import_data184.useSelect)(
       (select3) => {
         if (!usedLayout?.inherit && !usedLayout?.contentSize && usedLayout?.type !== "constrained") {
           return false;
@@ -70757,7 +70849,7 @@ var wp;
   }) {
     const settings2 = useBlockSettings(blockName);
     const { layout: layoutSettings } = settings2;
-    const { themeSupportsLayout } = (0, import_data183.useSelect)((select3) => {
+    const { themeSupportsLayout } = (0, import_data184.useSelect)((select3) => {
       const { getSettings: getSettings8 } = select3(store);
       return {
         themeSupportsLayout: getSettings8().supportsLayout
@@ -70803,33 +70895,33 @@ var wp;
     const hasContentSizeOrLegacySettings = !!inherit || !!contentSize;
     const onChangeType = (newType) => setAttributes({ layout: { type: newType } });
     const onChangeLayout = (newLayout) => setAttributes({ layout: newLayout });
-    return /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(import_jsx_runtime446.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(import_components259.PanelBody, { title: (0, import_i18n233.__)("Layout"), children: [
-        showInheritToggle && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_jsx_runtime446.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-          import_components259.ToggleControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime447.jsxs)(import_jsx_runtime447.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime447.jsxs)(import_components260.PanelBody, { title: (0, import_i18n234.__)("Layout"), children: [
+        showInheritToggle && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(import_jsx_runtime447.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+          import_components260.ToggleControl,
           {
-            label: (0, import_i18n233.__)("Inner blocks use content width"),
+            label: (0, import_i18n234.__)("Inner blocks use content width"),
             checked: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings,
             onChange: () => setAttributes({
               layout: {
                 type: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings ? "default" : "constrained"
               }
             }),
-            help: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings ? (0, import_i18n233.__)(
+            help: layoutType?.name === "constrained" || hasContentSizeOrLegacySettings ? (0, import_i18n234.__)(
               "Nested blocks use content width with options for full and wide widths."
-            ) : (0, import_i18n233.__)(
+            ) : (0, import_i18n234.__)(
               "Nested blocks will fill the width of this container."
             )
           }
         ) }),
-        !inherit && allowSwitching && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+        !inherit && allowSwitching && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
           LayoutTypeSwitcher,
           {
             type: blockLayoutType,
             onChange: onChangeType
           }
         ),
-        layoutType && layoutType.name !== "default" && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+        layoutType && layoutType.name !== "default" && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
           layoutType.inspectorControls,
           {
             layout: usedLayout,
@@ -70839,7 +70931,7 @@ var wp;
             clientId
           }
         ),
-        constrainedType && displayControlsForLegacyLayouts && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+        constrainedType && displayControlsForLegacyLayouts && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
           constrainedType.inspectorControls,
           {
             layout: usedLayout,
@@ -70850,7 +70942,7 @@ var wp;
           }
         )
       ] }) }),
-      !inherit && layoutType && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+      !inherit && layoutType && /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
         layoutType.toolBarControls,
         {
           layout: usedLayout,
@@ -70871,19 +70963,19 @@ var wp;
     }
   };
   function LayoutTypeSwitcher({ type, onChange }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-      import_components259.__experimentalToggleGroupControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+      import_components260.__experimentalToggleGroupControl,
       {
         __next40pxDefaultSize: true,
         isBlock: true,
-        label: (0, import_i18n233.__)("Layout type"),
+        label: (0, import_i18n234.__)("Layout type"),
         hideLabelFromVision: true,
         isAdaptiveWidth: true,
         value: type,
         onChange,
         children: getLayoutTypes().map(({ name, label }) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-            import_components259.__experimentalToggleGroupControlOption,
+          return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+            import_components260.__experimentalToggleGroupControlOption,
             {
               value: name,
               label
@@ -70923,7 +71015,7 @@ var wp;
     const selector3 = `.${selectorPrefix}${id}`;
     const hasBlockGapSupport = blockGapSupport !== null;
     const fullLayoutType = getLayoutType(usedLayout?.type || "default");
-    const css2 = fullLayoutType?.getLayoutStyle?.({
+    const css3 = fullLayoutType?.getLayoutStyle?.({
       blockName: name,
       selector: selector3,
       layout: usedLayout,
@@ -70932,13 +71024,13 @@ var wp;
     });
     const layoutClassNames = clsx_default(
       {
-        [`${selectorPrefix}${id}`]: !!css2
+        [`${selectorPrefix}${id}`]: !!css3
         // Only attach a container class if there is generated CSS to be attached.
       },
       layoutClasses
     );
-    useStyleOverride({ css: css2 });
-    return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+    useStyleOverride({ css: css3 });
+    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
       BlockListBlock2,
       {
         ...props,
@@ -70951,7 +71043,7 @@ var wp;
       const { clientId, name, attributes } = props;
       const blockSupportsLayout = hasLayoutBlockSupport(name);
       const layoutClasses = useLayoutClasses(attributes, name);
-      const extraProps = (0, import_data183.useSelect)(
+      const extraProps = (0, import_data184.useSelect)(
         (select3) => {
           if (!blockSupportsLayout) {
             return;
@@ -70972,7 +71064,7 @@ var wp;
         [blockSupportsLayout, clientId]
       );
       if (!extraProps) {
-        return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
           BlockListBlock2,
           {
             ...props,
@@ -70980,7 +71072,7 @@ var wp;
           }
         );
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
         BlockWithLayoutStyles,
         {
           block: BlockListBlock2,
@@ -71005,12 +71097,12 @@ var wp;
 
   // packages/block-editor/build-module/hooks/layout-child.js
   var import_compose104 = __toESM(require_compose(), 1);
-  var import_data187 = __toESM(require_data(), 1);
+  var import_data188 = __toESM(require_data(), 1);
   var import_element266 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.js
   var import_element263 = __toESM(require_element(), 1);
-  var import_data184 = __toESM(require_data(), 1);
+  var import_data185 = __toESM(require_data(), 1);
   var import_compose101 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/grid/utils.js
@@ -71120,9 +71212,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.js
-  var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime448 = __toESM(require_jsx_runtime(), 1);
   function GridVisualizer({ clientId, contentRef, parentLayout }) {
-    const isDistractionFree = (0, import_data184.useSelect)(
+    const isDistractionFree = (0, import_data185.useSelect)(
       (select3) => select3(store).getSettings().isDistractionFree,
       []
     );
@@ -71131,7 +71223,7 @@ var wp;
       return null;
     }
     const isManualGrid = parentLayout?.isManualPlacement && window.__experimentalEnableGridInteractivity;
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
       GridVisualizerGrid,
       {
         gridClientId: clientId,
@@ -71172,7 +71264,7 @@ var wp;
           document.removeEventListener("dragend", onGlobalDragEnd);
         };
       }, []);
-      return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
         cover_default,
         {
           className: clsx_default("block-editor-grid-visualizer", {
@@ -71180,19 +71272,19 @@ var wp;
           }),
           clientId: gridClientId,
           __unstablePopoverSlot: "__unstable-block-tools-after",
-          children: /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
             "div",
             {
               ref,
               className: "block-editor-grid-visualizer__grid",
               style: gridInfo.style,
-              children: isManualGrid ? /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+              children: isManualGrid ? /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
                 ManualGridVisualizer,
                 {
                   gridClientId,
                   gridInfo
                 }
-              ) : Array.from({ length: gridInfo.numItems }, (_, i2) => /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+              ) : Array.from({ length: gridInfo.numItems }, (_, i2) => /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
                 GridVisualizerCell,
                 {
                   color: gridInfo.currentColor
@@ -71207,7 +71299,7 @@ var wp;
   );
   function ManualGridVisualizer({ gridClientId, gridInfo }) {
     const [highlightedRect, setHighlightedRect] = (0, import_element263.useState)(null);
-    const gridItemStyles = (0, import_data184.useSelect)(
+    const gridItemStyles = (0, import_data185.useSelect)(
       (select3) => {
         const { getBlockOrder: getBlockOrder2, getBlockStyles: getBlockStyles2 } = unlock(
           select3(store)
@@ -71246,12 +71338,12 @@ var wp;
           (rect) => rect.contains(column, row)
         );
         const isHighlighted = highlightedRect?.contains(column, row) ?? false;
-        return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
           GridVisualizerCell,
           {
             color: gridInfo.currentColor,
             className: isHighlighted && "is-highlighted",
-            children: isCellOccupied ? /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+            children: isCellOccupied ? /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
               GridVisualizerDropZone,
               {
                 column,
@@ -71260,7 +71352,7 @@ var wp;
                 gridInfo,
                 setHighlightedRect
               }
-            ) : /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+            ) : /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
               GridVisualizerAppender,
               {
                 column,
@@ -71277,7 +71369,7 @@ var wp;
     );
   }
   function GridVisualizerCell({ color, children, className }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
       "div",
       {
         className: clsx_default(
@@ -71298,12 +71390,12 @@ var wp;
       getBlockRootClientId: getBlockRootClientId2,
       canInsertBlockType: canInsertBlockType2,
       getBlockName: getBlockName2
-    } = (0, import_data184.useSelect)(store);
+    } = (0, import_data185.useSelect)(store);
     const {
       updateBlockAttributes: updateBlockAttributes2,
       moveBlocksToPosition: moveBlocksToPosition2,
       __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2
-    } = (0, import_data184.useDispatch)(store);
+    } = (0, import_data185.useDispatch)(store);
     const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(
       gridClientId,
       gridInfo.numColumns
@@ -71373,7 +71465,7 @@ var wp;
     gridInfo,
     setHighlightedRect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
       "div",
       {
         className: "block-editor-grid-visualizer__drop-zone",
@@ -71398,12 +71490,12 @@ var wp;
       updateBlockAttributes: updateBlockAttributes2,
       moveBlocksToPosition: moveBlocksToPosition2,
       __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2
-    } = (0, import_data184.useDispatch)(store);
+    } = (0, import_data185.useDispatch)(store);
     const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(
       gridClientId,
       gridInfo.numColumns
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
       button_block_appender_default,
       {
         rootClientId: gridClientId,
@@ -71447,7 +71539,7 @@ var wp;
     onDragLeave,
     onDrop
   }) {
-    const { getDraggedBlockClientIds: getDraggedBlockClientIds2 } = (0, import_data184.useSelect)(store);
+    const { getDraggedBlockClientIds: getDraggedBlockClientIds2 } = (0, import_data185.useSelect)(store);
     return (0, import_compose101.__experimentalUseDropZone)({
       onDragEnter() {
         const [srcClientId] = getDraggedBlockClientIds2();
@@ -71468,9 +71560,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.js
-  var import_components261 = __toESM(require_components(), 1);
+  var import_components262 = __toESM(require_components(), 1);
   var import_element264 = __toESM(require_element(), 1);
-  var import_jsx_runtime448 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
   function GridItemResizer({
     clientId,
     bounds,
@@ -71483,7 +71575,7 @@ var wp;
     if (!blockElement || !rootBlockElement) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
       GridItemResizerInner,
       {
         clientId,
@@ -71547,15 +71639,15 @@ var wp;
         alignItems: alignment[resizeDirection]
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
       cover_default,
       {
         className: "block-editor-grid-item-resizer",
         clientId,
         __unstablePopoverSlot: "__unstable-block-tools-after",
         additionalStyles: styles,
-        children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
-          import_components261.ResizableBox,
+        children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+          import_components262.ResizableBox,
           {
             className: "block-editor-grid-item-resizer__box",
             size: {
@@ -71625,11 +71717,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/grid/grid-item-movers.js
-  var import_i18n234 = __toESM(require_i18n(), 1);
-  var import_components262 = __toESM(require_components(), 1);
-  var import_data185 = __toESM(require_data(), 1);
+  var import_i18n235 = __toESM(require_i18n(), 1);
+  var import_components263 = __toESM(require_components(), 1);
+  var import_data186 = __toESM(require_data(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
-  var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
   function GridItemMovers({
     layout,
     parentLayout,
@@ -71637,7 +71729,7 @@ var wp;
     gridClientId,
     blockClientId
   }) {
-    const { moveBlocksToPosition: moveBlocksToPosition2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data185.useDispatch)(store);
+    const { moveBlocksToPosition: moveBlocksToPosition2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data186.useDispatch)(store);
     const columnStart = layout?.columnStart ?? 1;
     const rowStart = layout?.rowStart ?? 1;
     const columnSpan = layout?.columnSpan ?? 1;
@@ -71650,13 +71742,13 @@ var wp;
       gridClientId,
       columnCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(block_controls_default, { group: "parent", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(import_components262.ToolbarGroup, { className: "block-editor-grid-item-mover__move-button-container", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime449.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-left", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(block_controls_default, { group: "parent", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)(import_components263.ToolbarGroup, { className: "block-editor-grid-item-mover__move-button-container", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-left", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
         GridItemMover,
         {
-          icon: (0, import_i18n234.isRTL)() ? chevron_right_default : chevron_left_default,
-          label: (0, import_i18n234.__)("Move left"),
-          description: (0, import_i18n234.__)("Move left"),
+          icon: (0, import_i18n235.isRTL)() ? chevron_right_default : chevron_left_default,
+          label: (0, import_i18n235.__)("Move left"),
+          description: (0, import_i18n235.__)("Move left"),
           isDisabled: columnStart <= 1,
           onClick: () => {
             onChange({
@@ -71675,14 +71767,14 @@ var wp;
           }
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)("div", { className: "block-editor-grid-item-mover__move-vertical-button-container", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)("div", { className: "block-editor-grid-item-mover__move-vertical-button-container", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
           GridItemMover,
           {
             className: "is-up-button",
             icon: chevron_up_default,
-            label: (0, import_i18n234.__)("Move up"),
-            description: (0, import_i18n234.__)("Move up"),
+            label: (0, import_i18n235.__)("Move up"),
+            description: (0, import_i18n235.__)("Move up"),
             isDisabled: rowStart <= 1,
             onClick: () => {
               onChange({
@@ -71701,13 +71793,13 @@ var wp;
             }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
           GridItemMover,
           {
             className: "is-down-button",
             icon: chevron_down_default,
-            label: (0, import_i18n234.__)("Move down"),
-            description: (0, import_i18n234.__)("Move down"),
+            label: (0, import_i18n235.__)("Move down"),
+            description: (0, import_i18n235.__)("Move down"),
             isDisabled: rowCount && rowEnd >= rowCount,
             onClick: () => {
               onChange({
@@ -71727,12 +71819,12 @@ var wp;
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime449.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-right", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)("div", { className: "block-editor-grid-item-mover__move-horizontal-button-container is-right", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
         GridItemMover,
         {
-          icon: (0, import_i18n234.isRTL)() ? chevron_left_default : chevron_right_default,
-          label: (0, import_i18n234.__)("Move right"),
-          description: (0, import_i18n234.__)("Move right"),
+          icon: (0, import_i18n235.isRTL)() ? chevron_left_default : chevron_right_default,
+          label: (0, import_i18n235.__)("Move right"),
+          description: (0, import_i18n235.__)("Move right"),
           isDisabled: columnCount && columnEnd >= columnCount,
           onClick: () => {
             onChange({
@@ -71763,9 +71855,9 @@ var wp;
   }) {
     const instanceId = (0, import_compose102.useInstanceId)(GridItemMover);
     const descriptionId = `block-editor-grid-item-mover-button__description-${instanceId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(import_jsx_runtime449.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
-        import_components262.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)(import_jsx_runtime450.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+        import_components263.ToolbarButton,
         {
           className: clsx_default(
             "block-editor-grid-item-mover-button",
@@ -71779,16 +71871,16 @@ var wp;
           accessibleWhenDisabled: true
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_components262.VisuallyHidden, { id: descriptionId, children: description })
+      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(import_components263.VisuallyHidden, { id: descriptionId, children: description })
     ] });
   }
 
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.js
-  var import_data186 = __toESM(require_data(), 1);
+  var import_data187 = __toESM(require_data(), 1);
   var import_element265 = __toESM(require_element(), 1);
   var import_compose103 = __toESM(require_compose(), 1);
   function useGridLayoutSync({ clientId: gridClientId }) {
-    const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data186.useSelect)(
+    const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data187.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes22, getBlockOrder: getBlockOrder2 } = select3(store);
         const selectedBlock = select3(store).getSelectedBlock();
@@ -71800,8 +71892,8 @@ var wp;
       },
       [gridClientId]
     );
-    const { getBlockAttributes: getBlockAttributes3, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data186.useSelect)(store);
-    const { updateBlockAttributes: updateBlockAttributes2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data186.useDispatch)(store);
+    const { getBlockAttributes: getBlockAttributes3, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data187.useSelect)(store);
+    const { updateBlockAttributes: updateBlockAttributes2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data187.useDispatch)(store);
     const selectedBlockRect = (0, import_element265.useMemo)(
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
@@ -71978,10 +72070,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/layout-child.js
-  var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime451 = __toESM(require_jsx_runtime(), 1);
   var LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
   function useBlockPropsChildLayoutStyles({ style }) {
-    const shouldRenderChildLayoutStyles = (0, import_data187.useSelect)((select3) => {
+    const shouldRenderChildLayoutStyles = (0, import_data188.useSelect)((select3) => {
       return !select3(store).getSettings().disableLayoutStyles;
     });
     const layout = style?.layout ?? {};
@@ -72011,40 +72103,40 @@ var wp;
         throw new Error("rowSpan must be a number");
       }
     }
-    let css2 = "";
+    let css3 = "";
     if (shouldRenderChildLayoutStyles) {
       if (selfStretch === "fixed" && flexSize) {
-        css2 = `${selector3} {
+        css3 = `${selector3} {
 				flex-basis: ${flexSize};
 				box-sizing: border-box;
 			}`;
       } else if (selfStretch === "fill") {
-        css2 = `${selector3} {
+        css3 = `${selector3} {
 				flex-grow: 1;
 			}`;
       } else if (columnStart && columnSpan) {
-        css2 = `${selector3} {
+        css3 = `${selector3} {
 				grid-column: ${columnStart} / span ${columnSpan};
 			}`;
       } else if (columnStart) {
-        css2 = `${selector3} {
+        css3 = `${selector3} {
 				grid-column: ${columnStart};
 			}`;
       } else if (columnSpan) {
-        css2 = `${selector3} {
+        css3 = `${selector3} {
 				grid-column: span ${columnSpan};
 			}`;
       }
       if (rowStart && rowSpan) {
-        css2 += `${selector3} {
+        css3 += `${selector3} {
 				grid-row: ${rowStart} / span ${rowSpan};
 			}`;
       } else if (rowStart) {
-        css2 += `${selector3} {
+        css3 += `${selector3} {
 				grid-row: ${rowStart};
 			}`;
       } else if (rowSpan) {
-        css2 += `${selector3} {
+        css3 += `${selector3} {
 				grid-row: span ${rowSpan};
 			}`;
       }
@@ -72072,7 +72164,7 @@ var wp;
         const containerQueryValue = numColsToBreakAt * parentColumnValue + (numColsToBreakAt - 1) * defaultGapValue;
         const minimumContainerQueryValue = parentColumnValue * 2 + defaultGapValue - 1;
         const gridColumnValue = columnSpan && columnSpan > 1 ? "1/-1" : "auto";
-        css2 += `@container (max-width: ${Math.max(
+        css3 += `@container (max-width: ${Math.max(
           containerQueryValue,
           minimumContainerQueryValue
         )}${parentColumnUnit}) {
@@ -72083,8 +72175,8 @@ var wp;
 			}`;
       }
     }
-    useStyleOverride({ css: css2 });
-    if (!css2) {
+    useStyleOverride({ css: css3 });
+    if (!css3) {
       return;
     }
     return { className: `wp-container-content-${id}` };
@@ -72099,7 +72191,7 @@ var wp;
     if (parentLayoutType !== "grid") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
       GridTools,
       {
         clientId,
@@ -72119,7 +72211,7 @@ var wp;
     isManualPlacement,
     parentLayout
   }) {
-    const { rootClientId, isVisible } = (0, import_data187.useSelect)(
+    const { rootClientId, isVisible } = (0, import_data188.useSelect)(
       (select3) => {
         const {
           getBlockRootClientId: getBlockRootClientId2,
@@ -72155,8 +72247,8 @@ var wp;
         }
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)(import_jsx_runtime450.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime451.jsxs)(import_jsx_runtime451.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
         GridVisualizer,
         {
           clientId: rootClientId,
@@ -72164,7 +72256,7 @@ var wp;
           parentLayout
         }
       ),
-      allowSizingOnChildren && /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+      allowSizingOnChildren && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
         GridItemResizer,
         {
           clientId,
@@ -72173,7 +72265,7 @@ var wp;
           parentLayout
         }
       ),
-      isManualPlacement && window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+      isManualPlacement && window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
         GridItemMovers,
         {
           layout: style?.layout,
@@ -72195,13 +72287,13 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/content-lock-ui.js
-  var import_components263 = __toESM(require_components(), 1);
-  var import_data188 = __toESM(require_data(), 1);
-  var import_i18n235 = __toESM(require_i18n(), 1);
+  var import_components264 = __toESM(require_components(), 1);
+  var import_data189 = __toESM(require_data(), 1);
+  var import_i18n236 = __toESM(require_i18n(), 1);
   var import_element267 = __toESM(require_element(), 1);
-  var import_jsx_runtime451 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime452 = __toESM(require_jsx_runtime(), 1);
   function ContentLockControlsPure({ clientId }) {
-    const { templateLock, isLockedByParent, isEditingContentOnlySection } = (0, import_data188.useSelect)(
+    const { templateLock, isLockedByParent, isEditingContentOnlySection } = (0, import_data189.useSelect)(
       (select3) => {
         const {
           getContentLockingParent: getContentLockingParent2,
@@ -72217,7 +72309,7 @@ var wp;
       [clientId]
     );
     const { stopEditingContentOnlySection: stopEditingContentOnlySection2 } = unlock(
-      (0, import_data188.useDispatch)(store)
+      (0, import_data189.useDispatch)(store)
     );
     const isContentLocked = !isLockedByParent && templateLock === "contentOnly";
     const stopEditingAsBlockCallback = (0, import_element267.useCallback)(() => {
@@ -72226,7 +72318,7 @@ var wp;
     if (window?.__experimentalContentOnlyPatternInsertion || !isContentLocked && !isEditingContentOnlySection) {
       return null;
     }
-    return isEditingContentOnlySection && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(import_components263.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n235.__)("Done") }) });
+    return isEditingContentOnlySection && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(block_controls_default, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(import_components264.ToolbarButton, { onClick: stopEditingAsBlockCallback, children: (0, import_i18n236.__)("Done") }) });
   }
   var content_lock_ui_default = {
     edit: ContentLockControlsPure,
@@ -72301,19 +72393,19 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/block-hooks.js
-  var import_i18n236 = __toESM(require_i18n(), 1);
+  var import_i18n237 = __toESM(require_i18n(), 1);
   var import_element268 = __toESM(require_element(), 1);
-  var import_components265 = __toESM(require_components(), 1);
+  var import_components266 = __toESM(require_components(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
-  var import_data189 = __toESM(require_data(), 1);
-  var import_jsx_runtime452 = __toESM(require_jsx_runtime(), 1);
+  var import_data190 = __toESM(require_data(), 1);
+  var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT4 = {};
   function BlockHooksControlPure({
     name,
     clientId,
     metadata: { ignoredHookedBlocks = [] } = {}
   }) {
-    const blockTypes = (0, import_data189.useSelect)(
+    const blockTypes = (0, import_data190.useSelect)(
       (select3) => select3(import_blocks117.store).getBlockTypes(),
       []
     );
@@ -72323,7 +72415,7 @@ var wp;
       ),
       [blockTypes, name, ignoredHookedBlocks]
     );
-    const hookedBlockClientIds = (0, import_data189.useSelect)(
+    const hookedBlockClientIds = (0, import_data190.useSelect)(
       (select3) => {
         const { getBlocks: getBlocks2, getBlockRootClientId: getBlockRootClientId22, getGlobalBlockCount: getGlobalBlockCount2 } = select3(store);
         const rootClientId = getBlockRootClientId22(clientId);
@@ -72370,8 +72462,8 @@ var wp;
       },
       [hookedBlocksForCurrentBlock, name, clientId]
     );
-    const { getBlockIndex: getBlockIndex2, getBlockCount: getBlockCount2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data189.useSelect)(store);
-    const { insertBlock: insertBlock2, removeBlock: removeBlock2 } = (0, import_data189.useDispatch)(store);
+    const { getBlockIndex: getBlockIndex2, getBlockCount: getBlockCount2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data190.useSelect)(store);
+    const { insertBlock: insertBlock2, removeBlock: removeBlock2 } = (0, import_data190.useDispatch)(store);
     if (!hookedBlocksForCurrentBlock.length) {
       return null;
     }
@@ -72423,23 +72515,23 @@ var wp;
           break;
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime452.jsxs)(
-      import_components265.PanelBody,
+    return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(inspector_controls_default, { children: /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(
+      import_components266.PanelBody,
       {
         className: "block-editor-hooks__block-hooks",
-        title: (0, import_i18n236.__)("Plugins"),
+        title: (0, import_i18n237.__)("Plugins"),
         initialOpen: true,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime452.jsx)("p", { className: "block-editor-hooks__block-hooks-helptext", children: (0, import_i18n236.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("p", { className: "block-editor-hooks__block-hooks-helptext", children: (0, import_i18n237.__)(
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime452.jsxs)(import_element268.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime452.jsx)("h3", { children: vendor }),
+            return /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(import_element268.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("h3", { children: vendor }),
               groupedHookedBlocks[vendor].map((block) => {
                 const checked = block.name in hookedBlockClientIds;
-                return /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
-                  import_components265.ToggleControl,
+                return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(
+                  import_components266.ToggleControl,
                   {
                     checked,
                     label: block.title,
@@ -72476,13 +72568,13 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/block-bindings.js
-  var import_i18n237 = __toESM(require_i18n(), 1);
+  var import_i18n238 = __toESM(require_i18n(), 1);
   var import_blocks118 = __toESM(require_blocks(), 1);
-  var import_components267 = __toESM(require_components(), 1);
-  var import_data190 = __toESM(require_data(), 1);
+  var import_components268 = __toESM(require_components(), 1);
+  var import_data191 = __toESM(require_data(), 1);
   var import_element269 = __toESM(require_element(), 1);
   var import_compose105 = __toESM(require_compose(), 1);
-  var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
   var useToolsPanelDropdownMenuProps2 = () => {
     const isMobile = (0, import_compose105.useViewportMatch)("medium", "<");
     return !isMobile ? {
@@ -72497,7 +72589,7 @@ var wp;
     const blockContext = (0, import_element269.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
-    const { bindableAttributes, hasCompatibleFields } = (0, import_data190.useSelect)(
+    const { bindableAttributes, hasCompatibleFields } = (0, import_data191.useSelect)(
       (select3) => {
         const { __experimentalBlockBindingsSupportedAttributes } = select3(store).getSettings();
         const {
@@ -72522,17 +72614,17 @@ var wp;
     if (bindings === void 0 && !hasCompatibleFields) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(inspector_controls_default, { group: "bindings", children: /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(
-      import_components267.__experimentalToolsPanel,
+    return /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(inspector_controls_default, { group: "bindings", children: /* @__PURE__ */ (0, import_jsx_runtime454.jsxs)(
+      import_components268.__experimentalToolsPanel,
       {
-        label: (0, import_i18n237.__)("Attributes"),
+        label: (0, import_i18n238.__)("Attributes"),
         resetAll: () => {
           removeAllBlockBindings();
         },
         dropdownMenuProps,
         className: "block-editor-bindings__panel",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_components267.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_components268.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: bindableAttributes.map((attribute) => /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
             BlockBindingsAttributeControl,
             {
               attribute,
@@ -72541,7 +72633,7 @@ var wp;
             },
             attribute
           )) }),
-          /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_components267.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("p", { children: (0, import_i18n237.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_components268.__experimentalText, { as: "div", variant: "muted", children: /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("p", { children: (0, import_i18n238.__)(
             "Attributes connected to custom fields or other dynamic data."
           ) }) })
         ]
@@ -72561,16 +72653,16 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/list-view.js
-  var import_i18n245 = __toESM(require_i18n(), 1);
-  var import_components276 = __toESM(require_components(), 1);
-  var import_data193 = __toESM(require_data(), 1);
+  var import_i18n246 = __toESM(require_i18n(), 1);
+  var import_components277 = __toESM(require_components(), 1);
+  var import_data194 = __toESM(require_data(), 1);
   var import_blocks120 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/rich-text/get-rich-text-values.js
   var import_element270 = __toESM(require_element(), 1);
   var import_blocks119 = __toESM(require_blocks(), 1);
   var import_rich_text21 = __toESM(require_rich_text(), 1);
-  var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
   function addValuesForElement(element, values, innerBlocks) {
     if (null === element || void 0 === element || false === element) {
       return;
@@ -72626,7 +72718,7 @@ var wp;
         // Instead of letting save elements use `useInnerBlocksProps.save`,
         // force them to use InnerBlocks.Content instead so we can intercept
         // a single component.
-        /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(inner_blocks_default.Content, {})
+        /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(inner_blocks_default.Content, {})
       );
       addValuesForElement(saveElement, values, innerBlocks);
     }
@@ -72642,39 +72734,39 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/resizable-box-popover/index.js
-  var import_components268 = __toESM(require_components(), 1);
-  var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
+  var import_components269 = __toESM(require_components(), 1);
+  var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
   function ResizableBoxPopover({
     clientId,
     resizableBoxProps,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
       cover_default,
       {
         clientId,
         __unstablePopoverSlot: "block-toolbar",
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_components268.ResizableBox, { ...resizableBoxProps })
+        children: /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_components269.ResizableBox, { ...resizableBoxProps })
       }
     );
   }
 
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.js
   var import_element271 = __toESM(require_element(), 1);
-  var import_data191 = __toESM(require_data(), 1);
-  var import_components269 = __toESM(require_components(), 1);
-  var import_i18n238 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
+  var import_data192 = __toESM(require_data(), 1);
+  var import_components270 = __toESM(require_components(), 1);
+  var import_i18n239 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
-    const { clientIds, selectPrevious, message: message2 } = (0, import_data191.useSelect)(
+    const { clientIds, selectPrevious, message: message2 } = (0, import_data192.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
     );
     const {
       clearBlockRemovalPrompt: clearBlockRemovalPrompt2,
       setBlockRemovalRules: setBlockRemovalRules2,
       privateRemoveBlocks: privateRemoveBlocks2
-    } = unlock((0, import_data191.useDispatch)(store));
+    } = unlock((0, import_data192.useDispatch)(store));
     (0, import_element271.useEffect)(() => {
       setBlockRemovalRules2(rules);
       return () => {
@@ -72693,31 +72785,31 @@ var wp;
       );
       clearBlockRemovalPrompt2();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(
-      import_components269.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime457.jsxs)(
+      import_components270.Modal,
       {
-        title: (0, import_i18n238.__)("Be careful!"),
+        title: (0, import_i18n239.__)("Be careful!"),
         onRequestClose: clearBlockRemovalPrompt2,
         size: "medium",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime456.jsx)("p", { children: message2 }),
-          /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(import_components269.__experimentalHStack, { justify: "right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
-              import_components269.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime457.jsx)("p", { children: message2 }),
+          /* @__PURE__ */ (0, import_jsx_runtime457.jsxs)(import_components270.__experimentalHStack, { justify: "right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
+              import_components270.Button,
               {
                 variant: "tertiary",
                 onClick: clearBlockRemovalPrompt2,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n238.__)("Cancel")
+                children: (0, import_i18n239.__)("Cancel")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
-              import_components269.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
+              import_components270.Button,
               {
                 variant: "primary",
                 onClick: onConfirmRemoval,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n238.__)("Delete")
+                children: (0, import_i18n239.__)("Delete")
               }
             )
           ] })
@@ -72730,37 +72822,37 @@ var wp;
   var import_element273 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.js
-  var import_components270 = __toESM(require_components(), 1);
+  var import_components271 = __toESM(require_components(), 1);
   var import_element272 = __toESM(require_element(), 1);
-  var import_i18n239 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n240 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime458 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCALE_OPTIONS = [
     {
       value: "fill",
-      label: (0, import_i18n239._x)("Fill", "Scale option for dimensions control"),
-      help: (0, import_i18n239.__)("Fill the space by stretching the content.")
+      label: (0, import_i18n240._x)("Fill", "Scale option for dimensions control"),
+      help: (0, import_i18n240.__)("Fill the space by stretching the content.")
     },
     {
       value: "contain",
-      label: (0, import_i18n239._x)("Contain", "Scale option for dimensions control"),
-      help: (0, import_i18n239.__)("Fit the content to the space without clipping.")
+      label: (0, import_i18n240._x)("Contain", "Scale option for dimensions control"),
+      help: (0, import_i18n240.__)("Fit the content to the space without clipping.")
     },
     {
       value: "cover",
-      label: (0, import_i18n239._x)("Cover", "Scale option for dimensions control"),
-      help: (0, import_i18n239.__)("Fill the space by clipping what doesn't fit.")
+      label: (0, import_i18n240._x)("Cover", "Scale option for dimensions control"),
+      help: (0, import_i18n240.__)("Fill the space by clipping what doesn't fit.")
     },
     {
       value: "none",
-      label: (0, import_i18n239._x)("None", "Scale option for dimensions control"),
-      help: (0, import_i18n239.__)(
+      label: (0, import_i18n240._x)("None", "Scale option for dimensions control"),
+      help: (0, import_i18n240.__)(
         "Do not adjust the sizing of the content. Content that is too large will be clipped, and content that is too small will have additional padding."
       )
     },
     {
       value: "scale-down",
-      label: (0, import_i18n239._x)("Scale down", "Scale option for dimensions control"),
-      help: (0, import_i18n239.__)(
+      label: (0, import_i18n240._x)("Scale down", "Scale option for dimensions control"),
+      help: (0, import_i18n240.__)(
         "Scale down the content to fit the space if it is too big. Content that is too small will have additional padding."
       )
     }
@@ -72780,25 +72872,25 @@ var wp;
         return acc;
       }, {});
     }, [options]);
-    return /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
-      import_components270.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
+      import_components271.__experimentalToolsPanelItem,
       {
-        label: (0, import_i18n239.__)("Scale"),
+        label: (0, import_i18n240.__)("Scale"),
         isShownByDefault,
         hasValue: () => displayValue !== defaultValue,
         onDeselect: () => onChange(defaultValue),
         panelId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
-          import_components270.__experimentalToggleGroupControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
+          import_components271.__experimentalToggleGroupControl,
           {
-            label: (0, import_i18n239.__)("Scale"),
+            label: (0, import_i18n240.__)("Scale"),
             isBlock: true,
             help: scaleHelp[displayValue],
             value: displayValue,
             onChange,
             size: "__unstable-large",
-            children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
-              import_components270.__experimentalToggleGroupControlOption,
+            children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
+              import_components271.__experimentalToggleGroupControlOption,
               {
                 ...option
               },
@@ -72811,9 +72903,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/width-height-tool.js
-  var import_components271 = __toESM(require_components(), 1);
-  var import_i18n240 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime458 = __toESM(require_jsx_runtime(), 1);
+  var import_components272 = __toESM(require_components(), 1);
+  var import_i18n241 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime459 = __toESM(require_jsx_runtime(), 1);
   function WidthHeightTool({
     panelId,
     value = {},
@@ -72833,21 +72925,21 @@ var wp;
       }
       onChange(nextValue);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime458.jsxs)(import_jsx_runtime458.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
-        import_components271.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime459.jsxs)(import_jsx_runtime459.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+        import_components272.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
-          label: (0, import_i18n240.__)("Width"),
+          label: (0, import_i18n241.__)("Width"),
           isShownByDefault,
           hasValue: () => width !== "",
           onDeselect: onDimensionChange("width"),
           panelId,
-          children: /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
-            import_components271.__experimentalUnitControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+            import_components272.__experimentalUnitControl,
             {
-              label: (0, import_i18n240.__)("Width"),
-              placeholder: (0, import_i18n240.__)("Auto"),
+              label: (0, import_i18n241.__)("Width"),
+              placeholder: (0, import_i18n241.__)("Auto"),
               labelPosition: "top",
               units: units2,
               min: 0,
@@ -72858,20 +72950,20 @@ var wp;
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
-        import_components271.__experimentalToolsPanelItem,
+      /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+        import_components272.__experimentalToolsPanelItem,
         {
           style: { gridColumn: "span 1" },
-          label: (0, import_i18n240.__)("Height"),
+          label: (0, import_i18n241.__)("Height"),
           isShownByDefault,
           hasValue: () => height !== "",
           onDeselect: onDimensionChange("height"),
           panelId,
-          children: /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
-            import_components271.__experimentalUnitControl,
+          children: /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+            import_components272.__experimentalUnitControl,
             {
-              label: (0, import_i18n240.__)("Height"),
-              placeholder: (0, import_i18n240.__)("Auto"),
+              label: (0, import_i18n241.__)("Height"),
+              placeholder: (0, import_i18n241.__)("Auto"),
               labelPosition: "top",
               units: units2,
               min: 0,
@@ -72886,7 +72978,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/index.js
-  var import_jsx_runtime459 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime460 = __toESM(require_jsx_runtime(), 1);
   function DimensionsTool({
     panelId,
     value = {},
@@ -72912,8 +73004,8 @@ var wp;
     const [lastAspectRatio, setLastAspectRatio] = (0, import_element273.useState)(aspectRatio);
     const aspectRatioValue = width && height ? "custom" : lastAspectRatio;
     const showScaleControl = aspectRatio || width && height;
-    return /* @__PURE__ */ (0, import_jsx_runtime459.jsxs)(import_jsx_runtime459.Fragment, { children: [
-      tools.includes("aspectRatio") && /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime460.jsxs)(import_jsx_runtime460.Fragment, { children: [
+      tools.includes("aspectRatio") && /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
         AspectRatioTool,
         {
           panelId,
@@ -72944,7 +73036,7 @@ var wp;
           }
         }
       ),
-      tools.includes("widthHeight") && /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+      tools.includes("widthHeight") && /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
         WidthHeightTool,
         {
           panelId,
@@ -72982,7 +73074,7 @@ var wp;
           }
         }
       ),
-      tools.includes("scale") && showScaleControl && /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+      tools.includes("scale") && showScaleControl && /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
         ScaleTool,
         {
           panelId,
@@ -73007,24 +73099,24 @@ var wp;
   var dimensions_tool_default = DimensionsTool;
 
   // packages/block-editor/build-module/components/resolution-tool/index.js
-  var import_components272 = __toESM(require_components(), 1);
-  var import_i18n241 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime460 = __toESM(require_jsx_runtime(), 1);
+  var import_components273 = __toESM(require_components(), 1);
+  var import_i18n242 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SIZE_OPTIONS = [
     {
-      label: (0, import_i18n241._x)("Thumbnail", "Image size option for resolution control"),
+      label: (0, import_i18n242._x)("Thumbnail", "Image size option for resolution control"),
       value: "thumbnail"
     },
     {
-      label: (0, import_i18n241._x)("Medium", "Image size option for resolution control"),
+      label: (0, import_i18n242._x)("Medium", "Image size option for resolution control"),
       value: "medium"
     },
     {
-      label: (0, import_i18n241._x)("Large", "Image size option for resolution control"),
+      label: (0, import_i18n242._x)("Large", "Image size option for resolution control"),
       value: "large"
     },
     {
-      label: (0, import_i18n241._x)("Full Size", "Image size option for resolution control"),
+      label: (0, import_i18n242._x)("Full Size", "Image size option for resolution control"),
       value: "full"
     }
   ];
@@ -73038,23 +73130,23 @@ var wp;
     resetAllFilter
   }) {
     const displayValue = value ?? defaultValue;
-    return /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
-      import_components272.__experimentalToolsPanelItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+      import_components273.__experimentalToolsPanelItem,
       {
         hasValue: () => displayValue !== defaultValue,
-        label: (0, import_i18n241.__)("Resolution"),
+        label: (0, import_i18n242.__)("Resolution"),
         onDeselect: () => onChange(defaultValue),
         isShownByDefault,
         panelId,
         resetAllFilter,
-        children: /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
-          import_components272.SelectControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+          import_components273.SelectControl,
           {
-            label: (0, import_i18n241.__)("Resolution"),
+            label: (0, import_i18n242.__)("Resolution"),
             value: displayValue,
             options,
             onChange,
-            help: (0, import_i18n241.__)("Select the size of the source image."),
+            help: (0, import_i18n242.__)("Select the size of the source image."),
             size: "__unstable-large"
           }
         )
@@ -73063,53 +73155,53 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/html-element-control/index.js
-  var import_i18n243 = __toESM(require_i18n(), 1);
-  var import_components273 = __toESM(require_components(), 1);
-  var import_data192 = __toESM(require_data(), 1);
+  var import_i18n244 = __toESM(require_i18n(), 1);
+  var import_components274 = __toESM(require_components(), 1);
+  var import_data193 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/html-element-control/messages.js
-  var import_i18n242 = __toESM(require_i18n(), 1);
+  var import_i18n243 = __toESM(require_i18n(), 1);
   var htmlElementMessages = {
-    a: (0, import_i18n242.__)(
+    a: (0, import_i18n243.__)(
       "The <a> element should be used for links that navigate to a different page or to a different section within the same page."
     ),
-    article: (0, import_i18n242.__)(
+    article: (0, import_i18n243.__)(
       "The <article> element should represent a self-contained, syndicatable portion of the document."
     ),
-    aside: (0, import_i18n242.__)(
+    aside: (0, import_i18n243.__)(
       "The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."
     ),
-    button: (0, import_i18n242.__)(
+    button: (0, import_i18n243.__)(
       "The <button> element should be used for interactive controls that perform an action on the current page, such as opening a modal or toggling content visibility."
     ),
-    div: (0, import_i18n242.__)(
+    div: (0, import_i18n243.__)(
       "The <div> element should only be used if the block is a design element with no semantic meaning."
     ),
-    footer: (0, import_i18n242.__)(
+    footer: (0, import_i18n243.__)(
       "The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.)."
     ),
-    header: (0, import_i18n242.__)(
+    header: (0, import_i18n243.__)(
       "The <header> element should represent introductory content, typically a group of introductory or navigational aids."
     ),
-    main: (0, import_i18n242.__)(
+    main: (0, import_i18n243.__)(
       "The <main> element should be used for the primary content of your document only."
     ),
-    nav: (0, import_i18n242.__)(
+    nav: (0, import_i18n243.__)(
       "The <nav> element should be used to identify groups of links that are intended to be used for website or page content navigation."
     ),
-    section: (0, import_i18n242.__)(
+    section: (0, import_i18n243.__)(
       "The <section> element should represent a standalone portion of the document that can't be better represented by another element."
     )
   };
 
   // packages/block-editor/build-module/components/html-element-control/index.js
-  var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime462 = __toESM(require_jsx_runtime(), 1);
   function HTMLElementControl({
     tagName,
     onChange,
     clientId,
     options = [
-      { label: (0, import_i18n243.__)("Default (<div>)"), value: "div" },
+      { label: (0, import_i18n244.__)("Default (<div>)"), value: "div" },
       { label: "<header>", value: "header" },
       { label: "<main>", value: "main" },
       { label: "<section>", value: "section" },
@@ -73119,7 +73211,7 @@ var wp;
     ]
   }) {
     const checkForMainTag = !!clientId && options.some((option) => option.value === "main");
-    const hasMainElementElsewhere = (0, import_data192.useSelect)(
+    const hasMainElementElsewhere = (0, import_data193.useSelect)(
       (select3) => {
         if (!checkForMainTag) {
           return false;
@@ -73139,46 +73231,46 @@ var wp;
         return {
           ...option,
           disabled: true,
-          label: (0, import_i18n243.sprintf)(
+          label: (0, import_i18n244.sprintf)(
             /* translators: %s: HTML element name */
-            (0, import_i18n243.__)("%s (Already in use)"),
+            (0, import_i18n244.__)("%s (Already in use)"),
             option.label
           )
         };
       }
       return option;
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime461.jsxs)(import_components273.__experimentalVStack, { spacing: 2, className: "block-editor-html-element-control", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
-        import_components273.SelectControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime462.jsxs)(import_components274.__experimentalVStack, { spacing: 2, className: "block-editor-html-element-control", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
+        import_components274.SelectControl,
         {
           __next40pxDefaultSize: true,
-          label: (0, import_i18n243.__)("HTML element"),
+          label: (0, import_i18n244.__)("HTML element"),
           options: modifiedOptions,
           value: tagName,
           onChange,
           help: htmlElementMessages[tagName]
         }
       ),
-      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(import_components273.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n243.__)(
+      tagName === "main" && hasMainElementElsewhere && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(import_components274.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n244.__)(
         "Multiple <main> elements detected. The duplicate may be in your content or template. This is not valid HTML and may cause accessibility issues. Please change this HTML element."
       ) })
     ] });
   }
 
   // packages/block-editor/build-module/components/link-picker/link-picker.js
-  var import_components275 = __toESM(require_components(), 1);
+  var import_components276 = __toESM(require_components(), 1);
   var import_element274 = __toESM(require_element(), 1);
-  var import_i18n244 = __toESM(require_i18n(), 1);
+  var import_i18n245 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/link-picker/link-preview.js
-  var import_components274 = __toESM(require_components(), 1);
-  var import_jsx_runtime462 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: Badge3 } = unlock(import_components274.privateApis);
+  var import_components275 = __toESM(require_components(), 1);
+  var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
+  var { Badge: Badge4 } = unlock(import_components275.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime462.jsxs)(import_components274.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(import_components274.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime462.jsxs)(import_components274.__experimentalHStack, { alignment: "top", children: [
-        image && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(import_components274.FlexItem, { className: "link-preview-button__image-container", children: /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_components275.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(import_components275.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_components275.__experimentalHStack, { alignment: "top", children: [
+        image && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(import_components275.FlexItem, { className: "link-preview-button__image-container", children: /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
           "img",
           {
             className: "link-preview-button__image",
@@ -73186,35 +73278,35 @@ var wp;
             alt: ""
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime462.jsxs)(
-          import_components274.__experimentalVStack,
+        /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(
+          import_components275.__experimentalVStack,
           {
             className: "link-preview-button__details",
             alignment: "topLeft",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
-                import_components274.__experimentalTruncate,
+              /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+                import_components275.__experimentalTruncate,
                 {
                   numberOfLines: 1,
                   className: "link-preview-button__title",
                   children: title
                 }
               ),
-              url && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
-                import_components274.__experimentalTruncate,
+              url && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+                import_components275.__experimentalTruncate,
                 {
                   numberOfLines: 1,
                   className: "link-preview-button__hint",
                   children: url
                 }
               ),
-              badges && badges.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
-                import_components274.__experimentalHStack,
+              badges && badges.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+                import_components275.__experimentalHStack,
                 {
                   className: "link-preview-button__badges",
                   alignment: "left",
-                  children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
-                    Badge3,
+                  children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+                    Badge4,
                     {
                       intent: badge.intent,
                       children: badge.label
@@ -73227,12 +73319,12 @@ var wp;
           }
         )
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(icon_default, { icon: chevron_down_default, className: "link-preview-button__icon" })
+      /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(icon_default, { icon: chevron_down_default, className: "link-preview-button__icon" })
     ] });
   }
 
   // packages/block-editor/build-module/components/link-picker/link-picker.js
-  var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime464 = __toESM(require_jsx_runtime(), 1);
   function LinkPicker({
     preview,
     onSelect,
@@ -73245,7 +73337,7 @@ var wp;
     const dialogTitleId = `link-picker-title-${instanceId}`;
     const dialogDescriptionId = `link-picker-description-${instanceId}`;
     const anchorRef = (0, import_element274.useRef)(null);
-    const { baseControlProps, controlProps } = (0, import_components275.useBaseControlProps)({
+    const { baseControlProps, controlProps } = (0, import_components276.useBaseControlProps)({
       help
     });
     const handleChange = (newValue) => {
@@ -73261,10 +73353,10 @@ var wp;
         onSelect(suggestion);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_components275.BaseControl, { ...baseControlProps, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(import_components275.BaseControl.VisualLabel, { children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(
-        import_components275.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(import_components276.BaseControl, { ...baseControlProps, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(import_components276.BaseControl.VisualLabel, { children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(
+        import_components276.Button,
         {
           ref: anchorRef,
           onClick: () => setIsOpen(!isOpen),
@@ -73275,14 +73367,14 @@ var wp;
           __next40pxDefaultSize: true,
           className: "link-preview-button",
           children: [
-            label && /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_components275.VisuallyHidden, { children: [
+            label && /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(import_components276.VisuallyHidden, { children: [
               label,
               ":"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
               LinkPreview2,
               {
-                title: preview.title || (0, import_i18n244.__)("Add link"),
+                title: preview.title || (0, import_i18n245.__)("Add link"),
                 url: preview.url,
                 image: preview.image,
                 badges: preview.badges
@@ -73291,28 +73383,28 @@ var wp;
           ]
         }
       ),
-      isOpen && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
-        import_components275.Popover,
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+        import_components276.Popover,
         {
           anchor: anchorRef.current,
           onClose: () => setIsOpen(false),
           placement: "left-start",
           offset: 36,
           shift: true,
-          children: /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(
             "div",
             {
               role: "dialog",
               "aria-labelledby": dialogTitleId,
               "aria-describedby": dialogDescriptionId,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_components275.VisuallyHidden, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime463.jsx)("h2", { id: dialogTitleId, children: (0, import_i18n244.__)("Select a link") }),
-                  /* @__PURE__ */ (0, import_jsx_runtime463.jsx)("p", { id: dialogDescriptionId, children: (0, import_i18n244.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(import_components276.VisuallyHidden, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime464.jsx)("h2", { id: dialogTitleId, children: (0, import_i18n245.__)("Select a link") }),
+                  /* @__PURE__ */ (0, import_jsx_runtime464.jsx)("p", { id: dialogDescriptionId, children: (0, import_i18n245.__)(
                     "Search for and add a link to the navigation item."
                   ) })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
                   link_control_default,
                   {
                     value: null,
@@ -73388,7 +73480,7 @@ var wp;
   });
 
   // packages/block-editor/build-module/hooks/list-view.js
-  var import_jsx_runtime464 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime465 = __toESM(require_jsx_runtime(), 1);
   var { PrivateListView: PrivateListView2 } = unlock(privateApis12);
   var LIST_VIEW_SUPPORT_KEY = "listView";
   function hasListViewSupport(nameOrType) {
@@ -73396,7 +73488,7 @@ var wp;
   }
   function ListViewPanel({ clientId, name }) {
     const isEnabled = hasListViewSupport(name);
-    const { hasChildren, blockTitle } = (0, import_data193.useSelect)(
+    const { hasChildren, blockTitle } = (0, import_data194.useSelect)(
       (select3) => ({
         hasChildren: !!select3(store).getBlockCount(clientId),
         blockTitle: select3(import_blocks120.store).getBlockType(name)?.title
@@ -73406,9 +73498,9 @@ var wp;
     if (!isEnabled) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(inspector_controls_default, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(import_components276.PanelBody, { title: null, children: [
-      !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)("p", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n245.__)("No items yet.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(inspector_controls_default, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(import_components277.PanelBody, { title: null, children: [
+      !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime465.jsx)("p", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n246.__)("No items yet.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
         PrivateListView2,
         {
           rootClientId: clientId,
@@ -73457,13 +73549,13 @@ var wp;
   // packages/block-editor/build-module/hooks/grid-visualizer.js
   var import_compose106 = __toESM(require_compose(), 1);
   var import_hooks33 = __toESM(require_hooks(), 1);
-  var import_data194 = __toESM(require_data(), 1);
-  var import_jsx_runtime465 = __toESM(require_jsx_runtime(), 1);
+  var import_data195 = __toESM(require_data(), 1);
+  var import_jsx_runtime466 = __toESM(require_jsx_runtime(), 1);
   function GridLayoutSync(props) {
     useGridLayoutSync(props);
   }
   function GridTools2({ clientId, layout }) {
-    const isVisible = (0, import_data194.useSelect)(
+    const isVisible = (0, import_data195.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
@@ -73478,25 +73570,25 @@ var wp;
       },
       [clientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(import_jsx_runtime465.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(GridLayoutSync, { clientId }),
-      isVisible && /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(GridVisualizer, { clientId, parentLayout: layout })
+    return /* @__PURE__ */ (0, import_jsx_runtime466.jsxs)(import_jsx_runtime466.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(GridLayoutSync, { clientId }),
+      isVisible && /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(GridVisualizer, { clientId, parentLayout: layout })
     ] });
   }
   var addGridVisualizerToBlockEdit = (0, import_compose106.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       if (props.attributes.layout?.type !== "grid") {
-        return /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(BlockEdit2, { ...props }, "edit");
+        return /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(BlockEdit2, { ...props }, "edit");
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(import_jsx_runtime465.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime466.jsxs)(import_jsx_runtime466.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
           GridTools2,
           {
             clientId: props.clientId,
             layout: props.attributes.layout
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(BlockEdit2, { ...props }, "edit")
+        /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(BlockEdit2, { ...props }, "edit")
       ] });
     },
     "addGridVisualizerToBlockEdit"
@@ -73631,8 +73723,8 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-typography-props.js
-  var import_components277 = __toESM(require_components(), 1);
-  var { kebabCase: kebabCase7 } = unlock(import_components277.privateApis);
+  var import_components278 = __toESM(require_components(), 1);
+  var { kebabCase: kebabCase7 } = unlock(import_components278.privateApis);
   function getTypographyClassesAndStyles(attributes, settings2) {
     let typographyStyles = attributes?.style?.typography || {};
     typographyStyles = {
