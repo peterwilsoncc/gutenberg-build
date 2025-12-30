@@ -565,17 +565,6 @@ var wp;
       );
     }
   };
-  var textIndent = {
-    name: "textIndent",
-    generate: (style, options) => {
-      return generateRule(
-        style,
-        options,
-        ["typography", "textIndent"],
-        "textIndent"
-      );
-    }
-  };
   var textTransform = {
     name: "textTransform",
     generate: (style, options) => {
@@ -607,7 +596,6 @@ var wp;
     lineHeight,
     textColumns,
     textDecoration,
-    textIndent,
     textTransform,
     writingMode
   ];

@@ -45143,7 +45143,6 @@ ${js}
         fontSize: true,
         lineHeight: true,
         textAlign: true,
-        textIndent: true,
         __experimentalFontFamily: true,
         __experimentalTextDecoration: true,
         __experimentalFontStyle: true,
@@ -45160,12 +45159,6 @@ ${js}
       __unstablePasteTextInline: true,
       interactivity: {
         clientNavigation: true
-      }
-    },
-    selectors: {
-      root: "p",
-      typography: {
-        textIndent: "p + p"
       }
     },
     editorStyle: "wp-block-paragraph-editor",
