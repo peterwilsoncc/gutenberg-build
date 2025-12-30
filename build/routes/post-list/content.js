@@ -73,6 +73,13 @@ var require_react_dom = __commonJS({
   }
 });
 
+// package-external:@wordpress/i18n
+var require_i18n = __commonJS({
+  "package-external:@wordpress/i18n"(exports, module) {
+    module.exports = window.wp.i18n;
+  }
+});
+
 // node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
 var require_use_sync_external_store_shim_development = __commonJS({
   "node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports) {
@@ -146,13 +153,6 @@ var require_shim = __commonJS({
     } else {
       module.exports = require_use_sync_external_store_shim_development();
     }
-  }
-});
-
-// package-external:@wordpress/i18n
-var require_i18n = __commonJS({
-  "package-external:@wordpress/i18n"(exports, module) {
-    module.exports = window.wp.i18n;
   }
 });
 
