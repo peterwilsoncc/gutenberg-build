@@ -63945,12 +63945,34 @@ ${js}
     };
     return colorVarMap;
   }
+  function getBorderStyles({ attributes: attributes3 }) {
+    const { radius } = attributes3?.style?.border || {};
+    if (!radius) {
+      return {};
+    }
+    let radiusValue = radius;
+    if (typeof radius === "object") {
+      const {
+        topLeft = "0",
+        topRight = "0",
+        bottomRight = "0",
+        bottomLeft = "0"
+      } = radius;
+      radiusValue = `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
+    }
+    const borderMap = {
+      "--tab-border-radius": radiusValue
+    };
+    return borderMap;
+  }
   function StyleEngine({ attributes: attributes3, clientId }) {
     const gapVarMap = getGapStyles({ attributes: attributes3 });
     const colorVarMap = getColorStyles({ attributes: attributes3 });
+    const borderVarMap = getBorderStyles({ attributes: attributes3 });
     const styleVarMap = {
       ...gapVarMap,
-      ...colorVarMap
+      ...colorVarMap,
+      ...borderVarMap
     };
     const declarations = Object.entries(styleVarMap).filter(([, value]) => !!value).map(([name117, value]) => `	${name117}: ${value};`).join("\n");
     (0, import_block_editor250.useStyleOverride)({
@@ -64406,6 +64428,13 @@ ${declarations}
       typography: {
         fontSize: true,
         __experimentalFontFamily: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          radius: true
+        }
       }
     },
     example: {
