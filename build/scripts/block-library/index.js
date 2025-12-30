@@ -36806,7 +36806,6 @@ ${js}
       }
     },
     supports: {
-      anchor: true,
       customClassName: false,
       className: false,
       html: false,
