@@ -6453,7 +6453,7 @@ var wp;
   var import_components12 = __toESM(require_components(), 1);
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   function isItemValid(item) {
-    return typeof item.menu_order === "number" && Number.isInteger(item.menu_order) && item.menu_order > 0;
+    return typeof item.menu_order === "number" && Number.isInteger(item.menu_order);
   }
   function ReorderModal({
     items,
