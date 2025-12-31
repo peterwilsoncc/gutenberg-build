@@ -69827,6 +69827,7 @@ ${declarations}
           ...(bootstrappedBlockType?.apiVersion ?? 0) < 3 && {
             apiVersion: 3
           },
+          // Inspector controls are rendered by the auto-register hook in block-editor
           edit: function Edit21({ attributes: attributes3 }) {
             const disabledRef = (0, import_compose54.useDisabled)();
             const blockProps = (0, import_block_editor283.useBlockProps)({ ref: disabledRef });
