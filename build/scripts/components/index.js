@@ -46538,7 +46538,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             variant,
             noDefaultClasses = false,
             onClick,
-            url
+            url,
+            disabled
           }, index2) => {
             let computedVariant = variant;
             if (variant !== "primary" && !noDefaultClasses) {
@@ -46551,7 +46552,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
               __next40pxDefaultSize: true,
               href: url,
               variant: computedVariant,
-              onClick: url ? void 0 : onClick,
+              onClick,
+              disabled,
+              accessibleWhenDisabled: true,
               className: clsx_default("components-notice__action", buttonCustomClasses),
               children: label
             }, index2);
