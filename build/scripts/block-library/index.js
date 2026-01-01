@@ -6132,16 +6132,6 @@ var wp;
     });
     const disabledRef = (0, import_compose2.useDisabled)();
     const blockProps = (0, import_block_editor11.useBlockProps)({ ref: disabledRef });
-    if (status === "loading") {
-      return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components3.Spinner, {}) });
-    }
-    if (status === "error") {
-      return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("p", { children: (0, import_i18n5.sprintf)(
-        /* translators: %s: error message returned when rendering the block. */
-        (0, import_i18n5.__)("Error: %s"),
-        error
-      ) }) });
-    }
     return /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(import_jsx_runtime158.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_block_editor11.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(
         import_components3.__experimentalToolsPanel,
@@ -6241,7 +6231,13 @@ var wp;
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components3.Spinner, {}),
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("p", { children: (0, import_i18n5.sprintf)(
+        /* translators: %s: error message returned when rendering the block. */
+        (0, import_i18n5.__)("Error: %s"),
+        error
+      ) }),
+      status === "success" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
     ] });
   }
 
@@ -64785,19 +64781,15 @@ ${declarations}
     });
     const disabledRef = (0, import_compose52.useDisabled)();
     const blockProps = (0, import_block_editor254.useBlockProps)({ ref: disabledRef });
-    if (status === "loading") {
-      return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.Spinner, {}) });
-    }
-    if (status === "error") {
-      return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("p", { children: (0, import_i18n234.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
+      inspectorControls,
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.Spinner, {}),
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("p", { children: (0, import_i18n234.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n234.__)("Error: %s"),
         error
-      ) }) });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
-      inspectorControls,
-      /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
+      ) }),
+      status === "success" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
     ] });
   }
   var edit_default34 = TagCloudEdit;
