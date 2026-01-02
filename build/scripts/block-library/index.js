@@ -6231,12 +6231,12 @@ var wp;
           ]
         }
       ) }),
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components3.Spinner, {}),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("p", { children: (0, import_i18n5.sprintf)(
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components3.Spinner, {}) }),
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("p", { children: (0, import_i18n5.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n5.__)("Error: %s"),
         error
-      ) }),
+      ) }) }),
       status === "success" && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
     ] });
   }
@@ -64783,12 +64783,12 @@ ${declarations}
     const blockProps = (0, import_block_editor254.useBlockProps)({ ref: disabledRef });
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
       inspectorControls,
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.Spinner, {}),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("p", { children: (0, import_i18n234.sprintf)(
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components153.Spinner, {}) }),
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)("p", { children: (0, import_i18n234.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n234.__)("Error: %s"),
         error
-      ) }),
+      ) }) }),
       status === "success" && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
     ] });
   }
