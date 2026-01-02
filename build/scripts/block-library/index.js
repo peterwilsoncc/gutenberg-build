@@ -3777,7 +3777,7 @@ var wp;
     registerCoreBlocks: () => registerCoreBlocks
   });
   var import_blocks124 = __toESM(require_blocks(), 1);
-  var import_compose54 = __toESM(require_compose(), 1);
+  var import_compose55 = __toESM(require_compose(), 1);
   var import_data156 = __toESM(require_data(), 1);
   var import_block_editor283 = __toESM(require_block_editor(), 1);
   var import_server_side_render7 = __toESM(require_server_side_render(), 1);
@@ -56575,10 +56575,11 @@ ${js}
   var import_i18n210 = __toESM(require_i18n(), 1);
   var import_url17 = __toESM(require_url(), 1);
   var import_server_side_render5 = __toESM(require_server_side_render(), 1);
+  var import_compose45 = __toESM(require_compose(), 1);
   var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_MIN_ITEMS = 1;
   var DEFAULT_MAX_ITEMS = 20;
-  function RSSEdit({ attributes: attributes3, setAttributes }) {
+  function RSSEdit({ attributes: attributes3, setAttributes, name: name117 }) {
     const [isEditing, setIsEditing] = (0, import_element107.useState)(!attributes3.feedURL);
     const {
       blockLayout,
@@ -56606,7 +56607,13 @@ ${js}
         setIsEditing(false);
       }
     }
-    const blockProps = (0, import_block_editor222.useBlockProps)();
+    const { content, status, error } = (0, import_server_side_render5.useServerSideRender)({
+      attributes: attributes3,
+      skipBlockSupportAttributes: true,
+      block: name117
+    });
+    const disabledRef = (0, import_compose45.useDisabled)();
+    const blockProps = (0, import_block_editor222.useBlockProps)({ ref: isEditing ? null : disabledRef });
     const label = (0, import_i18n210.__)("RSS URL");
     if (isEditing) {
       return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
@@ -56670,14 +56677,6 @@ ${js}
         isActive: blockLayout === "grid"
       }
     ];
-    const serverSideAttributes = {
-      ...attributes3,
-      style: {
-        ...attributes3?.style,
-        border: void 0,
-        spacing: void 0
-      }
-    };
     return /* @__PURE__ */ (0, import_jsx_runtime401.jsxs)(import_jsx_runtime401.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_block_editor222.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_components135.ToolbarGroup, { controls: toolbarControls }) }),
       /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_block_editor222.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime401.jsxs)(
@@ -56848,13 +56847,13 @@ ${js}
           onChange: (value) => setAttributes({ rel: value })
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime401.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_components135.Disabled, { children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
-        import_server_side_render5.default,
-        {
-          block: "core/rss",
-          attributes: serverSideAttributes
-        }
-      ) }) })
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime401.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_components135.Spinner, {}) }),
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime401.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)("p", { children: (0, import_i18n210.sprintf)(
+        /* translators: %s: error message returned when rendering the block. */
+        (0, import_i18n210.__)("Error: %s"),
+        error
+      ) }) }),
+      status === "success" && /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
     ] });
   }
 
@@ -56985,7 +56984,7 @@ ${js}
   var import_data122 = __toESM(require_data(), 1);
   var import_element108 = __toESM(require_element(), 1);
   var import_components136 = __toESM(require_components(), 1);
-  var import_compose45 = __toESM(require_compose(), 1);
+  var import_compose46 = __toESM(require_compose(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_dom8 = __toESM(require_dom(), 1);
 
@@ -57068,7 +57067,7 @@ ${js}
         wideSize: layout?.wideSize
       }
     });
-    const unitControlInstanceId = (0, import_compose45.useInstanceId)(import_components136.__experimentalUnitControl);
+    const unitControlInstanceId = (0, import_compose46.useInstanceId)(import_components136.__experimentalUnitControl);
     const unitControlInputId = `wp-block-search__width-${unitControlInstanceId}`;
     const isButtonPositionInside = "button-inside" === buttonPosition;
     const isButtonPositionOutside = "button-outside" === buttonPosition;
@@ -57554,10 +57553,10 @@ ${js}
 
   // packages/block-library/build-module/separator/use-deprecated-opacity.js
   var import_element109 = __toESM(require_element(), 1);
-  var import_compose46 = __toESM(require_compose(), 1);
+  var import_compose47 = __toESM(require_compose(), 1);
   function useDeprecatedOpacity(opacity, currentColor, setAttributes) {
     const [deprecatedOpacityWithNoColor, setDeprecatedOpacityWithNoColor] = (0, import_element109.useState)(false);
-    const previousColor = (0, import_compose46.usePrevious)(currentColor);
+    const previousColor = (0, import_compose47.usePrevious)(currentColor);
     (0, import_element109.useEffect)(() => {
       if (opacity === "css" && !currentColor && !previousColor) {
         setDeprecatedOpacityWithNoColor(true);
@@ -57809,11 +57808,11 @@ ${js}
   // packages/block-library/build-module/shortcode/edit.js
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_block_editor227 = __toESM(require_block_editor(), 1);
-  var import_compose47 = __toESM(require_compose(), 1);
+  var import_compose48 = __toESM(require_compose(), 1);
   var import_components138 = __toESM(require_components(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   function ShortcodeEdit({ attributes: attributes3, setAttributes }) {
-    const instanceId = (0, import_compose47.useInstanceId)(ShortcodeEdit);
+    const instanceId = (0, import_compose48.useInstanceId)(ShortcodeEdit);
     const inputId = `blocks-shortcode-input-${instanceId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)("div", { ...(0, import_block_editor227.useBlockProps)(), children: /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(import_components138.Placeholder, { icon: shortcode_default, label: (0, import_i18n215.__)("Shortcode"), children: /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
       import_block_editor227.PlainText,
@@ -57986,7 +57985,7 @@ ${js}
   var import_element111 = __toESM(require_element(), 1);
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_components139 = __toESM(require_components(), 1);
-  var import_compose48 = __toESM(require_compose(), 1);
+  var import_compose49 = __toESM(require_compose(), 1);
   var import_block_editor228 = __toESM(require_block_editor(), 1);
   var import_data123 = __toESM(require_data(), 1);
   var import_core_data75 = __toESM(require_core_data(), 1);
@@ -58006,7 +58005,7 @@ ${js}
     setIcon,
     canUserEdit
   }) => {
-    const isLargeViewport = (0, import_compose48.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose49.useViewportMatch)("medium");
     const isWideAligned = ["wide", "full"].includes(align);
     const isResizable = !isWideAligned && isLargeViewport;
     const [{ naturalWidth, naturalHeight }, setNaturalSize] = (0, import_element111.useState)({});
@@ -59116,7 +59115,7 @@ ${js}
   var import_block_editor231 = __toESM(require_block_editor(), 1);
   var import_element112 = __toESM(require_element(), 1);
   var import_components142 = __toESM(require_components(), 1);
-  var import_compose49 = __toESM(require_compose(), 1);
+  var import_compose50 = __toESM(require_compose(), 1);
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_blocks103 = __toESM(require_blocks(), 1);
 
@@ -59494,7 +59493,7 @@ ${js}
     const ref = (0, import_element112.useRef)();
     const blockProps = (0, import_block_editor231.useBlockProps)({
       className: "wp-block-social-link-anchor",
-      ref: (0, import_compose49.useMergeRefs)([setPopoverAnchor, ref]),
+      ref: (0, import_compose50.useMergeRefs)([setPopoverAnchor, ref]),
       onClick: () => setPopover(true),
       onKeyDown: (event) => {
         if (event.keyCode === import_keycodes9.ENTER) {
@@ -60559,7 +60558,7 @@ ${js}
   var import_i18n224 = __toESM(require_i18n(), 1);
   var import_block_editor236 = __toESM(require_block_editor(), 1);
   var import_components144 = __toESM(require_components(), 1);
-  var import_compose50 = __toESM(require_compose(), 1);
+  var import_compose51 = __toESM(require_compose(), 1);
   var import_primitives202 = __toESM(require_primitives(), 1);
 
   // packages/block-library/build-module/spacer/constants.js
@@ -60569,7 +60568,7 @@ ${js}
   var import_jsx_runtime465 = __toESM(require_jsx_runtime(), 1);
   var { useSpacingSizes } = unlock(import_block_editor236.privateApis);
   function DimensionInput({ label, onChange, isResizing, value = "" }) {
-    const inputId = (0, import_compose50.useInstanceId)(import_components144.__experimentalUnitControl, "block-spacer-height-input");
+    const inputId = (0, import_compose51.useInstanceId)(import_components144.__experimentalUnitControl, "block-spacer-height-input");
     const spacingSizes = useSpacingSizes();
     const [spacingUnits] = (0, import_block_editor236.useSettings)("spacing.units");
     const availableUnits = spacingUnits ? spacingUnits.filter((unit) => unit !== "%") : ["px", "em", "rem", "vw", "vh"];
@@ -63434,7 +63433,7 @@ ${js}
   var import_data133 = __toESM(require_data(), 1);
   var import_element119 = __toESM(require_element(), 1);
   var import_i18n231 = __toESM(require_i18n(), 1);
-  var import_compose51 = __toESM(require_compose(), 1);
+  var import_compose52 = __toESM(require_compose(), 1);
   var import_notices16 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/table-of-contents/list.js
@@ -63621,7 +63620,7 @@ ${js}
   }) {
     useObserveHeadings(clientId);
     const blockProps = (0, import_block_editor248.useBlockProps)();
-    const instanceId = (0, import_compose51.useInstanceId)(
+    const instanceId = (0, import_compose52.useInstanceId)(
       TableOfContentsEdit,
       "table-of-contents"
     );
@@ -64597,7 +64596,7 @@ ${declarations}
   var import_block_editor254 = __toESM(require_block_editor(), 1);
   var import_core_data78 = __toESM(require_core_data(), 1);
   var import_server_side_render6 = __toESM(require_server_side_render(), 1);
-  var import_compose52 = __toESM(require_compose(), 1);
+  var import_compose53 = __toESM(require_compose(), 1);
   var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
   var MIN_TAGS = 1;
   var MAX_TAGS = 100;
@@ -64779,7 +64778,7 @@ ${declarations}
       skipBlockSupportAttributes: true,
       block: name117
     });
-    const disabledRef = (0, import_compose52.useDisabled)();
+    const disabledRef = (0, import_compose53.useDisabled)();
     const blockProps = (0, import_block_editor254.useBlockProps)({ ref: disabledRef });
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
       inspectorControls,
@@ -66878,7 +66877,7 @@ ${declarations}
   var import_data148 = __toESM(require_data(), 1);
   var import_core_data91 = __toESM(require_core_data(), 1);
   var import_element129 = __toESM(require_element(), 1);
-  var import_compose53 = __toESM(require_compose(), 1);
+  var import_compose54 = __toESM(require_compose(), 1);
   var import_html_entities18 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY6 = [];
@@ -66896,7 +66895,7 @@ ${declarations}
     const [search, setSearch] = (0, import_element129.useState)("");
     const [value, setValue] = (0, import_element129.useState)(EMPTY_ARRAY6);
     const [suggestions, setSuggestions] = (0, import_element129.useState)(EMPTY_ARRAY6);
-    const debouncedSearch = (0, import_compose53.useDebounce)(setSearch, 250);
+    const debouncedSearch = (0, import_compose54.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data148.useSelect)(
       (select9) => {
         if (!search) {
@@ -69821,7 +69820,7 @@ ${declarations}
           },
           // Inspector controls are rendered by the auto-register hook in block-editor
           edit: function Edit21({ attributes: attributes3 }) {
-            const disabledRef = (0, import_compose54.useDisabled)();
+            const disabledRef = (0, import_compose55.useDisabled)();
             const blockProps = (0, import_block_editor283.useBlockProps)({ ref: disabledRef });
             const { content, status, error } = (0, import_server_side_render7.useServerSideRender)({
               block: blockName,
