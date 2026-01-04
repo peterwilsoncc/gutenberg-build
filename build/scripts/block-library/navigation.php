@@ -446,7 +446,7 @@ class WP_Navigation_Block_Renderer_Gutenberg {
 	private static function get_styles( $attributes ) {
 		$colors       = gutenberg_block_core_navigation_build_css_colors( $attributes );
 		$font_sizes   = gutenberg_block_core_navigation_build_css_font_sizes( $attributes );
-		$block_styles = isset( $attributes['styles'] ) ? $attributes['styles'] : '';
+		$block_styles = $attributes['styles'] ?? '';
 		return $block_styles . $colors['inline_styles'] . $font_sizes['inline_styles'];
 	}
 
@@ -1347,9 +1347,7 @@ function gutenberg_block_core_navigation_get_classic_menu_fallback_blocks( $clas
 	}
 
 	$inner_blocks = gutenberg_block_core_navigation_parse_blocks_from_menu_items(
-		isset( $menu_items_by_parent_id[0] )
-			? $menu_items_by_parent_id[0]
-			: array(),
+		$menu_items_by_parent_id[0] ?? array(),
 		$menu_items_by_parent_id
 	);
 
