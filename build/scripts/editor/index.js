@@ -11338,7 +11338,8 @@ var wp;
     sectionRootClientIdKey,
     mediaEditKey,
     getMediaSelectKey,
-    isIsolatedEditorKey
+    isIsolatedEditorKey,
+    deviceTypeKey
   } = unlock(import_block_editor7.privateApis);
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
     const isLargeViewport = (0, import_compose6.useViewportMatch)("medium");
@@ -11357,7 +11358,8 @@ var wp;
       pageForPosts,
       userPatternCategories,
       restBlockPatternCategories,
-      sectionRootClientId
+      sectionRootClientId,
+      deviceType: deviceType2
     } = (0, import_data27.useSelect)(
       (select5) => {
         const {
@@ -11369,6 +11371,7 @@ var wp;
         } = select5(import_core_data23.store);
         const { get } = select5(import_preferences3.store);
         const { getBlockTypes: getBlockTypes6 } = select5(import_blocks9.store);
+        const { getDeviceType: getDeviceType2 } = unlock(select5(store));
         const { getBlocksByName, getBlockAttributes: getBlockAttributes2 } = select5(import_block_editor7.store);
         const siteSettings = canUser("read", {
           kind: "root",
@@ -11410,7 +11413,8 @@ var wp;
           pageForPosts: siteSettings?.page_for_posts,
           userPatternCategories: getUserPatternCategories(),
           restBlockPatternCategories: getBlockPatternCategories(),
-          sectionRootClientId: getSectionRootBlock()
+          sectionRootClientId: getSectionRootBlock(),
+          deviceType: getDeviceType2()
         };
       },
       [postType2, postId2, isLargeViewport, renderingMode2]
@@ -11542,7 +11546,8 @@ var wp;
           "wp_template_part",
           "wp_block",
           "wp_navigation"
-        ].includes(postType2)
+        ].includes(postType2),
+        ...window.__experimentalHideBlocksBasedOnScreenSize && deviceType2 ? { [deviceTypeKey]: deviceType2 } : {}
       };
       return blockEditorSettings;
     }, [
@@ -11571,7 +11576,8 @@ var wp;
       globalStylesLinksData,
       renderingMode2,
       editMediaEntity,
-      wrappedOnNavigateToEntityRecord
+      wrappedOnNavigateToEntityRecord,
+      deviceType2
     ]);
   }
   var use_block_editor_settings_default = useBlockEditorSettings;

@@ -7840,6 +7840,7 @@ var wp;
   var getMediaSelectKey = Symbol("getMediaSelect");
   var essentialFormatKey = Symbol("essentialFormat");
   var isIsolatedEditorKey = Symbol("isIsolatedEditor");
+  var deviceTypeKey = Symbol("deviceTypeKey");
 
   // packages/block-editor/build-module/store/reducer.js
   var { isContentBlock } = unlock(import_blocks2.privateApis);
@@ -11139,7 +11140,20 @@ var wp;
       return false;
     }
     const attributes = state.blocks.attributes.get(clientId);
-    return attributes?.metadata?.blockVisibility === false;
+    const blockVisibility2 = attributes?.metadata?.blockVisibility;
+    if (blockVisibility2 === false) {
+      return true;
+    }
+    if (!window.__experimentalHideBlocksBasedOnScreenSize) {
+      return false;
+    }
+    if (typeof blockVisibility2 === "object" && blockVisibility2 !== null) {
+      const settings2 = getSettings(state);
+      const viewportType = settings2[deviceTypeKey] ?? "Desktop";
+      const viewportKey = viewportType.toLowerCase();
+      return blockVisibility2?.[viewportKey] === false;
+    }
+    return false;
   };
   function hasBlockSpotlight2(state) {
     return !!state.hasBlockSpotlight || !!state.editedContentOnlySection;
@@ -22226,6 +22240,9 @@ var wp;
           isPreviewMode: isPreviewMode2,
           __experimentalBlockBindingsSupportedAttributes
         } = getSettings8();
+        const { isBlockHidden: _isBlockHidden } = unlock(
+          select3(store)
+        );
         const bindableAttributes2 = __experimentalBlockBindingsSupportedAttributes?.[blockName];
         const hasLightBlockWrapper = blockType?.apiVersion > 1;
         const previewContext = {
@@ -22240,15 +22257,12 @@ var wp;
           className: hasLightBlockWrapper ? attributes2.className : void 0,
           defaultClassName: hasLightBlockWrapper ? (0, import_blocks20.getBlockDefaultClassName)(blockName) : void 0,
           blockTitle: blockType?.title,
-          isBlockHidden: attributes2?.metadata?.blockVisibility === false,
+          isBlockHidden: _isBlockHidden(clientId),
           bindableAttributes: bindableAttributes2
         };
         if (isPreviewMode2) {
           return previewContext;
         }
-        const { isBlockHidden: _isBlockHidden } = unlock(
-          select3(store)
-        );
         const _isSelected = isBlockSelected2(clientId);
         const canRemove2 = canRemoveBlock2(clientId);
         const canMove2 = canMoveBlock2(clientId);
@@ -22295,8 +22309,7 @@ var wp;
           hasChildSelected: isAncestorOfSelectedBlock,
           isEditingDisabled: blockEditingMode2 === "disabled",
           hasEditableOutline: blockEditingMode2 !== "disabled" && getBlockEditingMode2(rootClientId) === "disabled",
-          originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
-          isBlockHidden: _isBlockHidden(clientId)
+          originalBlockClientId: isInvalid ? blocksWithSameName[0] : false
         };
       },
       [clientId, rootClientId]
@@ -73673,6 +73686,7 @@ var wp;
     mediaEditKey,
     getMediaSelectKey,
     essentialFormatKey,
+    deviceTypeKey,
     isIsolatedEditorKey,
     useBlockElement,
     useBlockElementRef,
