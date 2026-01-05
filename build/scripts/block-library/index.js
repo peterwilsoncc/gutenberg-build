@@ -69423,8 +69423,8 @@ ${declarations}
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_blocks122 = __toESM(require_blocks(), 1);
   var import_jsx_runtime525 = __toESM(require_jsx_runtime(), 1);
-  var { usesContextKey } = unlock(import_block_editor281.privateApis);
   var formatName = "core/footnote";
+  var { usesContextKey } = unlock(import_block_editor281.privateApis);
   var POST_CONTENT_BLOCK_NAME = "core/post-content";
   var SYNCED_PATTERN_BLOCK_NAME = "core/block";
   var format2 = {
@@ -69470,10 +69470,18 @@ ${declarations}
           }
           const {
             getBlockParentsByBlockName: _getBlockParentsByBlockName,
-            getSelectedBlockClientId: _getSelectedBlockClientId
+            getSelectedBlockClientId: _getSelectedBlockClientId,
+            getBlockName: _getBlockName
           } = select9(import_block_editor281.store);
+          const selectedClientId = _getSelectedBlockClientId();
+          if (!selectedClientId) {
+            return false;
+          }
+          if (_getBlockName(selectedClientId) === name116) {
+            return false;
+          }
           const parentCoreBlocks = _getBlockParentsByBlockName(
-            _getSelectedBlockClientId(),
+            selectedClientId,
             SYNCED_PATTERN_BLOCK_NAME
           );
           return !parentCoreBlocks || parentCoreBlocks.length === 0;
