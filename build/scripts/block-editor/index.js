@@ -65998,6 +65998,7 @@ var wp;
         icon: more_vertical_default,
         label: (0, import_i18n216.__)("Options"),
         popoverProps: popoverProps3,
+        toggleProps: { size: "small" },
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(import_components231.MenuGroup, { label: (0, import_i18n216.__)("Show / Hide"), children: fields.map((field) => {
           const isVisible = visibleFields.includes(field.id);
           return /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
@@ -66742,11 +66743,22 @@ var wp;
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime415.jsxs)("div", { className: "block-editor-content-only-controls__fields-container", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime415.jsx)("div", { className: "block-editor-content-only-controls__fields-header", children: /* @__PURE__ */ (0, import_jsx_runtime415.jsxs)(import_components235.__experimentalHStack, { spacing: 1, justify: "space-between", expanded: true, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime415.jsxs)(import_components235.__experimentalHStack, { spacing: 1, justify: "flex-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(block_icon_default, { icon: blockInformation?.icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime415.jsx)("div", { children: blockTitle })
-        ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime415.jsx)("div", { className: "block-editor-content-only-controls__fields-header", children: /* @__PURE__ */ (0, import_jsx_runtime415.jsxs)(import_components235.__experimentalHStack, { spacing: 1, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(
+          block_icon_default,
+          {
+            className: "block-editor-content-only-controls__fields-header-icon",
+            icon: blockInformation?.icon
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(
+          import_components235.__experimentalTruncate,
+          {
+            className: "block-editor-content-only-controls__fields-header-title",
+            numberOfLines: 1,
+            children: blockTitle
+          }
+        ),
         /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(
           FieldsDropdownMenu,
           {
