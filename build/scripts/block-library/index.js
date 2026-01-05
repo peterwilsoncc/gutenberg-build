@@ -3820,7 +3820,11 @@ var wp;
               className: clsx_default(
                 parsedProps.className,
                 wrapperProps.className
-              )
+              ),
+              style: {
+                ...parsedProps.style || {},
+                ...wrapperProps.style || {}
+              }
             };
             return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TagName2, { ...mergedProps, children: (0, import_lib2.domToReact)(children, options2) });
           }
@@ -7767,10 +7771,7 @@ var wp;
       urlQueryArgs: { post_id: postId, invalidationKey }
     });
     const disabledRef = (0, import_compose5.useDisabled)();
-    const blockProps = (0, import_block_editor17.useBlockProps)({
-      ref: disabledRef,
-      style: { "--separator": `'${separator}'` }
-    });
+    const blockProps = (0, import_block_editor17.useBlockProps)({ ref: disabledRef });
     if (isLoading) {
       return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(import_components9.Spinner, {}) });
     }
