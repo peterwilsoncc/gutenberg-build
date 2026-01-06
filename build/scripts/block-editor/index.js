@@ -69979,24 +69979,11 @@ var wp;
   var hasFitTextSupport = (blockNameOrType) => {
     return (0, import_blocks109.hasBlockSupport)(blockNameOrType, FIT_TEXT_SUPPORT_KEY);
   };
-  function FitTextEdit(props) {
-    const { name, attributes, clientId, isSelected, setAttributes } = props;
-    const { fitText } = attributes;
+  function WithFitTextFontSize({ fitText, name, clientId, children }) {
     const { fontSize } = useFitText({ fitText, name, clientId });
-    return isSelected && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-      FitTextControl,
-      {
-        clientId,
-        fitText,
-        setAttributes,
-        name,
-        fontSize: attributes.fontSize,
-        style: attributes.style,
-        warning: fontSize < MIN_FONT_SIZE_FOR_WARNING && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(FitTextSizeWarning, {})
-      }
-    );
+    return children(fontSize);
   }
-  var withFitTextEdit = (0, import_compose97.createHigherOrderComponent)((BlockEdit2) => {
+  var addFitTextControl = (0, import_compose97.createHigherOrderComponent)((BlockEdit2) => {
     return (props) => {
       const { name, attributes, clientId, isSelected, setAttributes } = props;
       const { fitText } = attributes;
@@ -70007,14 +69994,23 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_jsx_runtime440.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(BlockEdit2, { ...props }),
         fitText && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-          FitTextEdit,
+          WithFitTextFontSize,
           {
-            clientId,
             fitText,
-            setAttributes: props.setAttributes,
             name,
-            attributes,
-            isSelected
+            clientId,
+            children: (fontSize) => isSelected && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
+              FitTextControl,
+              {
+                clientId,
+                fitText,
+                setAttributes,
+                name,
+                fontSize: attributes.fontSize,
+                style: attributes.style,
+                warning: fontSize < MIN_FONT_SIZE_FOR_WARNING && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(FitTextSizeWarning, {})
+              }
+            )
           }
         ),
         !fitText && isSelected && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
@@ -70030,11 +70026,11 @@ var wp;
         )
       ] });
     };
-  }, "withFitTextEdit");
+  }, "addFitTextControl");
   (0, import_hooks25.addFilter)(
     "editor.BlockEdit",
-    "core/fit-text/with-fit-text-edit",
-    withFitTextEdit
+    "core/fit-text/add-fit-text-control",
+    addFitTextControl
   );
   var fit_text_default = {
     useBlockProps: useBlockProps11,
