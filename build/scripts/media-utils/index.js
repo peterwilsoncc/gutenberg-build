@@ -17077,7 +17077,9 @@ If there's a particular need for this, please submit a feature request at https:
     label: (0, import_i18n56.__)("File type"),
     getValue: ({ item }) => item?.mime_type || "",
     render: ({ item }) => item?.mime_type || "-",
-    enableSorting: true,
+    // Disable sorting until REST API support for ordering my `mime_type` is added.
+    // See: https://core.trac.wordpress.org/ticket/64073
+    enableSorting: false,
     filterBy: false,
     readOnly: true
   };
