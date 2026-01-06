@@ -5363,18 +5363,20 @@ var wp;
     "application/x-tar",
     "application/x-gzip"
   ];
-  function MediaPreview({
-    url,
-    attachment
+  function MediaTitle({ attachment }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalTruncate, { className: "fields__media-edit-filename", children: attachment.title.rendered });
+  }
+  function MediaEditPlaceholder({
+    open,
+    label
   }) {
-    if (!attachment) {
-      return null;
-    }
-    const attachmentTitle = attachment.title.rendered;
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaPickerButton, { open, label, children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { className: "fields__media-edit-placeholder", children: label }) });
+  }
+  function MediaPreview({ attachment }) {
+    const url = attachment.source_url;
     const mimeType = attachment.mime_type;
-    let preview = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: file_default });
     if (mimeType.startsWith("image/")) {
-      preview = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
         "img",
         {
           className: "fields__media-edit-thumbnail",
@@ -5383,15 +5385,132 @@ var wp;
         }
       );
     } else if (mimeType.startsWith("audio/")) {
-      preview = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: audio_default });
+      return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: audio_default });
     } else if (mimeType.startsWith("video/")) {
-      preview = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: video_default });
+      return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: video_default });
     } else if (archiveMimeTypes.includes(mimeType)) {
-      preview = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: archive_default });
+      return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: archive_default });
     }
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: file_default });
+  }
+  function ExpandedMediaEditAttachments({
+    attachments,
+    addButtonLabel,
+    multiple,
+    removeItem,
+    open
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+      "div",
+      {
+        className: clsx_default("fields__media-edit-expanded", {
+          "is-multiple": multiple,
+          "is-single": !multiple,
+          "is-empty": !attachments?.length
+        }),
+        children: [
+          attachments?.map((attachment) => {
+            const hasPreviewImage = attachment.mime_type.startsWith("image/");
+            return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+              "div",
+              {
+                className: clsx_default("fields__media-edit-expanded-item", {
+                  "has-preview-image": hasPreviewImage
+                }),
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                    MediaPickerButton,
+                    {
+                      open,
+                      label: (0, import_i18n13.__)("Replace"),
+                      showTooltip: true,
+                      children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-preview", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+                        import_components5.__experimentalVStack,
+                        {
+                          spacing: 0,
+                          alignment: "center",
+                          justify: "center",
+                          className: "fields__media-edit-expanded-preview-stack",
+                          children: [
+                            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaPreview, { attachment }),
+                            !hasPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaTitle, { attachment }) : /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-title", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                              MediaTitle,
+                              {
+                                attachment
+                              }
+                            ) })
+                          ]
+                        }
+                      ) })
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-overlay", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                    import_components5.Button,
+                    {
+                      __next40pxDefaultSize: true,
+                      className: "fields__media-edit-expanded-remove",
+                      icon: close_small_default,
+                      label: (0, import_i18n13.__)("Remove"),
+                      size: "small",
+                      onClick: (event) => {
+                        event.stopPropagation();
+                        removeItem(attachment.id);
+                      }
+                    }
+                  ) })
+                ]
+              },
+              attachment.id
+            );
+          }),
+          (multiple || !attachments?.length) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaEditPlaceholder, { open, label: addButtonLabel })
+        ]
+      }
+    );
+  }
+  function CompactMediaEditAttachments({
+    attachments,
+    addButtonLabel,
+    multiple,
+    removeItem,
+    open
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_jsx_runtime74.Fragment, { children: [
-      preview,
-      /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalTruncate, { className: "fields__media-edit-filename", children: attachmentTitle })
+      !!attachments?.length && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalVStack, { spacing: 2, children: attachments.map((attachment) => /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+        "div",
+        {
+          className: "fields__media-edit-compact",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+              MediaPickerButton,
+              {
+                open,
+                label: (0, import_i18n13.__)("Replace"),
+                showTooltip: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_jsx_runtime74.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaPreview, { attachment }),
+                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaTitle, { attachment })
+                ] })
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+              import_components5.Button,
+              {
+                __next40pxDefaultSize: true,
+                className: "fields__media-edit-remove",
+                text: (0, import_i18n13.__)("Remove"),
+                variant: "secondary",
+                onClick: (event) => {
+                  event.stopPropagation();
+                  removeItem(attachment.id);
+                }
+              }
+            )
+          ]
+        },
+        attachment.id
+      )) }),
+      (multiple || !attachments?.length) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaEditPlaceholder, { open, label: addButtonLabel })
     ] });
   }
   function MediaEdit({
@@ -5400,7 +5519,8 @@ var wp;
     onChange,
     hideLabelFromVision,
     allowedTypes = ["image"],
-    multiple
+    multiple,
+    isExpanded
   }) {
     const value = field.getValue({ item: data });
     const attachments = (0, import_data6.useSelect)(
@@ -5425,6 +5545,7 @@ var wp;
       const newIds = currentIds.filter((id) => id !== itemId);
       onChangeControl(newIds.length ? newIds : void 0);
     };
+    const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n13.__)("Choose files") : (0, import_i18n13.__)("Choose file"));
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
       ConditionalMediaUpload,
       {
@@ -5441,52 +5562,17 @@ var wp;
         multiple,
         title: field.label,
         render: ({ open }) => {
-          const addButtonLabel = attachments?.length ? (0, import_i18n13.__)("Add files") : field.placeholder || (0, import_i18n13.__)("Choose file");
+          const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;
           return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_components5.__experimentalVStack, { spacing: 2, children: [
             field.label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.VisuallyHidden, { as: "legend", children: field.label }) : /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.BaseControl.VisualLabel, { as: "legend", children: field.label })),
-            !!attachments?.length && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalVStack, { spacing: 2, children: attachments.map((attachment) => /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
-              "div",
+            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+              AttachmentsComponent,
               {
-                className: "fields__media-edit-row",
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-                    MediaPickerButton,
-                    {
-                      open,
-                      label: (0, import_i18n13.__)("Replace"),
-                      showTooltip: true,
-                      children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-                        MediaPreview,
-                        {
-                          url: attachment.source_url,
-                          attachment
-                        }
-                      )
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-                    import_components5.Button,
-                    {
-                      __next40pxDefaultSize: true,
-                      className: "fields__media-edit-remove",
-                      text: (0, import_i18n13.__)("Remove"),
-                      variant: "secondary",
-                      onClick: (event) => {
-                        event.stopPropagation();
-                        removeItem(attachment.id);
-                      }
-                    }
-                  )
-                ]
-              },
-              attachment.id
-            )) }),
-            (multiple || !attachments?.length) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-              MediaPickerButton,
-              {
-                open,
-                label: addButtonLabel,
-                children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { className: "fields__media-edit-placeholder", children: addButtonLabel })
+                attachments,
+                addButtonLabel,
+                multiple,
+                removeItem,
+                open
               }
             ),
             field.description && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalText, { variant: "muted", children: field.description })
