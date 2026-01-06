@@ -53631,10 +53631,10 @@ var wp;
       let deviceWidth;
       switch (device) {
         case "Tablet":
-          deviceWidth = 780;
+          deviceWidth = 782 - 1;
           break;
         case "Mobile":
-          deviceWidth = 360;
+          deviceWidth = 480 - 1;
           break;
         default:
           return null;
