@@ -42938,12 +42938,17 @@ var wp;
     PatternOverridesControls,
     ResetOverridesControl,
     PATTERN_TYPES: PATTERN_TYPES4,
-    PARTIAL_SYNCING_SUPPORTED_BLOCKS,
     PATTERN_SYNC_TYPES
   } = unlock(import_patterns8.privateApis);
   var withPatternOverrideControls = (0, import_compose41.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
-      const isSupportedBlock = !!PARTIAL_SYNCING_SUPPORTED_BLOCKS[props.name];
+      const isSupportedBlock = (0, import_data174.useSelect)(
+        (select5) => {
+          const { __experimentalBlockBindingsSupportedAttributes } = select5(import_block_editor64.store).getSettings();
+          return !!__experimentalBlockBindingsSupportedAttributes?.[props.name];
+        },
+        [props.name]
+      );
       return /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(import_jsx_runtime291.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(BlockEdit2, { ...props }, "edit"),
         props.isSelected && isSupportedBlock && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(ControlsWithStoreSubscription, { ...props })

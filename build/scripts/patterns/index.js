@@ -189,12 +189,6 @@ var wp;
     full: "fully",
     unsynced: "unsynced"
   };
-  var PARTIAL_SYNCING_SUPPORTED_BLOCKS = {
-    "core/paragraph": ["content"],
-    "core/heading": ["content"],
-    "core/button": ["text", "url", "linkTarget", "rel"],
-    "core/image": ["id", "url", "title", "alt", "caption"]
-  };
   var PATTERN_OVERRIDES_BINDING_SOURCE = "core/pattern-overrides";
 
   // packages/patterns/build-module/store/actions.js
@@ -314,36 +308,31 @@ var wp;
 
   // packages/patterns/build-module/api/index.js
   function isOverridableBlock(block) {
-    return Object.keys(PARTIAL_SYNCING_SUPPORTED_BLOCKS).includes(
-      block.name
-    ) && !!block.attributes.metadata?.name && !!block.attributes.metadata?.bindings && Object.values(block.attributes.metadata.bindings).some(
+    return !!block.attributes.metadata?.name && !!block.attributes.metadata?.bindings && Object.values(block.attributes.metadata.bindings).some(
       (binding) => binding.source === "core/pattern-overrides"
     );
-  }
-  function hasOverridableBlocks(blocks) {
-    return blocks.some((block) => {
-      if (isOverridableBlock(block)) {
-        return true;
-      }
-      return hasOverridableBlocks(block.innerBlocks);
-    });
   }
 
   // packages/patterns/build-module/components/overrides-panel.js
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var { BlockQuickNavigation } = unlock(import_block_editor2.privateApis);
   function OverridesPanel() {
-    const allClientIds = (0, import_data3.useSelect)(
-      (select) => select(import_block_editor2.store).getClientIdsWithDescendants(),
+    const { allClientIds, supportedBlockTypes } = (0, import_data3.useSelect)(
+      (select) => ({
+        allClientIds: select(import_block_editor2.store).getClientIdsWithDescendants(),
+        supportedBlockTypes: Object.keys(
+          select(import_block_editor2.store).getSettings()?.__experimentalBlockBindingsSupportedAttributes || {}
+        )
+      }),
       []
     );
     const { getBlock } = (0, import_data3.useSelect)(import_block_editor2.store);
     const clientIdsWithOverrides = (0, import_element.useMemo)(
       () => allClientIds.filter((clientId) => {
         const block = getBlock(clientId);
-        return isOverridableBlock(block);
+        return supportedBlockTypes.includes(block.name) && isOverridableBlock(block);
       }),
-      [allClientIds, getBlock]
+      [allClientIds, getBlock, supportedBlockTypes]
     );
     if (!clientIdsWithOverrides?.length) {
       return null;
@@ -1494,7 +1483,6 @@ var wp;
     CreatePatternModalContents,
     DuplicatePatternModal,
     isOverridableBlock,
-    hasOverridableBlocks,
     useDuplicatePatternProps,
     RenamePatternModal,
     PatternsMenuItems,
@@ -1506,8 +1494,7 @@ var wp;
     PATTERN_DEFAULT_CATEGORY,
     PATTERN_USER_CATEGORY,
     EXCLUDED_PATTERN_SOURCES,
-    PATTERN_SYNC_TYPES,
-    PARTIAL_SYNCING_SUPPORTED_BLOCKS
+    PATTERN_SYNC_TYPES
   });
   return __toCommonJS(index_exports);
 })();

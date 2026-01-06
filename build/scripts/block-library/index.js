@@ -56081,7 +56081,7 @@ ${js}
   var import_blocks95 = __toESM(require_blocks(), 1);
   var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
   var { useLayoutClasses } = unlock(import_block_editor220.privateApis);
-  var { hasOverridableBlocks } = unlock(import_patterns.privateApis);
+  var { isOverridableBlock } = unlock(import_patterns.privateApis);
   var fullAlignments = ["full", "wide", "left", "right"];
   var useInferredLayout = (blocks, parentLayout) => {
     const initialInferredAlignmentRef = (0, import_element106.useRef)();
@@ -56159,21 +56159,31 @@ ${js}
     });
     const isMissing = hasResolved && !record;
     const { __unstableMarkLastChangeAsPersistent } = (0, import_data120.useDispatch)(import_block_editor220.store);
-    const { onNavigateToEntityRecord, hasPatternOverridesSource } = (0, import_data120.useSelect)(
-      (select9) => {
-        const { getSettings: getSettings2 } = select9(import_block_editor220.store);
-        return {
-          onNavigateToEntityRecord: getSettings2().onNavigateToEntityRecord,
-          hasPatternOverridesSource: !!(0, import_blocks95.getBlockBindingsSource)(
-            "core/pattern-overrides"
-          )
-        };
-      },
-      []
-    );
+    const {
+      onNavigateToEntityRecord,
+      hasPatternOverridesSource,
+      supportedBlockTypes
+    } = (0, import_data120.useSelect)((select9) => {
+      const { getSettings: getSettings2 } = select9(import_block_editor220.store);
+      return {
+        onNavigateToEntityRecord: getSettings2().onNavigateToEntityRecord,
+        hasPatternOverridesSource: !!(0, import_blocks95.getBlockBindingsSource)(
+          "core/pattern-overrides"
+        ),
+        supportedBlockTypes: Object.keys(
+          getSettings2().__experimentalBlockBindingsSupportedAttributes || {}
+        )
+      };
+    }, []);
+    const hasOverridableBlocks = (_blocks) => _blocks.some((block) => {
+      if (supportedBlockTypes.includes(block.name) && isOverridableBlock(block)) {
+        return true;
+      }
+      return hasOverridableBlocks(block.innerBlocks);
+    });
     const canOverrideBlocks = (0, import_element106.useMemo)(
       () => hasPatternOverridesSource && hasOverridableBlocks(blocks),
-      [hasPatternOverridesSource, blocks]
+      [hasPatternOverridesSource, hasOverridableBlocks, blocks]
     );
     const { alignment, layout } = useInferredLayout(blocks, parentLayout);
     const layoutClasses = useLayoutClasses({ layout }, name117);
