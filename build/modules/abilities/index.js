@@ -7115,17 +7115,17 @@ var require_dist2 = __commonJS({
   }
 });
 
-// packages/abilities/build-module/api.js
+// packages/abilities/build-module/api.mjs
 var import_data4 = __toESM(require_data(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
 
-// packages/abilities/build-module/store/index.js
+// packages/abilities/build-module/store/index.mjs
 var import_data3 = __toESM(require_data(), 1);
 
-// packages/abilities/build-module/store/reducer.js
+// packages/abilities/build-module/store/reducer.mjs
 var import_data = __toESM(require_data(), 1);
 
-// packages/abilities/build-module/store/constants.js
+// packages/abilities/build-module/store/constants.mjs
 var STORE_NAME = "core/abilities";
 var ABILITY_NAME_PATTERN = /^[a-z0-9-]+\/[a-z0-9-]+$/;
 var CATEGORY_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -7134,7 +7134,7 @@ var UNREGISTER_ABILITY = "UNREGISTER_ABILITY";
 var REGISTER_ABILITY_CATEGORY = "REGISTER_ABILITY_CATEGORY";
 var UNREGISTER_ABILITY_CATEGORY = "UNREGISTER_ABILITY_CATEGORY";
 
-// packages/abilities/build-module/store/reducer.js
+// packages/abilities/build-module/store/reducer.mjs
 var ABILITY_KEYS = [
   "name",
   "label",
@@ -7214,7 +7214,7 @@ var reducer_default = (0, import_data.combineReducers)({
   categoriesBySlug
 });
 
-// packages/abilities/build-module/store/actions.js
+// packages/abilities/build-module/store/actions.mjs
 var actions_exports = {};
 __export(actions_exports, {
   registerAbility: () => registerAbility,
@@ -7379,7 +7379,7 @@ function unregisterAbilityCategory(slug) {
   };
 }
 
-// packages/abilities/build-module/store/selectors.js
+// packages/abilities/build-module/store/selectors.mjs
 var selectors_exports = {};
 __export(selectors_exports, {
   getAbilities: () => getAbilities,
@@ -7416,7 +7416,7 @@ function getAbilityCategory(state, slug) {
   return state.categoriesBySlug[slug];
 }
 
-// packages/abilities/build-module/store/index.js
+// packages/abilities/build-module/store/index.mjs
 var store = (0, import_data3.createReduxStore)(STORE_NAME, {
   reducer: reducer_default,
   actions: actions_exports,
@@ -7424,7 +7424,7 @@ var store = (0, import_data3.createReduxStore)(STORE_NAME, {
 });
 (0, import_data3.register)(store);
 
-// packages/abilities/build-module/validation.js
+// packages/abilities/build-module/validation.mjs
 var import_ajv_draft_04 = __toESM(require_dist(), 1);
 var import_ajv_formats = __toESM(require_dist2(), 1);
 var ajv = new import_ajv_draft_04.default({
@@ -7530,7 +7530,7 @@ function validateValueFromSchema(value, args, param = "") {
   }
 }
 
-// packages/abilities/build-module/api.js
+// packages/abilities/build-module/api.mjs
 function getAbilities2(args = {}) {
   return (0, import_data4.select)(store).getAbilities(args);
 }

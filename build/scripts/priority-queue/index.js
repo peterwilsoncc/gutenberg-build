@@ -224,13 +224,13 @@ var wp;
     }
   });
 
-  // packages/priority-queue/build-module/index.js
+  // packages/priority-queue/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     createQueue: () => createQueue
   });
 
-  // packages/priority-queue/build-module/request-idle-callback.js
+  // packages/priority-queue/build-module/request-idle-callback.mjs
   var import_requestidlecallback = __toESM(require_requestidlecallback(), 1);
   function createRequestIdleCallback() {
     if (typeof window === "undefined") {
@@ -242,7 +242,7 @@ var wp;
   }
   var request_idle_callback_default = createRequestIdleCallback();
 
-  // packages/priority-queue/build-module/index.js
+  // packages/priority-queue/build-module/index.mjs
   var createQueue = () => {
     const waitingList = /* @__PURE__ */ new Map();
     let isRunning = false;

@@ -2197,7 +2197,7 @@ var wp;
     }
   });
 
-  // packages/editor/build-module/index.js
+  // packages/editor/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     AlignmentToolbar: () => AlignmentToolbar,
@@ -2359,20 +2359,20 @@ var wp;
     withFontSizes: () => withFontSizes
   });
 
-  // packages/editor/build-module/hooks/custom-sources-backwards-compatibility.js
+  // packages/editor/build-module/hooks/custom-sources-backwards-compatibility.mjs
   var import_data67 = __toESM(require_data(), 1);
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_element72 = __toESM(require_element(), 1);
   var import_compose16 = __toESM(require_compose(), 1);
   var import_hooks37 = __toESM(require_hooks(), 1);
 
-  // packages/editor/build-module/store/index.js
+  // packages/editor/build-module/store/index.mjs
   var import_data66 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/store/reducer.js
+  // packages/editor/build-module/store/reducer.mjs
   var import_data2 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/store/defaults.js
+  // packages/editor/build-module/store/defaults.mjs
   var import_block_editor = __toESM(require_block_editor(), 1);
   var EDITOR_SETTINGS_DEFAULTS = {
     ...import_block_editor.SETTINGS_DEFAULTS,
@@ -2383,7 +2383,7 @@ var wp;
     defaultRenderingMode: "post-only"
   };
 
-  // packages/editor/build-module/dataviews/store/reducer.js
+  // packages/editor/build-module/dataviews/store/reducer.mjs
   var import_data = __toESM(require_data(), 1);
   function isReady(state = {}, action) {
     switch (action.type) {
@@ -2457,7 +2457,7 @@ var wp;
     isReady
   });
 
-  // packages/editor/build-module/store/reducer.js
+  // packages/editor/build-module/store/reducer.mjs
   function getPostRawValue(value) {
     if (value && "object" === typeof value && "raw" in value) {
       return value.raw;
@@ -2663,7 +2663,7 @@ var wp;
     dataviews: reducer_default
   });
 
-  // packages/editor/build-module/store/selectors.js
+  // packages/editor/build-module/store/selectors.mjs
   var selectors_exports = {};
   __export(selectors_exports, {
     __experimentalGetDefaultTemplatePartAreas: () => __experimentalGetDefaultTemplatePartAreas,
@@ -2800,7 +2800,7 @@ var wp;
   var import_core_data = __toESM(require_core_data(), 1);
   var import_preferences = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/store/constants.js
+  // packages/editor/build-module/store/constants.mjs
   var EDIT_MERGE_PROPERTIES = /* @__PURE__ */ new Set(["meta"]);
   var STORE_NAME = "core/editor";
   var PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
@@ -2828,7 +2828,7 @@ var wp;
     NAVIGATION_POST_TYPE
   ];
 
-  // packages/icons/build-module/icon/index.js
+  // packages/icons/build-module/icon/index.mjs
   var import_element = __toESM(require_element(), 1);
   var icon_default = (0, import_element.forwardRef)(
     ({ icon, size: size3 = 24, ...props }, ref) => {
@@ -2841,7 +2841,7 @@ var wp;
     }
   );
 
-  // packages/icons/build-module/library/add-template.js
+  // packages/icons/build-module/library/add-template.mjs
   var import_primitives = __toESM(require_primitives(), 1);
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var add_template_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -2853,7 +2853,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/archive.js
+  // packages/icons/build-module/library/archive.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   var archive_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives2.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
@@ -2865,12 +2865,12 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/audio.js
+  // packages/icons/build-module/library/audio.mjs
   var import_primitives3 = __toESM(require_primitives(), 1);
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var audio_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M17.7 4.3c-1.2 0-2.8 0-3.8 1-.6.6-.9 1.5-.9 2.6V14c-.6-.6-1.5-1-2.5-1C8.6 13 7 14.6 7 16.5S8.6 20 10.5 20c1.5 0 2.8-1 3.3-2.3.5-.8.7-1.8.7-2.5V7.9c0-.7.2-1.2.5-1.6.6-.6 1.8-.6 2.8-.6h.3V4.3h-.4z" }) });
 
-  // packages/icons/build-module/library/background.js
+  // packages/icons/build-module/library/background.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   var background_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
@@ -2882,67 +2882,67 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/backup.js
+  // packages/icons/build-module/library/backup.mjs
   var import_primitives5 = __toESM(require_primitives(), 1);
   var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
   var backup_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives5.Path, { d: "M5.5 12h1.75l-2.5 3-2.5-3H4a8 8 0 113.134 6.35l.907-1.194A6.5 6.5 0 105.5 12zm9.53 1.97l-2.28-2.28V8.5a.75.75 0 00-1.5 0V12a.747.747 0 00.218.529l1.282-.84-1.28.842 2.5 2.5a.75.75 0 101.06-1.061z" }) });
 
-  // packages/icons/build-module/library/block-default.js
+  // packages/icons/build-module/library/block-default.mjs
   var import_primitives6 = __toESM(require_primitives(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   var block_default_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives6.Path, { d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z" }) });
 
-  // packages/icons/build-module/library/check.js
+  // packages/icons/build-module/library/check.mjs
   var import_primitives7 = __toESM(require_primitives(), 1);
   var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   var check_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives7.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
 
-  // packages/icons/build-module/library/chevron-left-small.js
+  // packages/icons/build-module/library/chevron-left-small.mjs
   var import_primitives8 = __toESM(require_primitives(), 1);
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   var chevron_left_small_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives8.Path, { d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z" }) });
 
-  // packages/icons/build-module/library/chevron-left.js
+  // packages/icons/build-module/library/chevron-left.mjs
   var import_primitives9 = __toESM(require_primitives(), 1);
   var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
   var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives9.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
 
-  // packages/icons/build-module/library/chevron-right-small.js
+  // packages/icons/build-module/library/chevron-right-small.mjs
   var import_primitives10 = __toESM(require_primitives(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives10.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
 
-  // packages/icons/build-module/library/chevron-right.js
+  // packages/icons/build-module/library/chevron-right.mjs
   var import_primitives11 = __toESM(require_primitives(), 1);
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives11.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
 
-  // packages/icons/build-module/library/close-small.js
+  // packages/icons/build-module/library/close-small.mjs
   var import_primitives12 = __toESM(require_primitives(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives12.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
 
-  // packages/icons/build-module/library/cloud-upload.js
+  // packages/icons/build-module/library/cloud-upload.mjs
   var import_primitives13 = __toESM(require_primitives(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var cloud_upload_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.Path, { d: "M17.3 10.1C17.3 7.60001 15.2 5.70001 12.5 5.70001C10.3 5.70001 8.4 7.10001 7.9 9.00001H7.7C5.7 9.00001 4 10.7 4 12.8C4 14.9 5.7 16.6 7.7 16.6H9.5V15.2H7.7C6.5 15.2 5.5 14.1 5.5 12.9C5.5 11.7 6.5 10.5 7.7 10.5H9L9.3 9.40001C9.7 8.10001 11 7.20001 12.5 7.20001C14.3 7.20001 15.8 8.50001 15.8 10.1V11.4L17.1 11.6C17.9 11.7 18.5 12.5 18.5 13.4C18.5 14.4 17.7 15.2 16.8 15.2H14.5V16.6H16.7C18.5 16.6 19.9 15.1 19.9 13.3C20 11.7 18.8 10.4 17.3 10.1Z M14.1245 14.2426L15.1852 13.182L12.0032 10L8.82007 13.1831L9.88072 14.2438L11.25 12.8745V18H12.75V12.8681L14.1245 14.2426Z" }) });
 
-  // packages/icons/build-module/library/cloud.js
+  // packages/icons/build-module/library/cloud.mjs
   var import_primitives14 = __toESM(require_primitives(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   var cloud_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives14.Path, { d: "M17.3 10.1c0-2.5-2.1-4.4-4.8-4.4-2.2 0-4.1 1.4-4.6 3.3h-.2C5.7 9 4 10.7 4 12.8c0 2.1 1.7 3.8 3.7 3.8h9c1.8 0 3.2-1.5 3.2-3.3.1-1.6-1.1-2.9-2.6-3.2zm-.5 5.1h-9c-1.2 0-2.2-1.1-2.2-2.3s1-2.4 2.2-2.4h1.3l.3-1.1c.4-1.3 1.7-2.2 3.2-2.2 1.8 0 3.3 1.3 3.3 2.9v1.3l1.3.2c.8.1 1.4.9 1.4 1.8-.1 1-.9 1.8-1.8 1.8z" }) });
 
-  // packages/icons/build-module/library/code.js
+  // packages/icons/build-module/library/code.mjs
   var import_primitives15 = __toESM(require_primitives(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
   var code_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives15.Path, { d: "M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z" }) });
 
-  // packages/icons/build-module/library/color.js
+  // packages/icons/build-module/library/color.mjs
   var import_primitives16 = __toESM(require_primitives(), 1);
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   var color_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives16.Path, { d: "M17.2 10.9c-.5-1-1.2-2.1-2.1-3.2-.6-.9-1.3-1.7-2.1-2.6L12 4l-1 1.1c-.6.9-1.3 1.7-2 2.6-.8 1.2-1.5 2.3-2 3.2-.6 1.2-1 2.2-1 3 0 3.4 2.7 6.1 6.1 6.1s6.1-2.7 6.1-6.1c0-.8-.3-1.8-1-3zm-5.1 7.6c-2.5 0-4.6-2.1-4.6-4.6 0-.3.1-1 .8-2.3.5-.9 1.1-1.9 2-3.1.7-.9 1.3-1.7 1.8-2.3.7.8 1.3 1.6 1.8 2.3.8 1.1 1.5 2.2 2 3.1.7 1.3.8 2 .8 2.3 0 2.5-2.1 4.6-4.6 4.6z" }) });
 
-  // packages/icons/build-module/library/comment-author-avatar.js
+  // packages/icons/build-module/library/comment-author-avatar.mjs
   var import_primitives17 = __toESM(require_primitives(), 1);
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   var comment_author_avatar_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
@@ -2954,12 +2954,12 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/comment.js
+  // packages/icons/build-module/library/comment.mjs
   var import_primitives18 = __toESM(require_primitives(), 1);
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var comment_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives18.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z" }) });
 
-  // packages/icons/build-module/library/copy-small.js
+  // packages/icons/build-module/library/copy-small.mjs
   var import_primitives19 = __toESM(require_primitives(), 1);
   var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   var copy_small_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
@@ -2971,17 +2971,17 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/desktop.js
+  // packages/icons/build-module/library/desktop.mjs
   var import_primitives20 = __toESM(require_primitives(), 1);
   var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   var desktop_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives20.Path, { d: "M20.5 16h-.7V8c0-1.1-.9-2-2-2H6.2c-1.1 0-2 .9-2 2v8h-.7c-.8 0-1.5.7-1.5 1.5h20c0-.8-.7-1.5-1.5-1.5zM5.7 8c0-.3.2-.5.5-.5h11.6c.3 0 .5.2.5.5v7.6H5.7V8z" }) });
 
-  // packages/icons/build-module/library/download.js
+  // packages/icons/build-module/library/download.mjs
   var import_primitives21 = __toESM(require_primitives(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   var download_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives21.Path, { d: "M18 11.3l-1-1.1-4 4V3h-1.5v11.3L7 10.2l-1 1.1 6.2 5.8 5.8-5.8zm.5 3.7v3.5h-13V15H4v5h16v-5h-1.5z" }) });
 
-  // packages/icons/build-module/library/drafts.js
+  // packages/icons/build-module/library/drafts.mjs
   var import_primitives22 = __toESM(require_primitives(), 1);
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   var drafts_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
@@ -2993,7 +2993,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/drawer-left.js
+  // packages/icons/build-module/library/drawer-left.mjs
   var import_primitives23 = __toESM(require_primitives(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   var drawer_left_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
@@ -3005,7 +3005,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/drawer-right.js
+  // packages/icons/build-module/library/drawer-right.mjs
   var import_primitives24 = __toESM(require_primitives(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var drawer_right_default = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
@@ -3017,12 +3017,12 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/external.js
+  // packages/icons/build-module/library/external.mjs
   var import_primitives25 = __toESM(require_primitives(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   var external_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives25.Path, { d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z" }) });
 
-  // packages/icons/build-module/library/file.js
+  // packages/icons/build-module/library/file.mjs
   var import_primitives26 = __toESM(require_primitives(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var file_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives26.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
@@ -3034,7 +3034,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/footer.js
+  // packages/icons/build-module/library/footer.mjs
   var import_primitives27 = __toESM(require_primitives(), 1);
   var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   var footer_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
@@ -3045,17 +3045,17 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/format-list-bullets.js
+  // packages/icons/build-module/library/format-list-bullets.mjs
   var import_primitives28 = __toESM(require_primitives(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives28.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
 
-  // packages/icons/build-module/library/header.js
+  // packages/icons/build-module/library/header.mjs
   var import_primitives29 = __toESM(require_primitives(), 1);
   var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   var header_default = /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives29.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives29.Path, { d: "M18.5 10.5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
-  // packages/icons/build-module/library/info.js
+  // packages/icons/build-module/library/info.mjs
   var import_primitives30 = __toESM(require_primitives(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   var info_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives30.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
@@ -3067,7 +3067,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/keyboard.js
+  // packages/icons/build-module/library/keyboard.mjs
   var import_primitives31 = __toESM(require_primitives(), 1);
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   var keyboard_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_primitives31.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -3075,17 +3075,17 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives31.Path, { d: "m18.5 6.5h-13a.5.5 0 0 0 -.5.5v9.5a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9.5a.5.5 0 0 0 -.5-.5zm-13-1.5h13a2 2 0 0 1 2 2v9.5a2 2 0 0 1 -2 2h-13a2 2 0 0 1 -2-2v-9.5a2 2 0 0 1 2-2z" })
   ] });
 
-  // packages/icons/build-module/library/layout.js
+  // packages/icons/build-module/library/layout.mjs
   var import_primitives32 = __toESM(require_primitives(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   var layout_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives32.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives32.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
-  // packages/icons/build-module/library/list-view.js
+  // packages/icons/build-module/library/list-view.mjs
   var import_primitives33 = __toESM(require_primitives(), 1);
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   var list_view_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives33.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives33.Path, { d: "M3 6h11v1.5H3V6Zm3.5 5.5h11V13h-11v-1.5ZM21 17H10v1.5h11V17Z" }) });
 
-  // packages/icons/build-module/library/lock-small.js
+  // packages/icons/build-module/library/lock-small.mjs
   var import_primitives34 = __toESM(require_primitives(), 1);
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   var lock_small_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives34.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
@@ -3097,27 +3097,27 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/mobile.js
+  // packages/icons/build-module/library/mobile.mjs
   var import_primitives35 = __toESM(require_primitives(), 1);
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives35.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
 
-  // packages/icons/build-module/library/more-vertical.js
+  // packages/icons/build-module/library/more-vertical.mjs
   var import_primitives36 = __toESM(require_primitives(), 1);
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives36.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives36.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
 
-  // packages/icons/build-module/library/navigation.js
+  // packages/icons/build-module/library/navigation.mjs
   var import_primitives37 = __toESM(require_primitives(), 1);
   var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   var navigation_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives37.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives37.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z" }) });
 
-  // packages/icons/build-module/library/next.js
+  // packages/icons/build-module/library/next.mjs
   var import_primitives38 = __toESM(require_primitives(), 1);
   var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
   var next_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives38.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives38.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
 
-  // packages/icons/build-module/library/not-allowed.js
+  // packages/icons/build-module/library/not-allowed.mjs
   var import_primitives39 = __toESM(require_primitives(), 1);
   var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
   var not_allowed_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives39.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
@@ -3129,7 +3129,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/page.js
+  // packages/icons/build-module/library/page.mjs
   var import_primitives40 = __toESM(require_primitives(), 1);
   var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
   var page_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_primitives40.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -3137,12 +3137,12 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives40.Path, { d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z" })
   ] });
 
-  // packages/icons/build-module/library/pencil.js
+  // packages/icons/build-module/library/pencil.mjs
   var import_primitives41 = __toESM(require_primitives(), 1);
   var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives41.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives41.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
 
-  // packages/icons/build-module/library/pending.js
+  // packages/icons/build-module/library/pending.mjs
   var import_primitives42 = __toESM(require_primitives(), 1);
   var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var pending_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives42.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
@@ -3154,17 +3154,17 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/plus.js
+  // packages/icons/build-module/library/plus.mjs
   var import_primitives43 = __toESM(require_primitives(), 1);
   var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   var plus_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives43.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives43.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
 
-  // packages/icons/build-module/library/previous.js
+  // packages/icons/build-module/library/previous.mjs
   var import_primitives44 = __toESM(require_primitives(), 1);
   var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var previous_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives44.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives44.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
 
-  // packages/icons/build-module/library/published.js
+  // packages/icons/build-module/library/published.mjs
   var import_primitives45 = __toESM(require_primitives(), 1);
   var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
   var published_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives45.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
@@ -3176,27 +3176,27 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/redo.js
+  // packages/icons/build-module/library/redo.mjs
   var import_primitives46 = __toESM(require_primitives(), 1);
   var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
   var redo_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives46.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives46.Path, { d: "M15.6 6.5l-1.1 1 2.9 3.3H8c-.9 0-1.7.3-2.3.9-1.4 1.5-1.4 4.2-1.4 5.6v.2h1.5v-.3c0-1.1 0-3.5 1-4.5.3-.3.7-.5 1.3-.5h9.2L14.5 15l1.1 1.1 4.6-4.6-4.6-5z" }) });
 
-  // packages/icons/build-module/library/reset.js
+  // packages/icons/build-module/library/reset.mjs
   var import_primitives47 = __toESM(require_primitives(), 1);
   var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
   var reset_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives47.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives47.Path, { d: "M7 11.5h10V13H7z" }) });
 
-  // packages/icons/build-module/library/rotate-left.js
+  // packages/icons/build-module/library/rotate-left.mjs
   var import_primitives48 = __toESM(require_primitives(), 1);
   var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
   var rotate_left_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives48.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives48.Path, { d: "M12 4V2.2L9 4.8l3 2.5V5.5c3.6 0 6.5 2.9 6.5 6.5 0 2.9-1.9 5.3-4.5 6.2v.2l-.1-.2c-.4.1-.7.2-1.1.2l.2 1.5c.3 0 .6-.1 1-.2 3.5-.9 6-4 6-7.7 0-4.4-3.6-8-8-8zm-7.9 7l1.5.2c.1-1.2.5-2.3 1.2-3.2l-1.1-.9C4.8 8.2 4.3 9.6 4.1 11zm1.5 1.8l-1.5.2c.1.7.3 1.4.5 2 .3.7.6 1.3 1 1.8l1.2-.8c-.3-.5-.6-1-.8-1.5s-.4-1.1-.4-1.7zm1.5 5.5c1.1.9 2.4 1.4 3.8 1.6l.2-1.5c-1.1-.1-2.2-.5-3.1-1.2l-.9 1.1z" }) });
 
-  // packages/icons/build-module/library/rotate-right.js
+  // packages/icons/build-module/library/rotate-right.mjs
   var import_primitives49 = __toESM(require_primitives(), 1);
   var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
   var rotate_right_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives49.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives49.Path, { d: "M15.1 4.8l-3-2.5V4c-4.4 0-8 3.6-8 8 0 3.7 2.5 6.9 6 7.7.3.1.6.1 1 .2l.2-1.5c-.4 0-.7-.1-1.1-.2l-.1.2v-.2c-2.6-.8-4.5-3.3-4.5-6.2 0-3.6 2.9-6.5 6.5-6.5v1.8l3-2.5zM20 11c-.2-1.4-.7-2.7-1.6-3.8l-1.2.8c.7.9 1.1 2 1.3 3.1L20 11zm-1.5 1.8c-.1.5-.2 1.1-.4 1.6s-.5 1-.8 1.5l1.2.9c.4-.5.8-1.1 1-1.8s.5-1.3.5-2l-1.5-.2zm-5.6 5.6l.2 1.5c1.4-.2 2.7-.7 3.8-1.6l-.9-1.1c-.9.7-2 1.1-3.1 1.2z" }) });
 
-  // packages/icons/build-module/library/scheduled.js
+  // packages/icons/build-module/library/scheduled.mjs
   var import_primitives50 = __toESM(require_primitives(), 1);
   var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
   var scheduled_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives50.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
@@ -3208,12 +3208,12 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/seen.js
+  // packages/icons/build-module/library/seen.mjs
   var import_primitives51 = __toESM(require_primitives(), 1);
   var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
   var seen_default = /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives51.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives51.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
 
-  // packages/icons/build-module/library/settings.js
+  // packages/icons/build-module/library/settings.mjs
   var import_primitives52 = __toESM(require_primitives(), 1);
   var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
   var settings_default = /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(import_primitives52.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -3221,22 +3221,22 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives52.Path, { d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z" })
   ] });
 
-  // packages/icons/build-module/library/shadow.js
+  // packages/icons/build-module/library/shadow.mjs
   var import_primitives53 = __toESM(require_primitives(), 1);
   var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
   var shadow_default = /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives53.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives53.Path, { d: "M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 6.5c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5zM12.8 3h-1.5v3h1.5V3zm-1.6 18h1.5v-3h-1.5v3zm6.8-9.8v1.5h3v-1.5h-3zm-12 0H3v1.5h3v-1.5zm9.7 5.6 2.1 2.1 1.1-1.1-2.1-2.1-1.1 1.1zM8.3 7.2 6.2 5.1 5.1 6.2l2.1 2.1 1.1-1.1zM5.1 17.8l1.1 1.1 2.1-2.1-1.1-1.1-2.1 2.1zM18.9 6.2l-1.1-1.1-2.1 2.1 1.1 1.1 2.1-2.1z" }) });
 
-  // packages/icons/build-module/library/shuffle.js
+  // packages/icons/build-module/library/shuffle.mjs
   var import_primitives54 = __toESM(require_primitives(), 1);
   var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
   var shuffle_default = /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives54.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/SVG", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives54.Path, { d: "M17.192 6.75L15.47 5.03l1.06-1.06 3.537 3.53-3.537 3.53-1.06-1.06 1.723-1.72h-3.19c-.602 0-.993.202-1.28.498-.309.319-.538.792-.695 1.383-.13.488-.222 1.023-.296 1.508-.034.664-.116 1.413-.303 2.117-.193.721-.513 1.467-1.068 2.04-.575.594-1.359.954-2.357.954H4v-1.5h4.003c.601 0 .993-.202 1.28-.498.308-.319.538-.792.695-1.383.149-.557.216-1.093.288-1.662l.039-.31a9.653 9.653 0 0 1 .272-1.653c.193-.722.513-1.467 1.067-2.04.576-.594 1.36-.954 2.358-.954h3.19zM8.004 6.75c.8 0 1.46.23 1.988.628a6.24 6.24 0 0 0-.684 1.396 1.725 1.725 0 0 0-.024-.026c-.287-.296-.679-.498-1.28-.498H4v-1.5h4.003zM12.699 14.726c-.161.459-.38.94-.684 1.396.527.397 1.188.628 1.988.628h3.19l-1.722 1.72 1.06 1.06L20.067 16l-3.537-3.53-1.06 1.06 1.723 1.72h-3.19c-.602 0-.993-.202-1.28-.498a1.96 1.96 0 0 1-.024-.026z" }) });
 
-  // packages/icons/build-module/library/sidebar.js
+  // packages/icons/build-module/library/sidebar.mjs
   var import_primitives55 = __toESM(require_primitives(), 1);
   var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
   var sidebar_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives55.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives55.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
-  // packages/icons/build-module/library/square.js
+  // packages/icons/build-module/library/square.mjs
   var import_primitives56 = __toESM(require_primitives(), 1);
   var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
   var square_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives56.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
@@ -3250,7 +3250,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/star-empty.js
+  // packages/icons/build-module/library/star-empty.mjs
   var import_primitives57 = __toESM(require_primitives(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
   var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives57.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
@@ -3262,12 +3262,12 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/star-filled.js
+  // packages/icons/build-module/library/star-filled.mjs
   var import_primitives58 = __toESM(require_primitives(), 1);
   var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
   var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives58.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives58.Path, { d: "M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z" }) });
 
-  // packages/icons/build-module/library/styles.js
+  // packages/icons/build-module/library/styles.mjs
   var import_primitives59 = __toESM(require_primitives(), 1);
   var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
   var styles_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives59.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
@@ -3279,27 +3279,27 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/symbol-filled.js
+  // packages/icons/build-module/library/symbol-filled.mjs
   var import_primitives60 = __toESM(require_primitives(), 1);
   var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
   var symbol_filled_default = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives60.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives60.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
-  // packages/icons/build-module/library/symbol.js
+  // packages/icons/build-module/library/symbol.mjs
   var import_primitives61 = __toESM(require_primitives(), 1);
   var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
   var symbol_default = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives61.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives61.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
-  // packages/icons/build-module/library/table-column-after.js
+  // packages/icons/build-module/library/table-column-after.mjs
   var import_primitives62 = __toESM(require_primitives(), 1);
   var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
   var table_column_after_default = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives62.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives62.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm0-5.5h-4v-4h4v4Zm0-5.5h-4V5c0-.3.2-.5.5-.5h3.5v4Zm11 10.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14Zm-4-10.8H14v3h-3v1.5h3v3h1.5v-3h3v-1.5h-3v-3Z" }) });
 
-  // packages/icons/build-module/library/tablet.js
+  // packages/icons/build-module/library/tablet.mjs
   var import_primitives63 = __toESM(require_primitives(), 1);
   var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
   var tablet_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives63.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives63.Path, { d: "M17 4H7c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H7c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h10c.3 0 .5.2.5.5v12zm-7.5-.5h4V16h-4v1.5z" }) });
 
-  // packages/icons/build-module/library/trash.js
+  // packages/icons/build-module/library/trash.mjs
   var import_primitives64 = __toESM(require_primitives(), 1);
   var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
   var trash_default = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives64.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
@@ -3311,32 +3311,32 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/typography.js
+  // packages/icons/build-module/library/typography.mjs
   var import_primitives65 = __toESM(require_primitives(), 1);
   var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
   var typography_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives65.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives65.Path, { d: "m8.6 7 3.9 10.8h-1.7l-1-2.8H5.7l-1 2.8H3L6.9 7h1.7Zm-2.4 6.6h3L7.7 9.3l-1.5 4.3ZM17.691 8.879c.473 0 .88.055 1.221.165.352.1.643.264.875.495.274.253.456.572.544.957.088.374.132.83.132 1.37v4.554c0 .274.033.472.099.593.077.11.198.166.363.166.11 0 .215-.028.313-.083.11-.055.237-.137.38-.247l.165.28a3.304 3.304 0 0 1-.71.446c-.23.11-.527.165-.89.165-.352 0-.639-.055-.858-.165-.22-.11-.386-.27-.495-.479-.1-.209-.149-.468-.149-.775-.286.462-.627.814-1.023 1.056-.396.242-.858.363-1.386.363-.462 0-.858-.088-1.188-.264a1.752 1.752 0 0 1-.742-.726 2.201 2.201 0 0 1-.248-1.056c0-.484.11-.875.33-1.172.22-.308.5-.556.841-.742.352-.187.721-.341 1.106-.462.396-.132.765-.253 1.106-.363.351-.121.637-.259.857-.413.232-.154.347-.357.347-.61V10.81c0-.396-.066-.71-.198-.941a1.05 1.05 0 0 0-.511-.511 1.763 1.763 0 0 0-.76-.149c-.253 0-.522.039-.808.116a1.165 1.165 0 0 0-.677.412 1.1 1.1 0 0 1 .595.396c.165.187.247.424.247.71 0 .307-.104.55-.313.726-.198.176-.451.263-.76.263-.34 0-.594-.104-.758-.313a1.231 1.231 0 0 1-.248-.759c0-.297.072-.539.214-.726.154-.187.352-.363.595-.528.264-.176.6-.324 1.006-.445.418-.121.88-.182 1.386-.182Zm.99 3.729a1.57 1.57 0 0 1-.528.462c-.231.121-.479.248-.742.38a5.377 5.377 0 0 0-.76.462c-.23.165-.423.38-.577.643-.154.264-.231.6-.231 1.007 0 .429.11.77.33 1.023.22.242.517.363.891.363.308 0 .594-.088.858-.264.275-.176.528-.44.759-.792v-3.284Z" }) });
 
-  // packages/icons/build-module/library/undo.js
+  // packages/icons/build-module/library/undo.mjs
   var import_primitives66 = __toESM(require_primitives(), 1);
   var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
   var undo_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives66.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives66.Path, { d: "M18.3 11.7c-.6-.6-1.4-.9-2.3-.9H6.7l2.9-3.3-1.1-1-4.5 5L8.5 16l1-1-2.7-2.7H16c.5 0 .9.2 1.3.5 1 1 1 3.4 1 4.5v.3h1.5v-.2c0-1.5 0-4.3-1.5-5.7z" }) });
 
-  // packages/icons/build-module/library/verse.js
+  // packages/icons/build-module/library/verse.mjs
   var import_primitives67 = __toESM(require_primitives(), 1);
   var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
   var verse_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives67.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives67.Path, { d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z" }) });
 
-  // packages/icons/build-module/library/video.js
+  // packages/icons/build-module/library/video.mjs
   var import_primitives68 = __toESM(require_primitives(), 1);
   var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
   var video_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives68.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives68.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z" }) });
 
-  // packages/icons/build-module/library/wordpress.js
+  // packages/icons/build-module/library/wordpress.mjs
   var import_primitives69 = __toESM(require_primitives(), 1);
   var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
   var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives69.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "-2 -2 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives69.Path, { d: "M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.1z" }) });
 
-  // packages/editor/build-module/utils/get-template-part-icon.js
+  // packages/editor/build-module/utils/get-template-part-icon.mjs
   function getTemplatePartIcon(areaOrIconName) {
     if ("header" === areaOrIconName) {
       return header_default;
@@ -3353,14 +3353,14 @@ var wp;
     return symbol_filled_default;
   }
 
-  // packages/editor/build-module/lock-unlock.js
+  // packages/editor/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/editor"
   );
 
-  // packages/editor/build-module/utils/get-template-info.js
+  // packages/editor/build-module/utils/get-template-info.mjs
   var EMPTY_OBJECT = {};
   var getTemplateInfo = (params) => {
     if (!params) {
@@ -3383,7 +3383,7 @@ var wp;
     };
   };
 
-  // packages/editor/build-module/store/selectors.js
+  // packages/editor/build-module/store/selectors.mjs
   var EMPTY_OBJECT2 = {};
   var hasEditorUndo = (0, import_data3.createRegistrySelector)((select5) => () => {
     return select5(import_core_data.store).hasUndo();
@@ -4107,7 +4107,7 @@ var wp;
     return state.publishSidebarActive;
   }
 
-  // packages/editor/build-module/store/actions.js
+  // packages/editor/build-module/store/actions.mjs
   var actions_exports = {};
   __export(actions_exports, {
     __experimentalTearDownEditor: () => __experimentalTearDownEditor,
@@ -4191,7 +4191,7 @@ var wp;
   var import_preferences2 = __toESM(require_preferences(), 1);
   var import_i18n2 = __toESM(require_i18n(), 1);
 
-  // packages/editor/build-module/store/local-autosave.js
+  // packages/editor/build-module/store/local-autosave.mjs
   function postKey(postId2, isPostNew) {
     return `wp-autosave-block-editor-post-${isPostNew ? "auto-draft" : postId2}`;
   }
@@ -4212,7 +4212,7 @@ var wp;
     window.sessionStorage.removeItem(postKey(postId2, isPostNew));
   }
 
-  // packages/editor/build-module/store/utils/notice-builder.js
+  // packages/editor/build-module/store/utils/notice-builder.mjs
   var import_i18n = __toESM(require_i18n(), 1);
   function getNotificationArgumentsForSaveSuccess(data) {
     const { previousPost, post: post2, postType: postType2 } = data;
@@ -4312,7 +4312,7 @@ var wp;
     ];
   }
 
-  // packages/editor/build-module/store/actions.js
+  // packages/editor/build-module/store/actions.mjs
   var setupEditor = (post2, edits, template2) => ({ dispatch: dispatch6 }) => {
     dispatch6.setEditedPost(post2.type, post2.id);
     const isNewPost = post2.status === "auto-draft";
@@ -4896,7 +4896,7 @@ var wp;
     "updateBlockListSettings"
   );
 
-  // packages/editor/build-module/store/private-actions.js
+  // packages/editor/build-module/store/private-actions.mjs
   var private_actions_exports = {};
   __export(private_actions_exports, {
     createTemplate: () => createTemplate,
@@ -4928,7 +4928,7 @@ var wp;
   var import_blocks19 = __toESM(require_blocks(), 1);
   var import_html_entities9 = __toESM(require_html_entities(), 1);
 
-  // packages/editor/build-module/store/utils/is-template-revertable.js
+  // packages/editor/build-module/store/utils/is-template-revertable.mjs
   function isTemplateRevertable(templateOrTemplatePart) {
     if (!templateOrTemplatePart) {
       return false;
@@ -4936,14 +4936,14 @@ var wp;
     return templateOrTemplatePart.source === TEMPLATE_ORIGINS.custom && (Boolean(templateOrTemplatePart?.plugin) || templateOrTemplatePart?.has_theme_file);
   }
 
-  // packages/editor/build-module/dataviews/store/private-actions.js
+  // packages/editor/build-module/dataviews/store/private-actions.mjs
   var import_core_data45 = __toESM(require_core_data(), 1);
   var import_hooks36 = __toESM(require_hooks(), 1);
 
-  // packages/fields/build-module/fields/slug/index.js
+  // packages/fields/build-module/fields/slug/index.mjs
   var import_i18n5 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/slug/slug-edit.js
+  // packages/fields/build-module/fields/slug/slug-edit.mjs
   var import_components = __toESM(require_components(), 1);
   var import_compose = __toESM(require_compose(), 1);
   var import_data4 = __toESM(require_data(), 1);
@@ -4952,10 +4952,10 @@ var wp;
   var import_url3 = __toESM(require_url(), 1);
   var import_i18n4 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/slug/utils.js
+  // packages/fields/build-module/fields/slug/utils.mjs
   var import_url2 = __toESM(require_url(), 1);
 
-  // packages/fields/build-module/actions/utils.js
+  // packages/fields/build-module/actions/utils.mjs
   var import_html_entities = __toESM(require_html_entities(), 1);
   var import_i18n3 = __toESM(require_i18n(), 1);
   function isTemplate(post2) {
@@ -4985,7 +4985,7 @@ var wp;
     return [template2.source, template2.source].includes("custom") && !Boolean(template2.type === "wp_template" && template2?.plugin) && !template2.has_theme_file;
   }
 
-  // packages/fields/build-module/fields/slug/utils.js
+  // packages/fields/build-module/fields/slug/utils.mjs
   var getSlug = (item) => {
     if (typeof item !== "object") {
       return "";
@@ -4993,7 +4993,7 @@ var wp;
     return item.slug || (0, import_url2.cleanForSlug)(getItemTitle(item)) || item.id.toString();
   };
 
-  // packages/fields/build-module/fields/slug/slug-edit.js
+  // packages/fields/build-module/fields/slug/slug-edit.mjs
   var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
   var SlugEdit = ({
     field,
@@ -5100,7 +5100,7 @@ var wp;
   };
   var slug_edit_default = SlugEdit;
 
-  // packages/fields/build-module/fields/slug/slug-view.js
+  // packages/fields/build-module/fields/slug/slug-view.mjs
   var import_element4 = __toESM(require_element(), 1);
   var SlugView = ({ item }) => {
     const slug = getSlug(item);
@@ -5115,7 +5115,7 @@ var wp;
   };
   var slug_view_default = SlugView;
 
-  // packages/fields/build-module/fields/slug/index.js
+  // packages/fields/build-module/fields/slug/index.mjs
   var slugField = {
     id: "slug",
     type: "text",
@@ -5126,7 +5126,7 @@ var wp;
   };
   var slug_default = slugField;
 
-  // packages/fields/build-module/fields/title/index.js
+  // packages/fields/build-module/fields/title/index.mjs
   var import_i18n7 = __toESM(require_i18n(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
@@ -5145,7 +5145,7 @@ var wp;
   }
   var clsx_default = clsx;
 
-  // packages/fields/build-module/fields/title/view.js
+  // packages/fields/build-module/fields/title/view.mjs
   var import_components2 = __toESM(require_components(), 1);
   var import_i18n6 = __toESM(require_i18n(), 1);
   var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
@@ -5172,7 +5172,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(BaseTitleView, { item });
   }
 
-  // packages/fields/build-module/fields/title/index.js
+  // packages/fields/build-module/fields/title/index.mjs
   var titleField = {
     type: "text",
     id: "title",
@@ -5186,23 +5186,23 @@ var wp;
   };
   var title_default = titleField;
 
-  // packages/fields/build-module/fields/page-title/index.js
+  // packages/fields/build-module/fields/page-title/index.mjs
   var import_i18n9 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/page-title/view.js
+  // packages/fields/build-module/fields/page-title/view.mjs
   var import_i18n8 = __toESM(require_i18n(), 1);
   var import_data5 = __toESM(require_data(), 1);
   var import_core_data3 = __toESM(require_core_data(), 1);
   var import_components3 = __toESM(require_components(), 1);
 
-  // packages/fields/build-module/lock-unlock.js
+  // packages/fields/build-module/lock-unlock.mjs
   var import_private_apis2 = __toESM(require_private_apis(), 1);
   var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/fields"
   );
 
-  // packages/fields/build-module/fields/page-title/view.js
+  // packages/fields/build-module/fields/page-title/view.mjs
   var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
   var { Badge } = unlock2(import_components3.privateApis);
   function PageTitleView({ item }) {
@@ -5220,7 +5220,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(BaseTitleView, { item, className: "fields-field__page-title", children: [frontPageId, postsPageId].includes(item.id) && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Badge, { children: item.id === frontPageId ? (0, import_i18n8.__)("Homepage") : (0, import_i18n8.__)("Posts Page") }) });
   }
 
-  // packages/fields/build-module/fields/page-title/index.js
+  // packages/fields/build-module/fields/page-title/index.mjs
   var pageTitleField = {
     type: "text",
     id: "title",
@@ -5234,7 +5234,7 @@ var wp;
   };
   var page_title_default = pageTitleField;
 
-  // packages/fields/build-module/fields/template-title/index.js
+  // packages/fields/build-module/fields/template-title/index.mjs
   var import_i18n10 = __toESM(require_i18n(), 1);
   var templateTitleField = {
     type: "text",
@@ -5249,10 +5249,10 @@ var wp;
   };
   var template_title_default = templateTitleField;
 
-  // packages/fields/build-module/fields/pattern-title/index.js
+  // packages/fields/build-module/fields/pattern-title/index.mjs
   var import_i18n12 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/pattern-title/view.js
+  // packages/fields/build-module/fields/pattern-title/view.mjs
   var import_i18n11 = __toESM(require_i18n(), 1);
   var import_components4 = __toESM(require_components(), 1);
   var import_patterns = __toESM(require_patterns(), 1);
@@ -5269,7 +5269,7 @@ var wp;
     ) });
   }
 
-  // packages/fields/build-module/fields/pattern-title/index.js
+  // packages/fields/build-module/fields/pattern-title/index.mjs
   var patternTitleField = {
     type: "text",
     id: "title",
@@ -5283,10 +5283,10 @@ var wp;
   };
   var pattern_title_default = patternTitleField;
 
-  // packages/fields/build-module/fields/featured-image/index.js
+  // packages/fields/build-module/fields/featured-image/index.mjs
   var import_i18n14 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/components/media-edit/index.js
+  // packages/fields/build-module/components/media-edit/index.mjs
   var import_components5 = __toESM(require_components(), 1);
   var import_core_data4 = __toESM(require_core_data(), 1);
   var import_data6 = __toESM(require_data(), 1);
@@ -5496,7 +5496,7 @@ var wp;
     ) });
   }
 
-  // packages/fields/build-module/fields/featured-image/featured-image-view.js
+  // packages/fields/build-module/fields/featured-image/featured-image-view.mjs
   var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
   var FeaturedImageView = ({
     item,
@@ -5521,7 +5521,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("span", { className: "fields-controls__featured-image-placeholder" });
   };
 
-  // packages/fields/build-module/fields/featured-image/index.js
+  // packages/fields/build-module/fields/featured-image/index.mjs
   var featuredImageField = {
     id: "featured_media",
     type: "media",
@@ -5536,10 +5536,10 @@ var wp;
   };
   var featured_image_default = featuredImageField;
 
-  // packages/fields/build-module/fields/template/index.js
+  // packages/fields/build-module/fields/template/index.mjs
   var import_i18n16 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/template/template-edit.js
+  // packages/fields/build-module/fields/template/template-edit.mjs
   var import_element6 = __toESM(require_element(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
   var import_core_data5 = __toESM(require_core_data(), 1);
@@ -5697,7 +5697,7 @@ var wp;
     ] });
   };
 
-  // packages/fields/build-module/fields/template/index.js
+  // packages/fields/build-module/fields/template/index.mjs
   var templateField = {
     id: "template",
     type: "text",
@@ -5708,10 +5708,10 @@ var wp;
   };
   var template_default = templateField;
 
-  // packages/fields/build-module/fields/parent/index.js
+  // packages/fields/build-module/fields/parent/index.mjs
   var import_i18n20 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/parent/parent-edit.js
+  // packages/fields/build-module/fields/parent/parent-edit.mjs
   var import_remove_accents = __toESM(require_remove_accents(), 1);
   var import_components7 = __toESM(require_components(), 1);
   var import_data8 = __toESM(require_data(), 1);
@@ -5722,14 +5722,14 @@ var wp;
   var import_i18n18 = __toESM(require_i18n(), 1);
   var import_url4 = __toESM(require_url(), 1);
 
-  // packages/fields/build-module/fields/parent/utils.js
+  // packages/fields/build-module/fields/parent/utils.mjs
   var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_i18n17 = __toESM(require_i18n(), 1);
   function getTitleWithFallbackName(post2) {
     return typeof post2.title === "object" && "rendered" in post2.title && post2.title.rendered ? (0, import_html_entities3.decodeEntities)(post2.title.rendered) : `#${post2?.id} (${(0, import_i18n17.__)("no title")})`;
   }
 
-  // packages/fields/build-module/fields/parent/parent-edit.js
+  // packages/fields/build-module/fields/parent/parent-edit.mjs
   var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
   function buildTermsTree(flatTerms) {
     const flatTermsWithParentAndChildren = flatTerms.map((term) => {
@@ -5953,7 +5953,7 @@ var wp;
     ] }) });
   };
 
-  // packages/fields/build-module/fields/parent/parent-view.js
+  // packages/fields/build-module/fields/parent/parent-view.mjs
   var import_data9 = __toESM(require_data(), 1);
   var import_core_data7 = __toESM(require_core_data(), 1);
   var import_i18n19 = __toESM(require_i18n(), 1);
@@ -5974,7 +5974,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_jsx_runtime78.Fragment, { children: (0, import_i18n19.__)("None") });
   };
 
-  // packages/fields/build-module/fields/parent/index.js
+  // packages/fields/build-module/fields/parent/index.mjs
   var parentField = {
     id: "parent",
     type: "text",
@@ -5986,10 +5986,10 @@ var wp;
   };
   var parent_default = parentField;
 
-  // packages/fields/build-module/fields/password/index.js
+  // packages/fields/build-module/fields/password/index.mjs
   var import_i18n22 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/password/edit.js
+  // packages/fields/build-module/fields/password/edit.mjs
   var import_components8 = __toESM(require_components(), 1);
   var import_element8 = __toESM(require_element(), 1);
   var import_i18n21 = __toESM(require_i18n(), 1);
@@ -6044,7 +6044,7 @@ var wp;
   }
   var edit_default = PasswordEdit;
 
-  // packages/fields/build-module/fields/password/index.js
+  // packages/fields/build-module/fields/password/index.mjs
   var passwordField = {
     id: "password",
     type: "text",
@@ -6057,13 +6057,13 @@ var wp;
   };
   var password_default = passwordField;
 
-  // packages/fields/build-module/fields/status/index.js
+  // packages/fields/build-module/fields/status/index.mjs
   var import_i18n24 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/status/status-view.js
+  // packages/fields/build-module/fields/status/status-view.mjs
   var import_components9 = __toESM(require_components(), 1);
 
-  // packages/fields/build-module/fields/status/status-elements.js
+  // packages/fields/build-module/fields/status/status-elements.mjs
   var import_i18n23 = __toESM(require_i18n(), 1);
   var STATUSES = [
     {
@@ -6100,7 +6100,7 @@ var wp;
   ];
   var status_elements_default = STATUSES;
 
-  // packages/fields/build-module/fields/status/status-view.js
+  // packages/fields/build-module/fields/status/status-view.mjs
   var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
   function StatusView({ item }) {
     const status = status_elements_default.find(({ value }) => value === item.status);
@@ -6113,7 +6113,7 @@ var wp;
   }
   var status_view_default = StatusView;
 
-  // packages/fields/build-module/fields/status/index.js
+  // packages/fields/build-module/fields/status/index.mjs
   var OPERATOR_IS_ANY = "isAny";
   var statusField = {
     label: (0, import_i18n24.__)("Status"),
@@ -6129,7 +6129,7 @@ var wp;
   };
   var status_default = statusField;
 
-  // packages/fields/build-module/fields/comment-status/index.js
+  // packages/fields/build-module/fields/comment-status/index.mjs
   var import_i18n25 = __toESM(require_i18n(), 1);
   var commentStatusField = {
     id: "comment_status",
@@ -6156,7 +6156,7 @@ var wp;
   };
   var comment_status_default = commentStatusField;
 
-  // packages/fields/build-module/fields/ping-status/index.js
+  // packages/fields/build-module/fields/ping-status/index.mjs
   var import_i18n26 = __toESM(require_i18n(), 1);
   var import_components10 = __toESM(require_components(), 1);
   var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
@@ -6216,7 +6216,7 @@ var wp;
   };
   var ping_status_default = pingStatusField;
 
-  // packages/fields/build-module/fields/discussion/index.js
+  // packages/fields/build-module/fields/discussion/index.mjs
   var import_i18n27 = __toESM(require_i18n(), 1);
   var discussionField = {
     id: "discussion",
@@ -6240,10 +6240,10 @@ var wp;
   };
   var discussion_default = discussionField;
 
-  // packages/fields/build-module/fields/date/index.js
+  // packages/fields/build-module/fields/date/index.mjs
   var import_i18n29 = __toESM(require_i18n(), 1);
 
-  // packages/fields/build-module/fields/date/date-view.js
+  // packages/fields/build-module/fields/date/date-view.mjs
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_element9 = __toESM(require_element(), 1);
   var import_date2 = __toESM(require_date(), 1);
@@ -6316,7 +6316,7 @@ var wp;
   };
   var date_view_default = DateView;
 
-  // packages/fields/build-module/fields/date/index.js
+  // packages/fields/build-module/fields/date/index.mjs
   var dateField = {
     id: "date",
     type: "datetime",
@@ -6328,12 +6328,12 @@ var wp;
   };
   var date_default = dateField;
 
-  // packages/fields/build-module/fields/author/index.js
+  // packages/fields/build-module/fields/author/index.mjs
   var import_i18n31 = __toESM(require_i18n(), 1);
   var import_data11 = __toESM(require_data(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
 
-  // packages/fields/build-module/fields/author/author-view.js
+  // packages/fields/build-module/fields/author/author-view.mjs
   var import_i18n30 = __toESM(require_i18n(), 1);
   var import_element10 = __toESM(require_element(), 1);
   var import_components11 = __toESM(require_components(), 1);
@@ -6382,7 +6382,7 @@ var wp;
   }
   var author_view_default = AuthorView;
 
-  // packages/fields/build-module/fields/author/index.js
+  // packages/fields/build-module/fields/author/index.mjs
   var authorField = {
     label: (0, import_i18n31.__)("Author"),
     id: "author",
@@ -6413,7 +6413,7 @@ var wp;
   };
   var author_default = authorField;
 
-  // packages/fields/build-module/fields/notes/index.js
+  // packages/fields/build-module/fields/notes/index.mjs
   var import_i18n32 = __toESM(require_i18n(), 1);
   var notesField = {
     id: "notesCount",
@@ -6424,7 +6424,7 @@ var wp;
   };
   var notes_default = notesField;
 
-  // packages/fields/build-module/actions/view-post.js
+  // packages/fields/build-module/actions/view-post.mjs
   var import_i18n33 = __toESM(require_i18n(), 1);
   var viewPost = {
     id: "view-post",
@@ -6444,7 +6444,7 @@ var wp;
   };
   var view_post_default = viewPost;
 
-  // packages/fields/build-module/actions/reorder-page.js
+  // packages/fields/build-module/actions/reorder-page.mjs
   var import_data12 = __toESM(require_data(), 1);
   var import_core_data10 = __toESM(require_core_data(), 1);
   var import_i18n34 = __toESM(require_i18n(), 1);
@@ -6546,7 +6546,7 @@ var wp;
   };
   var reorder_page_default = reorderPage;
 
-  // packages/fields/build-module/actions/duplicate-post.js
+  // packages/fields/build-module/actions/duplicate-post.mjs
   var import_data13 = __toESM(require_data(), 1);
   var import_core_data11 = __toESM(require_core_data(), 1);
   var import_i18n35 = __toESM(require_i18n(), 1);
@@ -6683,7 +6683,7 @@ var wp;
   };
   var duplicate_post_default = duplicatePost;
 
-  // packages/fields/build-module/actions/rename-post.js
+  // packages/fields/build-module/actions/rename-post.mjs
   var import_data14 = __toESM(require_data(), 1);
   var import_core_data12 = __toESM(require_core_data(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
@@ -6783,7 +6783,7 @@ var wp;
   };
   var rename_post_default = renamePost;
 
-  // packages/fields/build-module/actions/reset-post.js
+  // packages/fields/build-module/actions/reset-post.mjs
   var import_data15 = __toESM(require_data(), 1);
   var import_core_data13 = __toESM(require_core_data(), 1);
   var import_i18n37 = __toESM(require_i18n(), 1);
@@ -7012,7 +7012,7 @@ var wp;
   };
   var reset_post_default = resetPostAction;
 
-  // packages/fields/build-module/actions/duplicate-pattern.js
+  // packages/fields/build-module/actions/duplicate-pattern.mjs
   var import_i18n38 = __toESM(require_i18n(), 1);
   var import_patterns3 = __toESM(require_patterns(), 1);
   var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
@@ -7271,7 +7271,7 @@ var wp;
     })(u3, a3), u3);
   }
 
-  // packages/fields/build-module/actions/export-pattern.js
+  // packages/fields/build-module/actions/export-pattern.mjs
   var import_blob = __toESM(require_blob(), 1);
   var import_i18n39 = __toESM(require_i18n(), 1);
   function getJsonFromItem(item) {
@@ -7321,7 +7321,7 @@ var wp;
   };
   var export_pattern_default = exportPattern;
 
-  // packages/fields/build-module/actions/view-post-revisions.js
+  // packages/fields/build-module/actions/view-post-revisions.mjs
   var import_url6 = __toESM(require_url(), 1);
   var import_i18n40 = __toESM(require_i18n(), 1);
   var viewPostRevisions = {
@@ -7356,7 +7356,7 @@ var wp;
   };
   var view_post_revisions_default = viewPostRevisions;
 
-  // packages/fields/build-module/actions/permanently-delete-post.js
+  // packages/fields/build-module/actions/permanently-delete-post.mjs
   var import_core_data14 = __toESM(require_core_data(), 1);
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
@@ -7514,7 +7514,7 @@ var wp;
   };
   var permanently_delete_post_default = permanentlyDeletePost;
 
-  // packages/fields/build-module/actions/restore-post.js
+  // packages/fields/build-module/actions/restore-post.mjs
   var import_core_data15 = __toESM(require_core_data(), 1);
   var import_i18n42 = __toESM(require_i18n(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
@@ -7622,7 +7622,7 @@ var wp;
   };
   var restore_post_default = restorePost;
 
-  // packages/fields/build-module/actions/trash-post.js
+  // packages/fields/build-module/actions/trash-post.mjs
   var import_data17 = __toESM(require_data(), 1);
   var import_core_data16 = __toESM(require_core_data(), 1);
   var import_i18n43 = __toESM(require_i18n(), 1);
@@ -7790,14 +7790,14 @@ var wp;
   };
   var trash_post_default = trashPost2;
 
-  // packages/fields/build-module/actions/delete-post.js
+  // packages/fields/build-module/actions/delete-post.mjs
   var import_i18n44 = __toESM(require_i18n(), 1);
   var import_element17 = __toESM(require_element(), 1);
   var import_components18 = __toESM(require_components(), 1);
   var import_patterns4 = __toESM(require_patterns(), 1);
   var import_html_entities6 = __toESM(require_html_entities(), 1);
 
-  // packages/fields/build-module/mutation/index.js
+  // packages/fields/build-module/mutation/index.mjs
   var import_notices10 = __toESM(require_notices(), 1);
   var import_core_data17 = __toESM(require_core_data(), 1);
   var import_data18 = __toESM(require_data(), 1);
@@ -7863,7 +7863,7 @@ var wp;
     }
   };
 
-  // packages/fields/build-module/actions/delete-post.js
+  // packages/fields/build-module/actions/delete-post.mjs
   var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
   var { PATTERN_TYPES: PATTERN_TYPES3 } = unlock2(import_patterns4.privateApis);
   var deletePostAction = {
@@ -8018,14 +8018,14 @@ var wp;
   };
   var delete_post_default = deletePostAction;
 
-  // packages/fields/build-module/actions/duplicate-template-part.js
+  // packages/fields/build-module/actions/duplicate-template-part.mjs
   var import_data21 = __toESM(require_data(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
   var import_notices12 = __toESM(require_notices(), 1);
   var import_element19 = __toESM(require_element(), 1);
   var import_blocks6 = __toESM(require_blocks(), 1);
 
-  // packages/fields/build-module/components/create-template-part-modal/index.js
+  // packages/fields/build-module/components/create-template-part-modal/index.mjs
   var import_components19 = __toESM(require_components(), 1);
   var import_compose4 = __toESM(require_compose(), 1);
   var import_core_data19 = __toESM(require_core_data(), 1);
@@ -8035,7 +8035,7 @@ var wp;
   var import_notices11 = __toESM(require_notices(), 1);
   var import_blocks5 = __toESM(require_blocks(), 1);
 
-  // packages/fields/build-module/components/create-template-part-modal/utils.js
+  // packages/fields/build-module/components/create-template-part-modal/utils.mjs
   var import_data19 = __toESM(require_data(), 1);
   var import_core_data18 = __toESM(require_core_data(), 1);
   var useExistingTemplateParts = () => {
@@ -8068,7 +8068,7 @@ var wp;
     return paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
   };
 
-  // packages/fields/build-module/components/create-template-part-modal/index.js
+  // packages/fields/build-module/components/create-template-part-modal/index.mjs
   var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
   function getAreaRadioId(value, instanceId) {
     return `fields-create-template-part-modal__area-option-${value}-${instanceId}`;
@@ -8284,7 +8284,7 @@ var wp;
     );
   }
 
-  // packages/fields/build-module/actions/duplicate-template-part.js
+  // packages/fields/build-module/actions/duplicate-template-part.mjs
   var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
   var duplicateTemplatePart = {
     id: "duplicate-template-part",
@@ -8335,16 +8335,16 @@ var wp;
   };
   var duplicate_template_part_default = duplicateTemplatePart;
 
-  // packages/editor/build-module/dataviews/fields/content-preview/index.js
+  // packages/editor/build-module/dataviews/fields/content-preview/index.mjs
   var import_i18n107 = __toESM(require_i18n(), 1);
 
-  // packages/editor/build-module/dataviews/fields/content-preview/content-preview-view.js
+  // packages/editor/build-module/dataviews/fields/content-preview/content-preview-view.mjs
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_block_editor34 = __toESM(require_block_editor(), 1);
   var import_data64 = __toESM(require_data(), 1);
   var import_core_data44 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/provider/index.js
+  // packages/editor/build-module/components/provider/index.mjs
   var import_element37 = __toESM(require_element(), 1);
   var import_data48 = __toESM(require_data(), 1);
   var import_i18n60 = __toESM(require_i18n(), 1);
@@ -8354,7 +8354,7 @@ var wp;
   var import_patterns7 = __toESM(require_patterns(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
 
-  // packages/editor/build-module/components/provider/with-registry-provider.js
+  // packages/editor/build-module/components/provider/with-registry-provider.mjs
   var import_element20 = __toESM(require_element(), 1);
   var import_data22 = __toESM(require_data(), 1);
   var import_compose5 = __toESM(require_compose(), 1);
@@ -8395,7 +8395,7 @@ var wp;
   );
   var with_registry_provider_default = withRegistryProvider;
 
-  // packages/editor/build-module/components/provider/use-block-editor-settings.js
+  // packages/editor/build-module/components/provider/use-block-editor-settings.mjs
   var import_element22 = __toESM(require_element(), 1);
   var import_data27 = __toESM(require_data(), 1);
   var import_core_data23 = __toESM(require_core_data(), 1);
@@ -8405,7 +8405,7 @@ var wp;
   var import_blocks9 = __toESM(require_blocks(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/media-categories/index.js
+  // packages/editor/build-module/components/media-categories/index.mjs
   var import_i18n47 = __toESM(require_i18n(), 1);
   var import_data23 = __toESM(require_data(), 1);
   var import_html_entities7 = __toESM(require_html_entities(), 1);
@@ -8631,7 +8631,7 @@ var wp;
   }
   var v4_default = v4;
 
-  // packages/editor/build-module/utils/media-upload/index.js
+  // packages/editor/build-module/utils/media-upload/index.mjs
   var import_data24 = __toESM(require_data(), 1);
   var import_core_data21 = __toESM(require_core_data(), 1);
   var import_media_utils2 = __toESM(require_media_utils(), 1);
@@ -8709,7 +8709,7 @@ var wp;
     });
   }
 
-  // packages/editor/build-module/utils/url.js
+  // packages/editor/build-module/utils/url.mjs
   var import_url7 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
   function cleanForSlug3(string) {
@@ -8721,18 +8721,18 @@ var wp;
     return (0, import_url7.cleanForSlug)(string);
   }
 
-  // packages/editor/build-module/utils/media-sideload/index.js
+  // packages/editor/build-module/utils/media-sideload/index.mjs
   var import_media_utils3 = __toESM(require_media_utils(), 1);
   var { sideloadMedia: mediaSideload } = unlock(import_media_utils3.privateApis);
   var media_sideload_default = mediaSideload;
 
-  // packages/editor/build-module/components/global-styles-provider/index.js
+  // packages/editor/build-module/components/global-styles-provider/index.mjs
   var import_block_editor6 = __toESM(require_block_editor(), 1);
   var import_core_data22 = __toESM(require_core_data(), 1);
   var import_data26 = __toESM(require_data(), 1);
   var import_element21 = __toESM(require_element(), 1);
 
-  // packages/global-styles-engine/build-module/utils/object.js
+  // packages/global-styles-engine/build-module/utils/object.mjs
   function setImmutably(object, path, value) {
     path = Array.isArray(path) ? [...path] : [path];
     object = Array.isArray(object) ? [...object] : { ...object };
@@ -8754,7 +8754,7 @@ var wp;
     return value ?? defaultValue;
   };
 
-  // packages/global-styles-engine/build-module/settings/get-setting.js
+  // packages/global-styles-engine/build-module/settings/get-setting.mjs
   var VALID_SETTINGS = [
     "appearanceTools",
     "useRootPaddingAwareAlignments",
@@ -8842,7 +8842,7 @@ var wp;
     return result;
   }
 
-  // packages/global-styles-engine/build-module/settings/set-setting.js
+  // packages/global-styles-engine/build-module/settings/set-setting.mjs
   function setSetting(globalStyles, path, newValue, blockName) {
     const appendedBlockPath = blockName ? ".blocks." + blockName : "";
     const appendedPropertyPath = path ? "." + path : "";
@@ -8854,10 +8854,10 @@ var wp;
     );
   }
 
-  // packages/global-styles-engine/build-module/utils/common.js
+  // packages/global-styles-engine/build-module/utils/common.mjs
   var import_style_engine = __toESM(require_style_engine(), 1);
 
-  // packages/global-styles-engine/build-module/utils/fluid.js
+  // packages/global-styles-engine/build-module/utils/fluid.mjs
   var DEFAULT_MAXIMUM_VIEWPORT_WIDTH = "1600px";
   var DEFAULT_MINIMUM_VIEWPORT_WIDTH = "320px";
   var DEFAULT_SCALE_FACTOR = 1;
@@ -9000,7 +9000,7 @@ var wp;
     return Math.round(value * base) / base;
   }
 
-  // packages/global-styles-engine/build-module/utils/typography.js
+  // packages/global-styles-engine/build-module/utils/typography.mjs
   function isFluidTypographyEnabled(typographySettings) {
     const fluidSettings = typographySettings?.fluid;
     return true === fluidSettings || fluidSettings && typeof fluidSettings === "object" && Object.keys(fluidSettings).length > 0;
@@ -9043,7 +9043,7 @@ var wp;
     return defaultSize;
   }
 
-  // packages/global-styles-engine/build-module/utils/common.js
+  // packages/global-styles-engine/build-module/utils/common.mjs
   var ROOT_BLOCK_SELECTOR = "body";
   var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
   var PRESET_METADATA = [
@@ -9343,7 +9343,7 @@ var wp;
     return variable;
   }
 
-  // packages/global-styles-engine/build-module/settings/get-style.js
+  // packages/global-styles-engine/build-module/settings/get-style.mjs
   function getStyle(globalStyles, path, blockName, shouldDecodeEncode = true) {
     const appendedPath = path ? "." + path : "";
     const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
@@ -9355,7 +9355,7 @@ var wp;
     return result;
   }
 
-  // packages/global-styles-engine/build-module/settings/set-style.js
+  // packages/global-styles-engine/build-module/settings/set-style.mjs
   function setStyle(globalStyles, path, newValue, blockName) {
     const appendedPath = path ? "." + path : "";
     const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
@@ -9366,7 +9366,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-engine/build-module/core/equal.js
+  // packages/global-styles-engine/build-module/core/equal.mjs
   var import_es6 = __toESM(require_es6(), 1);
   function areGlobalStylesEqual(original, variation) {
     if (typeof original !== "object" || typeof variation !== "object") {
@@ -9375,7 +9375,7 @@ var wp;
     return (0, import_es6.default)(original?.styles, variation?.styles) && (0, import_es6.default)(original?.settings, variation?.settings);
   }
 
-  // packages/global-styles-engine/build-module/core/merge.js
+  // packages/global-styles-engine/build-module/core/merge.mjs
   var import_deepmerge = __toESM(require_cjs(), 1);
 
   // node_modules/is-plain-object/dist/is-plain-object.mjs
@@ -9395,7 +9395,7 @@ var wp;
     return true;
   }
 
-  // packages/global-styles-engine/build-module/core/merge.js
+  // packages/global-styles-engine/build-module/core/merge.mjs
   function mergeGlobalStyles(base, user) {
     return (0, import_deepmerge.default)(base, user, {
       /*
@@ -9486,7 +9486,7 @@ var wp;
     return memoized;
   }
 
-  // packages/global-styles-engine/build-module/utils/get-global-styles-changes.js
+  // packages/global-styles-engine/build-module/utils/get-global-styles-changes.mjs
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_blocks7 = __toESM(require_blocks(), 1);
   var globalStylesChangesCache = /* @__PURE__ */ new Map();
@@ -9671,12 +9671,12 @@ var wp;
     return EMPTY_ARRAY2;
   }
 
-  // packages/global-styles-engine/build-module/core/render.js
+  // packages/global-styles-engine/build-module/core/render.mjs
   var import_blocks8 = __toESM(require_blocks(), 1);
   var import_style_engine2 = __toESM(require_style_engine(), 1);
   var import_data25 = __toESM(require_data(), 1);
 
-  // packages/global-styles-engine/build-module/core/selectors.js
+  // packages/global-styles-engine/build-module/core/selectors.mjs
   function getBlockSelector(blockType, target = "root", options = {}) {
     if (!target) {
       return null;
@@ -9894,7 +9894,7 @@ var wp;
     });
   };
 
-  // packages/global-styles-engine/build-module/utils/duotone.js
+  // packages/global-styles-engine/build-module/utils/duotone.mjs
   function getValuesFromColors(colors = []) {
     const values = {
       r: [],
@@ -9945,12 +9945,12 @@ var wp;
 </svg>`;
   }
 
-  // packages/global-styles-engine/build-module/utils/string.js
+  // packages/global-styles-engine/build-module/utils/string.mjs
   function kebabCase(str) {
     return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([0-9])([a-zA-Z])/g, "$1-$2").replace(/([a-zA-Z])([0-9])/g, "$1-$2").replace(/[\s_]+/g, "-").toLowerCase();
   }
 
-  // packages/global-styles-engine/build-module/utils/spacing.js
+  // packages/global-styles-engine/build-module/utils/spacing.mjs
   function getSpacingPresetCssVar(value) {
     if (!value) {
       return;
@@ -9962,7 +9962,7 @@ var wp;
     return `var(--wp--preset--spacing--${slug[1]})`;
   }
 
-  // packages/global-styles-engine/build-module/utils/gap.js
+  // packages/global-styles-engine/build-module/utils/gap.mjs
   function getGapBoxControlValueFromStyle(blockGapValue) {
     if (!blockGapValue) {
       return null;
@@ -9983,7 +9983,7 @@ var wp;
     return row === column ? row : `${row} ${column}`;
   }
 
-  // packages/global-styles-engine/build-module/utils/background.js
+  // packages/global-styles-engine/build-module/utils/background.mjs
   var BACKGROUND_BLOCK_DEFAULT_VALUES = {
     backgroundSize: "cover",
     backgroundPosition: "50% 50%"
@@ -10008,7 +10008,7 @@ var wp;
     return backgroundStylesWithDefaults;
   }
 
-  // packages/global-styles-engine/build-module/utils/layout.js
+  // packages/global-styles-engine/build-module/utils/layout.mjs
   var LAYOUT_DEFINITIONS = {
     default: {
       name: "default",
@@ -10181,7 +10181,7 @@ var wp;
     }
   };
 
-  // packages/global-styles-engine/build-module/core/render.js
+  // packages/global-styles-engine/build-module/core/render.mjs
   var ELEMENT_CLASS_NAMES = {
     button: "wp-element-button",
     caption: "wp-element-caption"
@@ -11124,7 +11124,7 @@ var wp;
     return [styles, updatedConfig.settings];
   }
 
-  // packages/editor/build-module/components/global-styles-provider/index.js
+  // packages/editor/build-module/components/global-styles-provider/index.mjs
   var { cleanEmptyObject } = unlock(import_block_editor6.privateApis);
   function useGlobalStylesUserConfig() {
     const { globalStylesId, isReady: isReady2, settings, styles, _links } = (0, import_data26.useSelect)(
@@ -11271,7 +11271,7 @@ var wp;
     return context;
   }
 
-  // packages/editor/build-module/components/provider/use-block-editor-settings.js
+  // packages/editor/build-module/components/provider/use-block-editor-settings.mjs
   var EMPTY_OBJECT3 = {};
   function __experimentalReusableBlocksSelect(select5) {
     const { RECEIVE_INTERMEDIATE_RESULTS: RECEIVE_INTERMEDIATE_RESULTS2 } = unlock(import_core_data23.privateApis);
@@ -11582,12 +11582,12 @@ var wp;
   }
   var use_block_editor_settings_default = useBlockEditorSettings;
 
-  // packages/editor/build-module/components/provider/disable-non-page-content-blocks.js
+  // packages/editor/build-module/components/provider/disable-non-page-content-blocks.mjs
   var import_data29 = __toESM(require_data(), 1);
   var import_block_editor8 = __toESM(require_block_editor(), 1);
   var import_element24 = __toESM(require_element(), 1);
 
-  // packages/editor/build-module/components/provider/use-post-content-blocks.js
+  // packages/editor/build-module/components/provider/use-post-content-blocks.mjs
   var import_data28 = __toESM(require_data(), 1);
   var import_element23 = __toESM(require_element(), 1);
   var import_hooks2 = __toESM(require_hooks(), 1);
@@ -11616,7 +11616,7 @@ var wp;
     return contentOnlyIds;
   }
 
-  // packages/editor/build-module/components/provider/disable-non-page-content-blocks.js
+  // packages/editor/build-module/components/provider/disable-non-page-content-blocks.mjs
   function DisableNonPageContentBlocks() {
     const contentOnlyIds = usePostContentBlocks();
     const { templateParts } = (0, import_data29.useSelect)((select5) => {
@@ -11690,7 +11690,7 @@ var wp;
     return null;
   }
 
-  // packages/editor/build-module/components/provider/navigation-block-editing-mode.js
+  // packages/editor/build-module/components/provider/navigation-block-editing-mode.mjs
   var import_element25 = __toESM(require_element(), 1);
   var import_data30 = __toESM(require_data(), 1);
   var import_block_editor9 = __toESM(require_block_editor(), 1);
@@ -11711,7 +11711,7 @@ var wp;
     }, [blockClientId, unsetBlockEditingMode, setBlockEditingMode]);
   }
 
-  // packages/editor/build-module/components/provider/use-hide-blocks-from-inserter.js
+  // packages/editor/build-module/components/provider/use-hide-blocks-from-inserter.mjs
   var import_element26 = __toESM(require_element(), 1);
   var import_hooks3 = __toESM(require_hooks(), 1);
   var POST_TYPES_ALLOWING_POST_CONTENT_TEMPLATE_PART = [
@@ -11758,7 +11758,7 @@ var wp;
     }, [postType2, mode]);
   }
 
-  // packages/editor/build-module/components/commands/index.js
+  // packages/editor/build-module/components/commands/index.mjs
   var import_data38 = __toESM(require_data(), 1);
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_commands = __toESM(require_commands(), 1);
@@ -11767,7 +11767,7 @@ var wp;
   var import_block_editor10 = __toESM(require_block_editor(), 1);
   var import_core_data26 = __toESM(require_core_data(), 1);
 
-  // packages/interface/build-module/index.js
+  // packages/interface/build-module/index.mjs
   var build_module_exports = {};
   __export(build_module_exports, {
     ActionItem: () => action_item_default,
@@ -11779,7 +11779,7 @@ var wp;
     store: () => store2
   });
 
-  // packages/interface/build-module/components/complementary-area/index.js
+  // packages/interface/build-module/components/complementary-area/index.mjs
   var import_components24 = __toESM(require_components(), 1);
   var import_data35 = __toESM(require_data(), 1);
   var import_i18n50 = __toESM(require_i18n(), 1);
@@ -11789,15 +11789,15 @@ var wp;
   var import_compose7 = __toESM(require_compose(), 1);
   var import_plugins2 = __toESM(require_plugins(), 1);
 
-  // packages/interface/build-module/components/complementary-area-toggle/index.js
+  // packages/interface/build-module/components/complementary-area-toggle/index.mjs
   var import_components20 = __toESM(require_components(), 1);
   var import_data34 = __toESM(require_data(), 1);
   var import_plugins = __toESM(require_plugins(), 1);
 
-  // packages/interface/build-module/store/index.js
+  // packages/interface/build-module/store/index.mjs
   var import_data33 = __toESM(require_data(), 1);
 
-  // packages/interface/build-module/store/actions.js
+  // packages/interface/build-module/store/actions.mjs
   var actions_exports2 = {};
   __export(actions_exports2, {
     closeModal: () => closeModal,
@@ -11814,7 +11814,7 @@ var wp;
   var import_deprecated5 = __toESM(require_deprecated(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
 
-  // packages/interface/build-module/store/deprecated.js
+  // packages/interface/build-module/store/deprecated.mjs
   var import_deprecated4 = __toESM(require_deprecated(), 1);
   function normalizeComplementaryAreaScope(scope) {
     if (["core/edit-post", "core/edit-site"].includes(scope)) {
@@ -11845,7 +11845,7 @@ var wp;
     return name2;
   }
 
-  // packages/interface/build-module/store/actions.js
+  // packages/interface/build-module/store/actions.mjs
   var setDefaultComplementaryArea = (scope, area) => {
     scope = normalizeComplementaryAreaScope(scope);
     area = normalizeComplementaryAreaName(scope, area);
@@ -11944,7 +11944,7 @@ var wp;
     };
   }
 
-  // packages/interface/build-module/store/selectors.js
+  // packages/interface/build-module/store/selectors.mjs
   var selectors_exports2 = {};
   __export(selectors_exports2, {
     getActiveComplementaryArea: () => getActiveComplementaryArea,
@@ -12010,7 +12010,7 @@ var wp;
     return state.activeModal === modalName3;
   }
 
-  // packages/interface/build-module/store/reducer.js
+  // packages/interface/build-module/store/reducer.mjs
   var import_data32 = __toESM(require_data(), 1);
   function complementaryAreas(state = {}, action) {
     switch (action.type) {
@@ -12048,10 +12048,10 @@ var wp;
     activeModal
   });
 
-  // packages/interface/build-module/store/constants.js
+  // packages/interface/build-module/store/constants.mjs
   var STORE_NAME2 = "core/interface";
 
-  // packages/interface/build-module/store/index.js
+  // packages/interface/build-module/store/index.mjs
   var store2 = (0, import_data33.createReduxStore)(STORE_NAME2, {
     reducer: reducer_default3,
     actions: actions_exports2,
@@ -12059,7 +12059,7 @@ var wp;
   });
   (0, import_data33.register)(store2);
 
-  // packages/interface/build-module/components/complementary-area-toggle/index.js
+  // packages/interface/build-module/components/complementary-area-toggle/index.mjs
   var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
   function roleSupportsCheckedState(role) {
     return [
@@ -12110,7 +12110,7 @@ var wp;
     );
   }
 
-  // packages/interface/build-module/components/complementary-area-header/index.js
+  // packages/interface/build-module/components/complementary-area-header/index.mjs
   var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
   var ComplementaryAreaHeader = ({
     children,
@@ -12136,10 +12136,10 @@ var wp;
   };
   var complementary_area_header_default = ComplementaryAreaHeader;
 
-  // packages/interface/build-module/components/complementary-area-more-menu-item/index.js
+  // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
   var import_components22 = __toESM(require_components(), 1);
 
-  // packages/interface/build-module/components/action-item/index.js
+  // packages/interface/build-module/components/action-item/index.mjs
   var import_components21 = __toESM(require_components(), 1);
   var import_element27 = __toESM(require_element(), 1);
   var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
@@ -12203,7 +12203,7 @@ var wp;
   ActionItem.Slot = ActionItemSlot;
   var action_item_default = ActionItem;
 
-  // packages/interface/build-module/components/complementary-area-more-menu-item/index.js
+  // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
   var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
   var PluginsMenuItem = ({
     // Menu item is marked with unstable prop for backward compatibility.
@@ -12243,7 +12243,7 @@ var wp;
     );
   }
 
-  // packages/interface/build-module/components/pinned-items/index.js
+  // packages/interface/build-module/components/pinned-items/index.mjs
   var import_components23 = __toESM(require_components(), 1);
   var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
   function PinnedItems({ scope, ...props }) {
@@ -12264,7 +12264,7 @@ var wp;
   PinnedItems.Slot = PinnedItemsSlot;
   var pinned_items_default = PinnedItems;
 
-  // packages/interface/build-module/components/complementary-area/index.js
+  // packages/interface/build-module/components/complementary-area/index.mjs
   var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_DURATION = 0.3;
   function ComplementaryAreaSlot({ scope, ...props }) {
@@ -12517,7 +12517,7 @@ var wp;
   ComplementaryArea.Slot = ComplementaryAreaSlot;
   var complementary_area_default = ComplementaryArea;
 
-  // packages/interface/build-module/components/fullscreen-mode/index.js
+  // packages/interface/build-module/components/fullscreen-mode/index.mjs
   var import_element29 = __toESM(require_element(), 1);
   var FullscreenMode = ({ isActive }) => {
     (0, import_element29.useEffect)(() => {
@@ -12548,7 +12548,7 @@ var wp;
   };
   var fullscreen_mode_default = FullscreenMode;
 
-  // packages/admin-ui/build-module/navigable-region/index.js
+  // packages/admin-ui/build-module/navigable-region/index.mjs
   var import_element30 = __toESM(require_element(), 1);
   var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
   var NavigableRegion = (0, import_element30.forwardRef)(
@@ -12570,7 +12570,7 @@ var wp;
   NavigableRegion.displayName = "NavigableRegion";
   var navigable_region_default = NavigableRegion;
 
-  // packages/interface/build-module/components/interface-skeleton/index.js
+  // packages/interface/build-module/components/interface-skeleton/index.mjs
   var import_element31 = __toESM(require_element(), 1);
   var import_components25 = __toESM(require_components(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
@@ -12760,10 +12760,10 @@ var wp;
   }
   var interface_skeleton_default = (0, import_element31.forwardRef)(InterfaceSkeleton);
 
-  // packages/editor/build-module/components/commands/index.js
+  // packages/editor/build-module/components/commands/index.mjs
   var import_html_entities8 = __toESM(require_html_entities(), 1);
 
-  // packages/editor/build-module/components/pattern-rename-modal/index.js
+  // packages/editor/build-module/components/pattern-rename-modal/index.mjs
   var import_data36 = __toESM(require_data(), 1);
   var import_patterns5 = __toESM(require_patterns(), 1);
   var import_core_data24 = __toESM(require_core_data(), 1);
@@ -12800,7 +12800,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(RenamePatternModal, { onClose: closeModal2, pattern: record });
   }
 
-  // packages/editor/build-module/components/pattern-duplicate-modal/index.js
+  // packages/editor/build-module/components/pattern-duplicate-modal/index.mjs
   var import_data37 = __toESM(require_data(), 1);
   var import_patterns6 = __toESM(require_patterns(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
@@ -12844,7 +12844,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/commands/index.js
+  // packages/editor/build-module/components/commands/index.mjs
   var getEditorCommandLoader = () => function useEditorCommandLoader() {
     const {
       editorMode,
@@ -13206,7 +13206,7 @@ var wp;
     });
   }
 
-  // packages/editor/build-module/components/block-removal-warnings/index.js
+  // packages/editor/build-module/components/block-removal-warnings/index.mjs
   var import_i18n53 = __toESM(require_i18n(), 1);
   var import_block_editor11 = __toESM(require_block_editor(), 1);
   var import_data39 = __toESM(require_data(), 1);
@@ -13276,7 +13276,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(BlockRemovalWarningModal, { rules: removalRulesForPostType });
   }
 
-  // packages/editor/build-module/components/start-page-options/index.js
+  // packages/editor/build-module/components/start-page-options/index.mjs
   var import_components26 = __toESM(require_components(), 1);
   var import_i18n54 = __toESM(require_i18n(), 1);
   var import_element33 = __toESM(require_element(), 1);
@@ -13421,13 +13421,13 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(StartPageOptionsModal, { onClose: () => setIsOpen(false) });
   }
 
-  // packages/editor/build-module/components/keyboard-shortcut-help-modal/index.js
+  // packages/editor/build-module/components/keyboard-shortcut-help-modal/index.mjs
   var import_components27 = __toESM(require_components(), 1);
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
   var import_data42 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/components/keyboard-shortcut-help-modal/config.js
+  // packages/editor/build-module/components/keyboard-shortcut-help-modal/config.mjs
   var import_i18n55 = __toESM(require_i18n(), 1);
   var textFormattingShortcuts = [
     {
@@ -13487,7 +13487,7 @@ var wp;
     }
   ];
 
-  // packages/editor/build-module/components/keyboard-shortcut-help-modal/shortcut.js
+  // packages/editor/build-module/components/keyboard-shortcut-help-modal/shortcut.mjs
   var import_element34 = __toESM(require_element(), 1);
   var import_keycodes = __toESM(require_keycodes(), 1);
   var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
@@ -13545,7 +13545,7 @@ var wp;
   }
   var shortcut_default = Shortcut;
 
-  // packages/editor/build-module/components/keyboard-shortcut-help-modal/dynamic-shortcut.js
+  // packages/editor/build-module/components/keyboard-shortcut-help-modal/dynamic-shortcut.mjs
   var import_data41 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
@@ -13579,7 +13579,7 @@ var wp;
   }
   var dynamic_shortcut_default = DynamicShortcut;
 
-  // packages/editor/build-module/components/keyboard-shortcut-help-modal/index.js
+  // packages/editor/build-module/components/keyboard-shortcut-help-modal/index.mjs
   var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
   var KEYBOARD_SHORTCUT_HELP_MODAL_NAME = "editor/keyboard-shortcut-help";
   var ShortcutList = ({ shortcuts }) => (
@@ -13723,7 +13723,7 @@ var wp;
   }
   var keyboard_shortcut_help_modal_default = KeyboardShortcutHelpModal;
 
-  // packages/editor/build-module/components/start-template-options/index.js
+  // packages/editor/build-module/components/start-template-options/index.mjs
   var import_components28 = __toESM(require_components(), 1);
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_element35 = __toESM(require_element(), 1);
@@ -13906,7 +13906,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/global-keyboard-shortcuts/index.js
+  // packages/editor/build-module/components/global-keyboard-shortcuts/index.mjs
   var import_keyboard_shortcuts3 = __toESM(require_keyboard_shortcuts(), 1);
   var import_data44 = __toESM(require_data(), 1);
   var import_block_editor14 = __toESM(require_block_editor(), 1);
@@ -13986,11 +13986,11 @@ var wp;
     return null;
   }
 
-  // packages/editor/build-module/components/template-part-menu-items/index.js
+  // packages/editor/build-module/components/template-part-menu-items/index.mjs
   var import_data47 = __toESM(require_data(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/template-part-menu-items/convert-to-regular.js
+  // packages/editor/build-module/components/template-part-menu-items/convert-to-regular.mjs
   var import_data45 = __toESM(require_data(), 1);
   var import_block_editor15 = __toESM(require_block_editor(), 1);
   var import_components29 = __toESM(require_components(), 1);
@@ -14018,7 +14018,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/template-part-menu-items/convert-to-template-part.js
+  // packages/editor/build-module/components/template-part-menu-items/convert-to-template-part.mjs
   var import_data46 = __toESM(require_data(), 1);
   var import_block_editor16 = __toESM(require_block_editor(), 1);
   var import_components30 = __toESM(require_components(), 1);
@@ -14081,7 +14081,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/template-part-menu-items/index.js
+  // packages/editor/build-module/components/template-part-menu-items/index.mjs
   var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
   function TemplatePartMenuItems() {
     return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_block_editor17.BlockSettingsMenuControls, { children: ({ selectedClientIds, onClose }) => /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
@@ -14114,7 +14114,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(ConvertToTemplatePart, { clientIds, blocks });
   }
 
-  // packages/editor/build-module/components/provider/index.js
+  // packages/editor/build-module/components/provider/index.mjs
   var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider } = unlock(import_block_editor18.privateApis);
   var { PatternsMenuItems } = unlock(import_patterns7.privateApis);
@@ -14361,12 +14361,12 @@ var wp;
   }
   var provider_default = EditorProvider;
 
-  // packages/editor/build-module/components/global-styles/index.js
+  // packages/editor/build-module/components/global-styles/index.mjs
   var import_core_data43 = __toESM(require_core_data(), 1);
   var import_data63 = __toESM(require_data(), 1);
   var import_element71 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/global-styles-ui.js
+  // packages/global-styles-ui/build-module/global-styles-ui.mjs
   var import_components90 = __toESM(require_components(), 1);
   var import_blocks18 = __toESM(require_blocks(), 1);
   var import_data60 = __toESM(require_data(), 1);
@@ -14374,10 +14374,10 @@ var wp;
   var import_element68 = __toESM(require_element(), 1);
   var import_compose14 = __toESM(require_compose(), 1);
 
-  // packages/global-styles-ui/build-module/provider.js
+  // packages/global-styles-ui/build-module/provider.mjs
   var import_element39 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/context.js
+  // packages/global-styles-ui/build-module/context.mjs
   var import_element38 = __toESM(require_element(), 1);
   var GlobalStylesContext = (0, import_element38.createContext)({
     user: { styles: {}, settings: {} },
@@ -14388,7 +14388,7 @@ var wp;
     fontLibraryEnabled: false
   });
 
-  // packages/global-styles-ui/build-module/provider.js
+  // packages/global-styles-ui/build-module/provider.mjs
   var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesProvider({
     children,
@@ -14413,13 +14413,13 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(GlobalStylesContext.Provider, { value: contextValue, children });
   }
 
-  // packages/global-styles-ui/build-module/screen-root.js
+  // packages/global-styles-ui/build-module/screen-root.mjs
   var import_components37 = __toESM(require_components(), 1);
   var import_i18n64 = __toESM(require_i18n(), 1);
   var import_data50 = __toESM(require_data(), 1);
   var import_core_data32 = __toESM(require_core_data(), 1);
 
-  // packages/global-styles-ui/build-module/icon-with-current-color.js
+  // packages/global-styles-ui/build-module/icon-with-current-color.mjs
   var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
   function IconWithCurrentColor({
     className,
@@ -14437,7 +14437,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/navigation-button.js
+  // packages/global-styles-ui/build-module/navigation-button.mjs
   var import_components31 = __toESM(require_components(), 1);
   var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
   function GenericNavigationButton({
@@ -14457,7 +14457,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components31.Navigator.Button, { as: GenericNavigationButton, ...props });
   }
 
-  // packages/global-styles-ui/build-module/root-menu.js
+  // packages/global-styles-ui/build-module/root-menu.mjs
   var import_components32 = __toESM(require_components(), 1);
   var import_i18n62 = __toESM(require_i18n(), 1);
   var import_block_editor19 = __toESM(require_block_editor(), 1);
@@ -14484,13 +14484,13 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/hooks.js
+  // packages/global-styles-ui/build-module/hooks.mjs
   var import_element40 = __toESM(require_element(), 1);
   var import_data49 = __toESM(require_data(), 1);
   var import_core_data31 = __toESM(require_core_data(), 1);
   var import_i18n61 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/utils.js
+  // packages/global-styles-ui/build-module/utils.mjs
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
       return object;
@@ -14595,7 +14595,7 @@ var wp;
     return highestPresetValue + 1;
   }
 
-  // packages/global-styles-ui/build-module/hooks.js
+  // packages/global-styles-ui/build-module/hooks.mjs
   k([a11y_default]);
   function useStyle(path, blockName, readFrom = "merged", shouldDecodeEncode = true) {
     const { user, base, merged, onChange } = (0, import_element40.useContext)(GlobalStylesContext);
@@ -14712,14 +14712,14 @@ var wp;
     return window.__experimentalEnableColorRandomizer ? [randomizeColors] : [];
   }
 
-  // packages/global-styles-ui/build-module/lock-unlock.js
+  // packages/global-styles-ui/build-module/lock-unlock.mjs
   var import_private_apis3 = __toESM(require_private_apis(), 1);
   var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/global-styles-ui"
   );
 
-  // packages/global-styles-ui/build-module/root-menu.js
+  // packages/global-styles-ui/build-module/root-menu.mjs
   var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
   var {
     useHasDimensionsPanel,
@@ -14762,10 +14762,10 @@ var wp;
   }
   var root_menu_default = RootMenu;
 
-  // packages/global-styles-ui/build-module/preview-styles.js
+  // packages/global-styles-ui/build-module/preview-styles.mjs
   var import_components36 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preview-hooks.js
+  // packages/global-styles-ui/build-module/preview-hooks.mjs
   function useStylesPreviewColors() {
     const [textColor = "black"] = useStyle("color.text");
     const [backgroundColor = "white"] = useStyle("color.background");
@@ -14798,12 +14798,12 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/typography-example.js
+  // packages/global-styles-ui/build-module/typography-example.mjs
   var import_element41 = __toESM(require_element(), 1);
   var import_components33 = __toESM(require_components(), 1);
   var import_i18n63 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/utils/preview-styles.js
+  // packages/global-styles-ui/build-module/font-library/utils/preview-styles.mjs
   function findNearest(input, numbers) {
     if (numbers.length === 0) {
       return null;
@@ -14890,7 +14890,7 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/typography-example.js
+  // packages/global-styles-ui/build-module/typography-example.mjs
   var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
   function PreviewTypography({
     fontSize,
@@ -14940,7 +14940,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/highlighted-colors.js
+  // packages/global-styles-ui/build-module/highlighted-colors.mjs
   var import_components34 = __toESM(require_components(), 1);
   var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
   function HighlightedColors({
@@ -14974,7 +14974,7 @@ var wp;
     ));
   }
 
-  // packages/global-styles-ui/build-module/preview-wrapper.js
+  // packages/global-styles-ui/build-module/preview-wrapper.mjs
   var import_components35 = __toESM(require_components(), 1);
   var import_compose9 = __toESM(require_compose(), 1);
   var import_element42 = __toESM(require_element(), 1);
@@ -15053,7 +15053,7 @@ var wp;
   }
   var preview_wrapper_default = PreviewWrapper;
 
-  // packages/global-styles-ui/build-module/preview-styles.js
+  // packages/global-styles-ui/build-module/preview-styles.mjs
   var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
   var firstFrameVariants = {
     start: {
@@ -15234,7 +15234,7 @@ var wp;
   }
   var preview_styles_default = PreviewStyles;
 
-  // packages/global-styles-ui/build-module/screen-root.js
+  // packages/global-styles-ui/build-module/screen-root.mjs
   var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
   function ScreenRoot() {
     const hasVariations = (0, import_data50.useSelect)((select5) => {
@@ -15292,7 +15292,7 @@ var wp;
   }
   var screen_root_default = ScreenRoot;
 
-  // packages/global-styles-ui/build-module/screen-block-list.js
+  // packages/global-styles-ui/build-module/screen-block-list.mjs
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_i18n66 = __toESM(require_i18n(), 1);
   var import_components40 = __toESM(require_components(), 1);
@@ -15302,7 +15302,7 @@ var wp;
   var import_compose10 = __toESM(require_compose(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
 
-  // packages/global-styles-ui/build-module/variations/variations-panel.js
+  // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks14 = __toESM(require_blocks(), 1);
   var import_data51 = __toESM(require_data(), 1);
   var import_components38 = __toESM(require_components(), 1);
@@ -15341,7 +15341,7 @@ var wp;
     }) });
   }
 
-  // packages/global-styles-ui/build-module/screen-header.js
+  // packages/global-styles-ui/build-module/screen-header.mjs
   var import_components39 = __toESM(require_components(), 1);
   var import_i18n65 = __toESM(require_i18n(), 1);
   var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
@@ -15375,7 +15375,7 @@ var wp;
     ] }) }) }) });
   }
 
-  // packages/global-styles-ui/build-module/screen-block-list.js
+  // packages/global-styles-ui/build-module/screen-block-list.mjs
   var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
   var {
     useHasDimensionsPanel: useHasDimensionsPanel2,
@@ -15494,7 +15494,7 @@ var wp;
   }
   var screen_block_list_default = ScreenBlockList;
 
-  // packages/global-styles-ui/build-module/screen-block.js
+  // packages/global-styles-ui/build-module/screen-block.mjs
   var import_blocks17 = __toESM(require_blocks(), 1);
   var import_block_editor22 = __toESM(require_block_editor(), 1);
   var import_element45 = __toESM(require_element(), 1);
@@ -15503,7 +15503,7 @@ var wp;
   var import_components43 = __toESM(require_components(), 1);
   var import_i18n67 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/block-preview-panel.js
+  // packages/global-styles-ui/build-module/block-preview-panel.mjs
   var import_block_editor21 = __toESM(require_block_editor(), 1);
   var import_blocks16 = __toESM(require_blocks(), 1);
   var import_components41 = __toESM(require_components(), 1);
@@ -15570,14 +15570,14 @@ var wp;
   };
   var block_preview_panel_default = BlockPreviewPanel;
 
-  // packages/global-styles-ui/build-module/subtitle.js
+  // packages/global-styles-ui/build-module/subtitle.mjs
   var import_components42 = __toESM(require_components(), 1);
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
   function Subtitle({ children, level = 2 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_components42.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
   }
 
-  // packages/global-styles-ui/build-module/screen-block.js
+  // packages/global-styles-ui/build-module/screen-block.mjs
   var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
   var BACKGROUND_BLOCK_DEFAULT_VALUES2 = {
     backgroundSize: "cover",
@@ -15848,12 +15848,12 @@ var wp;
   }
   var screen_block_default = ScreenBlock;
 
-  // packages/global-styles-ui/build-module/screen-typography.js
+  // packages/global-styles-ui/build-module/screen-typography.mjs
   var import_i18n81 = __toESM(require_i18n(), 1);
   var import_components63 = __toESM(require_components(), 1);
   var import_element56 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/screen-body.js
+  // packages/global-styles-ui/build-module/screen-body.mjs
   var import_components44 = __toESM(require_components(), 1);
   var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
   function ScreenBody({ children, className }) {
@@ -15867,7 +15867,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/typography-elements.js
+  // packages/global-styles-ui/build-module/typography-elements.mjs
   var import_i18n68 = __toESM(require_i18n(), 1);
   var import_components45 = __toESM(require_components(), 1);
   var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
@@ -15959,10 +15959,10 @@ var wp;
   }
   var typography_elements_default = TypographyElements;
 
-  // packages/global-styles-ui/build-module/variations/variations-typography.js
+  // packages/global-styles-ui/build-module/variations/variations-typography.mjs
   var import_components48 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preview-typography.js
+  // packages/global-styles-ui/build-module/preview-typography.mjs
   var import_components46 = __toESM(require_components(), 1);
   var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
   var StylesPreviewTypography = ({
@@ -16000,7 +16000,7 @@ var wp;
   };
   var preview_typography_default = StylesPreviewTypography;
 
-  // packages/global-styles-ui/build-module/variations/variation.js
+  // packages/global-styles-ui/build-module/variations/variation.mjs
   var import_components47 = __toESM(require_components(), 1);
   var import_element46 = __toESM(require_element(), 1);
   var import_keycodes2 = __toESM(require_keycodes(), 1);
@@ -16080,7 +16080,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components47.Tooltip, { text: variation?.title, children: content }) : content });
   }
 
-  // packages/global-styles-ui/build-module/variations/variations-typography.js
+  // packages/global-styles-ui/build-module/variations/variations-typography.mjs
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
   var propertiesToFilter = ["typography"];
   function TypographyVariations({
@@ -16123,18 +16123,18 @@ var wp;
     ] });
   }
 
-  // packages/global-styles-ui/build-module/font-families.js
+  // packages/global-styles-ui/build-module/font-families.mjs
   var import_i18n79 = __toESM(require_i18n(), 1);
   var import_components61 = __toESM(require_components(), 1);
   var import_element55 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/context.js
+  // packages/global-styles-ui/build-module/font-library/context.mjs
   var import_element47 = __toESM(require_element(), 1);
   var import_data54 = __toESM(require_data(), 1);
   var import_core_data35 = __toESM(require_core_data(), 1);
   var import_i18n71 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/api.js
+  // packages/global-styles-ui/build-module/font-library/api.mjs
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
   var import_core_data34 = __toESM(require_core_data(), 1);
   var FONT_FAMILIES_URL = "/wp/v2/font-families";
@@ -16177,10 +16177,10 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/font-library/utils/index.js
+  // packages/global-styles-ui/build-module/font-library/utils/index.mjs
   var import_components49 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/utils/constants.js
+  // packages/global-styles-ui/build-module/font-library/utils/constants.mjs
   var import_i18n70 = __toESM(require_i18n(), 1);
   var ALLOWED_FILE_EXTENSIONS = ["otf", "ttf", "woff", "woff2"];
   var FONT_WEIGHTS = {
@@ -16199,7 +16199,7 @@ var wp;
     italic: (0, import_i18n70._x)("Italic", "font style")
   };
 
-  // packages/global-styles-ui/build-module/font-library/utils/index.js
+  // packages/global-styles-ui/build-module/font-library/utils/index.mjs
   var { File: File2 } = window;
   var { kebabCase: kebabCase2 } = unlock3(import_components49.privateApis);
   function setUIValuesNeeded(font2, extraValues = {}) {
@@ -16419,7 +16419,7 @@ var wp;
     });
   }
 
-  // packages/global-styles-ui/build-module/font-library/utils/set-immutably.js
+  // packages/global-styles-ui/build-module/font-library/utils/set-immutably.mjs
   function setImmutably2(object, path, value) {
     path = Array.isArray(path) ? [...path] : [path];
     object = Array.isArray(object) ? [...object] : { ...object };
@@ -16433,7 +16433,7 @@ var wp;
     return object;
   }
 
-  // packages/global-styles-ui/build-module/font-library/utils/toggleFont.js
+  // packages/global-styles-ui/build-module/font-library/utils/toggleFont.mjs
   function toggleFont(font2, face, initialfonts = []) {
     const isFontActivated = (f3) => f3.slug === font2.slug;
     const getActivatedFont = (fonts) => fonts.find(isFontActivated);
@@ -16474,7 +16474,7 @@ var wp;
     return toggleFontVariant(activatedFont);
   }
 
-  // packages/global-styles-ui/build-module/font-library/context.js
+  // packages/global-styles-ui/build-module/font-library/context.mjs
   var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
   var FontLibraryContext = (0, import_element47.createContext)(
     {}
@@ -16814,24 +16814,24 @@ var wp;
   }
   var context_default = FontLibraryProvider;
 
-  // packages/global-styles-ui/build-module/font-library/modal.js
+  // packages/global-styles-ui/build-module/font-library/modal.mjs
   var import_i18n77 = __toESM(require_i18n(), 1);
   var import_components59 = __toESM(require_components(), 1);
   var import_core_data38 = __toESM(require_core_data(), 1);
   var import_data56 = __toESM(require_data(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/installed-fonts.js
+  // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
   var import_components53 = __toESM(require_components(), 1);
   var import_core_data36 = __toESM(require_core_data(), 1);
   var import_data55 = __toESM(require_data(), 1);
   var import_element50 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/font-card.js
+  // packages/global-styles-ui/build-module/font-library/font-card.mjs
   var import_i18n72 = __toESM(require_i18n(), 1);
   var import_components51 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/font-demo.js
+  // packages/global-styles-ui/build-module/font-library/font-demo.mjs
   var import_components50 = __toESM(require_components(), 1);
   var import_element48 = __toESM(require_element(), 1);
   var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
@@ -16917,7 +16917,7 @@ var wp;
   }
   var font_demo_default = FontDemo;
 
-  // packages/global-styles-ui/build-module/font-library/font-card.js
+  // packages/global-styles-ui/build-module/font-library/font-card.mjs
   var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
   function FontCard({
     font: font2,
@@ -16962,7 +16962,7 @@ var wp;
   }
   var font_card_default = FontCard;
 
-  // packages/global-styles-ui/build-module/font-library/library-font-variant.js
+  // packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
   var import_element49 = __toESM(require_element(), 1);
   var import_components52 = __toESM(require_components(), 1);
   var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
@@ -17007,7 +17007,7 @@ var wp;
   }
   var library_font_variant_default = LibraryFontVariant;
 
-  // packages/global-styles-ui/build-module/font-library/utils/sort-font-faces.js
+  // packages/global-styles-ui/build-module/font-library/utils/sort-font-faces.mjs
   function getNumericFontWeight(value) {
     switch (value) {
       case "normal":
@@ -17040,7 +17040,7 @@ var wp;
     });
   }
 
-  // packages/global-styles-ui/build-module/font-library/installed-fonts.js
+  // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
   var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
   function InstalledFonts() {
     const {
@@ -17439,14 +17439,14 @@ var wp;
   }
   var installed_fonts_default = InstalledFonts;
 
-  // packages/global-styles-ui/build-module/font-library/font-collection.js
+  // packages/global-styles-ui/build-module/font-library/font-collection.mjs
   var import_element52 = __toESM(require_element(), 1);
   var import_components56 = __toESM(require_components(), 1);
   var import_compose11 = __toESM(require_compose(), 1);
   var import_i18n75 = __toESM(require_i18n(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/utils/filter-fonts.js
+  // packages/global-styles-ui/build-module/font-library/utils/filter-fonts.mjs
   function filterFonts(fonts, filters) {
     const { category, search } = filters;
     let filteredFonts = fonts || [];
@@ -17463,7 +17463,7 @@ var wp;
     return filteredFonts;
   }
 
-  // packages/global-styles-ui/build-module/font-library/utils/fonts-outline.js
+  // packages/global-styles-ui/build-module/font-library/utils/fonts-outline.mjs
   function getFontsOutline(fonts) {
     return fonts.reduce(
       (acc, font2) => ({
@@ -17486,7 +17486,7 @@ var wp;
     return !!outline[slug]?.[`${face.fontStyle}-${face.fontWeight}`];
   }
 
-  // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.js
+  // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
   var import_i18n74 = __toESM(require_i18n(), 1);
   var import_components54 = __toESM(require_components(), 1);
   var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
@@ -17522,7 +17522,7 @@ var wp;
   }
   var google_fonts_confirm_dialog_default = GoogleFontsConfirmDialog;
 
-  // packages/global-styles-ui/build-module/font-library/collection-font-variant.js
+  // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
   var import_element51 = __toESM(require_element(), 1);
   var import_components55 = __toESM(require_components(), 1);
   var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
@@ -17562,7 +17562,7 @@ var wp;
   }
   var collection_font_variant_default = CollectionFontVariant;
 
-  // packages/global-styles-ui/build-module/font-library/font-collection.js
+  // packages/global-styles-ui/build-module/font-library/font-collection.mjs
   var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_CATEGORY = {
     slug: "all",
@@ -17999,12 +17999,12 @@ var wp;
   }
   var font_collection_default = FontCollection;
 
-  // packages/global-styles-ui/build-module/font-library/upload-fonts.js
+  // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
   var import_i18n76 = __toESM(require_i18n(), 1);
   var import_components58 = __toESM(require_components(), 1);
   var import_element53 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/lib/unbrotli.js
+  // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
   var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
     get: (a3, b3) => (typeof __require !== "undefined" ? __require : a3)[b3]
   }) : x2)(function(x2) {
@@ -21670,7 +21670,7 @@ var wp;
     )(12);
   })();
 
-  // packages/global-styles-ui/build-module/font-library/lib/inflate.js
+  // packages/global-styles-ui/build-module/font-library/lib/inflate.mjs
   var __require3 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
     get: (a3, b3) => (typeof __require !== "undefined" ? __require : a3)[b3]
   }) : x2)(function(x2) {
@@ -24286,7 +24286,7 @@ var wp;
     )("/lib/inflate.js");
   })();
 
-  // packages/global-styles-ui/build-module/font-library/lib/lib-font.browser.js
+  // packages/global-styles-ui/build-module/font-library/lib/lib-font.browser.mjs
   var fetchFunction = globalThis.fetch;
   var Event2 = class {
     constructor(type, detail = {}, msg) {
@@ -28036,7 +28036,7 @@ var wp;
   };
   var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
 
-  // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.js
+  // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.mjs
   var import_components57 = __toESM(require_components(), 1);
   var { kebabCase: kebabCase3 } = unlock3(import_components57.privateApis);
   function makeFamiliesFromFaces(fontFaces) {
@@ -28058,7 +28058,7 @@ var wp;
     return Object.values(fontFamiliesObject);
   }
 
-  // packages/global-styles-ui/build-module/font-library/upload-fonts.js
+  // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
   var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
   function UploadFonts() {
     const { installFonts } = (0, import_element53.useContext)(FontLibraryContext);
@@ -28224,7 +28224,7 @@ var wp;
   }
   var upload_fonts_default = UploadFonts;
 
-  // packages/global-styles-ui/build-module/font-library/modal.js
+  // packages/global-styles-ui/build-module/font-library/modal.mjs
   var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
   var { Tabs } = unlock3(import_components59.privateApis);
   var DEFAULT_TAB = {
@@ -28295,7 +28295,7 @@ var wp;
   }
   var modal_default = FontLibraryModal;
 
-  // packages/global-styles-ui/build-module/font-family-item.js
+  // packages/global-styles-ui/build-module/font-family-item.mjs
   var import_i18n78 = __toESM(require_i18n(), 1);
   var import_components60 = __toESM(require_components(), 1);
   var import_element54 = __toESM(require_element(), 1);
@@ -28319,7 +28319,7 @@ var wp;
   }
   var font_family_item_default = FontFamilyItem;
 
-  // packages/global-styles-ui/build-module/font-families.js
+  // packages/global-styles-ui/build-module/font-families.mjs
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
   function mapFontsWithSource(fonts, source) {
     return fonts ? fonts.map((f3) => setUIValuesNeeded(f3, { source })) : [];
@@ -28391,7 +28391,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(context_default, { children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(FontFamiliesInner, { ...props }) });
   }
 
-  // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.js
+  // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
   var import_i18n80 = __toESM(require_i18n(), 1);
   var import_components62 = __toESM(require_components(), 1);
   var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
@@ -28406,7 +28406,7 @@ var wp;
   }
   var font_sizes_count_default = FontSizes;
 
-  // packages/global-styles-ui/build-module/screen-typography.js
+  // packages/global-styles-ui/build-module/screen-typography.mjs
   var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
   function ScreenTypography() {
     const { fontLibraryEnabled } = (0, import_element56.useContext)(GlobalStylesContext);
@@ -28430,12 +28430,12 @@ var wp;
   }
   var screen_typography_default = ScreenTypography;
 
-  // packages/global-styles-ui/build-module/screen-typography-element.js
+  // packages/global-styles-ui/build-module/screen-typography-element.mjs
   var import_i18n82 = __toESM(require_i18n(), 1);
   var import_components64 = __toESM(require_components(), 1);
   var import_element57 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/typography-panel.js
+  // packages/global-styles-ui/build-module/typography-panel.mjs
   var import_block_editor23 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
   var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock3(import_block_editor23.privateApis);
@@ -28475,7 +28475,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/typography-preview.js
+  // packages/global-styles-ui/build-module/typography-preview.mjs
   var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
   function TypographyPreview({
     name: name2,
@@ -28522,7 +28522,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/screen-typography-element.js
+  // packages/global-styles-ui/build-module/screen-typography-element.mjs
   var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
   var elements = {
     text: {
@@ -28650,17 +28650,17 @@ var wp;
   }
   var screen_typography_element_default = ScreenTypographyElement;
 
-  // packages/global-styles-ui/build-module/screen-colors.js
+  // packages/global-styles-ui/build-module/screen-colors.mjs
   var import_i18n84 = __toESM(require_i18n(), 1);
   var import_components67 = __toESM(require_components(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
 
-  // packages/global-styles-ui/build-module/palette.js
+  // packages/global-styles-ui/build-module/palette.mjs
   var import_components66 = __toESM(require_components(), 1);
   var import_i18n83 = __toESM(require_i18n(), 1);
   var import_element58 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/color-indicator-wrapper.js
+  // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
   var import_components65 = __toESM(require_components(), 1);
   var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
   function ColorIndicatorWrapper({
@@ -28682,7 +28682,7 @@ var wp;
   }
   var color_indicator_wrapper_default = ColorIndicatorWrapper;
 
-  // packages/global-styles-ui/build-module/palette.js
+  // packages/global-styles-ui/build-module/palette.mjs
   var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_COLORS = [];
   function Palette({ name: name2 }) {
@@ -28735,7 +28735,7 @@ var wp;
   }
   var palette_default = Palette;
 
-  // packages/global-styles-ui/build-module/screen-colors.js
+  // packages/global-styles-ui/build-module/screen-colors.mjs
   var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
   var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock3(
     import_block_editor24.privateApis
@@ -28779,22 +28779,22 @@ var wp;
   }
   var screen_colors_default = ScreenColors;
 
-  // packages/global-styles-ui/build-module/screen-color-palette.js
+  // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_i18n87 = __toESM(require_i18n(), 1);
   var import_components72 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/color-palette-panel.js
+  // packages/global-styles-ui/build-module/color-palette-panel.mjs
   var import_compose12 = __toESM(require_compose(), 1);
   var import_components70 = __toESM(require_components(), 1);
   var import_i18n85 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/variations/variations-color.js
+  // packages/global-styles-ui/build-module/variations/variations-color.mjs
   var import_components69 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preview-colors.js
+  // packages/global-styles-ui/build-module/preview-colors.mjs
   var import_components68 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preset-colors.js
+  // packages/global-styles-ui/build-module/preset-colors.mjs
   var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
   function PresetColors() {
     const { paletteColors } = useStylesPreviewColors();
@@ -28811,7 +28811,7 @@ var wp;
     ));
   }
 
-  // packages/global-styles-ui/build-module/preview-colors.js
+  // packages/global-styles-ui/build-module/preview-colors.mjs
   var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
   var firstFrameVariants2 = {
     start: {
@@ -28862,7 +28862,7 @@ var wp;
   };
   var preview_colors_default = StylesPreviewColors;
 
-  // packages/global-styles-ui/build-module/variations/variations-color.js
+  // packages/global-styles-ui/build-module/variations/variations-color.mjs
   var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
   var propertiesToFilter2 = ["color"];
   function ColorVariations({
@@ -28889,7 +28889,7 @@ var wp;
     ] });
   }
 
-  // packages/global-styles-ui/build-module/color-palette-panel.js
+  // packages/global-styles-ui/build-module/color-palette-panel.mjs
   var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
   var mobilePopoverProps = { placement: "bottom-start", offset: 8 };
   function ColorPalettePanel({ name: name2 }) {
@@ -28974,7 +28974,7 @@ var wp;
     ] });
   }
 
-  // packages/global-styles-ui/build-module/gradients-palette-panel.js
+  // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
   var import_compose13 = __toESM(require_compose(), 1);
   var import_components71 = __toESM(require_components(), 1);
   var import_i18n86 = __toESM(require_i18n(), 1);
@@ -29083,7 +29083,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/screen-color-palette.js
+  // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs2 } = unlock3(import_components72.privateApis);
   function ScreenColorPalette({ name: name2 }) {
@@ -29109,12 +29109,12 @@ var wp;
   }
   var screen_color_palette_default = ScreenColorPalette;
 
-  // packages/global-styles-ui/build-module/screen-background.js
+  // packages/global-styles-ui/build-module/screen-background.mjs
   var import_i18n88 = __toESM(require_i18n(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_components73 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/background-panel.js
+  // packages/global-styles-ui/build-module/background-panel.mjs
   var import_block_editor25 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
   var BACKGROUND_DEFAULT_VALUES = {
@@ -29144,7 +29144,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/screen-background.js
+  // packages/global-styles-ui/build-module/screen-background.mjs
   var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
   var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock3(import_block_editor26.privateApis);
   function ScreenBackground() {
@@ -29163,12 +29163,12 @@ var wp;
   }
   var screen_background_default = ScreenBackground;
 
-  // packages/global-styles-ui/build-module/shadows-panel.js
+  // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_components75 = __toESM(require_components(), 1);
   var import_i18n90 = __toESM(require_i18n(), 1);
   var import_element59 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.js
+  // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
   var import_components74 = __toESM(require_components(), 1);
   var import_i18n89 = __toESM(require_i18n(), 1);
   var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
@@ -29201,7 +29201,7 @@ var wp;
   }
   var confirm_reset_shadow_dialog_default = ConfirmResetShadowDialog;
 
-  // packages/global-styles-ui/build-module/shadows-panel.js
+  // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
   var { Menu } = unlock3(import_components75.privateApis);
   var defaultShadow = "6px 6px 9px rgba(0, 0, 0, 0.2)";
@@ -29356,12 +29356,12 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/shadows-edit-panel.js
+  // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
   var import_components76 = __toESM(require_components(), 1);
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_element60 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/shadow-utils.js
+  // packages/global-styles-ui/build-module/shadow-utils.mjs
   function getShadowParts(shadow) {
     const shadowValues = shadow.match(/(?:[^,(]|\([^)]*\))+/g) || [];
     return shadowValues.map((value) => value.trim());
@@ -29424,7 +29424,7 @@ var wp;
     return `${shadowObj.inset ? "inset" : ""} ${shadowString} ${shadowObj.color || ""}`.trim();
   }
 
-  // packages/global-styles-ui/build-module/shadows-edit-panel.js
+  // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
   var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu2 } = unlock3(import_components76.privateApis);
   var customShadowMenuItems = [
@@ -29883,7 +29883,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/screen-shadows.js
+  // packages/global-styles-ui/build-module/screen-shadows.mjs
   var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
   function ScreenShadows() {
     return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(ShadowsPanel, {});
@@ -29892,11 +29892,11 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(ShadowsEditPanel, {});
   }
 
-  // packages/global-styles-ui/build-module/screen-layout.js
+  // packages/global-styles-ui/build-module/screen-layout.mjs
   var import_i18n92 = __toESM(require_i18n(), 1);
   var import_block_editor28 = __toESM(require_block_editor(), 1);
 
-  // packages/global-styles-ui/build-module/dimensions-panel.js
+  // packages/global-styles-ui/build-module/dimensions-panel.mjs
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_element61 = __toESM(require_element(), 1);
   var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
@@ -29963,7 +29963,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/screen-layout.js
+  // packages/global-styles-ui/build-module/screen-layout.mjs
   var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
   var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock3(
     import_block_editor28.privateApis
@@ -29979,15 +29979,15 @@ var wp;
   }
   var screen_layout_default = ScreenLayout;
 
-  // packages/global-styles-ui/build-module/screen-style-variations.js
+  // packages/global-styles-ui/build-module/screen-style-variations.mjs
   var import_components79 = __toESM(require_components(), 1);
   var import_i18n95 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/style-variations-content.js
+  // packages/global-styles-ui/build-module/style-variations-content.mjs
   var import_i18n94 = __toESM(require_i18n(), 1);
   var import_components78 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/style-variations-container.js
+  // packages/global-styles-ui/build-module/style-variations-container.mjs
   var import_core_data39 = __toESM(require_core_data(), 1);
   var import_data57 = __toESM(require_data(), 1);
   var import_element62 = __toESM(require_element(), 1);
@@ -30081,7 +30081,7 @@ var wp;
   }
   var style_variations_container_default = StyleVariationsContainer;
 
-  // packages/global-styles-ui/build-module/style-variations-content.js
+  // packages/global-styles-ui/build-module/style-variations-content.mjs
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
   function StyleVariationsContent() {
     const gap = 3;
@@ -30092,7 +30092,7 @@ var wp;
     ] });
   }
 
-  // packages/global-styles-ui/build-module/screen-style-variations.js
+  // packages/global-styles-ui/build-module/screen-style-variations.mjs
   var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
   function ScreenStyleVariations() {
     return /* @__PURE__ */ (0, import_jsx_runtime171.jsxs)(import_jsx_runtime171.Fragment, { children: [
@@ -30118,7 +30118,7 @@ var wp;
   }
   var screen_style_variations_default = ScreenStyleVariations;
 
-  // packages/global-styles-ui/build-module/screen-css.js
+  // packages/global-styles-ui/build-module/screen-css.mjs
   var import_i18n96 = __toESM(require_i18n(), 1);
   var import_components80 = __toESM(require_components(), 1);
   var import_block_editor29 = __toESM(require_block_editor(), 1);
@@ -30167,12 +30167,12 @@ var wp;
   }
   var screen_css_default = ScreenCSS;
 
-  // packages/global-styles-ui/build-module/screen-revisions/index.js
+  // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_i18n99 = __toESM(require_i18n(), 1);
   var import_components83 = __toESM(require_components(), 1);
   var import_element64 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.js
+  // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
   var import_data58 = __toESM(require_data(), 1);
   var import_core_data40 = __toESM(require_core_data(), 1);
   var import_element63 = __toESM(require_element(), 1);
@@ -30312,7 +30312,7 @@ var wp;
     ]);
   }
 
-  // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.js
+  // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
   var import_i18n97 = __toESM(require_i18n(), 1);
   var import_components81 = __toESM(require_components(), 1);
   var import_date4 = __toESM(require_date(), 1);
@@ -30487,7 +30487,7 @@ var wp;
   }
   var revisions_buttons_default = RevisionsButtons;
 
-  // packages/global-styles-ui/build-module/pagination/index.js
+  // packages/global-styles-ui/build-module/pagination/index.mjs
   var import_components82 = __toESM(require_components(), 1);
   var import_i18n98 = __toESM(require_i18n(), 1);
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
@@ -30586,7 +30586,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/screen-revisions/index.js
+  // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
   var PAGE_SIZE = 10;
   function ScreenRevisions({ onClose } = {}) {
@@ -30692,12 +30692,12 @@ var wp;
   }
   var screen_revisions_default = ScreenRevisions;
 
-  // packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+  // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_i18n101 = __toESM(require_i18n(), 1);
   var import_components85 = __toESM(require_components(), 1);
   var import_element65 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.js
+  // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
   var import_components84 = __toESM(require_components(), 1);
   var import_i18n100 = __toESM(require_i18n(), 1);
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
@@ -30730,7 +30730,7 @@ var wp;
   }
   var confirm_reset_font_sizes_dialog_default = ConfirmResetFontSizesDialog;
 
-  // packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+  // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu3 } = unlock3(import_components85.privateApis);
   function FontSizeGroup({
@@ -30902,12 +30902,12 @@ var wp;
   }
   var font_sizes_default = FontSizes2;
 
-  // packages/global-styles-ui/build-module/font-sizes/font-size.js
+  // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_i18n105 = __toESM(require_i18n(), 1);
   var import_components89 = __toESM(require_components(), 1);
   var import_element67 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/font-size-preview.js
+  // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
   var import_block_editor30 = __toESM(require_block_editor(), 1);
   var import_i18n102 = __toESM(require_i18n(), 1);
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
@@ -30934,7 +30934,7 @@ var wp;
   }
   var font_size_preview_default = FontSizePreview;
 
-  // packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.js
+  // packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.mjs
   var import_components86 = __toESM(require_components(), 1);
   var import_i18n103 = __toESM(require_i18n(), 1);
   var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
@@ -30972,7 +30972,7 @@ var wp;
   }
   var confirm_delete_font_size_dialog_default = ConfirmDeleteFontSizeDialog;
 
-  // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.js
+  // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
   var import_components87 = __toESM(require_components(), 1);
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_element66 = __toESM(require_element(), 1);
@@ -31046,7 +31046,7 @@ var wp;
   }
   var rename_font_size_dialog_default = RenameFontSizeDialog;
 
-  // packages/global-styles-ui/build-module/size-control/index.js
+  // packages/global-styles-ui/build-module/size-control/index.mjs
   var import_components88 = __toESM(require_components(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_UNITS = ["px", "em", "rem", "vw", "vh"];
@@ -31101,7 +31101,7 @@ var wp;
     ] }) });
   }
 
-  // packages/global-styles-ui/build-module/font-sizes/font-size.js
+  // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu4 } = unlock3(import_components89.privateApis);
   function FontSize() {
@@ -31317,7 +31317,7 @@ var wp;
   }
   var font_size_default = FontSize;
 
-  // packages/global-styles-ui/build-module/global-styles-ui.js
+  // packages/global-styles-ui/build-module/global-styles-ui.mjs
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
   function BlockStylesNavigationScreens({
     parentMenu,
@@ -31489,7 +31489,7 @@ var wp;
     return null;
   }
 
-  // packages/global-styles-ui/build-module/with-global-styles-provider.js
+  // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
   function withGlobalStylesProvider(Component6) {
     return function WrappedComponent({
@@ -31510,22 +31510,22 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/style-variations.js
+  // packages/global-styles-ui/build-module/style-variations.mjs
   var StyleVariations = withGlobalStylesProvider(style_variations_container_default);
 
-  // packages/global-styles-ui/build-module/color-variations.js
+  // packages/global-styles-ui/build-module/color-variations.mjs
   var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 
-  // packages/global-styles-ui/build-module/typography-variations.js
+  // packages/global-styles-ui/build-module/typography-variations.mjs
   var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
-  // packages/global-styles-ui/build-module/font-library/font-library.js
+  // packages/global-styles-ui/build-module/font-library/font-library.mjs
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/editor/build-module/components/global-styles/index.js
+  // packages/editor/build-module/components/global-styles/index.mjs
   var import_media_utils4 = __toESM(require_media_utils(), 1);
 
-  // packages/editor/build-module/components/global-styles/block-link.js
+  // packages/editor/build-module/components/global-styles/block-link.mjs
   var import_data61 = __toESM(require_data(), 1);
   var import_element69 = __toESM(require_element(), 1);
   var import_block_editor32 = __toESM(require_block_editor(), 1);
@@ -31569,7 +31569,7 @@ var wp;
     return null;
   }
 
-  // packages/editor/build-module/components/global-styles/hooks.js
+  // packages/editor/build-module/components/global-styles/hooks.mjs
   var import_element70 = __toESM(require_element(), 1);
   var import_core_data42 = __toESM(require_core_data(), 1);
   var import_data62 = __toESM(require_data(), 1);
@@ -31713,7 +31713,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/global-styles/index.js
+  // packages/editor/build-module/components/global-styles/index.mjs
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function useServerData() {
     const {
@@ -31811,7 +31811,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/dataviews/fields/content-preview/content-preview-view.js
+  // packages/editor/build-module/dataviews/fields/content-preview/content-preview-view.mjs
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   function PostPreviewContainer({
     template: template2,
@@ -31874,7 +31874,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/dataviews/fields/content-preview/index.js
+  // packages/editor/build-module/dataviews/fields/content-preview/index.mjs
   var postPreviewField = {
     type: "media",
     id: "content-preview",
@@ -31884,7 +31884,7 @@ var wp;
   };
   var content_preview_default = postPreviewField;
 
-  // packages/editor/build-module/dataviews/store/private-actions.js
+  // packages/editor/build-module/dataviews/store/private-actions.mjs
   function hasEditorNotesSupport(supports) {
     const editor = supports?.editor;
     if (Array.isArray(editor)) {
@@ -32023,7 +32023,7 @@ var wp;
     (0, import_hooks36.doAction)("core.registerPostTypeSchema", postType2);
   };
 
-  // packages/editor/build-module/store/private-actions.js
+  // packages/editor/build-module/store/private-actions.mjs
   function setCurrentTemplateId(id) {
     return {
       type: "SET_CURRENT_TEMPLATE_ID",
@@ -32367,7 +32367,7 @@ var wp;
     };
   }
 
-  // packages/editor/build-module/store/private-selectors.js
+  // packages/editor/build-module/store/private-selectors.mjs
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
     getCanvasMinHeight: () => getCanvasMinHeight,
@@ -32390,7 +32390,7 @@ var wp;
   var import_core_data47 = __toESM(require_core_data(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/dataviews/store/private-selectors.js
+  // packages/editor/build-module/dataviews/store/private-selectors.mjs
   var EMPTY_ARRAY5 = [];
   function getEntityActions(state, kind, name2) {
     return state.actions[kind]?.[name2] ?? EMPTY_ARRAY5;
@@ -32402,7 +32402,7 @@ var wp;
     return state.isReady[kind]?.[name2];
   }
 
-  // packages/editor/build-module/store/private-selectors.js
+  // packages/editor/build-module/store/private-selectors.mjs
   var EMPTY_INSERTION_POINT = {
     rootClientId: void 0,
     insertionIndex: void 0,
@@ -32562,7 +32562,7 @@ var wp;
     return state.canvasMinHeight;
   }
 
-  // packages/editor/build-module/store/index.js
+  // packages/editor/build-module/store/index.mjs
   var storeConfig = {
     reducer: reducer_default2,
     selectors: selectors_exports,
@@ -32575,7 +32575,7 @@ var wp;
   unlock(store).registerPrivateActions(private_actions_exports);
   unlock(store).registerPrivateSelectors(private_selectors_exports);
 
-  // packages/editor/build-module/hooks/custom-sources-backwards-compatibility.js
+  // packages/editor/build-module/hooks/custom-sources-backwards-compatibility.mjs
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
   var createWithMetaAttributeSource = (metaAttributes) => (0, import_compose16.createHigherOrderComponent)(
     (BlockEdit2) => ({ attributes, setAttributes, ...props }) => {
@@ -32646,10 +32646,10 @@ var wp;
     shimAttributeSource
   );
 
-  // packages/editor/build-module/hooks/default-autocompleters.js
+  // packages/editor/build-module/hooks/default-autocompleters.mjs
   var import_hooks47 = __toESM(require_hooks(), 1);
 
-  // packages/editor/build-module/components/autocompleters/user.js
+  // packages/editor/build-module/components/autocompleters/user.mjs
   var import_element73 = __toESM(require_element(), 1);
   var import_data68 = __toESM(require_data(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
@@ -32699,7 +32699,7 @@ var wp;
     }
   };
 
-  // packages/editor/build-module/components/autosave-monitor/index.js
+  // packages/editor/build-module/components/autosave-monitor/index.mjs
   var import_element74 = __toESM(require_element(), 1);
   var import_compose17 = __toESM(require_compose(), 1);
   var import_data69 = __toESM(require_data(), 1);
@@ -32786,7 +32786,7 @@ var wp;
     }))
   ])(AutosaveMonitor);
 
-  // packages/editor/build-module/components/document-bar/index.js
+  // packages/editor/build-module/components/document-bar/index.mjs
   var import_i18n115 = __toESM(require_i18n(), 1);
   var import_data77 = __toESM(require_data(), 1);
   var import_components98 = __toESM(require_components(), 1);
@@ -32799,7 +32799,7 @@ var wp;
   var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_dom = __toESM(require_dom(), 1);
 
-  // packages/editor/build-module/utils/pageTypeBadge.js
+  // packages/editor/build-module/utils/pageTypeBadge.mjs
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_data70 = __toESM(require_data(), 1);
   var import_core_data51 = __toESM(require_core_data(), 1);
@@ -32824,7 +32824,7 @@ var wp;
     return false;
   }
 
-  // packages/editor/build-module/components/styles-canvas/index.js
+  // packages/editor/build-module/components/styles-canvas/index.mjs
   var import_components97 = __toESM(require_components(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n114 = __toESM(require_i18n(), 1);
@@ -32832,10 +32832,10 @@ var wp;
   var import_compose18 = __toESM(require_compose(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/components/styles-canvas/style-book.js
+  // packages/editor/build-module/components/styles-canvas/style-book.mjs
   var import_element78 = __toESM(require_element(), 1);
 
-  // packages/editor/build-module/components/style-book/index.js
+  // packages/editor/build-module/components/style-book/index.mjs
   var import_components93 = __toESM(require_components(), 1);
   var import_i18n112 = __toESM(require_i18n(), 1);
   var import_block_editor38 = __toESM(require_block_editor(), 1);
@@ -32845,7 +32845,7 @@ var wp;
   var import_media_utils5 = __toESM(require_media_utils(), 1);
   var import_core_data52 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/style-book/constants.js
+  // packages/editor/build-module/components/style-book/constants.mjs
   var import_i18n110 = __toESM(require_i18n(), 1);
   var STYLE_BOOK_COLOR_GROUPS = [
     {
@@ -33128,7 +33128,7 @@ var wp;
 	}
 `;
 
-  // packages/editor/build-module/components/style-book/categories.js
+  // packages/editor/build-module/components/style-book/categories.mjs
   var import_blocks20 = __toESM(require_blocks(), 1);
   function getExamplesByCategory(categoryDefinition, examples) {
     if (!categoryDefinition?.slug || !examples?.length) {
@@ -33185,11 +33185,11 @@ var wp;
     return [...STYLE_BOOK_CATEGORIES, ...extraCategoriesFiltered];
   }
 
-  // packages/editor/build-module/components/style-book/examples.js
+  // packages/editor/build-module/components/style-book/examples.mjs
   var import_i18n111 = __toESM(require_i18n(), 1);
   var import_blocks21 = __toESM(require_blocks(), 1);
 
-  // packages/editor/build-module/components/style-book/color-examples.js
+  // packages/editor/build-module/components/style-book/color-examples.mjs
   var import_components91 = __toESM(require_components(), 1);
   var import_block_editor37 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
@@ -33220,7 +33220,7 @@ var wp;
   };
   var color_examples_default = ColorExamples;
 
-  // packages/editor/build-module/components/style-book/duotone-examples.js
+  // packages/editor/build-module/components/style-book/duotone-examples.mjs
   var import_components92 = __toESM(require_components(), 1);
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   var DuotoneExamples = ({
@@ -33266,7 +33266,7 @@ var wp;
   };
   var duotone_examples_default = DuotoneExamples;
 
-  // packages/editor/build-module/components/style-book/examples.js
+  // packages/editor/build-module/components/style-book/examples.mjs
   var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   function getColorExamples(colors) {
     if (!colors) {
@@ -33462,11 +33462,11 @@ var wp;
     ];
   }
 
-  // packages/editor/build-module/components/global-styles-renderer/index.js
+  // packages/editor/build-module/components/global-styles-renderer/index.mjs
   var import_element76 = __toESM(require_element(), 1);
   var import_data72 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/hooks/use-global-styles-output.js
+  // packages/editor/build-module/hooks/use-global-styles-output.mjs
   var import_blocks22 = __toESM(require_blocks(), 1);
   var import_data71 = __toESM(require_data(), 1);
   var import_element75 = __toESM(require_element(), 1);
@@ -33509,7 +33509,7 @@ var wp;
     return useGlobalStylesOutputWithConfig(mergedConfig, disableRootPadding);
   }
 
-  // packages/editor/build-module/components/global-styles-renderer/index.js
+  // packages/editor/build-module/components/global-styles-renderer/index.mjs
   function useGlobalStylesRenderer(disableRootPadding) {
     const [styles, settings] = useGlobalStylesOutput(disableRootPadding);
     const { getEditorSettings: getEditorSettings2 } = (0, import_data72.useSelect)(store);
@@ -33534,7 +33534,7 @@ var wp;
     return null;
   }
 
-  // packages/editor/build-module/components/style-book/index.js
+  // packages/editor/build-module/components/style-book/index.mjs
   var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider2 } = unlock(import_block_editor38.privateApis);
   var { Tabs: Tabs3 } = unlock(import_components93.privateApis);
@@ -34099,7 +34099,7 @@ var wp;
   };
   var style_book_default = (0, import_element77.forwardRef)(StyleBook);
 
-  // packages/editor/build-module/components/styles-canvas/style-book.js
+  // packages/editor/build-module/components/styles-canvas/style-book.mjs
   var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
   function StylesCanvasStyleBook({ path, onPathChange }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
@@ -34132,7 +34132,7 @@ var wp;
   }
   var style_book_default2 = (0, import_element78.forwardRef)(StylesCanvasStyleBook);
 
-  // packages/editor/build-module/components/styles-canvas/revisions.js
+  // packages/editor/build-module/components/styles-canvas/revisions.mjs
   var import_components94 = __toESM(require_components(), 1);
   var import_block_editor39 = __toESM(require_block_editor(), 1);
   var import_data74 = __toESM(require_data(), 1);
@@ -34226,11 +34226,11 @@ var wp;
   }
   var revisions_default = (0, import_element79.forwardRef)(StylesCanvasRevisions);
 
-  // packages/editor/build-module/components/resizable-editor/index.js
+  // packages/editor/build-module/components/resizable-editor/index.mjs
   var import_element80 = __toESM(require_element(), 1);
   var import_components96 = __toESM(require_components(), 1);
 
-  // packages/editor/build-module/components/resizable-editor/resize-handle.js
+  // packages/editor/build-module/components/resizable-editor/resize-handle.mjs
   var import_i18n113 = __toESM(require_i18n(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_components95 = __toESM(require_components(), 1);
@@ -34277,7 +34277,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/resizable-editor/index.js
+  // packages/editor/build-module/components/resizable-editor/index.mjs
   var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
   var HANDLE_STYLES_OVERRIDE = {
     position: void 0,
@@ -34350,7 +34350,7 @@ var wp;
   }
   var resizable_editor_default = ResizableEditor;
 
-  // packages/editor/build-module/components/styles-canvas/index.js
+  // packages/editor/build-module/components/styles-canvas/index.mjs
   var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
   function getStylesCanvasTitle(path, showStylebook2) {
     if (showStylebook2) {
@@ -34439,7 +34439,7 @@ var wp;
     ) }) });
   }
 
-  // packages/editor/build-module/components/document-bar/useEditedSectionDetails.js
+  // packages/editor/build-module/components/document-bar/useEditedSectionDetails.mjs
   var import_data76 = __toESM(require_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_block_editor40 = __toESM(require_block_editor(), 1);
@@ -34509,7 +34509,7 @@ var wp;
     }, []);
   }
 
-  // packages/editor/build-module/components/document-bar/index.js
+  // packages/editor/build-module/components/document-bar/index.mjs
   var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
   var MotionButton = import_components98.__unstableMotion.create(import_components98.Button);
   function DocumentBar(props) {
@@ -34670,7 +34670,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/document-outline/index.js
+  // packages/editor/build-module/components/document-outline/index.mjs
   var import_i18n116 = __toESM(require_i18n(), 1);
   var import_data78 = __toESM(require_data(), 1);
   var import_element82 = __toESM(require_element(), 1);
@@ -34679,7 +34679,7 @@ var wp;
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_components99 = __toESM(require_components(), 1);
 
-  // packages/editor/build-module/components/document-outline/item.js
+  // packages/editor/build-module/components/document-outline/item.mjs
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   var TableOfContentsItem = ({
     children,
@@ -34732,7 +34732,7 @@ var wp;
   };
   var item_default = TableOfContentsItem;
 
-  // packages/editor/build-module/components/document-outline/index.js
+  // packages/editor/build-module/components/document-outline/index.mjs
   var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   var emptyHeadingContent = /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("em", { children: (0, import_i18n116.__)("(Empty heading)") });
   var incorrectLevelContent = [
@@ -34906,7 +34906,7 @@ var wp;
     ] }) });
   }
 
-  // packages/editor/build-module/components/document-outline/check.js
+  // packages/editor/build-module/components/document-outline/check.mjs
   var import_data79 = __toESM(require_data(), 1);
   var import_block_editor43 = __toESM(require_block_editor(), 1);
   function DocumentOutlineCheck({ children }) {
@@ -34920,7 +34920,7 @@ var wp;
     return children;
   }
 
-  // packages/editor/build-module/components/global-keyboard-shortcuts/register-shortcuts.js
+  // packages/editor/build-module/components/global-keyboard-shortcuts/register-shortcuts.mjs
   var import_element83 = __toESM(require_element(), 1);
   var import_data80 = __toESM(require_data(), 1);
   var import_i18n117 = __toESM(require_i18n(), 1);
@@ -35052,7 +35052,7 @@ var wp;
   }
   var register_shortcuts_default = EditorKeyboardShortcutsRegister;
 
-  // packages/editor/build-module/components/editor-history/redo.js
+  // packages/editor/build-module/components/editor-history/redo.mjs
   var import_i18n118 = __toESM(require_i18n(), 1);
   var import_components100 = __toESM(require_components(), 1);
   var import_data81 = __toESM(require_data(), 1);
@@ -35083,7 +35083,7 @@ var wp;
   }
   var redo_default2 = (0, import_element84.forwardRef)(EditorHistoryRedo);
 
-  // packages/editor/build-module/components/editor-history/undo.js
+  // packages/editor/build-module/components/editor-history/undo.mjs
   var import_i18n119 = __toESM(require_i18n(), 1);
   var import_components101 = __toESM(require_components(), 1);
   var import_data82 = __toESM(require_data(), 1);
@@ -35113,12 +35113,12 @@ var wp;
   }
   var undo_default2 = (0, import_element85.forwardRef)(EditorHistoryUndo);
 
-  // packages/editor/build-module/components/editor-notices/index.js
+  // packages/editor/build-module/components/editor-notices/index.mjs
   var import_components103 = __toESM(require_components(), 1);
   var import_data84 = __toESM(require_data(), 1);
   var import_notices17 = __toESM(require_notices(), 1);
 
-  // packages/editor/build-module/components/template-validation-notice/index.js
+  // packages/editor/build-module/components/template-validation-notice/index.mjs
   var import_components102 = __toESM(require_components(), 1);
   var import_i18n120 = __toESM(require_i18n(), 1);
   var import_data83 = __toESM(require_data(), 1);
@@ -35175,7 +35175,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/editor-notices/index.js
+  // packages/editor/build-module/components/editor-notices/index.mjs
   var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   function EditorNotices() {
     const { notices } = (0, import_data84.useSelect)(
@@ -35212,7 +35212,7 @@ var wp;
   }
   var editor_notices_default = EditorNotices;
 
-  // packages/editor/build-module/components/editor-snackbars/index.js
+  // packages/editor/build-module/components/editor-snackbars/index.mjs
   var import_components104 = __toESM(require_components(), 1);
   var import_data85 = __toESM(require_data(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
@@ -35235,20 +35235,20 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/entities-saved-states/index.js
+  // packages/editor/build-module/components/entities-saved-states/index.mjs
   var import_components107 = __toESM(require_components(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
   var import_element88 = __toESM(require_element(), 1);
   var import_compose20 = __toESM(require_compose(), 1);
   var import_data89 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/components/entities-saved-states/entity-type-list.js
+  // packages/editor/build-module/components/entities-saved-states/entity-type-list.mjs
   var import_i18n122 = __toESM(require_i18n(), 1);
   var import_data87 = __toESM(require_data(), 1);
   var import_components106 = __toESM(require_components(), 1);
   var import_core_data57 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/entities-saved-states/entity-record-item.js
+  // packages/editor/build-module/components/entities-saved-states/entity-record-item.mjs
   var import_components105 = __toESM(require_components(), 1);
   var import_i18n121 = __toESM(require_i18n(), 1);
   var import_data86 = __toESM(require_data(), 1);
@@ -35299,7 +35299,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/entities-saved-states/entity-type-list.js
+  // packages/editor/build-module/components/entities-saved-states/entity-type-list.mjs
   var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   function getEntityDescription(entity, count) {
     switch (entity) {
@@ -35394,7 +35394,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/entities-saved-states/hooks/use-is-dirty.js
+  // packages/editor/build-module/components/entities-saved-states/hooks/use-is-dirty.mjs
   var import_data88 = __toESM(require_data(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_element87 = __toESM(require_element(), 1);
@@ -35454,7 +35454,7 @@ var wp;
     };
   };
 
-  // packages/editor/build-module/components/entities-saved-states/index.js
+  // packages/editor/build-module/components/entities-saved-states/index.mjs
   var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
   function identity(values) {
     return values;
@@ -35621,7 +35621,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/error-boundary/index.js
+  // packages/editor/build-module/components/error-boundary/index.mjs
   var import_element89 = __toESM(require_element(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_components108 = __toESM(require_components(), 1);
@@ -35680,7 +35680,7 @@ var wp;
   };
   var error_boundary_default = ErrorBoundary;
 
-  // packages/editor/build-module/components/local-autosave-monitor/index.js
+  // packages/editor/build-module/components/local-autosave-monitor/index.mjs
   var import_element90 = __toESM(require_element(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
   var import_data91 = __toESM(require_data(), 1);
@@ -35813,7 +35813,7 @@ var wp;
   }
   var local_autosave_monitor_default = (0, import_compose22.ifCondition)(hasSessionStorageSupport)(LocalAutosaveMonitor);
 
-  // packages/editor/build-module/components/page-attributes/check.js
+  // packages/editor/build-module/components/page-attributes/check.mjs
   var import_data92 = __toESM(require_data(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
   function PageAttributesCheck({ children }) {
@@ -35830,13 +35830,13 @@ var wp;
   }
   var check_default2 = PageAttributesCheck;
 
-  // packages/editor/build-module/components/page-attributes/order.js
+  // packages/editor/build-module/components/page-attributes/order.mjs
   var import_i18n126 = __toESM(require_i18n(), 1);
   var import_components109 = __toESM(require_components(), 1);
   var import_data94 = __toESM(require_data(), 1);
   var import_element91 = __toESM(require_element(), 1);
 
-  // packages/editor/build-module/components/post-type-support-check/index.js
+  // packages/editor/build-module/components/post-type-support-check/index.mjs
   var import_data93 = __toESM(require_data(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
   function checkSupport(supports = {}, key) {
@@ -35864,7 +35864,7 @@ var wp;
   }
   var post_type_support_check_default = PostTypeSupportCheck;
 
-  // packages/editor/build-module/components/page-attributes/order.js
+  // packages/editor/build-module/components/page-attributes/order.mjs
   var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
   function PageAttributesOrder() {
     const order = (0, import_data94.useSelect)(
@@ -35900,11 +35900,11 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(post_type_support_check_default, { supportKeys: "page-attributes", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(PageAttributesOrder, {}) });
   }
 
-  // packages/editor/build-module/components/page-attributes/panel.js
+  // packages/editor/build-module/components/page-attributes/panel.mjs
   var import_data96 = __toESM(require_data(), 1);
   var import_core_data62 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/page-attributes/parent.js
+  // packages/editor/build-module/components/page-attributes/parent.mjs
   var import_remove_accents2 = __toESM(require_remove_accents(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
   var import_components111 = __toESM(require_components(), 1);
@@ -35916,7 +35916,7 @@ var wp;
   var import_block_editor46 = __toESM(require_block_editor(), 1);
   var import_url10 = __toESM(require_url(), 1);
 
-  // packages/editor/build-module/components/post-panel-row/index.js
+  // packages/editor/build-module/components/post-panel-row/index.mjs
   var import_components110 = __toESM(require_components(), 1);
   var import_element92 = __toESM(require_element(), 1);
   var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
@@ -35935,7 +35935,7 @@ var wp;
   });
   var post_panel_row_default = PostPanelRow;
 
-  // packages/editor/build-module/utils/terms.js
+  // packages/editor/build-module/utils/terms.mjs
   var import_html_entities13 = __toESM(require_html_entities(), 1);
   function buildTermsTree2(flatTerms) {
     const flatTermsWithParentAndChildren = flatTerms.map((term) => {
@@ -35985,7 +35985,7 @@ var wp;
     return (terms ?? []).map(unescapeTerm);
   };
 
-  // packages/editor/build-module/components/page-attributes/parent.js
+  // packages/editor/build-module/components/page-attributes/parent.mjs
   var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
   function getTitle(post2) {
     return post2?.title?.rendered ? (0, import_html_entities14.decodeEntities)(post2.title.rendered) : `#${post2.id} (${(0, import_i18n127.__)("no title")})`;
@@ -36218,7 +36218,7 @@ var wp;
   }
   var parent_default2 = PageAttributesParent2;
 
-  // packages/editor/build-module/components/page-attributes/panel.js
+  // packages/editor/build-module/components/page-attributes/panel.mjs
   var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
   var PANEL_NAME = "page-attributes";
   function AttributesPanel() {
@@ -36239,7 +36239,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(AttributesPanel, {}) });
   }
 
-  // packages/editor/build-module/components/post-template/classic-theme.js
+  // packages/editor/build-module/components/post-template/classic-theme.mjs
   var import_i18n129 = __toESM(require_i18n(), 1);
   var import_components113 = __toESM(require_components(), 1);
   var import_data99 = __toESM(require_data(), 1);
@@ -36248,7 +36248,7 @@ var wp;
   var import_element96 = __toESM(require_element(), 1);
   var import_notices20 = __toESM(require_notices(), 1);
 
-  // packages/editor/build-module/components/post-template/create-new-template-modal.js
+  // packages/editor/build-module/components/post-template/create-new-template-modal.mjs
   var import_data97 = __toESM(require_data(), 1);
   var import_element94 = __toESM(require_element(), 1);
   var import_blocks24 = __toESM(require_blocks(), 1);
@@ -36383,7 +36383,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-template/hooks.js
+  // packages/editor/build-module/components/post-template/hooks.mjs
   var import_data98 = __toESM(require_data(), 1);
   var import_element95 = __toESM(require_element(), 1);
   var import_core_data63 = __toESM(require_core_data(), 1);
@@ -36459,7 +36459,7 @@ var wp;
     return templates?.find((template2) => template2.slug === entityTemplate)?.slug;
   }
 
-  // packages/editor/build-module/components/post-template/classic-theme.js
+  // packages/editor/build-module/components/post-template/classic-theme.mjs
   var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
   function PostTemplateToggle({ isOpen, onClick }) {
     const templateTitle = (0, import_data99.useSelect)((select5) => {
@@ -36636,16 +36636,16 @@ var wp;
   }
   var classic_theme_default = ClassicThemeControl;
 
-  // packages/editor/build-module/components/plugin-document-setting-panel/index.js
+  // packages/editor/build-module/components/plugin-document-setting-panel/index.mjs
   var import_components115 = __toESM(require_components(), 1);
   var import_plugins3 = __toESM(require_plugins(), 1);
   var import_data101 = __toESM(require_data(), 1);
   var import_warning = __toESM(require_warning(), 1);
 
-  // packages/editor/build-module/components/preferences-modal/enable-plugin-document-setting-panel.js
+  // packages/editor/build-module/components/preferences-modal/enable-plugin-document-setting-panel.mjs
   var import_components114 = __toESM(require_components(), 1);
 
-  // packages/editor/build-module/components/preferences-modal/enable-panel.js
+  // packages/editor/build-module/components/preferences-modal/enable-panel.mjs
   var import_data100 = __toESM(require_data(), 1);
   var import_preferences12 = __toESM(require_preferences(), 1);
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
@@ -36675,7 +36675,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/preferences-modal/enable-plugin-document-setting-panel.js
+  // packages/editor/build-module/components/preferences-modal/enable-plugin-document-setting-panel.mjs
   var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill4, Slot: Slot4 } = (0, import_components114.createSlotFill)(
     "EnablePluginDocumentSettingPanelOption"
@@ -36684,7 +36684,7 @@ var wp;
   EnablePluginDocumentSettingPanelOption.Slot = Slot4;
   var enable_plugin_document_setting_panel_default = EnablePluginDocumentSettingPanelOption;
 
-  // packages/editor/build-module/components/plugin-document-setting-panel/index.js
+  // packages/editor/build-module/components/plugin-document-setting-panel/index.mjs
   var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill5, Slot: Slot5 } = (0, import_components115.createSlotFill)("PluginDocumentSettingPanel");
   var PluginDocumentSettingPanel = ({
@@ -36734,7 +36734,7 @@ var wp;
   PluginDocumentSettingPanel.Slot = Slot5;
   var plugin_document_setting_panel_default = PluginDocumentSettingPanel;
 
-  // packages/editor/build-module/components/block-settings-menu/plugin-block-settings-menu-item.js
+  // packages/editor/build-module/components/block-settings-menu/plugin-block-settings-menu-item.mjs
   var import_block_editor48 = __toESM(require_block_editor(), 1);
   var import_components116 = __toESM(require_components(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
@@ -36765,7 +36765,7 @@ var wp;
   } });
   var plugin_block_settings_menu_item_default = PluginBlockSettingsMenuItem;
 
-  // packages/editor/build-module/components/plugin-more-menu-item/index.js
+  // packages/editor/build-module/components/plugin-more-menu-item/index.mjs
   var import_components117 = __toESM(require_components(), 1);
   var import_plugins4 = __toESM(require_plugins(), 1);
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
@@ -36782,7 +36782,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/plugin-post-publish-panel/index.js
+  // packages/editor/build-module/components/plugin-post-publish-panel/index.mjs
   var import_plugins5 = __toESM(require_plugins(), 1);
   var import_components118 = __toESM(require_components(), 1);
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
@@ -36809,7 +36809,7 @@ var wp;
   PluginPostPublishPanel.Slot = Slot6;
   var plugin_post_publish_panel_default = PluginPostPublishPanel;
 
-  // packages/editor/build-module/components/plugin-post-status-info/index.js
+  // packages/editor/build-module/components/plugin-post-status-info/index.mjs
   var import_components119 = __toESM(require_components(), 1);
   var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill7, Slot: Slot7 } = (0, import_components119.createSlotFill)("PluginPostStatusInfo");
@@ -36817,7 +36817,7 @@ var wp;
   PluginPostStatusInfo.Slot = Slot7;
   var plugin_post_status_info_default = PluginPostStatusInfo;
 
-  // packages/editor/build-module/components/plugin-pre-publish-panel/index.js
+  // packages/editor/build-module/components/plugin-pre-publish-panel/index.mjs
   var import_components120 = __toESM(require_components(), 1);
   var import_plugins6 = __toESM(require_plugins(), 1);
   var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
@@ -36844,7 +36844,7 @@ var wp;
   PluginPrePublishPanel.Slot = Slot8;
   var plugin_pre_publish_panel_default = PluginPrePublishPanel;
 
-  // packages/editor/build-module/components/plugin-preview-menu-item/index.js
+  // packages/editor/build-module/components/plugin-preview-menu-item/index.mjs
   var import_components121 = __toESM(require_components(), 1);
   var import_plugins7 = __toESM(require_plugins(), 1);
   var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
@@ -36861,7 +36861,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/plugin-sidebar/index.js
+  // packages/editor/build-module/components/plugin-sidebar/index.mjs
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   function PluginSidebar({ className, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
@@ -36875,7 +36875,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/plugin-sidebar-more-menu-item/index.js
+  // packages/editor/build-module/components/plugin-sidebar-more-menu-item/index.mjs
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   function PluginSidebarMoreMenuItem(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
@@ -36888,11 +36888,11 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-template/panel.js
+  // packages/editor/build-module/components/post-template/panel.mjs
   var import_data106 = __toESM(require_data(), 1);
   var import_core_data69 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-template/block-theme.js
+  // packages/editor/build-module/components/post-template/block-theme.mjs
   var import_data105 = __toESM(require_data(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_components125 = __toESM(require_components(), 1);
@@ -36902,7 +36902,7 @@ var wp;
   var import_notices21 = __toESM(require_notices(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/components/post-template/swap-template-button.js
+  // packages/editor/build-module/components/post-template/swap-template-button.mjs
   var import_element97 = __toESM(require_element(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_block_editor49 = __toESM(require_block_editor(), 1);
@@ -36912,7 +36912,7 @@ var wp;
   var import_core_data65 = __toESM(require_core_data(), 1);
   var import_blocks25 = __toESM(require_blocks(), 1);
 
-  // packages/editor/build-module/utils/search-templates.js
+  // packages/editor/build-module/utils/search-templates.mjs
   var import_remove_accents3 = __toESM(require_remove_accents(), 1);
   function normalizeSearchInput(input = "") {
     input = (0, import_remove_accents3.default)(input);
@@ -36949,7 +36949,7 @@ var wp;
     return rankedTemplates.map(([template2]) => template2);
   }
 
-  // packages/editor/build-module/components/post-template/swap-template-button.js
+  // packages/editor/build-module/components/post-template/swap-template-button.mjs
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
   function SwapTemplateButton({ onClick }) {
     const [showModal, setShowModal] = (0, import_element97.useState)(false);
@@ -37032,7 +37032,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-template/reset-default-template.js
+  // packages/editor/build-module/components/post-template/reset-default-template.mjs
   var import_components123 = __toESM(require_components(), 1);
   var import_i18n131 = __toESM(require_i18n(), 1);
   var import_data103 = __toESM(require_data(), 1);
@@ -37064,7 +37064,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-template/create-new-template.js
+  // packages/editor/build-module/components/post-template/create-new-template.mjs
   var import_components124 = __toESM(require_components(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_data104 = __toESM(require_data(), 1);
@@ -37107,7 +37107,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-template/block-theme.js
+  // packages/editor/build-module/components/post-template/block-theme.mjs
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   function BlockThemeControl({ id }) {
     const {
@@ -37256,7 +37256,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/post-template/panel.js
+  // packages/editor/build-module/components/post-template/panel.mjs
   var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   function PostTemplatePanel() {
     const { templateId: templateId2, isBlockTheme } = (0, import_data106.useSelect)((select5) => {
@@ -37304,25 +37304,25 @@ var wp;
     return null;
   }
 
-  // packages/editor/build-module/components/post-author/index.js
+  // packages/editor/build-module/components/post-author/index.mjs
   var import_data110 = __toESM(require_data(), 1);
   var import_core_data71 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-author/combobox.js
+  // packages/editor/build-module/components/post-author/combobox.mjs
   var import_compose25 = __toESM(require_compose(), 1);
   var import_element101 = __toESM(require_element(), 1);
   var import_data108 = __toESM(require_data(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
   var import_components126 = __toESM(require_components(), 1);
 
-  // packages/editor/build-module/components/post-author/hook.js
+  // packages/editor/build-module/components/post-author/hook.mjs
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_element100 = __toESM(require_element(), 1);
   var import_data107 = __toESM(require_data(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-author/constants.js
+  // packages/editor/build-module/components/post-author/constants.mjs
   var BASE_QUERY = {
     _fields: "id,name",
     context: "view"
@@ -37334,7 +37334,7 @@ var wp;
     ...BASE_QUERY
   };
 
-  // packages/editor/build-module/components/post-author/hook.js
+  // packages/editor/build-module/components/post-author/hook.mjs
   function useAuthorsQuery(search) {
     const { authorId, authors, postAuthor, isLoading } = (0, import_data107.useSelect)(
       (select5) => {
@@ -37386,7 +37386,7 @@ var wp;
     return { authorId, authorOptions, postAuthor, isLoading };
   }
 
-  // packages/editor/build-module/components/post-author/combobox.js
+  // packages/editor/build-module/components/post-author/combobox.mjs
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   function PostAuthorCombobox() {
     const [fieldValue, setFieldValue] = (0, import_element101.useState)();
@@ -37414,7 +37414,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-author/select.js
+  // packages/editor/build-module/components/post-author/select.mjs
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_data109 = __toESM(require_data(), 1);
   var import_components127 = __toESM(require_components(), 1);
@@ -37440,7 +37440,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-author/index.js
+  // packages/editor/build-module/components/post-author/index.mjs
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   var minimumUsersForCombobox = 25;
   function PostAuthor() {
@@ -37455,7 +37455,7 @@ var wp;
   }
   var post_author_default = PostAuthor;
 
-  // packages/editor/build-module/components/post-author/check.js
+  // packages/editor/build-module/components/post-author/check.mjs
   var import_data111 = __toESM(require_data(), 1);
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   function PostAuthorCheck({ children }) {
@@ -37472,7 +37472,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(post_type_support_check_default, { supportKeys: "author", children });
   }
 
-  // packages/editor/build-module/components/post-author/panel.js
+  // packages/editor/build-module/components/post-author/panel.mjs
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_components128 = __toESM(require_components(), 1);
   var import_element102 = __toESM(require_element(), 1);
@@ -37546,7 +37546,7 @@ var wp;
   }
   var panel_default = PostAuthor2;
 
-  // packages/editor/build-module/components/post-comments/index.js
+  // packages/editor/build-module/components/post-comments/index.mjs
   var import_i18n138 = __toESM(require_i18n(), 1);
   var import_components129 = __toESM(require_components(), 1);
   var import_data113 = __toESM(require_data(), 1);
@@ -37589,7 +37589,7 @@ var wp;
   }
   var post_comments_default = PostComments;
 
-  // packages/editor/build-module/components/post-discussion/panel.js
+  // packages/editor/build-module/components/post-discussion/panel.mjs
   var import_i18n140 = __toESM(require_i18n(), 1);
   var import_components131 = __toESM(require_components(), 1);
   var import_data115 = __toESM(require_data(), 1);
@@ -37597,7 +37597,7 @@ var wp;
   var import_block_editor51 = __toESM(require_block_editor(), 1);
   var import_core_data73 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-pingbacks/index.js
+  // packages/editor/build-module/components/post-pingbacks/index.mjs
   var import_i18n139 = __toESM(require_i18n(), 1);
   var import_components130 = __toESM(require_components(), 1);
   var import_data114 = __toESM(require_data(), 1);
@@ -37631,7 +37631,7 @@ var wp;
   }
   var post_pingbacks_default = PostPingbacks;
 
-  // packages/editor/build-module/components/post-discussion/panel.js
+  // packages/editor/build-module/components/post-discussion/panel.mjs
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
   var PANEL_NAME2 = "discussion-panel";
   function ModalContents({ onClose }) {
@@ -37732,7 +37732,7 @@ var wp;
     ) }) });
   }
 
-  // packages/editor/build-module/components/post-excerpt/index.js
+  // packages/editor/build-module/components/post-excerpt/index.mjs
   var import_i18n141 = __toESM(require_i18n(), 1);
   var import_components132 = __toESM(require_components(), 1);
   var import_data116 = __toESM(require_data(), 1);
@@ -37794,14 +37794,14 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/post-excerpt/check.js
+  // packages/editor/build-module/components/post-excerpt/check.mjs
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
   function PostExcerptCheck({ children }) {
     return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(post_type_support_check_default, { supportKeys: "excerpt", children });
   }
   var check_default3 = PostExcerptCheck;
 
-  // packages/editor/build-module/components/post-excerpt/panel.js
+  // packages/editor/build-module/components/post-excerpt/panel.mjs
   var import_i18n142 = __toESM(require_i18n(), 1);
   var import_components134 = __toESM(require_components(), 1);
   var import_data117 = __toESM(require_data(), 1);
@@ -37810,7 +37810,7 @@ var wp;
   var import_core_data74 = __toESM(require_core_data(), 1);
   var import_html_entities20 = __toESM(require_html_entities(), 1);
 
-  // packages/editor/build-module/components/post-excerpt/plugin.js
+  // packages/editor/build-module/components/post-excerpt/plugin.mjs
   var import_components133 = __toESM(require_components(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill9, Slot: Slot9 } = (0, import_components133.createSlotFill)("PluginPostExcerpt");
@@ -37820,7 +37820,7 @@ var wp;
   PluginPostExcerpt.Slot = Slot9;
   var plugin_default = PluginPostExcerpt;
 
-  // packages/editor/build-module/components/post-excerpt/panel.js
+  // packages/editor/build-module/components/post-excerpt/panel.mjs
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
   var PANEL_NAME3 = "post-excerpt";
   function ExcerptPanel() {
@@ -37968,7 +37968,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-featured-image/index.js
+  // packages/editor/build-module/components/post-featured-image/index.mjs
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_hooks44 = __toESM(require_hooks(), 1);
   var import_components135 = __toESM(require_components(), 1);
@@ -37979,7 +37979,7 @@ var wp;
   var import_block_editor53 = __toESM(require_block_editor(), 1);
   var import_core_data76 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/theme-support-check/index.js
+  // packages/editor/build-module/components/theme-support-check/index.mjs
   var import_data118 = __toESM(require_data(), 1);
   var import_core_data75 = __toESM(require_core_data(), 1);
   function ThemeSupportCheck({ children, supportKeys }) {
@@ -38002,14 +38002,14 @@ var wp;
     return children;
   }
 
-  // packages/editor/build-module/components/post-featured-image/check.js
+  // packages/editor/build-module/components/post-featured-image/check.mjs
   var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
   function PostFeaturedImageCheck({ children }) {
     return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(ThemeSupportCheck, { supportKeys: "post-thumbnails", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(post_type_support_check_default, { supportKeys: "thumbnail", children }) });
   }
   var check_default4 = PostFeaturedImageCheck;
 
-  // packages/editor/build-module/components/post-featured-image/index.js
+  // packages/editor/build-module/components/post-featured-image/index.mjs
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES = ["image"];
   var DEFAULT_FEATURE_IMAGE_LABEL = (0, import_i18n143.__)("Featured image");
@@ -38271,7 +38271,7 @@ var wp;
     (0, import_components135.withFilters)("editor.PostFeaturedImage")
   )(PostFeaturedImage);
 
-  // packages/editor/build-module/components/post-featured-image/panel.js
+  // packages/editor/build-module/components/post-featured-image/panel.mjs
   var import_i18n144 = __toESM(require_i18n(), 1);
   var import_components136 = __toESM(require_components(), 1);
   var import_data120 = __toESM(require_data(), 1);
@@ -38310,14 +38310,14 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/post-format/index.js
+  // packages/editor/build-module/components/post-format/index.mjs
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_components137 = __toESM(require_components(), 1);
   var import_data122 = __toESM(require_data(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
   var import_core_data78 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-format/check.js
+  // packages/editor/build-module/components/post-format/check.mjs
   var import_data121 = __toESM(require_data(), 1);
   var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   function PostFormatCheck({ children }) {
@@ -38331,7 +38331,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(post_type_support_check_default, { supportKeys: "post-formats", children });
   }
 
-  // packages/editor/build-module/components/post-format/index.js
+  // packages/editor/build-module/components/post-format/index.mjs
   var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
   var POST_FORMATS = [
     { id: "aside", caption: (0, import_i18n145.__)("Aside") },
@@ -38411,13 +38411,13 @@ var wp;
     ] }) });
   }
 
-  // packages/editor/build-module/components/post-last-revision/index.js
+  // packages/editor/build-module/components/post-last-revision/index.mjs
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_components138 = __toESM(require_components(), 1);
   var import_data124 = __toESM(require_data(), 1);
   var import_url11 = __toESM(require_url(), 1);
 
-  // packages/editor/build-module/components/post-last-revision/check.js
+  // packages/editor/build-module/components/post-last-revision/check.mjs
   var import_data123 = __toESM(require_data(), 1);
   var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
   function PostLastRevisionCheck({ children }) {
@@ -38435,7 +38435,7 @@ var wp;
   }
   var check_default5 = PostLastRevisionCheck;
 
-  // packages/editor/build-module/components/post-last-revision/index.js
+  // packages/editor/build-module/components/post-last-revision/index.mjs
   var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
   function usePostLastRevisionInfo() {
     return (0, import_data124.useSelect)((select5) => {
@@ -38483,7 +38483,7 @@ var wp;
   }
   var post_last_revision_default = PostLastRevision;
 
-  // packages/editor/build-module/components/post-last-revision/panel.js
+  // packages/editor/build-module/components/post-last-revision/panel.mjs
   var import_components139 = __toESM(require_components(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   function PostLastRevisionPanel() {
@@ -38491,7 +38491,7 @@ var wp;
   }
   var panel_default2 = PostLastRevisionPanel;
 
-  // packages/editor/build-module/components/post-locked-modal/index.js
+  // packages/editor/build-module/components/post-locked-modal/index.mjs
   var import_i18n147 = __toESM(require_i18n(), 1);
   var import_components140 = __toESM(require_components(), 1);
   var import_data125 = __toESM(require_data(), 1);
@@ -38702,12 +38702,12 @@ var wp;
   }
   var post_locked_modal_default = true ? (0, import_components140.withFilters)("editor.PostLockedModal")(PostLockedModal) : PostLockedModal;
 
-  // packages/editor/build-module/components/post-pending-status/index.js
+  // packages/editor/build-module/components/post-pending-status/index.mjs
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_components141 = __toESM(require_components(), 1);
   var import_data127 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/components/post-pending-status/check.js
+  // packages/editor/build-module/components/post-pending-status/check.mjs
   var import_data126 = __toESM(require_data(), 1);
   function PostPendingStatusCheck({ children }) {
     const { hasPublishAction, isPublished } = (0, import_data126.useSelect)((select5) => {
@@ -38724,7 +38724,7 @@ var wp;
   }
   var check_default6 = PostPendingStatusCheck;
 
-  // packages/editor/build-module/components/post-pending-status/index.js
+  // packages/editor/build-module/components/post-pending-status/index.mjs
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   function PostPendingStatus() {
     const status = (0, import_data127.useSelect)(
@@ -38747,7 +38747,7 @@ var wp;
   }
   var post_pending_status_default = PostPendingStatus;
 
-  // packages/editor/build-module/components/post-preview-button/index.js
+  // packages/editor/build-module/components/post-preview-button/index.mjs
   var import_element108 = __toESM(require_element(), 1);
   var import_components142 = __toESM(require_components(), 1);
   var import_i18n149 = __toESM(require_i18n(), 1);
@@ -38902,13 +38902,13 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-publish-button/index.js
+  // packages/editor/build-module/components/post-publish-button/index.mjs
   var import_components143 = __toESM(require_components(), 1);
   var import_element109 = __toESM(require_element(), 1);
   var import_data130 = __toESM(require_data(), 1);
   var import_compose30 = __toESM(require_compose(), 1);
 
-  // packages/editor/build-module/components/post-publish-button/label.js
+  // packages/editor/build-module/components/post-publish-button/label.mjs
   var import_i18n150 = __toESM(require_i18n(), 1);
   var import_data129 = __toESM(require_data(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
@@ -38966,7 +38966,7 @@ var wp;
     return (0, import_i18n150.__)("Publish");
   }
 
-  // packages/editor/build-module/components/post-publish-button/index.js
+  // packages/editor/build-module/components/post-publish-button/index.mjs
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   var noop5 = () => {
   };
@@ -39130,7 +39130,7 @@ var wp;
     })
   ])(PostPublishButton);
 
-  // packages/editor/build-module/components/post-publish-panel/index.js
+  // packages/editor/build-module/components/post-publish-panel/index.mjs
   var import_i18n163 = __toESM(require_i18n(), 1);
   var import_element118 = __toESM(require_element(), 1);
   var import_components154 = __toESM(require_components(), 1);
@@ -39138,7 +39138,7 @@ var wp;
   var import_compose35 = __toESM(require_compose(), 1);
   var import_core_data90 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-publish-panel/prepublish.js
+  // packages/editor/build-module/components/post-publish-panel/prepublish.mjs
   var import_i18n161 = __toESM(require_i18n(), 1);
   var import_components152 = __toESM(require_components(), 1);
   var import_data142 = __toESM(require_data(), 1);
@@ -39146,7 +39146,7 @@ var wp;
   var import_core_data88 = __toESM(require_core_data(), 1);
   var import_html_entities22 = __toESM(require_html_entities(), 1);
 
-  // packages/editor/build-module/components/post-visibility/index.js
+  // packages/editor/build-module/components/post-visibility/index.mjs
   var import_i18n152 = __toESM(require_i18n(), 1);
   var import_element110 = __toESM(require_element(), 1);
   var import_components144 = __toESM(require_components(), 1);
@@ -39154,7 +39154,7 @@ var wp;
   var import_data131 = __toESM(require_data(), 1);
   var import_block_editor54 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/post-visibility/utils.js
+  // packages/editor/build-module/components/post-visibility/utils.mjs
   var import_i18n151 = __toESM(require_i18n(), 1);
   var VISIBILITY_OPTIONS = [
     {
@@ -39174,7 +39174,7 @@ var wp;
     }
   ];
 
-  // packages/editor/build-module/components/post-visibility/index.js
+  // packages/editor/build-module/components/post-visibility/index.mjs
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   function PostVisibility({ onClose }) {
     const instanceId = (0, import_compose31.useInstanceId)(PostVisibility);
@@ -39240,7 +39240,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-visibility/label.js
+  // packages/editor/build-module/components/post-visibility/label.mjs
   var import_data132 = __toESM(require_data(), 1);
   function PostVisibilityLabel() {
     return usePostVisibilityLabel();
@@ -39475,7 +39475,7 @@ var wp;
     return minutes >= 0 && minutes <= 59;
   }
 
-  // packages/editor/build-module/components/post-schedule/index.js
+  // packages/editor/build-module/components/post-schedule/index.mjs
   var import_date5 = __toESM(require_date(), 1);
   var import_i18n153 = __toESM(require_i18n(), 1);
   var import_data133 = __toESM(require_data(), 1);
@@ -39552,7 +39552,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-schedule/label.js
+  // packages/editor/build-module/components/post-schedule/label.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_date6 = __toESM(require_date(), 1);
   var import_data134 = __toESM(require_data(), 1);
@@ -39636,14 +39636,14 @@ var wp;
     return left.getDate() === right.getDate() && left.getMonth() === right.getMonth() && left.getFullYear() === right.getFullYear();
   }
 
-  // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.js
+  // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.mjs
   var import_i18n156 = __toESM(require_i18n(), 1);
   var import_element113 = __toESM(require_element(), 1);
   var import_data137 = __toESM(require_data(), 1);
   var import_components147 = __toESM(require_components(), 1);
   var import_core_data84 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-taxonomies/flat-term-selector.js
+  // packages/editor/build-module/components/post-taxonomies/flat-term-selector.mjs
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_element112 = __toESM(require_element(), 1);
   var import_components146 = __toESM(require_components(), 1);
@@ -39653,7 +39653,7 @@ var wp;
   var import_a11y4 = __toESM(require_a11y(), 1);
   var import_notices22 = __toESM(require_notices(), 1);
 
-  // packages/editor/build-module/components/post-taxonomies/most-used-terms.js
+  // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
   var import_components145 = __toESM(require_components(), 1);
   var import_data135 = __toESM(require_data(), 1);
   var import_core_data82 = __toESM(require_core_data(), 1);
@@ -39714,7 +39714,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-taxonomies/flat-term-selector.js
+  // packages/editor/build-module/components/post-taxonomies/flat-term-selector.mjs
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY6 = [];
   var MAX_TERMS_SUGGESTIONS = 100;
@@ -39911,7 +39911,7 @@ var wp;
   }
   var flat_term_selector_default = (0, import_components146.withFilters)("editor.PostTaxonomyType")(FlatTermSelector);
 
-  // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.js
+  // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.mjs
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
   var TagsPanel = () => {
     const tagLabels = (0, import_data137.useSelect)((select5) => {
@@ -39973,7 +39973,7 @@ var wp;
   };
   var maybe_tags_panel_default = MaybeTagsPanel;
 
-  // packages/editor/build-module/components/post-publish-panel/maybe-post-format-panel.js
+  // packages/editor/build-module/components/post-publish-panel/maybe-post-format-panel.mjs
   var import_components148 = __toESM(require_components(), 1);
   var import_data138 = __toESM(require_data(), 1);
   var import_i18n157 = __toESM(require_i18n(), 1);
@@ -40038,14 +40038,14 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-publish-panel/maybe-category-panel.js
+  // packages/editor/build-module/components/post-publish-panel/maybe-category-panel.mjs
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_data140 = __toESM(require_data(), 1);
   var import_components150 = __toESM(require_components(), 1);
   var import_core_data87 = __toESM(require_core_data(), 1);
   var import_element115 = __toESM(require_element(), 1);
 
-  // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.js
+  // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_element114 = __toESM(require_element(), 1);
   var import_notices23 = __toESM(require_notices(), 1);
@@ -40381,7 +40381,7 @@ var wp;
     HierarchicalTermSelector
   );
 
-  // packages/editor/build-module/components/post-publish-panel/maybe-category-panel.js
+  // packages/editor/build-module/components/post-publish-panel/maybe-category-panel.mjs
   var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
   function MaybeCategoryPanel() {
     const { hasNoCategory, hasSiteCategories } = (0, import_data140.useSelect)((select5) => {
@@ -40433,7 +40433,7 @@ var wp;
   }
   var maybe_category_panel_default = MaybeCategoryPanel;
 
-  // packages/editor/build-module/components/post-publish-panel/maybe-upload-media.js
+  // packages/editor/build-module/components/post-publish-panel/maybe-upload-media.mjs
   var import_components151 = __toESM(require_components(), 1);
   var import_data141 = __toESM(require_data(), 1);
   var import_i18n160 = __toESM(require_i18n(), 1);
@@ -40441,7 +40441,7 @@ var wp;
   var import_element116 = __toESM(require_element(), 1);
   var import_blob3 = __toESM(require_blob(), 1);
 
-  // packages/editor/build-module/components/post-publish-panel/media-util.js
+  // packages/editor/build-module/components/post-publish-panel/media-util.mjs
   var import_url13 = __toESM(require_url(), 1);
   function generateUniqueBasenames(urls) {
     const basenames = /* @__PURE__ */ new Set();
@@ -40482,7 +40482,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-publish-panel/maybe-upload-media.js
+  // packages/editor/build-module/components/post-publish-panel/maybe-upload-media.mjs
   var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
   function flattenBlocks(blocks) {
     const result = [];
@@ -40671,7 +40671,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-publish-panel/prepublish.js
+  // packages/editor/build-module/components/post-publish-panel/prepublish.mjs
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   function PostPublishPanelPrepublish({ children }) {
     const {
@@ -40786,7 +40786,7 @@ var wp;
   }
   var prepublish_default = PostPublishPanelPrepublish;
 
-  // packages/editor/build-module/components/post-publish-panel/postpublish.js
+  // packages/editor/build-module/components/post-publish-panel/postpublish.mjs
   var import_components153 = __toESM(require_components(), 1);
   var import_i18n162 = __toESM(require_i18n(), 1);
   var import_element117 = __toESM(require_element(), 1);
@@ -40928,7 +40928,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-publish-panel/index.js
+  // packages/editor/build-module/components/post-publish-panel/index.mjs
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
   var PostPublishPanel = class extends import_element118.Component {
     constructor() {
@@ -41072,7 +41072,7 @@ var wp;
     import_components154.withConstrainedTabbing
   ])(PostPublishPanel);
 
-  // packages/editor/build-module/components/post-saved-state/index.js
+  // packages/editor/build-module/components/post-saved-state/index.mjs
   var import_components157 = __toESM(require_components(), 1);
   var import_compose37 = __toESM(require_compose(), 1);
   var import_data148 = __toESM(require_data(), 1);
@@ -41081,7 +41081,7 @@ var wp;
   var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_preferences14 = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/components/post-status/index.js
+  // packages/editor/build-module/components/post-status/index.mjs
   var import_components156 = __toESM(require_components(), 1);
   var import_i18n165 = __toESM(require_i18n(), 1);
   var import_data147 = __toESM(require_data(), 1);
@@ -41090,12 +41090,12 @@ var wp;
   var import_block_editor57 = __toESM(require_block_editor(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
 
-  // packages/editor/build-module/components/post-sticky/index.js
+  // packages/editor/build-module/components/post-sticky/index.mjs
   var import_i18n164 = __toESM(require_i18n(), 1);
   var import_components155 = __toESM(require_components(), 1);
   var import_data146 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/components/post-sticky/check.js
+  // packages/editor/build-module/components/post-sticky/check.mjs
   var import_data145 = __toESM(require_data(), 1);
   function PostStickyCheck({ children }) {
     const { hasStickyAction, postType: postType2 } = (0, import_data145.useSelect)((select5) => {
@@ -41111,7 +41111,7 @@ var wp;
     return children;
   }
 
-  // packages/editor/build-module/components/post-sticky/index.js
+  // packages/editor/build-module/components/post-sticky/index.mjs
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
   function PostSticky() {
     const postSticky = (0, import_data146.useSelect)((select5) => {
@@ -41130,7 +41130,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/post-status/index.js
+  // packages/editor/build-module/components/post-status/index.mjs
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   var postStatusesInfo = {
     "auto-draft": { label: (0, import_i18n165.__)("Draft"), icon: drafts_default },
@@ -41351,7 +41351,7 @@ var wp;
     ) : /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("div", { className: "editor-post-status is-read-only", children: postStatusesInfo[status]?.label }) });
   }
 
-  // packages/editor/build-module/components/post-saved-state/index.js
+  // packages/editor/build-module/components/post-saved-state/index.mjs
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
   function PostSavedState({ forceIsDirty }) {
     const [forceSavedMessage, setForceSavedMessage] = (0, import_element120.useState)(false);
@@ -41462,7 +41462,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-schedule/check.js
+  // packages/editor/build-module/components/post-schedule/check.mjs
   var import_data149 = __toESM(require_data(), 1);
   function PostScheduleCheck({ children }) {
     const hasPublishAction = (0, import_data149.useSelect)((select5) => {
@@ -41474,7 +41474,7 @@ var wp;
     return children;
   }
 
-  // packages/editor/build-module/components/post-schedule/panel.js
+  // packages/editor/build-module/components/post-schedule/panel.mjs
   var import_components158 = __toESM(require_components(), 1);
   var import_i18n167 = __toESM(require_i18n(), 1);
   var import_element121 = __toESM(require_element(), 1);
@@ -41534,7 +41534,7 @@ var wp;
     ) }) });
   }
 
-  // packages/editor/build-module/components/post-switch-to-draft-button/index.js
+  // packages/editor/build-module/components/post-switch-to-draft-button/index.mjs
   var import_components159 = __toESM(require_components(), 1);
   var import_i18n168 = __toESM(require_i18n(), 1);
   var import_data151 = __toESM(require_data(), 1);
@@ -41601,7 +41601,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-sync-status/index.js
+  // packages/editor/build-module/components/post-sync-status/index.mjs
   var import_data152 = __toESM(require_data(), 1);
   var import_i18n169 = __toESM(require_i18n(), 1);
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
@@ -41621,7 +41621,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(post_panel_row_default, { label: (0, import_i18n169.__)("Sync status"), children: /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("div", { className: "editor-post-sync-status__value", children: syncStatus === "unsynced" ? (0, import_i18n169._x)("Not synced", "pattern (singular)") : (0, import_i18n169._x)("Synced", "pattern (singular)") }) });
   }
 
-  // packages/editor/build-module/components/post-taxonomies/index.js
+  // packages/editor/build-module/components/post-taxonomies/index.mjs
   var import_element123 = __toESM(require_element(), 1);
   var import_data153 = __toESM(require_data(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
@@ -41655,7 +41655,7 @@ var wp;
   }
   var post_taxonomies_default = PostTaxonomies;
 
-  // packages/editor/build-module/components/post-taxonomies/check.js
+  // packages/editor/build-module/components/post-taxonomies/check.mjs
   var import_data154 = __toESM(require_data(), 1);
   var import_core_data93 = __toESM(require_core_data(), 1);
   function PostTaxonomiesCheck({ children }) {
@@ -41676,7 +41676,7 @@ var wp;
     return children;
   }
 
-  // packages/editor/build-module/components/post-taxonomies/panel.js
+  // packages/editor/build-module/components/post-taxonomies/panel.mjs
   var import_components160 = __toESM(require_components(), 1);
   var import_data155 = __toESM(require_data(), 1);
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
@@ -41722,7 +41722,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/post-text-editor/index.js
+  // packages/editor/build-module/components/post-text-editor/index.mjs
   var import_react_autosize_textarea = __toESM(require_lib(), 1);
   var import_i18n170 = __toESM(require_i18n(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
@@ -41786,7 +41786,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-title/index.js
+  // packages/editor/build-module/components/post-title/index.mjs
   var import_i18n171 = __toESM(require_i18n(), 1);
   var import_element126 = __toESM(require_element(), 1);
   var import_html_entities24 = __toESM(require_html_entities(), 1);
@@ -41798,11 +41798,11 @@ var wp;
   var import_compose39 = __toESM(require_compose(), 1);
   var import_dom2 = __toESM(require_dom(), 1);
 
-  // packages/editor/build-module/components/post-title/constants.js
+  // packages/editor/build-module/components/post-title/constants.mjs
   var DEFAULT_CLASSNAMES = "wp-block wp-block-post-title block-editor-block-list__block editor-post-title editor-post-title__input rich-text";
   var REGEXP_NEWLINES = /[\r\n]+/g;
 
-  // packages/editor/build-module/components/post-title/use-post-title-focus.js
+  // packages/editor/build-module/components/post-title/use-post-title-focus.mjs
   var import_element125 = __toESM(require_element(), 1);
   var import_data157 = __toESM(require_data(), 1);
   function usePostTitleFocus(forwardedRef) {
@@ -41833,7 +41833,7 @@ var wp;
     return { ref };
   }
 
-  // packages/editor/build-module/components/post-title/use-post-title.js
+  // packages/editor/build-module/components/post-title/use-post-title.mjs
   var import_data158 = __toESM(require_data(), 1);
   function usePostTitle() {
     const { editPost: editPost2 } = (0, import_data158.useDispatch)(store);
@@ -41849,7 +41849,7 @@ var wp;
     return { title, setTitle: updateTitle };
   }
 
-  // packages/editor/build-module/components/post-title/index.js
+  // packages/editor/build-module/components/post-title/index.mjs
   var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
   var PostTitle = (0, import_element126.forwardRef)((_, forwardedRef) => {
     const { placeholder, isEditingContentOnlySection } = (0, import_data159.useSelect)(
@@ -41979,7 +41979,7 @@ var wp;
   });
   var post_title_default = (0, import_element126.forwardRef)((_, forwardedRef) => /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(post_type_support_check_default, { supportKeys: "title", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(PostTitle, { ref: forwardedRef }) }));
 
-  // packages/editor/build-module/components/post-title/post-title-raw.js
+  // packages/editor/build-module/components/post-title/post-title-raw.mjs
   var import_components162 = __toESM(require_components(), 1);
   var import_i18n172 = __toESM(require_i18n(), 1);
   var import_html_entities25 = __toESM(require_html_entities(), 1);
@@ -42032,13 +42032,13 @@ var wp;
   }
   var post_title_raw_default = (0, import_element127.forwardRef)(PostTitleRaw);
 
-  // packages/editor/build-module/components/post-trash/index.js
+  // packages/editor/build-module/components/post-trash/index.mjs
   var import_i18n173 = __toESM(require_i18n(), 1);
   var import_components163 = __toESM(require_components(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_element128 = __toESM(require_element(), 1);
 
-  // packages/editor/build-module/components/post-trash/check.js
+  // packages/editor/build-module/components/post-trash/check.mjs
   var import_data161 = __toESM(require_data(), 1);
   var import_core_data95 = __toESM(require_core_data(), 1);
   function PostTrashCheck({ children }) {
@@ -42063,7 +42063,7 @@ var wp;
     return children;
   }
 
-  // packages/editor/build-module/components/post-trash/index.js
+  // packages/editor/build-module/components/post-trash/index.mjs
   var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
   function PostTrash({ onActionPerformed }) {
     const registry = (0, import_data162.useRegistry)();
@@ -42119,7 +42119,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-url/index.js
+  // packages/editor/build-module/components/post-url/index.mjs
   var import_data163 = __toESM(require_data(), 1);
   var import_url16 = __toESM(require_url(), 1);
   var import_element129 = __toESM(require_element(), 1);
@@ -42272,7 +42272,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-url/check.js
+  // packages/editor/build-module/components/post-url/check.mjs
   var import_data164 = __toESM(require_data(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
   function PostURLCheck({ children }) {
@@ -42298,7 +42298,7 @@ var wp;
     return children;
   }
 
-  // packages/editor/build-module/components/post-url/label.js
+  // packages/editor/build-module/components/post-url/label.mjs
   var import_data165 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
   function PostURLLabel() {
@@ -42312,7 +42312,7 @@ var wp;
     return (0, import_url17.filterURLForDisplay)((0, import_url17.safeDecodeURIComponent)(postLink));
   }
 
-  // packages/editor/build-module/components/post-url/panel.js
+  // packages/editor/build-module/components/post-url/panel.mjs
   var import_element130 = __toESM(require_element(), 1);
   var import_data166 = __toESM(require_data(), 1);
   var import_components165 = __toESM(require_components(), 1);
@@ -42408,7 +42408,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-visibility/check.js
+  // packages/editor/build-module/components/post-visibility/check.mjs
   var import_data167 = __toESM(require_data(), 1);
   function PostVisibilityCheck({ render }) {
     const canEdit = (0, import_data167.useSelect)((select5) => {
@@ -42417,19 +42417,19 @@ var wp;
     return render({ canEdit });
   }
 
-  // packages/editor/build-module/components/table-of-contents/index.js
+  // packages/editor/build-module/components/table-of-contents/index.mjs
   var import_i18n179 = __toESM(require_i18n(), 1);
   var import_components166 = __toESM(require_components(), 1);
   var import_data172 = __toESM(require_data(), 1);
   var import_element132 = __toESM(require_element(), 1);
   var import_block_editor62 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/table-of-contents/panel.js
+  // packages/editor/build-module/components/table-of-contents/panel.mjs
   var import_i18n178 = __toESM(require_i18n(), 1);
   var import_data171 = __toESM(require_data(), 1);
   var import_block_editor61 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/word-count/index.js
+  // packages/editor/build-module/components/word-count/index.mjs
   var import_data168 = __toESM(require_data(), 1);
   var import_i18n176 = __toESM(require_i18n(), 1);
   var import_wordcount = __toESM(require_wordcount(), 1);
@@ -42443,7 +42443,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)("span", { className: "word-count", children: (0, import_wordcount.count)(content, wordCountType) });
   }
 
-  // packages/editor/build-module/components/time-to-read/index.js
+  // packages/editor/build-module/components/time-to-read/index.mjs
   var import_data169 = __toESM(require_data(), 1);
   var import_i18n177 = __toESM(require_i18n(), 1);
   var import_wordcount2 = __toESM(require_wordcount(), 1);
@@ -42478,7 +42478,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("span", { className: "time-to-read", children: minutesToReadString });
   }
 
-  // packages/editor/build-module/components/character-count/index.js
+  // packages/editor/build-module/components/character-count/index.mjs
   var import_data170 = __toESM(require_data(), 1);
   var import_wordcount3 = __toESM(require_wordcount(), 1);
   function CharacterCount() {
@@ -42489,7 +42489,7 @@ var wp;
     return (0, import_wordcount3.count)(content, "characters_including_spaces");
   }
 
-  // packages/editor/build-module/components/table-of-contents/panel.js
+  // packages/editor/build-module/components/table-of-contents/panel.mjs
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   function TableOfContentsPanel({ hasOutlineItemsDisabled, onRequestClose }) {
     const { headingCount, paragraphCount, numberOfBlocks } = (0, import_data171.useSelect)(
@@ -42561,7 +42561,7 @@ var wp;
   }
   var panel_default3 = TableOfContentsPanel;
 
-  // packages/editor/build-module/components/table-of-contents/index.js
+  // packages/editor/build-module/components/table-of-contents/index.mjs
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   function TableOfContents({ hasOutlineItemsDisabled, repositionDropdown, ...props }, ref) {
     const hasBlocks = (0, import_data172.useSelect)(
@@ -42603,7 +42603,7 @@ var wp;
   }
   var table_of_contents_default = (0, import_element132.forwardRef)(TableOfContents);
 
-  // packages/editor/build-module/components/unsaved-changes-warning/index.js
+  // packages/editor/build-module/components/unsaved-changes-warning/index.mjs
   var import_i18n180 = __toESM(require_i18n(), 1);
   var import_element133 = __toESM(require_element(), 1);
   var import_data173 = __toESM(require_data(), 1);
@@ -42628,7 +42628,7 @@ var wp;
     return null;
   }
 
-  // packages/editor/build-module/components/deprecated.js
+  // packages/editor/build-module/components/deprecated.mjs
   var import_deprecated10 = __toESM(require_deprecated(), 1);
   var import_element134 = __toESM(require_element(), 1);
   var import_block_editor63 = __toESM(require_block_editor(), 1);
@@ -42831,11 +42831,11 @@ var wp;
     import_block_editor63.withFontSizes
   );
 
-  // packages/editor/build-module/components/index.js
+  // packages/editor/build-module/components/index.mjs
   var VisualEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
   var TextEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
 
-  // packages/editor/build-module/hooks/default-autocompleters.js
+  // packages/editor/build-module/hooks/default-autocompleters.mjs
   function setDefaultCompleters(completers = []) {
     completers.push({ ...user_default });
     return completers;
@@ -42846,7 +42846,7 @@ var wp;
     setDefaultCompleters
   );
 
-  // packages/editor/build-module/hooks/media-upload.js
+  // packages/editor/build-module/hooks/media-upload.mjs
   var import_element135 = __toESM(require_element(), 1);
   var import_hooks48 = __toESM(require_hooks(), 1);
   var import_deprecated11 = __toESM(require_deprecated(), 1);
@@ -42926,7 +42926,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/hooks/pattern-overrides.js
+  // packages/editor/build-module/hooks/pattern-overrides.mjs
   var import_hooks49 = __toESM(require_hooks(), 1);
   var import_patterns8 = __toESM(require_patterns(), 1);
   var import_compose41 = __toESM(require_compose(), 1);
@@ -42991,7 +42991,7 @@ var wp;
     withPatternOverrideControls
   );
 
-  // packages/editor/build-module/hooks/navigation-link-view-button.js
+  // packages/editor/build-module/hooks/navigation-link-view-button.mjs
   var import_hooks50 = __toESM(require_hooks(), 1);
   var import_compose42 = __toESM(require_compose(), 1);
   var import_element136 = __toESM(require_element(), 1);
@@ -43045,7 +43045,7 @@ var wp;
     withNavigationViewButton
   );
 
-  // packages/editor/build-module/hooks/template-part-navigation-edit-button.js
+  // packages/editor/build-module/hooks/template-part-navigation-edit-button.mjs
   var import_hooks51 = __toESM(require_hooks(), 1);
   var import_compose43 = __toESM(require_compose(), 1);
   var import_element137 = __toESM(require_element(), 1);
@@ -43132,7 +43132,7 @@ var wp;
     withTemplatePartNavigationEditButton
   );
 
-  // packages/editor/build-module/hooks/push-changes-to-global-styles/index.js
+  // packages/editor/build-module/hooks/push-changes-to-global-styles/index.mjs
   var import_hooks52 = __toESM(require_hooks(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
   var import_block_editor67 = __toESM(require_block_editor(), 1);
@@ -43144,7 +43144,7 @@ var wp;
   var import_notices25 = __toESM(require_notices(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/utils/set-nested-value.js
+  // packages/editor/build-module/utils/set-nested-value.mjs
   function setNestedValue(object, path, value) {
     if (!object || typeof object !== "object") {
       return object;
@@ -43165,7 +43165,7 @@ var wp;
     return object;
   }
 
-  // packages/editor/build-module/hooks/push-changes-to-global-styles/index.js
+  // packages/editor/build-module/hooks/push-changes-to-global-styles/index.mjs
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor67.privateApis);
   var STYLE_PROPERTY2 = {
@@ -43451,7 +43451,7 @@ var wp;
     withPushChangesToGlobalStyles
   );
 
-  // packages/editor/build-module/components/header/back-button.js
+  // packages/editor/build-module/components/header/back-button.mjs
   var import_components171 = __toESM(require_components(), 1);
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
   var slotName = "__experimentalMainDashboardButton";
@@ -43474,7 +43474,7 @@ var wp;
   BackButton.Slot = BackButtonSlot;
   var back_button_default = BackButton;
 
-  // packages/editor/build-module/components/editor/index.js
+  // packages/editor/build-module/components/editor/index.mjs
   var import_data229 = __toESM(require_data(), 1);
   var import_core_data121 = __toESM(require_core_data(), 1);
   var import_components214 = __toESM(require_components(), 1);
@@ -43482,7 +43482,7 @@ var wp;
   var import_element174 = __toESM(require_element(), 1);
   var import_block_editor98 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/utils/block-selection-path.js
+  // packages/editor/build-module/utils/block-selection-path.mjs
   var import_data178 = __toESM(require_data(), 1);
   var import_element139 = __toESM(require_element(), 1);
   var import_block_editor68 = __toESM(require_block_editor(), 1);
@@ -43558,7 +43558,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/editor-interface/index.js
+  // packages/editor/build-module/components/editor-interface/index.mjs
   var import_data199 = __toESM(require_data(), 1);
   var import_i18n197 = __toESM(require_i18n(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
@@ -43567,7 +43567,7 @@ var wp;
   var import_element151 = __toESM(require_element(), 1);
   var import_html_entities26 = __toESM(require_html_entities(), 1);
 
-  // packages/editor/build-module/components/header/index.js
+  // packages/editor/build-module/components/header/index.mjs
   var import_block_editor73 = __toESM(require_block_editor(), 1);
   var import_data188 = __toESM(require_data(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
@@ -43575,7 +43575,7 @@ var wp;
   var import_preferences20 = __toESM(require_preferences(), 1);
   var import_element144 = __toESM(require_element(), 1);
 
-  // packages/editor/build-module/components/collapsible-block-toolbar/index.js
+  // packages/editor/build-module/components/collapsible-block-toolbar/index.mjs
   var import_block_editor69 = __toESM(require_block_editor(), 1);
   var import_element140 = __toESM(require_element(), 1);
   var import_components172 = __toESM(require_components(), 1);
@@ -43625,7 +43625,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/document-tools/index.js
+  // packages/editor/build-module/components/document-tools/index.mjs
   var import_compose45 = __toESM(require_compose(), 1);
   var import_data180 = __toESM(require_data(), 1);
   var import_i18n185 = __toESM(require_i18n(), 1);
@@ -43762,14 +43762,14 @@ var wp;
   }
   var document_tools_default = DocumentTools;
 
-  // packages/editor/build-module/components/more-menu/index.js
+  // packages/editor/build-module/components/more-menu/index.mjs
   var import_i18n188 = __toESM(require_i18n(), 1);
   var import_data183 = __toESM(require_data(), 1);
   var import_keycodes13 = __toESM(require_keycodes(), 1);
   var import_components178 = __toESM(require_components(), 1);
   var import_preferences16 = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/components/more-menu/copy-content-menu-item.js
+  // packages/editor/build-module/components/more-menu/copy-content-menu-item.mjs
   var import_components174 = __toESM(require_components(), 1);
   var import_data181 = __toESM(require_data(), 1);
   var import_i18n186 = __toESM(require_i18n(), 1);
@@ -43809,7 +43809,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_components174.MenuItem, { ref, children: (0, import_i18n186.__)("Copy all blocks") });
   }
 
-  // packages/editor/build-module/components/mode-switcher/index.js
+  // packages/editor/build-module/components/mode-switcher/index.mjs
   var import_i18n187 = __toESM(require_i18n(), 1);
   var import_components175 = __toESM(require_components(), 1);
   var import_data182 = __toESM(require_data(), 1);
@@ -43877,14 +43877,14 @@ var wp;
   }
   var mode_switcher_default = ModeSwitcher;
 
-  // packages/editor/build-module/components/more-menu/tools-more-menu-group.js
+  // packages/editor/build-module/components/more-menu/tools-more-menu-group.mjs
   var import_components176 = __toESM(require_components(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
   var { Fill: ToolsMoreMenuGroup, Slot: Slot11 } = (0, import_components176.createSlotFill)("ToolsMoreMenuGroup");
   ToolsMoreMenuGroup.Slot = ({ fillProps }) => /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(Slot11, { fillProps });
   var tools_more_menu_group_default = ToolsMoreMenuGroup;
 
-  // packages/editor/build-module/components/more-menu/view-more-menu-group.js
+  // packages/editor/build-module/components/more-menu/view-more-menu-group.mjs
   var import_components177 = __toESM(require_components(), 1);
   var import_element142 = __toESM(require_element(), 1);
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
@@ -43894,7 +43894,7 @@ var wp;
   ViewMoreMenuGroup.Slot = ({ fillProps }) => /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(Slot12, { fillProps });
   var view_more_menu_group_default = ViewMoreMenuGroup;
 
-  // packages/editor/build-module/components/more-menu/index.js
+  // packages/editor/build-module/components/more-menu/index.mjs
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   function MoreMenu() {
     const { openModal: openModal2 } = (0, import_data183.useDispatch)(store2);
@@ -44038,7 +44038,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/post-publish-button/post-publish-button-or-toggle.js
+  // packages/editor/build-module/components/post-publish-button/post-publish-button-or-toggle.mjs
   var import_compose47 = __toESM(require_compose(), 1);
   var import_data184 = __toESM(require_data(), 1);
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
@@ -44093,7 +44093,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/post-view-link/index.js
+  // packages/editor/build-module/components/post-view-link/index.mjs
   var import_i18n189 = __toESM(require_i18n(), 1);
   var import_components179 = __toESM(require_components(), 1);
   var import_core_data102 = __toESM(require_core_data(), 1);
@@ -44129,7 +44129,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/preview-dropdown/index.js
+  // packages/editor/build-module/components/preview-dropdown/index.mjs
   var import_compose48 = __toESM(require_compose(), 1);
   var import_components180 = __toESM(require_components(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
@@ -44295,7 +44295,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/zoom-out-toggle/index.js
+  // packages/editor/build-module/components/zoom-out-toggle/index.mjs
   var import_components181 = __toESM(require_components(), 1);
   var import_i18n191 = __toESM(require_i18n(), 1);
   var import_element143 = __toESM(require_element(), 1);
@@ -44378,7 +44378,7 @@ var wp;
   };
   var zoom_out_toggle_default = ZoomOutToggle;
 
-  // packages/editor/build-module/components/header/index.js
+  // packages/editor/build-module/components/header/index.mjs
   var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   var toolbarVariations = {
     distractionFreeDisabled: { y: "-50px" },
@@ -44534,7 +44534,7 @@ var wp;
   }
   var header_default2 = Header;
 
-  // packages/editor/build-module/components/inserter-sidebar/index.js
+  // packages/editor/build-module/components/inserter-sidebar/index.mjs
   var import_data189 = __toESM(require_data(), 1);
   var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
@@ -44615,7 +44615,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/list-view-sidebar/index.js
+  // packages/editor/build-module/components/list-view-sidebar/index.mjs
   var import_block_editor75 = __toESM(require_block_editor(), 1);
   var import_compose51 = __toESM(require_compose(), 1);
   var import_data190 = __toESM(require_data(), 1);
@@ -44625,7 +44625,7 @@ var wp;
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes16 = __toESM(require_keycodes(), 1);
 
-  // packages/editor/build-module/components/list-view-sidebar/list-view-outline.js
+  // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
   var import_components183 = __toESM(require_components(), 1);
   var import_i18n192 = __toESM(require_i18n(), 1);
   var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
@@ -44649,7 +44649,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/list-view-sidebar/index.js
+  // packages/editor/build-module/components/list-view-sidebar/index.mjs
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   var { TabbedSidebar } = unlock(import_block_editor75.privateApis);
   function ListViewSidebar() {
@@ -44744,7 +44744,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/save-publish-panels/index.js
+  // packages/editor/build-module/components/save-publish-panels/index.mjs
   var import_data191 = __toESM(require_data(), 1);
   var import_components184 = __toESM(require_components(), 1);
   var import_i18n194 = __toESM(require_i18n(), 1);
@@ -44833,7 +44833,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/text-editor/index.js
+  // packages/editor/build-module/components/text-editor/index.mjs
   var import_components185 = __toESM(require_components(), 1);
   var import_data192 = __toESM(require_data(), 1);
   var import_i18n195 = __toESM(require_i18n(), 1);
@@ -44878,7 +44878,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/visual-editor/index.js
+  // packages/editor/build-module/components/visual-editor/index.mjs
   var import_block_editor80 = __toESM(require_block_editor(), 1);
   var import_element150 = __toESM(require_element(), 1);
   var import_data198 = __toESM(require_data(), 1);
@@ -44886,7 +44886,7 @@ var wp;
   var import_core_data105 = __toESM(require_core_data(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
 
-  // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.js
+  // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data193 = __toESM(require_data(), 1);
   var import_core_data104 = __toESM(require_core_data(), 1);
   var import_element149 = __toESM(require_element(), 1);
@@ -44952,7 +44952,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.js
+  // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.mjs
   var import_compose52 = __toESM(require_compose(), 1);
   var import_data194 = __toESM(require_data(), 1);
   var import_block_editor76 = __toESM(require_block_editor(), 1);
@@ -45023,7 +45023,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.js
+  // packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.mjs
   var import_data195 = __toESM(require_data(), 1);
   var import_compose53 = __toESM(require_compose(), 1);
   var import_block_editor77 = __toESM(require_block_editor(), 1);
@@ -45054,7 +45054,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/visual-editor/use-padding-appender.js
+  // packages/editor/build-module/components/visual-editor/use-padding-appender.mjs
   var import_data196 = __toESM(require_data(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
   var import_block_editor78 = __toESM(require_block_editor(), 1);
@@ -45101,7 +45101,7 @@ var wp;
     return enabled ? [effect, CSS2] : [];
   }
 
-  // packages/editor/build-module/components/visual-editor/use-edit-content-only-section-exit.js
+  // packages/editor/build-module/components/visual-editor/use-edit-content-only-section-exit.mjs
   var import_data197 = __toESM(require_data(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
   var import_block_editor79 = __toESM(require_block_editor(), 1);
@@ -45136,7 +45136,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/visual-editor/index.js
+  // packages/editor/build-module/components/visual-editor/index.mjs
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var {
     LayoutStyle,
@@ -45506,7 +45506,7 @@ var wp;
   }
   var visual_editor_default = VisualEditor;
 
-  // packages/editor/build-module/components/editor-interface/index.js
+  // packages/editor/build-module/components/editor-interface/index.mjs
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var interfaceLabels = {
     /* translators: accessibility text for the editor top bar landmark region. */
@@ -45646,7 +45646,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/sidebar/index.js
+  // packages/editor/build-module/components/sidebar/index.mjs
   var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_data219 = __toESM(require_data(), 1);
   var import_element167 = __toESM(require_element(), 1);
@@ -45654,7 +45654,7 @@ var wp;
   var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
   var import_components203 = __toESM(require_components(), 1);
 
-  // packages/editor/build-module/components/pattern-overrides-panel/index.js
+  // packages/editor/build-module/components/pattern-overrides-panel/index.mjs
   var import_data200 = __toESM(require_data(), 1);
   var import_patterns9 = __toESM(require_patterns(), 1);
   var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
@@ -45670,11 +45670,11 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(OverridesPanel, {});
   }
 
-  // packages/editor/build-module/components/sidebar/post-summary.js
+  // packages/editor/build-module/components/sidebar/post-summary.mjs
   var import_components198 = __toESM(require_components(), 1);
   var import_data212 = __toESM(require_data(), 1);
 
-  // packages/editor/build-module/components/post-card-panel/index.js
+  // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_components190 = __toESM(require_components(), 1);
   var import_core_data110 = __toESM(require_core_data(), 1);
   var import_data205 = __toESM(require_data(), 1);
@@ -45682,19 +45682,19 @@ var wp;
   var import_i18n201 = __toESM(require_i18n(), 1);
   var import_dom4 = __toESM(require_dom(), 1);
 
-  // packages/editor/build-module/components/post-actions/index.js
+  // packages/editor/build-module/components/post-actions/index.mjs
   var import_data204 = __toESM(require_data(), 1);
   var import_element155 = __toESM(require_element(), 1);
   var import_i18n200 = __toESM(require_i18n(), 1);
   var import_components189 = __toESM(require_components(), 1);
   var import_core_data109 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-actions/actions.js
+  // packages/editor/build-module/components/post-actions/actions.mjs
   var import_data203 = __toESM(require_data(), 1);
   var import_element154 = __toESM(require_element(), 1);
   var import_core_data108 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/post-actions/set-as-homepage.js
+  // packages/editor/build-module/components/post-actions/set-as-homepage.mjs
   var import_i18n198 = __toESM(require_i18n(), 1);
   var import_element152 = __toESM(require_element(), 1);
   var import_components187 = __toESM(require_components(), 1);
@@ -45702,7 +45702,7 @@ var wp;
   var import_core_data106 = __toESM(require_core_data(), 1);
   var import_notices27 = __toESM(require_notices(), 1);
 
-  // packages/editor/build-module/utils/get-item-title.js
+  // packages/editor/build-module/utils/get-item-title.mjs
   var import_html_entities27 = __toESM(require_html_entities(), 1);
   function getItemTitle2(item) {
     if (typeof item.title === "string") {
@@ -45717,7 +45717,7 @@ var wp;
     return "";
   }
 
-  // packages/editor/build-module/components/post-actions/set-as-homepage.js
+  // packages/editor/build-module/components/post-actions/set-as-homepage.mjs
   var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   var SetAsHomepageModal = ({ items, closeModal: closeModal2 }) => {
     const [item] = items;
@@ -45844,7 +45844,7 @@ var wp;
     );
   };
 
-  // packages/editor/build-module/components/post-actions/set-as-posts-page.js
+  // packages/editor/build-module/components/post-actions/set-as-posts-page.mjs
   var import_i18n199 = __toESM(require_i18n(), 1);
   var import_element153 = __toESM(require_element(), 1);
   var import_components188 = __toESM(require_components(), 1);
@@ -45970,7 +45970,7 @@ var wp;
     );
   };
 
-  // packages/editor/build-module/components/post-actions/actions.js
+  // packages/editor/build-module/components/post-actions/actions.mjs
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   function usePostActions({ postType: postType2, onActionPerformed, context }) {
     const { defaultActions } = (0, import_data203.useSelect)(
@@ -46091,7 +46091,7 @@ var wp;
     ]);
   }
 
-  // packages/editor/build-module/components/post-actions/index.js
+  // packages/editor/build-module/components/post-actions/index.mjs
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu5, kebabCase: kebabCase4 } = unlock(import_components189.privateApis);
   function PostActions({ postType: postType2, postId: postId2, onActionPerformed }) {
@@ -46202,7 +46202,7 @@ var wp;
     }) });
   }
 
-  // packages/editor/build-module/components/post-card-panel/index.js
+  // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   var { Badge: Badge2 } = unlock(import_components190.privateApis);
   function PostCardPanel({
@@ -46298,7 +46298,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/post-content-information/index.js
+  // packages/editor/build-module/components/post-content-information/index.mjs
   var import_components191 = __toESM(require_components(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
@@ -46353,7 +46353,7 @@ var wp;
     ) }) });
   }
 
-  // packages/editor/build-module/components/post-format/panel.js
+  // packages/editor/build-module/components/post-format/panel.mjs
   var import_components192 = __toESM(require_components(), 1);
   var import_i18n203 = __toESM(require_i18n(), 1);
   var import_data207 = __toESM(require_data(), 1);
@@ -46419,7 +46419,7 @@ var wp;
   }
   var panel_default4 = PostFormat2;
 
-  // packages/editor/build-module/components/post-last-edited-panel/index.js
+  // packages/editor/build-module/components/post-last-edited-panel/index.mjs
   var import_components193 = __toESM(require_components(), 1);
   var import_data208 = __toESM(require_data(), 1);
   var import_i18n204 = __toESM(require_i18n(), 1);
@@ -46441,7 +46441,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(import_components193.__experimentalText, { children: lastEditedText }) });
   }
 
-  // packages/editor/build-module/components/post-panel-section/index.js
+  // packages/editor/build-module/components/post-panel-section/index.mjs
   var import_components194 = __toESM(require_components(), 1);
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
   function PostPanelSection({ className, children }) {
@@ -46449,7 +46449,7 @@ var wp;
   }
   var post_panel_section_default = PostPanelSection;
 
-  // packages/editor/build-module/components/blog-title/index.js
+  // packages/editor/build-module/components/blog-title/index.mjs
   var import_i18n205 = __toESM(require_i18n(), 1);
   var import_compose58 = __toESM(require_compose(), 1);
   var import_data209 = __toESM(require_data(), 1);
@@ -46553,7 +46553,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/posts-per-page/index.js
+  // packages/editor/build-module/components/posts-per-page/index.mjs
   var import_i18n206 = __toESM(require_i18n(), 1);
   var import_data210 = __toESM(require_data(), 1);
   var import_core_data113 = __toESM(require_core_data(), 1);
@@ -46643,7 +46643,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/site-discussion/index.js
+  // packages/editor/build-module/components/site-discussion/index.mjs
   var import_i18n207 = __toESM(require_i18n(), 1);
   var import_data211 = __toESM(require_data(), 1);
   var import_core_data114 = __toESM(require_core_data(), 1);
@@ -46750,7 +46750,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/sidebar/post-summary.js
+  // packages/editor/build-module/components/sidebar/post-summary.mjs
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   var PANEL_NAME5 = "post-status";
   function PostSummary({ onActionPerformed }) {
@@ -46811,7 +46811,7 @@ var wp;
     ] }) }) }) });
   }
 
-  // packages/editor/build-module/components/post-transform-panel/index.js
+  // packages/editor/build-module/components/post-transform-panel/index.mjs
   var import_data214 = __toESM(require_data(), 1);
   var import_core_data116 = __toESM(require_core_data(), 1);
   var import_components199 = __toESM(require_components(), 1);
@@ -46819,7 +46819,7 @@ var wp;
   var import_block_editor86 = __toESM(require_block_editor(), 1);
   var import_blocks34 = __toESM(require_blocks(), 1);
 
-  // packages/editor/build-module/components/post-transform-panel/hooks.js
+  // packages/editor/build-module/components/post-transform-panel/hooks.mjs
   var import_data213 = __toESM(require_data(), 1);
   var import_element162 = __toESM(require_element(), 1);
   var import_core_data115 = __toESM(require_core_data(), 1);
@@ -46892,7 +46892,7 @@ var wp;
     ]);
   }
 
-  // packages/editor/build-module/components/post-transform-panel/index.js
+  // packages/editor/build-module/components/post-transform-panel/index.mjs
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   function TemplatesList2({ availableTemplates, onSelect }) {
     if (!availableTemplates || availableTemplates?.length === 0) {
@@ -46962,20 +46962,20 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(PostTransform, {});
   }
 
-  // packages/editor/build-module/components/sidebar/header.js
+  // packages/editor/build-module/components/sidebar/header.mjs
   var import_components200 = __toESM(require_components(), 1);
   var import_i18n209 = __toESM(require_i18n(), 1);
   var import_data215 = __toESM(require_data(), 1);
   var import_element163 = __toESM(require_element(), 1);
   var import_html_entities29 = __toESM(require_html_entities(), 1);
 
-  // packages/editor/build-module/components/sidebar/constants.js
+  // packages/editor/build-module/components/sidebar/constants.mjs
   var sidebars = {
     document: "edit-post/document",
     block: "edit-post/block"
   };
 
-  // packages/editor/build-module/components/sidebar/header.js
+  // packages/editor/build-module/components/sidebar/header.mjs
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs4 } = unlock(import_components200.privateApis);
   var SidebarHeader = (_, ref) => {
@@ -47008,7 +47008,7 @@ var wp;
   };
   var header_default3 = (0, import_element163.forwardRef)(SidebarHeader);
 
-  // packages/editor/build-module/components/template-content-panel/index.js
+  // packages/editor/build-module/components/template-content-panel/index.mjs
   var import_data216 = __toESM(require_data(), 1);
   var import_block_editor87 = __toESM(require_block_editor(), 1);
   var import_components201 = __toESM(require_components(), 1);
@@ -47064,7 +47064,7 @@ var wp;
     ) });
   }
 
-  // packages/editor/build-module/components/template-part-content-panel/index.js
+  // packages/editor/build-module/components/template-part-content-panel/index.mjs
   var import_data217 = __toESM(require_data(), 1);
   var import_element165 = __toESM(require_element(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
@@ -47106,7 +47106,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(TemplatePartContentPanelInner, {});
   }
 
-  // packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.js
+  // packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.mjs
   var import_data218 = __toESM(require_data(), 1);
   var import_element166 = __toESM(require_element(), 1);
   var import_block_editor89 = __toESM(require_block_editor(), 1);
@@ -47144,7 +47144,7 @@ var wp;
   }
   var use_auto_switch_editor_sidebars_default = useAutoSwitchEditorSidebars;
 
-  // packages/editor/build-module/components/sidebar/index.js
+  // packages/editor/build-module/components/sidebar/index.mjs
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs5 } = unlock(import_components203.privateApis);
   var SIDEBAR_ACTIVE_BY_DEFAULT = import_element167.Platform.select({
@@ -47268,7 +47268,7 @@ var wp;
   };
   var sidebar_default2 = Sidebar;
 
-  // packages/editor/build-module/components/collab-sidebar/index.js
+  // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n221 = __toESM(require_i18n(), 1);
   var import_data225 = __toESM(require_data(), 1);
   var import_components210 = __toESM(require_components(), 1);
@@ -47276,12 +47276,12 @@ var wp;
   var import_compose61 = __toESM(require_compose(), 1);
   var import_block_editor97 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/collab-sidebar/constants.js
+  // packages/editor/build-module/components/collab-sidebar/constants.mjs
   var collabHistorySidebarName = "edit-post/collab-history-sidebar";
   var collabSidebarName = "edit-post/collab-sidebar";
   var SIDEBARS = [collabHistorySidebarName, collabSidebarName];
 
-  // packages/editor/build-module/components/collab-sidebar/comments.js
+  // packages/editor/build-module/components/collab-sidebar/comments.mjs
   var import_element170 = __toESM(require_element(), 1);
   var import_components207 = __toESM(require_components(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
@@ -47290,7 +47290,7 @@ var wp;
   var import_dom8 = __toESM(require_dom(), 1);
   var import_block_editor94 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/collab-sidebar/comment-author-info.js
+  // packages/editor/build-module/components/collab-sidebar/comment-author-info.mjs
   var import_components204 = __toESM(require_components(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
   var import_date8 = __toESM(require_date(), 1);
@@ -47298,7 +47298,7 @@ var wp;
   var import_data220 = __toESM(require_data(), 1);
   var import_block_editor91 = __toESM(require_block_editor(), 1);
 
-  // packages/editor/build-module/components/collab-sidebar/utils.js
+  // packages/editor/build-module/components/collab-sidebar/utils.mjs
   var import_i18n213 = __toESM(require_i18n(), 1);
   function sanitizeCommentString(str) {
     return str.trim();
@@ -47374,7 +47374,7 @@ var wp;
     }).then((element) => element?.focus());
   }
 
-  // packages/editor/build-module/components/collab-sidebar/comment-author-info.js
+  // packages/editor/build-module/components/collab-sidebar/comment-author-info.mjs
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
   function CommentAuthorInfo({ avatar, name: name2, date, userId }) {
     const hasAvatar = !!avatar;
@@ -47449,7 +47449,7 @@ var wp;
   }
   var comment_author_info_default = CommentAuthorInfo;
 
-  // packages/editor/build-module/components/collab-sidebar/comment-form.js
+  // packages/editor/build-module/components/collab-sidebar/comment-form.mjs
   var import_react_autosize_textarea2 = __toESM(require_lib(), 1);
   var import_element168 = __toESM(require_element(), 1);
   var import_components205 = __toESM(require_components(), 1);
@@ -48758,7 +48758,7 @@ var wp;
     }), [data, update, refs, elements2, floatingStyles]);
   }
 
-  // packages/editor/build-module/components/collab-sidebar/hooks.js
+  // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_element169 = __toESM(require_element(), 1);
   var import_core_data118 = __toESM(require_core_data(), 1);
@@ -49085,7 +49085,7 @@ var wp;
     };
   }
 
-  // packages/editor/build-module/components/collab-sidebar/add-comment.js
+  // packages/editor/build-module/components/collab-sidebar/add-comment.mjs
   var import_i18n217 = __toESM(require_i18n(), 1);
   var import_data222 = __toESM(require_data(), 1);
   var import_components206 = __toESM(require_components(), 1);
@@ -49164,7 +49164,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/collab-sidebar/comments.js
+  // packages/editor/build-module/components/collab-sidebar/comments.mjs
   var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement: useBlockElement3 } = unlock(import_block_editor94.privateApis);
   var { Menu: Menu6 } = unlock(import_components207.privateApis);
@@ -49918,7 +49918,7 @@ var wp;
     );
   };
 
-  // packages/editor/build-module/components/collab-sidebar/comment-menu-item.js
+  // packages/editor/build-module/components/collab-sidebar/comment-menu-item.mjs
   var import_components208 = __toESM(require_components(), 1);
   var import_i18n219 = __toESM(require_i18n(), 1);
   var import_block_editor95 = __toESM(require_block_editor(), 1);
@@ -49970,7 +49970,7 @@ var wp;
   };
   var comment_menu_item_default = AddCommentMenuItemFill;
 
-  // packages/editor/build-module/components/collab-sidebar/comment-indicator-toolbar.js
+  // packages/editor/build-module/components/collab-sidebar/comment-indicator-toolbar.mjs
   var import_components209 = __toESM(require_components(), 1);
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_element171 = __toESM(require_element(), 1);
@@ -50044,7 +50044,7 @@ var wp;
   };
   var comment_indicator_toolbar_default = CommentAvatarIndicator;
 
-  // packages/editor/build-module/components/collab-sidebar/index.js
+  // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
   function NotesSidebarContent({
     newNoteFormState,
@@ -50230,7 +50230,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(NotesSidebar, { postId: postId2, mode }) });
   }
 
-  // packages/editor/build-module/components/global-styles-sidebar/index.js
+  // packages/editor/build-module/components/global-styles-sidebar/index.mjs
   var import_components213 = __toESM(require_components(), 1);
   var import_i18n224 = __toESM(require_i18n(), 1);
   var import_data228 = __toESM(require_data(), 1);
@@ -50239,7 +50239,7 @@ var wp;
   var import_compose62 = __toESM(require_compose(), 1);
   var import_core_data120 = __toESM(require_core_data(), 1);
 
-  // packages/editor/build-module/components/global-styles/menu.js
+  // packages/editor/build-module/components/global-styles/menu.mjs
   var import_components211 = __toESM(require_components(), 1);
   var import_data226 = __toESM(require_data(), 1);
   var import_i18n222 = __toESM(require_i18n(), 1);
@@ -50306,7 +50306,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/global-styles-sidebar/default-sidebar.js
+  // packages/editor/build-module/components/global-styles-sidebar/default-sidebar.mjs
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   function DefaultSidebar({
     className,
@@ -50349,13 +50349,13 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.js
+  // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_data227 = __toESM(require_data(), 1);
   var import_components212 = __toESM(require_components(), 1);
   var import_i18n223 = __toESM(require_i18n(), 1);
   var import_preferences25 = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/components/global-styles-sidebar/welcome-guide-image.js
+  // packages/editor/build-module/components/global-styles-sidebar/welcome-guide-image.mjs
   var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideImage({ nonAnimatedSrc, animatedSrc }) {
     return /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)("picture", { className: "editor-welcome-guide__image", children: [
@@ -50370,7 +50370,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.js
+  // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
     const { toggle } = (0, import_data227.useDispatch)(import_preferences25.store);
@@ -50475,7 +50475,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/global-styles-sidebar/index.js
+  // packages/editor/build-module/components/global-styles-sidebar/index.mjs
   var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesSidebar() {
     const {
@@ -50610,7 +50610,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/editor/index.js
+  // packages/editor/build-module/components/editor/index.mjs
   var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
   function Editor({
     postType: postType2,
@@ -50733,14 +50733,14 @@ var wp;
   }
   var editor_default = Editor;
 
-  // packages/editor/build-module/components/preferences-modal/index.js
+  // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n227 = __toESM(require_i18n(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_data232 = __toESM(require_data(), 1);
   var import_element176 = __toESM(require_element(), 1);
   var import_preferences29 = __toESM(require_preferences(), 1);
 
-  // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.js
+  // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
   var import_data230 = __toESM(require_data(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
   var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
@@ -50760,7 +50760,7 @@ var wp;
     );
   }
 
-  // packages/editor/build-module/components/block-visibility/index.js
+  // packages/editor/build-module/components/block-visibility/index.mjs
   var import_data231 = __toESM(require_data(), 1);
   var import_preferences28 = __toESM(require_preferences(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
@@ -50859,7 +50859,7 @@ var wp;
     ] });
   }
 
-  // packages/editor/build-module/components/preferences-modal/index.js
+  // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
   var {
     PreferencesModal,
@@ -51214,7 +51214,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(PreferencesModalTabs, { sections });
   }
 
-  // packages/editor/build-module/components/post-fields/index.js
+  // packages/editor/build-module/components/post-fields/index.mjs
   var import_element177 = __toESM(require_element(), 1);
   var import_data233 = __toESM(require_data(), 1);
   function usePostFields({
@@ -51237,10 +51237,10 @@ var wp;
   }
   var post_fields_default = usePostFields;
 
-  // packages/editor/build-module/bindings/api.js
+  // packages/editor/build-module/bindings/api.mjs
   var import_blocks38 = __toESM(require_blocks(), 1);
 
-  // packages/editor/build-module/bindings/pattern-overrides.js
+  // packages/editor/build-module/bindings/pattern-overrides.mjs
   var import_block_editor100 = __toESM(require_block_editor(), 1);
   var CONTENT = "content";
   var pattern_overrides_default = {
@@ -51315,7 +51315,7 @@ var wp;
     canUserEditValue: () => true
   };
 
-  // packages/editor/build-module/bindings/post-data.js
+  // packages/editor/build-module/bindings/post-data.mjs
   var import_i18n228 = __toESM(require_i18n(), 1);
   var import_core_data122 = __toESM(require_core_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
@@ -51428,7 +51428,7 @@ var wp;
     }
   };
 
-  // packages/editor/build-module/bindings/post-meta.js
+  // packages/editor/build-module/bindings/post-meta.mjs
   var import_core_data123 = __toESM(require_core_data(), 1);
   function getPostMetaFields(select5, context) {
     const { getRegisteredPostMeta } = unlock(select5(import_core_data123.store));
@@ -51531,7 +51531,7 @@ var wp;
     }
   };
 
-  // packages/editor/build-module/bindings/term-data.js
+  // packages/editor/build-module/bindings/term-data.mjs
   var import_i18n229 = __toESM(require_i18n(), 1);
   var import_core_data124 = __toESM(require_core_data(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
@@ -51661,7 +51661,7 @@ var wp;
     }
   };
 
-  // packages/editor/build-module/bindings/api.js
+  // packages/editor/build-module/bindings/api.mjs
   function registerCoreBlockBindingsSources() {
     (0, import_blocks38.registerBlockBindingsSource)(pattern_overrides_default);
     (0, import_blocks38.registerBlockBindingsSource)(post_data_default);
@@ -51669,7 +51669,7 @@ var wp;
     (0, import_blocks38.registerBlockBindingsSource)(term_data_default);
   }
 
-  // packages/editor/build-module/private-apis.js
+  // packages/editor/build-module/private-apis.mjs
   var { store: interfaceStore, ...remainingInterfaceApis } = build_module_exports;
   var privateApis3 = {};
   lock(privateApis3, {
@@ -51703,7 +51703,7 @@ var wp;
     ...remainingInterfaceApis
   });
 
-  // packages/editor/build-module/dataviews/api.js
+  // packages/editor/build-module/dataviews/api.mjs
   var import_data234 = __toESM(require_data(), 1);
   function registerEntityAction2(kind, name2, config) {
     const { registerEntityAction: _registerEntityAction } = unlock(
@@ -51738,7 +51738,7 @@ var wp;
     }
   }
 
-  // packages/editor/build-module/index.js
+  // packages/editor/build-module/index.mjs
   var import_block_editor103 = __toESM(require_block_editor(), 1);
   return __toCommonJS(index_exports);
 })();

@@ -94,7 +94,7 @@ var wp;
     }
   });
 
-  // packages/server-side-render/build-module/index.js
+  // packages/server-side-render/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     ServerSideRender: () => ServerSideRenderWithPostId,
@@ -102,13 +102,13 @@ var wp;
     useServerSideRender: () => useServerSideRender
   });
 
-  // packages/server-side-render/build-module/server-side-render.js
+  // packages/server-side-render/build-module/server-side-render.mjs
   var import_element2 = __toESM(require_element(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
   var import_components = __toESM(require_components(), 1);
   var import_data = __toESM(require_data(), 1);
 
-  // packages/server-side-render/build-module/hook.js
+  // packages/server-side-render/build-module/hook.mjs
   var import_compose = __toESM(require_compose(), 1);
   var import_element = __toESM(require_element(), 1);
   var import_api_fetch = __toESM(require_api_fetch(), 1);
@@ -207,7 +207,7 @@ var wp;
     return response;
   }
 
-  // packages/server-side-render/build-module/server-side-render.js
+  // packages/server-side-render/build-module/server-side-render.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT = {};
   function DefaultEmptyResponsePlaceholder({ className }) {
@@ -292,7 +292,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ServerSideRender, { urlQueryArgs: newUrlQueryArgs, ...props });
   }
 
-  // packages/server-side-render/build-module/index.js
+  // packages/server-side-render/build-module/index.mjs
   var ServerSideRenderCompat = ServerSideRenderWithPostId;
   ServerSideRenderCompat.ServerSideRender = ServerSideRenderWithPostId;
   ServerSideRenderCompat.useServerSideRender = useServerSideRender;

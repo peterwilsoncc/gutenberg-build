@@ -39,7 +39,7 @@ var wp;
     }
   });
 
-  // packages/undo-manager/build-module/index.js
+  // packages/undo-manager/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     createUndoManager: () => createUndoManager

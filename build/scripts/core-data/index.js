@@ -3023,7 +3023,7 @@ var wp;
     }
   });
 
-  // packages/core-data/build-module/index.js
+  // packages/core-data/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     EntityProvider: () => EntityProvider,
@@ -3044,13 +3044,13 @@ var wp;
   });
   var import_data11 = __toESM(require_data(), 1);
 
-  // packages/core-data/build-module/reducer.js
+  // packages/core-data/build-module/reducer.mjs
   var import_es64 = __toESM(require_es6(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
   var import_data3 = __toESM(require_data(), 1);
   var import_undo_manager2 = __toESM(require_undo_manager(), 1);
 
-  // packages/core-data/build-module/utils/conservative-map-item.js
+  // packages/core-data/build-module/utils/conservative-map-item.mjs
   var import_es6 = __toESM(require_es6(), 1);
   function conservativeMapItem(item, nextItem) {
     if (!item) {
@@ -3077,7 +3077,7 @@ var wp;
     return result;
   }
 
-  // packages/core-data/build-module/utils/get-normalized-comma-separable.js
+  // packages/core-data/build-module/utils/get-normalized-comma-separable.mjs
   function getNormalizedCommaSeparable(value) {
     if (typeof value === "string") {
       return value.split(",");
@@ -3088,7 +3088,7 @@ var wp;
   }
   var get_normalized_comma_separable_default = getNormalizedCommaSeparable;
 
-  // packages/core-data/build-module/utils/if-matching-action.js
+  // packages/core-data/build-module/utils/if-matching-action.mjs
   var ifMatchingAction = (isMatch) => (reducer) => (state, action) => {
     if (state === void 0 || isMatch(action)) {
       return reducer(state, action);
@@ -3097,13 +3097,13 @@ var wp;
   };
   var if_matching_action_default = ifMatchingAction;
 
-  // packages/core-data/build-module/utils/forward-resolver.js
+  // packages/core-data/build-module/utils/forward-resolver.mjs
   var forwardResolver = (resolverName) => (...args2) => async ({ resolveSelect }) => {
     await resolveSelect[resolverName](...args2);
   };
   var forward_resolver_default = forwardResolver;
 
-  // packages/core-data/build-module/utils/on-sub-key.js
+  // packages/core-data/build-module/utils/on-sub-key.mjs
   var onSubKey = (actionProperty) => (reducer) => (state = {}, action) => {
     const key = action[actionProperty];
     if (key === void 0) {
@@ -3120,13 +3120,13 @@ var wp;
   };
   var on_sub_key_default = onSubKey;
 
-  // packages/core-data/build-module/utils/replace-action.js
+  // packages/core-data/build-module/utils/replace-action.mjs
   var replaceAction = (replacer) => (reducer) => (state, action) => {
     return reducer(state, replacer(action));
   };
   var replace_action_default = replaceAction;
 
-  // packages/core-data/build-module/utils/with-weak-map-cache.js
+  // packages/core-data/build-module/utils/with-weak-map-cache.mjs
   function withWeakMapCache(fn) {
     const cache3 = /* @__PURE__ */ new WeakMap();
     return (key) => {
@@ -3144,12 +3144,12 @@ var wp;
   }
   var with_weak_map_cache_default = withWeakMapCache;
 
-  // packages/core-data/build-module/utils/is-raw-attribute.js
+  // packages/core-data/build-module/utils/is-raw-attribute.mjs
   function isRawAttribute(entity2, attribute) {
     return (entity2.rawAttributes || []).includes(attribute);
   }
 
-  // packages/core-data/build-module/utils/set-nested-value.js
+  // packages/core-data/build-module/utils/set-nested-value.mjs
   function setNestedValue(object, path, value) {
     if (!object || typeof object !== "object") {
       return object;
@@ -3171,7 +3171,7 @@ var wp;
     return object;
   }
 
-  // packages/core-data/build-module/utils/get-nested-value.js
+  // packages/core-data/build-module/utils/get-nested-value.mjs
   function getNestedValue(object, path, defaultValue) {
     if (!object || typeof object !== "object" || typeof path !== "string" && !Array.isArray(path)) {
       return object;
@@ -3184,12 +3184,12 @@ var wp;
     return value !== void 0 ? value : defaultValue;
   }
 
-  // packages/core-data/build-module/utils/is-numeric-id.js
+  // packages/core-data/build-module/utils/is-numeric-id.mjs
   function isNumericID(id2) {
     return /^\s*\d+\s*$/.test(id2);
   }
 
-  // packages/core-data/build-module/utils/user-permissions.js
+  // packages/core-data/build-module/utils/user-permissions.mjs
   var ALLOWED_RESOURCE_ACTIONS = [
     "create",
     "read",
@@ -3217,12 +3217,12 @@ var wp;
     return key;
   }
 
-  // packages/core-data/build-module/utils/receive-intermediate-results.js
+  // packages/core-data/build-module/utils/receive-intermediate-results.mjs
   var RECEIVE_INTERMEDIATE_RESULTS = Symbol(
     "RECEIVE_INTERMEDIATE_RESULTS"
   );
 
-  // packages/core-data/build-module/queried-data/actions.js
+  // packages/core-data/build-module/queried-data/actions.mjs
   function receiveItems(items2, edits, meta) {
     return {
       type: "RECEIVE_ITEMS",
@@ -3247,11 +3247,11 @@ var wp;
     };
   }
 
-  // packages/core-data/build-module/queried-data/selectors.js
+  // packages/core-data/build-module/queried-data/selectors.mjs
   var import_equivalent_key_map = __toESM(require_equivalent_key_map(), 1);
   var import_data = __toESM(require_data(), 1);
 
-  // packages/core-data/build-module/queried-data/get-query-parts.js
+  // packages/core-data/build-module/queried-data/get-query-parts.mjs
   var import_url = __toESM(require_url(), 1);
   function getQueryParts(query) {
     const parts = {
@@ -3295,7 +3295,7 @@ var wp;
   }
   var get_query_parts_default = with_weak_map_cache_default(getQueryParts);
 
-  // packages/core-data/build-module/queried-data/selectors.js
+  // packages/core-data/build-module/queried-data/selectors.mjs
   var queriedItemsCacheByState = /* @__PURE__ */ new WeakMap();
   function getQueriedItemsUncached(state, query) {
     const { stableKey, page, perPage, include, fields, context } = get_query_parts_default(query);
@@ -3366,7 +3366,7 @@ var wp;
     return state.queries?.[context]?.[stableKey]?.meta?.totalPages ?? null;
   }
 
-  // packages/core-data/build-module/queried-data/reducer.js
+  // packages/core-data/build-module/queried-data/reducer.mjs
   var import_data2 = __toESM(require_data(), 1);
   var import_compose = __toESM(require_compose(), 1);
 
@@ -3457,7 +3457,7 @@ var wp;
     return noCase(input, __assign({ delimiter: " ", transform: capitalCaseTransform }, options));
   }
 
-  // packages/core-data/build-module/entities.js
+  // packages/core-data/build-module/entities.mjs
   var import_api_fetch = __toESM(require_api_fetch(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
@@ -12161,7 +12161,7 @@ var wp;
   }
   glo[importIdentifier] = true;
 
-  // packages/sync/build-module/config.js
+  // packages/sync/build-module/config.mjs
   var CRDT_DOC_VERSION = 1;
   var CRDT_DOC_META_PERSISTENCE_KEY = "fromPersistence";
   var CRDT_RECORD_MAP_KEY = "document";
@@ -12171,7 +12171,7 @@ var wp;
   var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
   var WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
 
-  // packages/sync/build-module/utils.js
+  // packages/sync/build-module/utils.mjs
   function createYjsDoc(documentMeta = {}) {
     const metaMap = new Map(
       Object.entries(documentMeta)
@@ -12202,7 +12202,7 @@ var wp;
     }
   }
 
-  // packages/sync/build-module/persistence.js
+  // packages/sync/build-module/persistence.mjs
   function getPersistedCrdtDoc(record) {
     const serializedCrdtDoc = record.meta?.[WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE];
     if (serializedCrdtDoc) {
@@ -12216,7 +12216,7 @@ var wp;
     };
   }
 
-  // packages/sync/build-module/providers/index.js
+  // packages/sync/build-module/providers/index.mjs
   var import_hooks = __toESM(require_hooks(), 1);
 
   // node_modules/lib0/indexeddb.js
@@ -12423,7 +12423,7 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/providers/indexeddb-provider.js
+  // packages/sync/build-module/providers/indexeddb-provider.mjs
   function createIndexedDbProvider(objectType, objectId, doc2) {
     const roomName = `${objectType}-${objectId}`;
     const provider = new IndexeddbPersistence(roomName, doc2);
@@ -12608,7 +12608,7 @@ var wp;
     };
   };
 
-  // packages/sync/build-module/providers/y-webrtc/y-webrtc.js
+  // packages/sync/build-module/providers/y-webrtc/y-webrtc.mjs
   var import_simplepeer_min = __toESM(require_simplepeer_min(), 1);
 
   // node_modules/y-protocols/sync.js
@@ -12857,7 +12857,7 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/providers/y-webrtc/crypto.js
+  // packages/sync/build-module/providers/y-webrtc/crypto.mjs
   var deriveKey = (secret, roomName) => {
     const secretBuffer = encodeUtf8(secret).buffer;
     const salt = encodeUtf8(roomName).buffer;
@@ -12939,7 +12939,7 @@ var wp;
     )
   );
 
-  // packages/sync/build-module/providers/y-webrtc/y-webrtc.js
+  // packages/sync/build-module/providers/y-webrtc/y-webrtc.mjs
   var log = createModuleLogger2("y-webrtc");
   var messageSync = 0;
   var messageQueryAwareness = 3;
@@ -13587,7 +13587,7 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/providers/webrtc-http-stream-signaling.js
+  // packages/sync/build-module/providers/webrtc-http-stream-signaling.mjs
   var import_url2 = __toESM(require_url(), 1);
   function setupSignalEventHandlers(signalCon, url) {
     signalCon.on("connect", () => {
@@ -13874,7 +13874,7 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/providers/webrtc-provider.js
+  // packages/sync/build-module/providers/webrtc-provider.mjs
   function createWebRTCProvider({ signaling, password }) {
     return function(objectType, objectId, doc2) {
       const roomName = `${objectType}-${objectId}`;
@@ -13888,7 +13888,7 @@ var wp;
     };
   }
 
-  // packages/sync/build-module/providers/index.js
+  // packages/sync/build-module/providers/index.mjs
   var providerCreators = null;
   function getDefaultProviderCreators() {
     const signalingUrl = window?.wp?.ajax?.settings?.url;
@@ -13922,7 +13922,7 @@ var wp;
     return providerCreators;
   }
 
-  // packages/sync/build-module/y-utilities/y-multidoc-undomanager.js
+  // packages/sync/build-module/y-utilities/y-multidoc-undomanager.mjs
   var popStackItem2 = (mum, type) => {
     const stack = type === "undo" ? mum.undoStack : mum.redoStack;
     while (stack.length > 0) {
@@ -14109,7 +14109,7 @@ var wp;
     }
   };
 
-  // packages/sync/build-module/undo-manager.js
+  // packages/sync/build-module/undo-manager.mjs
   function createUndoManager() {
     const yUndoManager = new YMultiDocUndoManager([], {
       // Throttle undo/redo captures. (default: 500ms)
@@ -14177,7 +14177,7 @@ var wp;
     };
   }
 
-  // packages/sync/build-module/manager.js
+  // packages/sync/build-module/manager.mjs
   function createSyncManager() {
     const entityStates = /* @__PURE__ */ new Map();
     const undoManager2 = createUndoManager();
@@ -14296,7 +14296,7 @@ var wp;
     };
   }
 
-  // packages/core-data/build-module/sync.js
+  // packages/core-data/build-module/sync.mjs
   var syncManager;
   function getSyncManager() {
     if (syncManager) {
@@ -14306,7 +14306,7 @@ var wp;
     return syncManager;
   }
 
-  // packages/core-data/build-module/utils/crdt.js
+  // packages/core-data/build-module/utils/crdt.mjs
   var import_es63 = __toESM(require_es6(), 1);
   var import_blocks2 = __toESM(require_blocks(), 1);
 
@@ -14358,7 +14358,7 @@ var wp;
   }
   var v4_default = v4;
 
-  // packages/core-data/build-module/utils/crdt-blocks.js
+  // packages/core-data/build-module/utils/crdt-blocks.mjs
   var import_es62 = __toESM(require_es6(), 1);
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
@@ -14610,7 +14610,7 @@ var wp;
     blockYText.insert(0, updatedValue);
   }
 
-  // packages/core-data/build-module/utils/crdt.js
+  // packages/core-data/build-module/utils/crdt.mjs
   var lastSelection = null;
   var allowedPostProperties = /* @__PURE__ */ new Set([
     "author",
@@ -14821,7 +14821,7 @@ var wp;
     }
   }
 
-  // packages/core-data/build-module/entities.js
+  // packages/core-data/build-module/entities.mjs
   var DEFAULT_ENTITY_KEY = "id";
   var POST_RAW_ATTRIBUTES = ["title", "excerpt", "content"];
   var blocksTransientEdits = {
@@ -15183,7 +15183,7 @@ var wp;
     return `${prefix}${kindPrefix}${suffix}`;
   };
 
-  // packages/core-data/build-module/queried-data/reducer.js
+  // packages/core-data/build-module/queried-data/reducer.mjs
   function getContextFromAction(action) {
     const { query } = action;
     if (!query) {
@@ -15352,7 +15352,7 @@ var wp;
     queries
   });
 
-  // packages/core-data/build-module/reducer.js
+  // packages/core-data/build-module/reducer.mjs
   function users(state = { byId: {}, queries: {} }, action) {
     switch (action.type) {
       case "RECEIVE_USER_QUERY":
@@ -15769,7 +15769,7 @@ var wp;
     editorAssets
   });
 
-  // packages/core-data/build-module/selectors.js
+  // packages/core-data/build-module/selectors.mjs
   var selectors_exports = {};
   __export(selectors_exports, {
     __experimentalGetCurrentGlobalStylesId: () => __experimentalGetCurrentGlobalStylesId,
@@ -15828,10 +15828,10 @@ var wp;
   var import_url3 = __toESM(require_url(), 1);
   var import_deprecated2 = __toESM(require_deprecated(), 1);
 
-  // packages/core-data/build-module/name.js
+  // packages/core-data/build-module/name.mjs
   var STORE_NAME = "core";
 
-  // packages/core-data/build-module/private-selectors.js
+  // packages/core-data/build-module/private-selectors.mjs
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
     getBlockPatternsForPostType: () => getBlockPatternsForPostType,
@@ -15848,14 +15848,14 @@ var wp;
   });
   var import_data4 = __toESM(require_data(), 1);
 
-  // packages/core-data/build-module/lock-unlock.js
+  // packages/core-data/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/core-data"
   );
 
-  // packages/core-data/build-module/utils/log-entity-deprecation.js
+  // packages/core-data/build-module/utils/log-entity-deprecation.mjs
   var import_deprecated = __toESM(require_deprecated(), 1);
   var loggedAlready = false;
   function logEntityDeprecation(kind, name, functionName, {
@@ -15884,7 +15884,7 @@ var wp;
     }, 0);
   }
 
-  // packages/core-data/build-module/private-selectors.js
+  // packages/core-data/build-module/private-selectors.mjs
   function getUndoManager(state) {
     if (window.__experimentalEnableSync) {
       if (true) {
@@ -16045,7 +16045,7 @@ var wp;
     return state.editorAssets;
   }
 
-  // packages/core-data/build-module/selectors.js
+  // packages/core-data/build-module/selectors.mjs
   var EMPTY_OBJECT = {};
   var isRequestingEmbedPreview = (0, import_data5.createRegistrySelector)(
     (select) => (state, url) => {
@@ -16561,7 +16561,7 @@ var wp;
     }
   );
 
-  // packages/core-data/build-module/actions.js
+  // packages/core-data/build-module/actions.mjs
   var actions_exports = {};
   __export(actions_exports, {
     __experimentalBatch: () => __experimentalBatch,
@@ -16597,7 +16597,7 @@ var wp;
   var import_url4 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
 
-  // packages/core-data/build-module/batch/default-processor.js
+  // packages/core-data/build-module/batch/default-processor.mjs
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
   var maxItems = null;
   function chunk(arr, chunkSize) {
@@ -16653,7 +16653,7 @@ var wp;
     return results;
   }
 
-  // packages/core-data/build-module/batch/create-batch.js
+  // packages/core-data/build-module/batch/create-batch.mjs
   function createBatch(processor = defaultProcessor) {
     let lastId = 0;
     let queue = [];
@@ -16778,7 +16778,7 @@ var wp;
     }
   };
 
-  // packages/core-data/build-module/actions.js
+  // packages/core-data/build-module/actions.mjs
   function receiveUserQuery(queryID, users2) {
     return {
       type: "RECEIVE_USER_QUERY",
@@ -17337,7 +17337,7 @@ var wp;
     });
   };
 
-  // packages/core-data/build-module/private-actions.js
+  // packages/core-data/build-module/private-actions.mjs
   var private_actions_exports = {};
   __export(private_actions_exports, {
     editMediaEntity: () => editMediaEntity,
@@ -17434,7 +17434,7 @@ var wp;
     };
   }
 
-  // packages/core-data/build-module/resolvers.js
+  // packages/core-data/build-module/resolvers.mjs
   var resolvers_exports = {};
   __export(resolvers_exports, {
     __experimentalGetCurrentGlobalStylesId: () => __experimentalGetCurrentGlobalStylesId2,
@@ -17472,10 +17472,10 @@ var wp;
   var import_html_entities2 = __toESM(require_html_entities(), 1);
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
 
-  // packages/core-data/build-module/fetch/index.js
+  // packages/core-data/build-module/fetch/index.mjs
   var import_api_fetch7 = __toESM(require_api_fetch(), 1);
 
-  // packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.js
+  // packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.mjs
   var import_api_fetch5 = __toESM(require_api_fetch(), 1);
   var import_url5 = __toESM(require_url(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
@@ -17623,7 +17623,7 @@ var wp;
     return text2.toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
   }
 
-  // packages/core-data/build-module/fetch/__experimental-fetch-url-data.js
+  // packages/core-data/build-module/fetch/__experimental-fetch-url-data.mjs
   var import_api_fetch6 = __toESM(require_api_fetch(), 1);
   var import_url6 = __toESM(require_url(), 1);
   var CACHE = /* @__PURE__ */ new Map();
@@ -17654,7 +17654,7 @@ var wp;
   };
   var experimental_fetch_url_data_default = fetchUrlData;
 
-  // packages/core-data/build-module/fetch/index.js
+  // packages/core-data/build-module/fetch/index.mjs
   async function fetchBlockPatterns() {
     const restPatterns = await (0, import_api_fetch7.default)({
       path: "/wp/v2/block-patterns/patterns"
@@ -17672,7 +17672,7 @@ var wp;
     );
   }
 
-  // packages/core-data/build-module/resolvers.js
+  // packages/core-data/build-module/resolvers.mjs
   var getAuthors2 = (query) => async ({ dispatch }) => {
     const path = (0, import_url7.addQueryArgs)(
       "/wp/v2/users/?who=authors&per_page=100",
@@ -18402,7 +18402,7 @@ var wp;
     dispatch.receiveEditorAssets(assets);
   };
 
-  // packages/core-data/build-module/locks/utils.js
+  // packages/core-data/build-module/locks/utils.mjs
   function deepCopyLocksTreePath(tree, path) {
     const newTree = { ...tree };
     let currentNode = newTree;
@@ -18460,7 +18460,7 @@ var wp;
     return false;
   }
 
-  // packages/core-data/build-module/locks/reducer.js
+  // packages/core-data/build-module/locks/reducer.mjs
   var DEFAULT_STATE = {
     requests: [],
     tree: {
@@ -18505,7 +18505,7 @@ var wp;
     return state;
   }
 
-  // packages/core-data/build-module/locks/selectors.js
+  // packages/core-data/build-module/locks/selectors.mjs
   function getPendingLockRequests(state) {
     return state.requests;
   }
@@ -18529,7 +18529,7 @@ var wp;
     return true;
   }
 
-  // packages/core-data/build-module/locks/engine.js
+  // packages/core-data/build-module/locks/engine.mjs
   function createLocks() {
     let state = locks(void 0, { type: "@@INIT" });
     function processPendingLockRequests() {
@@ -18565,7 +18565,7 @@ var wp;
     return { acquire, release };
   }
 
-  // packages/core-data/build-module/locks/actions.js
+  // packages/core-data/build-module/locks/actions.mjs
   function createLocksActions() {
     const locks2 = createLocks();
     function __unstableAcquireStoreLock(store2, path, { exclusive }) {
@@ -18577,19 +18577,19 @@ var wp;
     return { __unstableAcquireStoreLock, __unstableReleaseStoreLock };
   }
 
-  // packages/core-data/build-module/dynamic-entities.js
+  // packages/core-data/build-module/dynamic-entities.mjs
   var dynamicActions;
   var dynamicSelectors;
 
-  // packages/core-data/build-module/entity-provider.js
+  // packages/core-data/build-module/entity-provider.mjs
   var import_element2 = __toESM(require_element(), 1);
 
-  // packages/core-data/build-module/entity-context.js
+  // packages/core-data/build-module/entity-context.mjs
   var import_element = __toESM(require_element(), 1);
   var EntityContext = (0, import_element.createContext)({});
   EntityContext.displayName = "EntityContext";
 
-  // packages/core-data/build-module/entity-provider.js
+  // packages/core-data/build-module/entity-provider.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function EntityProvider({ kind, type: name, id: id2, children }) {
     const parent = (0, import_element2.useContext)(EntityContext);
@@ -18606,12 +18606,12 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntityContext.Provider, { value: childContext, children });
   }
 
-  // packages/core-data/build-module/hooks/use-entity-record.js
+  // packages/core-data/build-module/hooks/use-entity-record.mjs
   var import_data7 = __toESM(require_data(), 1);
   var import_deprecated4 = __toESM(require_deprecated(), 1);
   var import_element3 = __toESM(require_element(), 1);
 
-  // packages/core-data/build-module/hooks/use-query-select.js
+  // packages/core-data/build-module/hooks/use-query-select.mjs
   var import_data6 = __toESM(require_data(), 1);
 
   // node_modules/memize/dist/index.js
@@ -18682,10 +18682,10 @@ var wp;
     return memoized;
   }
 
-  // packages/core-data/build-module/hooks/memoize.js
+  // packages/core-data/build-module/hooks/memoize.mjs
   var memoize_default = memize;
 
-  // packages/core-data/build-module/hooks/constants.js
+  // packages/core-data/build-module/hooks/constants.mjs
   var Status = /* @__PURE__ */ ((Status2) => {
     Status2["Idle"] = "IDLE";
     Status2["Resolving"] = "RESOLVING";
@@ -18694,7 +18694,7 @@ var wp;
     return Status2;
   })(Status || {});
 
-  // packages/core-data/build-module/hooks/use-query-select.js
+  // packages/core-data/build-module/hooks/use-query-select.mjs
   var META_SELECTORS = [
     "getIsResolving",
     "hasStartedResolution",
@@ -18749,7 +18749,7 @@ var wp;
     return resolvers;
   }));
 
-  // packages/core-data/build-module/hooks/use-entity-record.js
+  // packages/core-data/build-module/hooks/use-entity-record.mjs
   var EMPTY_OBJECT2 = {};
   function useEntityRecord(kind, name, recordId, options = { enabled: true }) {
     const { editEntityRecord: editEntityRecord2, saveEditedEntityRecord: saveEditedEntityRecord2 } = (0, import_data7.useDispatch)(store);
@@ -18820,7 +18820,7 @@ var wp;
     return useEntityRecord(kind, name, recordId, options);
   }
 
-  // packages/core-data/build-module/hooks/use-entity-records.js
+  // packages/core-data/build-module/hooks/use-entity-records.mjs
   var import_url8 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
   var import_data8 = __toESM(require_data(), 1);
@@ -18928,7 +18928,7 @@ var wp;
     return { records: dataWithPermissions, ...ret };
   }
 
-  // packages/core-data/build-module/hooks/use-resource-permissions.js
+  // packages/core-data/build-module/hooks/use-resource-permissions.mjs
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_warning = __toESM(require_warning(), 1);
   function useResourcePermissions(resource, id2) {
@@ -18998,22 +18998,22 @@ var wp;
     return useResourcePermissions(resource, id2);
   }
 
-  // packages/core-data/build-module/hooks/use-entity-block-editor.js
+  // packages/core-data/build-module/hooks/use-entity-block-editor.mjs
   var import_element6 = __toESM(require_element(), 1);
   var import_data9 = __toESM(require_data(), 1);
   var import_blocks4 = __toESM(require_blocks(), 1);
 
-  // packages/core-data/build-module/hooks/use-entity-id.js
+  // packages/core-data/build-module/hooks/use-entity-id.mjs
   var import_element5 = __toESM(require_element(), 1);
   function useEntityId(kind, name) {
     const context = (0, import_element5.useContext)(EntityContext);
     return context?.[kind]?.[name];
   }
 
-  // packages/core-data/build-module/footnotes/index.js
+  // packages/core-data/build-module/footnotes/index.mjs
   var import_rich_text2 = __toESM(require_rich_text(), 1);
 
-  // packages/core-data/build-module/footnotes/get-rich-text-values-cached.js
+  // packages/core-data/build-module/footnotes/get-rich-text-values-cached.mjs
   var import_block_editor = __toESM(require_block_editor(), 1);
   var unlockedApis;
   var cache = /* @__PURE__ */ new WeakMap();
@@ -19028,7 +19028,7 @@ var wp;
     return cache.get(block);
   }
 
-  // packages/core-data/build-module/footnotes/get-footnotes-order.js
+  // packages/core-data/build-module/footnotes/get-footnotes-order.mjs
   var cache2 = /* @__PURE__ */ new WeakMap();
   function getBlockFootnotesOrder(block) {
     if (!cache2.has(block)) {
@@ -19051,7 +19051,7 @@ var wp;
     return blocks.flatMap(getBlockFootnotesOrder);
   }
 
-  // packages/core-data/build-module/footnotes/index.js
+  // packages/core-data/build-module/footnotes/index.mjs
   var oldFootnotes = {};
   function updateFootnotesFromMeta(blocks, meta) {
     const output = { blocks };
@@ -19145,7 +19145,7 @@ var wp;
     };
   }
 
-  // packages/core-data/build-module/hooks/use-entity-block-editor.js
+  // packages/core-data/build-module/hooks/use-entity-block-editor.mjs
   var EMPTY_ARRAY2 = [];
   var parsedBlocksCache = /* @__PURE__ */ new WeakMap();
   function useEntityBlockEditor(kind, name, { id: _id } = {}) {
@@ -19238,7 +19238,7 @@ var wp;
     return [blocks, onInput, onChange2];
   }
 
-  // packages/core-data/build-module/hooks/use-entity-prop.js
+  // packages/core-data/build-module/hooks/use-entity-prop.mjs
   var import_element7 = __toESM(require_element(), 1);
   var import_data10 = __toESM(require_data(), 1);
   function useEntityProp(kind, name, prop, _id) {
@@ -19268,14 +19268,14 @@ var wp;
     return [value, setValue, fullValue];
   }
 
-  // packages/core-data/build-module/private-apis.js
+  // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
     useEntityRecordsWithPermissions,
     RECEIVE_INTERMEDIATE_RESULTS
   });
 
-  // packages/core-data/build-module/index.js
+  // packages/core-data/build-module/index.mjs
   var entitiesConfig2 = [
     ...rootEntitiesConfig,
     ...additionalEntityConfigLoaders.filter((config) => !!config.name)

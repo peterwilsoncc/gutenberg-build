@@ -993,7 +993,7 @@ var wp;
     }
   });
 
-  // packages/edit-site/build-module/index.js
+  // packages/edit-site/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     PluginMoreMenuItem: () => PluginMoreMenuItem,
@@ -1013,10 +1013,10 @@ var wp;
   var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
 
-  // packages/edit-site/build-module/store/index.js
+  // packages/edit-site/build-module/store/index.mjs
   var import_data3 = __toESM(require_data(), 1);
 
-  // packages/edit-site/build-module/store/reducer.js
+  // packages/edit-site/build-module/store/reducer.mjs
   var import_data = __toESM(require_data(), 1);
   function settings(state = {}, action) {
     switch (action.type) {
@@ -1067,7 +1067,7 @@ var wp;
     routes
   });
 
-  // packages/edit-site/build-module/store/actions.js
+  // packages/edit-site/build-module/store/actions.mjs
   var actions_exports = {};
   __export(actions_exports, {
     __experimentalSetPreviewDeviceType: () => __experimentalSetPreviewDeviceType,
@@ -1102,18 +1102,18 @@ var wp;
   var import_editor = __toESM(require_editor(), 1);
   var import_preferences = __toESM(require_preferences(), 1);
 
-  // packages/edit-site/build-module/utils/constants.js
+  // packages/edit-site/build-module/utils/constants.mjs
   var import_i18n = __toESM(require_i18n(), 1);
   var import_patterns = __toESM(require_patterns(), 1);
 
-  // packages/edit-site/build-module/lock-unlock.js
+  // packages/edit-site/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/edit-site"
   );
 
-  // packages/edit-site/build-module/utils/constants.js
+  // packages/edit-site/build-module/utils/constants.mjs
   var NAVIGATION_POST_TYPE = "wp_navigation";
   var TEMPLATE_POST_TYPE = "wp_template";
   var TEMPLATE_PART_POST_TYPE = "wp_template_part";
@@ -1151,7 +1151,7 @@ var wp;
   var OPERATOR_BEFORE = "before";
   var OPERATOR_AFTER = "after";
 
-  // packages/edit-site/build-module/store/actions.js
+  // packages/edit-site/build-module/store/actions.mjs
   var { interfaceStore } = unlock(import_editor.privateApis);
   function toggleFeature(featureName) {
     return function({ registry }) {
@@ -1353,7 +1353,7 @@ var wp;
     registry.dispatch(import_editor.store).toggleDistractionFree();
   };
 
-  // packages/edit-site/build-module/store/private-actions.js
+  // packages/edit-site/build-module/store/private-actions.mjs
   var private_actions_exports = {};
   __export(private_actions_exports, {
     registerRoute: () => registerRoute,
@@ -1372,7 +1372,7 @@ var wp;
     };
   }
 
-  // packages/edit-site/build-module/store/selectors.js
+  // packages/edit-site/build-module/store/selectors.mjs
   var selectors_exports = {};
   __export(selectors_exports, {
     __experimentalGetInsertionPoint: () => __experimentalGetInsertionPoint,
@@ -1405,7 +1405,7 @@ var wp;
   var import_editor2 = __toESM(require_editor(), 1);
   var import_block_editor2 = __toESM(require_block_editor(), 1);
 
-  // packages/edit-site/build-module/utils/get-filtered-template-parts.js
+  // packages/edit-site/build-module/utils/get-filtered-template-parts.mjs
   var import_blocks2 = __toESM(require_blocks(), 1);
   var EMPTY_ARRAY = [];
   function getFilteredTemplatePartBlocks(blocks = EMPTY_ARRAY, templateParts) {
@@ -1441,7 +1441,7 @@ var wp;
     return result;
   }
 
-  // packages/edit-site/build-module/store/selectors.js
+  // packages/edit-site/build-module/store/selectors.mjs
   var isFeatureActive = (0, import_data2.createRegistrySelector)(
     (select3) => (_, featureName) => {
       (0, import_deprecated2.default)(`select( 'core/edit-site' ).isFeatureActive`, {
@@ -1621,7 +1621,7 @@ var wp;
     return false;
   }
 
-  // packages/edit-site/build-module/store/private-selectors.js
+  // packages/edit-site/build-module/store/private-selectors.mjs
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
     getRoutes: () => getRoutes
@@ -1630,10 +1630,10 @@ var wp;
     return state.routes;
   }
 
-  // packages/edit-site/build-module/store/constants.js
+  // packages/edit-site/build-module/store/constants.mjs
   var STORE_NAME = "core/edit-site";
 
-  // packages/edit-site/build-module/store/index.js
+  // packages/edit-site/build-module/store/index.mjs
   var storeConfig = {
     reducer: reducer_default,
     actions: actions_exports,
@@ -1644,7 +1644,7 @@ var wp;
   unlock(store).registerPrivateSelectors(private_selectors_exports);
   unlock(store).registerPrivateActions(private_actions_exports);
 
-  // packages/edit-site/build-module/components/app/index.js
+  // packages/edit-site/build-module/components/app/index.mjs
   var import_data82 = __toESM(require_data(), 1);
   var import_router41 = __toESM(require_router(), 1);
   var import_element154 = __toESM(require_element(), 1);
@@ -1666,7 +1666,7 @@ var wp;
   }
   var clsx_default = clsx;
 
-  // packages/admin-ui/build-module/navigable-region/index.js
+  // packages/admin-ui/build-module/navigable-region/index.mjs
   var import_element2 = __toESM(require_element(), 1);
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var NavigableRegion = (0, import_element2.forwardRef)(
@@ -1688,14 +1688,14 @@ var wp;
   NavigableRegion.displayName = "NavigableRegion";
   var navigable_region_default = NavigableRegion;
 
-  // packages/admin-ui/build-module/page/header.js
+  // packages/admin-ui/build-module/page/header.mjs
   var import_components2 = __toESM(require_components(), 1);
 
-  // packages/admin-ui/build-module/page/sidebar-toggle-slot.js
+  // packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
   var import_components = __toESM(require_components(), 1);
   var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
 
-  // packages/admin-ui/build-module/page/header.js
+  // packages/admin-ui/build-module/page/header.mjs
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   function Header({
     breadcrumbs,
@@ -1733,7 +1733,7 @@ var wp;
     ] });
   }
 
-  // packages/admin-ui/build-module/page/index.js
+  // packages/admin-ui/build-module/page/index.mjs
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   function Page({
     breadcrumbs,
@@ -1765,7 +1765,7 @@ var wp;
   Page.SidebarToggleFill = SidebarToggleFill;
   var page_default = Page;
 
-  // packages/edit-site/build-module/components/layout/index.js
+  // packages/edit-site/build-module/components/layout/index.mjs
   var import_components9 = __toESM(require_components(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
   var import_i18n8 = __toESM(require_i18n(), 1);
@@ -1777,7 +1777,7 @@ var wp;
   var import_data13 = __toESM(require_data(), 1);
   var import_preferences3 = __toESM(require_preferences(), 1);
 
-  // packages/edit-site/build-module/components/site-hub/index.js
+  // packages/edit-site/build-module/components/site-hub/index.mjs
   var import_data5 = __toESM(require_data(), 1);
   var import_components4 = __toESM(require_components(), 1);
   var import_i18n3 = __toESM(require_i18n(), 1);
@@ -1785,7 +1785,7 @@ var wp;
   var import_html_entities = __toESM(require_html_entities(), 1);
   var import_element5 = __toESM(require_element(), 1);
 
-  // packages/icons/build-module/icon/index.js
+  // packages/icons/build-module/icon/index.mjs
   var import_element3 = __toESM(require_element(), 1);
   var icon_default = (0, import_element3.forwardRef)(
     ({ icon, size = 24, ...props }, ref) => {
@@ -1798,7 +1798,7 @@ var wp;
     }
   );
 
-  // packages/icons/build-module/library/archive.js
+  // packages/icons/build-module/library/archive.mjs
   var import_primitives = __toESM(require_primitives(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   var archive_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
@@ -1810,37 +1810,37 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/arrow-down.js
+  // packages/icons/build-module/library/arrow-down.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);
   var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
   var arrow_down_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives2.Path, { d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z" }) });
 
-  // packages/icons/build-module/library/arrow-left.js
+  // packages/icons/build-module/library/arrow-left.mjs
   var import_primitives3 = __toESM(require_primitives(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   var arrow_left_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.Path, { d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z" }) });
 
-  // packages/icons/build-module/library/arrow-right.js
+  // packages/icons/build-module/library/arrow-right.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
   var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives4.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
 
-  // packages/icons/build-module/library/arrow-up-left.js
+  // packages/icons/build-module/library/arrow-up-left.mjs
   var import_primitives5 = __toESM(require_primitives(), 1);
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   var arrow_up_left_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives5.Path, { d: "M14 6H6v8h1.5V8.5L17 18l1-1-9.5-9.5H14V6Z" }) });
 
-  // packages/icons/build-module/library/arrow-up.js
+  // packages/icons/build-module/library/arrow-up.mjs
   var import_primitives6 = __toESM(require_primitives(), 1);
   var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
   var arrow_up_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives6.Path, { d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z" }) });
 
-  // packages/icons/build-module/library/backup.js
+  // packages/icons/build-module/library/backup.mjs
   var import_primitives7 = __toESM(require_primitives(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   var backup_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives7.Path, { d: "M5.5 12h1.75l-2.5 3-2.5-3H4a8 8 0 113.134 6.35l.907-1.194A6.5 6.5 0 105.5 12zm9.53 1.97l-2.28-2.28V8.5a.75.75 0 00-1.5 0V12a.747.747 0 00.218.529l1.282-.84-1.28.842 2.5 2.5a.75.75 0 101.06-1.061z" }) });
 
-  // packages/icons/build-module/library/block-meta.js
+  // packages/icons/build-module/library/block-meta.mjs
   var import_primitives8 = __toESM(require_primitives(), 1);
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   var block_meta_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
@@ -1852,17 +1852,17 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/block-table.js
+  // packages/icons/build-module/library/block-table.mjs
   var import_primitives9 = __toESM(require_primitives(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives9.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives9.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
 
-  // packages/icons/build-module/library/calendar.js
+  // packages/icons/build-module/library/calendar.mjs
   var import_primitives10 = __toESM(require_primitives(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var calendar_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives10.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives10.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z" }) });
 
-  // packages/icons/build-module/library/category.js
+  // packages/icons/build-module/library/category.mjs
   var import_primitives11 = __toESM(require_primitives(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   var category_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives11.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
@@ -1874,47 +1874,47 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/check.js
+  // packages/icons/build-module/library/check.mjs
   var import_primitives12 = __toESM(require_primitives(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
   var check_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives12.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
 
-  // packages/icons/build-module/library/chevron-down.js
+  // packages/icons/build-module/library/chevron-down.mjs
   var import_primitives13 = __toESM(require_primitives(), 1);
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives13.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives13.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
-  // packages/icons/build-module/library/chevron-left-small.js
+  // packages/icons/build-module/library/chevron-left-small.mjs
   var import_primitives14 = __toESM(require_primitives(), 1);
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   var chevron_left_small_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives14.Path, { d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z" }) });
 
-  // packages/icons/build-module/library/chevron-left.js
+  // packages/icons/build-module/library/chevron-left.mjs
   var import_primitives15 = __toESM(require_primitives(), 1);
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives15.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
 
-  // packages/icons/build-module/library/chevron-right-small.js
+  // packages/icons/build-module/library/chevron-right-small.mjs
   var import_primitives16 = __toESM(require_primitives(), 1);
   var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives16.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
 
-  // packages/icons/build-module/library/chevron-right.js
+  // packages/icons/build-module/library/chevron-right.mjs
   var import_primitives17 = __toESM(require_primitives(), 1);
   var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives17.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
 
-  // packages/icons/build-module/library/chevron-up.js
+  // packages/icons/build-module/library/chevron-up.mjs
   var import_primitives18 = __toESM(require_primitives(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives18.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives18.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
 
-  // packages/icons/build-module/library/close-small.js
+  // packages/icons/build-module/library/close-small.mjs
   var import_primitives19 = __toESM(require_primitives(), 1);
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives19.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
 
-  // packages/icons/build-module/library/cog.js
+  // packages/icons/build-module/library/cog.mjs
   var import_primitives20 = __toESM(require_primitives(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   var cog_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
@@ -1926,7 +1926,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/comment-author-avatar.js
+  // packages/icons/build-module/library/comment-author-avatar.mjs
   var import_primitives21 = __toESM(require_primitives(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var comment_author_avatar_default = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
@@ -1938,12 +1938,12 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/download.js
+  // packages/icons/build-module/library/download.mjs
   var import_primitives22 = __toESM(require_primitives(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   var download_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives22.Path, { d: "M18 11.3l-1-1.1-4 4V3h-1.5v11.3L7 10.2l-1 1.1 6.2 5.8 5.8-5.8zm.5 3.7v3.5h-13V15H4v5h16v-5h-1.5z" }) });
 
-  // packages/icons/build-module/library/drafts.js
+  // packages/icons/build-module/library/drafts.mjs
   var import_primitives23 = __toESM(require_primitives(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var drafts_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
@@ -1955,7 +1955,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/drawer-right.js
+  // packages/icons/build-module/library/drawer-right.mjs
   var import_primitives24 = __toESM(require_primitives(), 1);
   var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   var drawer_right_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
@@ -1967,7 +1967,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/envelope.js
+  // packages/icons/build-module/library/envelope.mjs
   var import_primitives25 = __toESM(require_primitives(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var envelope_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
@@ -1979,7 +1979,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/error.js
+  // packages/icons/build-module/library/error.mjs
   var import_primitives26 = __toESM(require_primitives(), 1);
   var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   var error_default = /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives26.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
@@ -1991,7 +1991,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/file.js
+  // packages/icons/build-module/library/file.mjs
   var import_primitives27 = __toESM(require_primitives(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   var file_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives27.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
@@ -2003,52 +2003,52 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/format-list-bullets-rtl.js
+  // packages/icons/build-module/library/format-list-bullets-rtl.mjs
   var import_primitives28 = __toESM(require_primitives(), 1);
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   var format_list_bullets_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives28.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
 
-  // packages/icons/build-module/library/format-list-bullets.js
+  // packages/icons/build-module/library/format-list-bullets.mjs
   var import_primitives29 = __toESM(require_primitives(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives29.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives29.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
 
-  // packages/icons/build-module/library/funnel.js
+  // packages/icons/build-module/library/funnel.mjs
   var import_primitives30 = __toESM(require_primitives(), 1);
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   var funnel_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives30.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives30.Path, { d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z" }) });
 
-  // packages/icons/build-module/library/globe.js
+  // packages/icons/build-module/library/globe.mjs
   var import_primitives31 = __toESM(require_primitives(), 1);
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   var globe_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives31.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives31.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm6.5 8c0 .6 0 1.2-.2 1.8h-2.7c0-.6.2-1.1.2-1.8s0-1.2-.2-1.8h2.7c.2.6.2 1.1.2 1.8Zm-.9-3.2h-2.4c-.3-.9-.7-1.8-1.1-2.4-.1-.2-.2-.4-.3-.5 1.6.5 3 1.6 3.8 3ZM12.8 17c-.3.5-.6 1-.8 1.3-.2-.3-.5-.8-.8-1.3-.3-.5-.6-1.1-.8-1.7h3.3c-.2.6-.5 1.2-.8 1.7Zm-2.9-3.2c-.1-.6-.2-1.1-.2-1.8s0-1.2.2-1.8H14c.1.6.2 1.1.2 1.8s0 1.2-.2 1.8H9.9ZM11.2 7c.3-.5.6-1 .8-1.3.2.3.5.8.8 1.3.3.5.6 1.1.8 1.7h-3.3c.2-.6.5-1.2.8-1.7Zm-1-1.2c-.1.2-.2.3-.3.5-.4.7-.8 1.5-1.1 2.4H6.4c.8-1.4 2.2-2.5 3.8-3Zm-1.8 8H5.7c-.2-.6-.2-1.1-.2-1.8s0-1.2.2-1.8h2.7c0 .6-.2 1.1-.2 1.8s0 1.2.2 1.8Zm-2 1.4h2.4c.3.9.7 1.8 1.1 2.4.1.2.2.4.3.5-1.6-.5-3-1.6-3.8-3Zm7.4 3c.1-.2.2-.3.3-.5.4-.7.8-1.5 1.1-2.4h2.4c-.8 1.4-2.2 2.5-3.8 3Z" }) });
 
-  // packages/icons/build-module/library/help.js
+  // packages/icons/build-module/library/help.mjs
   var import_primitives32 = __toESM(require_primitives(), 1);
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   var help_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives32.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives32.Path, { d: "M12 4a8 8 0 1 1 .001 16.001A8 8 0 0 1 12 4Zm0 1.5a6.5 6.5 0 1 0-.001 13.001A6.5 6.5 0 0 0 12 5.5Zm.75 11h-1.5V15h1.5v1.5Zm-.445-9.234a3 3 0 0 1 .445 5.89V14h-1.5v-1.25c0-.57.452-.958.917-1.01A1.5 1.5 0 0 0 12 8.75a1.5 1.5 0 0 0-1.5 1.5H9a3 3 0 0 1 3.305-2.984Z" }) });
 
-  // packages/icons/build-module/library/home.js
+  // packages/icons/build-module/library/home.mjs
   var import_primitives33 = __toESM(require_primitives(), 1);
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var home_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives33.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives33.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
 
-  // packages/icons/build-module/library/layout.js
+  // packages/icons/build-module/library/layout.mjs
   var import_primitives34 = __toESM(require_primitives(), 1);
   var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   var layout_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives34.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives34.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
-  // packages/icons/build-module/library/link.js
+  // packages/icons/build-module/library/link.mjs
   var import_primitives35 = __toESM(require_primitives(), 1);
   var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
   var link_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives35.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
 
-  // packages/icons/build-module/library/list.js
+  // packages/icons/build-module/library/list.mjs
   var import_primitives36 = __toESM(require_primitives(), 1);
   var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
   var list_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives36.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives36.Path, { d: "M4 4v1.5h16V4H4zm8 8.5h8V11h-8v1.5zM4 20h16v-1.5H4V20zm4-8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z" }) });
 
-  // packages/icons/build-module/library/media.js
+  // packages/icons/build-module/library/media.mjs
   var import_primitives37 = __toESM(require_primitives(), 1);
   var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
   var media_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_primitives37.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -2063,27 +2063,27 @@ var wp;
     )
   ] });
 
-  // packages/icons/build-module/library/mobile.js
+  // packages/icons/build-module/library/mobile.mjs
   var import_primitives38 = __toESM(require_primitives(), 1);
   var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives38.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives38.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
 
-  // packages/icons/build-module/library/more-vertical.js
+  // packages/icons/build-module/library/more-vertical.mjs
   var import_primitives39 = __toESM(require_primitives(), 1);
   var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives39.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives39.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
 
-  // packages/icons/build-module/library/navigation.js
+  // packages/icons/build-module/library/navigation.mjs
   var import_primitives40 = __toESM(require_primitives(), 1);
   var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   var navigation_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives40.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives40.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z" }) });
 
-  // packages/icons/build-module/library/next.js
+  // packages/icons/build-module/library/next.mjs
   var import_primitives41 = __toESM(require_primitives(), 1);
   var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var next_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives41.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives41.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
 
-  // packages/icons/build-module/library/not-allowed.js
+  // packages/icons/build-module/library/not-allowed.mjs
   var import_primitives42 = __toESM(require_primitives(), 1);
   var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
   var not_allowed_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives42.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
@@ -2095,12 +2095,12 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/not-found.js
+  // packages/icons/build-module/library/not-found.mjs
   var import_primitives43 = __toESM(require_primitives(), 1);
   var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
   var not_found_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives43.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives43.Path, { d: "M19 5c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2zM5 6.5c-.3 0-.5.2-.5.5v10c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V7c0-.3-.2-.5-.5-.5zm7.01 2.75q.711 0 1.24.364.533.364.824 1.012.296.645.296 1.488 0 .887-.296 1.556-.292.664-.824 1.036-.528.368-1.24.368-.708 0-1.24-.368-.527-.372-.824-1.036-.296-.668-.296-1.556 0-.848.296-1.492.296-.648.824-1.008a2.14 2.14 0 0 1 1.24-.364m-3.484 3.6h.72v.832h-.72v1.28h-.984v-1.28H4.75l3.08-4.32h.696zm9.522 0h.72v.832h-.72v1.28h-.983v-1.28h-2.793l3.08-4.32h.696zm-6.038-2.696q-.568 0-.952.48-.384.475-.384 1.48 0 .716.176 1.168.176.45.476.66.304.212.684.212t.68-.208q.304-.207.48-.656.176-.451.176-1.176 0-.996-.384-1.476-.38-.484-.952-.484M6.33 12.85h1.212v-1.722zm9.523 0h1.211v-1.722z" }) });
 
-  // packages/icons/build-module/library/page.js
+  // packages/icons/build-module/library/page.mjs
   var import_primitives44 = __toESM(require_primitives(), 1);
   var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
   var page_default2 = /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_primitives44.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -2108,7 +2108,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives44.Path, { d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z" })
   ] });
 
-  // packages/icons/build-module/library/pages.js
+  // packages/icons/build-module/library/pages.mjs
   var import_primitives45 = __toESM(require_primitives(), 1);
   var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
   var pages_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_primitives45.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -2117,12 +2117,12 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives45.Path, { d: "M20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z" })
   ] });
 
-  // packages/icons/build-module/library/pencil.js
+  // packages/icons/build-module/library/pencil.mjs
   var import_primitives46 = __toESM(require_primitives(), 1);
   var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
   var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives46.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives46.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
 
-  // packages/icons/build-module/library/pending.js
+  // packages/icons/build-module/library/pending.mjs
   var import_primitives47 = __toESM(require_primitives(), 1);
   var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
   var pending_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives47.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
@@ -2134,27 +2134,27 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/pin.js
+  // packages/icons/build-module/library/pin.mjs
   var import_primitives48 = __toESM(require_primitives(), 1);
   var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
   var pin_default = /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives48.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives48.Path, { d: "m21.5 9.1-6.6-6.6-4.2 5.6c-1.2-.1-2.4.1-3.6.7-.1 0-.1.1-.2.1-.5.3-.9.6-1.2.9l3.7 3.7-5.7 5.7v1.1h1.1l5.7-5.7 3.7 3.7c.4-.4.7-.8.9-1.2.1-.1.1-.2.2-.3.6-1.1.8-2.4.6-3.6l5.6-4.1zm-7.3 3.5.1.9c.1.9 0 1.8-.4 2.6l-6-6c.8-.4 1.7-.5 2.6-.4l.9.1L15 4.9 19.1 9l-4.9 3.6z" }) });
 
-  // packages/icons/build-module/library/plugins.js
+  // packages/icons/build-module/library/plugins.mjs
   var import_primitives49 = __toESM(require_primitives(), 1);
   var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
   var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives49.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives49.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
 
-  // packages/icons/build-module/library/post.js
+  // packages/icons/build-module/library/post.mjs
   var import_primitives50 = __toESM(require_primitives(), 1);
   var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
   var post_default = /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives50.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives50.Path, { d: "m7.3 9.7 1.4 1.4c.2-.2.3-.3.4-.5 0 0 0-.1.1-.1.3-.5.4-1.1.3-1.6L12 7 9 4 7.2 6.5c-.6-.1-1.1 0-1.6.3 0 0-.1 0-.1.1-.3.1-.4.2-.6.4l1.4 1.4L4 11v1h1l2.3-2.3zM4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4z" }) });
 
-  // packages/icons/build-module/library/previous.js
+  // packages/icons/build-module/library/previous.mjs
   var import_primitives51 = __toESM(require_primitives(), 1);
   var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
   var previous_default = /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives51.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives51.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
 
-  // packages/icons/build-module/library/published.js
+  // packages/icons/build-module/library/published.mjs
   var import_primitives52 = __toESM(require_primitives(), 1);
   var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
   var published_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives52.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
@@ -2166,17 +2166,17 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/rotate-left.js
+  // packages/icons/build-module/library/rotate-left.mjs
   var import_primitives53 = __toESM(require_primitives(), 1);
   var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
   var rotate_left_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives53.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives53.Path, { d: "M12 4V2.2L9 4.8l3 2.5V5.5c3.6 0 6.5 2.9 6.5 6.5 0 2.9-1.9 5.3-4.5 6.2v.2l-.1-.2c-.4.1-.7.2-1.1.2l.2 1.5c.3 0 .6-.1 1-.2 3.5-.9 6-4 6-7.7 0-4.4-3.6-8-8-8zm-7.9 7l1.5.2c.1-1.2.5-2.3 1.2-3.2l-1.1-.9C4.8 8.2 4.3 9.6 4.1 11zm1.5 1.8l-1.5.2c.1.7.3 1.4.5 2 .3.7.6 1.3 1 1.8l1.2-.8c-.3-.5-.6-1-.8-1.5s-.4-1.1-.4-1.7zm1.5 5.5c1.1.9 2.4 1.4 3.8 1.6l.2-1.5c-1.1-.1-2.2-.5-3.1-1.2l-.9 1.1z" }) });
 
-  // packages/icons/build-module/library/rotate-right.js
+  // packages/icons/build-module/library/rotate-right.mjs
   var import_primitives54 = __toESM(require_primitives(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
   var rotate_right_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives54.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives54.Path, { d: "M15.1 4.8l-3-2.5V4c-4.4 0-8 3.6-8 8 0 3.7 2.5 6.9 6 7.7.3.1.6.1 1 .2l.2-1.5c-.4 0-.7-.1-1.1-.2l-.1.2v-.2c-2.6-.8-4.5-3.3-4.5-6.2 0-3.6 2.9-6.5 6.5-6.5v1.8l3-2.5zM20 11c-.2-1.4-.7-2.7-1.6-3.8l-1.2.8c.7.9 1.1 2 1.3 3.1L20 11zm-1.5 1.8c-.1.5-.2 1.1-.4 1.6s-.5 1-.8 1.5l1.2.9c.4-.5.8-1.1 1-1.8s.5-1.3.5-2l-1.5-.2zm-5.6 5.6l.2 1.5c1.4-.2 2.7-.7 3.8-1.6l-.9-1.1c-.9.7-2 1.1-3.1 1.2z" }) });
 
-  // packages/icons/build-module/library/scheduled.js
+  // packages/icons/build-module/library/scheduled.mjs
   var import_primitives55 = __toESM(require_primitives(), 1);
   var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
   var scheduled_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives55.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
@@ -2188,17 +2188,17 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/search.js
+  // packages/icons/build-module/library/search.mjs
   var import_primitives56 = __toESM(require_primitives(), 1);
   var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
   var search_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives56.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives56.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
-  // packages/icons/build-module/library/seen.js
+  // packages/icons/build-module/library/seen.mjs
   var import_primitives57 = __toESM(require_primitives(), 1);
   var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
   var seen_default = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives57.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives57.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
 
-  // packages/icons/build-module/library/styles.js
+  // packages/icons/build-module/library/styles.mjs
   var import_primitives58 = __toESM(require_primitives(), 1);
   var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
   var styles_default = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives58.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
@@ -2210,22 +2210,22 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/symbol-filled.js
+  // packages/icons/build-module/library/symbol-filled.mjs
   var import_primitives59 = __toESM(require_primitives(), 1);
   var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
   var symbol_filled_default = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives59.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives59.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
-  // packages/icons/build-module/library/symbol.js
+  // packages/icons/build-module/library/symbol.mjs
   var import_primitives60 = __toESM(require_primitives(), 1);
   var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
   var symbol_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives60.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives60.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
-  // packages/icons/build-module/library/tag.js
+  // packages/icons/build-module/library/tag.mjs
   var import_primitives61 = __toESM(require_primitives(), 1);
   var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
   var tag_default = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives61.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives61.Path, { d: "M4.75 4a.75.75 0 0 0-.75.75v7.826c0 .2.08.39.22.53l6.72 6.716a2.313 2.313 0 0 0 3.276-.001l5.61-5.611-.531-.53.532.528a2.315 2.315 0 0 0 0-3.264L13.104 4.22a.75.75 0 0 0-.53-.22H4.75ZM19 12.576a.815.815 0 0 1-.236.574l-5.61 5.611a.814.814 0 0 1-1.153 0L5.5 12.264V5.5h6.763l6.5 6.502a.816.816 0 0 1 .237.574ZM8.75 9.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" }) });
 
-  // packages/icons/build-module/library/trash.js
+  // packages/icons/build-module/library/trash.mjs
   var import_primitives62 = __toESM(require_primitives(), 1);
   var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
   var trash_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives62.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
@@ -2237,33 +2237,33 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/unseen.js
+  // packages/icons/build-module/library/unseen.mjs
   var import_primitives63 = __toESM(require_primitives(), 1);
   var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
   var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives63.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives63.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
 
-  // packages/icons/build-module/library/upload.js
+  // packages/icons/build-module/library/upload.mjs
   var import_primitives64 = __toESM(require_primitives(), 1);
   var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
   var upload_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives64.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives64.Path, { d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z" }) });
 
-  // packages/icons/build-module/library/verse.js
+  // packages/icons/build-module/library/verse.mjs
   var import_primitives65 = __toESM(require_primitives(), 1);
   var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
   var verse_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives65.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives65.Path, { d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z" }) });
 
-  // packages/icons/build-module/library/wordpress.js
+  // packages/icons/build-module/library/wordpress.mjs
   var import_primitives66 = __toESM(require_primitives(), 1);
   var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
   var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives66.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "-2 -2 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives66.Path, { d: "M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.1z" }) });
 
-  // packages/edit-site/build-module/components/site-hub/index.js
+  // packages/edit-site/build-module/components/site-hub/index.mjs
   var import_commands = __toESM(require_commands(), 1);
   var import_keycodes = __toESM(require_keycodes(), 1);
   var import_url = __toESM(require_url(), 1);
   var import_router = __toESM(require_router(), 1);
 
-  // packages/edit-site/build-module/components/site-icon/index.js
+  // packages/edit-site/build-module/components/site-icon/index.mjs
   var import_data4 = __toESM(require_data(), 1);
   var import_components3 = __toESM(require_components(), 1);
   var import_i18n2 = __toESM(require_i18n(), 1);
@@ -2300,7 +2300,7 @@ var wp;
   }
   var site_icon_default = SiteIcon;
 
-  // packages/edit-site/build-module/components/sidebar/index.js
+  // packages/edit-site/build-module/components/sidebar/index.mjs
   var import_element4 = __toESM(require_element(), 1);
   var import_dom = __toESM(require_dom(), 1);
   var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
@@ -2372,7 +2372,7 @@ var wp;
     ) });
   }
 
-  // packages/edit-site/build-module/components/site-hub/index.js
+  // packages/edit-site/build-module/components/site-hub/index.mjs
   var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
   var { useLocation, useHistory } = unlock(import_router.privateApis);
   var SiteHub = (0, import_element5.memo)(
@@ -2564,7 +2564,7 @@ var wp;
     })
   );
 
-  // packages/edit-site/build-module/components/resizable-frame/index.js
+  // packages/edit-site/build-module/components/resizable-frame/index.mjs
   var import_element6 = __toESM(require_element(), 1);
   var import_components5 = __toESM(require_components(), 1);
   var import_compose = __toESM(require_compose(), 1);
@@ -2825,7 +2825,7 @@ var wp;
   }
   var resizable_frame_default = ResizableFrame;
 
-  // packages/edit-site/build-module/components/save-keyboard-shortcut/index.js
+  // packages/edit-site/build-module/components/save-keyboard-shortcut/index.mjs
   var import_element7 = __toESM(require_element(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
   var import_i18n5 = __toESM(require_i18n(), 1);
@@ -2874,7 +2874,7 @@ var wp;
     return null;
   }
 
-  // packages/edit-site/build-module/components/layout/hooks.js
+  // packages/edit-site/build-module/components/layout/hooks.mjs
   var import_element8 = __toESM(require_element(), 1);
   var import_data8 = __toESM(require_data(), 1);
   var import_core_data7 = __toESM(require_core_data(), 1);
@@ -5813,7 +5813,7 @@ var wp;
   });
   var animated = host.animated;
 
-  // packages/edit-site/build-module/components/layout/animation.js
+  // packages/edit-site/build-module/components/layout/animation.mjs
   var import_element9 = __toESM(require_element(), 1);
   function getAbsolutePosition(element) {
     return {
@@ -5893,12 +5893,12 @@ var wp;
   }
   var animation_default = useMovingAnimation;
 
-  // packages/edit-site/build-module/components/save-hub/index.js
+  // packages/edit-site/build-module/components/save-hub/index.mjs
   var import_data10 = __toESM(require_data(), 1);
   var import_components7 = __toESM(require_components(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
 
-  // packages/edit-site/build-module/components/save-button/index.js
+  // packages/edit-site/build-module/components/save-button/index.mjs
   var import_data9 = __toESM(require_data(), 1);
   var import_components6 = __toESM(require_components(), 1);
   var import_i18n6 = __toESM(require_i18n(), 1);
@@ -5907,7 +5907,7 @@ var wp;
   var import_router3 = __toESM(require_router(), 1);
   var import_editor4 = __toESM(require_editor(), 1);
 
-  // packages/edit-site/build-module/utils/is-previewing-theme.js
+  // packages/edit-site/build-module/utils/is-previewing-theme.mjs
   var import_url3 = __toESM(require_url(), 1);
   function isPreviewingTheme() {
     return !!(0, import_url3.getQueryArg)(window.location.href, "wp_theme_preview");
@@ -5919,7 +5919,7 @@ var wp;
     return null;
   }
 
-  // packages/edit-site/build-module/components/save-button/index.js
+  // packages/edit-site/build-module/components/save-button/index.mjs
   var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation3 } = unlock(import_router3.privateApis);
   function SaveButton({
@@ -6031,7 +6031,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/save-hub/index.js
+  // packages/edit-site/build-module/components/save-hub/index.mjs
   var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
   function SaveHub() {
     const { isDisabled, isSaving } = (0, import_data10.useSelect)((select3) => {
@@ -6058,7 +6058,7 @@ var wp;
     ) });
   }
 
-  // packages/edit-site/build-module/components/save-panel/index.js
+  // packages/edit-site/build-module/components/save-panel/index.mjs
   var import_components8 = __toESM(require_components(), 1);
   var import_editor5 = __toESM(require_editor(), 1);
   var import_data12 = __toESM(require_data(), 1);
@@ -6067,7 +6067,7 @@ var wp;
   var import_router5 = __toESM(require_router(), 1);
   var import_element11 = __toESM(require_element(), 1);
 
-  // packages/edit-site/build-module/utils/use-activate-theme.js
+  // packages/edit-site/build-module/utils/use-activate-theme.mjs
   var import_core_data10 = __toESM(require_core_data(), 1);
   var import_data11 = __toESM(require_data(), 1);
   var import_router4 = __toESM(require_router(), 1);
@@ -6088,7 +6088,7 @@ var wp;
     };
   }
 
-  // packages/edit-site/build-module/utils/use-actual-current-theme.js
+  // packages/edit-site/build-module/utils/use-actual-current-theme.mjs
   var import_api_fetch = __toESM(require_api_fetch(), 1);
   var import_element10 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
@@ -6106,7 +6106,7 @@ var wp;
     return currentTheme;
   }
 
-  // packages/edit-site/build-module/components/save-panel/index.js
+  // packages/edit-site/build-module/components/save-panel/index.mjs
   var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
   var { EntitiesSavedStatesExtensible } = unlock(import_editor5.privateApis);
   var { useLocation: useLocation5 } = unlock(import_router5.privateApis);
@@ -6250,7 +6250,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/layout/index.js
+  // packages/edit-site/build-module/components/layout/index.mjs
   var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation6 } = unlock(import_router6.privateApis);
   var { useStyle } = unlock(import_editor6.privateApis);
@@ -6433,7 +6433,7 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/hooks/commands/use-common-commands.js
+  // packages/edit-site/build-module/hooks/commands/use-common-commands.mjs
   var import_element13 = __toESM(require_element(), 1);
   var import_data14 = __toESM(require_data(), 1);
   var import_i18n9 = __toESM(require_i18n(), 1);
@@ -6567,7 +6567,7 @@ var wp;
     });
   }
 
-  // packages/edit-site/build-module/hooks/commands/use-set-command-context.js
+  // packages/edit-site/build-module/hooks/commands/use-set-command-context.mjs
   var import_data15 = __toESM(require_data(), 1);
   var import_commands3 = __toESM(require_commands(), 1);
   var import_block_editor3 = __toESM(require_block_editor(), 1);
@@ -6590,17 +6590,17 @@ var wp;
     useCommandContext(commandContext);
   }
 
-  // packages/edit-site/build-module/components/site-editor-routes/index.js
+  // packages/edit-site/build-module/components/site-editor-routes/index.mjs
   var import_data81 = __toESM(require_data(), 1);
   var import_element153 = __toESM(require_element(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.mjs
   var import_components74 = __toESM(require_components(), 1);
   var import_i18n59 = __toESM(require_i18n(), 1);
   var import_data31 = __toESM(require_data(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen/index.mjs
   var import_components11 = __toESM(require_components(), 1);
   var import_i18n10 = __toESM(require_i18n(), 1);
   var import_core_data13 = __toESM(require_core_data(), 1);
@@ -6608,7 +6608,7 @@ var wp;
   var import_router9 = __toESM(require_router(), 1);
   var import_element14 = __toESM(require_element(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-button/index.js
+  // packages/edit-site/build-module/components/sidebar-button/index.mjs
   var import_components10 = __toESM(require_components(), 1);
   var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
   function SidebarButton(props) {
@@ -6622,7 +6622,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen/index.mjs
   var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
   var { useHistory: useHistory5, useLocation: useLocation9 } = unlock(import_router9.privateApis);
   function SidebarNavigationScreen({
@@ -6720,7 +6720,7 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-item/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-item/index.mjs
   var import_components12 = __toESM(require_components(), 1);
   var import_i18n11 = __toESM(require_i18n(), 1);
   var import_router10 = __toESM(require_router(), 1);
@@ -6787,7 +6787,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/index.mjs
   var import_i18n58 = __toESM(require_i18n(), 1);
   var import_data30 = __toESM(require_data(), 1);
   var import_element47 = __toESM(require_element(), 1);
@@ -6796,7 +6796,7 @@ var wp;
   var import_router11 = __toESM(require_router(), 1);
   var import_url7 = __toESM(require_url(), 1);
 
-  // packages/global-styles-ui/build-module/global-styles-ui.js
+  // packages/global-styles-ui/build-module/global-styles-ui.mjs
   var import_components72 = __toESM(require_components(), 1);
   var import_blocks8 = __toESM(require_blocks(), 1);
   var import_data29 = __toESM(require_data(), 1);
@@ -6804,7 +6804,7 @@ var wp;
   var import_element46 = __toESM(require_element(), 1);
   var import_compose8 = __toESM(require_compose(), 1);
 
-  // packages/global-styles-engine/build-module/utils/object.js
+  // packages/global-styles-engine/build-module/utils/object.mjs
   function setImmutably(object, path, value) {
     path = Array.isArray(path) ? [...path] : [path];
     object = Array.isArray(object) ? [...object] : { ...object };
@@ -6826,7 +6826,7 @@ var wp;
     return value ?? defaultValue2;
   };
 
-  // packages/global-styles-engine/build-module/settings/get-setting.js
+  // packages/global-styles-engine/build-module/settings/get-setting.mjs
   var VALID_SETTINGS = [
     "appearanceTools",
     "useRootPaddingAwareAlignments",
@@ -6914,7 +6914,7 @@ var wp;
     return result;
   }
 
-  // packages/global-styles-engine/build-module/settings/set-setting.js
+  // packages/global-styles-engine/build-module/settings/set-setting.mjs
   function setSetting(globalStyles, path, newValue, blockName) {
     const appendedBlockPath = blockName ? ".blocks." + blockName : "";
     const appendedPropertyPath = path ? "." + path : "";
@@ -6926,10 +6926,10 @@ var wp;
     );
   }
 
-  // packages/global-styles-engine/build-module/utils/common.js
+  // packages/global-styles-engine/build-module/utils/common.mjs
   var import_style_engine = __toESM(require_style_engine(), 1);
 
-  // packages/global-styles-engine/build-module/utils/fluid.js
+  // packages/global-styles-engine/build-module/utils/fluid.mjs
   var DEFAULT_MAXIMUM_VIEWPORT_WIDTH = "1600px";
   var DEFAULT_MINIMUM_VIEWPORT_WIDTH = "320px";
   var DEFAULT_SCALE_FACTOR = 1;
@@ -7072,7 +7072,7 @@ var wp;
     return Math.round(value * base) / base;
   }
 
-  // packages/global-styles-engine/build-module/utils/typography.js
+  // packages/global-styles-engine/build-module/utils/typography.mjs
   function isFluidTypographyEnabled(typographySettings) {
     const fluidSettings = typographySettings?.fluid;
     return true === fluidSettings || fluidSettings && typeof fluidSettings === "object" && Object.keys(fluidSettings).length > 0;
@@ -7115,7 +7115,7 @@ var wp;
     return defaultSize;
   }
 
-  // packages/global-styles-engine/build-module/utils/common.js
+  // packages/global-styles-engine/build-module/utils/common.mjs
   var ROOT_BLOCK_SELECTOR = "body";
   var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
   var PRESET_METADATA = [
@@ -7415,7 +7415,7 @@ var wp;
     return variable;
   }
 
-  // packages/global-styles-engine/build-module/settings/get-style.js
+  // packages/global-styles-engine/build-module/settings/get-style.mjs
   function getStyle(globalStyles, path, blockName, shouldDecodeEncode = true) {
     const appendedPath = path ? "." + path : "";
     const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
@@ -7427,7 +7427,7 @@ var wp;
     return result;
   }
 
-  // packages/global-styles-engine/build-module/settings/set-style.js
+  // packages/global-styles-engine/build-module/settings/set-style.mjs
   function setStyle(globalStyles, path, newValue, blockName) {
     const appendedPath = path ? "." + path : "";
     const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
@@ -7438,7 +7438,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-engine/build-module/core/equal.js
+  // packages/global-styles-engine/build-module/core/equal.mjs
   var import_es6 = __toESM(require_es6(), 1);
   function areGlobalStylesEqual(original, variation) {
     if (typeof original !== "object" || typeof variation !== "object") {
@@ -7447,7 +7447,7 @@ var wp;
     return (0, import_es6.default)(original?.styles, variation?.styles) && (0, import_es6.default)(original?.settings, variation?.settings);
   }
 
-  // packages/global-styles-engine/build-module/core/merge.js
+  // packages/global-styles-engine/build-module/core/merge.mjs
   var import_deepmerge = __toESM(require_cjs(), 1);
 
   // node_modules/is-plain-object/dist/is-plain-object.mjs
@@ -7467,7 +7467,7 @@ var wp;
     return true;
   }
 
-  // packages/global-styles-engine/build-module/core/merge.js
+  // packages/global-styles-engine/build-module/core/merge.mjs
   function mergeGlobalStyles(base, user) {
     return (0, import_deepmerge.default)(base, user, {
       /*
@@ -7490,12 +7490,12 @@ var wp;
     });
   }
 
-  // packages/global-styles-engine/build-module/core/render.js
+  // packages/global-styles-engine/build-module/core/render.mjs
   var import_blocks3 = __toESM(require_blocks(), 1);
   var import_style_engine2 = __toESM(require_style_engine(), 1);
   var import_data17 = __toESM(require_data(), 1);
 
-  // packages/global-styles-engine/build-module/core/selectors.js
+  // packages/global-styles-engine/build-module/core/selectors.mjs
   function getBlockSelector(blockType, target = "root", options = {}) {
     if (!target) {
       return null;
@@ -7713,7 +7713,7 @@ var wp;
     });
   };
 
-  // packages/global-styles-engine/build-module/utils/duotone.js
+  // packages/global-styles-engine/build-module/utils/duotone.mjs
   function getValuesFromColors(colors2 = []) {
     const values = {
       r: [],
@@ -7764,12 +7764,12 @@ var wp;
 </svg>`;
   }
 
-  // packages/global-styles-engine/build-module/utils/string.js
+  // packages/global-styles-engine/build-module/utils/string.mjs
   function kebabCase(str) {
     return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([0-9])([a-zA-Z])/g, "$1-$2").replace(/([a-zA-Z])([0-9])/g, "$1-$2").replace(/[\s_]+/g, "-").toLowerCase();
   }
 
-  // packages/global-styles-engine/build-module/utils/spacing.js
+  // packages/global-styles-engine/build-module/utils/spacing.mjs
   function getSpacingPresetCssVar(value) {
     if (!value) {
       return;
@@ -7781,7 +7781,7 @@ var wp;
     return `var(--wp--preset--spacing--${slug[1]})`;
   }
 
-  // packages/global-styles-engine/build-module/utils/gap.js
+  // packages/global-styles-engine/build-module/utils/gap.mjs
   function getGapBoxControlValueFromStyle(blockGapValue) {
     if (!blockGapValue) {
       return null;
@@ -7802,7 +7802,7 @@ var wp;
     return row === column ? row : `${row} ${column}`;
   }
 
-  // packages/global-styles-engine/build-module/utils/background.js
+  // packages/global-styles-engine/build-module/utils/background.mjs
   var BACKGROUND_BLOCK_DEFAULT_VALUES = {
     backgroundSize: "cover",
     backgroundPosition: "50% 50%"
@@ -7827,7 +7827,7 @@ var wp;
     return backgroundStylesWithDefaults;
   }
 
-  // packages/global-styles-engine/build-module/utils/layout.js
+  // packages/global-styles-engine/build-module/utils/layout.mjs
   var LAYOUT_DEFINITIONS = {
     default: {
       name: "default",
@@ -8000,7 +8000,7 @@ var wp;
     }
   };
 
-  // packages/global-styles-engine/build-module/core/render.js
+  // packages/global-styles-engine/build-module/core/render.mjs
   var ELEMENT_CLASS_NAMES = {
     button: "wp-element-button",
     caption: "wp-element-caption"
@@ -8943,10 +8943,10 @@ var wp;
     return [styles, updatedConfig.settings];
   }
 
-  // packages/global-styles-ui/build-module/provider.js
+  // packages/global-styles-ui/build-module/provider.mjs
   var import_element17 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/context.js
+  // packages/global-styles-ui/build-module/context.mjs
   var import_element16 = __toESM(require_element(), 1);
   var GlobalStylesContext = (0, import_element16.createContext)({
     user: { styles: {}, settings: {} },
@@ -8957,7 +8957,7 @@ var wp;
     fontLibraryEnabled: false
   });
 
-  // packages/global-styles-ui/build-module/provider.js
+  // packages/global-styles-ui/build-module/provider.mjs
   var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesProvider({
     children,
@@ -8982,13 +8982,13 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(GlobalStylesContext.Provider, { value: contextValue, children });
   }
 
-  // packages/global-styles-ui/build-module/screen-root.js
+  // packages/global-styles-ui/build-module/screen-root.mjs
   var import_components19 = __toESM(require_components(), 1);
   var import_i18n15 = __toESM(require_i18n(), 1);
   var import_data19 = __toESM(require_data(), 1);
   var import_core_data15 = __toESM(require_core_data(), 1);
 
-  // packages/global-styles-ui/build-module/icon-with-current-color.js
+  // packages/global-styles-ui/build-module/icon-with-current-color.mjs
   var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
   function IconWithCurrentColor({
     className,
@@ -9006,7 +9006,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/navigation-button.js
+  // packages/global-styles-ui/build-module/navigation-button.mjs
   var import_components13 = __toESM(require_components(), 1);
   var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
   function GenericNavigationButton({
@@ -9026,7 +9026,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components13.Navigator.Button, { as: GenericNavigationButton, ...props });
   }
 
-  // packages/global-styles-ui/build-module/root-menu.js
+  // packages/global-styles-ui/build-module/root-menu.mjs
   var import_components14 = __toESM(require_components(), 1);
   var import_i18n13 = __toESM(require_i18n(), 1);
   var import_block_editor4 = __toESM(require_block_editor(), 1);
@@ -9053,13 +9053,13 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/hooks.js
+  // packages/global-styles-ui/build-module/hooks.mjs
   var import_element18 = __toESM(require_element(), 1);
   var import_data18 = __toESM(require_data(), 1);
   var import_core_data14 = __toESM(require_core_data(), 1);
   var import_i18n12 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/utils.js
+  // packages/global-styles-ui/build-module/utils.mjs
   function removePropertiesFromObject(object, properties) {
     if (!properties?.length) {
       return object;
@@ -9142,7 +9142,7 @@ var wp;
     return [bodyFontFamily, headingFontFamily];
   }
 
-  // packages/global-styles-ui/build-module/hooks.js
+  // packages/global-styles-ui/build-module/hooks.mjs
   k([a11y_default]);
   function useStyle2(path, blockName, readFrom = "merged", shouldDecodeEncode = true) {
     const { user, base, merged, onChange } = (0, import_element18.useContext)(GlobalStylesContext);
@@ -9237,14 +9237,14 @@ var wp;
     }, [properties, userVariation, variationsFromTheme]);
   }
 
-  // packages/global-styles-ui/build-module/lock-unlock.js
+  // packages/global-styles-ui/build-module/lock-unlock.mjs
   var import_private_apis2 = __toESM(require_private_apis(), 1);
   var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/global-styles-ui"
   );
 
-  // packages/global-styles-ui/build-module/root-menu.js
+  // packages/global-styles-ui/build-module/root-menu.mjs
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   var {
     useHasDimensionsPanel,
@@ -9254,10 +9254,10 @@ var wp;
     useHasBackgroundPanel
   } = unlock2(import_block_editor4.privateApis);
 
-  // packages/global-styles-ui/build-module/preview-styles.js
+  // packages/global-styles-ui/build-module/preview-styles.mjs
   var import_components18 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preview-hooks.js
+  // packages/global-styles-ui/build-module/preview-hooks.mjs
   function useStylesPreviewColors() {
     const [textColor = "black"] = useStyle2("color.text");
     const [backgroundColor = "white"] = useStyle2("color.background");
@@ -9290,12 +9290,12 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/typography-example.js
+  // packages/global-styles-ui/build-module/typography-example.mjs
   var import_element19 = __toESM(require_element(), 1);
   var import_components15 = __toESM(require_components(), 1);
   var import_i18n14 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/utils/preview-styles.js
+  // packages/global-styles-ui/build-module/font-library/utils/preview-styles.mjs
   function findNearest(input, numbers) {
     if (numbers.length === 0) {
       return null;
@@ -9361,7 +9361,7 @@ var wp;
     return style;
   }
 
-  // packages/global-styles-ui/build-module/typography-example.js
+  // packages/global-styles-ui/build-module/typography-example.mjs
   var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
   function PreviewTypography({
     fontSize,
@@ -9411,7 +9411,7 @@ var wp;
     );
   }
 
-  // packages/global-styles-ui/build-module/highlighted-colors.js
+  // packages/global-styles-ui/build-module/highlighted-colors.mjs
   var import_components16 = __toESM(require_components(), 1);
   var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
   function HighlightedColors({
@@ -9445,7 +9445,7 @@ var wp;
     ));
   }
 
-  // packages/global-styles-ui/build-module/preview-wrapper.js
+  // packages/global-styles-ui/build-module/preview-wrapper.mjs
   var import_components17 = __toESM(require_components(), 1);
   var import_compose3 = __toESM(require_compose(), 1);
   var import_element20 = __toESM(require_element(), 1);
@@ -9524,7 +9524,7 @@ var wp;
   }
   var preview_wrapper_default = PreviewWrapper;
 
-  // packages/global-styles-ui/build-module/preview-styles.js
+  // packages/global-styles-ui/build-module/preview-styles.mjs
   var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
   var firstFrameVariants = {
     start: {
@@ -9705,10 +9705,10 @@ var wp;
   }
   var preview_styles_default = PreviewStyles;
 
-  // packages/global-styles-ui/build-module/screen-root.js
+  // packages/global-styles-ui/build-module/screen-root.mjs
   var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-block-list.js
+  // packages/global-styles-ui/build-module/screen-block-list.mjs
   var import_blocks5 = __toESM(require_blocks(), 1);
   var import_i18n17 = __toESM(require_i18n(), 1);
   var import_components22 = __toESM(require_components(), 1);
@@ -9718,7 +9718,7 @@ var wp;
   var import_compose4 = __toESM(require_compose(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
 
-  // packages/global-styles-ui/build-module/variations/variations-panel.js
+  // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks4 = __toESM(require_blocks(), 1);
   var import_data20 = __toESM(require_data(), 1);
   var import_components20 = __toESM(require_components(), 1);
@@ -9741,12 +9741,12 @@ var wp;
     return getFilteredBlockStyles(blockStyles, variationNames);
   }
 
-  // packages/global-styles-ui/build-module/screen-header.js
+  // packages/global-styles-ui/build-module/screen-header.mjs
   var import_components21 = __toESM(require_components(), 1);
   var import_i18n16 = __toESM(require_i18n(), 1);
   var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-block-list.js
+  // packages/global-styles-ui/build-module/screen-block-list.mjs
   var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
   var {
     useHasDimensionsPanel: useHasDimensionsPanel2,
@@ -9838,7 +9838,7 @@ var wp;
   }
   var MemoizedBlockList = (0, import_element21.memo)(BlockList);
 
-  // packages/global-styles-ui/build-module/screen-block.js
+  // packages/global-styles-ui/build-module/screen-block.mjs
   var import_blocks7 = __toESM(require_blocks(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
   var import_element23 = __toESM(require_element(), 1);
@@ -9847,21 +9847,21 @@ var wp;
   var import_components25 = __toESM(require_components(), 1);
   var import_i18n18 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/block-preview-panel.js
+  // packages/global-styles-ui/build-module/block-preview-panel.mjs
   var import_block_editor6 = __toESM(require_block_editor(), 1);
   var import_blocks6 = __toESM(require_blocks(), 1);
   var import_components23 = __toESM(require_components(), 1);
   var import_element22 = __toESM(require_element(), 1);
   var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/subtitle.js
+  // packages/global-styles-ui/build-module/subtitle.mjs
   var import_components24 = __toESM(require_components(), 1);
   var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
   function Subtitle({ children, level = 2 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components24.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
   }
 
-  // packages/global-styles-ui/build-module/screen-block.js
+  // packages/global-styles-ui/build-module/screen-block.mjs
   var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
   var {
     useHasDimensionsPanel: useHasDimensionsPanel3,
@@ -9882,24 +9882,24 @@ var wp;
     AdvancedPanel: StylesAdvancedPanel
   } = unlock2(import_block_editor7.privateApis);
 
-  // packages/global-styles-ui/build-module/screen-typography.js
+  // packages/global-styles-ui/build-module/screen-typography.mjs
   var import_i18n32 = __toESM(require_i18n(), 1);
   var import_components45 = __toESM(require_components(), 1);
   var import_element34 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/screen-body.js
+  // packages/global-styles-ui/build-module/screen-body.mjs
   var import_components26 = __toESM(require_components(), 1);
   var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/typography-elements.js
+  // packages/global-styles-ui/build-module/typography-elements.mjs
   var import_i18n19 = __toESM(require_i18n(), 1);
   var import_components27 = __toESM(require_components(), 1);
   var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/variations/variations-typography.js
+  // packages/global-styles-ui/build-module/variations/variations-typography.mjs
   var import_components30 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preview-typography.js
+  // packages/global-styles-ui/build-module/preview-typography.mjs
   var import_components28 = __toESM(require_components(), 1);
   var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
   var StylesPreviewTypography = ({
@@ -9937,7 +9937,7 @@ var wp;
   };
   var preview_typography_default = StylesPreviewTypography;
 
-  // packages/global-styles-ui/build-module/variations/variation.js
+  // packages/global-styles-ui/build-module/variations/variation.mjs
   var import_components29 = __toESM(require_components(), 1);
   var import_element24 = __toESM(require_element(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
@@ -10017,7 +10017,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components29.Tooltip, { text: variation?.title, children: content }) : content });
   }
 
-  // packages/global-styles-ui/build-module/variations/variations-typography.js
+  // packages/global-styles-ui/build-module/variations/variations-typography.mjs
   var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
   var propertiesToFilter = ["typography"];
   function TypographyVariations({
@@ -10060,25 +10060,25 @@ var wp;
     ] });
   }
 
-  // packages/global-styles-ui/build-module/font-families.js
+  // packages/global-styles-ui/build-module/font-families.mjs
   var import_i18n30 = __toESM(require_i18n(), 1);
   var import_components43 = __toESM(require_components(), 1);
   var import_element33 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/context.js
+  // packages/global-styles-ui/build-module/font-library/context.mjs
   var import_element25 = __toESM(require_element(), 1);
   var import_data23 = __toESM(require_data(), 1);
   var import_core_data18 = __toESM(require_core_data(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/api.js
+  // packages/global-styles-ui/build-module/font-library/api.mjs
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
   var import_core_data17 = __toESM(require_core_data(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/utils/index.js
+  // packages/global-styles-ui/build-module/font-library/utils/index.mjs
   var import_components31 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/utils/constants.js
+  // packages/global-styles-ui/build-module/font-library/utils/constants.mjs
   var import_i18n21 = __toESM(require_i18n(), 1);
   var FONT_WEIGHTS = {
     100: (0, import_i18n21._x)("Thin", "font weight"),
@@ -10096,80 +10096,80 @@ var wp;
     italic: (0, import_i18n21._x)("Italic", "font style")
   };
 
-  // packages/global-styles-ui/build-module/font-library/utils/index.js
+  // packages/global-styles-ui/build-module/font-library/utils/index.mjs
   var { File } = window;
   var { kebabCase: kebabCase2 } = unlock2(import_components31.privateApis);
 
-  // packages/global-styles-ui/build-module/font-library/context.js
+  // packages/global-styles-ui/build-module/font-library/context.mjs
   var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
   var FontLibraryContext = (0, import_element25.createContext)(
     {}
   );
   FontLibraryContext.displayName = "FontLibraryContext";
 
-  // packages/global-styles-ui/build-module/font-library/modal.js
+  // packages/global-styles-ui/build-module/font-library/modal.mjs
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_components41 = __toESM(require_components(), 1);
   var import_core_data21 = __toESM(require_core_data(), 1);
   var import_data25 = __toESM(require_data(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/installed-fonts.js
+  // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
   var import_components35 = __toESM(require_components(), 1);
   var import_core_data19 = __toESM(require_core_data(), 1);
   var import_data24 = __toESM(require_data(), 1);
   var import_element28 = __toESM(require_element(), 1);
   var import_i18n24 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/font-card.js
+  // packages/global-styles-ui/build-module/font-library/font-card.mjs
   var import_i18n23 = __toESM(require_i18n(), 1);
   var import_components33 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/font-demo.js
+  // packages/global-styles-ui/build-module/font-library/font-demo.mjs
   var import_components32 = __toESM(require_components(), 1);
   var import_element26 = __toESM(require_element(), 1);
   var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/font-card.js
+  // packages/global-styles-ui/build-module/font-library/font-card.mjs
   var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/library-font-variant.js
+  // packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
   var import_element27 = __toESM(require_element(), 1);
   var import_components34 = __toESM(require_components(), 1);
   var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/installed-fonts.js
+  // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
   var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/font-collection.js
+  // packages/global-styles-ui/build-module/font-library/font-collection.mjs
   var import_element30 = __toESM(require_element(), 1);
   var import_components38 = __toESM(require_components(), 1);
   var import_compose5 = __toESM(require_compose(), 1);
   var import_i18n26 = __toESM(require_i18n(), 1);
   var import_core_data20 = __toESM(require_core_data(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.js
+  // packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
   var import_i18n25 = __toESM(require_i18n(), 1);
   var import_components36 = __toESM(require_components(), 1);
   var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/collection-font-variant.js
+  // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
   var import_element29 = __toESM(require_element(), 1);
   var import_components37 = __toESM(require_components(), 1);
   var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/font-collection.js
+  // packages/global-styles-ui/build-module/font-library/font-collection.mjs
   var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_CATEGORY = {
     slug: "all",
     name: (0, import_i18n26._x)("All", "font categories")
   };
 
-  // packages/global-styles-ui/build-module/font-library/upload-fonts.js
+  // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
   var import_i18n27 = __toESM(require_i18n(), 1);
   var import_components40 = __toESM(require_components(), 1);
   var import_element31 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/lib/unbrotli.js
+  // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
   var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
     get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
   }) : x2)(function(x2) {
@@ -13835,7 +13835,7 @@ var wp;
     )(12);
   })();
 
-  // packages/global-styles-ui/build-module/font-library/lib/inflate.js
+  // packages/global-styles-ui/build-module/font-library/lib/inflate.mjs
   var __require3 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
     get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
   }) : x2)(function(x2) {
@@ -16451,7 +16451,7 @@ var wp;
     )("/lib/inflate.js");
   })();
 
-  // packages/global-styles-ui/build-module/font-library/lib/lib-font.browser.js
+  // packages/global-styles-ui/build-module/font-library/lib/lib-font.browser.mjs
   var fetchFunction = globalThis.fetch;
   var Event2 = class {
     constructor(type, detail = {}, msg) {
@@ -20201,14 +20201,14 @@ var wp;
   };
   var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
 
-  // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.js
+  // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.mjs
   var import_components39 = __toESM(require_components(), 1);
   var { kebabCase: kebabCase3 } = unlock2(import_components39.privateApis);
 
-  // packages/global-styles-ui/build-module/font-library/upload-fonts.js
+  // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
   var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-library/modal.js
+  // packages/global-styles-ui/build-module/font-library/modal.mjs
   var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
   var { Tabs } = unlock2(import_components41.privateApis);
   var DEFAULT_TAB = {
@@ -20220,37 +20220,37 @@ var wp;
     title: (0, import_i18n28._x)("Upload", "noun")
   };
 
-  // packages/global-styles-ui/build-module/font-family-item.js
+  // packages/global-styles-ui/build-module/font-family-item.mjs
   var import_i18n29 = __toESM(require_i18n(), 1);
   var import_components42 = __toESM(require_components(), 1);
   var import_element32 = __toESM(require_element(), 1);
   var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-families.js
+  // packages/global-styles-ui/build-module/font-families.mjs
   var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.js
+  // packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
   var import_i18n31 = __toESM(require_i18n(), 1);
   var import_components44 = __toESM(require_components(), 1);
   var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-typography.js
+  // packages/global-styles-ui/build-module/screen-typography.mjs
   var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-typography-element.js
+  // packages/global-styles-ui/build-module/screen-typography-element.mjs
   var import_i18n33 = __toESM(require_i18n(), 1);
   var import_components46 = __toESM(require_components(), 1);
   var import_element35 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/typography-panel.js
+  // packages/global-styles-ui/build-module/typography-panel.mjs
   var import_block_editor8 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
   var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock2(import_block_editor8.privateApis);
 
-  // packages/global-styles-ui/build-module/typography-preview.js
+  // packages/global-styles-ui/build-module/typography-preview.mjs
   var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-typography-element.js
+  // packages/global-styles-ui/build-module/screen-typography-element.mjs
   var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
   var elements = {
     text: {
@@ -20275,45 +20275,45 @@ var wp;
     }
   };
 
-  // packages/global-styles-ui/build-module/screen-colors.js
+  // packages/global-styles-ui/build-module/screen-colors.mjs
   var import_i18n35 = __toESM(require_i18n(), 1);
   var import_components49 = __toESM(require_components(), 1);
   var import_block_editor9 = __toESM(require_block_editor(), 1);
 
-  // packages/global-styles-ui/build-module/palette.js
+  // packages/global-styles-ui/build-module/palette.mjs
   var import_components48 = __toESM(require_components(), 1);
   var import_i18n34 = __toESM(require_i18n(), 1);
   var import_element36 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/color-indicator-wrapper.js
+  // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
   var import_components47 = __toESM(require_components(), 1);
   var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/palette.js
+  // packages/global-styles-ui/build-module/palette.mjs
   var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-colors.js
+  // packages/global-styles-ui/build-module/screen-colors.mjs
   var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
   var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock2(
     import_block_editor9.privateApis
   );
 
-  // packages/global-styles-ui/build-module/screen-color-palette.js
+  // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_i18n38 = __toESM(require_i18n(), 1);
   var import_components54 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/color-palette-panel.js
+  // packages/global-styles-ui/build-module/color-palette-panel.mjs
   var import_compose6 = __toESM(require_compose(), 1);
   var import_components52 = __toESM(require_components(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/variations/variations-color.js
+  // packages/global-styles-ui/build-module/variations/variations-color.mjs
   var import_components51 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preview-colors.js
+  // packages/global-styles-ui/build-module/preview-colors.mjs
   var import_components50 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/preset-colors.js
+  // packages/global-styles-ui/build-module/preset-colors.mjs
   var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
   function PresetColors() {
     const { paletteColors } = useStylesPreviewColors();
@@ -20330,7 +20330,7 @@ var wp;
     ));
   }
 
-  // packages/global-styles-ui/build-module/preview-colors.js
+  // packages/global-styles-ui/build-module/preview-colors.mjs
   var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
   var firstFrameVariants2 = {
     start: {
@@ -20381,7 +20381,7 @@ var wp;
   };
   var preview_colors_default = StylesPreviewColors;
 
-  // packages/global-styles-ui/build-module/variations/variations-color.js
+  // packages/global-styles-ui/build-module/variations/variations-color.mjs
   var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
   var propertiesToFilter2 = ["color"];
   function ColorVariations({
@@ -20408,50 +20408,50 @@ var wp;
     ] });
   }
 
-  // packages/global-styles-ui/build-module/color-palette-panel.js
+  // packages/global-styles-ui/build-module/color-palette-panel.mjs
   var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/gradients-palette-panel.js
+  // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
   var import_compose7 = __toESM(require_compose(), 1);
   var import_components53 = __toESM(require_components(), 1);
   var import_i18n37 = __toESM(require_i18n(), 1);
   var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-color-palette.js
+  // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs2 } = unlock2(import_components54.privateApis);
 
-  // packages/global-styles-ui/build-module/screen-background.js
+  // packages/global-styles-ui/build-module/screen-background.mjs
   var import_i18n39 = __toESM(require_i18n(), 1);
   var import_block_editor11 = __toESM(require_block_editor(), 1);
   var import_components55 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/background-panel.js
+  // packages/global-styles-ui/build-module/background-panel.mjs
   var import_block_editor10 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
   var { BackgroundPanel: StylesBackgroundPanel2 } = unlock2(
     import_block_editor10.privateApis
   );
 
-  // packages/global-styles-ui/build-module/screen-background.js
+  // packages/global-styles-ui/build-module/screen-background.mjs
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
   var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock2(import_block_editor11.privateApis);
 
-  // packages/global-styles-ui/build-module/shadows-panel.js
+  // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_components57 = __toESM(require_components(), 1);
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_element37 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.js
+  // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
   var import_components56 = __toESM(require_components(), 1);
   var import_i18n40 = __toESM(require_i18n(), 1);
   var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/shadows-panel.js
+  // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
   var { Menu } = unlock2(import_components57.privateApis);
 
-  // packages/global-styles-ui/build-module/shadows-edit-panel.js
+  // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
   var import_components58 = __toESM(require_components(), 1);
   var import_i18n42 = __toESM(require_i18n(), 1);
   var import_element38 = __toESM(require_element(), 1);
@@ -20474,34 +20474,34 @@ var wp;
     }
   ];
 
-  // packages/global-styles-ui/build-module/screen-shadows.js
+  // packages/global-styles-ui/build-module/screen-shadows.mjs
   var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-layout.js
+  // packages/global-styles-ui/build-module/screen-layout.mjs
   var import_i18n43 = __toESM(require_i18n(), 1);
   var import_block_editor13 = __toESM(require_block_editor(), 1);
 
-  // packages/global-styles-ui/build-module/dimensions-panel.js
+  // packages/global-styles-ui/build-module/dimensions-panel.mjs
   var import_block_editor12 = __toESM(require_block_editor(), 1);
   var import_element39 = __toESM(require_element(), 1);
   var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
   var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock2(import_block_editor12.privateApis);
 
-  // packages/global-styles-ui/build-module/screen-layout.js
+  // packages/global-styles-ui/build-module/screen-layout.mjs
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
   var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock2(
     import_block_editor13.privateApis
   );
 
-  // packages/global-styles-ui/build-module/screen-style-variations.js
+  // packages/global-styles-ui/build-module/screen-style-variations.mjs
   var import_components61 = __toESM(require_components(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
 
-  // packages/global-styles-ui/build-module/style-variations-content.js
+  // packages/global-styles-ui/build-module/style-variations-content.mjs
   var import_i18n45 = __toESM(require_i18n(), 1);
   var import_components60 = __toESM(require_components(), 1);
 
-  // packages/global-styles-ui/build-module/style-variations-container.js
+  // packages/global-styles-ui/build-module/style-variations-container.mjs
   var import_core_data22 = __toESM(require_core_data(), 1);
   var import_data26 = __toESM(require_data(), 1);
   var import_element40 = __toESM(require_element(), 1);
@@ -20595,25 +20595,25 @@ var wp;
   }
   var style_variations_container_default = StyleVariationsContainer;
 
-  // packages/global-styles-ui/build-module/style-variations-content.js
+  // packages/global-styles-ui/build-module/style-variations-content.mjs
   var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-style-variations.js
+  // packages/global-styles-ui/build-module/screen-style-variations.mjs
   var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-css.js
+  // packages/global-styles-ui/build-module/screen-css.mjs
   var import_i18n47 = __toESM(require_i18n(), 1);
   var import_components62 = __toESM(require_components(), 1);
   var import_block_editor14 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
   var { AdvancedPanel: StylesAdvancedPanel2 } = unlock2(import_block_editor14.privateApis);
 
-  // packages/global-styles-ui/build-module/screen-revisions/index.js
+  // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_i18n50 = __toESM(require_i18n(), 1);
   var import_components65 = __toESM(require_components(), 1);
   var import_element42 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.js
+  // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
   var import_data27 = __toESM(require_data(), 1);
   var import_core_data23 = __toESM(require_core_data(), 1);
   var import_element41 = __toESM(require_element(), 1);
@@ -20753,7 +20753,7 @@ var wp;
     ]);
   }
 
-  // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.js
+  // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_components63 = __toESM(require_components(), 1);
   var import_date = __toESM(require_date(), 1);
@@ -20763,61 +20763,61 @@ var wp;
   var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
-  // packages/global-styles-ui/build-module/pagination/index.js
+  // packages/global-styles-ui/build-module/pagination/index.mjs
   var import_components64 = __toESM(require_components(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
   var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/screen-revisions/index.js
+  // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+  // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_components67 = __toESM(require_components(), 1);
   var import_element43 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.js
+  // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
   var import_components66 = __toESM(require_components(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
   var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+  // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu3 } = unlock2(import_components67.privateApis);
 
-  // packages/global-styles-ui/build-module/font-sizes/font-size.js
+  // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_components71 = __toESM(require_components(), 1);
   var import_element45 = __toESM(require_element(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/font-size-preview.js
+  // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
   var import_block_editor15 = __toESM(require_block_editor(), 1);
   var import_i18n53 = __toESM(require_i18n(), 1);
   var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.js
+  // packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.mjs
   var import_components68 = __toESM(require_components(), 1);
   var import_i18n54 = __toESM(require_i18n(), 1);
   var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.js
+  // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
   var import_components69 = __toESM(require_components(), 1);
   var import_i18n55 = __toESM(require_i18n(), 1);
   var import_element44 = __toESM(require_element(), 1);
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/size-control/index.js
+  // packages/global-styles-ui/build-module/size-control/index.mjs
   var import_components70 = __toESM(require_components(), 1);
   var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/font-sizes/font-size.js
+  // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu4 } = unlock2(import_components71.privateApis);
 
-  // packages/global-styles-ui/build-module/global-styles-ui.js
+  // packages/global-styles-ui/build-module/global-styles-ui.mjs
   var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/global-styles-ui/build-module/with-global-styles-provider.js
+  // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
   var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
   function withGlobalStylesProvider(Component) {
     return function WrappedComponent({
@@ -20838,19 +20838,19 @@ var wp;
     };
   }
 
-  // packages/global-styles-ui/build-module/style-variations.js
+  // packages/global-styles-ui/build-module/style-variations.mjs
   var StyleVariations = withGlobalStylesProvider(style_variations_container_default);
 
-  // packages/global-styles-ui/build-module/color-variations.js
+  // packages/global-styles-ui/build-module/color-variations.mjs
   var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 
-  // packages/global-styles-ui/build-module/typography-variations.js
+  // packages/global-styles-ui/build-module/typography-variations.mjs
   var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
-  // packages/global-styles-ui/build-module/font-library/font-library.js
+  // packages/global-styles-ui/build-module/font-library/font-library.mjs
   var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-details-footer/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-details-footer/index.mjs
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_url6 = __toESM(require_url(), 1);
   var import_components73 = __toESM(require_components(), 1);
@@ -20891,7 +20891,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/index.mjs
   var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation10, useHistory: useHistory7 } = unlock(import_router11.privateApis);
   function SidebarNavigationItemGlobalStyles(props) {
@@ -20950,7 +20950,7 @@ var wp;
     ) });
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.mjs
   var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
   function MainSidebarNavigationContent({ isBlockBasedTheme = true }) {
     return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(import_components74.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-main", children: [
@@ -21050,7 +21050,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-unsupported/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-unsupported/index.mjs
   var import_i18n60 = __toESM(require_i18n(), 1);
   var import_components75 = __toESM(require_components(), 1);
   var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
@@ -21060,7 +21060,7 @@ var wp;
     ) }) });
   }
 
-  // packages/edit-site/build-module/components/editor/index.js
+  // packages/edit-site/build-module/components/editor/index.mjs
   var import_data46 = __toESM(require_data(), 1);
   var import_components83 = __toESM(require_components(), 1);
   var import_compose10 = __toESM(require_compose(), 1);
@@ -21075,7 +21075,7 @@ var wp;
   var import_block_editor18 = __toESM(require_block_editor(), 1);
   var import_url11 = __toESM(require_url(), 1);
 
-  // packages/edit-site/build-module/components/welcome-guide/editor.js
+  // packages/edit-site/build-module/components/welcome-guide/editor.mjs
   var import_data32 = __toESM(require_data(), 1);
   var import_components76 = __toESM(require_components(), 1);
   var import_i18n61 = __toESM(require_i18n(), 1);
@@ -21083,7 +21083,7 @@ var wp;
   var import_preferences6 = __toESM(require_preferences(), 1);
   var import_core_data26 = __toESM(require_core_data(), 1);
 
-  // packages/edit-site/build-module/components/welcome-guide/image.js
+  // packages/edit-site/build-module/components/welcome-guide/image.mjs
   var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideImage({ nonAnimatedSrc, animatedSrc }) {
     return /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)("picture", { className: "edit-site-welcome-guide__image", children: [
@@ -21098,7 +21098,7 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/components/welcome-guide/editor.js
+  // packages/edit-site/build-module/components/welcome-guide/editor.mjs
   var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideEditor() {
     const { toggle } = (0, import_data32.useDispatch)(import_preferences6.store);
@@ -21156,7 +21156,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/welcome-guide/page.js
+  // packages/edit-site/build-module/components/welcome-guide/page.mjs
   var import_data33 = __toESM(require_data(), 1);
   var import_components77 = __toESM(require_components(), 1);
   var import_i18n62 = __toESM(require_i18n(), 1);
@@ -21219,7 +21219,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/welcome-guide/template.js
+  // packages/edit-site/build-module/components/welcome-guide/template.mjs
   var import_data34 = __toESM(require_data(), 1);
   var import_components78 = __toESM(require_components(), 1);
   var import_i18n63 = __toESM(require_i18n(), 1);
@@ -21280,7 +21280,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/welcome-guide/index.js
+  // packages/edit-site/build-module/components/welcome-guide/index.mjs
   var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuide({ postType: postType2 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(import_jsx_runtime160.Fragment, { children: [
@@ -21290,7 +21290,7 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/components/canvas-loader/index.js
+  // packages/edit-site/build-module/components/canvas-loader/index.mjs
   var import_components79 = __toESM(require_components(), 1);
   var import_core_data27 = __toESM(require_core_data(), 1);
   var import_data35 = __toESM(require_data(), 1);
@@ -21313,14 +21313,14 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("div", { className: "edit-site-canvas-loader", children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(Theme, { accent: textColor, background: backgroundColor, children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(import_components79.ProgressBar, { id, max: total, value: elapsed }) }) });
   }
 
-  // packages/edit-site/build-module/components/block-editor/use-site-editor-settings.js
+  // packages/edit-site/build-module/components/block-editor/use-site-editor-settings.mjs
   var import_data36 = __toESM(require_data(), 1);
   var import_element50 = __toESM(require_element(), 1);
   var import_router13 = __toESM(require_router(), 1);
   var import_compose9 = __toESM(require_compose(), 1);
   var import_editor13 = __toESM(require_editor(), 1);
 
-  // packages/edit-site/build-module/components/block-editor/use-navigate-to-entity-record.js
+  // packages/edit-site/build-module/components/block-editor/use-navigate-to-entity-record.mjs
   var import_router12 = __toESM(require_router(), 1);
   var import_element49 = __toESM(require_element(), 1);
   var import_url8 = __toESM(require_url(), 1);
@@ -21371,7 +21371,7 @@ var wp;
     return [onNavigateToEntityRecord, initialBlockSelection];
   }
 
-  // packages/edit-site/build-module/components/block-editor/use-site-editor-settings.js
+  // packages/edit-site/build-module/components/block-editor/use-site-editor-settings.mjs
   var { useLocation: useLocation12, useHistory: useHistory9 } = unlock(import_router13.privateApis);
   var { useGlobalStyles: useGlobalStyles2 } = unlock(import_editor13.privateApis);
   function useNavigateToPreviousEntityRecord() {
@@ -21442,7 +21442,7 @@ var wp;
     return defaultEditorSettings;
   }
 
-  // packages/edit-site/build-module/components/plugin-template-setting-panel/index.js
+  // packages/edit-site/build-module/components/plugin-template-setting-panel/index.mjs
   var import_editor14 = __toESM(require_editor(), 1);
   var import_data37 = __toESM(require_data(), 1);
   var import_components80 = __toESM(require_components(), 1);
@@ -21467,10 +21467,10 @@ var wp;
   PluginTemplateSettingPanel.Slot = Slot;
   var plugin_template_setting_panel_default = PluginTemplateSettingPanel;
 
-  // packages/edit-site/build-module/components/more-menu/index.js
+  // packages/edit-site/build-module/components/more-menu/index.mjs
   var import_editor15 = __toESM(require_editor(), 1);
 
-  // packages/edit-site/build-module/components/more-menu/site-export.js
+  // packages/edit-site/build-module/components/more-menu/site-export.mjs
   var import_i18n64 = __toESM(require_i18n(), 1);
   var import_components81 = __toESM(require_components(), 1);
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
@@ -21528,7 +21528,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/more-menu/welcome-guide-menu-item.js
+  // packages/edit-site/build-module/components/more-menu/welcome-guide-menu-item.mjs
   var import_i18n65 = __toESM(require_i18n(), 1);
   var import_data39 = __toESM(require_data(), 1);
   var import_components82 = __toESM(require_components(), 1);
@@ -21539,7 +21539,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(import_components82.MenuItem, { onClick: () => toggle("core/edit-site", "welcomeGuide"), children: (0, import_i18n65.__)("Welcome Guide") });
   }
 
-  // packages/edit-site/build-module/components/more-menu/index.js
+  // packages/edit-site/build-module/components/more-menu/index.mjs
   var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
   var { ToolsMoreMenuGroup, PreferencesModal } = unlock(import_editor15.privateApis);
   function MoreMenu() {
@@ -21552,7 +21552,7 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/components/block-editor/use-editor-iframe-props.js
+  // packages/edit-site/build-module/components/block-editor/use-editor-iframe-props.mjs
   var import_data40 = __toESM(require_data(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_element51 = __toESM(require_element(), 1);
@@ -21610,14 +21610,14 @@ var wp;
     };
   }
 
-  // packages/edit-site/build-module/components/editor/use-editor-title.js
+  // packages/edit-site/build-module/components/editor/use-editor-title.mjs
   var import_i18n68 = __toESM(require_i18n(), 1);
   var import_data42 = __toESM(require_data(), 1);
   var import_core_data30 = __toESM(require_core_data(), 1);
   var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_editor17 = __toESM(require_editor(), 1);
 
-  // packages/edit-site/build-module/components/routes/use-title.js
+  // packages/edit-site/build-module/components/routes/use-title.mjs
   var import_element52 = __toESM(require_element(), 1);
   var import_data41 = __toESM(require_data(), 1);
   var import_core_data29 = __toESM(require_core_data(), 1);
@@ -21653,7 +21653,7 @@ var wp;
     }, [title, siteTitle, location]);
   }
 
-  // packages/edit-site/build-module/components/editor/use-editor-title.js
+  // packages/edit-site/build-module/components/editor/use-editor-title.mjs
   var { getTemplateInfo } = unlock(import_editor17.privateApis);
   function useEditorTitle(postType2, postId) {
     const { title, isLoaded } = (0, import_data42.useSelect)(
@@ -21701,7 +21701,7 @@ var wp;
   }
   var use_editor_title_default = useEditorTitle;
 
-  // packages/edit-site/build-module/components/editor/use-adapt-editor-to-canvas.js
+  // packages/edit-site/build-module/components/editor/use-adapt-editor-to-canvas.mjs
   var import_data43 = __toESM(require_data(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_editor18 = __toESM(require_editor(), 1);
@@ -21742,7 +21742,7 @@ var wp;
     ]);
   }
 
-  // packages/edit-site/build-module/components/editor/use-resolve-edited-entity.js
+  // packages/edit-site/build-module/components/editor/use-resolve-edited-entity.mjs
   var import_element54 = __toESM(require_element(), 1);
   var import_data44 = __toESM(require_data(), 1);
   var import_core_data31 = __toESM(require_core_data(), 1);
@@ -21842,7 +21842,7 @@ var wp;
     }, [isReady, postType2, postId, context, setEditedEntity2]);
   }
 
-  // packages/edit-site/build-module/components/editor/site-preview.js
+  // packages/edit-site/build-module/components/editor/site-preview.mjs
   var import_i18n69 = __toESM(require_i18n(), 1);
   var import_data45 = __toESM(require_data(), 1);
   var import_core_data32 = __toESM(require_core_data(), 1);
@@ -21882,7 +21882,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/editor/index.js
+  // packages/edit-site/build-module/components/editor/index.mjs
   var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
   var { Editor, BackButton } = unlock(import_editor19.privateApis);
   var { useHistory: useHistory11, useLocation: useLocation16 } = unlock(import_router17.privateApis);
@@ -22114,7 +22114,7 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/components/site-editor-routes/utils.js
+  // packages/edit-site/build-module/components/site-editor-routes/utils.mjs
   function isClassicThemeWithStyleBookSupport(siteData) {
     const isBlockTheme = siteData.currentTheme?.is_block_theme;
     const supportsEditorStyles = siteData.currentTheme?.theme_supports["editor-styles"];
@@ -22122,7 +22122,7 @@ var wp;
     return !isBlockTheme && (supportsEditorStyles || hasThemeJson);
   }
 
-  // packages/edit-site/build-module/components/site-editor-routes/home.js
+  // packages/edit-site/build-module/components/site-editor-routes/home.mjs
   var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
   var homeRoute = {
     name: "home",
@@ -22143,12 +22143,12 @@ var wp;
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/styles.js
+  // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
   var import_router19 = __toESM(require_router(), 1);
   var import_editor22 = __toESM(require_editor(), 1);
   var import_url13 = __toESM(require_url(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-global-styles/index.js
+  // packages/edit-site/build-module/components/sidebar-global-styles/index.mjs
   var import_i18n71 = __toESM(require_i18n(), 1);
   var import_element56 = __toESM(require_element(), 1);
   var import_router18 = __toESM(require_router(), 1);
@@ -22238,7 +22238,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/site-editor-routes/styles.js
+  // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation18, useHistory: useHistory13 } = unlock(import_router19.privateApis);
   var { StyleBookPreview } = unlock(import_editor22.privateApis);
@@ -22287,17 +22287,17 @@ var wp;
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/navigation.js
+  // packages/edit-site/build-module/components/site-editor-routes/navigation.mjs
   var import_router24 = __toESM(require_router(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.mjs
   var import_i18n80 = __toESM(require_i18n(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
   var import_data52 = __toESM(require_data(), 1);
   var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_components90 = __toESM(require_components(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/constants.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/constants.mjs
   var PRELOADED_NAVIGATION_MENUS_QUERY = {
     per_page: 100,
     status: ["publish", "draft"],
@@ -22305,17 +22305,17 @@ var wp;
     orderby: "date"
   };
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/single-navigation-menu.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/single-navigation-menu.mjs
   var import_i18n77 = __toESM(require_i18n(), 1);
   var import_html_entities6 = __toESM(require_html_entities(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
   var import_components87 = __toESM(require_components(), 1);
   var import_i18n74 = __toESM(require_i18n(), 1);
   var import_element58 = __toESM(require_element(), 1);
   var import_router20 = __toESM(require_router(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/rename-modal.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/rename-modal.mjs
   var import_components85 = __toESM(require_components(), 1);
   var import_i18n72 = __toESM(require_i18n(), 1);
   var import_element57 = __toESM(require_element(), 1);
@@ -22378,7 +22378,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/delete-confirm-dialog.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/delete-confirm-dialog.mjs
   var import_components86 = __toESM(require_components(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
@@ -22399,7 +22399,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
   var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
   var { useHistory: useHistory14 } = unlock(import_router20.privateApis);
   var POPOVER_PROPS = {
@@ -22488,20 +22488,20 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/navigation-menu-editor.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/navigation-menu-editor.mjs
   var import_element61 = __toESM(require_element(), 1);
   var import_data49 = __toESM(require_data(), 1);
   var import_block_editor21 = __toESM(require_block_editor(), 1);
   var import_blocks10 = __toESM(require_blocks(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
   var import_block_editor20 = __toESM(require_block_editor(), 1);
   var import_data48 = __toESM(require_data(), 1);
   var import_blocks9 = __toESM(require_blocks(), 1);
   var import_element60 = __toESM(require_element(), 1);
   var import_core_data34 = __toESM(require_core_data(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/leaf-more-menu.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/leaf-more-menu.mjs
   var import_components88 = __toESM(require_components(), 1);
   var import_data47 = __toESM(require_data(), 1);
   var import_element59 = __toESM(require_element(), 1);
@@ -22615,7 +22615,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
   var { PrivateListView } = unlock(import_block_editor20.privateApis);
   var MAX_PAGE_COUNT = 100;
@@ -22686,7 +22686,7 @@ var wp;
     ] });
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/navigation-menu-editor.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/navigation-menu-editor.mjs
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
   var noop2 = () => {
   };
@@ -22718,7 +22718,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/build-navigation-label.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/build-navigation-label.mjs
   var import_i18n76 = __toESM(require_i18n(), 1);
   var import_html_entities5 = __toESM(require_html_entities(), 1);
   function buildNavigationLabel(title, id, status) {
@@ -22736,7 +22736,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/single-navigation-menu.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/single-navigation-menu.mjs
   var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   function SingleNavigationMenu({
     navigationMenu,
@@ -22773,14 +22773,14 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.mjs
   var import_core_data36 = __toESM(require_core_data(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
   var import_data51 = __toESM(require_data(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
   var import_router23 = __toESM(require_router(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/index.mjs
   var import_core_data35 = __toESM(require_core_data(), 1);
   var import_components89 = __toESM(require_components(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
@@ -22876,7 +22876,7 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.mjs
   var { useHistory: useHistory16 } = unlock(import_router23.privateApis);
   function useDeleteNavigationMenu() {
     const { deleteEntityRecord } = (0, import_data51.useDispatch)(import_core_data36.store);
@@ -23023,7 +23023,7 @@ var wp;
     };
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.mjs
   var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
   function buildMenuLabel(title, id, status) {
     if (!title) {
@@ -23125,7 +23125,7 @@ var wp;
     );
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/navigation.js
+  // packages/edit-site/build-module/components/site-editor-routes/navigation.mjs
   var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation21 } = unlock(import_router24.privateApis);
   function MobileNavigationView() {
@@ -23152,7 +23152,7 @@ var wp;
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/navigation-item.js
+  // packages/edit-site/build-module/components/site-editor-routes/navigation-item.mjs
   var import_router25 = __toESM(require_router(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation22 } = unlock(import_router25.privateApis);
@@ -23180,13 +23180,13 @@ var wp;
     }
   };
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_components91 = __toESM(require_components(), 1);
   var import_editor26 = __toESM(require_editor(), 1);
   var import_i18n82 = __toESM(require_i18n(), 1);
   var import_router26 = __toESM(require_router(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/category-item.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/category-item.mjs
   var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
   function CategoryItem({
     count,
@@ -23215,11 +23215,11 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
   var import_element64 = __toESM(require_element(), 1);
   var import_i18n81 = __toESM(require_i18n(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-default-pattern-categories.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-default-pattern-categories.mjs
   var import_core_data38 = __toESM(require_core_data(), 1);
   var import_data53 = __toESM(require_data(), 1);
   function useDefaultPatternCategories() {
@@ -23237,15 +23237,15 @@ var wp;
     ];
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
   var import_core_data39 = __toESM(require_core_data(), 1);
   var import_data54 = __toESM(require_data(), 1);
   var import_element62 = __toESM(require_element(), 1);
 
-  // packages/edit-site/build-module/components/page-patterns/utils.js
+  // packages/edit-site/build-module/components/page-patterns/utils.mjs
   var filterOutDuplicatesByName = (currentItem, index, items) => index === items.findIndex((item) => currentItem.name === item.name);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
   function useThemePatterns() {
     const blockPatterns = (0, import_data54.useSelect)((select3) => {
       const { getSettings: getSettings7 } = unlock(select3(store));
@@ -23263,13 +23263,13 @@ var wp;
     return patterns;
   }
 
-  // packages/edit-site/build-module/components/page-patterns/use-patterns.js
+  // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
   var import_blocks11 = __toESM(require_blocks(), 1);
   var import_data55 = __toESM(require_data(), 1);
   var import_core_data40 = __toESM(require_core_data(), 1);
   var import_element63 = __toESM(require_element(), 1);
 
-  // packages/edit-site/build-module/components/page-patterns/search-items.js
+  // packages/edit-site/build-module/components/page-patterns/search-items.mjs
   var import_block_editor22 = __toESM(require_block_editor(), 1);
   var { extractWords, getNormalizedSearchTerms, normalizeString } = unlock(
     import_block_editor22.privateApis
@@ -23365,7 +23365,7 @@ var wp;
     return rank;
   }
 
-  // packages/edit-site/build-module/components/page-patterns/use-patterns.js
+  // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
   var EMPTY_PATTERN_LIST = [];
   var selectTemplateParts = (0, import_data55.createSelector)(
     (select3, categoryId, search = "") => {
@@ -23604,7 +23604,7 @@ var wp;
   };
   var use_patterns_default = usePatterns;
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
   function usePatternCategories() {
     const defaultCategories = useDefaultPatternCategories();
     defaultCategories.push({
@@ -23684,7 +23684,7 @@ var wp;
     return { patternCategories, hasPatterns: !!patternCategories.length };
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.mjs
   var import_core_data41 = __toESM(require_core_data(), 1);
   var import_data56 = __toESM(require_data(), 1);
   var useTemplatePartsGroupedByArea = (items) => {
@@ -23726,7 +23726,7 @@ var wp;
     };
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation23 } = unlock(import_router26.privateApis);
   function CategoriesGroup({
@@ -23825,12 +23825,12 @@ var wp;
     );
   }
 
-  // packages/edit-site/build-module/components/page-patterns/index.js
+  // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_i18n135 = __toESM(require_i18n(), 1);
   var import_element134 = __toESM(require_element(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
 
-  // packages/dataviews/build-module/dataviews/index.js
+  // packages/dataviews/build-module/dataviews/index.mjs
   var import_element116 = __toESM(require_element(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
 
@@ -24219,7 +24219,7 @@ var wp;
     return useRenderElement(params.defaultTagName ?? "div", params, params);
   }
 
-  // packages/ui/build-module/stack/stack.js
+  // packages/ui/build-module/stack/stack.mjs
   var import_element65 = __toESM(require_element(), 1);
   var css = `@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;
 
@@ -24249,10 +24249,10 @@ var wp;
     return element;
   });
 
-  // packages/dataviews/build-module/components/dataviews-context/index.js
+  // packages/dataviews/build-module/components/dataviews-context/index.mjs
   var import_element66 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/constants.js
+  // packages/dataviews/build-module/constants.mjs
   var import_i18n83 = __toESM(require_i18n(), 1);
   var OPERATOR_IS_ANY2 = "isAny";
   var OPERATOR_IS_NONE2 = "isNone";
@@ -24294,7 +24294,7 @@ var wp;
   var LAYOUT_PICKER_GRID = "pickerGrid";
   var LAYOUT_PICKER_TABLE = "pickerTable";
 
-  // packages/dataviews/build-module/components/dataviews-context/index.js
+  // packages/dataviews/build-module/components/dataviews-context/index.mjs
   var DataViewsContext = (0, import_element66.createContext)({
     view: { type: LAYOUT_TABLE2 },
     onChangeView: () => {
@@ -24331,16 +24331,16 @@ var wp;
   DataViewsContext.displayName = "DataViewsContext";
   var dataviews_context_default = DataViewsContext;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/index.mjs
   var import_i18n102 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
   var import_i18n90 = __toESM(require_i18n(), 1);
   var import_components97 = __toESM(require_components(), 1);
   var import_element73 = __toESM(require_element(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.js
+  // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.mjs
   var import_components92 = __toESM(require_components(), 1);
   var import_i18n84 = __toESM(require_i18n(), 1);
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
@@ -24376,21 +24376,21 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-item-actions/index.js
+  // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
   var import_components93 = __toESM(require_components(), 1);
   var import_i18n85 = __toESM(require_i18n(), 1);
   var import_element67 = __toESM(require_element(), 1);
   var import_data57 = __toESM(require_data(), 1);
   var import_compose12 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/lock-unlock.js
+  // packages/dataviews/build-module/lock-unlock.mjs
   var import_private_apis3 = __toESM(require_private_apis(), 1);
   var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/dataviews"
   );
 
-  // packages/dataviews/build-module/components/dataviews-item-actions/index.js
+  // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu5, kebabCase: kebabCase4 } = unlock3(import_components93.privateApis);
   function ButtonTrigger({
@@ -24630,7 +24630,7 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/components/dataviews-bulk-actions/index.js
+  // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
   var import_components94 = __toESM(require_components(), 1);
   var import_i18n86 = __toESM(require_i18n(), 1);
   var import_element68 = __toESM(require_element(), 1);
@@ -24950,12 +24950,12 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_i18n87 = __toESM(require_i18n(), 1);
   var import_components95 = __toESM(require_components(), 1);
   var import_element69 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/utils/get-hideable-fields.js
+  // packages/dataviews/build-module/utils/get-hideable-fields.mjs
   function getHideableFields(view, fields) {
     const togglableFields = [
       view?.titleField,
@@ -24967,7 +24967,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu6 } = unlock3(import_components95.privateApis);
   function WithMenuSeparators({ children }) {
@@ -25202,7 +25202,7 @@ var wp;
   var ColumnHeaderMenu = _HeaderMenu;
   var column_header_menu_default = ColumnHeaderMenu;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.mjs
   var import_element70 = __toESM(require_element(), 1);
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
   function getClickableItemProps({
@@ -25275,7 +25275,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", { ...clickProps, ...extraProps, children });
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/column-primary.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/column-primary.mjs
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
   function ColumnPrimary({
     item,
@@ -25345,7 +25345,7 @@ var wp;
   }
   var column_primary_default = ColumnPrimary;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/use-is-horizontal-scroll-end.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/use-is-horizontal-scroll-end.mjs
   var import_compose14 = __toESM(require_compose(), 1);
   var import_element71 = __toESM(require_element(), 1);
   var import_i18n88 = __toESM(require_i18n(), 1);
@@ -25392,7 +25392,7 @@ var wp;
     return isHorizontalScrollEnd;
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/utils/get-data-by-group.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/get-data-by-group.mjs
   function getDataByGroup(data, groupByField) {
     return data.reduce((groups, item) => {
       const groupName = groupByField.getValue({ item });
@@ -25404,7 +25404,7 @@ var wp;
     }, /* @__PURE__ */ new Map());
   }
 
-  // packages/dataviews/build-module/components/dataviews-view-config/properties-section.js
+  // packages/dataviews/build-module/components/dataviews-view-config/properties-section.mjs
   var import_components96 = __toESM(require_components(), 1);
   var import_i18n89 = __toESM(require_i18n(), 1);
   var import_element72 = __toESM(require_element(), 1);
@@ -25541,7 +25541,7 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   function TableColumnField({
     item,
@@ -25985,18 +25985,18 @@ var wp;
   }
   var table_default = ViewTable;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/index.mjs
   var import_components100 = __toESM(require_components(), 1);
   var import_i18n93 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_components99 = __toESM(require_components(), 1);
   var import_i18n92 = __toESM(require_i18n(), 1);
   var import_compose15 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_element75 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
   var import_components98 = __toESM(require_components(), 1);
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_element74 = __toESM(require_element(), 1);
@@ -26045,7 +26045,7 @@ var wp;
     }, [context.containerWidth, view.layout?.previewSize]);
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   var { Badge } = unlock3(import_components99.privateApis);
   function chunk(array, size) {
@@ -26379,7 +26379,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/grid/index.mjs
   var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
   function ViewGrid({
     actions,
@@ -26468,7 +26468,7 @@ var wp;
   }
   var grid_default = ViewGrid;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/list/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
   var import_compose16 = __toESM(require_compose(), 1);
   var import_components101 = __toESM(require_components(), 1);
   var import_element76 = __toESM(require_element(), 1);
@@ -26994,10 +26994,10 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/activity/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/index.mjs
   var import_components103 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
   var import_i18n95 = __toESM(require_i18n(), 1);
   var import_element77 = __toESM(require_element(), 1);
   var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
@@ -27035,7 +27035,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
   var import_components102 = __toESM(require_components(), 1);
   var import_element78 = __toESM(require_element(), 1);
   var import_data60 = __toESM(require_data(), 1);
@@ -27202,7 +27202,7 @@ var wp;
   }
   var activity_item_default = ActivityItem;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-items.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-items.mjs
   var import_react6 = __toESM(require_react(), 1);
   function isDefined3(item) {
     return !!item;
@@ -27232,7 +27232,7 @@ var wp;
     });
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/activity/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/activity/index.mjs
   var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
   function ViewActivity(props) {
     const { empty, data, fields, isLoading, view, className } = props;
@@ -27287,19 +27287,19 @@ var wp;
     ] });
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_components106 = __toESM(require_components(), 1);
   var import_i18n98 = __toESM(require_i18n(), 1);
   var import_compose17 = __toESM(require_compose(), 1);
   var import_element82 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-picker-footer/index.js
+  // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_components105 = __toESM(require_components(), 1);
   var import_data61 = __toESM(require_data(), 1);
   var import_element80 = __toESM(require_element(), 1);
   var import_i18n97 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-pagination/index.js
+  // packages/dataviews/build-module/components/dataviews-pagination/index.mjs
   var import_components104 = __toESM(require_components(), 1);
   var import_element79 = __toESM(require_element(), 1);
   var import_i18n96 = __toESM(require_i18n(), 1);
@@ -27415,7 +27415,7 @@ var wp;
   }
   var dataviews_pagination_default = (0, import_element79.memo)(DataViewsPagination);
 
-  // packages/dataviews/build-module/components/dataviews-picker-footer/index.js
+  // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   function useIsMultiselectPicker(actions) {
     return (0, import_element80.useMemo)(() => {
@@ -27423,7 +27423,7 @@ var wp;
     }, [actions]);
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
   var import_element81 = __toESM(require_element(), 1);
   var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   var GridItems = (0, import_element81.forwardRef)(({ className, previewSize, ...props }, ref) => {
@@ -27440,7 +27440,7 @@ var wp;
     );
   });
 
-  // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   var { Badge: Badge2 } = unlock3(import_components106.privateApis);
   function GridItem3({
@@ -27820,7 +27820,7 @@ var wp;
   }
   var picker_grid_default = ViewPickerGrid;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/picker-table/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/picker-table/index.mjs
   var import_i18n99 = __toESM(require_i18n(), 1);
   var import_components107 = __toESM(require_components(), 1);
   var import_element83 = __toESM(require_element(), 1);
@@ -28199,7 +28199,7 @@ var wp;
   }
   var picker_table_default = ViewPickerTable;
 
-  // packages/dataviews/build-module/components/dataviews-layouts/utils/preview-size-picker.js
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/preview-size-picker.mjs
   var import_components108 = __toESM(require_components(), 1);
   var import_i18n100 = __toESM(require_i18n(), 1);
   var import_element84 = __toESM(require_element(), 1);
@@ -28271,7 +28271,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/density-picker.js
+  // packages/dataviews/build-module/components/dataviews-layouts/table/density-picker.mjs
   var import_components109 = __toESM(require_components(), 1);
   var import_i18n101 = __toESM(require_i18n(), 1);
   var import_element85 = __toESM(require_element(), 1);
@@ -28328,7 +28328,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/index.js
+  // packages/dataviews/build-module/components/dataviews-layouts/index.mjs
   var VIEW_LAYOUTS = [
     {
       type: LAYOUT_TABLE2,
@@ -28375,10 +28375,10 @@ var wp;
     }
   ];
 
-  // packages/dataviews/build-module/components/dataviews-filters/filters.js
+  // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
   var import_element93 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-filters/filter.js
+  // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
   var import_components112 = __toESM(require_components(), 1);
   var import_i18n105 = __toESM(require_i18n(), 1);
   var import_element90 = __toESM(require_element(), 1);
@@ -32441,14 +32441,14 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName13, htmlProps);
   });
 
-  // packages/dataviews/build-module/components/dataviews-filters/search-widget.js
+  // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
   var import_remove_accents = __toESM(require_remove_accents(), 1);
   var import_compose18 = __toESM(require_compose(), 1);
   var import_i18n103 = __toESM(require_i18n(), 1);
   var import_element87 = __toESM(require_element(), 1);
   var import_components110 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-filters/utils.js
+  // packages/dataviews/build-module/components/dataviews-filters/utils.mjs
   var EMPTY_ARRAY6 = [];
   var getCurrentValue = (filterDefinition, currentFilter) => {
     if (filterDefinition.singleSelection) {
@@ -32463,7 +32463,7 @@ If there's a particular need for this, please submit a feature request at https:
     return EMPTY_ARRAY6;
   };
 
-  // packages/dataviews/build-module/hooks/use-elements.js
+  // packages/dataviews/build-module/hooks/use-elements.mjs
   var import_element86 = __toESM(require_element(), 1);
   var EMPTY_ARRAY7 = [];
   function useElements({
@@ -32504,7 +32504,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/dataviews/build-module/components/dataviews-filters/search-widget.js
+  // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
   var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
   function normalizeSearchInput(input = "") {
     return (0, import_remove_accents.default)(input.trim().toLowerCase());
@@ -32793,7 +32793,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(Widget, { ...props, filter: { ...props.filter, elements: elements2 } });
   }
 
-  // packages/dataviews/build-module/components/dataviews-filters/input-widget.js
+  // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
   var import_es62 = __toESM(require_es6(), 1);
   var import_compose19 = __toESM(require_compose(), 1);
   var import_element88 = __toESM(require_element(), 1);
@@ -32882,7 +32882,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/utils/operators.js
+  // packages/dataviews/build-module/utils/operators.mjs
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_element89 = __toESM(require_element(), 1);
   var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
@@ -33246,7 +33246,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
   var isRegisteredOperator = (name2) => OPERATORS.some((op) => op.name === name2);
 
-  // packages/dataviews/build-module/components/dataviews-filters/filter.js
+  // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
   var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
   var ENTER4 = "Enter";
   var SPACE3 = " ";
@@ -33527,7 +33527,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-filters/add-filter.js
+  // packages/dataviews/build-module/components/dataviews-filters/add-filter.mjs
   var import_components113 = __toESM(require_components(), 1);
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_element91 = __toESM(require_element(), 1);
@@ -33597,7 +33597,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var add_filter_default = (0, import_element91.forwardRef)(AddFilter);
 
-  // packages/dataviews/build-module/components/dataviews-filters/reset-filters.js
+  // packages/dataviews/build-module/components/dataviews-filters/reset-filters.mjs
   var import_components114 = __toESM(require_components(), 1);
   var import_i18n107 = __toESM(require_i18n(), 1);
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
@@ -33633,7 +33633,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-filters/use-filters.js
+  // packages/dataviews/build-module/components/dataviews-filters/use-filters.mjs
   var import_element92 = __toESM(require_element(), 1);
   function useFilters(fields, view) {
     return (0, import_element92.useMemo)(() => {
@@ -33684,7 +33684,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var use_filters_default = useFilters;
 
-  // packages/dataviews/build-module/components/dataviews-filters/filters.js
+  // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
   var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
   function Filters({ className }) {
     const { fields, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element93.useContext)(dataviews_context_default);
@@ -33748,7 +33748,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var filters_default = (0, import_element93.memo)(Filters);
 
-  // packages/dataviews/build-module/components/dataviews-filters/toggle.js
+  // packages/dataviews/build-module/components/dataviews-filters/toggle.mjs
   var import_element94 = __toESM(require_element(), 1);
   var import_components115 = __toESM(require_components(), 1);
   var import_i18n108 = __toESM(require_i18n(), 1);
@@ -33837,7 +33837,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var toggle_default = FiltersToggle;
 
-  // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.js
+  // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.mjs
   var import_element95 = __toESM(require_element(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   function FiltersToggled(props) {
@@ -33849,7 +33849,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var filters_toggled_default = FiltersToggled;
 
-  // packages/dataviews/build-module/components/dataviews-layout/index.js
+  // packages/dataviews/build-module/components/dataviews-layout/index.mjs
   var import_element96 = __toESM(require_element(), 1);
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
@@ -33898,7 +33898,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-footer/index.js
+  // packages/dataviews/build-module/components/dataviews-footer/index.mjs
   var import_element97 = __toESM(require_element(), 1);
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY8 = [];
@@ -33929,7 +33929,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-search/index.js
+  // packages/dataviews/build-module/components/dataviews-search/index.mjs
   var import_i18n110 = __toESM(require_i18n(), 1);
   var import_element98 = __toESM(require_element(), 1);
   var import_components116 = __toESM(require_components(), 1);
@@ -33973,14 +33973,14 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var dataviews_search_default = DataViewsSearch;
 
-  // packages/dataviews/build-module/components/dataviews-view-config/index.js
+  // packages/dataviews/build-module/components/dataviews-view-config/index.mjs
   var import_components118 = __toESM(require_components(), 1);
   var import_i18n112 = __toESM(require_i18n(), 1);
   var import_element100 = __toESM(require_element(), 1);
   var import_warning = __toESM(require_warning(), 1);
   var import_compose21 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.js
+  // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.mjs
   var import_components117 = __toESM(require_components(), 1);
   var import_i18n111 = __toESM(require_i18n(), 1);
   var import_element99 = __toESM(require_element(), 1);
@@ -34010,7 +34010,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-view-config/index.js
+  // packages/dataviews/build-module/components/dataviews-view-config/index.mjs
   var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu9 } = unlock3(import_components118.privateApis);
   var DATAVIEWS_CONFIG_POPOVER_PROPS = {
@@ -34309,11 +34309,11 @@ If there's a particular need for this, please submit a feature request at https:
   var DataViewsViewConfig = (0, import_element100.memo)(_DataViewsViewConfig);
   var dataviews_view_config_default = DataViewsViewConfig;
 
-  // packages/dataviews/build-module/components/dataform-controls/checkbox.js
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
   var import_components119 = __toESM(require_components(), 1);
   var import_element101 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
   function getCustomValidity(isValid2, validity) {
     let customValidity;
     if (isValid2?.required && validity?.required) {
@@ -34336,7 +34336,7 @@ If there's a particular need for this, please submit a feature request at https:
     return customValidity;
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/checkbox.js
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedCheckboxControl } = unlock3(import_components119.privateApis);
   function Checkbox({
@@ -36005,13 +36005,13 @@ If there's a particular need for this, please submit a feature request at https:
     return addYears(date, -amount, options);
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/datetime.js
+  // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_components121 = __toESM(require_components(), 1);
   var import_element103 = __toESM(require_element(), 1);
   var import_i18n114 = __toESM(require_i18n(), 1);
   var import_date3 = __toESM(require_date(), 1);
 
-  // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
   var import_components120 = __toESM(require_components(), 1);
   var import_element102 = __toESM(require_element(), 1);
   var import_i18n113 = __toESM(require_i18n(), 1);
@@ -36097,7 +36097,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/field-types/utils/parse-date-time.js
+  // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
   var import_date2 = __toESM(require_date(), 1);
   function parseDateTime(dateTimeString) {
     if (!dateTimeString) {
@@ -36107,7 +36107,7 @@ If there's a particular need for this, please submit a feature request at https:
     return parsed && isValid(parsed) ? parsed : null;
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/datetime.js
+  // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
   var { DateCalendar, ValidatedInputControl } = unlock3(import_components121.privateApis);
   var formatDateTime = (date) => {
@@ -36278,7 +36278,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/date.js
+  // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components122 = __toESM(require_components(), 1);
   var import_element104 = __toESM(require_element(), 1);
   var import_i18n115 = __toESM(require_i18n(), 1);
@@ -36847,10 +36847,10 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/email.js
+  // packages/dataviews/build-module/components/dataform-controls/email.mjs
   var import_components124 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
   var import_components123 = __toESM(require_components(), 1);
   var import_element105 = __toESM(require_element(), 1);
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
@@ -36898,7 +36898,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/email.js
+  // packages/dataviews/build-module/components/dataform-controls/email.mjs
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   function Email({
     data,
@@ -36923,7 +36923,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/telephone.js
+  // packages/dataviews/build-module/components/dataform-controls/telephone.mjs
   var import_components125 = __toESM(require_components(), 1);
   var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   function Telephone({
@@ -36949,7 +36949,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/url.js
+  // packages/dataviews/build-module/components/dataform-controls/url.mjs
   var import_components126 = __toESM(require_components(), 1);
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   function Url({
@@ -36975,7 +36975,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.js
+  // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
   var import_components127 = __toESM(require_components(), 1);
   var import_element106 = __toESM(require_element(), 1);
   var import_i18n116 = __toESM(require_i18n(), 1);
@@ -37108,19 +37108,19 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/integer.js
+  // packages/dataviews/build-module/components/dataform-controls/integer.mjs
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   function Integer(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(ValidatedNumber, { ...props });
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/number.js
+  // packages/dataviews/build-module/components/dataform-controls/number.mjs
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   function Number2(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(ValidatedNumber, { ...props });
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/radio.js
+  // packages/dataviews/build-module/components/dataform-controls/radio.mjs
   var import_components128 = __toESM(require_components(), 1);
   var import_element107 = __toESM(require_element(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
@@ -37160,7 +37160,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/select.js
+  // packages/dataviews/build-module/components/dataform-controls/select.mjs
   var import_components129 = __toESM(require_components(), 1);
   var import_element108 = __toESM(require_element(), 1);
   var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
@@ -37203,7 +37203,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/text.js
+  // packages/dataviews/build-module/components/dataform-controls/text.mjs
   var import_element109 = __toESM(require_element(), 1);
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
   function Text13({
@@ -37231,7 +37231,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/toggle.js
+  // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
   var import_components130 = __toESM(require_components(), 1);
   var import_element110 = __toESM(require_element(), 1);
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
@@ -37263,7 +37263,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/textarea.js
+  // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
   var import_components131 = __toESM(require_components(), 1);
   var import_element111 = __toESM(require_element(), 1);
   var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
@@ -37302,7 +37302,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/toggle-group.js
+  // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
   var import_components132 = __toESM(require_components(), 1);
   var import_element112 = __toESM(require_element(), 1);
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
@@ -37355,7 +37355,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/array.js
+  // packages/dataviews/build-module/components/dataform-controls/array.mjs
   var import_components133 = __toESM(require_components(), 1);
   var import_element113 = __toESM(require_element(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
@@ -37442,7 +37442,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/color.js
+  // packages/dataviews/build-module/components/dataform-controls/color.mjs
   var import_components134 = __toESM(require_components(), 1);
   var import_element114 = __toESM(require_element(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
@@ -37533,7 +37533,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/password.js
+  // packages/dataviews/build-module/components/dataform-controls/password.mjs
   var import_components135 = __toESM(require_components(), 1);
   var import_element115 = __toESM(require_element(), 1);
   var import_i18n117 = __toESM(require_i18n(), 1);
@@ -37573,12 +37573,12 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/field-types/utils/has-elements.js
+  // packages/dataviews/build-module/field-types/utils/has-elements.mjs
   function hasElements(field) {
     return Array.isArray(field.elements) && field.elements.length > 0 || typeof field.getElements === "function";
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/index.js
+  // packages/dataviews/build-module/components/dataform-controls/index.mjs
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
   var FORM_CONTROLS = {
     array: ArrayControl,
@@ -37637,7 +37637,7 @@ If there's a particular need for this, please submit a feature request at https:
     return null;
   }
 
-  // packages/dataviews/build-module/field-types/utils/get-filter-by.js
+  // packages/dataviews/build-module/field-types/utils/get-filter-by.mjs
   function getFilterBy(field, defaultOperators, validOperators) {
     if (field.filterBy === false) {
       return false;
@@ -37655,7 +37655,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var get_filter_by_default = getFilterBy;
 
-  // packages/dataviews/build-module/field-types/utils/get-value-from-id.js
+  // packages/dataviews/build-module/field-types/utils/get-value-from-id.mjs
   var getValueFromId = (id) => ({ item }) => {
     const path = id.split(".");
     let value = item;
@@ -37670,7 +37670,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var get_value_from_id_default = getValueFromId;
 
-  // packages/dataviews/build-module/field-types/utils/set-value-from-id.js
+  // packages/dataviews/build-module/field-types/utils/set-value-from-id.mjs
   var setValueFromId = (id) => ({ value }) => {
     const path = id.split(".");
     const result = {};
@@ -37684,10 +37684,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var set_value_from_id_default = setValueFromId;
 
-  // packages/dataviews/build-module/field-types/email.js
+  // packages/dataviews/build-module/field-types/email.mjs
   var import_i18n118 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/field-types/utils/render-from-elements.js
+  // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
   function RenderFromElements({
     item,
     field
@@ -37706,7 +37706,7 @@ If there's a particular need for this, please submit a feature request at https:
     return elements2?.find((element) => element.value === value)?.label || field.getValue({ item });
   }
 
-  // packages/dataviews/build-module/field-types/utils/render-default.js
+  // packages/dataviews/build-module/field-types/utils/render-default.mjs
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   function render({
     item,
@@ -37718,18 +37718,18 @@ If there's a particular need for this, please submit a feature request at https:
     return field.getValueFormatted({ item, field });
   }
 
-  // packages/dataviews/build-module/field-types/utils/sort-text.js
+  // packages/dataviews/build-module/field-types/utils/sort-text.mjs
   var sort_text_default = (a2, b2, direction) => {
     return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
   };
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-required.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-required.mjs
   function isValidRequired(item, field) {
     const value = field.getValue({ item });
     return ![void 0, "", null].includes(value);
   }
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-min-length.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-min-length.mjs
   function isValidMinLength(item, field) {
     if (typeof field.isValid.minLength?.constraint !== "number") {
       return false;
@@ -37741,7 +37741,7 @@ If there's a particular need for this, please submit a feature request at https:
     return String(value).length >= field.isValid.minLength.constraint;
   }
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-max-length.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-max-length.mjs
   function isValidMaxLength(item, field) {
     if (typeof field.isValid.maxLength?.constraint !== "number") {
       return false;
@@ -37753,7 +37753,7 @@ If there's a particular need for this, please submit a feature request at https:
     return String(value).length <= field.isValid.maxLength.constraint;
   }
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-pattern.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-pattern.mjs
   function isValidPattern(item, field) {
     if (field.isValid.pattern?.constraint === void 0) {
       return true;
@@ -37770,7 +37770,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-elements.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-elements.mjs
   function isValidElements(item, field) {
     const elements2 = field.elements ?? [];
     const validValues = elements2.map((el) => el.value);
@@ -37781,7 +37781,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [].concat(value).every((v2) => validValues.includes(v2));
   }
 
-  // packages/dataviews/build-module/field-types/utils/get-value-formatted-default.js
+  // packages/dataviews/build-module/field-types/utils/get-value-formatted-default.mjs
   function getValueFormatted({
     item,
     field
@@ -37790,7 +37790,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var get_value_formatted_default_default = getValueFormatted;
 
-  // packages/dataviews/build-module/field-types/email.js
+  // packages/dataviews/build-module/field-types/email.mjs
   var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   function isValidCustom(item, field) {
     const value = field.getValue({ item });
@@ -37831,15 +37831,15 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/integer.js
+  // packages/dataviews/build-module/field-types/integer.mjs
   var import_i18n119 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/field-types/utils/sort-number.js
+  // packages/dataviews/build-module/field-types/utils/sort-number.mjs
   var sort_number_default = (a2, b2, direction) => {
     return direction === "asc" ? a2 - b2 : b2 - a2;
   };
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-min.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-min.mjs
   function isValidMin(item, field) {
     if (typeof field.isValid.min?.constraint !== "number") {
       return false;
@@ -37851,7 +37851,7 @@ If there's a particular need for this, please submit a feature request at https:
     return Number(value) >= field.isValid.min.constraint;
   }
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-max.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-max.mjs
   function isValidMax(item, field) {
     if (typeof field.isValid.max?.constraint !== "number") {
       return false;
@@ -37863,7 +37863,7 @@ If there's a particular need for this, please submit a feature request at https:
     return Number(value) <= field.isValid.max.constraint;
   }
 
-  // packages/dataviews/build-module/field-types/integer.js
+  // packages/dataviews/build-module/field-types/integer.mjs
   var format2 = {
     separatorThousand: ","
   };
@@ -37944,7 +37944,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/number.js
+  // packages/dataviews/build-module/field-types/number.mjs
   var import_i18n120 = __toESM(require_i18n(), 1);
   var format3 = {
     separatorThousand: ",",
@@ -38027,7 +38027,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/text.js
+  // packages/dataviews/build-module/field-types/text.mjs
   var text_default = {
     type: "text",
     render,
@@ -38060,7 +38060,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/datetime.js
+  // packages/dataviews/build-module/field-types/datetime.mjs
   var import_date6 = __toESM(require_date(), 1);
   var format4 = {
     datetime: (0, import_date6.getSettings)().formats.datetime,
@@ -38122,7 +38122,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/date.js
+  // packages/dataviews/build-module/field-types/date.mjs
   var import_date7 = __toESM(require_date(), 1);
   var format5 = {
     date: (0, import_date7.getSettings)().formats.date,
@@ -38186,16 +38186,16 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/boolean.js
+  // packages/dataviews/build-module/field-types/boolean.mjs
   var import_i18n121 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
   function isValidRequiredForBool(item, field) {
     const value = field.getValue({ item });
     return value === true;
   }
 
-  // packages/dataviews/build-module/field-types/boolean.js
+  // packages/dataviews/build-module/field-types/boolean.mjs
   function getValueFormatted6({
     item,
     field
@@ -38245,7 +38245,7 @@ If there's a particular need for this, please submit a feature request at https:
     getValueFormatted: getValueFormatted6
   };
 
-  // packages/dataviews/build-module/field-types/media.js
+  // packages/dataviews/build-module/field-types/media.mjs
   var media_default2 = {
     type: "media",
     render: () => null,
@@ -38263,10 +38263,10 @@ If there's a particular need for this, please submit a feature request at https:
     validate: {}
   };
 
-  // packages/dataviews/build-module/field-types/array.js
+  // packages/dataviews/build-module/field-types/array.mjs
   var import_i18n122 = __toESM(require_i18n(), 1);
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.js
+  // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
   function isValidRequiredForArray(item, field) {
     const value = field.getValue({ item });
     return Array.isArray(value) && value.length > 0 && value.every(
@@ -38274,7 +38274,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/field-types/array.js
+  // packages/dataviews/build-module/field-types/array.mjs
   function getValueFormatted7({
     item,
     field
@@ -38329,7 +38329,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/password.js
+  // packages/dataviews/build-module/field-types/password.mjs
   function getValueFormatted8({
     item,
     field
@@ -38357,7 +38357,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/telephone.js
+  // packages/dataviews/build-module/field-types/telephone.mjs
   var telephone_default = {
     type: "telephone",
     render,
@@ -38389,7 +38389,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/color.js
+  // packages/dataviews/build-module/field-types/color.mjs
   var import_i18n123 = __toESM(require_i18n(), 1);
   var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   function render3({ item, field }) {
@@ -38469,7 +38469,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/url.js
+  // packages/dataviews/build-module/field-types/url.mjs
   var url_default = {
     type: "url",
     render,
@@ -38501,7 +38501,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/no-type.js
+  // packages/dataviews/build-module/field-types/no-type.mjs
   var sort6 = (a2, b2, direction) => {
     if (typeof a2 === "number" && typeof b2 === "number") {
       return sort_number_default(a2, b2, direction);
@@ -38525,7 +38525,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/dataviews/build-module/field-types/utils/get-is-valid.js
+  // packages/dataviews/build-module/field-types/utils/get-is-valid.mjs
   function getIsValid(field, fieldType) {
     let required;
     if (field.isValid?.required === true && fieldType.validate.required !== void 0) {
@@ -38590,7 +38590,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/dataviews/build-module/field-types/utils/get-format.js
+  // packages/dataviews/build-module/field-types/utils/get-format.mjs
   function getFormat(field, fieldType) {
     return {
       ...fieldType.format,
@@ -38599,7 +38599,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var get_format_default = getFormat;
 
-  // packages/dataviews/build-module/field-types/index.js
+  // packages/dataviews/build-module/field-types/index.mjs
   function getFieldTypeByName(type) {
     const found = [
       email_default,
@@ -38663,7 +38663,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
 
-  // packages/dataviews/build-module/dataviews/index.js
+  // packages/dataviews/build-module/dataviews/index.mjs
   var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
   var defaultGetItemId = (item) => item.id;
   var defaultIsItemClickable = () => true;
@@ -38869,10 +38869,10 @@ If there's a particular need for this, please submit a feature request at https:
   DataViewsSubComponents.Footer = DataViewsFooter;
   var dataviews_default = DataViewsSubComponents;
 
-  // packages/dataviews/build-module/dataform/index.js
+  // packages/dataviews/build-module/dataform/index.mjs
   var import_element126 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataform-context/index.js
+  // packages/dataviews/build-module/components/dataform-context/index.mjs
   var import_element117 = __toESM(require_element(), 1);
   var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
   var DataFormContext = (0, import_element117.createContext)({
@@ -38887,14 +38887,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var dataform_context_default = DataFormContext;
 
-  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.js
+  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
   var import_element125 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataform-layouts/regular/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
   var import_element118 = __toESM(require_element(), 1);
   var import_components136 = __toESM(require_components(), 1);
 
-  // packages/dataviews/build-module/components/dataform-layouts/normalize-form.js
+  // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
   var DEFAULT_LAYOUT = {
     type: "regular",
     labelPosition: "top"
@@ -38993,7 +38993,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var normalize_form_default = normalizeForm;
 
-  // packages/dataviews/build-module/components/dataform-layouts/regular/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
   var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
   function Header2({ title }) {
     return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
@@ -39103,17 +39103,17 @@ If there's a particular need for this, please submit a feature request at https:
     ) });
   }
 
-  // packages/dataviews/build-module/components/dataform-layouts/panel/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
   var import_components140 = __toESM(require_components(), 1);
   var import_element122 = __toESM(require_element(), 1);
 
-  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
   var import_components138 = __toESM(require_components(), 1);
   var import_i18n125 = __toESM(require_i18n(), 1);
   var import_element119 = __toESM(require_element(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components137 = __toESM(require_components(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
@@ -39184,7 +39184,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var summary_button_default = SummaryButton;
 
-  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
   var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
     title,
@@ -39311,14 +39311,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var dropdown_default = PanelDropdown;
 
-  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components139 = __toESM(require_components(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
   var import_element121 = __toESM(require_element(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/hooks/use-form-validity.js
+  // packages/dataviews/build-module/hooks/use-form-validity.mjs
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_es63 = __toESM(require_es6(), 1);
   var import_element120 = __toESM(require_element(), 1);
@@ -39782,7 +39782,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var use_form_validity_default = useFormValidity;
 
-  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   function ModalContent({
     data,
@@ -39939,7 +39939,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var modal_default2 = PanelModal;
 
-  // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.js
+  // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
   function extractSummaryIds(summary) {
     if (Array.isArray(summary)) {
       return summary.map(
@@ -39958,7 +39958,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [];
   };
 
-  // packages/dataviews/build-module/components/dataform-layouts/panel/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   function getFirstValidationError(validity) {
     if (!validity) {
@@ -40144,7 +40144,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-layouts/card/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_components141 = __toESM(require_components(), 1);
   var import_element123 = __toESM(require_element(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
@@ -40368,7 +40368,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/dataviews/build-module/components/dataform-layouts/row/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
   var import_components142 = __toESM(require_components(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   function Header3({ title }) {
@@ -40443,7 +40443,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) }) });
   }
 
-  // packages/dataviews/build-module/components/dataform-layouts/details/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element124 = __toESM(require_element(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
@@ -40484,7 +40484,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/dataviews/build-module/components/dataform-layouts/index.js
+  // packages/dataviews/build-module/components/dataform-layouts/index.mjs
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
   var FORM_FIELD_LAYOUTS = [
     {
@@ -40559,7 +40559,7 @@ If there's a particular need for this, please submit a feature request at https:
     return FORM_FIELD_LAYOUTS.find((layout) => layout.type === type);
   }
 
-  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.js
+  // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "md", children });
   function DataFormLayout({
@@ -40606,7 +40606,7 @@ If there's a particular need for this, please submit a feature request at https:
     }) });
   }
 
-  // packages/dataviews/build-module/dataform/index.js
+  // packages/dataviews/build-module/dataform/index.mjs
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
   function DataForm({
     data,
@@ -40634,7 +40634,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) });
   }
 
-  // packages/dataviews/build-module/utils/filter-sort-and-paginate.js
+  // packages/dataviews/build-module/utils/filter-sort-and-paginate.mjs
   var import_remove_accents2 = __toESM(require_remove_accents(), 1);
   var import_deprecated4 = __toESM(require_deprecated(), 1);
   var import_date9 = __toESM(require_date(), 1);
@@ -40893,7 +40893,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/edit-site/build-module/components/page-patterns/index.js
+  // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_core_data47 = __toESM(require_core_data(), 1);
   var import_editor30 = __toESM(require_editor(), 1);
   var import_router30 = __toESM(require_router(), 1);
@@ -40974,12 +40974,12 @@ If there's a particular need for this, please submit a feature request at https:
     return foo !== foo && bar !== bar;
   }
 
-  // packages/views/build-module/preference-keys.js
+  // packages/views/build-module/preference-keys.mjs
   function generatePreferenceKey(kind, name2, slug) {
     return `dataviews-${kind}-${name2}-${slug}`;
   }
 
-  // packages/views/build-module/use-view.js
+  // packages/views/build-module/use-view.mjs
   var import_element127 = __toESM(require_element(), 1);
   var import_data62 = __toESM(require_data(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
@@ -41053,7 +41053,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/views/build-module/load-view.js
+  // packages/views/build-module/load-view.mjs
   var import_data63 = __toESM(require_data(), 1);
   var import_preferences12 = __toESM(require_preferences(), 1);
   async function loadView(config2) {
@@ -41073,10 +41073,10 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/edit-site/build-module/components/page-patterns/index.js
+  // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_data69 = __toESM(require_data(), 1);
 
-  // packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
+  // packages/edit-site/build-module/components/page-patterns/use-pattern-settings.mjs
   var import_core_data42 = __toESM(require_core_data(), 1);
   var import_data64 = __toESM(require_data(), 1);
   var import_element128 = __toESM(require_element(), 1);
@@ -41124,11 +41124,11 @@ If there's a particular need for this, please submit a feature request at https:
     return settings2;
   }
 
-  // packages/edit-site/build-module/components/page-patterns/actions.js
+  // packages/edit-site/build-module/components/page-patterns/actions.mjs
   var import_components146 = __toESM(require_components(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
 
-  // packages/edit-site/build-module/components/add-new-pattern/index.js
+  // packages/edit-site/build-module/components/add-new-pattern/index.mjs
   var import_components143 = __toESM(require_components(), 1);
   var import_element129 = __toESM(require_element(), 1);
   var import_i18n129 = __toESM(require_i18n(), 1);
@@ -41311,7 +41311,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.js
+  // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.mjs
   var import_components144 = __toESM(require_components(), 1);
   var import_element130 = __toESM(require_element(), 1);
   var import_i18n130 = __toESM(require_i18n(), 1);
@@ -41354,7 +41354,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/page-patterns/delete-category-menu-item.js
+  // packages/edit-site/build-module/components/page-patterns/delete-category-menu-item.mjs
   var import_components145 = __toESM(require_components(), 1);
   var import_core_data44 = __toESM(require_core_data(), 1);
   var import_data66 = __toESM(require_data(), 1);
@@ -41436,7 +41436,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/edit-site/build-module/components/page-patterns/actions.js
+  // packages/edit-site/build-module/components/page-patterns/actions.mjs
   var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
   function PatternsActions({ categoryId, type }) {
     const { patternCategories } = usePatternCategories();
@@ -41478,7 +41478,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/edit-site/build-module/components/dataviews-actions/index.js
+  // packages/edit-site/build-module/components/dataviews-actions/index.mjs
   var import_i18n133 = __toESM(require_i18n(), 1);
   var import_element132 = __toESM(require_element(), 1);
   var import_router29 = __toESM(require_router(), 1);
@@ -41557,7 +41557,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
 
-  // packages/edit-site/build-module/components/page-patterns/fields.js
+  // packages/edit-site/build-module/components/page-patterns/fields.mjs
   var import_components147 = __toESM(require_components(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_element133 = __toESM(require_element(), 1);
@@ -41565,7 +41565,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_editor29 = __toESM(require_editor(), 1);
 
-  // packages/edit-site/build-module/components/page-templates/hooks.js
+  // packages/edit-site/build-module/components/page-templates/hooks.mjs
   var import_core_data46 = __toESM(require_core_data(), 1);
   var import_data68 = __toESM(require_data(), 1);
   function useAddedBy(postType2, postId) {
@@ -41629,7 +41629,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/page-patterns/fields.js
+  // packages/edit-site/build-module/components/page-patterns/fields.mjs
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   var { useStyle: useStyle4 } = unlock(import_editor29.privateApis);
   function PreviewField({ item }) {
@@ -41738,7 +41738,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/page-patterns/index.js
+  // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_url16 = __toESM(require_url(), 1);
   var import_components148 = __toESM(require_components(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
@@ -41926,7 +41926,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) });
   }
 
-  // packages/edit-site/build-module/components/site-editor-routes/patterns.js
+  // packages/edit-site/build-module/components/site-editor-routes/patterns.mjs
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
   var patternsRoute = {
     name: "patterns",
@@ -41947,7 +41947,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/pattern-item.js
+  // packages/edit-site/build-module/components/site-editor-routes/pattern-item.mjs
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
   var patternItemRoute = {
     name: "pattern-item",
@@ -41963,7 +41963,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/template-part-item.js
+  // packages/edit-site/build-module/components/site-editor-routes/template-part-item.mjs
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   var templatePartItemRoute = {
     name: "template-part-item",
@@ -41975,10 +41975,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.mjs
   var import_i18n138 = __toESM(require_i18n(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_element135 = __toESM(require_element(), 1);
   var import_components149 = __toESM(require_components(), 1);
@@ -42056,7 +42056,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content-legacy.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content-legacy.mjs
   var import_core_data49 = __toESM(require_core_data(), 1);
   var import_element136 = __toESM(require_element(), 1);
   var import_components150 = __toESM(require_components(), 1);
@@ -42118,7 +42118,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.js
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.mjs
   var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
   function SidebarNavigationScreenTemplatesBrowse({ backPath }) {
     return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
@@ -42134,7 +42134,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/page-templates/index.js
+  // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_i18n144 = __toESM(require_i18n(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_element142 = __toESM(require_element(), 1);
@@ -42147,7 +42147,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components155 = __toESM(require_components(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
 
-  // packages/edit-site/build-module/components/add-new-template/index.js
+  // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_components153 = __toESM(require_components(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_element140 = __toESM(require_element(), 1);
@@ -42159,7 +42159,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_router33 = __toESM(require_router(), 1);
   var import_dom13 = __toESM(require_dom(), 1);
 
-  // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.js
+  // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
   var import_element138 = __toESM(require_element(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
   var import_components151 = __toESM(require_components(), 1);
@@ -42169,7 +42169,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom12 = __toESM(require_dom(), 1);
   var import_url20 = __toESM(require_url(), 1);
 
-  // packages/edit-site/build-module/components/add-new-template/utils.js
+  // packages/edit-site/build-module/components/add-new-template/utils.mjs
   var import_data70 = __toESM(require_data(), 1);
   var import_core_data50 = __toESM(require_core_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
@@ -42672,7 +42672,7 @@ If there's a particular need for this, please submit a feature request at https:
     return entitiesInfo;
   };
 
-  // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.js
+  // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY14 = [];
   function SuggestionListItem({
@@ -43022,7 +43022,7 @@ If there's a particular need for this, please submit a feature request at https:
     return dotCase(input, __assign({ delimiter: "-" }, options));
   }
 
-  // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.js
+  // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.mjs
   var import_element139 = __toESM(require_element(), 1);
   var import_i18n141 = __toESM(require_i18n(), 1);
   var import_components152 = __toESM(require_components(), 1);
@@ -43105,7 +43105,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var add_custom_generic_template_modal_content_default = AddCustomGenericTemplateModalContent;
 
-  // packages/edit-site/build-module/components/add-new-template/index.js
+  // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
   var { useHistory: useHistory21 } = unlock(import_router33.privateApis);
   var DEFAULT_TEMPLATE_SLUGS = [
@@ -43441,7 +43441,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var add_new_template_default = (0, import_element140.memo)(NewTemplate);
 
-  // packages/edit-site/build-module/components/page-templates/fields.js
+  // packages/edit-site/build-module/components/page-templates/fields.mjs
   var import_components154 = __toESM(require_components(), 1);
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_element141 = __toESM(require_element(), 1);
@@ -43586,7 +43586,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/page-templates/view-utils.js
+  // packages/edit-site/build-module/components/page-templates/view-utils.mjs
   var defaultLayouts2 = {
     table: {
       showMedia: false
@@ -43629,7 +43629,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/edit-site/build-module/components/page-templates/index.js
+  // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
   var { usePostActions: usePostActions2, usePostFields, templateTitleField } = unlock(import_editor34.privateApis);
   var { useHistory: useHistory22, useLocation: useLocation28 } = unlock(import_router34.privateApis);
@@ -43931,7 +43931,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/page-templates/index-legacy.js
+  // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_element147 = __toESM(require_element(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
@@ -43941,7 +43941,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose30 = __toESM(require_compose(), 1);
   var import_components159 = __toESM(require_components(), 1);
 
-  // packages/edit-site/build-module/components/add-new-template-legacy/index.js
+  // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_components158 = __toESM(require_components(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_element146 = __toESM(require_element(), 1);
@@ -43953,7 +43953,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_router35 = __toESM(require_router(), 1);
   var import_dom15 = __toESM(require_dom(), 1);
 
-  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.js
+  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
   var import_element144 = __toESM(require_element(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_components156 = __toESM(require_components(), 1);
@@ -43963,7 +43963,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom14 = __toESM(require_dom(), 1);
   var import_url23 = __toESM(require_url(), 1);
 
-  // packages/edit-site/build-module/components/add-new-template-legacy/utils.js
+  // packages/edit-site/build-module/components/add-new-template-legacy/utils.mjs
   var import_data74 = __toESM(require_data(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
@@ -44541,7 +44541,7 @@ If there's a particular need for this, please submit a feature request at https:
     return entitiesInfo;
   };
 
-  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.js
+  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
   var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY15 = [];
   function SuggestionListItem2({
@@ -44835,7 +44835,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var add_custom_template_modal_content_default2 = AddCustomTemplateModalContent2;
 
-  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-generic-template-modal-content.js
+  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-generic-template-modal-content.mjs
   var import_element145 = __toESM(require_element(), 1);
   var import_i18n147 = __toESM(require_i18n(), 1);
   var import_components157 = __toESM(require_components(), 1);
@@ -44918,7 +44918,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var add_custom_generic_template_modal_content_default2 = AddCustomGenericTemplateModalContent2;
 
-  // packages/edit-site/build-module/components/add-new-template-legacy/index.js
+  // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
   var { useHistory: useHistory23 } = unlock(import_router35.privateApis);
   var DEFAULT_TEMPLATE_SLUGS2 = [
@@ -45256,7 +45256,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var add_new_template_legacy_default = (0, import_element146.memo)(NewTemplate2);
 
-  // packages/edit-site/build-module/components/page-templates/index-legacy.js
+  // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   var { usePostActions: usePostActions3, templateTitleField: templateTitleField2 } = unlock(import_editor35.privateApis);
   var { useHistory: useHistory24, useLocation: useLocation29 } = unlock(import_router36.privateApis);
@@ -45390,7 +45390,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/site-editor-routes/templates.js
+  // packages/edit-site/build-module/components/site-editor-routes/templates.mjs
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   async function isTemplateListView(query) {
     const { activeView = "active" } = query;
@@ -45442,7 +45442,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/template-item.js
+  // packages/edit-site/build-module/components/site-editor-routes/template-item.mjs
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   var areas = {
     sidebar({ siteData }) {
@@ -45464,20 +45464,20 @@ If there's a particular need for this, please submit a feature request at https:
     areas
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/pages.js
+  // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
   var import_router40 = __toESM(require_router(), 1);
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_data80 = __toESM(require_data(), 1);
   var import_core_data64 = __toESM(require_core_data(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-dataviews/index.js
+  // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
   var import_components161 = __toESM(require_components(), 1);
   var import_router38 = __toESM(require_router(), 1);
   var import_data76 = __toESM(require_data(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
   var import_element148 = __toESM(require_element(), 1);
 
-  // packages/edit-site/build-module/components/sidebar-dataviews/dataview-item.js
+  // packages/edit-site/build-module/components/sidebar-dataviews/dataview-item.mjs
   var import_router37 = __toESM(require_router(), 1);
   var import_components160 = __toESM(require_components(), 1);
   var import_url25 = __toESM(require_url(), 1);
@@ -45521,7 +45521,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/post-list/view-utils.js
+  // packages/edit-site/build-module/components/post-list/view-utils.mjs
   var import_i18n150 = __toESM(require_i18n(), 1);
   var defaultLayouts3 = {
     table: {},
@@ -45656,7 +45656,7 @@ If there's a particular need for this, please submit a feature request at https:
     )?.view;
   };
 
-  // packages/edit-site/build-module/components/sidebar-dataviews/index.js
+  // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation31 } = unlock(import_router38.privateApis);
   function DataViewsSidebarContent({ postType: postType2 }) {
@@ -45692,7 +45692,7 @@ If there's a particular need for this, please submit a feature request at https:
     }) }) });
   }
 
-  // packages/edit-site/build-module/components/post-list/index.js
+  // packages/edit-site/build-module/components/post-list/index.mjs
   var import_components163 = __toESM(require_components(), 1);
   var import_core_data62 = __toESM(require_core_data(), 1);
   var import_element151 = __toESM(require_element(), 1);
@@ -45703,7 +45703,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose31 = __toESM(require_compose(), 1);
   var import_url26 = __toESM(require_url(), 1);
 
-  // packages/edit-site/build-module/components/add-new-post/index.js
+  // packages/edit-site/build-module/components/add-new-post/index.mjs
   var import_components162 = __toESM(require_components(), 1);
   var import_i18n151 = __toESM(require_i18n(), 1);
   var import_data77 = __toESM(require_data(), 1);
@@ -45813,7 +45813,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/post-list/use-notes-count.js
+  // packages/edit-site/build-module/components/post-list/use-notes-count.mjs
   var import_element150 = __toESM(require_element(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
   function useNotesCount(postIds) {
@@ -45845,7 +45845,7 @@ If there's a particular need for this, please submit a feature request at https:
     return { notesCount, isResolving };
   }
 
-  // packages/edit-site/build-module/components/post-list/index.js
+  // packages/edit-site/build-module/components/post-list/index.mjs
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   var { usePostActions: usePostActions4, usePostFields: usePostFields2 } = unlock(import_editor38.privateApis);
   var { useLocation: useLocation32, useHistory: useHistory25 } = unlock(import_router39.privateApis);
@@ -46100,7 +46100,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/post-edit/index.js
+  // packages/edit-site/build-module/components/post-edit/index.mjs
   var import_i18n153 = __toESM(require_i18n(), 1);
   var import_data79 = __toESM(require_data(), 1);
   var import_core_data63 = __toESM(require_core_data(), 1);
@@ -46260,7 +46260,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/components/site-editor-routes/pages.js
+  // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation33 } = unlock(import_router40.privateApis);
   async function isListView(query) {
@@ -46329,7 +46329,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/page-item.js
+  // packages/edit-site/build-module/components/site-editor-routes/page-item.mjs
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   var pageItemRoute = {
@@ -46358,7 +46358,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/stylebook.js
+  // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
   var import_i18n156 = __toESM(require_i18n(), 1);
   var import_editor42 = __toESM(require_editor(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
@@ -46388,7 +46388,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/notfound.js
+  // packages/edit-site/build-module/components/site-editor-routes/notfound.mjs
   var import_i18n157 = __toESM(require_i18n(), 1);
   var import_components165 = __toESM(require_components(), 1);
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
@@ -46412,7 +46412,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/index.js
+  // packages/edit-site/build-module/components/site-editor-routes/index.mjs
   var routes2 = [
     pageItemRoute,
     pagesRoute,
@@ -46438,7 +46438,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [registry, registerRoute2]);
   }
 
-  // packages/edit-site/build-module/components/app/index.js
+  // packages/edit-site/build-module/components/app/index.mjs
   var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
   var { RouterProvider } = unlock(import_router41.privateApis);
   function AppLayout() {
@@ -46486,7 +46486,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/edit-site/build-module/deprecated.js
+  // packages/edit-site/build-module/deprecated.mjs
   var import_editor43 = __toESM(require_editor(), 1);
   var import_url27 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
@@ -46522,7 +46522,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_editor43.PluginSidebarMoreMenuItem, { ...props });
   }
 
-  // packages/edit-site/build-module/index.js
+  // packages/edit-site/build-module/index.mjs
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   var { registerCoreBlockBindingsSources } = unlock(import_editor44.privateApis);
   function initializeEditor(id, settings2) {

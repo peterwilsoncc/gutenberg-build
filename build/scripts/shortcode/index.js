@@ -19,7 +19,7 @@ var wp;
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // packages/shortcode/build-module/index.js
+  // packages/shortcode/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     attrs: () => attrs,
@@ -99,7 +99,7 @@ var wp;
     return memoized;
   }
 
-  // packages/shortcode/build-module/index.js
+  // packages/shortcode/build-module/index.mjs
   function next(tag, text, index = 0) {
     const re = regexp(tag);
     re.lastIndex = index;

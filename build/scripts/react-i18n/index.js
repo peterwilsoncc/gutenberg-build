@@ -53,7 +53,7 @@ var wp;
     }
   });
 
-  // packages/react-i18n/build-module/index.js
+  // packages/react-i18n/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     I18nProvider: () => I18nProvider,

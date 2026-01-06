@@ -59,7 +59,7 @@ var wp;
     }
   });
 
-  // packages/keyboard-shortcuts/build-module/index.js
+  // packages/keyboard-shortcuts/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     ShortcutProvider: () => ShortcutProvider,
@@ -68,10 +68,10 @@ var wp;
     useShortcut: () => useShortcut
   });
 
-  // packages/keyboard-shortcuts/build-module/store/index.js
+  // packages/keyboard-shortcuts/build-module/store/index.mjs
   var import_data2 = __toESM(require_data(), 1);
 
-  // packages/keyboard-shortcuts/build-module/store/reducer.js
+  // packages/keyboard-shortcuts/build-module/store/reducer.mjs
   function reducer(state = {}, action) {
     switch (action.type) {
       case "REGISTER_SHORTCUT":
@@ -92,7 +92,7 @@ var wp;
   }
   var reducer_default = reducer;
 
-  // packages/keyboard-shortcuts/build-module/store/actions.js
+  // packages/keyboard-shortcuts/build-module/store/actions.mjs
   var actions_exports = {};
   __export(actions_exports, {
     registerShortcut: () => registerShortcut,
@@ -121,7 +121,7 @@ var wp;
     };
   }
 
-  // packages/keyboard-shortcuts/build-module/store/selectors.js
+  // packages/keyboard-shortcuts/build-module/store/selectors.mjs
   var selectors_exports = {};
   __export(selectors_exports, {
     getAllShortcutKeyCombinations: () => getAllShortcutKeyCombinations,
@@ -185,7 +185,7 @@ var wp;
     (state) => [state]
   );
 
-  // packages/keyboard-shortcuts/build-module/store/index.js
+  // packages/keyboard-shortcuts/build-module/store/index.mjs
   var STORE_NAME = "core/keyboard-shortcuts";
   var store = (0, import_data2.createReduxStore)(STORE_NAME, {
     reducer: reducer_default,
@@ -194,10 +194,10 @@ var wp;
   });
   (0, import_data2.register)(store);
 
-  // packages/keyboard-shortcuts/build-module/hooks/use-shortcut.js
+  // packages/keyboard-shortcuts/build-module/hooks/use-shortcut.mjs
   var import_element2 = __toESM(require_element(), 1);
 
-  // packages/keyboard-shortcuts/build-module/hooks/use-shortcut-event-match.js
+  // packages/keyboard-shortcuts/build-module/hooks/use-shortcut-event-match.mjs
   var import_data3 = __toESM(require_data(), 1);
   var import_keycodes2 = __toESM(require_keycodes(), 1);
   function useShortcutEventMatch() {
@@ -214,7 +214,7 @@ var wp;
     return isMatch;
   }
 
-  // packages/keyboard-shortcuts/build-module/context.js
+  // packages/keyboard-shortcuts/build-module/context.mjs
   var import_element = __toESM(require_element(), 1);
   var globalShortcuts = /* @__PURE__ */ new Set();
   var globalListener = (event) => {
@@ -238,7 +238,7 @@ var wp;
   });
   context.displayName = "KeyboardShortcutsContext";
 
-  // packages/keyboard-shortcuts/build-module/hooks/use-shortcut.js
+  // packages/keyboard-shortcuts/build-module/hooks/use-shortcut.mjs
   function useShortcut(name, callback, { isDisabled = false } = {}) {
     const shortcuts = (0, import_element2.useContext)(context);
     const isMatch = useShortcutEventMatch();
@@ -262,7 +262,7 @@ var wp;
     }, [name, isDisabled, shortcuts]);
   }
 
-  // packages/keyboard-shortcuts/build-module/components/shortcut-provider.js
+  // packages/keyboard-shortcuts/build-module/components/shortcut-provider.mjs
   var import_element3 = __toESM(require_element(), 1);
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var { Provider } = context;

@@ -140,11 +140,11 @@ var require_theme = __commonJS({
   }
 });
 
-// packages/boot/build-module/components/app/index.js
+// packages/boot/build-module/components/app/index.mjs
 var import_element15 = __toESM(require_element(), 1);
 var import_data11 = __toESM(require_data(), 1);
 
-// packages/boot/build-module/components/app/router.js
+// packages/boot/build-module/components/app/router.mjs
 var import_i18n11 = __toESM(require_i18n(), 1);
 var import_element14 = __toESM(require_element(), 1);
 
@@ -164,7 +164,7 @@ function clsx() {
 }
 var clsx_default = clsx;
 
-// packages/admin-ui/build-module/navigable-region/index.js
+// packages/admin-ui/build-module/navigable-region/index.mjs
 var import_element = __toESM(require_element(), 1);
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 var NavigableRegion = (0, import_element.forwardRef)(
@@ -186,14 +186,14 @@ var NavigableRegion = (0, import_element.forwardRef)(
 NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
-// packages/admin-ui/build-module/page/header.js
+// packages/admin-ui/build-module/page/header.mjs
 var import_components2 = __toESM(require_components(), 1);
 
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.js
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
 var import_components = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
 
-// packages/admin-ui/build-module/page/header.js
+// packages/admin-ui/build-module/page/header.mjs
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 function Header({
   breadcrumbs,
@@ -231,7 +231,7 @@ function Header({
   ] });
 }
 
-// packages/admin-ui/build-module/page/index.js
+// packages/admin-ui/build-module/page/index.mjs
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 function Page({
   breadcrumbs,
@@ -263,20 +263,20 @@ function Page({
 Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
-// packages/boot/build-module/components/app/router.js
+// packages/boot/build-module/components/app/router.mjs
 var import_data10 = __toESM(require_data(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
 import {
   privateApis as routePrivateApis6
 } from "@wordpress/route";
 
-// packages/boot/build-module/components/root/index.js
+// packages/boot/build-module/components/root/index.mjs
 var import_editor4 = __toESM(require_editor(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_components15 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
 
-// packages/icons/build-module/icon/index.js
+// packages/icons/build-module/icon/index.mjs
 var import_element2 = __toESM(require_element(), 1);
 var icon_default = (0, import_element2.forwardRef)(
   ({ icon, size = 24, ...props }, ref) => {
@@ -289,61 +289,61 @@ var icon_default = (0, import_element2.forwardRef)(
   }
 );
 
-// packages/icons/build-module/library/arrow-up-left.js
+// packages/icons/build-module/library/arrow-up-left.mjs
 var import_primitives = __toESM(require_primitives(), 1);
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var arrow_up_left_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives.Path, { d: "M14 6H6v8h1.5V8.5L17 18l1-1-9.5-9.5H14V6Z" }) });
 
-// packages/icons/build-module/library/check.js
+// packages/icons/build-module/library/check.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 var check_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives2.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
 
-// packages/icons/build-module/library/chevron-down-small.js
+// packages/icons/build-module/library/chevron-down-small.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 var chevron_down_small_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives3.Path, { d: "m15.99 10.889-3.988 3.418-3.988-3.418.976-1.14 3.012 2.582 3.012-2.581.976 1.139Z" }) });
 
-// packages/icons/build-module/library/chevron-left-small.js
+// packages/icons/build-module/library/chevron-left-small.mjs
 var import_primitives4 = __toESM(require_primitives(), 1);
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var chevron_left_small_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives4.Path, { d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z" }) });
 
-// packages/icons/build-module/library/chevron-left.js
+// packages/icons/build-module/library/chevron-left.mjs
 var import_primitives5 = __toESM(require_primitives(), 1);
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives5.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
 
-// packages/icons/build-module/library/chevron-right-small.js
+// packages/icons/build-module/library/chevron-right-small.mjs
 var import_primitives6 = __toESM(require_primitives(), 1);
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives6.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
 
-// packages/icons/build-module/library/chevron-right.js
+// packages/icons/build-module/library/chevron-right.mjs
 var import_primitives7 = __toESM(require_primitives(), 1);
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives7.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
 
-// packages/icons/build-module/library/menu.js
+// packages/icons/build-module/library/menu.mjs
 var import_primitives8 = __toESM(require_primitives(), 1);
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 var menu_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives8.Path, { d: "M5 5v1.5h14V5H5zm0 7.8h14v-1.5H5v1.5zM5 19h14v-1.5H5V19z" }) });
 
-// packages/icons/build-module/library/search.js
+// packages/icons/build-module/library/search.mjs
 var import_primitives9 = __toESM(require_primitives(), 1);
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 var search_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives9.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
-// packages/icons/build-module/library/wordpress.js
+// packages/icons/build-module/library/wordpress.mjs
 var import_primitives10 = __toESM(require_primitives(), 1);
 var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "-2 -2 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives10.Path, { d: "M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.1z" }) });
 
-// packages/boot/build-module/components/root/index.js
+// packages/boot/build-module/components/root/index.mjs
 var import_element13 = __toESM(require_element(), 1);
 var import_i18n10 = __toESM(require_i18n(), 1);
 
-// packages/boot/build-module/components/site-hub/index.js
+// packages/boot/build-module/components/site-hub/index.mjs
 var import_data3 = __toESM(require_data(), 1);
 var import_components4 = __toESM(require_components(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
@@ -353,18 +353,18 @@ var import_keycodes = __toESM(require_keycodes(), 1);
 var import_commands = __toESM(require_commands(), 1);
 var import_url = __toESM(require_url(), 1);
 
-// packages/boot/build-module/components/site-icon-link/index.js
+// packages/boot/build-module/components/site-icon-link/index.mjs
 var import_components3 = __toESM(require_components(), 1);
 import { Link, privateApis as routePrivateApis } from "@wordpress/route";
 
-// packages/boot/build-module/lock-unlock.js
+// packages/boot/build-module/lock-unlock.mjs
 var import_private_apis = __toESM(require_private_apis(), 1);
 var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/boot"
 );
 
-// packages/boot/build-module/components/site-icon/index.js
+// packages/boot/build-module/components/site-icon/index.mjs
 var import_data = __toESM(require_data(), 1);
 var import_i18n = __toESM(require_i18n(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
@@ -470,7 +470,7 @@ function SiteIcon({ className }) {
 }
 var site_icon_default = SiteIcon;
 
-// packages/boot/build-module/components/site-icon-link/index.js
+// packages/boot/build-module/components/site-icon-link/index.mjs
 var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 var css2 = `/**
  * SCSS Variables.
@@ -563,10 +563,10 @@ function SiteIconLink({
 }
 var site_icon_link_default = SiteIconLink;
 
-// packages/boot/build-module/store/index.js
+// packages/boot/build-module/store/index.mjs
 var import_data2 = __toESM(require_data(), 1);
 
-// packages/boot/build-module/store/reducer.js
+// packages/boot/build-module/store/reducer.mjs
 var initialState = {
   menuItems: {},
   routes: [],
@@ -607,7 +607,7 @@ function reducer(state = initialState, action) {
   return state;
 }
 
-// packages/boot/build-module/store/actions.js
+// packages/boot/build-module/store/actions.mjs
 var actions_exports = {};
 __export(actions_exports, {
   registerMenuItem: () => registerMenuItem,
@@ -642,7 +642,7 @@ function setDashboardLink(dashboardLink) {
   };
 }
 
-// packages/boot/build-module/store/selectors.js
+// packages/boot/build-module/store/selectors.mjs
 var selectors_exports = {};
 __export(selectors_exports, {
   getDashboardLink: () => getDashboardLink,
@@ -659,7 +659,7 @@ function getDashboardLink(state) {
   return state.dashboardLink;
 }
 
-// packages/boot/build-module/store/index.js
+// packages/boot/build-module/store/index.mjs
 var STORE_NAME = "wordpress/boot";
 var store = (0, import_data2.createReduxStore)(STORE_NAME, {
   reducer,
@@ -668,7 +668,7 @@ var store = (0, import_data2.createReduxStore)(STORE_NAME, {
 });
 (0, import_data2.register)(store);
 
-// packages/boot/build-module/components/site-hub/index.js
+// packages/boot/build-module/components/site-hub/index.mjs
 var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 var css3 = `/**
  * SCSS Variables.
@@ -825,14 +825,14 @@ function SiteHub() {
 }
 var site_hub_default = SiteHub;
 
-// packages/boot/build-module/components/navigation/index.js
+// packages/boot/build-module/components/navigation/index.mjs
 var import_element6 = __toESM(require_element(), 1);
 var import_data6 = __toESM(require_data(), 1);
 
-// packages/boot/build-module/components/navigation/navigation-item/index.js
+// packages/boot/build-module/components/navigation/navigation-item/index.mjs
 var import_components7 = __toESM(require_components(), 1);
 
-// packages/boot/build-module/components/navigation/router-link-item.js
+// packages/boot/build-module/components/navigation/router-link-item.mjs
 var import_element3 = __toESM(require_element(), 1);
 var import_components5 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis2 } from "@wordpress/route";
@@ -844,7 +844,7 @@ function AnchorOnlyItem(props, forwardedRef) {
 var RouterLinkItem = createLink((0, import_element3.forwardRef)(AnchorOnlyItem));
 var router_link_item_default = RouterLinkItem;
 
-// packages/boot/build-module/components/navigation/items.js
+// packages/boot/build-module/components/navigation/items.mjs
 var import_element4 = __toESM(require_element(), 1);
 var import_components6 = __toESM(require_components(), 1);
 var import_primitives11 = __toESM(require_primitives(), 1);
@@ -901,7 +901,7 @@ function wrapIcon(icon, shouldShowPlaceholder = true) {
   return null;
 }
 
-// packages/boot/build-module/components/navigation/navigation-item/index.js
+// packages/boot/build-module/components/navigation/navigation-item/index.mjs
 var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
 var css4 = `/**
  * SCSS Variables.
@@ -1070,7 +1070,7 @@ function NavigationItem({
   );
 }
 
-// packages/boot/build-module/components/navigation/drilldown-item/index.js
+// packages/boot/build-module/components/navigation/drilldown-item/index.mjs
 var import_components8 = __toESM(require_components(), 1);
 var import_i18n3 = __toESM(require_i18n(), 1);
 var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
@@ -1108,7 +1108,7 @@ function DrilldownItem({
   );
 }
 
-// packages/boot/build-module/components/navigation/dropdown-item/index.js
+// packages/boot/build-module/components/navigation/dropdown-item/index.mjs
 var import_components9 = __toESM(require_components(), 1);
 var import_compose = __toESM(require_compose(), 1);
 var import_data4 = __toESM(require_data(), 1);
@@ -1251,7 +1251,7 @@ function DropdownItem({
   ] });
 }
 
-// packages/boot/build-module/components/navigation/navigation-screen/index.js
+// packages/boot/build-module/components/navigation/navigation-screen/index.mjs
 var import_components10 = __toESM(require_components(), 1);
 var import_i18n4 = __toESM(require_i18n(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
@@ -1433,12 +1433,12 @@ function NavigationScreen({
   );
 }
 
-// packages/boot/build-module/components/navigation/use-sidebar-parent.js
+// packages/boot/build-module/components/navigation/use-sidebar-parent.mjs
 var import_element5 = __toESM(require_element(), 1);
 var import_data5 = __toESM(require_data(), 1);
 import { privateApis as routePrivateApis3 } from "@wordpress/route";
 
-// packages/boot/build-module/components/navigation/path-matching.js
+// packages/boot/build-module/components/navigation/path-matching.mjs
 var isValidParentPath = (currentPath, menuPath) => {
   if (!menuPath || menuPath === currentPath) {
     return false;
@@ -1511,7 +1511,7 @@ var findDropdownParent = (id, menuItems) => {
   return void 0;
 };
 
-// packages/boot/build-module/components/navigation/use-sidebar-parent.js
+// packages/boot/build-module/components/navigation/use-sidebar-parent.mjs
 var { useRouter: useRouter2, useMatches } = unlock(routePrivateApis3);
 function useSidebarParent() {
   const matches = useMatches();
@@ -1552,7 +1552,7 @@ function useSidebarParent() {
   ];
 }
 
-// packages/boot/build-module/components/navigation/index.js
+// packages/boot/build-module/components/navigation/index.mjs
 var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 function Navigation() {
   const backButtonRef = (0, import_element6.useRef)(null);
@@ -1642,7 +1642,7 @@ function Navigation() {
 }
 var navigation_default = Navigation;
 
-// packages/boot/build-module/components/save-button/index.js
+// packages/boot/build-module/components/save-button/index.mjs
 var import_element8 = __toESM(require_element(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_i18n6 = __toESM(require_i18n(), 1);
@@ -1651,7 +1651,7 @@ var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_editor2 = __toESM(require_editor(), 1);
 var import_components11 = __toESM(require_components(), 1);
 
-// packages/boot/build-module/components/save-panel/use-save-shortcut.js
+// packages/boot/build-module/components/save-panel/use-save-shortcut.mjs
 var import_element7 = __toESM(require_element(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_i18n5 = __toESM(require_i18n(), 1);
@@ -1700,7 +1700,7 @@ function useSaveShortcut({
   });
 }
 
-// packages/boot/build-module/components/save-button/index.js
+// packages/boot/build-module/components/save-button/index.mjs
 var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
 var css7 = `.boot-save-button {
   width: 100%;
@@ -1800,7 +1800,7 @@ function SaveButton() {
   ] });
 }
 
-// packages/boot/build-module/components/sidebar/index.js
+// packages/boot/build-module/components/sidebar/index.mjs
 var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 var css8 = `/**
  * SCSS Variables.
@@ -1874,7 +1874,7 @@ function Sidebar() {
   ] });
 }
 
-// packages/boot/build-module/components/save-panel/index.js
+// packages/boot/build-module/components/save-panel/index.mjs
 var import_element9 = __toESM(require_element(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_editor3 = __toESM(require_editor(), 1);
@@ -1906,15 +1906,15 @@ function SavePanel() {
   );
 }
 
-// packages/boot/build-module/components/canvas-renderer/index.js
+// packages/boot/build-module/components/canvas-renderer/index.mjs
 var import_element11 = __toESM(require_element(), 1);
 
-// packages/boot/build-module/components/canvas/index.js
+// packages/boot/build-module/components/canvas/index.mjs
 var import_element10 = __toESM(require_element(), 1);
 var import_components14 = __toESM(require_components(), 1);
 import { useNavigate } from "@wordpress/route";
 
-// packages/boot/build-module/components/canvas/back-button.js
+// packages/boot/build-module/components/canvas/back-button.mjs
 var import_components13 = __toESM(require_components(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_i18n8 = __toESM(require_i18n(), 1);
@@ -2081,7 +2081,7 @@ function BootBackButton({ length }) {
   );
 }
 
-// packages/boot/build-module/components/canvas/index.js
+// packages/boot/build-module/components/canvas/index.mjs
 var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 function Canvas({ canvas }) {
   const [Editor, setEditor] = (0, import_element10.useState)(null);
@@ -2150,7 +2150,7 @@ function Canvas({ canvas }) {
   ] });
 }
 
-// packages/boot/build-module/components/canvas-renderer/index.js
+// packages/boot/build-module/components/canvas-renderer/index.mjs
 var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 function CanvasRenderer({
   canvas,
@@ -2180,7 +2180,7 @@ function CanvasRenderer({
   return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Canvas, { canvas });
 }
 
-// packages/boot/build-module/components/app/use-route-title.js
+// packages/boot/build-module/components/app/use-route-title.mjs
 var import_element12 = __toESM(require_element(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
@@ -2226,7 +2226,7 @@ function useRouteTitle() {
   }, [routeTitle, siteTitle, location]);
 }
 
-// packages/boot/build-module/components/user-theme-provider/index.js
+// packages/boot/build-module/components/user-theme-provider/index.mjs
 var import_theme = __toESM(require_theme(), 1);
 var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 var ThemeProvider = unlock(import_theme.privateApis).ThemeProvider;
@@ -2252,7 +2252,7 @@ function UserThemeProvider({
   return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(ThemeProvider, { ...restProps, color: { primary, ...color } });
 }
 
-// packages/boot/build-module/components/root/index.js
+// packages/boot/build-module/components/root/index.mjs
 var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 var css10 = `/**
  * SCSS Variables.
@@ -2650,7 +2650,7 @@ function Root() {
   ) }) }) });
 }
 
-// packages/boot/build-module/components/app/router.js
+// packages/boot/build-module/components/app/router.mjs
 var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 var {
   createLazyRoute,
@@ -2782,7 +2782,7 @@ function Router({
   return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(RouterProvider, { router });
 }
 
-// packages/boot/build-module/components/root/single-page.js
+// packages/boot/build-module/components/root/single-page.mjs
 var import_editor5 = __toESM(require_editor(), 1);
 var import_components16 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
@@ -3103,7 +3103,7 @@ function RootSinglePage() {
   ) }) }) });
 }
 
-// packages/boot/build-module/components/app/index.js
+// packages/boot/build-module/components/app/index.mjs
 var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
 function App({ rootComponent }) {
   const routes = (0, import_data11.useSelect)((select) => select(store).getRoutes(), []);
@@ -3153,7 +3153,7 @@ async function initSinglePage({
   }
 }
 
-// packages/boot/build-module/index.js
+// packages/boot/build-module/index.mjs
 var css12 = `@charset "UTF-8";
 /* -------------------------------------------
  *  Autogenerated by \u26CB Terrazzo. DO NOT EDIT!

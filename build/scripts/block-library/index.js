@@ -3768,7 +3768,7 @@ var wp;
     }
   });
 
-  // packages/block-library/build-module/index.js
+  // packages/block-library/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     __experimentalGetCoreBlocks: () => __experimentalGetCoreBlocks,
@@ -3804,7 +3804,7 @@ var wp;
   var import_lib2 = __toESM(require_lib6(), 1);
   var esm_default = import_lib.default.default || import_lib.default;
 
-  // packages/block-library/build-module/utils/html-renderer.js
+  // packages/block-library/build-module/utils/html-renderer.mjs
   var import_dom = __toESM(require_dom(), 1);
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var HtmlRenderer = ({ wrapperProps = {}, html = "" }) => {
@@ -3837,7 +3837,7 @@ var wp;
   };
   var html_renderer_default = HtmlRenderer;
 
-  // packages/block-library/build-module/accordion/index.js
+  // packages/block-library/build-module/accordion/index.mjs
   var accordion_exports = {};
   __export(accordion_exports, {
     init: () => init,
@@ -3847,14 +3847,14 @@ var wp;
   });
   var import_i18n2 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/accordion/edit.js
+  // packages/block-library/build-module/accordion/edit.mjs
   var import_block_editor2 = __toESM(require_block_editor(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
   var import_components = __toESM(require_components(), 1);
   var import_data2 = __toESM(require_data(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/utils/hooks.js
+  // packages/block-library/build-module/utils/hooks.mjs
   var import_data = __toESM(require_data(), 1);
   var import_element = __toESM(require_element(), 1);
   var import_blob = __toESM(require_blob(), 1);
@@ -3933,7 +3933,7 @@ var wp;
     } : {};
   }
 
-  // packages/block-library/build-module/accordion/edit.js
+  // packages/block-library/build-module/accordion/edit.mjs
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   var ACCORDION_BLOCK_NAME = "core/accordion-item";
   var ACCORDION_HEADING_BLOCK_NAME = "core/accordion-heading";
@@ -4110,7 +4110,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/accordion/save.js
+  // packages/block-library/build-module/accordion/save.mjs
   var import_block_editor3 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   function save() {
@@ -4211,7 +4211,7 @@ var wp;
     viewScriptModule: "@wordpress/block-library/accordion/view"
   };
 
-  // packages/block-library/build-module/utils/init-block.js
+  // packages/block-library/build-module/utils/init-block.mjs
   var import_blocks2 = __toESM(require_blocks(), 1);
   function initBlock(block) {
     if (!block) {
@@ -4221,7 +4221,7 @@ var wp;
     return (0, import_blocks2.registerBlockType)({ name: name117, ...metadata }, settings116);
   }
 
-  // packages/block-library/build-module/accordion/icon.js
+  // packages/block-library/build-module/accordion/icon.mjs
   var import_primitives = __toESM(require_primitives(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   var icon_default = /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -4247,7 +4247,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_primitives.Path, { d: "M4.5 13L8.5 15.5L4.5 18L4.5 13Z", fill: "currentColor" })
   ] });
 
-  // packages/block-library/build-module/accordion/index.js
+  // packages/block-library/build-module/accordion/index.mjs
   var { name } = block_default;
   var settings = {
     icon: icon_default,
@@ -4286,7 +4286,7 @@ var wp;
   };
   var init = () => initBlock({ name, metadata: block_default, settings });
 
-  // packages/block-library/build-module/accordion-item/index.js
+  // packages/block-library/build-module/accordion-item/index.mjs
   var accordion_item_exports = {};
   __export(accordion_item_exports, {
     init: () => init2,
@@ -4295,7 +4295,7 @@ var wp;
     settings: () => settings2
   });
 
-  // packages/block-library/build-module/accordion-item/edit.js
+  // packages/block-library/build-module/accordion-item/edit.mjs
   var import_i18n3 = __toESM(require_i18n(), 1);
   var import_block_editor4 = __toESM(require_block_editor(), 1);
   var import_data3 = __toESM(require_data(), 1);
@@ -4376,7 +4376,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/accordion-item/save.js
+  // packages/block-library/build-module/accordion-item/save.mjs
   var import_block_editor5 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   function save2({ attributes: attributes3 }) {
@@ -4455,7 +4455,7 @@ var wp;
     style: "wp-block-accordion-item"
   };
 
-  // packages/block-library/build-module/accordion-item/icon.js
+  // packages/block-library/build-module/accordion-item/icon.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);
   var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   var icon_default2 = /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -4489,7 +4489,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives2.Path, { d: "M4.5 6.25L8.5 8.75L4.5 11.25L4.5 6.25Z", fill: "currentColor" })
   ] });
 
-  // packages/block-library/build-module/accordion-item/index.js
+  // packages/block-library/build-module/accordion-item/index.mjs
   var { name: name2 } = block_default2;
   var settings2 = {
     icon: icon_default2,
@@ -4498,7 +4498,7 @@ var wp;
   };
   var init2 = () => initBlock({ name: name2, metadata: block_default2, settings: settings2 });
 
-  // packages/block-library/build-module/accordion-heading/index.js
+  // packages/block-library/build-module/accordion-heading/index.mjs
   var accordion_heading_exports = {};
   __export(accordion_heading_exports, {
     init: () => init3,
@@ -4507,7 +4507,7 @@ var wp;
     settings: () => settings3
   });
 
-  // packages/block-library/build-module/accordion-heading/edit.js
+  // packages/block-library/build-module/accordion-heading/edit.mjs
   var import_i18n4 = __toESM(require_i18n(), 1);
   var import_element2 = __toESM(require_element(), 1);
   var import_block_editor6 = __toESM(require_block_editor(), 1);
@@ -4594,7 +4594,7 @@ var wp;
     ) });
   }
 
-  // packages/block-library/build-module/accordion-heading/save.js
+  // packages/block-library/build-module/accordion-heading/save.mjs
   var import_block_editor7 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
   function save3({ attributes: attributes3 }) {
@@ -4739,7 +4739,7 @@ var wp;
     textdomain: "default"
   };
 
-  // packages/block-library/build-module/accordion-heading/icon.js
+  // packages/block-library/build-module/accordion-heading/icon.mjs
   var import_primitives3 = __toESM(require_primitives(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   var icon_default3 = /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -4755,7 +4755,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_primitives3.Path, { d: "M4.5 9.5L8.5 12L4.5 14.5L4.5 9.5Z", fill: "currentColor" })
   ] });
 
-  // packages/block-library/build-module/accordion-heading/deprecated.js
+  // packages/block-library/build-module/accordion-heading/deprecated.mjs
   var import_block_editor8 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   var v1 = {
@@ -4988,7 +4988,7 @@ var wp;
   };
   var deprecated_default = [v1, v2];
 
-  // packages/block-library/build-module/accordion-heading/index.js
+  // packages/block-library/build-module/accordion-heading/index.mjs
   var { name: name3 } = block_default3;
   var settings3 = {
     icon: icon_default3,
@@ -4998,7 +4998,7 @@ var wp;
   };
   var init3 = () => initBlock({ name: name3, metadata: block_default3, settings: settings3 });
 
-  // packages/block-library/build-module/accordion-panel/index.js
+  // packages/block-library/build-module/accordion-panel/index.mjs
   var accordion_panel_exports = {};
   __export(accordion_panel_exports, {
     init: () => init4,
@@ -5007,7 +5007,7 @@ var wp;
     settings: () => settings4
   });
 
-  // packages/block-library/build-module/accordion-panel/edit.js
+  // packages/block-library/build-module/accordion-panel/edit.mjs
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_data5 = __toESM(require_data(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
@@ -5043,7 +5043,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/accordion-panel/save.js
+  // packages/block-library/build-module/accordion-panel/save.mjs
   var import_block_editor10 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   function save4() {
@@ -5124,7 +5124,7 @@ var wp;
     style: "wp-block-accordion-panel"
   };
 
-  // packages/block-library/build-module/accordion-panel/icon.js
+  // packages/block-library/build-module/accordion-panel/icon.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   var icon_default4 = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
@@ -5137,7 +5137,7 @@ var wp;
     }
   ) });
 
-  // packages/block-library/build-module/accordion-panel/index.js
+  // packages/block-library/build-module/accordion-panel/index.mjs
   var { name: name4 } = block_default4;
   var settings4 = {
     icon: icon_default4,
@@ -5146,7 +5146,7 @@ var wp;
   };
   var init4 = () => initBlock({ name: name4, metadata: block_default4, settings: settings4 });
 
-  // packages/block-library/build-module/archives/index.js
+  // packages/block-library/build-module/archives/index.mjs
   var archives_exports = {};
   __export(archives_exports, {
     init: () => init5,
@@ -5155,7 +5155,7 @@ var wp;
     settings: () => settings5
   });
 
-  // packages/icons/build-module/icon/index.js
+  // packages/icons/build-module/icon/index.mjs
   var import_element3 = __toESM(require_element(), 1);
   var icon_default5 = (0, import_element3.forwardRef)(
     ({ icon: icon3, size = 24, ...props }, ref) => {
@@ -5168,32 +5168,32 @@ var wp;
     }
   );
 
-  // packages/icons/build-module/library/add-submenu.js
+  // packages/icons/build-module/library/add-submenu.mjs
   var import_primitives5 = __toESM(require_primitives(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
   var add_submenu_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives5.Path, { d: "M2 12c0 3.6 2.4 5.5 6 5.5h.5V19l3-2.5-3-2.5v2H8c-2.5 0-4.5-1.5-4.5-4s2-4.5 4.5-4.5h3.5V6H8c-3.6 0-6 2.4-6 6zm19.5-1h-8v1.5h8V11zm0 5h-8v1.5h8V16zm0-10h-8v1.5h8V6z" }) });
 
-  // packages/icons/build-module/library/align-center.js
+  // packages/icons/build-module/library/align-center.mjs
   var import_primitives6 = __toESM(require_primitives(), 1);
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   var align_center_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives6.Path, { d: "M7.5 5.5h9V4h-9v1.5Zm-3.5 7h16V11H4v1.5Zm3.5 7h9V18h-9v1.5Z" }) });
 
-  // packages/icons/build-module/library/align-left.js
+  // packages/icons/build-module/library/align-left.mjs
   var import_primitives7 = __toESM(require_primitives(), 1);
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   var align_left_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives7.Path, { d: "M13 5.5H4V4h9v1.5Zm7 7H4V11h16v1.5Zm-7 7H4V18h9v1.5Z" }) });
 
-  // packages/icons/build-module/library/align-none.js
+  // packages/icons/build-module/library/align-none.mjs
   var import_primitives8 = __toESM(require_primitives(), 1);
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var align_none_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primitives8.Path, { d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM5 9h14v6H5V9Z" }) });
 
-  // packages/icons/build-module/library/align-right.js
+  // packages/icons/build-module/library/align-right.mjs
   var import_primitives9 = __toESM(require_primitives(), 1);
   var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   var align_right_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives9.Path, { d: "M11.111 5.5H20V4h-8.889v1.5ZM4 12.5h16V11H4v1.5Zm7.111 7H20V18h-8.889v1.5Z" }) });
 
-  // packages/icons/build-module/library/archive.js
+  // packages/icons/build-module/library/archive.mjs
   var import_primitives10 = __toESM(require_primitives(), 1);
   var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   var archive_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives10.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
@@ -5205,42 +5205,42 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/audio.js
+  // packages/icons/build-module/library/audio.mjs
   var import_primitives11 = __toESM(require_primitives(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   var audio_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives11.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives11.Path, { d: "M17.7 4.3c-1.2 0-2.8 0-3.8 1-.6.6-.9 1.5-.9 2.6V14c-.6-.6-1.5-1-2.5-1C8.6 13 7 14.6 7 16.5S8.6 20 10.5 20c1.5 0 2.8-1 3.3-2.3.5-.8.7-1.8.7-2.5V7.9c0-.7.2-1.2.5-1.6.6-.6 1.8-.6 2.8-.6h.3V4.3h-.4z" }) });
 
-  // packages/icons/build-module/library/block-default.js
+  // packages/icons/build-module/library/block-default.mjs
   var import_primitives12 = __toESM(require_primitives(), 1);
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   var block_default_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives12.Path, { d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z" }) });
 
-  // packages/icons/build-module/library/block-table.js
+  // packages/icons/build-module/library/block-table.mjs
   var import_primitives13 = __toESM(require_primitives(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives13.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives13.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
 
-  // packages/icons/build-module/library/breadcrumbs.js
+  // packages/icons/build-module/library/breadcrumbs.mjs
   var import_primitives14 = __toESM(require_primitives(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var breadcrumbs_default = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives14.Path, { d: "M4 13.5h3v-3H4v3Zm6-3.5 2 2-2 2 1 1 3-3-3-3-1 1Zm7 .5v3h3v-3h-3Z" }) });
 
-  // packages/icons/build-module/library/button.js
+  // packages/icons/build-module/library/button.mjs
   var import_primitives15 = __toESM(require_primitives(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   var button_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives15.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives15.Path, { d: "M8 12.5h8V11H8v1.5Z M19 6.5H5a2 2 0 0 0-2 2V15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2ZM5 8h14a.5.5 0 0 1 .5.5V15a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8.5A.5.5 0 0 1 5 8Z" }) });
 
-  // packages/icons/build-module/library/buttons.js
+  // packages/icons/build-module/library/buttons.mjs
   var import_primitives16 = __toESM(require_primitives(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var buttons_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives16.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives16.Path, { d: "M14.5 17.5H9.5V16H14.5V17.5Z M14.5 8H9.5V6.5H14.5V8Z M7 3.5H17C18.1046 3.5 19 4.39543 19 5.5V9C19 10.1046 18.1046 11 17 11H7C5.89543 11 5 10.1046 5 9V5.5C5 4.39543 5.89543 3.5 7 3.5ZM17 5H7C6.72386 5 6.5 5.22386 6.5 5.5V9C6.5 9.27614 6.72386 9.5 7 9.5H17C17.2761 9.5 17.5 9.27614 17.5 9V5.5C17.5 5.22386 17.2761 5 17 5Z M7 13H17C18.1046 13 19 13.8954 19 15V18.5C19 19.6046 18.1046 20.5 17 20.5H7C5.89543 20.5 5 19.6046 5 18.5V15C5 13.8954 5.89543 13 7 13ZM17 14.5H7C6.72386 14.5 6.5 14.7239 6.5 15V18.5C6.5 18.7761 6.72386 19 7 19H17C17.2761 19 17.5 18.7761 17.5 18.5V15C17.5 14.7239 17.2761 14.5 17 14.5Z" }) });
 
-  // packages/icons/build-module/library/calendar.js
+  // packages/icons/build-module/library/calendar.mjs
   var import_primitives17 = __toESM(require_primitives(), 1);
   var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   var calendar_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives17.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives17.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z" }) });
 
-  // packages/icons/build-module/library/caption.js
+  // packages/icons/build-module/library/caption.mjs
   var import_primitives18 = __toESM(require_primitives(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var caption_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives18.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
@@ -5252,7 +5252,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/category.js
+  // packages/icons/build-module/library/category.mjs
   var import_primitives19 = __toESM(require_primitives(), 1);
   var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   var category_default = /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives19.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
@@ -5264,47 +5264,47 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/chevron-down.js
+  // packages/icons/build-module/library/chevron-down.mjs
   var import_primitives20 = __toESM(require_primitives(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives20.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives20.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
-  // packages/icons/build-module/library/chevron-left-small.js
+  // packages/icons/build-module/library/chevron-left-small.mjs
   var import_primitives21 = __toESM(require_primitives(), 1);
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   var chevron_left_small_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives21.Path, { d: "m13.1 16-3.4-4 3.4-4 1.1 1-2.6 3 2.6 3-1.1 1z" }) });
 
-  // packages/icons/build-module/library/chevron-right-small.js
+  // packages/icons/build-module/library/chevron-right-small.mjs
   var import_primitives22 = __toESM(require_primitives(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   var chevron_right_small_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives22.Path, { d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z" }) });
 
-  // packages/icons/build-module/library/chevron-up.js
+  // packages/icons/build-module/library/chevron-up.mjs
   var import_primitives23 = __toESM(require_primitives(), 1);
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives23.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives23.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
 
-  // packages/icons/build-module/library/classic.js
+  // packages/icons/build-module/library/classic.mjs
   var import_primitives24 = __toESM(require_primitives(), 1);
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   var classic_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives24.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives24.Path, { d: "M20 6H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h16c.3 0 .5.2.5.5v9zM10 10H8v2h2v-2zm-5 2h2v-2H5v2zm8-2h-2v2h2v-2zm-5 6h8v-2H8v2zm6-4h2v-2h-2v2zm3 0h2v-2h-2v2zm0 4h2v-2h-2v2zM5 16h2v-2H5v2z" }) });
 
-  // packages/icons/build-module/library/close.js
+  // packages/icons/build-module/library/close.mjs
   var import_primitives25 = __toESM(require_primitives(), 1);
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   var close_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives25.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
 
-  // packages/icons/build-module/library/code.js
+  // packages/icons/build-module/library/code.mjs
   var import_primitives26 = __toESM(require_primitives(), 1);
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var code_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives26.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives26.Path, { d: "M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z" }) });
 
-  // packages/icons/build-module/library/column.js
+  // packages/icons/build-module/library/column.mjs
   var import_primitives27 = __toESM(require_primitives(), 1);
   var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   var column_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives27.Path, { d: "M19 6H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM6 17.5c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h3v10H6zm13.5-.5c0 .3-.2.5-.5.5h-3v-10h3c.3 0 .5.2.5.5v9z" }) });
 
-  // packages/icons/build-module/library/columns.js
+  // packages/icons/build-module/library/columns.mjs
   var import_primitives28 = __toESM(require_primitives(), 1);
   var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
   var columns_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives28.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
@@ -5316,7 +5316,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/comment-author-avatar.js
+  // packages/icons/build-module/library/comment-author-avatar.mjs
   var import_primitives29 = __toESM(require_primitives(), 1);
   var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
   var comment_author_avatar_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives29.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
@@ -5328,7 +5328,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/comment-author-name.js
+  // packages/icons/build-module/library/comment-author-name.mjs
   var import_primitives30 = __toESM(require_primitives(), 1);
   var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
   var comment_author_name_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_primitives30.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: [
@@ -5351,7 +5351,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives30.Circle, { cx: "12", cy: "9", r: "2", fillRule: "evenodd", clipRule: "evenodd" })
   ] });
 
-  // packages/icons/build-module/library/comment-content.js
+  // packages/icons/build-module/library/comment-content.mjs
   var import_primitives31 = __toESM(require_primitives(), 1);
   var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var comment_content_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives31.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
@@ -5363,42 +5363,42 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/comment-edit-link.js
+  // packages/icons/build-module/library/comment-edit-link.mjs
   var import_primitives32 = __toESM(require_primitives(), 1);
   var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var comment_edit_link_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives32.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives32.Path, { d: "m6.249 11.065.44-.44h3.186l-1.5 1.5H7.31l-1.957 1.96A.792.792 0 0 1 4 13.524V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5L12.5 8V5.5h-7v6.315l.749-.75ZM20 19.75H7v-1.5h13v1.5Zm0-12.653-8.967 9.064L8 17l.867-2.935L17.833 5 20 7.097Z" }) });
 
-  // packages/icons/build-module/library/comment-reply-link.js
+  // packages/icons/build-module/library/comment-reply-link.mjs
   var import_primitives33 = __toESM(require_primitives(), 1);
   var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   var comment_reply_link_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives33.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives33.Path, { d: "M6.68822 10.625L6.24878 11.0649L5.5 11.8145L5.5 5.5L12.5 5.5V8L14 6.5V5C14 4.44772 13.5523 4 13 4H5C4.44772 4 4 4.44771 4 5V13.5247C4 13.8173 4.16123 14.086 4.41935 14.2237C4.72711 14.3878 5.10601 14.3313 5.35252 14.0845L7.31 12.125H8.375L9.875 10.625H7.31H6.68822ZM14.5605 10.4983L11.6701 13.75H16.9975C17.9963 13.75 18.7796 14.1104 19.3553 14.7048C19.9095 15.2771 20.2299 16.0224 20.4224 16.7443C20.7645 18.0276 20.7543 19.4618 20.7487 20.2544C20.7481 20.345 20.7475 20.4272 20.7475 20.4999L19.2475 20.5001C19.2475 20.4191 19.248 20.3319 19.2484 20.2394V20.2394C19.2526 19.4274 19.259 18.2035 18.973 17.1307C18.8156 16.5401 18.586 16.0666 18.2778 15.7483C17.9909 15.4521 17.5991 15.25 16.9975 15.25H11.8106L14.5303 17.9697L13.4696 19.0303L8.96956 14.5303L13.4394 9.50171L14.5605 10.4983Z" }) });
 
-  // packages/icons/build-module/library/comment.js
+  // packages/icons/build-module/library/comment.mjs
   var import_primitives34 = __toESM(require_primitives(), 1);
   var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var comment_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives34.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives34.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z" }) });
 
-  // packages/icons/build-module/library/cover.js
+  // packages/icons/build-module/library/cover.mjs
   var import_primitives35 = __toESM(require_primitives(), 1);
   var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
   var cover_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives35.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h6.2v8.9l2.5-3.1 2.5 3.1V4.5h2.2c.4 0 .8.4.8.8v13.4z" }) });
 
-  // packages/icons/build-module/library/crop.js
+  // packages/icons/build-module/library/crop.mjs
   var import_primitives36 = __toESM(require_primitives(), 1);
   var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
   var crop_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives36.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives36.Path, { d: "M18 20v-2h2v-1.5H7.75a.25.25 0 0 1-.25-.25V4H6v2H4v1.5h2v8.75c0 .966.784 1.75 1.75 1.75h8.75v2H18ZM9.273 7.5h6.977a.25.25 0 0 1 .25.25v6.977H18V7.75A1.75 1.75 0 0 0 16.25 6H9.273v1.5Z" }) });
 
-  // packages/icons/build-module/library/custom-link.js
+  // packages/icons/build-module/library/custom-link.mjs
   var import_primitives37 = __toESM(require_primitives(), 1);
   var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
   var custom_link_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives37.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives37.Path, { d: "M12.5 14.5h-1V16h1c2.2 0 4-1.8 4-4s-1.8-4-4-4h-1v1.5h1c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5zm-4 1.5v-1.5h-1C6.1 14.5 5 13.4 5 12s1.1-2.5 2.5-2.5h1V8h-1c-2.2 0-4 1.8-4 4s1.8 4 4 4h1zm-1-3.2h5v-1.5h-5v1.5zM18 4H9c-1.1 0-2 .9-2 2v.5h1.5V6c0-.3.2-.5.5-.5h9c.3 0 .5.2.5.5v12c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5v-.5H7v.5c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" }) });
 
-  // packages/icons/build-module/library/custom-post-type.js
+  // packages/icons/build-module/library/custom-post-type.mjs
   var import_primitives38 = __toESM(require_primitives(), 1);
   var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
   var custom_post_type_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives38.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives38.Path, { d: "M4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4zm.8-4l.7.7 2-2V12h1V9.2l2 2 .7-.7-2-2H12v-1H9.2l2-2-.7-.7-2 2V4h-1v2.8l-2-2-.7.7 2 2H4v1h2.8l-2 2z" }) });
 
-  // packages/icons/build-module/library/details.js
+  // packages/icons/build-module/library/details.mjs
   var import_primitives39 = __toESM(require_primitives(), 1);
   var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
   var details_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_primitives39.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: [
@@ -5413,7 +5413,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives39.Path, { d: "m4 5.25 4 2.5-4 2.5v-5Z" })
   ] });
 
-  // packages/icons/build-module/library/file.js
+  // packages/icons/build-module/library/file.mjs
   var import_primitives40 = __toESM(require_primitives(), 1);
   var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
   var file_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives40.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
@@ -5425,7 +5425,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/footer.js
+  // packages/icons/build-module/library/footer.mjs
   var import_primitives41 = __toESM(require_primitives(), 1);
   var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
   var footer_default = /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives41.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
@@ -5436,57 +5436,57 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/format-indent-rtl.js
+  // packages/icons/build-module/library/format-indent-rtl.mjs
   var import_primitives42 = __toESM(require_primitives(), 1);
   var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
   var format_indent_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives42.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives42.Path, { d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM20.0303 9.03033L17.0607 12L20.0303 14.9697L18.9697 16.0303L15.4697 12.5303L14.9393 12L15.4697 11.4697L18.9697 7.96967L20.0303 9.03033Z" }) });
 
-  // packages/icons/build-module/library/format-indent.js
+  // packages/icons/build-module/library/format-indent.mjs
   var import_primitives43 = __toESM(require_primitives(), 1);
   var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
   var format_indent_default = /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives43.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives43.Path, { d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-8-3.5l3 3-3 3 1 1 4-4-4-4-1 1z" }) });
 
-  // packages/icons/build-module/library/format-list-bullets-rtl.js
+  // packages/icons/build-module/library/format-list-bullets-rtl.mjs
   var import_primitives44 = __toESM(require_primitives(), 1);
   var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
   var format_list_bullets_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives44.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives44.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
 
-  // packages/icons/build-module/library/format-list-bullets.js
+  // packages/icons/build-module/library/format-list-bullets.mjs
   var import_primitives45 = __toESM(require_primitives(), 1);
   var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
   var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives45.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives45.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
 
-  // packages/icons/build-module/library/format-list-numbered-rtl.js
+  // packages/icons/build-module/library/format-list-numbered-rtl.mjs
   var import_primitives46 = __toESM(require_primitives(), 1);
   var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
   var format_list_numbered_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives46.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives46.Path, { d: "M3.8 15.8h8.9v-1.5H3.8v1.5zm0-7h8.9V7.2H3.8v1.6zm14.7-2.1V10h1V5.3l-2.2.7.3 1 .9-.3zm1.2 6.1c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5H20v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3 0-.8-.3-1.1z" }) });
 
-  // packages/icons/build-module/library/format-list-numbered.js
+  // packages/icons/build-module/library/format-list-numbered.mjs
   var import_primitives47 = __toESM(require_primitives(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
   var format_list_numbered_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives47.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives47.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM5 6.7V10h1V5.3L3.8 6l.4 1 .8-.3zm-.4 5.7c-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-1c.3-.6.8-1.4.9-2.1.1-.3 0-.8-.2-1.1-.5-.6-1.3-.5-1.7-.4z" }) });
 
-  // packages/icons/build-module/library/format-ltr.js
+  // packages/icons/build-module/library/format-ltr.mjs
   var import_primitives48 = __toESM(require_primitives(), 1);
   var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
   var format_ltr_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives48.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives48.Path, { d: "M3 9c0 2.8 2.2 5 5 5v-.2V20h1.5V5.5H12V20h1.5V5.5h3V4H8C5.2 4 3 6.2 3 9Zm15.9-1-1.1 1 2.6 3-2.6 3 1.1 1 3.4-4-3.4-4Z" }) });
 
-  // packages/icons/build-module/library/format-outdent-rtl.js
+  // packages/icons/build-module/library/format-outdent-rtl.mjs
   var import_primitives49 = __toESM(require_primitives(), 1);
   var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
   var format_outdent_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives49.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives49.Path, { d: "M20 5.5H4V4H20V5.5ZM12 12.5H4V11H12V12.5ZM20 20V18.5H4V20H20ZM15.4697 14.9697L18.4393 12L15.4697 9.03033L16.5303 7.96967L20.0303 11.4697L20.5607 12L20.0303 12.5303L16.5303 16.0303L15.4697 14.9697Z" }) });
 
-  // packages/icons/build-module/library/format-outdent.js
+  // packages/icons/build-module/library/format-outdent.mjs
   var import_primitives50 = __toESM(require_primitives(), 1);
   var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
   var format_outdent_default = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives50.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives50.Path, { d: "M4 7.2v1.5h16V7.2H4zm8 8.6h8v-1.5h-8v1.5zm-4-4.6l-4 4 4 4 1-1-3-3 3-3-1-1z" }) });
 
-  // packages/icons/build-module/library/fullscreen.js
+  // packages/icons/build-module/library/fullscreen.mjs
   var import_primitives51 = __toESM(require_primitives(), 1);
   var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
   var fullscreen_default = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives51.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives51.Path, { d: "M6 4a2 2 0 0 0-2 2v3h1.5V6a.5.5 0 0 1 .5-.5h3V4H6Zm3 14.5H6a.5.5 0 0 1-.5-.5v-3H4v3a2 2 0 0 0 2 2h3v-1.5Zm6 1.5v-1.5h3a.5.5 0 0 0 .5-.5v-3H20v3a2 2 0 0 1-2 2h-3Zm3-16a2 2 0 0 1 2 2v3h-1.5V6a.5.5 0 0 0-.5-.5h-3V4h3Z" }) });
 
-  // packages/icons/build-module/library/gallery.js
+  // packages/icons/build-module/library/gallery.mjs
   var import_primitives52 = __toESM(require_primitives(), 1);
   var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
   var gallery_default = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives52.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
@@ -5498,7 +5498,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/grid.js
+  // packages/icons/build-module/library/grid.mjs
   var import_primitives53 = __toESM(require_primitives(), 1);
   var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
   var grid_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives53.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
@@ -5510,122 +5510,122 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/group.js
+  // packages/icons/build-module/library/group.mjs
   var import_primitives54 = __toESM(require_primitives(), 1);
   var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
   var group_default = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives54.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives54.Path, { d: "M18 4h-7c-1.1 0-2 .9-2 2v3H6c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2v-3h3c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h3V13c0 1.1.9 2 2 2h2.5v3zm0-4.5H11c-.3 0-.5-.2-.5-.5v-2.5H13c.3 0 .5.2.5.5v2.5zm5-.5c0 .3-.2.5-.5.5h-3V11c0-1.1-.9-2-2-2h-2.5V6c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v7z" }) });
 
-  // packages/icons/build-module/library/header.js
+  // packages/icons/build-module/library/header.mjs
   var import_primitives55 = __toESM(require_primitives(), 1);
   var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
   var header_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives55.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives55.Path, { d: "M18.5 10.5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
-  // packages/icons/build-module/library/heading-level-1.js
+  // packages/icons/build-module/library/heading-level-1.mjs
   var import_primitives56 = __toESM(require_primitives(), 1);
   var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
   var heading_level_1_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives56.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives56.Path, { d: "M17.6 7c-.6.9-1.5 1.7-2.6 2v1h2v7h2V7h-1.4zM11 11H7V7H5v10h2v-4h4v4h2V7h-2v4z" }) });
 
-  // packages/icons/build-module/library/heading-level-2.js
+  // packages/icons/build-module/library/heading-level-2.mjs
   var import_primitives57 = __toESM(require_primitives(), 1);
   var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
   var heading_level_2_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives57.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives57.Path, { d: "M9 11.1H5v-4H3v10h2v-4h4v4h2v-10H9v4zm8 4c.5-.4.6-.6 1.1-1.1.4-.4.8-.8 1.2-1.3.3-.4.6-.8.9-1.3.2-.4.3-.8.3-1.3 0-.4-.1-.9-.3-1.3-.2-.4-.4-.7-.8-1-.3-.3-.7-.5-1.2-.6-.5-.2-1-.2-1.5-.2-.4 0-.7 0-1.1.1-.3.1-.7.2-1 .3-.3.1-.6.3-.9.5-.3.2-.6.4-.8.7l1.2 1.2c.3-.3.6-.5 1-.7.4-.2.7-.3 1.2-.3s.9.1 1.3.4c.3.3.5.7.5 1.1 0 .4-.1.8-.4 1.1-.3.5-.6.9-1 1.2-.4.4-1 .9-1.6 1.4-.6.5-1.4 1.1-2.2 1.6v1.5h8v-2H17z" }) });
 
-  // packages/icons/build-module/library/heading-level-3.js
+  // packages/icons/build-module/library/heading-level-3.mjs
   var import_primitives58 = __toESM(require_primitives(), 1);
   var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
   var heading_level_3_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives58.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives58.Path, { d: "M9 11H5V7H3v10h2v-4h4v4h2V7H9v4zm11.3 1.7c-.4-.4-1-.7-1.6-.8v-.1c.6-.2 1.1-.5 1.5-.9.3-.4.5-.8.5-1.3 0-.4-.1-.8-.3-1.1-.2-.3-.5-.6-.8-.8-.4-.2-.8-.4-1.2-.5-.6-.1-1.1-.2-1.6-.2-.6 0-1.3.1-1.8.3s-1.1.5-1.6.9l1.2 1.4c.4-.2.7-.4 1.1-.6.3-.2.7-.3 1.1-.3.4 0 .8.1 1.1.3.3.2.4.5.4.8 0 .4-.2.7-.6.9-.7.3-1.5.5-2.2.4v1.6c.5 0 1 0 1.5.1.3.1.7.2 1 .3.2.1.4.2.5.4s.1.4.1.6c0 .3-.2.7-.5.8-.4.2-.9.3-1.4.3s-1-.1-1.4-.3c-.4-.2-.8-.4-1.2-.7L13 15.6c.5.4 1 .8 1.6 1 .7.3 1.5.4 2.3.4.6 0 1.1-.1 1.6-.2.4-.1.9-.2 1.3-.5.4-.2.7-.5.9-.9.2-.4.3-.8.3-1.2 0-.6-.3-1.1-.7-1.5z" }) });
 
-  // packages/icons/build-module/library/heading-level-4.js
+  // packages/icons/build-module/library/heading-level-4.mjs
   var import_primitives59 = __toESM(require_primitives(), 1);
   var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
   var heading_level_4_default = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives59.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_primitives59.Path, { d: "M20 13V7h-3l-4 6v2h5v2h2v-2h1v-2h-1zm-2 0h-2.8L18 9v4zm-9-2H5V7H3v10h2v-4h4v4h2V7H9v4z" }) });
 
-  // packages/icons/build-module/library/heading-level-5.js
+  // packages/icons/build-module/library/heading-level-5.mjs
   var import_primitives60 = __toESM(require_primitives(), 1);
   var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
   var heading_level_5_default = /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_primitives60.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_primitives60.Path, { d: "M9 11H5V7H3v10h2v-4h4v4h2V7H9v4zm11.7 1.2c-.2-.3-.5-.7-.8-.9-.3-.3-.7-.5-1.1-.6-.5-.1-.9-.2-1.4-.2-.2 0-.5.1-.7.1-.2.1-.5.1-.7.2l.1-1.9h4.3V7H14l-.3 5 1 .6.5-.2.4-.1c.1-.1.3-.1.4-.1h.5c.5 0 1 .1 1.4.4.4.2.6.7.6 1.1 0 .4-.2.8-.6 1.1-.4.3-.9.4-1.4.4-.4 0-.9-.1-1.3-.3-.4-.2-.7-.4-1.1-.7 0 0-1.1 1.4-1 1.5.5.4 1 .8 1.6 1 .7.3 1.5.4 2.3.4.5 0 1-.1 1.5-.3s.9-.4 1.3-.7c.4-.3.7-.7.9-1.1s.3-.9.3-1.4-.1-1-.3-1.4z" }) });
 
-  // packages/icons/build-module/library/heading-level-6.js
+  // packages/icons/build-module/library/heading-level-6.mjs
   var import_primitives61 = __toESM(require_primitives(), 1);
   var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
   var heading_level_6_default = /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(import_primitives61.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(import_primitives61.Path, { d: "M20.7 12.4c-.2-.3-.4-.6-.7-.9s-.6-.5-1-.6c-.4-.2-.8-.2-1.2-.2-.5 0-.9.1-1.3.3s-.8.5-1.2.8c0-.5 0-.9.2-1.4l.6-.9c.2-.2.5-.4.8-.5.6-.2 1.3-.2 1.9 0 .3.1.6.3.8.5 0 0 1.3-1.3 1.3-1.4-.4-.3-.9-.6-1.4-.8-.6-.2-1.3-.3-2-.3-.6 0-1.1.1-1.7.4-.5.2-1 .5-1.4.9-.4.4-.8 1-1 1.6-.3.7-.4 1.5-.4 2.3s.1 1.5.3 2.1c.2.6.6 1.1 1 1.5.4.4.9.7 1.4.9 1 .3 2 .3 3 0 .4-.1.8-.3 1.2-.6.3-.3.6-.6.8-1 .2-.5.3-.9.3-1.4s-.1-.9-.3-1.3zm-2 2.1c-.1.2-.3.4-.4.5-.1.1-.3.2-.5.2-.2.1-.4.1-.6.1-.2.1-.5 0-.7-.1-.2 0-.3-.2-.5-.3-.1-.2-.3-.4-.4-.6-.2-.3-.3-.7-.3-1 .3-.3.6-.5 1-.7.3-.1.7-.2 1-.2.4 0 .8.1 1.1.3.3.3.4.7.4 1.1 0 .2 0 .5-.1.7zM9 11H5V7H3v10h2v-4h4v4h2V7H9v4z" }) });
 
-  // packages/icons/build-module/library/heading.js
+  // packages/icons/build-module/library/heading.mjs
   var import_primitives62 = __toESM(require_primitives(), 1);
   var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
   var heading_default = /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives62.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives62.Path, { d: "M6 5V18.5911L12 13.8473L18 18.5911V5H6Z" }) });
 
-  // packages/icons/build-module/library/home.js
+  // packages/icons/build-module/library/home.mjs
   var import_primitives63 = __toESM(require_primitives(), 1);
   var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
   var home_default = /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives63.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives63.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
 
-  // packages/icons/build-module/library/html.js
+  // packages/icons/build-module/library/html.mjs
   var import_primitives64 = __toESM(require_primitives(), 1);
   var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
   var html_default = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_primitives64.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_primitives64.Path, { d: "M4.8 11.4H2.1V9H1v6h1.1v-2.6h2.7V15h1.1V9H4.8v2.4zm1.9-1.3h1.7V15h1.1v-4.9h1.7V9H6.7v1.1zM16.2 9l-1.5 2.7L13.3 9h-.9l-.8 6h1.1l.5-4 1.5 2.8 1.5-2.8.5 4h1.1L17 9h-.8zm3.8 5V9h-1.1v6h3.6v-1H20z" }) });
 
-  // packages/icons/build-module/library/image.js
+  // packages/icons/build-module/library/image.mjs
   var import_primitives65 = __toESM(require_primitives(), 1);
   var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
   var image_default = /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives65.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives65.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" }) });
 
-  // packages/icons/build-module/library/keyboard-return.js
+  // packages/icons/build-module/library/keyboard-return.mjs
   var import_primitives66 = __toESM(require_primitives(), 1);
   var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
   var keyboard_return_default = /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives66.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives66.Path, { d: "m6.734 16.106 2.176-2.38-1.093-1.028-3.846 4.158 3.846 4.158 1.093-1.028-2.176-2.38h2.811c1.125 0 2.25.03 3.374 0 1.428-.001 3.362-.25 4.963-1.277 1.66-1.065 2.868-2.906 2.868-5.859 0-2.479-1.327-4.896-3.65-5.93-1.82-.813-3.044-.8-4.806-.788l-.567.002v1.5c.184 0 .368 0 .553-.002 1.82-.007 2.704-.014 4.21.657 1.854.827 2.76 2.657 2.76 4.561 0 2.472-.973 3.824-2.178 4.596-1.258.807-2.864 1.04-4.163 1.04h-.02c-1.115.03-2.229 0-3.344 0H6.734Z" }) });
 
-  // packages/icons/build-module/library/layout.js
+  // packages/icons/build-module/library/layout.mjs
   var import_primitives67 = __toESM(require_primitives(), 1);
   var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
   var layout_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives67.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives67.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
-  // packages/icons/build-module/library/link-off.js
+  // packages/icons/build-module/library/link-off.mjs
   var import_primitives68 = __toESM(require_primitives(), 1);
   var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
   var link_off_default = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_primitives68.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_primitives68.Path, { d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z" }) });
 
-  // packages/icons/build-module/library/link.js
+  // packages/icons/build-module/library/link.mjs
   var import_primitives69 = __toESM(require_primitives(), 1);
   var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
   var link_default = /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_primitives69.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_primitives69.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
 
-  // packages/icons/build-module/library/list-item.js
+  // packages/icons/build-module/library/list-item.mjs
   var import_primitives70 = __toESM(require_primitives(), 1);
   var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
   var list_item_default = /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives70.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives70.Path, { d: "M12 11v1.5h8V11h-8zm-6-1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
 
-  // packages/icons/build-module/library/list.js
+  // packages/icons/build-module/library/list.mjs
   var import_primitives71 = __toESM(require_primitives(), 1);
   var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
   var list_default = /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives71.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives71.Path, { d: "M4 4v1.5h16V4H4zm8 8.5h8V11h-8v1.5zM4 20h16v-1.5H4V20zm4-8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2z" }) });
 
-  // packages/icons/build-module/library/login.js
+  // packages/icons/build-module/library/login.mjs
   var import_primitives72 = __toESM(require_primitives(), 1);
   var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
   var login_default = /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives72.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives72.Path, { d: "M11 14.5l1.1 1.1 3-3 .5-.5-.6-.6-3-3-1 1 1.7 1.7H5v1.5h7.7L11 14.5zM16.8 5h-7c-1.1 0-2 .9-2 2v1.5h1.5V7c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v10c0 .3-.2.5-.5.5h-7c-.3 0-.5-.2-.5-.5v-1.5H7.8V17c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z" }) });
 
-  // packages/icons/build-module/library/loop.js
+  // packages/icons/build-module/library/loop.mjs
   var import_primitives73 = __toESM(require_primitives(), 1);
   var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
   var loop_default = /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_primitives73.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_primitives73.Path, { d: "M18.1823 11.6392C18.1823 13.0804 17.0139 14.2487 15.5727 14.2487C14.3579 14.2487 13.335 13.4179 13.0453 12.2922L13.0377 12.2625L13.0278 12.2335L12.3985 10.377L12.3942 10.3785C11.8571 8.64997 10.246 7.39405 8.33961 7.39405C5.99509 7.39405 4.09448 9.29465 4.09448 11.6392C4.09448 13.9837 5.99509 15.8843 8.33961 15.8843C8.88499 15.8843 9.40822 15.781 9.88943 15.5923L9.29212 14.0697C8.99812 14.185 8.67729 14.2487 8.33961 14.2487C6.89838 14.2487 5.73003 13.0804 5.73003 11.6392C5.73003 10.1979 6.89838 9.02959 8.33961 9.02959C9.55444 9.02959 10.5773 9.86046 10.867 10.9862L10.8772 10.9836L11.4695 12.7311C11.9515 14.546 13.6048 15.8843 15.5727 15.8843C17.9172 15.8843 19.8178 13.9837 19.8178 11.6392C19.8178 9.29465 17.9172 7.39404 15.5727 7.39404C15.0287 7.39404 14.5066 7.4968 14.0264 7.6847L14.6223 9.20781C14.9158 9.093 15.2358 9.02959 15.5727 9.02959C17.0139 9.02959 18.1823 10.1979 18.1823 11.6392Z" }) });
 
-  // packages/icons/build-module/library/map-marker.js
+  // packages/icons/build-module/library/map-marker.mjs
   var import_primitives74 = __toESM(require_primitives(), 1);
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   var map_marker_default = /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_primitives74.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_primitives74.Path, { d: "M12 9c-.8 0-1.5.7-1.5 1.5S11.2 12 12 12s1.5-.7 1.5-1.5S12.8 9 12 9zm0-5c-3.6 0-6.5 2.8-6.5 6.2 0 .8.3 1.8.9 3.1.5 1.1 1.2 2.3 2 3.6.7 1 3 3.8 3.2 3.9l.4.5.4-.5c.2-.2 2.6-2.9 3.2-3.9.8-1.2 1.5-2.5 2-3.6.6-1.3.9-2.3.9-3.1C18.5 6.8 15.6 4 12 4zm4.3 8.7c-.5 1-1.1 2.2-1.9 3.4-.5.7-1.7 2.2-2.4 3-.7-.8-1.9-2.3-2.4-3-.8-1.2-1.4-2.3-1.9-3.3-.6-1.4-.7-2.2-.7-2.5 0-2.6 2.2-4.7 5-4.7s5 2.1 5 4.7c0 .2-.1 1-.7 2.4z" }) });
 
-  // packages/icons/build-module/library/math.js
+  // packages/icons/build-module/library/math.mjs
   var import_primitives75 = __toESM(require_primitives(), 1);
   var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
   var math_default = /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_primitives75.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_primitives75.Path, { d: "M11.2 6.8c-.7 0-1.4.5-1.6 1.1l-2.8 7.5-1.2-1.8c-.1-.2-.4-.3-.6-.3H3v1.5h1.6l1.2 1.8c.6.9 1.9.7 2.2-.3l2.9-7.9s.1-.2.2-.2h7.8V6.7h-7.8Zm5.3 3.4-1.9 1.9-1.9-1.9-1.1 1.1 1.9 1.9-1.9 1.9 1.1 1.1 1.9-1.9 1.9 1.9 1.1-1.1-1.9-1.9 1.9-1.9-1.1-1.1Z" }) });
 
-  // packages/icons/build-module/library/media-and-text.js
+  // packages/icons/build-module/library/media-and-text.mjs
   var import_primitives76 = __toESM(require_primitives(), 1);
   var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
   var media_and_text_default = /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_primitives76.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_primitives76.Path, { d: "M3 6v11.5h8V6H3Zm11 3h7V7.5h-7V9Zm7 3.5h-7V11h7v1.5ZM14 16h7v-1.5h-7V16Z" }) });
 
-  // packages/icons/build-module/library/media.js
+  // packages/icons/build-module/library/media.mjs
   var import_primitives77 = __toESM(require_primitives(), 1);
   var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
   var media_default = /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_primitives77.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -5640,42 +5640,42 @@ var wp;
     )
   ] });
 
-  // packages/icons/build-module/library/menu.js
+  // packages/icons/build-module/library/menu.mjs
   var import_primitives78 = __toESM(require_primitives(), 1);
   var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
   var menu_default = /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_primitives78.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_primitives78.Path, { d: "M5 5v1.5h14V5H5zm0 7.8h14v-1.5H5v1.5zM5 19h14v-1.5H5V19z" }) });
 
-  // packages/icons/build-module/library/more-vertical.js
+  // packages/icons/build-module/library/more-vertical.mjs
   var import_primitives79 = __toESM(require_primitives(), 1);
   var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
   var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_primitives79.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_primitives79.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
 
-  // packages/icons/build-module/library/more.js
+  // packages/icons/build-module/library/more.mjs
   var import_primitives80 = __toESM(require_primitives(), 1);
   var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
   var more_default = /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_primitives80.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_primitives80.Path, { d: "M4 9v1.5h16V9H4zm12 5.5h4V13h-4v1.5zm-6 0h4V13h-4v1.5zm-6 0h4V13H4v1.5z" }) });
 
-  // packages/icons/build-module/library/navigation.js
+  // packages/icons/build-module/library/navigation.mjs
   var import_primitives81 = __toESM(require_primitives(), 1);
   var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
   var navigation_default = /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_primitives81.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_primitives81.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5zM9 16l4.5-3L15 8.4l-4.5 3L9 16z" }) });
 
-  // packages/icons/build-module/library/next.js
+  // packages/icons/build-module/library/next.mjs
   var import_primitives82 = __toESM(require_primitives(), 1);
   var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
   var next_default = /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_primitives82.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_primitives82.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
 
-  // packages/icons/build-module/library/overlay-text.js
+  // packages/icons/build-module/library/overlay-text.mjs
   var import_primitives83 = __toESM(require_primitives(), 1);
   var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
   var overlay_text_default = /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_primitives83.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_primitives83.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12-9.8c.4 0 .8-.3.9-.7l1.1-3h3.6l.5 1.7h1.9L13 9h-2.2l-3.4 9.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12H20V6c0-1.1-.9-2-2-2zm-6 7l1.4 3.9h-2.7L12 11z" }) });
 
-  // packages/icons/build-module/library/page-break.js
+  // packages/icons/build-module/library/page-break.mjs
   var import_primitives84 = __toESM(require_primitives(), 1);
   var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
   var page_break_default = /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_primitives84.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_primitives84.Path, { d: "M17.5 9V6a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v3H8V6a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v3h1.5Zm0 6.5V18a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-2.5H8V18a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2.5h1.5ZM4 13h16v-1.5H4V13Z" }) });
 
-  // packages/icons/build-module/library/page.js
+  // packages/icons/build-module/library/page.mjs
   var import_primitives85 = __toESM(require_primitives(), 1);
   var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
   var page_default = /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(import_primitives85.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -5683,7 +5683,7 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_primitives85.Path, { d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z" })
   ] });
 
-  // packages/icons/build-module/library/pages.js
+  // packages/icons/build-module/library/pages.mjs
   var import_primitives86 = __toESM(require_primitives(), 1);
   var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
   var pages_default = /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(import_primitives86.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -5692,47 +5692,47 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(import_primitives86.Path, { d: "M20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z" })
   ] });
 
-  // packages/icons/build-module/library/paragraph.js
+  // packages/icons/build-module/library/paragraph.mjs
   var import_primitives87 = __toESM(require_primitives(), 1);
   var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
   var paragraph_default = /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_primitives87.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_primitives87.Path, { d: "m9.99609 14v-.2251l.00391.0001v6.225h1.5v-14.5h2.5v14.5h1.5v-14.5h3v-1.5h-8.50391c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5z" }) });
 
-  // packages/icons/build-module/library/pencil.js
+  // packages/icons/build-module/library/pencil.mjs
   var import_primitives88 = __toESM(require_primitives(), 1);
   var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
   var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_primitives88.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_primitives88.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
 
-  // packages/icons/build-module/library/pin.js
+  // packages/icons/build-module/library/pin.mjs
   var import_primitives89 = __toESM(require_primitives(), 1);
   var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
   var pin_default = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_primitives89.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_primitives89.Path, { d: "m21.5 9.1-6.6-6.6-4.2 5.6c-1.2-.1-2.4.1-3.6.7-.1 0-.1.1-.2.1-.5.3-.9.6-1.2.9l3.7 3.7-5.7 5.7v1.1h1.1l5.7-5.7 3.7 3.7c.4-.4.7-.8.9-1.2.1-.1.1-.2.2-.3.6-1.1.8-2.4.6-3.6l5.6-4.1zm-7.3 3.5.1.9c.1.9 0 1.8-.4 2.6l-6-6c.8-.4 1.7-.5 2.6-.4l.9.1L15 4.9 19.1 9l-4.9 3.6z" }) });
 
-  // packages/icons/build-module/library/plugins.js
+  // packages/icons/build-module/library/plugins.mjs
   var import_primitives90 = __toESM(require_primitives(), 1);
   var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
   var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_primitives90.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_primitives90.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
 
-  // packages/icons/build-module/library/plus.js
+  // packages/icons/build-module/library/plus.mjs
   var import_primitives91 = __toESM(require_primitives(), 1);
   var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
   var plus_default = /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_primitives91.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_primitives91.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
 
-  // packages/icons/build-module/library/position-center.js
+  // packages/icons/build-module/library/position-center.mjs
   var import_primitives92 = __toESM(require_primitives(), 1);
   var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
   var position_center_default = /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_primitives92.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_primitives92.Path, { d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM7 9h10v6H7V9Z" }) });
 
-  // packages/icons/build-module/library/position-left.js
+  // packages/icons/build-module/library/position-left.mjs
   var import_primitives93 = __toESM(require_primitives(), 1);
   var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
   var position_left_default = /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_primitives93.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_primitives93.Path, { d: "M5 5.5h8V4H5v1.5ZM5 20h8v-1.5H5V20ZM19 9H5v6h14V9Z" }) });
 
-  // packages/icons/build-module/library/position-right.js
+  // packages/icons/build-module/library/position-right.mjs
   var import_primitives94 = __toESM(require_primitives(), 1);
   var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
   var position_right_default = /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_primitives94.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_primitives94.Path, { d: "M19 5.5h-8V4h8v1.5ZM19 20h-8v-1.5h8V20ZM5 9h14v6H5V9Z" }) });
 
-  // packages/icons/build-module/library/post-author.js
+  // packages/icons/build-module/library/post-author.mjs
   var import_primitives95 = __toESM(require_primitives(), 1);
   var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
   var post_author_default = /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_primitives95.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
@@ -5744,7 +5744,7 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/post-categories.js
+  // packages/icons/build-module/library/post-categories.mjs
   var import_primitives96 = __toESM(require_primitives(), 1);
   var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
   var post_categories_default = /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_primitives96.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
@@ -5756,27 +5756,27 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/post-comments-count.js
+  // packages/icons/build-module/library/post-comments-count.mjs
   var import_primitives97 = __toESM(require_primitives(), 1);
   var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
   var post_comments_count_default = /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_primitives97.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_primitives97.Path, { d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-2.2 6.6H7l1.6-2.2c.3-.4.5-.7.6-.9.1-.2.2-.4.2-.5 0-.2-.1-.3-.1-.4-.1-.1-.2-.1-.4-.1s-.4 0-.6.1c-.3.1-.5.3-.7.4l-.2.2-.2-1.2.1-.1c.3-.2.5-.3.8-.4.3-.1.6-.1.9-.1.3 0 .6.1.9.2.2.1.4.3.6.5.1.2.2.5.2.7 0 .3-.1.6-.2.9-.1.3-.4.7-.7 1.1l-.5.6h1.6v1.2z" }) });
 
-  // packages/icons/build-module/library/post-comments-form.js
+  // packages/icons/build-module/library/post-comments-form.mjs
   var import_primitives98 = __toESM(require_primitives(), 1);
   var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
   var post_comments_form_default = /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_primitives98.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_primitives98.Path, { d: "M13 8H4v1.5h9V8zM4 4v1.5h16V4H4zm9 8H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1V13c0-.6-.4-1-1-1zm-.5 6.6H6.7l-1.2 1.2v-6.3h7v5.1z" }) });
 
-  // packages/icons/build-module/library/post-comments.js
+  // packages/icons/build-module/library/post-comments.mjs
   var import_primitives99 = __toESM(require_primitives(), 1);
   var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
   var post_comments_default = /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_primitives99.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_primitives99.Path, { d: "M14 10.1V4c0-.6-.4-1-1-1H5c-.6 0-1 .4-1 1v8.3c0 .3.2.7.6.8.1.1.2.1.3.1.2 0 .5-.1.6-.3l1.8-1.8H13c.6 0 1-.4 1-1zm-1.5-.5H6.7l-1.2 1.2V4.5h7v5.1zM19 12h-8c-.6 0-1 .4-1 1v6.1c0 .6.4 1 1 1h5.7l1.8 1.8c.1.2.4.3.6.3.1 0 .2 0 .3-.1.4-.1.6-.5.6-.8V13c0-.6-.4-1-1-1zm-.5 7.8l-1.2-1.2h-5.8v-5.1h7v6.3z" }) });
 
-  // packages/icons/build-module/library/post-content.js
+  // packages/icons/build-module/library/post-content.mjs
   var import_primitives100 = __toESM(require_primitives(), 1);
   var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
   var post_content_default = /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_primitives100.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_primitives100.Path, { d: "M4 6h12V4.5H4V6Zm16 4.5H4V9h16v1.5ZM4 15h16v-1.5H4V15Zm0 4.5h16V18H4v1.5Z" }) });
 
-  // packages/icons/build-module/library/post-date.js
+  // packages/icons/build-module/library/post-date.mjs
   var import_primitives101 = __toESM(require_primitives(), 1);
   var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
   var post_date_default = /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(import_primitives101.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -5784,77 +5784,77 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_primitives101.Path, { d: "M19.5 7h-15v12a.5.5 0 00.5.5h14a.5.5 0 00.5-.5V7zM3 7V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" })
   ] });
 
-  // packages/icons/build-module/library/post-excerpt.js
+  // packages/icons/build-module/library/post-excerpt.mjs
   var import_primitives102 = __toESM(require_primitives(), 1);
   var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
   var post_excerpt_default = /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_primitives102.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_primitives102.Path, { d: "M8.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H4v-3h4.001ZM4 20h9v-1.5H4V20Zm16-4H4v-1.5h16V16ZM13.001 3.984V9.47c0 1.518-.98 2.5-2.499 2.5h-.5v-1.5h.5c.69 0 1-.31 1-1V6.984H9v-3h4.001Z" }) });
 
-  // packages/icons/build-module/library/post-featured-image.js
+  // packages/icons/build-module/library/post-featured-image.mjs
   var import_primitives103 = __toESM(require_primitives(), 1);
   var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
   var post_featured_image_default = /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_primitives103.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_primitives103.Path, { d: "M19 3H5c-.6 0-1 .4-1 1v7c0 .5.4 1 1 1h14c.5 0 1-.4 1-1V4c0-.6-.4-1-1-1zM5.5 10.5v-.4l1.8-1.3 1.3.8c.3.2.7.2.9-.1L11 8.1l2.4 2.4H5.5zm13 0h-2.9l-4-4c-.3-.3-.8-.3-1.1 0L8.9 8l-1.2-.8c-.3-.2-.6-.2-.9 0l-1.3 1V4.5h13v6zM4 20h9v-1.5H4V20zm0-4h16v-1.5H4V16z" }) });
 
-  // packages/icons/build-module/library/post-list.js
+  // packages/icons/build-module/library/post-list.mjs
   var import_primitives104 = __toESM(require_primitives(), 1);
   var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
   var post_list_default = /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_primitives104.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_primitives104.Path, { d: "M18 5.5H6a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5ZM6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1 5h1.5v1.5H7V9Zm1.5 4.5H7V15h1.5v-1.5ZM10 9h7v1.5h-7V9Zm7 4.5h-7V15h7v-1.5Z" }) });
 
-  // packages/icons/build-module/library/post-terms.js
+  // packages/icons/build-module/library/post-terms.mjs
   var import_primitives105 = __toESM(require_primitives(), 1);
   var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
   var post_terms_default = /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_primitives105.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_primitives105.Path, { d: "M8.1 12.3c.1.1.3.3.5.3.2.1.4.1.6.1.2 0 .4 0 .6-.1.2-.1.4-.2.5-.3l3-3c.3-.3.5-.7.5-1.1 0-.4-.2-.8-.5-1.1L9.7 3.5c-.1-.2-.3-.3-.5-.3H5c-.4 0-.8.4-.8.8v4.2c0 .2.1.4.2.5l3.7 3.6zM5.8 4.8h3.1l3.4 3.4v.1l-3 3 .5.5-.7-.5-3.3-3.4V4.8zM4 20h9v-1.5H4V20zm0-5.5V16h16v-1.5H4z" }) });
 
-  // packages/icons/build-module/library/preformatted.js
+  // packages/icons/build-module/library/preformatted.mjs
   var import_primitives106 = __toESM(require_primitives(), 1);
   var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
   var preformatted_default = /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_primitives106.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_primitives106.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12zM7 16.5h6V15H7v1.5zm4-4h6V11h-6v1.5zM9 11H7v1.5h2V11zm6 5.5h2V15h-2v1.5z" }) });
 
-  // packages/icons/build-module/library/previous.js
+  // packages/icons/build-module/library/previous.mjs
   var import_primitives107 = __toESM(require_primitives(), 1);
   var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
   var previous_default = /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_primitives107.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_primitives107.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
 
-  // packages/icons/build-module/library/pull-left.js
+  // packages/icons/build-module/library/pull-left.mjs
   var import_primitives108 = __toESM(require_primitives(), 1);
   var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
   var pull_left_default = /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_primitives108.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_primitives108.Path, { d: "M4 18h6V6H4v12zm9-9.5V10h7V8.5h-7zm0 7h7V14h-7v1.5z" }) });
 
-  // packages/icons/build-module/library/pull-right.js
+  // packages/icons/build-module/library/pull-right.mjs
   var import_primitives109 = __toESM(require_primitives(), 1);
   var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
   var pull_right_default = /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_primitives109.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_primitives109.Path, { d: "M14 6v12h6V6h-6zM4 10h7V8.5H4V10zm0 5.5h7V14H4v1.5z" }) });
 
-  // packages/icons/build-module/library/pullquote.js
+  // packages/icons/build-module/library/pullquote.mjs
   var import_primitives110 = __toESM(require_primitives(), 1);
   var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
   var pullquote_default = /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_primitives110.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_primitives110.Path, { d: "M18 8H6c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zm.5 6c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-4c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v4zM4 4v1.5h16V4H4zm0 16h16v-1.5H4V20z" }) });
 
-  // packages/icons/build-module/library/query-pagination-next.js
+  // packages/icons/build-module/library/query-pagination-next.mjs
   var import_primitives111 = __toESM(require_primitives(), 1);
   var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
   var query_pagination_next_default = /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_primitives111.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_primitives111.Path, { d: "M5 13.5h3v-3H5v3zm5 0h3v-3h-3v3zM17 9l-1 1 2 2-2 2 1 1 3-3-3-3z" }) });
 
-  // packages/icons/build-module/library/query-pagination-numbers.js
+  // packages/icons/build-module/library/query-pagination-numbers.mjs
   var import_primitives112 = __toESM(require_primitives(), 1);
   var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
   var query_pagination_numbers_default = /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_primitives112.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_primitives112.Path, { d: "M4 13.5h6v-3H4v3zm8.2-2.5.8-.3V14h1V9.3l-2.2.7.4 1zm7.1-1.2c-.5-.6-1.2-.5-1.7-.4-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-.9c.3-.6.8-1.4.9-2.1 0-.3-.1-.8-.3-1.1z" }) });
 
-  // packages/icons/build-module/library/query-pagination-previous.js
+  // packages/icons/build-module/library/query-pagination-previous.mjs
   var import_primitives113 = __toESM(require_primitives(), 1);
   var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
   var query_pagination_previous_default = /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_primitives113.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_primitives113.Path, { d: "M16 10.5v3h3v-3h-3zm-5 3h3v-3h-3v3zM7 9l-3 3 3 3 1-1-2-2 2-2-1-1z" }) });
 
-  // packages/icons/build-module/library/query-pagination.js
+  // packages/icons/build-module/library/query-pagination.mjs
   var import_primitives114 = __toESM(require_primitives(), 1);
   var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
   var query_pagination_default = /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_primitives114.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_primitives114.Path, { d: "M4 13.5h6v-3H4v3zm8 0h3v-3h-3v3zm5-3v3h3v-3h-3z" }) });
 
-  // packages/icons/build-module/library/quote.js
+  // packages/icons/build-module/library/quote.mjs
   var import_primitives115 = __toESM(require_primitives(), 1);
   var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
   var quote_default = /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_primitives115.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_primitives115.Path, { d: "M13 6v6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H13zm-9 6h5.2v4c0 .8-.2 1.4-.5 1.7-.6.6-1.6.6-2.5.5h-.3v1.5h.5c1 0 2.3-.1 3.3-1 .6-.6 1-1.6 1-2.8V6H4v6z" }) });
 
-  // packages/icons/build-module/library/remove-submenu.js
+  // packages/icons/build-module/library/remove-submenu.mjs
   var import_primitives116 = __toESM(require_primitives(), 1);
   var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
   var remove_submenu_default = /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_primitives116.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
@@ -5866,52 +5866,52 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/resize-corner-n-e.js
+  // packages/icons/build-module/library/resize-corner-n-e.mjs
   var import_primitives117 = __toESM(require_primitives(), 1);
   var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
   var resize_corner_n_e_default = /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_primitives117.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_primitives117.Path, { d: "M7 18h4.5v1.5h-7v-7H6V17L17 6h-4.5V4.5h7v7H18V7L7 18Z" }) });
 
-  // packages/icons/build-module/library/row.js
+  // packages/icons/build-module/library/row.mjs
   var import_primitives118 = __toESM(require_primitives(), 1);
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
   var row_default = /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_primitives118.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_primitives118.Path, { d: "M4 6.5h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4V16h5a.5.5 0 0 0 .5-.5v-7A.5.5 0 0 0 9 8H4V6.5Zm16 0h-5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h5V16h-5a.5.5 0 0 1-.5-.5v-7A.5.5 0 0 1 15 8h5V6.5Z" }) });
 
-  // packages/icons/build-module/library/rss.js
+  // packages/icons/build-module/library/rss.mjs
   var import_primitives119 = __toESM(require_primitives(), 1);
   var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
   var rss_default = /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_primitives119.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_primitives119.Path, { d: "M5 10.2h-.8v1.5H5c1.9 0 3.8.8 5.1 2.1 1.4 1.4 2.1 3.2 2.1 5.1v.8h1.5V19c0-2.3-.9-4.5-2.6-6.2-1.6-1.6-3.8-2.6-6.1-2.6zm10.4-1.6C12.6 5.8 8.9 4.2 5 4.2h-.8v1.5H5c3.5 0 6.9 1.4 9.4 3.9s3.9 5.8 3.9 9.4v.8h1.5V19c0-3.9-1.6-7.6-4.4-10.4zM4 20h3v-3H4v3z" }) });
 
-  // packages/icons/build-module/library/search.js
+  // packages/icons/build-module/library/search.mjs
   var import_primitives120 = __toESM(require_primitives(), 1);
   var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
   var search_default = /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_primitives120.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_primitives120.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
-  // packages/icons/build-module/library/separator.js
+  // packages/icons/build-module/library/separator.mjs
   var import_primitives121 = __toESM(require_primitives(), 1);
   var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
   var separator_default = /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_primitives121.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_primitives121.Path, { d: "M4.5 12.5v4H3V7h1.5v3.987h15V7H21v9.5h-1.5v-4h-15Z" }) });
 
-  // packages/icons/build-module/library/share.js
+  // packages/icons/build-module/library/share.mjs
   var import_primitives122 = __toESM(require_primitives(), 1);
   var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
   var share_default = /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_primitives122.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_primitives122.Path, { d: "M9 11.8l6.1-4.5c.1.4.4.7.9.7h2c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1h-2c-.6 0-1 .4-1 1v.4l-6.4 4.8c-.2-.1-.4-.2-.6-.2H6c-.6 0-1 .4-1 1v2c0 .6.4 1 1 1h2c.2 0 .4-.1.6-.2l6.4 4.8v.4c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1h-2c-.5 0-.8.3-.9.7L9 12.2v-.4z" }) });
 
-  // packages/icons/build-module/library/shortcode.js
+  // packages/icons/build-module/library/shortcode.mjs
   var import_primitives123 = __toESM(require_primitives(), 1);
   var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
   var shortcode_default = /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_primitives123.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_primitives123.Path, { d: "M16 4.2v1.5h2.5v12.5H16v1.5h4V4.2h-4zM4.2 19.8h4v-1.5H5.8V5.8h2.5V4.2h-4l-.1 15.6zm5.1-3.1l1.4.6 4-10-1.4-.6-4 10z" }) });
 
-  // packages/icons/build-module/library/sidebar.js
+  // packages/icons/build-module/library/sidebar.mjs
   var import_primitives124 = __toESM(require_primitives(), 1);
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
   var sidebar_default = /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_primitives124.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_primitives124.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
-  // packages/icons/build-module/library/site-logo.js
+  // packages/icons/build-module/library/site-logo.mjs
   var import_primitives125 = __toESM(require_primitives(), 1);
   var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
   var site_logo_default = /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_primitives125.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_primitives125.Path, { d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm0 1.5c3.4 0 6.2 2.7 6.5 6l-1.2-.6-.8-.4c-.1 0-.2 0-.3-.1H16c-.1-.2-.4-.2-.7 0l-2.9 2.1L9 11.3h-.7L5.5 13v-1.1c0-3.6 2.9-6.5 6.5-6.5Zm0 13c-2.7 0-5-1.7-6-4l2.8-1.7 3.5 1.2h.4s.2 0 .4-.2l2.9-2.1.4.2c.6.3 1.4.7 2.1 1.1-.5 3.1-3.2 5.4-6.4 5.4Z" }) });
 
-  // packages/icons/build-module/library/square.js
+  // packages/icons/build-module/library/square.mjs
   var import_primitives126 = __toESM(require_primitives(), 1);
   var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
   var square_default = /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_primitives126.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
@@ -5925,37 +5925,37 @@ var wp;
     }
   ) });
 
-  // packages/icons/build-module/library/stack.js
+  // packages/icons/build-module/library/stack.mjs
   var import_primitives127 = __toESM(require_primitives(), 1);
   var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
   var stack_default = /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_primitives127.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_primitives127.Path, { d: "M17.5 4v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V4H8v5a.5.5 0 0 0 .5.5h7A.5.5 0 0 0 16 9V4h1.5Zm0 16v-5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v5H8v-5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v5h1.5Z" }) });
 
-  // packages/icons/build-module/library/symbol-filled.js
+  // packages/icons/build-module/library/symbol-filled.mjs
   var import_primitives128 = __toESM(require_primitives(), 1);
   var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
   var symbol_filled_default = /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_primitives128.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_primitives128.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
-  // packages/icons/build-module/library/symbol.js
+  // packages/icons/build-module/library/symbol.mjs
   var import_primitives129 = __toESM(require_primitives(), 1);
   var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
   var symbol_default = /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives129.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_primitives129.Path, { d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-1 1.4l-5.6 5.6c-.1.1-.3.1-.4 0l-5.6-5.6c-.1-.1-.1-.3 0-.4l5.6-5.6s.1-.1.2-.1.1 0 .2.1l5.6 5.6c.1.1.1.3 0 .4zm-16.6-.4L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z" }) });
 
-  // packages/icons/build-module/library/table-column-after.js
+  // packages/icons/build-module/library/table-column-after.mjs
   var import_primitives130 = __toESM(require_primitives(), 1);
   var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
   var table_column_after_default = /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_primitives130.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_primitives130.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm0-5.5h-4v-4h4v4Zm0-5.5h-4V5c0-.3.2-.5.5-.5h3.5v4Zm11 10.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14Zm-4-10.8H14v3h-3v1.5h3v3h1.5v-3h3v-1.5h-3v-3Z" }) });
 
-  // packages/icons/build-module/library/table-column-before.js
+  // packages/icons/build-module/library/table-column-before.mjs
   var import_primitives131 = __toESM(require_primitives(), 1);
   var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
   var table_column_before_default = /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_primitives131.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_primitives131.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1 .8 1.9 1.8 2H19.2c.9-.1 1.7-.9 1.8-1.8V5c0-1.1-.9-2-2-2Zm-5 16.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h9v15Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19Zm0-5h-4v-4h4v4Zm0-5.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-11 7.3H10v-3h3v-1.5h-3v-3H8.5v3h-3v1.5h3v3Z" }) });
 
-  // packages/icons/build-module/library/table-column-delete.js
+  // packages/icons/build-module/library/table-column-delete.mjs
   var import_primitives132 = __toESM(require_primitives(), 1);
   var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
   var table_column_delete_default = /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_primitives132.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_primitives132.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14.2c.1.9.9 1.7 1.8 1.8H19.2c1-.1 1.8-1 1.8-2V5c0-1.1-.9-2-2-2ZM8.5 19.5H5c-.3 0-.5-.2-.5-.5V5c0-.3.2-.5.5-.5h3.5v15Zm11-.5c0 .3-.2.5-.5.5h-9v-15h9c.3 0 .5.2.5.5v14ZM16.9 8.8l-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1L18 9.9l-1.1-1.1Z" }) });
 
-  // packages/icons/build-module/library/table-of-contents.js
+  // packages/icons/build-module/library/table-of-contents.mjs
   var import_primitives133 = __toESM(require_primitives(), 1);
   var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
   var table_of_contents_default = /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(import_primitives133.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -5970,32 +5970,32 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_primitives133.Path, { d: "M13 15.516a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 8.484a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" })
   ] });
 
-  // packages/icons/build-module/library/table-row-after.js
+  // packages/icons/build-module/library/table-row-after.mjs
   var import_primitives134 = __toESM(require_primitives(), 1);
   var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
   var table_row_after_default = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_primitives134.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_primitives134.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm-9 1.5h4v4h-4v-4ZM4.5 5c0-.3.2-.5.5-.5h3.5v4h-4V5Zm15 14c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-4v-4H19c.3 0 .5.2.5.5v3.5Zm-8.3 10h1.5v-3h3V14h-3v-3h-1.5v3h-3v1.5h3v3Z" }) });
 
-  // packages/icons/build-module/library/table-row-before.js
+  // packages/icons/build-module/library/table-row-before.mjs
   var import_primitives135 = __toESM(require_primitives(), 1);
   var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
   var table_row_before_default = /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(import_primitives135.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(import_primitives135.Path, { d: "M21 5c0-1.1-.9-2-2-2H5c-1 0-1.9.8-2 1.8V19.2c.1.9.9 1.7 1.8 1.8H19c1.1 0 2-.9 2-2V5ZM4.5 14V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v9h-15Zm4 5.5H5c-.3 0-.5-.2-.5-.5v-3.5h4v4Zm5.5 0h-4v-4h4v4Zm5.5-.5c0 .3-.2.5-.5.5h-3.5v-4h4V19ZM11.2 10h-3V8.5h3v-3h1.5v3h3V10h-3v3h-1.5v-3Z" }) });
 
-  // packages/icons/build-module/library/table-row-delete.js
+  // packages/icons/build-module/library/table-row-delete.mjs
   var import_primitives136 = __toESM(require_primitives(), 1);
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
   var table_row_delete_default = /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_primitives136.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_primitives136.Path, { d: "M19 3H4.8c-.9.1-1.7.9-1.8 1.8V19.2c.1 1 1 1.8 2 1.8h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-9h15v9Zm0-10.5h-15V5c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v3.5Zm-9.6 9.4 2.1-2.1 2.1 2.1 1.1-1.1-2.1-2.1 2.1-2.1-1.1-1.1-2.1 2.1-2.1-2.1-1.1 1.1 2.1 2.1-2.1 2.1 1.1 1.1Z" }) });
 
-  // packages/icons/build-module/library/table.js
+  // packages/icons/build-module/library/table.mjs
   var import_primitives137 = __toESM(require_primitives(), 1);
   var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
   var table_default = /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_primitives137.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_primitives137.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm.5 2v6.2h-6.8V4.4h6.2c.3 0 .5.2.5.5ZM5 4.5h6.2v6.8H4.4V5.1c0-.3.2-.5.5-.5ZM4.5 19v-6.2h6.8v6.8H5.1c-.3 0-.5-.2-.5-.5Zm14.5.5h-6.2v-6.8h6.8v6.2c0 .3-.2.5-.5.5Z" }) });
 
-  // packages/icons/build-module/library/tag.js
+  // packages/icons/build-module/library/tag.mjs
   var import_primitives138 = __toESM(require_primitives(), 1);
   var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
   var tag_default = /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_primitives138.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_primitives138.Path, { d: "M4.75 4a.75.75 0 0 0-.75.75v7.826c0 .2.08.39.22.53l6.72 6.716a2.313 2.313 0 0 0 3.276-.001l5.61-5.611-.531-.53.532.528a2.315 2.315 0 0 0 0-3.264L13.104 4.22a.75.75 0 0 0-.53-.22H4.75ZM19 12.576a.815.815 0 0 1-.236.574l-5.61 5.611a.814.814 0 0 1-1.153 0L5.5 12.264V5.5h6.763l6.5 6.502a.816.816 0 0 1 .237.574ZM8.75 9.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" }) });
 
-  // packages/icons/build-module/library/term-count.js
+  // packages/icons/build-module/library/term-count.mjs
   var import_primitives139 = __toESM(require_primitives(), 1);
   var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
   var term_count_default = /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(import_primitives139.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -6003,12 +6003,12 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(import_primitives139.Path, { d: "M12.574 4a.75.75 0 0 1 .53.22l6.723 6.724a2.315 2.315 0 0 1 0 3.264l-.532-.528.531.53-5.61 5.611a2.31 2.31 0 0 1-3.276.001l-6.72-6.716a.75.75 0 0 1-.22-.53V4.75A.75.75 0 0 1 4.75 4h7.824ZM5.5 5.5v6.764l6.501 6.497a.817.817 0 0 0 .889.178.816.816 0 0 0 .264-.178l5.61-5.61a.816.816 0 0 0-.001-1.149l-6.5-6.502H5.5Z" })
   ] });
 
-  // packages/icons/build-module/library/term-description.js
+  // packages/icons/build-module/library/term-description.mjs
   var import_primitives140 = __toESM(require_primitives(), 1);
   var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
   var term_description_default = /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(import_primitives140.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(import_primitives140.Path, { d: "M6.08 10.103h2.914L9.657 12h1.417L8.23 4H6.846L4 12h1.417l.663-1.897Zm1.463-4.137.994 2.857h-2l1.006-2.857ZM11 16H4v-1.5h7V16Zm1 0h8v-1.5h-8V16Zm-4 4H4v-1.5h4V20Zm7-1.5V20H9v-1.5h6Z" }) });
 
-  // packages/icons/build-module/library/term-name.js
+  // packages/icons/build-module/library/term-name.mjs
   var import_primitives141 = __toESM(require_primitives(), 1);
   var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
   var term_name_default = /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(import_primitives141.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: [
@@ -6016,32 +6016,32 @@ var wp;
     /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(import_primitives141.Path, { d: "M12.574 4a.75.75 0 0 1 .53.22l6.723 6.724a2.315 2.315 0 0 1 0 3.264l-.532-.528.531.53-5.61 5.611a2.31 2.31 0 0 1-3.276.001l-6.72-6.716a.75.75 0 0 1-.22-.53V4.75A.75.75 0 0 1 4.75 4h7.824ZM5.5 5.5v6.764l6.501 6.497a.817.817 0 0 0 .889.178.816.816 0 0 0 .264-.178l5.61-5.61a.816.816 0 0 0-.001-1.149l-6.5-6.502H5.5Z" })
   ] });
 
-  // packages/icons/build-module/library/time-to-read.js
+  // packages/icons/build-module/library/time-to-read.mjs
   var import_primitives142 = __toESM(require_primitives(), 1);
   var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
   var time_to_read_default = /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_primitives142.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_primitives142.Path, { d: "M12 3c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm0 16.5c-4.1 0-7.5-3.4-7.5-7.5S7.9 4.5 12 4.5s7.5 3.4 7.5 7.5-3.4 7.5-7.5 7.5zM12 7l-1 5c0 .3.2.6.4.8l4.2 2.8-2.7-4.1L12 7z" }) });
 
-  // packages/icons/build-module/library/title.js
+  // packages/icons/build-module/library/title.mjs
   var import_primitives143 = __toESM(require_primitives(), 1);
   var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
   var title_default = /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(import_primitives143.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(import_primitives143.Path, { d: "m4 5.5h2v6.5h1.5v-6.5h2v-1.5h-5.5zm16 10.5h-16v-1.5h16zm-7 4h-9v-1.5h9z" }) });
 
-  // packages/icons/build-module/library/upload.js
+  // packages/icons/build-module/library/upload.mjs
   var import_primitives144 = __toESM(require_primitives(), 1);
   var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
   var upload_default = /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(import_primitives144.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(import_primitives144.Path, { d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z" }) });
 
-  // packages/icons/build-module/library/verse.js
+  // packages/icons/build-module/library/verse.mjs
   var import_primitives145 = __toESM(require_primitives(), 1);
   var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
   var verse_default = /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_primitives145.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_primitives145.Path, { d: "M17.8 2l-.9.3c-.1 0-3.6 1-5.2 2.1C10 5.5 9.3 6.5 8.9 7.1c-.6.9-1.7 4.7-1.7 6.3l-.9 2.3c-.2.4 0 .8.4 1 .1 0 .2.1.3.1.3 0 .6-.2.7-.5l.6-1.5c.3 0 .7-.1 1.2-.2.7-.1 1.4-.3 2.2-.5.8-.2 1.6-.5 2.4-.8.7-.3 1.4-.7 1.9-1.2s.8-1.2 1-1.9c.2-.7.3-1.6.4-2.4.1-.8.1-1.7.2-2.5 0-.8.1-1.5.2-2.1V2zm-1.9 5.6c-.1.8-.2 1.5-.3 2.1-.2.6-.4 1-.6 1.3-.3.3-.8.6-1.4.9-.7.3-1.4.5-2.2.8-.6.2-1.3.3-1.8.4L15 7.5c.3-.3.6-.7 1-1.1 0 .4 0 .8-.1 1.2zM6 20h8v-1.5H6V20z" }) });
 
-  // packages/icons/build-module/library/video.js
+  // packages/icons/build-module/library/video.mjs
   var import_primitives146 = __toESM(require_primitives(), 1);
   var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
   var video_default = /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(import_primitives146.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(import_primitives146.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z" }) });
 
-  // packages/icons/build-module/library/word-count.js
+  // packages/icons/build-module/library/word-count.mjs
   var import_primitives147 = __toESM(require_primitives(), 1);
   var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
   var word_count_default = /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(import_primitives147.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(import_primitives147.Path, { d: "M19 5c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2zM5 6.5c-.3 0-.5.2-.5.5v10c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V7c0-.3-.2-.5-.5-.5zM14.734 9q.714 0 1.15.253.437.247.639.84.2.591.2 1.61v1.15q0 .402.036.667.04.258.172.39.138.127.437.127h.104l-.162.828h-.08q-.5 0-.776-.097a.9.9 0 0 1-.414-.283 2 2 0 0 1-.259-.448q-.316.367-.748.598-.43.23-.977.23-.524 0-.914-.213a1.56 1.56 0 0 1-.61-.58 1.65 1.65 0 0 1-.213-.84q0-.477.207-.817.213-.345.564-.568.357-.23.794-.363.437-.139.902-.196.471-.062.902-.068 0-.805-.315-1.053-.316-.247-.915-.247-.316 0-.678.098-.356.097-.805.408l-.15-.84a2.8 2.8 0 0 1 .846-.419A3.4 3.4 0 0 1 14.734 9m-5.877 1.669H9.86l.59-1.531h.689l-.585 1.53h.898l-.249.727h-.922l-.337.866h1.019l-.354.773h-.962l-.681 1.804h-.701l.69-1.804h-.999l-.693 1.804h-.69l.685-1.804H6.3l.34-.773h.915l.333-.866h-.994l.244-.726H8.16l.594-1.531h.693zm6.832 1.264q-.823.029-1.335.16-.506.133-.74.397-.236.265-.236.685 0 .454.241.66.248.202.632.202.414 0 .8-.207.39-.207.637-.552zm-7.441.328h1l.34-.866h-1z" }) });
@@ -6119,7 +6119,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/archives/edit.js
+  // packages/block-library/build-module/archives/edit.mjs
   var import_components3 = __toESM(require_components(), 1);
   var import_i18n5 = __toESM(require_i18n(), 1);
   var import_block_editor11 = __toESM(require_block_editor(), 1);
@@ -6245,7 +6245,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/archives/index.js
+  // packages/block-library/build-module/archives/index.mjs
   var { name: name5 } = block_default5;
   var settings5 = {
     icon: archive_default,
@@ -6254,7 +6254,7 @@ var wp;
   };
   var init5 = () => initBlock({ name: name5, metadata: block_default5, settings: settings5 });
 
-  // packages/block-library/build-module/avatar/index.js
+  // packages/block-library/build-module/avatar/index.mjs
   var avatar_exports = {};
   __export(avatar_exports, {
     init: () => init6,
@@ -6334,13 +6334,13 @@ var wp;
     style: "wp-block-avatar"
   };
 
-  // packages/block-library/build-module/avatar/edit.js
+  // packages/block-library/build-module/avatar/edit.mjs
   var import_block_editor12 = __toESM(require_block_editor(), 1);
   var import_components5 = __toESM(require_components(), 1);
   var import_i18n8 = __toESM(require_i18n(), 1);
   var import_url = __toESM(require_url(), 1);
 
-  // packages/block-library/build-module/avatar/hooks.js
+  // packages/block-library/build-module/avatar/hooks.mjs
   var import_core_data2 = __toESM(require_core_data(), 1);
   var import_i18n6 = __toESM(require_i18n(), 1);
   var import_data6 = __toESM(require_data(), 1);
@@ -6415,7 +6415,7 @@ var wp;
     };
   }
 
-  // packages/block-library/build-module/avatar/user-control.js
+  // packages/block-library/build-module/avatar/user-control.mjs
   var import_i18n7 = __toESM(require_i18n(), 1);
   var import_components4 = __toESM(require_components(), 1);
   var import_data7 = __toESM(require_data(), 1);
@@ -6472,7 +6472,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/avatar/edit.js
+  // packages/block-library/build-module/avatar/edit.mjs
   var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
   var AvatarInspectorControls = ({
     setAttributes,
@@ -6707,7 +6707,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(UserEdit, { ...props });
   }
 
-  // packages/block-library/build-module/avatar/index.js
+  // packages/block-library/build-module/avatar/index.mjs
   var { name: name6 } = block_default6;
   var settings6 = {
     icon: comment_author_avatar_default,
@@ -6716,7 +6716,7 @@ var wp;
   };
   var init6 = () => initBlock({ name: name6, metadata: block_default6, settings: settings6 });
 
-  // packages/block-library/build-module/audio/index.js
+  // packages/block-library/build-module/audio/index.mjs
   var audio_exports = {};
   __export(audio_exports, {
     init: () => init7,
@@ -6727,7 +6727,7 @@ var wp;
   var import_i18n11 = __toESM(require_i18n(), 1);
   var import_blocks6 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/audio/deprecated.js
+  // packages/block-library/build-module/audio/deprecated.mjs
   var import_block_editor13 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
   var deprecated_default2 = [
@@ -6794,7 +6794,7 @@ var wp;
     }
   ];
 
-  // packages/block-library/build-module/audio/edit.js
+  // packages/block-library/build-module/audio/edit.mjs
   var import_blob2 = __toESM(require_blob(), 1);
   var import_components8 = __toESM(require_components(), 1);
   var import_block_editor15 = __toESM(require_block_editor(), 1);
@@ -6871,7 +6871,7 @@ var wp;
     return memoized;
   }
 
-  // packages/block-library/build-module/embed/util.js
+  // packages/block-library/build-module/embed/util.mjs
   var import_components6 = __toESM(require_components(), 1);
   var import_element5 = __toESM(require_element(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
@@ -6933,7 +6933,7 @@ var wp;
     style: "wp-block-embed"
   };
 
-  // packages/block-library/build-module/embed/constants.js
+  // packages/block-library/build-module/embed/constants.mjs
   var ASPECT_RATIOS = [
     // Common video resolutions.
     { ratio: "2.33", className: "wp-embed-aspect-21-9" },
@@ -6947,14 +6947,14 @@ var wp;
   ];
   var WP_EMBED_TYPE = "wp-embed";
 
-  // packages/block-library/build-module/lock-unlock.js
+  // packages/block-library/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/block-library"
   );
 
-  // packages/block-library/build-module/embed/util.js
+  // packages/block-library/build-module/embed/util.mjs
   var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
   var { name: DEFAULT_EMBED_BLOCK } = block_default7;
   var { kebabCase } = unlock(import_components6.privateApis);
@@ -7106,7 +7106,7 @@ var wp;
     };
   };
 
-  // packages/block-library/build-module/utils/caption.js
+  // packages/block-library/build-module/utils/caption.mjs
   var import_element6 = __toESM(require_element(), 1);
   var import_compose4 = __toESM(require_compose(), 1);
   var import_i18n9 = __toESM(require_i18n(), 1);
@@ -7198,7 +7198,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/audio/edit.js
+  // packages/block-library/build-module/audio/edit.mjs
   var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES = ["audio"];
   function AudioEdit({
@@ -7481,7 +7481,7 @@ var wp;
     style: "wp-block-audio"
   };
 
-  // packages/block-library/build-module/audio/save.js
+  // packages/block-library/build-module/audio/save.mjs
   var import_block_editor16 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
   function save5({ attributes: attributes3 }) {
@@ -7510,7 +7510,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/audio/transforms.js
+  // packages/block-library/build-module/audio/transforms.mjs
   var import_blob3 = __toESM(require_blob(), 1);
   var import_blocks5 = __toESM(require_blocks(), 1);
   var transforms = {
@@ -7564,7 +7564,7 @@ var wp;
   };
   var transforms_default = transforms;
 
-  // packages/block-library/build-module/audio/index.js
+  // packages/block-library/build-module/audio/index.mjs
   var { fieldsKey, formKey } = unlock(import_blocks6.privateApis);
   var { name: name7 } = block_default8;
   var settings7 = {
@@ -7607,7 +7607,7 @@ var wp;
   }
   var init7 = () => initBlock({ name: name7, metadata: block_default8, settings: settings7 });
 
-  // packages/block-library/build-module/breadcrumbs/index.js
+  // packages/block-library/build-module/breadcrumbs/index.mjs
   var breadcrumbs_exports = {};
   __export(breadcrumbs_exports, {
     init: () => init8,
@@ -7696,7 +7696,7 @@ var wp;
     style: "wp-block-breadcrumbs"
   };
 
-  // packages/block-library/build-module/breadcrumbs/edit.js
+  // packages/block-library/build-module/breadcrumbs/edit.mjs
   var import_i18n12 = __toESM(require_i18n(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_components9 = __toESM(require_components(), 1);
@@ -7923,7 +7923,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/breadcrumbs/index.js
+  // packages/block-library/build-module/breadcrumbs/index.mjs
   var { name: name8 } = block_default9;
   var settings8 = {
     icon: breadcrumbs_default,
@@ -7931,7 +7931,7 @@ var wp;
   };
   var init8 = () => initBlock({ name: name8, metadata: block_default9, settings: settings8 });
 
-  // packages/block-library/build-module/button/index.js
+  // packages/block-library/build-module/button/index.mjs
   var button_exports = {};
   __export(button_exports, {
     init: () => init9,
@@ -7942,11 +7942,11 @@ var wp;
   var import_i18n14 = __toESM(require_i18n(), 1);
   var import_blocks8 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/button/deprecated.js
+  // packages/block-library/build-module/button/deprecated.mjs
   var import_block_editor19 = __toESM(require_block_editor(), 1);
   var import_compose6 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/utils/migrate-font-family.js
+  // packages/block-library/build-module/utils/migrate-font-family.mjs
   var import_block_editor18 = __toESM(require_block_editor(), 1);
   var { cleanEmptyObject } = unlock(import_block_editor18.privateApis);
   function migrate_font_family_default(attributes3) {
@@ -7964,7 +7964,7 @@ var wp;
     };
   }
 
-  // packages/block-library/build-module/utils/migrate-text-align.js
+  // packages/block-library/build-module/utils/migrate-text-align.mjs
   function migrate_text_align_default(attributes3) {
     const { textAlign, ...restAttributes } = attributes3;
     if (!textAlign) {
@@ -7982,7 +7982,7 @@ var wp;
     };
   }
 
-  // packages/block-library/build-module/button/deprecated.js
+  // packages/block-library/build-module/button/deprecated.mjs
   var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
   var migrateBorderRadius = (attributes3) => {
     const { borderRadius, ...newAttributes } = attributes3;
@@ -9340,7 +9340,7 @@ var wp;
   ];
   var deprecated_default3 = deprecated;
 
-  // packages/block-library/build-module/button/edit.js
+  // packages/block-library/build-module/button/edit.mjs
   var import_i18n13 = __toESM(require_i18n(), 1);
   var import_element10 = __toESM(require_element(), 1);
   var import_components10 = __toESM(require_components(), 1);
@@ -9350,12 +9350,12 @@ var wp;
   var import_compose8 = __toESM(require_compose(), 1);
   var import_data11 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/button/constants.js
+  // packages/block-library/build-module/button/constants.mjs
   var NEW_TAB_REL = "noreferrer noopener";
   var NEW_TAB_TARGET = "_blank";
   var NOFOLLOW_REL = "nofollow";
 
-  // packages/block-library/build-module/button/get-updated-link-attributes.js
+  // packages/block-library/build-module/button/get-updated-link-attributes.mjs
   var import_url2 = __toESM(require_url(), 1);
   function getUpdatedLinkAttributes({
     rel = "",
@@ -9385,12 +9385,12 @@ var wp;
     };
   }
 
-  // packages/block-library/build-module/utils/remove-anchor-tag.js
+  // packages/block-library/build-module/utils/remove-anchor-tag.mjs
   function removeAnchorTag(value) {
     return value.toString().replace(/<\/?a[^>]*>/g, "");
   }
 
-  // packages/block-library/build-module/utils/deprecated-text-align-attributes.js
+  // packages/block-library/build-module/utils/deprecated-text-align-attributes.mjs
   var import_compose7 = __toESM(require_compose(), 1);
   var import_element9 = __toESM(require_element(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
@@ -9426,7 +9426,7 @@ var wp;
     }, [textAlign, updateStyleWithAlign]);
   }
 
-  // packages/block-library/build-module/button/edit.js
+  // packages/block-library/build-module/button/edit.mjs
   var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl } = unlock(import_block_editor21.privateApis);
   var LINK_SETTINGS = [
@@ -9956,7 +9956,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/button/save.js
+  // packages/block-library/build-module/button/save.mjs
   var import_block_editor22 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
   function save6({ attributes: attributes3, className }) {
@@ -10020,7 +10020,7 @@ var wp;
     ) });
   }
 
-  // packages/block-library/build-module/button/index.js
+  // packages/block-library/build-module/button/index.mjs
   var { fieldsKey: fieldsKey2, formKey: formKey2 } = unlock(import_blocks8.privateApis);
   var { name: name9 } = block_default10;
   var settings9 = {
@@ -10071,7 +10071,7 @@ var wp;
   }
   var init9 = () => initBlock({ name: name9, metadata: block_default10, settings: settings9 });
 
-  // packages/block-library/build-module/buttons/index.js
+  // packages/block-library/build-module/buttons/index.mjs
   var buttons_exports = {};
   __export(buttons_exports, {
     init: () => init10,
@@ -10081,7 +10081,7 @@ var wp;
   });
   var import_i18n15 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/buttons/deprecated.js
+  // packages/block-library/build-module/buttons/deprecated.mjs
   var import_block_editor23 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
   var migrateWithLayout = (attributes3) => {
@@ -10170,11 +10170,11 @@ var wp;
   ];
   var deprecated_default4 = deprecated3;
 
-  // packages/block-library/build-module/buttons/transforms.js
+  // packages/block-library/build-module/buttons/transforms.mjs
   var import_blocks10 = __toESM(require_blocks(), 1);
   var import_rich_text = __toESM(require_rich_text(), 1);
 
-  // packages/block-library/build-module/utils/get-transformed-attributes.js
+  // packages/block-library/build-module/utils/get-transformed-attributes.mjs
   var import_blocks9 = __toESM(require_blocks(), 1);
   function getTransformedAttributes(attributes3, newBlockName, bindingsCallback = null) {
     if (!attributes3) {
@@ -10218,7 +10218,7 @@ var wp;
     return transformedAttributes;
   }
 
-  // packages/block-library/build-module/buttons/transforms.js
+  // packages/block-library/build-module/buttons/transforms.mjs
   var transforms2 = {
     from: [
       {
@@ -10287,7 +10287,7 @@ var wp;
   };
   var transforms_default2 = transforms2;
 
-  // packages/block-library/build-module/buttons/edit.js
+  // packages/block-library/build-module/buttons/edit.mjs
   var import_block_editor24 = __toESM(require_block_editor(), 1);
   var import_data12 = __toESM(require_data(), 1);
   var import_blocks11 = __toESM(require_blocks(), 1);
@@ -10407,7 +10407,7 @@ var wp;
     style: "wp-block-buttons"
   };
 
-  // packages/block-library/build-module/buttons/save.js
+  // packages/block-library/build-module/buttons/save.mjs
   var import_block_editor25 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
   function save7({ attributes: attributes3, className }) {
@@ -10421,7 +10421,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/buttons/index.js
+  // packages/block-library/build-module/buttons/index.mjs
   var { name: name10 } = block_default11;
   var settings10 = {
     icon: buttons_default,
@@ -10450,7 +10450,7 @@ var wp;
   };
   var init10 = () => initBlock({ name: name10, metadata: block_default11, settings: settings10 });
 
-  // packages/block-library/build-module/calendar/index.js
+  // packages/block-library/build-module/calendar/index.mjs
   var calendar_exports = {};
   __export(calendar_exports, {
     init: () => init11,
@@ -10509,7 +10509,7 @@ var wp;
     style: "wp-block-calendar"
   };
 
-  // packages/block-library/build-module/calendar/edit.js
+  // packages/block-library/build-module/calendar/edit.mjs
   var import_components11 = __toESM(require_components(), 1);
   var import_data13 = __toESM(require_data(), 1);
   var import_server_side_render3 = __toESM(require_server_side_render(), 1);
@@ -10582,7 +10582,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/calendar/transforms.js
+  // packages/block-library/build-module/calendar/transforms.mjs
   var import_blocks12 = __toESM(require_blocks(), 1);
   var transforms3 = {
     from: [
@@ -10602,7 +10602,7 @@ var wp;
   };
   var transforms_default3 = transforms3;
 
-  // packages/block-library/build-module/calendar/index.js
+  // packages/block-library/build-module/calendar/index.mjs
   var { name: name11 } = block_default12;
   var settings11 = {
     icon: calendar_default,
@@ -10612,7 +10612,7 @@ var wp;
   };
   var init11 = () => initBlock({ name: name11, metadata: block_default12, settings: settings11 });
 
-  // packages/block-library/build-module/categories/index.js
+  // packages/block-library/build-module/categories/index.mjs
   var categories_exports = {};
   __export(categories_exports, {
     init: () => init12,
@@ -10720,7 +10720,7 @@ var wp;
     style: "wp-block-categories"
   };
 
-  // packages/block-library/build-module/categories/edit.js
+  // packages/block-library/build-module/categories/edit.mjs
   var import_components12 = __toESM(require_components(), 1);
   var import_compose10 = __toESM(require_compose(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
@@ -11014,7 +11014,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/categories/variations.js
+  // packages/block-library/build-module/categories/variations.mjs
   var import_i18n18 = __toESM(require_i18n(), 1);
   var variations = [
     {
@@ -11051,7 +11051,7 @@ var wp;
   ];
   var variations_default = variations;
 
-  // packages/block-library/build-module/categories/index.js
+  // packages/block-library/build-module/categories/index.mjs
   var { name: name12 } = block_default13;
   var settings12 = {
     icon: category_default,
@@ -11061,7 +11061,7 @@ var wp;
   };
   var init12 = () => initBlock({ name: name12, metadata: block_default13, settings: settings12 });
 
-  // packages/block-library/build-module/freeform/index.js
+  // packages/block-library/build-module/freeform/index.mjs
   var freeform_exports = {};
   __export(freeform_exports, {
     init: () => init13,
@@ -11070,14 +11070,14 @@ var wp;
     settings: () => settings13
   });
 
-  // packages/block-library/build-module/freeform/edit.js
+  // packages/block-library/build-module/freeform/edit.mjs
   var import_block_editor30 = __toESM(require_block_editor(), 1);
   var import_data17 = __toESM(require_data(), 1);
   var import_components15 = __toESM(require_components(), 1);
   var import_element12 = __toESM(require_element(), 1);
   var import_i18n21 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/freeform/convert-to-blocks-button.js
+  // packages/block-library/build-module/freeform/convert-to-blocks-button.mjs
   var import_i18n19 = __toESM(require_i18n(), 1);
   var import_components13 = __toESM(require_components(), 1);
   var import_data15 = __toESM(require_data(), 1);
@@ -11105,7 +11105,7 @@ var wp;
   };
   var convert_to_blocks_button_default = ConvertToBlocksButton;
 
-  // packages/block-library/build-module/freeform/modal.js
+  // packages/block-library/build-module/freeform/modal.mjs
   var import_block_editor29 = __toESM(require_block_editor(), 1);
   var import_components14 = __toESM(require_components(), 1);
   var import_element11 = __toESM(require_element(), 1);
@@ -11217,7 +11217,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/freeform/edit.js
+  // packages/block-library/build-module/freeform/edit.mjs
   var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   function FreeformEdit({
     attributes: attributes3,
@@ -11305,7 +11305,7 @@ var wp;
     editorStyle: "wp-block-freeform-editor"
   };
 
-  // packages/block-library/build-module/freeform/save.js
+  // packages/block-library/build-module/freeform/save.mjs
   var import_element13 = __toESM(require_element(), 1);
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
   function save8({ attributes: attributes3 }) {
@@ -11313,7 +11313,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_element13.RawHTML, { children: content });
   }
 
-  // packages/block-library/build-module/freeform/index.js
+  // packages/block-library/build-module/freeform/index.mjs
   var { name: name13 } = block_default14;
   var settings13 = {
     icon: classic_default,
@@ -11322,7 +11322,7 @@ var wp;
   };
   var init13 = () => initBlock({ name: name13, metadata: block_default14, settings: settings13 });
 
-  // packages/block-library/build-module/code/index.js
+  // packages/block-library/build-module/code/index.mjs
   var code_exports = {};
   __export(code_exports, {
     init: () => init14,
@@ -11333,7 +11333,7 @@ var wp;
   var import_i18n23 = __toESM(require_i18n(), 1);
   var import_blocks16 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/code/edit.js
+  // packages/block-library/build-module/code/edit.mjs
   var import_i18n22 = __toESM(require_i18n(), 1);
   var import_block_editor31 = __toESM(require_block_editor(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
@@ -11432,10 +11432,10 @@ var wp;
     style: "wp-block-code"
   };
 
-  // packages/block-library/build-module/code/save.js
+  // packages/block-library/build-module/code/save.mjs
   var import_block_editor32 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/code/utils.js
+  // packages/block-library/build-module/code/utils.mjs
   var import_compose12 = __toESM(require_compose(), 1);
   function escape(content) {
     return (0, import_compose12.pipe)(
@@ -11453,7 +11453,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/code/save.js
+  // packages/block-library/build-module/code/save.mjs
   var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
   function save9({ attributes: attributes3 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("pre", { ...import_block_editor32.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
@@ -11469,7 +11469,7 @@ var wp;
     ) });
   }
 
-  // packages/block-library/build-module/code/transforms.js
+  // packages/block-library/build-module/code/transforms.mjs
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
   var transforms4 = {
@@ -11537,7 +11537,7 @@ var wp;
   };
   var transforms_default4 = transforms4;
 
-  // packages/block-library/build-module/code/index.js
+  // packages/block-library/build-module/code/index.mjs
   var { fieldsKey: fieldsKey3, formKey: formKey3 } = unlock(import_blocks16.privateApis);
   var { name: name14 } = block_default15;
   var settings14 = {
@@ -11575,7 +11575,7 @@ var wp;
   }
   var init14 = () => initBlock({ name: name14, metadata: block_default15, settings: settings14 });
 
-  // packages/block-library/build-module/column/index.js
+  // packages/block-library/build-module/column/index.mjs
   var column_exports = {};
   __export(column_exports, {
     init: () => init15,
@@ -11584,7 +11584,7 @@ var wp;
     settings: () => settings15
   });
 
-  // packages/block-library/build-module/column/deprecated.js
+  // packages/block-library/build-module/column/deprecated.mjs
   var import_block_editor33 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   var deprecated4 = [
@@ -11620,7 +11620,7 @@ var wp;
   ];
   var deprecated_default5 = deprecated4;
 
-  // packages/block-library/build-module/column/edit.js
+  // packages/block-library/build-module/column/edit.mjs
   var import_block_editor34 = __toESM(require_block_editor(), 1);
   var import_components16 = __toESM(require_components(), 1);
   var import_data18 = __toESM(require_data(), 1);
@@ -11815,7 +11815,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/column/save.js
+  // packages/block-library/build-module/column/save.mjs
   var import_block_editor35 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
   function save10({ attributes: attributes3 }) {
@@ -11840,7 +11840,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/column/index.js
+  // packages/block-library/build-module/column/index.mjs
   var { name: name15 } = block_default16;
   var settings15 = {
     icon: column_default,
@@ -11850,7 +11850,7 @@ var wp;
   };
   var init15 = () => initBlock({ name: name15, metadata: block_default16, settings: settings15 });
 
-  // packages/block-library/build-module/columns/index.js
+  // packages/block-library/build-module/columns/index.mjs
   var columns_exports = {};
   __export(columns_exports, {
     init: () => init16,
@@ -11860,7 +11860,7 @@ var wp;
   });
   var import_i18n27 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/columns/deprecated.js
+  // packages/block-library/build-module/columns/deprecated.mjs
   var import_blocks17 = __toESM(require_blocks(), 1);
   var import_block_editor36 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
@@ -12023,14 +12023,14 @@ var wp;
     }
   ];
 
-  // packages/block-library/build-module/columns/edit.js
+  // packages/block-library/build-module/columns/edit.mjs
   var import_i18n25 = __toESM(require_i18n(), 1);
   var import_components17 = __toESM(require_components(), 1);
   var import_block_editor37 = __toESM(require_block_editor(), 1);
   var import_data19 = __toESM(require_data(), 1);
   var import_blocks18 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/columns/utils.js
+  // packages/block-library/build-module/columns/utils.mjs
   var toWidthPrecision = (value) => {
     const unitlessValue = parseFloat(value);
     return Number.isFinite(unitlessValue) ? parseFloat(unitlessValue.toFixed(2)) : void 0;
@@ -12080,7 +12080,7 @@ var wp;
     }));
   }
 
-  // packages/block-library/build-module/columns/edit.js
+  // packages/block-library/build-module/columns/edit.mjs
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_BLOCK2 = {
     name: "core/column"
@@ -12404,7 +12404,7 @@ var wp;
     style: "wp-block-columns"
   };
 
-  // packages/block-library/build-module/columns/save.js
+  // packages/block-library/build-module/columns/save.mjs
   var import_block_editor38 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function save11({ attributes: attributes3 }) {
@@ -12418,7 +12418,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/columns/variations.js
+  // packages/block-library/build-module/columns/variations.mjs
   var import_components18 = __toESM(require_components(), 1);
   var import_i18n26 = __toESM(require_i18n(), 1);
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
@@ -12543,7 +12543,7 @@ var wp;
   ];
   var variations_default2 = variations2;
 
-  // packages/block-library/build-module/columns/transforms.js
+  // packages/block-library/build-module/columns/transforms.mjs
   var import_blocks19 = __toESM(require_blocks(), 1);
   var MAXIMUM_SELECTED_BLOCKS = 6;
   var transforms5 = {
@@ -12636,7 +12636,7 @@ var wp;
   };
   var transforms_default5 = transforms5;
 
-  // packages/block-library/build-module/columns/index.js
+  // packages/block-library/build-module/columns/index.mjs
   var { name: name16 } = block_default17;
   var settings16 = {
     icon: columns_default,
@@ -12706,7 +12706,7 @@ var wp;
   };
   var init16 = () => initBlock({ name: name16, metadata: block_default17, settings: settings16 });
 
-  // packages/block-library/build-module/comments/index.js
+  // packages/block-library/build-module/comments/index.mjs
   var comments_exports = {};
   __export(comments_exports, {
     init: () => init17,
@@ -12782,7 +12782,7 @@ var wp;
     usesContext: ["postId", "postType"]
   };
 
-  // packages/block-library/build-module/comments/deprecated.js
+  // packages/block-library/build-module/comments/deprecated.mjs
   var import_block_editor39 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
   var v14 = {
@@ -12822,10 +12822,10 @@ var wp;
   };
   var deprecated_default7 = [v14];
 
-  // packages/block-library/build-module/comments/edit/index.js
+  // packages/block-library/build-module/comments/edit/index.mjs
   var import_block_editor44 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/comments/edit/comments-inspector-controls.js
+  // packages/block-library/build-module/comments/edit/comments-inspector-controls.mjs
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_block_editor40 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
@@ -12848,19 +12848,19 @@ var wp;
     ) }) });
   }
 
-  // packages/block-library/build-module/comments/edit/comments-legacy.js
+  // packages/block-library/build-module/comments/edit/comments-legacy.mjs
   var import_block_editor43 = __toESM(require_block_editor(), 1);
   var import_i18n31 = __toESM(require_i18n(), 1);
   var import_components20 = __toESM(require_components(), 1);
 
-  // packages/block-library/build-module/comments/edit/placeholder.js
+  // packages/block-library/build-module/comments/edit/placeholder.mjs
   var import_block_editor42 = __toESM(require_block_editor(), 1);
   var import_i18n30 = __toESM(require_i18n(), 1);
   var import_data21 = __toESM(require_data(), 1);
   var import_core_data8 = __toESM(require_core_data(), 1);
   var import_element14 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/post-comments-form/form.js
+  // packages/block-library/build-module/post-comments-form/form.mjs
   var import_i18n29 = __toESM(require_i18n(), 1);
   var import_block_editor41 = __toESM(require_block_editor(), 1);
   var import_components19 = __toESM(require_components(), 1);
@@ -12964,7 +12964,7 @@ var wp;
   };
   var form_default = CommentsForm;
 
-  // packages/block-library/build-module/comments/edit/placeholder.js
+  // packages/block-library/build-module/comments/edit/placeholder.mjs
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   function PostCommentsPlaceholder({ postType, postId }) {
     let [postTitle] = (0, import_core_data8.useEntityProp)("postType", postType, "title", postId);
@@ -13067,7 +13067,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comments/edit/comments-legacy.js
+  // packages/block-library/build-module/comments/edit/comments-legacy.mjs
   var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   function CommentsLegacy({
     attributes: attributes3,
@@ -13111,7 +13111,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comments/edit/template.js
+  // packages/block-library/build-module/comments/edit/template.mjs
   var TEMPLATE2 = [
     ["core/comments-title"],
     [
@@ -13193,7 +13193,7 @@ var wp;
   ];
   var template_default = TEMPLATE2;
 
-  // packages/block-library/build-module/comments/edit/index.js
+  // packages/block-library/build-module/comments/edit/index.mjs
   var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   function CommentsEdit(props) {
     const { attributes: attributes3, setAttributes, clientId } = props;
@@ -13218,7 +13218,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comments/save.js
+  // packages/block-library/build-module/comments/save.mjs
   var import_block_editor45 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
   function save12({ attributes: { tagName: Tag, legacy } }) {
@@ -13227,7 +13227,7 @@ var wp;
     return legacy ? null : /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(Tag, { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/comments/index.js
+  // packages/block-library/build-module/comments/index.mjs
   var { name: name17 } = block_default18;
   var settings17 = {
     icon: post_comments_default,
@@ -13238,7 +13238,7 @@ var wp;
   };
   var init17 = () => initBlock({ name: name17, metadata: block_default18, settings: settings17 });
 
-  // packages/block-library/build-module/comment-author-avatar/index.js
+  // packages/block-library/build-module/comment-author-avatar/index.mjs
   var comment_author_avatar_exports = {};
   __export(comment_author_avatar_exports, {
     init: () => init18,
@@ -13296,7 +13296,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/comment-author-avatar/edit.js
+  // packages/block-library/build-module/comment-author-avatar/edit.mjs
   var import_block_editor46 = __toESM(require_block_editor(), 1);
   var import_components21 = __toESM(require_components(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
@@ -13387,7 +13387,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comment-author-avatar/index.js
+  // packages/block-library/build-module/comment-author-avatar/index.mjs
   var { name: name18 } = block_default19;
   var settings18 = {
     icon: comment_author_avatar_default,
@@ -13395,7 +13395,7 @@ var wp;
   };
   var init18 = () => initBlock({ name: name18, metadata: block_default19, settings: settings18 });
 
-  // packages/block-library/build-module/comment-author-name/index.js
+  // packages/block-library/build-module/comment-author-name/index.mjs
   var comment_author_name_exports = {};
   __export(comment_author_name_exports, {
     init: () => init19,
@@ -13474,7 +13474,7 @@ var wp;
     style: "wp-block-comment-author-name"
   };
 
-  // packages/block-library/build-module/comment-author-name/edit.js
+  // packages/block-library/build-module/comment-author-name/edit.mjs
   var import_i18n33 = __toESM(require_i18n(), 1);
   var import_data23 = __toESM(require_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
@@ -13575,7 +13575,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comment-author-name/deprecated.js
+  // packages/block-library/build-module/comment-author-name/deprecated.mjs
   var v22 = {
     attributes: {
       isLink: {
@@ -13668,7 +13668,7 @@ var wp;
   };
   var deprecated_default8 = [v22, v15];
 
-  // packages/block-library/build-module/comment-author-name/index.js
+  // packages/block-library/build-module/comment-author-name/index.mjs
   var { name: name19 } = block_default20;
   var settings19 = {
     icon: comment_author_name_default,
@@ -13678,7 +13678,7 @@ var wp;
   };
   var init19 = () => initBlock({ name: name19, metadata: block_default20, settings: settings19 });
 
-  // packages/block-library/build-module/comment-content/index.js
+  // packages/block-library/build-module/comment-content/index.mjs
   var comment_content_exports = {};
   __export(comment_content_exports, {
     init: () => init20,
@@ -13745,7 +13745,7 @@ var wp;
     style: "wp-block-comment-content"
   };
 
-  // packages/block-library/build-module/comment-content/edit.js
+  // packages/block-library/build-module/comment-content/edit.mjs
   var import_i18n34 = __toESM(require_i18n(), 1);
   var import_element15 = __toESM(require_element(), 1);
   var import_components23 = __toESM(require_components(), 1);
@@ -13770,7 +13770,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(import_jsx_runtime197.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(import_components23.Disabled, { children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(import_element15.RawHTML, { children: content.rendered }, "html") }) }) });
   }
 
-  // packages/block-library/build-module/comment-content/deprecated.js
+  // packages/block-library/build-module/comment-content/deprecated.mjs
   var v16 = {
     attributes: {
       textAlign: {
@@ -13817,7 +13817,7 @@ var wp;
   };
   var deprecated_default9 = [v16];
 
-  // packages/block-library/build-module/comment-content/index.js
+  // packages/block-library/build-module/comment-content/index.mjs
   var { name: name20 } = block_default21;
   var settings20 = {
     icon: comment_content_default,
@@ -13827,7 +13827,7 @@ var wp;
   };
   var init20 = () => initBlock({ name: name20, metadata: block_default21, settings: settings20 });
 
-  // packages/block-library/build-module/comment-date/index.js
+  // packages/block-library/build-module/comment-date/index.mjs
   var comment_date_exports = {};
   __export(comment_date_exports, {
     init: () => init21,
@@ -13904,7 +13904,7 @@ var wp;
     style: "wp-block-comment-date"
   };
 
-  // packages/block-library/build-module/comment-date/edit.js
+  // packages/block-library/build-module/comment-date/edit.mjs
   var import_core_data12 = __toESM(require_core_data(), 1);
   var import_date = __toESM(require_date(), 1);
   var import_block_editor49 = __toESM(require_block_editor(), 1);
@@ -13993,7 +13993,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comment-date/deprecated.js
+  // packages/block-library/build-module/comment-date/deprecated.mjs
   var v17 = {
     attributes: {
       format: {
@@ -14030,7 +14030,7 @@ var wp;
   };
   var deprecated_default10 = [v17];
 
-  // packages/block-library/build-module/comment-date/index.js
+  // packages/block-library/build-module/comment-date/index.mjs
   var { name: name21 } = block_default22;
   var settings21 = {
     icon: post_date_default,
@@ -14040,7 +14040,7 @@ var wp;
   };
   var init21 = () => initBlock({ name: name21, metadata: block_default22, settings: settings21 });
 
-  // packages/block-library/build-module/comment-edit-link/index.js
+  // packages/block-library/build-module/comment-edit-link/index.mjs
   var comment_edit_link_exports = {};
   __export(comment_edit_link_exports, {
     init: () => init22,
@@ -14115,7 +14115,7 @@ var wp;
     style: "wp-block-comment-edit-link"
   };
 
-  // packages/block-library/build-module/comment-edit-link/edit.js
+  // packages/block-library/build-module/comment-edit-link/edit.mjs
   var import_block_editor50 = __toESM(require_block_editor(), 1);
   var import_components25 = __toESM(require_components(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
@@ -14182,7 +14182,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comment-edit-link/index.js
+  // packages/block-library/build-module/comment-edit-link/index.mjs
   var { name: name22 } = block_default23;
   var settings22 = {
     icon: comment_edit_link_default,
@@ -14191,7 +14191,7 @@ var wp;
   };
   var init22 = () => initBlock({ name: name22, metadata: block_default23, settings: settings22 });
 
-  // packages/block-library/build-module/comment-reply-link/index.js
+  // packages/block-library/build-module/comment-reply-link/index.mjs
   var comment_reply_link_exports = {};
   __export(comment_reply_link_exports, {
     init: () => init23,
@@ -14259,7 +14259,7 @@ var wp;
     style: "wp-block-comment-reply-link"
   };
 
-  // packages/block-library/build-module/comment-reply-link/edit.js
+  // packages/block-library/build-module/comment-reply-link/edit.mjs
   var import_i18n37 = __toESM(require_i18n(), 1);
   var import_block_editor51 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
@@ -14290,7 +14290,7 @@ var wp;
   }
   var edit_default6 = Edit11;
 
-  // packages/block-library/build-module/comment-reply-link/index.js
+  // packages/block-library/build-module/comment-reply-link/index.mjs
   var { name: name23 } = block_default24;
   var settings23 = {
     edit: edit_default6,
@@ -14299,7 +14299,7 @@ var wp;
   };
   var init23 = () => initBlock({ name: name23, metadata: block_default24, settings: settings23 });
 
-  // packages/block-library/build-module/comment-template/index.js
+  // packages/block-library/build-module/comment-template/index.mjs
   var comment_template_exports = {};
   __export(comment_template_exports, {
     init: () => init24,
@@ -14360,7 +14360,7 @@ var wp;
     style: "wp-block-comment-template"
   };
 
-  // packages/block-library/build-module/comment-template/edit.js
+  // packages/block-library/build-module/comment-template/edit.mjs
   var import_element17 = __toESM(require_element(), 1);
   var import_data25 = __toESM(require_data(), 1);
   var import_i18n38 = __toESM(require_i18n(), 1);
@@ -14368,7 +14368,7 @@ var wp;
   var import_components26 = __toESM(require_components(), 1);
   var import_core_data13 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/comment-template/hooks.js
+  // packages/block-library/build-module/comment-template/hooks.mjs
   var import_element16 = __toESM(require_element(), 1);
   var import_data24 = __toESM(require_data(), 1);
   var import_block_editor52 = __toESM(require_block_editor(), 1);
@@ -14457,7 +14457,7 @@ var wp;
     return commentTree;
   };
 
-  // packages/block-library/build-module/comment-template/edit.js
+  // packages/block-library/build-module/comment-template/edit.mjs
   var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE3 = [
     ["core/avatar"],
@@ -14658,14 +14658,14 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/comment-template/save.js
+  // packages/block-library/build-module/comment-template/save.mjs
   var import_block_editor54 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   function CommentTemplateSave() {
     return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_block_editor54.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/comment-template/index.js
+  // packages/block-library/build-module/comment-template/index.mjs
   var { name: name24 } = block_default25;
   var settings24 = {
     icon: layout_default,
@@ -14674,7 +14674,7 @@ var wp;
   };
   var init24 = () => initBlock({ name: name24, metadata: block_default25, settings: settings24 });
 
-  // packages/block-library/build-module/comments-pagination-previous/index.js
+  // packages/block-library/build-module/comments-pagination-previous/index.mjs
   var comments_pagination_previous_exports = {};
   __export(comments_pagination_previous_exports, {
     init: () => init25,
@@ -14730,7 +14730,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/comments-pagination-previous/edit.js
+  // packages/block-library/build-module/comments-pagination-previous/edit.mjs
   var import_i18n39 = __toESM(require_i18n(), 1);
   var import_block_editor55 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
@@ -14775,7 +14775,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/comments-pagination-previous/index.js
+  // packages/block-library/build-module/comments-pagination-previous/index.mjs
   var { name: name25 } = block_default26;
   var settings25 = {
     icon: query_pagination_previous_default,
@@ -14788,7 +14788,7 @@ var wp;
   };
   var init25 = () => initBlock({ name: name25, metadata: block_default26, settings: settings25 });
 
-  // packages/block-library/build-module/comments-pagination/index.js
+  // packages/block-library/build-module/comments-pagination/index.mjs
   var comments_pagination_exports = {};
   __export(comments_pagination_exports, {
     init: () => init26,
@@ -14868,13 +14868,13 @@ var wp;
     style: "wp-block-comments-pagination"
   };
 
-  // packages/block-library/build-module/comments-pagination/edit.js
+  // packages/block-library/build-module/comments-pagination/edit.mjs
   var import_i18n42 = __toESM(require_i18n(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
   var import_data26 = __toESM(require_data(), 1);
   var import_components28 = __toESM(require_components(), 1);
 
-  // packages/block-library/build-module/comments-pagination/comments-pagination-arrow-controls.js
+  // packages/block-library/build-module/comments-pagination/comments-pagination-arrow-controls.mjs
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_components27 = __toESM(require_components(), 1);
   var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
@@ -14926,7 +14926,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/comments-pagination/edit.js
+  // packages/block-library/build-module/comments-pagination/edit.mjs
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE4 = [
     ["core/comments-pagination-previous"],
@@ -14994,14 +14994,14 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comments-pagination/save.js
+  // packages/block-library/build-module/comments-pagination/save.mjs
   var import_block_editor57 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   function save13() {
     return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_block_editor57.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/comments-pagination/index.js
+  // packages/block-library/build-module/comments-pagination/index.mjs
   var { name: name26 } = block_default27;
   var settings26 = {
     icon: query_pagination_default,
@@ -15010,7 +15010,7 @@ var wp;
   };
   var init26 = () => initBlock({ name: name26, metadata: block_default27, settings: settings26 });
 
-  // packages/block-library/build-module/comments-pagination-next/index.js
+  // packages/block-library/build-module/comments-pagination-next/index.mjs
   var comments_pagination_next_exports = {};
   __export(comments_pagination_next_exports, {
     init: () => init27,
@@ -15066,7 +15066,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/comments-pagination-next/edit.js
+  // packages/block-library/build-module/comments-pagination-next/edit.mjs
   var import_i18n43 = __toESM(require_i18n(), 1);
   var import_block_editor58 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
@@ -15111,7 +15111,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/comments-pagination-next/index.js
+  // packages/block-library/build-module/comments-pagination-next/index.mjs
   var { name: name27 } = block_default28;
   var settings27 = {
     icon: query_pagination_next_default,
@@ -15124,7 +15124,7 @@ var wp;
   };
   var init27 = () => initBlock({ name: name27, metadata: block_default28, settings: settings27 });
 
-  // packages/block-library/build-module/comments-pagination-numbers/index.js
+  // packages/block-library/build-module/comments-pagination-numbers/index.mjs
   var comments_pagination_numbers_exports = {};
   __export(comments_pagination_numbers_exports, {
     init: () => init28,
@@ -15181,7 +15181,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/comments-pagination-numbers/edit.js
+  // packages/block-library/build-module/comments-pagination-numbers/edit.mjs
   var import_block_editor59 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
   var PaginationItem = ({ content, tag: Tag = "a", extraClass = "" }) => Tag === "a" ? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
@@ -15205,7 +15205,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comments-pagination-numbers/index.js
+  // packages/block-library/build-module/comments-pagination-numbers/index.mjs
   var { name: name28 } = block_default29;
   var settings28 = {
     icon: query_pagination_numbers_default,
@@ -15214,7 +15214,7 @@ var wp;
   };
   var init28 = () => initBlock({ name: name28, metadata: block_default29, settings: settings28 });
 
-  // packages/block-library/build-module/comments-title/index.js
+  // packages/block-library/build-module/comments-title/index.mjs
   var comments_title_exports = {};
   __export(comments_title_exports, {
     init: () => init29,
@@ -15297,7 +15297,7 @@ var wp;
     }
   };
 
-  // packages/block-library/build-module/comments-title/edit.js
+  // packages/block-library/build-module/comments-title/edit.mjs
   var import_block_editor60 = __toESM(require_block_editor(), 1);
   var import_i18n45 = __toESM(require_i18n(), 1);
   var import_core_data14 = __toESM(require_core_data(), 1);
@@ -15474,7 +15474,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/comments-title/deprecated.js
+  // packages/block-library/build-module/comments-title/deprecated.mjs
   var { attributes, supports } = block_default30;
   var deprecated_default11 = [
     {
@@ -15501,7 +15501,7 @@ var wp;
     }
   ];
 
-  // packages/block-library/build-module/comments-title/index.js
+  // packages/block-library/build-module/comments-title/index.mjs
   var { name: name29 } = block_default30;
   var settings29 = {
     icon: title_default,
@@ -15511,7 +15511,7 @@ var wp;
   };
   var init29 = () => initBlock({ name: name29, metadata: block_default30, settings: settings29 });
 
-  // packages/block-library/build-module/cover/index.js
+  // packages/block-library/build-module/cover/index.mjs
   var cover_exports = {};
   __export(cover_exports, {
     init: () => init30,
@@ -15522,13 +15522,13 @@ var wp;
   var import_i18n54 = __toESM(require_i18n(), 1);
   var import_blocks23 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/cover/deprecated.js
+  // packages/block-library/build-module/cover/deprecated.mjs
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_block_editor61 = __toESM(require_block_editor(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
   var import_compose14 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/cover/shared.js
+  // packages/block-library/build-module/cover/shared.mjs
   var import_blob4 = __toESM(require_blob(), 1);
   var POSITION_CLASSNAMES = {
     "top left": "is-position-top-left",
@@ -15594,7 +15594,7 @@ var wp;
     return POSITION_CLASSNAMES[contentPosition];
   }
 
-  // packages/block-library/build-module/cover/deprecated.js
+  // packages/block-library/build-module/cover/deprecated.mjs
   var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
   function backgroundImageStyles(url) {
     return url ? { backgroundImage: `url(${url})` } : {};
@@ -17345,7 +17345,7 @@ var wp;
   };
   var deprecated_default12 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v23, v18];
 
-  // packages/block-library/build-module/cover/edit/index.js
+  // packages/block-library/build-module/cover/edit/index.mjs
   var import_core_data16 = __toESM(require_core_data(), 1);
   var import_element24 = __toESM(require_element(), 1);
   var import_components34 = __toESM(require_components(), 1);
@@ -17356,7 +17356,7 @@ var wp;
   var import_blob6 = __toESM(require_blob(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/cover/edit/inspector-controls.js
+  // packages/block-library/build-module/cover/edit/inspector-controls.mjs
   var import_element20 = __toESM(require_element(), 1);
   var import_components31 = __toESM(require_components(), 1);
   var import_compose16 = __toESM(require_compose(), 1);
@@ -17365,10 +17365,10 @@ var wp;
   var import_data29 = __toESM(require_data(), 1);
   var import_core_data15 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/cover/constants.js
+  // packages/block-library/build-module/cover/constants.mjs
   var DEFAULT_MEDIA_SIZE_SLUG = "full";
 
-  // packages/block-library/build-module/utils/poster-image.js
+  // packages/block-library/build-module/utils/poster-image.mjs
   var import_block_editor62 = __toESM(require_block_editor(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
   var import_components30 = __toESM(require_components(), 1);
@@ -17520,7 +17520,7 @@ var wp;
   }
   var poster_image_default = PosterImage;
 
-  // packages/block-library/build-module/cover/edit/inspector-controls.js
+  // packages/block-library/build-module/cover/edit/inspector-controls.mjs
   var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   var { cleanEmptyObject: cleanEmptyObject2, ResolutionTool, HTMLElementControl: HTMLElementControl3 } = unlock(
     import_block_editor63.privateApis
@@ -17895,18 +17895,18 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/cover/edit/block-controls.js
+  // packages/block-library/build-module/cover/edit/block-controls.mjs
   var import_element22 = __toESM(require_element(), 1);
   var import_block_editor64 = __toESM(require_block_editor(), 1);
   var import_i18n50 = __toESM(require_i18n(), 1);
   var import_components33 = __toESM(require_components(), 1);
 
-  // packages/block-library/build-module/cover/edit/embed-video-url-input.js
+  // packages/block-library/build-module/cover/edit/embed-video-url-input.mjs
   var import_element21 = __toESM(require_element(), 1);
   var import_components32 = __toESM(require_components(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/cover/embed-video-utils.js
+  // packages/block-library/build-module/cover/embed-video-utils.mjs
   var import_blocks21 = __toESM(require_blocks(), 1);
   var DEFAULT_EMBED_BLOCK2 = "core/embed";
   var VIDEO_PROVIDERS = [
@@ -18016,7 +18016,7 @@ var wp;
     }
   }
 
-  // packages/block-library/build-module/cover/edit/embed-video-url-input.js
+  // packages/block-library/build-module/cover/edit/embed-video-url-input.mjs
   var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
   function EmbedVideoUrlInput({ onSubmit, onClose }) {
     const [url, setUrl] = (0, import_element21.useState)("");
@@ -18070,7 +18070,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/cover/edit/block-controls.js
+  // packages/block-library/build-module/cover/edit/block-controls.mjs
   var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
   var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor64.privateApis);
   function CoverBlockControls({
@@ -18177,7 +18177,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/cover/edit/cover-placeholder.js
+  // packages/block-library/build-module/cover/edit/cover-placeholder.mjs
   var import_block_editor65 = __toESM(require_block_editor(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
   var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
@@ -18207,7 +18207,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/cover/edit/resizable-cover-popover.js
+  // packages/block-library/build-module/cover/edit/resizable-cover-popover.mjs
   var import_element23 = __toESM(require_element(), 1);
   var import_block_editor66 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
@@ -18912,7 +18912,7 @@ var wp;
     })()
   );
 
-  // packages/block-library/build-module/cover/edit/color-utils.js
+  // packages/block-library/build-module/cover/edit/color-utils.mjs
   var import_hooks20 = __toESM(require_hooks(), 1);
   k([names_default]);
   var DEFAULT_BACKGROUND_COLOR = "#FFF";
@@ -18968,7 +18968,7 @@ var wp;
     return w(composite).isDark();
   }
 
-  // packages/block-library/build-module/cover/edit/index.js
+  // packages/block-library/build-module/cover/edit/index.mjs
   var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
   function getInnerBlocksTemplate(attributes3) {
     return [
@@ -19667,7 +19667,7 @@ var wp;
     style: "wp-block-cover"
   };
 
-  // packages/block-library/build-module/cover/save.js
+  // packages/block-library/build-module/cover/save.mjs
   var import_block_editor68 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
   function save14({ attributes: attributes3 }) {
@@ -19816,7 +19816,7 @@ var wp;
     ] });
   }
 
-  // packages/block-library/build-module/cover/transforms.js
+  // packages/block-library/build-module/cover/transforms.mjs
   var import_blocks22 = __toESM(require_blocks(), 1);
   var import_block_editor69 = __toESM(require_block_editor(), 1);
   var { cleanEmptyObject: cleanEmptyObject4 } = unlock(import_block_editor69.privateApis);
@@ -20039,7 +20039,7 @@ var wp;
   };
   var transforms_default6 = transforms6;
 
-  // packages/block-library/build-module/cover/variations.js
+  // packages/block-library/build-module/cover/variations.mjs
   var import_i18n53 = __toESM(require_i18n(), 1);
   var variations3 = [
     {
@@ -20053,7 +20053,7 @@ var wp;
   ];
   var variations_default3 = variations3;
 
-  // packages/block-library/build-module/cover/index.js
+  // packages/block-library/build-module/cover/index.mjs
   var { fieldsKey: fieldsKey4, formKey: formKey4 } = unlock(import_blocks23.privateApis);
   var { name: name30 } = block_default31;
   var settings30 = {
@@ -20119,7 +20119,7 @@ var wp;
   }
   var init30 = () => initBlock({ name: name30, metadata: block_default31, settings: settings30 });
 
-  // packages/block-library/build-module/details/index.js
+  // packages/block-library/build-module/details/index.mjs
   var details_exports = {};
   __export(details_exports, {
     init: () => init31,
@@ -20213,7 +20213,7 @@ var wp;
     style: "wp-block-details"
   };
 
-  // packages/block-library/build-module/details/edit.js
+  // packages/block-library/build-module/details/edit.mjs
   var import_block_editor70 = __toESM(require_block_editor(), 1);
   var import_components35 = __toESM(require_components(), 1);
   var import_i18n55 = __toESM(require_i18n(), 1);
@@ -20338,7 +20338,7 @@ var wp;
   }
   var edit_default8 = DetailsEdit;
 
-  // packages/block-library/build-module/details/save.js
+  // packages/block-library/build-module/details/save.mjs
   var import_block_editor71 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
   function save15({ attributes: attributes3 }) {
@@ -20359,7 +20359,7 @@ var wp;
     );
   }
 
-  // packages/block-library/build-module/details/transforms.js
+  // packages/block-library/build-module/details/transforms.mjs
   var import_blocks24 = __toESM(require_blocks(), 1);
   var transforms_default7 = {
     from: [
@@ -20381,7 +20381,7 @@ var wp;
     ]
   };
 
-  // packages/block-library/build-module/details/index.js
+  // packages/block-library/build-module/details/index.mjs
   var { fieldsKey: fieldsKey5, formKey: formKey5 } = unlock(import_blocks25.privateApis);
   var { name: name31 } = block_default32;
   var settings31 = {
@@ -20435,7 +20435,7 @@ var wp;
   }
   var init31 = () => initBlock({ name: name31, metadata: block_default32, settings: settings31 });
 
-  // packages/block-library/build-module/embed/index.js
+  // packages/block-library/build-module/embed/index.mjs
   var embed_exports = {};
   __export(embed_exports, {
     init: () => init32,
@@ -20444,7 +20444,7 @@ var wp;
     settings: () => settings32
   });
 
-  // packages/block-library/build-module/embed/embed-controls.js
+  // packages/block-library/build-module/embed/embed-controls.mjs
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_components36 = __toESM(require_components(), 1);
   var import_block_editor72 = __toESM(require_block_editor(), 1);
@@ -20509,7 +20509,7 @@ var wp;
   };
   var embed_controls_default = EmbedControls;
 
-  // packages/block-library/build-module/embed/icons.js
+  // packages/block-library/build-module/embed/icons.mjs
   var import_components37 = __toESM(require_components(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   var embedContentIcon = /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_components37.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zm-6-9.5L16 12l-2.5 2.8 1.1 1L18 12l-3.5-3.5-1 1zm-3 0l-1-1L6 12l3.5 3.8 1.1-1L8 12l2.5-2.5z" }) });
@@ -20639,13 +20639,13 @@ var wp;
     }
   ) });
 
-  // packages/block-library/build-module/embed/embed-loading.js
+  // packages/block-library/build-module/embed/embed-loading.mjs
   var import_components38 = __toESM(require_components(), 1);
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
   var EmbedLoading = () => /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("div", { className: "wp-block-embed is-loading", children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_components38.Spinner, {}) });
   var embed_loading_default = EmbedLoading;
 
-  // packages/block-library/build-module/embed/embed-placeholder.js
+  // packages/block-library/build-module/embed/embed-placeholder.mjs
   var import_i18n58 = __toESM(require_i18n(), 1);
   var import_components39 = __toESM(require_components(), 1);
   var import_block_editor73 = __toESM(require_block_editor(), 1);
@@ -20733,14 +20733,14 @@ var wp;
   };
   var embed_placeholder_default = EmbedPlaceholder;
 
-  // packages/block-library/build-module/embed/embed-preview.js
+  // packages/block-library/build-module/embed/embed-preview.mjs
   var import_i18n59 = __toESM(require_i18n(), 1);
   var import_components40 = __toESM(require_components(), 1);
   var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_element27 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
-  // packages/block-library/build-module/embed/wp-embed-preview.js
+  // packages/block-library/build-module/embed/wp-embed-preview.mjs
   var import_compose18 = __toESM(require_compose(), 1);
   var import_element26 = __toESM(require_element(), 1);
   var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
@@ -20791,7 +20791,7 @@ var wp;
     ) });
   }
 
-  // packages/block-library/build-module/embed/embed-preview.js
+  // packages/block-library/build-module/embed/embed-preview.mjs
   var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
   function EmbedPreview({
     preview,
@@ -20861,7 +20861,7 @@ var wp;
     ) });
   }
 
-  // packages/block-library/build-module/embed/edit.js
+  // packages/block-library/build-module/embed/edit.mjs
   var import_i18n60 = __toESM(require_i18n(), 1);
   var import_element28 = __toESM(require_element(), 1);
   var import_data32 = __toESM(require_data(), 1);
@@ -21089,7 +21089,7 @@ var wp;
   };
   var edit_default9 = EmbedEdit;
 
-  // packages/block-library/build-module/embed/save.js
+  // packages/block-library/build-module/embed/save.mjs
   var import_block_editor76 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   function save16({ attributes: attributes3 }) {
@@ -21117,7 +21117,7 @@ ${url}
     ] });
   }
 
-  // packages/block-library/build-module/embed/transforms.js
+  // packages/block-library/build-module/embed/transforms.mjs
   var import_blocks26 = __toESM(require_blocks(), 1);
   var { name: EMBED_BLOCK } = block_default7;
   var transforms7 = {
@@ -21152,7 +21152,7 @@ ${url}
   };
   var transforms_default8 = transforms7;
 
-  // packages/block-library/build-module/embed/variations.js
+  // packages/block-library/build-module/embed/variations.mjs
   var import_i18n61 = __toESM(require_i18n(), 1);
   function getTitle(providerName) {
     return (0, import_i18n61.sprintf)(
@@ -21486,7 +21486,7 @@ ${url}
   });
   var variations_default4 = variations4;
 
-  // packages/block-library/build-module/embed/deprecated.js
+  // packages/block-library/build-module/embed/deprecated.mjs
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes3 } = block_default7;
@@ -21531,7 +21531,7 @@ ${url}
   var deprecated5 = [v24, v19];
   var deprecated_default13 = deprecated5;
 
-  // packages/block-library/build-module/embed/index.js
+  // packages/block-library/build-module/embed/index.mjs
   var { name: name32 } = block_default7;
   var settings32 = {
     icon: embedContentIcon,
@@ -21543,7 +21543,7 @@ ${url}
   };
   var init32 = () => initBlock({ name: name32, metadata: block_default7, settings: settings32 });
 
-  // packages/block-library/build-module/file/index.js
+  // packages/block-library/build-module/file/index.mjs
   var file_exports = {};
   __export(file_exports, {
     init: () => init33,
@@ -21554,7 +21554,7 @@ ${url}
   var import_i18n65 = __toESM(require_i18n(), 1);
   var import_blocks28 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/file/deprecated.js
+  // packages/block-library/build-module/file/deprecated.mjs
   var import_block_editor78 = __toESM(require_block_editor(), 1);
   var import_i18n62 = __toESM(require_i18n(), 1);
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
@@ -21877,7 +21877,7 @@ ${url}
   var deprecated6 = [v32, v25, v110];
   var deprecated_default14 = deprecated6;
 
-  // packages/block-library/build-module/file/edit.js
+  // packages/block-library/build-module/file/edit.mjs
   var import_blob7 = __toESM(require_blob(), 1);
   var import_components42 = __toESM(require_components(), 1);
   var import_data33 = __toESM(require_data(), 1);
@@ -21889,7 +21889,7 @@ ${url}
   var import_notices5 = __toESM(require_notices(), 1);
   var import_url7 = __toESM(require_url(), 1);
 
-  // packages/block-library/build-module/file/inspector.js
+  // packages/block-library/build-module/file/inspector.mjs
   var import_i18n63 = __toESM(require_i18n(), 1);
   var import_components41 = __toESM(require_components(), 1);
   var import_block_editor79 = __toESM(require_block_editor(), 1);
@@ -22042,7 +22042,7 @@ ${url}
     ] }) });
   }
 
-  // packages/block-library/build-module/file/utils/index.js
+  // packages/block-library/build-module/file/utils/index.mjs
   var browserSupportsPdfs = () => {
     if (window.navigator.pdfViewerEnabled) {
       return true;
@@ -22071,7 +22071,7 @@ ${url}
     return ax;
   };
 
-  // packages/block-library/build-module/file/edit.js
+  // packages/block-library/build-module/file/edit.mjs
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
   var MIN_PREVIEW_HEIGHT = 200;
   var MAX_PREVIEW_HEIGHT = 2e3;
@@ -22444,7 +22444,7 @@ ${url}
     style: "wp-block-file"
   };
 
-  // packages/block-library/build-module/file/save.js
+  // packages/block-library/build-module/file/save.mjs
   var import_block_editor81 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   function save17({ attributes: attributes3 }) {
@@ -22506,7 +22506,7 @@ ${url}
     ] });
   }
 
-  // packages/block-library/build-module/file/transforms.js
+  // packages/block-library/build-module/file/transforms.mjs
   var import_blob8 = __toESM(require_blob(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_data34 = __toESM(require_data(), 1);
@@ -22661,7 +22661,7 @@ ${url}
   };
   var transforms_default9 = transforms8;
 
-  // packages/block-library/build-module/file/index.js
+  // packages/block-library/build-module/file/index.mjs
   var { fieldsKey: fieldsKey6, formKey: formKey6 } = unlock(import_blocks28.privateApis);
   var { name: name33 } = block_default33;
   var settings33 = {
@@ -22709,7 +22709,7 @@ ${url}
   }
   var init33 = () => initBlock({ name: name33, metadata: block_default33, settings: settings33 });
 
-  // packages/block-library/build-module/form/index.js
+  // packages/block-library/build-module/form/index.mjs
   var form_exports = {};
   __export(form_exports, {
     init: () => init34,
@@ -22719,13 +22719,13 @@ ${url}
   });
   var import_hooks26 = __toESM(require_hooks(), 1);
 
-  // packages/block-library/build-module/form/edit.js
+  // packages/block-library/build-module/form/edit.mjs
   var import_i18n67 = __toESM(require_i18n(), 1);
   var import_block_editor82 = __toESM(require_block_editor(), 1);
   var import_components43 = __toESM(require_components(), 1);
   var import_data35 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/form/utils.js
+  // packages/block-library/build-module/form/utils.mjs
   var import_i18n66 = __toESM(require_i18n(), 1);
   var formSubmissionNotificationSuccess = [
     "core/form-submission-notification",
@@ -22756,7 +22756,7 @@ ${url}
     ]
   ];
 
-  // packages/block-library/build-module/form/edit.js
+  // packages/block-library/build-module/form/edit.mjs
   var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE6 = [
     formSubmissionNotificationSuccess,
@@ -23008,7 +23008,7 @@ ${url}
     }
   };
 
-  // packages/block-library/build-module/form/save.js
+  // packages/block-library/build-module/form/save.mjs
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   function save18({ attributes: attributes3 }) {
@@ -23024,7 +23024,7 @@ ${url}
     );
   }
 
-  // packages/block-library/build-module/form/variations.js
+  // packages/block-library/build-module/form/variations.mjs
   var import_i18n68 = __toESM(require_i18n(), 1);
   var variations5 = [
     {
@@ -23151,7 +23151,7 @@ ${url}
   ];
   var variations_default5 = variations5;
 
-  // packages/block-library/build-module/form/deprecated.js
+  // packages/block-library/build-module/form/deprecated.mjs
   var import_block_editor84 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
   var v111 = {
@@ -23238,12 +23238,12 @@ ${url}
   };
   var deprecated_default15 = [v111];
 
-  // packages/block-library/build-module/form/icons.js
+  // packages/block-library/build-module/form/icons.mjs
   var import_primitives149 = __toESM(require_primitives(), 1);
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   var icon = /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_primitives149.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_primitives149.Path, { d: "M18 16H6c-1.1 0-2 .9-2 2s.9 2 2 2h12c1.1 0 2-.9 2-2s-.9-2-2-2Zm0 2.5H6c-.3 0-.5-.2-.5-.5s.2-.5.5-.5h12c.3 0 .5.2.5.5s-.2.5-.5.5ZM13 13H4v1.5h9V13Zm-7-2h12c1.1 0 2-.9 2-2s-.9-2-2-2H6c-1.1 0-2 .9-2 2s.9 2 2 2Zm0-2.5h12c.3 0 .5.2.5.5s-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5s.2-.5.5-.5ZM13 4H4v1.5h9V4Z" }) });
 
-  // packages/block-library/build-module/form/index.js
+  // packages/block-library/build-module/form/index.mjs
   var { name: name34 } = block_default34;
   var settings34 = {
     icon,
@@ -23277,7 +23277,7 @@ ${url}
     return initBlock({ name: name34, metadata: block_default34, settings: settings34 });
   };
 
-  // packages/block-library/build-module/form-input/index.js
+  // packages/block-library/build-module/form-input/index.mjs
   var form_input_exports = {};
   __export(form_input_exports, {
     init: () => init35,
@@ -23286,7 +23286,7 @@ ${url}
     settings: () => settings35
   });
 
-  // packages/block-library/build-module/form-input/deprecated.js
+  // packages/block-library/build-module/form-input/deprecated.mjs
   var import_remove_accents = __toESM(require_remove_accents(), 1);
   var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_dom2 = __toESM(require_dom(), 1);
@@ -23503,7 +23503,7 @@ ${url}
   var deprecated7 = [v26, v113];
   var deprecated_default16 = deprecated7;
 
-  // packages/block-library/build-module/form-input/edit.js
+  // packages/block-library/build-module/form-input/edit.mjs
   var import_i18n69 = __toESM(require_i18n(), 1);
   var import_block_editor86 = __toESM(require_block_editor(), 1);
   var import_components44 = __toESM(require_components(), 1);
@@ -23742,7 +23742,7 @@ ${url}
     style: ["wp-block-form-input"]
   };
 
-  // packages/block-library/build-module/form-input/save.js
+  // packages/block-library/build-module/form-input/save.mjs
   var import_remove_accents2 = __toESM(require_remove_accents(), 1);
   var import_block_editor87 = __toESM(require_block_editor(), 1);
   var import_dom3 = __toESM(require_dom(), 1);
@@ -23795,7 +23795,7 @@ ${url}
     ) });
   }
 
-  // packages/block-library/build-module/form-input/variations.js
+  // packages/block-library/build-module/form-input/variations.mjs
   var import_i18n70 = __toESM(require_i18n(), 1);
   var variations6 = [
     {
@@ -23866,12 +23866,12 @@ ${url}
   ];
   var variations_default6 = variations6;
 
-  // packages/block-library/build-module/form-input/icons.js
+  // packages/block-library/build-module/form-input/icons.mjs
   var import_primitives150 = __toESM(require_primitives(), 1);
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
   var icon2 = /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_primitives150.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_primitives150.Path, { d: "M5.547 18.892A.99.99 0 0 0 6 19h.72v1H6a1.99 1.99 0 0 1-.908-.22l.455-.888ZM9.12 20H7.68v-1h1.44v1Zm2.4 0h-1.44v-1h1.44v1Zm2.4 0h-1.44v-1h1.44v1Zm2.4 0h-1.44v-1h1.44v1Zm2.587-.22c-.272.14-.58.22-.907.22h-.72v-1H18a.99.99 0 0 0 .453-.108l.454.888ZM5.108 17.547a.99.99 0 0 0 0 .906l-.89.454a1.99 1.99 0 0 1 0-1.815l.89.455Zm14.672-.455a1.99 1.99 0 0 1 0 1.815l-.888-.454a.99.99 0 0 0 0-.906l.888-.455ZM6.72 17H6a.99.99 0 0 0-.453.108l-.455-.89A1.99 1.99 0 0 1 6 16h.72v1ZM18 16c.327 0 .635.08.907.219l-.454.89A.99.99 0 0 0 18 17h-.72v-1H18Zm-8.88 1H7.68v-1h1.44v1Zm2.4 0h-1.44v-1h1.44v1Zm2.4 0h-1.44v-1h1.44v1Zm2.4 0h-1.44v-1h1.44v1ZM5.5 14.28H4.25v-1H5.5v1Zm2.5 0H6.5v-1H8v1Zm2.5 0H9v-1h1.5v1Zm2.25 0H11.5v-1h1.25v1ZM18 7a2 2 0 1 1 0 4H6a2 2 0 1 1 0-4h12ZM6 8.5a.5.5 0 0 0 0 1h12a.5.5 0 0 0 0-1H6Zm7-3H4V4h9v1.5Z" }) });
 
-  // packages/block-library/build-module/form-input/index.js
+  // packages/block-library/build-module/form-input/index.mjs
   var { name: name35 } = block_default35;
   var settings35 = {
     icon: icon2,
@@ -23883,7 +23883,7 @@ ${url}
   };
   var init35 = () => initBlock({ name: name35, metadata: block_default35, settings: settings35 });
 
-  // packages/block-library/build-module/form-submit-button/index.js
+  // packages/block-library/build-module/form-submit-button/index.mjs
   var form_submit_button_exports = {};
   __export(form_submit_button_exports, {
     init: () => init36,
@@ -23892,7 +23892,7 @@ ${url}
     settings: () => settings36
   });
 
-  // packages/block-library/build-module/form-submit-button/edit.js
+  // packages/block-library/build-module/form-submit-button/edit.mjs
   var import_i18n71 = __toESM(require_i18n(), 1);
   var import_block_editor88 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
@@ -23939,7 +23939,7 @@ ${url}
     style: ["wp-block-form-submit-button"]
   };
 
-  // packages/block-library/build-module/form-submit-button/save.js
+  // packages/block-library/build-module/form-submit-button/save.mjs
   var import_block_editor89 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
   function save20() {
@@ -23947,7 +23947,7 @@ ${url}
     return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "wp-block-form-submit-wrapper", ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(import_block_editor89.InnerBlocks.Content, {}) });
   }
 
-  // packages/block-library/build-module/form-submit-button/index.js
+  // packages/block-library/build-module/form-submit-button/index.mjs
   var { name: name36 } = block_default36;
   var settings36 = {
     edit: edit_default13,
@@ -23956,7 +23956,7 @@ ${url}
   };
   var init36 = () => initBlock({ name: name36, metadata: block_default36, settings: settings36 });
 
-  // packages/block-library/build-module/form-submission-notification/index.js
+  // packages/block-library/build-module/form-submission-notification/index.mjs
   var form_submission_notification_exports = {};
   __export(form_submission_notification_exports, {
     init: () => init37,
@@ -23965,7 +23965,7 @@ ${url}
     settings: () => settings37
   });
 
-  // packages/block-library/build-module/form-submission-notification/edit.js
+  // packages/block-library/build-module/form-submission-notification/edit.mjs
   var import_i18n72 = __toESM(require_i18n(), 1);
   var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_data36 = __toESM(require_data(), 1);
@@ -24033,7 +24033,7 @@ ${url}
     }
   };
 
-  // packages/block-library/build-module/form-submission-notification/save.js
+  // packages/block-library/build-module/form-submission-notification/save.mjs
   var import_block_editor91 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   function save21({ attributes: attributes3 }) {
@@ -24052,7 +24052,7 @@ ${url}
     );
   }
 
-  // packages/block-library/build-module/form-submission-notification/variations.js
+  // packages/block-library/build-module/form-submission-notification/variations.mjs
   var import_i18n73 = __toESM(require_i18n(), 1);
   var variations7 = [
     {
@@ -24106,7 +24106,7 @@ ${url}
   ];
   var variations_default7 = variations7;
 
-  // packages/block-library/build-module/form-submission-notification/index.js
+  // packages/block-library/build-module/form-submission-notification/index.mjs
   var { name: name37 } = block_default37;
   var settings37 = {
     icon: group_default,
@@ -24117,7 +24117,7 @@ ${url}
   };
   var init37 = () => initBlock({ name: name37, metadata: block_default37, settings: settings37 });
 
-  // packages/block-library/build-module/gallery/index.js
+  // packages/block-library/build-module/gallery/index.mjs
   var gallery_exports = {};
   __export(gallery_exports, {
     init: () => init38,
@@ -24126,11 +24126,11 @@ ${url}
     settings: () => settings38
   });
 
-  // packages/block-library/build-module/gallery/deprecated.js
+  // packages/block-library/build-module/gallery/deprecated.mjs
   var import_block_editor92 = __toESM(require_block_editor(), 1);
   var import_blocks29 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/gallery/constants.js
+  // packages/block-library/build-module/gallery/constants.mjs
   var LINK_DESTINATION_NONE = "none";
   var LINK_DESTINATION_MEDIA = "media";
   var LINK_DESTINATION_LIGHTBOX = "lightbox";
@@ -24139,7 +24139,7 @@ ${url}
   var LINK_DESTINATION_ATTACHMENT_WP_CORE = "post";
   var DEFAULT_MEDIA_SIZE_SLUG2 = "large";
 
-  // packages/block-library/build-module/gallery/deprecated.js
+  // packages/block-library/build-module/gallery/deprecated.mjs
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
   var DEPRECATED_LINK_DESTINATION_MEDIA = "file";
   var DEPRECATED_LINK_DESTINATION_ATTACHMENT = "post";
@@ -25076,7 +25076,7 @@ ${url}
   };
   var deprecated_default17 = [v72, v62, v52, v42, v33, v27, v114];
 
-  // packages/block-library/build-module/gallery/edit.js
+  // packages/block-library/build-module/gallery/edit.mjs
   var import_components45 = __toESM(require_components(), 1);
   var import_block_editor95 = __toESM(require_block_editor(), 1);
   var import_element33 = __toESM(require_element(), 1);
@@ -25087,12 +25087,12 @@ ${url}
   var import_blob9 = __toESM(require_blob(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/gallery/shared-icon.js
+  // packages/block-library/build-module/gallery/shared-icon.mjs
   var import_block_editor93 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
   var sharedIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_block_editor93.BlockIcon, { icon: gallery_default });
 
-  // packages/block-library/build-module/gallery/shared.js
+  // packages/block-library/build-module/gallery/shared.mjs
   function defaultColumnsNumber(imageCount) {
     return imageCount ? Math.min(3, imageCount) : 3;
   }
@@ -25110,7 +25110,7 @@ ${url}
     return imageProps;
   };
 
-  // packages/block-library/build-module/image/constants.js
+  // packages/block-library/build-module/image/constants.mjs
   var MIN_SIZE2 = 20;
   var LINK_DESTINATION_NONE2 = "none";
   var LINK_DESTINATION_MEDIA2 = "media";
@@ -25121,7 +25121,7 @@ ${url}
   var SIZED_LAYOUTS = ["flex", "grid"];
   var DEFAULT_MEDIA_SIZE_SLUG3 = "full";
 
-  // packages/block-library/build-module/gallery/utils.js
+  // packages/block-library/build-module/gallery/utils.mjs
   function getHrefAndDestination2(image, galleryDestination, imageDestination, attributes3, lightboxSetting) {
     switch (imageDestination ? imageDestination : galleryDestination) {
       case LINK_DESTINATION_MEDIA_WP_CORE:
@@ -25154,7 +25154,7 @@ ${url}
     return {};
   }
 
-  // packages/block-library/build-module/image/utils.js
+  // packages/block-library/build-module/image/utils.mjs
   function evalAspectRatio(value) {
     const [width, height = 1] = value.split("/").map(Number);
     const aspectRatio = width / height;
@@ -25202,7 +25202,7 @@ ${url}
     );
   }
 
-  // packages/block-library/build-module/gallery/gallery.js
+  // packages/block-library/build-module/gallery/gallery.mjs
   var import_i18n74 = __toESM(require_i18n(), 1);
   var import_primitives151 = __toESM(require_primitives(), 1);
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
@@ -25255,7 +25255,7 @@ ${url}
     );
   }
 
-  // packages/block-library/build-module/gallery/use-image-sizes.js
+  // packages/block-library/build-module/gallery/use-image-sizes.mjs
   var import_element31 = __toESM(require_element(), 1);
   function useImageSizes(images, isSelected, getSettings2) {
     return (0, import_element31.useMemo)(() => getImageSizing(), [images, isSelected]);
@@ -25291,7 +25291,7 @@ ${url}
     }
   }
 
-  // packages/block-library/build-module/gallery/use-get-new-images.js
+  // packages/block-library/build-module/gallery/use-get-new-images.mjs
   var import_element32 = __toESM(require_element(), 1);
   function useGetNewImages(images, imageData) {
     const [currentImages, setCurrentImages] = (0, import_element32.useState)([]);
@@ -25326,7 +25326,7 @@ ${url}
     }
   }
 
-  // packages/block-library/build-module/gallery/use-get-media.js
+  // packages/block-library/build-module/gallery/use-get-media.mjs
   var import_data37 = __toESM(require_data(), 1);
   var import_core_data20 = __toESM(require_core_data(), 1);
   var EMPTY_IMAGE_MEDIA = [];
@@ -25351,7 +25351,7 @@ ${url}
     );
   }
 
-  // packages/block-library/build-module/gallery/gap-styles.js
+  // packages/block-library/build-module/gallery/gap-styles.mjs
   var import_block_editor94 = __toESM(require_block_editor(), 1);
   function GapStyles({ blockGap, clientId }) {
     const fallbackValue = `var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )`;
@@ -25371,7 +25371,7 @@ ${url}
     return null;
   }
 
-  // packages/block-library/build-module/gallery/edit.js
+  // packages/block-library/build-module/gallery/edit.mjs
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   var MAX_COLUMNS = 8;
   var LINK_OPTIONS = [
@@ -26265,7 +26265,7 @@ ${url}
     style: "wp-block-gallery"
   };
 
-  // packages/block-library/build-module/gallery/save.js
+  // packages/block-library/build-module/gallery/save.mjs
   var import_block_editor96 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   function saveWithInnerBlocks({ attributes: attributes3 }) {
@@ -26293,7 +26293,7 @@ ${url}
     ] });
   }
 
-  // packages/block-library/build-module/gallery/transforms.js
+  // packages/block-library/build-module/gallery/transforms.mjs
   var import_blocks31 = __toESM(require_blocks(), 1);
   var import_blob10 = __toESM(require_blob(), 1);
   var import_hooks29 = __toESM(require_hooks(), 1);
@@ -26486,7 +26486,7 @@ ${url}
   };
   var transforms_default10 = transforms9;
 
-  // packages/block-library/build-module/gallery/index.js
+  // packages/block-library/build-module/gallery/index.mjs
   var { name: name38 } = block_default38;
   var settings38 = {
     icon: gallery_default,
@@ -26516,7 +26516,7 @@ ${url}
   };
   var init38 = () => initBlock({ name: name38, metadata: block_default38, settings: settings38 });
 
-  // packages/block-library/build-module/group/index.js
+  // packages/block-library/build-module/group/index.mjs
   var group_exports = {};
   __export(group_exports, {
     init: () => init39,
@@ -26526,7 +26526,7 @@ ${url}
   });
   var import_i18n79 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/group/deprecated.js
+  // packages/block-library/build-module/group/deprecated.mjs
   var import_block_editor97 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
   var migrateAttributes = (attributes3) => {
@@ -26786,14 +26786,14 @@ ${url}
   ];
   var deprecated_default18 = deprecated8;
 
-  // packages/block-library/build-module/group/edit.js
+  // packages/block-library/build-module/group/edit.mjs
   var import_data40 = __toESM(require_data(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
   var import_element35 = __toESM(require_element(), 1);
   var import_i18n77 = __toESM(require_i18n(), 1);
   var import_primitives153 = __toESM(require_primitives(), 1);
 
-  // packages/block-library/build-module/group/placeholder.js
+  // packages/block-library/build-module/group/placeholder.mjs
   var import_data39 = __toESM(require_data(), 1);
   var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_i18n76 = __toESM(require_i18n(), 1);
@@ -26918,7 +26918,7 @@ ${url}
   }
   var placeholder_default = GroupPlaceHolder;
 
-  // packages/block-library/build-module/group/edit.js
+  // packages/block-library/build-module/group/edit.mjs
   var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl4 } = unlock(import_block_editor99.privateApis);
   function GroupEditControls({ tagName, onSelectTagName, clientId }) {
@@ -27111,14 +27111,14 @@ ${url}
     style: "wp-block-group"
   };
 
-  // packages/block-library/build-module/group/save.js
+  // packages/block-library/build-module/group/save.mjs
   var import_block_editor100 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   function save22({ attributes: { tagName: Tag } }) {
     return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(Tag, { ...import_block_editor100.useInnerBlocksProps.save(import_block_editor100.useBlockProps.save()) });
   }
 
-  // packages/block-library/build-module/group/transforms.js
+  // packages/block-library/build-module/group/transforms.mjs
   var import_blocks33 = __toESM(require_blocks(), 1);
   var transforms10 = {
     from: [
@@ -27156,7 +27156,7 @@ ${url}
   };
   var transforms_default11 = transforms10;
 
-  // packages/block-library/build-module/group/variations.js
+  // packages/block-library/build-module/group/variations.mjs
   var import_i18n78 = __toESM(require_i18n(), 1);
   var example = {
     innerBlocks: [
@@ -27241,7 +27241,7 @@ ${url}
   ];
   var variations_default8 = variations8;
 
-  // packages/block-library/build-module/group/index.js
+  // packages/block-library/build-module/group/index.mjs
   var { name: name39 } = block_default39;
   var settings39 = {
     icon: group_default,
@@ -27306,7 +27306,7 @@ ${url}
   };
   var init39 = () => initBlock({ name: name39, metadata: block_default39, settings: settings39 });
 
-  // packages/block-library/build-module/heading/index.js
+  // packages/block-library/build-module/heading/index.mjs
   var heading_exports = {};
   __export(heading_exports, {
     init: () => init40,
@@ -27317,7 +27317,7 @@ ${url}
   var import_i18n82 = __toESM(require_i18n(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/heading/deprecated.js
+  // packages/block-library/build-module/heading/deprecated.mjs
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var blockSupports = {
@@ -27559,13 +27559,13 @@ ${url}
   var deprecated9 = [v53, v43, v34, v28, v115];
   var deprecated_default19 = deprecated9;
 
-  // packages/block-library/build-module/heading/edit.js
+  // packages/block-library/build-module/heading/edit.mjs
   var import_i18n80 = __toESM(require_i18n(), 1);
   var import_element36 = __toESM(require_element(), 1);
   var import_data41 = __toESM(require_data(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/heading/autogenerate-anchors.js
+  // packages/block-library/build-module/heading/autogenerate-anchors.mjs
   var import_remove_accents3 = __toESM(require_remove_accents(), 1);
   var anchors = {};
   var getTextWithoutMarkup = (text) => {
@@ -27594,7 +27594,7 @@ ${url}
     anchors[clientId] = anchor;
   };
 
-  // packages/block-library/build-module/heading/edit.js
+  // packages/block-library/build-module/heading/edit.mjs
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   function HeadingEdit({
     attributes: attributes3,
@@ -27754,7 +27754,7 @@ ${url}
     style: "wp-block-heading"
   };
 
-  // packages/block-library/build-module/heading/save.js
+  // packages/block-library/build-module/heading/save.mjs
   var import_block_editor103 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   function save23({ attributes: attributes3 }) {
@@ -27766,15 +27766,15 @@ ${url}
     return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(TagName2, { ...import_block_editor103.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(import_block_editor103.RichText.Content, { value: content }) });
   }
 
-  // packages/block-library/build-module/heading/transforms.js
+  // packages/block-library/build-module/heading/transforms.mjs
   var import_blocks34 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/heading/shared.js
+  // packages/block-library/build-module/heading/shared.mjs
   function getLevelFromHeadingNodeName(nodeName) {
     return Number(nodeName.substr(1));
   }
 
-  // packages/block-library/build-module/heading/transforms.js
+  // packages/block-library/build-module/heading/transforms.mjs
   var transforms11 = {
     from: [
       {
@@ -27874,7 +27874,7 @@ ${url}
   };
   var transforms_default12 = transforms11;
 
-  // packages/block-library/build-module/heading/variations.js
+  // packages/block-library/build-module/heading/variations.mjs
   var import_i18n81 = __toESM(require_i18n(), 1);
   var LEVEL_ICONS = [
     heading_level_1_default,
@@ -27904,7 +27904,7 @@ ${url}
   ];
   var variations_default9 = variations9;
 
-  // packages/block-library/build-module/heading/index.js
+  // packages/block-library/build-module/heading/index.mjs
   var { fieldsKey: fieldsKey7, formKey: formKey7 } = unlock(import_blocks35.privateApis);
   var { name: name40 } = block_default40;
   var settings40 = {
@@ -27972,7 +27972,7 @@ ${url}
     return block;
   };
 
-  // packages/block-library/build-module/home-link/index.js
+  // packages/block-library/build-module/home-link/index.mjs
   var home_link_exports = {};
   __export(home_link_exports, {
     init: () => init41,
@@ -28032,7 +28032,7 @@ ${url}
     style: "wp-block-home-link"
   };
 
-  // packages/block-library/build-module/home-link/edit.js
+  // packages/block-library/build-module/home-link/edit.mjs
   var import_block_editor104 = __toESM(require_block_editor(), 1);
   var import_i18n83 = __toESM(require_i18n(), 1);
   var import_data42 = __toESM(require_data(), 1);
@@ -28080,14 +28080,14 @@ ${url}
     ) });
   }
 
-  // packages/block-library/build-module/home-link/save.js
+  // packages/block-library/build-module/home-link/save.mjs
   var import_block_editor105 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   function save24() {
     return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_block_editor105.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/home-link/index.js
+  // packages/block-library/build-module/home-link/index.mjs
   var { name: name41 } = block_default41;
   var settings41 = {
     icon: home_default,
@@ -28101,7 +28101,7 @@ ${url}
   };
   var init41 = () => initBlock({ name: name41, metadata: block_default41, settings: settings41 });
 
-  // packages/block-library/build-module/html/index.js
+  // packages/block-library/build-module/html/index.mjs
   var html_exports = {};
   __export(html_exports, {
     init: () => init42,
@@ -28111,13 +28111,13 @@ ${url}
   });
   var import_i18n88 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/html/edit.js
+  // packages/block-library/build-module/html/edit.mjs
   var import_i18n87 = __toESM(require_i18n(), 1);
   var import_element39 = __toESM(require_element(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_components49 = __toESM(require_components(), 1);
 
-  // packages/block-library/build-module/html/preview.js
+  // packages/block-library/build-module/html/preview.mjs
   var import_element37 = __toESM(require_element(), 1);
   var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_components47 = __toESM(require_components(), 1);
@@ -28160,14 +28160,14 @@ ${url}
     ] });
   }
 
-  // packages/block-library/build-module/html/modal.js
+  // packages/block-library/build-module/html/modal.mjs
   var import_i18n86 = __toESM(require_i18n(), 1);
   var import_element38 = __toESM(require_element(), 1);
   var import_data44 = __toESM(require_data(), 1);
   var import_components48 = __toESM(require_components(), 1);
   var import_block_editor107 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/html/utils.js
+  // packages/block-library/build-module/html/utils.mjs
   function parseContent(content = "") {
     if (!content || !content.trim()) {
       return { html: "", css: "", js: "" };
@@ -28209,7 +28209,7 @@ ${js}
     return parts.join("\n\n");
   }
 
-  // packages/block-library/build-module/html/modal.js
+  // packages/block-library/build-module/html/modal.mjs
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
   var { Tabs } = unlock(import_components48.privateApis);
   function HTMLEditModal({
@@ -28496,7 +28496,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/html/edit.js
+  // packages/block-library/build-module/html/edit.mjs
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
   function HTMLEdit({ attributes: attributes3, setAttributes, isSelected }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element39.useState)(false);
@@ -28595,14 +28595,14 @@ ${js}
     editorStyle: "wp-block-html-editor"
   };
 
-  // packages/block-library/build-module/html/save.js
+  // packages/block-library/build-module/html/save.mjs
   var import_element40 = __toESM(require_element(), 1);
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
   function save25({ attributes: attributes3 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(import_element40.RawHTML, { children: attributes3.content });
   }
 
-  // packages/block-library/build-module/html/transforms.js
+  // packages/block-library/build-module/html/transforms.mjs
   var import_blocks36 = __toESM(require_blocks(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var transforms12 = {
@@ -28622,7 +28622,7 @@ ${js}
   };
   var transforms_default13 = transforms12;
 
-  // packages/block-library/build-module/html/index.js
+  // packages/block-library/build-module/html/index.mjs
   var { name: name42 } = block_default42;
   var settings42 = {
     icon: html_default,
@@ -28637,7 +28637,7 @@ ${js}
   };
   var init42 = () => initBlock({ name: name42, metadata: block_default42, settings: settings42 });
 
-  // packages/block-library/build-module/image/index.js
+  // packages/block-library/build-module/image/index.mjs
   var image_exports = {};
   __export(image_exports, {
     init: () => init43,
@@ -28648,7 +28648,7 @@ ${js}
   var import_i18n92 = __toESM(require_i18n(), 1);
   var import_blocks40 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/image/deprecated.js
+  // packages/block-library/build-module/image/deprecated.mjs
   var import_block_editor109 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
   var v116 = {
@@ -29655,7 +29655,7 @@ ${js}
   };
   var deprecated_default20 = [v82, v73, v63, v54, v44, v35, v29, v116];
 
-  // packages/block-library/build-module/image/edit.js
+  // packages/block-library/build-module/image/edit.mjs
   var import_blob12 = __toESM(require_blob(), 1);
   var import_blocks38 = __toESM(require_blocks(), 1);
   var import_components52 = __toESM(require_components(), 1);
@@ -29666,7 +29666,7 @@ ${js}
   var import_notices8 = __toESM(require_notices(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/image/image.js
+  // packages/block-library/build-module/image/image.mjs
   var import_blob11 = __toESM(require_blob(), 1);
   var import_components51 = __toESM(require_components(), 1);
   var import_compose20 = __toESM(require_compose(), 1);
@@ -29679,7 +29679,7 @@ ${js}
   var import_notices7 = __toESM(require_notices(), 1);
   var import_core_data22 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/utils/media-control.js
+  // packages/block-library/build-module/utils/media-control.mjs
   var import_components50 = __toESM(require_components(), 1);
   var import_block_editor110 = __toESM(require_block_editor(), 1);
   var import_i18n89 = __toESM(require_i18n(), 1);
@@ -29752,7 +29752,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/image/image.js
+  // packages/block-library/build-module/image/image.mjs
   var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
   var { DimensionsTool, ResolutionTool: ResolutionTool2 } = unlock(import_block_editor111.privateApis);
   var scaleOptions = [
@@ -30644,7 +30644,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/image/use-max-width-observer.js
+  // packages/block-library/build-module/image/use-max-width-observer.mjs
   var import_element42 = __toESM(require_element(), 1);
   var import_compose21 = __toESM(require_compose(), 1);
   var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
@@ -30670,7 +30670,7 @@ ${js}
     return [maxWidthObserver, width];
   }
 
-  // packages/block-library/build-module/image/edit.js
+  // packages/block-library/build-module/image/edit.mjs
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   var pickRelevantMediaFiles2 = (image, size) => {
     const imageProps = Object.fromEntries(
@@ -31149,7 +31149,7 @@ ${js}
     style: "wp-block-image"
   };
 
-  // packages/block-library/build-module/image/save.js
+  // packages/block-library/build-module/image/save.mjs
   var import_block_editor113 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
   function save26({ attributes: attributes3 }) {
@@ -31226,7 +31226,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("figure", { ...import_block_editor113.useBlockProps.save({ className: classes }), children: figure });
   }
 
-  // packages/block-library/build-module/image/transforms.js
+  // packages/block-library/build-module/image/transforms.mjs
   var import_blob13 = __toESM(require_blob(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
   function stripFirstImage(attributes3, { shortcode }) {
@@ -31402,7 +31402,7 @@ ${js}
   };
   var transforms_default14 = transforms13;
 
-  // packages/block-library/build-module/image/index.js
+  // packages/block-library/build-module/image/index.mjs
   var { fieldsKey: fieldsKey8, formKey: formKey8 } = unlock(import_blocks40.privateApis);
   var { name: name43 } = block_default43;
   var settings43 = {
@@ -31486,7 +31486,7 @@ ${js}
   }
   var init43 = () => initBlock({ name: name43, metadata: block_default43, settings: settings43 });
 
-  // packages/block-library/build-module/latest-comments/index.js
+  // packages/block-library/build-module/latest-comments/index.mjs
   var latest_comments_exports = {};
   __export(latest_comments_exports, {
     init: () => init44,
@@ -31563,7 +31563,7 @@ ${js}
     style: "wp-block-latest-comments"
   };
 
-  // packages/block-library/build-module/latest-comments/edit.js
+  // packages/block-library/build-module/latest-comments/edit.mjs
   var import_block_editor114 = __toESM(require_block_editor(), 1);
   var import_components53 = __toESM(require_components(), 1);
   var import_i18n93 = __toESM(require_i18n(), 1);
@@ -31698,7 +31698,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/latest-comments/deprecated.js
+  // packages/block-library/build-module/latest-comments/deprecated.mjs
   var v117 = {
     attributes: {
       commentsToShow: {
@@ -31732,7 +31732,7 @@ ${js}
   };
   var deprecated_default21 = [v117];
 
-  // packages/block-library/build-module/latest-comments/index.js
+  // packages/block-library/build-module/latest-comments/index.mjs
   var { name: name44 } = block_default44;
   var settings44 = {
     icon: comment_default,
@@ -31742,7 +31742,7 @@ ${js}
   };
   var init44 = () => initBlock({ name: name44, metadata: block_default44, settings: settings44 });
 
-  // packages/block-library/build-module/latest-posts/index.js
+  // packages/block-library/build-module/latest-posts/index.mjs
   var latest_posts_exports = {};
   __export(latest_posts_exports, {
     init: () => init45,
@@ -31886,7 +31886,7 @@ ${js}
     style: "wp-block-latest-posts"
   };
 
-  // packages/block-library/build-module/latest-posts/deprecated.js
+  // packages/block-library/build-module/latest-posts/deprecated.mjs
   var { attributes: attributes2 } = block_default45;
   var deprecated_default22 = [
     {
@@ -31911,7 +31911,7 @@ ${js}
     }
   ];
 
-  // packages/block-library/build-module/latest-posts/edit.js
+  // packages/block-library/build-module/latest-posts/edit.mjs
   var import_components54 = __toESM(require_components(), 1);
   var import_i18n94 = __toESM(require_i18n(), 1);
   var import_date2 = __toESM(require_date(), 1);
@@ -31922,13 +31922,13 @@ ${js}
   var import_compose24 = __toESM(require_compose(), 1);
   var import_element44 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/latest-posts/constants.js
+  // packages/block-library/build-module/latest-posts/constants.mjs
   var MIN_EXCERPT_LENGTH = 10;
   var MAX_EXCERPT_LENGTH = 100;
   var MAX_POSTS_COLUMNS = 6;
   var DEFAULT_EXCERPT_LENGTH = 55;
 
-  // packages/block-library/build-module/latest-posts/edit.js
+  // packages/block-library/build-module/latest-posts/edit.mjs
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
   var CATEGORIES_LIST_QUERY = {
     per_page: -1,
@@ -32582,7 +32582,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/latest-posts/index.js
+  // packages/block-library/build-module/latest-posts/index.mjs
   var { name: name45 } = block_default45;
   var settings45 = {
     icon: post_list_default,
@@ -32592,7 +32592,7 @@ ${js}
   };
   var init45 = () => initBlock({ name: name45, metadata: block_default45, settings: settings45 });
 
-  // packages/block-library/build-module/list/index.js
+  // packages/block-library/build-module/list/index.mjs
   var list_exports = {};
   __export(list_exports, {
     init: () => init46,
@@ -32602,10 +32602,10 @@ ${js}
   });
   var import_i18n97 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/list/deprecated.js
+  // packages/block-library/build-module/list/deprecated.mjs
   var import_block_editor116 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/list/utils.js
+  // packages/block-library/build-module/list/utils.mjs
   var import_blocks41 = __toESM(require_blocks(), 1);
   var LIST_STYLES = {
     A: "upper-alpha",
@@ -32687,7 +32687,7 @@ ${js}
     return attributes3;
   }
 
-  // packages/block-library/build-module/list/deprecated.js
+  // packages/block-library/build-module/list/deprecated.mjs
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   var v0 = {
     attributes: {
@@ -32967,7 +32967,7 @@ ${js}
   };
   var deprecated_default23 = [v36, v210, v118, v0];
 
-  // packages/block-library/build-module/list/edit.js
+  // packages/block-library/build-module/list/edit.mjs
   var import_block_editor118 = __toESM(require_block_editor(), 1);
   var import_components56 = __toESM(require_components(), 1);
   var import_data49 = __toESM(require_data(), 1);
@@ -32976,7 +32976,7 @@ ${js}
   var import_element47 = __toESM(require_element(), 1);
   var import_deprecated24 = __toESM(require_deprecated(), 1);
 
-  // packages/block-library/build-module/list/ordered-list-settings.js
+  // packages/block-library/build-module/list/ordered-list-settings.mjs
   var import_i18n95 = __toESM(require_i18n(), 1);
   var import_block_editor117 = __toESM(require_block_editor(), 1);
   var import_components55 = __toESM(require_components(), 1);
@@ -33141,7 +33141,7 @@ ${js}
   };
   var ordered_list_settings_default = OrderedListSettings;
 
-  // packages/block-library/build-module/list/tag-name.js
+  // packages/block-library/build-module/list/tag-name.mjs
   var import_element46 = __toESM(require_element(), 1);
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
   function TagName(props, ref) {
@@ -33151,7 +33151,7 @@ ${js}
   }
   var tag_name_default = (0, import_element46.forwardRef)(TagName);
 
-  // packages/block-library/build-module/list/edit.js
+  // packages/block-library/build-module/list/edit.mjs
   var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_BLOCK4 = {
     name: "core/list-item"
@@ -33377,7 +33377,7 @@ ${js}
     style: "wp-block-list"
   };
 
-  // packages/block-library/build-module/list/save.js
+  // packages/block-library/build-module/list/save.mjs
   var import_block_editor119 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
   function save27({ attributes: attributes3 }) {
@@ -33398,7 +33398,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/list/transforms.js
+  // packages/block-library/build-module/list/transforms.mjs
   var import_blocks43 = __toESM(require_blocks(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
   function getListContentSchema({ phrasingContentSchema }) {
@@ -33503,7 +33503,7 @@ ${js}
   };
   var transforms_default15 = transforms14;
 
-  // packages/block-library/build-module/list/index.js
+  // packages/block-library/build-module/list/index.mjs
   var { name: name46 } = block_default46;
   var settings46 = {
     icon: list_default,
@@ -33538,7 +33538,7 @@ ${js}
   };
   var init46 = () => initBlock({ name: name46, metadata: block_default46, settings: settings46 });
 
-  // packages/block-library/build-module/math/index.js
+  // packages/block-library/build-module/math/index.mjs
   var math_exports = {};
   __export(math_exports, {
     init: () => init47,
@@ -33547,7 +33547,7 @@ ${js}
     settings: () => settings47
   });
 
-  // packages/block-library/build-module/math/edit.js
+  // packages/block-library/build-module/math/edit.mjs
   var import_i18n98 = __toESM(require_i18n(), 1);
   var import_block_editor120 = __toESM(require_block_editor(), 1);
   var import_components57 = __toESM(require_components(), 1);
@@ -33715,7 +33715,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/math/save.js
+  // packages/block-library/build-module/math/save.mjs
   var import_block_editor121 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
   function save28({ attributes: attributes3 }) {
@@ -33732,7 +33732,7 @@ ${js}
     ) });
   }
 
-  // packages/block-library/build-module/math/deprecated.js
+  // packages/block-library/build-module/math/deprecated.mjs
   var import_block_editor122 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
   var v119 = {
@@ -33764,7 +33764,7 @@ ${js}
   };
   var deprecated_default24 = [v119];
 
-  // packages/block-library/build-module/math/index.js
+  // packages/block-library/build-module/math/index.mjs
   var { name: name47 } = block_default47;
   var settings47 = {
     icon: math_default,
@@ -33781,7 +33781,7 @@ ${js}
   };
   var init47 = () => initBlock({ name: name47, metadata: block_default47, settings: settings47 });
 
-  // packages/block-library/build-module/list-item/index.js
+  // packages/block-library/build-module/list-item/index.mjs
   var list_item_exports = {};
   __export(list_item_exports, {
     init: () => init48,
@@ -33864,7 +33864,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/list-item/edit.js
+  // packages/block-library/build-module/list-item/edit.mjs
   var import_block_editor128 = __toESM(require_block_editor(), 1);
   var import_i18n99 = __toESM(require_i18n(), 1);
   var import_components58 = __toESM(require_components(), 1);
@@ -33872,7 +33872,7 @@ ${js}
   var import_data56 = __toESM(require_data(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
 
-  // packages/block-library/build-module/list-item/hooks/use-outdent-list-item.js
+  // packages/block-library/build-module/list-item/hooks/use-outdent-list-item.mjs
   var import_element49 = __toESM(require_element(), 1);
   var import_data51 = __toESM(require_data(), 1);
   var import_block_editor123 = __toESM(require_block_editor(), 1);
@@ -33963,7 +33963,7 @@ ${js}
     }, []);
   }
 
-  // packages/block-library/build-module/list-item/hooks/use-indent-list-item.js
+  // packages/block-library/build-module/list-item/hooks/use-indent-list-item.mjs
   var import_element50 = __toESM(require_element(), 1);
   var import_data52 = __toESM(require_data(), 1);
   var import_block_editor124 = __toESM(require_block_editor(), 1);
@@ -34010,7 +34010,7 @@ ${js}
     }, [clientId]);
   }
 
-  // packages/block-library/build-module/list-item/hooks/use-enter.js
+  // packages/block-library/build-module/list-item/hooks/use-enter.mjs
   var import_blocks46 = __toESM(require_blocks(), 1);
   var import_element51 = __toESM(require_element(), 1);
   var import_compose25 = __toESM(require_compose(), 1);
@@ -34078,7 +34078,7 @@ ${js}
     }, []);
   }
 
-  // packages/block-library/build-module/list-item/hooks/use-space.js
+  // packages/block-library/build-module/list-item/hooks/use-space.mjs
   var import_compose26 = __toESM(require_compose(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_block_editor126 = __toESM(require_block_editor(), 1);
@@ -34120,7 +34120,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/list-item/hooks/use-merge.js
+  // packages/block-library/build-module/list-item/hooks/use-merge.mjs
   var import_data55 = __toESM(require_data(), 1);
   var import_block_editor127 = __toESM(require_block_editor(), 1);
   var import_blocks47 = __toESM(require_blocks(), 1);
@@ -34229,7 +34229,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/list-item/edit.js
+  // packages/block-library/build-module/list-item/edit.mjs
   var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
   function IndentUI2({ clientId }) {
     const indentListItem = useIndentListItem(clientId);
@@ -34307,7 +34307,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/list-item/save.js
+  // packages/block-library/build-module/list-item/save.mjs
   var import_block_editor129 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
   function save29({ attributes: attributes3 }) {
@@ -34317,7 +34317,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/list-item/transforms.js
+  // packages/block-library/build-module/list-item/transforms.mjs
   var import_blocks48 = __toESM(require_blocks(), 1);
   var transforms15 = {
     to: [
@@ -34333,7 +34333,7 @@ ${js}
   };
   var transforms_default16 = transforms15;
 
-  // packages/block-library/build-module/list-item/index.js
+  // packages/block-library/build-module/list-item/index.mjs
   var { fieldsKey: fieldsKey9, formKey: formKey9 } = unlock(import_blocks49.privateApis);
   var { name: name48 } = block_default48;
   var settings48 = {
@@ -34363,7 +34363,7 @@ ${js}
   }
   var init48 = () => initBlock({ name: name48, metadata: block_default48, settings: settings48 });
 
-  // packages/block-library/build-module/loginout/index.js
+  // packages/block-library/build-module/loginout/index.mjs
   var loginout_exports = {};
   __export(loginout_exports, {
     init: () => init49,
@@ -34372,7 +34372,7 @@ ${js}
     settings: () => settings49
   });
 
-  // packages/block-library/build-module/loginout/edit.js
+  // packages/block-library/build-module/loginout/edit.mjs
   var import_block_editor131 = __toESM(require_block_editor(), 1);
   var import_components59 = __toESM(require_components(), 1);
   var import_i18n101 = __toESM(require_i18n(), 1);
@@ -34512,7 +34512,7 @@ ${js}
     style: "wp-block-loginout"
   };
 
-  // packages/block-library/build-module/loginout/index.js
+  // packages/block-library/build-module/loginout/index.mjs
   var { name: name49 } = block_default49;
   var settings49 = {
     icon: login_default,
@@ -34520,7 +34520,7 @@ ${js}
   };
   var init49 = () => initBlock({ name: name49, metadata: block_default49, settings: settings49 });
 
-  // packages/block-library/build-module/media-text/index.js
+  // packages/block-library/build-module/media-text/index.mjs
   var media_text_exports = {};
   __export(media_text_exports, {
     init: () => init50,
@@ -34531,11 +34531,11 @@ ${js}
   var import_i18n105 = __toESM(require_i18n(), 1);
   var import_blocks51 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/media-text/deprecated.js
+  // packages/block-library/build-module/media-text/deprecated.mjs
   var import_block_editor132 = __toESM(require_block_editor(), 1);
   var import_compose28 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/media-text/constants.js
+  // packages/block-library/build-module/media-text/constants.mjs
   var import_i18n102 = __toESM(require_i18n(), 1);
   var DEFAULT_MEDIA_SIZE_SLUG4 = "full";
   var WIDTH_CONSTRAINT_PERCENTAGE = 15;
@@ -34550,7 +34550,7 @@ ${js}
     ]
   ];
 
-  // packages/block-library/build-module/media-text/deprecated.js
+  // packages/block-library/build-module/media-text/deprecated.mjs
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
   var v1ToV5ImageFillStyles = (url, focalPoint) => {
     return url ? {
@@ -35467,7 +35467,7 @@ ${js}
   };
   var deprecated_default25 = [v74, v64, v55, v45, v37, v211, v120];
 
-  // packages/block-library/build-module/media-text/edit.js
+  // packages/block-library/build-module/media-text/edit.mjs
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_data58 = __toESM(require_data(), 1);
   var import_element53 = __toESM(require_element(), 1);
@@ -35476,7 +35476,7 @@ ${js}
   var import_blob15 = __toESM(require_blob(), 1);
   var import_core_data24 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/media-text/media-container.js
+  // packages/block-library/build-module/media-text/media-container.mjs
   var import_components60 = __toESM(require_components(), 1);
   var import_block_editor133 = __toESM(require_block_editor(), 1);
   var import_i18n103 = __toESM(require_i18n(), 1);
@@ -35486,7 +35486,7 @@ ${js}
   var import_blob14 = __toESM(require_blob(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/media-text/image-fill.js
+  // packages/block-library/build-module/media-text/image-fill.mjs
   function imageFillStyles(url, focalPoint) {
     return url ? {
       objectPosition: focalPoint ? `${Math.round(focalPoint.x * 100)}% ${Math.round(
@@ -35495,7 +35495,7 @@ ${js}
     } : {};
   }
 
-  // packages/block-library/build-module/media-text/media-container.js
+  // packages/block-library/build-module/media-text/media-container.mjs
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES5 = ["image", "video"];
   var noop2 = () => {
@@ -35670,7 +35670,7 @@ ${js}
   }
   var media_container_default = (0, import_element52.forwardRef)(MediaContainer);
 
-  // packages/block-library/build-module/media-text/edit.js
+  // packages/block-library/build-module/media-text/edit.mjs
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   var { ResolutionTool: ResolutionTool3 } = unlock(import_block_editor134.privateApis);
   var applyWidthConstraints = (width) => Math.max(
@@ -36264,7 +36264,7 @@ ${js}
     style: "wp-block-media-text"
   };
 
-  // packages/block-library/build-module/media-text/save.js
+  // packages/block-library/build-module/media-text/save.mjs
   var import_block_editor135 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_MEDIA_WIDTH2 = 50;
@@ -36358,7 +36358,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/media-text/transforms.js
+  // packages/block-library/build-module/media-text/transforms.mjs
   var import_blocks50 = __toESM(require_blocks(), 1);
   var transforms16 = {
     from: [
@@ -36531,7 +36531,7 @@ ${js}
   };
   var transforms_default17 = transforms16;
 
-  // packages/block-library/build-module/media-text/index.js
+  // packages/block-library/build-module/media-text/index.mjs
   var { fieldsKey: fieldsKey10, formKey: formKey10 } = unlock(import_blocks51.privateApis);
   var { name: name50 } = block_default50;
   var settings50 = {
@@ -36599,7 +36599,7 @@ ${js}
   }
   var init50 = () => initBlock({ name: name50, metadata: block_default50, settings: settings50 });
 
-  // packages/block-library/build-module/missing/index.js
+  // packages/block-library/build-module/missing/index.mjs
   var missing_exports = {};
   __export(missing_exports, {
     init: () => init51,
@@ -36609,7 +36609,7 @@ ${js}
   });
   var import_blocks53 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/missing/edit.js
+  // packages/block-library/build-module/missing/edit.mjs
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_element54 = __toESM(require_element(), 1);
   var import_components62 = __toESM(require_components(), 1);
@@ -36729,14 +36729,14 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/missing/save.js
+  // packages/block-library/build-module/missing/save.mjs
   var import_element55 = __toESM(require_element(), 1);
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   function save31({ attributes: attributes3 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_element55.RawHTML, { children: attributes3.originalContent });
   }
 
-  // packages/block-library/build-module/missing/index.js
+  // packages/block-library/build-module/missing/index.mjs
   var { name: name51 } = block_default51;
   var settings51 = {
     name: name51,
@@ -36755,7 +36755,7 @@ ${js}
   };
   var init51 = () => initBlock({ name: name51, metadata: block_default51, settings: settings51 });
 
-  // packages/block-library/build-module/more/index.js
+  // packages/block-library/build-module/more/index.mjs
   var more_exports = {};
   __export(more_exports, {
     init: () => init52,
@@ -36766,7 +36766,7 @@ ${js}
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_blocks56 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/more/edit.js
+  // packages/block-library/build-module/more/edit.mjs
   var import_i18n107 = __toESM(require_i18n(), 1);
   var import_components63 = __toESM(require_components(), 1);
   var import_block_editor137 = __toESM(require_block_editor(), 1);
@@ -36863,7 +36863,7 @@ ${js}
     editorStyle: "wp-block-more-editor"
   };
 
-  // packages/block-library/build-module/more/save.js
+  // packages/block-library/build-module/more/save.mjs
   var import_element56 = __toESM(require_element(), 1);
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   function save32({ attributes: { customText, noTeaser } }) {
@@ -36872,7 +36872,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(import_element56.RawHTML, { children: [moreTag, noTeaserTag].filter(Boolean).join("\n") });
   }
 
-  // packages/block-library/build-module/more/transforms.js
+  // packages/block-library/build-module/more/transforms.mjs
   var import_blocks55 = __toESM(require_blocks(), 1);
   var transforms17 = {
     from: [
@@ -36898,7 +36898,7 @@ ${js}
   };
   var transforms_default18 = transforms17;
 
-  // packages/block-library/build-module/more/index.js
+  // packages/block-library/build-module/more/index.mjs
   var { fieldsKey: fieldsKey11, formKey: formKey11 } = unlock(import_blocks56.privateApis);
   var { name: name52 } = block_default52;
   var settings52 = {
@@ -36931,7 +36931,7 @@ ${js}
   }
   var init52 = () => initBlock({ name: name52, metadata: block_default52, settings: settings52 });
 
-  // packages/block-library/build-module/navigation/index.js
+  // packages/block-library/build-module/navigation/index.mjs
   var navigation_exports = {};
   __export(navigation_exports, {
     init: () => init53,
@@ -37096,7 +37096,7 @@ ${js}
     style: "wp-block-navigation"
   };
 
-  // packages/block-library/build-module/navigation/edit/index.js
+  // packages/block-library/build-module/navigation/edit/index.mjs
   var import_element73 = __toESM(require_element(), 1);
   var import_block_editor152 = __toESM(require_block_editor(), 1);
   var import_core_data43 = __toESM(require_core_data(), 1);
@@ -37107,11 +37107,11 @@ ${js}
   var import_blocks60 = __toESM(require_blocks(), 1);
   var import_compose32 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/navigation/use-navigation-menu.js
+  // packages/block-library/build-module/navigation/use-navigation-menu.mjs
   var import_core_data25 = __toESM(require_core_data(), 1);
   var import_data60 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/navigation/constants.js
+  // packages/block-library/build-module/navigation/constants.mjs
   var DEFAULT_BLOCK5 = {
     name: "core/navigation-link",
     attributes: {
@@ -37135,7 +37135,7 @@ ${js}
     PRELOADED_NAVIGATION_MENUS_QUERY
   ];
 
-  // packages/block-library/build-module/navigation/use-navigation-menu.js
+  // packages/block-library/build-module/navigation/use-navigation-menu.mjs
   function useNavigationMenu(ref) {
     const permissions = (0, import_core_data25.useResourcePermissions)({
       kind: "postType",
@@ -37214,7 +37214,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/navigation/use-navigation-entities.js
+  // packages/block-library/build-module/navigation/use-navigation-entities.mjs
   var import_core_data26 = __toESM(require_core_data(), 1);
   function useNavigationEntities(menuId) {
     const {
@@ -37257,13 +37257,13 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/navigation/edit/placeholder/index.js
+  // packages/block-library/build-module/navigation/edit/placeholder/index.mjs
   var import_components65 = __toESM(require_components(), 1);
   var import_i18n111 = __toESM(require_i18n(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
   var import_element58 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/navigation/edit/placeholder/placeholder-preview.js
+  // packages/block-library/build-module/navigation/edit/placeholder/placeholder-preview.mjs
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   var PlaceholderPreview = ({ isVisible = true }) => {
@@ -37281,7 +37281,7 @@ ${js}
   };
   var placeholder_preview_default = PlaceholderPreview;
 
-  // packages/block-library/build-module/navigation/edit/navigation-menu-selector.js
+  // packages/block-library/build-module/navigation/edit/navigation-menu-selector.mjs
   var import_components64 = __toESM(require_components(), 1);
   var import_i18n110 = __toESM(require_i18n(), 1);
   var import_html_entities3 = __toESM(require_html_entities(), 1);
@@ -37438,7 +37438,7 @@ ${js}
   }
   var navigation_menu_selector_default = NavigationMenuSelector;
 
-  // packages/block-library/build-module/navigation/edit/placeholder/index.js
+  // packages/block-library/build-module/navigation/edit/placeholder/index.mjs
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   function NavigationPlaceholder({
     isSelected,
@@ -37503,12 +37503,12 @@ ${js}
     ] }) });
   }
 
-  // packages/block-library/build-module/navigation/edit/responsive-wrapper.js
+  // packages/block-library/build-module/navigation/edit/responsive-wrapper.mjs
   var import_components66 = __toESM(require_components(), 1);
   var import_i18n112 = __toESM(require_i18n(), 1);
   var import_block_editor138 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/navigation/edit/overlay-menu-icon.js
+  // packages/block-library/build-module/navigation/edit/overlay-menu-icon.mjs
   var import_primitives154 = __toESM(require_primitives(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   function OverlayMenuIcon({ icon: icon3 }) {
@@ -37532,7 +37532,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation/edit/responsive-wrapper.js
+  // packages/block-library/build-module/navigation/edit/responsive-wrapper.mjs
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
     children,
@@ -37648,7 +37648,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation/edit/inner-blocks.js
+  // packages/block-library/build-module/navigation/edit/inner-blocks.mjs
   var import_core_data28 = __toESM(require_core_data(), 1);
   var import_block_editor139 = __toESM(require_block_editor(), 1);
   var import_data61 = __toESM(require_data(), 1);
@@ -37723,7 +37723,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/navigation/edit/navigation-menu-name-control.js
+  // packages/block-library/build-module/navigation/edit/navigation-menu-name-control.mjs
   var import_components67 = __toESM(require_components(), 1);
   var import_core_data29 = __toESM(require_core_data(), 1);
   var import_i18n113 = __toESM(require_i18n(), 1);
@@ -37745,14 +37745,14 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation/edit/unsaved-inner-blocks.js
+  // packages/block-library/build-module/navigation/edit/unsaved-inner-blocks.mjs
   var import_block_editor140 = __toESM(require_block_editor(), 1);
   var import_components68 = __toESM(require_components(), 1);
   var import_core_data30 = __toESM(require_core_data(), 1);
   var import_data62 = __toESM(require_data(), 1);
   var import_element60 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/navigation/edit/are-blocks-dirty.js
+  // packages/block-library/build-module/navigation/edit/are-blocks-dirty.mjs
   function areBlocksDirty(originalBlocks, blocks) {
     return !isDeepEqual(originalBlocks, blocks, (prop, x2) => {
       if (x2?.name === "core/page-list" && prop === "innerBlocks") {
@@ -37784,7 +37784,7 @@ ${js}
     return false;
   };
 
-  // packages/block-library/build-module/navigation/edit/unsaved-inner-blocks.js
+  // packages/block-library/build-module/navigation/edit/unsaved-inner-blocks.mjs
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT = {};
   function UnsavedInnerBlocks({
@@ -37847,7 +37847,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(Wrapper, { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/navigation/edit/navigation-menu-delete-control.js
+  // packages/block-library/build-module/navigation/edit/navigation-menu-delete-control.mjs
   var import_components69 = __toESM(require_components(), 1);
   var import_core_data31 = __toESM(require_core_data(), 1);
   var import_data63 = __toESM(require_data(), 1);
@@ -37895,7 +37895,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation/edit/use-navigation-notice.js
+  // packages/block-library/build-module/navigation/edit/use-navigation-notice.mjs
   var import_element62 = __toESM(require_element(), 1);
   var import_data64 = __toESM(require_data(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
@@ -37926,7 +37926,7 @@ ${js}
   }
   var use_navigation_notice_default = useNavigationNotice;
 
-  // packages/block-library/build-module/navigation/edit/overlay-menu-preview.js
+  // packages/block-library/build-module/navigation/edit/overlay-menu-preview.mjs
   var import_components70 = __toESM(require_components(), 1);
   var import_i18n115 = __toESM(require_i18n(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
@@ -37993,11 +37993,11 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation/edit/overlay-panel.js
+  // packages/block-library/build-module/navigation/edit/overlay-panel.mjs
   var import_components75 = __toESM(require_components(), 1);
   var import_i18n121 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/navigation/edit/overlay-template-part-selector.js
+  // packages/block-library/build-module/navigation/edit/overlay-template-part-selector.mjs
   var import_element64 = __toESM(require_element(), 1);
   var import_core_data33 = __toESM(require_core_data(), 1);
   var import_data66 = __toESM(require_data(), 1);
@@ -38006,12 +38006,12 @@ ${js}
   var import_html_entities4 = __toESM(require_html_entities(), 1);
   var import_notices12 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/template-part/edit/utils/create-template-part-id.js
+  // packages/block-library/build-module/template-part/edit/utils/create-template-part-id.mjs
   function createTemplatePartId(theme, slug) {
     return theme && slug ? theme + "//" + slug : null;
   }
 
-  // packages/block-library/build-module/navigation/edit/use-create-overlay.js
+  // packages/block-library/build-module/navigation/edit/use-create-overlay.mjs
   var import_element63 = __toESM(require_element(), 1);
   var import_data65 = __toESM(require_data(), 1);
   var import_core_data32 = __toESM(require_core_data(), 1);
@@ -38091,7 +38091,7 @@ ${js}
     return dotCase(input, __assign({ delimiter: "-" }, options2));
   }
 
-  // packages/block-library/build-module/navigation/edit/utils.js
+  // packages/block-library/build-module/navigation/edit/utils.mjs
   function getComputedStyle(node) {
     return node.ownerDocument.defaultView.getComputedStyle(node);
   }
@@ -38177,7 +38177,7 @@ ${js}
     return paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
   };
 
-  // packages/block-library/build-module/navigation/edit/use-create-overlay.js
+  // packages/block-library/build-module/navigation/edit/use-create-overlay.mjs
   function useCreateOverlayTemplatePart(overlayTemplateParts) {
     const { saveEntityRecord } = (0, import_data65.useDispatch)(import_core_data32.store);
     const createOverlayTemplatePart = (0, import_element63.useCallback)(async () => {
@@ -38204,7 +38204,7 @@ ${js}
     return createOverlayTemplatePart;
   }
 
-  // packages/block-library/build-module/navigation/edit/overlay-template-part-selector.js
+  // packages/block-library/build-module/navigation/edit/overlay-template-part-selector.mjs
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
   function OverlayTemplatePartSelector({
     overlay,
@@ -38367,7 +38367,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation/edit/overlay-visibility-control.js
+  // packages/block-library/build-module/navigation/edit/overlay-visibility-control.mjs
   var import_components72 = __toESM(require_components(), 1);
   var import_i18n118 = __toESM(require_i18n(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
@@ -38396,11 +38396,11 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation/edit/overlay-menu-preview-button.js
+  // packages/block-library/build-module/navigation/edit/overlay-menu-preview-button.mjs
   var import_components74 = __toESM(require_components(), 1);
   var import_i18n120 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/navigation/edit/overlay-menu-preview-controls.js
+  // packages/block-library/build-module/navigation/edit/overlay-menu-preview-controls.mjs
   var import_components73 = __toESM(require_components(), 1);
   var import_i18n119 = __toESM(require_i18n(), 1);
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
@@ -38453,7 +38453,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation/edit/overlay-menu-preview-button.js
+  // packages/block-library/build-module/navigation/edit/overlay-menu-preview-button.mjs
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   function OverlayMenuPreviewButton({
     isResponsive,
@@ -38510,7 +38510,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation/edit/overlay-panel.js
+  // packages/block-library/build-module/navigation/edit/overlay-panel.mjs
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   function OverlayPanel({
     overlayMenu,
@@ -38557,17 +38557,17 @@ ${js}
     ] }) });
   }
 
-  // packages/block-library/build-module/navigation/edit/use-convert-classic-menu-to-block-menu.js
+  // packages/block-library/build-module/navigation/edit/use-convert-classic-menu-to-block-menu.mjs
   var import_data68 = __toESM(require_data(), 1);
   var import_core_data35 = __toESM(require_core_data(), 1);
   var import_element66 = __toESM(require_element(), 1);
   var import_i18n122 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/navigation/menu-items-to-blocks.js
+  // packages/block-library/build-module/navigation/menu-items-to-blocks.mjs
   var import_blocks57 = __toESM(require_blocks(), 1);
   var import_hooks39 = __toESM(require_hooks(), 1);
 
-  // packages/block-library/build-module/navigation-link/shared/use-entity-binding.js
+  // packages/block-library/build-module/navigation-link/shared/use-entity-binding.mjs
   var import_element65 = __toESM(require_element(), 1);
   var import_block_editor141 = __toESM(require_block_editor(), 1);
   var import_data67 = __toESM(require_data(), 1);
@@ -38662,7 +38662,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/navigation/menu-items-to-blocks.js
+  // packages/block-library/build-module/navigation/menu-items-to-blocks.mjs
   function menuItemsToBlocks(menuItems) {
     if (!menuItems) {
       return null;
@@ -38792,7 +38792,7 @@ ${js}
     return dataTree;
   }
 
-  // packages/block-library/build-module/navigation/edit/use-convert-classic-menu-to-block-menu.js
+  // packages/block-library/build-module/navigation/edit/use-convert-classic-menu-to-block-menu.mjs
   var CLASSIC_MENU_CONVERSION_SUCCESS = "success";
   var CLASSIC_MENU_CONVERSION_ERROR = "error";
   var CLASSIC_MENU_CONVERSION_PENDING = "pending";
@@ -38915,25 +38915,25 @@ ${js}
   }
   var use_convert_classic_menu_to_block_menu_default = useConvertClassicToBlockMenu;
 
-  // packages/block-library/build-module/navigation/edit/use-create-navigation-menu.js
+  // packages/block-library/build-module/navigation/edit/use-create-navigation-menu.mjs
   var import_blocks58 = __toESM(require_blocks(), 1);
   var import_core_data38 = __toESM(require_core_data(), 1);
   var import_data71 = __toESM(require_data(), 1);
   var import_element68 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/navigation/edit/use-generate-default-navigation-title.js
+  // packages/block-library/build-module/navigation/edit/use-generate-default-navigation-title.mjs
   var import_components76 = __toESM(require_components(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
   var import_data70 = __toESM(require_data(), 1);
   var import_element67 = __toESM(require_element(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/navigation/use-template-part-area-label.js
+  // packages/block-library/build-module/navigation/use-template-part-area-label.mjs
   var import_block_editor142 = __toESM(require_block_editor(), 1);
   var import_core_data36 = __toESM(require_core_data(), 1);
   var import_data69 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/template-part/edit/utils/get-template-part-icon.js
+  // packages/block-library/build-module/template-part/edit/utils/get-template-part-icon.mjs
   var getTemplatePartIcon = (areaOrIconName) => {
     if ("header" === areaOrIconName) {
       return header_default;
@@ -38950,7 +38950,7 @@ ${js}
     return symbol_filled_default;
   };
 
-  // packages/block-library/build-module/navigation/use-template-part-area-label.js
+  // packages/block-library/build-module/navigation/use-template-part-area-label.mjs
   function useTemplatePartAreaLabel(clientId) {
     return (0, import_data69.useSelect)(
       (select9) => {
@@ -38997,7 +38997,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation/edit/use-generate-default-navigation-title.js
+  // packages/block-library/build-module/navigation/edit/use-generate-default-navigation-title.mjs
   var DRAFT_MENU_PARAMS = [
     "postType",
     "wp_navigation",
@@ -39041,7 +39041,7 @@ ${js}
     }, [isDisabled, area, registry]);
   }
 
-  // packages/block-library/build-module/navigation/edit/use-create-navigation-menu.js
+  // packages/block-library/build-module/navigation/edit/use-create-navigation-menu.mjs
   var CREATE_NAVIGATION_MENU_SUCCESS = "success";
   var CREATE_NAVIGATION_MENU_ERROR = "error";
   var CREATE_NAVIGATION_MENU_PENDING = "pending";
@@ -39117,7 +39117,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/navigation/edit/use-inner-blocks.js
+  // packages/block-library/build-module/navigation/edit/use-inner-blocks.mjs
   var import_data72 = __toESM(require_data(), 1);
   var import_block_editor143 = __toESM(require_block_editor(), 1);
   var EMPTY_ARRAY2 = [];
@@ -39140,7 +39140,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation/edit/manage-menus-button.js
+  // packages/block-library/build-module/navigation/edit/manage-menus-button.mjs
   var import_url10 = __toESM(require_url(), 1);
   var import_components77 = __toESM(require_components(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
@@ -39169,13 +39169,13 @@ ${js}
   };
   var manage_menus_button_default = ManageMenusButton;
 
-  // packages/block-library/build-module/navigation/edit/menu-inspector-controls.js
+  // packages/block-library/build-module/navigation/edit/menu-inspector-controls.mjs
   var import_block_editor151 = __toESM(require_block_editor(), 1);
   var import_components84 = __toESM(require_components(), 1);
   var import_data78 = __toESM(require_data(), 1);
   var import_i18n133 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/navigation/edit/deleted-navigation-warning.js
+  // packages/block-library/build-module/navigation/edit/deleted-navigation-warning.mjs
   var import_block_editor144 = __toESM(require_block_editor(), 1);
   var import_components78 = __toESM(require_components(), 1);
   var import_i18n125 = __toESM(require_i18n(), 1);
@@ -39208,7 +39208,7 @@ ${js}
   }
   var deleted_navigation_warning_default = DeletedNavigationWarning;
 
-  // packages/block-library/build-module/navigation/edit/leaf-more-menu.js
+  // packages/block-library/build-module/navigation/edit/leaf-more-menu.mjs
   var import_blocks59 = __toESM(require_blocks(), 1);
   var import_components79 = __toESM(require_components(), 1);
   var import_data73 = __toESM(require_data(), 1);
@@ -39351,7 +39351,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation-link/shared/controls.js
+  // packages/block-library/build-module/navigation-link/shared/controls.mjs
   var import_components83 = __toESM(require_components(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_dom6 = __toESM(require_dom(), 1);
@@ -39359,12 +39359,12 @@ ${js}
   var import_data77 = __toESM(require_data(), 1);
   var import_core_data41 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.js
+  // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.mjs
   var import_element70 = __toESM(require_element(), 1);
   var import_data74 = __toESM(require_data(), 1);
   var import_block_editor146 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/navigation-link/shared/update-attributes.js
+  // packages/block-library/build-module/navigation-link/shared/update-attributes.mjs
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_url11 = __toESM(require_url(), 1);
   var shouldSeverEntityLink = (originalUrl, newUrl) => {
@@ -39481,7 +39481,7 @@ ${js}
     };
   };
 
-  // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.js
+  // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.mjs
   function useHandleLinkChange({ clientId, attributes: attributes3, setAttributes }) {
     const { updateBlockAttributes } = (0, import_data74.useDispatch)(import_block_editor146.store);
     const { hasUrlBinding, createBinding, clearBinding } = useEntityBinding({
@@ -39532,7 +39532,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation-link/link-ui/index.js
+  // packages/block-library/build-module/navigation-link/link-ui/index.mjs
   var import_dom5 = __toESM(require_dom(), 1);
   var import_components82 = __toESM(require_components(), 1);
   var import_i18n130 = __toESM(require_i18n(), 1);
@@ -39541,7 +39541,7 @@ ${js}
   var import_core_data40 = __toESM(require_core_data(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/navigation-link/link-ui/page-creator.js
+  // packages/block-library/build-module/navigation-link/link-ui/page-creator.mjs
   var import_components81 = __toESM(require_components(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_data75 = __toESM(require_data(), 1);
@@ -39550,7 +39550,7 @@ ${js}
   var import_html_entities5 = __toESM(require_html_entities(), 1);
   var import_element71 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/navigation-link/link-ui/dialog-wrapper.js
+  // packages/block-library/build-module/navigation-link/link-ui/dialog-wrapper.mjs
   var import_components80 = __toESM(require_components(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
   var import_compose30 = __toESM(require_compose(), 1);
@@ -39602,7 +39602,7 @@ ${js}
   }
   var dialog_wrapper_default = DialogWrapper;
 
-  // packages/block-library/build-module/navigation-link/link-ui/page-creator.js
+  // packages/block-library/build-module/navigation-link/link-ui/page-creator.mjs
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   function LinkUIPageCreator({
     postType,
@@ -39734,7 +39734,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation-link/link-ui/block-inserter.js
+  // packages/block-library/build-module/navigation-link/link-ui/block-inserter.mjs
   var import_i18n129 = __toESM(require_i18n(), 1);
   var import_data76 = __toESM(require_data(), 1);
   var import_block_editor147 = __toESM(require_block_editor(), 1);
@@ -39779,7 +39779,7 @@ ${js}
   }
   var block_inserter_default = LinkUIBlockInserter;
 
-  // packages/block-library/build-module/navigation-link/link-ui/index.js
+  // packages/block-library/build-module/navigation-link/link-ui/index.mjs
   var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
   function getSuggestionsQuery(type, kind) {
     switch (type) {
@@ -40003,7 +40003,7 @@ ${js}
     ] });
   };
 
-  // packages/block-library/build-module/navigation-link/shared/use-link-preview.js
+  // packages/block-library/build-module/navigation-link/shared/use-link-preview.mjs
   var import_i18n131 = __toESM(require_i18n(), 1);
   var import_url12 = __toESM(require_url(), 1);
   var import_block_editor149 = __toESM(require_block_editor(), 1);
@@ -40101,7 +40101,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/navigation-link/shared/controls.js
+  // packages/block-library/build-module/navigation-link/shared/controls.mjs
   var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
   var { LinkPicker } = unlock(import_block_editor150.privateApis);
   function getEntityTypeName(type, kind) {
@@ -40314,7 +40314,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation/edit/menu-inspector-controls.js
+  // packages/block-library/build-module/navigation/edit/menu-inspector-controls.mjs
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var actionLabel = (
     /* translators: %s: The name of a menu. */
@@ -40466,14 +40466,14 @@ ${js}
   };
   var menu_inspector_controls_default = MenuInspectorControls;
 
-  // packages/block-library/build-module/navigation/edit/accessible-description.js
+  // packages/block-library/build-module/navigation/edit/accessible-description.mjs
   var import_components85 = __toESM(require_components(), 1);
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   function AccessibleDescription({ id, children }) {
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(import_components85.VisuallyHidden, { children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", { id, className: "wp-block-navigation__description", children }) });
   }
 
-  // packages/block-library/build-module/navigation/edit/accessible-menu-description.js
+  // packages/block-library/build-module/navigation/edit/accessible-menu-description.mjs
   var import_core_data42 = __toESM(require_core_data(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
@@ -40483,7 +40483,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(AccessibleDescription, { id, children: description });
   }
 
-  // packages/block-library/build-module/navigation/edit/index.js
+  // packages/block-library/build-module/navigation/edit/index.mjs
   var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   function NavigationAddPageButton({ clientId }) {
     const { insertBlock } = (0, import_data79.useDispatch)(import_block_editor152.store);
@@ -41262,7 +41262,7 @@ ${js}
     { overlayTextColor: "color" }
   )(Navigation);
 
-  // packages/block-library/build-module/navigation/save.js
+  // packages/block-library/build-module/navigation/save.mjs
   var import_block_editor153 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   function save33({ attributes: attributes3 }) {
@@ -41272,7 +41272,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_block_editor153.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/navigation/deprecated.js
+  // packages/block-library/build-module/navigation/deprecated.mjs
   var import_block_editor154 = __toESM(require_block_editor(), 1);
   var import_compose33 = __toESM(require_compose(), 1);
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
@@ -41809,7 +41809,7 @@ ${js}
   ];
   var deprecated_default26 = deprecated11;
 
-  // packages/block-library/build-module/navigation/index.js
+  // packages/block-library/build-module/navigation/index.mjs
   var { name: name53 } = block_default53;
   var settings53 = {
     icon: navigation_default,
@@ -41864,7 +41864,7 @@ ${js}
   };
   var init53 = () => initBlock({ name: name53, metadata: block_default53, settings: settings53 });
 
-  // packages/block-library/build-module/navigation-link/index.js
+  // packages/block-library/build-module/navigation-link/index.mjs
   var navigation_link_exports = {};
   __export(navigation_link_exports, {
     init: () => init54,
@@ -41969,7 +41969,7 @@ ${js}
     style: "wp-block-navigation-link"
   };
 
-  // packages/block-library/build-module/navigation-link/edit.js
+  // packages/block-library/build-module/navigation-link/edit.mjs
   var import_blocks61 = __toESM(require_blocks(), 1);
   var import_data81 = __toESM(require_data(), 1);
   var import_components87 = __toESM(require_components(), 1);
@@ -42396,14 +42396,14 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation-link/save.js
+  // packages/block-library/build-module/navigation-link/save.mjs
   var import_block_editor156 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   function save34() {
     return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_block_editor156.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/navigation-link/hooks.js
+  // packages/block-library/build-module/navigation-link/hooks.mjs
   function getIcon(variationName) {
     switch (variationName) {
       case "post":
@@ -42445,7 +42445,7 @@ ${js}
     return settings116;
   }
 
-  // packages/block-library/build-module/navigation-link/transforms.js
+  // packages/block-library/build-module/navigation-link/transforms.mjs
   var import_blocks62 = __toESM(require_blocks(), 1);
   var transforms18 = {
     from: [
@@ -42574,7 +42574,7 @@ ${js}
   };
   var transforms_default19 = transforms18;
 
-  // packages/block-library/build-module/navigation-link/index.js
+  // packages/block-library/build-module/navigation-link/index.mjs
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   var { fieldsKey: fieldsKey12, formKey: formKey12 } = unlock(import_blocks63.privateApis);
   var { name: name54 } = block_default54;
@@ -42668,7 +42668,7 @@ ${js}
     return initBlock({ name: name54, metadata: block_default54, settings: settings54 });
   };
 
-  // packages/block-library/build-module/navigation-submenu/index.js
+  // packages/block-library/build-module/navigation-submenu/index.mjs
   var navigation_submenu_exports = {};
   __export(navigation_submenu_exports, {
     init: () => init55,
@@ -42765,7 +42765,7 @@ ${js}
     style: "wp-block-navigation-submenu"
   };
 
-  // packages/block-library/build-module/navigation-submenu/edit.js
+  // packages/block-library/build-module/navigation-submenu/edit.mjs
   var import_data82 = __toESM(require_data(), 1);
   var import_components89 = __toESM(require_components(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
@@ -42777,7 +42777,7 @@ ${js}
   var import_blocks64 = __toESM(require_blocks(), 1);
   var import_compose35 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/navigation-submenu/icons.js
+  // packages/block-library/build-module/navigation-submenu/icons.mjs
   var import_components88 = __toESM(require_components(), 1);
   var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var ItemSubmenuIcon = () => /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
@@ -42792,7 +42792,7 @@ ${js}
     }
   );
 
-  // packages/block-library/build-module/navigation-submenu/edit.js
+  // packages/block-library/build-module/navigation-submenu/edit.mjs
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_BLOCKS = [
     "core/navigation-link",
@@ -43081,14 +43081,14 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/navigation-submenu/save.js
+  // packages/block-library/build-module/navigation-submenu/save.mjs
   var import_block_editor159 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
   function save35() {
     return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_block_editor159.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/navigation-submenu/transforms.js
+  // packages/block-library/build-module/navigation-submenu/transforms.mjs
   var import_blocks65 = __toESM(require_blocks(), 1);
   var transforms19 = {
     to: [
@@ -43142,7 +43142,7 @@ ${js}
   };
   var transforms_default20 = transforms19;
 
-  // packages/block-library/build-module/navigation-submenu/index.js
+  // packages/block-library/build-module/navigation-submenu/index.mjs
   var { fieldsKey: fieldsKey13, formKey: formKey13 } = unlock(import_blocks66.privateApis);
   var { name: name55 } = block_default55;
   var settings55 = {
@@ -43194,7 +43194,7 @@ ${js}
   }
   var init55 = () => initBlock({ name: name55, metadata: block_default55, settings: settings55 });
 
-  // packages/block-library/build-module/nextpage/index.js
+  // packages/block-library/build-module/nextpage/index.mjs
   var nextpage_exports = {};
   __export(nextpage_exports, {
     init: () => init56,
@@ -43203,7 +43203,7 @@ ${js}
     settings: () => settings56
   });
 
-  // packages/block-library/build-module/nextpage/edit.js
+  // packages/block-library/build-module/nextpage/edit.mjs
   var import_i18n141 = __toESM(require_i18n(), 1);
   var import_block_editor160 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
@@ -43234,14 +43234,14 @@ ${js}
     editorStyle: "wp-block-nextpage-editor"
   };
 
-  // packages/block-library/build-module/nextpage/save.js
+  // packages/block-library/build-module/nextpage/save.mjs
   var import_element76 = __toESM(require_element(), 1);
   var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
   function save36() {
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(import_element76.RawHTML, { children: "<!--nextpage-->" });
   }
 
-  // packages/block-library/build-module/nextpage/transforms.js
+  // packages/block-library/build-module/nextpage/transforms.mjs
   var import_blocks67 = __toESM(require_blocks(), 1);
   var transforms20 = {
     from: [
@@ -43259,7 +43259,7 @@ ${js}
   };
   var transforms_default21 = transforms20;
 
-  // packages/block-library/build-module/nextpage/index.js
+  // packages/block-library/build-module/nextpage/index.mjs
   var { name: name56 } = block_default56;
   var settings56 = {
     icon: page_break_default,
@@ -43270,7 +43270,7 @@ ${js}
   };
   var init56 = () => initBlock({ name: name56, metadata: block_default56, settings: settings56 });
 
-  // packages/block-library/build-module/navigation-overlay-close/index.js
+  // packages/block-library/build-module/navigation-overlay-close/index.mjs
   var navigation_overlay_close_exports = {};
   __export(navigation_overlay_close_exports, {
     init: () => init57,
@@ -43282,7 +43282,7 @@ ${js}
   var import_data83 = __toESM(require_data(), 1);
   var import_core_data46 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/navigation-overlay-close/edit.js
+  // packages/block-library/build-module/navigation-overlay-close/edit.mjs
   var import_block_editor161 = __toESM(require_block_editor(), 1);
   var import_components90 = __toESM(require_components(), 1);
   var import_i18n142 = __toESM(require_i18n(), 1);
@@ -43431,7 +43431,7 @@ ${js}
     style: "wp-block-navigation-overlay-close"
   };
 
-  // packages/block-library/build-module/navigation-overlay-close/save.js
+  // packages/block-library/build-module/navigation-overlay-close/save.mjs
   var import_block_editor162 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   var saveBlockProps = import_block_editor162.useBlockProps.save;
@@ -43474,12 +43474,12 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/navigation-overlay-close/icon.js
+  // packages/block-library/build-module/navigation-overlay-close/icon.mjs
   var import_primitives155 = __toESM(require_primitives(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   var icon_default6 = /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_primitives155.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_primitives155.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12ZM15 8l-3 3-3-3-1.1 1.1 3 3-3 3L9 16.2l3-3 3 3 1.1-1.1-3-3 3-3L15 8Z" }) });
 
-  // packages/block-library/build-module/navigation-overlay-close/index.js
+  // packages/block-library/build-module/navigation-overlay-close/index.mjs
   var { name: name57 } = block_default57;
   var settings57 = {
     icon: icon_default6,
@@ -43522,7 +43522,7 @@ ${js}
     return initBlock({ name: name57, metadata: block_default57, settings: settings57 });
   };
 
-  // packages/block-library/build-module/pattern/index.js
+  // packages/block-library/build-module/pattern/index.mjs
   var pattern_exports = {};
   __export(pattern_exports, {
     init: () => init58,
@@ -43556,7 +43556,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/pattern/edit.js
+  // packages/block-library/build-module/pattern/edit.mjs
   var import_blocks68 = __toESM(require_blocks(), 1);
   var import_data85 = __toESM(require_data(), 1);
   var import_element77 = __toESM(require_element(), 1);
@@ -43564,7 +43564,7 @@ ${js}
   var import_core_data47 = __toESM(require_core_data(), 1);
   var import_i18n143 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/pattern/recursion-detector.js
+  // packages/block-library/build-module/pattern/recursion-detector.mjs
   var import_data84 = __toESM(require_data(), 1);
   var cachedParsers = /* @__PURE__ */ new WeakMap();
   function useParsePatternDependencies() {
@@ -43618,7 +43618,7 @@ ${js}
     return false;
   }
 
-  // packages/block-library/build-module/pattern/edit.js
+  // packages/block-library/build-module/pattern/edit.mjs
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   var PatternEdit = ({ attributes: attributes3, clientId }) => {
     const registry = (0, import_data85.useRegistry)();
@@ -43715,14 +43715,14 @@ ${js}
   };
   var edit_default20 = PatternEdit;
 
-  // packages/block-library/build-module/pattern/index.js
+  // packages/block-library/build-module/pattern/index.mjs
   var { name: name58 } = block_default58;
   var settings58 = {
     edit: edit_default20
   };
   var init58 = () => initBlock({ name: name58, metadata: block_default58, settings: settings58 });
 
-  // packages/block-library/build-module/page-list/index.js
+  // packages/block-library/build-module/page-list/index.mjs
   var page_list_exports = {};
   __export(page_list_exports, {
     init: () => init59,
@@ -43818,7 +43818,7 @@ ${js}
     style: "wp-block-page-list"
   };
 
-  // packages/block-library/build-module/page-list/edit.js
+  // packages/block-library/build-module/page-list/edit.mjs
   var import_blocks70 = __toESM(require_blocks(), 1);
   var import_block_editor165 = __toESM(require_block_editor(), 1);
   var import_components92 = __toESM(require_components(), 1);
@@ -43827,7 +43827,7 @@ ${js}
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_data87 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/page-list/use-convert-to-navigation-links.js
+  // packages/block-library/build-module/page-list/use-convert-to-navigation-links.mjs
   var import_blocks69 = __toESM(require_blocks(), 1);
   var import_data86 = __toESM(require_data(), 1);
   var import_block_editor164 = __toESM(require_block_editor(), 1);
@@ -43922,7 +43922,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/page-list/convert-to-links-modal.js
+  // packages/block-library/build-module/page-list/convert-to-links-modal.mjs
   var import_components91 = __toESM(require_components(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
@@ -43981,7 +43981,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/page-list/edit.js
+  // packages/block-library/build-module/page-list/edit.mjs
   var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
   var MAX_PAGE_COUNT = 100;
   var NOOP = () => {
@@ -44280,7 +44280,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/page-list/index.js
+  // packages/block-library/build-module/page-list/index.mjs
   var { name: name59 } = block_default59;
   var settings59 = {
     icon: pages_default,
@@ -44289,7 +44289,7 @@ ${js}
   };
   var init59 = () => initBlock({ name: name59, metadata: block_default59, settings: settings59 });
 
-  // packages/block-library/build-module/page-list-item/index.js
+  // packages/block-library/build-module/page-list-item/index.mjs
   var page_list_item_exports = {};
   __export(page_list_item_exports, {
     init: () => init60,
@@ -44356,14 +44356,14 @@ ${js}
     style: "wp-block-page-list"
   };
 
-  // packages/block-library/build-module/page-list-item/edit.js
+  // packages/block-library/build-module/page-list-item/edit.mjs
   var import_block_editor166 = __toESM(require_block_editor(), 1);
   var import_data88 = __toESM(require_data(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
   var import_element79 = __toESM(require_element(), 1);
   var import_dom7 = __toESM(require_dom(), 1);
 
-  // packages/block-library/build-module/navigation-link/icons.js
+  // packages/block-library/build-module/navigation-link/icons.mjs
   var import_components93 = __toESM(require_components(), 1);
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
   var ItemSubmenuIcon2 = () => /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
@@ -44378,7 +44378,7 @@ ${js}
     }
   );
 
-  // packages/block-library/build-module/page-list-item/edit.js
+  // packages/block-library/build-module/page-list-item/edit.mjs
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
   function useFrontPageId() {
     return (0, import_data88.useSelect)((select9) => {
@@ -44453,7 +44453,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/page-list-item/index.js
+  // packages/block-library/build-module/page-list-item/index.mjs
   var { name: name60 } = block_default60;
   var settings60 = {
     __experimentalLabel: ({ label }) => label,
@@ -44463,7 +44463,7 @@ ${js}
   };
   var init60 = () => initBlock({ name: name60, metadata: block_default60, settings: settings60 });
 
-  // packages/block-library/build-module/paragraph/index.js
+  // packages/block-library/build-module/paragraph/index.mjs
   var paragraph_exports = {};
   __export(paragraph_exports, {
     init: () => init61,
@@ -44474,7 +44474,7 @@ ${js}
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_blocks74 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/paragraph/deprecated.js
+  // packages/block-library/build-module/paragraph/deprecated.mjs
   var import_element80 = __toESM(require_element(), 1);
   var import_block_editor167 = __toESM(require_block_editor(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
@@ -44872,13 +44872,13 @@ ${js}
   ];
   var deprecated_default27 = deprecated12;
 
-  // packages/block-library/build-module/paragraph/edit.js
+  // packages/block-library/build-module/paragraph/edit.mjs
   var import_i18n147 = __toESM(require_i18n(), 1);
   var import_components94 = __toESM(require_components(), 1);
   var import_block_editor170 = __toESM(require_block_editor(), 1);
   var import_blocks72 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/paragraph/use-enter.js
+  // packages/block-library/build-module/paragraph/use-enter.mjs
   var import_element81 = __toESM(require_element(), 1);
   var import_compose37 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
@@ -44980,7 +44980,7 @@ ${js}
     }, []);
   }
 
-  // packages/block-library/build-module/paragraph/deprecated-attributes.js
+  // packages/block-library/build-module/paragraph/deprecated-attributes.mjs
   var import_compose38 = __toESM(require_compose(), 1);
   var import_element82 = __toESM(require_element(), 1);
   var import_deprecated29 = __toESM(require_deprecated(), 1);
@@ -45014,7 +45014,7 @@ ${js}
     }, [align, updateStyleWithAlign]);
   }
 
-  // packages/block-library/build-module/paragraph/edit.js
+  // packages/block-library/build-module/paragraph/edit.mjs
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   function ParagraphRTLControl({ direction, setDirection }) {
     return (0, import_i18n147.isRTL)() && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
@@ -45220,7 +45220,7 @@ ${js}
     style: "wp-block-paragraph"
   };
 
-  // packages/block-library/build-module/paragraph/save.js
+  // packages/block-library/build-module/paragraph/save.mjs
   var import_block_editor171 = __toESM(require_block_editor(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
@@ -45233,7 +45233,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)("p", { ...import_block_editor171.useBlockProps.save({ className, dir: direction }), children: /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_block_editor171.RichText.Content, { value: content }) });
   }
 
-  // packages/block-library/build-module/paragraph/transforms.js
+  // packages/block-library/build-module/paragraph/transforms.mjs
   var import_blocks73 = __toESM(require_blocks(), 1);
   var transforms21 = {
     from: [
@@ -45267,7 +45267,7 @@ ${js}
   };
   var transforms_default22 = transforms21;
 
-  // packages/block-library/build-module/paragraph/index.js
+  // packages/block-library/build-module/paragraph/index.mjs
   var { fieldsKey: fieldsKey14, formKey: formKey14 } = unlock(import_blocks74.privateApis);
   var { name: name62 } = block_default61;
   var settings61 = {
@@ -45316,7 +45316,7 @@ ${js}
   }
   var init61 = () => initBlock({ name: name62, metadata: block_default61, settings: settings61 });
 
-  // packages/block-library/build-module/post-author/index.js
+  // packages/block-library/build-module/post-author/index.mjs
   var post_author_exports = {};
   __export(post_author_exports, {
     init: () => init62,
@@ -45421,7 +45421,7 @@ ${js}
     style: "wp-block-post-author"
   };
 
-  // packages/block-library/build-module/post-author/edit.js
+  // packages/block-library/build-module/post-author/edit.mjs
   var import_block_editor172 = __toESM(require_block_editor(), 1);
   var import_components95 = __toESM(require_components(), 1);
   var import_compose39 = __toESM(require_compose(), 1);
@@ -45733,7 +45733,7 @@ ${js}
   }
   var edit_default22 = PostAuthorEdit;
 
-  // packages/block-library/build-module/post-author/index.js
+  // packages/block-library/build-module/post-author/index.mjs
   var { name: name63 } = block_default62;
   var settings62 = {
     icon: post_author_default,
@@ -45748,7 +45748,7 @@ ${js}
   };
   var init62 = () => initBlock({ name: name63, metadata: block_default62, settings: settings62 });
 
-  // packages/block-library/build-module/post-author-name/index.js
+  // packages/block-library/build-module/post-author-name/index.mjs
   var post_author_name_exports = {};
   __export(post_author_name_exports, {
     init: () => init63,
@@ -45833,7 +45833,7 @@ ${js}
     style: "wp-block-post-author-name"
   };
 
-  // packages/block-library/build-module/post-author-name/edit.js
+  // packages/block-library/build-module/post-author-name/edit.mjs
   var import_block_editor173 = __toESM(require_block_editor(), 1);
   var import_data92 = __toESM(require_data(), 1);
   var import_i18n152 = __toESM(require_i18n(), 1);
@@ -45948,7 +45948,7 @@ ${js}
   }
   var edit_default23 = PostAuthorNameEdit;
 
-  // packages/block-library/build-module/post-author-name/transforms.js
+  // packages/block-library/build-module/post-author-name/transforms.mjs
   var import_blocks75 = __toESM(require_blocks(), 1);
   var transforms22 = {
     from: [
@@ -45968,7 +45968,7 @@ ${js}
   };
   var transforms_default23 = transforms22;
 
-  // packages/block-library/build-module/post-author-name/index.js
+  // packages/block-library/build-module/post-author-name/index.mjs
   var { name: name64 } = block_default63;
   var settings63 = {
     icon: post_author_default,
@@ -45977,7 +45977,7 @@ ${js}
   };
   var init63 = () => initBlock({ name: name64, metadata: block_default63, settings: settings63 });
 
-  // packages/block-library/build-module/post-author-biography/index.js
+  // packages/block-library/build-module/post-author-biography/index.mjs
   var post_author_biography_exports = {};
   __export(post_author_biography_exports, {
     init: () => init64,
@@ -46050,7 +46050,7 @@ ${js}
     style: "wp-block-post-author-biography"
   };
 
-  // packages/block-library/build-module/post-author-biography/edit.js
+  // packages/block-library/build-module/post-author-biography/edit.mjs
   var import_block_editor174 = __toESM(require_block_editor(), 1);
   var import_data93 = __toESM(require_data(), 1);
   var import_i18n153 = __toESM(require_i18n(), 1);
@@ -46102,7 +46102,7 @@ ${js}
   }
   var edit_default24 = PostAuthorBiographyEdit;
 
-  // packages/block-library/build-module/post-author-biography/index.js
+  // packages/block-library/build-module/post-author-biography/index.mjs
   var { name: name65 } = block_default64;
   var settings64 = {
     icon: post_author_default,
@@ -46110,7 +46110,7 @@ ${js}
   };
   var init64 = () => initBlock({ name: name65, metadata: block_default64, settings: settings64 });
 
-  // packages/block-library/build-module/post-comment/index.js
+  // packages/block-library/build-module/post-comment/index.mjs
   var post_comment_exports = {};
   __export(post_comment_exports, {
     init: () => init65,
@@ -46154,7 +46154,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/post-comment/edit.js
+  // packages/block-library/build-module/post-comment/edit.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_components97 = __toESM(require_components(), 1);
   var import_element84 = __toESM(require_element(), 1);
@@ -46210,7 +46210,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/post-comment/save.js
+  // packages/block-library/build-module/post-comment/save.mjs
   var import_block_editor176 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
   function save38() {
@@ -46219,7 +46219,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/post-comment/index.js
+  // packages/block-library/build-module/post-comment/index.mjs
   var { name: name66 } = block_default65;
   var settings65 = {
     icon: comment_default,
@@ -46228,7 +46228,7 @@ ${js}
   };
   var init65 = () => initBlock({ name: name66, metadata: block_default65, settings: settings65 });
 
-  // packages/block-library/build-module/post-comments-count/index.js
+  // packages/block-library/build-module/post-comments-count/index.mjs
   var post_comments_count_exports = {};
   __export(post_comments_count_exports, {
     init: () => init66,
@@ -46295,7 +46295,7 @@ ${js}
     style: "wp-block-post-comments-count"
   };
 
-  // packages/block-library/build-module/post-comments-count/edit.js
+  // packages/block-library/build-module/post-comments-count/edit.mjs
   var import_block_editor177 = __toESM(require_block_editor(), 1);
   var import_element85 = __toESM(require_element(), 1);
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
@@ -46349,7 +46349,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-comments-count/transforms.js
+  // packages/block-library/build-module/post-comments-count/transforms.mjs
   var import_blocks76 = __toESM(require_blocks(), 1);
   var transforms23 = {
     to: [
@@ -46366,7 +46366,7 @@ ${js}
   };
   var transforms_default24 = transforms23;
 
-  // packages/block-library/build-module/post-comments-count/index.js
+  // packages/block-library/build-module/post-comments-count/index.mjs
   var { name: name67 } = block_default66;
   var settings66 = {
     icon: post_comments_count_default,
@@ -46375,7 +46375,7 @@ ${js}
   };
   var init66 = () => initBlock({ name: name67, metadata: block_default66, settings: settings66 });
 
-  // packages/block-library/build-module/post-comments-form/index.js
+  // packages/block-library/build-module/post-comments-form/index.mjs
   var post_comments_form_exports = {};
   __export(post_comments_form_exports, {
     init: () => init67,
@@ -46452,7 +46452,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/post-comments-form/edit.js
+  // packages/block-library/build-module/post-comments-form/edit.mjs
   var import_block_editor178 = __toESM(require_block_editor(), 1);
   var import_components98 = __toESM(require_components(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
@@ -46490,7 +46490,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-comments-form/index.js
+  // packages/block-library/build-module/post-comments-form/index.mjs
   var { name: name68 } = block_default67;
   var settings67 = {
     icon: post_comments_form_default,
@@ -46498,7 +46498,7 @@ ${js}
   };
   var init67 = () => initBlock({ name: name68, metadata: block_default67, settings: settings67 });
 
-  // packages/block-library/build-module/post-comments-link/index.js
+  // packages/block-library/build-module/post-comments-link/index.mjs
   var post_comments_link_exports = {};
   __export(post_comments_link_exports, {
     init: () => init68,
@@ -46572,7 +46572,7 @@ ${js}
     style: "wp-block-post-comments-link"
   };
 
-  // packages/block-library/build-module/post-comments-link/edit.js
+  // packages/block-library/build-module/post-comments-link/edit.mjs
   var import_block_editor179 = __toESM(require_block_editor(), 1);
   var import_element86 = __toESM(require_element(), 1);
   var import_data94 = __toESM(require_data(), 1);
@@ -46656,7 +46656,7 @@ ${js}
   }
   var edit_default25 = PostCommentsLinkEdit;
 
-  // packages/block-library/build-module/post-comments-link/transforms.js
+  // packages/block-library/build-module/post-comments-link/transforms.mjs
   var import_blocks77 = __toESM(require_blocks(), 1);
   var transforms24 = {
     to: [
@@ -46673,7 +46673,7 @@ ${js}
   };
   var transforms_default25 = transforms24;
 
-  // packages/block-library/build-module/post-comments-link/index.js
+  // packages/block-library/build-module/post-comments-link/index.mjs
   var { name: name69 } = block_default68;
   var settings68 = {
     edit: edit_default25,
@@ -46682,7 +46682,7 @@ ${js}
   };
   var init68 = () => initBlock({ name: name69, metadata: block_default68, settings: settings68 });
 
-  // packages/block-library/build-module/post-content/index.js
+  // packages/block-library/build-module/post-content/index.mjs
   var post_content_exports = {};
   __export(post_content_exports, {
     init: () => init69,
@@ -46776,7 +46776,7 @@ ${js}
     editorStyle: "wp-block-post-content-editor"
   };
 
-  // packages/block-library/build-module/post-content/edit.js
+  // packages/block-library/build-module/post-content/edit.mjs
   var import_i18n157 = __toESM(require_i18n(), 1);
   var import_block_editor180 = __toESM(require_block_editor(), 1);
   var import_blocks78 = __toESM(require_blocks(), 1);
@@ -46943,7 +46943,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-content/index.js
+  // packages/block-library/build-module/post-content/index.mjs
   var { name: name70 } = block_default69;
   var settings69 = {
     icon: post_content_default,
@@ -46951,7 +46951,7 @@ ${js}
   };
   var init69 = () => initBlock({ name: name70, metadata: block_default69, settings: settings69 });
 
-  // packages/block-library/build-module/post-date/index.js
+  // packages/block-library/build-module/post-date/index.mjs
   var post_date_exports = {};
   __export(post_date_exports, {
     init: () => init70,
@@ -47037,7 +47037,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/post-date/edit.js
+  // packages/block-library/build-module/post-date/edit.mjs
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_element88 = __toESM(require_element(), 1);
   var import_date3 = __toESM(require_date(), 1);
@@ -47226,7 +47226,7 @@ ${js}
     return /(?:^|[^\\])[aAgh]/.test(format3);
   }
 
-  // packages/block-library/build-module/post-date/deprecated.js
+  // packages/block-library/build-module/post-date/deprecated.mjs
   var v38 = {
     attributes: {
       datetime: {
@@ -47454,7 +47454,7 @@ ${js}
   };
   var deprecated_default28 = [v38, v212, v121];
 
-  // packages/block-library/build-module/post-date/variations.js
+  // packages/block-library/build-module/post-date/variations.mjs
   var import_i18n159 = __toESM(require_i18n(), 1);
   var variations10 = [
     {
@@ -47495,7 +47495,7 @@ ${js}
   ];
   var variations_default10 = variations10;
 
-  // packages/block-library/build-module/post-date/index.js
+  // packages/block-library/build-module/post-date/index.mjs
   var { name: name71 } = block_default70;
   var settings70 = {
     icon: post_date_default,
@@ -47505,7 +47505,7 @@ ${js}
   };
   var init70 = () => initBlock({ name: name71, metadata: block_default70, settings: settings70 });
 
-  // packages/block-library/build-module/post-excerpt/index.js
+  // packages/block-library/build-module/post-excerpt/index.mjs
   var post_excerpt_exports = {};
   __export(post_excerpt_exports, {
     init: () => init71,
@@ -47593,7 +47593,7 @@ ${js}
     style: "wp-block-post-excerpt"
   };
 
-  // packages/block-library/build-module/post-excerpt/edit.js
+  // packages/block-library/build-module/post-excerpt/edit.mjs
   var import_core_data56 = __toESM(require_core_data(), 1);
   var import_element89 = __toESM(require_element(), 1);
   var import_block_editor182 = __toESM(require_block_editor(), 1);
@@ -47771,7 +47771,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-excerpt/transforms.js
+  // packages/block-library/build-module/post-excerpt/transforms.mjs
   var import_blocks80 = __toESM(require_blocks(), 1);
   var transforms25 = {
     from: [
@@ -47791,7 +47791,7 @@ ${js}
   };
   var transforms_default26 = transforms25;
 
-  // packages/block-library/build-module/post-excerpt/index.js
+  // packages/block-library/build-module/post-excerpt/index.mjs
   var { name: name72 } = block_default71;
   var settings71 = {
     icon: post_excerpt_default,
@@ -47800,7 +47800,7 @@ ${js}
   };
   var init71 = () => initBlock({ name: name72, metadata: block_default71, settings: settings71 });
 
-  // packages/block-library/build-module/post-featured-image/index.js
+  // packages/block-library/build-module/post-featured-image/index.mjs
   var post_featured_image_exports = {};
   __export(post_featured_image_exports, {
     init: () => init72,
@@ -47920,7 +47920,7 @@ ${js}
     style: "wp-block-post-featured-image"
   };
 
-  // packages/block-library/build-module/post-featured-image/edit.js
+  // packages/block-library/build-module/post-featured-image/edit.mjs
   var import_blob16 = __toESM(require_blob(), 1);
   var import_core_data57 = __toESM(require_core_data(), 1);
   var import_data98 = __toESM(require_data(), 1);
@@ -47930,7 +47930,7 @@ ${js}
   var import_i18n163 = __toESM(require_i18n(), 1);
   var import_notices14 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/post-featured-image/dimension-controls.js
+  // packages/block-library/build-module/post-featured-image/dimension-controls.mjs
   var import_i18n161 = __toESM(require_i18n(), 1);
   var import_components101 = __toESM(require_components(), 1);
   var import_block_editor183 = __toESM(require_block_editor(), 1);
@@ -48126,7 +48126,7 @@ ${js}
   };
   var dimension_controls_default = DimensionControls;
 
-  // packages/block-library/build-module/post-featured-image/overlay-controls.js
+  // packages/block-library/build-module/post-featured-image/overlay-controls.mjs
   var import_components102 = __toESM(require_components(), 1);
   var import_block_editor184 = __toESM(require_block_editor(), 1);
   var import_compose41 = __toESM(require_compose(), 1);
@@ -48205,16 +48205,16 @@ ${js}
     (0, import_block_editor184.withColors)({ overlayColor: "background-color" })
   ])(Overlay);
 
-  // packages/block-library/build-module/post-featured-image/overlay.js
+  // packages/block-library/build-module/post-featured-image/overlay.mjs
   var import_block_editor185 = __toESM(require_block_editor(), 1);
   var import_compose42 = __toESM(require_compose(), 1);
 
-  // packages/block-library/build-module/post-featured-image/utils.js
+  // packages/block-library/build-module/post-featured-image/utils.mjs
   function dimRatioToClass2(ratio) {
     return ratio === void 0 ? null : "has-background-dim-" + 10 * Math.round(ratio / 10);
   }
 
-  // packages/block-library/build-module/post-featured-image/overlay.js
+  // packages/block-library/build-module/post-featured-image/overlay.mjs
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var Overlay2 = ({ attributes: attributes3, overlayColor }) => {
     const { dimRatio } = attributes3;
@@ -48252,7 +48252,7 @@ ${js}
     (0, import_block_editor185.withColors)({ overlayColor: "background-color" })
   ])(Overlay2);
 
-  // packages/block-library/build-module/post-featured-image/edit.js
+  // packages/block-library/build-module/post-featured-image/edit.mjs
   var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES6 = ["image"];
   var { ResolutionTool: ResolutionTool4 } = unlock(import_block_editor186.privateApis);
@@ -48616,7 +48616,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-featured-image/index.js
+  // packages/block-library/build-module/post-featured-image/index.mjs
   var { name: name73 } = block_default72;
   var settings72 = {
     icon: post_featured_image_default,
@@ -48624,7 +48624,7 @@ ${js}
   };
   var init72 = () => initBlock({ name: name73, metadata: block_default72, settings: settings72 });
 
-  // packages/block-library/build-module/post-navigation-link/index.js
+  // packages/block-library/build-module/post-navigation-link/index.mjs
   var post_navigation_link_exports = {};
   __export(post_navigation_link_exports, {
     init: () => init73,
@@ -48701,7 +48701,7 @@ ${js}
     style: "wp-block-post-navigation-link"
   };
 
-  // packages/block-library/build-module/post-navigation-link/edit.js
+  // packages/block-library/build-module/post-navigation-link/edit.mjs
   var import_components104 = __toESM(require_components(), 1);
   var import_block_editor187 = __toESM(require_block_editor(), 1);
   var import_i18n164 = __toESM(require_i18n(), 1);
@@ -48953,7 +48953,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-navigation-link/variations.js
+  // packages/block-library/build-module/post-navigation-link/variations.mjs
   var import_i18n165 = __toESM(require_i18n(), 1);
   var variations11 = [
     {
@@ -48998,7 +48998,7 @@ ${js}
   });
   var variations_default11 = variations11;
 
-  // packages/block-library/build-module/post-navigation-link/index.js
+  // packages/block-library/build-module/post-navigation-link/index.mjs
   var { name: name74 } = block_default73;
   var settings73 = {
     edit: PostNavigationLinkEdit,
@@ -49012,7 +49012,7 @@ ${js}
   };
   var init73 = () => initBlock({ name: name74, metadata: block_default73, settings: settings73 });
 
-  // packages/block-library/build-module/post-template/index.js
+  // packages/block-library/build-module/post-template/index.mjs
   var post_template_exports = {};
   __export(post_template_exports, {
     init: () => init74,
@@ -49093,7 +49093,7 @@ ${js}
     editorStyle: "wp-block-post-template-editor"
   };
 
-  // packages/block-library/build-module/post-template/edit.js
+  // packages/block-library/build-module/post-template/edit.mjs
   var import_element91 = __toESM(require_element(), 1);
   var import_data100 = __toESM(require_data(), 1);
   var import_i18n167 = __toESM(require_i18n(), 1);
@@ -49386,14 +49386,14 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-template/save.js
+  // packages/block-library/build-module/post-template/save.mjs
   var import_block_editor189 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
   function PostTemplateSave() {
     return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(import_block_editor189.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/post-template/index.js
+  // packages/block-library/build-module/post-template/index.mjs
   var { name: name75 } = block_default74;
   var settings74 = {
     icon: layout_default,
@@ -49402,7 +49402,7 @@ ${js}
   };
   var init74 = () => initBlock({ name: name75, metadata: block_default74, settings: settings74 });
 
-  // packages/block-library/build-module/post-terms/index.js
+  // packages/block-library/build-module/post-terms/index.mjs
   var post_terms_exports = {};
   __export(post_terms_exports, {
     init: () => init75,
@@ -49495,7 +49495,7 @@ ${js}
     style: "wp-block-post-terms"
   };
 
-  // packages/block-library/build-module/post-terms/edit.js
+  // packages/block-library/build-module/post-terms/edit.mjs
   var import_block_editor190 = __toESM(require_block_editor(), 1);
   var import_blocks81 = __toESM(require_blocks(), 1);
   var import_components106 = __toESM(require_components(), 1);
@@ -49504,7 +49504,7 @@ ${js}
   var import_i18n168 = __toESM(require_i18n(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/post-terms/use-post-terms.js
+  // packages/block-library/build-module/post-terms/use-post-terms.mjs
   var import_core_data60 = __toESM(require_core_data(), 1);
   var import_data101 = __toESM(require_data(), 1);
   var EMPTY_ARRAY3 = [];
@@ -49541,7 +49541,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/post-terms/edit.js
+  // packages/block-library/build-module/post-terms/edit.mjs
   var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_FORMATS = [
     "core/bold",
@@ -49660,7 +49660,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-terms/hooks.js
+  // packages/block-library/build-module/post-terms/hooks.mjs
   var variationIconMap = {
     category: post_categories_default,
     post_tag: post_terms_default
@@ -49681,7 +49681,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/post-terms/index.js
+  // packages/block-library/build-module/post-terms/index.mjs
   var { name: name76 } = block_default75;
   var settings75 = {
     icon: post_categories_default,
@@ -49696,7 +49696,7 @@ ${js}
     return initBlock({ name: name76, metadata: block_default75, settings: settings75 });
   };
 
-  // packages/block-library/build-module/post-time-to-read/index.js
+  // packages/block-library/build-module/post-time-to-read/index.mjs
   var post_time_to_read_exports = {};
   __export(post_time_to_read_exports, {
     init: () => init76,
@@ -49775,7 +49775,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/post-time-to-read/edit.js
+  // packages/block-library/build-module/post-time-to-read/edit.mjs
   var import_i18n169 = __toESM(require_i18n(), 1);
   var import_element92 = __toESM(require_element(), 1);
   var import_block_editor191 = __toESM(require_block_editor(), 1);
@@ -49916,7 +49916,7 @@ ${js}
   }
   var edit_default26 = PostTimeToReadEdit;
 
-  // packages/block-library/build-module/post-time-to-read/variations.js
+  // packages/block-library/build-module/post-time-to-read/variations.mjs
   var import_i18n170 = __toESM(require_i18n(), 1);
   var variations12 = [
     {
@@ -49945,7 +49945,7 @@ ${js}
   ];
   var variations_default12 = variations12;
 
-  // packages/block-library/build-module/post-time-to-read/index.js
+  // packages/block-library/build-module/post-time-to-read/index.mjs
   var { name: name77 } = block_default76;
   var settings76 = {
     icon: time_to_read_default,
@@ -49955,7 +49955,7 @@ ${js}
   };
   var init76 = () => initBlock({ name: name77, metadata: block_default76, settings: settings76 });
 
-  // packages/block-library/build-module/post-title/index.js
+  // packages/block-library/build-module/post-title/index.mjs
   var post_title_exports = {};
   __export(post_title_exports, {
     init: () => init77,
@@ -50054,7 +50054,7 @@ ${js}
     style: "wp-block-post-title"
   };
 
-  // packages/block-library/build-module/post-title/edit.js
+  // packages/block-library/build-module/post-title/edit.mjs
   var import_block_editor192 = __toESM(require_block_editor(), 1);
   var import_components108 = __toESM(require_components(), 1);
   var import_i18n171 = __toESM(require_i18n(), 1);
@@ -50259,7 +50259,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/post-title/deprecated.js
+  // packages/block-library/build-module/post-title/deprecated.mjs
   var v123 = {
     attributes: {
       textAlign: {
@@ -50312,7 +50312,7 @@ ${js}
   };
   var deprecated_default29 = [v123];
 
-  // packages/block-library/build-module/post-title/index.js
+  // packages/block-library/build-module/post-title/index.mjs
   var { name: name78 } = block_default77;
   var settings77 = {
     icon: title_default,
@@ -50321,7 +50321,7 @@ ${js}
   };
   var init77 = () => initBlock({ name: name78, metadata: block_default77, settings: settings77 });
 
-  // packages/block-library/build-module/preformatted/index.js
+  // packages/block-library/build-module/preformatted/index.mjs
   var preformatted_exports = {};
   __export(preformatted_exports, {
     init: () => init78,
@@ -50332,7 +50332,7 @@ ${js}
   var import_i18n173 = __toESM(require_i18n(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/preformatted/edit.js
+  // packages/block-library/build-module/preformatted/edit.mjs
   var import_i18n172 = __toESM(require_i18n(), 1);
   var import_block_editor193 = __toESM(require_block_editor(), 1);
   var import_blocks84 = __toESM(require_blocks(), 1);
@@ -50433,7 +50433,7 @@ ${js}
     style: "wp-block-preformatted"
   };
 
-  // packages/block-library/build-module/preformatted/save.js
+  // packages/block-library/build-module/preformatted/save.mjs
   var import_block_editor194 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
   function save39({ attributes: attributes3 }) {
@@ -50441,7 +50441,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)("pre", { ...import_block_editor194.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_block_editor194.RichText.Content, { value: content }) });
   }
 
-  // packages/block-library/build-module/preformatted/transforms.js
+  // packages/block-library/build-module/preformatted/transforms.mjs
   var import_blocks85 = __toESM(require_blocks(), 1);
   var transforms26 = {
     from: [
@@ -50483,7 +50483,7 @@ ${js}
   };
   var transforms_default27 = transforms26;
 
-  // packages/block-library/build-module/preformatted/index.js
+  // packages/block-library/build-module/preformatted/index.mjs
   var { fieldsKey: fieldsKey15, formKey: formKey15 } = unlock(import_blocks86.privateApis);
   var { name: name79 } = block_default78;
   var settings78 = {
@@ -50521,7 +50521,7 @@ ${js}
   }
   var init78 = () => initBlock({ name: name79, metadata: block_default78, settings: settings78 });
 
-  // packages/block-library/build-module/pullquote/index.js
+  // packages/block-library/build-module/pullquote/index.mjs
   var pullquote_exports = {};
   __export(pullquote_exports, {
     init: () => init79,
@@ -50532,14 +50532,14 @@ ${js}
   var import_i18n175 = __toESM(require_i18n(), 1);
   var import_blocks89 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/pullquote/deprecated.js
+  // packages/block-library/build-module/pullquote/deprecated.mjs
   var import_block_editor195 = __toESM(require_block_editor(), 1);
   var import_data104 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/pullquote/shared.js
+  // packages/block-library/build-module/pullquote/shared.mjs
   var SOLID_COLOR_CLASS = `is-style-solid-color`;
 
-  // packages/block-library/build-module/pullquote/deprecated.js
+  // packages/block-library/build-module/pullquote/deprecated.mjs
   var import_jsx_runtime362 = __toESM(require_jsx_runtime(), 1);
   var blockAttributes6 = {
     value: {
@@ -51003,19 +51003,19 @@ ${js}
   };
   var deprecated_default30 = [v57, v47, v39, v213, v124, v02];
 
-  // packages/block-library/build-module/pullquote/edit.js
+  // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n174 = __toESM(require_i18n(), 1);
   var import_block_editor196 = __toESM(require_block_editor(), 1);
   var import_blocks87 = __toESM(require_blocks(), 1);
   var import_element94 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/pullquote/figure.js
+  // packages/block-library/build-module/pullquote/figure.mjs
   var Figure = "figure";
 
-  // packages/block-library/build-module/pullquote/blockquote.js
+  // packages/block-library/build-module/pullquote/blockquote.mjs
   var BlockQuote = "blockquote";
 
-  // packages/block-library/build-module/pullquote/edit.js
+  // packages/block-library/build-module/pullquote/edit.mjs
   var import_jsx_runtime363 = __toESM(require_jsx_runtime(), 1);
   var isWebPlatform = import_element94.Platform.OS === "web";
   function PullQuoteEdit({
@@ -51182,7 +51182,7 @@ ${js}
     style: "wp-block-pullquote"
   };
 
-  // packages/block-library/build-module/pullquote/save.js
+  // packages/block-library/build-module/pullquote/save.mjs
   var import_block_editor197 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
   function save40({ attributes: attributes3 }) {
@@ -51204,7 +51204,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/pullquote/transforms.js
+  // packages/block-library/build-module/pullquote/transforms.mjs
   var import_blocks88 = __toESM(require_blocks(), 1);
   var transforms27 = {
     to: [
@@ -51262,7 +51262,7 @@ ${js}
   };
   var transforms_default28 = transforms27;
 
-  // packages/block-library/build-module/pullquote/index.js
+  // packages/block-library/build-module/pullquote/index.mjs
   var { fieldsKey: fieldsKey16, formKey: formKey16 } = unlock(import_blocks89.privateApis);
   var { name: name80 } = block_default79;
   var settings79 = {
@@ -51302,7 +51302,7 @@ ${js}
   }
   var init79 = () => initBlock({ name: name80, metadata: block_default79, settings: settings79 });
 
-  // packages/block-library/build-module/query/index.js
+  // packages/block-library/build-module/query/index.mjs
   var query_exports = {};
   __export(query_exports, {
     init: () => init80,
@@ -51374,12 +51374,12 @@ ${js}
     editorStyle: "wp-block-query-editor"
   };
 
-  // packages/block-library/build-module/query/edit/index.js
+  // packages/block-library/build-module/query/edit/index.mjs
   var import_data115 = __toESM(require_data(), 1);
   var import_element103 = __toESM(require_element(), 1);
   var import_block_editor203 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/query/edit/query-content.js
+  // packages/block-library/build-module/query/edit/query-content.mjs
   var import_data113 = __toESM(require_data(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
   var import_element101 = __toESM(require_element(), 1);
@@ -51387,11 +51387,11 @@ ${js}
   var import_i18n191 = __toESM(require_i18n(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/query/edit/inspector-controls/enhanced-pagination-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/enhanced-pagination-control.mjs
   var import_components109 = __toESM(require_components(), 1);
   var import_i18n177 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/query/utils.js
+  // packages/block-library/build-module/query/utils.mjs
   var import_data105 = __toESM(require_data(), 1);
   var import_element95 = __toESM(require_element(), 1);
   var import_core_data64 = __toESM(require_core_data(), 1);
@@ -51683,7 +51683,7 @@ ${js}
     return { isSingular, templateType };
   }
 
-  // packages/block-library/build-module/query/edit/inspector-controls/enhanced-pagination-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/enhanced-pagination-control.mjs
   var import_jsx_runtime365 = __toESM(require_jsx_runtime(), 1);
   function EnhancedPaginationControl({
     enhancedPagination,
@@ -51715,7 +51715,7 @@ ${js}
     ) });
   }
 
-  // packages/block-library/build-module/query/edit/inspector-controls/index.js
+  // packages/block-library/build-module/query/edit/inspector-controls/index.mjs
   var import_components119 = __toESM(require_components(), 1);
   var import_data110 = __toESM(require_data(), 1);
   var import_core_data69 = __toESM(require_core_data(), 1);
@@ -51723,7 +51723,7 @@ ${js}
   var import_compose45 = __toESM(require_compose(), 1);
   var import_element98 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/query/edit/inspector-controls/order-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/order-control.mjs
   var import_components110 = __toESM(require_components(), 1);
   var import_i18n178 = __toESM(require_i18n(), 1);
   var import_jsx_runtime366 = __toESM(require_jsx_runtime(), 1);
@@ -51769,7 +51769,7 @@ ${js}
   }
   var order_control_default = OrderControl;
 
-  // packages/block-library/build-module/query/edit/inspector-controls/author-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/author-control.mjs
   var import_i18n179 = __toESM(require_i18n(), 1);
   var import_components111 = __toESM(require_components(), 1);
   var import_data106 = __toESM(require_data(), 1);
@@ -51836,7 +51836,7 @@ ${js}
   }
   var author_control_default = AuthorControl;
 
-  // packages/block-library/build-module/query/edit/inspector-controls/parent-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/parent-control.mjs
   var import_i18n180 = __toESM(require_i18n(), 1);
   var import_components112 = __toESM(require_components(), 1);
   var import_data107 = __toESM(require_data(), 1);
@@ -51966,7 +51966,7 @@ ${js}
   }
   var parent_control_default = ParentControl;
 
-  // packages/block-library/build-module/query/edit/inspector-controls/taxonomy-controls.js
+  // packages/block-library/build-module/query/edit/inspector-controls/taxonomy-controls.mjs
   var import_components113 = __toESM(require_components(), 1);
   var import_data108 = __toESM(require_data(), 1);
   var import_core_data67 = __toESM(require_core_data(), 1);
@@ -52150,7 +52150,7 @@ ${js}
     ) });
   }
 
-  // packages/block-library/build-module/query/edit/inspector-controls/format-controls.js
+  // packages/block-library/build-module/query/edit/inspector-controls/format-controls.mjs
   var import_components114 = __toESM(require_components(), 1);
   var import_data109 = __toESM(require_data(), 1);
   var import_core_data68 = __toESM(require_core_data(), 1);
@@ -52218,7 +52218,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query/edit/inspector-controls/sticky-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/sticky-control.mjs
   var import_components115 = __toESM(require_components(), 1);
   var import_i18n183 = __toESM(require_i18n(), 1);
   var import_jsx_runtime371 = __toESM(require_jsx_runtime(), 1);
@@ -52244,7 +52244,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query/edit/inspector-controls/per-page-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/per-page-control.mjs
   var import_components116 = __toESM(require_components(), 1);
   var import_i18n184 = __toESM(require_i18n(), 1);
   var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
@@ -52270,7 +52270,7 @@ ${js}
   };
   var per_page_control_default = PerPageControl;
 
-  // packages/block-library/build-module/query/edit/inspector-controls/offset-controls.js
+  // packages/block-library/build-module/query/edit/inspector-controls/offset-controls.mjs
   var import_components117 = __toESM(require_components(), 1);
   var import_i18n185 = __toESM(require_i18n(), 1);
   var import_jsx_runtime373 = __toESM(require_jsx_runtime(), 1);
@@ -52295,7 +52295,7 @@ ${js}
   };
   var offset_controls_default = OffsetControl;
 
-  // packages/block-library/build-module/query/edit/inspector-controls/pages-control.js
+  // packages/block-library/build-module/query/edit/inspector-controls/pages-control.mjs
   var import_components118 = __toESM(require_components(), 1);
   var import_i18n186 = __toESM(require_i18n(), 1);
   var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
@@ -52321,7 +52321,7 @@ ${js}
   };
   var pages_control_default = PagesControl;
 
-  // packages/block-library/build-module/query/edit/inspector-controls/index.js
+  // packages/block-library/build-module/query/edit/inspector-controls/index.mjs
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   function QueryInspectorControls(props) {
     const { attributes: attributes3, setQuery, isSingular } = props;
@@ -52739,7 +52739,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/query/edit/enhanced-pagination-modal.js
+  // packages/block-library/build-module/query/edit/enhanced-pagination-modal.mjs
   var import_components120 = __toESM(require_components(), 1);
   var import_i18n188 = __toESM(require_i18n(), 1);
   var import_element99 = __toESM(require_element(), 1);
@@ -52794,20 +52794,20 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query/edit/query-toolbar.js
+  // packages/block-library/build-module/query/edit/query-toolbar.mjs
   var import_components122 = __toESM(require_components(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
   var import_data112 = __toESM(require_data(), 1);
   var import_block_editor200 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/query/edit/pattern-selection.js
+  // packages/block-library/build-module/query/edit/pattern-selection.mjs
   var import_element100 = __toESM(require_element(), 1);
   var import_data111 = __toESM(require_data(), 1);
   var import_components121 = __toESM(require_components(), 1);
   var import_block_editor199 = __toESM(require_block_editor(), 1);
   var import_i18n189 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/utils/search-patterns.js
+  // packages/block-library/build-module/utils/search-patterns.mjs
   var import_remove_accents4 = __toESM(require_remove_accents(), 1);
   function normalizeSearchInput(input = "") {
     input = (0, import_remove_accents4.default)(input);
@@ -52844,7 +52844,7 @@ ${js}
     return rankedPatterns.map(([pattern]) => pattern);
   }
 
-  // packages/block-library/build-module/query/edit/pattern-selection.js
+  // packages/block-library/build-module/query/edit/pattern-selection.mjs
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   function PatternSelectionModal({
     clientId,
@@ -52924,7 +52924,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/query/edit/query-toolbar.js
+  // packages/block-library/build-module/query/edit/query-toolbar.mjs
   var import_jsx_runtime378 = __toESM(require_jsx_runtime(), 1);
   function PatternPicker({ clientId, attributes: attributes3, hasInnerBlocks }) {
     const hasPatterns = useBlockPatterns(clientId, attributes3).length;
@@ -52973,7 +52973,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(PatternPicker, { ...props });
   }
 
-  // packages/block-library/build-module/query/edit/query-content.js
+  // packages/block-library/build-module/query/edit/query-content.mjs
   var import_jsx_runtime379 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl6 } = unlock(import_block_editor201.privateApis);
   var DEFAULTS_POSTS_PER_PAGE = 3;
@@ -53104,7 +53104,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/query/edit/query-placeholder.js
+  // packages/block-library/build-module/query/edit/query-placeholder.mjs
   var import_data114 = __toESM(require_data(), 1);
   var import_blocks91 = __toESM(require_blocks(), 1);
   var import_element102 = __toESM(require_element(), 1);
@@ -53225,7 +53225,7 @@ ${js}
     ) });
   }
 
-  // packages/block-library/build-module/query/edit/index.js
+  // packages/block-library/build-module/query/edit/index.mjs
   var import_jsx_runtime381 = __toESM(require_jsx_runtime(), 1);
   var QueryEdit = (props) => {
     const { clientId, attributes: attributes3 } = props;
@@ -53255,7 +53255,7 @@ ${js}
   };
   var edit_default28 = QueryEdit;
 
-  // packages/block-library/build-module/query/save.js
+  // packages/block-library/build-module/query/save.mjs
   var import_block_editor204 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime382 = __toESM(require_jsx_runtime(), 1);
   function save41({ attributes: { tagName: Tag = "div" } }) {
@@ -53264,10 +53264,10 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime382.jsx)(Tag, { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/query/variations.js
+  // packages/block-library/build-module/query/variations.mjs
   var import_i18n193 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/query/icons.js
+  // packages/block-library/build-module/query/icons.mjs
   var import_components124 = __toESM(require_components(), 1);
   var import_jsx_runtime383 = __toESM(require_jsx_runtime(), 1);
   var titleDate = /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components124.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components124.Path, { d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zM7 26h12v1H7v-1zm34-5H7v3h34v-3zM7 38h12v1H7v-1zm34-5H7v3h34v-3z" }) });
@@ -53275,7 +53275,7 @@ ${js}
   var titleDateExcerpt = /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components124.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components124.Path, { d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zm22 3H7v1h34v-1zM7 20h34v1H7v-1zm0 12h12v1H7v-1zm34 3H7v1h34v-1zM7 38h34v1H7v-1zm34-11H7v3h34v-3z" }) });
   var imageDateTitle = /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components124.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_components124.Path, { d: "M7 9h34v6H7V9zm12 8H7v1h12v-1zm18 3H7v1h30v-1zm0 18H7v1h30v-1zM7 35h12v1H7v-1zm34-8H7v6h34v-6z" }) });
 
-  // packages/block-library/build-module/query/variations.js
+  // packages/block-library/build-module/query/variations.mjs
   var postDate = [
     "core/post-date",
     {
@@ -53357,7 +53357,7 @@ ${js}
   ];
   var variations_default13 = variations13;
 
-  // packages/block-library/build-module/query/deprecated.js
+  // packages/block-library/build-module/query/deprecated.mjs
   var import_blocks92 = __toESM(require_blocks(), 1);
   var import_block_editor205 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime384 = __toESM(require_jsx_runtime(), 1);
@@ -53859,7 +53859,7 @@ ${js}
   var deprecated14 = [v66, v58, v48, v310, v214, v125];
   var deprecated_default31 = deprecated14;
 
-  // packages/block-library/build-module/query/index.js
+  // packages/block-library/build-module/query/index.mjs
   var { name: name81 } = block_default80;
   var settings80 = {
     icon: loop_default,
@@ -53920,7 +53920,7 @@ ${js}
   };
   var init80 = () => initBlock({ name: name81, metadata: block_default80, settings: settings80 });
 
-  // packages/block-library/build-module/query-no-results/index.js
+  // packages/block-library/build-module/query-no-results/index.mjs
   var query_no_results_exports = {};
   __export(query_no_results_exports, {
     init: () => init81,
@@ -53969,7 +53969,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/query-no-results/edit.js
+  // packages/block-library/build-module/query-no-results/edit.mjs
   var import_block_editor206 = __toESM(require_block_editor(), 1);
   var import_i18n194 = __toESM(require_i18n(), 1);
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
@@ -53991,14 +53991,14 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)("div", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/query-no-results/save.js
+  // packages/block-library/build-module/query-no-results/save.mjs
   var import_block_editor207 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
   function save42() {
     return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_block_editor207.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/query-no-results/index.js
+  // packages/block-library/build-module/query-no-results/index.mjs
   var { name: name82 } = block_default81;
   var settings81 = {
     icon: loop_default,
@@ -54017,7 +54017,7 @@ ${js}
   };
   var init81 = () => initBlock({ name: name82, metadata: block_default81, settings: settings81 });
 
-  // packages/block-library/build-module/query-pagination/index.js
+  // packages/block-library/build-module/query-pagination/index.mjs
   var query_pagination_exports = {};
   __export(query_pagination_exports, {
     init: () => init82,
@@ -54098,14 +54098,14 @@ ${js}
     style: "wp-block-query-pagination"
   };
 
-  // packages/block-library/build-module/query-pagination/edit.js
+  // packages/block-library/build-module/query-pagination/edit.mjs
   var import_i18n198 = __toESM(require_i18n(), 1);
   var import_block_editor208 = __toESM(require_block_editor(), 1);
   var import_data116 = __toESM(require_data(), 1);
   var import_components127 = __toESM(require_components(), 1);
   var import_element104 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/query-pagination/query-pagination-arrow-controls.js
+  // packages/block-library/build-module/query-pagination/query-pagination-arrow-controls.mjs
   var import_i18n196 = __toESM(require_i18n(), 1);
   var import_components125 = __toESM(require_components(), 1);
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
@@ -54157,7 +54157,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query-pagination/query-pagination-label-control.js
+  // packages/block-library/build-module/query-pagination/query-pagination-label-control.mjs
   var import_i18n197 = __toESM(require_i18n(), 1);
   var import_components126 = __toESM(require_components(), 1);
   var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
@@ -54173,7 +54173,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query-pagination/edit.js
+  // packages/block-library/build-module/query-pagination/edit.mjs
   var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE15 = [
     ["core/query-pagination-previous"],
@@ -54271,14 +54271,14 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/query-pagination/save.js
+  // packages/block-library/build-module/query-pagination/save.mjs
   var import_block_editor209 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
   function save43() {
     return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_block_editor209.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/query-pagination/deprecated.js
+  // packages/block-library/build-module/query-pagination/deprecated.mjs
   var import_block_editor210 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
   var deprecated15 = [
@@ -54291,7 +54291,7 @@ ${js}
   ];
   var deprecated_default32 = deprecated15;
 
-  // packages/block-library/build-module/query-pagination/index.js
+  // packages/block-library/build-module/query-pagination/index.mjs
   var { name: name83 } = block_default82;
   var settings82 = {
     icon: query_pagination_default,
@@ -54301,7 +54301,7 @@ ${js}
   };
   var init82 = () => initBlock({ name: name83, metadata: block_default82, settings: settings82 });
 
-  // packages/block-library/build-module/query-pagination-next/index.js
+  // packages/block-library/build-module/query-pagination-next/index.mjs
   var query_pagination_next_exports = {};
   __export(query_pagination_next_exports, {
     init: () => init83,
@@ -54362,7 +54362,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/query-pagination-next/edit.js
+  // packages/block-library/build-module/query-pagination-next/edit.mjs
   var import_i18n199 = __toESM(require_i18n(), 1);
   var import_block_editor211 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime392 = __toESM(require_jsx_runtime(), 1);
@@ -54408,7 +54408,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query-pagination-next/index.js
+  // packages/block-library/build-module/query-pagination-next/index.mjs
   var { name: name84 } = block_default83;
   var settings83 = {
     icon: query_pagination_next_default,
@@ -54416,7 +54416,7 @@ ${js}
   };
   var init83 = () => initBlock({ name: name84, metadata: block_default83, settings: settings83 });
 
-  // packages/block-library/build-module/query-pagination-numbers/index.js
+  // packages/block-library/build-module/query-pagination-numbers/index.mjs
   var query_pagination_numbers_exports = {};
   __export(query_pagination_numbers_exports, {
     init: () => init84,
@@ -54473,7 +54473,7 @@ ${js}
     editorStyle: "wp-block-query-pagination-numbers-editor"
   };
 
-  // packages/block-library/build-module/query-pagination-numbers/edit.js
+  // packages/block-library/build-module/query-pagination-numbers/edit.mjs
   var import_i18n200 = __toESM(require_i18n(), 1);
   var import_block_editor212 = __toESM(require_block_editor(), 1);
   var import_components128 = __toESM(require_components(), 1);
@@ -54544,7 +54544,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/query-pagination-numbers/index.js
+  // packages/block-library/build-module/query-pagination-numbers/index.mjs
   var { name: name85 } = block_default84;
   var settings84 = {
     icon: query_pagination_numbers_default,
@@ -54553,7 +54553,7 @@ ${js}
   };
   var init84 = () => initBlock({ name: name85, metadata: block_default84, settings: settings84 });
 
-  // packages/block-library/build-module/query-pagination-previous/index.js
+  // packages/block-library/build-module/query-pagination-previous/index.mjs
   var query_pagination_previous_exports = {};
   __export(query_pagination_previous_exports, {
     init: () => init85,
@@ -54614,7 +54614,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/query-pagination-previous/edit.js
+  // packages/block-library/build-module/query-pagination-previous/edit.mjs
   var import_i18n201 = __toESM(require_i18n(), 1);
   var import_block_editor213 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime394 = __toESM(require_jsx_runtime(), 1);
@@ -54660,7 +54660,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query-pagination-previous/index.js
+  // packages/block-library/build-module/query-pagination-previous/index.mjs
   var { name: name86 } = block_default85;
   var settings85 = {
     icon: query_pagination_previous_default,
@@ -54668,7 +54668,7 @@ ${js}
   };
   var init85 = () => initBlock({ name: name86, metadata: block_default85, settings: settings85 });
 
-  // packages/block-library/build-module/query-title/index.js
+  // packages/block-library/build-module/query-title/index.mjs
   var query_title_exports = {};
   __export(query_title_exports, {
     init: () => init86,
@@ -54762,12 +54762,12 @@ ${js}
     style: "wp-block-query-title"
   };
 
-  // packages/block-library/build-module/query-title/edit.js
+  // packages/block-library/build-module/query-title/edit.mjs
   var import_block_editor214 = __toESM(require_block_editor(), 1);
   var import_components129 = __toESM(require_components(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/query-title/use-archive-label.js
+  // packages/block-library/build-module/query-title/use-archive-label.mjs
   var import_core_data71 = __toESM(require_core_data(), 1);
   var import_data117 = __toESM(require_data(), 1);
   function useArchiveLabel() {
@@ -54840,7 +54840,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query-title/use-post-type-label.js
+  // packages/block-library/build-module/query-title/use-post-type-label.mjs
   var import_core_data72 = __toESM(require_core_data(), 1);
   var import_data118 = __toESM(require_data(), 1);
   function usePostTypeLabel(contextPostType) {
@@ -54861,7 +54861,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/query-title/edit.js
+  // packages/block-library/build-module/query-title/edit.mjs
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
   var SUPPORTED_TYPES = ["archive", "search", "post-type"];
   function QueryTitleEdit({
@@ -55058,7 +55058,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/query-title/variations.js
+  // packages/block-library/build-module/query-title/variations.mjs
   var import_i18n203 = __toESM(require_i18n(), 1);
   var variations14 = [
     {
@@ -55109,7 +55109,7 @@ ${js}
   });
   var variations_default14 = variations14;
 
-  // packages/block-library/build-module/query-title/deprecated.js
+  // packages/block-library/build-module/query-title/deprecated.mjs
   var v126 = {
     attributes: {
       type: {
@@ -55148,7 +55148,7 @@ ${js}
   };
   var deprecated_default33 = [v126];
 
-  // packages/block-library/build-module/query-title/index.js
+  // packages/block-library/build-module/query-title/index.mjs
   var { name: name87 } = block_default86;
   var settings86 = {
     icon: title_default,
@@ -55158,7 +55158,7 @@ ${js}
   };
   var init86 = () => initBlock({ name: name87, metadata: block_default86, settings: settings86 });
 
-  // packages/block-library/build-module/query-total/index.js
+  // packages/block-library/build-module/query-total/index.mjs
   var query_total_exports = {};
   __export(query_total_exports, {
     init: () => init87,
@@ -55231,12 +55231,12 @@ ${js}
     style: "wp-block-query-total"
   };
 
-  // packages/block-library/build-module/query-total/edit.js
+  // packages/block-library/build-module/query-total/edit.mjs
   var import_block_editor215 = __toESM(require_block_editor(), 1);
   var import_components131 = __toESM(require_components(), 1);
   var import_i18n204 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/query-total/icons.js
+  // packages/block-library/build-module/query-total/icons.mjs
   var import_components130 = __toESM(require_components(), 1);
   var import_jsx_runtime396 = __toESM(require_jsx_runtime(), 1);
   var resultsFound = /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
@@ -55276,7 +55276,7 @@ ${js}
     }
   );
 
-  // packages/block-library/build-module/query-total/edit.js
+  // packages/block-library/build-module/query-total/edit.mjs
   var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
   function QueryTotalEdit({ attributes: attributes3, setAttributes }) {
     const { displayType } = attributes3;
@@ -55332,7 +55332,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/query-total/index.js
+  // packages/block-library/build-module/query-total/index.mjs
   var { name: name88 } = block_default87;
   var settings87 = {
     icon: queryTotal,
@@ -55340,7 +55340,7 @@ ${js}
   };
   var init87 = () => initBlock({ name: name88, metadata: block_default87, settings: settings87 });
 
-  // packages/block-library/build-module/quote/index.js
+  // packages/block-library/build-module/quote/index.mjs
   var quote_exports = {};
   __export(quote_exports, {
     init: () => init88,
@@ -55350,7 +55350,7 @@ ${js}
   });
   var import_i18n206 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/quote/deprecated.js
+  // packages/block-library/build-module/quote/deprecated.mjs
   var import_blocks93 = __toESM(require_blocks(), 1);
   var import_block_editor216 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime398 = __toESM(require_jsx_runtime(), 1);
@@ -55628,7 +55628,7 @@ ${js}
   };
   var deprecated_default34 = [v49, v311, v215, v127, v03];
 
-  // packages/block-library/build-module/quote/edit.js
+  // packages/block-library/build-module/quote/edit.mjs
   var import_i18n205 = __toESM(require_i18n(), 1);
   var import_block_editor217 = __toESM(require_block_editor(), 1);
   var import_components132 = __toESM(require_components(), 1);
@@ -55829,7 +55829,7 @@ ${js}
     style: "wp-block-quote"
   };
 
-  // packages/block-library/build-module/quote/save.js
+  // packages/block-library/build-module/quote/save.mjs
   var import_block_editor218 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime400 = __toESM(require_jsx_runtime(), 1);
   function save44({ attributes: attributes3 }) {
@@ -55843,7 +55843,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/quote/transforms.js
+  // packages/block-library/build-module/quote/transforms.mjs
   var import_block_editor219 = __toESM(require_block_editor(), 1);
   var import_blocks94 = __toESM(require_blocks(), 1);
   var transforms28 = {
@@ -56001,7 +56001,7 @@ ${js}
   };
   var transforms_default29 = transforms28;
 
-  // packages/block-library/build-module/quote/index.js
+  // packages/block-library/build-module/quote/index.mjs
   var { name: name89 } = block_default88;
   var settings88 = {
     icon: quote_default,
@@ -56025,7 +56025,7 @@ ${js}
   };
   var init88 = () => initBlock({ name: name89, metadata: block_default88, settings: settings88 });
 
-  // packages/block-library/build-module/block/index.js
+  // packages/block-library/build-module/block/index.mjs
   var block_exports = {};
   __export(block_exports, {
     init: () => init89,
@@ -56070,7 +56070,7 @@ ${js}
     }
   };
 
-  // packages/block-library/build-module/block/edit.js
+  // packages/block-library/build-module/block/edit.mjs
   var import_data120 = __toESM(require_data(), 1);
   var import_element106 = __toESM(require_element(), 1);
   var import_core_data73 = __toESM(require_core_data(), 1);
@@ -56234,7 +56234,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/block/deprecated.js
+  // packages/block-library/build-module/block/deprecated.mjs
   var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
   var v216 = {
     attributes: {
@@ -56340,7 +56340,7 @@ ${js}
   };
   var deprecated_default35 = [v216, v128];
 
-  // packages/block-library/build-module/block/index.js
+  // packages/block-library/build-module/block/index.mjs
   var { name: name90 } = block_default89;
   var settings89 = {
     deprecated: deprecated_default35,
@@ -56363,7 +56363,7 @@ ${js}
   };
   var init89 = () => initBlock({ name: name90, metadata: block_default89, settings: settings89 });
 
-  // packages/block-library/build-module/read-more/index.js
+  // packages/block-library/build-module/read-more/index.mjs
   var read_more_exports = {};
   __export(read_more_exports, {
     init: () => init90,
@@ -56436,7 +56436,7 @@ ${js}
     style: "wp-block-read-more"
   };
 
-  // packages/block-library/build-module/read-more/edit.js
+  // packages/block-library/build-module/read-more/edit.mjs
   var import_block_editor221 = __toESM(require_block_editor(), 1);
   var import_components134 = __toESM(require_components(), 1);
   var import_blocks96 = __toESM(require_blocks(), 1);
@@ -56494,7 +56494,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/read-more/index.js
+  // packages/block-library/build-module/read-more/index.mjs
   var { name: name91 } = block_default90;
   var settings90 = {
     icon: link_default,
@@ -56507,7 +56507,7 @@ ${js}
   };
   var init90 = () => initBlock({ name: name91, metadata: block_default90, settings: settings90 });
 
-  // packages/block-library/build-module/rss/index.js
+  // packages/block-library/build-module/rss/index.mjs
   var rss_exports = {};
   __export(rss_exports, {
     init: () => init91,
@@ -56600,7 +56600,7 @@ ${js}
     style: "wp-block-rss"
   };
 
-  // packages/block-library/build-module/rss/edit.js
+  // packages/block-library/build-module/rss/edit.mjs
   var import_block_editor222 = __toESM(require_block_editor(), 1);
   var import_components135 = __toESM(require_components(), 1);
   var import_element107 = __toESM(require_element(), 1);
@@ -56889,7 +56889,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/rss/index.js
+  // packages/block-library/build-module/rss/index.mjs
   var { name: name92 } = block_default91;
   var settings91 = {
     icon: rss_default,
@@ -56902,7 +56902,7 @@ ${js}
   };
   var init91 = () => initBlock({ name: name92, metadata: block_default91, settings: settings91 });
 
-  // packages/block-library/build-module/search/index.js
+  // packages/block-library/build-module/search/index.mjs
   var search_exports = {};
   __export(search_exports, {
     init: () => init92,
@@ -57011,7 +57011,7 @@ ${js}
     style: "wp-block-search"
   };
 
-  // packages/block-library/build-module/search/edit.js
+  // packages/block-library/build-module/search/edit.mjs
   var import_block_editor223 = __toESM(require_block_editor(), 1);
   var import_data122 = __toESM(require_data(), 1);
   var import_element108 = __toESM(require_element(), 1);
@@ -57020,7 +57020,7 @@ ${js}
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_dom8 = __toESM(require_dom(), 1);
 
-  // packages/block-library/build-module/search/utils.js
+  // packages/block-library/build-module/search/utils.mjs
   var PC_WIDTH_DEFAULT = 50;
   var PX_WIDTH_DEFAULT = 350;
   var MIN_WIDTH = 220;
@@ -57028,7 +57028,7 @@ ${js}
     return unit === "%";
   }
 
-  // packages/block-library/build-module/search/edit.js
+  // packages/block-library/build-module/search/edit.mjs
   var import_jsx_runtime404 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_INNER_PADDING = "4px";
   var PERCENTAGE_WIDTHS = [25, 50, 75, 100];
@@ -57521,7 +57521,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/search/variations.js
+  // packages/block-library/build-module/search/variations.mjs
   var import_i18n212 = __toESM(require_i18n(), 1);
   var variations15 = [
     {
@@ -57532,7 +57532,7 @@ ${js}
   ];
   var variations_default15 = variations15;
 
-  // packages/block-library/build-module/search/index.js
+  // packages/block-library/build-module/search/index.mjs
   var { fieldsKey: fieldsKey17, formKey: formKey17 } = unlock(import_blocks97.privateApis);
   var { name: name93 } = block_default92;
   var settings92 = {
@@ -57569,7 +57569,7 @@ ${js}
   }
   var init92 = () => initBlock({ name: name93, metadata: block_default92, settings: settings92 });
 
-  // packages/block-library/build-module/separator/index.js
+  // packages/block-library/build-module/separator/index.mjs
   var separator_exports = {};
   __export(separator_exports, {
     init: () => init93,
@@ -57578,12 +57578,12 @@ ${js}
     settings: () => settings93
   });
 
-  // packages/block-library/build-module/separator/edit.js
+  // packages/block-library/build-module/separator/edit.mjs
   var import_block_editor224 = __toESM(require_block_editor(), 1);
   var import_components137 = __toESM(require_components(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/separator/use-deprecated-opacity.js
+  // packages/block-library/build-module/separator/use-deprecated-opacity.mjs
   var import_element109 = __toESM(require_element(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
   function useDeprecatedOpacity(opacity, currentColor, setAttributes) {
@@ -57602,7 +57602,7 @@ ${js}
     }, [deprecatedOpacityWithNoColor, currentColor, previousColor]);
   }
 
-  // packages/block-library/build-module/separator/edit.js
+  // packages/block-library/build-module/separator/edit.mjs
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
   var HtmlElementControl = ({ tagName, setAttributes }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
@@ -57715,7 +57715,7 @@ ${js}
     style: "wp-block-separator"
   };
 
-  // packages/block-library/build-module/separator/save.js
+  // packages/block-library/build-module/separator/save.mjs
   var import_block_editor225 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   function separatorSave({ attributes: attributes3 }) {
@@ -57739,7 +57739,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(Tag, { ...import_block_editor225.useBlockProps.save({ className, style: styles }) });
   }
 
-  // packages/block-library/build-module/separator/transforms.js
+  // packages/block-library/build-module/separator/transforms.mjs
   var import_blocks98 = __toESM(require_blocks(), 1);
   var transforms29 = {
     from: [
@@ -57771,7 +57771,7 @@ ${js}
   };
   var transforms_default30 = transforms29;
 
-  // packages/block-library/build-module/separator/deprecated.js
+  // packages/block-library/build-module/separator/deprecated.mjs
   var import_block_editor226 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime407 = __toESM(require_jsx_runtime(), 1);
   var v129 = {
@@ -57811,7 +57811,7 @@ ${js}
   };
   var deprecated_default36 = [v129];
 
-  // packages/block-library/build-module/separator/index.js
+  // packages/block-library/build-module/separator/index.mjs
   var { name: name94 } = block_default93;
   var settings93 = {
     icon: separator_default,
@@ -57828,7 +57828,7 @@ ${js}
   };
   var init93 = () => initBlock({ name: name94, metadata: block_default93, settings: settings93 });
 
-  // packages/block-library/build-module/shortcode/index.js
+  // packages/block-library/build-module/shortcode/index.mjs
   var shortcode_exports = {};
   __export(shortcode_exports, {
     init: () => init94,
@@ -57837,7 +57837,7 @@ ${js}
     settings: () => settings94
   });
 
-  // packages/block-library/build-module/shortcode/edit.js
+  // packages/block-library/build-module/shortcode/edit.mjs
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_block_editor227 = __toESM(require_block_editor(), 1);
   var import_compose51 = __toESM(require_compose(), 1);
@@ -57859,14 +57859,14 @@ ${js}
     ) }) });
   }
 
-  // packages/block-library/build-module/shortcode/save.js
+  // packages/block-library/build-module/shortcode/save.mjs
   var import_element110 = __toESM(require_element(), 1);
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
   function save45({ attributes: attributes3 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(import_element110.RawHTML, { children: attributes3.text });
   }
 
-  // packages/block-library/build-module/shortcode/transforms.js
+  // packages/block-library/build-module/shortcode/transforms.mjs
   var import_autop = __toESM(require_autop(), 1);
   var transforms30 = {
     from: [
@@ -57918,7 +57918,7 @@ ${js}
     editorStyle: "wp-block-shortcode-editor"
   };
 
-  // packages/block-library/build-module/shortcode/index.js
+  // packages/block-library/build-module/shortcode/index.mjs
   var { name: name95 } = block_default94;
   var settings94 = {
     icon: shortcode_default,
@@ -57928,7 +57928,7 @@ ${js}
   };
   var init94 = () => initBlock({ name: name95, metadata: block_default94, settings: settings94 });
 
-  // packages/block-library/build-module/site-logo/index.js
+  // packages/block-library/build-module/site-logo/index.mjs
   var site_logo_exports = {};
   __export(site_logo_exports, {
     init: () => init95,
@@ -58012,7 +58012,7 @@ ${js}
     style: "wp-block-site-logo"
   };
 
-  // packages/block-library/build-module/site-logo/edit.js
+  // packages/block-library/build-module/site-logo/edit.mjs
   var import_blob17 = __toESM(require_blob(), 1);
   var import_element111 = __toESM(require_element(), 1);
   var import_i18n216 = __toESM(require_i18n(), 1);
@@ -58574,7 +58574,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/site-logo/transforms.js
+  // packages/block-library/build-module/site-logo/transforms.mjs
   var import_blocks99 = __toESM(require_blocks(), 1);
   var transforms31 = {
     to: [
@@ -58592,7 +58592,7 @@ ${js}
   };
   var transforms_default32 = transforms31;
 
-  // packages/block-library/build-module/site-logo/index.js
+  // packages/block-library/build-module/site-logo/index.mjs
   var { name: name96 } = block_default95;
   var settings95 = {
     icon: site_logo_default,
@@ -58602,7 +58602,7 @@ ${js}
   };
   var init95 = () => initBlock({ name: name96, metadata: block_default95, settings: settings95 });
 
-  // packages/block-library/build-module/site-tagline/index.js
+  // packages/block-library/build-module/site-tagline/index.mjs
   var site_tagline_exports = {};
   __export(site_tagline_exports, {
     init: () => init96,
@@ -58688,7 +58688,7 @@ ${js}
     style: "wp-block-site-tagline"
   };
 
-  // packages/block-library/build-module/site-tagline/edit.js
+  // packages/block-library/build-module/site-tagline/edit.mjs
   var import_data124 = __toESM(require_data(), 1);
   var import_core_data76 = __toESM(require_core_data(), 1);
   var import_block_editor229 = __toESM(require_block_editor(), 1);
@@ -58763,12 +58763,12 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/site-tagline/icon.js
+  // packages/block-library/build-module/site-tagline/icon.mjs
   var import_components140 = __toESM(require_components(), 1);
   var import_jsx_runtime412 = __toESM(require_jsx_runtime(), 1);
   var icon_default7 = /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_components140.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", children: /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(import_components140.Path, { d: "M4 10.5h16V9H4v1.5ZM4 15h9v-1.5H4V15Z" }) });
 
-  // packages/block-library/build-module/site-tagline/deprecated.js
+  // packages/block-library/build-module/site-tagline/deprecated.mjs
   var v130 = {
     attributes: {
       textAlign: {
@@ -58805,7 +58805,7 @@ ${js}
   };
   var deprecated_default37 = [v130];
 
-  // packages/block-library/build-module/site-tagline/index.js
+  // packages/block-library/build-module/site-tagline/index.mjs
   var { name: name97 } = block_default96;
   var settings96 = {
     icon: icon_default7,
@@ -58814,7 +58814,7 @@ ${js}
   };
   var init96 = () => initBlock({ name: name97, metadata: block_default96, settings: settings96 });
 
-  // packages/block-library/build-module/site-title/index.js
+  // packages/block-library/build-module/site-title/index.mjs
   var site_title_exports = {};
   __export(site_title_exports, {
     init: () => init97,
@@ -58907,7 +58907,7 @@ ${js}
     style: "wp-block-site-title"
   };
 
-  // packages/block-library/build-module/site-title/edit.js
+  // packages/block-library/build-module/site-title/edit.mjs
   var import_data125 = __toESM(require_data(), 1);
   var import_core_data77 = __toESM(require_core_data(), 1);
   var import_i18n218 = __toESM(require_i18n(), 1);
@@ -59046,7 +59046,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/site-title/deprecated.js
+  // packages/block-library/build-module/site-title/deprecated.mjs
   var v131 = {
     attributes: {
       level: {
@@ -59096,7 +59096,7 @@ ${js}
   };
   var deprecated_default38 = [v131];
 
-  // packages/block-library/build-module/site-title/transforms.js
+  // packages/block-library/build-module/site-title/transforms.mjs
   var import_blocks102 = __toESM(require_blocks(), 1);
   var transforms32 = {
     to: [
@@ -59114,7 +59114,7 @@ ${js}
   };
   var transforms_default33 = transforms32;
 
-  // packages/block-library/build-module/site-title/index.js
+  // packages/block-library/build-module/site-title/index.mjs
   var { name: name98 } = block_default97;
   var settings97 = {
     icon: map_marker_default,
@@ -59130,7 +59130,7 @@ ${js}
   };
   var init97 = () => initBlock({ name: name98, metadata: block_default97, settings: settings97 });
 
-  // packages/block-library/build-module/social-link/index.js
+  // packages/block-library/build-module/social-link/index.mjs
   var social_link_exports = {};
   __export(social_link_exports, {
     init: () => init98,
@@ -59141,7 +59141,7 @@ ${js}
   var import_i18n222 = __toESM(require_i18n(), 1);
   var import_blocks104 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/social-link/edit.js
+  // packages/block-library/build-module/social-link/edit.mjs
   var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_data126 = __toESM(require_data(), 1);
   var import_block_editor231 = __toESM(require_block_editor(), 1);
@@ -59151,230 +59151,230 @@ ${js}
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_blocks103 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/social-link/social-list.js
+  // packages/block-library/build-module/social-link/social-list.mjs
   var import_i18n219 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/social-link/icons/amazon.js
+  // packages/block-library/build-module/social-link/icons/amazon.mjs
   var import_primitives156 = __toESM(require_primitives(), 1);
   var import_jsx_runtime414 = __toESM(require_jsx_runtime(), 1);
   var AmazonIcon = () => /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_primitives156.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_primitives156.Path, { d: "M13.582,8.182C11.934,8.367,9.78,8.49,8.238,9.166c-1.781,0.769-3.03,2.337-3.03,4.644 c0,2.953,1.86,4.429,4.253,4.429c2.02,0,3.125-0.477,4.685-2.065c0.516,0.747,0.685,1.109,1.629,1.894 c0.212,0.114,0.483,0.103,0.672-0.066l0.006,0.006c0.567-0.505,1.599-1.401,2.18-1.888c0.231-0.188,0.19-0.496,0.009-0.754 c-0.52-0.718-1.072-1.303-1.072-2.634V8.305c0-1.876,0.133-3.599-1.249-4.891C15.23,2.369,13.422,2,12.04,2 C9.336,2,6.318,3.01,5.686,6.351C5.618,6.706,5.877,6.893,6.109,6.945l2.754,0.298C9.121,7.23,9.308,6.977,9.357,6.72 c0.236-1.151,1.2-1.706,2.284-1.706c0.584,0,1.249,0.215,1.595,0.738c0.398,0.584,0.346,1.384,0.346,2.061V8.182z M13.049,14.088 c-0.451,0.8-1.169,1.291-1.967,1.291c-1.09,0-1.728-0.83-1.728-2.061c0-2.42,2.171-2.86,4.227-2.86v0.615 C13.582,12.181,13.608,13.104,13.049,14.088z M20.683,19.339C18.329,21.076,14.917,22,11.979,22c-4.118,0-7.826-1.522-10.632-4.057 c-0.22-0.199-0.024-0.471,0.241-0.317c3.027,1.762,6.771,2.823,10.639,2.823c2.608,0,5.476-0.541,8.115-1.66 C20.739,18.62,21.072,19.051,20.683,19.339z M21.336,21.043c-0.194,0.163-0.379,0.076-0.293-0.139 c0.284-0.71,0.92-2.298,0.619-2.684c-0.301-0.386-1.99-0.183-2.749-0.092c-0.23,0.027-0.266-0.173-0.059-0.319 c1.348-0.946,3.555-0.673,3.811-0.356C22.925,17.773,22.599,19.986,21.336,21.043z" }) });
 
-  // packages/block-library/build-module/social-link/icons/bandcamp.js
+  // packages/block-library/build-module/social-link/icons/bandcamp.mjs
   var import_primitives157 = __toESM(require_primitives(), 1);
   var import_jsx_runtime415 = __toESM(require_jsx_runtime(), 1);
   var BandcampIcon = () => /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(import_primitives157.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime415.jsx)(import_primitives157.Path, { d: "M15.27 17.289 3 17.289 8.73 6.711 21 6.711 15.27 17.289" }) });
 
-  // packages/block-library/build-module/social-link/icons/behance.js
+  // packages/block-library/build-module/social-link/icons/behance.mjs
   var import_primitives158 = __toESM(require_primitives(), 1);
   var import_jsx_runtime416 = __toESM(require_jsx_runtime(), 1);
   var BehanceIcon = () => /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(import_primitives158.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(import_primitives158.Path, { d: "M7.799,5.698c0.589,0,1.12,0.051,1.606,0.156c0.482,0.102,0.894,0.273,1.241,0.507c0.344,0.235,0.612,0.546,0.804,0.938 c0.188,0.387,0.281,0.871,0.281,1.443c0,0.619-0.141,1.137-0.421,1.551c-0.284,0.413-0.7,0.751-1.255,1.014 c0.756,0.218,1.317,0.601,1.689,1.146c0.374,0.549,0.557,1.205,0.557,1.975c0,0.623-0.12,1.161-0.359,1.612 c-0.241,0.457-0.569,0.828-0.973,1.114c-0.408,0.288-0.876,0.5-1.399,0.637C9.052,17.931,8.514,18,7.963,18H2V5.698H7.799 M7.449,10.668c0.481,0,0.878-0.114,1.192-0.345c0.311-0.228,0.463-0.603,0.463-1.119c0-0.286-0.051-0.523-0.152-0.707 C8.848,8.315,8.711,8.171,8.536,8.07C8.362,7.966,8.166,7.894,7.94,7.854c-0.224-0.044-0.457-0.06-0.697-0.06H4.709v2.874H7.449z M7.6,15.905c0.267,0,0.521-0.024,0.759-0.077c0.243-0.053,0.457-0.137,0.637-0.261c0.182-0.12,0.332-0.283,0.441-0.491 C9.547,14.87,9.6,14.602,9.6,14.278c0-0.633-0.18-1.084-0.533-1.357c-0.356-0.27-0.83-0.404-1.413-0.404H4.709v3.388L7.6,15.905z M16.162,15.864c0.367,0.358,0.897,0.538,1.583,0.538c0.493,0,0.92-0.125,1.277-0.374c0.354-0.248,0.571-0.514,0.654-0.79h2.155 c-0.347,1.072-0.872,1.838-1.589,2.299C19.534,18,18.67,18.23,17.662,18.23c-0.701,0-1.332-0.113-1.899-0.337 c-0.567-0.227-1.041-0.544-1.439-0.958c-0.389-0.415-0.689-0.907-0.904-1.484c-0.213-0.574-0.32-1.21-0.32-1.899 c0-0.666,0.11-1.288,0.329-1.863c0.222-0.577,0.529-1.075,0.933-1.492c0.406-0.42,0.885-0.751,1.444-0.994 c0.558-0.241,1.175-0.363,1.857-0.363c0.754,0,1.414,0.145,1.98,0.44c0.563,0.291,1.026,0.686,1.389,1.181 c0.363,0.493,0.622,1.057,0.783,1.69c0.16,0.632,0.217,1.292,0.171,1.983h-6.428C15.557,14.84,15.795,15.506,16.162,15.864 M18.973,11.184c-0.291-0.321-0.783-0.496-1.384-0.496c-0.39,0-0.714,0.066-0.973,0.2c-0.254,0.132-0.461,0.297-0.621,0.491 c-0.157,0.197-0.265,0.405-0.328,0.628c-0.063,0.217-0.101,0.413-0.111,0.587h3.98C19.478,11.969,19.265,11.509,18.973,11.184z M15.057,7.738h4.985V6.524h-4.985L15.057,7.738z" }) });
 
-  // packages/block-library/build-module/social-link/icons/bluesky.js
+  // packages/block-library/build-module/social-link/icons/bluesky.mjs
   var import_primitives159 = __toESM(require_primitives(), 1);
   var import_jsx_runtime417 = __toESM(require_jsx_runtime(), 1);
   var BlueskyIcon = () => /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(import_primitives159.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(import_primitives159.Path, { d: "M6.3,4.2c2.3,1.7,4.8,5.3,5.7,7.2.9-1.9,3.4-5.4,5.7-7.2,1.7-1.3,4.3-2.2,4.3.9s-.4,5.2-.6,5.9c-.7,2.6-3.3,3.2-5.6,2.8,4,.7,5.1,3,2.9,5.3-5,5.2-6.7-2.8-6.7-2.8,0,0-1.7,8-6.7,2.8-2.2-2.3-1.2-4.6,2.9-5.3-2.3.4-4.9-.3-5.6-2.8-.2-.7-.6-5.3-.6-5.9,0-3.1,2.7-2.1,4.3-.9h0Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/chain.js
+  // packages/block-library/build-module/social-link/icons/chain.mjs
   var import_primitives160 = __toESM(require_primitives(), 1);
   var import_jsx_runtime418 = __toESM(require_jsx_runtime(), 1);
   var ChainIcon = () => /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_primitives160.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(import_primitives160.Path, { d: "M15.6 7.2H14v1.5h1.6c2 0 3.7 1.7 3.7 3.7s-1.7 3.7-3.7 3.7H14v1.5h1.6c2.8 0 5.2-2.3 5.2-5.2 0-2.9-2.3-5.2-5.2-5.2zM4.7 12.4c0-2 1.7-3.7 3.7-3.7H10V7.2H8.4c-2.9 0-5.2 2.3-5.2 5.2 0 2.9 2.3 5.2 5.2 5.2H10v-1.5H8.4c-2 0-3.7-1.7-3.7-3.7zm4.6.9h5.3v-1.5H9.3v1.5z" }) });
 
-  // packages/block-library/build-module/social-link/icons/codepen.js
+  // packages/block-library/build-module/social-link/icons/codepen.mjs
   var import_primitives161 = __toESM(require_primitives(), 1);
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
   var CodepenIcon = () => /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_primitives161.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_primitives161.Path, { d: "M22.016,8.84c-0.002-0.013-0.005-0.025-0.007-0.037c-0.005-0.025-0.008-0.048-0.015-0.072 c-0.003-0.015-0.01-0.028-0.013-0.042c-0.008-0.02-0.015-0.04-0.023-0.062c-0.007-0.015-0.013-0.028-0.02-0.042 c-0.008-0.02-0.018-0.037-0.03-0.057c-0.007-0.013-0.017-0.027-0.025-0.038c-0.012-0.018-0.023-0.035-0.035-0.052 c-0.01-0.013-0.02-0.025-0.03-0.037c-0.015-0.017-0.028-0.032-0.043-0.045c-0.01-0.012-0.022-0.023-0.035-0.035 c-0.015-0.015-0.032-0.028-0.048-0.04c-0.012-0.01-0.025-0.02-0.037-0.03c-0.005-0.003-0.01-0.008-0.015-0.012l-9.161-6.096 c-0.289-0.192-0.666-0.192-0.955,0L2.359,8.237C2.354,8.24,2.349,8.245,2.344,8.249L2.306,8.277 c-0.017,0.013-0.033,0.027-0.048,0.04C2.246,8.331,2.234,8.342,2.222,8.352c-0.015,0.015-0.028,0.03-0.042,0.047 c-0.012,0.013-0.022,0.023-0.03,0.037C2.139,8.453,2.125,8.471,2.115,8.488C2.107,8.501,2.099,8.514,2.09,8.526 C2.079,8.548,2.069,8.565,2.06,8.585C2.054,8.6,2.047,8.613,2.04,8.626C2.032,8.648,2.025,8.67,2.019,8.69 c-0.005,0.013-0.01,0.027-0.013,0.042C1.999,8.755,1.995,8.778,1.99,8.803C1.989,8.817,1.985,8.828,1.984,8.84 C1.978,8.879,1.975,8.915,1.975,8.954v6.093c0,0.037,0.003,0.075,0.008,0.112c0.002,0.012,0.005,0.025,0.007,0.038 c0.005,0.023,0.008,0.047,0.015,0.072c0.003,0.015,0.008,0.028,0.013,0.04c0.007,0.022,0.013,0.042,0.022,0.063 c0.007,0.015,0.013,0.028,0.02,0.04c0.008,0.02,0.018,0.038,0.03,0.058c0.007,0.013,0.015,0.027,0.025,0.038 c0.012,0.018,0.023,0.035,0.035,0.052c0.01,0.013,0.02,0.025,0.03,0.037c0.013,0.015,0.028,0.032,0.042,0.045 c0.012,0.012,0.023,0.023,0.035,0.035c0.015,0.013,0.032,0.028,0.048,0.04l0.038,0.03c0.005,0.003,0.01,0.007,0.013,0.01 l9.163,6.095C11.668,21.953,11.833,22,12,22c0.167,0,0.332-0.047,0.478-0.144l9.163-6.095l0.015-0.01 c0.013-0.01,0.027-0.02,0.037-0.03c0.018-0.013,0.035-0.028,0.048-0.04c0.013-0.012,0.025-0.023,0.035-0.035 c0.017-0.015,0.03-0.032,0.043-0.045c0.01-0.013,0.02-0.025,0.03-0.037c0.013-0.018,0.025-0.035,0.035-0.052 c0.008-0.013,0.018-0.027,0.025-0.038c0.012-0.02,0.022-0.038,0.03-0.058c0.007-0.013,0.013-0.027,0.02-0.04 c0.008-0.022,0.015-0.042,0.023-0.063c0.003-0.013,0.01-0.027,0.013-0.04c0.007-0.025,0.01-0.048,0.015-0.072 c0.002-0.013,0.005-0.027,0.007-0.037c0.003-0.042,0.007-0.079,0.007-0.117V8.954C22.025,8.915,22.022,8.879,22.016,8.84z M12.862,4.464l6.751,4.49l-3.016,2.013l-3.735-2.492V4.464z M11.138,4.464v4.009l-3.735,2.494L4.389,8.954L11.138,4.464z M3.699,10.562L5.853,12l-2.155,1.438V10.562z M11.138,19.536l-6.749-4.491l3.015-2.011l3.735,2.492V19.536z M12,14.035L8.953,12 L12,9.966L15.047,12L12,14.035z M12.862,19.536v-4.009l3.735-2.492l3.016,2.011L12.862,19.536z M20.303,13.438L18.147,12 l2.156-1.438L20.303,13.438z" }) });
 
-  // packages/block-library/build-module/social-link/icons/deviantart.js
+  // packages/block-library/build-module/social-link/icons/deviantart.mjs
   var import_primitives162 = __toESM(require_primitives(), 1);
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
   var DeviantArtIcon = () => /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_primitives162.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(import_primitives162.Path, { d: "M 18.19 5.636 18.19 2 18.188 2 14.553 2 14.19 2.366 12.474 5.636 11.935 6 5.81 6 5.81 10.994 9.177 10.994 9.477 11.357 5.81 18.363 5.81 22 5.811 22 9.447 22 9.81 21.634 11.526 18.364 12.065 18 18.19 18 18.19 13.006 14.823 13.006 14.523 12.641 18.19 5.636z" }) });
 
-  // packages/block-library/build-module/social-link/icons/discord.js
+  // packages/block-library/build-module/social-link/icons/discord.mjs
   var import_primitives163 = __toESM(require_primitives(), 1);
   var import_jsx_runtime421 = __toESM(require_jsx_runtime(), 1);
   var DiscordIcon = () => /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_primitives163.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(import_primitives163.Path, { d: "M20.317 4.369A19.88 19.88 0 0 0 15.894 3a14.145 14.145 0 0 0-.719 1.518 19.205 19.205 0 0 0-5.351 0A14.183 14.183 0 0 0 9.104 3 19.896 19.896 0 0 0 4.682 4.369a18.921 18.921 0 0 0-3.012 12.52 19.929 19.929 0 0 0 6.081 3.097c.487-.65.922-1.339 1.3-2.061a12.445 12.445 0 0 1-1.958-.896c.165-.12.326-.246.483-.374a12.445 12.445 0 0 0 8.946 0c.157.128.318.253.483.374-.627.371-1.281.683-1.958.896.379.722.813 1.41 1.3 2.061a19.94 19.94 0 0 0 6.081-3.097 18.921 18.921 0 0 0-3.012-12.52ZM8.12 15.233c-1.202 0-2.184-1.09-2.184-2.431 0-1.34.97-2.431 2.184-2.431 1.213 0 2.202 1.09 2.184 2.431 0 1.341-.97 2.431-2.184 2.431Zm7.757 0c-1.202 0-2.184-1.09-2.184-2.431 0-1.34.97-2.431 2.184-2.431 1.213 0 2.202 1.09 2.184 2.431 0 1.341-.97 2.431-2.184 2.431Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/dribbble.js
+  // packages/block-library/build-module/social-link/icons/dribbble.mjs
   var import_primitives164 = __toESM(require_primitives(), 1);
   var import_jsx_runtime422 = __toESM(require_jsx_runtime(), 1);
   var DribbbleIcon = () => /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(import_primitives164.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(import_primitives164.Path, { d: "M12,22C6.486,22,2,17.514,2,12S6.486,2,12,2c5.514,0,10,4.486,10,10S17.514,22,12,22z M20.434,13.369 c-0.292-0.092-2.644-0.794-5.32-0.365c1.117,3.07,1.572,5.57,1.659,6.09C18.689,17.798,20.053,15.745,20.434,13.369z M15.336,19.876c-0.127-0.749-0.623-3.361-1.822-6.477c-0.019,0.006-0.038,0.013-0.056,0.019c-4.818,1.679-6.547,5.02-6.701,5.334 c1.448,1.129,3.268,1.803,5.243,1.803C13.183,20.555,14.311,20.313,15.336,19.876z M5.654,17.724 c0.193-0.331,2.538-4.213,6.943-5.637c0.111-0.036,0.224-0.07,0.337-0.102c-0.214-0.485-0.448-0.971-0.692-1.45 c-4.266,1.277-8.405,1.223-8.778,1.216c-0.003,0.087-0.004,0.174-0.004,0.261C3.458,14.207,4.29,16.21,5.654,17.724z M3.639,10.264 c0.382,0.005,3.901,0.02,7.897-1.041c-1.415-2.516-2.942-4.631-3.167-4.94C5.979,5.41,4.193,7.613,3.639,10.264z M9.998,3.709 c0.236,0.316,1.787,2.429,3.187,5c3.037-1.138,4.323-2.867,4.477-3.085C16.154,4.286,14.17,3.471,12,3.471 C11.311,3.471,10.641,3.554,9.998,3.709z M18.612,6.612C18.432,6.855,17,8.69,13.842,9.979c0.199,0.407,0.389,0.821,0.567,1.237 c0.063,0.148,0.124,0.295,0.184,0.441c2.842-0.357,5.666,0.215,5.948,0.275C20.522,9.916,19.801,8.065,18.612,6.612z" }) });
 
-  // packages/block-library/build-module/social-link/icons/dropbox.js
+  // packages/block-library/build-module/social-link/icons/dropbox.mjs
   var import_primitives165 = __toESM(require_primitives(), 1);
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
   var DropboxIcon = () => /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_primitives165.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_primitives165.Path, { d: "M12,6.134L6.069,9.797L2,6.54l5.883-3.843L12,6.134z M2,13.054l5.883,3.843L12,13.459L6.069,9.797L2,13.054z M12,13.459 l4.116,3.439L22,13.054l-4.069-3.257L12,13.459z M22,6.54l-5.884-3.843L12,6.134l5.931,3.663L22,6.54z M12.011,14.2l-4.129,3.426 l-1.767-1.153v1.291l5.896,3.539l5.897-3.539v-1.291l-1.769,1.153L12.011,14.2z" }) });
 
-  // packages/block-library/build-module/social-link/icons/etsy.js
+  // packages/block-library/build-module/social-link/icons/etsy.mjs
   var import_primitives166 = __toESM(require_primitives(), 1);
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
   var EtsyIcon = () => /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_primitives166.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_primitives166.Path, { d: "M9.16033,4.038c0-.27174.02717-.43478.48913-.43478h6.22283c1.087,0,1.68478.92391,2.11957,2.663l.35326,1.38587h1.05978C19.59511,3.712,19.75815,2,19.75815,2s-2.663.29891-4.23913.29891h-7.962L3.29076,2.163v1.1413L4.731,3.57609c1.00543.19022,1.25.40761,1.33152,1.33152,0,0,.08152,2.71739.08152,7.20109s-.08152,7.17391-.08152,7.17391c0,.81522-.32609,1.11413-1.33152,1.30435l-1.44022.27174V22l4.2663-.13587h7.11957c1.60326,0,5.32609.13587,5.32609.13587.08152-.97826.625-5.40761.70652-5.89674H19.7038L18.644,18.52174c-.84239,1.90217-2.06522,2.038-3.42391,2.038H11.1712c-1.3587,0-2.01087-.54348-2.01087-1.712V12.65217s3.0163,0,3.99457.08152c.76087.05435,1.22283.27174,1.46739,1.33152l.32609,1.413h1.16848l-.08152-3.55978.163-3.587H15.02989l-.38043,1.57609c-.24457,1.03261-.40761,1.22283-1.46739,1.33152-1.38587.13587-4.02174.1087-4.02174.1087Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/facebook.js
+  // packages/block-library/build-module/social-link/icons/facebook.mjs
   var import_primitives167 = __toESM(require_primitives(), 1);
   var import_jsx_runtime425 = __toESM(require_jsx_runtime(), 1);
   var FacebookIcon = () => /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(import_primitives167.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(import_primitives167.Path, { d: "M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z" }) });
 
-  // packages/block-library/build-module/social-link/icons/feed.js
+  // packages/block-library/build-module/social-link/icons/feed.mjs
   var import_primitives168 = __toESM(require_primitives(), 1);
   var import_jsx_runtime426 = __toESM(require_jsx_runtime(), 1);
   var FeedIcon = () => /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(import_primitives168.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(import_primitives168.Path, { d: "M2,8.667V12c5.515,0,10,4.485,10,10h3.333C15.333,14.637,9.363,8.667,2,8.667z M2,2v3.333 c9.19,0,16.667,7.477,16.667,16.667H22C22,10.955,13.045,2,2,2z M4.5,17C3.118,17,2,18.12,2,19.5S3.118,22,4.5,22S7,20.88,7,19.5 S5.882,17,4.5,17z" }) });
 
-  // packages/block-library/build-module/social-link/icons/fivehundredpx.js
+  // packages/block-library/build-module/social-link/icons/fivehundredpx.mjs
   var import_primitives169 = __toESM(require_primitives(), 1);
   var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
   var FivehundredpxIcon = () => /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_primitives169.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_primitives169.Path, { d: "M6.94026,15.1412c.00437.01213.108.29862.168.44064a6.55008,6.55008,0,1,0,6.03191-9.09557,6.68654,6.68654,0,0,0-2.58357.51467A8.53914,8.53914,0,0,0,8.21268,8.61344L8.209,8.61725V3.22948l9.0504-.00008c.32934-.0036.32934-.46353.32934-.61466s0-.61091-.33035-.61467L7.47248,2a.43.43,0,0,0-.43131.42692v7.58355c0,.24466.30476.42131.58793.4819.553.11812.68074-.05864.81617-.2457l.018-.02481A10.52673,10.52673,0,0,1,9.32258,9.258a5.35268,5.35268,0,1,1,7.58985,7.54976,5.417,5.417,0,0,1-3.80867,1.56365,5.17483,5.17483,0,0,1-2.69822-.74478l.00342-4.61111a2.79372,2.79372,0,0,1,.71372-1.78792,2.61611,2.61611,0,0,1,1.98282-.89477,2.75683,2.75683,0,0,1,1.95525.79477,2.66867,2.66867,0,0,1,.79656,1.909,2.724,2.724,0,0,1-2.75849,2.748,4.94651,4.94651,0,0,1-.86254-.13719c-.31234-.093-.44519.34058-.48892.48349-.16811.54966.08453.65862.13687.67489a3.75751,3.75751,0,0,0,1.25234.18375,3.94634,3.94634,0,1,0-2.82444-6.742,3.67478,3.67478,0,0,0-1.13028,2.584l-.00041.02323c-.0035.11667-.00579,2.881-.00644,3.78811l-.00407-.00451a6.18521,6.18521,0,0,1-1.0851-1.86092c-.10544-.27856-.34358-.22925-.66857-.12917-.14192.04372-.57386.17677-.47833.489Zm4.65165-1.08338a.51346.51346,0,0,0,.19513.31818l.02276.022a.52945.52945,0,0,0,.3517.18416.24242.24242,0,0,0,.16577-.0611c.05473-.05082.67382-.67812.73287-.738l.69041.68819a.28978.28978,0,0,0,.21437.11032.53239.53239,0,0,0,.35708-.19486c.29792-.30419.14885-.46821.07676-.54751l-.69954-.69975.72952-.73469c.16-.17311.01874-.35708-.12218-.498-.20461-.20461-.402-.25742-.52855-.14083l-.7254.72665-.73354-.73375a.20128.20128,0,0,0-.14179-.05695.54135.54135,0,0,0-.34379.19648c-.22561.22555-.274.38149-.15656.5059l.73374.7315-.72942.73072A.26589.26589,0,0,0,11.59191,14.05782Zm1.59866-9.915A8.86081,8.86081,0,0,0,9.854,4.776a.26169.26169,0,0,0-.16938.22759.92978.92978,0,0,0,.08619.42094c.05682.14524.20779.531.50006.41955a8.40969,8.40969,0,0,1,2.91968-.55484,7.87875,7.87875,0,0,1,3.086.62286,8.61817,8.61817,0,0,1,2.30562,1.49315.2781.2781,0,0,0,.18318.07586c.15529,0,.30425-.15253.43167-.29551.21268-.23861.35873-.4369.1492-.63538a8.50425,8.50425,0,0,0-2.62312-1.694A9.0177,9.0177,0,0,0,13.19058,4.14283ZM19.50945,18.6236h0a.93171.93171,0,0,0-.36642-.25406.26589.26589,0,0,0-.27613.06613l-.06943.06929A7.90606,7.90606,0,0,1,7.60639,18.505a7.57284,7.57284,0,0,1-1.696-2.51537,8.58715,8.58715,0,0,1-.5147-1.77754l-.00871-.04864c-.04939-.25873-.28755-.27684-.62981-.22448-.14234.02178-.5755.088-.53426.39969l.001.00712a9.08807,9.08807,0,0,0,15.406,4.99094c.00193-.00192.04753-.04718.0725-.07436C19.79425,19.16234,19.87422,18.98728,19.50945,18.6236Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/flickr.js
+  // packages/block-library/build-module/social-link/icons/flickr.mjs
   var import_primitives170 = __toESM(require_primitives(), 1);
   var import_jsx_runtime428 = __toESM(require_jsx_runtime(), 1);
   var FlickrIcon = () => /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_primitives170.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(import_primitives170.Path, { d: "M6.5,7c-2.75,0-5,2.25-5,5s2.25,5,5,5s5-2.25,5-5S9.25,7,6.5,7z M17.5,7c-2.75,0-5,2.25-5,5s2.25,5,5,5s5-2.25,5-5 S20.25,7,17.5,7z" }) });
 
-  // packages/block-library/build-module/social-link/icons/foursquare.js
+  // packages/block-library/build-module/social-link/icons/foursquare.mjs
   var import_primitives171 = __toESM(require_primitives(), 1);
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
   var FoursquareIcon = () => /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_primitives171.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_primitives171.Path, { d: "M17.573,2c0,0-9.197,0-10.668,0S5,3.107,5,3.805s0,16.948,0,16.948c0,0.785,0.422,1.077,0.66,1.172 c0.238,0.097,0.892,0.177,1.285-0.275c0,0,5.035-5.843,5.122-5.93c0.132-0.132,0.132-0.132,0.262-0.132h3.26 c1.368,0,1.588-0.977,1.732-1.552c0.078-0.318,0.692-3.428,1.225-6.122l0.675-3.368C19.56,2.893,19.14,2,17.573,2z M16.495,7.22 c-0.053,0.252-0.372,0.518-0.665,0.518c-0.293,0-4.157,0-4.157,0c-0.467,0-0.802,0.318-0.802,0.787v0.508 c0,0.467,0.337,0.798,0.805,0.798c0,0,3.197,0,3.528,0s0.655,0.362,0.583,0.715c-0.072,0.353-0.407,2.102-0.448,2.295 c-0.04,0.193-0.262,0.523-0.655,0.523c-0.33,0-2.88,0-2.88,0c-0.523,0-0.683,0.068-1.033,0.503 c-0.35,0.437-3.505,4.223-3.505,4.223c-0.032,0.035-0.063,0.027-0.063-0.015V4.852c0-0.298,0.26-0.648,0.648-0.648 c0,0,8.228,0,8.562,0c0.315,0,0.61,0.297,0.528,0.683L16.495,7.22z" }) });
 
-  // packages/block-library/build-module/social-link/icons/goodreads.js
+  // packages/block-library/build-module/social-link/icons/goodreads.mjs
   var import_primitives172 = __toESM(require_primitives(), 1);
   var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
   var GoodreadsIcon = () => /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(import_primitives172.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(import_primitives172.Path, { d: "M17.3,17.5c-0.2,0.8-0.5,1.4-1,1.9c-0.4,0.5-1,0.9-1.7,1.2C13.9,20.9,13.1,21,12,21c-0.6,0-1.3-0.1-1.9-0.2 c-0.6-0.1-1.1-0.4-1.6-0.7c-0.5-0.3-0.9-0.7-1.2-1.2c-0.3-0.5-0.5-1.1-0.5-1.7h1.5c0.1,0.5,0.2,0.9,0.5,1.2 c0.2,0.3,0.5,0.6,0.9,0.8c0.3,0.2,0.7,0.3,1.1,0.4c0.4,0.1,0.8,0.1,1.2,0.1c1.4,0,2.5-0.4,3.1-1.2c0.6-0.8,1-2,1-3.5v-1.7h0 c-0.4,0.8-0.9,1.4-1.6,1.9c-0.7,0.5-1.5,0.7-2.4,0.7c-1,0-1.9-0.2-2.6-0.5C8.7,15,8.1,14.5,7.7,14c-0.5-0.6-0.8-1.3-1-2.1 c-0.2-0.8-0.3-1.6-0.3-2.5c0-0.9,0.1-1.7,0.4-2.5c0.3-0.8,0.6-1.5,1.1-2c0.5-0.6,1.1-1,1.8-1.4C10.3,3.2,11.1,3,12,3 c0.5,0,0.9,0.1,1.3,0.2c0.4,0.1,0.8,0.3,1.1,0.5c0.3,0.2,0.6,0.5,0.9,0.8c0.3,0.3,0.5,0.6,0.6,1h0V3.4h1.5V15 C17.6,15.9,17.5,16.7,17.3,17.5z M13.8,14.1c0.5-0.3,0.9-0.7,1.3-1.1c0.3-0.5,0.6-1,0.8-1.6c0.2-0.6,0.3-1.2,0.3-1.9 c0-0.6-0.1-1.2-0.2-1.9c-0.1-0.6-0.4-1.2-0.7-1.7c-0.3-0.5-0.7-0.9-1.3-1.2c-0.5-0.3-1.1-0.5-1.9-0.5s-1.4,0.2-1.9,0.5 c-0.5,0.3-1,0.7-1.3,1.2C8.5,6.4,8.3,7,8.1,7.6C8,8.2,7.9,8.9,7.9,9.5c0,0.6,0.1,1.3,0.2,1.9C8.3,12,8.6,12.5,8.9,13 c0.3,0.5,0.8,0.8,1.3,1.1c0.5,0.3,1.1,0.4,1.9,0.4C12.7,14.5,13.3,14.4,13.8,14.1z" }) });
 
-  // packages/block-library/build-module/social-link/icons/google.js
+  // packages/block-library/build-module/social-link/icons/google.mjs
   var import_primitives173 = __toESM(require_primitives(), 1);
   var import_jsx_runtime431 = __toESM(require_jsx_runtime(), 1);
   var GoogleIcon = () => /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_primitives173.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_primitives173.Path, { d: "M12.02,10.18v3.72v0.01h5.51c-0.26,1.57-1.67,4.22-5.5,4.22c-3.31,0-6.01-2.75-6.01-6.12s2.7-6.12,6.01-6.12 c1.87,0,3.13,0.8,3.85,1.48l2.84-2.76C16.99,2.99,14.73,2,12.03,2c-5.52,0-10,4.48-10,10s4.48,10,10,10c5.77,0,9.6-4.06,9.6-9.77 c0-0.83-0.11-1.42-0.25-2.05H12.02z" }) });
 
-  // packages/block-library/build-module/social-link/icons/github.js
+  // packages/block-library/build-module/social-link/icons/github.mjs
   var import_primitives174 = __toESM(require_primitives(), 1);
   var import_jsx_runtime432 = __toESM(require_jsx_runtime(), 1);
   var GitHubIcon = () => /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_primitives174.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_primitives174.Path, { d: "M12,2C6.477,2,2,6.477,2,12c0,4.419,2.865,8.166,6.839,9.489c0.5,0.09,0.682-0.218,0.682-0.484 c0-0.236-0.009-0.866-0.014-1.699c-2.782,0.602-3.369-1.34-3.369-1.34c-0.455-1.157-1.11-1.465-1.11-1.465 c-0.909-0.62,0.069-0.608,0.069-0.608c1.004,0.071,1.532,1.03,1.532,1.03c0.891,1.529,2.341,1.089,2.91,0.833 c0.091-0.647,0.349-1.086,0.635-1.337c-2.22-0.251-4.555-1.111-4.555-4.943c0-1.091,0.39-1.984,1.03-2.682 C6.546,8.54,6.202,7.524,6.746,6.148c0,0,0.84-0.269,2.75,1.025C10.295,6.95,11.15,6.84,12,6.836 c0.85,0.004,1.705,0.114,2.504,0.336c1.909-1.294,2.748-1.025,2.748-1.025c0.546,1.376,0.202,2.394,0.1,2.646 c0.64,0.699,1.026,1.591,1.026,2.682c0,3.841-2.337,4.687-4.565,4.935c0.359,0.307,0.679,0.917,0.679,1.852 c0,1.335-0.012,2.415-0.012,2.741c0,0.269,0.18,0.579,0.688,0.481C19.138,20.161,22,16.416,22,12C22,6.477,17.523,2,12,2z" }) });
 
-  // packages/block-library/build-module/social-link/icons/gravatar.js
+  // packages/block-library/build-module/social-link/icons/gravatar.mjs
   var import_primitives175 = __toESM(require_primitives(), 1);
   var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
   var GravatarIcon = () => /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_primitives175.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_primitives175.Path, { d: "M10.8001 4.69937V10.6494C10.8001 11.1001 10.9791 11.5323 11.2978 11.851C11.6165 12.1697 12.0487 12.3487 12.4994 12.3487C12.9501 12.3487 13.3824 12.1697 13.7011 11.851C14.0198 11.5323 14.1988 11.1001 14.1988 10.6494V6.69089C15.2418 7.05861 16.1371 7.75537 16.7496 8.67617C17.3622 9.59698 17.6589 10.6919 17.595 11.796C17.5311 12.9001 17.1101 13.9535 16.3954 14.7975C15.6807 15.6415 14.711 16.2303 13.6325 16.4753C12.5541 16.7202 11.4252 16.608 10.4161 16.1555C9.40691 15.703 8.57217 14.9348 8.03763 13.9667C7.50308 12.9985 7.29769 11.8828 7.45242 10.7877C7.60714 9.69266 8.11359 8.67755 8.89545 7.89537C9.20904 7.57521 9.38364 7.14426 9.38132 6.69611C9.37899 6.24797 9.19994 5.81884 8.88305 5.50195C8.56616 5.18506 8.13704 5.00601 7.68889 5.00369C7.24075 5.00137 6.80979 5.17597 6.48964 5.48956C5.09907 6.8801 4.23369 8.7098 4.04094 10.6669C3.84819 12.624 4.34 14.5873 5.43257 16.2224C6.52515 17.8575 8.15088 19.0632 10.0328 19.634C11.9146 20.2049 13.9362 20.1055 15.753 19.3529C17.5699 18.6003 19.0695 17.241 19.9965 15.5066C20.9234 13.7722 21.2203 11.7701 20.8366 9.84133C20.4528 7.91259 19.4122 6.17658 17.892 4.92911C16.3717 3.68163 14.466 2.99987 12.4994 3C12.0487 3 11.6165 3.17904 11.2978 3.49773C10.9791 3.81643 10.8001 4.24867 10.8001 4.69937Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/instagram.js
+  // packages/block-library/build-module/social-link/icons/instagram.mjs
   var import_primitives176 = __toESM(require_primitives(), 1);
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
   var InstagramIcon = () => /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_primitives176.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(import_primitives176.Path, { d: "M12,4.622c2.403,0,2.688,0.009,3.637,0.052c0.877,0.04,1.354,0.187,1.671,0.31c0.42,0.163,0.72,0.358,1.035,0.673 c0.315,0.315,0.51,0.615,0.673,1.035c0.123,0.317,0.27,0.794,0.31,1.671c0.043,0.949,0.052,1.234,0.052,3.637 s-0.009,2.688-0.052,3.637c-0.04,0.877-0.187,1.354-0.31,1.671c-0.163,0.42-0.358,0.72-0.673,1.035 c-0.315,0.315-0.615,0.51-1.035,0.673c-0.317,0.123-0.794,0.27-1.671,0.31c-0.949,0.043-1.233,0.052-3.637,0.052 s-2.688-0.009-3.637-0.052c-0.877-0.04-1.354-0.187-1.671-0.31c-0.42-0.163-0.72-0.358-1.035-0.673 c-0.315-0.315-0.51-0.615-0.673-1.035c-0.123-0.317-0.27-0.794-0.31-1.671C4.631,14.688,4.622,14.403,4.622,12 s0.009-2.688,0.052-3.637c0.04-0.877,0.187-1.354,0.31-1.671c0.163-0.42,0.358-0.72,0.673-1.035 c0.315-0.315,0.615-0.51,1.035-0.673c0.317-0.123,0.794-0.27,1.671-0.31C9.312,4.631,9.597,4.622,12,4.622 M12,3 C9.556,3,9.249,3.01,8.289,3.054C7.331,3.098,6.677,3.25,6.105,3.472C5.513,3.702,5.011,4.01,4.511,4.511 c-0.5,0.5-0.808,1.002-1.038,1.594C3.25,6.677,3.098,7.331,3.054,8.289C3.01,9.249,3,9.556,3,12c0,2.444,0.01,2.751,0.054,3.711 c0.044,0.958,0.196,1.612,0.418,2.185c0.23,0.592,0.538,1.094,1.038,1.594c0.5,0.5,1.002,0.808,1.594,1.038 c0.572,0.222,1.227,0.375,2.185,0.418C9.249,20.99,9.556,21,12,21s2.751-0.01,3.711-0.054c0.958-0.044,1.612-0.196,2.185-0.418 c0.592-0.23,1.094-0.538,1.594-1.038c0.5-0.5,0.808-1.002,1.038-1.594c0.222-0.572,0.375-1.227,0.418-2.185 C20.99,14.751,21,14.444,21,12s-0.01-2.751-0.054-3.711c-0.044-0.958-0.196-1.612-0.418-2.185c-0.23-0.592-0.538-1.094-1.038-1.594 c-0.5-0.5-1.002-0.808-1.594-1.038c-0.572-0.222-1.227-0.375-2.185-0.418C14.751,3.01,14.444,3,12,3L12,3z M12,7.378 c-2.552,0-4.622,2.069-4.622,4.622S9.448,16.622,12,16.622s4.622-2.069,4.622-4.622S14.552,7.378,12,7.378z M12,15 c-1.657,0-3-1.343-3-3s1.343-3,3-3s3,1.343,3,3S13.657,15,12,15z M16.804,6.116c-0.596,0-1.08,0.484-1.08,1.08 s0.484,1.08,1.08,1.08c0.596,0,1.08-0.484,1.08-1.08S17.401,6.116,16.804,6.116z" }) });
 
-  // packages/block-library/build-module/social-link/icons/lastfm.js
+  // packages/block-library/build-module/social-link/icons/lastfm.mjs
   var import_primitives177 = __toESM(require_primitives(), 1);
   var import_jsx_runtime435 = __toESM(require_jsx_runtime(), 1);
   var LastfmIcon = () => /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(import_primitives177.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(import_primitives177.Path, { d: "M 12.0002 1.5 C 6.2006 1.5 1.5 6.2011 1.5 11.9998 C 1.5 17.799 6.2006 22.5 12.0002 22.5 C 17.799 22.5 22.5 17.799 22.5 11.9998 C 22.5 6.2011 17.799 1.5 12.0002 1.5 Z M 16.1974 16.2204 C 14.8164 16.2152 13.9346 15.587 13.3345 14.1859 L 13.1816 13.8451 L 11.8541 10.8101 C 11.4271 9.7688 10.3526 9.0712 9.1801 9.0712 C 7.5695 9.0712 6.2593 10.3851 6.2593 12.001 C 6.2593 13.6165 7.5695 14.9303 9.1801 14.9303 C 10.272 14.9303 11.2651 14.3275 11.772 13.3567 C 11.7893 13.3235 11.8239 13.302 11.863 13.3038 C 11.9007 13.3054 11.9353 13.3288 11.9504 13.3632 L 12.4865 14.6046 C 12.5016 14.639 12.4956 14.6778 12.4723 14.7069 C 11.6605 15.6995 10.4602 16.2683 9.1801 16.2683 C 6.8331 16.2683 4.9234 14.3536 4.9234 12.001 C 4.9234 9.6468 6.833 7.732 9.1801 7.732 C 10.9572 7.732 12.3909 8.6907 13.1138 10.3636 C 13.1206 10.3802 13.8412 12.0708 14.4744 13.5191 C 14.8486 14.374 15.1462 14.896 16.1288 14.9292 C 17.0663 14.9613 17.7538 14.4122 17.7538 13.6485 C 17.7538 12.9691 17.3321 12.8004 16.3803 12.4822 C 14.7365 11.9398 13.845 11.3861 13.845 10.0182 C 13.845 8.6809 14.7667 7.8162 16.192 7.8162 C 17.1288 7.8162 17.8155 8.2287 18.2921 9.0768 C 18.305 9.1006 18.3079 9.1281 18.3004 9.1542 C 18.2929 9.1803 18.2748 9.2021 18.2507 9.2138 L 17.3614 9.669 C 17.3178 9.692 17.2643 9.6781 17.2356 9.6385 C 16.9329 9.2135 16.5956 9.0251 16.1423 9.0251 C 15.5512 9.0251 15.122 9.429 15.122 9.9865 C 15.122 10.6738 15.6529 10.8414 16.5339 11.1192 C 16.6491 11.1558 16.7696 11.194 16.8939 11.2343 C 18.2763 11.6865 19.0768 12.2311 19.0768 13.6836 C 19.0769 15.1297 17.8389 16.2204 16.1974 16.2204 Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/linkedin.js
+  // packages/block-library/build-module/social-link/icons/linkedin.mjs
   var import_primitives178 = __toESM(require_primitives(), 1);
   var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
   var LinkedInIcon = () => /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(import_primitives178.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(import_primitives178.Path, { d: "M19.7,3H4.3C3.582,3,3,3.582,3,4.3v15.4C3,20.418,3.582,21,4.3,21h15.4c0.718,0,1.3-0.582,1.3-1.3V4.3 C21,3.582,20.418,3,19.7,3z M8.339,18.338H5.667v-8.59h2.672V18.338z M7.004,8.574c-0.857,0-1.549-0.694-1.549-1.548 c0-0.855,0.691-1.548,1.549-1.548c0.854,0,1.547,0.694,1.547,1.548C8.551,7.881,7.858,8.574,7.004,8.574z M18.339,18.338h-2.669 v-4.177c0-0.996-0.017-2.278-1.387-2.278c-1.389,0-1.601,1.086-1.601,2.206v4.249h-2.667v-8.59h2.559v1.174h0.037 c0.356-0.675,1.227-1.387,2.526-1.387c2.703,0,3.203,1.779,3.203,4.092V18.338z" }) });
 
-  // packages/block-library/build-module/social-link/icons/mail.js
+  // packages/block-library/build-module/social-link/icons/mail.mjs
   var import_primitives179 = __toESM(require_primitives(), 1);
   var import_jsx_runtime437 = __toESM(require_jsx_runtime(), 1);
   var MailIcon = () => /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_primitives179.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_primitives179.Path, { d: "M19 5H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm.5 12c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l7.5 5.6 7.5-5.6V17zm0-9.1L12 13.6 4.5 7.9V7c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v.9z" }) });
 
-  // packages/block-library/build-module/social-link/icons/mastodon.js
+  // packages/block-library/build-module/social-link/icons/mastodon.mjs
   var import_primitives180 = __toESM(require_primitives(), 1);
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
   var MastodonIcon = () => /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(import_primitives180.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(import_primitives180.Path, { d: "M23.193 7.879c0-5.206-3.411-6.732-3.411-6.732C18.062.357 15.108.025 12.041 0h-.076c-3.068.025-6.02.357-7.74 1.147 0 0-3.411 1.526-3.411 6.732 0 1.192-.023 2.618.015 4.129.124 5.092.934 10.109 5.641 11.355 2.17.574 4.034.695 5.535.612 2.722-.15 4.25-.972 4.25-.972l-.09-1.975s-1.945.613-4.129.539c-2.165-.074-4.449-.233-4.799-2.891a5.499 5.499 0 0 1-.048-.745s2.125.52 4.817.643c1.646.075 3.19-.097 4.758-.283 3.007-.359 5.625-2.212 5.954-3.905.517-2.665.475-6.507.475-6.507zm-4.024 6.709h-2.497V8.469c0-1.29-.543-1.944-1.628-1.944-1.2 0-1.802.776-1.802 2.312v3.349h-2.483v-3.35c0-1.536-.602-2.312-1.802-2.312-1.085 0-1.628.655-1.628 1.944v6.119H4.832V8.284c0-1.289.328-2.313.987-3.07.68-.758 1.569-1.146 2.674-1.146 1.278 0 2.246.491 2.886 1.474L12 6.585l.622-1.043c.64-.983 1.608-1.474 2.886-1.474 1.104 0 1.994.388 2.674 1.146.658.757.986 1.781.986 3.07v6.304z" }) });
 
-  // packages/block-library/build-module/social-link/icons/meetup.js
+  // packages/block-library/build-module/social-link/icons/meetup.mjs
   var import_primitives181 = __toESM(require_primitives(), 1);
   var import_jsx_runtime439 = __toESM(require_jsx_runtime(), 1);
   var MeetupIcon = () => /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_primitives181.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_primitives181.Path, { d: "M19.24775,14.722a3.57032,3.57032,0,0,1-2.94457,3.52073,3.61886,3.61886,0,0,1-.64652.05634c-.07314-.0008-.10187.02846-.12507.09547A2.38881,2.38881,0,0,1,13.49453,20.094a2.33092,2.33092,0,0,1-1.827-.50716.13635.13635,0,0,0-.19878-.00408,3.191,3.191,0,0,1-2.104.60248,3.26309,3.26309,0,0,1-3.00324-2.71993,2.19076,2.19076,0,0,1-.03512-.30865c-.00156-.08579-.03413-.1189-.11608-.13493a2.86421,2.86421,0,0,1-1.23189-.56111,2.945,2.945,0,0,1-1.166-2.05749,2.97484,2.97484,0,0,1,.87524-2.50774.112.112,0,0,0,.02091-.16107,2.7213,2.7213,0,0,1-.36648-1.48A2.81256,2.81256,0,0,1,6.57673,7.58838a.35764.35764,0,0,0,.28869-.22819,4.2208,4.2208,0,0,1,6.02892-1.90111.25161.25161,0,0,0,.22023.0243,3.65608,3.65608,0,0,1,3.76031.90678A3.57244,3.57244,0,0,1,17.95918,8.626a2.97339,2.97339,0,0,1,.01829.57356.10637.10637,0,0,0,.0853.12792,1.97669,1.97669,0,0,1,1.27939,1.33733,2.00266,2.00266,0,0,1-.57112,2.12652c-.05284.05166-.04168.08328-.01173.13489A3.51189,3.51189,0,0,1,19.24775,14.722Zm-6.35959-.27836a1.6984,1.6984,0,0,0,1.14556,1.61113,3.82039,3.82039,0,0,0,1.036.17935,1.46888,1.46888,0,0,0,.73509-.12255.44082.44082,0,0,0,.26057-.44274.45312.45312,0,0,0-.29211-.43375.97191.97191,0,0,0-.20678-.063c-.21326-.03806-.42754-.0701-.63973-.11215a.54787.54787,0,0,1-.50172-.60926,2.75864,2.75864,0,0,1,.1773-.901c.1763-.535.414-1.045.64183-1.55913A12.686,12.686,0,0,0,15.85,10.47863a1.58461,1.58461,0,0,0,.04861-.87208,1.04531,1.04531,0,0,0-.85432-.83981,1.60658,1.60658,0,0,0-1.23654.16594.27593.27593,0,0,1-.36286-.03413c-.085-.0747-.16594-.15379-.24918-.23055a.98682.98682,0,0,0-1.33577-.04933,6.1468,6.1468,0,0,1-.4989.41615.47762.47762,0,0,1-.51535.03566c-.17448-.09307-.35512-.175-.53531-.25665a1.74949,1.74949,0,0,0-.56476-.2016,1.69943,1.69943,0,0,0-1.61654.91787,8.05815,8.05815,0,0,0-.32952.80126c-.45471,1.2557-.82507,2.53825-1.20838,3.81639a1.24151,1.24151,0,0,0,.51532,1.44389,1.42659,1.42659,0,0,0,1.22008.17166,1.09728,1.09728,0,0,0,.66994-.69764c.44145-1.04111.839-2.09989,1.25981-3.14926.11581-.28876.22792-.57874.35078-.86438a.44548.44548,0,0,1,.69189-.19539.50521.50521,0,0,1,.15044.43836,1.75625,1.75625,0,0,1-.14731.50453c-.27379.69219-.55265,1.38236-.82766,2.074a2.0836,2.0836,0,0,0-.14038.42876.50719.50719,0,0,0,.27082.57722.87236.87236,0,0,0,.66145.02739.99137.99137,0,0,0,.53406-.532q.61571-1.20914,1.228-2.42031.28423-.55863.57585-1.1133a.87189.87189,0,0,1,.29055-.35253.34987.34987,0,0,1,.37634-.01265.30291.30291,0,0,1,.12434.31459.56716.56716,0,0,1-.04655.1915c-.05318.12739-.10286.25669-.16183.38156-.34118.71775-.68754,1.43273-1.02568,2.152A2.00213,2.00213,0,0,0,12.88816,14.44366Zm4.78568,5.28972a.88573.88573,0,0,0-1.77139.00465.8857.8857,0,0,0,1.77139-.00465Zm-14.83838-7.296a.84329.84329,0,1,0,.00827-1.68655.8433.8433,0,0,0-.00827,1.68655Zm10.366-9.43673a.83506.83506,0,1,0-.0091,1.67.83505.83505,0,0,0,.0091-1.67Zm6.85014,5.22a.71651.71651,0,0,0-1.433.0093.71656.71656,0,0,0,1.433-.0093ZM5.37528,6.17908A.63823.63823,0,1,0,6.015,5.54483.62292.62292,0,0,0,5.37528,6.17908Zm6.68214,14.80843a.54949.54949,0,1,0-.55052.541A.54556.54556,0,0,0,12.05742,20.98752Zm8.53235-8.49689a.54777.54777,0,0,0-.54027.54023.53327.53327,0,0,0,.532.52293.51548.51548,0,0,0,.53272-.5237A.53187.53187,0,0,0,20.58977,12.49063ZM7.82846,2.4715a.44927.44927,0,1,0,.44484.44766A.43821.43821,0,0,0,7.82846,2.4715Zm13.775,7.60492a.41186.41186,0,0,0-.40065.39623.40178.40178,0,0,0,.40168.40168A.38994.38994,0,0,0,22,10.48172.39946.39946,0,0,0,21.60349,10.07642ZM5.79193,17.96207a.40469.40469,0,0,0-.397-.39646.399.399,0,0,0-.396.405.39234.39234,0,0,0,.39939.389A.39857.39857,0,0,0,5.79193,17.96207Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/medium.js
+  // packages/block-library/build-module/social-link/icons/medium.mjs
   var import_primitives182 = __toESM(require_primitives(), 1);
   var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
   var MediumIcon = () => /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(import_primitives182.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(import_primitives182.Path, { d: "M13.2,12c0,3-2.4,5.4-5.3,5.4S2.6,15,2.6,12s2.4-5.4,5.3-5.4S13.2,9,13.2,12 M19.1,12c0,2.8-1.2,5-2.7,5s-2.7-2.3-2.7-5s1.2-5,2.7-5C17.9,7,19.1,9.2,19.1,12 M21.4,12c0,2.5-0.4,4.5-0.9,4.5c-0.5,0-0.9-2-0.9-4.5s0.4-4.5,0.9-4.5C21,7.5,21.4,9.5,21.4,12" }) });
 
-  // packages/block-library/build-module/social-link/icons/patreon.js
+  // packages/block-library/build-module/social-link/icons/patreon.mjs
   var import_primitives183 = __toESM(require_primitives(), 1);
   var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
   var PatreonIcon = () => /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(import_primitives183.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(import_primitives183.Path, { d: "M20 8.40755C19.9969 6.10922 18.2543 4.22555 16.2097 3.54588C13.6708 2.70188 10.3222 2.82421 7.89775 3.99921C4.95932 5.42355 4.03626 8.54355 4.00186 11.6552C3.97363 14.2136 4.2222 20.9517 7.92225 20.9997C10.6715 21.0356 11.0809 17.3967 12.3529 15.6442C13.258 14.3974 14.4233 14.0452 15.8578 13.6806C18.3233 13.0537 20.0036 11.0551 20 8.40755Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/pinterest.js
+  // packages/block-library/build-module/social-link/icons/pinterest.mjs
   var import_primitives184 = __toESM(require_primitives(), 1);
   var import_jsx_runtime442 = __toESM(require_jsx_runtime(), 1);
   var PinterestIcon = () => /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(import_primitives184.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(import_primitives184.Path, { d: "M12.289,2C6.617,2,3.606,5.648,3.606,9.622c0,1.846,1.025,4.146,2.666,4.878c0.25,0.111,0.381,0.063,0.439-0.169 c0.044-0.175,0.267-1.029,0.365-1.428c0.032-0.128,0.017-0.237-0.091-0.362C6.445,11.911,6.01,10.75,6.01,9.668 c0-2.777,2.194-5.464,5.933-5.464c3.23,0,5.49,2.108,5.49,5.122c0,3.407-1.794,5.768-4.13,5.768c-1.291,0-2.257-1.021-1.948-2.277 c0.372-1.495,1.089-3.112,1.089-4.191c0-0.967-0.542-1.775-1.663-1.775c-1.319,0-2.379,1.309-2.379,3.059 c0,1.115,0.394,1.869,0.394,1.869s-1.302,5.279-1.54,6.261c-0.405,1.666,0.053,4.368,0.094,4.604 c0.021,0.126,0.167,0.169,0.25,0.063c0.129-0.165,1.699-2.419,2.142-4.051c0.158-0.59,0.817-2.995,0.817-2.995 c0.43,0.784,1.681,1.446,3.013,1.446c3.963,0,6.822-3.494,6.822-7.833C20.394,5.112,16.849,2,12.289,2" }) });
 
-  // packages/block-library/build-module/social-link/icons/pocket.js
+  // packages/block-library/build-module/social-link/icons/pocket.mjs
   var import_primitives185 = __toESM(require_primitives(), 1);
   var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
   var PocketIcon = () => /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(import_primitives185.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(import_primitives185.Path, { d: "M21.927,4.194C21.667,3.48,20.982,3,20.222,3h-0.01h-1.721H3.839C3.092,3,2.411,3.47,2.145,4.17 C2.066,4.378,2.026,4.594,2.026,4.814v6.035l0.069,1.2c0.29,2.73,1.707,5.115,3.899,6.778c0.039,0.03,0.079,0.059,0.119,0.089 l0.025,0.018c1.175,0.859,2.491,1.441,3.91,1.727c0.655,0.132,1.325,0.2,1.991,0.2c0.615,0,1.232-0.057,1.839-0.17 c0.073-0.014,0.145-0.028,0.219-0.044c0.02-0.004,0.042-0.012,0.064-0.023c1.359-0.297,2.621-0.864,3.753-1.691l0.025-0.018 c0.04-0.029,0.08-0.058,0.119-0.089c2.192-1.664,3.609-4.049,3.898-6.778l0.069-1.2V4.814C22.026,4.605,22,4.398,21.927,4.194z M17.692,10.481l-4.704,4.512c-0.266,0.254-0.608,0.382-0.949,0.382c-0.342,0-0.684-0.128-0.949-0.382l-4.705-4.512 C5.838,9.957,5.82,9.089,6.344,8.542c0.524-0.547,1.392-0.565,1.939-0.04l3.756,3.601l3.755-3.601 c0.547-0.524,1.415-0.506,1.939,0.04C18.256,9.089,18.238,9.956,17.692,10.481z" }) });
 
-  // packages/block-library/build-module/social-link/icons/reddit.js
+  // packages/block-library/build-module/social-link/icons/reddit.mjs
   var import_primitives186 = __toESM(require_primitives(), 1);
   var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
   var RedditIcon = () => /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(import_primitives186.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(import_primitives186.Path, { d: "M5.27 9.221A2.775 2.775 0 0 0 2.498 11.993a2.785 2.785 0 0 0 1.6 2.511 5.337 5.337 0 0 0 2.374 4.11 9.386 9.386 0 0 0 5.539 1.7 9.386 9.386 0 0 0 5.541-1.7 5.331 5.331 0 0 0 2.372-4.114 2.787 2.787 0 0 0 1.583-2.5 2.775 2.775 0 0 0-2.772-2.772 2.742 2.742 0 0 0-1.688.574 9.482 9.482 0 0 0-4.637-1.348v-.008a2.349 2.349 0 0 1 2.011-2.316 1.97 1.97 0 0 0 1.926 1.521 1.98 1.98 0 0 0 1.978-1.978 1.98 1.98 0 0 0-1.978-1.978 1.985 1.985 0 0 0-1.938 1.578 3.183 3.183 0 0 0-2.849 3.172v.011a9.463 9.463 0 0 0-4.59 1.35 2.741 2.741 0 0 0-1.688-.574Zm6.736 9.1a3.162 3.162 0 0 1-2.921-1.944.215.215 0 0 1 .014-.2.219.219 0 0 1 .168-.106 27.327 27.327 0 0 1 2.74-.133 27.357 27.357 0 0 1 2.74.133.219.219 0 0 1 .168.106.215.215 0 0 1 .014.2 3.158 3.158 0 0 1-2.921 1.944Zm3.743-3.157a1.265 1.265 0 0 1-1.4-1.371 1.954 1.954 0 0 1 .482-1.442 1.15 1.15 0 0 1 .842-.379 1.7 1.7 0 0 1 1.49 1.777 1.323 1.323 0 0 1-.325 1.015 1.476 1.476 0 0 1-1.089.4Zm-7.485 0a1.476 1.476 0 0 1-1.086-.4 1.323 1.323 0 0 1-.325-1.016 1.7 1.7 0 0 1 1.49-1.777 1.151 1.151 0 0 1 .843.379 1.951 1.951 0 0 1 .481 1.441 1.276 1.276 0 0 1-1.403 1.373Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/skype.js
+  // packages/block-library/build-module/social-link/icons/skype.mjs
   var import_primitives187 = __toESM(require_primitives(), 1);
   var import_jsx_runtime445 = __toESM(require_jsx_runtime(), 1);
   var SkypeIcon = () => /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(import_primitives187.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(import_primitives187.Path, { d: "M10.113,2.699c0.033-0.006,0.067-0.013,0.1-0.02c0.033,0.017,0.066,0.033,0.098,0.051L10.113,2.699z M2.72,10.223 c-0.006,0.034-0.011,0.069-0.017,0.103c0.018,0.032,0.033,0.064,0.051,0.095L2.72,10.223z M21.275,13.771 c0.007-0.035,0.011-0.071,0.018-0.106c-0.018-0.031-0.033-0.064-0.052-0.095L21.275,13.771z M13.563,21.199 c0.032,0.019,0.065,0.035,0.096,0.053c0.036-0.006,0.071-0.011,0.105-0.017L13.563,21.199z M22,16.386 c0,1.494-0.581,2.898-1.637,3.953c-1.056,1.057-2.459,1.637-3.953,1.637c-0.967,0-1.914-0.251-2.75-0.725 c0.036-0.006,0.071-0.011,0.105-0.017l-0.202-0.035c0.032,0.019,0.065,0.035,0.096,0.053c-0.543,0.096-1.099,0.147-1.654,0.147 c-1.275,0-2.512-0.25-3.676-0.743c-1.125-0.474-2.135-1.156-3.002-2.023c-0.867-0.867-1.548-1.877-2.023-3.002 c-0.493-1.164-0.743-2.401-0.743-3.676c0-0.546,0.049-1.093,0.142-1.628c0.018,0.032,0.033,0.064,0.051,0.095L2.72,10.223 c-0.006,0.034-0.011,0.069-0.017,0.103C2.244,9.5,2,8.566,2,7.615c0-1.493,0.582-2.898,1.637-3.953 c1.056-1.056,2.46-1.638,3.953-1.638c0.915,0,1.818,0.228,2.622,0.655c-0.033,0.007-0.067,0.013-0.1,0.02l0.199,0.031 c-0.032-0.018-0.066-0.034-0.098-0.051c0.002,0,0.003-0.001,0.004-0.001c0.586-0.112,1.187-0.169,1.788-0.169 c1.275,0,2.512,0.249,3.676,0.742c1.124,0.476,2.135,1.156,3.002,2.024c0.868,0.867,1.548,1.877,2.024,3.002 c0.493,1.164,0.743,2.401,0.743,3.676c0,0.575-0.054,1.15-0.157,1.712c-0.018-0.031-0.033-0.064-0.052-0.095l0.034,0.201 c0.007-0.035,0.011-0.071,0.018-0.106C21.754,14.494,22,15.432,22,16.386z M16.817,14.138c0-1.331-0.613-2.743-3.033-3.282 l-2.209-0.49c-0.84-0.192-1.807-0.444-1.807-1.237c0-0.794,0.679-1.348,1.903-1.348c2.468,0,2.243,1.696,3.468,1.696 c0.645,0,1.209-0.379,1.209-1.031c0-1.521-2.435-2.663-4.5-2.663c-2.242,0-4.63,0.952-4.63,3.488c0,1.221,0.436,2.521,2.839,3.123 l2.984,0.745c0.903,0.223,1.129,0.731,1.129,1.189c0,0.762-0.758,1.507-2.129,1.507c-2.679,0-2.307-2.062-3.743-2.062 c-0.645,0-1.113,0.444-1.113,1.078c0,1.236,1.501,2.886,4.856,2.886C15.236,17.737,16.817,16.199,16.817,14.138z" }) });
 
-  // packages/block-library/build-module/social-link/icons/snapchat.js
+  // packages/block-library/build-module/social-link/icons/snapchat.mjs
   var import_primitives188 = __toESM(require_primitives(), 1);
   var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
   var SnapchatIcon = () => /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_primitives188.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_primitives188.Path, { d: "M12.065,2a5.526,5.526,0,0,1,3.132.892A5.854,5.854,0,0,1,17.326,5.4a5.821,5.821,0,0,1,.351,2.33q0,.612-.117,2.487a.809.809,0,0,0,.365.091,1.93,1.93,0,0,0,.664-.176,1.93,1.93,0,0,1,.664-.176,1.3,1.3,0,0,1,.729.234.7.7,0,0,1,.351.6.839.839,0,0,1-.41.7,2.732,2.732,0,0,1-.9.41,3.192,3.192,0,0,0-.9.378.728.728,0,0,0-.41.618,1.575,1.575,0,0,0,.156.56,6.9,6.9,0,0,0,1.334,1.953,5.6,5.6,0,0,0,1.881,1.315,5.875,5.875,0,0,0,1.042.3.42.42,0,0,1,.365.456q0,.911-2.852,1.341a1.379,1.379,0,0,0-.143.507,1.8,1.8,0,0,1-.182.605.451.451,0,0,1-.429.241,5.878,5.878,0,0,1-.807-.085,5.917,5.917,0,0,0-.833-.085,4.217,4.217,0,0,0-.807.065,2.42,2.42,0,0,0-.82.293,6.682,6.682,0,0,0-.755.5q-.351.267-.755.527a3.886,3.886,0,0,1-.989.436A4.471,4.471,0,0,1,11.831,22a4.307,4.307,0,0,1-1.256-.176,3.784,3.784,0,0,1-.976-.436q-.4-.26-.749-.527a6.682,6.682,0,0,0-.755-.5,2.422,2.422,0,0,0-.807-.293,4.432,4.432,0,0,0-.82-.065,5.089,5.089,0,0,0-.853.1,5,5,0,0,1-.762.1.474.474,0,0,1-.456-.241,1.819,1.819,0,0,1-.182-.618,1.411,1.411,0,0,0-.143-.521q-2.852-.429-2.852-1.341a.42.42,0,0,1,.365-.456,5.793,5.793,0,0,0,1.042-.3,5.524,5.524,0,0,0,1.881-1.315,6.789,6.789,0,0,0,1.334-1.953A1.575,1.575,0,0,0,6,12.9a.728.728,0,0,0-.41-.618,3.323,3.323,0,0,0-.9-.384,2.912,2.912,0,0,1-.9-.41.814.814,0,0,1-.41-.684.71.71,0,0,1,.338-.593,1.208,1.208,0,0,1,.716-.241,1.976,1.976,0,0,1,.625.169,2.008,2.008,0,0,0,.69.169.919.919,0,0,0,.416-.091q-.117-1.849-.117-2.474A5.861,5.861,0,0,1,6.385,5.4,5.516,5.516,0,0,1,8.625,2.819,7.075,7.075,0,0,1,12.062,2Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/soundcloud.js
+  // packages/block-library/build-module/social-link/icons/soundcloud.mjs
   var import_primitives189 = __toESM(require_primitives(), 1);
   var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
   var SoundCloudIcon = () => /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(import_primitives189.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(import_primitives189.Path, { d: "M23.994 14.552a3.36 3.36 0 01-3.401 3.171h-8.176a.685.685 0 01-.679-.681V8.238a.749.749 0 01.452-.716S12.942 7 14.526 7a5.357 5.357 0 012.748.755 5.44 5.44 0 012.56 3.546c.282-.08.574-.12.868-.119a3.273 3.273 0 013.292 3.37zM10.718 8.795a.266.266 0 10-.528 0c-.224 2.96-.397 5.735 0 8.685a.265.265 0 00.528 0c.425-2.976.246-5.7 0-8.685zM9.066 9.82a.278.278 0 00-.553 0 33.183 33.183 0 000 7.663.278.278 0 00.55 0c.33-2.544.332-5.12.003-7.664zM7.406 9.56a.269.269 0 00-.535 0c-.253 2.7-.38 5.222 0 7.917a.266.266 0 10.531 0c.394-2.73.272-5.181.004-7.917zM5.754 10.331a.275.275 0 10-.55 0 28.035 28.035 0 000 7.155.272.272 0 00.54 0c.332-2.373.335-4.78.01-7.155zM4.087 12.12a.272.272 0 00-.544 0c-.393 1.843-.208 3.52.016 5.386a.26.26 0 00.512 0c.247-1.892.435-3.53.016-5.386zM2.433 11.838a.282.282 0 00-.56 0c-.349 1.882-.234 3.54.01 5.418.025.285.508.282.54 0 .269-1.907.394-3.517.01-5.418zM.762 12.76a.282.282 0 00-.56 0c-.32 1.264-.22 2.31.023 3.578a.262.262 0 00.521 0c.282-1.293.42-2.317.016-3.578z" }) });
 
-  // packages/block-library/build-module/social-link/icons/spotify.js
+  // packages/block-library/build-module/social-link/icons/spotify.mjs
   var import_primitives190 = __toESM(require_primitives(), 1);
   var import_jsx_runtime448 = __toESM(require_jsx_runtime(), 1);
   var SpotifyIcon = () => /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(import_primitives190.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(import_primitives190.Path, { d: "M12,2C6.477,2,2,6.477,2,12c0,5.523,4.477,10,10,10c5.523,0,10-4.477,10-10C22,6.477,17.523,2,12,2 M16.586,16.424 c-0.18,0.295-0.563,0.387-0.857,0.207c-2.348-1.435-5.304-1.76-8.785-0.964c-0.335,0.077-0.67-0.133-0.746-0.469 c-0.077-0.335,0.132-0.67,0.469-0.746c3.809-0.871,7.077-0.496,9.713,1.115C16.673,15.746,16.766,16.13,16.586,16.424 M17.81,13.7 c-0.226,0.367-0.706,0.482-1.072,0.257c-2.687-1.652-6.785-2.131-9.965-1.166C6.36,12.917,5.925,12.684,5.8,12.273 C5.675,11.86,5.908,11.425,6.32,11.3c3.632-1.102,8.147-0.568,11.234,1.328C17.92,12.854,18.035,13.335,17.81,13.7 M17.915,10.865 c-3.223-1.914-8.54-2.09-11.618-1.156C5.804,9.859,5.281,9.58,5.131,9.086C4.982,8.591,5.26,8.069,5.755,7.919 c3.532-1.072,9.404-0.865,13.115,1.338c0.445,0.264,0.59,0.838,0.327,1.282C18.933,10.983,18.359,11.129,17.915,10.865" }) });
 
-  // packages/block-library/build-module/social-link/icons/telegram.js
+  // packages/block-library/build-module/social-link/icons/telegram.mjs
   var import_primitives191 = __toESM(require_primitives(), 1);
   var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
   var TelegramIcon = () => /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_primitives191.SVG, { width: "24", height: "24", viewBox: "0 0 128 128", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_primitives191.Path, { d: "M28.9700376,63.3244248 C47.6273373,55.1957357 60.0684594,49.8368063 66.2934036,47.2476366 C84.0668845,39.855031 87.7600616,38.5708563 90.1672227,38.528 C90.6966555,38.5191258 91.8804274,38.6503351 92.6472251,39.2725385 C93.294694,39.7979149 93.4728387,40.5076237 93.5580865,41.0057381 C93.6433345,41.5038525 93.7494885,42.63857 93.6651041,43.5252052 C92.7019529,53.6451182 88.5344133,78.2034783 86.4142057,89.5379542 C85.5170662,94.3339958 83.750571,95.9420841 82.0403991,96.0994568 C78.3237996,96.4414641 75.5015827,93.6432685 71.9018743,91.2836143 C66.2690414,87.5912212 63.0868492,85.2926952 57.6192095,81.6896017 C51.3004058,77.5256038 55.3966232,75.2369981 58.9976911,71.4967761 C59.9401076,70.5179421 76.3155302,55.6232293 76.6324771,54.2720454 C76.6721165,54.1030573 76.7089039,53.4731496 76.3346867,53.1405352 C75.9604695,52.8079208 75.4081573,52.921662 75.0095933,53.0121213 C74.444641,53.1403447 65.4461175,59.0880351 48.0140228,70.8551922 C45.4598218,72.6091037 43.1463059,73.4636682 41.0734751,73.4188859 C38.7883453,73.3695169 34.3926725,72.1268388 31.1249416,71.0646282 C27.1169366,69.7617838 23.931454,69.0729605 24.208838,66.8603276 C24.3533167,65.7078514 25.9403832,64.5292172 28.9700376,63.3244248 Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/threads.js
+  // packages/block-library/build-module/social-link/icons/threads.mjs
   var import_primitives192 = __toESM(require_primitives(), 1);
   var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
   var ThreadsIcon = () => /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(import_primitives192.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(import_primitives192.Path, { d: "M16.3 11.3c-.1 0-.2-.1-.2-.1-.1-2.6-1.5-4-3.9-4-1.4 0-2.6.6-3.3 1.7l1.3.9c.5-.8 1.4-1 2-1 .8 0 1.4.2 1.7.7.3.3.5.8.5 1.3-.7-.1-1.4-.2-2.2-.1-2.2.1-3.7 1.4-3.6 3.2 0 .9.5 1.7 1.3 2.2.7.4 1.5.6 2.4.6 1.2-.1 2.1-.5 2.7-1.3.5-.6.8-1.4.9-2.4.6.3 1 .8 1.2 1.3.4.9.4 2.4-.8 3.6-1.1 1.1-2.3 1.5-4.3 1.5-2.1 0-3.8-.7-4.8-2S5.7 14.3 5.7 12c0-2.3.5-4.1 1.5-5.4 1.1-1.3 2.7-2 4.8-2 2.2 0 3.8.7 4.9 2 .5.7.9 1.5 1.2 2.5l1.5-.4c-.3-1.2-.8-2.2-1.5-3.1-1.3-1.7-3.3-2.6-6-2.6-2.6 0-4.7.9-6 2.6C4.9 7.2 4.3 9.3 4.3 12s.6 4.8 1.9 6.4c1.4 1.7 3.4 2.6 6 2.6 2.3 0 4-.6 5.3-2 1.8-1.8 1.7-4 1.1-5.4-.4-.9-1.2-1.7-2.3-2.3zm-4 3.8c-1 .1-2-.4-2-1.3 0-.7.5-1.5 2.1-1.6h.5c.6 0 1.1.1 1.6.2-.2 2.3-1.3 2.7-2.2 2.7z" }) });
 
-  // packages/block-library/build-module/social-link/icons/tiktok.js
+  // packages/block-library/build-module/social-link/icons/tiktok.mjs
   var import_primitives193 = __toESM(require_primitives(), 1);
   var import_jsx_runtime451 = __toESM(require_jsx_runtime(), 1);
   var TiktokIcon = () => /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(import_primitives193.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(import_primitives193.Path, { d: "M12.4044 3.01519C13.4086 3 14.4072 3.009 15.4045 3C15.465 4.14812 15.8874 5.31762 16.7472 6.12935C17.6053 6.96134 18.819 7.34217 20 7.47099V10.4912C18.8933 10.4558 17.7814 10.2308 16.7771 9.76499C16.3397 9.57148 15.9323 9.32227 15.5334 9.06745C15.5283 11.2591 15.5426 13.4479 15.5191 15.6305C15.4592 16.679 15.1053 17.7225 14.4814 18.5866C13.4777 20.025 11.7356 20.9627 9.94635 20.992C8.84885 21.0533 7.7525 20.7608 6.81729 20.2219C5.26743 19.3286 4.17683 17.6933 4.01799 15.9382C3.99957 15.563 3.99324 15.1883 4.00878 14.8221C4.14691 13.395 4.86917 12.0297 5.99027 11.101C7.26101 10.0192 9.04107 9.50397 10.7078 9.80886C10.7233 10.9199 10.6778 12.0297 10.6778 13.1407C9.91643 12.9 9.02668 12.9675 8.36139 13.4192C7.87566 13.7269 7.50675 14.1983 7.31453 14.7316C7.15569 15.1118 7.20116 15.5343 7.21036 15.9382C7.3928 17.169 8.60368 18.2035 9.89628 18.0916C10.7532 18.0826 11.5745 17.5965 12.0211 16.8849C12.1655 16.6357 12.3273 16.3809 12.3359 16.0878C12.4113 14.7462 12.3814 13.4102 12.3906 12.0685C12.3969 9.04495 12.3814 6.02979 12.4049 3.01575L12.4044 3.01519Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/tumblr.js
+  // packages/block-library/build-module/social-link/icons/tumblr.mjs
   var import_primitives194 = __toESM(require_primitives(), 1);
   var import_jsx_runtime452 = __toESM(require_jsx_runtime(), 1);
   var TumblrIcon = () => /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(import_primitives194.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(import_primitives194.Path, { d: "M17.04 21.28h-3.28c-2.84 0-4.94-1.37-4.94-5.02v-5.67H6.08V7.5c2.93-.73 4.11-3.3 4.3-5.48h3.01v4.93h3.47v3.65H13.4v4.93c0 1.47.73 2.01 1.92 2.01h1.73v3.75z" }) });
 
-  // packages/block-library/build-module/social-link/icons/twitch.js
+  // packages/block-library/build-module/social-link/icons/twitch.mjs
   var import_primitives195 = __toESM(require_primitives(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
   var TwitchIcon = () => /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_primitives195.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(import_primitives195.Path, { d: "M16.499,8.089h-1.636v4.91h1.636V8.089z M12,8.089h-1.637v4.91H12V8.089z M4.228,3.178L3,6.451v13.092h4.499V22h2.456 l2.454-2.456h3.681L21,14.636V3.178H4.228z M19.364,13.816l-2.864,2.865H12l-2.453,2.453V16.68H5.863V4.814h13.501V13.816z" }) });
 
-  // packages/block-library/build-module/social-link/icons/twitter.js
+  // packages/block-library/build-module/social-link/icons/twitter.mjs
   var import_primitives196 = __toESM(require_primitives(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
   var TwitterIcon = () => /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_primitives196.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(import_primitives196.Path, { d: "M22.23,5.924c-0.736,0.326-1.527,0.547-2.357,0.646c0.847-0.508,1.498-1.312,1.804-2.27 c-0.793,0.47-1.671,0.812-2.606,0.996C18.324,4.498,17.257,4,16.077,4c-2.266,0-4.103,1.837-4.103,4.103 c0,0.322,0.036,0.635,0.106,0.935C8.67,8.867,5.647,7.234,3.623,4.751C3.27,5.357,3.067,6.062,3.067,6.814 c0,1.424,0.724,2.679,1.825,3.415c-0.673-0.021-1.305-0.206-1.859-0.513c0,0.017,0,0.034,0,0.052c0,1.988,1.414,3.647,3.292,4.023 c-0.344,0.094-0.707,0.144-1.081,0.144c-0.264,0-0.521-0.026-0.772-0.074c0.522,1.63,2.038,2.816,3.833,2.85 c-1.404,1.1-3.174,1.756-5.096,1.756c-0.331,0-0.658-0.019-0.979-0.057c1.816,1.164,3.973,1.843,6.29,1.843 c7.547,0,11.675-6.252,11.675-11.675c0-0.178-0.004-0.355-0.012-0.531C20.985,7.47,21.68,6.747,22.23,5.924z" }) });
 
-  // packages/block-library/build-module/social-link/icons/vimeo.js
+  // packages/block-library/build-module/social-link/icons/vimeo.mjs
   var import_primitives197 = __toESM(require_primitives(), 1);
   var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
   var VimeoIcon = () => /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_primitives197.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(import_primitives197.Path, { d: "M22.396,7.164c-0.093,2.026-1.507,4.799-4.245,8.32C15.322,19.161,12.928,21,10.97,21c-1.214,0-2.24-1.119-3.079-3.359 c-0.56-2.053-1.119-4.106-1.68-6.159C5.588,9.243,4.921,8.122,4.206,8.122c-0.156,0-0.701,0.328-1.634,0.98L1.594,7.841 c1.027-0.902,2.04-1.805,3.037-2.708C6.001,3.95,7.03,3.327,7.715,3.264c1.619-0.156,2.616,0.951,2.99,3.321 c0.404,2.557,0.685,4.147,0.841,4.769c0.467,2.121,0.981,3.181,1.542,3.181c0.435,0,1.09-0.688,1.963-2.065 c0.871-1.376,1.338-2.422,1.401-3.142c0.125-1.187-0.343-1.782-1.401-1.782c-0.498,0-1.012,0.115-1.541,0.341 c1.023-3.35,2.977-4.977,5.862-4.884C21.511,3.066,22.52,4.453,22.396,7.164z" }) });
 
-  // packages/block-library/build-module/social-link/icons/vk.js
+  // packages/block-library/build-module/social-link/icons/vk.mjs
   var import_primitives198 = __toESM(require_primitives(), 1);
   var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
   var VkIcon = () => /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_primitives198.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_primitives198.Path, { d: "M22,7.1c0.2,0.4-0.4,1.5-1.6,3.1c-0.2,0.2-0.4,0.5-0.7,0.9c-0.5,0.7-0.9,1.1-0.9,1.4c-0.1,0.3-0.1,0.6,0.1,0.8 c0.1,0.1,0.4,0.4,0.8,0.9h0l0,0c1,0.9,1.6,1.7,2,2.3c0,0,0,0.1,0.1,0.1c0,0.1,0,0.1,0.1,0.3c0,0.1,0,0.2,0,0.4 c0,0.1-0.1,0.2-0.3,0.3c-0.1,0.1-0.4,0.1-0.6,0.1l-2.7,0c-0.2,0-0.4,0-0.6-0.1c-0.2-0.1-0.4-0.1-0.5-0.2l-0.2-0.1 c-0.2-0.1-0.5-0.4-0.7-0.7s-0.5-0.6-0.7-0.8c-0.2-0.2-0.4-0.4-0.6-0.6C14.8,15,14.6,15,14.4,15c0,0,0,0-0.1,0c0,0-0.1,0.1-0.2,0.2 c-0.1,0.1-0.2,0.2-0.2,0.3c-0.1,0.1-0.1,0.3-0.2,0.5c-0.1,0.2-0.1,0.5-0.1,0.8c0,0.1,0,0.2,0,0.3c0,0.1-0.1,0.2-0.1,0.2l0,0.1 c-0.1,0.1-0.3,0.2-0.6,0.2h-1.2c-0.5,0-1,0-1.5-0.2c-0.5-0.1-1-0.3-1.4-0.6s-0.7-0.5-1.1-0.7s-0.6-0.4-0.7-0.6l-0.3-0.3 c-0.1-0.1-0.2-0.2-0.3-0.3s-0.4-0.5-0.7-0.9s-0.7-1-1.1-1.6c-0.4-0.6-0.8-1.3-1.3-2.2C2.9,9.4,2.5,8.5,2.1,7.5C2,7.4,2,7.3,2,7.2 c0-0.1,0-0.1,0-0.2l0-0.1c0.1-0.1,0.3-0.2,0.6-0.2l2.9,0c0.1,0,0.2,0,0.2,0.1S5.9,6.9,5.9,7L6,7c0.1,0.1,0.2,0.2,0.3,0.3 C6.4,7.7,6.5,8,6.7,8.4C6.9,8.8,7,9,7.1,9.2l0.2,0.3c0.2,0.4,0.4,0.8,0.6,1.1c0.2,0.3,0.4,0.5,0.5,0.7s0.3,0.3,0.4,0.4 c0.1,0.1,0.3,0.1,0.4,0.1c0.1,0,0.2,0,0.3-0.1c0,0,0,0,0.1-0.1c0,0,0.1-0.1,0.1-0.2c0.1-0.1,0.1-0.3,0.1-0.5c0-0.2,0.1-0.5,0.1-0.8 c0-0.4,0-0.8,0-1.3c0-0.3,0-0.5-0.1-0.8c0-0.2-0.1-0.4-0.1-0.5L9.6,7.6C9.4,7.3,9.1,7.2,8.7,7.1C8.6,7.1,8.6,7,8.7,6.9 C8.9,6.7,9,6.6,9.1,6.5c0.4-0.2,1.2-0.3,2.5-0.3c0.6,0,1,0.1,1.4,0.1c0.1,0,0.3,0.1,0.3,0.1c0.1,0.1,0.2,0.1,0.2,0.3 c0,0.1,0.1,0.2,0.1,0.3s0,0.3,0,0.5c0,0.2,0,0.4,0,0.6c0,0.2,0,0.4,0,0.7c0,0.3,0,0.6,0,0.9c0,0.1,0,0.2,0,0.4c0,0.2,0,0.4,0,0.5 c0,0.1,0,0.3,0,0.4s0.1,0.3,0.1,0.4c0.1,0.1,0.1,0.2,0.2,0.3c0.1,0,0.1,0,0.2,0c0.1,0,0.2,0,0.3-0.1c0.1-0.1,0.2-0.2,0.4-0.4 s0.3-0.4,0.5-0.7c0.2-0.3,0.5-0.7,0.7-1.1c0.4-0.7,0.8-1.5,1.1-2.3c0-0.1,0.1-0.1,0.1-0.2c0-0.1,0.1-0.1,0.1-0.1l0,0l0.1,0 c0,0,0,0,0.1,0s0.2,0,0.2,0l3,0c0.3,0,0.5,0,0.7,0S21.9,7,21.9,7L22,7.1z" }) });
 
-  // packages/block-library/build-module/social-link/icons/whatsapp.js
+  // packages/block-library/build-module/social-link/icons/whatsapp.mjs
   var import_primitives199 = __toESM(require_primitives(), 1);
   var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
   var WhatsAppIcon = () => /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(import_primitives199.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(import_primitives199.Path, { d: "M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.976562 L 2 22 L 7.2324219 20.763672 C 8.6914219 21.559672 10.333859 21.977516 12.005859 21.978516 L 12.009766 21.978516 C 17.514766 21.978516 21.995047 17.499141 21.998047 11.994141 C 22.000047 9.3251406 20.962172 6.8157344 19.076172 4.9277344 C 17.190172 3.0407344 14.683719 2.001 12.011719 2 z M 12.009766 4 C 14.145766 4.001 16.153109 4.8337969 17.662109 6.3417969 C 19.171109 7.8517969 20.000047 9.8581875 19.998047 11.992188 C 19.996047 16.396187 16.413812 19.978516 12.007812 19.978516 C 10.674812 19.977516 9.3544062 19.642812 8.1914062 19.007812 L 7.5175781 18.640625 L 6.7734375 18.816406 L 4.8046875 19.28125 L 5.2851562 17.496094 L 5.5019531 16.695312 L 5.0878906 15.976562 C 4.3898906 14.768562 4.0204844 13.387375 4.0214844 11.984375 C 4.0234844 7.582375 7.6067656 4 12.009766 4 z M 8.4765625 7.375 C 8.3095625 7.375 8.0395469 7.4375 7.8105469 7.6875 C 7.5815469 7.9365 6.9355469 8.5395781 6.9355469 9.7675781 C 6.9355469 10.995578 7.8300781 12.182609 7.9550781 12.349609 C 8.0790781 12.515609 9.68175 15.115234 12.21875 16.115234 C 14.32675 16.946234 14.754891 16.782234 15.212891 16.740234 C 15.670891 16.699234 16.690438 16.137687 16.898438 15.554688 C 17.106437 14.971687 17.106922 14.470187 17.044922 14.367188 C 16.982922 14.263188 16.816406 14.201172 16.566406 14.076172 C 16.317406 13.951172 15.090328 13.348625 14.861328 13.265625 C 14.632328 13.182625 14.464828 13.140625 14.298828 13.390625 C 14.132828 13.640625 13.655766 14.201187 13.509766 14.367188 C 13.363766 14.534188 13.21875 14.556641 12.96875 14.431641 C 12.71875 14.305641 11.914938 14.041406 10.960938 13.191406 C 10.218937 12.530406 9.7182656 11.714844 9.5722656 11.464844 C 9.4272656 11.215844 9.5585938 11.079078 9.6835938 10.955078 C 9.7955938 10.843078 9.9316406 10.663578 10.056641 10.517578 C 10.180641 10.371578 10.223641 10.267562 10.306641 10.101562 C 10.389641 9.9355625 10.347156 9.7890625 10.285156 9.6640625 C 10.223156 9.5390625 9.737625 8.3065 9.515625 7.8125 C 9.328625 7.3975 9.131125 7.3878594 8.953125 7.3808594 C 8.808125 7.3748594 8.6425625 7.375 8.4765625 7.375 z" }) });
 
-  // packages/block-library/build-module/social-link/icons/wordpress.js
+  // packages/block-library/build-module/social-link/icons/wordpress.mjs
   var import_primitives200 = __toESM(require_primitives(), 1);
   var import_jsx_runtime458 = __toESM(require_jsx_runtime(), 1);
   var WordPressIcon = () => /* @__PURE__ */ (0, import_jsx_runtime458.jsx)(
@@ -59389,22 +59389,22 @@ ${js}
     }
   );
 
-  // packages/block-library/build-module/social-link/icons/x.js
+  // packages/block-library/build-module/social-link/icons/x.mjs
   var import_primitives201 = __toESM(require_primitives(), 1);
   var import_jsx_runtime459 = __toESM(require_jsx_runtime(), 1);
   var XIcon = () => /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(import_primitives201.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(import_primitives201.Path, { d: "M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/yelp.js
+  // packages/block-library/build-module/social-link/icons/yelp.mjs
   var import_primitives202 = __toESM(require_primitives(), 1);
   var import_jsx_runtime460 = __toESM(require_jsx_runtime(), 1);
   var YelpIcon = () => /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(import_primitives202.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(import_primitives202.Path, { d: "M12.271,16.718v1.417q-.011,3.257-.067,3.4a.707.707,0,0,1-.569.446,4.637,4.637,0,0,1-2.024-.424A4.609,4.609,0,0,1,7.8,20.565a.844.844,0,0,1-.19-.4.692.692,0,0,1,.044-.29,3.181,3.181,0,0,1,.379-.524q.335-.412,2.019-2.409.011,0,.669-.781a.757.757,0,0,1,.44-.274.965.965,0,0,1,.552.039.945.945,0,0,1,.418.324.732.732,0,0,1,.139.468Zm-1.662-2.8a.783.783,0,0,1-.58.781l-1.339.435q-3.067.981-3.257.981a.711.711,0,0,1-.6-.4,2.636,2.636,0,0,1-.19-.836,9.134,9.134,0,0,1,.011-1.857,3.559,3.559,0,0,1,.335-1.389.659.659,0,0,1,.625-.357,22.629,22.629,0,0,1,2.253.859q.781.324,1.283.524l.937.379a.771.771,0,0,1,.4.34A.982.982,0,0,1,10.609,13.917Zm9.213,3.313a4.467,4.467,0,0,1-1.021,1.8,4.559,4.559,0,0,1-1.512,1.417.671.671,0,0,1-.7-.078q-.156-.112-2.052-3.2l-.524-.859a.761.761,0,0,1-.128-.513.957.957,0,0,1,.217-.513.774.774,0,0,1,.926-.29q.011.011,1.327.446,2.264.736,2.7.887a2.082,2.082,0,0,1,.524.229.673.673,0,0,1,.245.68Zm-7.5-7.049q.056,1.137-.6,1.361-.647.19-1.272-.792L6.237,4.08a.7.7,0,0,1,.212-.691,5.788,5.788,0,0,1,2.314-1,5.928,5.928,0,0,1,2.5-.352.681.681,0,0,1,.547.5q.034.2.245,3.407T12.327,10.181Zm7.384,1.2a.679.679,0,0,1-.29.658q-.167.112-3.67.959-.747.167-1.015.257l.011-.022a.769.769,0,0,1-.513-.044.914.914,0,0,1-.413-.357.786.786,0,0,1,0-.971q.011-.011.836-1.137,1.394-1.908,1.673-2.275a2.423,2.423,0,0,1,.379-.435A.7.7,0,0,1,17.435,8a4.482,4.482,0,0,1,1.372,1.489,4.81,4.81,0,0,1,.9,1.868v.034Z" }) });
 
-  // packages/block-library/build-module/social-link/icons/youtube.js
+  // packages/block-library/build-module/social-link/icons/youtube.mjs
   var import_primitives203 = __toESM(require_primitives(), 1);
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
   var YouTubeIcon = () => /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(import_primitives203.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(import_primitives203.Path, { d: "M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202 h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517 c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201 s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517 C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z" }) });
 
-  // packages/block-library/build-module/social-link/social-list.js
+  // packages/block-library/build-module/social-link/social-list.mjs
   function getSocialService(variation) {
     if (!variation?.name) {
       return {
@@ -59418,7 +59418,7 @@ ${js}
     };
   }
 
-  // packages/block-library/build-module/social-link/edit.js
+  // packages/block-library/build-module/social-link/edit.mjs
   var import_jsx_runtime462 = __toESM(require_jsx_runtime(), 1);
   var SocialLinkURLPopover = ({
     url,
@@ -59702,7 +59702,7 @@ ${js}
     editorStyle: "wp-block-social-link-editor"
   };
 
-  // packages/block-library/build-module/social-link/variations.js
+  // packages/block-library/build-module/social-link/variations.mjs
   var import_i18n221 = __toESM(require_i18n(), 1);
   var variations16 = [
     {
@@ -60007,7 +60007,7 @@ ${js}
   });
   var variations_default16 = variations16;
 
-  // packages/block-library/build-module/social-link/index.js
+  // packages/block-library/build-module/social-link/index.mjs
   var { fieldsKey: fieldsKey18, formKey: formKey18 } = unlock(import_blocks104.privateApis);
   var { name: name99 } = block_default98;
   var settings98 = {
@@ -60038,7 +60038,7 @@ ${js}
   }
   var init98 = () => initBlock({ name: name99, metadata: block_default98, settings: settings98 });
 
-  // packages/block-library/build-module/social-links/index.js
+  // packages/block-library/build-module/social-links/index.mjs
   var social_links_exports = {};
   __export(social_links_exports, {
     init: () => init99,
@@ -60047,7 +60047,7 @@ ${js}
     settings: () => settings99
   });
 
-  // packages/block-library/build-module/social-links/deprecated.js
+  // packages/block-library/build-module/social-links/deprecated.mjs
   var import_block_editor232 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
   var migrateWithLayout3 = (attributes3) => {
@@ -60134,7 +60134,7 @@ ${js}
   ];
   var deprecated_default39 = deprecated17;
 
-  // packages/block-library/build-module/social-links/edit.js
+  // packages/block-library/build-module/social-links/edit.mjs
   var import_element113 = __toESM(require_element(), 1);
   var import_block_editor233 = __toESM(require_block_editor(), 1);
   var import_components143 = __toESM(require_components(), 1);
@@ -60473,7 +60473,7 @@ ${js}
     style: "wp-block-social-links"
   };
 
-  // packages/block-library/build-module/social-links/save.js
+  // packages/block-library/build-module/social-links/save.mjs
   var import_block_editor234 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime465 = __toESM(require_jsx_runtime(), 1);
   function save46(props) {
@@ -60495,7 +60495,7 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime465.jsx)("ul", { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/social-links/index.js
+  // packages/block-library/build-module/social-links/index.mjs
   var { name: name100 } = block_default99;
   var settings99 = {
     example: {
@@ -60530,7 +60530,7 @@ ${js}
   };
   var init99 = () => initBlock({ name: name100, metadata: block_default99, settings: settings99 });
 
-  // packages/block-library/build-module/spacer/index.js
+  // packages/block-library/build-module/spacer/index.mjs
   var spacer_exports = {};
   __export(spacer_exports, {
     init: () => init100,
@@ -60539,7 +60539,7 @@ ${js}
     settings: () => settings100
   });
 
-  // packages/block-library/build-module/spacer/deprecated.js
+  // packages/block-library/build-module/spacer/deprecated.mjs
   var import_block_editor235 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime466 = __toESM(require_jsx_runtime(), 1);
   var deprecated18 = [
@@ -60579,24 +60579,24 @@ ${js}
   ];
   var deprecated_default40 = deprecated18;
 
-  // packages/block-library/build-module/spacer/edit.js
+  // packages/block-library/build-module/spacer/edit.mjs
   var import_block_editor237 = __toESM(require_block_editor(), 1);
   var import_components145 = __toESM(require_components(), 1);
   var import_element114 = __toESM(require_element(), 1);
   var import_primitives205 = __toESM(require_primitives(), 1);
   var import_data128 = __toESM(require_data(), 1);
 
-  // packages/block-library/build-module/spacer/controls.js
+  // packages/block-library/build-module/spacer/controls.mjs
   var import_i18n224 = __toESM(require_i18n(), 1);
   var import_block_editor236 = __toESM(require_block_editor(), 1);
   var import_components144 = __toESM(require_components(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
   var import_primitives204 = __toESM(require_primitives(), 1);
 
-  // packages/block-library/build-module/spacer/constants.js
+  // packages/block-library/build-module/spacer/constants.mjs
   var MIN_SPACER_SIZE = 0;
 
-  // packages/block-library/build-module/spacer/controls.js
+  // packages/block-library/build-module/spacer/controls.mjs
   var import_jsx_runtime467 = __toESM(require_jsx_runtime(), 1);
   var { useSpacingSizes } = unlock(import_block_editor236.privateApis);
   function DimensionInput({ label, onChange, isResizing, value = "" }) {
@@ -60699,7 +60699,7 @@ ${js}
     ) });
   }
 
-  // packages/block-library/build-module/spacer/edit.js
+  // packages/block-library/build-module/spacer/edit.mjs
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
   var { useSpacingSizes: useSpacingSizes2 } = unlock(import_block_editor237.privateApis);
   var ResizableSpacer = ({
@@ -61017,7 +61017,7 @@ ${js}
     style: "wp-block-spacer"
   };
 
-  // packages/block-library/build-module/spacer/transforms.js
+  // packages/block-library/build-module/spacer/transforms.mjs
   var import_blocks105 = __toESM(require_blocks(), 1);
   var transforms33 = {
     to: [
@@ -61035,7 +61035,7 @@ ${js}
   };
   var transforms_default34 = transforms33;
 
-  // packages/block-library/build-module/spacer/save.js
+  // packages/block-library/build-module/spacer/save.mjs
   var import_block_editor238 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime469 = __toESM(require_jsx_runtime(), 1);
   function save47({ attributes: attributes3 }) {
@@ -61056,7 +61056,7 @@ ${js}
     );
   }
 
-  // packages/block-library/build-module/spacer/index.js
+  // packages/block-library/build-module/spacer/index.mjs
   var { name: name101 } = block_default100;
   var settings100 = {
     icon: resize_corner_n_e_default,
@@ -61067,7 +61067,7 @@ ${js}
   };
   var init100 = () => initBlock({ name: name101, metadata: block_default100, settings: settings100 });
 
-  // packages/block-library/build-module/tab/index.js
+  // packages/block-library/build-module/tab/index.mjs
   var tab_exports = {};
   __export(tab_exports, {
     init: () => init101,
@@ -61076,20 +61076,20 @@ ${js}
     settings: () => settings101
   });
 
-  // packages/block-library/build-module/tab/edit.js
+  // packages/block-library/build-module/tab/edit.mjs
   var import_i18n228 = __toESM(require_i18n(), 1);
   var import_block_editor242 = __toESM(require_block_editor(), 1);
   var import_data131 = __toESM(require_data(), 1);
   var import_element116 = __toESM(require_element(), 1);
 
-  // packages/block-library/build-module/tab/controls.js
+  // packages/block-library/build-module/tab/controls.mjs
   var import_block_editor240 = __toESM(require_block_editor(), 1);
   var import_components147 = __toESM(require_components(), 1);
   var import_i18n226 = __toESM(require_i18n(), 1);
   var import_data130 = __toESM(require_data(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
 
-  // packages/block-library/build-module/tab/add-tab-toolbar-control.js
+  // packages/block-library/build-module/tab/add-tab-toolbar-control.mjs
   var import_blocks106 = __toESM(require_blocks(), 1);
   var import_block_editor239 = __toESM(require_block_editor(), 1);
   var import_components146 = __toESM(require_components(), 1);
@@ -61119,7 +61119,7 @@ ${js}
     ) }) });
   }
 
-  // packages/block-library/build-module/tab/slug-from-label.js
+  // packages/block-library/build-module/tab/slug-from-label.mjs
   var import_url18 = __toESM(require_url(), 1);
   function slugFromLabel(label, tabIndex) {
     const htmlDocument = new window.DOMParser().parseFromString(
@@ -61132,7 +61132,7 @@ ${js}
     return `tab-panel-${tabIndex}`;
   }
 
-  // packages/block-library/build-module/tab/controls.js
+  // packages/block-library/build-module/tab/controls.mjs
   var import_jsx_runtime471 = __toESM(require_jsx_runtime(), 1);
   function Controls3({
     attributes: attributes3,
@@ -61185,7 +61185,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/tab/tabs-list.js
+  // packages/block-library/build-module/tab/tabs-list.mjs
   var import_i18n227 = __toESM(require_i18n(), 1);
   var import_block_editor241 = __toESM(require_block_editor(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
@@ -61281,7 +61281,7 @@ ${js}
     }) });
   }
 
-  // packages/block-library/build-module/tab/edit.js
+  // packages/block-library/build-module/tab/edit.mjs
   var import_jsx_runtime473 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE17 = [
     [
@@ -61465,7 +61465,7 @@ ${js}
     ] }) });
   }
 
-  // packages/block-library/build-module/tab/save.js
+  // packages/block-library/build-module/tab/save.mjs
   var import_block_editor243 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime474 = __toESM(require_jsx_runtime(), 1);
   function Save({ attributes: attributes3 }) {
@@ -61528,7 +61528,7 @@ ${js}
     style: "file:./style-index.css"
   };
 
-  // packages/block-library/build-module/tab/icon.js
+  // packages/block-library/build-module/tab/icon.mjs
   var import_components148 = __toESM(require_components(), 1);
   var import_jsx_runtime475 = __toESM(require_jsx_runtime(), 1);
   var icon_default8 = /* @__PURE__ */ (0, import_jsx_runtime475.jsx)(
@@ -61549,7 +61549,7 @@ ${js}
     }
   );
 
-  // packages/block-library/build-module/tab/index.js
+  // packages/block-library/build-module/tab/index.mjs
   var { name: name102 } = block_default101;
   var settings101 = {
     icon: icon_default8,
@@ -61558,7 +61558,7 @@ ${js}
   };
   var init101 = () => initBlock({ name: name102, metadata: block_default101, settings: settings101 });
 
-  // packages/block-library/build-module/table/index.js
+  // packages/block-library/build-module/table/index.mjs
   var table_exports = {};
   __export(table_exports, {
     init: () => init102,
@@ -61568,7 +61568,7 @@ ${js}
   });
   var import_i18n230 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/table/deprecated.js
+  // packages/block-library/build-module/table/deprecated.mjs
   var import_block_editor244 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime476 = __toESM(require_jsx_runtime(), 1);
   var oldColors = {
@@ -62223,13 +62223,13 @@ ${js}
   };
   var deprecated_default41 = [v410, v312, v217, v133];
 
-  // packages/block-library/build-module/table/edit.js
+  // packages/block-library/build-module/table/edit.mjs
   var import_element117 = __toESM(require_element(), 1);
   var import_block_editor245 = __toESM(require_block_editor(), 1);
   var import_i18n229 = __toESM(require_i18n(), 1);
   var import_components149 = __toESM(require_components(), 1);
 
-  // packages/block-library/build-module/table/state.js
+  // packages/block-library/build-module/table/state.mjs
   var INHERITED_COLUMN_ATTRIBUTES = ["align"];
   function createTable({ rowCount, columnCount }) {
     return {
@@ -62413,7 +62413,7 @@ ${js}
     return !(row.cells && row.cells.length);
   }
 
-  // packages/block-library/build-module/table/edit.js
+  // packages/block-library/build-module/table/edit.mjs
   var import_jsx_runtime477 = __toESM(require_jsx_runtime(), 1);
   var ALIGNMENT_CONTROLS = [
     {
@@ -63108,7 +63108,7 @@ ${js}
     style: "wp-block-table"
   };
 
-  // packages/block-library/build-module/table/save.js
+  // packages/block-library/build-module/table/save.mjs
   var import_block_editor246 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime478 = __toESM(require_jsx_runtime(), 1);
   function save48({ attributes: attributes3 }) {
@@ -63180,10 +63180,10 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/table/transforms.js
+  // packages/block-library/build-module/table/transforms.mjs
   var import_blocks107 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/table/utils.js
+  // packages/block-library/build-module/table/utils.mjs
   function normalizeRowColSpan(rowColSpan) {
     const parsedValue = parseInt(rowColSpan, 10);
     if (!Number.isInteger(parsedValue)) {
@@ -63192,7 +63192,7 @@ ${js}
     return parsedValue < 0 || parsedValue === 1 ? void 0 : parsedValue.toString();
   }
 
-  // packages/block-library/build-module/table/transforms.js
+  // packages/block-library/build-module/table/transforms.mjs
   var tableContentPasteSchema = ({ phrasingContentSchema }) => ({
     tr: {
       allowEmpty: true,
@@ -63287,7 +63287,7 @@ ${js}
   };
   var transforms_default35 = transforms34;
 
-  // packages/block-library/build-module/table/index.js
+  // packages/block-library/build-module/table/index.mjs
   var { name: name103 } = block_default102;
   var settings102 = {
     icon: block_table_default,
@@ -63371,7 +63371,7 @@ ${js}
   };
   var init102 = () => initBlock({ name: name103, metadata: block_default102, settings: settings102 });
 
-  // packages/block-library/build-module/table-of-contents/index.js
+  // packages/block-library/build-module/table-of-contents/index.mjs
   var table_of_contents_exports = {};
   __export(table_of_contents_exports, {
     init: () => init103,
@@ -63458,7 +63458,7 @@ ${js}
     style: "wp-block-table-of-contents"
   };
 
-  // packages/block-library/build-module/table-of-contents/edit.js
+  // packages/block-library/build-module/table-of-contents/edit.mjs
   var import_block_editor248 = __toESM(require_block_editor(), 1);
   var import_blocks108 = __toESM(require_blocks(), 1);
   var import_components150 = __toESM(require_components(), 1);
@@ -63468,7 +63468,7 @@ ${js}
   var import_compose55 = __toESM(require_compose(), 1);
   var import_notices16 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/table-of-contents/list.js
+  // packages/block-library/build-module/table-of-contents/list.mjs
   var import_jsx_runtime479 = __toESM(require_jsx_runtime(), 1);
   var ENTRY_CLASS_NAME = "wp-block-table-of-contents__entry";
   function TableOfContentsList({
@@ -63505,7 +63505,7 @@ ${js}
     }) });
   }
 
-  // packages/block-library/build-module/table-of-contents/utils.js
+  // packages/block-library/build-module/table-of-contents/utils.mjs
   function linearToNestedHeadingList(headingList) {
     const nestedHeadingList = [];
     headingList.forEach((heading, key) => {
@@ -63538,7 +63538,7 @@ ${js}
     return nestedHeadingList;
   }
 
-  // packages/block-library/build-module/table-of-contents/hooks.js
+  // packages/block-library/build-module/table-of-contents/hooks.mjs
   var import_es6 = __toESM(require_es6(), 1);
   var import_data132 = __toESM(require_data(), 1);
   var import_dom9 = __toESM(require_dom(), 1);
@@ -63638,7 +63638,7 @@ ${js}
     }, [registry, clientId]);
   }
 
-  // packages/block-library/build-module/table-of-contents/edit.js
+  // packages/block-library/build-module/table-of-contents/edit.mjs
   var import_jsx_runtime480 = __toESM(require_jsx_runtime(), 1);
   function TableOfContentsEdit({
     attributes: {
@@ -63823,7 +63823,7 @@ ${js}
     ] });
   }
 
-  // packages/block-library/build-module/table-of-contents/save.js
+  // packages/block-library/build-module/table-of-contents/save.mjs
   var import_block_editor249 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime481 = __toESM(require_jsx_runtime(), 1);
   function save49({
@@ -63842,7 +63842,7 @@ ${js}
     ) }) });
   }
 
-  // packages/block-library/build-module/table-of-contents/index.js
+  // packages/block-library/build-module/table-of-contents/index.mjs
   var { name: name104 } = block_default103;
   var settings103 = {
     icon: table_of_contents_default,
@@ -63903,7 +63903,7 @@ ${js}
   };
   var init103 = () => initBlock({ name: name104, metadata: block_default103, settings: settings103 });
 
-  // packages/block-library/build-module/tabs/index.js
+  // packages/block-library/build-module/tabs/index.mjs
   var tabs_exports = {};
   __export(tabs_exports, {
     init: () => init104,
@@ -63912,10 +63912,10 @@ ${js}
     settings: () => settings104
   });
 
-  // packages/block-library/build-module/tabs/edit.js
+  // packages/block-library/build-module/tabs/edit.mjs
   var import_block_editor252 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/tabs/style-engine.js
+  // packages/block-library/build-module/tabs/style-engine.mjs
   var import_block_editor250 = __toESM(require_block_editor(), 1);
   function getGapStyles({ attributes: attributes3 }) {
     const { style: style2, orientation } = attributes3 || {};
@@ -64010,7 +64010,7 @@ ${declarations}
     return null;
   }
 
-  // packages/block-library/build-module/tabs/controls.js
+  // packages/block-library/build-module/tabs/controls.mjs
   var import_i18n233 = __toESM(require_i18n(), 1);
   var import_components151 = __toESM(require_components(), 1);
   var import_element120 = __toESM(require_element(), 1);
@@ -64247,7 +64247,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/tabs/edit.js
+  // packages/block-library/build-module/tabs/edit.mjs
   var import_jsx_runtime483 = __toESM(require_jsx_runtime(), 1);
   var TABS_TEMPLATE = [["core/tab", {}]];
   var DEFAULT_BLOCK7 = {
@@ -64326,7 +64326,7 @@ ${declarations}
     "tabHoverTextColor"
   )(Edit19);
 
-  // packages/block-library/build-module/tabs/save.js
+  // packages/block-library/build-module/tabs/save.mjs
   var import_block_editor253 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
   function Save2({ attributes: attributes3 }) {
@@ -64340,7 +64340,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/tabs/icon.js
+  // packages/block-library/build-module/tabs/icon.mjs
   var import_components152 = __toESM(require_components(), 1);
   var import_jsx_runtime485 = __toESM(require_jsx_runtime(), 1);
   var icon_default9 = /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
@@ -64512,7 +64512,7 @@ ${declarations}
     viewScriptModule: "@wordpress/block-library/tabs/view"
   };
 
-  // packages/block-library/build-module/tabs/index.js
+  // packages/block-library/build-module/tabs/index.mjs
   var { name: name105 } = block_default104;
   var settings104 = {
     icon: icon_default9,
@@ -64521,7 +64521,7 @@ ${declarations}
   };
   var init104 = () => initBlock({ name: name105, metadata: block_default104, settings: settings104 });
 
-  // packages/block-library/build-module/tag-cloud/index.js
+  // packages/block-library/build-module/tag-cloud/index.mjs
   var tag_cloud_exports = {};
   __export(tag_cloud_exports, {
     init: () => init105,
@@ -64530,7 +64530,7 @@ ${declarations}
     settings: () => settings105
   });
 
-  // packages/block-library/build-module/tag-cloud/transforms.js
+  // packages/block-library/build-module/tag-cloud/transforms.mjs
   var import_blocks109 = __toESM(require_blocks(), 1);
   var transforms35 = {
     from: [
@@ -64621,7 +64621,7 @@ ${declarations}
     }
   };
 
-  // packages/block-library/build-module/tag-cloud/edit.js
+  // packages/block-library/build-module/tag-cloud/edit.mjs
   var import_components153 = __toESM(require_components(), 1);
   var import_data134 = __toESM(require_data(), 1);
   var import_i18n234 = __toESM(require_i18n(), 1);
@@ -64825,7 +64825,7 @@ ${declarations}
   }
   var edit_default34 = TagCloudEdit;
 
-  // packages/block-library/build-module/tag-cloud/index.js
+  // packages/block-library/build-module/tag-cloud/index.mjs
   var { name: name106 } = block_default105;
   var settings105 = {
     icon: tag_default,
@@ -64835,7 +64835,7 @@ ${declarations}
   };
   var init105 = () => initBlock({ name: name106, metadata: block_default105, settings: settings105 });
 
-  // packages/block-library/build-module/template-part/index.js
+  // packages/block-library/build-module/template-part/index.mjs
   var template_part_exports = {};
   __export(template_part_exports, {
     init: () => init106,
@@ -64883,7 +64883,7 @@ ${declarations}
     editorStyle: "wp-block-template-part-editor"
   };
 
-  // packages/block-library/build-module/template-part/edit/index.js
+  // packages/block-library/build-module/template-part/edit/index.mjs
   var import_blocks114 = __toESM(require_blocks(), 1);
   var import_data141 = __toESM(require_data(), 1);
   var import_block_editor259 = __toESM(require_block_editor(), 1);
@@ -64893,14 +64893,14 @@ ${declarations}
   var import_element127 = __toESM(require_element(), 1);
   var import_notices19 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/template-part/edit/placeholder.js
+  // packages/block-library/build-module/template-part/edit/placeholder.mjs
   var import_i18n237 = __toESM(require_i18n(), 1);
   var import_components155 = __toESM(require_components(), 1);
   var import_element123 = __toESM(require_element(), 1);
   var import_data136 = __toESM(require_data(), 1);
   var import_core_data80 = __toESM(require_core_data(), 1);
 
-  // packages/block-library/build-module/template-part/edit/utils/hooks.js
+  // packages/block-library/build-module/template-part/edit/utils/hooks.mjs
   var import_data135 = __toESM(require_data(), 1);
   var import_core_data79 = __toESM(require_core_data(), 1);
   var import_block_editor255 = __toESM(require_block_editor(), 1);
@@ -64995,7 +64995,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/template-part/edit/title-modal.js
+  // packages/block-library/build-module/template-part/edit/title-modal.mjs
   var import_element122 = __toESM(require_element(), 1);
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_components154 = __toESM(require_components(), 1);
@@ -65058,7 +65058,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/template-part/edit/placeholder.js
+  // packages/block-library/build-module/template-part/edit/placeholder.mjs
   var import_jsx_runtime488 = __toESM(require_jsx_runtime(), 1);
   function TemplatePartPlaceholder({
     area,
@@ -65142,7 +65142,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/template-part/edit/selection-modal.js
+  // packages/block-library/build-module/template-part/edit/selection-modal.mjs
   var import_element124 = __toESM(require_element(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_notices17 = __toESM(require_notices(), 1);
@@ -65150,7 +65150,7 @@ ${declarations}
   var import_block_editor256 = __toESM(require_block_editor(), 1);
   var import_components156 = __toESM(require_components(), 1);
 
-  // packages/block-library/build-module/template-part/edit/utils/map-template-part-to-block-pattern.js
+  // packages/block-library/build-module/template-part/edit/utils/map-template-part-to-block-pattern.mjs
   var import_blocks111 = __toESM(require_blocks(), 1);
   function mapTemplatePartToBlockPattern(templatePart) {
     return {
@@ -65161,7 +65161,7 @@ ${declarations}
     };
   }
 
-  // packages/block-library/build-module/template-part/edit/selection-modal.js
+  // packages/block-library/build-module/template-part/edit/selection-modal.mjs
   var import_jsx_runtime489 = __toESM(require_jsx_runtime(), 1);
   function TemplatePartSelectionModal({
     setAttributes,
@@ -65232,14 +65232,14 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/template-part/edit/advanced-controls.js
+  // packages/block-library/build-module/template-part/edit/advanced-controls.mjs
   var import_core_data82 = __toESM(require_core_data(), 1);
   var import_components158 = __toESM(require_components(), 1);
   var import_i18n240 = __toESM(require_i18n(), 1);
   var import_data139 = __toESM(require_data(), 1);
   var import_block_editor257 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/template-part/edit/import-controls.js
+  // packages/block-library/build-module/template-part/edit/import-controls.mjs
   var import_i18n239 = __toESM(require_i18n(), 1);
   var import_element125 = __toESM(require_element(), 1);
   var import_data138 = __toESM(require_data(), 1);
@@ -65247,7 +65247,7 @@ ${declarations}
   var import_core_data81 = __toESM(require_core_data(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/template-part/edit/utils/transformers.js
+  // packages/block-library/build-module/template-part/edit/utils/transformers.mjs
   var import_blocks112 = __toESM(require_blocks(), 1);
   function transformWidgetToBlock(widget) {
     if (widget.id_base !== "block") {
@@ -65322,7 +65322,7 @@ ${declarations}
     }).filter((block) => !!block);
   }
 
-  // packages/block-library/build-module/template-part/edit/import-controls.js
+  // packages/block-library/build-module/template-part/edit/import-controls.mjs
   var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
   var SIDEBARS_QUERY = {
     per_page: -1,
@@ -65446,7 +65446,7 @@ ${declarations}
     ] }) });
   }
 
-  // packages/block-library/build-module/template-part/edit/advanced-controls.js
+  // packages/block-library/build-module/template-part/edit/advanced-controls.mjs
   var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl7 } = unlock(import_block_editor257.privateApis);
   function TemplatePartAdvancedControls({
@@ -65541,7 +65541,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/template-part/edit/inner-blocks.js
+  // packages/block-library/build-module/template-part/edit/inner-blocks.mjs
   var import_core_data83 = __toESM(require_core_data(), 1);
   var import_block_editor258 = __toESM(require_block_editor(), 1);
   var import_data140 = __toESM(require_data(), 1);
@@ -65688,7 +65688,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/template-part/edit/index.js
+  // packages/block-library/build-module/template-part/edit/index.mjs
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
   function ReplaceButton({
     isEntityAvailable,
@@ -65928,7 +65928,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/template-part/variations.js
+  // packages/block-library/build-module/template-part/variations.mjs
   var import_core_data85 = __toESM(require_core_data(), 1);
   var import_data142 = __toESM(require_data(), 1);
   function enhanceTemplatePartVariations(settings116, name117) {
@@ -65972,7 +65972,7 @@ ${declarations}
     return settings116;
   }
 
-  // packages/block-library/build-module/template-part/index.js
+  // packages/block-library/build-module/template-part/index.mjs
   var { name: name107 } = block_default106;
   var settings106 = {
     icon: symbol_filled_default,
@@ -66022,7 +66022,7 @@ ${declarations}
     return initBlock({ name: name107, metadata: block_default106, settings: settings106 });
   };
 
-  // packages/block-library/build-module/term-count/index.js
+  // packages/block-library/build-module/term-count/index.mjs
   var term_count_exports = {};
   __export(term_count_exports, {
     init: () => init107,
@@ -66092,12 +66092,12 @@ ${declarations}
     style: "wp-block-term-count"
   };
 
-  // packages/block-library/build-module/term-count/edit.js
+  // packages/block-library/build-module/term-count/edit.mjs
   var import_i18n242 = __toESM(require_i18n(), 1);
   var import_block_editor260 = __toESM(require_block_editor(), 1);
   var import_components161 = __toESM(require_components(), 1);
 
-  // packages/block-library/build-module/term-count/icons.js
+  // packages/block-library/build-module/term-count/icons.mjs
   var import_components160 = __toESM(require_components(), 1);
   var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
   var bareNumber = /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components160.Path, { d: "M 10 6 L 9.609375 9 L 7 9 L 7 10.5 L 9.4121094 10.5 L 9.0878906 13 L 7 13 L 7 14.5 L 8.890625 14.5 L 8.5 17.5 L 10 17.5 L 10.390625 14.5 L 12.890625 14.5 L 12.5 17.5 L 14 17.5 L 14.390625 14.5 L 17 14.5 L 17 13 L 14.587891 13 L 14.912109 10.5 L 17 10.5 L 17 9 L 15.109375 9 L 15.5 6 L 14 6 L 13.609375 9 L 11.109375 9 L 11.5 6 L 10 6 z M 10.912109 10.5 L 13.412109 10.5 L 13.087891 13 L 10.587891 13 L 10.912109 10.5 z" }) });
@@ -66106,7 +66106,7 @@ ${declarations}
   var numberInCurlyBrackets = /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components160.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,21 c 1.104567,0 2,-0.895433 2,-2 v -4 c 0,-1.104567 0.895433,-2 2,-2 v -2 c -1.104567,0 -2,-0.895433 -2,-2 V 5 c 0,-1.104567 -0.895433,-2 -2,-2 H 17 v 1.5 h 1.5 A 0.5,0.5 0 0 1 19,5 v 5 c 0,1.104567 0.895433,2 2,2 -1.104567,0 -2,0.895433 -2,2 v 5 c 0,0.276142 -0.223858,0.5 -0.5,0.5 H 17 V 21 Z M 5.5,3 c -1.1045668,0 -2,0.8954327 -2,2 v 4 c 0,1.104567 -0.8954332,2 -2,2 v 2 c 1.1045668,0 2,0.895433 2,2 v 4 c 0,1.104567 0.8954332,2 2,2 H 7 V 19.5 H 5.5 A 0.5,0.5 0 0 1 5,19 V 14 C 5,12.895433 4.1045668,12 3,12 4.1045668,12 5,11.104567 5,10 V 5 C 5,4.7238579 5.2238579,4.5 5.5,4.5 H 7 V 3 Z" }) });
   var numberInAngleBrackets = /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components160.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components160.Path, { d: "M 18.970703,16.53125 23.5,12 18.970703,7.46875 17.910156,8.53125 21.378906,12 17.910156,15.46875 Z M 5.0292969,7.46875 0.5,12 5.0292969,16.53125 6.0898438,15.46875 2.6210938,12 6.0898438,8.53125 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
 
-  // packages/block-library/build-module/term-count/use-term-count.js
+  // packages/block-library/build-module/term-count/use-term-count.mjs
   var import_core_data87 = __toESM(require_core_data(), 1);
   var import_data144 = __toESM(require_data(), 1);
   function useTermCount(termId, taxonomy) {
@@ -66162,7 +66162,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/term-count/edit.js
+  // packages/block-library/build-module/term-count/edit.mjs
   var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
   var BRACKET_TYPES = {
     none: { label: (0, import_i18n242.__)("No brackets"), icon: bareNumber },
@@ -66228,7 +66228,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/term-count/index.js
+  // packages/block-library/build-module/term-count/index.mjs
   var { name: name108 } = block_default107;
   var settings107 = {
     icon: term_count_default,
@@ -66237,7 +66237,7 @@ ${declarations}
   };
   var init107 = () => initBlock({ name: name108, metadata: block_default107, settings: settings107 });
 
-  // packages/block-library/build-module/term-description/index.js
+  // packages/block-library/build-module/term-description/index.mjs
   var term_description_exports = {};
   __export(term_description_exports, {
     init: () => init108,
@@ -66307,11 +66307,11 @@ ${declarations}
     }
   };
 
-  // packages/block-library/build-module/term-description/edit.js
+  // packages/block-library/build-module/term-description/edit.mjs
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_block_editor261 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/term-description/use-term-description.js
+  // packages/block-library/build-module/term-description/use-term-description.mjs
   var import_core_data88 = __toESM(require_core_data(), 1);
   var import_data145 = __toESM(require_data(), 1);
   function useTermDescription(termId, taxonomy) {
@@ -66373,7 +66373,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/term-description/edit.js
+  // packages/block-library/build-module/term-description/edit.mjs
   var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
   function TermDescriptionEdit({
     attributes: attributes3,
@@ -66408,7 +66408,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/term-description/index.js
+  // packages/block-library/build-module/term-description/index.mjs
   var { name: name109 } = block_default108;
   var settings108 = {
     icon: term_description_default,
@@ -66417,7 +66417,7 @@ ${declarations}
   };
   var init108 = () => initBlock({ name: name109, metadata: block_default108, settings: settings108 });
 
-  // packages/block-library/build-module/term-name/index.js
+  // packages/block-library/build-module/term-name/index.mjs
   var term_name_exports = {};
   __export(term_name_exports, {
     init: () => init109,
@@ -66500,13 +66500,13 @@ ${declarations}
     style: "wp-block-term-name"
   };
 
-  // packages/block-library/build-module/term-name/edit.js
+  // packages/block-library/build-module/term-name/edit.mjs
   var import_i18n244 = __toESM(require_i18n(), 1);
   var import_block_editor262 = __toESM(require_block_editor(), 1);
   var import_components162 = __toESM(require_components(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
 
-  // packages/block-library/build-module/term-name/use-term-name.js
+  // packages/block-library/build-module/term-name/use-term-name.mjs
   var import_core_data89 = __toESM(require_core_data(), 1);
   var import_data146 = __toESM(require_data(), 1);
   function useTermName(termId, taxonomy) {
@@ -66572,7 +66572,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/term-name/edit.js
+  // packages/block-library/build-module/term-name/edit.mjs
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   function TermNameEdit({
     attributes: attributes3,
@@ -66655,7 +66655,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/term-name/index.js
+  // packages/block-library/build-module/term-name/index.mjs
   var { name: name110 } = block_default109;
   var settings109 = {
     icon: term_name_default,
@@ -66664,7 +66664,7 @@ ${declarations}
   };
   var init109 = () => initBlock({ name: name110, metadata: block_default109, settings: settings109 });
 
-  // packages/block-library/build-module/terms-query/index.js
+  // packages/block-library/build-module/terms-query/index.mjs
   var terms_query_exports = {};
   __export(terms_query_exports, {
     init: () => init110,
@@ -66715,20 +66715,20 @@ ${declarations}
     }
   };
 
-  // packages/block-library/build-module/terms-query/edit/index.js
+  // packages/block-library/build-module/terms-query/edit/index.mjs
   var import_data150 = __toESM(require_data(), 1);
   var import_block_editor267 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/terms-query/edit/terms-query-content.js
+  // packages/block-library/build-module/terms-query/edit/terms-query-content.mjs
   var import_element130 = __toESM(require_element(), 1);
   var import_block_editor265 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/index.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/index.mjs
   var import_i18n249 = __toESM(require_i18n(), 1);
   var import_components170 = __toESM(require_components(), 1);
   var import_block_editor264 = __toESM(require_block_editor(), 1);
 
-  // packages/block-library/build-module/terms-query/utils.js
+  // packages/block-library/build-module/terms-query/utils.mjs
   var import_core_data90 = __toESM(require_core_data(), 1);
   var import_data147 = __toESM(require_data(), 1);
   var import_element128 = __toESM(require_element(), 1);
@@ -66744,7 +66744,7 @@ ${declarations}
     }, [taxonomies]);
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/taxonomy-control.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/taxonomy-control.mjs
   var import_components163 = __toESM(require_components(), 1);
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   function TaxonomyControl({ value, onChange, ...props }) {
@@ -66765,7 +66765,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/order-control.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/order-control.mjs
   var import_i18n245 = __toESM(require_i18n(), 1);
   var import_components164 = __toESM(require_components(), 1);
   var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
@@ -66802,7 +66802,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/empty-terms-control.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/empty-terms-control.mjs
   var import_components165 = __toESM(require_components(), 1);
   var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
   function EmptyTermsControl({ value, onChange, ...props }) {
@@ -66816,14 +66816,14 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/nested-terms-control.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/nested-terms-control.mjs
   var import_components166 = __toESM(require_components(), 1);
   var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
   function NestedTermsControl({ value, onChange, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime501.jsx)(import_components166.ToggleControl, { checked: value, onChange, ...props });
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.mjs
   var import_components167 = __toESM(require_components(), 1);
   var import_i18n246 = __toESM(require_i18n(), 1);
   var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
@@ -66857,7 +66857,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/max-terms-control.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/max-terms-control.mjs
   var import_i18n247 = __toESM(require_i18n(), 1);
   var import_components168 = __toESM(require_components(), 1);
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
@@ -66878,7 +66878,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/advanced-controls.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/advanced-controls.mjs
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_block_editor263 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
@@ -66904,7 +66904,7 @@ ${declarations}
     ) });
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/include-control.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/include-control.mjs
   var import_components169 = __toESM(require_components(), 1);
   var import_data148 = __toESM(require_data(), 1);
   var import_core_data91 = __toESM(require_core_data(), 1);
@@ -67035,7 +67035,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/terms-query/edit/inspector-controls/index.js
+  // packages/block-library/build-module/terms-query/edit/inspector-controls/index.mjs
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   function TermsQueryInspectorControls({
     attributes: attributes3,
@@ -67248,7 +67248,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/terms-query/edit/terms-query-content.js
+  // packages/block-library/build-module/terms-query/edit/terms-query-content.mjs
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE18 = [["core/term-template"]];
   function TermsQueryContent({
@@ -67283,7 +67283,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/terms-query/edit/terms-query-placeholder.js
+  // packages/block-library/build-module/terms-query/edit/terms-query-placeholder.mjs
   var import_data149 = __toESM(require_data(), 1);
   var import_blocks115 = __toESM(require_blocks(), 1);
   var import_block_editor266 = __toESM(require_block_editor(), 1);
@@ -67336,7 +67336,7 @@ ${declarations}
     ) });
   }
 
-  // packages/block-library/build-module/terms-query/edit/index.js
+  // packages/block-library/build-module/terms-query/edit/index.mjs
   var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
   var TermsQueryEdit = (props) => {
     const hasInnerBlocks = (0, import_data150.useSelect)(
@@ -67348,7 +67348,7 @@ ${declarations}
   };
   var edit_default35 = TermsQueryEdit;
 
-  // packages/block-library/build-module/terms-query/save.js
+  // packages/block-library/build-module/terms-query/save.mjs
   var import_block_editor268 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
   function save50({ attributes: { tagName: Tag = "div" } }) {
@@ -67357,7 +67357,7 @@ ${declarations}
     return /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(Tag, { ...innerBlocksProps });
   }
 
-  // packages/block-library/build-module/terms-query/variations.js
+  // packages/block-library/build-module/terms-query/variations.mjs
   var import_i18n250 = __toESM(require_i18n(), 1);
   var import_components171 = __toESM(require_components(), 1);
   var import_jsx_runtime511 = __toESM(require_jsx_runtime(), 1);
@@ -67405,7 +67405,7 @@ ${declarations}
   ];
   var variations_default17 = variations17;
 
-  // packages/block-library/build-module/terms-query/index.js
+  // packages/block-library/build-module/terms-query/index.mjs
   var { name: name111 } = block_default110;
   var settings110 = {
     icon: loop_default,
@@ -67416,7 +67416,7 @@ ${declarations}
   };
   var init110 = () => initBlock({ name: name111, metadata: block_default110, settings: settings110 });
 
-  // packages/block-library/build-module/term-template/index.js
+  // packages/block-library/build-module/term-template/index.mjs
   var term_template_exports = {};
   __export(term_template_exports, {
     init: () => init111,
@@ -67489,7 +67489,7 @@ ${declarations}
     editorStyle: "wp-block-term-template-editor"
   };
 
-  // packages/block-library/build-module/term-template/edit.js
+  // packages/block-library/build-module/term-template/edit.mjs
   var import_components172 = __toESM(require_components(), 1);
   var import_element131 = __toESM(require_element(), 1);
   var import_data151 = __toESM(require_data(), 1);
@@ -67663,14 +67663,14 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/term-template/save.js
+  // packages/block-library/build-module/term-template/save.mjs
   var import_block_editor270 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
   function TermTemplateSave() {
     return /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor270.InnerBlocks.Content, {});
   }
 
-  // packages/block-library/build-module/term-template/index.js
+  // packages/block-library/build-module/term-template/index.mjs
   var { name: name112 } = block_default111;
   var settings111 = {
     icon: layout_default,
@@ -67680,7 +67680,7 @@ ${declarations}
   };
   var init111 = () => initBlock({ name: name112, metadata: block_default111, settings: settings111 });
 
-  // packages/block-library/build-module/text-columns/index.js
+  // packages/block-library/build-module/text-columns/index.mjs
   var text_columns_exports = {};
   __export(text_columns_exports, {
     init: () => init112,
@@ -67689,7 +67689,7 @@ ${declarations}
     settings: () => settings112
   });
 
-  // packages/block-library/build-module/text-columns/edit.js
+  // packages/block-library/build-module/text-columns/edit.mjs
   var import_i18n252 = __toESM(require_i18n(), 1);
   var import_components173 = __toESM(require_components(), 1);
   var import_block_editor271 = __toESM(require_block_editor(), 1);
@@ -67805,7 +67805,7 @@ ${declarations}
     style: "wp-block-text-columns"
   };
 
-  // packages/block-library/build-module/text-columns/save.js
+  // packages/block-library/build-module/text-columns/save.mjs
   var import_block_editor272 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
   function save51({ attributes: attributes3 }) {
@@ -67827,7 +67827,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/text-columns/transforms.js
+  // packages/block-library/build-module/text-columns/transforms.mjs
   var import_blocks116 = __toESM(require_blocks(), 1);
   var transforms36 = {
     to: [
@@ -67854,7 +67854,7 @@ ${declarations}
   };
   var transforms_default37 = transforms36;
 
-  // packages/block-library/build-module/text-columns/index.js
+  // packages/block-library/build-module/text-columns/index.mjs
   var { name: name113 } = block_default112;
   var settings112 = {
     transforms: transforms_default37,
@@ -67869,7 +67869,7 @@ ${declarations}
   };
   var init112 = () => initBlock({ name: name113, metadata: block_default112, settings: settings112 });
 
-  // packages/block-library/build-module/verse/index.js
+  // packages/block-library/build-module/verse/index.mjs
   var verse_exports = {};
   __export(verse_exports, {
     init: () => init113,
@@ -67880,7 +67880,7 @@ ${declarations}
   var import_i18n254 = __toESM(require_i18n(), 1);
   var import_blocks119 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/verse/deprecated.js
+  // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor273 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime516 = __toESM(require_jsx_runtime(), 1);
   var v134 = {
@@ -67949,7 +67949,7 @@ ${declarations}
   };
   var deprecated_default42 = [v218, v134];
 
-  // packages/block-library/build-module/verse/edit.js
+  // packages/block-library/build-module/verse/edit.mjs
   var import_i18n253 = __toESM(require_i18n(), 1);
   var import_block_editor274 = __toESM(require_block_editor(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
@@ -68085,7 +68085,7 @@ ${declarations}
     editorStyle: "wp-block-verse-editor"
   };
 
-  // packages/block-library/build-module/verse/save.js
+  // packages/block-library/build-module/verse/save.mjs
   var import_block_editor275 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   function save52({ attributes: attributes3 }) {
@@ -68096,7 +68096,7 @@ ${declarations}
     return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("pre", { ...import_block_editor275.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_block_editor275.RichText.Content, { value: content }) });
   }
 
-  // packages/block-library/build-module/verse/transforms.js
+  // packages/block-library/build-module/verse/transforms.mjs
   var import_blocks118 = __toESM(require_blocks(), 1);
   var transforms37 = {
     from: [
@@ -68116,7 +68116,7 @@ ${declarations}
   };
   var transforms_default38 = transforms37;
 
-  // packages/block-library/build-module/verse/index.js
+  // packages/block-library/build-module/verse/index.mjs
   var { fieldsKey: fieldsKey19, formKey: formKey19 } = unlock(import_blocks119.privateApis);
   var { name: name114 } = block_default113;
   var settings113 = {
@@ -68155,7 +68155,7 @@ ${declarations}
   }
   var init113 = () => initBlock({ name: name114, metadata: block_default113, settings: settings113 });
 
-  // packages/block-library/build-module/video/index.js
+  // packages/block-library/build-module/video/index.mjs
   var video_exports = {};
   __export(video_exports, {
     init: () => init114,
@@ -68166,7 +68166,7 @@ ${declarations}
   var import_i18n258 = __toESM(require_i18n(), 1);
   var import_blocks121 = __toESM(require_blocks(), 1);
 
-  // packages/block-library/build-module/video/deprecated.js
+  // packages/block-library/build-module/video/deprecated.mjs
   var import_block_editor276 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/video/block.json
@@ -68273,7 +68273,7 @@ ${declarations}
     style: "wp-block-video"
   };
 
-  // packages/block-library/build-module/video/tracks.js
+  // packages/block-library/build-module/video/tracks.mjs
   var import_jsx_runtime519 = __toESM(require_jsx_runtime(), 1);
   function Tracks({ tracks = [] }) {
     return tracks.map((track) => {
@@ -68282,7 +68282,7 @@ ${declarations}
     });
   }
 
-  // packages/block-library/build-module/video/deprecated.js
+  // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime520 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default114;
   var v135 = {
@@ -68322,7 +68322,7 @@ ${declarations}
   var deprecated20 = [v135];
   var deprecated_default43 = deprecated20;
 
-  // packages/block-library/build-module/video/edit.js
+  // packages/block-library/build-module/video/edit.mjs
   var import_blob18 = __toESM(require_blob(), 1);
   var import_components176 = __toESM(require_components(), 1);
   var import_block_editor278 = __toESM(require_block_editor(), 1);
@@ -68331,7 +68331,7 @@ ${declarations}
   var import_data153 = __toESM(require_data(), 1);
   var import_notices20 = __toESM(require_notices(), 1);
 
-  // packages/block-library/build-module/video/edit-common-settings.js
+  // packages/block-library/build-module/video/edit-common-settings.mjs
   var import_i18n255 = __toESM(require_i18n(), 1);
   var import_components174 = __toESM(require_components(), 1);
   var import_element132 = __toESM(require_element(), 1);
@@ -68506,7 +68506,7 @@ ${declarations}
   };
   var edit_common_settings_default = VideoSettings;
 
-  // packages/block-library/build-module/video/tracks-editor.js
+  // packages/block-library/build-module/video/tracks-editor.mjs
   var import_i18n256 = __toESM(require_i18n(), 1);
   var import_components175 = __toESM(require_components(), 1);
   var import_block_editor277 = __toESM(require_block_editor(), 1);
@@ -68846,7 +68846,7 @@ ${declarations}
     );
   }
 
-  // packages/block-library/build-module/video/edit.js
+  // packages/block-library/build-module/video/edit.mjs
   var import_jsx_runtime523 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES8 = ["video"];
   function VideoEdit({
@@ -69047,7 +69047,7 @@ ${declarations}
   }
   var edit_default36 = VideoEdit;
 
-  // packages/block-library/build-module/video/save.js
+  // packages/block-library/build-module/video/save.mjs
   var import_block_editor279 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   function save53({ attributes: attributes3 }) {
@@ -69089,7 +69089,7 @@ ${declarations}
     ] });
   }
 
-  // packages/block-library/build-module/video/transforms.js
+  // packages/block-library/build-module/video/transforms.mjs
   var import_blob19 = __toESM(require_blob(), 1);
   var import_blocks120 = __toESM(require_blocks(), 1);
   var transforms38 = {
@@ -69171,7 +69171,7 @@ ${declarations}
   };
   var transforms_default39 = transforms38;
 
-  // packages/block-library/build-module/video/index.js
+  // packages/block-library/build-module/video/index.mjs
   var { fieldsKey: fieldsKey20, formKey: formKey20 } = unlock(import_blocks121.privateApis);
   var { name: name115 } = block_default114;
   var settings114 = {
@@ -69217,7 +69217,7 @@ ${declarations}
   }
   var init114 = () => initBlock({ name: name115, metadata: block_default114, settings: settings114 });
 
-  // packages/block-library/build-module/footnotes/index.js
+  // packages/block-library/build-module/footnotes/index.mjs
   var footnotes_exports = {};
   __export(footnotes_exports, {
     init: () => init115,
@@ -69227,7 +69227,7 @@ ${declarations}
   });
   var import_rich_text6 = __toESM(require_rich_text(), 1);
 
-  // packages/block-library/build-module/footnotes/edit.js
+  // packages/block-library/build-module/footnotes/edit.mjs
   var import_block_editor280 = __toESM(require_block_editor(), 1);
   var import_core_data93 = __toESM(require_core_data(), 1);
   var import_i18n259 = __toESM(require_i18n(), 1);
@@ -69430,7 +69430,7 @@ ${declarations}
   }
   var v4_default = v411;
 
-  // packages/block-library/build-module/footnotes/format.js
+  // packages/block-library/build-module/footnotes/format.mjs
   var import_i18n260 = __toESM(require_i18n(), 1);
   var import_rich_text5 = __toESM(require_rich_text(), 1);
   var import_block_editor281 = __toESM(require_block_editor(), 1);
@@ -69571,7 +69571,7 @@ ${declarations}
     }
   };
 
-  // packages/block-library/build-module/footnotes/index.js
+  // packages/block-library/build-module/footnotes/index.mjs
   var { name: name116 } = block_default115;
   var settings115 = {
     icon: format_list_numbered_default,
@@ -69582,12 +69582,12 @@ ${declarations}
     initBlock({ name: name116, metadata: block_default115, settings: settings115 });
   };
 
-  // packages/block-library/build-module/utils/is-block-metadata-experimental.js
+  // packages/block-library/build-module/utils/is-block-metadata-experimental.mjs
   function isBlockMetadataExperimental(metadata) {
     return metadata && "__experimental" in metadata && metadata.__experimental !== false;
   }
 
-  // packages/block-library/build-module/block-keyboard-shortcuts/index.js
+  // packages/block-library/build-module/block-keyboard-shortcuts/index.mjs
   var import_element135 = __toESM(require_element(), 1);
   var import_data155 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
@@ -69696,13 +69696,13 @@ ${declarations}
   }
   var block_keyboard_shortcuts_default = BlockKeyboardShortcuts;
 
-  // packages/block-library/build-module/private-apis.js
+  // packages/block-library/build-module/private-apis.mjs
   var privateApis3 = {};
   lock(privateApis3, {
     BlockKeyboardShortcuts: block_keyboard_shortcuts_default
   });
 
-  // packages/block-library/build-module/index.js
+  // packages/block-library/build-module/index.mjs
   var import_jsx_runtime527 = __toESM(require_jsx_runtime(), 1);
   var getAllBlocks = () => {
     const blocks = [

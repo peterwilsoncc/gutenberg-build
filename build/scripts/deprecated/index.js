@@ -39,7 +39,7 @@ var wp;
     }
   });
 
-  // packages/deprecated/build-module/index.js
+  // packages/deprecated/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     default: () => deprecated,

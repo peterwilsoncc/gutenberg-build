@@ -67,7 +67,7 @@ var wp;
     }
   });
 
-  // packages/router/build-module/index.js
+  // packages/router/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     privateApis: () => privateApis
@@ -963,7 +963,7 @@ var wp;
     return parsedPath;
   }
 
-  // packages/router/build-module/router.js
+  // packages/router/build-module/router.mjs
   var import_element = __toESM(require_element(), 1);
   var import_url = __toESM(require_url(), 1);
   var import_compose = __toESM(require_compose(), 1);
@@ -1131,7 +1131,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ConfigContext.Provider, { value: config, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RoutesContext.Provider, { value: renderedMatch, children }) });
   }
 
-  // packages/router/build-module/link.js
+  // packages/router/build-module/link.mjs
   var import_element2 = __toESM(require_element(), 1);
   var import_url2 = __toESM(require_url(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
@@ -1166,14 +1166,14 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("a", { href, onClick, ...props, children });
   }
 
-  // packages/router/build-module/lock-unlock.js
+  // packages/router/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/router"
   );
 
-  // packages/router/build-module/private-apis.js
+  // packages/router/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
     useHistory,

@@ -1,4 +1,4 @@
-// packages/block-library/build-module/navigation/view.js
+// packages/block-library/build-module/navigation/view.mjs
 import {
   store,
   getContext,

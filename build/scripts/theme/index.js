@@ -52,23 +52,23 @@ var wp;
     }
   });
 
-  // packages/theme/build-module/index.js
+  // packages/theme/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     privateApis: () => privateApis
   });
 
-  // packages/theme/build-module/lock-unlock.js
+  // packages/theme/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/theme"
   );
 
-  // packages/theme/build-module/theme-provider.js
+  // packages/theme/build-module/theme-provider.mjs
   var import_element3 = __toESM(require_element(), 1);
 
-  // packages/theme/build-module/context.js
+  // packages/theme/build-module/context.mjs
   var import_element = __toESM(require_element(), 1);
   var ThemeContext = (0, import_element.createContext)({
     resolvedSettings: {
@@ -3027,16 +3027,16 @@ var wp;
     return memoized;
   }
 
-  // packages/theme/build-module/use-theme-provider-styles.js
+  // packages/theme/build-module/use-theme-provider-styles.mjs
   var import_element2 = __toESM(require_element(), 1);
 
-  // packages/theme/build-module/color-ramps/lib/register-color-spaces.js
+  // packages/theme/build-module/color-ramps/lib/register-color-spaces.mjs
   ColorSpace.register(srgb_default);
   ColorSpace.register(oklch_default);
   ColorSpace.register(p3_default);
   ColorSpace.register(hsl_default);
 
-  // packages/theme/build-module/prebuilt/ts/color-tokens.js
+  // packages/theme/build-module/prebuilt/ts/color-tokens.mjs
   var color_tokens_default = {
     "primary-bgFill1": ["bg-interactive-brand-strong"],
     "primary-fgFill": [
@@ -3172,7 +3172,7 @@ var wp;
     "caution-fgSurface3": ["fg-content-caution-weak"]
   };
 
-  // packages/theme/build-module/color-ramps/lib/color-utils.js
+  // packages/theme/build-module/color-ramps/lib/color-utils.mjs
   function getColorString(color) {
     return serialize(color, { format: "hex", inGamut: true });
   }
@@ -3183,7 +3183,7 @@ var wp;
     return to(toGamut(c, { space: srgb_default, method: "css" }), oklch_default);
   }
 
-  // packages/theme/build-module/color-ramps/lib/constants.js
+  // packages/theme/build-module/color-ramps/lib/constants.mjs
   var WHITE = to("white", oklch_default);
   var BLACK = to("black", oklch_default);
   var UNIVERSAL_CONTRAST_TOPUP = 0.02;
@@ -3204,7 +3204,7 @@ var wp;
     error: "#cc1818"
   };
 
-  // packages/theme/build-module/color-ramps/lib/utils.js
+  // packages/theme/build-module/color-ramps/lib/utils.mjs
   function buildDependencyGraph(config) {
     const dependencies = /* @__PURE__ */ new Map();
     const dependents = /* @__PURE__ */ new Map();
@@ -3330,7 +3330,7 @@ var wp;
     return bestC;
   }
 
-  // packages/theme/build-module/color-ramps/lib/taper-chroma.js
+  // packages/theme/build-module/color-ramps/lib/taper-chroma.mjs
   function taperChroma(seed, lTarget, options = {}) {
     const gamut = options.gamut ?? srgb_default;
     const alpha = options.alpha ?? 0.65;
@@ -3442,7 +3442,7 @@ var wp;
     return get(clamped, [oklch_default, "c"]);
   }
 
-  // packages/theme/build-module/color-ramps/lib/find-color-with-constraints.js
+  // packages/theme/build-module/color-ramps/lib/find-color-with-constraints.mjs
   function cdiff(c13, c23) {
     return Math.log(c13 / c23);
   }
@@ -3519,7 +3519,7 @@ var wp;
     };
   }
 
-  // packages/theme/build-module/color-ramps/lib/index.js
+  // packages/theme/build-module/color-ramps/lib/index.mjs
   function calculateRamp({
     seed,
     sortedSteps,
@@ -3715,7 +3715,7 @@ var wp;
     };
   }
 
-  // packages/theme/build-module/color-ramps/lib/ramp-configs.js
+  // packages/theme/build-module/color-ramps/lib/ramp-configs.mjs
   var lightnessConstraintForegroundHighContrast = (direction) => direction === "lighter" ? 0.9551 : 0.235;
   var lightnessConstraintForegroundMediumContrast = (direction) => direction === "lighter" ? 0.77 : 0.56;
   var lightnessConstraintBgFill = (direction) => direction === "lighter" ? 0.67 : 0.45;
@@ -4002,7 +4002,7 @@ var wp;
     }
   };
 
-  // packages/theme/build-module/color-ramps/index.js
+  // packages/theme/build-module/color-ramps/index.mjs
   function buildBgRamp(seed) {
     if (typeof seed !== "string" || seed.trim() === "") {
       throw new Error("Seed color must be a non-empty string");
@@ -4030,7 +4030,7 @@ var wp;
     return buildRamp(seed, ACCENT_RAMP_CONFIG, bgRampInfo);
   }
 
-  // packages/theme/build-module/use-theme-provider-styles.js
+  // packages/theme/build-module/use-theme-provider-styles.mjs
   var getCachedBgRamp = memize(buildBgRamp, { maxSize: 10 });
   var getCachedAccentRamp = memize(buildAccentRamp, { maxSize: 10 });
   var legacyWpComponentsOverridesCSS = [
@@ -4202,7 +4202,7 @@ var wp;
     };
   }
 
-  // packages/theme/build-module/theme-provider.js
+  // packages/theme/build-module/theme-provider.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var css = `.style-module__root__26kw6 {
 	display: contents;
@@ -4264,7 +4264,7 @@ var wp;
     ] });
   };
 
-  // packages/theme/build-module/private-apis.js
+  // packages/theme/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
     ThemeProvider,

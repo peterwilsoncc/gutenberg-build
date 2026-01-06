@@ -39,16 +39,16 @@ var wp;
     }
   });
 
-  // packages/notices/build-module/index.js
+  // packages/notices/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     store: () => store
   });
 
-  // packages/notices/build-module/store/index.js
+  // packages/notices/build-module/store/index.mjs
   var import_data = __toESM(require_data(), 1);
 
-  // packages/notices/build-module/store/utils/on-sub-key.js
+  // packages/notices/build-module/store/utils/on-sub-key.mjs
   var onSubKey = (actionProperty) => (reducer) => (state = {}, action) => {
     const key = action[actionProperty];
     if (key === void 0) {
@@ -65,7 +65,7 @@ var wp;
   };
   var on_sub_key_default = onSubKey;
 
-  // packages/notices/build-module/store/reducer.js
+  // packages/notices/build-module/store/reducer.mjs
   var notices = on_sub_key_default("context")((state = [], action) => {
     switch (action.type) {
       case "CREATE_NOTICE":
@@ -84,7 +84,7 @@ var wp;
   });
   var reducer_default = notices;
 
-  // packages/notices/build-module/store/actions.js
+  // packages/notices/build-module/store/actions.mjs
   var actions_exports = {};
   __export(actions_exports, {
     createErrorNotice: () => createErrorNotice,
@@ -97,11 +97,11 @@ var wp;
     removeNotices: () => removeNotices
   });
 
-  // packages/notices/build-module/store/constants.js
+  // packages/notices/build-module/store/constants.mjs
   var DEFAULT_CONTEXT = "global";
   var DEFAULT_STATUS = "info";
 
-  // packages/notices/build-module/store/actions.js
+  // packages/notices/build-module/store/actions.mjs
   var uniqueId = 0;
   function createNotice(status = DEFAULT_STATUS, content, options = {}) {
     const {
@@ -169,7 +169,7 @@ var wp;
     };
   }
 
-  // packages/notices/build-module/store/selectors.js
+  // packages/notices/build-module/store/selectors.mjs
   var selectors_exports = {};
   __export(selectors_exports, {
     getNotices: () => getNotices
@@ -179,7 +179,7 @@ var wp;
     return state[context] || DEFAULT_NOTICES;
   }
 
-  // packages/notices/build-module/store/index.js
+  // packages/notices/build-module/store/index.mjs
   var store = (0, import_data.createReduxStore)("core/notices", {
     reducer: reducer_default,
     actions: actions_exports,

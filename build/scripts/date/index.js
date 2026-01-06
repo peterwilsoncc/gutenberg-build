@@ -1645,7 +1645,7 @@ var wp;
     }
   });
 
-  // packages/date/build-module/index.js
+  // packages/date/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     __experimentalGetSettings: () => __experimentalGetSettings,

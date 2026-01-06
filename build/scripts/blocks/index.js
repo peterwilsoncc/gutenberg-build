@@ -4499,7 +4499,7 @@ var wp;
     }
   });
 
-  // packages/blocks/build-module/index.js
+  // packages/blocks/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     __EXPERIMENTAL_ELEMENTS: () => __EXPERIMENTAL_ELEMENTS,
@@ -4583,7 +4583,7 @@ var wp;
     withBlockContentContext: () => withBlockContentContext
   });
 
-  // packages/blocks/build-module/store/index.js
+  // packages/blocks/build-module/store/index.mjs
   var import_data5 = __toESM(require_data(), 1);
 
   // node_modules/tslib/tslib.es6.mjs
@@ -4657,7 +4657,7 @@ var wp;
     return pascalCase(input, __assign({ transform: camelCaseTransform }, options));
   }
 
-  // packages/blocks/build-module/store/reducer.js
+  // packages/blocks/build-module/store/reducer.mjs
   var import_data2 = __toESM(require_data(), 1);
   var import_i18n3 = __toESM(require_i18n(), 1);
 
@@ -4872,14 +4872,14 @@ var wp;
     };
   }
 
-  // packages/blocks/build-module/api/utils.js
+  // packages/blocks/build-module/api/utils.mjs
   var import_element = __toESM(require_element(), 1);
   var import_i18n2 = __toESM(require_i18n(), 1);
   var import_dom = __toESM(require_dom(), 1);
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_deprecated = __toESM(require_deprecated(), 1);
 
-  // packages/blocks/build-module/api/constants.js
+  // packages/blocks/build-module/api/constants.mjs
   var BLOCK_ICON_DEFAULT = "block-default";
   var DEPRECATED_ENTRY_KEYS = [
     "attributes",
@@ -5179,7 +5179,7 @@ var wp;
     "spacing.spacingSizes": true
   };
 
-  // packages/blocks/build-module/api/registration.js
+  // packages/blocks/build-module/api/registration.mjs
   var import_data = __toESM(require_data(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
   var import_warning = __toESM(require_warning(), 1);
@@ -5203,14 +5203,14 @@ var wp;
     ]
   };
 
-  // packages/blocks/build-module/lock-unlock.js
+  // packages/blocks/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
   var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/blocks"
   );
 
-  // packages/blocks/build-module/api/registration.js
+  // packages/blocks/build-module/api/registration.mjs
   function isObject(object) {
     return object !== null && typeof object === "object";
   }
@@ -5500,7 +5500,7 @@ var wp;
     return unlock((0, import_data.select)(store)).getAllBlockBindingsSources();
   }
 
-  // packages/blocks/build-module/api/utils.js
+  // packages/blocks/build-module/api/utils.mjs
   k([names_default, a11y_default]);
   var ICON_COLORS = ["#191e23", "#f8f9f9"];
   function isUnmodifiedBlock(block, role) {
@@ -5721,7 +5721,7 @@ var wp;
     );
   }
 
-  // packages/blocks/build-module/store/reducer.js
+  // packages/blocks/build-module/store/reducer.mjs
   var DEFAULT_CATEGORIES = [
     { slug: "text", title: (0, import_i18n3.__)("Text") },
     { slug: "media", title: (0, import_i18n3.__)("Media") },
@@ -5995,7 +5995,7 @@ var wp;
     blockBindingsSources
   });
 
-  // packages/blocks/build-module/store/selectors.js
+  // packages/blocks/build-module/store/selectors.mjs
   var selectors_exports = {};
   __export(selectors_exports, {
     __experimentalHasContentRoleAttribute: () => __experimentalHasContentRoleAttribute,
@@ -6023,7 +6023,7 @@ var wp;
   var import_rich_text2 = __toESM(require_rich_text(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
 
-  // packages/blocks/build-module/store/utils.js
+  // packages/blocks/build-module/store/utils.mjs
   var getValueFromObjectPath = (object, path, defaultValue) => {
     const normalizedPath = Array.isArray(path) ? path : path.split(".");
     let value = object;
@@ -6044,7 +6044,7 @@ var wp;
     return blockAttributes === variationAttributes;
   }
 
-  // packages/blocks/build-module/store/private-selectors.js
+  // packages/blocks/build-module/store/private-selectors.mjs
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
     getAllBlockBindingsSources: () => getAllBlockBindingsSources,
@@ -6205,7 +6205,7 @@ var wp;
     );
   };
 
-  // packages/blocks/build-module/store/selectors.js
+  // packages/blocks/build-module/store/selectors.mjs
   var getNormalizedBlockType = (state, nameOrType) => "string" === typeof nameOrType ? getBlockType2(state, nameOrType) : nameOrType;
   var getBlockTypes2 = (0, import_data4.createSelector)(
     (state) => Object.values(state.blockTypes),
@@ -6358,7 +6358,7 @@ var wp;
     return hasContentRoleAttribute(...args);
   };
 
-  // packages/blocks/build-module/store/actions.js
+  // packages/blocks/build-module/store/actions.mjs
   var actions_exports = {};
   __export(actions_exports, {
     __experimentalReapplyBlockFilters: () => __experimentalReapplyBlockFilters,
@@ -6397,7 +6397,7 @@ var wp;
     return true;
   }
 
-  // packages/blocks/build-module/store/process-block-type.js
+  // packages/blocks/build-module/store/process-block-type.mjs
   var import_react_is = __toESM(require_react_is(), 1);
   var import_deprecated4 = __toESM(require_deprecated(), 1);
   var import_hooks = __toESM(require_hooks(), 1);
@@ -6551,7 +6551,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return settings;
   };
 
-  // packages/blocks/build-module/store/actions.js
+  // packages/blocks/build-module/store/actions.mjs
   function addBlockTypes(blockTypes2) {
     return {
       type: "ADD_BLOCK_TYPES",
@@ -6671,7 +6671,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     };
   }
 
-  // packages/blocks/build-module/store/private-actions.js
+  // packages/blocks/build-module/store/private-actions.mjs
   var private_actions_exports = {};
   __export(private_actions_exports, {
     addBlockBindingsSource: () => addBlockBindingsSource,
@@ -6717,10 +6717,10 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     };
   }
 
-  // packages/blocks/build-module/store/constants.js
+  // packages/blocks/build-module/store/constants.mjs
   var STORE_NAME = "core/blocks";
 
-  // packages/blocks/build-module/store/index.js
+  // packages/blocks/build-module/store/index.mjs
   var store = (0, import_data5.createReduxStore)(STORE_NAME, {
     reducer: reducer_default,
     selectors: selectors_exports,
@@ -6778,7 +6778,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
   var v4_default = v4;
 
-  // packages/blocks/build-module/api/factory.js
+  // packages/blocks/build-module/api/factory.mjs
   var import_hooks2 = __toESM(require_hooks(), 1);
   function createBlock(name, attributes = {}, innerBlocks = []) {
     if (!isBlockRegistered(name)) {
@@ -7056,18 +7056,18 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     )
   );
 
-  // packages/blocks/build-module/api/parser/index.js
+  // packages/blocks/build-module/api/parser/index.mjs
   var import_block_serialization_default_parser = __toESM(require_block_serialization_default_parser(), 1);
   var import_autop2 = __toESM(require_autop(), 1);
 
-  // packages/blocks/build-module/api/serializer.js
+  // packages/blocks/build-module/api/serializer.mjs
   var import_element2 = __toESM(require_element(), 1);
   var import_hooks3 = __toESM(require_hooks(), 1);
   var import_is_shallow_equal = __toESM(require_is_shallow_equal(), 1);
   var import_autop = __toESM(require_autop(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
 
-  // packages/blocks/build-module/api/parser/serialize-raw-block.js
+  // packages/blocks/build-module/api/parser/serialize-raw-block.mjs
   function serializeRawBlock(rawBlock, options = {}) {
     const { isCommentDelimited = true } = options;
     const {
@@ -7086,7 +7086,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return isCommentDelimited ? getCommentDelimitedContent(blockName, attrs, content) : content;
   }
 
-  // packages/blocks/build-module/api/serializer.js
+  // packages/blocks/build-module/api/serializer.mjs
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   function getBlockDefaultClassName(blockName) {
     const className = "wp-block-" + blockName.replace(/\//, "-").replace(/^core-/, "");
@@ -8001,12 +8001,12 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     })()
   );
 
-  // packages/blocks/build-module/api/validation/index.js
+  // packages/blocks/build-module/api/validation/index.mjs
   var import_es6 = __toESM(require_es6(), 1);
   var import_deprecated7 = __toESM(require_deprecated(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
 
-  // packages/blocks/build-module/api/validation/logger.js
+  // packages/blocks/build-module/api/validation/logger.mjs
   function createLogger() {
     function createLogHandler(logger) {
       return (message, ...args) => logger("Block validation: " + message, ...args);
@@ -8037,7 +8037,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     };
   }
 
-  // packages/blocks/build-module/api/validation/index.js
+  // packages/blocks/build-module/api/validation/index.mjs
   var identity = (x2) => x2;
   var REGEXP_WHITESPACE = /[\t\n\r\v\f ]+/g;
   var REGEXP_ONLY_WHITESPACE = /^[\t\n\r\v\f ]*$/;
@@ -8391,7 +8391,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return isValid;
   }
 
-  // packages/blocks/build-module/api/parser/convert-legacy-block.js
+  // packages/blocks/build-module/api/parser/convert-legacy-block.mjs
   function convertLegacyBlockNameAndAttributes(name, attributes) {
     const newAttributes = { ...attributes };
     if ("core/cover-image" === name) {
@@ -8621,17 +8621,17 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return memoized;
   }
 
-  // packages/blocks/build-module/api/parser/get-block-attributes.js
+  // packages/blocks/build-module/api/parser/get-block-attributes.mjs
   var import_hooks4 = __toESM(require_hooks(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
 
-  // packages/blocks/build-module/api/matchers.js
+  // packages/blocks/build-module/api/matchers.mjs
   var import_rich_text3 = __toESM(require_rich_text(), 1);
 
-  // packages/blocks/build-module/api/node.js
+  // packages/blocks/build-module/api/node.mjs
   var import_deprecated9 = __toESM(require_deprecated(), 1);
 
-  // packages/blocks/build-module/api/children.js
+  // packages/blocks/build-module/api/children.mjs
   var import_element3 = __toESM(require_element(), 1);
   var import_deprecated8 = __toESM(require_deprecated(), 1);
   function getSerializeCapableElement(children) {
@@ -8719,7 +8719,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     matcher
   };
 
-  // packages/blocks/build-module/api/node.js
+  // packages/blocks/build-module/api/node.mjs
   function isNodeOfType(node, type) {
     (0, import_deprecated9.default)("wp.blocks.node.isNodeOfType", {
       since: "6.1",
@@ -8794,7 +8794,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     matcher: matcher2
   };
 
-  // packages/blocks/build-module/api/matchers.js
+  // packages/blocks/build-module/api/matchers.mjs
   function html(selector, multilineTag) {
     return (domNode) => {
       let match = domNode;
@@ -8824,7 +8824,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return target ? import_rich_text3.RichTextData.fromHTMLElement(target, { preserveWhiteSpace }) : import_rich_text3.RichTextData.empty();
   };
 
-  // packages/blocks/build-module/api/parser/get-block-attributes.js
+  // packages/blocks/build-module/api/parser/get-block-attributes.mjs
   var toBooleanAttributeMatcher = (matcher3) => (value) => matcher3(value) !== void 0;
   function isOfType(value, type) {
     switch (type) {
@@ -8953,7 +8953,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     );
   }
 
-  // packages/blocks/build-module/api/parser/fix-custom-classname.js
+  // packages/blocks/build-module/api/parser/fix-custom-classname.mjs
   var CLASS_ATTR_SCHEMA = {
     type: "string",
     source: "attribute",
@@ -8987,7 +8987,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return modifiedBlockAttributes;
   }
 
-  // packages/blocks/build-module/api/parser/fix-global-attribute.js
+  // packages/blocks/build-module/api/parser/fix-global-attribute.mjs
   function getHTMLRootElement(innerHTML, dataAttribute, attributeSchema) {
     const parsed = parseWithAttributeSchema(
       `<div ${dataAttribute}>${innerHTML}</div>`,
@@ -9011,7 +9011,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return modifiedBlockAttributes;
   }
 
-  // packages/blocks/build-module/api/parser/apply-built-in-validation-fixes.js
+  // packages/blocks/build-module/api/parser/apply-built-in-validation-fixes.mjs
   var ARIA_LABEL_ATTR_SCHEMA = {
     type: "string",
     source: "attribute",
@@ -9054,7 +9054,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     };
   }
 
-  // packages/blocks/build-module/api/parser/apply-block-deprecated-versions.js
+  // packages/blocks/build-module/api/parser/apply-block-deprecated-versions.mjs
   function stubFalse() {
     return false;
   }
@@ -9119,7 +9119,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return block;
   }
 
-  // packages/blocks/build-module/api/parser/index.js
+  // packages/blocks/build-module/api/parser/index.mjs
   function convertLegacyBlocks(rawBlock) {
     const [correctName, correctedAttributes] = convertLegacyBlockNameAndAttributes(
       rawBlock.blockName,
@@ -9241,14 +9241,14 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }, []);
   }
 
-  // packages/blocks/build-module/api/raw-handling/index.js
+  // packages/blocks/build-module/api/raw-handling/index.mjs
   var import_deprecated10 = __toESM(require_deprecated(), 1);
   var import_dom12 = __toESM(require_dom(), 1);
 
-  // packages/blocks/build-module/api/raw-handling/html-to-blocks.js
+  // packages/blocks/build-module/api/raw-handling/html-to-blocks.mjs
   var import_element4 = __toESM(require_element(), 1);
 
-  // packages/blocks/build-module/api/raw-handling/get-raw-transforms.js
+  // packages/blocks/build-module/api/raw-handling/get-raw-transforms.mjs
   function getRawTransforms() {
     return getBlockTransforms("from").filter(({ type }) => type === "raw").map((transform) => {
       return transform.isMatch ? transform : {
@@ -9258,7 +9258,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     });
   }
 
-  // packages/blocks/build-module/api/raw-handling/html-to-blocks.js
+  // packages/blocks/build-module/api/raw-handling/html-to-blocks.mjs
   function htmlToBlocks(html2, handler) {
     const doc = document.implementation.createHTMLDocument("");
     doc.body.innerHTML = html2;
@@ -9294,7 +9294,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     });
   }
 
-  // packages/blocks/build-module/api/raw-handling/normalise-blocks.js
+  // packages/blocks/build-module/api/raw-handling/normalise-blocks.mjs
   var import_dom2 = __toESM(require_dom(), 1);
   function normaliseBlocks(HTML, options = {}) {
     const decuDoc = document.implementation.createHTMLDocument("");
@@ -9345,7 +9345,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return accu.innerHTML;
   }
 
-  // packages/blocks/build-module/api/raw-handling/special-comment-converter.js
+  // packages/blocks/build-module/api/raw-handling/special-comment-converter.mjs
   var import_dom3 = __toESM(require_dom(), 1);
   function specialCommentConverter(node, doc) {
     if (node.nodeType !== node.COMMENT_NODE) {
@@ -9411,7 +9411,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return node;
   }
 
-  // packages/blocks/build-module/api/raw-handling/list-reducer.js
+  // packages/blocks/build-module/api/raw-handling/list-reducer.mjs
   var import_dom4 = __toESM(require_dom(), 1);
   function isList(node) {
     return node.nodeName === "OL" || node.nodeName === "UL";
@@ -9451,7 +9451,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/blockquote-normaliser.js
+  // packages/blocks/build-module/api/raw-handling/blockquote-normaliser.mjs
   function blockquoteNormaliser(options) {
     return (node) => {
       if (node.nodeName !== "BLOCKQUOTE") {
@@ -9461,7 +9461,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     };
   }
 
-  // packages/blocks/build-module/api/raw-handling/figure-content-reducer.js
+  // packages/blocks/build-module/api/raw-handling/figure-content-reducer.mjs
   var import_dom5 = __toESM(require_dom(), 1);
   function isFigureContent(node, schema) {
     const tag = node.nodeName.toLowerCase();
@@ -9500,7 +9500,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/shortcode-converter.js
+  // packages/blocks/build-module/api/raw-handling/shortcode-converter.mjs
   var import_shortcode = __toESM(require_shortcode(), 1);
   var castArray = (maybeArray) => Array.isArray(maybeArray) ? maybeArray : [maybeArray];
   var beforeLineRegexp = /(\n|<p>)\s*$/;
@@ -9591,7 +9591,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
   }
   var shortcode_converter_default = segmentHTMLToShortcodeBlock;
 
-  // packages/blocks/build-module/api/raw-handling/utils.js
+  // packages/blocks/build-module/api/raw-handling/utils.mjs
   var import_dom6 = __toESM(require_dom(), 1);
   function getBlockContentSchemaFromTransforms(transforms, context) {
     const phrasingContentSchema = (0, import_dom6.getPhrasingContentSchema)(context);
@@ -9711,10 +9711,10 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return getSibling(parentNode, which);
   }
 
-  // packages/blocks/build-module/api/raw-handling/paste-handler.js
+  // packages/blocks/build-module/api/raw-handling/paste-handler.mjs
   var import_dom11 = __toESM(require_dom(), 1);
 
-  // packages/blocks/build-module/api/raw-handling/comment-remover.js
+  // packages/blocks/build-module/api/raw-handling/comment-remover.mjs
   var import_dom7 = __toESM(require_dom(), 1);
   function commentRemover(node) {
     if (node.nodeType === node.COMMENT_NODE) {
@@ -9722,7 +9722,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/is-inline-content.js
+  // packages/blocks/build-module/api/raw-handling/is-inline-content.mjs
   var import_dom8 = __toESM(require_dom(), 1);
   function isInline(node, contextTag) {
     if ((0, import_dom8.isTextContent)(node)) {
@@ -9755,7 +9755,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     return !nodes.some(isDoubleBR) && deepCheck(nodes, contextTag);
   }
 
-  // packages/blocks/build-module/api/raw-handling/phrasing-content-reducer.js
+  // packages/blocks/build-module/api/raw-handling/phrasing-content-reducer.mjs
   var import_dom9 = __toESM(require_dom(), 1);
   function phrasingContentReducer(node, doc) {
     if (node.nodeName === "SPAN" && node.style) {
@@ -9800,7 +9800,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/head-remover.js
+  // packages/blocks/build-module/api/raw-handling/head-remover.mjs
   function headRemover(node) {
     if (node.nodeName !== "SCRIPT" && node.nodeName !== "NOSCRIPT" && node.nodeName !== "TEMPLATE" && node.nodeName !== "STYLE") {
       return;
@@ -9808,7 +9808,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     node.parentNode.removeChild(node);
   }
 
-  // packages/blocks/build-module/api/raw-handling/ms-list-ignore.js
+  // packages/blocks/build-module/api/raw-handling/ms-list-ignore.mjs
   function msListIgnore(node) {
     if (node.nodeType !== node.ELEMENT_NODE) {
       return;
@@ -9829,7 +9829,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/ms-list-converter.js
+  // packages/blocks/build-module/api/raw-handling/ms-list-converter.mjs
   function isList2(node) {
     return node.nodeName === "OL" || node.nodeName === "UL";
   }
@@ -9873,7 +9873,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     node.parentNode.removeChild(node);
   }
 
-  // packages/blocks/build-module/api/raw-handling/image-corrector.js
+  // packages/blocks/build-module/api/raw-handling/image-corrector.mjs
   var import_blob = __toESM(require_blob(), 1);
   function imageCorrector(node) {
     if (node.nodeName !== "IMG") {
@@ -9909,7 +9909,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/div-normaliser.js
+  // packages/blocks/build-module/api/raw-handling/div-normaliser.mjs
   function divNormaliser(node) {
     if (node.nodeName !== "DIV") {
       return;
@@ -9917,7 +9917,7 @@ See: https://developer.wordpress.org/block-editor/reference-guides/block-api/blo
     node.innerHTML = normaliseBlocks(node.innerHTML);
   }
 
-  // packages/blocks/build-module/api/raw-handling/markdown-converter.js
+  // packages/blocks/build-module/api/raw-handling/markdown-converter.mjs
   var import_showdown = __toESM(require_showdown(), 1);
   var converter = new import_showdown.default.Converter({
     noHeaderId: true,
@@ -9944,7 +9944,7 @@ ${p3}`
     );
   }
 
-  // packages/blocks/build-module/api/raw-handling/iframe-remover.js
+  // packages/blocks/build-module/api/raw-handling/iframe-remover.mjs
   function iframeRemover(node) {
     if (node.nodeName === "IFRAME") {
       const text2 = node.ownerDocument.createTextNode(node.src);
@@ -9952,7 +9952,7 @@ ${p3}`
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/google-docs-uid-remover.js
+  // packages/blocks/build-module/api/raw-handling/google-docs-uid-remover.mjs
   var import_dom10 = __toESM(require_dom(), 1);
   function googleDocsUIdRemover(node) {
     if (!node.id || node.id.indexOf("docs-internal-guid-") !== 0) {
@@ -9965,7 +9965,7 @@ ${p3}`
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/html-formatting-remover.js
+  // packages/blocks/build-module/api/raw-handling/html-formatting-remover.mjs
   function isFormattingSpace(character) {
     return character === " " || character === "\r" || character === "\n" || character === "	";
   }
@@ -9999,7 +9999,7 @@ ${p3}`
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/br-remover.js
+  // packages/blocks/build-module/api/raw-handling/br-remover.mjs
   function brRemover(node) {
     if (node.nodeName !== "BR") {
       return;
@@ -10010,7 +10010,7 @@ ${p3}`
     node.parentNode.removeChild(node);
   }
 
-  // packages/blocks/build-module/api/raw-handling/empty-paragraph-remover.js
+  // packages/blocks/build-module/api/raw-handling/empty-paragraph-remover.mjs
   function emptyParagraphRemover(node) {
     if (node.nodeName !== "P") {
       return;
@@ -10021,7 +10021,7 @@ ${p3}`
     node.parentNode.removeChild(node);
   }
 
-  // packages/blocks/build-module/api/raw-handling/slack-paragraph-corrector.js
+  // packages/blocks/build-module/api/raw-handling/slack-paragraph-corrector.mjs
   function slackParagraphCorrector(node) {
     if (node.nodeName !== "SPAN") {
       return;
@@ -10035,7 +10035,7 @@ ${p3}`
     parentNode.removeChild(node);
   }
 
-  // packages/blocks/build-module/api/raw-handling/latex-to-math.js
+  // packages/blocks/build-module/api/raw-handling/latex-to-math.mjs
   function isLatexMathMode(text2) {
     const lettersRegex = /[\p{L}\s]+/gu;
     let match;
@@ -10068,7 +10068,7 @@ ${p3}`
     return false;
   }
 
-  // packages/blocks/build-module/api/raw-handling/heading-transformer.js
+  // packages/blocks/build-module/api/raw-handling/heading-transformer.mjs
   function headingTransformer(node) {
     if (node.nodeType !== node.ELEMENT_NODE) {
       return;
@@ -10091,7 +10091,7 @@ ${p3}`
     }
   }
 
-  // packages/blocks/build-module/api/raw-handling/paste-handler.js
+  // packages/blocks/build-module/api/raw-handling/paste-handler.mjs
   var log = (...args) => window?.console?.log?.(...args);
   function filterInlineHTML(HTML) {
     HTML = deepFilterHTML(HTML, [
@@ -10210,7 +10210,7 @@ ${p3}`
     return blocks;
   }
 
-  // packages/blocks/build-module/api/raw-handling/index.js
+  // packages/blocks/build-module/api/raw-handling/index.mjs
   function deprecatedGetPhrasingContentSchema(context) {
     (0, import_deprecated10.default)("wp.blocks.getPhrasingContentSchema", {
       since: "5.6",
@@ -10249,7 +10249,7 @@ ${p3}`
     }).flat().filter(Boolean);
   }
 
-  // packages/blocks/build-module/api/categories.js
+  // packages/blocks/build-module/api/categories.mjs
   var import_data6 = __toESM(require_data(), 1);
   function getCategories2() {
     return (0, import_data6.select)(store).getCategories();
@@ -10261,7 +10261,7 @@ ${p3}`
     (0, import_data6.dispatch)(store).updateCategory(slug, category);
   }
 
-  // packages/blocks/build-module/api/templates.js
+  // packages/blocks/build-module/api/templates.mjs
   var import_element5 = __toESM(require_element(), 1);
   function doBlocksMatchTemplate(blocks = [], template = []) {
     return blocks.length === template.length && template.every(([name, , innerBlocksTemplate], index) => {
@@ -10325,13 +10325,13 @@ ${p3}`
     );
   }
 
-  // packages/blocks/build-module/api/index.js
+  // packages/blocks/build-module/api/index.mjs
   var fieldsKey = Symbol("fields");
   var formKey = Symbol("form");
   var privateApis = {};
   lock(privateApis, { isContentBlock, fieldsKey, formKey });
 
-  // packages/blocks/build-module/deprecated.js
+  // packages/blocks/build-module/deprecated.mjs
   var import_deprecated11 = __toESM(require_deprecated(), 1);
   function withBlockContentContext(OriginalComponent) {
     (0, import_deprecated11.default)("wp.blocks.withBlockContentContext", {

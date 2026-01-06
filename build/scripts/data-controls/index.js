@@ -53,7 +53,7 @@ var wp;
     }
   });
 
-  // packages/data-controls/build-module/index.js
+  // packages/data-controls/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     __unstableAwaitPromise: () => __unstableAwaitPromise,

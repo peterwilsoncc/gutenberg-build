@@ -39,7 +39,7 @@ var wp;
     }
   });
 
-  // packages/keycodes/build-module/index.js
+  // packages/keycodes/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
     ALT: () => ALT,
@@ -72,7 +72,7 @@ var wp;
   });
   var import_i18n = __toESM(require_i18n(), 1);
 
-  // packages/keycodes/build-module/platform.js
+  // packages/keycodes/build-module/platform.mjs
   function isAppleOS(_window) {
     if (!_window) {
       if (typeof window === "undefined") {
@@ -84,7 +84,7 @@ var wp;
     return platform.indexOf("Mac") !== -1 || ["iPad", "iPhone"].includes(platform);
   }
 
-  // packages/keycodes/build-module/index.js
+  // packages/keycodes/build-module/index.mjs
   var BACKSPACE = 8;
   var TAB = 9;
   var ENTER = 13;

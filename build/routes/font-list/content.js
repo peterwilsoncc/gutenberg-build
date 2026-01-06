@@ -317,7 +317,7 @@ function clsx() {
 }
 var clsx_default = clsx;
 
-// packages/admin-ui/build-module/navigable-region/index.js
+// packages/admin-ui/build-module/navigable-region/index.mjs
 var import_element = __toESM(require_element(), 1);
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 var NavigableRegion = (0, import_element.forwardRef)(
@@ -339,14 +339,14 @@ var NavigableRegion = (0, import_element.forwardRef)(
 NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
-// packages/admin-ui/build-module/page/header.js
+// packages/admin-ui/build-module/page/header.mjs
 var import_components2 = __toESM(require_components(), 1);
 
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.js
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
 var import_components = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
 
-// packages/admin-ui/build-module/page/header.js
+// packages/admin-ui/build-module/page/header.mjs
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 function Header({
   breadcrumbs,
@@ -384,7 +384,7 @@ function Header({
   ] });
 }
 
-// packages/admin-ui/build-module/page/index.js
+// packages/admin-ui/build-module/page/index.mjs
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 function Page({
   breadcrumbs,
@@ -424,7 +424,7 @@ var import_core_data12 = __toESM(require_core_data());
 var import_data13 = __toESM(require_data());
 var import_element34 = __toESM(require_element());
 
-// packages/global-styles-ui/build-module/global-styles-ui.js
+// packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_components62 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data12 = __toESM(require_data(), 1);
@@ -432,7 +432,7 @@ var import_block_editor13 = __toESM(require_block_editor(), 1);
 var import_element33 = __toESM(require_element(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
 
-// packages/global-styles-engine/build-module/utils/object.js
+// packages/global-styles-engine/build-module/utils/object.mjs
 function setImmutably(object, path, value) {
   path = Array.isArray(path) ? [...path] : [path];
   object = Array.isArray(object) ? [...object] : { ...object };
@@ -454,7 +454,7 @@ var getValueFromObjectPath = (object, path, defaultValue) => {
   return value ?? defaultValue;
 };
 
-// packages/global-styles-engine/build-module/settings/get-setting.js
+// packages/global-styles-engine/build-module/settings/get-setting.mjs
 var VALID_SETTINGS = [
   "appearanceTools",
   "useRootPaddingAwareAlignments",
@@ -542,7 +542,7 @@ function getSetting(globalStyles, path, blockName) {
   return result;
 }
 
-// packages/global-styles-engine/build-module/settings/set-setting.js
+// packages/global-styles-engine/build-module/settings/set-setting.mjs
 function setSetting(globalStyles, path, newValue, blockName) {
   const appendedBlockPath = blockName ? ".blocks." + blockName : "";
   const appendedPropertyPath = path ? "." + path : "";
@@ -554,10 +554,10 @@ function setSetting(globalStyles, path, newValue, blockName) {
   );
 }
 
-// packages/global-styles-engine/build-module/utils/common.js
+// packages/global-styles-engine/build-module/utils/common.mjs
 var import_style_engine = __toESM(require_style_engine(), 1);
 
-// packages/global-styles-engine/build-module/utils/fluid.js
+// packages/global-styles-engine/build-module/utils/fluid.mjs
 var DEFAULT_MAXIMUM_VIEWPORT_WIDTH = "1600px";
 var DEFAULT_MINIMUM_VIEWPORT_WIDTH = "320px";
 var DEFAULT_SCALE_FACTOR = 1;
@@ -700,7 +700,7 @@ function roundToPrecision(value, digits = 3) {
   return Math.round(value * base) / base;
 }
 
-// packages/global-styles-engine/build-module/utils/typography.js
+// packages/global-styles-engine/build-module/utils/typography.mjs
 function isFluidTypographyEnabled(typographySettings) {
   const fluidSettings = typographySettings?.fluid;
   return true === fluidSettings || fluidSettings && typeof fluidSettings === "object" && Object.keys(fluidSettings).length > 0;
@@ -743,7 +743,7 @@ function getTypographyFontSizeValue(preset, settings) {
   return defaultSize;
 }
 
-// packages/global-styles-engine/build-module/utils/common.js
+// packages/global-styles-engine/build-module/utils/common.mjs
 var PRESET_METADATA = [
   {
     path: ["color", "palette"],
@@ -941,7 +941,7 @@ function getValueFromVariable(features, blockName, variable) {
   return variable;
 }
 
-// packages/global-styles-engine/build-module/settings/get-style.js
+// packages/global-styles-engine/build-module/settings/get-style.mjs
 function getStyle(globalStyles, path, blockName, shouldDecodeEncode = true) {
   const appendedPath = path ? "." + path : "";
   const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
@@ -953,7 +953,7 @@ function getStyle(globalStyles, path, blockName, shouldDecodeEncode = true) {
   return result;
 }
 
-// packages/global-styles-engine/build-module/settings/set-style.js
+// packages/global-styles-engine/build-module/settings/set-style.mjs
 function setStyle(globalStyles, path, newValue, blockName) {
   const appendedPath = path ? "." + path : "";
   const finalPath = !blockName ? `styles${appendedPath}` : `styles.blocks.${blockName}${appendedPath}`;
@@ -964,7 +964,7 @@ function setStyle(globalStyles, path, newValue, blockName) {
   );
 }
 
-// packages/global-styles-engine/build-module/core/equal.js
+// packages/global-styles-engine/build-module/core/equal.mjs
 var import_es6 = __toESM(require_es6(), 1);
 function areGlobalStylesEqual(original, variation) {
   if (typeof original !== "object" || typeof variation !== "object") {
@@ -973,7 +973,7 @@ function areGlobalStylesEqual(original, variation) {
   return (0, import_es6.default)(original?.styles, variation?.styles) && (0, import_es6.default)(original?.settings, variation?.settings);
 }
 
-// packages/global-styles-engine/build-module/core/merge.js
+// packages/global-styles-engine/build-module/core/merge.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 
 // node_modules/is-plain-object/dist/is-plain-object.mjs
@@ -993,7 +993,7 @@ function isPlainObject(o3) {
   return true;
 }
 
-// packages/global-styles-engine/build-module/core/merge.js
+// packages/global-styles-engine/build-module/core/merge.mjs
 function mergeGlobalStyles(base, user) {
   return (0, import_deepmerge.default)(base, user, {
     /*
@@ -1180,10 +1180,10 @@ var k = function(r3) {
   });
 };
 
-// packages/global-styles-ui/build-module/provider.js
+// packages/global-styles-ui/build-module/provider.mjs
 var import_element3 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/context.js
+// packages/global-styles-ui/build-module/context.mjs
 var import_element2 = __toESM(require_element(), 1);
 var GlobalStylesContext = (0, import_element2.createContext)({
   user: { styles: {}, settings: {} },
@@ -1194,7 +1194,7 @@ var GlobalStylesContext = (0, import_element2.createContext)({
   fontLibraryEnabled: false
 });
 
-// packages/global-styles-ui/build-module/provider.js
+// packages/global-styles-ui/build-module/provider.mjs
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 function GlobalStylesProvider({
   children,
@@ -1219,11 +1219,11 @@ function GlobalStylesProvider({
   return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(GlobalStylesContext.Provider, { value: contextValue, children });
 }
 
-// packages/global-styles-ui/build-module/screen-root.js
+// packages/global-styles-ui/build-module/screen-root.mjs
 var import_components9 = __toESM(require_components(), 1);
 var import_i18n4 = __toESM(require_i18n(), 1);
 
-// packages/icons/build-module/icon/index.js
+// packages/icons/build-module/icon/index.mjs
 var import_element4 = __toESM(require_element(), 1);
 var icon_default = (0, import_element4.forwardRef)(
   ({ icon, size = 24, ...props }, ref) => {
@@ -1236,36 +1236,36 @@ var icon_default = (0, import_element4.forwardRef)(
   }
 );
 
-// packages/icons/build-module/library/chevron-left.js
+// packages/icons/build-module/library/chevron-left.mjs
 var import_primitives = __toESM(require_primitives(), 1);
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_primitives.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
 
-// packages/icons/build-module/library/chevron-right.js
+// packages/icons/build-module/library/chevron-right.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_primitives2.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
 
-// packages/icons/build-module/library/more-vertical.js
+// packages/icons/build-module/library/more-vertical.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_primitives3.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
 
-// packages/icons/build-module/library/next.js
+// packages/icons/build-module/library/next.mjs
 var import_primitives4 = __toESM(require_primitives(), 1);
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var next_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives4.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
 
-// packages/icons/build-module/library/previous.js
+// packages/icons/build-module/library/previous.mjs
 var import_primitives5 = __toESM(require_primitives(), 1);
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var previous_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives5.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
 
-// packages/global-styles-ui/build-module/screen-root.js
+// packages/global-styles-ui/build-module/screen-root.mjs
 var import_data2 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 
-// packages/global-styles-ui/build-module/icon-with-current-color.js
+// packages/global-styles-ui/build-module/icon-with-current-color.mjs
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 function IconWithCurrentColor({
   className,
@@ -1283,7 +1283,7 @@ function IconWithCurrentColor({
   );
 }
 
-// packages/global-styles-ui/build-module/navigation-button.js
+// packages/global-styles-ui/build-module/navigation-button.mjs
 var import_components3 = __toESM(require_components(), 1);
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 function GenericNavigationButton({
@@ -1303,7 +1303,7 @@ function NavigationButtonAsItem(props) {
   return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_components3.Navigator.Button, { as: GenericNavigationButton, ...props });
 }
 
-// packages/global-styles-ui/build-module/root-menu.js
+// packages/global-styles-ui/build-module/root-menu.mjs
 var import_components4 = __toESM(require_components(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
 var import_block_editor = __toESM(require_block_editor(), 1);
@@ -1330,13 +1330,13 @@ function a11y_default(o3) {
   };
 }
 
-// packages/global-styles-ui/build-module/hooks.js
+// packages/global-styles-ui/build-module/hooks.mjs
 var import_element5 = __toESM(require_element(), 1);
 var import_data = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
 var import_i18n = __toESM(require_i18n(), 1);
 
-// packages/global-styles-ui/build-module/utils.js
+// packages/global-styles-ui/build-module/utils.mjs
 function removePropertiesFromObject(object, properties) {
   if (!properties?.length) {
     return object;
@@ -1419,7 +1419,7 @@ function getFontFamilies(themeJson) {
   return [bodyFontFamily, headingFontFamily];
 }
 
-// packages/global-styles-ui/build-module/hooks.js
+// packages/global-styles-ui/build-module/hooks.mjs
 k([a11y_default]);
 function useStyle(path, blockName, readFrom = "merged", shouldDecodeEncode = true) {
   const { user, base, merged, onChange } = (0, import_element5.useContext)(GlobalStylesContext);
@@ -1514,14 +1514,14 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
   }, [properties, userVariation, variationsFromTheme]);
 }
 
-// packages/global-styles-ui/build-module/lock-unlock.js
+// packages/global-styles-ui/build-module/lock-unlock.mjs
 var import_private_apis = __toESM(require_private_apis(), 1);
 var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/global-styles-ui"
 );
 
-// packages/global-styles-ui/build-module/root-menu.js
+// packages/global-styles-ui/build-module/root-menu.mjs
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel,
@@ -1531,10 +1531,10 @@ var {
   useHasBackgroundPanel
 } = unlock(import_block_editor.privateApis);
 
-// packages/global-styles-ui/build-module/preview-styles.js
+// packages/global-styles-ui/build-module/preview-styles.mjs
 var import_components8 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/preview-hooks.js
+// packages/global-styles-ui/build-module/preview-hooks.mjs
 function useStylesPreviewColors() {
   const [textColor = "black"] = useStyle("color.text");
   const [backgroundColor = "white"] = useStyle("color.background");
@@ -1567,12 +1567,12 @@ function useStylesPreviewColors() {
   };
 }
 
-// packages/global-styles-ui/build-module/typography-example.js
+// packages/global-styles-ui/build-module/typography-example.mjs
 var import_element6 = __toESM(require_element(), 1);
 var import_components5 = __toESM(require_components(), 1);
 var import_i18n3 = __toESM(require_i18n(), 1);
 
-// packages/global-styles-ui/build-module/font-library/utils/preview-styles.js
+// packages/global-styles-ui/build-module/font-library/utils/preview-styles.mjs
 function findNearest(input, numbers) {
   if (numbers.length === 0) {
     return null;
@@ -1659,7 +1659,7 @@ function getFacePreviewStyle(face) {
   };
 }
 
-// packages/global-styles-ui/build-module/typography-example.js
+// packages/global-styles-ui/build-module/typography-example.mjs
 var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 function PreviewTypography({
   fontSize,
@@ -1709,7 +1709,7 @@ function PreviewTypography({
   );
 }
 
-// packages/global-styles-ui/build-module/highlighted-colors.js
+// packages/global-styles-ui/build-module/highlighted-colors.mjs
 var import_components6 = __toESM(require_components(), 1);
 var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
 function HighlightedColors({
@@ -1743,7 +1743,7 @@ function HighlightedColors({
   ));
 }
 
-// packages/global-styles-ui/build-module/preview-wrapper.js
+// packages/global-styles-ui/build-module/preview-wrapper.mjs
 var import_components7 = __toESM(require_components(), 1);
 var import_compose = __toESM(require_compose(), 1);
 var import_element7 = __toESM(require_element(), 1);
@@ -1822,7 +1822,7 @@ function PreviewWrapper({
 }
 var preview_wrapper_default = PreviewWrapper;
 
-// packages/global-styles-ui/build-module/preview-styles.js
+// packages/global-styles-ui/build-module/preview-styles.mjs
 var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 var firstFrameVariants = {
   start: {
@@ -2003,10 +2003,10 @@ function PreviewStyles({
 }
 var preview_styles_default = PreviewStyles;
 
-// packages/global-styles-ui/build-module/screen-root.js
+// packages/global-styles-ui/build-module/screen-root.mjs
 var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-block-list.js
+// packages/global-styles-ui/build-module/screen-block-list.mjs
 var import_blocks2 = __toESM(require_blocks(), 1);
 var import_i18n6 = __toESM(require_i18n(), 1);
 var import_components12 = __toESM(require_components(), 1);
@@ -2016,7 +2016,7 @@ var import_block_editor2 = __toESM(require_block_editor(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
 import { speak } from "@wordpress/a11y";
 
-// packages/global-styles-ui/build-module/variations/variations-panel.js
+// packages/global-styles-ui/build-module/variations/variations-panel.mjs
 var import_blocks = __toESM(require_blocks(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_components10 = __toESM(require_components(), 1);
@@ -2039,12 +2039,12 @@ function useBlockVariations(name2) {
   return getFilteredBlockStyles(blockStyles, variationNames);
 }
 
-// packages/global-styles-ui/build-module/screen-header.js
+// packages/global-styles-ui/build-module/screen-header.mjs
 var import_components11 = __toESM(require_components(), 1);
 var import_i18n5 = __toESM(require_i18n(), 1);
 var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-block-list.js
+// packages/global-styles-ui/build-module/screen-block-list.mjs
 var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel: useHasDimensionsPanel2,
@@ -2136,7 +2136,7 @@ function BlockList({ filterValue }) {
 }
 var MemoizedBlockList = (0, import_element8.memo)(BlockList);
 
-// packages/global-styles-ui/build-module/screen-block.js
+// packages/global-styles-ui/build-module/screen-block.mjs
 var import_blocks4 = __toESM(require_blocks(), 1);
 var import_block_editor4 = __toESM(require_block_editor(), 1);
 var import_element10 = __toESM(require_element(), 1);
@@ -2145,21 +2145,21 @@ var import_core_data3 = __toESM(require_core_data(), 1);
 var import_components15 = __toESM(require_components(), 1);
 var import_i18n7 = __toESM(require_i18n(), 1);
 
-// packages/global-styles-ui/build-module/block-preview-panel.js
+// packages/global-styles-ui/build-module/block-preview-panel.mjs
 var import_block_editor3 = __toESM(require_block_editor(), 1);
 var import_blocks3 = __toESM(require_blocks(), 1);
 var import_components13 = __toESM(require_components(), 1);
 var import_element9 = __toESM(require_element(), 1);
 var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/subtitle.js
+// packages/global-styles-ui/build-module/subtitle.mjs
 var import_components14 = __toESM(require_components(), 1);
 var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 function Subtitle({ children, level = 2 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_components14.__experimentalHeading, { className: "global-styles-ui-subtitle", level, children });
 }
 
-// packages/global-styles-ui/build-module/screen-block.js
+// packages/global-styles-ui/build-module/screen-block.mjs
 var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 var {
   useHasDimensionsPanel: useHasDimensionsPanel3,
@@ -2180,24 +2180,24 @@ var {
   AdvancedPanel: StylesAdvancedPanel
 } = unlock(import_block_editor4.privateApis);
 
-// packages/global-styles-ui/build-module/screen-typography.js
+// packages/global-styles-ui/build-module/screen-typography.mjs
 var import_i18n21 = __toESM(require_i18n(), 1);
 var import_components35 = __toESM(require_components(), 1);
 var import_element21 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/screen-body.js
+// packages/global-styles-ui/build-module/screen-body.mjs
 var import_components16 = __toESM(require_components(), 1);
 var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/typography-elements.js
+// packages/global-styles-ui/build-module/typography-elements.mjs
 var import_i18n8 = __toESM(require_i18n(), 1);
 var import_components17 = __toESM(require_components(), 1);
 var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/variations/variations-typography.js
+// packages/global-styles-ui/build-module/variations/variations-typography.mjs
 var import_components20 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/preview-typography.js
+// packages/global-styles-ui/build-module/preview-typography.mjs
 var import_components18 = __toESM(require_components(), 1);
 var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
 var StylesPreviewTypography = ({
@@ -2235,7 +2235,7 @@ var StylesPreviewTypography = ({
 };
 var preview_typography_default = StylesPreviewTypography;
 
-// packages/global-styles-ui/build-module/variations/variation.js
+// packages/global-styles-ui/build-module/variations/variation.mjs
 var import_components19 = __toESM(require_components(), 1);
 var import_element11 = __toESM(require_element(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
@@ -2315,7 +2315,7 @@ function Variation({
   return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GlobalStylesContext.Provider, { value: context, children: showTooltip ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_components19.Tooltip, { text: variation?.title, children: content }) : content });
 }
 
-// packages/global-styles-ui/build-module/variations/variations-typography.js
+// packages/global-styles-ui/build-module/variations/variations-typography.mjs
 var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter = ["typography"];
 function TypographyVariations({
@@ -2358,18 +2358,18 @@ function TypographyVariations({
   ] });
 }
 
-// packages/global-styles-ui/build-module/font-families.js
+// packages/global-styles-ui/build-module/font-families.mjs
 var import_i18n19 = __toESM(require_i18n(), 1);
 var import_components33 = __toESM(require_components(), 1);
 var import_element20 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/font-library/context.js
+// packages/global-styles-ui/build-module/font-library/context.mjs
 var import_element12 = __toESM(require_element(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
 var import_i18n11 = __toESM(require_i18n(), 1);
 
-// packages/global-styles-ui/build-module/font-library/api.js
+// packages/global-styles-ui/build-module/font-library/api.mjs
 var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_core_data4 = __toESM(require_core_data(), 1);
 var FONT_FAMILIES_URL = "/wp/v2/font-families";
@@ -2412,10 +2412,10 @@ async function fetchInstallFontFace(fontFamilyId, data, registry) {
   };
 }
 
-// packages/global-styles-ui/build-module/font-library/utils/index.js
+// packages/global-styles-ui/build-module/font-library/utils/index.mjs
 var import_components21 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/font-library/utils/constants.js
+// packages/global-styles-ui/build-module/font-library/utils/constants.mjs
 var import_i18n10 = __toESM(require_i18n(), 1);
 var ALLOWED_FILE_EXTENSIONS = ["otf", "ttf", "woff", "woff2"];
 var FONT_WEIGHTS = {
@@ -2434,7 +2434,7 @@ var FONT_STYLES = {
   italic: (0, import_i18n10._x)("Italic", "font style")
 };
 
-// packages/global-styles-ui/build-module/font-library/utils/index.js
+// packages/global-styles-ui/build-module/font-library/utils/index.mjs
 var { File } = window;
 var { kebabCase } = unlock(import_components21.privateApis);
 function setUIValuesNeeded(font2, extraValues = {}) {
@@ -2654,7 +2654,7 @@ function checkFontFaceInstalled(fontFace, collection) {
   });
 }
 
-// packages/global-styles-ui/build-module/font-library/utils/set-immutably.js
+// packages/global-styles-ui/build-module/font-library/utils/set-immutably.mjs
 function setImmutably2(object, path, value) {
   path = Array.isArray(path) ? [...path] : [path];
   object = Array.isArray(object) ? [...object] : { ...object };
@@ -2668,7 +2668,7 @@ function setImmutably2(object, path, value) {
   return object;
 }
 
-// packages/global-styles-ui/build-module/font-library/utils/toggleFont.js
+// packages/global-styles-ui/build-module/font-library/utils/toggleFont.mjs
 function toggleFont(font2, face, initialfonts = []) {
   const isFontActivated = (f2) => f2.slug === font2.slug;
   const getActivatedFont = (fonts) => fonts.find(isFontActivated);
@@ -2709,7 +2709,7 @@ function toggleFont(font2, face, initialfonts = []) {
   return toggleFontVariant(activatedFont);
 }
 
-// packages/global-styles-ui/build-module/font-library/context.js
+// packages/global-styles-ui/build-module/font-library/context.mjs
 var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 var FontLibraryContext = (0, import_element12.createContext)(
   {}
@@ -3049,24 +3049,24 @@ function FontLibraryProvider({ children }) {
 }
 var context_default = FontLibraryProvider;
 
-// packages/global-styles-ui/build-module/font-library/modal.js
+// packages/global-styles-ui/build-module/font-library/modal.mjs
 var import_i18n17 = __toESM(require_i18n(), 1);
 var import_components31 = __toESM(require_components(), 1);
 var import_core_data8 = __toESM(require_core_data(), 1);
 var import_data8 = __toESM(require_data(), 1);
 
-// packages/global-styles-ui/build-module/font-library/installed-fonts.js
+// packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
 var import_components25 = __toESM(require_components(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_element15 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
 
-// packages/global-styles-ui/build-module/font-library/font-card.js
+// packages/global-styles-ui/build-module/font-library/font-card.mjs
 var import_i18n12 = __toESM(require_i18n(), 1);
 var import_components23 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/font-library/font-demo.js
+// packages/global-styles-ui/build-module/font-library/font-demo.mjs
 var import_components22 = __toESM(require_components(), 1);
 var import_element13 = __toESM(require_element(), 1);
 var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
@@ -3152,7 +3152,7 @@ function FontDemo({ font: font2, text }) {
 }
 var font_demo_default = FontDemo;
 
-// packages/global-styles-ui/build-module/font-library/font-card.js
+// packages/global-styles-ui/build-module/font-library/font-card.mjs
 var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 function FontCard({
   font: font2,
@@ -3197,7 +3197,7 @@ function FontCard({
 }
 var font_card_default = FontCard;
 
-// packages/global-styles-ui/build-module/font-library/library-font-variant.js
+// packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
 var import_element14 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
 var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
@@ -3242,7 +3242,7 @@ function LibraryFontVariant({
 }
 var library_font_variant_default = LibraryFontVariant;
 
-// packages/global-styles-ui/build-module/font-library/utils/sort-font-faces.js
+// packages/global-styles-ui/build-module/font-library/utils/sort-font-faces.mjs
 function getNumericFontWeight(value) {
   switch (value) {
     case "normal":
@@ -3275,7 +3275,7 @@ function sortFontFaces(faces) {
   });
 }
 
-// packages/global-styles-ui/build-module/font-library/installed-fonts.js
+// packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
 var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 function InstalledFonts() {
   const {
@@ -3674,14 +3674,14 @@ function ConfirmDeleteDialog({
 }
 var installed_fonts_default = InstalledFonts;
 
-// packages/global-styles-ui/build-module/font-library/font-collection.js
+// packages/global-styles-ui/build-module/font-library/font-collection.mjs
 var import_element17 = __toESM(require_element(), 1);
 var import_components28 = __toESM(require_components(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_i18n15 = __toESM(require_i18n(), 1);
 var import_core_data7 = __toESM(require_core_data(), 1);
 
-// packages/global-styles-ui/build-module/font-library/utils/filter-fonts.js
+// packages/global-styles-ui/build-module/font-library/utils/filter-fonts.mjs
 function filterFonts(fonts, filters) {
   const { category, search } = filters;
   let filteredFonts = fonts || [];
@@ -3698,7 +3698,7 @@ function filterFonts(fonts, filters) {
   return filteredFonts;
 }
 
-// packages/global-styles-ui/build-module/font-library/utils/fonts-outline.js
+// packages/global-styles-ui/build-module/font-library/utils/fonts-outline.mjs
 function getFontsOutline(fonts) {
   return fonts.reduce(
     (acc, font2) => ({
@@ -3721,7 +3721,7 @@ function isFontFontFaceInOutline(slug, face, outline) {
   return !!outline[slug]?.[`${face.fontStyle}-${face.fontWeight}`];
 }
 
-// packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.js
+// packages/global-styles-ui/build-module/font-library/google-fonts-confirm-dialog.mjs
 var import_i18n14 = __toESM(require_i18n(), 1);
 var import_components26 = __toESM(require_components(), 1);
 var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
@@ -3757,7 +3757,7 @@ function GoogleFontsConfirmDialog() {
 }
 var google_fonts_confirm_dialog_default = GoogleFontsConfirmDialog;
 
-// packages/global-styles-ui/build-module/font-library/collection-font-variant.js
+// packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
 var import_element16 = __toESM(require_element(), 1);
 var import_components27 = __toESM(require_components(), 1);
 var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
@@ -3797,7 +3797,7 @@ function CollectionFontVariant({
 }
 var collection_font_variant_default = CollectionFontVariant;
 
-// packages/global-styles-ui/build-module/font-library/font-collection.js
+// packages/global-styles-ui/build-module/font-library/font-collection.mjs
 var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_CATEGORY = {
   slug: "all",
@@ -4234,12 +4234,12 @@ function FontCollection({ slug }) {
 }
 var font_collection_default = FontCollection;
 
-// packages/global-styles-ui/build-module/font-library/upload-fonts.js
+// packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
 var import_i18n16 = __toESM(require_i18n(), 1);
 var import_components30 = __toESM(require_components(), 1);
 var import_element18 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/font-library/lib/unbrotli.js
+// packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
 var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
   get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
 }) : x2)(function(x2) {
@@ -7905,7 +7905,7 @@ var unbrotli_default = (function() {
   )(12);
 })();
 
-// packages/global-styles-ui/build-module/font-library/lib/inflate.js
+// packages/global-styles-ui/build-module/font-library/lib/inflate.mjs
 var __require3 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
   get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
 }) : x2)(function(x2) {
@@ -10521,7 +10521,7 @@ var inflate_default = (function() {
   )("/lib/inflate.js");
 })();
 
-// packages/global-styles-ui/build-module/font-library/lib/lib-font.browser.js
+// packages/global-styles-ui/build-module/font-library/lib/lib-font.browser.mjs
 var fetchFunction = globalThis.fetch;
 var Event2 = class {
   constructor(type, detail = {}, msg) {
@@ -14271,7 +14271,7 @@ var LongVertMetric = class {
 };
 var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
 
-// packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.js
+// packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.mjs
 var import_components29 = __toESM(require_components(), 1);
 var { kebabCase: kebabCase2 } = unlock(import_components29.privateApis);
 function makeFamiliesFromFaces(fontFaces) {
@@ -14293,7 +14293,7 @@ function makeFamiliesFromFaces(fontFaces) {
   return Object.values(fontFamiliesObject);
 }
 
-// packages/global-styles-ui/build-module/font-library/upload-fonts.js
+// packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
 var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
 function UploadFonts() {
   const { installFonts } = (0, import_element18.useContext)(FontLibraryContext);
@@ -14459,7 +14459,7 @@ function UploadFonts() {
 }
 var upload_fonts_default = UploadFonts;
 
-// packages/global-styles-ui/build-module/font-library/modal.js
+// packages/global-styles-ui/build-module/font-library/modal.mjs
 var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 var { Tabs } = unlock(import_components31.privateApis);
 var DEFAULT_TAB = {
@@ -14471,37 +14471,37 @@ var UPLOAD_TAB = {
   title: (0, import_i18n17._x)("Upload", "noun")
 };
 
-// packages/global-styles-ui/build-module/font-family-item.js
+// packages/global-styles-ui/build-module/font-family-item.mjs
 var import_i18n18 = __toESM(require_i18n(), 1);
 var import_components32 = __toESM(require_components(), 1);
 var import_element19 = __toESM(require_element(), 1);
 var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-families.js
+// packages/global-styles-ui/build-module/font-families.mjs
 var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-sizes-count.js
+// packages/global-styles-ui/build-module/font-sizes/font-sizes-count.mjs
 var import_i18n20 = __toESM(require_i18n(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-typography.js
+// packages/global-styles-ui/build-module/screen-typography.mjs
 var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-typography-element.js
+// packages/global-styles-ui/build-module/screen-typography-element.mjs
 var import_i18n22 = __toESM(require_i18n(), 1);
 var import_components36 = __toESM(require_components(), 1);
 var import_element22 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/typography-panel.js
+// packages/global-styles-ui/build-module/typography-panel.mjs
 var import_block_editor5 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock(import_block_editor5.privateApis);
 
-// packages/global-styles-ui/build-module/typography-preview.js
+// packages/global-styles-ui/build-module/typography-preview.mjs
 var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-typography-element.js
+// packages/global-styles-ui/build-module/screen-typography-element.mjs
 var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 var elements = {
   text: {
@@ -14526,45 +14526,45 @@ var elements = {
   }
 };
 
-// packages/global-styles-ui/build-module/screen-colors.js
+// packages/global-styles-ui/build-module/screen-colors.mjs
 var import_i18n24 = __toESM(require_i18n(), 1);
 var import_components39 = __toESM(require_components(), 1);
 var import_block_editor6 = __toESM(require_block_editor(), 1);
 
-// packages/global-styles-ui/build-module/palette.js
+// packages/global-styles-ui/build-module/palette.mjs
 var import_components38 = __toESM(require_components(), 1);
 var import_i18n23 = __toESM(require_i18n(), 1);
 var import_element23 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/color-indicator-wrapper.js
+// packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
 var import_components37 = __toESM(require_components(), 1);
 var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/palette.js
+// packages/global-styles-ui/build-module/palette.mjs
 var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-colors.js
+// packages/global-styles-ui/build-module/screen-colors.mjs
 var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock(
   import_block_editor6.privateApis
 );
 
-// packages/global-styles-ui/build-module/screen-color-palette.js
+// packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_i18n27 = __toESM(require_i18n(), 1);
 var import_components44 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/color-palette-panel.js
+// packages/global-styles-ui/build-module/color-palette-panel.mjs
 var import_compose4 = __toESM(require_compose(), 1);
 var import_components42 = __toESM(require_components(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
 
-// packages/global-styles-ui/build-module/variations/variations-color.js
+// packages/global-styles-ui/build-module/variations/variations-color.mjs
 var import_components41 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/preview-colors.js
+// packages/global-styles-ui/build-module/preview-colors.mjs
 var import_components40 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/preset-colors.js
+// packages/global-styles-ui/build-module/preset-colors.mjs
 var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 function PresetColors() {
   const { paletteColors } = useStylesPreviewColors();
@@ -14581,7 +14581,7 @@ function PresetColors() {
   ));
 }
 
-// packages/global-styles-ui/build-module/preview-colors.js
+// packages/global-styles-ui/build-module/preview-colors.mjs
 var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 var firstFrameVariants2 = {
   start: {
@@ -14632,7 +14632,7 @@ var StylesPreviewColors = ({
 };
 var preview_colors_default = StylesPreviewColors;
 
-// packages/global-styles-ui/build-module/variations/variations-color.js
+// packages/global-styles-ui/build-module/variations/variations-color.mjs
 var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 var propertiesToFilter2 = ["color"];
 function ColorVariations({
@@ -14659,50 +14659,50 @@ function ColorVariations({
   ] });
 }
 
-// packages/global-styles-ui/build-module/color-palette-panel.js
+// packages/global-styles-ui/build-module/color-palette-panel.mjs
 var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/gradients-palette-panel.js
+// packages/global-styles-ui/build-module/gradients-palette-panel.mjs
 var import_compose5 = __toESM(require_compose(), 1);
 var import_components43 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
 var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-color-palette.js
+// packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 var { Tabs: Tabs2 } = unlock(import_components44.privateApis);
 
-// packages/global-styles-ui/build-module/screen-background.js
+// packages/global-styles-ui/build-module/screen-background.mjs
 var import_i18n28 = __toESM(require_i18n(), 1);
 var import_block_editor8 = __toESM(require_block_editor(), 1);
 var import_components45 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/background-panel.js
+// packages/global-styles-ui/build-module/background-panel.mjs
 var import_block_editor7 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var { BackgroundPanel: StylesBackgroundPanel2 } = unlock(
   import_block_editor7.privateApis
 );
 
-// packages/global-styles-ui/build-module/screen-background.js
+// packages/global-styles-ui/build-module/screen-background.mjs
 var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
 var { useHasBackgroundPanel: useHasBackgroundPanel3 } = unlock(import_block_editor8.privateApis);
 
-// packages/global-styles-ui/build-module/shadows-panel.js
+// packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_components47 = __toESM(require_components(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 var import_element24 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.js
+// packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
 var import_components46 = __toESM(require_components(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/shadows-panel.js
+// packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 var { Menu } = unlock(import_components47.privateApis);
 
-// packages/global-styles-ui/build-module/shadows-edit-panel.js
+// packages/global-styles-ui/build-module/shadows-edit-panel.mjs
 var import_components48 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_element25 = __toESM(require_element(), 1);
@@ -14725,34 +14725,34 @@ var presetShadowMenuItems = [
   }
 ];
 
-// packages/global-styles-ui/build-module/screen-shadows.js
+// packages/global-styles-ui/build-module/screen-shadows.mjs
 var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-layout.js
+// packages/global-styles-ui/build-module/screen-layout.mjs
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_block_editor10 = __toESM(require_block_editor(), 1);
 
-// packages/global-styles-ui/build-module/dimensions-panel.js
+// packages/global-styles-ui/build-module/dimensions-panel.mjs
 var import_block_editor9 = __toESM(require_block_editor(), 1);
 var import_element26 = __toESM(require_element(), 1);
 var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock(import_block_editor9.privateApis);
 
-// packages/global-styles-ui/build-module/screen-layout.js
+// packages/global-styles-ui/build-module/screen-layout.mjs
 var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
 var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock(
   import_block_editor10.privateApis
 );
 
-// packages/global-styles-ui/build-module/screen-style-variations.js
+// packages/global-styles-ui/build-module/screen-style-variations.mjs
 var import_components51 = __toESM(require_components(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 
-// packages/global-styles-ui/build-module/style-variations-content.js
+// packages/global-styles-ui/build-module/style-variations-content.mjs
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_components50 = __toESM(require_components(), 1);
 
-// packages/global-styles-ui/build-module/style-variations-container.js
+// packages/global-styles-ui/build-module/style-variations-container.mjs
 var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_element27 = __toESM(require_element(), 1);
@@ -14846,30 +14846,30 @@ function StyleVariationsContainer({
 }
 var style_variations_container_default = StyleVariationsContainer;
 
-// packages/global-styles-ui/build-module/style-variations-content.js
+// packages/global-styles-ui/build-module/style-variations-content.mjs
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-style-variations.js
+// packages/global-styles-ui/build-module/screen-style-variations.mjs
 var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-css.js
+// packages/global-styles-ui/build-module/screen-css.mjs
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_components52 = __toESM(require_components(), 1);
 var import_block_editor11 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock(import_block_editor11.privateApis);
 
-// packages/global-styles-ui/build-module/screen-revisions/index.js
+// packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_i18n39 = __toESM(require_i18n(), 1);
 var import_components55 = __toESM(require_components(), 1);
 var import_element29 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.js
+// packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
 var import_data10 = __toESM(require_data(), 1);
 var import_core_data10 = __toESM(require_core_data(), 1);
 var import_element28 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.js
+// packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
 var import_i18n37 = __toESM(require_i18n(), 1);
 var import_components53 = __toESM(require_components(), 1);
 var import_date = __toESM(require_date(), 1);
@@ -14879,61 +14879,61 @@ var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
-// packages/global-styles-ui/build-module/pagination/index.js
+// packages/global-styles-ui/build-module/pagination/index.mjs
 var import_components54 = __toESM(require_components(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
 var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-revisions/index.js
+// packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_i18n41 = __toESM(require_i18n(), 1);
 var import_components57 = __toESM(require_components(), 1);
 var import_element30 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.js
+// packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
 var import_components56 = __toESM(require_components(), 1);
 var import_i18n40 = __toESM(require_i18n(), 1);
 var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-sizes.js
+// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu3 } = unlock(import_components57.privateApis);
 
-// packages/global-styles-ui/build-module/font-sizes/font-size.js
+// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_i18n45 = __toESM(require_i18n(), 1);
 var import_components61 = __toESM(require_components(), 1);
 var import_element32 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-size-preview.js
+// packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor12 = __toESM(require_block_editor(), 1);
 var import_i18n42 = __toESM(require_i18n(), 1);
 var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.js
+// packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.mjs
 var import_components58 = __toESM(require_components(), 1);
 var import_i18n43 = __toESM(require_i18n(), 1);
 var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.js
+// packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
 var import_components59 = __toESM(require_components(), 1);
 var import_i18n44 = __toESM(require_i18n(), 1);
 var import_element31 = __toESM(require_element(), 1);
 var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/size-control/index.js
+// packages/global-styles-ui/build-module/size-control/index.mjs
 var import_components60 = __toESM(require_components(), 1);
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-size.js
+// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu4 } = unlock(import_components61.privateApis);
 
-// packages/global-styles-ui/build-module/global-styles-ui.js
+// packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/with-global-styles-provider.js
+// packages/global-styles-ui/build-module/with-global-styles-provider.mjs
 var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
@@ -14954,16 +14954,16 @@ function withGlobalStylesProvider(Component) {
   };
 }
 
-// packages/global-styles-ui/build-module/style-variations.js
+// packages/global-styles-ui/build-module/style-variations.mjs
 var StyleVariations = withGlobalStylesProvider(style_variations_container_default);
 
-// packages/global-styles-ui/build-module/color-variations.js
+// packages/global-styles-ui/build-module/color-variations.mjs
 var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 
-// packages/global-styles-ui/build-module/typography-variations.js
+// packages/global-styles-ui/build-module/typography-variations.mjs
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
-// packages/global-styles-ui/build-module/font-library/font-library.js
+// packages/global-styles-ui/build-module/font-library/font-library.mjs
 var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 function FontLibrary({
   value,
