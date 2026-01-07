@@ -23729,6 +23729,7 @@ var wp;
         description: (0, import_i18n31.__)("Select text across multiple blocks."),
         keyCombination: {
           modifier: "shift",
+          // Spotted during my own research — invalid character?
           character: "arrow"
         }
       });

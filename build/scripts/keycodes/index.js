@@ -62,6 +62,7 @@ var wp;
     TAB: () => TAB,
     UP: () => UP,
     ZERO: () => ZERO,
+    ariaKeyShortcut: () => ariaKeyShortcut,
     displayShortcut: () => displayShortcut,
     displayShortcutList: () => displayShortcutList,
     isAppleOS: () => isAppleOS,
@@ -134,6 +135,14 @@ var wp;
       return [...modifier(_isApple), character.toLowerCase()].join(
         "+"
       );
+    };
+  });
+  var ariaKeyShortcut = /* @__PURE__ */ mapValues(modifiers, (modifier) => {
+    return (character, _isApple = isAppleOS) => {
+      return [
+        ...modifier(_isApple).map((key) => key === CTRL ? "Control" : key).map((key) => capitaliseFirstCharacter(key)),
+        capitaliseFirstCharacter(character)
+      ].join("+");
     };
   });
   var displayShortcutList = /* @__PURE__ */ mapValues(
