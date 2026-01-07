@@ -51535,7 +51535,8 @@ var wp;
         onChange,
         __unstableAllowPrefixTransformations,
         formatTypes,
-        registry
+        registry,
+        onReplace
       } = props.current;
       if (inputType !== "insertText" && type !== "compositionend") {
         return;
@@ -51544,6 +51545,17 @@ var wp;
         return;
       }
       const value = getValue();
+      const transforms = (0, import_blocks82.getBlockTransforms)("from").filter(
+        (transform) => transform.type === "input"
+      );
+      const transformation = (0, import_blocks82.findTransform)(transforms, (item) => {
+        return item.regExp.test(value.text);
+      });
+      if (transformation) {
+        onReplace(transformation.transform());
+        registry.dispatch(store).__unstableMarkAutomaticChange();
+        return;
+      }
       const transformed = formatTypes.reduce(
         (accumulator, { __unstableInputRule }) => {
           if (__unstableInputRule) {

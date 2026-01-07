@@ -11475,7 +11475,7 @@ var wp;
   var transforms4 = {
     from: [
       {
-        type: "enter",
+        type: "input",
         regExp: /^```$/,
         transform: () => (0, import_blocks15.createBlock)("core/code")
       },
@@ -57745,9 +57745,12 @@ ${js}
   var transforms29 = {
     from: [
       {
-        type: "enter",
+        type: "input",
         regExp: /^-{3,}$/,
-        transform: () => (0, import_blocks98.createBlock)("core/separator")
+        transform: () => [
+          (0, import_blocks98.createBlock)("core/separator"),
+          (0, import_blocks98.createBlock)((0, import_blocks98.getDefaultBlockName)())
+        ]
       },
       {
         type: "raw",
