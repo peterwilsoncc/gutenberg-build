@@ -56143,6 +56143,7 @@ ${js}
       ) }) })
     ] });
   }
+  var EMPTY_OBJECT2 = {};
   function ReusableBlockEdit({
     name: name117,
     attributes: { ref, content },
@@ -56162,7 +56163,7 @@ ${js}
     const {
       onNavigateToEntityRecord,
       hasPatternOverridesSource,
-      supportedBlockTypes
+      supportedBlockTypesRaw
     } = (0, import_data120.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor220.store);
       return {
@@ -56170,21 +56171,19 @@ ${js}
         hasPatternOverridesSource: !!(0, import_blocks95.getBlockBindingsSource)(
           "core/pattern-overrides"
         ),
-        supportedBlockTypes: Object.keys(
-          getSettings2().__experimentalBlockBindingsSupportedAttributes || {}
-        )
+        supportedBlockTypesRaw: getSettings2().__experimentalBlockBindingsSupportedAttributes || EMPTY_OBJECT2
       };
     }, []);
-    const hasOverridableBlocks = (_blocks) => _blocks.some((block) => {
-      if (supportedBlockTypes.includes(block.name) && isOverridableBlock(block)) {
-        return true;
-      }
-      return hasOverridableBlocks(block.innerBlocks);
-    });
-    const canOverrideBlocks = (0, import_element106.useMemo)(
-      () => hasPatternOverridesSource && hasOverridableBlocks(blocks),
-      [hasPatternOverridesSource, hasOverridableBlocks, blocks]
-    );
+    const canOverrideBlocks = (0, import_element106.useMemo)(() => {
+      const supportedBlockTypes = Object.keys(supportedBlockTypesRaw);
+      const hasOverridableBlocks = (_blocks) => _blocks.some((block) => {
+        if (supportedBlockTypes.includes(block.name) && isOverridableBlock(block)) {
+          return true;
+        }
+        return hasOverridableBlocks(block.innerBlocks);
+      });
+      return hasPatternOverridesSource && hasOverridableBlocks(blocks);
+    }, [hasPatternOverridesSource, blocks, supportedBlockTypesRaw]);
     const { alignment, layout } = useInferredLayout(blocks, parentLayout);
     const layoutClasses = useLayoutClasses({ layout }, name117);
     const blockProps = (0, import_block_editor220.useBlockProps)({
