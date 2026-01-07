@@ -4240,7 +4240,11 @@ function ViewList(props) {
       {
         id: baseId,
         render: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", {}),
-        className: clsx_default("dataviews-view-list", className),
+        className: clsx_default("dataviews-view-list", className, {
+          [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
+            view.layout.density
+          )
+        }),
         role: view.infiniteScrollEnabled ? "feed" : "grid",
         activeId: activeCompositeId,
         setActiveId: setActiveCompositeId,
@@ -5548,7 +5552,7 @@ function PreviewSizePicker() {
   );
 }
 
-// packages/dataviews/build-module/components/dataviews-layouts/table/density-picker.mjs
+// packages/dataviews/build-module/components/dataviews-layouts/utils/density-picker.mjs
 var import_components18 = __toESM(require_components(), 1);
 var import_i18n19 = __toESM(require_i18n(), 1);
 var import_element22 = __toESM(require_element(), 1);
@@ -5625,7 +5629,8 @@ var VIEW_LAYOUTS = [
     type: LAYOUT_LIST,
     label: (0, import_i18n20.__)("List"),
     component: ViewList,
-    icon: (0, import_i18n20.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default
+    icon: (0, import_i18n20.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
+    viewConfigOptions: DensityPicker
   },
   {
     type: LAYOUT_ACTIVITY,

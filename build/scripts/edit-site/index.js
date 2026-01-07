@@ -26963,7 +26963,11 @@ var wp;
         {
           id: baseId,
           render: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", {}),
-          className: clsx_default("dataviews-view-list", className),
+          className: clsx_default("dataviews-view-list", className, {
+            [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
+              view.layout.density
+            )
+          }),
           role: view.infiniteScrollEnabled ? "feed" : "grid",
           activeId: activeCompositeId,
           setActiveId: setActiveCompositeId,
@@ -28271,7 +28275,7 @@ var wp;
     );
   }
 
-  // packages/dataviews/build-module/components/dataviews-layouts/table/density-picker.mjs
+  // packages/dataviews/build-module/components/dataviews-layouts/utils/density-picker.mjs
   var import_components109 = __toESM(require_components(), 1);
   var import_i18n101 = __toESM(require_i18n(), 1);
   var import_element85 = __toESM(require_element(), 1);
@@ -28348,7 +28352,8 @@ var wp;
       type: LAYOUT_LIST2,
       label: (0, import_i18n102.__)("List"),
       component: ViewList,
-      icon: (0, import_i18n102.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default
+      icon: (0, import_i18n102.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
+      viewConfigOptions: DensityPicker
     },
     {
       type: LAYOUT_ACTIVITY,

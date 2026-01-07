@@ -3056,6 +3056,62 @@ div.dataviews-view-list {
   justify-content: space-between;
 }
 
+.dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__item-wrapper {
+  padding: 8px 24px;
+}
+
+.dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__title-field {
+  min-height: 16px;
+  line-height: 16px;
+}
+
+.dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__media-wrapper {
+  width: 32px;
+  height: 32px;
+}
+
+.dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__field-wrapper {
+  min-height: 32px;
+}
+
+.dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__fields {
+  gap: 8px;
+  row-gap: 4px;
+}
+
+.dataviews-view-list.has-compact-density div[role=row] .dataviews-view-list__fields .dataviews-view-list__field-value {
+  min-height: 16px;
+  line-height: 16px;
+}
+
+.dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__item-wrapper {
+  padding: 24px 24px;
+}
+
+.dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__title-field {
+  min-height: 32px;
+  line-height: 32px;
+}
+
+.dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__media-wrapper {
+  width: 64px;
+  height: 64px;
+}
+
+.dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__field-wrapper {
+  min-height: 64px;
+}
+
+.dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__fields {
+  gap: 16px;
+  row-gap: 8px;
+}
+
+.dataviews-view-list.has-comfortable-density div[role=row] .dataviews-view-list__fields .dataviews-view-list__field-value {
+  min-height: 32px;
+  line-height: 24px;
+}
+
 .dataviews-view-list__group-header {
   font-size: 15px;
   font-weight: 499;
