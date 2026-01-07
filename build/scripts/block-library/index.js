@@ -56175,16 +56175,15 @@ ${js}
         )
       };
     }, []);
-    const hasOverridableBlocks = (_blocks) => _blocks.some((block) => {
-      if (supportedBlockTypes.includes(block.name) && isOverridableBlock(block)) {
-        return true;
-      }
-      return hasOverridableBlocks(block.innerBlocks);
-    });
-    const canOverrideBlocks = (0, import_element106.useMemo)(
-      () => hasPatternOverridesSource && hasOverridableBlocks(blocks),
-      [hasPatternOverridesSource, hasOverridableBlocks, blocks]
-    );
+    const canOverrideBlocks = (0, import_element106.useMemo)(() => {
+      const hasOverridableBlocks = (_blocks) => _blocks.some((block) => {
+        if (supportedBlockTypes.includes(block.name) && isOverridableBlock(block)) {
+          return true;
+        }
+        return hasOverridableBlocks(block.innerBlocks);
+      });
+      return hasPatternOverridesSource && hasOverridableBlocks(blocks);
+    }, [hasPatternOverridesSource, blocks, supportedBlockTypes]);
     const { alignment, layout } = useInferredLayout(blocks, parentLayout);
     const layoutClasses = useLayoutClasses({ layout }, name117);
     const blockProps = (0, import_block_editor220.useBlockProps)({
