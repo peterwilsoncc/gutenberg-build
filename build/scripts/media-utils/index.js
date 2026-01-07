@@ -1515,7 +1515,7 @@ var wp;
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
   var import_element55 = __toESM(require_element(), 1);
-  var import_i18n57 = __toESM(require_i18n(), 1);
+  var import_i18n59 = __toESM(require_i18n(), 1);
   var import_core_data2 = __toESM(require_core_data(), 1);
   var import_data7 = __toESM(require_data(), 1);
   var import_components50 = __toESM(require_components(), 1);
@@ -16803,14 +16803,48 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var caption_default = captionField;
 
-  // packages/media-fields/build-module/description/index.mjs
+  // packages/media-fields/build-module/date_added/index.mjs
   var import_i18n50 = __toESM(require_i18n(), 1);
+  var import_date8 = __toESM(require_date(), 1);
+  var dateAddedField = {
+    id: "date",
+    type: "datetime",
+    label: (0, import_i18n50.__)("Date added"),
+    filterBy: {
+      operators: ["before", "after"]
+    },
+    format: {
+      datetime: (0, import_date8.getSettings)().formats.datetimeAbbreviated
+    },
+    readOnly: true
+  };
+  var date_added_default = dateAddedField;
+
+  // packages/media-fields/build-module/date_modified/index.mjs
+  var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_date9 = __toESM(require_date(), 1);
+  var dateModifiedField = {
+    id: "modified",
+    type: "datetime",
+    label: (0, import_i18n51.__)("Date modified"),
+    filterBy: {
+      operators: ["before", "after"]
+    },
+    format: {
+      datetime: (0, import_date9.getSettings)().formats.datetimeAbbreviated
+    },
+    readOnly: true
+  };
+  var date_modified_default = dateModifiedField;
+
+  // packages/media-fields/build-module/description/index.mjs
+  var import_i18n52 = __toESM(require_i18n(), 1);
   var import_components47 = __toESM(require_components(), 1);
   var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
   var descriptionField = {
     id: "description",
     type: "text",
-    label: (0, import_i18n50.__)("Description"),
+    label: (0, import_i18n52.__)("Description"),
     getValue: ({ item }) => getRawContent(item?.description),
     render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { children: getRawContent(item?.description) || "-" }),
     Edit: ({ field, onChange, data }) => {
@@ -16830,7 +16864,7 @@ If there's a particular need for this, please submit a feature request at https:
   var description_default = descriptionField;
 
   // packages/media-fields/build-module/filename/index.mjs
-  var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_i18n53 = __toESM(require_i18n(), 1);
   var import_url4 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/filename/view.mjs
@@ -16856,7 +16890,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filenameField = {
     id: "filename",
     type: "text",
-    label: (0, import_i18n51.__)("File name"),
+    label: (0, import_i18n53.__)("File name"),
     getValue: ({ item }) => (0, import_url4.getFilename)(item?.source_url || ""),
     render: FileNameView,
     enableSorting: false,
@@ -16866,7 +16900,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filename_default = filenameField;
 
   // packages/media-fields/build-module/filesize/index.mjs
-  var import_i18n52 = __toESM(require_i18n(), 1);
+  var import_i18n54 = __toESM(require_i18n(), 1);
   var KB_IN_BYTES = 1024;
   var MB_IN_BYTES = 1024 * KB_IN_BYTES;
   var GB_IN_BYTES = 1024 * MB_IN_BYTES;
@@ -16876,9 +16910,9 @@ If there's a particular need for this, please submit a feature request at https:
   var ZB_IN_BYTES = 1024 * EB_IN_BYTES;
   var YB_IN_BYTES = 1024 * ZB_IN_BYTES;
   function getBytesString(bytes, unitSymbol, decimals = 2) {
-    return (0, import_i18n52.sprintf)(
+    return (0, import_i18n54.sprintf)(
       // translators: 1: Actual bytes of a file. 2: The unit symbol (e.g. MB).
-      (0, import_i18n52._x)("%1$s %2$s", "file size"),
+      (0, import_i18n54._x)("%1$s %2$s", "file size"),
       bytes.toLocaleString(void 0, {
         minimumFractionDigits: 0,
         maximumFractionDigits: decimals
@@ -16888,27 +16922,27 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function formatFileSize(bytes, decimals = 2) {
     if (bytes === 0) {
-      return getBytesString(0, (0, import_i18n52._x)("B", "unit symbol"), decimals);
+      return getBytesString(0, (0, import_i18n54._x)("B", "unit symbol"), decimals);
     }
     const quant = {
       /* translators: Unit symbol for yottabyte. */
-      [(0, import_i18n52._x)("YB", "unit symbol")]: YB_IN_BYTES,
+      [(0, import_i18n54._x)("YB", "unit symbol")]: YB_IN_BYTES,
       /* translators: Unit symbol for zettabyte. */
-      [(0, import_i18n52._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
+      [(0, import_i18n54._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
       /* translators: Unit symbol for exabyte. */
-      [(0, import_i18n52._x)("EB", "unit symbol")]: EB_IN_BYTES,
+      [(0, import_i18n54._x)("EB", "unit symbol")]: EB_IN_BYTES,
       /* translators: Unit symbol for petabyte. */
-      [(0, import_i18n52._x)("PB", "unit symbol")]: PB_IN_BYTES,
+      [(0, import_i18n54._x)("PB", "unit symbol")]: PB_IN_BYTES,
       /* translators: Unit symbol for terabyte. */
-      [(0, import_i18n52._x)("TB", "unit symbol")]: TB_IN_BYTES,
+      [(0, import_i18n54._x)("TB", "unit symbol")]: TB_IN_BYTES,
       /* translators: Unit symbol for gigabyte. */
-      [(0, import_i18n52._x)("GB", "unit symbol")]: GB_IN_BYTES,
+      [(0, import_i18n54._x)("GB", "unit symbol")]: GB_IN_BYTES,
       /* translators: Unit symbol for megabyte. */
-      [(0, import_i18n52._x)("MB", "unit symbol")]: MB_IN_BYTES,
+      [(0, import_i18n54._x)("MB", "unit symbol")]: MB_IN_BYTES,
       /* translators: Unit symbol for kilobyte. */
-      [(0, import_i18n52._x)("KB", "unit symbol")]: KB_IN_BYTES,
+      [(0, import_i18n54._x)("KB", "unit symbol")]: KB_IN_BYTES,
       /* translators: Unit symbol for byte. */
-      [(0, import_i18n52._x)("B", "unit symbol")]: 1
+      [(0, import_i18n54._x)("B", "unit symbol")]: 1
     };
     for (const [unit, mag] of Object.entries(quant)) {
       if (bytes >= mag) {
@@ -16920,7 +16954,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filesizeField = {
     id: "filesize",
     type: "text",
-    label: (0, import_i18n52.__)("File size"),
+    label: (0, import_i18n54.__)("File size"),
     getValue: ({ item }) => item?.media_details?.filesize ? formatFileSize(item?.media_details?.filesize) : "",
     isVisible: (item) => {
       return !!item?.media_details?.filesize;
@@ -16932,14 +16966,14 @@ If there's a particular need for this, please submit a feature request at https:
   var filesize_default = filesizeField;
 
   // packages/media-fields/build-module/media_dimensions/index.mjs
-  var import_i18n53 = __toESM(require_i18n(), 1);
+  var import_i18n55 = __toESM(require_i18n(), 1);
   var mediaDimensionsField = {
     id: "media_dimensions",
     type: "text",
-    label: (0, import_i18n53.__)("Dimensions"),
-    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n53.sprintf)(
+    label: (0, import_i18n55.__)("Dimensions"),
+    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n55.sprintf)(
       // translators: 1: Width. 2: Height.
-      (0, import_i18n53._x)("%1$s \xD7 %2$s", "image dimensions"),
+      (0, import_i18n55._x)("%1$s \xD7 %2$s", "image dimensions"),
       item?.media_details?.width?.toString(),
       item?.media_details?.height?.toString()
     ) : "",
@@ -16953,7 +16987,7 @@ If there's a particular need for this, please submit a feature request at https:
   var media_dimensions_default = mediaDimensionsField;
 
   // packages/media-fields/build-module/media_thumbnail/index.mjs
-  var import_i18n55 = __toESM(require_i18n(), 1);
+  var import_i18n57 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
   var import_data6 = __toESM(require_data(), 1);
@@ -16963,32 +16997,32 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url5 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.mjs
-  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_i18n56 = __toESM(require_i18n(), 1);
   function getMediaTypeFromMimeType(mimeType) {
     if (mimeType.startsWith("image/")) {
       return {
         type: "image",
-        label: (0, import_i18n54.__)("Image"),
+        label: (0, import_i18n56.__)("Image"),
         icon: image_default
       };
     }
     if (mimeType.startsWith("video/")) {
       return {
         type: "video",
-        label: (0, import_i18n54.__)("Video"),
+        label: (0, import_i18n56.__)("Video"),
         icon: video_default
       };
     }
     if (mimeType.startsWith("audio/")) {
       return {
         type: "audio",
-        label: (0, import_i18n54.__)("Audio"),
+        label: (0, import_i18n56.__)("Audio"),
         icon: audio_default
       };
     }
     return {
       type: "application",
-      label: (0, import_i18n54.__)("Application"),
+      label: (0, import_i18n56.__)("Application"),
       icon: file_default
     };
   }
@@ -17067,7 +17101,7 @@ If there's a particular need for this, please submit a feature request at https:
   var mediaThumbnailField = {
     id: "media_thumbnail",
     type: "media",
-    label: (0, import_i18n55.__)("Thumbnail"),
+    label: (0, import_i18n57.__)("Thumbnail"),
     render: MediaThumbnailView,
     enableSorting: false,
     filterBy: false
@@ -17075,11 +17109,11 @@ If there's a particular need for this, please submit a feature request at https:
   var media_thumbnail_default = mediaThumbnailField;
 
   // packages/media-fields/build-module/mime_type/index.mjs
-  var import_i18n56 = __toESM(require_i18n(), 1);
+  var import_i18n58 = __toESM(require_i18n(), 1);
   var mimeTypeField = {
     id: "mime_type",
     type: "text",
-    label: (0, import_i18n56.__)("File type"),
+    label: (0, import_i18n58.__)("File type"),
     getValue: ({ item }) => item?.mime_type || "",
     render: ({ item }) => item?.mime_type || "-",
     // Disable sorting until REST API support for ordering my `mime_type` is added.
@@ -17109,12 +17143,12 @@ If there's a particular need for this, please submit a feature request at https:
     onSelect,
     onClose,
     onUpload,
-    title = (0, import_i18n57.__)("Select Media"),
+    title = (0, import_i18n59.__)("Select Media"),
     isOpen,
     isDismissible = true,
     modalClass,
     search = true,
-    searchLabel = (0, import_i18n57.__)("Search media")
+    searchLabel = (0, import_i18n59.__)("Search media")
   }) {
     const [selection, setSelection] = (0, import_element55.useState)(() => {
       if (!value) {
@@ -17142,9 +17176,12 @@ If there's a particular need for this, please submit a feature request at https:
         if (filter.field === "author") {
           filters.author = filter.value;
         }
-        if (filter.field === "date") {
-          filters.after = filter.value?.after;
-          filters.before = filter.value?.before;
+        if (filter.field === "date" || filter.field === "modified") {
+          if (filter.operator === "before") {
+            filters.before = filter.value;
+          } else if (filter.operator === "after") {
+            filters.after = filter.value;
+          }
         }
         if (filter.field === "mime_type") {
           filters.mime_type = filter.value;
@@ -17181,15 +17218,17 @@ If there's a particular need for this, please submit a feature request at https:
         {
           id: "title",
           type: "text",
-          label: (0, import_i18n57.__)("Title"),
+          label: (0, import_i18n59.__)("Title"),
           getValue: ({ item }) => {
             const titleValue = item.title.raw || item.title.rendered;
-            return titleValue || (0, import_i18n57.__)("(no title)");
+            return titleValue || (0, import_i18n59.__)("(no title)");
           }
         },
         alt_text_default,
         caption_default,
         description_default,
+        date_added_default,
+        date_modified_default,
         filename_default,
         filesize_default,
         media_dimensions_default,
@@ -17201,7 +17240,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => [
         {
           id: "select",
-          label: multiple ? (0, import_i18n57.__)("Select") : (0, import_i18n57.__)("Select"),
+          label: multiple ? (0, import_i18n59.__)("Select") : (0, import_i18n59.__)("Select"),
           isPrimary: true,
           supportsBulk: multiple,
           async callback() {
@@ -17258,7 +17297,7 @@ If there's a particular need for this, please submit a feature request at https:
           showTitle: false
         },
         [LAYOUT_PICKER_TABLE2]: {
-          fields: ["filename", "filesize", "media_dimensions"],
+          fields: ["filename", "filesize", "media_dimensions", "date"],
           showTitle: true
         }
       }),
@@ -17295,7 +17334,7 @@ If there's a particular need for this, please submit a feature request at https:
                 onClick: openFileDialog,
                 icon: upload_default,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n57.__)("Upload media")
+                children: (0, import_i18n59.__)("Upload media")
               }
             )
           }
@@ -17322,7 +17361,7 @@ If there's a particular need for this, please submit a feature request at https:
                   });
                 }
               },
-              label: (0, import_i18n57.__)("Drop files to upload")
+              label: (0, import_i18n59.__)("Drop files to upload")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
@@ -17341,7 +17380,7 @@ If there's a particular need for this, please submit a feature request at https:
               getItemId: (item) => String(item.id),
               search,
               searchLabel,
-              itemListLabel: (0, import_i18n57.__)("Media items")
+              itemListLabel: (0, import_i18n59.__)("Media items")
             }
           )
         ]
