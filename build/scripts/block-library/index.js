@@ -56143,7 +56143,6 @@ ${js}
       ) }) })
     ] });
   }
-  var EMPTY_OBJECT2 = {};
   function ReusableBlockEdit({
     name: name117,
     attributes: { ref, content },
@@ -56163,7 +56162,7 @@ ${js}
     const {
       onNavigateToEntityRecord,
       hasPatternOverridesSource,
-      supportedBlockTypesRaw
+      supportedBlockTypes
     } = (0, import_data120.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor220.store);
       return {
@@ -56171,13 +56170,11 @@ ${js}
         hasPatternOverridesSource: !!(0, import_blocks95.getBlockBindingsSource)(
           "core/pattern-overrides"
         ),
-        supportedBlockTypesRaw: getSettings2().__experimentalBlockBindingsSupportedAttributes || EMPTY_OBJECT2
+        supportedBlockTypes: Object.keys(
+          getSettings2().__experimentalBlockBindingsSupportedAttributes || {}
+        )
       };
     }, []);
-    const supportedBlockTypes = (0, import_element106.useMemo)(
-      () => Object.keys(supportedBlockTypesRaw),
-      [supportedBlockTypesRaw]
-    );
     const canOverrideBlocks = (0, import_element106.useMemo)(() => {
       const hasOverridableBlocks = (_blocks) => _blocks.some((block) => {
         if (supportedBlockTypes.includes(block.name) && isOverridableBlock(block)) {
