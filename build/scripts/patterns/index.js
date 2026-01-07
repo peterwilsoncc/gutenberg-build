@@ -317,23 +317,21 @@ var wp;
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
   var { BlockQuickNavigation } = unlock(import_block_editor2.privateApis);
   function OverridesPanel() {
-    const { allClientIds, supportedBlockTypes } = (0, import_data3.useSelect)(
+    const { allClientIds, supportedBlockTypesRaw } = (0, import_data3.useSelect)(
       (select) => ({
         allClientIds: select(import_block_editor2.store).getClientIdsWithDescendants(),
-        supportedBlockTypes: Object.keys(
-          select(import_block_editor2.store).getSettings()?.__experimentalBlockBindingsSupportedAttributes || {}
-        )
+        supportedBlockTypesRaw: select(import_block_editor2.store).getSettings()?.__experimentalBlockBindingsSupportedAttributes
       }),
       []
     );
     const { getBlock } = (0, import_data3.useSelect)(import_block_editor2.store);
-    const clientIdsWithOverrides = (0, import_element.useMemo)(
-      () => allClientIds.filter((clientId) => {
+    const clientIdsWithOverrides = (0, import_element.useMemo)(() => {
+      const supportedBlockTypes = Object.keys(supportedBlockTypesRaw ?? {});
+      return allClientIds.filter((clientId) => {
         const block = getBlock(clientId);
         return supportedBlockTypes.includes(block.name) && isOverridableBlock(block);
-      }),
-      [allClientIds, getBlock, supportedBlockTypes]
-    );
+      });
+    }, [allClientIds, getBlock, supportedBlockTypesRaw]);
     if (!clientIdsWithOverrides?.length) {
       return null;
     }
