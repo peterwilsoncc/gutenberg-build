@@ -6950,7 +6950,7 @@ var wp;
   function createStore(initialState, ...stores) {
     let state = initialState;
     let prevStateBatch = state;
-    let lastUpdate = Symbol();
+    let lastUpdate = /* @__PURE__ */ Symbol();
     let destroy = noop2;
     const instances = /* @__PURE__ */ new Set();
     const updatedKeys = /* @__PURE__ */ new Set();
@@ -6965,7 +6965,7 @@ var wp;
     };
     const storeInit = () => {
       const initialized = instances.size;
-      const instance = Symbol();
+      const instance = /* @__PURE__ */ Symbol();
       instances.add(instance);
       const maybeDestroy = () => {
         instances.delete(instance);
@@ -7035,7 +7035,7 @@ var wp;
       }
       const prevState = state;
       state = __spreadProps2(__spreadValues2({}, state), { [key]: nextValue });
-      const thisUpdate = Symbol();
+      const thisUpdate = /* @__PURE__ */ Symbol();
       lastUpdate = thisUpdate;
       updatedKeys.add(key);
       const run = (listener, prev, uKeys) => {
@@ -7802,14 +7802,14 @@ If there's a particular need for this, please submit a feature request at https:
       anchorElement: defaultValue(syncState == null ? void 0 : syncState.anchorElement, null),
       popoverElement: defaultValue(syncState == null ? void 0 : syncState.popoverElement, null),
       arrowElement: defaultValue(syncState == null ? void 0 : syncState.arrowElement, null),
-      rendered: Symbol("rendered")
+      rendered: /* @__PURE__ */ Symbol("rendered")
     });
     const popover = createStore(initialState, dialog, store);
     return __spreadProps2(__spreadValues2(__spreadValues2({}, dialog), popover), {
       setAnchorElement: (element) => popover.setState("anchorElement", element),
       setPopoverElement: (element) => popover.setState("popoverElement", element),
       setArrowElement: (element) => popover.setState("arrowElement", element),
-      render: () => popover.setState("rendered", Symbol("rendered"))
+      render: () => popover.setState("rendered", /* @__PURE__ */ Symbol("rendered"))
     });
   }
 
@@ -8097,7 +8097,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
   }
-  var FOCUS_SILENTLY = Symbol("FOCUS_SILENTLY");
+  var FOCUS_SILENTLY = /* @__PURE__ */ Symbol("FOCUS_SILENTLY");
   function focusSilently(element) {
     element[FOCUS_SILENTLY] = true;
     element.focus({ preventScroll: true });
@@ -8185,7 +8185,7 @@ If there's a particular need for this, please submit a feature request at https:
     "datetime",
     "datetime-local"
   ];
-  var safariFocusAncestorSymbol = Symbol("safariFocusAncestor");
+  var safariFocusAncestorSymbol = /* @__PURE__ */ Symbol("safariFocusAncestor");
   function markSafariFocusAncestor(element, value) {
     if (!element) return;
     element[safariFocusAncestorSymbol] = value;
@@ -9172,7 +9172,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return false;
   }
-  var symbol = Symbol("command");
+  var symbol = /* @__PURE__ */ Symbol("command");
   var useCommand = createHook(
     function useCommand2(_a) {
       var _b = _a, { clickOnEnter = true, clickOnSpace = true } = _b, props = __objRest(_b, ["clickOnEnter", "clickOnSpace"]);
@@ -9372,7 +9372,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!nextElement) return false;
     return contains(event.currentTarget, nextElement);
   }
-  var symbol2 = Symbol("composite-hover");
+  var symbol2 = /* @__PURE__ */ Symbol("composite-hover");
   function movingToAnotherItem(event) {
     let dest = getMouseDestination(event);
     if (!dest) return false;
@@ -12123,7 +12123,7 @@ If there's a particular need for this, please submit a feature request at https:
   var secondsInYear = secondsInDay * daysInYear;
   var secondsInMonth = secondsInYear / 12;
   var secondsInQuarter = secondsInMonth * 3;
-  var constructFromSymbol = Symbol.for("constructDateFrom");
+  var constructFromSymbol = /* @__PURE__ */ Symbol.for("constructDateFrom");
 
   // packages/dataviews/node_modules/date-fns/constructFrom.js
   function constructFrom(date, value) {

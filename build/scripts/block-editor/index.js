@@ -979,24 +979,24 @@ var wp;
         (function() {
           "use strict";
           var hasSymbol = typeof Symbol === "function" && Symbol.for;
-          var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for("react.element") : 60103;
-          var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for("react.portal") : 60106;
-          var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for("react.fragment") : 60107;
-          var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for("react.strict_mode") : 60108;
-          var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for("react.profiler") : 60114;
-          var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for("react.provider") : 60109;
-          var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for("react.context") : 60110;
-          var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for("react.async_mode") : 60111;
-          var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for("react.concurrent_mode") : 60111;
-          var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for("react.forward_ref") : 60112;
-          var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for("react.suspense") : 60113;
-          var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for("react.suspense_list") : 60120;
-          var REACT_MEMO_TYPE = hasSymbol ? Symbol.for("react.memo") : 60115;
-          var REACT_LAZY_TYPE = hasSymbol ? Symbol.for("react.lazy") : 60116;
-          var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for("react.block") : 60121;
-          var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for("react.fundamental") : 60117;
-          var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for("react.responder") : 60118;
-          var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for("react.scope") : 60119;
+          var REACT_ELEMENT_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.element") : 60103;
+          var REACT_PORTAL_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.portal") : 60106;
+          var REACT_FRAGMENT_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.fragment") : 60107;
+          var REACT_STRICT_MODE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.strict_mode") : 60108;
+          var REACT_PROFILER_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.profiler") : 60114;
+          var REACT_PROVIDER_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.provider") : 60109;
+          var REACT_CONTEXT_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.context") : 60110;
+          var REACT_ASYNC_MODE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.async_mode") : 60111;
+          var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.concurrent_mode") : 60111;
+          var REACT_FORWARD_REF_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.forward_ref") : 60112;
+          var REACT_SUSPENSE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.suspense") : 60113;
+          var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.suspense_list") : 60120;
+          var REACT_MEMO_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.memo") : 60115;
+          var REACT_LAZY_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116;
+          var REACT_BLOCK_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.block") : 60121;
+          var REACT_FUNDAMENTAL_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.fundamental") : 60117;
+          var REACT_RESPONDER_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.responder") : 60118;
+          var REACT_SCOPE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.scope") : 60119;
           function isValidElementType(type) {
             return typeof type === "string" || typeof type === "function" || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
             type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
@@ -2513,7 +2513,7 @@ var wp;
       var terminalHighlight = require_terminal_highlight();
       var CssSyntaxError2 = require_css_syntax_error();
       var PreviousMap = require_previous_map();
-      var fromOffsetCache = Symbol("fromOffsetCache");
+      var fromOffsetCache = /* @__PURE__ */ Symbol("fromOffsetCache");
       var sourceMapAvailable = Boolean(SourceMapConsumer && SourceMapGenerator);
       var pathAvailable = Boolean(resolve && isAbsolute);
       var Input = class {
@@ -3364,8 +3364,8 @@ var wp;
   var require_symbols = __commonJS({
     "node_modules/postcss/lib/symbols.js"(exports, module) {
       "use strict";
-      module.exports.isClean = Symbol("isClean");
-      module.exports.my = Symbol("my");
+      module.exports.isClean = /* @__PURE__ */ Symbol("isClean");
+      module.exports.my = /* @__PURE__ */ Symbol("my");
     }
   });
 
@@ -6374,7 +6374,7 @@ var wp;
         return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
       }
       var canUseSymbol = typeof Symbol === "function" && Symbol.for;
-      var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 60103;
+      var REACT_ELEMENT_TYPE = canUseSymbol ? /* @__PURE__ */ Symbol.for("react.element") : 60103;
       function isReactElement(value) {
         return value.$$typeof === REACT_ELEMENT_TYPE;
       }
@@ -7015,11 +7015,11 @@ var wp;
 
   // packages/block-editor/build-module/components/block-edit/context.mjs
   var import_element = __toESM(require_element(), 1);
-  var mayDisplayControlsKey = Symbol("mayDisplayControls");
-  var mayDisplayParentControlsKey = Symbol("mayDisplayParentControls");
-  var blockEditingModeKey = Symbol("blockEditingMode");
-  var blockBindingsKey = Symbol("blockBindings");
-  var isPreviewModeKey = Symbol("isPreviewMode");
+  var mayDisplayControlsKey = /* @__PURE__ */ Symbol("mayDisplayControls");
+  var mayDisplayParentControlsKey = /* @__PURE__ */ Symbol("mayDisplayParentControls");
+  var blockEditingModeKey = /* @__PURE__ */ Symbol("blockEditingMode");
+  var blockBindingsKey = /* @__PURE__ */ Symbol("blockBindings");
+  var isPreviewModeKey = /* @__PURE__ */ Symbol("isPreviewMode");
   var DEFAULT_BLOCK_EDIT_CONTEXT = {
     name: "",
     isSelected: false
@@ -7831,16 +7831,16 @@ var wp;
   }
 
   // packages/block-editor/build-module/store/private-keys.mjs
-  var globalStylesDataKey = Symbol("globalStylesDataKey");
-  var globalStylesLinksDataKey = Symbol("globalStylesLinks");
-  var selectBlockPatternsKey = Symbol("selectBlockPatternsKey");
-  var reusableBlocksSelectKey = Symbol("reusableBlocksSelect");
-  var sectionRootClientIdKey = Symbol("sectionRootClientIdKey");
-  var mediaEditKey = Symbol("mediaEditKey");
-  var getMediaSelectKey = Symbol("getMediaSelect");
-  var essentialFormatKey = Symbol("essentialFormat");
-  var isIsolatedEditorKey = Symbol("isIsolatedEditor");
-  var deviceTypeKey = Symbol("deviceTypeKey");
+  var globalStylesDataKey = /* @__PURE__ */ Symbol("globalStylesDataKey");
+  var globalStylesLinksDataKey = /* @__PURE__ */ Symbol("globalStylesLinks");
+  var selectBlockPatternsKey = /* @__PURE__ */ Symbol("selectBlockPatternsKey");
+  var reusableBlocksSelectKey = /* @__PURE__ */ Symbol("reusableBlocksSelect");
+  var sectionRootClientIdKey = /* @__PURE__ */ Symbol("sectionRootClientIdKey");
+  var mediaEditKey = /* @__PURE__ */ Symbol("mediaEditKey");
+  var getMediaSelectKey = /* @__PURE__ */ Symbol("getMediaSelect");
+  var essentialFormatKey = /* @__PURE__ */ Symbol("essentialFormat");
+  var isIsolatedEditorKey = /* @__PURE__ */ Symbol("isIsolatedEditor");
+  var deviceTypeKey = /* @__PURE__ */ Symbol("deviceTypeKey");
 
   // packages/block-editor/build-module/store/reducer.mjs
   var { isContentBlock } = unlock(import_blocks2.privateApis);
@@ -11239,7 +11239,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/store/utils.mjs
-  var isFiltered = Symbol("isFiltered");
+  var isFiltered = /* @__PURE__ */ Symbol("isFiltered");
   var parsedPatternCache = /* @__PURE__ */ new WeakMap();
   var grammarMapCache = /* @__PURE__ */ new WeakMap();
   function mapUserPattern(userPattern, __experimentalUserPatternCategories = []) {
@@ -18785,8 +18785,8 @@ var wp;
     };
     return _extends.apply(this, arguments);
   }
-  var $get = Symbol.for("FluidValue.get");
-  var $observers = Symbol.for("FluidValue.observers");
+  var $get = /* @__PURE__ */ Symbol.for("FluidValue.get");
+  var $observers = /* @__PURE__ */ Symbol.for("FluidValue.observers");
   var hasFluidValue = (arg) => Boolean(arg && arg[$get]);
   var getFluidValue = (arg) => arg && arg[$get] ? arg[$get]() : arg;
   var getFluidObservers = (target) => target[$observers] || null;
@@ -18997,7 +18997,7 @@ var wp;
   // node_modules/@react-spring/animated/dist/react-spring-animated.esm.js
   var React = __toESM(require_react());
   var import_react2 = __toESM(require_react());
-  var $node = Symbol.for("Animated:node");
+  var $node = /* @__PURE__ */ Symbol.for("Animated:node");
   var isAnimated = (value) => !!value && value[$node] === value;
   var getAnimated = (owner) => owner && owner[$node];
   var setAnimated = (owner, node) => defineHidden(owner, $node, node);
@@ -19263,7 +19263,7 @@ var wp;
     }
     return value;
   }
-  var cacheKey = Symbol.for("AnimatedComponent");
+  var cacheKey = /* @__PURE__ */ Symbol.for("AnimatedComponent");
   var createHost = (components, {
     applyAnimatedValues: _applyAnimatedValues = () => false,
     createAnimatedStyle: _createAnimatedStyle = (style) => new AnimatedObject(style),
@@ -19821,7 +19821,7 @@ var wp;
       });
     }
   };
-  var $P = Symbol.for("SpringPhase");
+  var $P = /* @__PURE__ */ Symbol.for("SpringPhase");
   var HAS_ANIMATED = 1;
   var IS_ANIMATING = 2;
   var IS_PAUSED = 4;
@@ -25130,7 +25130,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/utils.mjs
-  var requiresWrapperOnCopy = Symbol("requiresWrapperOnCopy");
+  var requiresWrapperOnCopy = /* @__PURE__ */ Symbol("requiresWrapperOnCopy");
   function setClipboardBlocks(event, blocks2, registry) {
     let _blocks = blocks2;
     const [firstBlock] = blocks2;
@@ -32904,7 +32904,7 @@ var wp;
   };
   var groups_default = groups;
   var PrivateInspectorControlsAllowedBlocks = (0, import_components67.createSlotFill)(
-    Symbol("PrivateInspectorControlsAllowedBlocks")
+    /* @__PURE__ */ Symbol("PrivateInspectorControlsAllowedBlocks")
   );
 
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
@@ -35005,7 +35005,7 @@ var wp;
 
   // packages/block-editor/build-module/components/collab/block-comment-icon-slot.mjs
   var import_components81 = __toESM(require_components(), 1);
-  var CommentIconSlotFill = (0, import_components81.createSlotFill)(Symbol("CommentIconSlotFill"));
+  var CommentIconSlotFill = (0, import_components81.createSlotFill)(/* @__PURE__ */ Symbol("CommentIconSlotFill"));
   var block_comment_icon_slot_default = CommentIconSlotFill;
 
   // packages/block-editor/build-module/components/block-settings-menu/block-html-convert-button.mjs
@@ -36323,7 +36323,7 @@ var wp;
   // packages/block-editor/build-module/components/collab/block-comment-icon-toolbar-slot.mjs
   var import_components97 = __toESM(require_components(), 1);
   var CommentIconToolbarSlotFill = (0, import_components97.createSlotFill)(
-    Symbol("CommentIconToolbarSlotFill")
+    /* @__PURE__ */ Symbol("CommentIconToolbarSlotFill")
   );
   var block_comment_icon_toolbar_slot_default = CommentIconToolbarSlotFill;
 
@@ -52027,7 +52027,7 @@ var wp;
   var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
   var import_react5 = __toESM(require_react(), 1);
   var DEFAULT_BLOCK_CONTEXT2 = {};
-  var usesContextKey = Symbol("usesContext");
+  var usesContextKey = /* @__PURE__ */ Symbol("usesContext");
   function Edit3({
     onChange,
     onFocus,
@@ -52340,7 +52340,7 @@ var wp;
   keyboardShortcutContext.displayName = "keyboardShortcutContext";
   var inputEventContext = (0, import_element185.createContext)();
   inputEventContext.displayName = "inputEventContext";
-  var instanceIdKey = Symbol("instanceId");
+  var instanceIdKey = /* @__PURE__ */ Symbol("instanceId");
   function removeNativeProps(props) {
     const {
       __unstableMobileNoFocusOnMount,
@@ -62371,7 +62371,7 @@ var wp;
   var secondsInYear = secondsInDay * daysInYear;
   var secondsInMonth = secondsInYear / 12;
   var secondsInQuarter = secondsInMonth * 3;
-  var constructFromSymbol = Symbol.for("constructDateFrom");
+  var constructFromSymbol = /* @__PURE__ */ Symbol.for("constructDateFrom");
 
   // packages/dataviews/node_modules/date-fns/constructFrom.js
   function constructFrom(date, value) {

@@ -4800,7 +4800,7 @@ var Route = class extends BaseRoute {
         return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Link, { ref, from: this.fullPath, ...props });
       }
     );
-    this.$$typeof = Symbol.for("react.memo");
+    this.$$typeof = /* @__PURE__ */ Symbol.for("react.memo");
   }
 };
 function createRoute(options) {
@@ -4857,7 +4857,7 @@ var RootRoute = class extends BaseRootRoute {
         return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Link, { ref, from: this.fullPath, ...props });
       }
     );
-    this.$$typeof = Symbol.for("react.memo");
+    this.$$typeof = /* @__PURE__ */ Symbol.for("react.memo");
   }
 };
 function createRootRoute(options) {
@@ -4930,7 +4930,7 @@ var LazyRoute = class {
       return useNavigate({ from: router.routesById[this.options.id].fullPath });
     };
     this.options = opts;
-    this.$$typeof = Symbol.for("react.memo");
+    this.$$typeof = /* @__PURE__ */ Symbol.for("react.memo");
   }
 };
 function createLazyRoute(id) {

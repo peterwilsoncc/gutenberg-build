@@ -40,14 +40,14 @@ var wp;
         value: true
       });
       var keys = {
-        all: Symbol("all"),
-        error: Symbol("error"),
-        fork: Symbol("fork"),
-        join: Symbol("join"),
-        race: Symbol("race"),
-        call: Symbol("call"),
-        cps: Symbol("cps"),
-        subscribe: Symbol("subscribe")
+        all: /* @__PURE__ */ Symbol("all"),
+        error: /* @__PURE__ */ Symbol("error"),
+        fork: /* @__PURE__ */ Symbol("fork"),
+        join: /* @__PURE__ */ Symbol("join"),
+        race: /* @__PURE__ */ Symbol("race"),
+        call: /* @__PURE__ */ Symbol("call"),
+        cps: /* @__PURE__ */ Symbol("cps"),
+        subscribe: /* @__PURE__ */ Symbol("subscribe")
       };
       exports.default = keys;
     }
@@ -453,7 +453,7 @@ var wp;
       var forkedTasks = /* @__PURE__ */ new Map();
       var fork = exports.fork = function fork2(value, next, rungen) {
         if (!_is2.default.fork(value)) return false;
-        var task = Symbol("fork");
+        var task = /* @__PURE__ */ Symbol("fork");
         var dispatcher = (0, _dispatcher2.default)();
         forkedTasks.set(task, dispatcher);
         rungen(value.iterator.apply(null, value.args), function(result) {

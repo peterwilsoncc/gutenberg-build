@@ -692,7 +692,7 @@ function D2(n3, t5) {
 }
 
 // node_modules/@preact/signals-core/dist/signals-core.module.js
-var i3 = Symbol.for("preact-signals");
+var i3 = /* @__PURE__ */ Symbol.for("preact-signals");
 function t3() {
   if (!(s3 > 1)) {
     var i6, t5 = false;
@@ -1663,7 +1663,7 @@ var getPropSignal = (proxy, key, initial) => {
 };
 var objToIterable = /* @__PURE__ */ new WeakMap();
 var peeking = false;
-var PENDING_GETTER = Symbol("PENDING_GETTER");
+var PENDING_GETTER = /* @__PURE__ */ Symbol("PENDING_GETTER");
 var stateHandlers = {
   get(target, key, receiver) {
     if (peeking || !target.hasOwnProperty(key) && key in target || typeof key === "symbol" && wellKnownSymbols.has(key)) {

@@ -289,7 +289,7 @@ var wp;
   };
 
   // packages/theme/node_modules/colorjs.io/src/Format.js
-  var instance = Symbol("instance");
+  var instance = /* @__PURE__ */ Symbol("instance");
   var Format = class _Format {
     // Class properties - declared here so that type inference works
     type;

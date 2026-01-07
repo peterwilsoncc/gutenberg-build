@@ -2128,7 +2128,7 @@ var wp;
                   }, r3);
                 };
               }
-              var s, l = e("./end-of-stream"), c = Symbol("lastResolve"), u = Symbol("lastReject"), p = Symbol("error"), f = Symbol("ended"), g = Symbol("lastPromise"), _ = Symbol("handlePromise"), h = Symbol("stream"), m = Object.getPrototypeOf(function() {
+              var s, l = e("./end-of-stream"), c = /* @__PURE__ */ Symbol("lastResolve"), u = /* @__PURE__ */ Symbol("lastReject"), p = /* @__PURE__ */ Symbol("error"), f = /* @__PURE__ */ Symbol("ended"), g = /* @__PURE__ */ Symbol("lastPromise"), _ = /* @__PURE__ */ Symbol("handlePromise"), h = /* @__PURE__ */ Symbol("stream"), m = Object.getPrototypeOf(function() {
               }), b = Object.setPrototypeOf((s = { get stream() {
                 return this[h];
               }, next: function() {
@@ -3218,7 +3218,7 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/receive-intermediate-results.mjs
-  var RECEIVE_INTERMEDIATE_RESULTS = Symbol(
+  var RECEIVE_INTERMEDIATE_RESULTS = /* @__PURE__ */ Symbol(
     "RECEIVE_INTERMEDIATE_RESULTS"
   );
 

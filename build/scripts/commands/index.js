@@ -353,7 +353,6 @@ var wp;
   function isFunction(value) {
     return typeof value === "function";
   }
-  var SYNC_STATE = Symbol("RADIX:SYNC_STATE");
 
   // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
   var React11 = __toESM(require_react(), 1);
@@ -456,7 +455,7 @@ var wp;
     SlotClone.displayName = `${ownerName}.SlotClone`;
     return SlotClone;
   }
-  var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
+  var SLOTTABLE_IDENTIFIER = /* @__PURE__ */ Symbol("radix.slottable");
   function isSlottable(child) {
     return React7.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
   }
@@ -525,7 +524,7 @@ var wp;
       const { asChild, ...primitiveProps } = props;
       const Comp = asChild ? Slot2 : node;
       if (typeof window !== "undefined") {
-        window[Symbol.for("radix-ui")] = true;
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
     });
@@ -854,7 +853,7 @@ var wp;
     SlotClone.displayName = `${ownerName}.SlotClone`;
     return SlotClone;
   }
-  var SLOTTABLE_IDENTIFIER2 = Symbol("radix.slottable");
+  var SLOTTABLE_IDENTIFIER2 = /* @__PURE__ */ Symbol("radix.slottable");
   function isSlottable2(child) {
     return React13.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER2;
   }
@@ -923,7 +922,7 @@ var wp;
       const { asChild, ...primitiveProps } = props;
       const Comp = asChild ? Slot2 : node;
       if (typeof window !== "undefined") {
-        window[Symbol.for("radix-ui")] = true;
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
     });
@@ -1232,7 +1231,7 @@ var wp;
     SlotClone.displayName = `${ownerName}.SlotClone`;
     return SlotClone;
   }
-  var SLOTTABLE_IDENTIFIER3 = Symbol("radix.slottable");
+  var SLOTTABLE_IDENTIFIER3 = /* @__PURE__ */ Symbol("radix.slottable");
   function isSlottable3(child) {
     return React18.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER3;
   }
@@ -1301,7 +1300,7 @@ var wp;
       const { asChild, ...primitiveProps } = props;
       const Comp = asChild ? Slot2 : node;
       if (typeof window !== "undefined") {
-        window[Symbol.for("radix-ui")] = true;
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
     });
@@ -1544,7 +1543,7 @@ var wp;
     SlotClone.displayName = `${ownerName}.SlotClone`;
     return SlotClone;
   }
-  var SLOTTABLE_IDENTIFIER4 = Symbol("radix.slottable");
+  var SLOTTABLE_IDENTIFIER4 = /* @__PURE__ */ Symbol("radix.slottable");
   function isSlottable4(child) {
     return React27.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER4;
   }
@@ -1613,7 +1612,7 @@ var wp;
       const { asChild, ...primitiveProps } = props;
       const Comp = asChild ? Slot2 : node;
       if (typeof window !== "undefined") {
-        window[Symbol.for("radix-ui")] = true;
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
     });
@@ -2831,7 +2830,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
 
   // node_modules/cmdk/node_modules/@radix-ui/react-slot/dist/index.mjs
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+  var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
   var use = React39[" use ".trim().toString()];
   function isPromiseLike(value) {
     return typeof value === "object" && value !== null && "then" in value;
@@ -2886,7 +2885,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     SlotClone.displayName = `${ownerName}.SlotClone`;
     return SlotClone;
   }
-  var SLOTTABLE_IDENTIFIER5 = Symbol("radix.slottable");
+  var SLOTTABLE_IDENTIFIER5 = /* @__PURE__ */ Symbol("radix.slottable");
   function isSlottable5(child) {
     return React39.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER5;
   }
@@ -2955,7 +2954,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
       const { asChild, ...primitiveProps } = props;
       const Comp = asChild ? Slot2 : node;
       if (typeof window !== "undefined") {
-        window[Symbol.for("radix-ui")] = true;
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
     });

@@ -100,7 +100,7 @@ var wp;
     return lockedData.get(_object[__private]);
   }
   var lockedData = /* @__PURE__ */ new WeakMap();
-  var __private = Symbol("Private API ID");
+  var __private = /* @__PURE__ */ Symbol("Private API ID");
   return __toCommonJS(index_exports);
 })();
 //# sourceMappingURL=index.js.map

@@ -338,7 +338,6 @@ function useUncontrolledState({
 function isFunction(value) {
   return typeof value === "function";
 }
-var SYNC_STATE = Symbol("RADIX:SYNC_STATE");
 
 // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
 var React11 = __toESM(require_react(), 1);
@@ -441,7 +440,7 @@ function createSlotClone(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER = /* @__PURE__ */ Symbol("radix.slottable");
 function isSlottable(child) {
   return React7.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
 }
@@ -510,7 +509,7 @@ var Primitive = NODES.reduce((primitive, node) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? Slot2 : node;
     if (typeof window !== "undefined") {
-      window[Symbol.for("radix-ui")] = true;
+      window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
   });
@@ -839,7 +838,7 @@ function createSlotClone2(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER2 = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER2 = /* @__PURE__ */ Symbol("radix.slottable");
 function isSlottable2(child) {
   return React13.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER2;
 }
@@ -908,7 +907,7 @@ var Primitive2 = NODES2.reduce((primitive, node) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? Slot2 : node;
     if (typeof window !== "undefined") {
-      window[Symbol.for("radix-ui")] = true;
+      window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
   });
@@ -1217,7 +1216,7 @@ function createSlotClone3(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER3 = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER3 = /* @__PURE__ */ Symbol("radix.slottable");
 function isSlottable3(child) {
   return React18.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER3;
 }
@@ -1286,7 +1285,7 @@ var Primitive3 = NODES3.reduce((primitive, node) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? Slot2 : node;
     if (typeof window !== "undefined") {
-      window[Symbol.for("radix-ui")] = true;
+      window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
   });
@@ -1529,7 +1528,7 @@ function createSlotClone4(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER4 = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER4 = /* @__PURE__ */ Symbol("radix.slottable");
 function isSlottable4(child) {
   return React27.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER4;
 }
@@ -1598,7 +1597,7 @@ var Primitive4 = NODES4.reduce((primitive, node) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? Slot2 : node;
     if (typeof window !== "undefined") {
-      window[Symbol.for("radix-ui")] = true;
+      window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
   });
@@ -2816,7 +2815,7 @@ function composeRefs6(...refs) {
 
 // node_modules/cmdk/node_modules/@radix-ui/react-slot/dist/index.mjs
 var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
 var use = React39[" use ".trim().toString()];
 function isPromiseLike(value) {
   return typeof value === "object" && value !== null && "then" in value;
@@ -2871,7 +2870,7 @@ function createSlotClone5(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER5 = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER5 = /* @__PURE__ */ Symbol("radix.slottable");
 function isSlottable5(child) {
   return React39.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER5;
 }
@@ -2940,7 +2939,7 @@ var Primitive5 = NODES5.reduce((primitive, node) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? Slot2 : node;
     if (typeof window !== "undefined") {
-      window[Symbol.for("radix-ui")] = true;
+      window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
   });
