@@ -65719,6 +65719,11 @@ ${declarations}
 
   // packages/block-library/build-module/template-part/edit/index.mjs
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
+  var SUPPORTED_AREAS = ["header", "footer"];
+  function getSupportedAreas() {
+    const isOverlayExperimentEnabled = typeof window !== "undefined" && window.__experimentalNavigationOverlays === true;
+    return isOverlayExperimentEnabled ? [...SUPPORTED_AREAS, "navigation-overlay"] : SUPPORTED_AREAS;
+  }
   function ReplaceButton({
     isEntityAvailable,
     area,
@@ -65731,7 +65736,8 @@ ${declarations}
       templatePartId
     );
     const hasReplacements = !!templateParts.length;
-    const canReplace = isEntityAvailable && hasReplacements && (area === "header" || area === "footer");
+    const supportedAreas = getSupportedAreas();
+    const canReplace = isEntityAvailable && hasReplacements && supportedAreas.includes(area);
     if (!canReplace) {
       return null;
     }
@@ -65749,7 +65755,8 @@ ${declarations}
   }
   function TemplatesList({ area, clientId, isEntityAvailable, onSelect }) {
     const blockPatterns = useAlternativeBlockPatterns(area, clientId);
-    const canReplace = isEntityAvailable && !!blockPatterns.length && (area === "header" || area === "footer");
+    const supportedAreas = getSupportedAreas();
+    const canReplace = isEntityAvailable && !!blockPatterns.length && supportedAreas.includes(area);
     if (!canReplace) {
       return null;
     }
