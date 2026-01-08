@@ -185,6 +185,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/blob
+  var require_blob = __commonJS({
+    "package-external:@wordpress/blob"(exports, module) {
+      module.exports = window.wp.blob;
+    }
+  });
+
   // package-external:@wordpress/media-utils
   var require_media_utils = __commonJS({
     "package-external:@wordpress/media-utils"(exports, module) {
@@ -671,13 +678,6 @@ var wp;
       module.exports = removeAccents4;
       module.exports.has = hasAccents;
       module.exports.remove = removeAccents4;
-    }
-  });
-
-  // package-external:@wordpress/blob
-  var require_blob = __commonJS({
-    "package-external:@wordpress/blob"(exports, module) {
-      module.exports = window.wp.blob;
     }
   });
 
@@ -4920,7 +4920,7 @@ var wp;
   });
   var import_core_data46 = __toESM(require_core_data(), 1);
   var import_i18n108 = __toESM(require_i18n(), 1);
-  var import_notices16 = __toESM(require_notices(), 1);
+  var import_notices17 = __toESM(require_notices(), 1);
   var import_block_editor35 = __toESM(require_block_editor(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   var import_url9 = __toESM(require_url(), 1);
@@ -5288,11 +5288,13 @@ var wp;
 
   // packages/fields/build-module/components/media-edit/index.mjs
   var import_components5 = __toESM(require_components(), 1);
+  var import_blob = __toESM(require_blob(), 1);
   var import_core_data4 = __toESM(require_core_data(), 1);
   var import_data6 = __toESM(require_data(), 1);
   var import_element5 = __toESM(require_element(), 1);
   var import_i18n13 = __toESM(require_i18n(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
+  var import_notices3 = __toESM(require_notices(), 1);
   var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
   var { MediaUploadModal } = unlock2(import_media_utils.privateApis);
   function ConditionalMediaUpload({ render, multiple, ...props }) {
@@ -5331,23 +5333,44 @@ var wp;
     open,
     children,
     label,
-    showTooltip = false
+    showTooltip = false,
+    onFilesDrop,
+    attachment,
+    isUploading = false
   }) {
-    const mediaPickerButton = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+    const isBlob = attachment && (0, import_blob.isBlobURL)(attachment.source_url);
+    const mediaPickerButton = /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
       "div",
       {
         className: "fields__media-edit-picker-button",
         role: "button",
         tabIndex: 0,
-        onClick: open,
+        onClick: () => {
+          if (!isUploading) {
+            open();
+          }
+        },
         onKeyDown: (event) => {
+          if (isUploading) {
+            return;
+          }
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
             open();
           }
         },
         "aria-label": label,
-        children
+        "aria-disabled": isUploading,
+        children: [
+          children,
+          isBlob && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { className: "fields__media-edit-picker-button-spinner", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Spinner, {}) }),
+          !isUploading && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+            import_components5.DropZone,
+            {
+              onFilesDrop: (files) => onFilesDrop(files, attachment?.id)
+            }
+          )
+        ]
       }
     );
     if (!showTooltip) {
@@ -5366,16 +5389,13 @@ var wp;
   function MediaTitle({ attachment }) {
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalTruncate, { className: "fields__media-edit-filename", children: attachment.title.rendered });
   }
-  function MediaEditPlaceholder({
-    open,
-    label
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaPickerButton, { open, label, children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { className: "fields__media-edit-placeholder", children: label }) });
+  function MediaEditPlaceholder(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaPickerButton, { ...props, children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("span", { className: "fields__media-edit-placeholder", children: props.label }) });
   }
   function MediaPreview({ attachment }) {
     const url = attachment.source_url;
-    const mimeType = attachment.mime_type;
-    if (mimeType.startsWith("image/")) {
+    const mimeType = attachment.mime_type || "";
+    if (mimeType.startsWith("image")) {
       return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
         "img",
         {
@@ -5384,9 +5404,9 @@ var wp;
           src: url
         }
       );
-    } else if (mimeType.startsWith("audio/")) {
+    } else if (mimeType.startsWith("audio")) {
       return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: audio_default });
-    } else if (mimeType.startsWith("video/")) {
+    } else if (mimeType.startsWith("video")) {
       return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: video_default });
     } else if (archiveMimeTypes.includes(mimeType)) {
       return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: archive_default });
@@ -5394,11 +5414,13 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.Icon, { icon: file_default });
   }
   function ExpandedMediaEditAttachments({
-    attachments,
+    allItems,
     addButtonLabel,
     multiple,
     removeItem,
-    open
+    open,
+    onFilesDrop,
+    isUploading
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
       "div",
@@ -5406,11 +5428,12 @@ var wp;
         className: clsx_default("fields__media-edit-expanded", {
           "is-multiple": multiple,
           "is-single": !multiple,
-          "is-empty": !attachments?.length
+          "is-empty": !allItems?.length
         }),
         children: [
-          attachments?.map((attachment) => {
-            const hasPreviewImage = attachment.mime_type.startsWith("image/");
+          allItems?.map((attachment) => {
+            const hasPreviewImage = attachment.mime_type?.startsWith("image");
+            const isBlob = (0, import_blob.isBlobURL)(attachment.source_url);
             return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
               "div",
               {
@@ -5424,6 +5447,9 @@ var wp;
                       open,
                       label: (0, import_i18n13.__)("Replace"),
                       showTooltip: true,
+                      onFilesDrop,
+                      attachment,
+                      isUploading,
                       children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-preview", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
                         import_components5.__experimentalVStack,
                         {
@@ -5432,19 +5458,29 @@ var wp;
                           justify: "center",
                           className: "fields__media-edit-expanded-preview-stack",
                           children: [
-                            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaPreview, { attachment }),
-                            !hasPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaTitle, { attachment }) : /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-title", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                            (!isBlob || hasPreviewImage) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                              MediaPreview,
+                              {
+                                attachment
+                              }
+                            ),
+                            !isBlob && (!hasPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
                               MediaTitle,
                               {
                                 attachment
                               }
-                            ) })
+                            ) : /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-overlay", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-title", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                              MediaTitle,
+                              {
+                                attachment
+                              }
+                            ) }) }))
                           ]
                         }
                       ) })
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-overlay", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                  !isBlob && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: "fields__media-edit-expanded-overlay", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
                     import_components5.Button,
                     {
                       __next40pxDefaultSize: true,
@@ -5452,6 +5488,8 @@ var wp;
                       icon: close_small_default,
                       label: (0, import_i18n13.__)("Remove"),
                       size: "small",
+                      disabled: isUploading,
+                      accessibleWhenDisabled: true,
                       onClick: (event) => {
                         event.stopPropagation();
                         removeItem(attachment.id);
@@ -5463,54 +5501,92 @@ var wp;
               attachment.id
             );
           }),
-          (multiple || !attachments?.length) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaEditPlaceholder, { open, label: addButtonLabel })
+          (multiple || !allItems?.length) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+            MediaEditPlaceholder,
+            {
+              open,
+              label: addButtonLabel,
+              onFilesDrop,
+              isUploading
+            }
+          )
         ]
       }
     );
   }
   function CompactMediaEditAttachments({
-    attachments,
+    allItems,
     addButtonLabel,
     multiple,
     removeItem,
-    open
+    open,
+    onFilesDrop,
+    isUploading
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_jsx_runtime74.Fragment, { children: [
-      !!attachments?.length && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalVStack, { spacing: 2, children: attachments.map((attachment) => /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
-        "div",
-        {
-          className: "fields__media-edit-compact",
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-              MediaPickerButton,
-              {
-                open,
-                label: (0, import_i18n13.__)("Replace"),
-                showTooltip: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_jsx_runtime74.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaPreview, { attachment }),
-                  /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaTitle, { attachment })
-                ] })
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-              import_components5.Button,
-              {
-                __next40pxDefaultSize: true,
-                className: "fields__media-edit-remove",
-                text: (0, import_i18n13.__)("Remove"),
-                variant: "secondary",
-                onClick: (event) => {
-                  event.stopPropagation();
-                  removeItem(attachment.id);
+      !!allItems?.length && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalVStack, { spacing: 2, children: allItems.map((attachment) => {
+        const isBlob = (0, import_blob.isBlobURL)(attachment.source_url);
+        return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+          "div",
+          {
+            className: "fields__media-edit-compact",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                MediaPickerButton,
+                {
+                  open,
+                  label: (0, import_i18n13.__)("Replace"),
+                  showTooltip: true,
+                  onFilesDrop,
+                  attachment,
+                  isUploading,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_jsx_runtime74.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                      MediaPreview,
+                      {
+                        attachment
+                      }
+                    ),
+                    !isBlob && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                      MediaTitle,
+                      {
+                        attachment
+                      }
+                    )
+                  ] })
                 }
-              }
-            )
-          ]
-        },
-        attachment.id
-      )) }),
-      (multiple || !attachments?.length) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(MediaEditPlaceholder, { open, label: addButtonLabel })
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                import_components5.Button,
+                {
+                  __next40pxDefaultSize: true,
+                  className: "fields__media-edit-remove",
+                  text: (0, import_i18n13.__)("Remove"),
+                  variant: "secondary",
+                  disabled: isUploading,
+                  accessibleWhenDisabled: true,
+                  onClick: (event) => {
+                    event.stopPropagation();
+                    if (typeof attachment.id === "number") {
+                      removeItem(attachment.id);
+                    }
+                  }
+                }
+              )
+            ]
+          },
+          attachment.id
+        );
+      }) }),
+      (multiple || !allItems?.length) && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+        MediaEditPlaceholder,
+        {
+          open,
+          label: addButtonLabel,
+          onFilesDrop,
+          isUploading
+        }
+      )
     ] });
   }
   function MediaEdit({
@@ -5536,6 +5612,9 @@ var wp;
       },
       [value]
     );
+    const { createErrorNotice } = (0, import_data6.useDispatch)(import_notices3.store);
+    const [replacementId, setReplacementId] = (0, import_element5.useState)();
+    const [blobs, setBlobs] = (0, import_element5.useState)([]);
     const onChangeControl = (0, import_element5.useCallback)(
       (newValue) => onChange(field.setValue({ item: data, value: newValue })),
       [data, field, onChange]
@@ -5545,7 +5624,87 @@ var wp;
       const newIds = currentIds.filter((id) => id !== itemId);
       onChangeControl(newIds.length ? newIds : void 0);
     };
+    const onFilesDrop = (0, import_element5.useCallback)(
+      (files, _replacementId) => {
+        (0, import_media_utils.uploadMedia)({
+          allowedTypes: allowedTypes?.length ? allowedTypes : void 0,
+          filesList: files,
+          onFileChange(uploadedMedia) {
+            setReplacementId(_replacementId);
+            const { blobItems, uploadedItems } = uploadedMedia.reduce(
+              (accumulator, item) => {
+                if ((0, import_blob.isBlobURL)(item.url)) {
+                  accumulator.blobItems.push(item.url);
+                } else {
+                  accumulator.uploadedItems.push(item.id);
+                }
+                return accumulator;
+              },
+              {
+                blobItems: [],
+                uploadedItems: []
+              }
+            );
+            setBlobs(blobItems);
+            if (uploadedItems.length === uploadedMedia.length) {
+              setReplacementId(void 0);
+            }
+            if (!uploadedItems.length) {
+              return;
+            }
+            if (!multiple) {
+              onChangeControl(uploadedItems[0]);
+              return;
+            }
+            if (!value) {
+              onChangeControl(uploadedItems);
+              return;
+            }
+            const normalizedValue = Array.isArray(value) ? value : [value];
+            const newIds = [
+              ..._replacementId ? normalizedValue.filter(
+                (id) => id !== _replacementId
+              ) : normalizedValue,
+              ...uploadedItems
+            ];
+            onChangeControl(newIds);
+          },
+          onError(error) {
+            setReplacementId(void 0);
+            setBlobs([]);
+            createErrorNotice(error.message, { type: "snackbar" });
+          },
+          multiple: !!multiple
+        });
+      },
+      [allowedTypes, value, multiple, createErrorNotice, onChangeControl]
+    );
     const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n13.__)("Choose files") : (0, import_i18n13.__)("Choose file"));
+    const allItems = (0, import_element5.useMemo)(() => {
+      if (!blobs.length) {
+        return attachments;
+      }
+      const items = [
+        ...attachments || []
+      ];
+      const blobItems = blobs.map((url) => ({
+        id: url,
+        source_url: url,
+        mime_type: (0, import_blob.getBlobTypeByURL)(url)
+      }));
+      const replacementIndex = items.findIndex(
+        (a3) => a3.id === replacementId
+      );
+      if (replacementIndex !== -1) {
+        return [
+          ...items.slice(0, replacementIndex),
+          ...blobItems,
+          ...items.slice(replacementIndex + 1)
+        ];
+      }
+      items.push(...blobItems);
+      return items;
+    }, [attachments, replacementId, blobs]);
     return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
       ConditionalMediaUpload,
       {
@@ -5568,11 +5727,13 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
               AttachmentsComponent,
               {
-                attachments,
+                allItems,
                 addButtonLabel,
                 multiple,
                 removeItem,
-                open
+                open,
+                onFilesDrop,
+                isUploading: !!blobs.length
               }
             ),
             field.description && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components5.__experimentalText, { variant: "muted", children: field.description })
@@ -6534,7 +6695,7 @@ var wp;
   var import_data12 = __toESM(require_data(), 1);
   var import_core_data10 = __toESM(require_core_data(), 1);
   var import_i18n34 = __toESM(require_i18n(), 1);
-  var import_notices3 = __toESM(require_notices(), 1);
+  var import_notices4 = __toESM(require_notices(), 1);
   var import_element11 = __toESM(require_element(), 1);
   var import_components12 = __toESM(require_components(), 1);
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
@@ -6548,7 +6709,7 @@ var wp;
   }) {
     const [item, setItem] = (0, import_element11.useState)(items[0]);
     const { editEntityRecord, saveEditedEntityRecord } = (0, import_data12.useDispatch)(import_core_data10.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data12.useDispatch)(import_notices3.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data12.useDispatch)(import_notices4.store);
     const isValid = isItemValid(item);
     async function onOrder(event) {
       event.preventDefault();
@@ -6636,7 +6797,7 @@ var wp;
   var import_data13 = __toESM(require_data(), 1);
   var import_core_data11 = __toESM(require_core_data(), 1);
   var import_i18n35 = __toESM(require_i18n(), 1);
-  var import_notices4 = __toESM(require_notices(), 1);
+  var import_notices5 = __toESM(require_notices(), 1);
   var import_element12 = __toESM(require_element(), 1);
   var import_components13 = __toESM(require_components(), 1);
   var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
@@ -6658,7 +6819,7 @@ var wp;
       });
       const [isCreatingPage, setIsCreatingPage] = (0, import_element12.useState)(false);
       const { saveEntityRecord } = (0, import_data13.useDispatch)(import_core_data11.store);
-      const { createSuccessNotice, createErrorNotice } = (0, import_data13.useDispatch)(import_notices4.store);
+      const { createSuccessNotice, createErrorNotice } = (0, import_data13.useDispatch)(import_notices5.store);
       async function createPage(event) {
         event.preventDefault();
         if (isCreatingPage) {
@@ -6776,7 +6937,7 @@ var wp;
   var import_element13 = __toESM(require_element(), 1);
   var import_patterns2 = __toESM(require_patterns(), 1);
   var import_components14 = __toESM(require_components(), 1);
-  var import_notices5 = __toESM(require_notices(), 1);
+  var import_notices6 = __toESM(require_notices(), 1);
   var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
   var { PATTERN_TYPES: PATTERN_TYPES2 } = unlock2(import_patterns2.privateApis);
   var renamePost = {
@@ -6809,7 +6970,7 @@ var wp;
       const [item] = items;
       const [title, setTitle] = (0, import_element13.useState)(() => getItemTitle(item, ""));
       const { editEntityRecord, saveEditedEntityRecord } = (0, import_data14.useDispatch)(import_core_data12.store);
-      const { createSuccessNotice, createErrorNotice } = (0, import_data14.useDispatch)(import_notices5.store);
+      const { createSuccessNotice, createErrorNotice } = (0, import_data14.useDispatch)(import_notices6.store);
       async function onRename(event) {
         event.preventDefault();
         try {
@@ -6873,7 +7034,7 @@ var wp;
   var import_data15 = __toESM(require_data(), 1);
   var import_core_data13 = __toESM(require_core_data(), 1);
   var import_i18n37 = __toESM(require_i18n(), 1);
-  var import_notices6 = __toESM(require_notices(), 1);
+  var import_notices7 = __toESM(require_notices(), 1);
   var import_element14 = __toESM(require_element(), 1);
   var import_blocks4 = __toESM(require_blocks(), 1);
   var import_components15 = __toESM(require_components(), 1);
@@ -6888,9 +7049,9 @@ var wp;
   };
   var revertTemplate = async (template2, { allowUndo = true } = {}) => {
     const noticeId = "edit-site-template-reverted";
-    (0, import_data15.dispatch)(import_notices6.store).removeNotice(noticeId);
+    (0, import_data15.dispatch)(import_notices7.store).removeNotice(noticeId);
     if (!isTemplateRevertable2(template2)) {
-      (0, import_data15.dispatch)(import_notices6.store).createErrorNotice(
+      (0, import_data15.dispatch)(import_notices7.store).createErrorNotice(
         (0, import_i18n37.__)("This template is not revertable."),
         {
           type: "snackbar"
@@ -6904,7 +7065,7 @@ var wp;
         template2.type
       );
       if (!templateEntityConfig) {
-        (0, import_data15.dispatch)(import_notices6.store).createErrorNotice(
+        (0, import_data15.dispatch)(import_notices7.store).createErrorNotice(
           (0, import_i18n37.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -6920,7 +7081,7 @@ var wp;
         path: fileTemplatePath
       });
       if (!fileTemplate) {
-        (0, import_data15.dispatch)(import_notices6.store).createErrorNotice(
+        (0, import_data15.dispatch)(import_notices7.store).createErrorNotice(
           (0, import_i18n37.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -6975,7 +7136,7 @@ var wp;
             }
           );
         };
-        (0, import_data15.dispatch)(import_notices6.store).createSuccessNotice(
+        (0, import_data15.dispatch)(import_notices7.store).createSuccessNotice(
           (0, import_i18n37.__)("Template reset."),
           {
             type: "snackbar",
@@ -6991,7 +7152,7 @@ var wp;
       }
     } catch (error) {
       const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n37.__)("Template revert failed. Please reload.");
-      (0, import_data15.dispatch)(import_notices6.store).createErrorNotice(errorMessage, {
+      (0, import_data15.dispatch)(import_notices7.store).createErrorNotice(errorMessage, {
         type: "snackbar"
       });
     }
@@ -7012,7 +7173,7 @@ var wp;
     RenderModal: ({ items, closeModal: closeModal2, onActionPerformed }) => {
       const [isBusy, setIsBusy] = (0, import_element14.useState)(false);
       const { saveEditedEntityRecord } = (0, import_data15.useDispatch)(import_core_data13.store);
-      const { createSuccessNotice, createErrorNotice } = (0, import_data15.useDispatch)(import_notices6.store);
+      const { createSuccessNotice, createErrorNotice } = (0, import_data15.useDispatch)(import_notices7.store);
       const onConfirm = async () => {
         try {
           for (const template2 of items) {
@@ -7358,7 +7519,7 @@ var wp;
   }
 
   // packages/fields/build-module/actions/export-pattern.mjs
-  var import_blob = __toESM(require_blob(), 1);
+  var import_blob2 = __toESM(require_blob(), 1);
   var import_i18n39 = __toESM(require_i18n(), 1);
   function getJsonFromItem(item) {
     return JSON.stringify(
@@ -7380,7 +7541,7 @@ var wp;
     isEligible: (item) => item.type === "wp_block",
     callback: async (items) => {
       if (items.length === 1) {
-        return (0, import_blob.downloadBlob)(
+        return (0, import_blob2.downloadBlob)(
           `${paramCase(
             getItemTitle(items[0]) || items[0].slug
           )}.json`,
@@ -7398,7 +7559,7 @@ var wp;
           input: getJsonFromItem(item)
         };
       });
-      return (0, import_blob.downloadBlob)(
+      return (0, import_blob2.downloadBlob)(
         (0, import_i18n39.__)("patterns-export") + ".zip",
         await A(filesToZip).blob(),
         "application/zip"
@@ -7445,7 +7606,7 @@ var wp;
   // packages/fields/build-module/actions/permanently-delete-post.mjs
   var import_core_data14 = __toESM(require_core_data(), 1);
   var import_i18n41 = __toESM(require_i18n(), 1);
-  var import_notices7 = __toESM(require_notices(), 1);
+  var import_notices8 = __toESM(require_notices(), 1);
   var import_element15 = __toESM(require_element(), 1);
   var import_data16 = __toESM(require_data(), 1);
   var import_components16 = __toESM(require_components(), 1);
@@ -7467,7 +7628,7 @@ var wp;
     modalFocusOnMount: "firstContentElement",
     RenderModal: ({ items, closeModal: closeModal2, onActionPerformed }) => {
       const [isBusy, setIsBusy] = (0, import_element15.useState)(false);
-      const { createSuccessNotice, createErrorNotice } = (0, import_data16.useDispatch)(import_notices7.store);
+      const { createSuccessNotice, createErrorNotice } = (0, import_data16.useDispatch)(import_notices8.store);
       const { deleteEntityRecord } = (0, import_data16.useDispatch)(import_core_data14.store);
       return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(import_components16.__experimentalVStack, { spacing: "5", children: [
         /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components16.__experimentalText, { children: items.length > 1 ? (0, import_i18n41.sprintf)(
@@ -7603,7 +7764,7 @@ var wp;
   // packages/fields/build-module/actions/restore-post.mjs
   var import_core_data15 = __toESM(require_core_data(), 1);
   var import_i18n42 = __toESM(require_i18n(), 1);
-  var import_notices8 = __toESM(require_notices(), 1);
+  var import_notices9 = __toESM(require_notices(), 1);
   var restorePost = {
     id: "restore",
     label: (0, import_i18n42.__)("Restore"),
@@ -7614,7 +7775,7 @@ var wp;
       return !isTemplateOrTemplatePart(item) && item.type !== "wp_block" && item.status === "trash" && item.permissions?.update;
     },
     async callback(posts, { registry, onActionPerformed }) {
-      const { createSuccessNotice, createErrorNotice } = registry.dispatch(import_notices8.store);
+      const { createSuccessNotice, createErrorNotice } = registry.dispatch(import_notices9.store);
       const { editEntityRecord, saveEditedEntityRecord } = registry.dispatch(import_core_data15.store);
       await Promise.allSettled(
         posts.map((post2) => {
@@ -7712,7 +7873,7 @@ var wp;
   var import_data17 = __toESM(require_data(), 1);
   var import_core_data16 = __toESM(require_core_data(), 1);
   var import_i18n43 = __toESM(require_i18n(), 1);
-  var import_notices9 = __toESM(require_notices(), 1);
+  var import_notices10 = __toESM(require_notices(), 1);
   var import_element16 = __toESM(require_element(), 1);
   var import_components17 = __toESM(require_components(), 1);
   var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
@@ -7735,7 +7896,7 @@ var wp;
     modalFocusOnMount: "firstContentElement",
     RenderModal: ({ items, closeModal: closeModal2, onActionPerformed }) => {
       const [isBusy, setIsBusy] = (0, import_element16.useState)(false);
-      const { createSuccessNotice, createErrorNotice } = (0, import_data17.useDispatch)(import_notices9.store);
+      const { createSuccessNotice, createErrorNotice } = (0, import_data17.useDispatch)(import_notices10.store);
       const { deleteEntityRecord } = (0, import_data17.useDispatch)(import_core_data16.store);
       return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(import_components17.__experimentalVStack, { spacing: "5", children: [
         /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_components17.__experimentalText, { children: items.length === 1 ? (0, import_i18n43.sprintf)(
@@ -7884,7 +8045,7 @@ var wp;
   var import_html_entities6 = __toESM(require_html_entities(), 1);
 
   // packages/fields/build-module/mutation/index.mjs
-  var import_notices10 = __toESM(require_notices(), 1);
+  var import_notices11 = __toESM(require_notices(), 1);
   var import_core_data17 = __toESM(require_core_data(), 1);
   var import_data18 = __toESM(require_data(), 1);
   function getErrorMessagesFromPromises(allSettledResults) {
@@ -7908,7 +8069,7 @@ var wp;
     return errorMessages;
   }
   var deletePostWithNotices = async (posts, notice, callbacks) => {
-    const { createSuccessNotice, createErrorNotice } = (0, import_data18.dispatch)(import_notices10.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data18.dispatch)(import_notices11.store);
     const { deleteEntityRecord } = (0, import_data18.dispatch)(import_core_data17.store);
     const allSettledResults = await Promise.allSettled(
       posts.map((post2) => {
@@ -8107,7 +8268,7 @@ var wp;
   // packages/fields/build-module/actions/duplicate-template-part.mjs
   var import_data21 = __toESM(require_data(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
-  var import_notices12 = __toESM(require_notices(), 1);
+  var import_notices13 = __toESM(require_notices(), 1);
   var import_element19 = __toESM(require_element(), 1);
   var import_blocks6 = __toESM(require_blocks(), 1);
 
@@ -8118,7 +8279,7 @@ var wp;
   var import_data20 = __toESM(require_data(), 1);
   var import_element18 = __toESM(require_element(), 1);
   var import_i18n45 = __toESM(require_i18n(), 1);
-  var import_notices11 = __toESM(require_notices(), 1);
+  var import_notices12 = __toESM(require_notices(), 1);
   var import_blocks5 = __toESM(require_blocks(), 1);
 
   // packages/fields/build-module/components/create-template-part-modal/utils.mjs
@@ -8206,7 +8367,7 @@ var wp;
     onError,
     defaultTitle = ""
   }) {
-    const { createErrorNotice } = (0, import_data20.useDispatch)(import_notices11.store);
+    const { createErrorNotice } = (0, import_data20.useDispatch)(import_notices12.store);
     const { saveEntityRecord } = (0, import_data20.useDispatch)(import_core_data19.store);
     const existingTemplateParts = useExistingTemplateParts();
     const [title, setTitle] = (0, import_element18.useState)(defaultTitle);
@@ -8388,7 +8549,7 @@ var wp;
           }
         );
       }, [item.content, item.blocks]);
-      const { createSuccessNotice } = (0, import_data21.useDispatch)(import_notices12.store);
+      const { createSuccessNotice } = (0, import_data21.useDispatch)(import_notices13.store);
       function onTemplatePartSuccess(templatePart) {
         createSuccessNotice(
           (0, import_i18n46.sprintf)(
@@ -8436,7 +8597,7 @@ var wp;
   var import_i18n60 = __toESM(require_i18n(), 1);
   var import_core_data30 = __toESM(require_core_data(), 1);
   var import_block_editor18 = __toESM(require_block_editor(), 1);
-  var import_notices15 = __toESM(require_notices(), 1);
+  var import_notices16 = __toESM(require_notices(), 1);
   var import_patterns7 = __toESM(require_patterns(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
 
@@ -11849,7 +12010,7 @@ var wp;
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_commands = __toESM(require_commands(), 1);
   var import_preferences7 = __toESM(require_preferences(), 1);
-  var import_notices13 = __toESM(require_notices(), 1);
+  var import_notices14 = __toESM(require_notices(), 1);
   var import_block_editor10 = __toESM(require_block_editor(), 1);
   var import_core_data26 = __toESM(require_core_data(), 1);
 
@@ -12963,7 +13124,7 @@ var wp;
     }, []);
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data38.useSelect)(store2);
     const { toggle } = (0, import_data38.useDispatch)(import_preferences7.store);
-    const { createInfoNotice } = (0, import_data38.useDispatch)(import_notices13.store);
+    const { createInfoNotice } = (0, import_data38.useDispatch)(import_notices14.store);
     const {
       __unstableSaveForPreview: __unstableSaveForPreview2,
       setIsListViewOpened: setIsListViewOpened2,
@@ -14111,13 +14272,13 @@ var wp;
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_i18n59 = __toESM(require_i18n(), 1);
   var import_element36 = __toESM(require_element(), 1);
-  var import_notices14 = __toESM(require_notices(), 1);
+  var import_notices15 = __toESM(require_notices(), 1);
   var import_core_data29 = __toESM(require_core_data(), 1);
   var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
   function ConvertToTemplatePart({ clientIds, blocks }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element36.useState)(false);
     const { replaceBlocks: replaceBlocks2 } = (0, import_data46.useDispatch)(import_block_editor16.store);
-    const { createSuccessNotice } = (0, import_data46.useDispatch)(import_notices14.store);
+    const { createSuccessNotice } = (0, import_data46.useDispatch)(import_notices15.store);
     const { isBlockBasedTheme, canCreate } = (0, import_data46.useSelect)((select5) => {
       return {
         isBlockBasedTheme: select5(import_core_data29.store).getCurrentTheme()?.is_block_theme,
@@ -14351,7 +14512,7 @@ var wp;
         setEditedPost: setEditedPost2,
         setRenderingMode: setRenderingMode2
       } = unlock((0, import_data48.useDispatch)(store));
-      const { createWarningNotice, removeNotice } = (0, import_data48.useDispatch)(import_notices15.store);
+      const { createWarningNotice, removeNotice } = (0, import_data48.useDispatch)(import_notices16.store);
       (0, import_element37.useLayoutEffect)(() => {
         if (recovery) {
           return;
@@ -32126,7 +32287,7 @@ var wp;
         template: savedTemplate.slug
       }
     );
-    registry.dispatch(import_notices16.store).createSuccessNotice(
+    registry.dispatch(import_notices17.store).createSuccessNotice(
       (0, import_i18n108.__)("Custom template created. You're in template mode now."),
       {
         type: "snackbar",
@@ -32163,7 +32324,7 @@ var wp;
     ];
     const saveNoticeId = "site-editor-save-success";
     const homeUrl = registry.select(import_core_data46.store).getEntityRecord("root", "__unstableBase")?.home;
-    registry.dispatch(import_notices16.store).removeNotice(saveNoticeId);
+    registry.dispatch(import_notices17.store).removeNotice(saveNoticeId);
     const entitiesToSave = dirtyEntityRecords.filter(
       ({ kind, name: name2, key, property }) => {
         return !entitiesToSkip.some(
@@ -32205,9 +32366,9 @@ var wp;
       return onSave ? onSave(values) : values;
     }).then((values) => {
       if (values.some((value) => typeof value === "undefined")) {
-        registry.dispatch(import_notices16.store).createErrorNotice((0, import_i18n108.__)("Saving failed."));
+        registry.dispatch(import_notices17.store).createErrorNotice((0, import_i18n108.__)("Saving failed."));
       } else {
-        registry.dispatch(import_notices16.store).createSuccessNotice((0, import_i18n108.__)("Site updated."), {
+        registry.dispatch(import_notices17.store).createSuccessNotice((0, import_i18n108.__)("Site updated."), {
           type: "snackbar",
           id: saveNoticeId,
           actions: [
@@ -32220,16 +32381,16 @@ var wp;
         });
       }
     }).catch(
-      (error) => registry.dispatch(import_notices16.store).createErrorNotice(
+      (error) => registry.dispatch(import_notices17.store).createErrorNotice(
         `${(0, import_i18n108.__)("Saving failed.")} ${error}`
       )
     );
   };
   var revertTemplate2 = (template2, { allowUndo = true } = {}) => async ({ registry }) => {
     const noticeId = "edit-site-template-reverted";
-    registry.dispatch(import_notices16.store).removeNotice(noticeId);
+    registry.dispatch(import_notices17.store).removeNotice(noticeId);
     if (!isTemplateRevertable(template2)) {
-      registry.dispatch(import_notices16.store).createErrorNotice((0, import_i18n108.__)("This template is not revertable."), {
+      registry.dispatch(import_notices17.store).createErrorNotice((0, import_i18n108.__)("This template is not revertable."), {
         type: "snackbar"
       });
       return;
@@ -32237,7 +32398,7 @@ var wp;
     try {
       const templateEntityConfig = registry.select(import_core_data46.store).getEntityConfig("postType", template2.type);
       if (!templateEntityConfig) {
-        registry.dispatch(import_notices16.store).createErrorNotice(
+        registry.dispatch(import_notices17.store).createErrorNotice(
           (0, import_i18n108.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -32251,7 +32412,7 @@ var wp;
       );
       const fileTemplate = await (0, import_api_fetch4.default)({ path: fileTemplatePath });
       if (!fileTemplate) {
-        registry.dispatch(import_notices16.store).createErrorNotice(
+        registry.dispatch(import_notices17.store).createErrorNotice(
           (0, import_i18n108.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -32303,7 +32464,7 @@ var wp;
             }
           );
         };
-        registry.dispatch(import_notices16.store).createSuccessNotice((0, import_i18n108.__)("Template reset."), {
+        registry.dispatch(import_notices17.store).createSuccessNotice((0, import_i18n108.__)("Template reset."), {
           type: "snackbar",
           id: noticeId,
           actions: [
@@ -32316,7 +32477,7 @@ var wp;
       }
     } catch (error) {
       const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n108.__)("Template revert failed. Please reload.");
-      registry.dispatch(import_notices16.store).createErrorNotice(errorMessage, { type: "snackbar" });
+      registry.dispatch(import_notices17.store).createErrorNotice(errorMessage, { type: "snackbar" });
     }
   };
   var removeTemplates = (items) => async ({ registry }) => {
@@ -32355,7 +32516,7 @@ var wp;
       } else {
         successMessage = isResetting ? (0, import_i18n108.__)("Items reset.") : (0, import_i18n108.__)("Items deleted.");
       }
-      registry.dispatch(import_notices16.store).createSuccessNotice(successMessage, {
+      registry.dispatch(import_notices17.store).createSuccessNotice(successMessage, {
         type: "snackbar",
         id: "editor-template-deleted-success"
       });
@@ -32411,7 +32572,7 @@ var wp;
           );
         }
       }
-      registry.dispatch(import_notices16.store).createErrorNotice(errorMessage, { type: "snackbar" });
+      registry.dispatch(import_notices17.store).createErrorNotice(errorMessage, { type: "snackbar" });
     }
   };
   var setDefaultRenderingMode = (mode) => ({ select: select5, registry }) => {
@@ -35202,7 +35363,7 @@ var wp;
   // packages/editor/build-module/components/editor-notices/index.mjs
   var import_components103 = __toESM(require_components(), 1);
   var import_data84 = __toESM(require_data(), 1);
-  var import_notices17 = __toESM(require_notices(), 1);
+  var import_notices18 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/template-validation-notice/index.mjs
   var import_components102 = __toESM(require_components(), 1);
@@ -35266,11 +35427,11 @@ var wp;
   function EditorNotices() {
     const { notices } = (0, import_data84.useSelect)(
       (select5) => ({
-        notices: select5(import_notices17.store).getNotices()
+        notices: select5(import_notices18.store).getNotices()
       }),
       []
     );
-    const { removeNotice } = (0, import_data84.useDispatch)(import_notices17.store);
+    const { removeNotice } = (0, import_data84.useDispatch)(import_notices18.store);
     const dismissibleNotices = notices.filter(
       ({ isDismissible, type }) => isDismissible && type === "default"
     );
@@ -35301,15 +35462,15 @@ var wp;
   // packages/editor/build-module/components/editor-snackbars/index.mjs
   var import_components104 = __toESM(require_components(), 1);
   var import_data85 = __toESM(require_data(), 1);
-  var import_notices18 = __toESM(require_notices(), 1);
+  var import_notices19 = __toESM(require_notices(), 1);
   var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
   var MAX_VISIBLE_NOTICES = -3;
   function EditorSnackbars() {
     const notices = (0, import_data85.useSelect)(
-      (select5) => select5(import_notices18.store).getNotices(),
+      (select5) => select5(import_notices19.store).getNotices(),
       []
     );
-    const { removeNotice } = (0, import_data85.useDispatch)(import_notices18.store);
+    const { removeNotice } = (0, import_data85.useDispatch)(import_notices19.store);
     const snackbarNotices = notices.filter(({ type }) => type === "snackbar").slice(MAX_VISIBLE_NOTICES);
     return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
       import_components104.SnackbarList,
@@ -35772,7 +35933,7 @@ var wp;
   var import_data91 = __toESM(require_data(), 1);
   var import_i18n125 = __toESM(require_i18n(), 1);
   var import_blocks23 = __toESM(require_blocks(), 1);
-  var import_notices19 = __toESM(require_notices(), 1);
+  var import_notices20 = __toESM(require_notices(), 1);
   var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   var requestIdleCallback = window.requestIdleCallback ? window.requestIdleCallback : window.requestAnimationFrame;
   var hasStorageSupport;
@@ -35799,7 +35960,7 @@ var wp;
       []
     );
     const { getEditedPostAttribute: getEditedPostAttribute2 } = (0, import_data91.useSelect)(store);
-    const { createWarningNotice, removeNotice } = (0, import_data91.useDispatch)(import_notices19.store);
+    const { createWarningNotice, removeNotice } = (0, import_data91.useDispatch)(import_notices20.store);
     const { editPost: editPost2, resetEditorBlocks: resetEditorBlocks2 } = (0, import_data91.useDispatch)(store);
     (0, import_element90.useEffect)(() => {
       let localAutosave = localAutosaveGet(postId2, isEditedPostNew2);
@@ -36332,7 +36493,7 @@ var wp;
   var import_core_data64 = __toESM(require_core_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
   var import_element96 = __toESM(require_element(), 1);
-  var import_notices20 = __toESM(require_notices(), 1);
+  var import_notices21 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-template/create-new-template-modal.mjs
   var import_data97 = __toESM(require_data(), 1);
@@ -36622,7 +36783,7 @@ var wp;
     );
     const selectedOption = options.find((option) => option.value === selectedTemplateSlug) ?? options.find((option) => !option.value);
     const { editPost: editPost2 } = (0, import_data99.useDispatch)(store);
-    const { createSuccessNotice } = (0, import_data99.useDispatch)(import_notices20.store);
+    const { createSuccessNotice } = (0, import_data99.useDispatch)(import_notices21.store);
     const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element96.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)("div", { className: "editor-post-template__classic-theme-dropdown", children: [
       /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
@@ -36985,7 +37146,7 @@ var wp;
   var import_element99 = __toESM(require_element(), 1);
   var import_i18n133 = __toESM(require_i18n(), 1);
   var import_core_data68 = __toESM(require_core_data(), 1);
-  var import_notices21 = __toESM(require_notices(), 1);
+  var import_notices22 = __toESM(require_notices(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-template/swap-template-button.mjs
@@ -37228,7 +37389,7 @@ var wp;
     );
     const { getEntityRecord } = (0, import_data105.useSelect)(import_core_data68.store);
     const { editEntityRecord } = (0, import_data105.useDispatch)(import_core_data68.store);
-    const { createSuccessNotice } = (0, import_data105.useDispatch)(import_notices21.store);
+    const { createSuccessNotice } = (0, import_data105.useDispatch)(import_notices22.store);
     const { setRenderingMode: setRenderingMode2, setDefaultRenderingMode: setDefaultRenderingMode2 } = unlock(
       (0, import_data105.useDispatch)(store)
     );
@@ -38058,7 +38219,7 @@ var wp;
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_hooks44 = __toESM(require_hooks(), 1);
   var import_components135 = __toESM(require_components(), 1);
-  var import_blob2 = __toESM(require_blob(), 1);
+  var import_blob3 = __toESM(require_blob(), 1);
   var import_element106 = __toESM(require_element(), 1);
   var import_compose26 = __toESM(require_compose(), 1);
   var import_data119 = __toESM(require_data(), 1);
@@ -38159,7 +38320,7 @@ var wp;
         allowedTypes: ALLOWED_MEDIA_TYPES,
         filesList,
         onFileChange([image]) {
-          if ((0, import_blob2.isBlobURL)(image?.url)) {
+          if ((0, import_blob3.isBlobURL)(image?.url)) {
             setIsLoading(true);
             return;
           }
@@ -39737,7 +39898,7 @@ var wp;
   var import_core_data83 = __toESM(require_core_data(), 1);
   var import_compose32 = __toESM(require_compose(), 1);
   var import_a11y4 = __toESM(require_a11y(), 1);
-  var import_notices22 = __toESM(require_notices(), 1);
+  var import_notices23 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
   var import_components145 = __toESM(require_components(), 1);
@@ -39880,7 +40041,7 @@ var wp;
     }, [searchResults]);
     const { editPost: editPost2 } = (0, import_data136.useDispatch)(store);
     const { saveEntityRecord } = (0, import_data136.useDispatch)(import_core_data83.store);
-    const { createErrorNotice } = (0, import_data136.useDispatch)(import_notices22.store);
+    const { createErrorNotice } = (0, import_data136.useDispatch)(import_notices23.store);
     if (!hasAssignAction) {
       return null;
     }
@@ -40134,7 +40295,7 @@ var wp;
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_element114 = __toESM(require_element(), 1);
-  var import_notices23 = __toESM(require_notices(), 1);
+  var import_notices24 = __toESM(require_notices(), 1);
   var import_components149 = __toESM(require_components(), 1);
   var import_data139 = __toESM(require_data(), 1);
   var import_compose33 = __toESM(require_compose(), 1);
@@ -40249,7 +40410,7 @@ var wp;
       // checking or unchecking a term.
       [availableTerms]
     );
-    const { createErrorNotice } = (0, import_data139.useDispatch)(import_notices23.store);
+    const { createErrorNotice } = (0, import_data139.useDispatch)(import_notices24.store);
     if (!hasAssignAction) {
       return null;
     }
@@ -40525,7 +40686,7 @@ var wp;
   var import_i18n160 = __toESM(require_i18n(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
   var import_element116 = __toESM(require_element(), 1);
-  var import_blob3 = __toESM(require_blob(), 1);
+  var import_blob4 = __toESM(require_blob(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/media-util.mjs
   var import_url13 = __toESM(require_url(), 1);
@@ -40684,7 +40845,7 @@ var wp;
                 mediaUpload2({
                   filesList: [blob],
                   onFileChange: ([media]) => {
-                    if ((0, import_blob3.isBlobURL)(media.url)) {
+                    if ((0, import_blob4.isBlobURL)(media.url)) {
                       return;
                     }
                     resolve(media);
@@ -42212,7 +42373,7 @@ var wp;
   var import_block_editor60 = __toESM(require_block_editor(), 1);
   var import_i18n174 = __toESM(require_i18n(), 1);
   var import_components164 = __toESM(require_components(), 1);
-  var import_notices24 = __toESM(require_notices(), 1);
+  var import_notices25 = __toESM(require_notices(), 1);
   var import_core_data96 = __toESM(require_core_data(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
@@ -42245,7 +42406,7 @@ var wp;
       };
     }, []);
     const { editPost: editPost2 } = (0, import_data163.useDispatch)(store);
-    const { createNotice } = (0, import_data163.useDispatch)(import_notices24.store);
+    const { createNotice } = (0, import_data163.useDispatch)(import_notices25.store);
     const [forceEmptyField, setForceEmptyField] = (0, import_element129.useState)(false);
     const copyButtonRef = (0, import_compose40.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n174.__)("Copied Permalink to clipboard."), {
@@ -43227,7 +43388,7 @@ var wp;
   var import_blocks29 = __toESM(require_blocks(), 1);
   var import_element138 = __toESM(require_element(), 1);
   var import_data177 = __toESM(require_data(), 1);
-  var import_notices25 = __toESM(require_notices(), 1);
+  var import_notices26 = __toESM(require_notices(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/set-nested-value.mjs
@@ -43420,7 +43581,7 @@ var wp;
     const { user: userConfig, setUser: setUserConfig } = useGlobalStyles();
     const changes = useChangesToPush(name2, attributes, userConfig);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data177.useDispatch)(import_block_editor67.store);
-    const { createSuccessNotice } = (0, import_data177.useDispatch)(import_notices25.store);
+    const { createSuccessNotice } = (0, import_data177.useDispatch)(import_notices26.store);
     const pushChanges = (0, import_element138.useCallback)(() => {
       if (changes.length === 0) {
         return;
@@ -43860,12 +44021,12 @@ var wp;
   var import_data181 = __toESM(require_data(), 1);
   var import_i18n186 = __toESM(require_i18n(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
-  var import_notices26 = __toESM(require_notices(), 1);
+  var import_notices27 = __toESM(require_notices(), 1);
   var import_core_data101 = __toESM(require_core_data(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   function CopyContentMenuItem() {
-    const { createNotice } = (0, import_data181.useDispatch)(import_notices26.store);
+    const { createNotice } = (0, import_data181.useDispatch)(import_notices27.store);
     const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = (0, import_data181.useSelect)(store);
     const { getEditedEntityRecord } = (0, import_data181.useSelect)(import_core_data101.store);
     function getText() {
@@ -45786,7 +45947,7 @@ var wp;
   var import_components187 = __toESM(require_components(), 1);
   var import_data201 = __toESM(require_data(), 1);
   var import_core_data106 = __toESM(require_core_data(), 1);
-  var import_notices27 = __toESM(require_notices(), 1);
+  var import_notices28 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/utils/get-item-title.mjs
   var import_html_entities27 = __toESM(require_html_entities(), 1);
@@ -45825,7 +45986,7 @@ var wp;
       }
     );
     const { saveEntityRecord } = (0, import_data201.useDispatch)(import_core_data106.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data201.useDispatch)(import_notices27.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data201.useDispatch)(import_notices28.store);
     async function onSetPageAsHomepage(event) {
       event.preventDefault();
       try {
@@ -45936,7 +46097,7 @@ var wp;
   var import_components188 = __toESM(require_components(), 1);
   var import_data202 = __toESM(require_data(), 1);
   var import_core_data107 = __toESM(require_core_data(), 1);
-  var import_notices28 = __toESM(require_notices(), 1);
+  var import_notices29 = __toESM(require_notices(), 1);
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   var SetAsPostsPageModal = ({ items, closeModal: closeModal2 }) => {
     const [item] = items;
@@ -45958,7 +46119,7 @@ var wp;
       }
     );
     const { saveEntityRecord } = (0, import_data202.useDispatch)(import_core_data107.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data202.useDispatch)(import_notices28.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data202.useDispatch)(import_notices29.store);
     async function onSetPageAsPostsPage(event) {
       event.preventDefault();
       try {
@@ -48850,7 +49011,7 @@ var wp;
   var import_core_data118 = __toESM(require_core_data(), 1);
   var import_data221 = __toESM(require_data(), 1);
   var import_block_editor92 = __toESM(require_block_editor(), 1);
-  var import_notices29 = __toESM(require_notices(), 1);
+  var import_notices30 = __toESM(require_notices(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
   var { useBlockElement, cleanEmptyObject: cleanEmptyObject4 } = unlock(import_block_editor92.privateApis);
   function useBlockComments(postId2) {
@@ -48951,7 +49112,7 @@ var wp;
     };
   }
   function useBlockCommentsActions(reflowComments = noop6) {
-    const { createNotice } = (0, import_data221.useDispatch)(import_notices29.store);
+    const { createNotice } = (0, import_data221.useDispatch)(import_notices30.store);
     const { saveEntityRecord, deleteEntityRecord } = (0, import_data221.useDispatch)(import_core_data118.store);
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data221.useSelect)(store);
     const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = (0, import_data221.useSelect)(import_block_editor92.store);
