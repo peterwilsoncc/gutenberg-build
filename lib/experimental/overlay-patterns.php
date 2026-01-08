@@ -38,7 +38,7 @@ function gutenberg_register_overlay_block_patterns() {
 <!-- wp:navigation {"layout":{"type":"flex","orientation":"vertical"}} /--></div>
 <!-- /wp:group -->',
 			'categories'  => array( 'navigation' ),
-			'blockTypes'  => array( 'core/template-part/overlay' ),
+			'blockTypes'  => array( 'core/template-part/navigation-overlay' ),
 		)
 	);
 }

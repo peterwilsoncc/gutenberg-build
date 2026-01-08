@@ -1005,7 +1005,7 @@ var wp;
     store: () => store
   });
   var import_blocks15 = __toESM(require_blocks(), 1);
-  var import_block_library2 = __toESM(require_block_library(), 1);
+  var import_block_library3 = __toESM(require_block_library(), 1);
   var import_data83 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element155 = __toESM(require_element(), 1);
@@ -23687,6 +23687,10 @@ var wp;
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.mjs
   var import_core_data41 = __toESM(require_core_data(), 1);
   var import_data56 = __toESM(require_data(), 1);
+  var import_block_library2 = __toESM(require_block_library(), 1);
+  var { NAVIGATION_OVERLAY_TEMPLATE_PART_AREA } = unlock(
+    import_block_library2.privateApis
+  );
   var useTemplatePartsGroupedByArea = (items) => {
     const allItems = items || [];
     const templatePartAreas = (0, import_data56.useSelect)(
@@ -23698,7 +23702,7 @@ var wp;
       footer: {},
       sidebar: {},
       uncategorized: {},
-      overlay: {}
+      [NAVIGATION_OVERLAY_TEMPLATE_PART_AREA]: {}
     };
     templatePartAreas.forEach(
       (templatePartArea) => knownAreas[templatePartArea.area] = {
@@ -46534,16 +46538,16 @@ If there's a particular need for this, please submit a feature request at https:
     const target = document.getElementById(id);
     const root = (0, import_element155.createRoot)(target);
     (0, import_data83.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
-    const coreBlocks = (0, import_block_library2.__experimentalGetCoreBlocks)().filter(
+    const coreBlocks = (0, import_block_library3.__experimentalGetCoreBlocks)().filter(
       ({ name: name2 }) => name2 !== "core/freeform"
     );
-    (0, import_block_library2.registerCoreBlocks)(coreBlocks);
+    (0, import_block_library3.registerCoreBlocks)(coreBlocks);
     registerCoreBlockBindingsSources();
     (0, import_data83.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });
     (0, import_widgets.registerWidgetGroupBlock)({ inserter: false });
     if (true) {
-      (0, import_block_library2.__experimentalRegisterExperimentalCoreBlocks)({
+      (0, import_block_library3.__experimentalRegisterExperimentalCoreBlocks)({
         enableFSEBlocks: true
       });
     }

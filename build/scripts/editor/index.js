@@ -3344,7 +3344,7 @@ var wp;
       return footer_default;
     } else if ("sidebar" === areaOrIconName) {
       return sidebar_default;
-    } else if ("overlay" === areaOrIconName) {
+    } else if ("navigation-overlay" === areaOrIconName) {
       return table_column_after_default;
     }
     if ("menu" === areaOrIconName) {
@@ -8189,7 +8189,7 @@ var wp;
       return footer_default;
     } else if ("sidebar" === areaOrIconName) {
       return sidebar_default;
-    } else if ("overlay" === areaOrIconName) {
+    } else if ("navigation-overlay" === areaOrIconName) {
       return table_column_after_default;
     }
     if ("menu" === areaOrIconName) {

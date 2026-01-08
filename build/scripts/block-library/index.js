@@ -37135,6 +37135,7 @@ ${js}
     "wp_navigation",
     PRELOADED_NAVIGATION_MENUS_QUERY
   ];
+  var NAVIGATION_OVERLAY_TEMPLATE_PART_AREA = "navigation-overlay";
 
   // packages/block-library/build-module/navigation/use-navigation-menu.mjs
   function useNavigationMenu(ref) {
@@ -38196,7 +38197,7 @@ ${js}
         {
           slug: cleanSlug,
           title: uniqueTitle,
-          area: "overlay"
+          area: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA
         },
         { throwOnError: true }
       );
@@ -38226,7 +38227,7 @@ ${js}
         return [];
       }
       return templateParts.filter(
-        (templatePart) => templatePart.area === "overlay"
+        (templatePart) => templatePart.area === NAVIGATION_OVERLAY_TEMPLATE_PART_AREA
       );
     }, [templateParts]);
     const createOverlayTemplatePart = useCreateOverlayTemplatePart(overlayTemplateParts);
@@ -69727,7 +69728,8 @@ ${declarations}
   // packages/block-library/build-module/private-apis.mjs
   var privateApis3 = {};
   lock(privateApis3, {
-    BlockKeyboardShortcuts: block_keyboard_shortcuts_default
+    BlockKeyboardShortcuts: block_keyboard_shortcuts_default,
+    NAVIGATION_OVERLAY_TEMPLATE_PART_AREA
   });
 
   // packages/block-library/build-module/index.mjs

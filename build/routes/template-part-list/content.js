@@ -16566,7 +16566,7 @@ var getTemplatePartIcon = (areaOrIconName) => {
     return footer_default;
   } else if ("sidebar" === areaOrIconName) {
     return sidebar_default;
-  } else if ("overlay" === areaOrIconName) {
+  } else if ("navigation-overlay" === areaOrIconName) {
     return table_column_after_default;
   }
   if ("menu" === areaOrIconName) {
@@ -16757,6 +16757,7 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
 // routes/template-part-list/view-utils.ts
 var import_data10 = __toESM(require_data());
 var import_core_data3 = __toESM(require_core_data());
+var NAVIGATION_OVERLAY_TEMPLATE_PART_AREA = "navigation-overlay";
 var DEFAULT_VIEW = {
   type: "grid",
   sort: {
@@ -16823,7 +16824,7 @@ var DEFAULT_VIEWS = [
     }
   },
   {
-    slug: "overlay",
+    slug: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA,
     label: "Overlays",
     view: {
       ...DEFAULT_VIEW,
@@ -16831,7 +16832,7 @@ var DEFAULT_VIEWS = [
         {
           field: "area",
           operator: "is",
-          value: "overlay"
+          value: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA
         }
       ]
     }

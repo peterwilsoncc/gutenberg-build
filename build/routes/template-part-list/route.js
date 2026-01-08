@@ -97,6 +97,7 @@ async function loadView(config) {
 // routes/template-part-list/view-utils.ts
 var import_data3 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
+var NAVIGATION_OVERLAY_TEMPLATE_PART_AREA = "navigation-overlay";
 var DEFAULT_VIEW = {
   type: "grid",
   sort: {
@@ -158,7 +159,7 @@ var DEFAULT_VIEWS = [
     }
   },
   {
-    slug: "overlay",
+    slug: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA,
     label: "Overlays",
     view: {
       ...DEFAULT_VIEW,
@@ -166,7 +167,7 @@ var DEFAULT_VIEWS = [
         {
           field: "area",
           operator: "is",
-          value: "overlay"
+          value: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA
         }
       ]
     }
