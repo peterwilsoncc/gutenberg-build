@@ -69744,7 +69744,7 @@ var wp;
   // packages/block-editor/build-module/hooks/fit-text.mjs
   var import_jsx_runtime442 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT4 = {};
-  var MIN_FONT_SIZE_FOR_WARNING = 6;
+  var MIN_FONT_SIZE_FOR_WARNING = 12;
   var FIT_TEXT_SUPPORT_KEY = "typography.fitText";
   function addAttributes5(settings2) {
     if (!(0, import_blocks109.hasBlockSupport)(settings2, FIT_TEXT_SUPPORT_KEY)) {
