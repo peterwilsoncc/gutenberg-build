@@ -12586,7 +12586,7 @@ var wp;
             style: style2,
             mediaAlt: alt,
             mediaId: id,
-            mediaPosition: mediaPosition2,
+            mediaPosition: mediaPosition3,
             mediaSizeSlug: sizeSlug,
             mediaType,
             mediaUrl: url,
@@ -12615,7 +12615,7 @@ var wp;
               innerBlocks
             ]
           ];
-          if (mediaPosition2 === "right") {
+          if (mediaPosition3 === "right") {
             innerBlocksTemplate.reverse();
           }
           return (0, import_blocks19.createBlock)(
@@ -25201,6 +25201,9 @@ ${url}
       (mediaType) => file.type.indexOf(mediaType) === 0
     );
   }
+  function mediaPosition2({ x: x2, y: y2 } = { x: 0.5, y: 0.5 }) {
+    return `${Math.round(x2 * 100)}% ${Math.round(y2 * 100)}%`;
+  }
 
   // packages/block-library/build-module/gallery/gallery.mjs
   var import_i18n74 = __toESM(require_i18n(), 1);
@@ -29945,6 +29948,7 @@ ${js}
       height,
       aspectRatio,
       scale,
+      focalPoint,
       linkTarget,
       sizeSlug,
       lightbox,
@@ -30077,6 +30081,14 @@ ${js}
     function updateAlt(newAlt) {
       setAttributes({ alt: newAlt });
     }
+    const imperativeFocalPointPreview = (value) => {
+      if (imageElement) {
+        imageElement.style.setProperty(
+          "object-position",
+          mediaPosition2(value)
+        );
+      }
+    };
     function updateImage(newSizeSlug) {
       const newUrl = image?.media_details?.sizes?.[newSizeSlug]?.source_url;
       if (!newUrl) {
@@ -30403,7 +30415,7 @@ ${js}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(
         import_block_editor111.InspectorControls,
         {
           group: "dimensions",
@@ -30412,9 +30424,37 @@ ${js}
             aspectRatio: void 0,
             width: void 0,
             height: void 0,
-            scale: void 0
+            scale: void 0,
+            focalPoint: void 0
           }),
-          children: dimensionsControl
+          children: [
+            dimensionsControl,
+            url && scale && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+              import_components51.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n90.__)("Focal point"),
+                isShownByDefault: true,
+                hasValue: () => !!focalPoint,
+                onDeselect: () => setAttributes({
+                  focalPoint: void 0
+                }),
+                panelId: clientId,
+                children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+                  import_components51.FocalPointPicker,
+                  {
+                    label: (0, import_i18n90.__)("Focal point"),
+                    url,
+                    value: focalPoint,
+                    onDragStart: imperativeFocalPointPreview,
+                    onDrag: imperativeFocalPointPreview,
+                    onChange: (newFocalPoint) => setAttributes({
+                      focalPoint: newFocalPoint
+                    })
+                  }
+                )
+              }
+            )
+          ]
         }
       ),
       !!imageSizeOptions.length && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_block_editor111.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
@@ -30501,6 +30541,7 @@ ${js}
               height: pixelSize.height + resizeDelta.height
             } : { width, height },
             objectFit: scale,
+            objectPosition: focalPoint && scale ? mediaPosition2(focalPoint) : void 0,
             ...borderProps.style,
             ...shadowProps.style
           }
@@ -31089,6 +31130,9 @@ ${js}
       scale: {
         type: "string"
       },
+      focalPoint: {
+        type: "object"
+      },
       sizeSlug: {
         type: "string"
       },
@@ -31166,6 +31210,7 @@ ${js}
       height,
       aspectRatio,
       scale,
+      focalPoint,
       id,
       linkTarget,
       sizeSlug,
@@ -31197,6 +31242,7 @@ ${js}
           ...shadowProps.style,
           aspectRatio,
           objectFit: scale,
+          objectPosition: focalPoint && scale ? mediaPosition2(focalPoint) : void 0,
           width,
           height
         },
@@ -34798,7 +34844,7 @@ ${js}
       const {
         isStackedOnMobile,
         mediaAlt,
-        mediaPosition: mediaPosition2,
+        mediaPosition: mediaPosition3,
         mediaType,
         mediaUrl,
         mediaWidth,
@@ -34842,7 +34888,7 @@ ${js}
         video: () => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("video", { controls: true, src: mediaUrl })
       };
       const className = clsx_default({
-        "has-media-on-the-right": "right" === mediaPosition2,
+        "has-media-on-the-right": "right" === mediaPosition3,
         "is-stacked-on-mobile": isStackedOnMobile,
         [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
         "is-image-fill": imageFill
@@ -34850,12 +34896,12 @@ ${js}
       const backgroundStyles = imageFill ? v6ToV7ImageFillStyles(mediaUrl, focalPoint) : {};
       let gridTemplateColumns;
       if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
-        gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+        gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
       }
       const style2 = {
         gridTemplateColumns
       };
-      if ("right" === mediaPosition2) {
+      if ("right" === mediaPosition3) {
         return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)("div", { ...import_block_editor132.useBlockProps.save({ className, style: style2 }), children: [
           /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
             "div",
@@ -34902,7 +34948,7 @@ ${js}
       const {
         isStackedOnMobile,
         mediaAlt,
-        mediaPosition: mediaPosition2,
+        mediaPosition: mediaPosition3,
         mediaType,
         mediaUrl,
         mediaWidth,
@@ -34946,7 +34992,7 @@ ${js}
         video: () => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("video", { controls: true, src: mediaUrl })
       };
       const className = clsx_default({
-        "has-media-on-the-right": "right" === mediaPosition2,
+        "has-media-on-the-right": "right" === mediaPosition3,
         "is-stacked-on-mobile": isStackedOnMobile,
         [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
         "is-image-fill": imageFill
@@ -34954,12 +35000,12 @@ ${js}
       const backgroundStyles = imageFill ? v6ToV7ImageFillStyles(mediaUrl, focalPoint) : {};
       let gridTemplateColumns;
       if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
-        gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+        gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
       }
       const style2 = {
         gridTemplateColumns
       };
-      if ("right" === mediaPosition2) {
+      if ("right" === mediaPosition3) {
         return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)("div", { ...import_block_editor132.useBlockProps.save({ className, style: style2 }), children: [
           /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
             "div",
@@ -35011,7 +35057,7 @@ ${js}
       const {
         isStackedOnMobile,
         mediaAlt,
-        mediaPosition: mediaPosition2,
+        mediaPosition: mediaPosition3,
         mediaType,
         mediaUrl,
         mediaWidth,
@@ -35055,7 +35101,7 @@ ${js}
         video: () => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("video", { controls: true, src: mediaUrl })
       };
       const className = clsx_default({
-        "has-media-on-the-right": "right" === mediaPosition2,
+        "has-media-on-the-right": "right" === mediaPosition3,
         "is-stacked-on-mobile": isStackedOnMobile,
         [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
         "is-image-fill": imageFill
@@ -35063,12 +35109,12 @@ ${js}
       const backgroundStyles = imageFill ? v1ToV5ImageFillStyles(mediaUrl, focalPoint) : {};
       let gridTemplateColumns;
       if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
-        gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+        gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
       }
       const style2 = {
         gridTemplateColumns
       };
-      if ("right" === mediaPosition2) {
+      if ("right" === mediaPosition3) {
         return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)("div", { ...import_block_editor132.useBlockProps.save({ className, style: style2 }), children: [
           /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
             "div",
@@ -35116,7 +35162,7 @@ ${js}
       const {
         isStackedOnMobile,
         mediaAlt,
-        mediaPosition: mediaPosition2,
+        mediaPosition: mediaPosition3,
         mediaType,
         mediaUrl,
         mediaWidth,
@@ -35160,7 +35206,7 @@ ${js}
         video: () => /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("video", { controls: true, src: mediaUrl })
       };
       const className = clsx_default({
-        "has-media-on-the-right": "right" === mediaPosition2,
+        "has-media-on-the-right": "right" === mediaPosition3,
         "is-stacked-on-mobile": isStackedOnMobile,
         [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
         "is-image-fill": imageFill
@@ -35168,7 +35214,7 @@ ${js}
       const backgroundStyles = imageFill ? v1ToV5ImageFillStyles(mediaUrl, focalPoint) : {};
       let gridTemplateColumns;
       if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
-        gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+        gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
       }
       const style2 = {
         gridTemplateColumns
@@ -35254,7 +35300,7 @@ ${js}
         customBackgroundColor,
         isStackedOnMobile,
         mediaAlt,
-        mediaPosition: mediaPosition2,
+        mediaPosition: mediaPosition3,
         mediaType,
         mediaUrl,
         mediaWidth,
@@ -35297,7 +35343,7 @@ ${js}
         backgroundColor
       );
       const className = clsx_default({
-        "has-media-on-the-right": "right" === mediaPosition2,
+        "has-media-on-the-right": "right" === mediaPosition3,
         "has-background": backgroundClass || customBackgroundColor,
         [backgroundClass]: backgroundClass,
         "is-stacked-on-mobile": isStackedOnMobile,
@@ -35307,7 +35353,7 @@ ${js}
       const backgroundStyles = imageFill ? v1ToV5ImageFillStyles(mediaUrl, focalPoint) : {};
       let gridTemplateColumns;
       if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
-        gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+        gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
       }
       const style2 = {
         backgroundColor: backgroundClass ? void 0 : customBackgroundColor,
@@ -35358,7 +35404,7 @@ ${js}
         customBackgroundColor,
         isStackedOnMobile,
         mediaAlt,
-        mediaPosition: mediaPosition2,
+        mediaPosition: mediaPosition3,
         mediaType,
         mediaUrl,
         mediaWidth,
@@ -35383,7 +35429,7 @@ ${js}
         backgroundColor
       );
       const className = clsx_default({
-        "has-media-on-the-right": "right" === mediaPosition2,
+        "has-media-on-the-right": "right" === mediaPosition3,
         [backgroundClass]: backgroundClass,
         "is-stacked-on-mobile": isStackedOnMobile,
         [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
@@ -35392,7 +35438,7 @@ ${js}
       const backgroundStyles = imageFill ? v1ToV5ImageFillStyles(mediaUrl, focalPoint) : {};
       let gridTemplateColumns;
       if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
-        gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+        gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
       }
       const style2 = {
         backgroundColor: backgroundClass ? void 0 : customBackgroundColor,
@@ -35434,7 +35480,7 @@ ${js}
         customBackgroundColor,
         isStackedOnMobile,
         mediaAlt,
-        mediaPosition: mediaPosition2,
+        mediaPosition: mediaPosition3,
         mediaType,
         mediaUrl,
         mediaWidth
@@ -35448,13 +35494,13 @@ ${js}
         backgroundColor
       );
       const className = clsx_default({
-        "has-media-on-the-right": "right" === mediaPosition2,
+        "has-media-on-the-right": "right" === mediaPosition3,
         [backgroundClass]: backgroundClass,
         "is-stacked-on-mobile": isStackedOnMobile
       });
       let gridTemplateColumns;
       if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
-        gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+        gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
       }
       const style2 = {
         backgroundColor: backgroundClass ? void 0 : customBackgroundColor,
@@ -35570,7 +35616,7 @@ ${js}
       isStackedOnMobile,
       mediaAlt,
       mediaId,
-      mediaPosition: mediaPosition2,
+      mediaPosition: mediaPosition3,
       mediaType,
       mediaUrl,
       mediaWidth,
@@ -35597,8 +35643,8 @@ ${js}
         commitWidthChange(parseInt(elt.style.width));
       };
       const enablePositions = {
-        right: enableResize && mediaPosition2 === "left",
-        left: enableResize && mediaPosition2 === "right"
+        right: enableResize && mediaPosition3 === "left",
+        left: enableResize && mediaPosition3 === "right"
       };
       const positionStyles = mediaType === "image" && imageFill ? imageFillStyles(mediaUrl || featuredImageURL, focalPoint) : {};
       const mediaTypeRenderers = {
@@ -35772,7 +35818,7 @@ ${js}
       linkTarget,
       mediaAlt,
       mediaId,
-      mediaPosition: mediaPosition2,
+      mediaPosition: mediaPosition3,
       mediaType,
       mediaUrl,
       mediaWidth,
@@ -35857,14 +35903,14 @@ ${js}
       setTemporaryMediaWidth(null);
     };
     const classNames = clsx_default({
-      "has-media-on-the-right": "right" === mediaPosition2,
+      "has-media-on-the-right": "right" === mediaPosition3,
       "is-selected": isSelected,
       "is-stacked-on-mobile": isStackedOnMobile,
       [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
       "is-image-fill-element": imageFill
     });
     const widthString = `${temporaryMediaWidth || mediaWidth}%`;
-    const gridTemplateColumns = "right" === mediaPosition2 ? `1fr ${widthString}` : `${widthString} 1fr`;
+    const gridTemplateColumns = "right" === mediaPosition3 ? `1fr ${widthString}` : `${widthString} 1fr`;
     const style2 = {
       gridTemplateColumns,
       msGridColumns: gridTemplateColumns
@@ -36051,7 +36097,7 @@ ${js}
             {
               icon: pull_left_default,
               title: (0, import_i18n104.__)("Show media on left"),
-              isActive: mediaPosition2 === "left",
+              isActive: mediaPosition3 === "left",
               onClick: () => setAttributes({ mediaPosition: "left" })
             }
           ),
@@ -36060,7 +36106,7 @@ ${js}
             {
               icon: pull_right_default,
               title: (0, import_i18n104.__)("Show media on right"),
-              isActive: mediaPosition2 === "right",
+              isActive: mediaPosition3 === "right",
               onClick: () => setAttributes({ mediaPosition: "right" })
             }
           )
@@ -36081,7 +36127,7 @@ ${js}
         )
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)("div", { ...blockProps, children: [
-        mediaPosition2 === "right" && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)("div", { ...innerBlocksProps }),
+        mediaPosition3 === "right" && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)("div", { ...innerBlocksProps }),
         /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
           media_container_default,
           {
@@ -36099,7 +36145,7 @@ ${js}
               isStackedOnMobile,
               mediaAlt,
               mediaId,
-              mediaPosition: mediaPosition2,
+              mediaPosition: mediaPosition3,
               mediaType,
               mediaUrl,
               mediaWidth,
@@ -36109,7 +36155,7 @@ ${js}
             }
           }
         ),
-        mediaPosition2 !== "right" && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)("div", { ...innerBlocksProps })
+        mediaPosition3 !== "right" && /* @__PURE__ */ (0, import_jsx_runtime285.jsx)("div", { ...innerBlocksProps })
       ] })
     ] });
   }
@@ -36275,7 +36321,7 @@ ${js}
     const {
       isStackedOnMobile,
       mediaAlt,
-      mediaPosition: mediaPosition2,
+      mediaPosition: mediaPosition3,
       mediaType,
       mediaUrl,
       mediaWidth,
@@ -36321,19 +36367,19 @@ ${js}
       video: () => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("video", { controls: true, src: mediaUrl })
     };
     const className = clsx_default({
-      "has-media-on-the-right": "right" === mediaPosition2,
+      "has-media-on-the-right": "right" === mediaPosition3,
       "is-stacked-on-mobile": isStackedOnMobile,
       [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
       "is-image-fill-element": imageFill
     });
     let gridTemplateColumns;
     if (mediaWidth !== DEFAULT_MEDIA_WIDTH2) {
-      gridTemplateColumns = "right" === mediaPosition2 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+      gridTemplateColumns = "right" === mediaPosition3 ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
     }
     const style2 = {
       gridTemplateColumns
     };
-    if ("right" === mediaPosition2) {
+    if ("right" === mediaPosition3) {
       return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)("div", { ...import_block_editor135.useBlockProps.save({ className, style: style2 }), children: [
         /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
           "div",
