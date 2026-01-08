@@ -55971,12 +55971,36 @@ ${js}
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: ({ citation }, innerBlocks) => import_block_editor219.RichText.isEmpty(citation) ? innerBlocks : [
-          ...innerBlocks,
-          (0, import_blocks94.createBlock)("core/paragraph", {
-            content: citation
-          })
-        ]
+        isMatch: ({ citation }, block) => {
+          const innerBlocks = block.innerBlocks;
+          if (!innerBlocks.length) {
+            return !import_block_editor219.RichText.isEmpty(citation);
+          }
+          return innerBlocks.every((innerBlock) => {
+            if (innerBlock.name === "core/paragraph") {
+              return true;
+            }
+            const converted = (0, import_blocks94.switchToBlockType)(
+              innerBlock,
+              "core/paragraph"
+            );
+            return converted !== null;
+          });
+        },
+        transform: ({ citation }, innerBlocks) => {
+          const paragraphs = innerBlocks.flatMap((innerBlock) => {
+            if (innerBlock.name === "core/paragraph") {
+              return innerBlock;
+            }
+            return (0, import_blocks94.switchToBlockType)(innerBlock, "core/paragraph") || [];
+          });
+          return import_block_editor219.RichText.isEmpty(citation) ? paragraphs : [
+            ...paragraphs,
+            (0, import_blocks94.createBlock)("core/paragraph", {
+              content: citation
+            })
+          ];
+        }
       },
       {
         type: "block",
