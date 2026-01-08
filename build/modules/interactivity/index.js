@@ -2964,7 +2964,11 @@ function toVdom(root) {
       } else if (attributeName === "ref") {
         continue;
       }
-      props[attributeName] = attributeValue;
+      if (attributeValue === "" && elementNode[attributeName] === true) {
+        props[attributeName] = true;
+      } else {
+        props[attributeName] = attributeValue;
+      }
     }
     if (ignore && !island) {
       return [
