@@ -41142,26 +41142,33 @@ var wp;
     };
   }
   function focusListItem(focusClientId, treeGridElement) {
-    const getFocusElement = () => {
-      const row = treeGridElement?.querySelector(
-        `[role=row][data-block="${focusClientId}"]`
-      );
-      if (!row) {
-        return null;
+    if (!treeGridElement) {
+      return;
+    }
+    const selector3 = `[role=row][data-block="${focusClientId}"]`;
+    return new Promise((resolve) => {
+      if (treeGridElement.querySelector(selector3)) {
+        return resolve(treeGridElement.querySelector(selector3));
       }
-      return import_dom30.focus.focusable.find(row)[0];
-    };
-    let focusElement = getFocusElement();
-    if (focusElement) {
-      focusElement.focus();
-    } else {
-      window.requestAnimationFrame(() => {
-        focusElement = getFocusElement();
-        if (focusElement) {
-          focusElement.focus();
+      let timer = null;
+      const observer = new window.MutationObserver(() => {
+        if (treeGridElement.querySelector(selector3)) {
+          clearTimeout(timer);
+          observer.disconnect();
+          resolve(treeGridElement.querySelector(selector3));
         }
       });
-    }
+      observer.observe(treeGridElement, {
+        childList: true,
+        subtree: true
+      });
+      timer = setTimeout(() => {
+        observer.disconnect();
+        resolve(null);
+      }, 3e3);
+    }).then((element) => {
+      import_dom30.focus.focusable.find(element)?.[0]?.focus();
+    });
   }
   function getDragDisplacementValues({
     blockIndexes,
@@ -42789,7 +42796,7 @@ var wp;
     const instanceId = (0, import_compose73.useInstanceId)(ListViewComponent);
     const { clientIdsTree, draggedClientIds, selectedClientIds } = useListViewClientIds({ blocks: blocks2, rootClientId });
     const blockIndexes = useListViewBlockIndexes(clientIdsTree);
-    const { getBlock: getBlock2 } = (0, import_data135.useSelect)(store);
+    const { getBlock: getBlock2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data135.useSelect)(store);
     const { visibleBlockCount } = (0, import_data135.useSelect)(
       (select3) => {
         const { getGlobalBlockCount: getGlobalBlockCount2, getClientIdsOfDescendants: getClientIdsOfDescendants2 } = select3(store);
@@ -42831,17 +42838,22 @@ var wp;
     const clipBoardRef = useClipboardHandler2({
       selectBlock: selectEditorBlock
     });
+    const focusSelectedBlock = (0, import_element142.useCallback)(
+      (node) => {
+        const [firstSelectedClientId] = getSelectedBlockClientIds2();
+        if (firstSelectedClientId && node) {
+          focusListItem(firstSelectedClientId, node);
+        }
+      },
+      [getSelectedBlockClientIds2]
+    );
     const treeGridRef = (0, import_compose73.useMergeRefs)([
       clipBoardRef,
+      focusSelectedBlock,
       elementRef,
       dropZoneRef,
       ref
     ]);
-    (0, import_element142.useEffect)(() => {
-      if (selectedClientIds?.length) {
-        focusListItem(selectedClientIds[0], elementRef?.current);
-      }
-    }, []);
     const expand = (0, import_element142.useCallback)(
       (clientId) => {
         if (!clientId) {
