@@ -135,7 +135,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState24({
+          cachedValue = useState26({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -147,7 +147,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect17(
+          useEffect18(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -173,7 +173,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React8 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState24 = React8.useState, useEffect17 = React8.useEffect, useLayoutEffect2 = React8.useLayoutEffect, useDebugValue = React8.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React8 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState26 = React8.useState, useEffect18 = React8.useEffect, useLayoutEffect2 = React8.useLayoutEffect, useDebugValue = React8.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React8.useSyncExternalStore ? React8.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -1514,11 +1514,11 @@ var wp;
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_element55 = __toESM(require_element(), 1);
-  var import_i18n59 = __toESM(require_i18n(), 1);
-  var import_core_data2 = __toESM(require_core_data(), 1);
-  var import_data7 = __toESM(require_data(), 1);
-  var import_components50 = __toESM(require_components(), 1);
+  var import_element57 = __toESM(require_element(), 1);
+  var import_i18n62 = __toESM(require_i18n(), 1);
+  var import_core_data3 = __toESM(require_core_data(), 1);
+  var import_data8 = __toESM(require_data(), 1);
+  var import_components51 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/arrow-down.mjs
   var import_primitives = __toESM(require_primitives(), 1);
@@ -3166,13 +3166,13 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React7.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState24 = React7.useCallback(
+    const useState26 = React7.useCallback(
       (keyOrSelector) => useStoreState(store, keyOrSelector),
       [store]
     );
     const memoizedStore = React7.useMemo(
-      () => __spreadProps(__spreadValues({}, store), { useState: useState24 }),
-      [store, useState24]
+      () => __spreadProps(__spreadValues({}, store), { useState: useState26 }),
+      [store, useState26]
     );
     const updateStore = useEvent(() => {
       setStore((store2) => createStore2(__spreadValues(__spreadValues({}, props), store2.getState())));
@@ -16761,9 +16761,192 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var alt_text_default = altTextField;
 
-  // packages/media-fields/build-module/caption/index.mjs
+  // packages/media-fields/build-module/attached_to/index.mjs
+  var import_i18n51 = __toESM(require_i18n(), 1);
+
+  // packages/media-fields/build-module/attached_to/view.mjs
+  var import_element53 = __toESM(require_element(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
+
+  // packages/media-fields/build-module/utils/get-rendered-content.mjs
+  function getRenderedContent(content) {
+    if (!content) {
+      return "";
+    }
+    if (typeof content === "string") {
+      return content;
+    }
+    if (typeof content === "object") {
+      return content.rendered || content.raw || "";
+    }
+    return "";
+  }
+
+  // packages/media-fields/build-module/attached_to/view.mjs
+  var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+  function MediaAttachedToView({
+    item
+  }) {
+    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element53.useState)(null);
+    const parentId = item.post;
+    const embeddedPostId = item._embedded?.["wp:attached-to"]?.[0]?.id;
+    const embeddedPostTitle = item._embedded?.["wp:attached-to"]?.[0]?.title;
+    (0, import_element53.useEffect)(() => {
+      if (!!parentId && parentId === embeddedPostId) {
+        setAttachedPostTitle(
+          getRenderedContent(embeddedPostTitle) || embeddedPostId?.toString() || ""
+        );
+      }
+      if (!parentId) {
+        setAttachedPostTitle((0, import_i18n49.__)("(Unattached)"));
+      }
+    }, [parentId, embeddedPostId, embeddedPostTitle]);
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_jsx_runtime97.Fragment, { children: attachedPostTitle });
+  }
+
+  // packages/media-fields/build-module/attached_to/edit.mjs
+  var import_core_data = __toESM(require_core_data(), 1);
   var import_components46 = __toESM(require_components(), 1);
+  var import_i18n50 = __toESM(require_i18n(), 1);
+  var import_element54 = __toESM(require_element(), 1);
+  var import_compose12 = __toESM(require_compose(), 1);
+  var import_data6 = __toESM(require_data(), 1);
+  var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+  function MediaAttachedToEdit({
+    data,
+    onChange
+  }) {
+    const defaultPost = !!data.post && !!data?._embedded?.["wp:attached-to"]?.[0] ? [
+      {
+        label: getRenderedContent(
+          data._embedded?.["wp:attached-to"]?.[0]?.title
+        ),
+        value: data.post.toString()
+      }
+    ] : [];
+    const [options, setOptions] = (0, import_element54.useState)(defaultPost);
+    const [searchResults, setSearchResults] = (0, import_element54.useState)(
+      []
+    );
+    const [isLoading, setIsLoading] = (0, import_element54.useState)(false);
+    const [value, setValue] = (0, import_element54.useState)(
+      data?.post?.toString() ?? null
+    );
+    const postTypes = (0, import_data6.useSelect)(
+      (select) => select(import_core_data.store).getPostTypes(),
+      []
+    );
+    const handleDetach = () => {
+      onChange({
+        post: 0,
+        _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
+      });
+      setOptions([]);
+    };
+    const onValueChange = async (filterValue) => {
+      setIsLoading(true);
+      const results = await (0, import_core_data.__experimentalFetchLinkSuggestions)(
+        filterValue,
+        /*
+         * @TODO `fetchLinkSuggestions()` should accept `perPage` as an option argument.
+         * `isInitialSuggestions` limits the result to 3, otherwise it's hardcoded to 20.
+         */
+        { type: "post", isInitialSuggestions: true },
+        {}
+      );
+      setSearchResults(results);
+      const mappedSuggestions = results.map((result) => {
+        return {
+          label: result.title,
+          value: result.id.toString()
+        };
+      });
+      setOptions(mappedSuggestions);
+      setIsLoading(false);
+    };
+    const handleSelectOption = (selectedPostId) => {
+      if (!selectedPostId) {
+        handleDetach();
+        return;
+      }
+      setValue(selectedPostId);
+      if (selectedPostId) {
+        const selectedPost = searchResults.find(
+          (result) => result.id === Number(selectedPostId)
+        );
+        if (selectedPost && postTypes) {
+          const postType = postTypes.find(
+            (_postType) => _postType.slug === selectedPost?.type
+          );
+          const attachedTo = {
+            ...postType && { type: postType.slug },
+            id: Number(selectedPostId),
+            title: {
+              raw: selectedPost.title,
+              rendered: selectedPost.title
+            }
+          };
+          onChange({
+            post: Number(selectedPostId),
+            _embedded: {
+              ...data?._embedded,
+              "wp:attached-to": [attachedTo]
+            }
+          });
+        }
+      }
+    };
+    const help = !!data.post ? (0, import_element54.createInterpolateElement)(
+      (0, import_i18n50.__)(
+        "Search for a post or page to attach this media to or <button>detach current</button>."
+      ),
+      {
+        button: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+          import_components46.Button,
+          {
+            __next40pxDefaultSize: true,
+            onClick: handleDetach,
+            variant: "link",
+            accessibleWhenDisabled: true
+          }
+        )
+      }
+    ) : (0, import_i18n50.__)("Search for a post or page to attach this media to.");
+    return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+      import_components46.ComboboxControl,
+      {
+        className: "dataviews-media-field__attached-to",
+        __next40pxDefaultSize: true,
+        isLoading,
+        label: (0, import_i18n50.__)("Attached to"),
+        help,
+        value,
+        options,
+        onFilterValueChange: (0, import_compose12.debounce)(
+          (filterValue) => onValueChange(filterValue),
+          300
+        ),
+        onChange: handleSelectOption,
+        hideLabelFromVision: true
+      }
+    );
+  }
+
+  // packages/media-fields/build-module/attached_to/index.mjs
+  var attachedToField = {
+    id: "attached_to",
+    type: "text",
+    label: (0, import_i18n51.__)("Attached to"),
+    Edit: MediaAttachedToEdit,
+    render: MediaAttachedToView,
+    enableSorting: false,
+    filterBy: false
+  };
+  var attached_to_default = attachedToField;
+
+  // packages/media-fields/build-module/caption/index.mjs
+  var import_i18n52 = __toESM(require_i18n(), 1);
+  var import_components47 = __toESM(require_components(), 1);
 
   // packages/media-fields/build-module/utils/get-raw-content.mjs
   function getRawContent(content) {
@@ -16780,16 +16963,16 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/caption/index.mjs
-  var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
   var captionField = {
     id: "caption",
     type: "text",
-    label: (0, import_i18n49.__)("Caption"),
+    label: (0, import_i18n52.__)("Caption"),
     getValue: ({ item }) => getRawContent(item?.caption),
     render: ({ item }) => getRawContent(item?.caption) || "-",
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
-        import_components46.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        import_components47.TextareaControl,
         {
           label: field.label,
           value: getRawContent(data.caption) || "",
@@ -16804,12 +16987,12 @@ If there's a particular need for this, please submit a feature request at https:
   var caption_default = captionField;
 
   // packages/media-fields/build-module/date_added/index.mjs
-  var import_i18n50 = __toESM(require_i18n(), 1);
+  var import_i18n53 = __toESM(require_i18n(), 1);
   var import_date8 = __toESM(require_date(), 1);
   var dateAddedField = {
     id: "date",
     type: "datetime",
-    label: (0, import_i18n50.__)("Date added"),
+    label: (0, import_i18n53.__)("Date added"),
     filterBy: {
       operators: ["before", "after"]
     },
@@ -16821,12 +17004,12 @@ If there's a particular need for this, please submit a feature request at https:
   var date_added_default = dateAddedField;
 
   // packages/media-fields/build-module/date_modified/index.mjs
-  var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_i18n54 = __toESM(require_i18n(), 1);
   var import_date9 = __toESM(require_date(), 1);
   var dateModifiedField = {
     id: "modified",
     type: "datetime",
-    label: (0, import_i18n51.__)("Date modified"),
+    label: (0, import_i18n54.__)("Date modified"),
     filterBy: {
       operators: ["before", "after"]
     },
@@ -16838,18 +17021,18 @@ If there's a particular need for this, please submit a feature request at https:
   var date_modified_default = dateModifiedField;
 
   // packages/media-fields/build-module/description/index.mjs
-  var import_i18n52 = __toESM(require_i18n(), 1);
-  var import_components47 = __toESM(require_components(), 1);
-  var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n55 = __toESM(require_i18n(), 1);
+  var import_components48 = __toESM(require_components(), 1);
+  var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
   var descriptionField = {
     id: "description",
     type: "text",
-    label: (0, import_i18n52.__)("Description"),
+    label: (0, import_i18n55.__)("Description"),
     getValue: ({ item }) => getRawContent(item?.description),
-    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("div", { children: getRawContent(item?.description) || "-" }),
+    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { children: getRawContent(item?.description) || "-" }),
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
-        import_components47.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+        import_components48.TextareaControl,
         {
           label: field.label,
           value: getRawContent(data.description) || "",
@@ -16864,33 +17047,33 @@ If there's a particular need for this, please submit a feature request at https:
   var description_default = descriptionField;
 
   // packages/media-fields/build-module/filename/index.mjs
-  var import_i18n53 = __toESM(require_i18n(), 1);
+  var import_i18n56 = __toESM(require_i18n(), 1);
   var import_url4 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/filename/view.mjs
-  var import_components48 = __toESM(require_components(), 1);
-  var import_element53 = __toESM(require_element(), 1);
+  var import_components49 = __toESM(require_components(), 1);
+  var import_element55 = __toESM(require_element(), 1);
   var import_url3 = __toESM(require_url(), 1);
-  var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
   var TRUNCATE_LENGTH = 15;
   function FileNameView({
     item
   }) {
-    const fileName = (0, import_element53.useMemo)(
+    const fileName = (0, import_element55.useMemo)(
       () => item?.source_url ? (0, import_url3.getFilename)(item.source_url) : null,
       [item?.source_url]
     );
     if (!fileName) {
       return "";
     }
-    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components48.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components48.__experimentalTruncate, { children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_jsx_runtime99.Fragment, { children: fileName });
+    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components49.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components49.__experimentalTruncate, { children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_jsx_runtime101.Fragment, { children: fileName });
   }
 
   // packages/media-fields/build-module/filename/index.mjs
   var filenameField = {
     id: "filename",
     type: "text",
-    label: (0, import_i18n53.__)("File name"),
+    label: (0, import_i18n56.__)("File name"),
     getValue: ({ item }) => (0, import_url4.getFilename)(item?.source_url || ""),
     render: FileNameView,
     enableSorting: false,
@@ -16900,7 +17083,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filename_default = filenameField;
 
   // packages/media-fields/build-module/filesize/index.mjs
-  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_i18n57 = __toESM(require_i18n(), 1);
   var KB_IN_BYTES = 1024;
   var MB_IN_BYTES = 1024 * KB_IN_BYTES;
   var GB_IN_BYTES = 1024 * MB_IN_BYTES;
@@ -16910,9 +17093,9 @@ If there's a particular need for this, please submit a feature request at https:
   var ZB_IN_BYTES = 1024 * EB_IN_BYTES;
   var YB_IN_BYTES = 1024 * ZB_IN_BYTES;
   function getBytesString(bytes, unitSymbol, decimals = 2) {
-    return (0, import_i18n54.sprintf)(
+    return (0, import_i18n57.sprintf)(
       // translators: 1: Actual bytes of a file. 2: The unit symbol (e.g. MB).
-      (0, import_i18n54._x)("%1$s %2$s", "file size"),
+      (0, import_i18n57._x)("%1$s %2$s", "file size"),
       bytes.toLocaleString(void 0, {
         minimumFractionDigits: 0,
         maximumFractionDigits: decimals
@@ -16922,27 +17105,27 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function formatFileSize(bytes, decimals = 2) {
     if (bytes === 0) {
-      return getBytesString(0, (0, import_i18n54._x)("B", "unit symbol"), decimals);
+      return getBytesString(0, (0, import_i18n57._x)("B", "unit symbol"), decimals);
     }
     const quant = {
       /* translators: Unit symbol for yottabyte. */
-      [(0, import_i18n54._x)("YB", "unit symbol")]: YB_IN_BYTES,
+      [(0, import_i18n57._x)("YB", "unit symbol")]: YB_IN_BYTES,
       /* translators: Unit symbol for zettabyte. */
-      [(0, import_i18n54._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
+      [(0, import_i18n57._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
       /* translators: Unit symbol for exabyte. */
-      [(0, import_i18n54._x)("EB", "unit symbol")]: EB_IN_BYTES,
+      [(0, import_i18n57._x)("EB", "unit symbol")]: EB_IN_BYTES,
       /* translators: Unit symbol for petabyte. */
-      [(0, import_i18n54._x)("PB", "unit symbol")]: PB_IN_BYTES,
+      [(0, import_i18n57._x)("PB", "unit symbol")]: PB_IN_BYTES,
       /* translators: Unit symbol for terabyte. */
-      [(0, import_i18n54._x)("TB", "unit symbol")]: TB_IN_BYTES,
+      [(0, import_i18n57._x)("TB", "unit symbol")]: TB_IN_BYTES,
       /* translators: Unit symbol for gigabyte. */
-      [(0, import_i18n54._x)("GB", "unit symbol")]: GB_IN_BYTES,
+      [(0, import_i18n57._x)("GB", "unit symbol")]: GB_IN_BYTES,
       /* translators: Unit symbol for megabyte. */
-      [(0, import_i18n54._x)("MB", "unit symbol")]: MB_IN_BYTES,
+      [(0, import_i18n57._x)("MB", "unit symbol")]: MB_IN_BYTES,
       /* translators: Unit symbol for kilobyte. */
-      [(0, import_i18n54._x)("KB", "unit symbol")]: KB_IN_BYTES,
+      [(0, import_i18n57._x)("KB", "unit symbol")]: KB_IN_BYTES,
       /* translators: Unit symbol for byte. */
-      [(0, import_i18n54._x)("B", "unit symbol")]: 1
+      [(0, import_i18n57._x)("B", "unit symbol")]: 1
     };
     for (const [unit, mag] of Object.entries(quant)) {
       if (bytes >= mag) {
@@ -16954,7 +17137,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filesizeField = {
     id: "filesize",
     type: "text",
-    label: (0, import_i18n54.__)("File size"),
+    label: (0, import_i18n57.__)("File size"),
     getValue: ({ item }) => item?.media_details?.filesize ? formatFileSize(item?.media_details?.filesize) : "",
     isVisible: (item) => {
       return !!item?.media_details?.filesize;
@@ -16966,14 +17149,14 @@ If there's a particular need for this, please submit a feature request at https:
   var filesize_default = filesizeField;
 
   // packages/media-fields/build-module/media_dimensions/index.mjs
-  var import_i18n55 = __toESM(require_i18n(), 1);
+  var import_i18n58 = __toESM(require_i18n(), 1);
   var mediaDimensionsField = {
     id: "media_dimensions",
     type: "text",
-    label: (0, import_i18n55.__)("Dimensions"),
-    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n55.sprintf)(
+    label: (0, import_i18n58.__)("Dimensions"),
+    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n58.sprintf)(
       // translators: 1: Width. 2: Height.
-      (0, import_i18n55._x)("%1$s \xD7 %2$s", "image dimensions"),
+      (0, import_i18n58._x)("%1$s \xD7 %2$s", "image dimensions"),
       item?.media_details?.width?.toString(),
       item?.media_details?.height?.toString()
     ) : "",
@@ -16987,69 +17170,69 @@ If there's a particular need for this, please submit a feature request at https:
   var media_dimensions_default = mediaDimensionsField;
 
   // packages/media-fields/build-module/media_thumbnail/index.mjs
-  var import_i18n57 = __toESM(require_i18n(), 1);
+  var import_i18n60 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
-  var import_data6 = __toESM(require_data(), 1);
-  var import_core_data = __toESM(require_core_data(), 1);
-  var import_components49 = __toESM(require_components(), 1);
-  var import_element54 = __toESM(require_element(), 1);
+  var import_data7 = __toESM(require_data(), 1);
+  var import_core_data2 = __toESM(require_core_data(), 1);
+  var import_components50 = __toESM(require_components(), 1);
+  var import_element56 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.mjs
-  var import_i18n56 = __toESM(require_i18n(), 1);
+  var import_i18n59 = __toESM(require_i18n(), 1);
   function getMediaTypeFromMimeType(mimeType) {
     if (mimeType.startsWith("image/")) {
       return {
         type: "image",
-        label: (0, import_i18n56.__)("Image"),
+        label: (0, import_i18n59.__)("Image"),
         icon: image_default
       };
     }
     if (mimeType.startsWith("video/")) {
       return {
         type: "video",
-        label: (0, import_i18n56.__)("Video"),
+        label: (0, import_i18n59.__)("Video"),
         icon: video_default
       };
     }
     if (mimeType.startsWith("audio/")) {
       return {
         type: "audio",
-        label: (0, import_i18n56.__)("Audio"),
+        label: (0, import_i18n59.__)("Audio"),
         icon: audio_default
       };
     }
     return {
       type: "application",
-      label: (0, import_i18n56.__)("Application"),
+      label: (0, import_i18n59.__)("Application"),
       icon: file_default
     };
   }
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
-  var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
   function FallbackView({
     item,
     filename
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
-      import_components49.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
+      import_components50.__experimentalVStack,
       {
         justify: "center",
         alignment: "center",
         className: "dataviews-media-field__media-thumbnail__stack",
         spacing: 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-            import_components49.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+            import_components50.Icon,
             {
               className: "dataviews-media-field__media-thumbnail--icon",
               icon: getMediaTypeFromMimeType(item.mime_type).icon,
               size: 24
             }
           ),
-          !!filename && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components49.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
+          !!filename && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components50.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
         ]
       }
     ) });
@@ -17058,13 +17241,13 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     config
   }) {
-    const [imageError, setImageError] = (0, import_element54.useState)(false);
-    const _featuredMedia = (0, import_data6.useSelect)(
+    const [imageError, setImageError] = (0, import_element56.useState)(false);
+    const _featuredMedia = (0, import_data7.useSelect)(
       (select) => {
         if (!item.featured_media) {
           return;
         }
-        return select(import_core_data.store).getEntityRecord(
+        return select(import_core_data2.store).getEntityRecord(
           "postType",
           "attachment",
           item.featured_media
@@ -17078,9 +17261,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const filename = (0, import_url5.getFilename)(featuredMedia.source_url || "");
     if (imageError || getMediaTypeFromMimeType(featuredMedia.mime_type).type !== "image") {
-      return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
+      return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
       "img",
       {
         className: "dataviews-media-field__media-thumbnail--image",
@@ -17101,7 +17284,7 @@ If there's a particular need for this, please submit a feature request at https:
   var mediaThumbnailField = {
     id: "media_thumbnail",
     type: "media",
-    label: (0, import_i18n57.__)("Thumbnail"),
+    label: (0, import_i18n60.__)("Thumbnail"),
     render: MediaThumbnailView,
     enableSorting: false,
     filterBy: false
@@ -17109,11 +17292,11 @@ If there's a particular need for this, please submit a feature request at https:
   var media_thumbnail_default = mediaThumbnailField;
 
   // packages/media-fields/build-module/mime_type/index.mjs
-  var import_i18n58 = __toESM(require_i18n(), 1);
+  var import_i18n61 = __toESM(require_i18n(), 1);
   var mimeTypeField = {
     id: "mime_type",
     type: "text",
-    label: (0, import_i18n58.__)("File type"),
+    label: (0, import_i18n61.__)("File type"),
     getValue: ({ item }) => item?.mime_type || "",
     render: ({ item }) => item?.mime_type || "-",
     // Disable sorting until REST API support for ordering my `mime_type` is added.
@@ -17132,8 +17315,8 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
-  var { useEntityRecordsWithPermissions } = unlock2(import_core_data2.privateApis);
+  var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+  var { useEntityRecordsWithPermissions } = unlock2(import_core_data3.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
   function MediaUploadModal({
@@ -17143,20 +17326,20 @@ If there's a particular need for this, please submit a feature request at https:
     onSelect,
     onClose,
     onUpload,
-    title = (0, import_i18n59.__)("Select Media"),
+    title = (0, import_i18n62.__)("Select Media"),
     isOpen,
     isDismissible = true,
     modalClass,
     search = true,
-    searchLabel = (0, import_i18n59.__)("Search media")
+    searchLabel = (0, import_i18n62.__)("Search media")
   }) {
-    const [selection, setSelection] = (0, import_element55.useState)(() => {
+    const [selection, setSelection] = (0, import_element57.useState)(() => {
       if (!value) {
         return [];
       }
       return Array.isArray(value) ? value.map(String) : [String(value)];
     });
-    const [view, setView] = (0, import_element55.useState)(() => ({
+    const [view, setView] = (0, import_element57.useState)(() => ({
       type: LAYOUT_PICKER_GRID2,
       fields: [],
       showTitle: false,
@@ -17167,7 +17350,7 @@ If there's a particular need for this, please submit a feature request at https:
       perPage: 20,
       filters: []
     }));
-    const queryArgs = (0, import_element55.useMemo)(() => {
+    const queryArgs = (0, import_element57.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "media_type") {
@@ -17197,6 +17380,7 @@ If there's a particular need for this, please submit a feature request at https:
         order: view.sort?.direction,
         orderby: view.sort?.field,
         search: view.search,
+        _embed: "wp:attached-to",
         ...filters
       };
     }, [view, allowedTypes]);
@@ -17206,7 +17390,7 @@ If there's a particular need for this, please submit a feature request at https:
       totalItems,
       totalPages
     } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
-    const fields = (0, import_element55.useMemo)(
+    const fields = (0, import_element57.useMemo)(
       () => [
         // Media field definitions from @wordpress/media-fields
         // Cast is safe because RestAttachment has the same properties as Attachment
@@ -17218,10 +17402,10 @@ If there's a particular need for this, please submit a feature request at https:
         {
           id: "title",
           type: "text",
-          label: (0, import_i18n59.__)("Title"),
+          label: (0, import_i18n62.__)("Title"),
           getValue: ({ item }) => {
             const titleValue = item.title.raw || item.title.rendered;
-            return titleValue || (0, import_i18n59.__)("(no title)");
+            return titleValue || (0, import_i18n62.__)("(no title)");
           }
         },
         alt_text_default,
@@ -17232,15 +17416,16 @@ If there's a particular need for this, please submit a feature request at https:
         filename_default,
         filesize_default,
         media_dimensions_default,
-        mime_type_default
+        mime_type_default,
+        attached_to_default
       ],
       []
     );
-    const actions = (0, import_element55.useMemo)(
+    const actions = (0, import_element57.useMemo)(
       () => [
         {
           id: "select",
-          label: multiple ? (0, import_i18n59.__)("Select") : (0, import_i18n59.__)("Select"),
+          label: multiple ? (0, import_i18n62.__)("Select") : (0, import_i18n62.__)("Select"),
           isPrimary: true,
           supportsBulk: multiple,
           async callback() {
@@ -17251,8 +17436,8 @@ If there's a particular need for this, please submit a feature request at https:
               include: selection,
               per_page: -1
             };
-            const selectedPosts = await (0, import_data7.resolveSelect)(
-              import_core_data2.store
+            const selectedPosts = await (0, import_data8.resolveSelect)(
+              import_core_data3.store
             ).getEntityRecords(
               "postType",
               "attachment",
@@ -17266,11 +17451,11 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [multiple, onSelect, selection]
     );
-    const handleModalClose = (0, import_element55.useCallback)(() => {
+    const handleModalClose = (0, import_element57.useCallback)(() => {
       onClose?.();
     }, [onClose]);
     const handleUpload = onUpload || uploadMedia;
-    const handleFileSelect = (0, import_element55.useCallback)(
+    const handleFileSelect = (0, import_element57.useCallback)(
       (event) => {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -17283,14 +17468,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowedTypes, handleUpload]
     );
-    const paginationInfo = (0, import_element55.useMemo)(
+    const paginationInfo = (0, import_element57.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const defaultLayouts = (0, import_element55.useMemo)(
+    const defaultLayouts = (0, import_element57.useMemo)(
       () => ({
         [LAYOUT_PICKER_GRID2]: {
           fields: [],
@@ -17303,7 +17488,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       []
     );
-    const acceptTypes = (0, import_element55.useMemo)(() => {
+    const acceptTypes = (0, import_element57.useMemo)(() => {
       if (allowedTypes.includes("*")) {
         return void 0;
       }
@@ -17312,8 +17497,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isOpen) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(
-      import_components50.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
+      import_components51.Modal,
       {
         title,
         onRequestClose: handleModalClose,
@@ -17321,27 +17506,27 @@ If there's a particular need for this, please submit a feature request at https:
         className: modalClass,
         overlayClassName: "media-upload-modal",
         size: "fill",
-        headerActions: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-          import_components50.FormFileUpload,
+        headerActions: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+          import_components51.FormFileUpload,
           {
             accept: acceptTypes,
             multiple: true,
             onChange: handleFileSelect,
             __next40pxDefaultSize: true,
-            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-              import_components50.Button,
+            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+              import_components51.Button,
               {
                 onClick: openFileDialog,
                 icon: upload_default,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n59.__)("Upload media")
+                children: (0, import_i18n62.__)("Upload media")
               }
             )
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-            import_components50.DropZone,
+          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+            import_components51.DropZone,
             {
               onFilesDrop: (files) => {
                 let filteredFiles = files;
@@ -17361,10 +17546,10 @@ If there's a particular need for this, please submit a feature request at https:
                   });
                 }
               },
-              label: (0, import_i18n59.__)("Drop files to upload")
+              label: (0, import_i18n62.__)("Drop files to upload")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
             dataviews_picker_default,
             {
               data: mediaRecords || [],
@@ -17380,7 +17565,7 @@ If there's a particular need for this, please submit a feature request at https:
               getItemId: (item) => String(item.id),
               search,
               searchLabel,
-              itemListLabel: (0, import_i18n59.__)("Media items")
+              itemListLabel: (0, import_i18n62.__)("Media items")
             }
           )
         ]
