@@ -30271,7 +30271,7 @@ ${js}
         variant: "toolbar"
       }
     ) });
-    const hasDataFormBlockFields = window?.__experimentalContentOnlyPatternInsertion && window?.__experimentalContentOnlyInspectorFields;
+    const hasDataFormBlockFields = window?.__experimentalContentOnlyInspectorFields;
     const controls = /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(import_jsx_runtime266.Fragment, { children: [
       showBlockControls && /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(import_block_editor111.BlockControls, { group: "block", children: [
         showUrlInput && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(

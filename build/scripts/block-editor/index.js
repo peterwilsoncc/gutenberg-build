@@ -59150,7 +59150,7 @@ var wp;
     if (!contentClientIds || contentClientIds.length === 0) {
       return null;
     }
-    const shouldShowBlockFields = window?.__experimentalContentOnlyPatternInsertion && window?.__experimentalContentOnlyInspectorFields;
+    const shouldShowBlockFields = window?.__experimentalContentOnlyInspectorFields;
     return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_jsx_runtime377.Fragment, { children: !shouldShowBlockFields && /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_components207.PanelBody, { title: (0, import_i18n199.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(BlockQuickNavigation, { clientIds: contentClientIds }) }) });
   };
   var content_tab_default = ContentTab;
@@ -69237,7 +69237,7 @@ var wp;
         blockEditingMode,
         isSelected
       } = (0, import_element254.useContext)(PrivateBlockContext);
-      const shouldShowBlockFields = window?.__experimentalContentOnlyPatternInsertion && window?.__experimentalContentOnlyInspectorFields;
+      const shouldShowBlockFields = window?.__experimentalContentOnlyInspectorFields;
       const blockTypeFields = blockType?.[fieldsKey];
       if (!shouldShowBlockFields || !blockTypeFields?.length) {
         return /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(BlockEdit2, { ...props }, "edit");
