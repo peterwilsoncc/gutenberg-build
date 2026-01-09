@@ -29642,6 +29642,8 @@ var wp;
     const [patternFilter, setPatternFilter] = (0, import_element76.useState)("all");
     const [selectedMediaCategory, setSelectedMediaCategory] = (0, import_element76.useState)(null);
     const isLargeViewport = (0, import_compose44.useViewportMatch)("large");
+    const isMobileViewport = (0, import_compose44.useViewportMatch)("medium", "<");
+    const maybeCloseInserter = isMobileViewport ? onClose : NOOP;
     function getInitialTab() {
       if (__experimentalInitialTab) {
         return __experimentalInitialTab;
@@ -29671,6 +29673,7 @@ var wp;
           _rootClientId
         );
         onSelect(blocks2);
+        maybeCloseInserter();
         window.requestAnimationFrame(() => {
           if (!shouldFocusBlock && !blockTypesTabRef.current?.contains(
             ref.current.ownerDocument.activeElement
@@ -29679,15 +29682,16 @@ var wp;
           }
         });
       },
-      [onInsertBlocks, onSelect, shouldFocusBlock]
+      [onInsertBlocks, maybeCloseInserter, onSelect, ref, shouldFocusBlock]
     );
     const onInsertPattern = (0, import_element76.useCallback)(
       (blocks2, patternName, ...args) => {
         onToggleInsertionPoint(false);
         onInsertBlocks(blocks2, { patternName }, ...args);
         onSelect();
+        maybeCloseInserter();
       },
-      [onInsertBlocks, onSelect]
+      [onInsertBlocks, maybeCloseInserter, onSelect, onToggleInsertionPoint]
     );
     const onHover = (0, import_element76.useCallback)(
       (item) => {
