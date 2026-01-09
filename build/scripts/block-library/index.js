@@ -40685,7 +40685,6 @@ ${js}
     setOverlayTextColor,
     // These props are used by the navigation editor to override specific
     // navigation block settings.
-    hasSubmenuIndicatorSetting = true,
     customPlaceholder: CustomPlaceholder = null,
     __unstableLayoutClassNames: layoutClassNames
   }) {
@@ -40963,7 +40962,7 @@ ${js}
     );
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const stylingInspectorControls = /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(import_jsx_runtime317.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_block_editor152.InspectorControls, { children: hasSubmenuIndicatorSetting && /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_block_editor152.InspectorControls, { children: (!isOverlayExperimentEnabled || hasSubmenus) && /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
         import_components86.__experimentalToolsPanel,
         {
           label: (0, import_i18n135.__)("Display"),
