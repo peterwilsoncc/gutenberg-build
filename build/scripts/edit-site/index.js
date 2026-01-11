@@ -29515,27 +29515,14 @@ If there's a particular need for this, please submit a feature request at https:
     const visibleRegularFieldsCount = regularFields.filter(
       (f2) => visibleFieldIds.includes(f2.id)
     ).length;
-    let visibleLockedFields = lockedFields.filter(
-      ({ field, isVisibleFlag }) => (
+    const visibleLockedFields = lockedFields.filter(
+      ({ isVisibleFlag }) => (
         // @ts-expect-error
-        isDefined(field) && (view[isVisibleFlag] ?? true)
+        view[isVisibleFlag] ?? true
       )
     );
     const totalVisibleFields = visibleLockedFields.length + visibleRegularFieldsCount;
-    if (totalVisibleFields === 1) {
-      if (visibleLockedFields.length === 1) {
-        visibleLockedFields = visibleLockedFields.map((locked) => ({
-          ...locked,
-          field: { ...locked.field, enableHiding: false }
-        }));
-      }
-    }
-    const hiddenLockedFields = lockedFields.filter(
-      ({ field, isVisibleFlag }) => (
-        // @ts-expect-error
-        isDefined(field) && !(view[isVisibleFlag] ?? true)
-      )
-    );
+    const isSingleVisibleLockedField = totalVisibleFields === 1 && visibleLockedFields.length === 1;
     return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(Stack, { direction: "column", className: "dataviews-field-control", children: [
       showLabel && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components96.BaseControl.VisualLabel, { children: (0, import_i18n89.__)("Properties") }),
       /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
@@ -29544,32 +29531,18 @@ If there's a particular need for this, please submit a feature request at https:
           direction: "column",
           className: "dataviews-view-config__properties",
           children: /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_components96.__experimentalItemGroup, { isBordered: true, isSeparated: true, size: "medium", children: [
-            visibleLockedFields.map(({ field, isVisibleFlag }) => {
+            lockedFields.map(({ field, isVisibleFlag }) => {
+              const isVisible2 = view[isVisibleFlag] ?? true;
+              const fieldToRender = isSingleVisibleLockedField && isVisible2 ? { ...field, enableHiding: false } : field;
               return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
                 FieldItem,
                 {
-                  field,
-                  isVisible: true,
+                  field: fieldToRender,
+                  isVisible: isVisible2,
                   onToggleVisibility: () => {
                     onChangeView({
                       ...view,
-                      [isVisibleFlag]: false
-                    });
-                  }
-                },
-                field.id
-              );
-            }),
-            hiddenLockedFields.map(({ field, isVisibleFlag }) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-                FieldItem,
-                {
-                  field,
-                  isVisible: false,
-                  onToggleVisibility: () => {
-                    onChangeView({
-                      ...view,
-                      [isVisibleFlag]: true
+                      [isVisibleFlag]: !isVisible2
                     });
                   }
                 },
@@ -29578,8 +29551,7 @@ If there's a particular need for this, please submit a feature request at https:
             }),
             regularFields.map((field) => {
               const isVisible2 = visibleFieldIds.includes(field.id);
-              const isLastVisible = totalVisibleFields === 1 && isVisible2;
-              const fieldToRender = isLastVisible ? { ...field, enableHiding: false } : field;
+              const fieldToRender = totalVisibleFields === 1 && isVisible2 ? { ...field, enableHiding: false } : field;
               return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
                 FieldItem,
                 {
