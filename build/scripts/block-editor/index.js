@@ -22872,6 +22872,7 @@ var wp;
     Type2["Prepare"] = "PREPARE_ITEM";
     Type2["Cancel"] = "CANCEL_ITEM";
     Type2["Remove"] = "REMOVE_ITEM";
+    Type2["RetryItem"] = "RETRY_ITEM";
     Type2["PauseItem"] = "PAUSE_ITEM";
     Type2["ResumeItem"] = "RESUME_ITEM";
     Type2["PauseQueue"] = "PAUSE_QUEUE";
@@ -22881,12 +22882,16 @@ var wp;
     Type2["AddOperations"] = "ADD_OPERATIONS";
     Type2["CacheBlobUrl"] = "CACHE_BLOB_URL";
     Type2["RevokeBlobUrls"] = "REVOKE_BLOB_URLS";
+    Type2["UpdateProgress"] = "UPDATE_PROGRESS";
     Type2["UpdateSettings"] = "UPDATE_SETTINGS";
     return Type2;
   })(Type || {});
   var ItemStatus = /* @__PURE__ */ ((ItemStatus2) => {
+    ItemStatus2["Queued"] = "QUEUED";
     ItemStatus2["Processing"] = "PROCESSING";
     ItemStatus2["Paused"] = "PAUSED";
+    ItemStatus2["Uploaded"] = "UPLOADED";
+    ItemStatus2["Error"] = "ERROR";
     return ItemStatus2;
   })(ItemStatus || {});
   var OperationType = /* @__PURE__ */ ((OperationType2) => {
@@ -22894,6 +22899,10 @@ var wp;
     OperationType2["Upload"] = "UPLOAD";
     return OperationType2;
   })(OperationType || {});
+
+  // packages/upload-media/build-module/store/constants.mjs
+  var STORE_NAME2 = "core/upload-media";
+  var DEFAULT_MAX_CONCURRENT_UPLOADS = 5;
 
   // packages/upload-media/build-module/store/reducer.mjs
   var noop4 = () => {
@@ -22903,7 +22912,8 @@ var wp;
     queueStatus: "active",
     blobUrls: {},
     settings: {
-      mediaUpload: noop4
+      mediaUpload: noop4,
+      maxConcurrentUploads: DEFAULT_MAX_CONCURRENT_UPLOADS
     }
   };
   function reducer(state = DEFAULT_STATE, action = { type: Type.Unknown }) {
@@ -22920,6 +22930,26 @@ var wp;
           queueStatus: "active"
         };
       }
+      case Type.PauseItem:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              status: ItemStatus.Paused
+            } : item
+          )
+        };
+      case Type.ResumeItem:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              status: ItemStatus.Processing
+            } : item
+          )
+        };
       case Type.Add:
         return {
           ...state,
@@ -22932,6 +22962,18 @@ var wp;
             (item) => item.id === action.id ? {
               ...item,
               error: action.error
+            } : item
+          )
+        };
+      case Type.RetryItem:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              status: ItemStatus.Processing,
+              error: void 0,
+              retryCount: (item.retryCount ?? 0) + 1
             } : item
           )
         };
@@ -23010,6 +23052,16 @@ var wp;
           blobUrls: newBlobUrls
         };
       }
+      case Type.UpdateProgress:
+        return {
+          ...state,
+          queue: state.queue.map(
+            (item) => item.id === action.id ? {
+              ...item,
+              progress: action.progress
+            } : item
+          )
+        };
       case Type.UpdateSettings: {
         return {
           ...state,
@@ -23056,10 +23108,14 @@ var wp;
   // packages/upload-media/build-module/store/private-selectors.mjs
   var private_selectors_exports2 = {};
   __export(private_selectors_exports2, {
+    getActiveUploadCount: () => getActiveUploadCount,
     getAllItems: () => getAllItems,
     getBlobUrls: () => getBlobUrls,
+    getFailedItems: () => getFailedItems,
     getItem: () => getItem,
+    getItemProgress: () => getItemProgress,
     getPausedUploadForPost: () => getPausedUploadForPost,
+    getPendingUploads: () => getPendingUploads,
     isBatchUploaded: () => isBatchUploaded,
     isPaused: () => isPaused2,
     isUploadingToPost: () => isUploadingToPost
@@ -23092,12 +23148,31 @@ var wp;
   function getBlobUrls(state, id) {
     return state.blobUrls[id] || [];
   }
+  function getActiveUploadCount(state) {
+    return state.queue.filter(
+      (item) => item.currentOperation === OperationType.Upload
+    ).length;
+  }
+  function getPendingUploads(state) {
+    return state.queue.filter((item) => {
+      const nextOperation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
+      return nextOperation === OperationType.Upload && item.currentOperation !== OperationType.Upload;
+    });
+  }
+  function getFailedItems(state) {
+    return state.queue.filter((item) => item.error !== void 0);
+  }
+  function getItemProgress(state, id) {
+    const item = state.queue.find((i2) => i2.id === id);
+    return item?.progress;
+  }
 
   // packages/upload-media/build-module/store/actions.mjs
   var actions_exports2 = {};
   __export(actions_exports2, {
     addItems: () => addItems,
-    cancelItem: () => cancelItem
+    cancelItem: () => cancelItem,
+    retryItem: () => retryItem
   });
 
   // node_modules/uuid/dist/esm-browser/rng.js
@@ -23332,18 +23407,37 @@ var wp;
       }
     };
   }
+  function retryItem(id) {
+    return async ({ select: select3, dispatch }) => {
+      const item = select3.getItem(id);
+      if (!item) {
+        return;
+      }
+      if (!item.error) {
+        return;
+      }
+      dispatch({
+        type: Type.RetryItem,
+        id
+      });
+      dispatch.processItem(id);
+    };
+  }
 
   // packages/upload-media/build-module/store/private-actions.mjs
   var private_actions_exports2 = {};
   __export(private_actions_exports2, {
     addItem: () => addItem,
     finishOperation: () => finishOperation,
+    pauseItem: () => pauseItem,
     pauseQueue: () => pauseQueue,
     prepareItem: () => prepareItem,
     processItem: () => processItem,
     removeItem: () => removeItem,
+    resumeItem: () => resumeItem,
     resumeQueue: () => resumeQueue,
     revokeBlobUrls: () => revokeBlobUrls,
+    updateItemProgress: () => updateItemProgress,
     updateSettings: () => updateSettings2,
     uploadItem: () => uploadItem
   });
@@ -23441,6 +23535,13 @@ var wp;
       const item = select3.getItem(id);
       const { attachment, onChange, onSuccess, onBatchSuccess, batchId } = item;
       const operation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
+      if (operation === OperationType.Upload) {
+        const settings2 = select3.getSettings();
+        const activeCount = select3.getActiveUploadCount();
+        if (activeCount >= settings2.maxConcurrentUploads) {
+          return;
+        }
+      }
       if (attachment) {
         onChange?.([attachment]);
       }
@@ -23487,6 +23588,27 @@ var wp;
       }
     };
   }
+  function pauseItem(id) {
+    return async ({ dispatch }) => {
+      dispatch({
+        type: Type.PauseItem,
+        id
+      });
+    };
+  }
+  function resumeItem(id) {
+    return async ({ select: select3, dispatch }) => {
+      const item = select3.getItem(id);
+      if (!item || item.status !== ItemStatus.Paused) {
+        return;
+      }
+      dispatch({
+        type: Type.ResumeItem,
+        id
+      });
+      dispatch.processItem(id);
+    };
+  }
   function removeItem(id) {
     return async ({ select: select3, dispatch }) => {
       const item = select3.getItem(id);
@@ -23500,13 +23622,21 @@ var wp;
     };
   }
   function finishOperation(id, updates) {
-    return async ({ dispatch }) => {
+    return async ({ select: select3, dispatch }) => {
+      const item = select3.getItem(id);
+      const previousOperation = item?.currentOperation;
       dispatch({
         type: Type.OperationFinish,
         id,
         item: updates
       });
       dispatch.processItem(id);
+      if (previousOperation === OperationType.Upload) {
+        const pendingUploads = select3.getPendingUploads();
+        for (const pendingItem of pendingUploads) {
+          dispatch.processItem(pendingItem.id);
+        }
+      }
     };
   }
   function prepareItem(id) {
@@ -23557,6 +23687,15 @@ var wp;
       });
     };
   }
+  function updateItemProgress(id, progress) {
+    return async ({ dispatch }) => {
+      dispatch({
+        type: Type.UpdateProgress,
+        id,
+        progress
+      });
+    };
+  }
   function updateSettings2(settings2) {
     return {
       type: Type.UpdateSettings,
@@ -23570,9 +23709,6 @@ var wp;
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/upload-media"
   );
-
-  // packages/upload-media/build-module/store/constants.mjs
-  var STORE_NAME2 = "core/upload-media";
 
   // packages/upload-media/build-module/store/index.mjs
   var storeConfig2 = {
