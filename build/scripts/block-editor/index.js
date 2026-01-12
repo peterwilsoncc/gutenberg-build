@@ -16093,7 +16093,11 @@ var wp;
       onChange,
       layoutBlockSupport = {}
     }) {
-      const { allowOrientation = true, allowJustification = true } = layoutBlockSupport;
+      const {
+        allowOrientation = true,
+        allowJustification = true,
+        allowWrap = true
+      } = layoutBlockSupport;
       return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_jsx_runtime130.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_components11.Flex, { children: [
           allowJustification && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components11.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
@@ -16111,7 +16115,7 @@ var wp;
             }
           ) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(FlexWrapControl, { layout, onChange })
+        allowWrap && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(FlexWrapControl, { layout, onChange })
       ] });
     },
     toolBarControls: function FlexLayoutToolbarControls({
