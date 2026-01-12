@@ -27376,7 +27376,9 @@ ${url}
         type: "string"
       }
     },
-    migrate: (attributes3) => migrateCustomColors2(migrateTextAlign(attributes3)),
+    migrate: (attributes3) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes3))
+    ),
     save({ attributes: attributes3 }) {
       const { align, level, content, textColor, customTextColor } = attributes3;
       const tagName = "h" + level;
@@ -27408,7 +27410,9 @@ ${url}
         type: "string"
       }
     },
-    migrate: (attributes3) => migrateCustomColors2(migrateTextAlign(attributes3)),
+    migrate: (attributes3) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes3))
+    ),
     save({ attributes: attributes3 }) {
       const { align, content, customTextColor, level, textColor } = attributes3;
       const tagName = "h" + level;
@@ -27442,7 +27446,9 @@ ${url}
         type: "string"
       }
     },
-    migrate: (attributes3) => migrateCustomColors2(migrateTextAlign(attributes3)),
+    migrate: (attributes3) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes3))
+    ),
     save({ attributes: attributes3 }) {
       const { align, content, customTextColor, level, textColor } = attributes3;
       const tagName = "h" + level;
@@ -27485,7 +27491,9 @@ ${url}
     },
     attributes: blockAttributes4,
     isEligible: ({ align }) => TEXT_ALIGN_OPTIONS.includes(align),
-    migrate: migrateTextAlign,
+    migrate: (attributes3) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes3))
+    ),
     save({ attributes: attributes3 }) {
       const { align, content, level } = attributes3;
       const TagName2 = "h" + level;
@@ -27557,9 +27565,96 @@ ${url}
         [`has-text-align-${textAlign}`]: textAlign
       });
       return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(TagName2, { ...import_block_editor101.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_block_editor101.RichText.Content, { value: content }) });
+    },
+    migrate: (attributes3) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes3))
+    )
+  };
+  var v63 = {
+    supports: {
+      align: ["wide", "full"],
+      anchor: true,
+      className: true,
+      splitting: true,
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontStyle: true,
+        __experimentalFontWeight: true,
+        __experimentalLetterSpacing: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalWritingMode: true,
+        fitText: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      __unstablePasteTextInline: true,
+      __experimentalSlashInserter: true,
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      content: {
+        type: "string",
+        source: "html",
+        selector: "h1,h2,h3,h4,h5,h6",
+        default: "",
+        role: "content"
+      },
+      level: {
+        type: "number",
+        default: 2
+      },
+      levelOptions: {
+        type: "array"
+      },
+      placeholder: {
+        type: "string"
+      }
+    },
+    save({ attributes: attributes3 }) {
+      const { textAlign, content, level } = attributes3;
+      const TagName2 = "h" + level;
+      const className = clsx_default({
+        [`has-text-align-${textAlign}`]: textAlign
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(TagName2, { ...import_block_editor101.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_block_editor101.RichText.Content, { value: content }) });
+    },
+    migrate: (attributes3) => migrate_text_align_default(
+      migrateCustomColors2(migrateTextAlign(attributes3))
+    ),
+    isEligible(attributes3) {
+      return !!attributes3.textAlign || !!attributes3.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
     }
   };
-  var deprecated9 = [v53, v43, v34, v28, v115];
+  var deprecated9 = [v63, v53, v43, v34, v28, v115];
   var deprecated_default19 = deprecated9;
 
   // packages/block-library/build-module/heading/edit.mjs
@@ -27599,23 +27694,14 @@ ${url}
 
   // packages/block-library/build-module/heading/edit.mjs
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
-  function HeadingEdit({
-    attributes: attributes3,
-    setAttributes,
-    mergeBlocks,
-    onReplace,
-    style: style2,
-    clientId
-  }) {
-    const { textAlign, content, level, placeholder: placeholder2, anchor } = attributes3;
+  function HeadingEdit(props) {
+    const { attributes: attributes3, setAttributes, mergeBlocks, onReplace, clientId } = props;
+    useDeprecatedTextAlign(props);
+    const { style: style2, content, level, placeholder: placeholder2, anchor } = attributes3;
     const tagName = "h" + level;
     const blockProps = (0, import_block_editor102.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      }),
       style: style2
     });
-    const blockEditingMode = (0, import_block_editor102.useBlockEditingMode)();
     const { canGenerateAnchors } = (0, import_data41.useSelect)((select9) => {
       const { getGlobalBlockCount, getSettings: getSettings2 } = select9(import_block_editor102.store);
       const settings116 = getSettings2();
@@ -27644,33 +27730,21 @@ ${url}
       }
       setAttributes(newAttrs);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(import_jsx_runtime256.Fragment, { children: [
-      blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(import_block_editor102.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-        import_block_editor102.AlignmentControl,
-        {
-          value: textAlign,
-          onChange: (nextAlign) => {
-            setAttributes({ textAlign: nextAlign });
-          }
-        }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-        import_block_editor102.RichText,
-        {
-          identifier: "content",
-          tagName,
-          value: content,
-          onChange: onContentChange,
-          onMerge: mergeBlocks,
-          onReplace,
-          onRemove: () => onReplace([]),
-          placeholder: placeholder2 || (0, import_i18n80.__)("Heading"),
-          textAlign,
-          ...import_element36.Platform.isNative && { deleteEnter: true },
-          ...blockProps
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(import_jsx_runtime256.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
+      import_block_editor102.RichText,
+      {
+        identifier: "content",
+        tagName,
+        value: content,
+        onChange: onContentChange,
+        onMerge: mergeBlocks,
+        onReplace,
+        onRemove: () => onReplace([]),
+        placeholder: placeholder2 || (0, import_i18n80.__)("Heading"),
+        ...import_element36.Platform.isNative && { deleteEnter: true },
+        ...blockProps
+      }
+    ) });
   }
   var edit_default16 = HeadingEdit;
 
@@ -27685,9 +27759,6 @@ ${url}
     keywords: ["title", "subtitle"],
     textdomain: "default",
     attributes: {
-      textAlign: {
-        type: "string"
-      },
       content: {
         type: "rich-text",
         source: "rich-text",
@@ -27735,6 +27806,7 @@ ${url}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontStyle: true,
         __experimentalFontWeight: true,
@@ -27761,12 +27833,9 @@ ${url}
   var import_block_editor103 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   function save23({ attributes: attributes3 }) {
-    const { textAlign, content, level } = attributes3;
+    const { content, level } = attributes3;
     const TagName2 = "h" + level;
-    const className = clsx_default({
-      [`has-text-align-${textAlign}`]: textAlign
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(TagName2, { ...import_block_editor103.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(import_block_editor103.RichText.Content, { value: content }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(TagName2, { ...import_block_editor103.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(import_block_editor103.RichText.Content, { value: content }) });
   }
 
   // packages/block-library/build-module/heading/transforms.mjs
@@ -27797,7 +27866,13 @@ ${url}
             ),
             content,
             anchor,
-            textAlign
+            ...textAlign && {
+              style: {
+                typography: {
+                  textAlign
+                }
+              }
+            }
           });
         })
       },
@@ -27826,7 +27901,13 @@ ${url}
           const { textAlign } = node.style || {};
           attributes3.level = getLevelFromHeadingNodeName(node.nodeName);
           if (textAlign === "left" || textAlign === "center" || textAlign === "right") {
-            attributes3.align = textAlign;
+            attributes3.style = {
+              ...attributes3.style,
+              typography: {
+                ...attributes3.style?.typography,
+                textAlign
+              }
+            };
           }
           return (0, import_blocks34.createBlock)("core/heading", attributes3);
         }
@@ -27853,7 +27934,8 @@ ${url}
         isMultiBlock: true,
         blocks: ["core/paragraph"],
         transform: (attributes3) => attributes3.map((_attributes) => {
-          const { content, textAlign } = _attributes;
+          const { content, style: style2 } = _attributes;
+          const textAlign = style2?.typography?.textAlign;
           return (0, import_blocks34.createBlock)("core/paragraph", {
             ...getTransformedAttributes(
               _attributes,
@@ -29099,7 +29181,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("figure", { ...import_block_editor109.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var v63 = {
+  var v64 = {
     attributes: {
       align: {
         type: "string"
@@ -29656,7 +29738,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("figure", { ...import_block_editor109.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var deprecated_default20 = [v82, v73, v63, v54, v44, v35, v29, v116];
+  var deprecated_default20 = [v82, v73, v64, v54, v44, v35, v29, v116];
 
   // packages/block-library/build-module/image/edit.mjs
   var import_blob12 = __toESM(require_blob(), 1);
@@ -34941,7 +35023,7 @@ ${js}
       ] });
     }
   };
-  var v64 = {
+  var v65 = {
     attributes: v6Attributes,
     supports: v6Supports,
     save({ attributes: attributes3 }) {
@@ -35512,7 +35594,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default25 = [v74, v64, v55, v45, v37, v211, v120];
+  var deprecated_default25 = [v74, v65, v55, v45, v37, v211, v120];
 
   // packages/block-library/build-module/media-text/edit.mjs
   var import_i18n104 = __toESM(require_i18n(), 1);
@@ -41353,7 +41435,7 @@ ${js}
     }
     return updatedAttributes;
   };
-  var v65 = {
+  var v66 = {
     attributes: {
       navigationMenuId: {
         type: "number"
@@ -41647,7 +41729,7 @@ ${js}
     };
   };
   var deprecated11 = [
-    v65,
+    v66,
     v56,
     v46,
     // Remove `isResponsive` attribute.
@@ -53847,7 +53929,7 @@ ${js}
     },
     migrate: migrateDisplayLayout
   };
-  var v66 = {
+  var v67 = {
     attributes: {
       queryId: {
         type: "number"
@@ -53903,7 +53985,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v66, v58, v48, v310, v214, v125];
+  var deprecated14 = [v67, v58, v48, v310, v214, v125];
   var deprecated_default31 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
@@ -69702,10 +69784,8 @@ ${declarations}
       const sourceTextAlign = attributes3.textAlign || attributes3.style?.typography?.textAlign;
       if (destinationBlockName === "core/heading") {
         newAttributes.level = level;
-        if (sourceTextAlign) {
-          newAttributes.textAlign = sourceTextAlign;
-        }
-      } else if (sourceTextAlign) {
+      }
+      if (sourceTextAlign) {
         newAttributes.style = {
           typography: {
             textAlign: sourceTextAlign
