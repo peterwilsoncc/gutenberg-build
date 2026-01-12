@@ -7602,7 +7602,7 @@ var wp;
       }
     ];
     settings7[formKey] = {
-      fields: ["audio"]
+      fields: ["audio", "caption"]
     };
   }
   var init7 = () => initBlock({ name: name7, metadata: block_default8, settings: settings7 });
@@ -10066,7 +10066,7 @@ var wp;
       }
     ];
     settings9[formKey2] = {
-      fields: ["text"]
+      fields: ["text", "link"]
     };
   }
   var init9 = () => initBlock({ name: name9, metadata: block_default10, settings: settings9 });
@@ -22704,7 +22704,7 @@ ${url}
       }
     ];
     settings33[formKey6] = {
-      fields: ["file"]
+      fields: ["file", "fileName", "downloadButtonText"]
     };
   }
   var init33 = () => initBlock({ name: name33, metadata: block_default33, settings: settings33 });
@@ -31528,7 +31528,7 @@ ${js}
       }
     ];
     settings43[formKey8] = {
-      fields: ["image"]
+      fields: ["image", "link", "caption", "alt"]
     };
   }
   var init43 = () => initBlock({ name: name43, metadata: block_default43, settings: settings43 });
@@ -36641,7 +36641,7 @@ ${js}
       }
     ];
     settings50[formKey10] = {
-      fields: ["media"]
+      fields: ["media", "link"]
     };
   }
   var init50 = () => initBlock({ name: name50, metadata: block_default50, settings: settings50 });
@@ -42703,7 +42703,7 @@ ${js}
       }
     ];
     settings54[formKey12] = {
-      fields: ["label"]
+      fields: ["label", "link"]
     };
   }
   var init54 = () => {
@@ -43236,7 +43236,7 @@ ${js}
       }
     ];
     settings55[formKey13] = {
-      fields: ["label"]
+      fields: ["label", "link"]
     };
   }
   var init55 = () => initBlock({ name: name55, metadata: block_default55, settings: settings55 });
@@ -51344,7 +51344,7 @@ ${js}
       }
     ];
     settings79[formKey16] = {
-      fields: ["value"]
+      fields: ["value", "citation"]
     };
   }
   var init79 = () => initBlock({ name: name80, metadata: block_default79, settings: settings79 });
@@ -57635,7 +57635,7 @@ ${js}
       }
     ];
     settings92[formKey17] = {
-      fields: ["label"]
+      fields: ["label", "buttonText", "placeholder"]
     };
   }
   var init92 = () => initBlock({ name: name93, metadata: block_default92, settings: settings92 });
@@ -60107,7 +60107,7 @@ ${js}
       }
     ];
     settings98[formKey18] = {
-      fields: ["link"]
+      fields: ["link", "label"]
     };
   }
   var init98 = () => initBlock({ name: name99, metadata: block_default98, settings: settings98 });
@@ -69293,7 +69293,7 @@ ${declarations}
       }
     ];
     settings114[formKey20] = {
-      fields: ["video"]
+      fields: ["video", "caption"]
     };
   }
   var init114 = () => initBlock({ name: name115, metadata: block_default114, settings: settings114 });

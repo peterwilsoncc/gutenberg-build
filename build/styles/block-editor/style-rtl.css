@@ -3569,6 +3569,7 @@ iframe[name=editor-canvas] {
 
 .block-editor-block-fields__header-title {
   flex: 1;
+  margin: 0 !important;
 }
 
 .block-editor-hooks__block-hooks {
