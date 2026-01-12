@@ -50635,6 +50635,7 @@ var wp;
         value,
         required: true,
         type: "text",
+        name: inputId,
         onChange: disabled ? () => {
         } : this.onChange,
         // Disable onChange when disabled
