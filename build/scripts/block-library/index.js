@@ -43630,7 +43630,7 @@ ${js}
         "wp_template_part",
         postId
       );
-      return templatePartEntity?.area === "overlay";
+      return templatePartEntity?.area === NAVIGATION_OVERLAY_TEMPLATE_PART_AREA;
     }
     return false;
   }

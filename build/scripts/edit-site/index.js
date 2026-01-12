@@ -23754,11 +23754,11 @@ var wp;
         "all"
       ),
       Object.entries(templatePartAreas).map(
-        ([area, { label, templateParts }]) => /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
+        ([area, { label, templateParts, icon }]) => /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
           CategoryItem,
           {
             count: templateParts?.length,
-            icon: (0, import_editor26.getTemplatePartIcon)(area),
+            icon: (0, import_editor26.getTemplatePartIcon)(icon),
             label,
             id: area,
             type: TEMPLATE_PART_POST_TYPE,

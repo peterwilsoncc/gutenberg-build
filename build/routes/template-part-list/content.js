@@ -16538,7 +16538,7 @@ var getTemplatePartIcon = (areaOrIconName) => {
     return footer_default;
   } else if ("sidebar" === areaOrIconName) {
     return sidebar_default;
-  } else if ("navigation-overlay" === areaOrIconName) {
+  } else if ("overlay" === areaOrIconName) {
     return table_column_after_default;
   }
   if ("menu" === areaOrIconName) {
