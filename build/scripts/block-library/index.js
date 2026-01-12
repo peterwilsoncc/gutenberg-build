@@ -36985,6 +36985,7 @@ ${js}
       className: false,
       html: false,
       multiple: false,
+      visibility: false,
       interactivity: {
         clientNavigation: true
       }
@@ -43356,6 +43357,7 @@ ${js}
       customClassName: false,
       className: false,
       html: false,
+      visibility: false,
       interactivity: {
         clientNavigation: true
       }
