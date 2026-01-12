@@ -38754,19 +38754,22 @@ var wp;
       postLockUtils,
       activePostLock,
       postType: postType2,
-      previewLink
+      previewLink,
+      supportsSync
     } = (0, import_data125.useSelect)((select5) => {
       const {
         isPostLocked: isPostLocked2,
         isPostLockTakeover: isPostLockTakeover2,
         getPostLockUser: getPostLockUser2,
         getCurrentPostId: getCurrentPostId2,
+        getCurrentPostType: getCurrentPostType2,
         getActivePostLock: getActivePostLock2,
         getEditedPostAttribute: getEditedPostAttribute2,
         getEditedPostPreviewLink: getEditedPostPreviewLink2,
         getEditorSettings: getEditorSettings2
       } = select5(store);
-      const { getPostType } = select5(import_core_data79.store);
+      const { getPostType, getEntityConfig } = select5(import_core_data79.store);
+      const currentPostType = getCurrentPostType2();
       return {
         isLocked: isPostLocked2(),
         isTakeover: isPostLockTakeover2(),
@@ -38775,7 +38778,10 @@ var wp;
         postLockUtils: getEditorSettings2().postLockUtils,
         activePostLock: getActivePostLock2(),
         postType: getPostType(getEditedPostAttribute2("type")),
-        previewLink: getEditedPostPreviewLink2()
+        previewLink: getEditedPostPreviewLink2(),
+        supportsSync: Boolean(
+          getEntityConfig("postType", currentPostType)?.syncConfig
+        )
       };
     }, []);
     (0, import_element107.useEffect)(() => {
@@ -38838,6 +38844,11 @@ var wp;
     }, []);
     if (!isLocked) {
       return null;
+    }
+    if (supportsSync) {
+      if (true) {
+        return null;
+      }
     }
     const userDisplayName = user.name;
     const userAvatar = user.avatar;
