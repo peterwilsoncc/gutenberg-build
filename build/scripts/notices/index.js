@@ -79,8 +79,9 @@ var wp;
         return state.filter(({ id }) => !action.ids.includes(id));
       case "REMOVE_ALL_NOTICES":
         return state.filter(({ type }) => type !== action.noticeType);
+      default:
+        return state;
     }
-    return state;
   });
   var reducer_default = notices;
 
