@@ -20099,7 +20099,7 @@ var wp;
         label: (0, import_i18n54.__)("Background"),
         type: "media",
         mapping: {
-          type: "backgroundType",
+          mediaType: "backgroundType",
           id: "id",
           url: "url",
           alt: "alt",
@@ -36702,7 +36702,7 @@ ${js}
         type: "media",
         mapping: {
           id: "mediaId",
-          type: "mediaType",
+          mediaType: "mediaType",
           url: "mediaUrl",
           link: "mediaLink"
         },

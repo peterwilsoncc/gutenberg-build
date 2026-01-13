@@ -69263,10 +69263,6 @@ var wp;
     const attrValue = field.getValue({ item: data });
     const fieldConfig = field.config || {};
     const { clientId } = config2;
-    const updateAttributes = (html) => {
-      const mappedChanges = field.setValue({ item: data, value: html });
-      onChange(mappedChanges);
-    };
     const [selection2, setSelection] = (0, import_element255.useState)({
       start: void 0,
       end: void 0
@@ -69328,7 +69324,7 @@ var wp;
     } = (0, import_rich_text18.__unstableUseRichText)({
       value: attrValue,
       onChange(html, { __unstableFormats, __unstableText }) {
-        updateAttributes(html);
+        onChange(field.setValue({ item: data, value: html }));
         Object.values(changeHandlers).forEach((changeHandler) => {
           changeHandler(__unstableFormats, __unstableText);
         });
@@ -69400,9 +69396,9 @@ var wp;
   var import_data182 = __toESM(require_data(), 1);
   var import_i18n230 = __toESM(require_i18n(), 1);
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
-  function MediaThumbnail({ data, field, attachment }) {
-    const config2 = field.config || {};
-    const { allowedTypes = [], multiple = false } = config2;
+  function MediaThumbnail({ data, field, attachment, config: config2 }) {
+    const { fieldDef } = config2;
+    const { allowedTypes = [], multiple = false } = fieldDef.args || {};
     if (multiple) {
       return "todo multiple";
     }
@@ -69420,7 +69416,7 @@ var wp;
     if (allowedTypes.length === 1) {
       const value = field.getValue({ item: data });
       const url = value?.url;
-      if (url) {
+      if (allowedTypes[0] === "image" && url) {
         return /* @__PURE__ */ (0, import_jsx_runtime438.jsx)("div", { className: "block-editor-content-only-controls__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)("img", { alt: "", width: 24, height: 24, src: url }) });
       }
       let icon;
@@ -69444,15 +69440,8 @@ var wp;
       isControl: true
     });
     const value = field.getValue({ item: data });
-    const { allowedTypes = [], multiple = false } = field.config || {};
     const { fieldDef } = config2;
-    const updateAttributes = (newFieldValue) => {
-      const mappedChanges = field.setValue({
-        item: data,
-        value: newFieldValue
-      });
-      onChange(mappedChanges);
-    };
+    const { allowedTypes = [], multiple = false } = fieldDef.args || {};
     const hasFeaturedImageSupport = fieldDef?.mapping && "featuredImage" in fieldDef.mapping;
     const id = value?.id;
     const url = value?.url;
@@ -69498,64 +69487,44 @@ var wp;
           const resetValue = {};
           if (fieldDef?.mapping) {
             Object.keys(fieldDef.mapping).forEach((key) => {
-              if (key === "id" || key === "src" || key === "url") {
-                resetValue[key] = void 0;
-              } else if (key === "caption" || key === "alt") {
-                resetValue[key] = "";
-              }
+              resetValue[key] = void 0;
             });
           }
-          if (hasFeaturedImageSupport) {
-            resetValue.featuredImage = false;
-          }
-          updateAttributes({ ...value, ...resetValue });
+          onChange(
+            field.setValue({
+              item: data,
+              value: resetValue
+            })
+          );
         },
         ...hasFeaturedImageSupport && {
           useFeaturedImage: !!value?.featuredImage,
           onToggleFeaturedImage: () => {
-            updateAttributes({
-              ...value,
-              featuredImage: !value?.featuredImage
-            });
+            onChange(
+              field.setValue({
+                item: data,
+                value: {
+                  featuredImage: !value?.featuredImage
+                }
+              })
+            );
           }
         },
         onSelect: (selectedMedia) => {
           if (selectedMedia.id && selectedMedia.url) {
-            let mediaType = "image";
-            if (selectedMedia.mime_type) {
-              if (selectedMedia.mime_type.startsWith("video/")) {
-                mediaType = "video";
-              } else if (selectedMedia.mime_type.startsWith("audio/")) {
-                mediaType = "audio";
-              }
-            }
-            const newValue = {};
-            if (fieldDef?.mapping) {
-              Object.keys(fieldDef.mapping).forEach(
-                (key) => {
-                  if (key === "id") {
-                    newValue[key] = selectedMedia.id;
-                  } else if (key === "src" || key === "url") {
-                    newValue[key] = selectedMedia.url;
-                  } else if (key === "type") {
-                    newValue[key] = mediaType;
-                  } else if (key === "link" && selectedMedia.link) {
-                    newValue[key] = selectedMedia.link;
-                  } else if (key === "caption" && !value?.caption && selectedMedia.caption) {
-                    newValue[key] = selectedMedia.caption;
-                  } else if (key === "alt" && !value?.alt && selectedMedia.alt) {
-                    newValue[key] = selectedMedia.alt;
-                  } else if (key === "poster" && selectedMedia.poster) {
-                    newValue[key] = selectedMedia.poster;
-                  }
-                }
-              );
-            }
+            const newValue = {
+              ...selectedMedia,
+              mediaType: selectedMedia.media_type
+            };
             if (hasFeaturedImageSupport) {
               newValue.featuredImage = false;
             }
-            const finalValue = { ...value, ...newValue };
-            updateAttributes(finalValue);
+            onChange(
+              field.setValue({
+                item: data,
+                value: newValue
+              })
+            );
           }
         },
         renderToggle: (buttonProps) => /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
@@ -69578,7 +69547,8 @@ var wp;
                       {
                         attachment,
                         field,
-                        data
+                        data,
+                        config: config2
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime438.jsx)("span", {
@@ -69651,10 +69621,6 @@ var wp;
       isControl: true
     });
     const { fieldDef } = config2;
-    const updateAttributes = (newValue) => {
-      const mappedChanges = field.setValue({ item: data, value: newValue });
-      onChange(mappedChanges);
-    };
     const value = field.getValue({ item: data });
     const url = value?.url;
     const rel = value?.rel || "";
@@ -69718,34 +69684,28 @@ var wp;
                   rel,
                   ...newValues
                 });
-                const updateValue = { ...value };
-                if (fieldDef?.mapping) {
-                  Object.keys(fieldDef.mapping).forEach(
-                    (key) => {
-                      if (key === "href" || key === "url") {
-                        updateValue[key] = updatedAttrs.url;
-                      } else if (key === "rel") {
-                        updateValue[key] = updatedAttrs.rel;
-                      } else if (key === "target" || key === "linkTarget") {
-                        updateValue[key] = updatedAttrs.linkTarget;
-                      }
-                    }
-                  );
-                }
-                updateAttributes(updateValue);
+                onChange(
+                  field.setValue({
+                    item: data,
+                    value: updatedAttrs
+                  })
+                );
               },
               onRemove: () => {
                 const removeValue = {};
                 if (fieldDef?.mapping) {
                   Object.keys(fieldDef.mapping).forEach(
                     (key) => {
-                      if (key === "href" || key === "url" || key === "rel" || key === "target" || key === "linkTarget") {
-                        removeValue[key] = void 0;
-                      }
+                      removeValue[key] = void 0;
                     }
                   );
                 }
-                updateAttributes(removeValue);
+                onChange(
+                  field.setValue({
+                    item: data,
+                    value: removeValue
+                  })
+                );
               }
             }
           )
@@ -69762,81 +69722,13 @@ var wp;
     media: Media,
     link: Link
   };
-  function createConfiguredControl2(config2) {
-    const { control, ...controlConfig } = config2;
-    const ControlComponent = CONTROLS[control];
+  function createConfiguredControl2(ControlComponent, type, config2) {
     if (!ControlComponent) {
-      throw new Error(`Control type "${control}" not found`);
+      throw new Error(`Control type "${type}" not found`);
     }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(ControlComponent, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(ControlComponent, { ...props, config: config2 });
     };
-  }
-  function normalizeMediaValue(value, fieldDef) {
-    const defaults2 = {
-      id: null,
-      url: "",
-      caption: "",
-      alt: "",
-      type: "image",
-      poster: "",
-      featuredImage: false,
-      link: ""
-    };
-    const result = {};
-    if (fieldDef?.mapping) {
-      Object.keys(fieldDef.mapping).forEach((key) => {
-        result[key] = value?.[key] ?? defaults2[key] ?? "";
-      });
-      return result;
-    }
-    Object.keys(defaults2).forEach((key) => {
-      result[key] = value?.[key] ?? defaults2[key];
-    });
-    return result;
-  }
-  function denormalizeMediaValue(value, fieldDef) {
-    if (!fieldDef.mapping) {
-      return value;
-    }
-    const result = {};
-    Object.entries(fieldDef.mapping).forEach(([key]) => {
-      if (key in value) {
-        result[key] = value[key];
-      }
-    });
-    return result;
-  }
-  function normalizeLinkValue(value, fieldDef) {
-    const defaults2 = {
-      url: "",
-      rel: "",
-      linkTarget: "",
-      destination: ""
-    };
-    const result = {};
-    if (fieldDef?.mapping) {
-      Object.keys(fieldDef.mapping).forEach((key) => {
-        result[key] = value?.[key] ?? defaults2[key] ?? "";
-      });
-      return result;
-    }
-    Object.keys(defaults2).forEach((key) => {
-      result[key] = value?.[key] ?? defaults2[key];
-    });
-    return result;
-  }
-  function denormalizeLinkValue(value, fieldDef) {
-    if (!fieldDef.mapping) {
-      return value;
-    }
-    const result = {};
-    Object.entries(fieldDef.mapping).forEach(([key]) => {
-      if (key in value) {
-        result[key] = value[key];
-      }
-    });
-    return result;
   }
   function BlockFields({
     clientId,
@@ -69866,80 +69758,49 @@ var wp;
         return [];
       }
       return blockTypeFields.map((fieldDef) => {
-        const ControlComponent = CONTROLS[fieldDef.type];
-        const defaultValues = {};
-        if (fieldDef.mapping && blockType?.attributes) {
-          Object.entries(fieldDef.mapping).forEach(
-            ([key, attrKey]) => {
-              defaultValues[key] = blockType.attributes[attrKey]?.defaultValue ?? void 0;
-            }
-          );
-        }
         const field = {
           id: fieldDef.id,
           label: fieldDef.label,
-          type: fieldDef.type,
+          type: fieldDef.type
           // Use the field's type; DataForm will use built-in or custom Edit
-          config: { ...fieldDef.args, defaultValues },
-          hideLabelFromVision: fieldDef.id === "content",
-          // getValue and setValue handle the mapping to block attributes
-          getValue: ({ item }) => {
-            if (fieldDef.mapping) {
-              const mappedValue = {};
-              Object.entries(fieldDef.mapping).forEach(
-                ([key, attrKey]) => {
-                  mappedValue[key] = item[attrKey];
-                }
-              );
-              if (fieldDef.type === "media") {
-                return normalizeMediaValue(mappedValue, fieldDef);
-              }
-              if (fieldDef.type === "link") {
-                return normalizeLinkValue(mappedValue, fieldDef);
-              }
-              return mappedValue;
-            }
-            return item[fieldDef.id];
-          },
-          setValue: ({ item, value }) => {
-            if (fieldDef.mapping) {
-              let denormalizedValue = value;
-              if (fieldDef.type === "media") {
-                denormalizedValue = denormalizeMediaValue(
-                  value,
-                  fieldDef
-                );
-              } else if (fieldDef.type === "link") {
-                denormalizedValue = denormalizeLinkValue(
-                  value,
-                  fieldDef
-                );
-              }
-              const updates = {};
-              Object.entries(fieldDef.mapping).forEach(
-                ([key, attrKey]) => {
-                  if (key in denormalizedValue) {
-                    updates[attrKey] = denormalizedValue[key];
-                  } else {
-                    updates[attrKey] = item[attrKey];
-                  }
-                }
-              );
-              return updates;
-            }
-            return { [fieldDef.id]: value };
-          }
         };
+        if (fieldDef.mapping) {
+          field.getValue = ({ item }) => {
+            const mappedValue = {};
+            Object.entries(fieldDef.mapping).forEach(
+              ([key, attrKey]) => {
+                mappedValue[key] = item[attrKey];
+              }
+            );
+            return mappedValue;
+          };
+          field.setValue = ({ value }) => {
+            const attributeUpdates = {};
+            Object.entries(fieldDef.mapping).forEach(
+              ([key, attrKey]) => {
+                attributeUpdates[attrKey] = value[key];
+              }
+            );
+            return attributeUpdates;
+          };
+        }
+        const ControlComponent = CONTROLS[fieldDef.type];
         if (ControlComponent) {
-          field.Edit = createConfiguredControl2({
-            control: fieldDef.type,
-            clientId,
-            fieldDef
-          });
+          field.Edit = createConfiguredControl2(
+            ControlComponent,
+            fieldDef.type,
+            {
+              clientId,
+              fieldDef
+            }
+          );
         }
         return field;
       });
-    }, [blockTypeFields, blockType?.attributes, clientId]);
+    }, [blockTypeFields, clientId]);
+    if (!blockTypeFields?.length) {
+      return null;
+    }
     const handleToggleField = (fieldId) => {
       setForm((prev) => {
         if (prev.fields?.includes(fieldId)) {
@@ -69954,9 +69815,6 @@ var wp;
         };
       });
     };
-    if (!blockTypeFields?.length) {
-      return null;
-    }
     return /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)("div", { className: "block-editor-block-fields__container", children: [
       /* @__PURE__ */ (0, import_jsx_runtime440.jsx)("div", { className: "block-editor-block-fields__header", children: /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_components254.__experimentalHStack, { spacing: 1, children: [
         isCollapsed3 && /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_jsx_runtime440.Fragment, { children: [
