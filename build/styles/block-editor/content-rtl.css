@@ -208,13 +208,16 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   border: none !important;
   padding: 0 !important;
   opacity: 0;
-  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 .block-editor-block-list__layout.is-layout-flex:not(.is-vertical) > .is-block-hidden {
   width: 0;
   height: auto;
   align-self: stretch;
   white-space: nowrap !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
 }
 .block-editor-block-list__layout [class^=components-] {
   -webkit-user-select: text;
