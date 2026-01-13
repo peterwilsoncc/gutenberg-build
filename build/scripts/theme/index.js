@@ -3044,7 +3044,6 @@ var wp;
       "fg-interactive-brand-strong-active"
     ],
     "primary-bgFill2": ["bg-interactive-brand-strong-active"],
-    "primary-surface2": ["bg-interactive-brand-active"],
     "primary-surface4": ["bg-interactive-brand-weak-active"],
     "primary-fgSurface3": [
       "fg-interactive-brand",
@@ -3106,23 +3105,8 @@ var wp;
     "error-stroke4": ["stroke-interactive-error-active"],
     "error-stroke1": ["stroke-surface-error"],
     "bg-surface2": ["bg-surface-neutral"],
-    "bg-surface6": [
-      "bg-interactive-brand-strong-disabled",
-      "bg-interactive-error-strong-disabled",
-      "bg-interactive-neutral-strong-disabled"
-    ],
-    "bg-surface5": [
-      "bg-interactive-brand-disabled",
-      "bg-interactive-brand-weak-disabled",
-      "bg-interactive-error-disabled",
-      "bg-interactive-error-weak-disabled",
-      "bg-interactive-neutral-disabled",
-      "bg-interactive-neutral-weak-disabled"
-    ],
-    "bg-surface4": [
-      "bg-interactive-neutral-active",
-      "bg-interactive-neutral-weak-active"
-    ],
+    "bg-surface5": ["bg-interactive-neutral-strong-disabled"],
+    "bg-surface4": ["bg-interactive-neutral-weak-active"],
     "bg-surface3": ["bg-surface-neutral-strong"],
     "bg-fgSurface4": [
       "fg-content-neutral",
@@ -3131,15 +3115,11 @@ var wp;
     ],
     "bg-fgSurface3": [
       "fg-content-neutral-weak",
-      "fg-interactive-brand-strong-disabled",
-      "fg-interactive-error-strong-disabled",
-      "fg-interactive-neutral-strong-disabled",
       "fg-interactive-neutral-weak"
     ],
     "bg-fgSurface2": [
-      "fg-interactive-brand-disabled",
-      "fg-interactive-error-disabled",
       "fg-interactive-neutral-disabled",
+      "fg-interactive-neutral-strong-disabled",
       "fg-interactive-neutral-weak-disabled"
     ],
     "bg-stroke3": [
@@ -3153,7 +3133,7 @@ var wp;
       "stroke-interactive-neutral-strong"
     ],
     "bg-stroke2": [
-      "bg-thumb-brand-disabled",
+      "bg-thumb-neutral-disabled",
       "bg-track-neutral",
       "stroke-interactive-neutral-disabled",
       "stroke-surface-neutral"
