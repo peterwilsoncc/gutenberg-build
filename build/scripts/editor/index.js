@@ -3510,9 +3510,6 @@ var wp;
         return;
       }
       const postType2 = getCurrentPostType(state);
-      if (postType2 === "wp_template") {
-        return false;
-      }
       const postId2 = getCurrentPostId(state);
       const currentUserId = select5(import_core_data.store).getCurrentUser()?.id;
       const autosave2 = select5(import_core_data.store).getAutosave(
@@ -3594,7 +3591,7 @@ var wp;
       }
       const postType2 = getCurrentPostType(state);
       const postTypeObject = select5(import_core_data.store).getPostType(postType2);
-      if (postType2 === "wp_template" || !postTypeObject?.supports?.autosave) {
+      if (!postTypeObject?.supports?.autosave) {
         return false;
       }
       const postId2 = getCurrentPostId(state);
@@ -4569,9 +4566,6 @@ var wp;
   };
   var autosave = ({ local = false, ...options } = {}) => async ({ select: select5, dispatch: dispatch6 }) => {
     const post2 = select5.getCurrentPost();
-    if (post2.type === "wp_template") {
-      return;
-    }
     if (local) {
       const isPostNew = select5.isEditedPostNew();
       const title = select5.getEditedPostAttribute("title");
