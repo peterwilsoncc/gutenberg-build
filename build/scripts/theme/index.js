@@ -3174,7 +3174,8 @@ var wp;
 
   // packages/theme/build-module/color-ramps/lib/color-utils.mjs
   function getColorString(color) {
-    return serialize(color, { format: "hex", inGamut: true });
+    const rgbRounded = serialize(to(color, srgb_default));
+    return serialize(rgbRounded, { format: "hex" });
   }
   function getContrast(colorA, colorB) {
     return contrastWCAG21(colorA, colorB);
@@ -4108,23 +4109,14 @@ var wp;
       // L reduced by 10%
     );
     return [
-      [
-        "--wp-admin-theme-color",
-        serialize(parsedAccent, { format: "hex" })
-      ],
+      ["--wp-admin-theme-color", getColorString(parsedAccent)],
       ["--wp-admin-theme-color--rgb", customRgbFormat(parsedAccent)],
-      [
-        "--wp-admin-theme-color-darker-10",
-        serialize(darker10, { format: "hex" })
-      ],
+      ["--wp-admin-theme-color-darker-10", getColorString(darker10)],
       [
         "--wp-admin-theme-color-darker-10--rgb",
         customRgbFormat(darker10)
       ],
-      [
-        "--wp-admin-theme-color-darker-20",
-        serialize(darker20, { format: "hex" })
-      ],
+      ["--wp-admin-theme-color-darker-20", getColorString(darker20)],
       [
         "--wp-admin-theme-color-darker-20--rgb",
         customRgbFormat(darker20)
