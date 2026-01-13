@@ -87,6 +87,54 @@
  * Creates a checkerboard pattern background to indicate transparency.
  * @param {String} $size - The size of the squares in the checkerboard pattern. Default is 12px.
  */
+.media-author-field__avatar {
+  flex-shrink: 0;
+  overflow: hidden;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: left;
+  display: flex;
+}
+
+.media-author-field__avatar img {
+  width: 16px;
+  height: 16px;
+  object-fit: cover;
+  opacity: 1;
+  border-radius: 100%;
+}
+
+@media not (prefers-reduced-motion) {
+  .media-author-field__avatar.is-loading img, .media-author-field__avatar.is-loaded img {
+    transition: opacity 0.1s linear;
+  }
+}
+.media-author-field__avatar.is-loading img {
+  opacity: 0;
+}
+
+.media-author-field__avatar.is-loaded img {
+  opacity: 1;
+}
+
+.media-author-field__icon {
+  display: flex;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.media-author-field__icon svg {
+  margin-left: -4px;
+  fill: currentColor;
+}
+
+.media-author-field__name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .dataviews-media-field__media-thumbnail {
   display: flex;
   align-items: center;
