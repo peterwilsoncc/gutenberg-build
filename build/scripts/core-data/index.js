@@ -9955,6 +9955,19 @@ var wp;
   var import_es62 = __toESM(require_es6(), 1);
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
+
+  // packages/core-data/build-module/utils/crdt-utils.mjs
+  function getRootMap(doc2, key) {
+    return doc2.getMap(key);
+  }
+  function createYMap(partial = {}) {
+    return new yjs_exports.Map(Object.entries(partial));
+  }
+  function isYMap(value) {
+    return value instanceof yjs_exports.Map;
+  }
+
+  // packages/core-data/build-module/utils/crdt-blocks.mjs
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
   function makeBlockAttributesSerializable(attributes) {
     const newAttributes = { ...attributes };
@@ -9967,10 +9980,8 @@ var wp;
   }
   function makeBlocksSerializable(blocks) {
     return blocks.map((block) => {
-      const blockAsJson = block instanceof yjs_exports.Map ? block.toJSON() : block;
-      const { name, innerBlocks, attributes, ...rest } = blockAsJson;
+      const { name, innerBlocks, attributes, ...rest } = block;
       delete rest.validationIssues;
-      delete rest.originalContent;
       return {
         ...rest,
         name,
@@ -9991,7 +10002,7 @@ var wp;
     );
     const inners = gblock.innerBlocks || [];
     const yinners = yblock.get("innerBlocks");
-    return res && inners.length === yinners.length && inners.every(
+    return res && inners.length === yinners?.length && inners.every(
       (block, i) => areBlocksEqual(block, yinners.get(i))
     );
   }
@@ -10019,29 +10030,34 @@ var wp;
     return attributeValue;
   }
   function createNewYBlock(block) {
-    return new yjs_exports.Map(
-      Object.entries(block).map(([key, value]) => {
-        switch (key) {
-          case "attributes": {
-            return [key, createNewYAttributeMap(block.name, value)];
-          }
-          case "innerBlocks": {
-            const innerBlocks = new yjs_exports.Array();
-            if (!Array.isArray(value)) {
+    return createYMap(
+      Object.fromEntries(
+        Object.entries(block).map(([key, value]) => {
+          switch (key) {
+            case "attributes": {
+              return [
+                key,
+                createNewYAttributeMap(block.name, value)
+              ];
+            }
+            case "innerBlocks": {
+              const innerBlocks = new yjs_exports.Array();
+              if (!Array.isArray(value)) {
+                return [key, innerBlocks];
+              }
+              innerBlocks.insert(
+                0,
+                value.map(
+                  (innerBlock) => createNewYBlock(innerBlock)
+                )
+              );
               return [key, innerBlocks];
             }
-            innerBlocks.insert(
-              0,
-              value.map(
-                (innerBlock) => createNewYBlock(innerBlock)
-              )
-            );
-            return [key, innerBlocks];
+            default:
+              return [key, value];
           }
-          default:
-            return [key, value];
-        }
-      })
+        })
+      )
     );
   }
   function mergeCrdtBlocks(yblocks, incomingBlocks, lastSelection2) {
@@ -10083,9 +10099,7 @@ var wp;
       Object.entries(block).forEach(([key, value]) => {
         switch (key) {
           case "attributes": {
-            const currentAttributes = yblock.get(
-              key
-            );
+            const currentAttributes = yblock.get(key);
             if (!currentAttributes) {
               yblock.set(
                 key,
@@ -10101,17 +10115,14 @@ var wp;
                 )) {
                   return;
                 }
+                const currentAttribute = currentAttributes.get(attributeName);
                 const isRichText = isRichTextAttribute(
                   block.name,
                   attributeName
                 );
-                if (isRichText && "string" === typeof attributeValue && currentAttributes.has(attributeName) && currentAttributes.get(
-                  attributeName
-                ) instanceof yjs_exports.Text) {
+                if (isRichText && "string" === typeof attributeValue && currentAttributes.has(attributeName) && currentAttribute instanceof yjs_exports.Text) {
                   mergeRichTextUpdate(
-                    currentAttributes.get(
-                      attributeName
-                    ),
+                    currentAttribute,
                     attributeValue,
                     lastSelection2
                   );
@@ -10137,7 +10148,11 @@ var wp;
             break;
           }
           case "innerBlocks": {
-            const yInnerBlocks = yblock.get(key);
+            let yInnerBlocks = yblock.get(key);
+            if (!(yInnerBlocks instanceof yjs_exports.Array)) {
+              yInnerBlocks = new yjs_exports.Array();
+              yblock.set(key, yInnerBlocks);
+            }
             mergeCrdtBlocks(yInnerBlocks, value ?? [], lastSelection2);
             break;
           }
@@ -10162,6 +10177,9 @@ var wp;
     for (let j = 0; j < yblocks.length; j++) {
       const yblock = yblocks.get(j);
       let clientId = yblock.get("clientId");
+      if (!clientId) {
+        continue;
+      }
       if (knownClientIds.has(clientId)) {
         clientId = v4_default();
         yblock.set("clientId", clientId);
@@ -10213,8 +10231,8 @@ var wp;
     "excerpt",
     "featured_media",
     "format",
-    "ping_status",
     "meta",
+    "ping_status",
     "slug",
     "status",
     "sticky",
@@ -10226,41 +10244,36 @@ var wp;
     WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   ]);
   function defaultApplyChangesToCRDTDoc(ydoc, changes) {
-    const ymap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
+    const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
     Object.entries(changes).forEach(([key, newValue]) => {
       if ("function" === typeof newValue) {
         return;
-      }
-      function setValue(updatedValue) {
-        ymap.set(key, updatedValue);
       }
       switch (key) {
         // Add support for additional data types here.
         default: {
           const currentValue = ymap.get(key);
-          mergeValue(currentValue, newValue, setValue);
+          updateMapValue(ymap, key, currentValue, newValue);
         }
       }
     });
   }
   function applyPostChangesToCRDTDoc(ydoc, changes, _postType) {
-    const ymap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
-    Object.entries(changes).forEach(([key, newValue]) => {
+    const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
+    Object.keys(changes).forEach((key) => {
       if (!allowedPostProperties.has(key)) {
         return;
       }
+      const newValue = changes[key];
       if ("function" === typeof newValue) {
         return;
       }
-      function setValue(updatedValue) {
-        ymap.set(key, updatedValue);
-      }
       switch (key) {
         case "blocks": {
-          let currentBlocks = ymap.get("blocks");
+          let currentBlocks = ymap.get(key);
           if (!(currentBlocks instanceof yjs_exports.Array)) {
             currentBlocks = new yjs_exports.Array();
-            setValue(currentBlocks);
+            ymap.set(key, currentBlocks);
           }
           const newBlocks = newValue ?? [];
           mergeCrdtBlocks(currentBlocks, newBlocks, lastSelection);
@@ -10269,29 +10282,28 @@ var wp;
         case "excerpt": {
           const currentValue = ymap.get("excerpt");
           const rawNewValue = getRawValue(newValue);
-          mergeValue(currentValue, rawNewValue, setValue);
+          updateMapValue(ymap, key, currentValue, rawNewValue);
           break;
         }
         // "Meta" is overloaded term; here, it refers to post meta.
         case "meta": {
           let metaMap = ymap.get("meta");
-          if (!(metaMap instanceof yjs_exports.Map)) {
-            metaMap = new yjs_exports.Map();
-            setValue(metaMap);
+          if (!isYMap(metaMap)) {
+            metaMap = createYMap();
+            ymap.set("meta", metaMap);
           }
           Object.entries(newValue ?? {}).forEach(
             ([metaKey, metaValue]) => {
               if (disallowedPostMetaKeys.has(metaKey)) {
                 return;
               }
-              mergeValue(
+              updateMapValue(
+                metaMap,
+                metaKey,
                 metaMap.get(metaKey),
                 // current value in CRDT
-                metaValue,
+                metaValue
                 // new value from changes
-                (updatedMetaValue) => {
-                  metaMap.set(metaKey, updatedMetaValue);
-                }
               );
             }
           );
@@ -10301,23 +10313,23 @@ var wp;
           if (!newValue) {
             break;
           }
-          const currentValue = ymap.get("slug");
-          mergeValue(currentValue, newValue, setValue);
+          const currentValue = ymap.get(key);
+          updateMapValue(ymap, key, currentValue, newValue);
           break;
         }
         case "title": {
-          const currentValue = ymap.get("title");
+          const currentValue = ymap.get(key);
           let rawNewValue = getRawValue(newValue);
           if (!currentValue && "Auto Draft" === rawNewValue) {
             rawNewValue = "";
           }
-          mergeValue(currentValue, rawNewValue, setValue);
+          updateMapValue(ymap, key, currentValue, rawNewValue);
           break;
         }
-        // Add support for additional data types here.
+        // Add support for additional properties here.
         default: {
           const currentValue = ymap.get(key);
-          mergeValue(currentValue, newValue, setValue);
+          updateMapValue(ymap, key, currentValue, newValue);
         }
       }
     });
@@ -10326,10 +10338,10 @@ var wp;
     }
   }
   function defaultGetChangesFromCRDTDoc(crdtDoc) {
-    return crdtDoc.getMap(CRDT_RECORD_MAP_KEY).toJSON();
+    return getRootMap(crdtDoc, CRDT_RECORD_MAP_KEY).toJSON();
   }
   function getPostChangesFromCRDTDoc(ydoc, editedRecord, _postType) {
-    const ymap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
+    const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
     let allowedMetaChanges = {};
     const changes = Object.fromEntries(
       Object.entries(ymap.toJSON()).filter(([key, newValue]) => {
@@ -10408,9 +10420,13 @@ var wp;
   function haveValuesChanged(currentValue, newValue) {
     return !(0, import_es63.default)(currentValue, newValue);
   }
-  function mergeValue(currentValue, newValue, setValue) {
+  function updateMapValue(map2, key, currentValue, newValue) {
+    if (void 0 === newValue) {
+      map2.delete(key);
+      return;
+    }
     if (haveValuesChanged(currentValue, newValue)) {
-      setValue(newValue);
+      map2.set(key, newValue);
     }
   }
 
