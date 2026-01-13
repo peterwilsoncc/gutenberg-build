@@ -50336,14 +50336,14 @@ var wp;
       }
     );
   }
-  function NotesSidebar({ postId: postId2, mode }) {
+  function NotesSidebar({ postId: postId2 }) {
     const [newNoteFormState, setNewNoteFormState] = (0, import_element172.useState)("closed");
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data225.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data225.useDispatch)(store2);
     const { toggleBlockSpotlight } = unlock((0, import_data225.useDispatch)(import_block_editor97.store));
     const isLargeViewport = (0, import_compose61.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element172.useRef)(null);
-    const showFloatingSidebar = isLargeViewport && mode === "post-only";
+    const showFloatingSidebar = isLargeViewport;
     const { clientId, blockCommentId, isDistractionFree } = (0, import_data225.useSelect)(
       (select5) => {
         const {
@@ -50372,7 +50372,7 @@ var wp;
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
     const currentThread = blockCommentId ? resultComments.find((thread) => thread.id === blockCommentId) : null;
-    const showAllNotesSidebar = resultComments.length > 0 || !showFloatingSidebar;
+    const showAllNotesSidebar = resultComments.length > 0;
     async function openTheSidebar() {
       const prevArea = await getActiveComplementaryArea2("core");
       const activeNotesArea = SIDEBARS.find((name2) => name2 === prevArea);
@@ -50460,11 +50460,10 @@ var wp;
     ] });
   }
   function NotesSidebarContainer() {
-    const { postId: postId2, mode, editorMode } = (0, import_data225.useSelect)((select5) => {
-      const { getCurrentPostId: getCurrentPostId2, getRenderingMode: getRenderingMode2, getEditorMode: getEditorMode2 } = select5(store);
+    const { postId: postId2, editorMode } = (0, import_data225.useSelect)((select5) => {
+      const { getCurrentPostId: getCurrentPostId2, getEditorMode: getEditorMode2 } = select5(store);
       return {
         postId: getCurrentPostId2(),
-        mode: getRenderingMode2(),
         editorMode: getEditorMode2()
       };
     }, []);
@@ -50474,7 +50473,7 @@ var wp;
     if (editorMode === "text") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(NotesSidebar, { postId: postId2, mode }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(post_type_support_check_default, { supportKeys: "editor.notes", children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(NotesSidebar, { postId: postId2 }) });
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
