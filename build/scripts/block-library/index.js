@@ -45269,11 +45269,10 @@ ${js}
   var edit_default21 = ParagraphBlock;
 
   // packages/block-library/build-module/paragraph/block.json
-  var name61 = "core/paragraph";
   var block_default61 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
-    name: name61,
+    name: "core/paragraph",
     title: "Paragraph",
     category: "text",
     description: "Start with the basic building block of all narrative.",
@@ -45366,6 +45365,7 @@ ${js}
 
   // packages/block-library/build-module/paragraph/transforms.mjs
   var import_blocks73 = __toESM(require_blocks(), 1);
+  var { name: name61 } = block_default61;
   var transforms21 = {
     from: [
       {
