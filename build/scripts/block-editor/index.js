@@ -12457,12 +12457,18 @@ var wp;
             )
           );
         } else {
+          const { getClosestAllowedInsertionPoint: getClosestAllowedInsertionPoint2 } = unlock(
+            select3(STORE_NAME)
+          );
           blockTypeInserterItems = blockTypeInserterItems.filter(
             (blockType) => isBlockVisibleInTheInserter(
               state,
               blockType,
               rootClientId
-            )
+            ) && getClosestAllowedInsertionPoint2(
+              blockType.name,
+              rootClientId
+            ) !== null
           ).map((blockType) => ({
             ...blockType,
             isAllowedInCurrentRoot: canIncludeBlockTypeInInserter(
