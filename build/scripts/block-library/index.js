@@ -15429,18 +15429,22 @@ var wp;
         ]
       }
     ) });
-    const postTitle = isSiteEditor ? (0, import_i18n45.__)("\u201CPost Title\u201D") : `"${rawTitle}"`;
+    const postTitle = isSiteEditor ? (0, import_i18n45.__)("Post Title") : rawTitle;
     let placeholder2;
     if (showCommentsCount && commentsCount !== void 0) {
       if (showPostTitle) {
         if (commentsCount === 1) {
-          placeholder2 = (0, import_i18n45.sprintf)((0, import_i18n45.__)("One response to %s"), postTitle);
+          placeholder2 = (0, import_i18n45.sprintf)(
+            /* translators: %s: Post title. */
+            (0, import_i18n45.__)('One response to "%s"'),
+            postTitle
+          );
         } else {
           placeholder2 = (0, import_i18n45.sprintf)(
             /* translators: 1: Number of comments, 2: Post title. */
             (0, import_i18n45._n)(
-              "%1$s response to %2$s",
-              "%1$s responses to %2$s",
+              '%1$s response to "%2$s"',
+              '%1$s responses to "%2$s"',
               commentsCount
             ),
             commentsCount,
@@ -15458,9 +15462,9 @@ var wp;
       }
     } else if (showPostTitle) {
       if (commentsCount === 1) {
-        placeholder2 = (0, import_i18n45.sprintf)((0, import_i18n45.__)("Response to %s"), postTitle);
+        placeholder2 = (0, import_i18n45.sprintf)((0, import_i18n45.__)('Response to "%s"'), postTitle);
       } else {
-        placeholder2 = (0, import_i18n45.sprintf)((0, import_i18n45.__)("Responses to %s"), postTitle);
+        placeholder2 = (0, import_i18n45.sprintf)((0, import_i18n45.__)('Responses to "%s"'), postTitle);
       }
     } else if (commentsCount === 1) {
       placeholder2 = (0, import_i18n45.__)("Response");
