@@ -51201,6 +51201,7 @@ var wp;
         required: true,
         type: "text",
         name: inputId,
+        autoComplete: "off",
         onChange: disabled ? () => {
         } : this.onChange,
         // Disable onChange when disabled
