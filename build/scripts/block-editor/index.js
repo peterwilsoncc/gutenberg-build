@@ -69403,8 +69403,7 @@ var wp;
   var import_i18n230 = __toESM(require_i18n(), 1);
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
   function MediaThumbnail({ data, field, attachment, config: config2 }) {
-    const { fieldDef } = config2;
-    const { allowedTypes = [], multiple = false } = fieldDef.args || {};
+    const { allowedTypes = [], multiple = false } = config2 || {};
     if (multiple) {
       return "todo multiple";
     }
@@ -69446,9 +69445,11 @@ var wp;
       isControl: true
     });
     const value = field.getValue({ item: data });
-    const { fieldDef } = config2;
-    const { allowedTypes = [], multiple = false } = fieldDef.args || {};
-    const hasFeaturedImageSupport = fieldDef?.mapping && "featuredImage" in fieldDef.mapping;
+    const {
+      allowedTypes = [],
+      multiple = false,
+      useFeaturedImage = false
+    } = config2;
     const id = value?.id;
     const url = value?.url;
     const attachment = (0, import_data182.useSelect)(
@@ -69490,20 +69491,14 @@ var wp;
         multiple,
         popoverProps: popoverProps3,
         onReset: () => {
-          const resetValue = {};
-          if (fieldDef?.mapping) {
-            Object.keys(fieldDef.mapping).forEach((key) => {
-              resetValue[key] = void 0;
-            });
-          }
           onChange(
             field.setValue({
               item: data,
-              value: resetValue
+              value: {}
             })
           );
         },
-        ...hasFeaturedImageSupport && {
+        ...useFeaturedImage && {
           useFeaturedImage: !!value?.featuredImage,
           onToggleFeaturedImage: () => {
             onChange(
@@ -69522,7 +69517,7 @@ var wp;
               ...selectedMedia,
               mediaType: selectedMedia.media_type
             };
-            if (hasFeaturedImageSupport) {
+            if (useFeaturedImage) {
               newValue.featuredImage = false;
             }
             onChange(
@@ -69621,12 +69616,11 @@ var wp;
       rel: updatedRel || void 0
     };
   }
-  function Link({ data, field, onChange, config: config2 = {} }) {
+  function Link({ data, field, onChange }) {
     const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element256.useState)(false);
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement({
       isControl: true
     });
-    const { fieldDef } = config2;
     const value = field.getValue({ item: data });
     const url = value?.url;
     const rel = value?.rel || "";
@@ -69698,18 +69692,10 @@ var wp;
                 );
               },
               onRemove: () => {
-                const removeValue = {};
-                if (fieldDef?.mapping) {
-                  Object.keys(fieldDef.mapping).forEach(
-                    (key) => {
-                      removeValue[key] = void 0;
-                    }
-                  );
-                }
                 onChange(
                   field.setValue({
                     item: data,
-                    value: removeValue
+                    value: {}
                   })
                 );
               }
@@ -69723,15 +69709,7 @@ var wp;
   // packages/block-editor/build-module/hooks/block-fields/index.mjs
   var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
   var { fieldsKey, formKey } = unlock(import_blocks103.privateApis);
-  var CONTROLS = {
-    richtext: RichTextControl,
-    media: Media,
-    link: Link
-  };
-  function createConfiguredControl2(ControlComponent, type, config2) {
-    if (!ControlComponent) {
-      throw new Error(`Control type "${type}" not found`);
-    }
+  function createConfiguredControl2(ControlComponent, config2 = {}) {
     return function ConfiguredControl(props) {
       return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(ControlComponent, { ...props, config: config2 });
     };
@@ -69765,41 +69743,18 @@ var wp;
       }
       return blockTypeFields.map((fieldDef) => {
         const field = {
-          id: fieldDef.id,
-          label: fieldDef.label,
-          type: fieldDef.type
-          // Use the field's type; DataForm will use built-in or custom Edit
+          ...fieldDef
         };
-        if (fieldDef.mapping) {
-          field.getValue = ({ item }) => {
-            const mappedValue = {};
-            Object.entries(fieldDef.mapping).forEach(
-              ([key, attrKey]) => {
-                mappedValue[key] = item[attrKey];
-              }
-            );
-            return mappedValue;
-          };
-          field.setValue = ({ value }) => {
-            const attributeUpdates = {};
-            Object.entries(fieldDef.mapping).forEach(
-              ([key, attrKey]) => {
-                attributeUpdates[attrKey] = value[key];
-              }
-            );
-            return attributeUpdates;
-          };
-        }
-        const ControlComponent = CONTROLS[fieldDef.type];
-        if (ControlComponent) {
-          field.Edit = createConfiguredControl2(
-            ControlComponent,
-            fieldDef.type,
-            {
-              clientId,
-              fieldDef
-            }
-          );
+        if ("string" === typeof fieldDef.Edit && fieldDef.Edit === "rich-text") {
+          field.Edit = createConfiguredControl2(RichTextControl, {
+            clientId
+          });
+        } else if ("string" === typeof fieldDef.Edit && fieldDef.Edit === "link") {
+          field.Edit = createConfiguredControl2(Link);
+        } else if ("object" === typeof fieldDef.Edit && fieldDef.Edit.control === "media") {
+          field.Edit = createConfiguredControl2(Media, {
+            ...fieldDef.Edit
+          });
         }
         return field;
       });

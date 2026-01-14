@@ -7586,19 +7586,27 @@ var wp;
         id: "audio",
         label: (0, import_i18n11.__)("Audio"),
         type: "media",
-        mapping: {
-          id: "id",
-          url: "src"
-        },
-        args: {
+        Edit: {
+          control: "media",
+          // TODO: replace with custom component
           allowedTypes: ["audio"],
           multiple: false
-        }
+        },
+        getValue: ({ item }) => ({
+          id: item.id,
+          url: item.src
+        }),
+        setValue: ({ value }) => ({
+          id: value.id,
+          src: value.url
+        })
       },
       {
         id: "caption",
         label: (0, import_i18n11.__)("Caption"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings7[formKey] = {
@@ -10052,17 +10060,26 @@ var wp;
       {
         id: "text",
         label: (0, import_i18n14.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       },
       {
         id: "link",
         label: (0, import_i18n14.__)("Link"),
-        type: "link",
-        mapping: {
-          url: "url",
-          rel: "rel",
-          linkTarget: "linkTarget"
-        }
+        type: "url",
+        Edit: "link",
+        // TODO: replace with custom component
+        getValue: ({ item }) => ({
+          url: item.url,
+          rel: item.rel,
+          linkTarget: item.linkTarget
+        }),
+        setValue: ({ value }) => ({
+          url: value.url,
+          rel: value.rel,
+          linkTarget: value.linkTarget
+        })
       }
     ];
     settings9[formKey2] = {
@@ -11566,7 +11583,9 @@ var wp;
       {
         id: "content",
         label: (0, import_i18n23.__)("Code"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings14[formKey3] = {
@@ -20102,19 +20121,29 @@ var wp;
         id: "background",
         label: (0, import_i18n54.__)("Background"),
         type: "media",
-        mapping: {
-          mediaType: "backgroundType",
-          id: "id",
-          url: "url",
-          alt: "alt",
-          featuredImage: "useFeaturedImage"
-        },
-        args: {
+        Edit: {
+          control: "media",
+          // TODO: replace with custom component
           // TODO - How to support custom gradient?
           // Build it into Media, or use a custom control?
           allowedTypes: ["image", "video"],
-          multiple: false
-        }
+          multiple: false,
+          useFeaturedImage: true
+        },
+        getValue: ({ item }) => ({
+          id: item.id,
+          url: item.url,
+          alt: item.alt,
+          mediaType: item.backgroundType,
+          featuredImage: item.useFeaturedImage
+        }),
+        setValue: ({ value }) => ({
+          id: value.id,
+          url: value.url,
+          alt: value.alt,
+          mediaType: value.backgroundType,
+          useFeaturedImage: value.featuredImage
+        })
       }
     ];
     settings30[formKey4] = {
@@ -20430,7 +20459,9 @@ var wp;
       {
         id: "summary",
         label: (0, import_i18n56.__)("Summary"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings31[formKey5] = {
@@ -22687,24 +22718,34 @@ ${url}
         id: "file",
         label: (0, import_i18n65.__)("File"),
         type: "media",
-        mapping: {
-          id: "id",
-          url: "href"
-        },
-        args: {
+        Edit: {
+          control: "media",
+          // TODO: replace with custom component
           allowedTypes: [],
           multiple: false
-        }
+        },
+        getValue: ({ item }) => ({
+          id: item.id,
+          url: item.href
+        }),
+        setValue: ({ value }) => ({
+          id: value.id,
+          href: value.url
+        })
       },
       {
         id: "fileName",
         label: (0, import_i18n65.__)("Filename"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       },
       {
         id: "downloadButtonText",
         label: (0, import_i18n65.__)("Button Text"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings33[formKey6] = {
@@ -28041,7 +28082,9 @@ ${url}
       {
         id: "content",
         label: (0, import_i18n82.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings40[formKey7] = {
@@ -31580,32 +31623,48 @@ ${js}
         id: "image",
         label: (0, import_i18n92.__)("Image"),
         type: "media",
-        mapping: {
-          id: "id",
-          url: "url",
-          caption: "caption",
-          alt: "alt"
-        },
-        args: {
+        Edit: {
+          control: "media",
+          // TODO: replace with custom component
           allowedTypes: ["image"],
           multiple: false
-        }
+        },
+        getValue: ({ item }) => ({
+          id: item.id,
+          url: item.url,
+          alt: item.alt,
+          caption: item.caption
+        }),
+        setValue: ({ value }) => ({
+          id: value.id,
+          url: value.url,
+          alt: value.alt,
+          caption: value.caption
+        })
       },
       {
         id: "link",
         label: (0, import_i18n92.__)("Link"),
-        type: "link",
-        mapping: {
-          url: "href",
-          rel: "rel",
-          linkTarget: "linkTarget",
-          destination: "linkDestination"
-        }
+        type: "url",
+        Edit: "link",
+        // TODO: replace with custom component
+        getValue: ({ item }) => ({
+          url: item.href,
+          rel: item.rel,
+          linkTarget: item.linkTarget
+        }),
+        setValue: ({ value }) => ({
+          href: value.url,
+          rel: value.rel,
+          linkTarget: value.linkTarget
+        })
       },
       {
         id: "caption",
         label: (0, import_i18n92.__)("Caption"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       },
       {
         id: "alt",
@@ -34487,7 +34546,9 @@ ${js}
       {
         id: "content",
         label: (0, import_i18n100.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings48[formKey9] = {
@@ -36704,26 +36765,41 @@ ${js}
         id: "media",
         label: (0, import_i18n105.__)("Media"),
         type: "media",
-        mapping: {
-          id: "mediaId",
-          mediaType: "mediaType",
-          url: "mediaUrl",
-          link: "mediaLink"
-        },
-        args: {
+        Edit: {
+          control: "media",
+          // TODO: replace with custom component
           allowedTypes: ["image", "video"],
           multiple: false
-        }
+        },
+        getValue: ({ item }) => ({
+          id: item.mediaId,
+          url: item.mediaUrl,
+          mediaType: item.mediaType,
+          link: item.mediaLink
+        }),
+        setValue: ({ value }) => ({
+          mediaId: value.id,
+          mediaUrl: value.url,
+          mediaType: value.mediaType,
+          mediaLink: value.link
+        })
       },
       {
         id: "link",
         label: (0, import_i18n105.__)("Link"),
-        type: "link",
-        mapping: {
-          url: "href",
-          rel: "rel",
-          linkTarget: "linkTarget"
-        }
+        type: "url",
+        Edit: "link",
+        // TODO: replace with custom component
+        getValue: ({ item }) => ({
+          url: item.href,
+          rel: item.rel,
+          linkTarget: item.linkTarget
+        }),
+        setValue: ({ value }) => ({
+          href: value.url,
+          rel: value.rel,
+          linkTarget: value.linkTarget
+        })
       }
     ];
     settings50[formKey10] = {
@@ -37056,7 +37132,9 @@ ${js}
       {
         id: "customText",
         label: (0, import_i18n108.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings52[formKey11] = {
@@ -42783,17 +42861,22 @@ ${js}
       {
         id: "label",
         label: (0, import_i18n138.__)("Label"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
       },
       {
         id: "link",
         label: (0, import_i18n138.__)("Link"),
-        type: "link",
-        mapping: {
-          href: "url",
-          rel: "rel"
-          // TODO - opens in new tab? id?
-        }
+        type: "url",
+        Edit: "link",
+        getValue: ({ item }) => ({
+          url: item.url,
+          rel: item.rel
+        }),
+        setValue: ({ value }) => ({
+          url: value.url,
+          rel: value.rel
+        })
       }
     ];
     settings54[formKey12] = {
@@ -43316,17 +43399,24 @@ ${js}
       {
         id: "label",
         label: (0, import_i18n140.__)("Label"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        //TODO: replace with custom component
       },
       {
         id: "link",
         label: (0, import_i18n140.__)("Link"),
-        type: "link",
-        mapping: {
-          href: "url",
-          rel: "rel"
-          // TODO - opens in new tab? id?
-        }
+        type: "url",
+        Edit: "link",
+        // TODO: replace with custom component
+        getValue: ({ item }) => ({
+          url: item.url,
+          rel: item.rel
+        }),
+        setValue: ({ value }) => ({
+          url: value.url,
+          rel: value.rel
+        })
       }
     ];
     settings55[formKey13] = {
@@ -45404,7 +45494,9 @@ ${js}
       {
         id: "content",
         label: (0, import_i18n149.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings61[formKey14] = {
@@ -50609,7 +50701,9 @@ ${js}
       {
         id: "content",
         label: (0, import_i18n173.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings78[formKey15] = {
@@ -51385,12 +51479,16 @@ ${js}
       {
         id: "value",
         label: (0, import_i18n175.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       },
       {
         id: "citation",
         label: (0, import_i18n175.__)("Citation"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings79[formKey16] = {
@@ -57670,18 +57768,23 @@ ${js}
       {
         id: "label",
         label: (0, import_i18n213.__)("Label"),
-        type: "richtext",
-        shownByDefault: true
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       },
       {
         id: "buttonText",
         label: (0, import_i18n213.__)("Button text"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       },
       {
         id: "placeholder",
         label: (0, import_i18n213.__)("Placeholder"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings92[formKey17] = {
@@ -60144,16 +60247,22 @@ ${js}
       {
         id: "link",
         label: (0, import_i18n222.__)("Link"),
-        type: "link",
-        mapping: {
-          href: "url",
-          rel: "rel"
-        }
+        type: "url",
+        Edit: "link",
+        // TODO: replace with custom component
+        getValue: ({ item }) => ({
+          url: item.url,
+          rel: item.rel
+        }),
+        setValue: ({ value }) => ({
+          url: value.url,
+          rel: value.rel
+        })
       },
       {
         id: "label",
         label: (0, import_i18n222.__)("Label"),
-        type: "richtext"
+        type: "text"
       }
     ];
     settings98[formKey18] = {
@@ -68277,7 +68386,9 @@ ${declarations}
       {
         id: "content",
         label: (0, import_i18n254.__)("Content"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings113[formKey19] = {
@@ -69325,21 +69436,31 @@ ${declarations}
         id: "video",
         label: (0, import_i18n258.__)("Video"),
         type: "media",
-        mapping: {
-          id: "id",
-          url: "src",
-          caption: "caption",
-          poster: "poster"
-        },
-        args: {
+        Edit: {
+          control: "media",
+          // TODO: replace with custom component
           allowedTypes: ["video"],
           multiple: false
-        }
+        },
+        getValue: ({ item }) => ({
+          id: item.id,
+          url: item.src,
+          caption: item.caption,
+          poster: item.poster
+        }),
+        setValue: ({ value }) => ({
+          id: value.id,
+          src: value.url,
+          caption: value.caption,
+          poster: value.poster
+        })
       },
       {
         id: "caption",
         label: (0, import_i18n258.__)("Caption"),
-        type: "richtext"
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
       }
     ];
     settings114[formKey20] = {
