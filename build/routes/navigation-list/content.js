@@ -2377,6 +2377,7 @@ var _HeaderMenu = (0, import_element7.forwardRef)(function HeaderMenu({
     (f2) => !visibleFieldIds.includes(f2.id)
   );
   const canInsert = (canInsertLeft || canInsertRight) && !!hiddenFields.length;
+  const isRtl = (0, import_i18n5.isRTL)();
   return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(Menu2, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
       Menu2.TriggerButton,
@@ -2451,21 +2452,21 @@ var _HeaderMenu = (0, import_element7.forwardRef)(function HeaderMenu({
           Menu2.Item,
           {
             prefix: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_components6.Icon, { icon: arrow_left_default }),
-            disabled: index < 1,
+            disabled: isRtl ? index >= visibleFieldIds.length - 1 : index < 1,
             onClick: () => {
+              const targetIndex = isRtl ? index + 1 : index - 1;
+              const newFields = [
+                ...visibleFieldIds
+              ];
+              newFields.splice(index, 1);
+              newFields.splice(
+                targetIndex,
+                0,
+                fieldId
+              );
               onChangeView({
                 ...view,
-                fields: [
-                  ...visibleFieldIds.slice(
-                    0,
-                    index - 1
-                  ) ?? [],
-                  fieldId,
-                  visibleFieldIds[index - 1],
-                  ...visibleFieldIds.slice(
-                    index + 1
-                  )
-                ]
+                fields: newFields
               });
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Menu2.ItemLabel, { children: (0, import_i18n5.__)("Move left") })
@@ -2475,21 +2476,21 @@ var _HeaderMenu = (0, import_element7.forwardRef)(function HeaderMenu({
           Menu2.Item,
           {
             prefix: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_components6.Icon, { icon: arrow_right_default }),
-            disabled: index >= visibleFieldIds.length - 1,
+            disabled: isRtl ? index < 1 : index >= visibleFieldIds.length - 1,
             onClick: () => {
+              const targetIndex = isRtl ? index - 1 : index + 1;
+              const newFields = [
+                ...visibleFieldIds
+              ];
+              newFields.splice(index, 1);
+              newFields.splice(
+                targetIndex,
+                0,
+                fieldId
+              );
               onChangeView({
                 ...view,
-                fields: [
-                  ...visibleFieldIds.slice(
-                    0,
-                    index
-                  ) ?? [],
-                  visibleFieldIds[index + 1],
-                  fieldId,
-                  ...visibleFieldIds.slice(
-                    index + 2
-                  )
-                ]
+                fields: newFields
               });
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Menu2.ItemLabel, { children: (0, import_i18n5.__)("Move right") })
