@@ -2286,6 +2286,80 @@ var wp;
     }
   };
   var id = (a) => a;
+  var equalityStrict = (a, b) => a === b;
+  var equalityDeep = (a, b) => {
+    if (a == null || b == null) {
+      return equalityStrict(a, b);
+    }
+    if (a.constructor !== b.constructor) {
+      return false;
+    }
+    if (a === b) {
+      return true;
+    }
+    switch (a.constructor) {
+      case ArrayBuffer:
+        a = new Uint8Array(a);
+        b = new Uint8Array(b);
+      // eslint-disable-next-line no-fallthrough
+      case Uint8Array: {
+        if (a.byteLength !== b.byteLength) {
+          return false;
+        }
+        for (let i = 0; i < a.length; i++) {
+          if (a[i] !== b[i]) {
+            return false;
+          }
+        }
+        break;
+      }
+      case Set: {
+        if (a.size !== b.size) {
+          return false;
+        }
+        for (const value of a) {
+          if (!b.has(value)) {
+            return false;
+          }
+        }
+        break;
+      }
+      case Map: {
+        if (a.size !== b.size) {
+          return false;
+        }
+        for (const key of a.keys()) {
+          if (!b.has(key) || !equalityDeep(a.get(key), b.get(key))) {
+            return false;
+          }
+        }
+        break;
+      }
+      case Object:
+        if (length(a) !== length(b)) {
+          return false;
+        }
+        for (const key in a) {
+          if (!hasProperty(a, key) || !equalityDeep(a[key], b[key])) {
+            return false;
+          }
+        }
+        break;
+      case Array:
+        if (a.length !== b.length) {
+          return false;
+        }
+        for (let i = 0; i < a.length; i++) {
+          if (!equalityDeep(a[i], b[i])) {
+            return false;
+          }
+        }
+        break;
+      default:
+        return false;
+    }
+    return true;
+  };
   var isOneOf = (value, options) => options.includes(value);
 
   // node_modules/lib0/environment.js
@@ -11412,6 +11486,7 @@ var wp;
   var LOCAL_EDITOR_ORIGIN = "gutenberg";
   var LOCAL_SYNC_MANAGER_ORIGIN = "syncManager";
   var WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE = "_crdt_document";
+  var REMOVAL_DELAY_IN_MS = 5e3;
 
   // packages/sync/build-module/utils.mjs
   function createYjsDoc(documentMeta = {}) {
@@ -11442,6 +11517,29 @@ var wp;
     } catch (e) {
       return null;
     }
+  }
+  function getRecordValue(obj, key) {
+    if ("object" === typeof obj && null !== obj && key in obj) {
+      return obj[key];
+    }
+    return null;
+  }
+  function getTypedKeys(obj) {
+    return Object.keys(obj);
+  }
+  function areMapsEqual(map1, map2, comparatorFn) {
+    if (map1.size !== map2.size) {
+      return false;
+    }
+    for (const [key, value1] of map1.entries()) {
+      if (!map2.has(key)) {
+        return false;
+      }
+      if (!comparatorFn(value1, map2.get(key))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   // packages/sync/build-module/persistence.mjs
@@ -11738,6 +11836,374 @@ var wp;
     };
   }
 
+  // node_modules/y-protocols/awareness.js
+  var outdatedTimeout = 3e4;
+  var Awareness = class extends Observable {
+    /**
+     * @param {Y.Doc} doc
+     */
+    constructor(doc2) {
+      super();
+      this.doc = doc2;
+      this.clientID = doc2.clientID;
+      this.states = /* @__PURE__ */ new Map();
+      this.meta = /* @__PURE__ */ new Map();
+      this._checkInterval = /** @type {any} */
+      setInterval(() => {
+        const now = getUnixTime();
+        if (this.getLocalState() !== null && outdatedTimeout / 2 <= now - /** @type {{lastUpdated:number}} */
+        this.meta.get(this.clientID).lastUpdated) {
+          this.setLocalState(this.getLocalState());
+        }
+        const remove = [];
+        this.meta.forEach((meta, clientid) => {
+          if (clientid !== this.clientID && outdatedTimeout <= now - meta.lastUpdated && this.states.has(clientid)) {
+            remove.push(clientid);
+          }
+        });
+        if (remove.length > 0) {
+          removeAwarenessStates(this, remove, "timeout");
+        }
+      }, floor(outdatedTimeout / 10));
+      doc2.on("destroy", () => {
+        this.destroy();
+      });
+      this.setLocalState({});
+    }
+    destroy() {
+      this.emit("destroy", [this]);
+      this.setLocalState(null);
+      super.destroy();
+      clearInterval(this._checkInterval);
+    }
+    /**
+     * @return {Object<string,any>|null}
+     */
+    getLocalState() {
+      return this.states.get(this.clientID) || null;
+    }
+    /**
+     * @param {Object<string,any>|null} state
+     */
+    setLocalState(state) {
+      const clientID = this.clientID;
+      const currLocalMeta = this.meta.get(clientID);
+      const clock = currLocalMeta === void 0 ? 0 : currLocalMeta.clock + 1;
+      const prevState = this.states.get(clientID);
+      if (state === null) {
+        this.states.delete(clientID);
+      } else {
+        this.states.set(clientID, state);
+      }
+      this.meta.set(clientID, {
+        clock,
+        lastUpdated: getUnixTime()
+      });
+      const added = [];
+      const updated = [];
+      const filteredUpdated = [];
+      const removed = [];
+      if (state === null) {
+        removed.push(clientID);
+      } else if (prevState == null) {
+        if (state != null) {
+          added.push(clientID);
+        }
+      } else {
+        updated.push(clientID);
+        if (!equalityDeep(prevState, state)) {
+          filteredUpdated.push(clientID);
+        }
+      }
+      if (added.length > 0 || filteredUpdated.length > 0 || removed.length > 0) {
+        this.emit("change", [{ added, updated: filteredUpdated, removed }, "local"]);
+      }
+      this.emit("update", [{ added, updated, removed }, "local"]);
+    }
+    /**
+     * @param {string} field
+     * @param {any} value
+     */
+    setLocalStateField(field, value) {
+      const state = this.getLocalState();
+      if (state !== null) {
+        this.setLocalState({
+          ...state,
+          [field]: value
+        });
+      }
+    }
+    /**
+     * @return {Map<number,Object<string,any>>}
+     */
+    getStates() {
+      return this.states;
+    }
+  };
+  var removeAwarenessStates = (awareness, clients, origin) => {
+    const removed = [];
+    for (let i = 0; i < clients.length; i++) {
+      const clientID = clients[i];
+      if (awareness.states.has(clientID)) {
+        awareness.states.delete(clientID);
+        if (clientID === awareness.clientID) {
+          const curMeta = (
+            /** @type {MetaClientState} */
+            awareness.meta.get(clientID)
+          );
+          awareness.meta.set(clientID, {
+            clock: curMeta.clock + 1,
+            lastUpdated: getUnixTime()
+          });
+        }
+        removed.push(clientID);
+      }
+    }
+    if (removed.length > 0) {
+      awareness.emit("change", [{ added: [], updated: [], removed }, origin]);
+      awareness.emit("update", [{ added: [], updated: [], removed }, origin]);
+    }
+  };
+
+  // packages/sync/build-module/awareness/awareness-types.mjs
+  var TypedAwareness = class extends Awareness {
+    /**
+     * Get the states from an awareness document.
+     */
+    getStates() {
+      return super.getStates();
+    }
+    /**
+     * Get a local state field from an awareness document.
+     * @param field
+     */
+    getLocalStateField(field) {
+      const state = this.getLocalState();
+      return getRecordValue(state, field);
+    }
+    /**
+     * Set a local state field on an awareness document.
+     * @param field
+     * @param value
+     */
+    setLocalStateField(field, value) {
+      super.setLocalStateField(field, value);
+    }
+  };
+
+  // packages/sync/build-module/awareness/awareness-state.mjs
+  var AwarenessWithEqualityChecks = class extends TypedAwareness {
+    /** OVERRIDDEN METHODS */
+    /**
+     * Set a local state field on an awareness document. Calling this method may
+     * trigger rerenders of any subscribed components.
+     *
+     * Equality checks are provided by the abstract `equalityFieldChecks` property.
+     * @param field
+     * @param value
+     */
+    setLocalStateField(field, value) {
+      if (this.isFieldEqual(
+        field,
+        value,
+        this.getLocalStateField(field) ?? void 0
+      )) {
+        return;
+      }
+      super.setLocalStateField(field, value);
+    }
+    /** CUSTOM METHODS */
+    /**
+     * Determine if a field value has changed using the provided equality checks.
+     * @param field
+     * @param value1
+     * @param value2
+     */
+    isFieldEqual(field, value1, value2) {
+      if (["clientId", "isConnected", "isMe"].includes(field)) {
+        return value1 === value2;
+      }
+      if (field in this.equalityFieldChecks) {
+        const fn = this.equalityFieldChecks[field];
+        return fn(value1, value2);
+      }
+      throw new Error(
+        `No equality check implemented for awareness state field "${field.toString()}".`
+      );
+    }
+    /**
+     * Determine if two states are equal by comparing each field using the
+     * provided equality checks.
+     * @param state1
+     * @param state2
+     */
+    isStateEqual(state1, state2) {
+      return [
+        .../* @__PURE__ */ new Set([
+          ...getTypedKeys(state1),
+          ...getTypedKeys(state2)
+        ])
+      ].every((field) => {
+        const value1 = state1[field];
+        const value2 = state2[field];
+        return this.isFieldEqual(field, value1, value2);
+      });
+    }
+  };
+  var AwarenessState = class extends AwarenessWithEqualityChecks {
+    /** CUSTOM PROPERTIES */
+    /**
+     * We keep track of all seen states during the current session for two reasons:
+     *
+     * 1. So that we can represent recently disconnected users in our UI, even
+     *    after they have been removed from the awareness document.
+     * 2. So that we can provide debug information about all users seen during
+     *    the session.
+     */
+    disconnectedUsers = /* @__PURE__ */ new Set();
+    seenStates = /* @__PURE__ */ new Map();
+    /**
+     * Hold a snapshot of the previous awareness state allows us to compare the
+     * state values and avoid unnecessary updates to subscribers.
+     */
+    previousSnapshot = /* @__PURE__ */ new Map();
+    stateSubscriptions = [];
+    /**
+     * In some cases, we may want to throttle setting local state fields to avoid
+     * overwhelming the awareness document with rapid updates. At the same time, we
+     * want to ensure that when we read our own state locally, we get the latest
+     * value -- even if it hasn't yet been set on the awareness instance.
+     */
+    myThrottledState = {};
+    /** CUSTOM METHODS */
+    /**
+     * Set up.
+     */
+    setUp() {
+      this.on(
+        "change",
+        ({ added, removed, updated }) => {
+          [...added, ...updated].forEach((id2) => {
+            this.disconnectedUsers.delete(id2);
+          });
+          removed.forEach((id2) => {
+            this.disconnectedUsers.add(id2);
+            setTimeout(() => {
+              this.disconnectedUsers.delete(id2);
+              this.updateSubscribers(
+                true
+                /* force update */
+              );
+            }, REMOVAL_DELAY_IN_MS);
+          });
+          this.updateSubscribers();
+        }
+      );
+    }
+    /**
+     * Get all seen states in this session to enable debug reporting.
+     */
+    getSeenStates() {
+      return this.seenStates;
+    }
+    /**
+     * Allow external code to subscribe to awareness state changes.
+     * @param callback
+     */
+    onStateChange(callback) {
+      this.stateSubscriptions.push(callback);
+      return () => {
+        this.stateSubscriptions = this.stateSubscriptions.filter(
+          (cb) => cb !== callback
+        );
+      };
+    }
+    /**
+     * Set the current user's connection status as awareness state.
+     * @param isConnected
+     */
+    setConnectionStatus(isConnected) {
+      if (isConnected) {
+        this.disconnectedUsers.delete(this.clientID);
+      } else {
+        this.disconnectedUsers.add(this.clientID);
+      }
+      this.updateSubscribers(
+        true
+        /* force update */
+      );
+    }
+    /**
+     * Update all subscribed listeners with the latest awareness state.
+     * @param forceUpdate
+     */
+    updateSubscribers(forceUpdate = false) {
+      if (!this.stateSubscriptions.length) {
+        return;
+      }
+      const states = this.getStates();
+      this.seenStates = new Map([
+        ...this.seenStates.entries(),
+        ...states.entries()
+      ]);
+      const updatedStates = new Map(
+        [...this.disconnectedUsers, ...states.keys()].map(
+          (clientId) => {
+            const rawState = this.seenStates.get(clientId);
+            const isConnected = !this.disconnectedUsers.has(clientId);
+            const isMe = clientId === this.clientID;
+            const myState = isMe ? this.myThrottledState : {};
+            const state = {
+              ...rawState,
+              ...myState,
+              clientId,
+              isConnected,
+              isMe
+            };
+            return [clientId, state];
+          }
+        )
+      );
+      if (!forceUpdate) {
+        if (areMapsEqual(
+          this.previousSnapshot,
+          updatedStates,
+          this.isStateEqual.bind(this)
+        )) {
+          return;
+        }
+      }
+      this.previousSnapshot = updatedStates;
+      this.stateSubscriptions.forEach((callback) => {
+        callback(Array.from(updatedStates.values()));
+      });
+    }
+  };
+
+  // packages/sync/build-module/awareness/post-editor-awareness-state.mjs
+  var PostEditorAwarenessState = class extends AwarenessState {
+    equalityFieldChecks = {};
+    // TODO: Add in subscription for user selection changes.
+  };
+
+  // packages/sync/build-module/awareness/awareness-manager.mjs
+  var awarenessInstances = /* @__PURE__ */ new Map();
+  function getAwarenessId(objectType, objectId) {
+    return `${objectType}:${objectId}`;
+  }
+  async function createAwareness(objectType, objectId, ydoc) {
+    if (objectId && objectType.startsWith("postType/")) {
+      const awareness = new PostEditorAwarenessState(ydoc);
+      awareness.setUp();
+      awarenessInstances.set(
+        getAwarenessId(objectType, objectId),
+        awareness
+      );
+      return awareness;
+    }
+    return void 0;
+  }
+
   // packages/sync/build-module/manager.mjs
   function createSyncManager() {
     const entityStates = /* @__PURE__ */ new Map();
@@ -11778,9 +12244,10 @@ var wp;
         ydoc
       };
       entityStates.set(entityId, entityState);
+      const awareness = await createAwareness(objectType, objectId, ydoc);
       const providerResults = await Promise.all(
         providerCreators2.map(
-          (create8) => create8(objectType, objectId, ydoc)
+          (create8) => create8(objectType, objectId, ydoc, awareness)
         )
       );
       recordMap.observeDeep(onRecordUpdate);
