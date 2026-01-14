@@ -11481,6 +11481,9 @@ var wp;
   var CRDT_DOC_VERSION = 1;
   var CRDT_DOC_META_PERSISTENCE_KEY = "fromPersistence";
   var CRDT_RECORD_MAP_KEY = "document";
+  var CRDT_RECORD_METADATA_MAP_KEY = "documentMeta";
+  var CRDT_RECORD_METADATA_SAVED_AT_KEY = "savedAt";
+  var CRDT_RECORD_METADATA_SAVED_BY_KEY = "savedBy";
   var CRDT_STATE_MAP_KEY = "state";
   var CRDT_STATE_VERSION_KEY = "version";
   var LOCAL_EDITOR_ORIGIN = "gutenberg";
@@ -12219,6 +12222,8 @@ var wp;
       }
       const ydoc = createYjsDoc({ objectType });
       const recordMap = ydoc.getMap(CRDT_RECORD_MAP_KEY);
+      const recordMetaMap = ydoc.getMap(CRDT_RECORD_METADATA_MAP_KEY);
+      const now = Date.now();
       const unload = () => {
         providerResults.forEach((result) => result.destroy());
         recordMap.unobserveDeep(onRecordUpdate);
@@ -12230,6 +12235,22 @@ var wp;
           return;
         }
         void updateEntityRecord(objectType, objectId);
+      };
+      const onRecordMetaUpdate = (event, transaction) => {
+        if (transaction.local) {
+          return;
+        }
+        event.keysChanged.forEach((key) => {
+          switch (key) {
+            case CRDT_RECORD_METADATA_SAVED_AT_KEY:
+              const newValue = recordMetaMap.get(CRDT_RECORD_METADATA_SAVED_AT_KEY);
+              if ("number" === typeof newValue && newValue > now) {
+                void handlers.refetchRecord().catch(() => {
+                });
+              }
+              break;
+          }
+        });
       };
       if (!undoManager2) {
         undoManager2 = createUndoManager();
@@ -12251,6 +12272,7 @@ var wp;
         )
       );
       recordMap.observeDeep(onRecordUpdate);
+      recordMetaMap.observe(onRecordMetaUpdate);
       const isInvalid = applyPersistedCrdtDoc(syncConfig, ydoc, record);
       if (isInvalid) {
         ydoc.transact(() => {
@@ -12283,7 +12305,7 @@ var wp;
       tempDoc.destroy();
       return Object.keys(changes).length > 0;
     }
-    function updateCRDTDoc(objectType, objectId, changes, origin) {
+    function updateCRDTDoc(objectType, objectId, changes, origin, isSave = false) {
       const entityId = getEntityId(objectType, objectId);
       const entityState = entityStates.get(entityId);
       if (!entityState) {
@@ -12292,6 +12314,11 @@ var wp;
       const { syncConfig, ydoc } = entityState;
       ydoc.transact(() => {
         syncConfig.applyChangesToCRDTDoc(ydoc, changes);
+        if (isSave) {
+          const recordMeta = ydoc.getMap(CRDT_RECORD_METADATA_MAP_KEY);
+          recordMeta.set(CRDT_RECORD_METADATA_SAVED_AT_KEY, Date.now());
+          recordMeta.set(CRDT_RECORD_METADATA_SAVED_BY_KEY, ydoc.clientID);
+        }
       }, origin);
     }
     async function updateEntityRecord(objectType, objectId) {
@@ -15200,6 +15227,18 @@ var wp;
             true,
             edits
           );
+          if (true) {
+            if (entityConfig.syncConfig) {
+              getSyncManager()?.update(
+                `${kind}/${name}`,
+                recordId,
+                updatedRecord,
+                LOCAL_EDITOR_ORIGIN,
+                true
+                // isSave
+              );
+            }
+          }
         }
       } catch (_error) {
         hasError = true;
@@ -15818,6 +15857,15 @@ var wp;
                 name,
                 key
               ),
+              // Refetch the current entity record from the database.
+              refetchRecord: async () => {
+                dispatch.receiveEntityRecords(
+                  kind,
+                  name,
+                  await (0, import_api_fetch8.default)({ path, parse: true }),
+                  query
+                );
+              },
               // Save the current entity record's unsaved edits.
               saveRecord: () => {
                 dispatch.saveEditedEntityRecord(
