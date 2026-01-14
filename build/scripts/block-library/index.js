@@ -37686,24 +37686,27 @@ ${js}
     if (!isResponsive) {
       return children;
     }
+    const hasCustomOverlay = !!overlay;
     const responsiveContainerClasses = clsx_default(
       "wp-block-navigation__responsive-container",
-      {
+      !hasCustomOverlay && {
         "has-text-color": !!overlayTextColor.color || !!overlayTextColor?.class,
         [(0, import_block_editor138.getColorClassName)("color", overlayTextColor?.slug)]: !!overlayTextColor?.slug,
         "has-background": !!overlayBackgroundColor.color || overlayBackgroundColor?.class,
         [(0, import_block_editor138.getColorClassName)(
           "background-color",
           overlayBackgroundColor?.slug
-        )]: !!overlayBackgroundColor?.slug,
+        )]: !!overlayBackgroundColor?.slug
+      },
+      {
         "is-menu-open": isOpen,
         "hidden-by-default": isHiddenByDefault
       }
     );
-    const styles = {
+    const styles = !hasCustomOverlay ? {
       color: !overlayTextColor?.slug && overlayTextColor?.color,
       backgroundColor: !overlayBackgroundColor?.slug && overlayBackgroundColor?.color && overlayBackgroundColor.color
-    };
+    } : {};
     const openButtonClasses = clsx_default(
       "wp-block-navigation__responsive-container-open",
       { "always-shown": isHiddenByDefault }
@@ -40653,7 +40656,8 @@ ${js}
     overlayBackgroundColor,
     setOverlayBackgroundColor,
     clientId,
-    navRef
+    navRef,
+    hasCustomOverlay
   }) {
     const [detectedBackgroundColor, setDetectedBackgroundColor] = (0, import_element73.useState)();
     const [detectedColor, setDetectedColor] = (0, import_element73.useState)();
@@ -40719,7 +40723,7 @@ ${js}
             },
             {
               colorValue: overlayTextColor.color,
-              label: (0, import_i18n135.__)("Submenu & overlay text"),
+              label: hasCustomOverlay ? (0, import_i18n135.__)("Submenu text") : (0, import_i18n135.__)("Submenu & overlay text"),
               onColorChange: setOverlayTextColor,
               resetAllFilter: () => setOverlayTextColor(),
               clearable: true,
@@ -40727,7 +40731,7 @@ ${js}
             },
             {
               colorValue: overlayBackgroundColor.color,
-              label: (0, import_i18n135.__)("Submenu & overlay background"),
+              label: hasCustomOverlay ? (0, import_i18n135.__)("Submenu background") : (0, import_i18n135.__)("Submenu & overlay background"),
               onColorChange: setOverlayBackgroundColor,
               resetAllFilter: () => setOverlayBackgroundColor(),
               clearable: true,
@@ -41199,7 +41203,8 @@ ${js}
           overlayBackgroundColor,
           setOverlayBackgroundColor,
           clientId,
-          navRef
+          navRef,
+          hasCustomOverlay: !!overlay
         }
       ) })
     ] });
