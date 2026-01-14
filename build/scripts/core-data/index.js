@@ -350,6 +350,1117 @@ var wp;
     }
   });
 
+  // node_modules/diff/dist/diff.js
+  var require_diff = __commonJS({
+    "node_modules/diff/dist/diff.js"(exports, module) {
+      (function(global2, factory) {
+        typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = global2 || self, factory(global2.Diff = {}));
+      })(exports, function(exports2) {
+        "use strict";
+        function Diff() {
+        }
+        Diff.prototype = {
+          diff: function diff(oldString, newString) {
+            var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
+            var callback = options.callback;
+            if (typeof options === "function") {
+              callback = options;
+              options = {};
+            }
+            this.options = options;
+            var self2 = this;
+            function done(value) {
+              if (callback) {
+                setTimeout(function() {
+                  callback(void 0, value);
+                }, 0);
+                return true;
+              } else {
+                return value;
+              }
+            }
+            oldString = this.castInput(oldString);
+            newString = this.castInput(newString);
+            oldString = this.removeEmpty(this.tokenize(oldString));
+            newString = this.removeEmpty(this.tokenize(newString));
+            var newLen = newString.length, oldLen = oldString.length;
+            var editLength = 1;
+            var maxEditLength = newLen + oldLen;
+            var bestPath = [{
+              newPos: -1,
+              components: []
+            }];
+            var oldPos = this.extractCommon(bestPath[0], newString, oldString, 0);
+            if (bestPath[0].newPos + 1 >= newLen && oldPos + 1 >= oldLen) {
+              return done([{
+                value: this.join(newString),
+                count: newString.length
+              }]);
+            }
+            function execEditLength() {
+              for (var diagonalPath = -1 * editLength; diagonalPath <= editLength; diagonalPath += 2) {
+                var basePath = void 0;
+                var addPath = bestPath[diagonalPath - 1], removePath = bestPath[diagonalPath + 1], _oldPos = (removePath ? removePath.newPos : 0) - diagonalPath;
+                if (addPath) {
+                  bestPath[diagonalPath - 1] = void 0;
+                }
+                var canAdd = addPath && addPath.newPos + 1 < newLen, canRemove = removePath && 0 <= _oldPos && _oldPos < oldLen;
+                if (!canAdd && !canRemove) {
+                  bestPath[diagonalPath] = void 0;
+                  continue;
+                }
+                if (!canAdd || canRemove && addPath.newPos < removePath.newPos) {
+                  basePath = clonePath(removePath);
+                  self2.pushComponent(basePath.components, void 0, true);
+                } else {
+                  basePath = addPath;
+                  basePath.newPos++;
+                  self2.pushComponent(basePath.components, true, void 0);
+                }
+                _oldPos = self2.extractCommon(basePath, newString, oldString, diagonalPath);
+                if (basePath.newPos + 1 >= newLen && _oldPos + 1 >= oldLen) {
+                  return done(buildValues(self2, basePath.components, newString, oldString, self2.useLongestToken));
+                } else {
+                  bestPath[diagonalPath] = basePath;
+                }
+              }
+              editLength++;
+            }
+            if (callback) {
+              (function exec() {
+                setTimeout(function() {
+                  if (editLength > maxEditLength) {
+                    return callback();
+                  }
+                  if (!execEditLength()) {
+                    exec();
+                  }
+                }, 0);
+              })();
+            } else {
+              while (editLength <= maxEditLength) {
+                var ret = execEditLength();
+                if (ret) {
+                  return ret;
+                }
+              }
+            }
+          },
+          pushComponent: function pushComponent(components, added, removed) {
+            var last2 = components[components.length - 1];
+            if (last2 && last2.added === added && last2.removed === removed) {
+              components[components.length - 1] = {
+                count: last2.count + 1,
+                added,
+                removed
+              };
+            } else {
+              components.push({
+                count: 1,
+                added,
+                removed
+              });
+            }
+          },
+          extractCommon: function extractCommon(basePath, newString, oldString, diagonalPath) {
+            var newLen = newString.length, oldLen = oldString.length, newPos = basePath.newPos, oldPos = newPos - diagonalPath, commonCount = 0;
+            while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(newString[newPos + 1], oldString[oldPos + 1])) {
+              newPos++;
+              oldPos++;
+              commonCount++;
+            }
+            if (commonCount) {
+              basePath.components.push({
+                count: commonCount
+              });
+            }
+            basePath.newPos = newPos;
+            return oldPos;
+          },
+          equals: function equals(left, right) {
+            if (this.options.comparator) {
+              return this.options.comparator(left, right);
+            } else {
+              return left === right || this.options.ignoreCase && left.toLowerCase() === right.toLowerCase();
+            }
+          },
+          removeEmpty: function removeEmpty(array) {
+            var ret = [];
+            for (var i = 0; i < array.length; i++) {
+              if (array[i]) {
+                ret.push(array[i]);
+              }
+            }
+            return ret;
+          },
+          castInput: function castInput(value) {
+            return value;
+          },
+          tokenize: function tokenize2(value) {
+            return value.split("");
+          },
+          join: function join(chars) {
+            return chars.join("");
+          }
+        };
+        function buildValues(diff, components, newString, oldString, useLongestToken) {
+          var componentPos = 0, componentLen = components.length, newPos = 0, oldPos = 0;
+          for (; componentPos < componentLen; componentPos++) {
+            var component = components[componentPos];
+            if (!component.removed) {
+              if (!component.added && useLongestToken) {
+                var value = newString.slice(newPos, newPos + component.count);
+                value = value.map(function(value2, i) {
+                  var oldValue = oldString[oldPos + i];
+                  return oldValue.length > value2.length ? oldValue : value2;
+                });
+                component.value = diff.join(value);
+              } else {
+                component.value = diff.join(newString.slice(newPos, newPos + component.count));
+              }
+              newPos += component.count;
+              if (!component.added) {
+                oldPos += component.count;
+              }
+            } else {
+              component.value = diff.join(oldString.slice(oldPos, oldPos + component.count));
+              oldPos += component.count;
+              if (componentPos && components[componentPos - 1].added) {
+                var tmp = components[componentPos - 1];
+                components[componentPos - 1] = components[componentPos];
+                components[componentPos] = tmp;
+              }
+            }
+          }
+          var lastComponent = components[componentLen - 1];
+          if (componentLen > 1 && typeof lastComponent.value === "string" && (lastComponent.added || lastComponent.removed) && diff.equals("", lastComponent.value)) {
+            components[componentLen - 2].value += lastComponent.value;
+            components.pop();
+          }
+          return components;
+        }
+        function clonePath(path) {
+          return {
+            newPos: path.newPos,
+            components: path.components.slice(0)
+          };
+        }
+        var characterDiff = new Diff();
+        function diffChars2(oldStr, newStr, options) {
+          return characterDiff.diff(oldStr, newStr, options);
+        }
+        function generateOptions(options, defaults) {
+          if (typeof options === "function") {
+            defaults.callback = options;
+          } else if (options) {
+            for (var name in options) {
+              if (options.hasOwnProperty(name)) {
+                defaults[name] = options[name];
+              }
+            }
+          }
+          return defaults;
+        }
+        var extendedWordChars = /^[A-Za-z\xC0-\u02C6\u02C8-\u02D7\u02DE-\u02FF\u1E00-\u1EFF]+$/;
+        var reWhitespace = /\S/;
+        var wordDiff = new Diff();
+        wordDiff.equals = function(left, right) {
+          if (this.options.ignoreCase) {
+            left = left.toLowerCase();
+            right = right.toLowerCase();
+          }
+          return left === right || this.options.ignoreWhitespace && !reWhitespace.test(left) && !reWhitespace.test(right);
+        };
+        wordDiff.tokenize = function(value) {
+          var tokens = value.split(/(\s+|[()[\]{}'"]|\b)/);
+          for (var i = 0; i < tokens.length - 1; i++) {
+            if (!tokens[i + 1] && tokens[i + 2] && extendedWordChars.test(tokens[i]) && extendedWordChars.test(tokens[i + 2])) {
+              tokens[i] += tokens[i + 2];
+              tokens.splice(i + 1, 2);
+              i--;
+            }
+          }
+          return tokens;
+        };
+        function diffWords(oldStr, newStr, options) {
+          options = generateOptions(options, {
+            ignoreWhitespace: true
+          });
+          return wordDiff.diff(oldStr, newStr, options);
+        }
+        function diffWordsWithSpace(oldStr, newStr, options) {
+          return wordDiff.diff(oldStr, newStr, options);
+        }
+        var lineDiff = new Diff();
+        lineDiff.tokenize = function(value) {
+          var retLines = [], linesAndNewlines = value.split(/(\n|\r\n)/);
+          if (!linesAndNewlines[linesAndNewlines.length - 1]) {
+            linesAndNewlines.pop();
+          }
+          for (var i = 0; i < linesAndNewlines.length; i++) {
+            var line = linesAndNewlines[i];
+            if (i % 2 && !this.options.newlineIsToken) {
+              retLines[retLines.length - 1] += line;
+            } else {
+              if (this.options.ignoreWhitespace) {
+                line = line.trim();
+              }
+              retLines.push(line);
+            }
+          }
+          return retLines;
+        };
+        function diffLines(oldStr, newStr, callback) {
+          return lineDiff.diff(oldStr, newStr, callback);
+        }
+        function diffTrimmedLines(oldStr, newStr, callback) {
+          var options = generateOptions(callback, {
+            ignoreWhitespace: true
+          });
+          return lineDiff.diff(oldStr, newStr, options);
+        }
+        var sentenceDiff = new Diff();
+        sentenceDiff.tokenize = function(value) {
+          return value.split(/(\S.+?[.!?])(?=\s+|$)/);
+        };
+        function diffSentences(oldStr, newStr, callback) {
+          return sentenceDiff.diff(oldStr, newStr, callback);
+        }
+        var cssDiff = new Diff();
+        cssDiff.tokenize = function(value) {
+          return value.split(/([{}:;,]|\s+)/);
+        };
+        function diffCss(oldStr, newStr, callback) {
+          return cssDiff.diff(oldStr, newStr, callback);
+        }
+        function _typeof(obj) {
+          if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+            _typeof = function(obj2) {
+              return typeof obj2;
+            };
+          } else {
+            _typeof = function(obj2) {
+              return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+            };
+          }
+          return _typeof(obj);
+        }
+        function _toConsumableArray(arr) {
+          return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+        }
+        function _arrayWithoutHoles(arr) {
+          if (Array.isArray(arr)) {
+            for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+            return arr2;
+          }
+        }
+        function _iterableToArray(iter) {
+          if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+        }
+        function _nonIterableSpread() {
+          throw new TypeError("Invalid attempt to spread non-iterable instance");
+        }
+        var objectPrototypeToString = Object.prototype.toString;
+        var jsonDiff = new Diff();
+        jsonDiff.useLongestToken = true;
+        jsonDiff.tokenize = lineDiff.tokenize;
+        jsonDiff.castInput = function(value) {
+          var _this$options = this.options, undefinedReplacement = _this$options.undefinedReplacement, _this$options$stringi = _this$options.stringifyReplacer, stringifyReplacer = _this$options$stringi === void 0 ? function(k, v) {
+            return typeof v === "undefined" ? undefinedReplacement : v;
+          } : _this$options$stringi;
+          return typeof value === "string" ? value : JSON.stringify(canonicalize(value, null, null, stringifyReplacer), stringifyReplacer, "  ");
+        };
+        jsonDiff.equals = function(left, right) {
+          return Diff.prototype.equals.call(jsonDiff, left.replace(/,([\r\n])/g, "$1"), right.replace(/,([\r\n])/g, "$1"));
+        };
+        function diffJson(oldObj, newObj, options) {
+          return jsonDiff.diff(oldObj, newObj, options);
+        }
+        function canonicalize(obj, stack, replacementStack, replacer, key) {
+          stack = stack || [];
+          replacementStack = replacementStack || [];
+          if (replacer) {
+            obj = replacer(key, obj);
+          }
+          var i;
+          for (i = 0; i < stack.length; i += 1) {
+            if (stack[i] === obj) {
+              return replacementStack[i];
+            }
+          }
+          var canonicalizedObj;
+          if ("[object Array]" === objectPrototypeToString.call(obj)) {
+            stack.push(obj);
+            canonicalizedObj = new Array(obj.length);
+            replacementStack.push(canonicalizedObj);
+            for (i = 0; i < obj.length; i += 1) {
+              canonicalizedObj[i] = canonicalize(obj[i], stack, replacementStack, replacer, key);
+            }
+            stack.pop();
+            replacementStack.pop();
+            return canonicalizedObj;
+          }
+          if (obj && obj.toJSON) {
+            obj = obj.toJSON();
+          }
+          if (_typeof(obj) === "object" && obj !== null) {
+            stack.push(obj);
+            canonicalizedObj = {};
+            replacementStack.push(canonicalizedObj);
+            var sortedKeys = [], _key;
+            for (_key in obj) {
+              if (obj.hasOwnProperty(_key)) {
+                sortedKeys.push(_key);
+              }
+            }
+            sortedKeys.sort();
+            for (i = 0; i < sortedKeys.length; i += 1) {
+              _key = sortedKeys[i];
+              canonicalizedObj[_key] = canonicalize(obj[_key], stack, replacementStack, replacer, _key);
+            }
+            stack.pop();
+            replacementStack.pop();
+          } else {
+            canonicalizedObj = obj;
+          }
+          return canonicalizedObj;
+        }
+        var arrayDiff = new Diff();
+        arrayDiff.tokenize = function(value) {
+          return value.slice();
+        };
+        arrayDiff.join = arrayDiff.removeEmpty = function(value) {
+          return value;
+        };
+        function diffArrays(oldArr, newArr, callback) {
+          return arrayDiff.diff(oldArr, newArr, callback);
+        }
+        function parsePatch(uniDiff) {
+          var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+          var diffstr = uniDiff.split(/\r\n|[\n\v\f\r\x85]/), delimiters = uniDiff.match(/\r\n|[\n\v\f\r\x85]/g) || [], list = [], i = 0;
+          function parseIndex() {
+            var index = {};
+            list.push(index);
+            while (i < diffstr.length) {
+              var line = diffstr[i];
+              if (/^(\-\-\-|\+\+\+|@@)\s/.test(line)) {
+                break;
+              }
+              var header = /^(?:Index:|diff(?: -r \w+)+)\s+(.+?)\s*$/.exec(line);
+              if (header) {
+                index.index = header[1];
+              }
+              i++;
+            }
+            parseFileHeader(index);
+            parseFileHeader(index);
+            index.hunks = [];
+            while (i < diffstr.length) {
+              var _line = diffstr[i];
+              if (/^(Index:|diff|\-\-\-|\+\+\+)\s/.test(_line)) {
+                break;
+              } else if (/^@@/.test(_line)) {
+                index.hunks.push(parseHunk());
+              } else if (_line && options.strict) {
+                throw new Error("Unknown line " + (i + 1) + " " + JSON.stringify(_line));
+              } else {
+                i++;
+              }
+            }
+          }
+          function parseFileHeader(index) {
+            var fileHeader = /^(---|\+\+\+)\s+(.*)$/.exec(diffstr[i]);
+            if (fileHeader) {
+              var keyPrefix = fileHeader[1] === "---" ? "old" : "new";
+              var data = fileHeader[2].split("	", 2);
+              var fileName = data[0].replace(/\\\\/g, "\\");
+              if (/^".*"$/.test(fileName)) {
+                fileName = fileName.substr(1, fileName.length - 2);
+              }
+              index[keyPrefix + "FileName"] = fileName;
+              index[keyPrefix + "Header"] = (data[1] || "").trim();
+              i++;
+            }
+          }
+          function parseHunk() {
+            var chunkHeaderIndex = i, chunkHeaderLine = diffstr[i++], chunkHeader = chunkHeaderLine.split(/@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/);
+            var hunk = {
+              oldStart: +chunkHeader[1],
+              oldLines: +chunkHeader[2] || 1,
+              newStart: +chunkHeader[3],
+              newLines: +chunkHeader[4] || 1,
+              lines: [],
+              linedelimiters: []
+            };
+            var addCount = 0, removeCount = 0;
+            for (; i < diffstr.length; i++) {
+              if (diffstr[i].indexOf("--- ") === 0 && i + 2 < diffstr.length && diffstr[i + 1].indexOf("+++ ") === 0 && diffstr[i + 2].indexOf("@@") === 0) {
+                break;
+              }
+              var operation = diffstr[i].length == 0 && i != diffstr.length - 1 ? " " : diffstr[i][0];
+              if (operation === "+" || operation === "-" || operation === " " || operation === "\\") {
+                hunk.lines.push(diffstr[i]);
+                hunk.linedelimiters.push(delimiters[i] || "\n");
+                if (operation === "+") {
+                  addCount++;
+                } else if (operation === "-") {
+                  removeCount++;
+                } else if (operation === " ") {
+                  addCount++;
+                  removeCount++;
+                }
+              } else {
+                break;
+              }
+            }
+            if (!addCount && hunk.newLines === 1) {
+              hunk.newLines = 0;
+            }
+            if (!removeCount && hunk.oldLines === 1) {
+              hunk.oldLines = 0;
+            }
+            if (options.strict) {
+              if (addCount !== hunk.newLines) {
+                throw new Error("Added line count did not match for hunk at line " + (chunkHeaderIndex + 1));
+              }
+              if (removeCount !== hunk.oldLines) {
+                throw new Error("Removed line count did not match for hunk at line " + (chunkHeaderIndex + 1));
+              }
+            }
+            return hunk;
+          }
+          while (i < diffstr.length) {
+            parseIndex();
+          }
+          return list;
+        }
+        function distanceIterator(start, minLine, maxLine) {
+          var wantForward = true, backwardExhausted = false, forwardExhausted = false, localOffset = 1;
+          return function iterator() {
+            if (wantForward && !forwardExhausted) {
+              if (backwardExhausted) {
+                localOffset++;
+              } else {
+                wantForward = false;
+              }
+              if (start + localOffset <= maxLine) {
+                return localOffset;
+              }
+              forwardExhausted = true;
+            }
+            if (!backwardExhausted) {
+              if (!forwardExhausted) {
+                wantForward = true;
+              }
+              if (minLine <= start - localOffset) {
+                return -localOffset++;
+              }
+              backwardExhausted = true;
+              return iterator();
+            }
+          };
+        }
+        function applyPatch(source, uniDiff) {
+          var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
+          if (typeof uniDiff === "string") {
+            uniDiff = parsePatch(uniDiff);
+          }
+          if (Array.isArray(uniDiff)) {
+            if (uniDiff.length > 1) {
+              throw new Error("applyPatch only works with a single input.");
+            }
+            uniDiff = uniDiff[0];
+          }
+          var lines = source.split(/\r\n|[\n\v\f\r\x85]/), delimiters = source.match(/\r\n|[\n\v\f\r\x85]/g) || [], hunks = uniDiff.hunks, compareLine = options.compareLine || function(lineNumber, line2, operation2, patchContent) {
+            return line2 === patchContent;
+          }, errorCount = 0, fuzzFactor = options.fuzzFactor || 0, minLine = 0, offset = 0, removeEOFNL, addEOFNL;
+          function hunkFits(hunk2, toPos2) {
+            for (var j2 = 0; j2 < hunk2.lines.length; j2++) {
+              var line2 = hunk2.lines[j2], operation2 = line2.length > 0 ? line2[0] : " ", content2 = line2.length > 0 ? line2.substr(1) : line2;
+              if (operation2 === " " || operation2 === "-") {
+                if (!compareLine(toPos2 + 1, lines[toPos2], operation2, content2)) {
+                  errorCount++;
+                  if (errorCount > fuzzFactor) {
+                    return false;
+                  }
+                }
+                toPos2++;
+              }
+            }
+            return true;
+          }
+          for (var i = 0; i < hunks.length; i++) {
+            var hunk = hunks[i], maxLine = lines.length - hunk.oldLines, localOffset = 0, toPos = offset + hunk.oldStart - 1;
+            var iterator = distanceIterator(toPos, minLine, maxLine);
+            for (; localOffset !== void 0; localOffset = iterator()) {
+              if (hunkFits(hunk, toPos + localOffset)) {
+                hunk.offset = offset += localOffset;
+                break;
+              }
+            }
+            if (localOffset === void 0) {
+              return false;
+            }
+            minLine = hunk.offset + hunk.oldStart + hunk.oldLines;
+          }
+          var diffOffset = 0;
+          for (var _i = 0; _i < hunks.length; _i++) {
+            var _hunk = hunks[_i], _toPos = _hunk.oldStart + _hunk.offset + diffOffset - 1;
+            diffOffset += _hunk.newLines - _hunk.oldLines;
+            if (_toPos < 0) {
+              _toPos = 0;
+            }
+            for (var j = 0; j < _hunk.lines.length; j++) {
+              var line = _hunk.lines[j], operation = line.length > 0 ? line[0] : " ", content = line.length > 0 ? line.substr(1) : line, delimiter = _hunk.linedelimiters[j];
+              if (operation === " ") {
+                _toPos++;
+              } else if (operation === "-") {
+                lines.splice(_toPos, 1);
+                delimiters.splice(_toPos, 1);
+              } else if (operation === "+") {
+                lines.splice(_toPos, 0, content);
+                delimiters.splice(_toPos, 0, delimiter);
+                _toPos++;
+              } else if (operation === "\\") {
+                var previousOperation = _hunk.lines[j - 1] ? _hunk.lines[j - 1][0] : null;
+                if (previousOperation === "+") {
+                  removeEOFNL = true;
+                } else if (previousOperation === "-") {
+                  addEOFNL = true;
+                }
+              }
+            }
+          }
+          if (removeEOFNL) {
+            while (!lines[lines.length - 1]) {
+              lines.pop();
+              delimiters.pop();
+            }
+          } else if (addEOFNL) {
+            lines.push("");
+            delimiters.push("\n");
+          }
+          for (var _k = 0; _k < lines.length - 1; _k++) {
+            lines[_k] = lines[_k] + delimiters[_k];
+          }
+          return lines.join("");
+        }
+        function applyPatches(uniDiff, options) {
+          if (typeof uniDiff === "string") {
+            uniDiff = parsePatch(uniDiff);
+          }
+          var currentIndex = 0;
+          function processIndex() {
+            var index = uniDiff[currentIndex++];
+            if (!index) {
+              return options.complete();
+            }
+            options.loadFile(index, function(err, data) {
+              if (err) {
+                return options.complete(err);
+              }
+              var updatedContent = applyPatch(data, index, options);
+              options.patched(index, updatedContent, function(err2) {
+                if (err2) {
+                  return options.complete(err2);
+                }
+                processIndex();
+              });
+            });
+          }
+          processIndex();
+        }
+        function structuredPatch(oldFileName, newFileName, oldStr, newStr, oldHeader, newHeader, options) {
+          if (!options) {
+            options = {};
+          }
+          if (typeof options.context === "undefined") {
+            options.context = 4;
+          }
+          var diff = diffLines(oldStr, newStr, options);
+          diff.push({
+            value: "",
+            lines: []
+          });
+          function contextLines(lines) {
+            return lines.map(function(entry) {
+              return " " + entry;
+            });
+          }
+          var hunks = [];
+          var oldRangeStart = 0, newRangeStart = 0, curRange = [], oldLine = 1, newLine = 1;
+          var _loop = function _loop2(i2) {
+            var current = diff[i2], lines = current.lines || current.value.replace(/\n$/, "").split("\n");
+            current.lines = lines;
+            if (current.added || current.removed) {
+              var _curRange;
+              if (!oldRangeStart) {
+                var prev = diff[i2 - 1];
+                oldRangeStart = oldLine;
+                newRangeStart = newLine;
+                if (prev) {
+                  curRange = options.context > 0 ? contextLines(prev.lines.slice(-options.context)) : [];
+                  oldRangeStart -= curRange.length;
+                  newRangeStart -= curRange.length;
+                }
+              }
+              (_curRange = curRange).push.apply(_curRange, _toConsumableArray(lines.map(function(entry) {
+                return (current.added ? "+" : "-") + entry;
+              })));
+              if (current.added) {
+                newLine += lines.length;
+              } else {
+                oldLine += lines.length;
+              }
+            } else {
+              if (oldRangeStart) {
+                if (lines.length <= options.context * 2 && i2 < diff.length - 2) {
+                  var _curRange2;
+                  (_curRange2 = curRange).push.apply(_curRange2, _toConsumableArray(contextLines(lines)));
+                } else {
+                  var _curRange3;
+                  var contextSize = Math.min(lines.length, options.context);
+                  (_curRange3 = curRange).push.apply(_curRange3, _toConsumableArray(contextLines(lines.slice(0, contextSize))));
+                  var hunk = {
+                    oldStart: oldRangeStart,
+                    oldLines: oldLine - oldRangeStart + contextSize,
+                    newStart: newRangeStart,
+                    newLines: newLine - newRangeStart + contextSize,
+                    lines: curRange
+                  };
+                  if (i2 >= diff.length - 2 && lines.length <= options.context) {
+                    var oldEOFNewline = /\n$/.test(oldStr);
+                    var newEOFNewline = /\n$/.test(newStr);
+                    var noNlBeforeAdds = lines.length == 0 && curRange.length > hunk.oldLines;
+                    if (!oldEOFNewline && noNlBeforeAdds) {
+                      curRange.splice(hunk.oldLines, 0, "\\ No newline at end of file");
+                    }
+                    if (!oldEOFNewline && !noNlBeforeAdds || !newEOFNewline) {
+                      curRange.push("\\ No newline at end of file");
+                    }
+                  }
+                  hunks.push(hunk);
+                  oldRangeStart = 0;
+                  newRangeStart = 0;
+                  curRange = [];
+                }
+              }
+              oldLine += lines.length;
+              newLine += lines.length;
+            }
+          };
+          for (var i = 0; i < diff.length; i++) {
+            _loop(i);
+          }
+          return {
+            oldFileName,
+            newFileName,
+            oldHeader,
+            newHeader,
+            hunks
+          };
+        }
+        function createTwoFilesPatch(oldFileName, newFileName, oldStr, newStr, oldHeader, newHeader, options) {
+          var diff = structuredPatch(oldFileName, newFileName, oldStr, newStr, oldHeader, newHeader, options);
+          var ret = [];
+          if (oldFileName == newFileName) {
+            ret.push("Index: " + oldFileName);
+          }
+          ret.push("===================================================================");
+          ret.push("--- " + diff.oldFileName + (typeof diff.oldHeader === "undefined" ? "" : "	" + diff.oldHeader));
+          ret.push("+++ " + diff.newFileName + (typeof diff.newHeader === "undefined" ? "" : "	" + diff.newHeader));
+          for (var i = 0; i < diff.hunks.length; i++) {
+            var hunk = diff.hunks[i];
+            ret.push("@@ -" + hunk.oldStart + "," + hunk.oldLines + " +" + hunk.newStart + "," + hunk.newLines + " @@");
+            ret.push.apply(ret, hunk.lines);
+          }
+          return ret.join("\n") + "\n";
+        }
+        function createPatch(fileName, oldStr, newStr, oldHeader, newHeader, options) {
+          return createTwoFilesPatch(fileName, fileName, oldStr, newStr, oldHeader, newHeader, options);
+        }
+        function arrayEqual(a, b) {
+          if (a.length !== b.length) {
+            return false;
+          }
+          return arrayStartsWith(a, b);
+        }
+        function arrayStartsWith(array, start) {
+          if (start.length > array.length) {
+            return false;
+          }
+          for (var i = 0; i < start.length; i++) {
+            if (start[i] !== array[i]) {
+              return false;
+            }
+          }
+          return true;
+        }
+        function calcLineCount(hunk) {
+          var _calcOldNewLineCount = calcOldNewLineCount(hunk.lines), oldLines = _calcOldNewLineCount.oldLines, newLines = _calcOldNewLineCount.newLines;
+          if (oldLines !== void 0) {
+            hunk.oldLines = oldLines;
+          } else {
+            delete hunk.oldLines;
+          }
+          if (newLines !== void 0) {
+            hunk.newLines = newLines;
+          } else {
+            delete hunk.newLines;
+          }
+        }
+        function merge(mine, theirs, base) {
+          mine = loadPatch(mine, base);
+          theirs = loadPatch(theirs, base);
+          var ret = {};
+          if (mine.index || theirs.index) {
+            ret.index = mine.index || theirs.index;
+          }
+          if (mine.newFileName || theirs.newFileName) {
+            if (!fileNameChanged(mine)) {
+              ret.oldFileName = theirs.oldFileName || mine.oldFileName;
+              ret.newFileName = theirs.newFileName || mine.newFileName;
+              ret.oldHeader = theirs.oldHeader || mine.oldHeader;
+              ret.newHeader = theirs.newHeader || mine.newHeader;
+            } else if (!fileNameChanged(theirs)) {
+              ret.oldFileName = mine.oldFileName;
+              ret.newFileName = mine.newFileName;
+              ret.oldHeader = mine.oldHeader;
+              ret.newHeader = mine.newHeader;
+            } else {
+              ret.oldFileName = selectField(ret, mine.oldFileName, theirs.oldFileName);
+              ret.newFileName = selectField(ret, mine.newFileName, theirs.newFileName);
+              ret.oldHeader = selectField(ret, mine.oldHeader, theirs.oldHeader);
+              ret.newHeader = selectField(ret, mine.newHeader, theirs.newHeader);
+            }
+          }
+          ret.hunks = [];
+          var mineIndex = 0, theirsIndex = 0, mineOffset = 0, theirsOffset = 0;
+          while (mineIndex < mine.hunks.length || theirsIndex < theirs.hunks.length) {
+            var mineCurrent = mine.hunks[mineIndex] || {
+              oldStart: Infinity
+            }, theirsCurrent = theirs.hunks[theirsIndex] || {
+              oldStart: Infinity
+            };
+            if (hunkBefore(mineCurrent, theirsCurrent)) {
+              ret.hunks.push(cloneHunk(mineCurrent, mineOffset));
+              mineIndex++;
+              theirsOffset += mineCurrent.newLines - mineCurrent.oldLines;
+            } else if (hunkBefore(theirsCurrent, mineCurrent)) {
+              ret.hunks.push(cloneHunk(theirsCurrent, theirsOffset));
+              theirsIndex++;
+              mineOffset += theirsCurrent.newLines - theirsCurrent.oldLines;
+            } else {
+              var mergedHunk = {
+                oldStart: Math.min(mineCurrent.oldStart, theirsCurrent.oldStart),
+                oldLines: 0,
+                newStart: Math.min(mineCurrent.newStart + mineOffset, theirsCurrent.oldStart + theirsOffset),
+                newLines: 0,
+                lines: []
+              };
+              mergeLines(mergedHunk, mineCurrent.oldStart, mineCurrent.lines, theirsCurrent.oldStart, theirsCurrent.lines);
+              theirsIndex++;
+              mineIndex++;
+              ret.hunks.push(mergedHunk);
+            }
+          }
+          return ret;
+        }
+        function loadPatch(param, base) {
+          if (typeof param === "string") {
+            if (/^@@/m.test(param) || /^Index:/m.test(param)) {
+              return parsePatch(param)[0];
+            }
+            if (!base) {
+              throw new Error("Must provide a base reference or pass in a patch");
+            }
+            return structuredPatch(void 0, void 0, base, param);
+          }
+          return param;
+        }
+        function fileNameChanged(patch) {
+          return patch.newFileName && patch.newFileName !== patch.oldFileName;
+        }
+        function selectField(index, mine, theirs) {
+          if (mine === theirs) {
+            return mine;
+          } else {
+            index.conflict = true;
+            return {
+              mine,
+              theirs
+            };
+          }
+        }
+        function hunkBefore(test, check) {
+          return test.oldStart < check.oldStart && test.oldStart + test.oldLines < check.oldStart;
+        }
+        function cloneHunk(hunk, offset) {
+          return {
+            oldStart: hunk.oldStart,
+            oldLines: hunk.oldLines,
+            newStart: hunk.newStart + offset,
+            newLines: hunk.newLines,
+            lines: hunk.lines
+          };
+        }
+        function mergeLines(hunk, mineOffset, mineLines, theirOffset, theirLines) {
+          var mine = {
+            offset: mineOffset,
+            lines: mineLines,
+            index: 0
+          }, their = {
+            offset: theirOffset,
+            lines: theirLines,
+            index: 0
+          };
+          insertLeading(hunk, mine, their);
+          insertLeading(hunk, their, mine);
+          while (mine.index < mine.lines.length && their.index < their.lines.length) {
+            var mineCurrent = mine.lines[mine.index], theirCurrent = their.lines[their.index];
+            if ((mineCurrent[0] === "-" || mineCurrent[0] === "+") && (theirCurrent[0] === "-" || theirCurrent[0] === "+")) {
+              mutualChange(hunk, mine, their);
+            } else if (mineCurrent[0] === "+" && theirCurrent[0] === " ") {
+              var _hunk$lines;
+              (_hunk$lines = hunk.lines).push.apply(_hunk$lines, _toConsumableArray(collectChange(mine)));
+            } else if (theirCurrent[0] === "+" && mineCurrent[0] === " ") {
+              var _hunk$lines2;
+              (_hunk$lines2 = hunk.lines).push.apply(_hunk$lines2, _toConsumableArray(collectChange(their)));
+            } else if (mineCurrent[0] === "-" && theirCurrent[0] === " ") {
+              removal(hunk, mine, their);
+            } else if (theirCurrent[0] === "-" && mineCurrent[0] === " ") {
+              removal(hunk, their, mine, true);
+            } else if (mineCurrent === theirCurrent) {
+              hunk.lines.push(mineCurrent);
+              mine.index++;
+              their.index++;
+            } else {
+              conflict(hunk, collectChange(mine), collectChange(their));
+            }
+          }
+          insertTrailing(hunk, mine);
+          insertTrailing(hunk, their);
+          calcLineCount(hunk);
+        }
+        function mutualChange(hunk, mine, their) {
+          var myChanges = collectChange(mine), theirChanges = collectChange(their);
+          if (allRemoves(myChanges) && allRemoves(theirChanges)) {
+            if (arrayStartsWith(myChanges, theirChanges) && skipRemoveSuperset(their, myChanges, myChanges.length - theirChanges.length)) {
+              var _hunk$lines3;
+              (_hunk$lines3 = hunk.lines).push.apply(_hunk$lines3, _toConsumableArray(myChanges));
+              return;
+            } else if (arrayStartsWith(theirChanges, myChanges) && skipRemoveSuperset(mine, theirChanges, theirChanges.length - myChanges.length)) {
+              var _hunk$lines4;
+              (_hunk$lines4 = hunk.lines).push.apply(_hunk$lines4, _toConsumableArray(theirChanges));
+              return;
+            }
+          } else if (arrayEqual(myChanges, theirChanges)) {
+            var _hunk$lines5;
+            (_hunk$lines5 = hunk.lines).push.apply(_hunk$lines5, _toConsumableArray(myChanges));
+            return;
+          }
+          conflict(hunk, myChanges, theirChanges);
+        }
+        function removal(hunk, mine, their, swap) {
+          var myChanges = collectChange(mine), theirChanges = collectContext(their, myChanges);
+          if (theirChanges.merged) {
+            var _hunk$lines6;
+            (_hunk$lines6 = hunk.lines).push.apply(_hunk$lines6, _toConsumableArray(theirChanges.merged));
+          } else {
+            conflict(hunk, swap ? theirChanges : myChanges, swap ? myChanges : theirChanges);
+          }
+        }
+        function conflict(hunk, mine, their) {
+          hunk.conflict = true;
+          hunk.lines.push({
+            conflict: true,
+            mine,
+            theirs: their
+          });
+        }
+        function insertLeading(hunk, insert, their) {
+          while (insert.offset < their.offset && insert.index < insert.lines.length) {
+            var line = insert.lines[insert.index++];
+            hunk.lines.push(line);
+            insert.offset++;
+          }
+        }
+        function insertTrailing(hunk, insert) {
+          while (insert.index < insert.lines.length) {
+            var line = insert.lines[insert.index++];
+            hunk.lines.push(line);
+          }
+        }
+        function collectChange(state) {
+          var ret = [], operation = state.lines[state.index][0];
+          while (state.index < state.lines.length) {
+            var line = state.lines[state.index];
+            if (operation === "-" && line[0] === "+") {
+              operation = "+";
+            }
+            if (operation === line[0]) {
+              ret.push(line);
+              state.index++;
+            } else {
+              break;
+            }
+          }
+          return ret;
+        }
+        function collectContext(state, matchChanges) {
+          var changes = [], merged = [], matchIndex = 0, contextChanges = false, conflicted = false;
+          while (matchIndex < matchChanges.length && state.index < state.lines.length) {
+            var change = state.lines[state.index], match = matchChanges[matchIndex];
+            if (match[0] === "+") {
+              break;
+            }
+            contextChanges = contextChanges || change[0] !== " ";
+            merged.push(match);
+            matchIndex++;
+            if (change[0] === "+") {
+              conflicted = true;
+              while (change[0] === "+") {
+                changes.push(change);
+                change = state.lines[++state.index];
+              }
+            }
+            if (match.substr(1) === change.substr(1)) {
+              changes.push(change);
+              state.index++;
+            } else {
+              conflicted = true;
+            }
+          }
+          if ((matchChanges[matchIndex] || "")[0] === "+" && contextChanges) {
+            conflicted = true;
+          }
+          if (conflicted) {
+            return changes;
+          }
+          while (matchIndex < matchChanges.length) {
+            merged.push(matchChanges[matchIndex++]);
+          }
+          return {
+            merged,
+            changes
+          };
+        }
+        function allRemoves(changes) {
+          return changes.reduce(function(prev, change) {
+            return prev && change[0] === "-";
+          }, true);
+        }
+        function skipRemoveSuperset(state, removeChanges, delta) {
+          for (var i = 0; i < delta; i++) {
+            var changeContent = removeChanges[removeChanges.length - delta + i].substr(1);
+            if (state.lines[state.index + i] !== " " + changeContent) {
+              return false;
+            }
+          }
+          state.index += delta;
+          return true;
+        }
+        function calcOldNewLineCount(lines) {
+          var oldLines = 0;
+          var newLines = 0;
+          lines.forEach(function(line) {
+            if (typeof line !== "string") {
+              var myCount = calcOldNewLineCount(line.mine);
+              var theirCount = calcOldNewLineCount(line.theirs);
+              if (oldLines !== void 0) {
+                if (myCount.oldLines === theirCount.oldLines) {
+                  oldLines += myCount.oldLines;
+                } else {
+                  oldLines = void 0;
+                }
+              }
+              if (newLines !== void 0) {
+                if (myCount.newLines === theirCount.newLines) {
+                  newLines += myCount.newLines;
+                } else {
+                  newLines = void 0;
+                }
+              }
+            } else {
+              if (newLines !== void 0 && (line[0] === "+" || line[0] === " ")) {
+                newLines++;
+              }
+              if (oldLines !== void 0 && (line[0] === "-" || line[0] === " ")) {
+                oldLines++;
+              }
+            }
+          });
+          return {
+            oldLines,
+            newLines
+          };
+        }
+        function convertChangesToDMP(changes) {
+          var ret = [], change, operation;
+          for (var i = 0; i < changes.length; i++) {
+            change = changes[i];
+            if (change.added) {
+              operation = 1;
+            } else if (change.removed) {
+              operation = -1;
+            } else {
+              operation = 0;
+            }
+            ret.push([operation, change.value]);
+          }
+          return ret;
+        }
+        function convertChangesToXML(changes) {
+          var ret = [];
+          for (var i = 0; i < changes.length; i++) {
+            var change = changes[i];
+            if (change.added) {
+              ret.push("<ins>");
+            } else if (change.removed) {
+              ret.push("<del>");
+            }
+            ret.push(escapeHTML(change.value));
+            if (change.added) {
+              ret.push("</ins>");
+            } else if (change.removed) {
+              ret.push("</del>");
+            }
+          }
+          return ret.join("");
+        }
+        function escapeHTML(s) {
+          var n = s;
+          n = n.replace(/&/g, "&amp;");
+          n = n.replace(/</g, "&lt;");
+          n = n.replace(/>/g, "&gt;");
+          n = n.replace(/"/g, "&quot;");
+          return n;
+        }
+        exports2.Diff = Diff;
+        exports2.diffChars = diffChars2;
+        exports2.diffWords = diffWords;
+        exports2.diffWordsWithSpace = diffWordsWithSpace;
+        exports2.diffLines = diffLines;
+        exports2.diffTrimmedLines = diffTrimmedLines;
+        exports2.diffSentences = diffSentences;
+        exports2.diffCss = diffCss;
+        exports2.diffJson = diffJson;
+        exports2.diffArrays = diffArrays;
+        exports2.structuredPatch = structuredPatch;
+        exports2.createTwoFilesPatch = createTwoFilesPatch;
+        exports2.createPatch = createPatch;
+        exports2.applyPatch = applyPatch;
+        exports2.applyPatches = applyPatches;
+        exports2.parsePatch = parsePatch;
+        exports2.merge = merge;
+        exports2.convertChangesToDMP = convertChangesToDMP;
+        exports2.convertChangesToXML = convertChangesToXML;
+        exports2.canonicalize = canonicalize;
+        Object.defineProperty(exports2, "__esModule", { value: true });
+      });
+    }
+  });
+
   // package-external:@wordpress/hooks
   var require_hooks = __commonJS({
     "package-external:@wordpress/hooks"(exports, module) {
@@ -435,7 +1546,7 @@ var wp;
   var import_data11 = __toESM(require_data(), 1);
 
   // packages/core-data/build-module/reducer.mjs
-  var import_es64 = __toESM(require_es6(), 1);
+  var import_es66 = __toESM(require_es6(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
   var import_data3 = __toESM(require_data(), 1);
   var import_undo_manager2 = __toESM(require_undo_manager(), 1);
@@ -9435,6 +10546,863 @@ var wp;
   }
   glo[importIdentifier] = true;
 
+  // packages/sync/build-module/quill-delta/Delta.mjs
+  var import_diff = __toESM(require_diff(), 1);
+  var import_es63 = __toESM(require_es6(), 1);
+
+  // packages/sync/build-module/quill-delta/AttributeMap.mjs
+  var import_es62 = __toESM(require_es6(), 1);
+  function cloneDeep(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+  var AttributeMap;
+  ((AttributeMap2) => {
+    function compose3(a = {}, b = {}, keepNull = false) {
+      if (typeof a !== "object") {
+        a = {};
+      }
+      if (typeof b !== "object") {
+        b = {};
+      }
+      let attributes = cloneDeep(b);
+      if (!keepNull) {
+        attributes = Object.keys(attributes).reduce(
+          (copy2, key) => {
+            if (attributes[key] !== null || attributes[key] !== void 0) {
+              copy2[key] = attributes[key];
+            }
+            return copy2;
+          },
+          {}
+        );
+      }
+      for (const key in a) {
+        if (a[key] !== void 0 && b[key] === void 0) {
+          attributes[key] = a[key];
+        }
+      }
+      return Object.keys(attributes).length > 0 ? attributes : void 0;
+    }
+    AttributeMap2.compose = compose3;
+    function diff(a = {}, b = {}) {
+      if (typeof a !== "object") {
+        a = {};
+      }
+      if (typeof b !== "object") {
+        b = {};
+      }
+      const attributes = Object.keys(a).concat(Object.keys(b)).reduce((attrs, key) => {
+        if (!(0, import_es62.default)(a[key], b[key])) {
+          attrs[key] = b[key] === void 0 ? null : b[key];
+        }
+        return attrs;
+      }, {});
+      return Object.keys(attributes).length > 0 ? attributes : void 0;
+    }
+    AttributeMap2.diff = diff;
+    function invert(attr = {}, base = {}) {
+      attr = attr || {};
+      const baseInverted = Object.keys(base).reduce(
+        (memo, key) => {
+          if (base[key] !== attr[key] && attr[key] !== void 0) {
+            memo[key] = base[key];
+          }
+          return memo;
+        },
+        {}
+      );
+      return Object.keys(attr).reduce((memo, key) => {
+        if (attr[key] !== base[key] && base[key] === void 0) {
+          memo[key] = null;
+        }
+        return memo;
+      }, baseInverted);
+    }
+    AttributeMap2.invert = invert;
+    function transform(a, b, priority = false) {
+      if (typeof a !== "object") {
+        return b;
+      }
+      if (typeof b !== "object") {
+        return void 0;
+      }
+      if (!priority) {
+        return b;
+      }
+      const attributes = Object.keys(b).reduce(
+        (attrs, key) => {
+          if (a[key] === void 0) {
+            attrs[key] = b[key];
+          }
+          return attrs;
+        },
+        {}
+      );
+      return Object.keys(attributes).length > 0 ? attributes : void 0;
+    }
+    AttributeMap2.transform = transform;
+  })(AttributeMap || (AttributeMap = {}));
+  var AttributeMap_default = AttributeMap;
+
+  // packages/sync/build-module/quill-delta/Op.mjs
+  var Op;
+  ((Op2) => {
+    function length3(op) {
+      if (typeof op.delete === "number") {
+        return op.delete;
+      } else if (typeof op.retain === "number") {
+        return op.retain;
+      } else if (typeof op.retain === "object" && op.retain !== null) {
+        return 1;
+      }
+      return typeof op.insert === "string" ? op.insert.length : 1;
+    }
+    Op2.length = length3;
+  })(Op || (Op = {}));
+  var Op_default = Op;
+
+  // packages/sync/build-module/quill-delta/OpIterator.mjs
+  var Iterator2 = class {
+    ops;
+    index;
+    offset;
+    constructor(ops) {
+      this.ops = ops;
+      this.index = 0;
+      this.offset = 0;
+    }
+    hasNext() {
+      return this.peekLength() < Infinity;
+    }
+    next(length3) {
+      if (!length3) {
+        length3 = Infinity;
+      }
+      const nextOp = this.ops[this.index];
+      if (nextOp) {
+        const offset = this.offset;
+        const opLength = Op_default.length(nextOp);
+        if (length3 >= opLength - offset) {
+          length3 = opLength - offset;
+          this.index += 1;
+          this.offset = 0;
+        } else {
+          this.offset += length3;
+        }
+        if (typeof nextOp.delete === "number") {
+          return { delete: length3 };
+        }
+        const retOp = {};
+        if (nextOp.attributes) {
+          retOp.attributes = nextOp.attributes;
+        }
+        if (typeof nextOp.retain === "number") {
+          retOp.retain = length3;
+        } else if (typeof nextOp.retain === "object" && nextOp.retain !== null) {
+          retOp.retain = nextOp.retain;
+        } else if (typeof nextOp.insert === "string") {
+          retOp.insert = nextOp.insert.substr(offset, length3);
+        } else {
+          retOp.insert = nextOp.insert;
+        }
+        return retOp;
+      }
+      return { retain: Infinity };
+    }
+    peek() {
+      return this.ops[this.index];
+    }
+    peekLength() {
+      if (this.ops[this.index]) {
+        return Op_default.length(this.ops[this.index]) - this.offset;
+      }
+      return Infinity;
+    }
+    peekType() {
+      const op = this.ops[this.index];
+      if (op) {
+        if (typeof op.delete === "number") {
+          return "delete";
+        } else if (typeof op.retain === "number" || typeof op.retain === "object" && op.retain !== null) {
+          return "retain";
+        }
+        return "insert";
+      }
+      return "retain";
+    }
+    rest() {
+      if (!this.hasNext()) {
+        return [];
+      } else if (this.offset === 0) {
+        return this.ops.slice(this.index);
+      }
+      const offset = this.offset;
+      const index = this.index;
+      const next = this.next();
+      const rest = this.ops.slice(this.index);
+      this.offset = offset;
+      this.index = index;
+      return [next].concat(rest);
+    }
+  };
+
+  // packages/sync/build-module/quill-delta/Delta.mjs
+  function cloneDeep2(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+  var NULL_CHARACTER = String.fromCharCode(0);
+  var getEmbedTypeAndData = (a, b) => {
+    if (typeof a !== "object" || a === null) {
+      throw new Error(`cannot retain a ${typeof a}`);
+    }
+    if (typeof b !== "object" || b === null) {
+      throw new Error(`cannot retain a ${typeof b}`);
+    }
+    const embedType = Object.keys(a)[0];
+    if (!embedType || embedType !== Object.keys(b)[0]) {
+      throw new Error(
+        `embed types not matched: ${embedType} != ${Object.keys(b)[0]}`
+      );
+    }
+    return [embedType, a[embedType], b[embedType]];
+  };
+  var Delta = class _Delta {
+    static Op = Op_default;
+    static OpIterator = Iterator2;
+    static AttributeMap = AttributeMap_default;
+    static handlers = {};
+    static registerEmbed(embedType, handler) {
+      this.handlers[embedType] = handler;
+    }
+    static unregisterEmbed(embedType) {
+      delete this.handlers[embedType];
+    }
+    static getHandler(embedType) {
+      const handler = this.handlers[embedType];
+      if (!handler) {
+        throw new Error(`no handlers for embed type "${embedType}"`);
+      }
+      return handler;
+    }
+    ops;
+    constructor(ops) {
+      if (Array.isArray(ops)) {
+        this.ops = ops;
+      } else if (ops !== null && ops !== void 0 && Array.isArray(ops.ops)) {
+        this.ops = ops.ops;
+      } else {
+        this.ops = [];
+      }
+    }
+    insert(arg, attributes) {
+      const newOp = {};
+      if (typeof arg === "string" && arg.length === 0) {
+        return this;
+      }
+      newOp.insert = arg;
+      if (attributes !== null && attributes !== void 0 && typeof attributes === "object" && Object.keys(attributes).length > 0) {
+        newOp.attributes = attributes;
+      }
+      return this.push(newOp);
+    }
+    delete(length3) {
+      if (length3 <= 0) {
+        return this;
+      }
+      return this.push({ delete: length3 });
+    }
+    retain(length3, attributes) {
+      if (typeof length3 === "number" && length3 <= 0) {
+        return this;
+      }
+      const newOp = { retain: length3 };
+      if (attributes !== null && attributes !== void 0 && typeof attributes === "object" && Object.keys(attributes).length > 0) {
+        newOp.attributes = attributes;
+      }
+      return this.push(newOp);
+    }
+    push(newOp) {
+      let index = this.ops.length;
+      let lastOp = this.ops[index - 1];
+      newOp = cloneDeep2(newOp);
+      if (typeof lastOp === "object") {
+        if (typeof newOp.delete === "number" && typeof lastOp.delete === "number") {
+          this.ops[index - 1] = {
+            delete: lastOp.delete + newOp.delete
+          };
+          return this;
+        }
+        if (typeof lastOp.delete === "number" && newOp.insert !== null && newOp.insert !== void 0) {
+          index -= 1;
+          lastOp = this.ops[index - 1];
+          if (typeof lastOp !== "object") {
+            this.ops.unshift(newOp);
+            return this;
+          }
+        }
+        if ((0, import_es63.default)(newOp.attributes, lastOp.attributes)) {
+          if (typeof newOp.insert === "string" && typeof lastOp.insert === "string") {
+            this.ops[index - 1] = {
+              insert: lastOp.insert + newOp.insert
+            };
+            if (typeof newOp.attributes === "object") {
+              this.ops[index - 1].attributes = newOp.attributes;
+            }
+            return this;
+          } else if (typeof newOp.retain === "number" && typeof lastOp.retain === "number") {
+            this.ops[index - 1] = {
+              retain: lastOp.retain + newOp.retain
+            };
+            if (typeof newOp.attributes === "object") {
+              this.ops[index - 1].attributes = newOp.attributes;
+            }
+            return this;
+          }
+        }
+      }
+      if (index === this.ops.length) {
+        this.ops.push(newOp);
+      } else {
+        this.ops.splice(index, 0, newOp);
+      }
+      return this;
+    }
+    chop() {
+      const lastOp = this.ops[this.ops.length - 1];
+      if (lastOp && typeof lastOp.retain === "number" && !lastOp.attributes) {
+        this.ops.pop();
+      }
+      return this;
+    }
+    filter(predicate) {
+      return this.ops.filter(predicate);
+    }
+    forEach(predicate) {
+      this.ops.forEach(predicate);
+    }
+    map(predicate) {
+      return this.ops.map(predicate);
+    }
+    partition(predicate) {
+      const passed = [];
+      const failed = [];
+      this.forEach((op) => {
+        const target = predicate(op) ? passed : failed;
+        target.push(op);
+      });
+      return [passed, failed];
+    }
+    reduce(predicate, initialValue) {
+      return this.ops.reduce(predicate, initialValue);
+    }
+    changeLength() {
+      return this.reduce((length3, elem) => {
+        if (elem.insert) {
+          return length3 + Op_default.length(elem);
+        } else if (elem.delete) {
+          return length3 - elem.delete;
+        }
+        return length3;
+      }, 0);
+    }
+    length() {
+      return this.reduce((length3, elem) => {
+        return length3 + Op_default.length(elem);
+      }, 0);
+    }
+    slice(start = 0, end = Infinity) {
+      const ops = [];
+      const iter = new Iterator2(this.ops);
+      let index = 0;
+      while (index < end && iter.hasNext()) {
+        let nextOp;
+        if (index < start) {
+          nextOp = iter.next(start - index);
+        } else {
+          nextOp = iter.next(end - index);
+          ops.push(nextOp);
+        }
+        index += Op_default.length(nextOp);
+      }
+      return new _Delta(ops);
+    }
+    compose(other) {
+      const thisIter = new Iterator2(this.ops);
+      const otherIter = new Iterator2(other.ops);
+      const ops = [];
+      const firstOther = otherIter.peek();
+      if (firstOther !== null && firstOther !== void 0 && typeof firstOther.retain === "number" && (firstOther.attributes === null || firstOther.attributes === void 0)) {
+        let firstLeft = firstOther.retain;
+        while (thisIter.peekType() === "insert" && thisIter.peekLength() <= firstLeft) {
+          firstLeft -= thisIter.peekLength();
+          ops.push(thisIter.next());
+        }
+        if (firstOther.retain - firstLeft > 0) {
+          otherIter.next(firstOther.retain - firstLeft);
+        }
+      }
+      const delta = new _Delta(ops);
+      while (thisIter.hasNext() || otherIter.hasNext()) {
+        if (otherIter.peekType() === "insert") {
+          delta.push(otherIter.next());
+        } else if (thisIter.peekType() === "delete") {
+          delta.push(thisIter.next());
+        } else {
+          const length3 = Math.min(
+            thisIter.peekLength(),
+            otherIter.peekLength()
+          );
+          const thisOp = thisIter.next(length3);
+          const otherOp = otherIter.next(length3);
+          if (otherOp.retain) {
+            const newOp = {};
+            if (typeof thisOp.retain === "number") {
+              newOp.retain = typeof otherOp.retain === "number" ? length3 : otherOp.retain;
+            } else if (typeof otherOp.retain === "number") {
+              if (thisOp.retain === null || thisOp.retain === void 0) {
+                newOp.insert = thisOp.insert;
+              } else {
+                newOp.retain = thisOp.retain;
+              }
+            } else {
+              const action = thisOp.retain === null || thisOp.retain === void 0 ? "insert" : "retain";
+              const [embedType, thisData, otherData] = getEmbedTypeAndData(
+                thisOp[action],
+                otherOp.retain
+              );
+              const handler = _Delta.getHandler(embedType);
+              newOp[action] = {
+                [embedType]: handler.compose(
+                  thisData,
+                  otherData,
+                  action === "retain"
+                )
+              };
+            }
+            const attributes = AttributeMap_default.compose(
+              thisOp.attributes,
+              otherOp.attributes,
+              typeof thisOp.retain === "number"
+            );
+            if (attributes) {
+              newOp.attributes = attributes;
+            }
+            delta.push(newOp);
+            if (!otherIter.hasNext() && (0, import_es63.default)(delta.ops[delta.ops.length - 1], newOp)) {
+              const rest = new _Delta(thisIter.rest());
+              return delta.concat(rest).chop();
+            }
+          } else if (typeof otherOp.delete === "number" && (typeof thisOp.retain === "number" || typeof thisOp.retain === "object" && thisOp.retain !== null)) {
+            delta.push(otherOp);
+          }
+        }
+      }
+      return delta.chop();
+    }
+    concat(other) {
+      const delta = new _Delta(this.ops.slice());
+      if (other.ops.length > 0) {
+        delta.push(other.ops[0]);
+        delta.ops = delta.ops.concat(other.ops.slice(1));
+      }
+      return delta;
+    }
+    diff(other) {
+      if (this.ops === other.ops) {
+        return new _Delta();
+      }
+      const strings = this.deltasToStrings(other);
+      const diffResult = (0, import_diff.diffChars)(strings[0], strings[1]);
+      const thisIter = new Iterator2(this.ops);
+      const otherIter = new Iterator2(other.ops);
+      const retDelta = this.convertChangesToDelta(
+        diffResult,
+        thisIter,
+        otherIter
+      );
+      return retDelta.chop();
+    }
+    eachLine(predicate, newline = "\n") {
+      const iter = new Iterator2(this.ops);
+      let line = new _Delta();
+      let i = 0;
+      while (iter.hasNext()) {
+        if (iter.peekType() !== "insert") {
+          return;
+        }
+        const thisOp = iter.peek();
+        const start = Op_default.length(thisOp) - iter.peekLength();
+        const index = typeof thisOp.insert === "string" ? thisOp.insert.indexOf(newline, start) - start : -1;
+        if (index < 0) {
+          line.push(iter.next());
+        } else if (index > 0) {
+          line.push(iter.next(index));
+        } else {
+          if (predicate(line, iter.next(1).attributes || {}, i) === false) {
+            return;
+          }
+          i += 1;
+          line = new _Delta();
+        }
+      }
+      if (line.length() > 0) {
+        predicate(line, {}, i);
+      }
+    }
+    invert(base) {
+      const inverted = new _Delta();
+      this.reduce((baseIndex, op) => {
+        if (op.insert) {
+          inverted.delete(Op_default.length(op));
+        } else if (typeof op.retain === "number" && (op.attributes === null || op.attributes === void 0)) {
+          inverted.retain(op.retain);
+          return baseIndex + op.retain;
+        } else if (op.delete || typeof op.retain === "number") {
+          const length3 = op.delete || op.retain;
+          const slice = base.slice(baseIndex, baseIndex + length3);
+          slice.forEach((baseOp) => {
+            if (op.delete) {
+              inverted.push(baseOp);
+            } else if (op.retain && op.attributes) {
+              inverted.retain(
+                Op_default.length(baseOp),
+                AttributeMap_default.invert(
+                  op.attributes,
+                  baseOp.attributes
+                )
+              );
+            }
+          });
+          return baseIndex + length3;
+        } else if (typeof op.retain === "object" && op.retain !== null) {
+          const slice = base.slice(baseIndex, baseIndex + 1);
+          const baseOp = new Iterator2(slice.ops).next();
+          const [embedType, opData, baseOpData] = getEmbedTypeAndData(
+            op.retain,
+            baseOp.insert
+          );
+          const handler = _Delta.getHandler(embedType);
+          inverted.retain(
+            { [embedType]: handler.invert(opData, baseOpData) },
+            AttributeMap_default.invert(op.attributes, baseOp.attributes)
+          );
+          return baseIndex + 1;
+        }
+        return baseIndex;
+      }, 0);
+      return inverted.chop();
+    }
+    transform(arg, priority = false) {
+      priority = !!priority;
+      if (typeof arg === "number") {
+        return this.transformPosition(arg, priority);
+      }
+      const other = arg;
+      const thisIter = new Iterator2(this.ops);
+      const otherIter = new Iterator2(other.ops);
+      const delta = new _Delta();
+      while (thisIter.hasNext() || otherIter.hasNext()) {
+        if (thisIter.peekType() === "insert" && (priority || otherIter.peekType() !== "insert")) {
+          delta.retain(Op_default.length(thisIter.next()));
+        } else if (otherIter.peekType() === "insert") {
+          delta.push(otherIter.next());
+        } else {
+          const length3 = Math.min(
+            thisIter.peekLength(),
+            otherIter.peekLength()
+          );
+          const thisOp = thisIter.next(length3);
+          const otherOp = otherIter.next(length3);
+          if (thisOp.delete) {
+            continue;
+          } else if (otherOp.delete) {
+            delta.push(otherOp);
+          } else {
+            const thisData = thisOp.retain;
+            const otherData = otherOp.retain;
+            let transformedData = typeof otherData === "object" && otherData !== null ? otherData : length3;
+            if (typeof thisData === "object" && thisData !== null && typeof otherData === "object" && otherData !== null) {
+              const embedType = Object.keys(thisData)[0];
+              if (embedType === Object.keys(otherData)[0]) {
+                const handler = _Delta.getHandler(embedType);
+                if (handler) {
+                  transformedData = {
+                    [embedType]: handler.transform(
+                      thisData[embedType],
+                      otherData[embedType],
+                      priority
+                    )
+                  };
+                }
+              }
+            }
+            delta.retain(
+              transformedData,
+              AttributeMap_default.transform(
+                thisOp.attributes,
+                otherOp.attributes,
+                priority
+              )
+            );
+          }
+        }
+      }
+      return delta.chop();
+    }
+    transformPosition(index, priority = false) {
+      priority = !!priority;
+      const thisIter = new Iterator2(this.ops);
+      let offset = 0;
+      while (thisIter.hasNext() && offset <= index) {
+        const length3 = thisIter.peekLength();
+        const nextType = thisIter.peekType();
+        thisIter.next();
+        if (nextType === "delete") {
+          index -= Math.min(length3, index - offset);
+          continue;
+        } else if (nextType === "insert" && (offset < index || !priority)) {
+          index += length3;
+        }
+        offset += length3;
+      }
+      return index;
+    }
+    /**
+     * Given a Delta and a cursor position, do a diff and attempt to adjust
+     * the diff to place insertions or deletions at the cursor position.
+     *
+     * @param other             - The other Delta to diff against.
+     * @param cursorAfterChange - The cursor position index after the change.
+     * @return A Delta that attempts to place insertions or deletions at the cursor position.
+     */
+    diffWithCursor(other, cursorAfterChange) {
+      if (this.ops === other.ops) {
+        return new _Delta();
+      } else if (cursorAfterChange === null) {
+        return this.diff(other);
+      }
+      const strings = this.deltasToStrings(other);
+      let diffs = (0, import_diff.diffChars)(strings[0], strings[1]);
+      let lastDiffPosition = 0;
+      const adjustedDiffs = [];
+      for (let i = 0; i < diffs.length; i++) {
+        const diff = diffs[i];
+        const segmentStart = lastDiffPosition;
+        const segmentEnd = lastDiffPosition + (diff.count ?? 0);
+        const isCursorInSegment = cursorAfterChange > segmentStart && cursorAfterChange <= segmentEnd;
+        const isUnchangedSegment = !diff.added && !diff.removed;
+        const isRemovalSegment = diff.removed && !diff.added;
+        const nextDiff = diffs[i + 1];
+        const isNextDiffAnInsert = nextDiff && nextDiff.added && !nextDiff.removed;
+        if (isUnchangedSegment && isCursorInSegment && isNextDiffAnInsert) {
+          const movedSegments = this.tryMoveInsertionToCursor(
+            diff,
+            nextDiff,
+            cursorAfterChange,
+            segmentStart
+          );
+          if (movedSegments) {
+            adjustedDiffs.push(...movedSegments);
+            i++;
+            lastDiffPosition = segmentEnd;
+            continue;
+          }
+        }
+        if (isRemovalSegment) {
+          const movedSegments = this.tryMoveDeletionToCursor(
+            diff,
+            adjustedDiffs,
+            cursorAfterChange,
+            lastDiffPosition
+          );
+          if (movedSegments) {
+            adjustedDiffs.pop();
+            adjustedDiffs.push(...movedSegments);
+            lastDiffPosition += diff.count ?? 0;
+            continue;
+          }
+        }
+        adjustedDiffs.push(diff);
+        if (!diff.added) {
+          lastDiffPosition += diff.count ?? 0;
+        }
+      }
+      diffs = adjustedDiffs;
+      const thisIter = new Iterator2(this.ops);
+      const otherIter = new Iterator2(other.ops);
+      const retDelta = this.convertChangesToDelta(
+        diffs,
+        thisIter,
+        otherIter
+      );
+      return retDelta.chop();
+    }
+    /**
+     * Try to move an insertion operation from after an unchanged segment to the cursor position within it.
+     * This is a "look-ahead" strategy.
+     *
+     * @param diff              - The current unchanged diff segment.
+     * @param nextDiff          - The next diff segment (expected to be an insertion).
+     * @param cursorAfterChange - The cursor position after the change.
+     * @param segmentStart      - The start position of the current segment.
+     * @return An array of adjusted diff segments if the insertion was successfully moved, null otherwise.
+     */
+    tryMoveInsertionToCursor(diff, nextDiff, cursorAfterChange, segmentStart) {
+      const nextDiffInsert = nextDiff.value;
+      const insertLength = nextDiffInsert.length;
+      const insertOffset = cursorAfterChange - segmentStart - insertLength;
+      const textAtCursor = diff.value.substring(
+        insertOffset,
+        insertOffset + nextDiffInsert.length
+      );
+      const isInsertMoveable = textAtCursor === nextDiffInsert;
+      if (!isInsertMoveable) {
+        return null;
+      }
+      const beforeCursor = diff.value.substring(0, insertOffset);
+      const afterCursor = diff.value.substring(insertOffset);
+      const result = [];
+      if (beforeCursor.length > 0) {
+        result.push({
+          value: beforeCursor,
+          count: beforeCursor.length,
+          added: false,
+          removed: false
+        });
+      }
+      result.push(nextDiff);
+      if (afterCursor.length > 0) {
+        result.push({
+          value: afterCursor,
+          count: afterCursor.length,
+          added: false,
+          removed: false
+        });
+      }
+      return result;
+    }
+    /**
+     * Try to move a deletion operation to the cursor position by looking back at the previous unchanged segment.
+     * This is a "look-back" strategy.
+     *
+     * @param diff              - The current deletion diff segment.
+     * @param adjustedDiffs     - The array of previously processed diff segments.
+     * @param cursorAfterChange - The cursor position after the change.
+     * @param lastDiffPosition  - The position in the document up to (but not including) the current diff.
+     * @return An array of adjusted diff segments if the deletion was successfully moved, null otherwise.
+     */
+    tryMoveDeletionToCursor(diff, adjustedDiffs, cursorAfterChange, lastDiffPosition) {
+      const prevDiff = adjustedDiffs[adjustedDiffs.length - 1];
+      if (!prevDiff || prevDiff.added || prevDiff.removed) {
+        return null;
+      }
+      const prevSegmentStart = lastDiffPosition - (prevDiff.count ?? 0);
+      const prevSegmentEnd = lastDiffPosition;
+      if (cursorAfterChange < prevSegmentStart || cursorAfterChange >= prevSegmentEnd) {
+        return null;
+      }
+      const deletedChars = diff.value;
+      const deleteOffset = cursorAfterChange - prevSegmentStart;
+      const textAtCursor = prevDiff.value.substring(
+        deleteOffset,
+        deleteOffset + deletedChars.length
+      );
+      const canBePlacedHere = textAtCursor === deletedChars;
+      if (!canBePlacedHere) {
+        return null;
+      }
+      const beforeCursor = prevDiff.value.substring(0, deleteOffset);
+      const atAndAfterCursor = prevDiff.value.substring(deleteOffset);
+      const deletionLength = diff.count ?? 0;
+      const afterDeletion = atAndAfterCursor.substring(deletionLength);
+      const result = [];
+      if (beforeCursor.length > 0) {
+        result.push({
+          value: beforeCursor,
+          count: beforeCursor.length,
+          added: false,
+          removed: false
+        });
+      }
+      result.push(diff);
+      if (afterDeletion.length > 0) {
+        result.push({
+          value: afterDeletion,
+          count: afterDeletion.length,
+          added: false,
+          removed: false
+        });
+      }
+      return result;
+    }
+    /**
+     * Convert two Deltas to string representations for diffing.
+     *
+     * @param other - The other Delta to convert.
+     * @return A tuple of [thisString, otherString].
+     */
+    deltasToStrings(other) {
+      return [this, other].map((delta) => {
+        return delta.map((op) => {
+          if (op.insert !== null || op.insert !== void 0) {
+            return typeof op.insert === "string" ? op.insert : NULL_CHARACTER;
+          }
+          const prep = delta === other ? "on" : "with";
+          throw new Error(
+            "diff() called " + prep + " non-document"
+          );
+        }).join("");
+      });
+    }
+    /**
+     * Process diff changes and convert them to Delta operations.
+     *
+     * @param changes   - The array of changes from the diff algorithm.
+     * @param thisIter  - Iterator for this Delta's operations.
+     * @param otherIter - Iterator for the other Delta's operations.
+     * @return A Delta containing the processed diff operations.
+     */
+    convertChangesToDelta(changes, thisIter, otherIter) {
+      const retDelta = new _Delta();
+      changes.forEach((component) => {
+        let length3 = component.count ?? 0;
+        while (length3 > 0) {
+          let opLength = 0;
+          if (component.added) {
+            opLength = Math.min(otherIter.peekLength(), length3);
+            retDelta.push(otherIter.next(opLength));
+          } else if (component.removed) {
+            opLength = Math.min(length3, thisIter.peekLength());
+            thisIter.next(opLength);
+            retDelta.delete(opLength);
+          } else {
+            opLength = Math.min(
+              thisIter.peekLength(),
+              otherIter.peekLength(),
+              length3
+            );
+            const thisOp = thisIter.next(opLength);
+            const otherOp = otherIter.next(opLength);
+            if ((0, import_es63.default)(thisOp.insert, otherOp.insert)) {
+              retDelta.retain(
+                opLength,
+                AttributeMap_default.diff(
+                  thisOp.attributes,
+                  otherOp.attributes
+                )
+              );
+            } else {
+              retDelta.push(otherOp).delete(opLength);
+            }
+          }
+          length3 -= opLength;
+        }
+      });
+      return retDelta;
+    }
+  };
+  var Delta_default = Delta;
+
   // packages/sync/build-module/config.mjs
   var CRDT_DOC_VERSION = 1;
   var CRDT_DOC_META_PERSISTENCE_KEY = "fromPersistence";
@@ -9900,7 +11868,7 @@ var wp;
   }
 
   // packages/core-data/build-module/utils/crdt.mjs
-  var import_es63 = __toESM(require_es6(), 1);
+  var import_es65 = __toESM(require_es6(), 1);
   var import_blocks2 = __toESM(require_blocks(), 1);
 
   // node_modules/uuid/dist/esm-browser/rng.js
@@ -9952,9 +11920,9 @@ var wp;
   var v4_default = v4;
 
   // packages/core-data/build-module/utils/crdt-blocks.mjs
-  var import_es62 = __toESM(require_es6(), 1);
-  var import_rich_text = __toESM(require_rich_text(), 1);
+  var import_es64 = __toESM(require_es6(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
+  var import_rich_text = __toESM(require_rich_text(), 1);
 
   // packages/core-data/build-module/utils/crdt-utils.mjs
   function getRootMap(doc2, key) {
@@ -9996,7 +11964,7 @@ var wp;
       innerBlocks: null,
       clientId: null
     };
-    const res = (0, import_es62.default)(
+    const res = (0, import_es64.default)(
       Object.assign({}, gblock, overwrites),
       Object.assign({}, yblockAsJson, overwrites)
     );
@@ -10060,7 +12028,7 @@ var wp;
       )
     );
   }
-  function mergeCrdtBlocks(yblocks, incomingBlocks, lastSelection2) {
+  function mergeCrdtBlocks(yblocks, incomingBlocks, cursorPosition) {
     if (!serializableBlocksCache.has(incomingBlocks)) {
       serializableBlocksCache.set(
         incomingBlocks,
@@ -10109,7 +12077,7 @@ var wp;
             }
             Object.entries(value).forEach(
               ([attributeName, attributeValue]) => {
-                if ((0, import_es62.default)(
+                if ((0, import_es64.default)(
                   currentAttributes?.get(attributeName),
                   attributeValue
                 )) {
@@ -10124,7 +12092,7 @@ var wp;
                   mergeRichTextUpdate(
                     currentAttribute,
                     attributeValue,
-                    lastSelection2
+                    cursorPosition
                   );
                 } else {
                   currentAttributes.set(
@@ -10153,11 +12121,15 @@ var wp;
               yInnerBlocks = new yjs_exports.Array();
               yblock.set(key, yInnerBlocks);
             }
-            mergeCrdtBlocks(yInnerBlocks, value ?? [], lastSelection2);
+            mergeCrdtBlocks(
+              yInnerBlocks,
+              value ?? [],
+              cursorPosition
+            );
             break;
           }
           default:
-            if (!(0, import_es62.default)(block[key], yblock.get(key))) {
+            if (!(0, import_es64.default)(block[key], yblock.get(key))) {
               yblock.set(key, value);
             }
         }
@@ -10216,13 +12188,24 @@ var wp;
     }
     return cachedRichTextAttributes.get(blockName)?.has(attributeName) ?? false;
   }
-  function mergeRichTextUpdate(blockYText, updatedValue, lastSelection2) {
-    blockYText.delete(0, blockYText.toString().length);
-    blockYText.insert(0, updatedValue);
+  var localDoc;
+  function mergeRichTextUpdate(blockYText, updatedValue, cursorPosition) {
+    if (!localDoc) {
+      localDoc = new yjs_exports.Doc();
+    }
+    const localYText = localDoc.getText("temporary-text");
+    localYText.delete(0, localYText.length);
+    localYText.insert(0, updatedValue);
+    const currentValueAsDelta = new Delta_default(blockYText.toDelta());
+    const updatedValueAsDelta = new Delta_default(localYText.toDelta());
+    const deltaDiff = currentValueAsDelta.diffWithCursor(
+      updatedValueAsDelta,
+      cursorPosition
+    );
+    blockYText.applyDelta(deltaDiff.ops);
   }
 
   // packages/core-data/build-module/utils/crdt.mjs
-  var lastSelection = null;
   var allowedPostProperties = /* @__PURE__ */ new Set([
     "author",
     "blocks",
@@ -10276,7 +12259,8 @@ var wp;
             ymap.set(key, currentBlocks);
           }
           const newBlocks = newValue ?? [];
-          mergeCrdtBlocks(currentBlocks, newBlocks, lastSelection);
+          const cursorPosition = changes.selection?.selectionStart?.offset ?? null;
+          mergeCrdtBlocks(currentBlocks, newBlocks, cursorPosition);
           break;
         }
         case "excerpt": {
@@ -10333,9 +12317,6 @@ var wp;
         }
       }
     });
-    if ("selection" in changes) {
-      lastSelection = changes.selection?.selectionStart ?? null;
-    }
   }
   function defaultGetChangesFromCRDTDoc(crdtDoc) {
     return getRootMap(crdtDoc, CRDT_RECORD_MAP_KEY).toJSON();
@@ -10418,7 +12399,7 @@ var wp;
     return void 0;
   }
   function haveValuesChanged(currentValue, newValue) {
-    return !(0, import_es63.default)(currentValue, newValue);
+    return !(0, import_es65.default)(currentValue, newValue);
   }
   function updateMapValue(map2, key, currentValue, newValue) {
     if (void 0 === newValue) {
@@ -11087,12 +13068,12 @@ var wp;
                       // Edits are the "raw" attribute values, but records may have
                       // objects with more properties, so we use `get` here for the
                       // comparison.
-                      !(0, import_es64.default)(
+                      !(0, import_es66.default)(
                         edits[key],
                         record[key]?.raw ?? record[key]
                       ) && // Sometimes the server alters the sent value which means
                       // we need to also remove the edits before the api request.
-                      (!action.persistedEdits || !(0, import_es64.default)(
+                      (!action.persistedEdits || !(0, import_es66.default)(
                         edits[key],
                         action.persistedEdits[key]
                       ))
@@ -12201,7 +14182,7 @@ var wp;
     saveEntityRecord: () => saveEntityRecord,
     undo: () => undo
   });
-  var import_es65 = __toESM(require_es6(), 1);
+  var import_es67 = __toESM(require_es6(), 1);
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
@@ -12563,7 +14544,7 @@ var wp;
         const recordValue = record[key];
         const editedRecordValue = editedRecord[key];
         const value = mergedEdits[key] ? { ...editedRecordValue, ...edits[key] } : edits[key];
-        acc[key] = (0, import_es65.default)(recordValue, value) ? void 0 : value;
+        acc[key] = (0, import_es67.default)(recordValue, value) ? void 0 : value;
         return acc;
       }, {})
     };
@@ -14975,4 +16956,45 @@ var wp;
   (0, import_data11.register)(store);
   return __toCommonJS(index_exports);
 })();
+/*! Bundled license information:
+
+diff/dist/diff.js:
+  (*!
+  
+   diff v4.0.1
+  
+  Software License Agreement (BSD License)
+  
+  Copyright (c) 2009-2015, Kevin Decker <kpdecker@gmail.com>
+  
+  All rights reserved.
+  
+  Redistribution and use of this software in source and binary forms, with or without modification,
+  are permitted provided that the following conditions are met:
+  
+  * Redistributions of source code must retain the above
+    copyright notice, this list of conditions and the
+    following disclaimer.
+  
+  * Redistributions in binary form must reproduce the above
+    copyright notice, this list of conditions and the
+    following disclaimer in the documentation and/or other
+    materials provided with the distribution.
+  
+  * Neither the name of Kevin Decker nor the names of its
+    contributors may be used to endorse or promote products
+    derived from this software without specific prior
+    written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+  FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+  IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+  OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  @license
+  *)
+*/
 //# sourceMappingURL=index.js.map
