@@ -11741,7 +11741,7 @@ var wp;
   // packages/sync/build-module/manager.mjs
   function createSyncManager() {
     const entityStates = /* @__PURE__ */ new Map();
-    const undoManager2 = createUndoManager();
+    let undoManager2;
     async function loadEntity(syncConfig, objectType, objectId, record, handlers) {
       const providerCreators2 = getProviderCreators();
       if (0 === providerCreators2.length) {
@@ -11765,6 +11765,9 @@ var wp;
         }
         void updateEntityRecord(objectType, objectId);
       };
+      if (!undoManager2) {
+        undoManager2 = createUndoManager();
+      }
       undoManager2.addToScope(recordMap);
       const entityState = {
         handlers,
@@ -11851,7 +11854,10 @@ var wp;
     return {
       createMeta: createEntityMeta,
       load: loadEntity,
-      undoManager: undoManager2,
+      // Use getter to ensure we always return the current value of `undoManager`.
+      get undoManager() {
+        return undoManager2;
+      },
       unload: unloadEntity,
       update: updateCRDTDoc
     };
@@ -12226,21 +12232,6 @@ var wp;
   var disallowedPostMetaKeys = /* @__PURE__ */ new Set([
     WORDPRESS_META_KEY_FOR_CRDT_DOC_PERSISTENCE
   ]);
-  function defaultApplyChangesToCRDTDoc(ydoc, changes) {
-    const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
-    Object.entries(changes).forEach(([key, newValue]) => {
-      if ("function" === typeof newValue) {
-        return;
-      }
-      switch (key) {
-        // Add support for additional data types here.
-        default: {
-          const currentValue = ymap.get(key);
-          updateMapValue(ymap, key, currentValue, newValue);
-        }
-      }
-    });
-  }
   function applyPostChangesToCRDTDoc(ydoc, changes, _postType) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
     Object.keys(changes).forEach((key) => {
@@ -12317,9 +12308,6 @@ var wp;
         }
       }
     });
-  }
-  function defaultGetChangesFromCRDTDoc(crdtDoc) {
-    return getRootMap(crdtDoc, CRDT_RECORD_MAP_KEY).toJSON();
   }
   function getPostChangesFromCRDTDoc(ydoc, editedRecord, _postType) {
     const ymap = getRootMap(ydoc, CRDT_RECORD_MAP_KEY);
@@ -12639,8 +12627,8 @@ var wp;
         newEdits.title = "";
       }
     }
-    if (persistedRecord && window.__experimentalEnableSync) {
-      if (true) {
+    if (true) {
+      if (persistedRecord) {
         const objectType = `postType/${name}`;
         const objectId = persistedRecord.id;
         const meta = getSyncManager()?.createMeta(objectType, objectId);
@@ -12680,41 +12668,39 @@ var wp;
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
         revisionKey: isTemplate && !window?.__experimentalTemplateActivate ? "wp_id" : DEFAULT_ENTITY_KEY
       };
-      if (window.__experimentalEnableSync) {
-        if (true) {
-          entity2.syncConfig = {
-            /**
-             * Apply changes from the local editor to the local CRDT document so
-             * that those changes can be synced to other peers (via the provider).
-             *
-             * @param {import('@wordpress/sync').CRDTDoc}               crdtDoc
-             * @param {Partial< import('@wordpress/sync').ObjectData >} changes
-             * @return {void}
-             */
-            applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, postType),
-            /**
-             * Extract changes from a CRDT document that can be used to update the
-             * local editor state.
-             *
-             * @param {import('@wordpress/sync').CRDTDoc}    crdtDoc
-             * @param {import('@wordpress/sync').ObjectData} editedRecord
-             * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
-             */
-            getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(
-              crdtDoc,
-              editedRecord,
-              postType
-            ),
-            /**
-             * Sync features supported by the entity.
-             *
-             * @type {Record< string, boolean >}
-             */
-            supports: {
-              crdtPersistence: true
-            }
-          };
-        }
+      if (true) {
+        entity2.syncConfig = {
+          /**
+           * Apply changes from the local editor to the local CRDT document so
+           * that those changes can be synced to other peers (via the provider).
+           *
+           * @param {import('@wordpress/sync').CRDTDoc}               crdtDoc
+           * @param {Partial< import('@wordpress/sync').ObjectData >} changes
+           * @return {void}
+           */
+          applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, postType),
+          /**
+           * Extract changes from a CRDT document that can be used to update the
+           * local editor state.
+           *
+           * @param {import('@wordpress/sync').CRDTDoc}    crdtDoc
+           * @param {import('@wordpress/sync').ObjectData} editedRecord
+           * @return {Partial< import('@wordpress/sync').ObjectData >} Changes to record
+           */
+          getChangesFromCRDTDoc: (crdtDoc, editedRecord) => getPostChangesFromCRDTDoc(
+            crdtDoc,
+            editedRecord,
+            postType
+          ),
+          /**
+           * Sync features supported by the entity.
+           *
+           * @type {Record< string, boolean >}
+           */
+          supports: {
+            crdtPersistence: true
+          }
+        };
       }
       return entity2;
     });
@@ -12745,14 +12731,6 @@ var wp;
       baseURL: "/wp/v2/settings",
       meta: {}
     };
-    if (window.__experimentalEnableSync) {
-      if (true) {
-        entity2.syncConfig = {
-          applyChangesToCRDTDoc: defaultApplyChangesToCRDTDoc,
-          getChangesFromCRDTDoc: defaultGetChangesFromCRDTDoc
-        };
-      }
-    }
     const site = await (0, import_api_fetch.default)({
       path: entity2.baseURL,
       method: "OPTIONS"
@@ -13476,10 +13454,8 @@ var wp;
 
   // packages/core-data/build-module/private-selectors.mjs
   function getUndoManager(state) {
-    if (window.__experimentalEnableSync) {
-      if (true) {
-        return getSyncManager()?.undoManager ?? state.undoManager;
-      }
+    if (true) {
+      return getSyncManager()?.undoManager ?? state.undoManager;
     }
     return state.undoManager;
   }
@@ -14548,8 +14524,8 @@ var wp;
         return acc;
       }, {})
     };
-    if (window.__experimentalEnableSync && entityConfig.syncConfig) {
-      if (true) {
+    if (true) {
+      if (entityConfig.syncConfig) {
         const objectType = `${kind}/${name}`;
         const objectId = recordId;
         getSyncManager()?.update(
@@ -15337,8 +15313,8 @@ var wp;
           { kind, name, id: key }
         ]);
       }
-      if (window.__experimentalEnableSync && entityConfig.syncConfig && isNumericID(key) && !query) {
-        if (true) {
+      if (true) {
+        if (entityConfig.syncConfig && isNumericID(key) && !query) {
           const objectType = `${kind}/${name}`;
           const objectId = key;
           const recordWithTransients = { ...record };
