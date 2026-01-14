@@ -43416,8 +43416,29 @@ ${js}
     settings: () => settings57
   });
   var import_hooks45 = __toESM(require_hooks(), 1);
+
+  // packages/block-library/build-module/utils/is-within-overlay.mjs
   var import_data83 = __toESM(require_data(), 1);
   var import_core_data46 = __toESM(require_core_data(), 1);
+  function isWithinNavigationOverlay() {
+    const editorStore = (0, import_data83.select)("core/editor");
+    if (!editorStore) {
+      return false;
+    }
+    const { getCurrentPostType, getCurrentPostId } = editorStore;
+    const { getEditedEntityRecord } = (0, import_data83.select)(import_core_data46.store);
+    const postType = getCurrentPostType?.();
+    const postId = getCurrentPostId?.();
+    if (postType === "wp_template_part" && postId) {
+      const templatePart = getEditedEntityRecord(
+        "postType",
+        "wp_template_part",
+        postId
+      );
+      return templatePart?.area === NAVIGATION_OVERLAY_TEMPLATE_PART_AREA;
+    }
+    return false;
+  }
 
   // packages/block-library/build-module/navigation-overlay-close/edit.mjs
   var import_block_editor161 = __toESM(require_block_editor(), 1);
@@ -43576,25 +43597,6 @@ ${js}
     icon: icon_default6,
     edit: NavigationOverlayCloseEdit
   };
-  function isWithinOverlay() {
-    const editorStore = (0, import_data83.select)("core/editor");
-    if (!editorStore) {
-      return false;
-    }
-    const { getCurrentPostType, getCurrentPostId } = editorStore;
-    const { getEditedEntityRecord } = (0, import_data83.select)(import_core_data46.store);
-    const postType = getCurrentPostType();
-    const postId = getCurrentPostId();
-    if (postType === "wp_template_part" && postId) {
-      const templatePartEntity = getEditedEntityRecord(
-        "postType",
-        "wp_template_part",
-        postId
-      );
-      return templatePartEntity?.area === NAVIGATION_OVERLAY_TEMPLATE_PART_AREA;
-    }
-    return false;
-  }
   var init57 = () => {
     (0, import_hooks45.addFilter)(
       "blockEditor.__unstableCanInsertBlockType",
@@ -43606,7 +43608,7 @@ ${js}
         if (!canInsert) {
           return canInsert;
         }
-        return isWithinOverlay();
+        return isWithinNavigationOverlay();
       }
     );
     return initBlock({ name: name57, metadata: block_default57, settings: settings57 });
