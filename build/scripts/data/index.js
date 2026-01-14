@@ -948,8 +948,9 @@ var wp;
       case "FAIL_RESOLUTIONS":
       case "INVALIDATE_RESOLUTION":
         return subKeysIsResolved(state, action);
+      default:
+        return state;
     }
-    return state;
   };
   var reducer_default = isResolved;
 
