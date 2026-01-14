@@ -30428,14 +30428,14 @@ ${js}
           lockTitleControlsMessage
         }
       ) }),
-      !hasDataFormBlockFields && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_block_editor111.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(
+      !hasDataFormBlockFields && isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(import_block_editor111.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(
         import_components51.__experimentalToolsPanel,
         {
           label: (0, import_i18n90.__)("Media"),
           resetAll: () => onSelectImage(void 0),
           dropdownMenuProps,
           children: [
-            isSingleSelected && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+            !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
               import_components51.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n90.__)("Image"),
@@ -30460,7 +30460,7 @@ ${js}
                 )
               }
             ),
-            isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
               import_components51.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n90.__)("Alternative text"),
