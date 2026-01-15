@@ -25140,53 +25140,59 @@ var wp;
           ),
           canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(Menu6, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Insert left") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-              Menu6.Item,
-              {
-                onClick: () => {
-                  onChangeView({
-                    ...view,
-                    fields: [
-                      ...visibleFieldIds.slice(
-                        0,
-                        index
-                      ),
-                      hiddenField.id,
-                      ...visibleFieldIds.slice(
-                        index
-                      )
-                    ]
-                  });
+            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => {
+              const insertIndex = isRtl ? index + 1 : index;
+              return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+                Menu6.Item,
+                {
+                  onClick: () => {
+                    onChangeView({
+                      ...view,
+                      fields: [
+                        ...visibleFieldIds.slice(
+                          0,
+                          insertIndex
+                        ),
+                        hiddenField.id,
+                        ...visibleFieldIds.slice(
+                          insertIndex
+                        )
+                      ]
+                    });
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
-              },
-              hiddenField.id
-            )) })
+                hiddenField.id
+              );
+            }) })
           ] }),
           canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(Menu6, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Insert right") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-              Menu6.Item,
-              {
-                onClick: () => {
-                  onChangeView({
-                    ...view,
-                    fields: [
-                      ...visibleFieldIds.slice(
-                        0,
-                        index + 1
-                      ),
-                      hiddenField.id,
-                      ...visibleFieldIds.slice(
-                        index + 1
-                      )
-                    ]
-                  });
+            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => {
+              const insertIndex = isRtl ? index : index + 1;
+              return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+                Menu6.Item,
+                {
+                  onClick: () => {
+                    onChangeView({
+                      ...view,
+                      fields: [
+                        ...visibleFieldIds.slice(
+                          0,
+                          insertIndex
+                        ),
+                        hiddenField.id,
+                        ...visibleFieldIds.slice(
+                          insertIndex
+                        )
+                      ]
+                    });
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
-              },
-              hiddenField.id
-            )) })
+                hiddenField.id
+              );
+            }) })
           ] }),
           isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
             Menu6.Item,
@@ -25758,6 +25764,7 @@ var wp;
       }
     };
     const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
+    const isRtl = (0, import_i18n90.isRTL)();
     return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(import_jsx_runtime191.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(
         "table",
@@ -25831,8 +25838,8 @@ var wp;
                   onHide,
                   setOpenedFilter,
                   canMove: false,
-                  canInsertLeft: false,
-                  canInsertRight: view.layout?.enableMoving ?? true
+                  canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
+                  canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
                 }
               ) }),
               columns.map((column, index) => {
