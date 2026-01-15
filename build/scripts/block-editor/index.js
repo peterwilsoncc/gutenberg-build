@@ -22031,7 +22031,7 @@ var wp;
         return (0, import_i18n25.sprintf)(
           // translators: %s: The shortcut key to access the List View.
           (0, import_i18n25.__)(
-            "Block visibility settings saved. You can access them via the List View (%s)."
+            "Block visibility settings updated. You can access them via the List View (%s)."
           ),
           listViewShortcut
         );
@@ -22092,7 +22092,7 @@ var wp;
           uniqueByBlock: true
         });
         createSuccessNotice(noticeMessage, {
-          id: hideEverywhere ? "block-visibility-hidden" : "block-visibility-viewports-saved",
+          id: hideEverywhere ? "block-visibility-hidden" : "block-visibility-viewports-updated",
           type: "snackbar"
         });
         onClose();
