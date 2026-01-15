@@ -15032,7 +15032,8 @@ var wp;
       {
         ...props,
         fontSizes,
-        disableCustomFontSizes: !customFontSize
+        disableCustomFontSizes: !customFontSize,
+        __next40pxDefaultSize: true
       }
     );
   }
@@ -31139,25 +31140,29 @@ var wp;
             "Add block",
             "Generic label for block inserter button"
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-            import_components64.Button,
-            {
-              __next40pxDefaultSize: true,
-              ref,
-              onFocus,
-              tabIndex,
-              className: clsx_default(
-                className,
-                "block-editor-button-block-appender"
-              ),
-              onClick: onToggle,
-              "aria-haspopup": isToggleButton ? "true" : void 0,
-              "aria-expanded": isToggleButton ? isOpen : void 0,
-              disabled,
-              label,
-              showTooltip: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(icon_default, { icon: plus_default })
-            }
+          return (
+            // Disable reason: There shouldn't be a case where this button is disabled but not visually hidden.
+            // eslint-disable-next-line @wordpress/components-no-unsafe-button-disabled
+            /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
+              import_components64.Button,
+              {
+                __next40pxDefaultSize: true,
+                ref,
+                onFocus,
+                tabIndex,
+                className: clsx_default(
+                  className,
+                  "block-editor-button-block-appender"
+                ),
+                onClick: onToggle,
+                "aria-haspopup": isToggleButton ? "true" : void 0,
+                "aria-expanded": isToggleButton ? isOpen : void 0,
+                disabled,
+                label,
+                showTooltip: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(icon_default, { icon: plus_default })
+              }
+            )
           );
         },
         isAppender: true
