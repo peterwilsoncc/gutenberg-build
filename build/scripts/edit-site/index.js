@@ -6257,7 +6257,7 @@ var wp;
   var ANIMATION_DURATION2 = 0.3;
   function Layout() {
     const { query, name: routeKey, areas: areas2, widths } = useLocation6();
-    const { canvas = "view" } = query;
+    const canvas = routeKey === "notfound" ? "view" : query?.canvas ?? "view";
     const isMobileViewport = (0, import_compose2.useViewportMatch)("medium", "<");
     const toggleRef = (0, import_element12.useRef)();
     const navigateRegionsProps = (0, import_components9.__unstableUseNavigateRegions)();
