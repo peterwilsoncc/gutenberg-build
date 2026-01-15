@@ -33095,6 +33095,7 @@ This message will only show in development mode. It won't appear in production. 
       ...additionalProps
     } = props;
     return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(button_default, {
+      __next40pxDefaultSize: true,
       ...additionalProps,
       "aria-pressed": isPressed,
       ref: forwardedRef,
@@ -33120,6 +33121,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [isSelected2, setActiveId, activeId, id3]);
     return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(Composite22.Item, {
       render: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(button_default, {
+        __next40pxDefaultSize: true,
         ...additionalProps,
         role: "option",
         "aria-selected": !!isSelected2,
@@ -33145,7 +33147,6 @@ This message will only show in development mode. It won't appear in production. 
     const commonProps = {
       id: id3,
       className: "components-circular-option-picker__option",
-      __next40pxDefaultSize: true,
       ...additionalProps
     };
     const isListbox = setActiveId !== void 0;
@@ -36123,13 +36124,21 @@ This message will only show in development mode. It won't appear in production. 
           onClick: toggleLinked,
           isLinked
         })
-      }), !isLinked && splitOnAxis && ["vertical", "horizontal"].map((axis) => /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BoxInputControl, {
-        side: axis,
-        ...inputControlProps
-      }, axis)), !isLinked && !splitOnAxis && Array.from(sidesToRender).map((axis) => /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BoxInputControl, {
-        side: axis,
-        ...inputControlProps
-      }, axis)), allowReset && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(ResetButton, {
+      }), !isLinked && splitOnAxis && ["vertical", "horizontal"].map((axis) => (
+        // Disable reason: the parent component is handling the __next40pxDefaultSize prop
+        // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
+        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BoxInputControl, {
+          side: axis,
+          ...inputControlProps
+        }, axis)
+      )), !isLinked && !splitOnAxis && Array.from(sidesToRender).map((axis) => (
+        // Disable reason: the parent component is handling the __next40pxDefaultSize prop
+        // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
+        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(BoxInputControl, {
+          side: axis,
+          ...inputControlProps
+        }, axis)
+      )), allowReset && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(ResetButton, {
         className: "component-box-control__reset-button",
         variant: "secondary",
         size: "small",
@@ -37067,13 +37076,17 @@ This message will only show in development mode. It won't appear in production. 
     const focusOnCopyEventTarget = (event) => {
       event.target.focus();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(button_default, {
-      ...buttonProps,
-      className: classes,
-      ref,
-      onCopy: focusOnCopyEventTarget,
-      children
-    });
+    return (
+      // Disable reasons: the parent component takes care of the __next40pxDefaultSize prop.
+      // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
+      /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(button_default, {
+        ...buttonProps,
+        className: classes,
+        ref,
+        onCopy: focusOnCopyEventTarget,
+        children
+      })
+    );
   }
 
   // packages/components/build-module/palette-edit/index.mjs
@@ -43402,11 +43415,15 @@ This message will only show in development mode. It won't appear in production. 
     }
     const ui = render ? render({
       openFileDialog
-    }) : /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(button_default, {
-      onClick: openFileDialog,
-      ...props,
-      children
-    });
+    }) : (
+      // Disable reason: the parent component already takes care of the `__next40pxDefaultSize` prop.
+      // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
+      /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(button_default, {
+        onClick: openFileDialog,
+        ...props,
+        children
+      })
+    );
     const compatAccept = accept?.includes("audio/*") ? `${accept}, audio/mp3, audio/x-m4a, audio/x-m4b, audio/x-m4p, audio/x-wav, audio/webm` : accept;
     return /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("div", {
       className: "components-form-file-upload",
@@ -44248,14 +44265,18 @@ This message will only show in development mode. It won't appear in production. 
       alternative: "wp.components.Button",
       version: "6.2"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(button_default, {
-      ...props,
-      ref,
-      tooltipPosition: labelPosition,
-      iconSize: size3,
-      showTooltip: tooltip !== void 0 ? !!tooltip : void 0,
-      label: tooltip || label
-    });
+    return (
+      // Disable reason: the parent component is taking care of the __next40pxDefaultSize prop.
+      // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
+      /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(button_default, {
+        ...props,
+        ref,
+        tooltipPosition: labelPosition,
+        iconSize: size3,
+        showTooltip: tooltip !== void 0 ? !!tooltip : void 0,
+        label: tooltip || label
+      })
+    );
   }
   var deprecated_default = (0, import_element147.forwardRef)(UnforwardedIconButton);
 
@@ -46998,14 +47019,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       size: restProps.size,
       __next40pxDefaultSize: restProps.__next40pxDefaultSize
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(SelectControl, {
-      __shouldNotWarnDeprecated36pxSize: true,
-      label,
-      options: options2,
-      onChange,
-      value: selectedId,
-      ...restProps
-    });
+    return (
+      // Disable reason: the parent component already takes case of the `__next40pxDefaultSize` prop.
+      // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
+      /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(SelectControl, {
+        __shouldNotWarnDeprecated36pxSize: true,
+        label,
+        options: options2,
+        onChange,
+        value: selectedId,
+        ...restProps
+      })
+    );
   }
   var tree_select_default = TreeSelect;
 
@@ -47197,10 +47222,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store,
       ref,
       value,
-      render: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(button_default, {
-        variant: isChecked ? "primary" : "secondary",
-        ...props
-      }),
+      render: (
+        // Disable: the parent component already takes care of the `__next40pxDefaultSize` prop.
+        // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
+        /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(button_default, {
+          variant: isChecked ? "primary" : "secondary",
+          ...props
+        })
+      ),
       children: children || value
     });
   }
