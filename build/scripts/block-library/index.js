@@ -7031,8 +7031,15 @@ var wp;
     }
     return outputClassNames.trim();
   };
+  function hasInlineResponsivePadding(html) {
+    const paddingPattern = /padding-(top|bottom)\s*:\s*[\d.]+%/i;
+    return paddingPattern.test(html);
+  }
   function getClassNames(html, existingClassNames, allowResponsive = true) {
     if (!allowResponsive) {
+      return removeAspectRatioClasses(existingClassNames);
+    }
+    if (hasInlineResponsivePadding(html)) {
       return removeAspectRatioClasses(existingClassNames);
     }
     const previewDocument = document.implementation.createHTMLDocument("");
