@@ -41883,7 +41883,9 @@ var wp;
         resolve(null);
       }, 3e3);
     }).then((element) => {
-      import_dom30.focus.focusable.find(element)?.[0]?.focus();
+      if (element && element.isConnected) {
+        import_dom30.focus.focusable.find(element)?.[0]?.focus();
+      }
     });
   }
   function getDragDisplacementValues({
