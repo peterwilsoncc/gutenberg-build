@@ -11186,10 +11186,13 @@ var wp;
       return false;
     }
     if (typeof blockVisibility2 === "object" && blockVisibility2 !== null) {
-      const settings2 = getSettings(state);
-      const viewportType = settings2[deviceTypeKey] ?? BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
-      const viewportKey = viewportType.toLowerCase();
-      return blockVisibility2?.[viewportKey] === false;
+      const viewportConfig = blockVisibility2.viewport;
+      if (viewportConfig && typeof viewportConfig === "object") {
+        const settings2 = getSettings(state);
+        const viewportType = settings2[deviceTypeKey] ?? BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
+        const viewportKey = viewportType.toLowerCase();
+        return viewportConfig[viewportKey] === false;
+      }
     }
     return false;
   };
@@ -11215,9 +11218,13 @@ var wp;
       if ("object" !== typeof blockVisibility2) {
         return false;
       }
-      return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.some(
-        ([, { key }]) => blockVisibility2?.[key] === false
-      );
+      const viewportConfig = blockVisibility2.viewport;
+      if (viewportConfig && typeof viewportConfig === "object") {
+        return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.some(
+          ([, { key }]) => viewportConfig[key] === false
+        );
+      }
+      return false;
     });
   };
   function hasBlockSpotlight2(state) {
@@ -21833,12 +21840,16 @@ var wp;
     if ("object" !== typeof blockVisibility2) {
       return false;
     }
+    const viewportConfig = blockVisibility2.viewport;
+    if (!viewportConfig || "object" !== typeof viewportConfig) {
+      return false;
+    }
     if (!BLOCK_VISIBILITY_VIEWPORT_ENTRIES.some(
       ([, { key }]) => key === viewport
     )) {
       return false;
     }
-    return blockVisibility2[viewport] === false;
+    return viewportConfig[viewport] === false;
   }
   function getViewportCheckboxState(blocks2, viewport) {
     if (!blocks2?.length) {
@@ -22055,15 +22066,17 @@ var wp;
     const handleSubmit = (0, import_element30.useCallback)(
       (event) => {
         event.preventDefault();
-        const newVisibility = hideEverywhere ? false : BLOCK_VISIBILITY_VIEWPORT_ENTRIES.reduce(
-          (acc, [, { key }]) => {
-            if (viewportChecked[key]) {
-              acc[key] = false;
-            }
-            return acc;
-          },
-          {}
-        );
+        const newVisibility = hideEverywhere ? false : {
+          viewport: BLOCK_VISIBILITY_VIEWPORT_ENTRIES.reduce(
+            (acc, [, { key }]) => {
+              if (viewportChecked[key]) {
+                acc[key] = false;
+              }
+              return acc;
+            },
+            {}
+          )
+        };
         const attributesByClientId = Object.fromEntries(
           blocks2.map(({ clientId, attributes }) => [
             clientId,
@@ -22248,7 +22261,7 @@ var wp;
       if (blockVisibility2 === false) {
         return true;
       }
-      if (window.__experimentalHideBlocksBasedOnScreenSize && blockVisibility2?.[currentViewport] === false) {
+      if (window.__experimentalHideBlocksBasedOnScreenSize && blockVisibility2?.viewport?.[currentViewport] === false) {
         return true;
       }
       return false;
