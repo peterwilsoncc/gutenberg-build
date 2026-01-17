@@ -30166,6 +30166,7 @@ ${js}
     const [hasImageErrored, setHasImageErrored] = (0, import_element41.useState)(false);
     const hasNonContentControls = blockEditingMode === "default";
     const isContentOnlyMode = blockEditingMode === "contentOnly";
+    const showDimensionsControls = allowResize && hasNonContentControls;
     const isResizable = allowResize && hasNonContentControls && !isWideAligned && isLargeViewport;
     const imageSizeOptions = imageSizes.filter(
       ({ slug }) => image?.media_details?.sizes?.[slug]?.source_url
@@ -30301,7 +30302,7 @@ ${js}
     );
     const lightboxChecked = !!lightbox?.enabled || !lightbox && !!lightboxSetting?.enabled;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const dimensionsControl = isResizable && (SIZED_LAYOUTS.includes(parentLayoutType) ? /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
+    const dimensionsControl = showDimensionsControls && (SIZED_LAYOUTS.includes(parentLayoutType) ? /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
       DimensionsTool,
       {
         panelId: clientId,
@@ -30340,7 +30341,8 @@ ${js}
         defaultScale: "cover",
         defaultAspectRatio: "auto",
         scaleOptions,
-        unitsOptions: dimensionsUnitsOptions
+        unitsOptions: dimensionsUnitsOptions,
+        tools: isWideAligned ? ["aspectRatio", "scale"] : ["aspectRatio", "widthHeight", "scale"]
       }
     ));
     const resetSettings = () => {
