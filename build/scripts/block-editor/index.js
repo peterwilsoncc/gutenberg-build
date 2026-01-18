@@ -24778,16 +24778,15 @@ var wp;
         stripExperimentalSettings = false
       } = props;
       const mediaUploadSettings = use_media_upload_settings_default(_settings);
-      let settings2 = _settings;
-      if (window.__experimentalMediaProcessing && _settings.mediaUpload) {
-        settings2 = (0, import_element44.useMemo)(
-          () => ({
+      const settings2 = (0, import_element44.useMemo)(() => {
+        if (window.__experimentalMediaProcessing && _settings?.mediaUpload) {
+          return {
             ..._settings,
             mediaUpload: mediaUpload.bind(null, registry)
-          }),
-          [_settings, registry]
-        );
-      }
+          };
+        }
+        return _settings;
+      }, [_settings, registry]);
       const { __experimentalUpdateSettings: __experimentalUpdateSettings2 } = unlock(
         (0, import_data38.useDispatch)(store)
       );
