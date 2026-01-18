@@ -59900,7 +59900,7 @@ var wp;
       hasUserSelectionRef.current = false;
     }, [clientId]);
     (0, import_element215.useEffect)(() => {
-      if (!tabs?.length || hasUserSelectionRef.current) {
+      if (!tabs?.length || hasUserSelectionRef.current && tabs.some((tab) => tab.name === selectedTabId)) {
         return;
       }
       const firstTabName = tabs[0]?.name;
