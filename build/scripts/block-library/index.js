@@ -37236,8 +37236,8 @@ ${js}
     settings: () => settings53
   });
   var import_i18n137 = __toESM(require_i18n(), 1);
-  var import_data83 = __toESM(require_data(), 1);
-  var import_core_data46 = __toESM(require_core_data(), 1);
+  var import_data84 = __toESM(require_data(), 1);
+  var import_core_data47 = __toESM(require_core_data(), 1);
   var import_html_entities7 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/navigation/block.json
@@ -37395,8 +37395,8 @@ ${js}
   // packages/block-library/build-module/navigation/edit/index.mjs
   var import_element73 = __toESM(require_element(), 1);
   var import_block_editor155 = __toESM(require_block_editor(), 1);
-  var import_core_data45 = __toESM(require_core_data(), 1);
-  var import_data82 = __toESM(require_data(), 1);
+  var import_core_data46 = __toESM(require_core_data(), 1);
+  var import_data83 = __toESM(require_data(), 1);
   var import_components86 = __toESM(require_components(), 1);
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
@@ -40916,11 +40916,34 @@ ${js}
     return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(AccessibleDescription, { id, children: description });
   }
 
+  // packages/block-library/build-module/utils/is-within-overlay.mjs
+  var import_data82 = __toESM(require_data(), 1);
+  var import_core_data45 = __toESM(require_core_data(), 1);
+  function isWithinNavigationOverlay() {
+    const editorStore = (0, import_data82.select)("core/editor");
+    if (!editorStore) {
+      return false;
+    }
+    const { getCurrentPostType, getCurrentPostId } = editorStore;
+    const { getEditedEntityRecord } = (0, import_data82.select)(import_core_data45.store);
+    const postType = getCurrentPostType?.();
+    const postId = getCurrentPostId?.();
+    if (postType === "wp_template_part" && postId) {
+      const templatePart = getEditedEntityRecord(
+        "postType",
+        "wp_template_part",
+        postId
+      );
+      return templatePart?.area === NAVIGATION_OVERLAY_TEMPLATE_PART_AREA;
+    }
+    return false;
+  }
+
   // packages/block-library/build-module/navigation/edit/index.mjs
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   function NavigationAddPageButton({ clientId }) {
-    const { insertBlock } = (0, import_data82.useDispatch)(import_block_editor155.store);
-    const { getBlockCount } = (0, import_data82.useSelect)(import_block_editor155.store);
+    const { insertBlock } = (0, import_data83.useDispatch)(import_block_editor155.store);
+    const { getBlockCount } = (0, import_data83.useSelect)(import_block_editor155.store);
     const onAddPage = (0, import_element73.useCallback)(() => {
       const blockCount = getBlockCount(clientId);
       const newBlock = (0, import_blocks61.createBlock)(DEFAULT_BLOCK5.name, {
@@ -40959,6 +40982,7 @@ ${js}
       setDetectedOverlayBackgroundColor
     ] = (0, import_element73.useState)();
     const [detectedOverlayColor, setDetectedOverlayColor] = (0, import_element73.useState)();
+    const isWithinOverlay = (0, import_data83.useSelect)(() => isWithinNavigationOverlay(), []);
     const enableContrastChecking = import_element73.Platform.OS === "web";
     (0, import_element73.useEffect)(() => {
       if (!enableContrastChecking) {
@@ -40992,45 +41016,50 @@ ${js}
     if (!colorGradientSettings.hasColorsOrGradients) {
       return null;
     }
+    const colorSettings = [
+      {
+        colorValue: textColor.color,
+        label: (0, import_i18n136.__)("Text"),
+        onColorChange: setTextColor,
+        resetAllFilter: () => setTextColor(),
+        clearable: true,
+        enableAlpha: true
+      },
+      {
+        colorValue: backgroundColor.color,
+        label: (0, import_i18n136.__)("Background"),
+        onColorChange: setBackgroundColor,
+        resetAllFilter: () => setBackgroundColor(),
+        clearable: true,
+        enableAlpha: true
+      }
+    ];
+    if (!hasCustomOverlay) {
+      colorSettings.push(
+        {
+          colorValue: overlayTextColor.color,
+          label: isWithinOverlay ? (0, import_i18n136.__)("Submenu text") : (0, import_i18n136.__)("Submenu & overlay text"),
+          onColorChange: setOverlayTextColor,
+          resetAllFilter: () => setOverlayTextColor(),
+          clearable: true,
+          enableAlpha: true
+        },
+        {
+          colorValue: overlayBackgroundColor.color,
+          label: isWithinOverlay ? (0, import_i18n136.__)("Submenu background") : (0, import_i18n136.__)("Submenu & overlay background"),
+          onColorChange: setOverlayBackgroundColor,
+          resetAllFilter: () => setOverlayBackgroundColor(),
+          clearable: true,
+          enableAlpha: true
+        }
+      );
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
         import_block_editor155.__experimentalColorGradientSettingsDropdown,
         {
           __experimentalIsRenderedInSidebar: true,
-          settings: [
-            {
-              colorValue: textColor.color,
-              label: (0, import_i18n136.__)("Text"),
-              onColorChange: setTextColor,
-              resetAllFilter: () => setTextColor(),
-              clearable: true,
-              enableAlpha: true
-            },
-            {
-              colorValue: backgroundColor.color,
-              label: (0, import_i18n136.__)("Background"),
-              onColorChange: setBackgroundColor,
-              resetAllFilter: () => setBackgroundColor(),
-              clearable: true,
-              enableAlpha: true
-            },
-            {
-              colorValue: overlayTextColor.color,
-              label: hasCustomOverlay ? (0, import_i18n136.__)("Submenu text") : (0, import_i18n136.__)("Submenu & overlay text"),
-              onColorChange: setOverlayTextColor,
-              resetAllFilter: () => setOverlayTextColor(),
-              clearable: true,
-              enableAlpha: true
-            },
-            {
-              colorValue: overlayBackgroundColor.color,
-              label: hasCustomOverlay ? (0, import_i18n136.__)("Submenu background") : (0, import_i18n136.__)("Submenu & overlay background"),
-              onColorChange: setOverlayBackgroundColor,
-              resetAllFilter: () => setOverlayBackgroundColor(),
-              clearable: true,
-              enableAlpha: true
-            }
-          ],
+          settings: colorSettings,
           panelId: clientId,
           ...colorGradientSettings,
           gradients: [],
@@ -41098,7 +41127,7 @@ ${js}
     const recursionId = `navigationMenu/${ref}`;
     const hasAlreadyRendered = (0, import_block_editor155.useHasRecursion)(recursionId);
     const blockEditingMode = (0, import_block_editor155.useBlockEditingMode)();
-    const { onNavigateToEntityRecord } = (0, import_data82.useSelect)((select9) => {
+    const { onNavigateToEntityRecord } = (0, import_data83.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor155.store);
       const settings116 = getSettings2();
       return {
@@ -41144,7 +41173,7 @@ ${js}
       replaceInnerBlocks,
       selectBlock,
       __unstableMarkNextChangeAsNotPersistent
-    } = (0, import_data82.useDispatch)(import_block_editor155.store);
+    } = (0, import_data83.useDispatch)(import_block_editor155.store);
     const [isResponsiveMenuOpen, setResponsiveMenuVisibility] = (0, import_element73.useState)(false);
     const [overlayMenuPreview, setOverlayMenuPreview] = (0, import_element73.useState)(false);
     const {
@@ -41178,7 +41207,7 @@ ${js}
     );
     const isEntityAvailable = !isNavigationMenuMissing && isNavigationMenuResolved;
     const hasUnsavedBlocks = hasUncontrolledInnerBlocks && !isEntityAvailable;
-    const { getNavigationFallbackId } = unlock((0, import_data82.useSelect)(import_core_data45.store));
+    const { getNavigationFallbackId } = unlock((0, import_data83.useSelect)(import_core_data46.store));
     const navigationFallbackId = !(ref || hasUnsavedBlocks) ? getNavigationFallbackId() : null;
     (0, import_element73.useEffect)(() => {
       if (ref || hasUnsavedBlocks || !navigationFallbackId) {
@@ -41198,7 +41227,7 @@ ${js}
     const isPlaceholder = !ref && !isCreatingNavigationMenu && !isConvertingClassicMenu && hasResolvedNavigationMenus && classicMenus?.length === 0 && !hasUncontrolledInnerBlocks;
     const isLoading = !hasResolvedNavigationMenus || isCreatingNavigationMenu || isConvertingClassicMenu || !!(ref && !isEntityAvailable && !isConvertingClassicMenu);
     const textDecoration = attributes3.style?.typography?.textDecoration;
-    const hasBlockOverlay = (0, import_data82.useSelect)(
+    const hasBlockOverlay = (0, import_data83.useSelect)(
       (select9) => select9(import_block_editor155.store).__unstableHasActiveBlockOverlayActive(
         clientId
       ),
@@ -41602,7 +41631,7 @@ ${js}
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_core_data45.EntityProvider, { kind: "postType", type: "wp_navigation", id: ref, children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_block_editor155.RecursionProvider, { uniqueId: recursionId, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_core_data46.EntityProvider, { kind: "postType", type: "wp_navigation", id: ref, children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_block_editor155.RecursionProvider, { uniqueId: recursionId, children: [
       /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
         menu_inspector_controls_default,
         {
@@ -42284,7 +42313,7 @@ ${js}
       if (!ref) {
         return;
       }
-      const navigation = (0, import_data83.select)(import_core_data46.store).getEditedEntityRecord(
+      const navigation = (0, import_data84.select)(import_core_data47.store).getEditedEntityRecord(
         "postType",
         "wp_navigation",
         ref
@@ -42405,7 +42434,7 @@ ${js}
 
   // packages/block-library/build-module/navigation-link/edit.mjs
   var import_blocks62 = __toESM(require_blocks(), 1);
-  var import_data84 = __toESM(require_data(), 1);
+  var import_data85 = __toESM(require_data(), 1);
   var import_components87 = __toESM(require_components(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
@@ -42483,7 +42512,7 @@ ${js}
       replaceBlock,
       __unstableMarkNextChangeAsNotPersistent,
       selectBlock
-    } = (0, import_data84.useDispatch)(import_block_editor158.store);
+    } = (0, import_data85.useDispatch)(import_block_editor158.store);
     const [isLinkOpen, setIsLinkOpen] = (0, import_element74.useState)(isSelected && !url);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element74.useState)(null);
     const listItemRef = (0, import_element74.useRef)(null);
@@ -42500,7 +42529,7 @@ ${js}
       hasChildren,
       parentBlockClientId,
       isSubmenu
-    } = (0, import_data84.useSelect)(
+    } = (0, import_data85.useSelect)(
       (select9) => {
         const {
           getBlockCount,
@@ -42532,7 +42561,7 @@ ${js}
       [clientId, maxNestingLevel]
     );
     const validateLinkStatus = useEnableLinkStatusValidation(clientId);
-    const { getBlocks } = (0, import_data84.useSelect)(import_block_editor158.store);
+    const { getBlocks } = (0, import_data85.useSelect)(import_block_editor158.store);
     const { hasUrlBinding, isBoundEntityAvailable } = useEntityBinding({
       clientId,
       attributes: attributes3
@@ -43155,7 +43184,7 @@ ${js}
   };
 
   // packages/block-library/build-module/navigation-submenu/edit.mjs
-  var import_data85 = __toESM(require_data(), 1);
+  var import_data86 = __toESM(require_data(), 1);
   var import_components89 = __toESM(require_components(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
@@ -43237,7 +43266,7 @@ ${js}
       clientId,
       attributes: attributes3
     });
-    const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, import_data85.useDispatch)(import_block_editor161.store);
+    const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, import_data86.useDispatch)(import_block_editor161.store);
     const [isLinkOpen, setIsLinkOpen] = (0, import_element75.useState)(false);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element75.useState)(null);
     const listItemRef = (0, import_element75.useRef)(null);
@@ -43251,7 +43280,7 @@ ${js}
       hasChildren,
       selectedBlockHasChildren,
       onlyDescendantIsEmptyLink
-    } = (0, import_data85.useSelect)(
+    } = (0, import_data86.useSelect)(
       (select9) => {
         const {
           hasSelectedInnerBlock,
@@ -43694,29 +43723,6 @@ ${js}
     settings: () => settings57
   });
   var import_hooks45 = __toESM(require_hooks(), 1);
-
-  // packages/block-library/build-module/utils/is-within-overlay.mjs
-  var import_data86 = __toESM(require_data(), 1);
-  var import_core_data47 = __toESM(require_core_data(), 1);
-  function isWithinNavigationOverlay() {
-    const editorStore = (0, import_data86.select)("core/editor");
-    if (!editorStore) {
-      return false;
-    }
-    const { getCurrentPostType, getCurrentPostId } = editorStore;
-    const { getEditedEntityRecord } = (0, import_data86.select)(import_core_data47.store);
-    const postType = getCurrentPostType?.();
-    const postId = getCurrentPostId?.();
-    if (postType === "wp_template_part" && postId) {
-      const templatePart = getEditedEntityRecord(
-        "postType",
-        "wp_template_part",
-        postId
-      );
-      return templatePart?.area === NAVIGATION_OVERLAY_TEMPLATE_PART_AREA;
-    }
-    return false;
-  }
 
   // packages/block-library/build-module/navigation-overlay-close/edit.mjs
   var import_block_editor164 = __toESM(require_block_editor(), 1);
