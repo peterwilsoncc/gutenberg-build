@@ -45567,6 +45567,7 @@ ${js}
         fontSize: true,
         lineHeight: true,
         textAlign: true,
+        textColumns: true,
         __experimentalFontFamily: true,
         __experimentalTextDecoration: true,
         __experimentalFontStyle: true,
