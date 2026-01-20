@@ -41234,6 +41234,12 @@ ${js}
       ),
       [clientId]
     );
+    const isWithinOverlay = (0, import_data83.useSelect)(() => isWithinNavigationOverlay(), []);
+    (0, import_element73.useEffect)(() => {
+      if (isWithinOverlay && overlayMenu !== "never") {
+        setAttributes({ overlayMenu: "never" });
+      }
+    }, [isWithinOverlay, overlayMenu, setAttributes]);
     const isResponsive = "never" !== overlayMenu;
     const blockProps = (0, import_block_editor155.useBlockProps)({
       ref: navRef,
@@ -41498,7 +41504,7 @@ ${js}
           ]
         }
       ) }),
-      isOverlayExperimentEnabled && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_block_editor155.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+      isOverlayExperimentEnabled && !isWithinOverlay && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_block_editor155.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
         OverlayPanel,
         {
           overlayMenu,
