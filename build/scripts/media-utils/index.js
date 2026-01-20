@@ -192,17 +192,17 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
-    }
-  });
-
   // package-external:@wordpress/keycodes
   var require_keycodes = __commonJS({
     "package-external:@wordpress/keycodes"(exports, module) {
       module.exports = window.wp.keycodes;
+    }
+  });
+
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
     }
   });
 
@@ -2769,59 +2769,53 @@ var wp;
           ),
           canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(Menu2, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.ItemLabel, { children: (0, import_i18n11.__)("Insert left") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.Popover, { children: hiddenFields.map((hiddenField) => {
-              const insertIndex = isRtl ? index + 1 : index;
-              return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-                Menu2.Item,
-                {
-                  onClick: () => {
-                    onChangeView({
-                      ...view,
-                      fields: [
-                        ...visibleFieldIds.slice(
-                          0,
-                          insertIndex
-                        ),
-                        hiddenField.id,
-                        ...visibleFieldIds.slice(
-                          insertIndex
-                        )
-                      ]
-                    });
-                  },
-                  children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.ItemLabel, { children: hiddenField.label })
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+              Menu2.Item,
+              {
+                onClick: () => {
+                  onChangeView({
+                    ...view,
+                    fields: [
+                      ...visibleFieldIds.slice(
+                        0,
+                        index
+                      ),
+                      hiddenField.id,
+                      ...visibleFieldIds.slice(
+                        index
+                      )
+                    ]
+                  });
                 },
-                hiddenField.id
-              );
-            }) })
+                children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.ItemLabel, { children: hiddenField.label })
+              },
+              hiddenField.id
+            )) })
           ] }),
           canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(Menu2, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.ItemLabel, { children: (0, import_i18n11.__)("Insert right") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.Popover, { children: hiddenFields.map((hiddenField) => {
-              const insertIndex = isRtl ? index : index + 1;
-              return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-                Menu2.Item,
-                {
-                  onClick: () => {
-                    onChangeView({
-                      ...view,
-                      fields: [
-                        ...visibleFieldIds.slice(
-                          0,
-                          insertIndex
-                        ),
-                        hiddenField.id,
-                        ...visibleFieldIds.slice(
-                          insertIndex
-                        )
-                      ]
-                    });
-                  },
-                  children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.ItemLabel, { children: hiddenField.label })
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+              Menu2.Item,
+              {
+                onClick: () => {
+                  onChangeView({
+                    ...view,
+                    fields: [
+                      ...visibleFieldIds.slice(
+                        0,
+                        index + 1
+                      ),
+                      hiddenField.id,
+                      ...visibleFieldIds.slice(
+                        index + 1
+                      )
+                    ]
+                  });
                 },
-                hiddenField.id
-              );
-            }) })
+                children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Menu2.ItemLabel, { children: hiddenField.label })
+              },
+              hiddenField.id
+            )) })
           ] }),
           isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
             Menu2.Item,
@@ -3393,7 +3387,6 @@ var wp;
       }
     };
     const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
-    const isRtl = (0, import_i18n14.isRTL)();
     return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
         "table",
@@ -3467,8 +3460,8 @@ var wp;
                   onHide,
                   setOpenedFilter,
                   canMove: false,
-                  canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
-                  canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
+                  canInsertLeft: false,
+                  canInsertRight: view.layout?.enableMoving ?? true
                 }
               ) }),
               columns.map((column, index) => {

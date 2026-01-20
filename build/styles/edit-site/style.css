@@ -679,6 +679,9 @@
 
 .dataviews-bulk-actions-footer__item-count {
   color: #1e1e1e;
+  font-weight: 499;
+  font-size: 11px;
+  text-transform: uppercase;
 }
 
 .dataviews-bulk-actions-footer__container {
