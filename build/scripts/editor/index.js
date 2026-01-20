@@ -5641,9 +5641,21 @@ var wp;
     hideLabelFromVision,
     allowedTypes = ["image"],
     multiple,
-    isExpanded
+    isExpanded,
+    validity
   }) {
     const value = field.getValue({ item: data });
+    const [isTouched, setIsTouched] = (0, import_element5.useState)(false);
+    const validityTargetRef = (0, import_element5.useRef)(null);
+    const [customValidity, setCustomValidity] = (0, import_element5.useState)(void 0);
+    (0, import_element5.useEffect)(() => {
+      const validityTarget = validityTargetRef.current;
+      const handler = () => {
+        setIsTouched(true);
+      };
+      validityTarget?.addEventListener("invalid", handler);
+      return () => validityTarget?.removeEventListener("invalid", handler);
+    }, []);
     const attachments = (0, import_data6.useSelect)(
       (select5) => {
         if (!value) {
@@ -5664,11 +5676,15 @@ var wp;
       (newValue) => onChange(field.setValue({ item: data, value: newValue })),
       [data, field, onChange]
     );
-    const removeItem = (itemId) => {
-      const currentIds = Array.isArray(value) ? value : [value];
-      const newIds = currentIds.filter((id) => id !== itemId);
-      onChangeControl(newIds.length ? newIds : void 0);
-    };
+    const removeItem = (0, import_element5.useCallback)(
+      (itemId) => {
+        const currentIds = Array.isArray(value) ? value : [value];
+        const newIds = currentIds.filter((id) => id !== itemId);
+        setIsTouched(true);
+        onChangeControl(newIds.length ? newIds : void 0);
+      },
+      [value, onChangeControl]
+    );
     const onFilesDrop = (0, import_element5.useCallback)(
       (files, _replacementId) => {
         (0, import_media_utils.uploadMedia)({
@@ -5750,42 +5766,114 @@ var wp;
       items.push(...blobItems);
       return items;
     }, [attachments, replacementId, blobs]);
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
-      ConditionalMediaUpload,
-      {
-        onSelect: (selectedMedia) => {
-          if (multiple) {
-            const newIds = Array.isArray(selectedMedia) ? selectedMedia.map((m2) => m2.id) : [selectedMedia.id];
-            onChangeControl(newIds);
-          } else {
-            onChangeControl(selectedMedia.id);
+    (0, import_element5.useEffect)(() => {
+      if (!isTouched) {
+        return;
+      }
+      const input = validityTargetRef.current;
+      if (!input) {
+        return;
+      }
+      if (validity) {
+        const customValidityResult = validity?.custom;
+        setCustomValidity(customValidityResult);
+        if (customValidityResult?.type === "invalid") {
+          input.setCustomValidity(
+            customValidityResult.message || (0, import_i18n13.__)("Invalid")
+          );
+        } else {
+          input.setCustomValidity("");
+        }
+      } else {
+        input.setCustomValidity("");
+        setCustomValidity(void 0);
+      }
+    }, [isTouched, field.isValid, validity]);
+    const onBlur = (0, import_element5.useCallback)(
+      (event) => {
+        if (isTouched) {
+          return;
+        }
+        if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
+          setIsTouched(true);
+        }
+      },
+      [isTouched]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)("div", { onBlur, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+        ConditionalMediaUpload,
+        {
+          onSelect: (selectedMedia) => {
+            if (multiple) {
+              const newIds = Array.isArray(selectedMedia) ? selectedMedia.map((m2) => m2.id) : [selectedMedia.id];
+              onChangeControl(newIds);
+            } else {
+              onChangeControl(selectedMedia.id);
+            }
+          },
+          allowedTypes,
+          value,
+          multiple,
+          title: field.label,
+          render: ({ open }) => {
+            const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;
+            return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_components5.__experimentalVStack, { spacing: 2, children: [
+              field.label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components5.VisuallyHidden, { as: "legend", children: field.label }) : /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components5.BaseControl.VisualLabel, { as: "legend", children: field.label })),
+              /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+                AttachmentsComponent,
+                {
+                  allItems,
+                  addButtonLabel,
+                  multiple,
+                  removeItem,
+                  open,
+                  onFilesDrop,
+                  isUploading: !!blobs.length
+                }
+              ),
+              field.description && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components5.__experimentalText, { variant: "muted", children: field.description })
+            ] });
           }
-        },
-        allowedTypes,
-        value,
-        multiple,
-        title: field.label,
-        render: ({ open }) => {
-          const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;
-          return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_components5.__experimentalVStack, { spacing: 2, children: [
-            field.label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components5.VisuallyHidden, { as: "legend", children: field.label }) : /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components5.BaseControl.VisualLabel, { as: "legend", children: field.label })),
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components5.VisuallyHidden, { children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+        "input",
+        {
+          type: "text",
+          ref: validityTargetRef,
+          value: value ?? "",
+          tabIndex: -1,
+          "aria-hidden": "true",
+          onChange: () => {
+          }
+        }
+      ) }),
+      customValidity && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("div", { "aria-live": "polite", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(
+        "p",
+        {
+          className: clsx_default(
+            "components-validated-control__indicator",
+            {
+              "is-invalid": customValidity.type === "invalid",
+              "is-valid": customValidity.type === "valid"
+            }
+          ),
+          children: [
             /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
-              AttachmentsComponent,
+              import_components5.Icon,
               {
-                allItems,
-                addButtonLabel,
-                multiple,
-                removeItem,
-                open,
-                onFilesDrop,
-                isUploading: !!blobs.length
+                className: "components-validated-control__indicator-icon",
+                icon: error_default,
+                size: 16,
+                fill: "currentColor"
               }
             ),
-            field.description && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components5.__experimentalText, { variant: "muted", children: field.description })
-          ] });
+            customValidity.message
+          ]
         }
-      }
-    ) });
+      ) })
+    ] });
   }
 
   // packages/fields/build-module/fields/featured-image/featured-image-view.mjs
