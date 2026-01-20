@@ -68342,7 +68342,8 @@ ${declarations}
           value: content
         }
       );
-    }
+    },
+    migrate: migrate_text_align_default
   };
   var v218 = {
     attributes: {
@@ -68379,66 +68380,118 @@ ${declarations}
       });
       return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)("pre", { ...import_block_editor275.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_block_editor275.RichText.Content, { value: content }) });
     },
-    migrate: migrate_font_family_default,
-    isEligible({ style: style2 }) {
-      return style2?.typography?.fontFamily;
+    migrate(attributes3) {
+      return migrate_text_align_default(migrate_font_family_default(attributes3));
+    },
+    isEligible({ style: style2, textAlign }) {
+      return style2?.typography?.fontFamily || !!textAlign;
     }
   };
-  var deprecated_default43 = [v218, v135];
+  var v313 = {
+    attributes: {
+      content: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "pre",
+        __unstablePreserveWhiteSpace: true,
+        role: "content"
+      },
+      textAlign: {
+        type: "string"
+      }
+    },
+    supports: {
+      anchor: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true
+      },
+      color: {
+        gradients: true,
+        link: true
+      },
+      dimensions: {
+        minHeight: true
+      },
+      typography: {
+        fontSize: true,
+        __experimentalFontFamily: true,
+        lineHeight: true,
+        __experimentalFontStyle: true,
+        __experimentalFontWeight: true,
+        __experimentalLetterSpacing: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalWritingMode: true
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        width: true,
+        color: true,
+        style: true
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    save({ attributes: attributes3 }) {
+      const { textAlign, content } = attributes3;
+      const className = clsx_default({
+        [`has-text-align-${textAlign}`]: textAlign
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime516.jsx)("pre", { ...import_block_editor275.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_block_editor275.RichText.Content, { value: content }) });
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes3) {
+      return !!attributes3.textAlign || !!attributes3.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    }
+  };
+  var deprecated_default43 = [v313, v218, v135];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n254 = __toESM(require_i18n(), 1);
   var import_block_editor276 = __toESM(require_block_editor(), 1);
   var import_blocks118 = __toESM(require_blocks(), 1);
   var import_jsx_runtime517 = __toESM(require_jsx_runtime(), 1);
-  function VerseEdit({
-    attributes: attributes3,
-    setAttributes,
-    mergeBlocks,
-    onRemove,
-    insertBlocksAfter,
-    style: style2
-  }) {
-    const { textAlign, content } = attributes3;
-    const blockProps = (0, import_block_editor276.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      }),
+  function VerseEdit(props) {
+    const {
+      attributes: attributes3,
+      setAttributes,
+      mergeBlocks,
+      onRemove,
+      insertBlocksAfter,
       style: style2
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime517.jsxs)(import_jsx_runtime517.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(import_block_editor276.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
-        import_block_editor276.AlignmentToolbar,
-        {
-          value: textAlign,
-          onChange: (nextAlign) => {
-            setAttributes({ textAlign: nextAlign });
-          }
-        }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
-        import_block_editor276.RichText,
-        {
-          tagName: "pre",
-          identifier: "content",
-          preserveWhiteSpace: true,
-          value: content,
-          onChange: (nextContent) => {
-            setAttributes({
-              content: nextContent
-            });
-          },
-          "aria-label": (0, import_i18n254.__)("Verse text"),
-          placeholder: (0, import_i18n254.__)("Write verse\u2026"),
-          onRemove,
-          onMerge: mergeBlocks,
-          textAlign,
-          ...blockProps,
-          __unstablePastePlainText: true,
-          __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks118.createBlock)((0, import_blocks118.getDefaultBlockName)()))
-        }
-      )
-    ] });
+    } = props;
+    const { content } = attributes3;
+    useDeprecatedTextAlign(props);
+    const blockProps = (0, import_block_editor276.useBlockProps)({ style: style2 });
+    return /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
+      import_block_editor276.RichText,
+      {
+        tagName: "pre",
+        identifier: "content",
+        preserveWhiteSpace: true,
+        value: content,
+        onChange: (nextContent) => {
+          setAttributes({
+            content: nextContent
+          });
+        },
+        "aria-label": (0, import_i18n254.__)("Verse text"),
+        placeholder: (0, import_i18n254.__)("Write verse\u2026"),
+        onRemove,
+        onMerge: mergeBlocks,
+        ...blockProps,
+        __unstablePastePlainText: true,
+        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks118.createBlock)((0, import_blocks118.getDefaultBlockName)()))
+      }
+    );
   }
 
   // packages/block-library/build-module/verse/block.json
@@ -68458,9 +68511,6 @@ ${declarations}
         selector: "pre",
         __unstablePreserveWhiteSpace: true,
         role: "content"
-      },
-      textAlign: {
-        type: "string"
       }
     },
     supports: {
@@ -68490,6 +68540,7 @@ ${declarations}
         fontSize: true,
         __experimentalFontFamily: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontStyle: true,
         __experimentalFontWeight: true,
         __experimentalLetterSpacing: true,
@@ -68526,11 +68577,8 @@ ${declarations}
   var import_block_editor277 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   function save52({ attributes: attributes3 }) {
-    const { textAlign, content } = attributes3;
-    const className = clsx_default({
-      [`has-text-align-${textAlign}`]: textAlign
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("pre", { ...import_block_editor277.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_block_editor277.RichText.Content, { value: content }) });
+    const { content } = attributes3;
+    return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("pre", { ...import_block_editor277.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_block_editor277.RichText.Content, { value: content }) });
   }
 
   // packages/block-library/build-module/verse/transforms.mjs
