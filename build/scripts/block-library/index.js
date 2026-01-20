@@ -41224,7 +41224,8 @@ ${js}
       __unstableMarkNextChangeAsNotPersistent
     ]);
     const navRef = (0, import_element73.useRef)();
-    const TagName2 = "nav";
+    const isWithinOverlay = (0, import_data83.useSelect)(() => isWithinNavigationOverlay(), []);
+    const TagName2 = isWithinOverlay ? "div" : "nav";
     const isPlaceholder = !ref && !isCreatingNavigationMenu && !isConvertingClassicMenu && hasResolvedNavigationMenus && classicMenus?.length === 0 && !hasUncontrolledInnerBlocks;
     const isLoading = !hasResolvedNavigationMenus || isCreatingNavigationMenu || isConvertingClassicMenu || !!(ref && !isEntityAvailable && !isConvertingClassicMenu);
     const textDecoration = attributes3.style?.typography?.textDecoration;
@@ -41234,7 +41235,6 @@ ${js}
       ),
       [clientId]
     );
-    const isWithinOverlay = (0, import_data83.useSelect)(() => isWithinNavigationOverlay(), []);
     (0, import_element73.useEffect)(() => {
       if (isWithinOverlay && overlayMenu !== "never") {
         setAttributes({ overlayMenu: "never" });
