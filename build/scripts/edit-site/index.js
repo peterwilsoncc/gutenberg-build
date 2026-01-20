@@ -1009,7 +1009,7 @@ var wp;
   var import_data83 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element155 = __toESM(require_element(), 1);
-  var import_editor44 = __toESM(require_editor(), 1);
+  var import_editor45 = __toESM(require_editor(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
 
@@ -1114,6 +1114,7 @@ var wp;
   );
 
   // packages/edit-site/build-module/utils/constants.mjs
+  var ATTACHMENT_POST_TYPE = "attachment";
   var NAVIGATION_POST_TYPE = "wp_navigation";
   var TEMPLATE_POST_TYPE = "wp_template";
   var TEMPLATE_PART_POST_TYPE = "wp_template_part";
@@ -13985,12 +13986,12 @@ var wp;
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__148) {
+            } catch (__149) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__148) {
+            } catch (__149) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -21749,6 +21750,7 @@ var wp;
   var import_router16 = __toESM(require_router(), 1);
   var { useLocation: useLocation15 } = unlock(import_router16.privateApis);
   var postTypesWithoutParentTemplate = [
+    ATTACHMENT_POST_TYPE,
     TEMPLATE_POST_TYPE,
     TEMPLATE_PART_POST_TYPE,
     NAVIGATION_POST_TYPE,
@@ -21771,6 +21773,8 @@ var wp;
       postType2 = "page";
     } else if (name2 === "post-item" || name2 === "posts") {
       postType2 = "post";
+    } else if (name2 === "attachment-item") {
+      postType2 = ATTACHMENT_POST_TYPE;
     }
     return postType2;
   }
@@ -25136,53 +25140,59 @@ var wp;
           ),
           canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(Menu6, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Insert left") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-              Menu6.Item,
-              {
-                onClick: () => {
-                  onChangeView({
-                    ...view,
-                    fields: [
-                      ...visibleFieldIds.slice(
-                        0,
-                        index
-                      ),
-                      hiddenField.id,
-                      ...visibleFieldIds.slice(
-                        index
-                      )
-                    ]
-                  });
+            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => {
+              const insertIndex = isRtl ? index + 1 : index;
+              return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+                Menu6.Item,
+                {
+                  onClick: () => {
+                    onChangeView({
+                      ...view,
+                      fields: [
+                        ...visibleFieldIds.slice(
+                          0,
+                          insertIndex
+                        ),
+                        hiddenField.id,
+                        ...visibleFieldIds.slice(
+                          insertIndex
+                        )
+                      ]
+                    });
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
-              },
-              hiddenField.id
-            )) })
+                hiddenField.id
+              );
+            }) })
           ] }),
           canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(Menu6, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: (0, import_i18n87.__)("Insert right") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-              Menu6.Item,
-              {
-                onClick: () => {
-                  onChangeView({
-                    ...view,
-                    fields: [
-                      ...visibleFieldIds.slice(
-                        0,
-                        index + 1
-                      ),
-                      hiddenField.id,
-                      ...visibleFieldIds.slice(
-                        index + 1
-                      )
-                    ]
-                  });
+            /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.Popover, { children: hiddenFields.map((hiddenField) => {
+              const insertIndex = isRtl ? index : index + 1;
+              return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+                Menu6.Item,
+                {
+                  onClick: () => {
+                    onChangeView({
+                      ...view,
+                      fields: [
+                        ...visibleFieldIds.slice(
+                          0,
+                          insertIndex
+                        ),
+                        hiddenField.id,
+                        ...visibleFieldIds.slice(
+                          insertIndex
+                        )
+                      ]
+                    });
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Menu6.ItemLabel, { children: hiddenField.label })
-              },
-              hiddenField.id
-            )) })
+                hiddenField.id
+              );
+            }) })
           ] }),
           isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
             Menu6.Item,
@@ -25754,6 +25764,7 @@ var wp;
       }
     };
     const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
+    const isRtl = (0, import_i18n90.isRTL)();
     return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(import_jsx_runtime191.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(
         "table",
@@ -25827,8 +25838,8 @@ var wp;
                   onHide,
                   setOpenedFilter,
                   canMove: false,
-                  canInsertLeft: false,
-                  canInsertRight: view.layout?.enableMoving ?? true
+                  canInsertLeft: isRtl ? view.layout?.enableMoving ?? true : false,
+                  canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
                 }
               ) }),
               columns.map((column, index) => {
@@ -46340,42 +46351,62 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
-  // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
+  // packages/edit-site/build-module/components/site-editor-routes/attachment-item.mjs
   var import_i18n156 = __toESM(require_i18n(), 1);
-  var import_editor42 = __toESM(require_editor(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
-  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor42.privateApis);
+  var attachmentItemRoute = {
+    name: "attachment-item",
+    path: "/attachment/:postId",
+    areas: {
+      sidebar: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+        SidebarNavigationScreen,
+        {
+          title: (0, import_i18n156.__)("Media"),
+          backPath: "/",
+          content: null
+        }
+      ),
+      mobile: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(EditSiteEditor, {}),
+      preview: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(EditSiteEditor, {})
+    }
+  };
+
+  // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
+  var import_i18n157 = __toESM(require_i18n(), 1);
+  var import_editor43 = __toESM(require_editor(), 1);
+  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
+  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor43.privateApis);
   var stylebookRoute = {
     name: "stylebook",
     path: "/stylebook",
     areas: {
       sidebar({ siteData }) {
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n156.__)("Styles"),
+            title: (0, import_i18n157.__)("Styles"),
             backPath: "/",
-            description: (0, import_i18n156.__)(
+            description: (0, import_i18n157.__)(
               `Preview your website's visual identity: colors, typography, and blocks.`
             )
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(SidebarNavigationScreenUnsupported, {});
+        ) : /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       preview({ siteData }) {
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(StyleBookPreview2, { isStatic: true }) : void 0;
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(StyleBookPreview2, { isStatic: true }) : void 0;
       },
       mobile({ siteData }) {
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(StyleBookPreview2, { isStatic: true }) : void 0;
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(StyleBookPreview2, { isStatic: true }) : void 0;
       }
     }
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/notfound.mjs
-  var import_i18n157 = __toESM(require_i18n(), 1);
+  var import_i18n158 = __toESM(require_i18n(), 1);
   var import_components165 = __toESM(require_components(), 1);
-  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
   function NotFoundError() {
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components165.Notice, { status: "error", isDismissible: false, children: (0, import_i18n157.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_components165.Notice, { status: "error", isDismissible: false, children: (0, import_i18n158.__)(
       "The requested page could not be found. Please check the URL."
     ) });
   }
@@ -46383,19 +46414,20 @@ If there's a particular need for this, please submit a feature request at https:
     name: "notfound",
     path: "*",
     areas: {
-      sidebar: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(SidebarNavigationScreenMain, {}),
-      mobile: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+      sidebar: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(SidebarNavigationScreenMain, {}),
+      mobile: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
         SidebarNavigationScreenMain,
         {
-          customDescription: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(NotFoundError, {})
+          customDescription: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(NotFoundError, {})
         }
       ),
-      content: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components165.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(NotFoundError, {}) })
+      content: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_components165.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(NotFoundError, {}) })
     }
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/index.mjs
   var routes2 = [
+    ...window?.__experimentalMediaEditor ? [attachmentItemRoute] : [],
     pageItemRoute,
     pagesRoute,
     templateItemRoute,
@@ -46421,12 +46453,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/app/index.mjs
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   var { RouterProvider } = unlock(import_router41.privateApis);
   function AppLayout() {
     useCommonCommands();
     useSetCommandContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(LayoutWithGlobalStylesProvider, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(LayoutWithGlobalStylesProvider, {});
   }
   function App() {
     useRegisterSiteEditorRoutes();
@@ -46456,23 +46488,23 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [currentTheme, editorSettings]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
       RouterProvider,
       {
         routes: routes3,
         pathArg: "p",
         beforeNavigate,
         matchResolverArgs: matchResolverArgsValue,
-        children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(AppLayout, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(AppLayout, {})
       }
     );
   }
 
   // packages/edit-site/build-module/deprecated.mjs
-  var import_editor43 = __toESM(require_editor(), 1);
+  var import_editor44 = __toESM(require_editor(), 1);
   var import_url27 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
   var isSiteEditor = (0, import_url27.getPath)(window.location.href)?.includes(
     "site-editor.php"
   );
@@ -46487,26 +46519,26 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     deprecateSlot("PluginMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_editor43.PluginMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_editor44.PluginMoreMenuItem, { ...props });
   }
   function PluginSidebar(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebar");
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_editor43.PluginSidebar, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_editor44.PluginSidebar, { ...props });
   }
   function PluginSidebarMoreMenuItem(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebarMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_editor43.PluginSidebarMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_editor44.PluginSidebarMoreMenuItem, { ...props });
   }
 
   // packages/edit-site/build-module/index.mjs
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-  var { registerCoreBlockBindingsSources } = unlock(import_editor44.privateApis);
+  var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
+  var { registerCoreBlockBindingsSources } = unlock(import_editor45.privateApis);
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
     const root = (0, import_element155.createRoot)(target);
@@ -46554,7 +46586,7 @@ If there's a particular need for this, please submit a feature request at https:
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_element155.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_element155.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(App, {}) })
     );
     return root;
   }

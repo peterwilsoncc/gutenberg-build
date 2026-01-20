@@ -12296,31 +12296,35 @@ var wp;
         },
         ydoc: targetDoc
       } = entityState;
-      targetDoc.transact(() => {
-        if (!supports?.crdtPersistence) {
+      if (!supports?.crdtPersistence) {
+        targetDoc.transact(() => {
           applyChangesToCRDTDoc(targetDoc, record);
-          return;
-        }
-        const tempDoc = getPersistedCrdtDoc(record);
-        if (!tempDoc) {
+        }, LOCAL_SYNC_MANAGER_ORIGIN);
+        return;
+      }
+      const tempDoc = getPersistedCrdtDoc(record);
+      if (!tempDoc) {
+        targetDoc.transact(() => {
           applyChangesToCRDTDoc(targetDoc, record);
           handlers.saveRecord();
-          return;
-        }
-        const update = encodeStateAsUpdateV2(tempDoc);
-        applyUpdateV2(targetDoc, update);
-        const invalidations = getChangesFromCRDTDoc(tempDoc, record);
-        const invalidatedKeys = Object.keys(invalidations);
-        tempDoc.destroy();
-        if (0 === invalidatedKeys.length) {
-          return;
-        }
-        const changes = invalidatedKeys.reduce(
-          (acc, key) => Object.assign(acc, {
-            [key]: record[key]
-          }),
-          {}
-        );
+        }, LOCAL_SYNC_MANAGER_ORIGIN);
+        return;
+      }
+      const update = encodeStateAsUpdateV2(tempDoc);
+      applyUpdateV2(targetDoc, update);
+      const invalidations = getChangesFromCRDTDoc(tempDoc, record);
+      const invalidatedKeys = Object.keys(invalidations);
+      tempDoc.destroy();
+      if (0 === invalidatedKeys.length) {
+        return;
+      }
+      const changes = invalidatedKeys.reduce(
+        (acc, key) => Object.assign(acc, {
+          [key]: record[key]
+        }),
+        {}
+      );
+      targetDoc.transact(() => {
         applyChangesToCRDTDoc(targetDoc, changes);
         handlers.saveRecord();
       }, LOCAL_SYNC_MANAGER_ORIGIN);
