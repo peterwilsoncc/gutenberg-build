@@ -16916,7 +16916,7 @@ var wp;
         if (blockGapToUse === "0" || blockGapToUse === 0) {
           blockGapToUse = "0px";
         }
-        const maxValue = `max(${minimumColumnWidth}, ( 100% - (${blockGapToUse}*${columnCount - 1}) ) / ${columnCount})`;
+        const maxValue = `max(min( ${minimumColumnWidth}, 100%), ( 100% - (${blockGapToUse}*${columnCount - 1}) ) / ${columnCount})`;
         rules.push(
           `grid-template-columns: repeat(auto-fill, minmax(${maxValue}, 1fr))`,
           `container-type: inline-size`
