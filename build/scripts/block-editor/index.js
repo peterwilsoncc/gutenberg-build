@@ -62745,422 +62745,6 @@ var wp;
     };
   }
 
-  // packages/dataviews/build-module/utils/operators.mjs
-  var import_i18n212 = __toESM(require_i18n(), 1);
-  var import_element229 = __toESM(require_element(), 1);
-  var import_jsx_runtime400 = __toESM(require_jsx_runtime(), 1);
-  var filterTextWrappers = {
-    Name: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
-    Value: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
-  };
-  var OPERATORS = [
-    {
-      name: OPERATOR_IS_ANY,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Includes"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
-          (0, import_i18n212.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements.map((element) => element.label).join(", ")
-        ),
-        filterTextWrappers
-      ),
-      selection: "multi"
-    },
-    {
-      name: OPERATOR_IS_NONE,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Is none of"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
-          (0, import_i18n212.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements.map((element) => element.label).join(", ")
-        ),
-        filterTextWrappers
-      ),
-      selection: "multi"
-    },
-    {
-      name: OPERATOR_IS_ALL,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Includes all"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
-          (0, import_i18n212.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements.map((element) => element.label).join(", ")
-        ),
-        filterTextWrappers
-      ),
-      selection: "multi"
-    },
-    {
-      name: OPERATOR_IS_NOT_ALL,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Is none of"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
-          (0, import_i18n212.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements.map((element) => element.label).join(", ")
-        ),
-        filterTextWrappers
-      ),
-      selection: "multi"
-    },
-    {
-      name: OPERATOR_BETWEEN,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Between (inc)"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"
-          ),
-          filter.name,
-          activeElements[0].label[0],
-          activeElements[0].label[1]
-        ),
-        filterTextWrappers
-      ),
-      selection: "custom"
-    },
-    {
-      name: OPERATOR_IN_THE_PAST,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("In the past"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s is in the past: </Name><Value>%2$s</Value>"
-          ),
-          filter.name,
-          `${activeElements[0].value.value} ${activeElements[0].value.unit}`
-        ),
-        filterTextWrappers
-      ),
-      selection: "custom"
-    },
-    {
-      name: OPERATOR_OVER,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Over"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
-          (0, import_i18n212.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
-          filter.name,
-          `${activeElements[0].value.value} ${activeElements[0].value.unit}`
-        ),
-        filterTextWrappers
-      ),
-      selection: "custom"
-    },
-    {
-      name: OPERATOR_IS,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Is"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
-          (0, import_i18n212.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_IS_NOT,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Is not"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
-          (0, import_i18n212.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_LESS_THAN,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Less than"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
-          (0, import_i18n212.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_GREATER_THAN,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Greater than"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s is greater than: </Name><Value>%2$s</Value>"
-          ),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_LESS_THAN_OR_EQUAL,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Less than or equal"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"
-          ),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_GREATER_THAN_OR_EQUAL,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Greater than or equal"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"
-          ),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_BEFORE,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Before"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
-          (0, import_i18n212.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_AFTER,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("After"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
-          (0, import_i18n212.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_BEFORE_INC,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Before (inc)"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s is on or before: </Name><Value>%2$s</Value>"
-          ),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_AFTER_INC,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("After (inc)"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s is on or after: </Name><Value>%2$s</Value>"
-          ),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_CONTAINS,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Contains"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
-          (0, import_i18n212.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_NOT_CONTAINS,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Doesn't contain"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
-          (0, import_i18n212.__)(
-            "<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"
-          ),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_STARTS_WITH,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Starts with"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
-          (0, import_i18n212.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_ON,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("On"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
-          (0, import_i18n212.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    },
-    {
-      name: OPERATOR_NOT_ON,
-      /* translators: DataViews operator name */
-      label: (0, import_i18n212.__)("Not on"),
-      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
-        (0, import_i18n212.sprintf)(
-          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
-          (0, import_i18n212.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
-          filter.name,
-          activeElements[0].label
-        ),
-        filterTextWrappers
-      ),
-      selection: "single"
-    }
-  ];
-  var getAllOperatorNames = () => OPERATORS.map((op) => op.name);
-
-  // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-  var import_components226 = __toESM(require_components(), 1);
-  var import_element230 = __toESM(require_element(), 1);
-
-  // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
-  function getCustomValidity(isValid2, validity) {
-    let customValidity;
-    if (isValid2?.required && validity?.required) {
-      customValidity = validity?.required?.message ? validity.required : void 0;
-    } else if (isValid2?.pattern && validity?.pattern) {
-      customValidity = validity.pattern;
-    } else if (isValid2?.min && validity?.min) {
-      customValidity = validity.min;
-    } else if (isValid2?.max && validity?.max) {
-      customValidity = validity.max;
-    } else if (isValid2?.minLength && validity?.minLength) {
-      customValidity = validity.minLength;
-    } else if (isValid2?.maxLength && validity?.maxLength) {
-      customValidity = validity.maxLength;
-    } else if (isValid2?.elements && validity?.elements) {
-      customValidity = validity.elements;
-    } else if (validity?.custom) {
-      customValidity = validity.custom;
-    }
-    return customValidity;
-  }
-
-  // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-  var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedCheckboxControl } = unlock3(import_components226.privateApis);
-  function Checkbox({
-    field,
-    onChange,
-    data,
-    hideLabelFromVision,
-    validity
-  }) {
-    const { getValue, setValue, label, description, isValid: isValid2 } = field;
-    const onChangeControl = (0, import_element230.useCallback)(() => {
-      onChange(
-        setValue({ item: data, value: !getValue({ item: data }) })
-      );
-    }, [data, getValue, onChange, setValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
-      ValidatedCheckboxControl,
-      {
-        required: !!field.isValid?.required,
-        customValidity: getCustomValidity(isValid2, validity),
-        hidden: hideLabelFromVision,
-        label,
-        help: description,
-        checked: getValue({ item: data }),
-        onChange: onChangeControl
-      }
-    );
-  }
-
   // packages/dataviews/node_modules/date-fns/constants.js
   var daysInYear = 365.2425;
   var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
@@ -63320,6 +62904,11 @@ var wp;
     fourthOfJanuary.setFullYear(year, 0, 4);
     fourthOfJanuary.setHours(0, 0, 0, 0);
     return startOfISOWeek(fourthOfJanuary);
+  }
+
+  // packages/dataviews/node_modules/date-fns/addWeeks.js
+  function addWeeks(date, amount, options) {
+    return addDays(date, amount * 7, options);
   }
 
   // packages/dataviews/node_modules/date-fns/addYears.js
@@ -64785,16 +64374,616 @@ var wp;
     return addMonths(date, -amount, options);
   }
 
+  // packages/dataviews/node_modules/date-fns/subWeeks.js
+  function subWeeks(date, amount, options) {
+    return addWeeks(date, -amount, options);
+  }
+
   // packages/dataviews/node_modules/date-fns/subYears.js
   function subYears(date, amount, options) {
     return addYears(date, -amount, options);
+  }
+
+  // packages/dataviews/build-module/utils/operators.mjs
+  var import_i18n212 = __toESM(require_i18n(), 1);
+  var import_element229 = __toESM(require_element(), 1);
+  var import_date3 = __toESM(require_date(), 1);
+  var import_jsx_runtime400 = __toESM(require_jsx_runtime(), 1);
+  var filterTextWrappers = {
+    Name: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
+    Value: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
+  };
+  function getRelativeDate(value, unit) {
+    switch (unit) {
+      case "days":
+        return subDays(/* @__PURE__ */ new Date(), value);
+      case "weeks":
+        return subWeeks(/* @__PURE__ */ new Date(), value);
+      case "months":
+        return subMonths(/* @__PURE__ */ new Date(), value);
+      case "years":
+        return subYears(/* @__PURE__ */ new Date(), value);
+      default:
+        return /* @__PURE__ */ new Date();
+    }
+  }
+  var isNoneOperatorDefinition = {
+    /* translators: DataViews operator name */
+    label: (0, import_i18n212.__)("Is none of"),
+    filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+      (0, import_i18n212.sprintf)(
+        /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
+        (0, import_i18n212.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+        filter.name,
+        activeElements.map((element) => element.label).join(", ")
+      ),
+      filterTextWrappers
+    ),
+    filter: ((item, field, filterValue) => {
+      if (!filterValue?.length) {
+        return true;
+      }
+      const fieldValue = field.getValue({ item });
+      if (Array.isArray(fieldValue)) {
+        return !filterValue.some(
+          (fv) => fieldValue.includes(fv)
+        );
+      } else if (typeof fieldValue === "string") {
+        return !filterValue.includes(fieldValue);
+      }
+      return false;
+    }),
+    selection: "multi"
+  };
+  var OPERATORS = [
+    {
+      name: OPERATOR_IS_ANY,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Includes"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
+          (0, import_i18n212.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements.map((element) => element.label).join(", ")
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (!filterValue?.length) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        if (Array.isArray(fieldValue)) {
+          return filterValue.some(
+            (fv) => fieldValue.includes(fv)
+          );
+        } else if (typeof fieldValue === "string") {
+          return filterValue.includes(fieldValue);
+        }
+        return false;
+      },
+      selection: "multi"
+    },
+    {
+      name: OPERATOR_IS_NONE,
+      ...isNoneOperatorDefinition
+    },
+    {
+      name: OPERATOR_IS_ALL,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Includes all"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
+          (0, import_i18n212.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements.map((element) => element.label).join(", ")
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (!filterValue?.length) {
+          return true;
+        }
+        return filterValue.every((value) => {
+          return field.getValue({ item })?.includes(value);
+        });
+      },
+      selection: "multi"
+    },
+    {
+      name: OPERATOR_IS_NOT_ALL,
+      ...isNoneOperatorDefinition
+    },
+    {
+      name: OPERATOR_BETWEEN,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Between (inc)"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"
+          ),
+          filter.name,
+          activeElements[0].label[0],
+          activeElements[0].label[1]
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (!Array.isArray(filterValue) || filterValue.length !== 2 || filterValue[0] === void 0 || filterValue[1] === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        if (typeof fieldValue === "number" || fieldValue instanceof Date || typeof fieldValue === "string") {
+          return fieldValue >= filterValue[0] && fieldValue <= filterValue[1];
+        }
+        return false;
+      },
+      selection: "custom"
+    },
+    {
+      name: OPERATOR_IN_THE_PAST,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("In the past"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s is in the past: </Name><Value>%2$s</Value>"
+          ),
+          filter.name,
+          `${activeElements[0].value.value} ${activeElements[0].value.unit}`
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue?.value === void 0 || filterValue?.unit === void 0) {
+          return true;
+        }
+        const targetDate = getRelativeDate(
+          filterValue.value,
+          filterValue.unit
+        );
+        const fieldValue = (0, import_date3.getDate)(field.getValue({ item }));
+        return fieldValue >= targetDate && fieldValue <= /* @__PURE__ */ new Date();
+      },
+      selection: "custom"
+    },
+    {
+      name: OPERATOR_OVER,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Over"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
+          (0, import_i18n212.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+          filter.name,
+          `${activeElements[0].value.value} ${activeElements[0].value.unit}`
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue?.value === void 0 || filterValue?.unit === void 0) {
+          return true;
+        }
+        const targetDate = getRelativeDate(
+          filterValue.value,
+          filterValue.unit
+        );
+        const fieldValue = (0, import_date3.getDate)(field.getValue({ item }));
+        return fieldValue < targetDate;
+      },
+      selection: "custom"
+    },
+    {
+      name: OPERATOR_IS,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Is"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
+          (0, import_i18n212.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        return filterValue === field.getValue({ item }) || filterValue === void 0;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_IS_NOT,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Is not"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
+          (0, import_i18n212.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        return filterValue !== field.getValue({ item });
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_LESS_THAN,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Less than"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
+          (0, import_i18n212.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        return fieldValue < filterValue;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_GREATER_THAN,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Greater than"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s is greater than: </Name><Value>%2$s</Value>"
+          ),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        return fieldValue > filterValue;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_LESS_THAN_OR_EQUAL,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Less than or equal"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"
+          ),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        return fieldValue <= filterValue;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_GREATER_THAN_OR_EQUAL,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Greater than or equal"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"
+          ),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        return fieldValue >= filterValue;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_BEFORE,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Before"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
+          (0, import_i18n212.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const filterDate = (0, import_date3.getDate)(filterValue);
+        const fieldDate = (0, import_date3.getDate)(field.getValue({ item }));
+        return fieldDate < filterDate;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_AFTER,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("After"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
+          (0, import_i18n212.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const filterDate = (0, import_date3.getDate)(filterValue);
+        const fieldDate = (0, import_date3.getDate)(field.getValue({ item }));
+        return fieldDate > filterDate;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_BEFORE_INC,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Before (inc)"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s is on or before: </Name><Value>%2$s</Value>"
+          ),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const filterDate = (0, import_date3.getDate)(filterValue);
+        const fieldDate = (0, import_date3.getDate)(field.getValue({ item }));
+        return fieldDate <= filterDate;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_AFTER_INC,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("After (inc)"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s is on or after: </Name><Value>%2$s</Value>"
+          ),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const filterDate = (0, import_date3.getDate)(filterValue);
+        const fieldDate = (0, import_date3.getDate)(field.getValue({ item }));
+        return fieldDate >= filterDate;
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_CONTAINS,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Contains"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
+          (0, import_i18n212.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        return typeof fieldValue === "string" && filterValue && fieldValue.toLowerCase().includes(String(filterValue).toLowerCase());
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_NOT_CONTAINS,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Doesn't contain"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
+          (0, import_i18n212.__)(
+            "<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"
+          ),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        return typeof fieldValue === "string" && filterValue && !fieldValue.toLowerCase().includes(String(filterValue).toLowerCase());
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_STARTS_WITH,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Starts with"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
+          (0, import_i18n212.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const fieldValue = field.getValue({ item });
+        return typeof fieldValue === "string" && filterValue && fieldValue.toLowerCase().startsWith(String(filterValue).toLowerCase());
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_ON,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("On"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
+          (0, import_i18n212.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const filterDate = (0, import_date3.getDate)(filterValue);
+        const fieldDate = (0, import_date3.getDate)(field.getValue({ item }));
+        return filterDate.getTime() === fieldDate.getTime();
+      },
+      selection: "single"
+    },
+    {
+      name: OPERATOR_NOT_ON,
+      /* translators: DataViews operator name */
+      label: (0, import_i18n212.__)("Not on"),
+      filterText: (filter, activeElements) => (0, import_element229.createInterpolateElement)(
+        (0, import_i18n212.sprintf)(
+          /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
+          (0, import_i18n212.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+          filter.name,
+          activeElements[0].label
+        ),
+        filterTextWrappers
+      ),
+      filter(item, field, filterValue) {
+        if (filterValue === void 0) {
+          return true;
+        }
+        const filterDate = (0, import_date3.getDate)(filterValue);
+        const fieldDate = (0, import_date3.getDate)(field.getValue({ item }));
+        return filterDate.getTime() !== fieldDate.getTime();
+      },
+      selection: "single"
+    }
+  ];
+  var getOperatorByName = (name) => OPERATORS.find((op) => op.name === name);
+  var getAllOperatorNames = () => OPERATORS.map((op) => op.name);
+
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
+  var import_components226 = __toESM(require_components(), 1);
+  var import_element230 = __toESM(require_element(), 1);
+
+  // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
+  function getCustomValidity(isValid2, validity) {
+    let customValidity;
+    if (isValid2?.required && validity?.required) {
+      customValidity = validity?.required?.message ? validity.required : void 0;
+    } else if (isValid2?.pattern && validity?.pattern) {
+      customValidity = validity.pattern;
+    } else if (isValid2?.min && validity?.min) {
+      customValidity = validity.min;
+    } else if (isValid2?.max && validity?.max) {
+      customValidity = validity.max;
+    } else if (isValid2?.minLength && validity?.minLength) {
+      customValidity = validity.minLength;
+    } else if (isValid2?.maxLength && validity?.maxLength) {
+      customValidity = validity.maxLength;
+    } else if (isValid2?.elements && validity?.elements) {
+      customValidity = validity.elements;
+    } else if (validity?.custom) {
+      customValidity = validity.custom;
+    }
+    return customValidity;
+  }
+
+  // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
+  var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedCheckboxControl } = unlock3(import_components226.privateApis);
+  function Checkbox({
+    field,
+    onChange,
+    data,
+    hideLabelFromVision,
+    validity
+  }) {
+    const { getValue, setValue, label, description, isValid: isValid2 } = field;
+    const onChangeControl = (0, import_element230.useCallback)(() => {
+      onChange(
+        setValue({ item: data, value: !getValue({ item: data }) })
+      );
+    }, [data, getValue, onChange, setValue]);
+    return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
+      ValidatedCheckboxControl,
+      {
+        required: !!field.isValid?.required,
+        customValidity: getCustomValidity(isValid2, validity),
+        hidden: hideLabelFromVision,
+        label,
+        help: description,
+        checked: getValue({ item: data }),
+        onChange: onChangeControl
+      }
+    );
   }
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_components228 = __toESM(require_components(), 1);
   var import_element232 = __toESM(require_element(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
-  var import_date4 = __toESM(require_date(), 1);
+  var import_date5 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
   var import_components227 = __toESM(require_components(), 1);
@@ -64883,12 +65072,12 @@ var wp;
   }
 
   // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
-  var import_date3 = __toESM(require_date(), 1);
+  var import_date4 = __toESM(require_date(), 1);
   function parseDateTime(dateTimeString) {
     if (!dateTimeString) {
       return null;
     }
-    const parsed = (0, import_date3.getDate)(dateTimeString);
+    const parsed = (0, import_date4.getDate)(dateTimeString);
     return parsed && isValid(parsed) ? parsed : null;
   }
 
@@ -64985,10 +65174,10 @@ var wp;
       [onChangeCallback]
     );
     const { format: fieldFormat } = field;
-    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
     const {
       timezone: { string: timezoneString }
-    } = (0, import_date4.getSettings)();
+    } = (0, import_date5.getSettings)();
     const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n214.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
       import_components228.BaseControl,
@@ -65067,20 +65256,20 @@ var wp;
   var import_components229 = __toESM(require_components(), 1);
   var import_element233 = __toESM(require_element(), 1);
   var import_i18n215 = __toESM(require_i18n(), 1);
-  var import_date5 = __toESM(require_date(), 1);
+  var import_date6 = __toESM(require_date(), 1);
   var import_jsx_runtime404 = __toESM(require_jsx_runtime(), 1);
   var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components229.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
       label: (0, import_i18n215.__)("Today"),
-      getValue: () => (0, import_date5.getDate)(null)
+      getValue: () => (0, import_date6.getDate)(null)
     },
     {
       id: "yesterday",
       label: (0, import_i18n215.__)("Yesterday"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return subDays(today, 1);
       }
     },
@@ -65088,7 +65277,7 @@ var wp;
       id: "past-week",
       label: (0, import_i18n215.__)("Past week"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return subDays(today, 7);
       }
     },
@@ -65096,7 +65285,7 @@ var wp;
       id: "past-month",
       label: (0, import_i18n215.__)("Past month"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return subMonths(today, 1);
       }
     }
@@ -65106,7 +65295,7 @@ var wp;
       id: "last-7-days",
       label: (0, import_i18n215.__)("Last 7 days"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [subDays(today, 7), today];
       }
     },
@@ -65114,7 +65303,7 @@ var wp;
       id: "last-30-days",
       label: (0, import_i18n215.__)("Last 30 days"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [subDays(today, 30), today];
       }
     },
@@ -65122,7 +65311,7 @@ var wp;
       id: "month-to-date",
       label: (0, import_i18n215.__)("Month to date"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [startOfMonth(today), today];
       }
     },
@@ -65130,7 +65319,7 @@ var wp;
       id: "last-year",
       label: (0, import_i18n215.__)("Last year"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [subYears(today, 1), today];
       }
     },
@@ -65138,7 +65327,7 @@ var wp;
       id: "year-to-date",
       label: (0, import_i18n215.__)("Year to date"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [startOfYear(today), today];
       }
     }
@@ -65147,7 +65336,7 @@ var wp;
     if (!dateString) {
       return null;
     }
-    const parsed = (0, import_date5.getDate)(dateString);
+    const parsed = (0, import_date6.getDate)(dateString);
     return parsed && isValid(parsed) ? parsed : null;
   };
   var formatDate = (date) => {
@@ -65245,7 +65434,7 @@ var wp;
     const [selectedPresetId, setSelectedPresetId] = (0, import_element233.useState)(
       null
     );
-    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element233.useState)(() => {
@@ -65294,7 +65483,7 @@ var wp;
     );
     const {
       timezone: { string: timezoneString }
-    } = (0, import_date5.getSettings)();
+    } = (0, import_date6.getSettings)();
     const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n215.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
       ValidatedDateControl,
@@ -65394,7 +65583,7 @@ var wp;
     if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
       value = fieldValue;
     }
-    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
     const onChangeCallback = (0, import_element233.useCallback)(
       (newValue) => {
         onChange(
@@ -65476,7 +65665,7 @@ var wp;
       },
       [value, updateDateRange]
     );
-    const { timezone } = (0, import_date5.getSettings)();
+    const { timezone } = (0, import_date6.getSettings)();
     const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n215.__)("Required")})` : label;
     return /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
       ValidatedDateControl,
@@ -66846,10 +67035,10 @@ var wp;
   };
 
   // packages/dataviews/build-module/field-types/datetime.mjs
-  var import_date7 = __toESM(require_date(), 1);
+  var import_date8 = __toESM(require_date(), 1);
   var format4 = {
-    datetime: (0, import_date7.getSettings)().formats.datetime,
-    weekStartsOn: (0, import_date7.getSettings)().l10n.startOfWeek
+    datetime: (0, import_date8.getSettings)().formats.datetime,
+    weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
   };
   function getValueFormatted4({
     item,
@@ -66865,7 +67054,7 @@ var wp;
     } else {
       formatDatetime = field.format;
     }
-    return (0, import_date7.dateI18n)(formatDatetime.datetime, (0, import_date7.getDate)(value));
+    return (0, import_date8.dateI18n)(formatDatetime.datetime, (0, import_date8.getDate)(value));
   }
   var sort = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
@@ -66908,10 +67097,10 @@ var wp;
   };
 
   // packages/dataviews/build-module/field-types/date.mjs
-  var import_date8 = __toESM(require_date(), 1);
+  var import_date9 = __toESM(require_date(), 1);
   var format5 = {
-    date: (0, import_date8.getSettings)().formats.date,
-    weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
+    date: (0, import_date9.getSettings)().formats.date,
+    weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
   };
   function getValueFormatted5({
     item,
@@ -66927,7 +67116,7 @@ var wp;
     } else {
       formatDate2 = field.format;
     }
-    return (0, import_date8.dateI18n)(formatDate2.date, (0, import_date8.getDate)(value));
+    return (0, import_date9.dateI18n)(formatDate2.date, (0, import_date9.getDate)(value));
   }
   var sort2 = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
@@ -67375,6 +67564,17 @@ var wp;
     };
   }
 
+  // packages/dataviews/build-module/field-types/utils/get-filter.mjs
+  function getFilter(fieldType) {
+    return fieldType.validOperators.reduce((accumulator, operator) => {
+      const operatorObj = getOperatorByName(operator);
+      if (operatorObj?.filter) {
+        accumulator[operator] = operatorObj.filter;
+      }
+      return accumulator;
+    }, {});
+  }
+
   // packages/dataviews/build-module/field-types/utils/get-format.mjs
   function getFormat(field, fieldType) {
     return {
@@ -67442,6 +67642,7 @@ var wp;
           fieldType.defaultOperators,
           fieldType.validOperators
         ),
+        filter: getFilter(fieldType),
         format: get_format_default(field, fieldType),
         getValueFormatted: field.getValueFormatted ?? fieldType.getValueFormatted
       };
