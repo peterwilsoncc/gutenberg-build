@@ -38636,6 +38636,7 @@ var wp;
       ([blockName, node]) => {
         const blockStyles = pickStyleKeys(node);
         const typedNode = node;
+        const variationNodesToAdd = [];
         if (typedNode?.variations) {
           const variations = {};
           Object.entries(typedNode.variations).forEach(
@@ -38650,7 +38651,7 @@ var wp;
                 typedVariation?.elements ?? {}
               ).forEach(([element, elementStyles]) => {
                 if (elementStyles && import_blocks67.__EXPERIMENTAL_ELEMENTS[element]) {
-                  nodes.push({
+                  variationNodesToAdd.push({
                     styles: elementStyles,
                     selector: scopeSelector2(
                       variationSelector,
@@ -38683,7 +38684,7 @@ var wp;
                   if (!variationBlockSelector || typeof blockSelectors === "string") {
                     return;
                   }
-                  nodes.push({
+                  variationNodesToAdd.push({
                     selector: variationBlockSelector,
                     duotoneSelector: variationDuotoneSelector,
                     featureSelectors: variationFeatureSelectors,
@@ -38699,7 +38700,7 @@ var wp;
                       variationBlockElementStyles
                     ]) => {
                       if (variationBlockElementStyles && import_blocks67.__EXPERIMENTAL_ELEMENTS[variationBlockElement]) {
-                        nodes.push({
+                        variationNodesToAdd.push({
                           styles: variationBlockElementStyles,
                           selector: scopeSelector2(
                             variationBlockSelector,
@@ -38741,6 +38742,7 @@ var wp;
             }
           }
         );
+        nodes.push(...variationNodesToAdd);
       }
     );
     return nodes;
@@ -38930,6 +38932,16 @@ var wp;
                       styleVariations.css,
                       `:root :where(${styleVariationSelector})`
                     );
+                  }
+                  if (hasLayoutSupport2 && styleVariations?.spacing?.blockGap) {
+                    const variationSelectorWithBlock = styleVariationSelector + selector3;
+                    ruleset += getLayoutStyles({
+                      style: styleVariations,
+                      selector: variationSelectorWithBlock,
+                      hasBlockGapSupport: true,
+                      hasFallbackGapSupport,
+                      fallbackGapValue
+                    });
                   }
                 }
               }
