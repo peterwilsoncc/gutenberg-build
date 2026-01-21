@@ -2395,6 +2395,7 @@ var wp;
         eligibleActions: _eligibleActions
       };
     }, [actions, item]);
+    const isMobileViewport = (0, import_compose.useViewportMatch)("medium", "<");
     if (isCompact) {
       return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         CompactItemActions,
@@ -2425,7 +2426,9 @@ var wp;
               registry
             }
           ),
-          primaryActions.length < eligibleActions.length && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+          (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
+          // there if there are any actions at all.
+          isMobileViewport) && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
             CompactItemActions,
             {
               item,
@@ -4687,6 +4690,7 @@ var wp;
   var import_components11 = __toESM(require_components(), 1);
   var import_element15 = __toESM(require_element(), 1);
   var import_data4 = __toESM(require_data(), 1);
+  var import_compose6 = __toESM(require_compose(), 1);
   var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   function ActivityItem(props) {
     const {
@@ -4723,6 +4727,7 @@ var wp;
         eligibleActions: _eligibleActions
       };
     }, [actions, item]);
+    const isMobileViewport = (0, import_compose6.useViewportMatch)("medium", "<");
     const density = view.layout?.density ?? "balanced";
     const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       mediaField.render,
@@ -4836,7 +4841,10 @@ var wp;
               ]
             }
           ),
-          primaryActions.length < eligibleActions.length && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+          (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
+          // there if there are any actions at all.
+          isMobileViewport && // At the same time, only show the menu if there are actions to show.
+          eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
             ItemActions,
             {
               item,
@@ -4938,7 +4946,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_components15 = __toESM(require_components(), 1);
   var import_i18n23 = __toESM(require_i18n(), 1);
-  var import_compose6 = __toESM(require_compose(), 1);
+  var import_compose7 = __toESM(require_compose(), 1);
   var import_element19 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
@@ -5389,7 +5397,7 @@ var wp;
     showLabel = true,
     children
   }) {
-    const headerId = (0, import_compose6.useInstanceId)(
+    const headerId = (0, import_compose7.useInstanceId)(
       GridGroup,
       "dataviews-view-picker-grid-group__header"
     );
@@ -10230,7 +10238,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
   var import_remove_accents = __toESM(require_remove_accents(), 1);
-  var import_compose7 = __toESM(require_compose(), 1);
+  var import_compose8 = __toESM(require_compose(), 1);
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_element24 = __toESM(require_element(), 1);
   var import_components19 = __toESM(require_components(), 1);
@@ -10332,7 +10340,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   function ListBox({ view, filter, onChangeView }) {
-    const baseId = (0, import_compose7.useInstanceId)(ListBox, "dataviews-filter-list-box");
+    const baseId = (0, import_compose8.useInstanceId)(ListBox, "dataviews-filter-list-box");
     const [activeCompositeId, setActiveCompositeId] = (0, import_element24.useState)(
       // When there are one or less operators, the first item is set as active
       // (by setting the initial `activeId` to `undefined`).
@@ -10582,7 +10590,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
   var import_es6 = __toESM(require_es6(), 1);
-  var import_compose8 = __toESM(require_compose(), 1);
+  var import_compose9 = __toESM(require_compose(), 1);
   var import_element25 = __toESM(require_element(), 1);
   var import_components20 = __toESM(require_components(), 1);
   var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
@@ -10621,7 +10629,7 @@ If there's a particular need for this, please submit a feature request at https:
         {}
       );
     }, [view.filters]);
-    const handleChange = (0, import_compose8.useEvent)((updatedData) => {
+    const handleChange = (0, import_compose9.useEvent)((updatedData) => {
       if (!field || !currentFilter) {
         return;
       }
@@ -13506,11 +13514,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n35 = __toESM(require_i18n(), 1);
   var import_element34 = __toESM(require_element(), 1);
   var import_components25 = __toESM(require_components(), 1);
-  var import_compose9 = __toESM(require_compose(), 1);
+  var import_compose10 = __toESM(require_compose(), 1);
   var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
   var DataViewsSearch = (0, import_element34.memo)(function Search({ label }) {
     const { view, onChangeView } = (0, import_element34.useContext)(dataviews_context_default);
-    const [search, setSearch, debouncedSearch] = (0, import_compose9.useDebouncedInput)(
+    const [search, setSearch, debouncedSearch] = (0, import_compose10.useDebouncedInput)(
       view.search
     );
     (0, import_element34.useEffect)(() => {
@@ -13551,7 +13559,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n37 = __toESM(require_i18n(), 1);
   var import_element36 = __toESM(require_element(), 1);
   var import_warning = __toESM(require_warning(), 1);
-  var import_compose10 = __toESM(require_compose(), 1);
+  var import_compose11 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.mjs
   var import_components26 = __toESM(require_components(), 1);
@@ -13809,7 +13817,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function DataviewsViewConfigDropdown() {
     const { view } = (0, import_element36.useContext)(dataviews_context_default);
-    const popoverId = (0, import_compose10.useInstanceId)(
+    const popoverId = (0, import_compose11.useInstanceId)(
       _DataViewsViewConfig,
       "dataviews-view-config-dropdown"
     );
@@ -16769,7 +16777,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/dataviews-picker/index.mjs
   var import_element52 = __toESM(require_element(), 1);
-  var import_compose11 = __toESM(require_compose(), 1);
+  var import_compose12 = __toESM(require_compose(), 1);
   var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
   var isItemClickable = () => false;
   var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
@@ -16835,7 +16843,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { infiniteScrollHandler } = paginationInfo;
     const containerRef = (0, import_element52.useRef)(null);
     const [containerWidth, setContainerWidth] = (0, import_element52.useState)(0);
-    const resizeObserverRef = (0, import_compose11.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose12.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
           resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -16870,7 +16878,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
-      const handleScroll = (0, import_compose11.throttle)((event) => {
+      const handleScroll = (0, import_compose12.throttle)((event) => {
         const target = event.target;
         const scrollTop = target.scrollTop;
         const scrollHeight = target.scrollHeight;
@@ -17020,7 +17028,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components46 = __toESM(require_components(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
   var import_element54 = __toESM(require_element(), 1);
-  var import_compose12 = __toESM(require_compose(), 1);
+  var import_compose13 = __toESM(require_compose(), 1);
   var import_data6 = __toESM(require_data(), 1);
   var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToEdit({
@@ -17133,7 +17141,7 @@ If there's a particular need for this, please submit a feature request at https:
         help,
         value,
         options,
-        onFilterValueChange: (0, import_compose12.debounce)(
+        onFilterValueChange: (0, import_compose13.debounce)(
           (filterValue) => onValueChange(filterValue),
           300
         ),

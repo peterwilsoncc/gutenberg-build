@@ -954,7 +954,7 @@ var import_preferences2 = __toESM(require_preferences(), 1);
 
 // packages/dataviews/build-module/dataviews/index.mjs
 var import_element53 = __toESM(require_element(), 1);
-var import_compose11 = __toESM(require_compose(), 1);
+var import_compose12 = __toESM(require_compose(), 1);
 
 // node_modules/@base-ui/utils/esm/useRefWithInit.js
 var React2 = __toESM(require_react(), 1);
@@ -1908,6 +1908,7 @@ function ItemActions({
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
+  const isMobileViewport = (0, import_compose.useViewportMatch)("medium", "<");
   if (isCompact) {
     return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
       CompactItemActions,
@@ -1938,7 +1939,9 @@ function ItemActions({
             registry
           }
         ),
-        primaryActions.length < eligibleActions.length && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
+        // there if there are any actions at all.
+        isMobileViewport) && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
           CompactItemActions,
           {
             item,
@@ -4456,6 +4459,7 @@ function ActivityGroup({
 var import_components11 = __toESM(require_components(), 1);
 var import_element15 = __toESM(require_element(), 1);
 var import_data6 = __toESM(require_data(), 1);
+var import_compose6 = __toESM(require_compose(), 1);
 var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
   const {
@@ -4492,6 +4496,7 @@ function ActivityItem(props) {
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
+  const isMobileViewport = (0, import_compose6.useViewportMatch)("medium", "<");
   const density = view.layout?.density ?? "balanced";
   const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
     mediaField.render,
@@ -4605,7 +4610,10 @@ function ActivityItem(props) {
             ]
           }
         ),
-        primaryActions.length < eligibleActions.length && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+        (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
+        // there if there are any actions at all.
+        isMobileViewport && // At the same time, only show the menu if there are actions to show.
+        eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
           ItemActions,
           {
             item,
@@ -4707,7 +4715,7 @@ function ViewActivity(props) {
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_components15 = __toESM(require_components(), 1);
 var import_i18n17 = __toESM(require_i18n(), 1);
-var import_compose6 = __toESM(require_compose(), 1);
+var import_compose7 = __toESM(require_compose(), 1);
 var import_element19 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
@@ -5020,7 +5028,7 @@ function GridGroup({
   showLabel = true,
   children
 }) {
-  const headerId = (0, import_compose6.useInstanceId)(
+  const headerId = (0, import_compose7.useInstanceId)(
     GridGroup,
     "dataviews-view-picker-grid-group__header"
   );
@@ -9861,7 +9869,7 @@ var ComboboxList = forwardRef22(function ComboboxList2(props) {
 
 // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
 var import_remove_accents = __toESM(require_remove_accents(), 1);
-var import_compose7 = __toESM(require_compose(), 1);
+var import_compose8 = __toESM(require_compose(), 1);
 var import_i18n22 = __toESM(require_i18n(), 1);
 var import_element24 = __toESM(require_element(), 1);
 var import_components19 = __toESM(require_components(), 1);
@@ -9963,7 +9971,7 @@ var SingleSelectionOption = ({ selected }) => {
   );
 };
 function ListBox({ view, filter, onChangeView }) {
-  const baseId = (0, import_compose7.useInstanceId)(ListBox, "dataviews-filter-list-box");
+  const baseId = (0, import_compose8.useInstanceId)(ListBox, "dataviews-filter-list-box");
   const [activeCompositeId, setActiveCompositeId] = (0, import_element24.useState)(
     // When there are one or less operators, the first item is set as active
     // (by setting the initial `activeId` to `undefined`).
@@ -10213,7 +10221,7 @@ function SearchWidget(props) {
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
 var import_es6 = __toESM(require_es6(), 1);
-var import_compose8 = __toESM(require_compose(), 1);
+var import_compose9 = __toESM(require_compose(), 1);
 var import_element25 = __toESM(require_element(), 1);
 var import_components20 = __toESM(require_components(), 1);
 var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
@@ -10252,7 +10260,7 @@ function InputWidget({
       {}
     );
   }, [view.filters]);
-  const handleChange = (0, import_compose8.useEvent)((updatedData) => {
+  const handleChange = (0, import_compose9.useEvent)((updatedData) => {
     if (!field || !currentFilter) {
       return;
     }
@@ -13168,11 +13176,11 @@ function DataViewsFooter() {
 var import_i18n29 = __toESM(require_i18n(), 1);
 var import_element35 = __toESM(require_element(), 1);
 var import_components25 = __toESM(require_components(), 1);
-var import_compose9 = __toESM(require_compose(), 1);
+var import_compose10 = __toESM(require_compose(), 1);
 var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 var DataViewsSearch = (0, import_element35.memo)(function Search({ label }) {
   const { view, onChangeView } = (0, import_element35.useContext)(dataviews_context_default);
-  const [search, setSearch, debouncedSearch] = (0, import_compose9.useDebouncedInput)(
+  const [search, setSearch, debouncedSearch] = (0, import_compose10.useDebouncedInput)(
     view.search
   );
   (0, import_element35.useEffect)(() => {
@@ -13213,7 +13221,7 @@ var import_components27 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_element37 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
-var import_compose10 = __toESM(require_compose(), 1);
+var import_compose11 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.mjs
 var import_components26 = __toESM(require_components(), 1);
@@ -13471,7 +13479,7 @@ function SettingsSection({
 }
 function DataviewsViewConfigDropdown() {
   const { view } = (0, import_element37.useContext)(dataviews_context_default);
-  const popoverId = (0, import_compose10.useInstanceId)(
+  const popoverId = (0, import_compose11.useInstanceId)(
     _DataViewsViewConfig,
     "dataviews-view-config-dropdown"
   );
@@ -16503,7 +16511,7 @@ function DataViews({
   const { infiniteScrollHandler } = paginationInfo;
   const containerRef = (0, import_element53.useRef)(null);
   const [containerWidth, setContainerWidth] = (0, import_element53.useState)(0);
-  const resizeObserverRef = (0, import_compose11.useResizeObserver)(
+  const resizeObserverRef = (0, import_compose12.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -16549,7 +16557,7 @@ function DataViews({
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
-    const handleScroll = (0, import_compose11.throttle)((event) => {
+    const handleScroll = (0, import_compose12.throttle)((event) => {
       const target = event.target;
       const scrollTop = target.scrollTop;
       const scrollHeight = target.scrollHeight;
@@ -17231,7 +17239,7 @@ var import_html_entities4 = __toESM(require_html_entities());
 var import_element61 = __toESM(require_element());
 var import_data12 = __toESM(require_data());
 var import_core_data8 = __toESM(require_core_data());
-var import_compose13 = __toESM(require_compose());
+var import_compose14 = __toESM(require_compose());
 var import_i18n52 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_dom11 = __toESM(require_dom());
@@ -17243,7 +17251,7 @@ var import_i18n50 = __toESM(require_i18n());
 var import_components49 = __toESM(require_components());
 var import_core_data7 = __toESM(require_core_data());
 var import_html_entities3 = __toESM(require_html_entities());
-var import_compose12 = __toESM(require_compose());
+var import_compose13 = __toESM(require_compose());
 var import_dom10 = __toESM(require_dom());
 var import_url4 = __toESM(require_url());
 
@@ -17850,7 +17858,7 @@ function SuggestionList({
   entityForSuggestions,
   onSelect
 }) {
-  const [search, setSearch, debouncedSearch] = (0, import_compose12.useDebouncedInput)();
+  const [search, setSearch, debouncedSearch] = (0, import_compose13.useDebouncedInput)();
   const suggestions = useSearchSuggestions(
     entityForSuggestions,
     debouncedSearch
@@ -18266,7 +18274,7 @@ function NewTemplateModal({ onClose }) {
   const { saveEntityRecord } = (0, import_data12.useDispatch)(import_core_data8.store);
   const { createErrorNotice, createSuccessNotice } = (0, import_data12.useDispatch)(import_notices.store);
   const containerRef = (0, import_element61.useRef)(null);
-  const isMobile = (0, import_compose13.useViewportMatch)("medium", "<");
+  const isMobile = (0, import_compose14.useViewportMatch)("medium", "<");
   const homeUrl = (0, import_data12.useSelect)((select2) => {
     return select2(import_core_data8.store).getEntityRecord("root", "__unstableBase")?.home;
   }, []);
