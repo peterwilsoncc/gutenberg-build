@@ -17708,7 +17708,7 @@ var wp;
         isRepeated: !isRepeated
       });
     };
-    const showFocalPointPicker = isVideoBackground || isImageBackground && (!hasParallax || isRepeated);
+    const showFocalPointPicker = isVideoBackground || isImageBackground;
     const imperativeFocalPointPreview = (value) => {
       const [styleOfRef, property] = mediaElement.current ? [mediaElement.current.style, "objectPosition"] : [coverRef.current.style, "backgroundPosition"];
       styleOfRef[property] = mediaPosition(value);
