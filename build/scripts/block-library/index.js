@@ -40788,6 +40788,18 @@ ${js}
     return isDraggingWithin;
   };
 
+  // packages/block-library/build-module/navigation-link/shared/select-label-text.mjs
+  function selectLabelText(ref) {
+    ref.current.focus();
+    const { ownerDocument } = ref.current;
+    const { defaultView } = ownerDocument;
+    const selection = defaultView.getSelection();
+    const range = ownerDocument.createRange();
+    range.selectNodeContents(ref.current);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
   // packages/block-library/build-module/navigation/edit/menu-inspector-controls.mjs
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var actionLabel = (
@@ -42630,7 +42642,7 @@ ${js}
       }
       isNewLink.current = false;
       if ((0, import_url13.isURL)((0, import_url13.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
-        selectLabelText();
+        selectLabelText(ref);
       } else {
         selectBlock(clientId, null);
         if (isSubmenu) {
@@ -42641,16 +42653,6 @@ ${js}
         }
       }
     }, [url, isLinkOpen, isNewLink, label]);
-    function selectLabelText() {
-      ref.current.focus();
-      const { ownerDocument } = ref.current;
-      const { defaultView } = ownerDocument;
-      const selection = defaultView.getSelection();
-      const range = ownerDocument.createRange();
-      range.selectNodeContents(ref.current);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
     function removeLink() {
       setAttributes({
         url: void 0,
@@ -43329,20 +43331,10 @@ ${js}
     (0, import_element76.useEffect)(() => {
       if (isLinkOpen && url) {
         if ((0, import_url14.isURL)((0, import_url14.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
-          selectLabelText();
+          selectLabelText(ref);
         }
       }
     }, [url]);
-    function selectLabelText() {
-      ref.current.focus();
-      const { ownerDocument } = ref.current;
-      const { defaultView } = ownerDocument;
-      const selection = defaultView.getSelection();
-      const range = ownerDocument.createRange();
-      range.selectNodeContents(ref.current);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
     const {
       textColor,
       customTextColor,
