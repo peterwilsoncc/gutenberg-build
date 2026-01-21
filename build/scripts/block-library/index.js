@@ -7942,6 +7942,7 @@ var wp;
   var { name: name8 } = block_default9;
   var settings8 = {
     icon: breadcrumbs_default,
+    example: {},
     edit: BreadcrumbEdit
   };
   var init8 = () => initBlock({ name: name8, metadata: block_default9, settings: settings8 });
