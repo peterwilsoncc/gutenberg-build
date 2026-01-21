@@ -34624,7 +34624,15 @@ ${js}
       };
     },
     transforms: transforms_default16,
-    [unlock(import_block_editor130.privateApis).requiresWrapperOnCopy]: true
+    [unlock(import_block_editor130.privateApis).requiresWrapperOnCopy]: true,
+    __experimentalLabel(attributes3, { context }) {
+      const { content } = attributes3;
+      const customName = attributes3?.metadata?.name;
+      const hasContent = content?.trim().length > 0;
+      if (context === "list-view" && (customName || hasContent)) {
+        return customName || content;
+      }
+    }
   };
   if (window.__experimentalContentOnlyInspectorFields) {
     settings48[fieldsKey9] = [
