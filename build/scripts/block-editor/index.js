@@ -73689,7 +73689,7 @@ var wp;
   function ListViewPanel({ clientId, name }) {
     const { isSelectionWithinCurrentSection } = (0, import_element272.useContext)(PrivateBlockContext);
     const isEnabled = hasListViewSupport(name);
-    const { hasChildren, blockTitle, isNestedListView } = (0, import_data195.useSelect)(
+    const { hasChildren, isNestedListView } = (0, import_data195.useSelect)(
       (select3) => {
         const { getBlockCount: getBlockCount2, getBlockParents: getBlockParents2, getBlockName: getBlockName2 } = select3(store);
         let _isNestedListView = false;
@@ -73702,24 +73702,27 @@ var wp;
         }
         return {
           hasChildren: !!getBlockCount2(clientId),
-          blockTitle: select3(import_blocks121.store).getBlockType(name)?.title,
           isNestedListView: _isNestedListView
         };
       },
-      [clientId, name, isSelectionWithinCurrentSection]
+      [clientId, isSelectionWithinCurrentSection]
     );
+    const title = useBlockDisplayTitle({
+      clientId,
+      context: "list-view"
+    });
     if (!isEnabled || isNestedListView) {
       return null;
     }
     const showBlockTitle = isSelectionWithinCurrentSection;
-    return /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(InspectorControlsFill, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime460.jsxs)(import_components271.PanelBody, { title: showBlockTitle ? blockTitle : void 0, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(InspectorControlsFill, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime460.jsxs)(import_components271.PanelBody, { title: showBlockTitle ? title : void 0, children: [
       !hasChildren && /* @__PURE__ */ (0, import_jsx_runtime460.jsx)("p", { className: "block-editor-block-inspector__no-blocks", children: (0, import_i18n242.__)("No items yet.") }),
       /* @__PURE__ */ (0, import_jsx_runtime460.jsx)(
         PrivateListView,
         {
           rootClientId: clientId,
           isExpanded: true,
-          description: blockTitle,
+          description: title,
           showAppender: true
         }
       )
