@@ -7581,7 +7581,6 @@ var wp;
   var reusableBlocksSelectKey = Symbol("reusableBlocksSelect");
   var sectionRootClientIdKey = Symbol("sectionRootClientIdKey");
   var mediaEditKey = Symbol("mediaEditKey");
-  var essentialFormatKey = Symbol("essentialFormat");
 
   // packages/block-editor/build-module/store/reducer.js
   var { isContentBlock } = unlock(import_blocks.privateApis);
@@ -55099,37 +55098,21 @@ var wp;
   function useFormatTypes({
     clientId,
     identifier: identifier2,
-    allowedFormats,
     withoutInteractiveFormatting,
-    disableNoneEssentialFormatting = false
+    allowedFormats
   }) {
     const allFormatTypes = (0, import_data150.useSelect)(formatTypesSelector, []);
     const formatTypes = (0, import_element188.useMemo)(() => {
-      return allFormatTypes.filter(
-        ({
-          name,
-          interactive,
-          tagName,
-          [essentialFormatKey]: isEssential
-        }) => {
-          if (allowedFormats && !allowedFormats.includes(name)) {
-            return false;
-          }
-          if (disableNoneEssentialFormatting && !isEssential) {
-            return false;
-          }
-          if (withoutInteractiveFormatting && (interactive || interactiveContentTags.has(tagName))) {
-            return false;
-          }
-          return true;
+      return allFormatTypes.filter(({ name, interactive, tagName }) => {
+        if (allowedFormats && !allowedFormats.includes(name)) {
+          return false;
         }
-      );
-    }, [
-      allFormatTypes,
-      allowedFormats,
-      disableNoneEssentialFormatting,
-      withoutInteractiveFormatting
-    ]);
+        if (withoutInteractiveFormatting && (interactive || interactiveContentTags.has(tagName))) {
+          return false;
+        }
+        return true;
+      });
+    }, [allFormatTypes, allowedFormats, withoutInteractiveFormatting]);
     const keyedSelected = (0, import_data150.useSelect)(
       (select2) => formatTypes.reduce((accumulator, type) => {
         if (!type.__experimentalGetPropsForEditableTreePreparation) {
@@ -56123,7 +56106,7 @@ var wp;
       if (!isBlockSelected2) {
         return { isSelected: false };
       }
-      const { getSelectionStart: getSelectionStart22, getSelectionEnd: getSelectionEnd22, getBlockEditingMode: getBlockEditingMode2 } = select2(store);
+      const { getSelectionStart: getSelectionStart22, getSelectionEnd: getSelectionEnd22 } = select2(store);
       const selectionStart2 = getSelectionStart22();
       const selectionEnd2 = getSelectionEnd22();
       let isSelected2;
@@ -56135,11 +56118,10 @@ var wp;
       return {
         selectionStart: isSelected2 ? selectionStart2.offset : void 0,
         selectionEnd: isSelected2 ? selectionEnd2.offset : void 0,
-        isSelected: isSelected2,
-        isContentOnly: getBlockEditingMode2(clientId) === "contentOnly"
+        isSelected: isSelected2
       };
     };
-    const { selectionStart, selectionEnd, isSelected, isContentOnly } = (0, import_data152.useSelect)(selector3, [
+    const { selectionStart, selectionEnd, isSelected } = (0, import_data152.useSelect)(selector3, [
       clientId,
       identifier2,
       instanceId,
@@ -56270,9 +56252,8 @@ var wp;
     } = useFormatTypes({
       clientId,
       identifier: identifier2,
-      allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      disableNoneEssentialFormatting: isContentOnly
+      allowedFormats: adjustedAllowedFormats
     });
     function addEditorOnlyFormats(value2) {
       return valueHandlers.reduce(
@@ -66456,7 +66437,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     CommentIconSlotFill: block_comment_icon_slot_default,
     CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot_default,
     mediaEditKey,
-    essentialFormatKey,
     useBlockElement,
     useBlockElementRef
   });

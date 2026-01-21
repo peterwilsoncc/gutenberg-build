@@ -74,13 +74,6 @@ var wp;
     }
   });
 
-  // wordpress-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "wordpress-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
-    }
-  });
-
   // wordpress-external:@wordpress/components
   var require_components = __commonJS({
     "wordpress-external:@wordpress/components"(exports, module) {
@@ -120,6 +113,13 @@ var wp;
   var require_compose = __commonJS({
     "wordpress-external:@wordpress/compose"(exports, module) {
       module.exports = window.wp.compose;
+    }
+  });
+
+  // wordpress-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "wordpress-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
     }
   });
 
@@ -210,15 +210,7 @@ var wp;
   var import_primitives13 = __toESM(require_primitives());
   var text_color_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives13.Path, { d: "M12.9 6h-2l-4 11h1.9l1.1-3h4.2l1.1 3h1.9L12.9 6zm-2.5 6.5l1.5-4.9 1.7 4.9h-3.2z" }) });
 
-  // packages/format-library/build-module/lock-unlock.js
-  var import_private_apis = __toESM(require_private_apis());
-  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/format-library"
-  );
-
   // packages/format-library/build-module/bold/index.js
-  var { essentialFormatKey } = unlock(import_block_editor.privateApis);
   var name = "core/bold";
   var title = (0, import_i18n.__)("Bold");
   var bold = {
@@ -226,7 +218,6 @@ var wp;
     title,
     tagName: "strong",
     className: null,
-    [essentialFormatKey]: true,
     edit({ isActive, value, onChange, onFocus }) {
       function onToggle() {
         onChange((0, import_rich_text.toggleFormat)(value, { type: name, title }));
@@ -525,7 +516,6 @@ var wp;
   var import_i18n4 = __toESM(require_i18n());
   var import_rich_text4 = __toESM(require_rich_text());
   var import_block_editor4 = __toESM(require_block_editor());
-  var { essentialFormatKey: essentialFormatKey2 } = unlock(import_block_editor4.privateApis);
   var name4 = "core/italic";
   var title4 = (0, import_i18n4.__)("Italic");
   var italic = {
@@ -533,7 +523,6 @@ var wp;
     title: title4,
     tagName: "em",
     className: null,
-    [essentialFormatKey2]: true,
     edit({ isActive, value, onChange, onFocus }) {
       function onToggle() {
         onChange((0, import_rich_text4.toggleFormat)(value, { type: name4, title: title4 }));
@@ -1012,7 +1001,6 @@ var wp;
   var inline_default = InlineLinkUI;
 
   // packages/format-library/build-module/link/index.js
-  var { essentialFormatKey: essentialFormatKey3 } = unlock(import_block_editor6.privateApis);
   var name5 = "core/link";
   var title5 = (0, import_i18n7.__)("Link");
   function Edit2({
@@ -1167,7 +1155,6 @@ var wp;
       rel: "rel",
       class: "class"
     },
-    [essentialFormatKey3]: true,
     __unstablePasteRule(value, { html, plainText }) {
       const pastedText = (html || plainText).replace(/<[^>]+>/g, "").trim();
       if (!(0, import_url3.isURL)(pastedText) || !/^https?:/.test(pastedText)) {
@@ -1298,6 +1285,15 @@ var wp;
   var import_block_editor9 = __toESM(require_block_editor());
   var import_components4 = __toESM(require_components());
   var import_i18n10 = __toESM(require_i18n());
+
+  // packages/format-library/build-module/lock-unlock.js
+  var import_private_apis = __toESM(require_private_apis());
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/format-library"
+  );
+
+  // packages/format-library/build-module/text-color/inline.js
   var { Tabs } = unlock(import_components4.privateApis);
   var TABS = [
     { name: "color", title: (0, import_i18n10.__)("Text") },
