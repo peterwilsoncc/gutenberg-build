@@ -16883,6 +16883,7 @@ var wp;
       style,
       blockName,
       hasBlockGapSupport,
+      globalBlockGapValue,
       layoutDefinitions = LAYOUT_DEFINITIONS
     }) {
       const {
@@ -16902,10 +16903,20 @@ var wp;
         }
       }
       const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue(style?.spacing?.blockGap, "0.5em") : void 0;
+      let fallbackGapValue = "1.2rem";
+      if (globalBlockGapValue) {
+        const processedGap = getGapCSSValue(globalBlockGapValue, "0.5em");
+        const gapParts = processedGap.split(" ");
+        fallbackGapValue = gapParts.length > 1 ? gapParts[1] : gapParts[0];
+      }
       let output = "";
       const rules = [];
       if (minimumColumnWidth && columnCount > 0) {
-        const maxValue = `max(${minimumColumnWidth}, ( 100% - (${blockGapValue || "1.2rem"}*${columnCount - 1}) ) / ${columnCount})`;
+        let blockGapToUse = blockGapValue || fallbackGapValue;
+        if (blockGapToUse === "0" || blockGapToUse === 0) {
+          blockGapToUse = "0px";
+        }
+        const maxValue = `max(${minimumColumnWidth}, ( 100% - (${blockGapToUse}*${columnCount - 1}) ) / ${columnCount})`;
         rules.push(
           `grid-template-columns: repeat(auto-fill, minmax(${maxValue}, 1fr))`,
           `container-type: inline-size`
@@ -71999,6 +72010,7 @@ var wp;
     block: BlockListBlock2,
     props,
     blockGapSupport,
+    globalBlockGapValue,
     layoutClasses
   }) {
     const { name, attributes } = props;
@@ -72015,7 +72027,8 @@ var wp;
       selector: selector3,
       layout: usedLayout,
       style: attributes?.style,
-      hasBlockGapSupport
+      hasBlockGapSupport,
+      globalBlockGapValue
     });
     const layoutClassNames = clsx_default(
       {
@@ -72054,7 +72067,10 @@ var wp;
             clientId,
             "spacing.blockGap"
           );
-          return { blockGapSupport };
+          const settings2 = getSettings8();
+          const globalStyles = settings2[globalStylesDataKey];
+          const globalBlockGapValue = globalStyles?.blocks?.[name]?.spacing?.blockGap ?? globalStyles?.spacing?.blockGap;
+          return { blockGapSupport, globalBlockGapValue };
         },
         [blockSupportsLayout, clientId]
       );
