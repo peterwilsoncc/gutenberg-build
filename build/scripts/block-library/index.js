@@ -66327,7 +66327,7 @@ ${declarations}
             }
           );
         } }),
-        /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_block_editor261.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_block_editor261.InspectorControls, { group: "settings", children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
           TemplatesList,
           {
             area,

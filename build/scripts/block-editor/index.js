@@ -33653,6 +33653,8 @@ var wp;
 
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
   var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
+  var PATTERN_EDITING_GROUPS = ["content", "list"];
+  var TEMPLATE_PART_GROUPS = ["default", "settings", "advanced"];
   function InspectorControlsFill({
     children,
     group = "default",
@@ -33676,8 +33678,16 @@ var wp;
       (0, import_warning5.default)(`Unknown InspectorControls group "${group}" provided.`);
       return null;
     }
-    const shouldDisplayForPatternEditing = context[mayDisplayPatternEditingControlsKey] && (group === "list" || group === "content");
-    if (!context[mayDisplayControlsKey] && !shouldDisplayForPatternEditing) {
+    if (context[mayDisplayPatternEditingControlsKey]) {
+      const isTemplatePart9 = context.name === "core/template-part";
+      const isTemplatePartGroup = TEMPLATE_PART_GROUPS.includes(group);
+      const isPatternEditingGroup = PATTERN_EDITING_GROUPS.includes(group);
+      const canShowGroup = isTemplatePart9 && isTemplatePartGroup || isPatternEditingGroup;
+      if (!canShowGroup) {
+        return null;
+      }
+    }
+    if (!context[mayDisplayPatternEditingControlsKey] && !context[mayDisplayControlsKey]) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components71.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Fill3, { children: (fillProps) => {
@@ -60048,8 +60058,8 @@ var wp;
     if (hasListFills) {
       tabs.push(TAB_LIST_VIEW);
     }
-    if ((settingsFills.length || // Advanded fills who up in settings tab if available or they blend into the default tab, if there's only one tab.
-    advancedFills.length && (hasContentTab || hasListFills)) && !isSectionBlock2) {
+    if (settingsFills.length || // Advanced fills show up in settings tab if available or they blend into the default tab, if there's only one tab.
+    advancedFills.length && (hasContentTab || hasListFills)) {
       tabs.push(TAB_SETTINGS);
     }
     if (hasBlockStyles || hasStyleFills) {
@@ -60174,7 +60184,6 @@ var wp;
   function BlockInspector() {
     const {
       selectedBlockCount,
-      selectedBlockClientId,
       renderedBlockName,
       renderedBlockClientId,
       blockType,
@@ -60209,7 +60218,6 @@ var wp;
       const _hasBlockStyles = blockStyles && blockStyles.length > 0;
       return {
         selectedBlockCount: getSelectedBlockCount2(),
-        selectedBlockClientId: _selectedBlockClientId,
         renderedBlockClientId: _renderedBlockClientId,
         renderedBlockName: _renderedBlockName,
         blockType: _blockType,
@@ -60297,7 +60305,6 @@ var wp;
           BlockInspectorSingleBlock,
           {
             renderedBlockClientId,
-            selectedBlockClientId,
             blockName: blockType.name,
             isSectionBlock: isSectionBlock2,
             availableTabs,
@@ -60342,10 +60349,6 @@ var wp;
     // The block that is displayed in the inspector. This is the block whose
     // controls and information are shown to the user.
     renderedBlockClientId,
-    // The actual block that is selected in the editor. This may or may not
-    // be the same as the rendered block (e.g., when a child block is selected
-    // but its parent section block is the main one rendered in the inspector).
-    selectedBlockClientId,
     blockName,
     isSectionBlock: isSectionBlock2,
     availableTabs,
@@ -60362,8 +60365,6 @@ var wp;
       renderedBlockClientId
     );
     const isBlockSynced = blockInformation.isSynced;
-    const shouldShowTabs = !isBlockSynced && hasMultipleTabs;
-    const isSectionBlockSelected = window?.__experimentalContentOnlyPatternInsertion && selectedBlockClientId === renderedBlockClientId;
     return /* @__PURE__ */ (0, import_jsx_runtime383.jsxs)("div", { className: "block-editor-block-inspector", children: [
       hasParentChildBlockCards && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
         block_card_default,
@@ -60386,7 +60387,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(BlockVisibilityInfo, { clientId: renderedBlockClientId }),
       window?.__experimentalContentOnlyPatternInsertion && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(EditContents, { clientId: renderedBlockClientId }),
       /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(block_variation_transforms_default, { blockClientId: renderedBlockClientId }),
-      shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+      hasMultipleTabs && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(import_jsx_runtime383.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
         InspectorControlsTabs,
         {
           hasBlockStyles,
@@ -60396,17 +60397,13 @@ var wp;
           isSectionBlock: isSectionBlock2,
           contentClientIds
         }
-      ),
-      !shouldShowTabs && /* @__PURE__ */ (0, import_jsx_runtime383.jsxs)(import_jsx_runtime383.Fragment, { children: [
+      ) }),
+      !hasMultipleTabs && /* @__PURE__ */ (0, import_jsx_runtime383.jsxs)(import_jsx_runtime383.Fragment, { children: [
         hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(block_styles_default, { clientId: renderedBlockClientId }),
         /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(content_tab_default, { contentClientIds }),
         /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(inspector_controls_default.Slot, { group: "content" }),
         /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(inspector_controls_default.Slot, { group: "list" }),
-        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(StyleInspectorSlots, { blockName }),
-        isSectionBlock2 && isBlockSynced && isSectionBlockSelected && /* @__PURE__ */ (0, import_jsx_runtime383.jsxs)(import_jsx_runtime383.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(inspector_controls_default.Slot, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(advanced_controls_panel_default, {})
-        ] })
+        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(StyleInspectorSlots, { blockName })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(SkipToSelectedBlock, {}, "back")
     ] });
