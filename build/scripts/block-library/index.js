@@ -7815,10 +7815,20 @@ var wp;
       } else {
         placeholderItems.push((0, import_i18n12.__)("Ancestor"), (0, import_i18n12.__)("Parent"));
       }
-      placeholder2 = /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("nav", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)("ol", { children: [
-        placeholderItems.map((text, index) => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index}`, children: text }) }, index)),
-        showCurrentItem && /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("span", { "aria-current": "page", children: (0, import_i18n12.__)("Current") }) })
-      ] }) });
+      placeholder2 = /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+        "nav",
+        {
+          ...blockProps,
+          style: {
+            "--separator": `"${separator.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`,
+            ...blockProps.style
+          },
+          children: /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)("ol", { children: [
+            placeholderItems.map((text, index) => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index}`, children: text }) }, index)),
+            showCurrentItem && /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("span", { "aria-current": "page", children: (0, import_i18n12.__)("Current") }) })
+          ] })
+        }
+      );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(import_jsx_runtime166.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(import_block_editor17.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(
@@ -7927,7 +7937,7 @@ var wp;
           }
         )
       ] }),
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(import_components9.Spinner, {}) }),
+      status === "loading" && !showPlaceholder && /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(import_components9.Spinner, {}) }),
       status === "error" && /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("p", { children: (0, import_i18n12.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n12.__)("Error: %s"),
