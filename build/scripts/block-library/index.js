@@ -41233,26 +41233,24 @@ ${js}
         enableAlpha: true
       }
     ];
-    if (!hasCustomOverlay) {
-      colorSettings.push(
-        {
-          colorValue: overlayTextColor.color,
-          label: isWithinOverlay ? (0, import_i18n137.__)("Submenu text") : (0, import_i18n137.__)("Submenu & overlay text"),
-          onColorChange: setOverlayTextColor,
-          resetAllFilter: () => setOverlayTextColor(),
-          clearable: true,
-          enableAlpha: true
-        },
-        {
-          colorValue: overlayBackgroundColor.color,
-          label: isWithinOverlay ? (0, import_i18n137.__)("Submenu background") : (0, import_i18n137.__)("Submenu & overlay background"),
-          onColorChange: setOverlayBackgroundColor,
-          resetAllFilter: () => setOverlayBackgroundColor(),
-          clearable: true,
-          enableAlpha: true
-        }
-      );
-    }
+    colorSettings.push(
+      {
+        colorValue: overlayTextColor.color,
+        label: hasCustomOverlay || isWithinOverlay ? (0, import_i18n137.__)("Submenu text") : (0, import_i18n137.__)("Submenu & overlay text"),
+        onColorChange: setOverlayTextColor,
+        resetAllFilter: () => setOverlayTextColor(),
+        clearable: true,
+        enableAlpha: true
+      },
+      {
+        colorValue: overlayBackgroundColor.color,
+        label: hasCustomOverlay || isWithinOverlay ? (0, import_i18n137.__)("Submenu background") : (0, import_i18n137.__)("Submenu & overlay background"),
+        onColorChange: setOverlayBackgroundColor,
+        resetAllFilter: () => setOverlayBackgroundColor(),
+        clearable: true,
+        enableAlpha: true
+      }
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(import_jsx_runtime319.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
         import_block_editor156.__experimentalColorGradientSettingsDropdown,
