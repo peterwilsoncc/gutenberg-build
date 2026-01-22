@@ -12268,7 +12268,7 @@ var wp;
       const awareness = await createAwareness(objectType, objectId, ydoc);
       const providerResults = await Promise.all(
         providerCreators2.map(
-          (create8) => create8(objectType, objectId, ydoc, awareness)
+          (create8) => create8({ objectType, objectId, ydoc, awareness })
         )
       );
       recordMap.observeDeep(onRecordUpdate);
