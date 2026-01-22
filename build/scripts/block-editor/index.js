@@ -21538,11 +21538,11 @@ var wp;
           ownerDocument.body.appendChild(dragElement);
           event.dataTransfer.setDragImage(dragElement, 0, 0);
           const rect = node.getBoundingClientRect();
-          const clone = node.cloneNode(true);
-          clone.style.visibility = "hidden";
-          clone.style.display = "none";
           const id = node.id;
+          const clone = node.cloneNode();
+          clone.style.display = "none";
           node.id = null;
+          node.after(clone);
           let _scale = 1;
           {
             let parentElement = node;
@@ -21555,7 +21555,6 @@ var wp;
             }
           }
           const inverted = 1 / _scale;
-          node.after(clone);
           const originalNodeProperties = {};
           for (const property of [
             "transform",
@@ -21601,18 +21600,34 @@ var wp;
             node.style.backgroundColor = bgColor;
           }
           let hasStarted = false;
-          function over(e2) {
+          let lastClientX = originClientX;
+          let lastClientY = originClientY;
+          function dragOver(e2) {
+            if (e2.clientX === lastClientX && e2.clientY === lastClientY) {
+              return;
+            }
+            lastClientX = e2.clientX;
+            lastClientY = e2.clientY;
+            over();
+          }
+          function over() {
             if (!hasStarted) {
               hasStarted = true;
               node.style.pointerEvents = "none";
             }
+            const pointerYDelta = lastClientY - originClientY;
+            const pointerXDelta = lastClientX - originClientX;
             const scrollTop = defaultView.scrollY;
             const scrollLeft = defaultView.scrollX;
-            node.style.top = `${(e2.clientY - originClientY + scrollTop - originScrollTop) * inverted}px`;
-            node.style.left = `${(e2.clientX - originClientX + scrollLeft - originScrollLeft) * inverted}px`;
+            const scrollTopDelta = scrollTop - originScrollTop;
+            const scrollLeftDelta = scrollLeft - originScrollLeft;
+            const topDelta = pointerYDelta + scrollTopDelta;
+            const leftDelta = pointerXDelta + scrollLeftDelta;
+            node.style.top = `${topDelta * inverted}px`;
+            node.style.left = `${leftDelta * inverted}px`;
           }
           function end() {
-            ownerDocument.removeEventListener("dragover", over);
+            ownerDocument.removeEventListener("dragover", dragOver);
             ownerDocument.removeEventListener("dragend", end);
             ownerDocument.removeEventListener("drop", end);
             ownerDocument.removeEventListener("scroll", over);
@@ -21632,7 +21647,7 @@ var wp;
               "is-dragging"
             );
           }
-          ownerDocument.addEventListener("dragover", over);
+          ownerDocument.addEventListener("dragover", dragOver);
           ownerDocument.addEventListener("dragend", end);
           ownerDocument.addEventListener("drop", end);
           ownerDocument.addEventListener("scroll", over);
