@@ -1676,6 +1676,10 @@ body.editor-styles-wrapper .wp-block-navigation__responsive-container.is-menu-op
     opacity: 0.5;
   }
 }
+.wp-block-navigation__deleted-overlay-warning {
+  margin-top: 12px;
+}
+
 /**
  * Appender
  */
