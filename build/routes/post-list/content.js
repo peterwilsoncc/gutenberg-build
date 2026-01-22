@@ -17270,34 +17270,17 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   font-weight: 600;
 }
 
-.dataviews-view-grid__media .fields-controls__featured-image-image,
-.dataviews-view-grid__media .fields-controls__featured-image-placeholder,
-.dataviews-view-table__cell-content-wrapper.dataviews-column-primary__media .fields-controls__featured-image-image,
-.dataviews-view-table__cell-content-wrapper.dataviews-column-primary__media .fields-controls__featured-image-placeholder,
-.dataviews-view-list__media-wrapper .fields-controls__featured-image-image,
-.dataviews-view-list__media-wrapper .fields-controls__featured-image-placeholder {
+.fields-controls__featured-image-image,
+.fields-controls__featured-image-placeholder {
   width: 100%;
   height: 100%;
   display: block;
   border-radius: 4px;
 }
 
-.dataviews-view-grid__media .fields-controls__featured-image-placeholder,
-.dataviews-view-table__cell-content-wrapper.dataviews-column-primary__media .fields-controls__featured-image-placeholder,
-.dataviews-view-list__media-wrapper .fields-controls__featured-image-placeholder {
+.fields-controls__featured-image-placeholder {
   box-shadow: none;
   background: #f0f0f0;
-}
-
-.dataviews-view-table__cell-content-wrapper.dataviews-column-primary__media .fields-controls__featured-image-image,
-.dataviews-view-table__cell-content-wrapper.dataviews-column-primary__media .fields-controls__featured-image-placeholder {
-  width: 32px;
-  height: 32px;
-}
-
-.dataforms-layouts-panel__field-control .fields-controls__featured-image-image {
-  width: 16px;
-  height: 16px;
 }
 
 .fields-controls__parent {

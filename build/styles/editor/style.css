@@ -3339,6 +3339,8 @@ div.dataviews-view-list {
 }
 .dataviews-column-primary__media {
   max-width: 60px;
+  min-width: 32px;
+  min-height: 32px;
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
@@ -3347,8 +3349,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-column-primary__media img {
-  width: 100%;
-  height: 100%;
+  width: 32px;
+  height: 32px;
   object-fit: cover;
 }
 
