@@ -72071,7 +72071,8 @@ var wp;
           const { getSettings: getSettings8, getBlockSettings: getBlockSettings2 } = unlock(
             select3(store)
           );
-          const { disableLayoutStyles } = getSettings8();
+          const settings2 = getSettings8();
+          const { disableLayoutStyles } = settings2;
           if (disableLayoutStyles) {
             return;
           }
@@ -72079,7 +72080,6 @@ var wp;
             clientId,
             "spacing.blockGap"
           );
-          const settings2 = getSettings8();
           const globalStyles = settings2[globalStylesDataKey];
           const globalBlockGapValue = globalStyles?.blocks?.[name]?.spacing?.blockGap ?? globalStyles?.spacing?.blockGap;
           return { blockGapSupport, globalBlockGapValue };
