@@ -678,7 +678,7 @@ var {
   populateServerData,
   batch,
   routerRegions,
-  cloneElement,
+  h: createElement,
   navigationSignal
 } = privateApis(
   "I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress."
@@ -709,7 +709,7 @@ var cloneRouterRegionContent = (vdom) => {
     (level) => level.includes("router-region")
   );
   const priorityLevels = routerRegionLevel !== -1 ? allPriorityLevels.slice(routerRegionLevel + 1) : allPriorityLevels;
-  return priorityLevels.length > 0 ? cloneElement(vdom, {
+  return priorityLevels.length > 0 ? createElement(vdom.type, {
     ...vdom.props,
     priorityLevels
   }) : vdom.props.element;
