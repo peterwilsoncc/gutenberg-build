@@ -716,6 +716,7 @@ var cloneRouterRegionContent = (vdom) => {
 };
 var regionsToAttachByParent = /* @__PURE__ */ new WeakMap();
 var rootFragmentsByParent = /* @__PURE__ */ new WeakMap();
+var initialRegionsToAttach = /* @__PURE__ */ new Set();
 var fetchPage = async (url, { html }) => {
   try {
     if (!html) {
@@ -742,7 +743,7 @@ var preparePage = async (url, dom, { vdom } = {}) => {
     } else {
       regions[id] = vdom?.has(region) ? vdom.get(region) : toVdom(region);
     }
-    if (attachTo) {
+    if (attachTo && !initialRegionsToAttach.has(id)) {
       regionsToAttach[id] = attachTo;
     }
   });
@@ -828,6 +829,12 @@ window.addEventListener("popstate", async () => {
     });
   } else {
     window.location.reload();
+  }
+});
+document.querySelectorAll(regionsSelector).forEach((region) => {
+  const { id, attachTo } = parseRegionAttribute(region);
+  if (attachTo) {
+    initialRegionsToAttach.add(id);
   }
 });
 window.document.querySelectorAll("script[type=module][src]").forEach(({ src }) => markScriptModuleAsResolved(src));
