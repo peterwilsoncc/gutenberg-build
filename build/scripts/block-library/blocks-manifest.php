@@ -4292,9 +4292,14 @@ return array(
 				'type' => 'boolean',
 				'default' => true
 			),
-			'openSubmenusOnClick' => array(
-				'type' => 'boolean',
-				'default' => false
+			'submenuVisibility' => array(
+				'type' => 'string',
+				'enum' => array(
+					'hover',
+					'click',
+					'always'
+				),
+				'default' => 'hover'
 			),
 			'overlayMenu' => array(
 				'type' => 'string',
@@ -4355,7 +4360,7 @@ return array(
 			'fontSize' => 'fontSize',
 			'customFontSize' => 'customFontSize',
 			'showSubmenuIcon' => 'showSubmenuIcon',
-			'openSubmenusOnClick' => 'openSubmenusOnClick',
+			'submenuVisibility' => 'submenuVisibility',
 			'style' => 'style',
 			'maxNestingLevel' => 'maxNestingLevel'
 		),
@@ -4623,7 +4628,7 @@ return array(
 			'customFontSize',
 			'showSubmenuIcon',
 			'maxNestingLevel',
-			'openSubmenusOnClick',
+			'submenuVisibility',
 			'style'
 		),
 		'supports' => array(

@@ -37346,9 +37346,10 @@ ${js}
         type: "boolean",
         default: true
       },
-      openSubmenusOnClick: {
-        type: "boolean",
-        default: false
+      submenuVisibility: {
+        type: "string",
+        enum: ["hover", "click", "always"],
+        default: "hover"
       },
       overlayMenu: {
         type: "string",
@@ -37401,7 +37402,7 @@ ${js}
       fontSize: "fontSize",
       customFontSize: "customFontSize",
       showSubmenuIcon: "showSubmenuIcon",
-      openSubmenusOnClick: "openSubmenusOnClick",
+      submenuVisibility: "submenuVisibility",
       style: "style",
       maxNestingLevel: "maxNestingLevel"
     },
@@ -41218,6 +41219,15 @@ ${js}
     return false;
   }
 
+  // packages/block-library/build-module/navigation/utils/get-submenu-visibility.mjs
+  function getSubmenuVisibility(attributes3) {
+    const { submenuVisibility, openSubmenusOnClick } = attributes3;
+    if (submenuVisibility) {
+      return submenuVisibility;
+    }
+    return openSubmenusOnClick ? "click" : "hover";
+  }
+
   // packages/block-library/build-module/navigation/edit/index.mjs
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   function NavigationAddPageButton({ clientId }) {
@@ -41381,7 +41391,7 @@ ${js}
     __unstableLayoutClassNames: layoutClassNames
   }) {
     const {
-      openSubmenusOnClick,
+      submenuVisibility,
       overlayMenu,
       overlay,
       showSubmenuIcon,
@@ -41401,6 +41411,14 @@ ${js}
       },
       [setAttributes]
     );
+    (0, import_element76.useEffect)(() => {
+      if (orientation === "horizontal" && submenuVisibility === "always") {
+        setAttributes({
+          submenuVisibility: "hover",
+          showSubmenuIcon: true
+        });
+      }
+    }, [orientation, submenuVisibility, setAttributes]);
     const recursionId = `navigationMenu/${ref}`;
     const recursionDetected = (0, import_block_editor156.useHasRecursion)(recursionId);
     const { isPreviewMode, onNavigateToEntityRecord, currentTheme } = (0, import_data84.useSelect)(
@@ -41651,7 +41669,8 @@ ${js}
       "wp-block-navigation__overlay-menu-preview",
       { open: overlayMenuPreview }
     );
-    const submenuAccessibilityNotice = !showSubmenuIcon && !openSubmenusOnClick ? (0, import_i18n138.__)(
+    const computedSubmenuVisibility = getSubmenuVisibility(attributes3);
+    const submenuAccessibilityNotice = !showSubmenuIcon && computedSubmenuVisibility !== "click" && computedSubmenuVisibility !== "always" ? (0, import_i18n138.__)(
       'The current menu options offer reduced accessibility for users and are not recommended. Enabling either "Open on Click" or "Show arrow" offers enhanced accessibility by allowing keyboard users to browse submenus selectively.'
     ) : "";
     const isFirstRender = (0, import_element76.useRef)(true);
@@ -41674,7 +41693,7 @@ ${js}
           resetAll: () => {
             setAttributes({
               showSubmenuIcon: true,
-              openSubmenusOnClick: false,
+              submenuVisibility: "hover",
               overlayMenu: "mobile",
               hasIcon: true,
               icon: "handle"
@@ -41723,27 +41742,55 @@ ${js}
               /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
                 import_components88.__experimentalToolsPanelItem,
                 {
-                  hasValue: () => openSubmenusOnClick,
-                  label: (0, import_i18n138.__)("Open on click"),
+                  hasValue: () => submenuVisibility !== "hover",
+                  label: (0, import_i18n138.__)("Submenu Visibility"),
                   onDeselect: () => setAttributes({
-                    openSubmenusOnClick: false,
-                    showSubmenuIcon: true
+                    submenuVisibility: "hover"
                   }),
                   isShownByDefault: true,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
-                    import_components88.ToggleControl,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
+                    import_components88.__experimentalToggleGroupControl,
                     {
-                      checked: openSubmenusOnClick,
+                      __nextHasNoMarginBottom: true,
+                      __next40pxDefaultSize: true,
+                      label: (0, import_i18n138.__)("Submenu Visibility"),
+                      value: submenuVisibility,
                       onChange: (value) => {
-                        setAttributes({
-                          openSubmenusOnClick: value,
-                          ...value && {
-                            showSubmenuIcon: true
-                          }
-                          // Make sure arrows are shown when we toggle this on.
-                        });
+                        const newAttributes = {
+                          submenuVisibility: value
+                        };
+                        const prevSubmenuVisibility = submenuVisibility;
+                        if (value === "always") {
+                          newAttributes.showSubmenuIcon = false;
+                        } else if (value === "click" || prevSubmenuVisibility === "always") {
+                          newAttributes.showSubmenuIcon = true;
+                        }
+                        setAttributes(newAttributes);
                       },
-                      label: (0, import_i18n138.__)("Open on click")
+                      isBlock: true,
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+                          import_components88.__experimentalToggleGroupControlOption,
+                          {
+                            value: "hover",
+                            label: (0, import_i18n138.__)("Hover")
+                          }
+                        ),
+                        /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+                          import_components88.__experimentalToggleGroupControlOption,
+                          {
+                            value: "click",
+                            label: (0, import_i18n138.__)("Click")
+                          }
+                        ),
+                        orientation === "vertical" && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+                          import_components88.__experimentalToggleGroupControlOption,
+                          {
+                            value: "always",
+                            label: (0, import_i18n138.__)("Always")
+                          }
+                        )
+                      ]
                     }
                   )
                 }
@@ -41756,7 +41803,7 @@ ${js}
                   onDeselect: () => setAttributes({
                     showSubmenuIcon: true
                   }),
-                  isDisabled: attributes3.openSubmenusOnClick,
+                  isDisabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
                     import_components88.ToggleControl,
@@ -41767,7 +41814,7 @@ ${js}
                           showSubmenuIcon: value
                         });
                       },
-                      disabled: attributes3.openSubmenusOnClick,
+                      disabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
                       label: (0, import_i18n138.__)("Show arrow")
                     }
                   )
@@ -42060,9 +42107,19 @@ ${js}
     }
     return updatedAttributes;
   };
-  var v66 = {
+  var migrateOpenSubmenusOnClick = (attributes3) => {
+    const { openSubmenusOnClick, ...restAttributes } = attributes3;
+    if (openSubmenusOnClick === null || openSubmenusOnClick === void 0) {
+      return attributes3;
+    }
+    return {
+      ...restAttributes,
+      submenuVisibility: restAttributes.submenuVisibility ?? (openSubmenusOnClick ? "click" : "hover")
+    };
+  };
+  var v75 = {
     attributes: {
-      navigationMenuId: {
+      ref: {
         type: "number"
       },
       textColor: {
@@ -42090,6 +42147,113 @@ ${js}
       openSubmenusOnClick: {
         type: "boolean",
         default: false
+      },
+      overlayMenu: {
+        type: "string",
+        default: "mobile"
+      },
+      icon: {
+        type: "string",
+        default: "handle"
+      },
+      hasIcon: {
+        type: "boolean",
+        default: true
+      },
+      __unstableLocation: {
+        type: "string"
+      },
+      overlayBackgroundColor: {
+        type: "string"
+      },
+      customOverlayBackgroundColor: {
+        type: "string"
+      },
+      overlayTextColor: {
+        type: "string"
+      },
+      customOverlayTextColor: {
+        type: "string"
+      },
+      maxNestingLevel: {
+        type: "number",
+        default: 5
+      },
+      templateLock: {
+        type: ["string", "boolean"],
+        enum: ["all", "insert", "contentOnly", false]
+      }
+    },
+    supports: {
+      align: ["wide", "full"],
+      anchor: true,
+      html: false,
+      inserter: true,
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontStyle: true,
+        __experimentalFontWeight: true,
+        __experimentalTextTransform: true,
+        __experimentalFontFamily: true,
+        __experimentalLetterSpacing: true,
+        __experimentalTextDecoration: true,
+        __experimentalSkipSerialization: ["textDecoration"],
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      spacing: {
+        blockGap: true,
+        units: ["px", "em", "rem", "vh", "vw"],
+        __experimentalDefaultControls: {
+          blockGap: true
+        }
+      },
+      layout: {
+        allowSwitching: false,
+        allowInheriting: false,
+        allowVerticalAlignment: false,
+        allowSizingOnChildren: true,
+        default: {
+          type: "flex"
+        }
+      },
+      interactivity: true,
+      renaming: false
+    },
+    save() {
+      return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor158.InnerBlocks.Content, {});
+    },
+    isEligible: ({ openSubmenusOnClick }) => openSubmenusOnClick !== null && openSubmenusOnClick !== void 0,
+    migrate: migrateOpenSubmenusOnClick
+  };
+  var v66 = {
+    attributes: {
+      navigationMenuId: {
+        type: "number"
+      },
+      textColor: {
+        type: "string"
+      },
+      customTextColor: {
+        type: "string"
+      },
+      rgbTextColor: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      customBackgroundColor: {
+        type: "string"
+      },
+      rgbBackgroundColor: {
+        type: "string"
+      },
+      showSubmenuIcon: {
+        type: "boolean",
+        default: true
       },
       overlayMenu: {
         type: "string",
@@ -42236,7 +42400,11 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor158.InnerBlocks.Content, {});
     },
     isEligible: ({ itemsJustification, orientation }) => !!itemsJustification || !!orientation,
-    migrate: (0, import_compose33.compose)(migrateIdToRef, migrateWithLayout2)
+    migrate: (0, import_compose33.compose)(
+      migrateIdToRef,
+      migrateWithLayout2,
+      migrateOpenSubmenusOnClick
+    )
   };
   var v46 = {
     attributes: {
@@ -42318,7 +42486,12 @@ ${js}
     save() {
       return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor158.InnerBlocks.Content, {});
     },
-    migrate: (0, import_compose33.compose)(migrateIdToRef, migrateWithLayout2, migrate_font_family_default),
+    migrate: (0, import_compose33.compose)(
+      migrateIdToRef,
+      migrateWithLayout2,
+      migrate_font_family_default,
+      migrateOpenSubmenusOnClick
+    ),
     isEligible({ style: style2 }) {
       return style2?.typography?.fontFamily;
     }
@@ -42354,6 +42527,7 @@ ${js}
     };
   };
   var deprecated11 = [
+    v75,
     v66,
     v56,
     v46,
@@ -42435,7 +42609,8 @@ ${js}
         migrateIdToRef,
         migrateWithLayout2,
         migrate_font_family_default,
-        migrateIsResponsive
+        migrateIsResponsive,
+        migrateOpenSubmenusOnClick
       ),
       save() {
         return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor158.InnerBlocks.Content, {});
@@ -43408,7 +43583,7 @@ ${js}
       "customFontSize",
       "showSubmenuIcon",
       "maxNestingLevel",
-      "openSubmenusOnClick",
+      "submenuVisibility",
       "style"
     ],
     supports: {
@@ -43480,13 +43655,10 @@ ${js}
     clientId
   }) {
     const { label, url, description, kind, type, id } = attributes3;
-    const {
-      showSubmenuIcon,
-      maxNestingLevel,
-      openSubmenusOnClick: contextOpenSubmenusOnClick
-    } = context;
+    const { showSubmenuIcon, maxNestingLevel } = context;
     const blockEditingMode = (0, import_block_editor162.useBlockEditingMode)();
-    const openSubmenusOnClick = blockEditingMode !== "default" ? true : contextOpenSubmenusOnClick;
+    const submenuVisibility = getSubmenuVisibility(context);
+    const openSubmenusOnClick = blockEditingMode !== "default" ? true : submenuVisibility === "click";
     const { clearBinding, createBinding } = useEntityBinding({
       clientId,
       attributes: attributes3
@@ -43591,7 +43763,8 @@ ${js}
         [(0, import_block_editor162.getColorClassName)("color", textColor)]: !!textColor,
         "has-background": !!backgroundColor || customBackgroundColor,
         [(0, import_block_editor162.getColorClassName)("background-color", backgroundColor)]: !!backgroundColor,
-        "open-on-click": openSubmenusOnClick
+        "open-on-click": openSubmenusOnClick,
+        "open-always": submenuVisibility === "always"
       }),
       style: {
         color: !textColor && customTextColor,
