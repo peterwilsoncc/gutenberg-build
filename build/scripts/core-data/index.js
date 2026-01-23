@@ -1468,6 +1468,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/block-editor
+  var require_block_editor = __commonJS({
+    "package-external:@wordpress/block-editor"(exports, module) {
+      module.exports = window.wp.blockEditor;
+    }
+  });
+
   // package-external:@wordpress/rich-text
   var require_rich_text = __commonJS({
     "package-external:@wordpress/rich-text"(exports, module) {
@@ -1517,13 +1524,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/block-editor
-  var require_block_editor = __commonJS({
-    "package-external:@wordpress/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
-    }
-  });
-
   // packages/core-data/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
@@ -1543,12 +1543,12 @@ var wp;
     useEntityRecords: () => useEntityRecords,
     useResourcePermissions: () => use_resource_permissions_default
   });
-  var import_data11 = __toESM(require_data(), 1);
+  var import_data12 = __toESM(require_data(), 1);
 
   // packages/core-data/build-module/reducer.mjs
   var import_es66 = __toESM(require_es6(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
-  var import_data3 = __toESM(require_data(), 1);
+  var import_data4 = __toESM(require_data(), 1);
   var import_undo_manager2 = __toESM(require_undo_manager(), 1);
 
   // packages/core-data/build-module/utils/conservative-map-item.mjs
@@ -1868,7 +1868,7 @@ var wp;
   }
 
   // packages/core-data/build-module/queried-data/reducer.mjs
-  var import_data2 = __toESM(require_data(), 1);
+  var import_data3 = __toESM(require_data(), 1);
   var import_compose = __toESM(require_compose(), 1);
 
   // node_modules/tslib/tslib.es6.mjs
@@ -1962,6 +1962,9 @@ var wp;
   var import_api_fetch = __toESM(require_api_fetch(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
+
+  // packages/core-data/build-module/awareness/post-editor-awareness.mjs
+  var import_data2 = __toESM(require_data(), 1);
 
   // node_modules/yjs/dist/yjs.mjs
   var yjs_exports = {};
@@ -11477,6 +11480,135 @@ var wp;
   };
   var Delta_default = Delta;
 
+  // node_modules/y-protocols/awareness.js
+  var outdatedTimeout = 3e4;
+  var Awareness = class extends Observable {
+    /**
+     * @param {Y.Doc} doc
+     */
+    constructor(doc2) {
+      super();
+      this.doc = doc2;
+      this.clientID = doc2.clientID;
+      this.states = /* @__PURE__ */ new Map();
+      this.meta = /* @__PURE__ */ new Map();
+      this._checkInterval = /** @type {any} */
+      setInterval(() => {
+        const now = getUnixTime();
+        if (this.getLocalState() !== null && outdatedTimeout / 2 <= now - /** @type {{lastUpdated:number}} */
+        this.meta.get(this.clientID).lastUpdated) {
+          this.setLocalState(this.getLocalState());
+        }
+        const remove = [];
+        this.meta.forEach((meta, clientid) => {
+          if (clientid !== this.clientID && outdatedTimeout <= now - meta.lastUpdated && this.states.has(clientid)) {
+            remove.push(clientid);
+          }
+        });
+        if (remove.length > 0) {
+          removeAwarenessStates(this, remove, "timeout");
+        }
+      }, floor(outdatedTimeout / 10));
+      doc2.on("destroy", () => {
+        this.destroy();
+      });
+      this.setLocalState({});
+    }
+    destroy() {
+      this.emit("destroy", [this]);
+      this.setLocalState(null);
+      super.destroy();
+      clearInterval(this._checkInterval);
+    }
+    /**
+     * @return {Object<string,any>|null}
+     */
+    getLocalState() {
+      return this.states.get(this.clientID) || null;
+    }
+    /**
+     * @param {Object<string,any>|null} state
+     */
+    setLocalState(state) {
+      const clientID = this.clientID;
+      const currLocalMeta = this.meta.get(clientID);
+      const clock = currLocalMeta === void 0 ? 0 : currLocalMeta.clock + 1;
+      const prevState = this.states.get(clientID);
+      if (state === null) {
+        this.states.delete(clientID);
+      } else {
+        this.states.set(clientID, state);
+      }
+      this.meta.set(clientID, {
+        clock,
+        lastUpdated: getUnixTime()
+      });
+      const added = [];
+      const updated = [];
+      const filteredUpdated = [];
+      const removed = [];
+      if (state === null) {
+        removed.push(clientID);
+      } else if (prevState == null) {
+        if (state != null) {
+          added.push(clientID);
+        }
+      } else {
+        updated.push(clientID);
+        if (!equalityDeep(prevState, state)) {
+          filteredUpdated.push(clientID);
+        }
+      }
+      if (added.length > 0 || filteredUpdated.length > 0 || removed.length > 0) {
+        this.emit("change", [{ added, updated: filteredUpdated, removed }, "local"]);
+      }
+      this.emit("update", [{ added, updated, removed }, "local"]);
+    }
+    /**
+     * @param {string} field
+     * @param {any} value
+     */
+    setLocalStateField(field, value) {
+      const state = this.getLocalState();
+      if (state !== null) {
+        this.setLocalState({
+          ...state,
+          [field]: value
+        });
+      }
+    }
+    /**
+     * @return {Map<number,Object<string,any>>}
+     */
+    getStates() {
+      return this.states;
+    }
+  };
+  var removeAwarenessStates = (awareness, clients, origin) => {
+    const removed = [];
+    for (let i = 0; i < clients.length; i++) {
+      const clientID = clients[i];
+      if (awareness.states.has(clientID)) {
+        awareness.states.delete(clientID);
+        if (clientID === awareness.clientID) {
+          const curMeta = (
+            /** @type {MetaClientState} */
+            awareness.meta.get(clientID)
+          );
+          awareness.meta.set(clientID, {
+            clock: curMeta.clock + 1,
+            lastUpdated: getUnixTime()
+          });
+        }
+        removed.push(clientID);
+      }
+    }
+    if (removed.length > 0) {
+      awareness.emit("change", [{ added: [], updated: [], removed }, origin]);
+      awareness.emit("update", [{ added: [], updated: [], removed }, origin]);
+    }
+  };
+
   // packages/sync/build-module/config.mjs
   var CRDT_DOC_VERSION = 1;
   var CRDT_DOC_META_PERSISTENCE_KEY = "fromPersistence";
@@ -11544,6 +11676,245 @@ var wp;
     }
     return true;
   }
+
+  // packages/sync/build-module/awareness/awareness-types.mjs
+  var TypedAwareness = class extends Awareness {
+    /**
+     * Get the states from an awareness document.
+     */
+    getStates() {
+      return super.getStates();
+    }
+    /**
+     * Get a local state field from an awareness document.
+     * @param field
+     */
+    getLocalStateField(field) {
+      const state = this.getLocalState();
+      return getRecordValue(state, field);
+    }
+    /**
+     * Set a local state field on an awareness document.
+     * @param field
+     * @param value
+     */
+    setLocalStateField(field, value) {
+      super.setLocalStateField(field, value);
+    }
+  };
+
+  // packages/sync/build-module/awareness/awareness-state.mjs
+  var AwarenessWithEqualityChecks = class extends TypedAwareness {
+    /** OVERRIDDEN METHODS */
+    /**
+     * Set a local state field on an awareness document. Calling this method may
+     * trigger rerenders of any subscribed components.
+     *
+     * Equality checks are provided by the abstract `equalityFieldChecks` property.
+     * @param field - The field to set.
+     * @param value - The value to set.
+     */
+    setLocalStateField(field, value) {
+      if (this.isFieldEqual(
+        field,
+        value,
+        this.getLocalStateField(field) ?? void 0
+      )) {
+        return;
+      }
+      super.setLocalStateField(field, value);
+    }
+    /** CUSTOM METHODS */
+    /**
+     * Determine if a field value has changed using the provided equality checks.
+     * @param field  - The field to check.
+     * @param value1 - The first value to compare.
+     * @param value2 - The second value to compare.
+     */
+    isFieldEqual(field, value1, value2) {
+      if (["clientId", "isConnected", "isMe"].includes(field)) {
+        return value1 === value2;
+      }
+      if (field in this.equalityFieldChecks) {
+        const fn = this.equalityFieldChecks[field];
+        return fn(value1, value2);
+      }
+      throw new Error(
+        `No equality check implemented for awareness state field "${field.toString()}".`
+      );
+    }
+    /**
+     * Determine if two states are equal by comparing each field using the
+     * provided equality checks.
+     * @param state1 - The first state to compare.
+     * @param state2 - The second state to compare.
+     */
+    isStateEqual(state1, state2) {
+      return [
+        .../* @__PURE__ */ new Set([
+          ...getTypedKeys(state1),
+          ...getTypedKeys(state2)
+        ])
+      ].every((field) => {
+        const value1 = state1[field];
+        const value2 = state2[field];
+        return this.isFieldEqual(field, value1, value2);
+      });
+    }
+  };
+  var AwarenessState = class extends AwarenessWithEqualityChecks {
+    /** CUSTOM PROPERTIES */
+    /**
+     * We keep track of all seen states during the current session for two reasons:
+     *
+     * 1. So that we can represent recently disconnected users in our UI, even
+     *    after they have been removed from the awareness document.
+     * 2. So that we can provide debug information about all users seen during
+     *    the session.
+     */
+    disconnectedUsers = /* @__PURE__ */ new Set();
+    seenStates = /* @__PURE__ */ new Map();
+    /**
+     * Hold a snapshot of the previous awareness state allows us to compare the
+     * state values and avoid unnecessary updates to subscribers.
+     */
+    previousSnapshot = /* @__PURE__ */ new Map();
+    stateSubscriptions = [];
+    /**
+     * In some cases, we may want to throttle setting local state fields to avoid
+     * overwhelming the awareness document with rapid updates. At the same time, we
+     * want to ensure that when we read our own state locally, we get the latest
+     * value -- even if it hasn't yet been set on the awareness instance.
+     */
+    myThrottledState = {};
+    throttleTimeouts = /* @__PURE__ */ new Map();
+    /** CUSTOM METHODS */
+    /**
+     * Set up the awareness state.
+     */
+    setUp() {
+      this.on(
+        "change",
+        ({ added, removed, updated }) => {
+          [...added, ...updated].forEach((id2) => {
+            this.disconnectedUsers.delete(id2);
+          });
+          removed.forEach((id2) => {
+            this.disconnectedUsers.add(id2);
+            setTimeout(() => {
+              this.disconnectedUsers.delete(id2);
+              this.updateSubscribers(
+                true
+                /* force update */
+              );
+            }, REMOVAL_DELAY_IN_MS);
+          });
+          this.updateSubscribers();
+        }
+      );
+    }
+    /**
+     * Get all seen states in this session to enable debug reporting.
+     */
+    getSeenStates() {
+      return this.seenStates;
+    }
+    /**
+     * Allow external code to subscribe to awareness state changes.
+     * @param callback - The callback to subscribe to.
+     */
+    onStateChange(callback) {
+      this.stateSubscriptions.push(callback);
+      return () => {
+        this.stateSubscriptions = this.stateSubscriptions.filter(
+          (cb) => cb !== callback
+        );
+      };
+    }
+    /**
+     * Set a local state field on an awareness document with throttle. See caveats
+     * of this.setLocalStateField.
+     * @param field - The field to set.
+     * @param value - The value to set.
+     * @param wait  - The wait time in milliseconds.
+     */
+    setThrottledLocalStateField(field, value, wait) {
+      this.setLocalStateField(field, value);
+      this.throttleTimeouts.set(
+        field,
+        setTimeout(() => {
+          this.throttleTimeouts.delete(field);
+          if (this.myThrottledState[field]) {
+            this.setLocalStateField(
+              field,
+              this.myThrottledState[field]
+            );
+            delete this.myThrottledState[field];
+          }
+        }, wait)
+      );
+    }
+    /**
+     * Set the current user's connection status as awareness state.
+     * @param isConnected - The connection status.
+     */
+    setConnectionStatus(isConnected) {
+      if (isConnected) {
+        this.disconnectedUsers.delete(this.clientID);
+      } else {
+        this.disconnectedUsers.add(this.clientID);
+      }
+      this.updateSubscribers(
+        true
+        /* force update */
+      );
+    }
+    /**
+     * Update all subscribed listeners with the latest awareness state.
+     * @param forceUpdate - Whether to force an update.
+     */
+    updateSubscribers(forceUpdate = false) {
+      if (!this.stateSubscriptions.length) {
+        return;
+      }
+      const states = this.getStates();
+      this.seenStates = new Map([
+        ...this.seenStates.entries(),
+        ...states.entries()
+      ]);
+      const updatedStates = new Map(
+        [...this.disconnectedUsers, ...states.keys()].filter((clientId) => {
+          return Object.keys(this.seenStates.get(clientId) ?? {}).length > 0;
+        }).map((clientId) => {
+          const rawState = this.seenStates.get(clientId);
+          const isConnected = !this.disconnectedUsers.has(clientId);
+          const isMe = clientId === this.clientID;
+          const myState = isMe ? this.myThrottledState : {};
+          const state = {
+            ...rawState,
+            ...myState,
+            clientId,
+            isConnected,
+            isMe
+          };
+          return [clientId, state];
+        })
+      );
+      if (!forceUpdate) {
+        if (areMapsEqual(
+          this.previousSnapshot,
+          updatedStates,
+          this.isStateEqual.bind(this)
+        )) {
+          return;
+        }
+      }
+      this.previousSnapshot = updatedStates;
+      this.stateSubscriptions.forEach((callback) => {
+        callback(Array.from(updatedStates.values()));
+      });
+    }
+  };
 
   // packages/sync/build-module/persistence.mjs
   function getPersistedCrdtDoc(record) {
@@ -11839,374 +12210,6 @@ var wp;
     };
   }
 
-  // node_modules/y-protocols/awareness.js
-  var outdatedTimeout = 3e4;
-  var Awareness = class extends Observable {
-    /**
-     * @param {Y.Doc} doc
-     */
-    constructor(doc2) {
-      super();
-      this.doc = doc2;
-      this.clientID = doc2.clientID;
-      this.states = /* @__PURE__ */ new Map();
-      this.meta = /* @__PURE__ */ new Map();
-      this._checkInterval = /** @type {any} */
-      setInterval(() => {
-        const now = getUnixTime();
-        if (this.getLocalState() !== null && outdatedTimeout / 2 <= now - /** @type {{lastUpdated:number}} */
-        this.meta.get(this.clientID).lastUpdated) {
-          this.setLocalState(this.getLocalState());
-        }
-        const remove = [];
-        this.meta.forEach((meta, clientid) => {
-          if (clientid !== this.clientID && outdatedTimeout <= now - meta.lastUpdated && this.states.has(clientid)) {
-            remove.push(clientid);
-          }
-        });
-        if (remove.length > 0) {
-          removeAwarenessStates(this, remove, "timeout");
-        }
-      }, floor(outdatedTimeout / 10));
-      doc2.on("destroy", () => {
-        this.destroy();
-      });
-      this.setLocalState({});
-    }
-    destroy() {
-      this.emit("destroy", [this]);
-      this.setLocalState(null);
-      super.destroy();
-      clearInterval(this._checkInterval);
-    }
-    /**
-     * @return {Object<string,any>|null}
-     */
-    getLocalState() {
-      return this.states.get(this.clientID) || null;
-    }
-    /**
-     * @param {Object<string,any>|null} state
-     */
-    setLocalState(state) {
-      const clientID = this.clientID;
-      const currLocalMeta = this.meta.get(clientID);
-      const clock = currLocalMeta === void 0 ? 0 : currLocalMeta.clock + 1;
-      const prevState = this.states.get(clientID);
-      if (state === null) {
-        this.states.delete(clientID);
-      } else {
-        this.states.set(clientID, state);
-      }
-      this.meta.set(clientID, {
-        clock,
-        lastUpdated: getUnixTime()
-      });
-      const added = [];
-      const updated = [];
-      const filteredUpdated = [];
-      const removed = [];
-      if (state === null) {
-        removed.push(clientID);
-      } else if (prevState == null) {
-        if (state != null) {
-          added.push(clientID);
-        }
-      } else {
-        updated.push(clientID);
-        if (!equalityDeep(prevState, state)) {
-          filteredUpdated.push(clientID);
-        }
-      }
-      if (added.length > 0 || filteredUpdated.length > 0 || removed.length > 0) {
-        this.emit("change", [{ added, updated: filteredUpdated, removed }, "local"]);
-      }
-      this.emit("update", [{ added, updated, removed }, "local"]);
-    }
-    /**
-     * @param {string} field
-     * @param {any} value
-     */
-    setLocalStateField(field, value) {
-      const state = this.getLocalState();
-      if (state !== null) {
-        this.setLocalState({
-          ...state,
-          [field]: value
-        });
-      }
-    }
-    /**
-     * @return {Map<number,Object<string,any>>}
-     */
-    getStates() {
-      return this.states;
-    }
-  };
-  var removeAwarenessStates = (awareness, clients, origin) => {
-    const removed = [];
-    for (let i = 0; i < clients.length; i++) {
-      const clientID = clients[i];
-      if (awareness.states.has(clientID)) {
-        awareness.states.delete(clientID);
-        if (clientID === awareness.clientID) {
-          const curMeta = (
-            /** @type {MetaClientState} */
-            awareness.meta.get(clientID)
-          );
-          awareness.meta.set(clientID, {
-            clock: curMeta.clock + 1,
-            lastUpdated: getUnixTime()
-          });
-        }
-        removed.push(clientID);
-      }
-    }
-    if (removed.length > 0) {
-      awareness.emit("change", [{ added: [], updated: [], removed }, origin]);
-      awareness.emit("update", [{ added: [], updated: [], removed }, origin]);
-    }
-  };
-
-  // packages/sync/build-module/awareness/awareness-types.mjs
-  var TypedAwareness = class extends Awareness {
-    /**
-     * Get the states from an awareness document.
-     */
-    getStates() {
-      return super.getStates();
-    }
-    /**
-     * Get a local state field from an awareness document.
-     * @param field
-     */
-    getLocalStateField(field) {
-      const state = this.getLocalState();
-      return getRecordValue(state, field);
-    }
-    /**
-     * Set a local state field on an awareness document.
-     * @param field
-     * @param value
-     */
-    setLocalStateField(field, value) {
-      super.setLocalStateField(field, value);
-    }
-  };
-
-  // packages/sync/build-module/awareness/awareness-state.mjs
-  var AwarenessWithEqualityChecks = class extends TypedAwareness {
-    /** OVERRIDDEN METHODS */
-    /**
-     * Set a local state field on an awareness document. Calling this method may
-     * trigger rerenders of any subscribed components.
-     *
-     * Equality checks are provided by the abstract `equalityFieldChecks` property.
-     * @param field
-     * @param value
-     */
-    setLocalStateField(field, value) {
-      if (this.isFieldEqual(
-        field,
-        value,
-        this.getLocalStateField(field) ?? void 0
-      )) {
-        return;
-      }
-      super.setLocalStateField(field, value);
-    }
-    /** CUSTOM METHODS */
-    /**
-     * Determine if a field value has changed using the provided equality checks.
-     * @param field
-     * @param value1
-     * @param value2
-     */
-    isFieldEqual(field, value1, value2) {
-      if (["clientId", "isConnected", "isMe"].includes(field)) {
-        return value1 === value2;
-      }
-      if (field in this.equalityFieldChecks) {
-        const fn = this.equalityFieldChecks[field];
-        return fn(value1, value2);
-      }
-      throw new Error(
-        `No equality check implemented for awareness state field "${field.toString()}".`
-      );
-    }
-    /**
-     * Determine if two states are equal by comparing each field using the
-     * provided equality checks.
-     * @param state1
-     * @param state2
-     */
-    isStateEqual(state1, state2) {
-      return [
-        .../* @__PURE__ */ new Set([
-          ...getTypedKeys(state1),
-          ...getTypedKeys(state2)
-        ])
-      ].every((field) => {
-        const value1 = state1[field];
-        const value2 = state2[field];
-        return this.isFieldEqual(field, value1, value2);
-      });
-    }
-  };
-  var AwarenessState = class extends AwarenessWithEqualityChecks {
-    /** CUSTOM PROPERTIES */
-    /**
-     * We keep track of all seen states during the current session for two reasons:
-     *
-     * 1. So that we can represent recently disconnected users in our UI, even
-     *    after they have been removed from the awareness document.
-     * 2. So that we can provide debug information about all users seen during
-     *    the session.
-     */
-    disconnectedUsers = /* @__PURE__ */ new Set();
-    seenStates = /* @__PURE__ */ new Map();
-    /**
-     * Hold a snapshot of the previous awareness state allows us to compare the
-     * state values and avoid unnecessary updates to subscribers.
-     */
-    previousSnapshot = /* @__PURE__ */ new Map();
-    stateSubscriptions = [];
-    /**
-     * In some cases, we may want to throttle setting local state fields to avoid
-     * overwhelming the awareness document with rapid updates. At the same time, we
-     * want to ensure that when we read our own state locally, we get the latest
-     * value -- even if it hasn't yet been set on the awareness instance.
-     */
-    myThrottledState = {};
-    /** CUSTOM METHODS */
-    /**
-     * Set up.
-     */
-    setUp() {
-      this.on(
-        "change",
-        ({ added, removed, updated }) => {
-          [...added, ...updated].forEach((id2) => {
-            this.disconnectedUsers.delete(id2);
-          });
-          removed.forEach((id2) => {
-            this.disconnectedUsers.add(id2);
-            setTimeout(() => {
-              this.disconnectedUsers.delete(id2);
-              this.updateSubscribers(
-                true
-                /* force update */
-              );
-            }, REMOVAL_DELAY_IN_MS);
-          });
-          this.updateSubscribers();
-        }
-      );
-    }
-    /**
-     * Get all seen states in this session to enable debug reporting.
-     */
-    getSeenStates() {
-      return this.seenStates;
-    }
-    /**
-     * Allow external code to subscribe to awareness state changes.
-     * @param callback
-     */
-    onStateChange(callback) {
-      this.stateSubscriptions.push(callback);
-      return () => {
-        this.stateSubscriptions = this.stateSubscriptions.filter(
-          (cb) => cb !== callback
-        );
-      };
-    }
-    /**
-     * Set the current user's connection status as awareness state.
-     * @param isConnected
-     */
-    setConnectionStatus(isConnected) {
-      if (isConnected) {
-        this.disconnectedUsers.delete(this.clientID);
-      } else {
-        this.disconnectedUsers.add(this.clientID);
-      }
-      this.updateSubscribers(
-        true
-        /* force update */
-      );
-    }
-    /**
-     * Update all subscribed listeners with the latest awareness state.
-     * @param forceUpdate
-     */
-    updateSubscribers(forceUpdate = false) {
-      if (!this.stateSubscriptions.length) {
-        return;
-      }
-      const states = this.getStates();
-      this.seenStates = new Map([
-        ...this.seenStates.entries(),
-        ...states.entries()
-      ]);
-      const updatedStates = new Map(
-        [...this.disconnectedUsers, ...states.keys()].map(
-          (clientId) => {
-            const rawState = this.seenStates.get(clientId);
-            const isConnected = !this.disconnectedUsers.has(clientId);
-            const isMe = clientId === this.clientID;
-            const myState = isMe ? this.myThrottledState : {};
-            const state = {
-              ...rawState,
-              ...myState,
-              clientId,
-              isConnected,
-              isMe
-            };
-            return [clientId, state];
-          }
-        )
-      );
-      if (!forceUpdate) {
-        if (areMapsEqual(
-          this.previousSnapshot,
-          updatedStates,
-          this.isStateEqual.bind(this)
-        )) {
-          return;
-        }
-      }
-      this.previousSnapshot = updatedStates;
-      this.stateSubscriptions.forEach((callback) => {
-        callback(Array.from(updatedStates.values()));
-      });
-    }
-  };
-
-  // packages/sync/build-module/awareness/post-editor-awareness-state.mjs
-  var PostEditorAwarenessState = class extends AwarenessState {
-    equalityFieldChecks = {};
-    // TODO: Add in subscription for user selection changes.
-  };
-
-  // packages/sync/build-module/awareness/awareness-manager.mjs
-  var awarenessInstances = /* @__PURE__ */ new Map();
-  function getAwarenessId(objectType, objectId) {
-    return `${objectType}:${objectId}`;
-  }
-  async function createAwareness(objectType, objectId, ydoc) {
-    if (objectId && objectType.startsWith("postType/")) {
-      const awareness = new PostEditorAwarenessState(ydoc);
-      awareness.setUp();
-      awarenessInstances.set(
-        getAwarenessId(objectType, objectId),
-        awareness
-      );
-      return awareness;
-    }
-    return void 0;
-  }
-
   // packages/sync/build-module/manager.mjs
   function createSyncManager() {
     const entityStates = /* @__PURE__ */ new Map();
@@ -12230,6 +12233,8 @@ var wp;
         ydoc.destroy();
         entityStates.delete(entityId);
       };
+      const awareness = syncConfig.createAwareness?.(ydoc, objectId);
+      awareness?.setUp();
       const onRecordUpdate = (_events, transaction) => {
         if (transaction.local && !(transaction.origin instanceof UndoManager)) {
           return;
@@ -12257,6 +12262,7 @@ var wp;
       }
       undoManager2.addToScope(recordMap);
       const entityState = {
+        awareness,
         handlers,
         objectId,
         objectType,
@@ -12265,10 +12271,9 @@ var wp;
         ydoc
       };
       entityStates.set(entityId, entityState);
-      const awareness = await createAwareness(objectType, objectId, ydoc);
       const providerResults = await Promise.all(
         providerCreators2.map(
-          (create8) => create8(objectType, objectId, ydoc, awareness)
+          (create8) => create8({ objectType, objectId, ydoc, awareness })
         )
       );
       recordMap.observeDeep(onRecordUpdate);
@@ -12280,6 +12285,14 @@ var wp;
     }
     function getEntityId(objectType, objectId) {
       return `${objectType}_${objectId}`;
+    }
+    function getAwareness(objectType, objectId) {
+      const entityId = getEntityId(objectType, objectId);
+      const entityState = entityStates.get(entityId);
+      if (!entityState || !entityState.awareness) {
+        return void 0;
+      }
+      return entityState.awareness;
     }
     function applyPersistedCrdtDoc(objectType, objectId, record) {
       const entityId = getEntityId(objectType, objectId);
@@ -12296,31 +12309,35 @@ var wp;
         },
         ydoc: targetDoc
       } = entityState;
-      targetDoc.transact(() => {
-        if (!supports?.crdtPersistence) {
+      if (!supports?.crdtPersistence) {
+        targetDoc.transact(() => {
           applyChangesToCRDTDoc(targetDoc, record);
-          return;
-        }
-        const tempDoc = getPersistedCrdtDoc(record);
-        if (!tempDoc) {
+        }, LOCAL_SYNC_MANAGER_ORIGIN);
+        return;
+      }
+      const tempDoc = getPersistedCrdtDoc(record);
+      if (!tempDoc) {
+        targetDoc.transact(() => {
           applyChangesToCRDTDoc(targetDoc, record);
           handlers.saveRecord();
-          return;
-        }
-        const update = encodeStateAsUpdateV2(tempDoc);
-        applyUpdateV2(targetDoc, update);
-        const invalidations = getChangesFromCRDTDoc(tempDoc, record);
-        const invalidatedKeys = Object.keys(invalidations);
-        tempDoc.destroy();
-        if (0 === invalidatedKeys.length) {
-          return;
-        }
-        const changes = invalidatedKeys.reduce(
-          (acc, key) => Object.assign(acc, {
-            [key]: record[key]
-          }),
-          {}
-        );
+        }, LOCAL_SYNC_MANAGER_ORIGIN);
+        return;
+      }
+      const update = encodeStateAsUpdateV2(tempDoc);
+      applyUpdateV2(targetDoc, update);
+      const invalidations = getChangesFromCRDTDoc(tempDoc, record);
+      const invalidatedKeys = Object.keys(invalidations);
+      tempDoc.destroy();
+      if (0 === invalidatedKeys.length) {
+        return;
+      }
+      const changes = invalidatedKeys.reduce(
+        (acc, key) => Object.assign(acc, {
+          [key]: record[key]
+        }),
+        {}
+      );
+      targetDoc.transact(() => {
         applyChangesToCRDTDoc(targetDoc, changes);
         handlers.saveRecord();
       }, LOCAL_SYNC_MANAGER_ORIGIN);
@@ -12367,6 +12384,7 @@ var wp;
     }
     return {
       createMeta: createEntityMeta,
+      getAwareness,
       load: loadEntity,
       // Use getter to ensure we always return the current value of `undoManager`.
       get undoManager() {
@@ -12376,6 +12394,352 @@ var wp;
       update: updateCRDTDoc
     };
   }
+
+  // packages/core-data/build-module/awareness/post-editor-awareness.mjs
+  var import_block_editor = __toESM(require_block_editor(), 1);
+
+  // packages/core-data/build-module/awareness/config.mjs
+  var AWARENESS_CURSOR_UPDATE_THROTTLE_IN_MS = 100;
+  var LOCAL_CURSOR_UPDATE_DEBOUNCE_IN_MS = 5;
+
+  // packages/core-data/build-module/name.mjs
+  var STORE_NAME = "core";
+
+  // packages/core-data/build-module/awareness/utils.mjs
+  var COLOR_PALETTE = [
+    "#3858E9",
+    // blueberry
+    "#B42AED",
+    // purple
+    "#E33184",
+    // pink
+    "#F3661D",
+    // orange
+    "#ECBD3A",
+    // yellow
+    "#97FE17",
+    // green
+    "#00FDD9",
+    // teal
+    "#37C5F0"
+    // cyan
+  ];
+  function generateRandomInt(min2, max2) {
+    return Math.floor(Math.random() * (max2 - min2 + 1)) + min2;
+  }
+  function getNewUserColor(existingColors) {
+    const availableColors = COLOR_PALETTE.filter(
+      (color) => !existingColors.includes(color)
+    );
+    let hexColor;
+    if (availableColors.length > 0) {
+      const randomIndex = generateRandomInt(0, availableColors.length - 1);
+      hexColor = availableColors[randomIndex];
+    } else {
+      const randomIndex = generateRandomInt(0, COLOR_PALETTE.length - 1);
+      const baseColor = COLOR_PALETTE[randomIndex];
+      hexColor = generateColorVariation(baseColor);
+    }
+    return hexColor;
+  }
+  function generateColorVariation(hexColor) {
+    const r = parseInt(hexColor.slice(1, 3), 16);
+    const g = parseInt(hexColor.slice(3, 5), 16);
+    const b = parseInt(hexColor.slice(5, 7), 16);
+    const shift = generateRandomInt(-30, 30);
+    const newR = Math.min(255, Math.max(0, r + shift));
+    const newG = Math.min(255, Math.max(0, g + shift));
+    const newB = Math.min(255, Math.max(0, b + shift));
+    const toHex = (n) => n.toString(16).padStart(2, "0").toUpperCase();
+    return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}`;
+  }
+  function getBrowserName() {
+    const userAgent = window.navigator.userAgent;
+    let browserName = "Unknown";
+    if (userAgent.includes("Firefox")) {
+      browserName = "Firefox";
+    } else if (userAgent.includes("Edg")) {
+      browserName = "Microsoft Edge";
+    } else if (userAgent.includes("Chrome") && !userAgent.includes("Edg")) {
+      browserName = "Chrome";
+    } else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) {
+      browserName = "Safari";
+    } else if (userAgent.includes("MSIE") || userAgent.includes("Trident")) {
+      browserName = "Internet Explorer";
+    } else if (userAgent.includes("Opera") || userAgent.includes("OPR")) {
+      browserName = "Opera";
+    }
+    return browserName;
+  }
+  function areUserInfosEqual(userInfo1, userInfo2) {
+    if (!userInfo1 || !userInfo2) {
+      return userInfo1 === userInfo2;
+    }
+    if (Object.keys(userInfo1).length !== Object.keys(userInfo2).length) {
+      return false;
+    }
+    return Object.entries(userInfo1).every(([key, value]) => {
+      return value === userInfo2[key];
+    });
+  }
+  function generateUserInfo(currentUser2, existingColors) {
+    return {
+      ...currentUser2,
+      browserType: getBrowserName(),
+      color: getNewUserColor(existingColors),
+      enteredAt: Date.now()
+    };
+  }
+
+  // packages/core-data/build-module/utils/crdt-utils.mjs
+  function getRootMap(doc2, key) {
+    return doc2.getMap(key);
+  }
+  function createYMap(partial = {}) {
+    return new yjs_exports.Map(Object.entries(partial));
+  }
+  function isYMap(value) {
+    return value instanceof yjs_exports.Map;
+  }
+
+  // packages/core-data/build-module/utils/crdt-user-selections.mjs
+  function getSelectionState(selectionStart, selectionEnd, yDoc) {
+    const ymap = getRootMap(yDoc, CRDT_RECORD_MAP_KEY);
+    const yBlocks = ymap.get("blocks") ?? new yjs_exports.Array();
+    const isSelectionEmpty = Object.keys(selectionStart).length === 0;
+    const noSelection = {
+      type: "none"
+      /* None */
+    };
+    if (isSelectionEmpty) {
+      return noSelection;
+    }
+    const isSelectionInOneBlock = selectionStart.clientId === selectionEnd.clientId;
+    const isCursorOnly = isSelectionInOneBlock && selectionStart.offset === selectionEnd.offset;
+    const isSelectionAWholeBlock = isSelectionInOneBlock && selectionStart.offset === void 0 && selectionEnd.offset === void 0;
+    if (isSelectionAWholeBlock) {
+      return {
+        type: "whole-block",
+        blockId: selectionStart.clientId
+      };
+    } else if (isCursorOnly) {
+      const cursorPosition = getCursorPosition(selectionStart, yBlocks);
+      if (!cursorPosition) {
+        return noSelection;
+      }
+      return {
+        type: "cursor",
+        blockId: selectionStart.clientId,
+        cursorPosition
+      };
+    } else if (isSelectionInOneBlock) {
+      const cursorStartPosition2 = getCursorPosition(
+        selectionStart,
+        yBlocks
+      );
+      const cursorEndPosition2 = getCursorPosition(selectionEnd, yBlocks);
+      if (!cursorStartPosition2 || !cursorEndPosition2) {
+        return noSelection;
+      }
+      return {
+        type: "selection-in-one-block",
+        blockId: selectionStart.clientId,
+        cursorStartPosition: cursorStartPosition2,
+        cursorEndPosition: cursorEndPosition2
+      };
+    }
+    const cursorStartPosition = getCursorPosition(selectionStart, yBlocks);
+    const cursorEndPosition = getCursorPosition(selectionEnd, yBlocks);
+    if (!cursorStartPosition || !cursorEndPosition) {
+      return noSelection;
+    }
+    return {
+      type: "selection-in-multiple-blocks",
+      blockStartId: selectionStart.clientId,
+      blockEndId: selectionEnd.clientId,
+      cursorStartPosition,
+      cursorEndPosition
+    };
+  }
+  function getCursorPosition(selection, blocks) {
+    const block = findBlockByClientId(selection.clientId, blocks);
+    if (!block) {
+      return null;
+    }
+    const attributes = block.get("attributes");
+    const currentYText = attributes.get(selection.attributeKey);
+    const relativePosition = yjs_exports.createRelativePositionFromTypeIndex(
+      currentYText,
+      selection.offset
+    );
+    return {
+      relativePosition,
+      absoluteOffset: selection.offset
+    };
+  }
+  function findBlockByClientId(blockId, blocks) {
+    for (const block of blocks) {
+      if (block.get("clientId") === blockId) {
+        return block;
+      }
+      const innerBlocks = block.get("innerBlocks");
+      if (innerBlocks && innerBlocks.length > 0) {
+        const innerBlock = findBlockByClientId(blockId, innerBlocks);
+        if (innerBlock) {
+          return innerBlock;
+        }
+      }
+    }
+    return null;
+  }
+  function areSelectionsStatesEqual(selection1, selection2) {
+    if (selection1.type !== selection2.type) {
+      return false;
+    }
+    switch (selection1.type) {
+      case "none":
+        return true;
+      case "cursor":
+        return selection1.blockId === selection2.blockId && areCursorPositionsEqual(
+          selection1.cursorPosition,
+          selection2.cursorPosition
+        );
+      case "selection-in-one-block":
+        return selection1.blockId === selection2.blockId && areCursorPositionsEqual(
+          selection1.cursorStartPosition,
+          selection2.cursorStartPosition
+        ) && areCursorPositionsEqual(
+          selection1.cursorEndPosition,
+          selection2.cursorEndPosition
+        );
+      case "selection-in-multiple-blocks":
+        return selection1.blockStartId === selection2.blockStartId && selection1.blockEndId === selection2.blockEndId && areCursorPositionsEqual(
+          selection1.cursorStartPosition,
+          selection2.cursorStartPosition
+        ) && areCursorPositionsEqual(
+          selection1.cursorEndPosition,
+          selection2.cursorEndPosition
+        );
+      case "whole-block":
+        return selection1.blockId === selection2.blockId;
+      default:
+        return false;
+    }
+  }
+  function areCursorPositionsEqual(cursorPosition1, cursorPosition2) {
+    const isRelativePositionEqual = JSON.stringify(cursorPosition1.relativePosition) === JSON.stringify(cursorPosition2.relativePosition);
+    const isAbsoluteOffsetEqual = cursorPosition1.absoluteOffset === cursorPosition2.absoluteOffset;
+    return isRelativePositionEqual && isAbsoluteOffsetEqual;
+  }
+
+  // packages/core-data/build-module/awareness/post-editor-awareness.mjs
+  var PostEditorAwareness = class extends AwarenessState {
+    constructor(doc2, kind, name, postId) {
+      super(doc2);
+      this.kind = kind;
+      this.name = name;
+      this.postId = postId;
+    }
+    equalityFieldChecks = {
+      editorState: this.areEditorStatesEqual,
+      userInfo: areUserInfosEqual
+    };
+    setUp() {
+      super.setUp();
+      this.setCurrentUserInfo();
+      this.subscribeToUserSelectionChanges();
+    }
+    /**
+     * Set the current user info in the local state.
+     */
+    setCurrentUserInfo() {
+      const states = this.getStates();
+      const otherUserColors = Array.from(states.entries()).filter(
+        ([clientId, state]) => state.userInfo && clientId !== this.clientID
+      ).map(([, state]) => state.userInfo.color).filter(Boolean);
+      const currentUser2 = (0, import_data2.select)(STORE_NAME).getCurrentUser();
+      const userInfo = generateUserInfo(currentUser2, otherUserColors);
+      this.setLocalStateField("userInfo", userInfo);
+    }
+    /**
+     * Subscribe to user selection changes and update the selection state.
+     */
+    subscribeToUserSelectionChanges() {
+      const {
+        getSelectionStart,
+        getSelectionEnd,
+        getSelectedBlocksInitialCaretPosition
+      } = (0, import_data2.select)(import_block_editor.store);
+      let selectionStart = getSelectionStart();
+      let selectionEnd = getSelectionEnd();
+      let localCursorTimeout = null;
+      (0, import_data2.subscribe)(() => {
+        const newSelectionStart = getSelectionStart();
+        const newSelectionEnd = getSelectionEnd();
+        if (newSelectionStart === selectionStart && newSelectionEnd === selectionEnd) {
+          return;
+        }
+        selectionStart = newSelectionStart;
+        selectionEnd = newSelectionEnd;
+        const initialPosition = getSelectedBlocksInitialCaretPosition();
+        void this.updateSelectionInEntityRecord(
+          selectionStart,
+          selectionEnd,
+          initialPosition
+        );
+        if (localCursorTimeout) {
+          clearTimeout(localCursorTimeout);
+        }
+        localCursorTimeout = setTimeout(() => {
+          const selectionState = getSelectionState(
+            selectionStart,
+            selectionEnd,
+            this.doc
+          );
+          this.setThrottledLocalStateField(
+            "editorState",
+            { selection: selectionState },
+            AWARENESS_CURSOR_UPDATE_THROTTLE_IN_MS
+          );
+        }, LOCAL_CURSOR_UPDATE_DEBOUNCE_IN_MS);
+      });
+    }
+    /**
+     * Update the entity record with the current user's selection.
+     *
+     * @param selectionStart  - The start position of the selection.
+     * @param selectionEnd    - The end position of the selection.
+     * @param initialPosition - The initial position of the selection.
+     */
+    async updateSelectionInEntityRecord(selectionStart, selectionEnd, initialPosition) {
+      const edits = {
+        selection: { selectionStart, selectionEnd, initialPosition }
+      };
+      const options = {
+        undoIgnore: true
+      };
+      (0, import_data2.dispatch)(STORE_NAME).editEntityRecord(
+        this.kind,
+        this.name,
+        this.postId,
+        edits,
+        options
+      );
+    }
+    /**
+     * Check if two editor states are equal.
+     *
+     * @param state1 - The first editor state.
+     * @param state2 - The second editor state.
+     * @return True if the editor states are equal, false otherwise.
+     */
+    areEditorStatesEqual(state1, state2) {
+      if (!state1 || !state2) {
+        return state1 === state2;
+      }
+      return areSelectionsStatesEqual(state1.selection, state2.selection);
+    }
+  };
 
   // packages/core-data/build-module/sync.mjs
   var syncManager;
@@ -12443,19 +12807,6 @@ var wp;
   var import_es64 = __toESM(require_es6(), 1);
   var import_blocks = __toESM(require_blocks(), 1);
   var import_rich_text = __toESM(require_rich_text(), 1);
-
-  // packages/core-data/build-module/utils/crdt-utils.mjs
-  function getRootMap(doc2, key) {
-    return doc2.getMap(key);
-  }
-  function createYMap(partial = {}) {
-    return new yjs_exports.Map(Object.entries(partial));
-  }
-  function isYMap(value) {
-    return value instanceof yjs_exports.Map;
-  }
-
-  // packages/core-data/build-module/utils/crdt-blocks.mjs
   var serializableBlocksCache = /* @__PURE__ */ new WeakMap();
   function makeBlockAttributesSerializable(attributes) {
     const newAttributes = { ...attributes };
@@ -13194,6 +13545,18 @@ var wp;
            */
           applyChangesToCRDTDoc: (crdtDoc, changes) => applyPostChangesToCRDTDoc(crdtDoc, changes, postType),
           /**
+           * Create the awareness instance for the entity's CRDT document.
+           *
+           * @param {import('@wordpress/sync').CRDTDoc}  ydoc
+           * @param {import('@wordpress/sync').ObjectID} objectId
+           * @return {import('@wordpress/sync').AwarenessState} AwarenessState instance
+           */
+          createAwareness: (ydoc, objectId) => {
+            const kind = "postType";
+            const id2 = parseInt(objectId, 10);
+            return new PostEditorAwareness(ydoc, kind, name, id2);
+          },
+          /**
            * Extract changes from a CRDT document that can be used to update the
            * local editor state.
            *
@@ -13428,7 +13791,7 @@ var wp;
         return state;
     }
   };
-  var reducer_default = (0, import_data2.combineReducers)({
+  var reducer_default = (0, import_data3.combineReducers)({
     items,
     itemIsComplete,
     queries
@@ -13538,7 +13901,7 @@ var wp;
         };
       })
     ])(
-      (0, import_data3.combineReducers)({
+      (0, import_data4.combineReducers)({
         queriedData: reducer_default,
         edits: (state = {}, action) => {
           switch (action.type) {
@@ -13678,11 +14041,11 @@ var wp;
         acc[kind].push(record);
         return acc;
       }, {});
-      entitiesDataReducer = (0, import_data3.combineReducers)(
+      entitiesDataReducer = (0, import_data4.combineReducers)(
         Object.fromEntries(
           Object.entries(entitiesByKind).map(
             ([kind, subEntities]) => {
-              const kindReducer = (0, import_data3.combineReducers)(
+              const kindReducer = (0, import_data4.combineReducers)(
                 Object.fromEntries(
                   subEntities.map((entityConfig) => [
                     entityConfig.name,
@@ -13827,7 +14190,7 @@ var wp;
     }
     return state;
   }
-  var reducer_default2 = (0, import_data3.combineReducers)({
+  var reducer_default2 = (0, import_data4.combineReducers)({
     users,
     currentTheme,
     currentGlobalStylesId,
@@ -13906,12 +14269,9 @@ var wp;
     isRequestingEmbedPreview: () => isRequestingEmbedPreview,
     isSavingEntityRecord: () => isSavingEntityRecord
   });
-  var import_data5 = __toESM(require_data(), 1);
+  var import_data6 = __toESM(require_data(), 1);
   var import_url2 = __toESM(require_url(), 1);
   var import_deprecated2 = __toESM(require_deprecated(), 1);
-
-  // packages/core-data/build-module/name.mjs
-  var STORE_NAME = "core";
 
   // packages/core-data/build-module/private-selectors.mjs
   var private_selectors_exports = {};
@@ -13928,7 +14288,7 @@ var wp;
     getTemplateId: () => getTemplateId,
     getUndoManager: () => getUndoManager
   });
-  var import_data4 = __toESM(require_data(), 1);
+  var import_data5 = __toESM(require_data(), 1);
 
   // packages/core-data/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
@@ -13976,25 +14336,25 @@ var wp;
   function getNavigationFallbackId(state) {
     return state.navigationFallbackId;
   }
-  var getBlockPatternsForPostType = (0, import_data4.createRegistrySelector)(
-    (select) => (0, import_data4.createSelector)(
-      (state, postType) => select(STORE_NAME).getBlockPatterns().filter(
+  var getBlockPatternsForPostType = (0, import_data5.createRegistrySelector)(
+    (select2) => (0, import_data5.createSelector)(
+      (state, postType) => select2(STORE_NAME).getBlockPatterns().filter(
         ({ postTypes }) => !postTypes || Array.isArray(postTypes) && postTypes.includes(postType)
       ),
-      () => [select(STORE_NAME).getBlockPatterns()]
+      () => [select2(STORE_NAME).getBlockPatterns()]
     )
   );
-  var getEntityRecordsPermissions = (0, import_data4.createRegistrySelector)(
-    (select) => (0, import_data4.createSelector)(
+  var getEntityRecordsPermissions = (0, import_data5.createRegistrySelector)(
+    (select2) => (0, import_data5.createSelector)(
       (state, kind, name, ids) => {
         const normalizedIds = Array.isArray(ids) ? ids : [ids];
         return normalizedIds.map((id2) => ({
-          delete: select(STORE_NAME).canUser("delete", {
+          delete: select2(STORE_NAME).canUser("delete", {
             kind,
             name,
             id: id2
           }),
-          update: select(STORE_NAME).canUser("update", {
+          update: select2(STORE_NAME).canUser("update", {
             kind,
             name,
             id: id2
@@ -14020,10 +14380,10 @@ var wp;
     }
     return value.toString();
   }
-  var getHomePage = (0, import_data4.createRegistrySelector)(
-    (select) => (0, import_data4.createSelector)(
+  var getHomePage = (0, import_data5.createRegistrySelector)(
+    (select2) => (0, import_data5.createSelector)(
       () => {
-        const siteData = select(STORE_NAME).getEntityRecord(
+        const siteData = select2(STORE_NAME).getEntityRecord(
           "root",
           "__unstableBase"
         );
@@ -14034,7 +14394,7 @@ var wp;
         if (homepageId) {
           return { postType: "page", postId: homepageId };
         }
-        const frontPageTemplateId = select(
+        const frontPageTemplateId = select2(
           STORE_NAME
         ).getDefaultTemplateId({
           slug: "front-page"
@@ -14055,21 +14415,21 @@ var wp;
       ]
     )
   );
-  var getPostsPageId = (0, import_data4.createRegistrySelector)((select) => () => {
-    const siteData = select(STORE_NAME).getEntityRecord(
+  var getPostsPageId = (0, import_data5.createRegistrySelector)((select2) => () => {
+    const siteData = select2(STORE_NAME).getEntityRecord(
       "root",
       "__unstableBase"
     );
     return siteData?.show_on_front === "page" ? normalizePageId(siteData.page_for_posts) : null;
   });
-  var getTemplateId = (0, import_data4.createRegistrySelector)(
-    (select) => (state, postType, postId) => {
-      const homepage = unlock(select(STORE_NAME)).getHomePage();
+  var getTemplateId = (0, import_data5.createRegistrySelector)(
+    (select2) => (state, postType, postId) => {
+      const homepage = unlock(select2(STORE_NAME)).getHomePage();
       if (!homepage) {
         return;
       }
       if (postType === "page" && postType === homepage?.postType && postId.toString() === homepage?.postId) {
-        const templates = select(STORE_NAME).getEntityRecords(
+        const templates = select2(STORE_NAME).getEntityRecords(
           "postType",
           "wp_template",
           {
@@ -14084,7 +14444,7 @@ var wp;
           return id2;
         }
       }
-      const editedEntity = select(STORE_NAME).getEditedEntityRecord(
+      const editedEntity = select2(STORE_NAME).getEditedEntityRecord(
         "postType",
         postType,
         postId
@@ -14092,15 +14452,15 @@ var wp;
       if (!editedEntity) {
         return;
       }
-      const postsPageId = unlock(select(STORE_NAME)).getPostsPageId();
+      const postsPageId = unlock(select2(STORE_NAME)).getPostsPageId();
       if (postType === "page" && postsPageId === postId.toString()) {
-        return select(STORE_NAME).getDefaultTemplateId({
+        return select2(STORE_NAME).getDefaultTemplateId({
           slug: "home"
         });
       }
       const currentTemplateSlug = editedEntity.template;
       if (currentTemplateSlug) {
-        const currentTemplate = select(STORE_NAME).getEntityRecords("postType", "wp_template", {
+        const currentTemplate = select2(STORE_NAME).getEntityRecords("postType", "wp_template", {
           per_page: -1
         })?.find(({ slug }) => slug === currentTemplateSlug);
         if (currentTemplate) {
@@ -14113,7 +14473,7 @@ var wp;
       } else {
         slugToCheck = postType === "page" ? "page" : `single-${postType}`;
       }
-      return select(STORE_NAME).getDefaultTemplateId({
+      return select2(STORE_NAME).getDefaultTemplateId({
         slug: slugToCheck
       });
     }
@@ -14127,9 +14487,9 @@ var wp;
 
   // packages/core-data/build-module/selectors.mjs
   var EMPTY_OBJECT = {};
-  var isRequestingEmbedPreview = (0, import_data5.createRegistrySelector)(
-    (select) => (state, url) => {
-      return select(STORE_NAME).isResolving("getEmbedPreview", [
+  var isRequestingEmbedPreview = (0, import_data6.createRegistrySelector)(
+    (select2) => (state, url) => {
+      return select2(STORE_NAME).isResolving("getEmbedPreview", [
         url
       ]);
     }
@@ -14148,7 +14508,7 @@ var wp;
   function getCurrentUser(state) {
     return state.currentUser;
   }
-  var getUserQueryResults = (0, import_data5.createSelector)(
+  var getUserQueryResults = (0, import_data6.createSelector)(
     (state, queryID) => {
       const queryResults = state.users.queries[queryID] ?? [];
       return queryResults.map((id2) => state.users.byId[id2]);
@@ -14165,7 +14525,7 @@ var wp;
     });
     return getEntitiesConfig(state, kind);
   }
-  var getEntitiesConfig = (0, import_data5.createSelector)(
+  var getEntitiesConfig = (0, import_data6.createSelector)(
     (state, kind) => state.entities.config.filter((entity2) => entity2.kind === kind),
     /* eslint-disable @typescript-eslint/no-unused-vars */
     (state, kind) => state.entities.config
@@ -14184,7 +14544,7 @@ var wp;
       (config) => config.kind === kind && config.name === name
     );
   }
-  var getEntityRecord = (0, import_data5.createSelector)(
+  var getEntityRecord = (0, import_data6.createSelector)(
     ((state, kind, name, key, query) => {
       logEntityDeprecation(kind, name, "getEntityRecord");
       const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
@@ -14259,7 +14619,7 @@ var wp;
   function __experimentalGetEntityRecordNoResolver(state, kind, name, key) {
     return getEntityRecord(state, kind, name, key);
   }
-  var getRawEntityRecord = (0, import_data5.createSelector)(
+  var getRawEntityRecord = (0, import_data6.createSelector)(
     (state, kind, name, key) => {
       logEntityDeprecation(kind, name, "getRawEntityRecord");
       const record = getEntityRecord(
@@ -14324,7 +14684,7 @@ var wp;
     }
     return Math.ceil(totalItems / query.per_page);
   };
-  var __experimentalGetDirtyEntityRecords = (0, import_data5.createSelector)(
+  var __experimentalGetDirtyEntityRecords = (0, import_data6.createSelector)(
     (state) => {
       const {
         entities: { records }
@@ -14364,7 +14724,7 @@ var wp;
     },
     (state) => [state.entities.records]
   );
-  var __experimentalGetEntitiesBeingSaved = (0, import_data5.createSelector)(
+  var __experimentalGetEntitiesBeingSaved = (0, import_data6.createSelector)(
     (state) => {
       const {
         entities: { records }
@@ -14404,7 +14764,7 @@ var wp;
     logEntityDeprecation(kind, name, "getEntityRecordEdits");
     return state.entities.records?.[kind]?.[name]?.edits?.[recordId];
   }
-  var getEntityRecordNonTransientEdits = (0, import_data5.createSelector)(
+  var getEntityRecordNonTransientEdits = (0, import_data6.createSelector)(
     (state, kind, name, recordId) => {
       logEntityDeprecation(kind, name, "getEntityRecordNonTransientEdits");
       const { transientEdits } = getEntityConfig(state, kind, name) || {};
@@ -14430,7 +14790,7 @@ var wp;
       getEntityRecordNonTransientEdits(state, kind, name, recordId)
     ).length > 0;
   }
-  var getEditedEntityRecord = (0, import_data5.createSelector)(
+  var getEditedEntityRecord = (0, import_data6.createSelector)(
     (state, kind, name, recordId) => {
       logEntityDeprecation(kind, name, "getEditedEntityRecord");
       const raw = getRawEntityRecord(state, kind, name, recordId);
@@ -14545,9 +14905,9 @@ var wp;
       (autosave) => autosave.author === authorId
     );
   }
-  var hasFetchedAutosaves = (0, import_data5.createRegistrySelector)(
-    (select) => (state, postType, postId) => {
-      return select(STORE_NAME).hasFinishedResolution("getAutosaves", [
+  var hasFetchedAutosaves = (0, import_data6.createRegistrySelector)(
+    (select2) => (state, postType, postId) => {
+      return select2(STORE_NAME).hasFinishedResolution("getAutosaves", [
         postType,
         postId
       ]);
@@ -14601,7 +14961,7 @@ var wp;
     }
     return getQueriedItems(queriedStateRevisions, query);
   };
-  var getRevision = (0, import_data5.createSelector)(
+  var getRevision = (0, import_data6.createSelector)(
     (state, kind, name, recordKey, revisionKey, query) => {
       logEntityDeprecation(kind, name, "getRevision");
       const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
@@ -14952,7 +15312,7 @@ var wp;
       preview
     };
   }
-  var deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = import_api_fetch3.default, throwOnError = false } = {}) => async ({ dispatch, resolveSelect }) => {
+  var deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = import_api_fetch3.default, throwOnError = false } = {}) => async ({ dispatch: dispatch2, resolveSelect }) => {
     logEntityDeprecation(kind, name, "deleteEntityRecord");
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
@@ -14963,13 +15323,13 @@ var wp;
     if (!entityConfig) {
       return;
     }
-    const lock2 = await dispatch.__unstableAcquireStoreLock(
+    const lock2 = await dispatch2.__unstableAcquireStoreLock(
       STORE_NAME,
       ["entities", "records", kind, name, recordId],
       { exclusive: true }
     );
     try {
-      dispatch({
+      dispatch2({
         type: "DELETE_ENTITY_RECORD_START",
         kind,
         name,
@@ -14989,12 +15349,12 @@ var wp;
           path,
           method: "DELETE"
         });
-        await dispatch(removeItems(kind, name, recordId, true));
+        await dispatch2(removeItems(kind, name, recordId, true));
       } catch (_error) {
         hasError = true;
         error = _error;
       }
-      dispatch({
+      dispatch2({
         type: "DELETE_ENTITY_RECORD_FINISH",
         kind,
         name,
@@ -15006,20 +15366,20 @@ var wp;
       }
       return deletedRecord;
     } finally {
-      dispatch.__unstableReleaseStoreLock(lock2);
+      dispatch2.__unstableReleaseStoreLock(lock2);
     }
   };
-  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select, dispatch }) => {
+  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select2, dispatch: dispatch2 }) => {
     logEntityDeprecation(kind, name, "editEntityRecord");
-    const entityConfig = select.getEntityConfig(kind, name);
+    const entityConfig = select2.getEntityConfig(kind, name);
     if (!entityConfig) {
       throw new Error(
         `The entity being edited (${kind}, ${name}) does not have a loaded config.`
       );
     }
     const { mergedEdits = {} } = entityConfig;
-    const record = select.getRawEntityRecord(kind, name, recordId);
-    const editedRecord = select.getEditedEntityRecord(
+    const record = select2.getRawEntityRecord(kind, name, recordId);
+    const editedRecord = select2.getEditedEntityRecord(
       kind,
       name,
       recordId
@@ -15051,7 +15411,7 @@ var wp;
       }
     }
     if (!options.undoIgnore) {
-      select.getUndoManager().addRecord(
+      select2.getUndoManager().addRecord(
         [
           {
             id: { kind, name, recordId },
@@ -15067,39 +15427,39 @@ var wp;
         options.isCached
       );
     }
-    dispatch({
+    dispatch2({
       type: "EDIT_ENTITY_RECORD",
       ...edit
     });
   };
-  var undo = () => ({ select, dispatch }) => {
-    const undoRecord = select.getUndoManager().undo();
+  var undo = () => ({ select: select2, dispatch: dispatch2 }) => {
+    const undoRecord = select2.getUndoManager().undo();
     if (!undoRecord) {
       return;
     }
-    dispatch({
+    dispatch2({
       type: "UNDO",
       record: undoRecord
     });
   };
-  var redo = () => ({ select, dispatch }) => {
-    const redoRecord = select.getUndoManager().redo();
+  var redo = () => ({ select: select2, dispatch: dispatch2 }) => {
+    const redoRecord = select2.getUndoManager().redo();
     if (!redoRecord) {
       return;
     }
-    dispatch({
+    dispatch2({
       type: "REDO",
       record: redoRecord
     });
   };
-  var __unstableCreateUndoLevel = () => ({ select }) => {
-    select.getUndoManager().addRecord();
+  var __unstableCreateUndoLevel = () => ({ select: select2 }) => {
+    select2.getUndoManager().addRecord();
   };
   var saveEntityRecord = (kind, name, record, {
     isAutosave = false,
     __unstableFetch = import_api_fetch3.default,
     throwOnError = false
-  } = {}) => async ({ select, resolveSelect, dispatch }) => {
+  } = {}) => async ({ select: select2, resolveSelect, dispatch: dispatch2 }) => {
     logEntityDeprecation(kind, name, "saveEntityRecord");
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
@@ -15111,7 +15471,7 @@ var wp;
     const entityIdKey = entityConfig.key ?? DEFAULT_ENTITY_KEY;
     const recordId = record[entityIdKey];
     const isNewRecord = !!entityIdKey && !recordId;
-    const lock2 = await dispatch.__unstableAcquireStoreLock(
+    const lock2 = await dispatch2.__unstableAcquireStoreLock(
       STORE_NAME,
       ["entities", "records", kind, name, recordId || v4_default()],
       { exclusive: true }
@@ -15120,9 +15480,9 @@ var wp;
       for (const [key, value] of Object.entries(record)) {
         if (typeof value === "function") {
           const evaluatedValue = value(
-            select.getEditedEntityRecord(kind, name, recordId)
+            select2.getEditedEntityRecord(kind, name, recordId)
           );
-          dispatch.editEntityRecord(
+          dispatch2.editEntityRecord(
             kind,
             name,
             recordId,
@@ -15134,7 +15494,7 @@ var wp;
           record[key] = evaluatedValue;
         }
       }
-      dispatch({
+      dispatch2({
         type: "SAVE_ENTITY_RECORD_START",
         kind,
         name,
@@ -15150,9 +15510,9 @@ var wp;
       }
       try {
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
-        const persistedRecord = !isNewRecord ? select.getRawEntityRecord(kind, name, recordId) : {};
+        const persistedRecord = !isNewRecord ? select2.getRawEntityRecord(kind, name, recordId) : {};
         if (isAutosave) {
-          const currentUser2 = select.getCurrentUser();
+          const currentUser2 = select2.getCurrentUser();
           const currentUserId = currentUser2 ? currentUser2.id : void 0;
           const autosavePost = await resolveSelect.getAutosave(
             persistedRecord.type,
@@ -15210,7 +15570,7 @@ var wp;
               },
               {}
             );
-            dispatch.receiveEntityRecords(
+            dispatch2.receiveEntityRecords(
               kind,
               name,
               newRecord,
@@ -15218,7 +15578,7 @@ var wp;
               true
             );
           } else {
-            dispatch.receiveAutosaves(
+            dispatch2.receiveAutosaves(
               persistedRecord.id,
               updatedRecord
             );
@@ -15239,7 +15599,7 @@ var wp;
             method: recordId ? "PUT" : "POST",
             data: edits
           });
-          dispatch.receiveEntityRecords(
+          dispatch2.receiveEntityRecords(
             kind,
             name,
             updatedRecord,
@@ -15264,7 +15624,7 @@ var wp;
         hasError = true;
         error = _error;
       }
-      dispatch({
+      dispatch2({
         type: "SAVE_ENTITY_RECORD_FINISH",
         kind,
         name,
@@ -15277,15 +15637,15 @@ var wp;
       }
       return updatedRecord;
     } finally {
-      dispatch.__unstableReleaseStoreLock(lock2);
+      dispatch2.__unstableReleaseStoreLock(lock2);
     }
   };
-  var __experimentalBatch = (requests) => async ({ dispatch }) => {
+  var __experimentalBatch = (requests) => async ({ dispatch: dispatch2 }) => {
     const batch = createBatch();
     const api = {
       saveEntityRecord(kind, name, record, options) {
         return batch.add(
-          (add) => dispatch.saveEntityRecord(kind, name, record, {
+          (add) => dispatch2.saveEntityRecord(kind, name, record, {
             ...options,
             __unstableFetch: add
           })
@@ -15293,7 +15653,7 @@ var wp;
       },
       saveEditedEntityRecord(kind, name, recordId, options) {
         return batch.add(
-          (add) => dispatch.saveEditedEntityRecord(kind, name, recordId, {
+          (add) => dispatch2.saveEditedEntityRecord(kind, name, recordId, {
             ...options,
             __unstableFetch: add
           })
@@ -15301,7 +15661,7 @@ var wp;
       },
       deleteEntityRecord(kind, name, recordId, query, options) {
         return batch.add(
-          (add) => dispatch.deleteEntityRecord(kind, name, recordId, query, {
+          (add) => dispatch2.deleteEntityRecord(kind, name, recordId, query, {
             ...options,
             __unstableFetch: add
           })
@@ -15315,9 +15675,9 @@ var wp;
     ]);
     return results;
   };
-  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select, dispatch, resolveSelect }) => {
+  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select2, dispatch: dispatch2, resolveSelect }) => {
     logEntityDeprecation(kind, name, "saveEditedEntityRecord");
-    if (!select.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select2.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
     const configs = await resolveSelect.getEntitiesConfig(kind);
@@ -15328,24 +15688,24 @@ var wp;
       return;
     }
     const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
-    const edits = select.getEntityRecordNonTransientEdits(
+    const edits = select2.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
     );
     const record = { [entityIdKey]: recordId, ...edits };
-    return await dispatch.saveEntityRecord(kind, name, record, options);
+    return await dispatch2.saveEntityRecord(kind, name, record, options);
   };
-  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select, dispatch, resolveSelect }) => {
+  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select: select2, dispatch: dispatch2, resolveSelect }) => {
     logEntityDeprecation(
       kind,
       name,
       "__experimentalSaveSpecifiedEntityEdits"
     );
-    if (!select.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select2.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
-    const edits = select.getEntityRecordNonTransientEdits(
+    const edits = select2.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
@@ -15362,7 +15722,7 @@ var wp;
     if (recordId) {
       editsToSave[entityIdKey] = recordId;
     }
-    return await dispatch.saveEntityRecord(
+    return await dispatch2.saveEntityRecord(
       kind,
       name,
       editsToSave,
@@ -15409,14 +15769,14 @@ var wp;
       templateId
     };
   }
-  var receiveRevisions = (kind, name, recordKey, records, query, invalidateCache = false, meta) => async ({ dispatch, resolveSelect }) => {
+  var receiveRevisions = (kind, name, recordKey, records, query, invalidateCache = false, meta) => async ({ dispatch: dispatch2, resolveSelect }) => {
     logEntityDeprecation(kind, name, "receiveRevisions");
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
     const key = entityConfig && entityConfig?.revisionKey ? entityConfig.revisionKey : DEFAULT_ENTITY_KEY;
-    dispatch({
+    dispatch2({
       type: "RECEIVE_ITEM_REVISIONS",
       key,
       items: Array.isArray(records) ? records : [records],
@@ -15445,7 +15805,7 @@ var wp;
       registeredPostMeta: registeredPostMeta2
     };
   }
-  var editMediaEntity = (recordId, edits = {}, { __unstableFetch = import_api_fetch4.default, throwOnError = false } = {}) => async ({ dispatch, resolveSelect }) => {
+  var editMediaEntity = (recordId, edits = {}, { __unstableFetch = import_api_fetch4.default, throwOnError = false } = {}) => async ({ dispatch: dispatch2, resolveSelect }) => {
     if (!recordId) {
       return;
     }
@@ -15458,7 +15818,7 @@ var wp;
     if (!entityConfig) {
       return;
     }
-    const lock2 = await dispatch.__unstableAcquireStoreLock(
+    const lock2 = await dispatch2.__unstableAcquireStoreLock(
       STORE_NAME,
       ["entities", "records", kind, name, recordId],
       { exclusive: true }
@@ -15467,7 +15827,7 @@ var wp;
     let error;
     let hasError = false;
     try {
-      dispatch({
+      dispatch2({
         type: "SAVE_ENTITY_RECORD_START",
         kind,
         name,
@@ -15483,7 +15843,7 @@ var wp;
           }
         });
         if (newRecord) {
-          dispatch.receiveEntityRecords(
+          dispatch2.receiveEntityRecords(
             kind,
             name,
             [newRecord],
@@ -15498,7 +15858,7 @@ var wp;
         error = e;
         hasError = true;
       }
-      dispatch({
+      dispatch2({
         type: "SAVE_ENTITY_RECORD_FINISH",
         kind,
         name,
@@ -15510,7 +15870,7 @@ var wp;
       }
       return updatedRecord;
     } finally {
-      dispatch.__unstableReleaseStoreLock(lock2);
+      dispatch2.__unstableReleaseStoreLock(lock2);
     }
   };
   function receiveEditorSettings(settings) {
@@ -15765,19 +16125,19 @@ var wp;
   }
 
   // packages/core-data/build-module/resolvers.mjs
-  var getAuthors2 = (query) => async ({ dispatch }) => {
+  var getAuthors2 = (query) => async ({ dispatch: dispatch2 }) => {
     const path = (0, import_url6.addQueryArgs)(
       "/wp/v2/users/?who=authors&per_page=100",
       query
     );
     const users2 = await (0, import_api_fetch8.default)({ path });
-    dispatch.receiveUserQuery(path, users2);
+    dispatch2.receiveUserQuery(path, users2);
   };
-  var getCurrentUser2 = () => async ({ dispatch }) => {
+  var getCurrentUser2 = () => async ({ dispatch: dispatch2 }) => {
     const currentUser2 = await (0, import_api_fetch8.default)({ path: "/wp/v2/users/me" });
-    dispatch.receiveCurrentUser(currentUser2);
+    dispatch2.receiveCurrentUser(currentUser2);
   };
-  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select, dispatch, registry, resolveSelect }) => {
+  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select2, dispatch: dispatch2, registry, resolveSelect }) => {
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -15785,7 +16145,7 @@ var wp;
     if (!entityConfig) {
       return;
     }
-    const lock2 = await dispatch.__unstableAcquireStoreLock(
+    const lock2 = await dispatch2.__unstableAcquireStoreLock(
       STORE_NAME,
       ["entities", "records", kind, name, key],
       { exclusive: false }
@@ -15803,7 +16163,7 @@ var wp;
         };
       }
       if (query !== void 0 && query._fields) {
-        const hasRecord = select.hasEntityRecord(
+        const hasRecord = select2.hasEntityRecord(
           kind,
           name,
           key,
@@ -15856,11 +16216,11 @@ var wp;
             recordWithTransients,
             {
               // Handle edits sourced from the sync manager.
-              editRecord: (edits) => {
+              editRecord: (edits, options = {}) => {
                 if (!Object.keys(edits).length) {
                   return;
                 }
-                dispatch({
+                dispatch2({
                   type: "EDIT_ENTITY_RECORD",
                   kind,
                   name,
@@ -15868,7 +16228,8 @@ var wp;
                   edits,
                   meta: {
                     undo: void 0
-                  }
+                  },
+                  options
                 });
               },
               // Get the current entity record (with edits)
@@ -15879,7 +16240,7 @@ var wp;
               ),
               // Refetch the current entity record from the database.
               refetchRecord: async () => {
-                dispatch.receiveEntityRecords(
+                dispatch2.receiveEntityRecords(
                   kind,
                   name,
                   await (0, import_api_fetch8.default)({ path, parse: true }),
@@ -15888,7 +16249,7 @@ var wp;
               },
               // Save the current entity record's unsaved edits.
               saveRecord: () => {
-                dispatch.saveEditedEntityRecord(
+                dispatch2.saveEditedEntityRecord(
                   kind,
                   name,
                   key
@@ -15899,12 +16260,12 @@ var wp;
         }
       }
       registry.batch(() => {
-        dispatch.receiveEntityRecords(kind, name, record, query);
-        dispatch.receiveUserPermissions(receiveUserPermissionArgs);
-        dispatch.finishResolutions("canUser", canUserResolutionsArgs);
+        dispatch2.receiveEntityRecords(kind, name, record, query);
+        dispatch2.receiveUserPermissions(receiveUserPermissionArgs);
+        dispatch2.finishResolutions("canUser", canUserResolutionsArgs);
       });
     } finally {
-      dispatch.__unstableReleaseStoreLock(lock2);
+      dispatch2.__unstableReleaseStoreLock(lock2);
     }
   };
   getEntityRecord2.shouldInvalidate = (action, kind, name) => {
@@ -15915,7 +16276,7 @@ var wp;
   };
   var getRawEntityRecord2 = forward_resolver_default("getEntityRecord");
   var getEditedEntityRecord2 = forward_resolver_default("getEntityRecord");
-  var getEntityRecords2 = (kind, name, query = {}) => async ({ dispatch, registry, resolveSelect }) => {
+  var getEntityRecords2 = (kind, name, query = {}) => async ({ dispatch: dispatch2, registry, resolveSelect }) => {
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -15923,7 +16284,7 @@ var wp;
     if (!entityConfig) {
       return;
     }
-    const lock2 = await dispatch.__unstableAcquireStoreLock(
+    const lock2 = await dispatch2.__unstableAcquireStoreLock(
       STORE_NAME,
       ["entities", "records", kind, name],
       { exclusive: false }
@@ -15998,7 +16359,7 @@ var wp;
           }
           records.push(...pageRecords);
           registry.batch(() => {
-            dispatch.receiveEntityRecords(
+            dispatch2.receiveEntityRecords(
               kind,
               name,
               records,
@@ -16007,7 +16368,7 @@ var wp;
               void 0,
               meta
             );
-            dispatch.finishResolutions(
+            dispatch2.finishResolutions(
               "getEntityRecord",
               getResolutionsArgs(pageRecords, rawQuery)
             );
@@ -16032,7 +16393,7 @@ var wp;
         });
       }
       registry.batch(() => {
-        dispatch.receiveEntityRecords(
+        dispatch2.receiveEntityRecords(
           kind,
           name,
           records,
@@ -16065,22 +16426,22 @@ var wp;
           }
         }
         if (targetHints.length > 0) {
-          dispatch.receiveUserPermissions(
+          dispatch2.receiveUserPermissions(
             receiveUserPermissionArgs
           );
-          dispatch.finishResolutions(
+          dispatch2.finishResolutions(
             "canUser",
             canUserResolutionsArgs
           );
         }
-        dispatch.finishResolutions(
+        dispatch2.finishResolutions(
           "getEntityRecord",
           getResolutionsArgs(records, rawQuery)
         );
-        dispatch.__unstableReleaseStoreLock(lock2);
+        dispatch2.__unstableReleaseStoreLock(lock2);
       });
     } catch (e) {
-      dispatch.__unstableReleaseStoreLock(lock2);
+      dispatch2.__unstableReleaseStoreLock(lock2);
     }
   };
   getEntityRecords2.shouldInvalidate = (action, kind, name) => {
@@ -16088,26 +16449,26 @@ var wp;
   };
   var getEntityRecordsTotalItems2 = forward_resolver_default("getEntityRecords");
   var getEntityRecordsTotalPages2 = forward_resolver_default("getEntityRecords");
-  var getCurrentTheme2 = () => async ({ dispatch, resolveSelect }) => {
+  var getCurrentTheme2 = () => async ({ dispatch: dispatch2, resolveSelect }) => {
     const activeThemes = await resolveSelect.getEntityRecords(
       "root",
       "theme",
       { status: "active" }
     );
-    dispatch.receiveCurrentTheme(activeThemes[0]);
+    dispatch2.receiveCurrentTheme(activeThemes[0]);
   };
   var getThemeSupports2 = forward_resolver_default("getCurrentTheme");
-  var getEmbedPreview2 = (url) => async ({ dispatch }) => {
+  var getEmbedPreview2 = (url) => async ({ dispatch: dispatch2 }) => {
     try {
       const embedProxyResponse = await (0, import_api_fetch8.default)({
         path: (0, import_url6.addQueryArgs)("/oembed/1.0/proxy", { url })
       });
-      dispatch.receiveEmbedPreview(url, embedProxyResponse);
+      dispatch2.receiveEmbedPreview(url, embedProxyResponse);
     } catch (error) {
-      dispatch.receiveEmbedPreview(url, false);
+      dispatch2.receiveEmbedPreview(url, false);
     }
   };
-  var canUser2 = (requestedAction, resource, id2) => async ({ dispatch, registry, resolveSelect }) => {
+  var canUser2 = (requestedAction, resource, id2) => async ({ dispatch: dispatch2, registry, resolveSelect }) => {
     if (!ALLOWED_RESOURCE_ACTIONS.includes(requestedAction)) {
       throw new Error(`'${requestedAction}' is not a valid action.`);
     }
@@ -16159,9 +16520,9 @@ var wp;
     registry.batch(() => {
       for (const action of ALLOWED_RESOURCE_ACTIONS) {
         const key = getUserPermissionCacheKey(action, resource, id2);
-        dispatch.receiveUserPermission(key, permissions[action]);
+        dispatch2.receiveUserPermission(key, permissions[action]);
         if (action !== requestedAction) {
-          dispatch.finishResolution("canUser", [
+          dispatch2.finishResolution("canUser", [
             action,
             resource,
             id2
@@ -16170,10 +16531,10 @@ var wp;
       }
     });
   };
-  var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ dispatch }) => {
-    await dispatch(canUser2("update", { kind, name, id: recordId }));
+  var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ dispatch: dispatch2 }) => {
+    await dispatch2(canUser2("update", { kind, name, id: recordId }));
   };
-  var getAutosaves2 = (postType, postId) => async ({ dispatch, resolveSelect }) => {
+  var getAutosaves2 = (postType, postId) => async ({ dispatch: dispatch2, resolveSelect }) => {
     const {
       rest_base: restBase,
       rest_namespace: restNamespace = "wp/v2",
@@ -16186,13 +16547,13 @@ var wp;
       path: `/${restNamespace}/${restBase}/${postId}/autosaves?context=edit`
     });
     if (autosaves2 && autosaves2.length) {
-      dispatch.receiveAutosaves(postId, autosaves2);
+      dispatch2.receiveAutosaves(postId, autosaves2);
     }
   };
   var getAutosave2 = (postType, postId) => async ({ resolveSelect }) => {
     await resolveSelect.getAutosaves(postType, postId);
   };
-  var __experimentalGetCurrentGlobalStylesId2 = () => async ({ dispatch, resolveSelect }) => {
+  var __experimentalGetCurrentGlobalStylesId2 = () => async ({ dispatch: dispatch2, resolveSelect }) => {
     const activeThemes = await resolveSelect.getEntityRecords(
       "root",
       "theme",
@@ -16205,30 +16566,30 @@ var wp;
     const matches = globalStylesURL.match(/\/(\d+)(?:\?|$)/);
     const id2 = matches ? Number(matches[1]) : null;
     if (id2) {
-      dispatch.__experimentalReceiveCurrentGlobalStylesId(id2);
+      dispatch2.__experimentalReceiveCurrentGlobalStylesId(id2);
     }
   };
-  var __experimentalGetCurrentThemeBaseGlobalStyles2 = () => async ({ resolveSelect, dispatch }) => {
+  var __experimentalGetCurrentThemeBaseGlobalStyles2 = () => async ({ resolveSelect, dispatch: dispatch2 }) => {
     const currentTheme2 = await resolveSelect.getCurrentTheme();
     const themeGlobalStyles = await (0, import_api_fetch8.default)({
       path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}?context=view`
     });
-    dispatch.__experimentalReceiveThemeBaseGlobalStyles(
+    dispatch2.__experimentalReceiveThemeBaseGlobalStyles(
       currentTheme2.stylesheet,
       themeGlobalStyles
     );
   };
-  var __experimentalGetCurrentThemeGlobalStylesVariations2 = () => async ({ resolveSelect, dispatch }) => {
+  var __experimentalGetCurrentThemeGlobalStylesVariations2 = () => async ({ resolveSelect, dispatch: dispatch2 }) => {
     const currentTheme2 = await resolveSelect.getCurrentTheme();
     const variations = await (0, import_api_fetch8.default)({
       path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}/variations?context=view`
     });
-    dispatch.__experimentalReceiveThemeGlobalStyleVariations(
+    dispatch2.__experimentalReceiveThemeGlobalStyleVariations(
       currentTheme2.stylesheet,
       variations
     );
   };
-  var getCurrentThemeGlobalStylesRevisions2 = () => async ({ resolveSelect, dispatch }) => {
+  var getCurrentThemeGlobalStylesRevisions2 = () => async ({ resolveSelect, dispatch: dispatch2 }) => {
     const globalStylesId = await resolveSelect.__experimentalGetCurrentGlobalStylesId();
     const record = globalStylesId ? await resolveSelect.getEntityRecord(
       "root",
@@ -16248,7 +16609,7 @@ var wp;
           ])
         )
       );
-      dispatch.receiveThemeGlobalStyleRevisions(
+      dispatch2.receiveThemeGlobalStyleRevisions(
         globalStylesId,
         revisions
       );
@@ -16257,17 +16618,17 @@ var wp;
   getCurrentThemeGlobalStylesRevisions2.shouldInvalidate = (action) => {
     return action.type === "SAVE_ENTITY_RECORD_FINISH" && action.kind === "root" && !action.error && action.name === "globalStyles";
   };
-  var getBlockPatterns2 = () => async ({ dispatch }) => {
+  var getBlockPatterns2 = () => async ({ dispatch: dispatch2 }) => {
     const patterns = await fetchBlockPatterns();
-    dispatch({ type: "RECEIVE_BLOCK_PATTERNS", patterns });
+    dispatch2({ type: "RECEIVE_BLOCK_PATTERNS", patterns });
   };
-  var getBlockPatternCategories2 = () => async ({ dispatch }) => {
+  var getBlockPatternCategories2 = () => async ({ dispatch: dispatch2 }) => {
     const categories = await (0, import_api_fetch8.default)({
       path: "/wp/v2/block-patterns/categories"
     });
-    dispatch({ type: "RECEIVE_BLOCK_PATTERN_CATEGORIES", categories });
+    dispatch2({ type: "RECEIVE_BLOCK_PATTERN_CATEGORIES", categories });
   };
-  var getUserPatternCategories2 = () => async ({ dispatch, resolveSelect }) => {
+  var getUserPatternCategories2 = () => async ({ dispatch: dispatch2, resolveSelect }) => {
     const patternCategories = await resolveSelect.getEntityRecords(
       "taxonomy",
       "wp_pattern_category",
@@ -16282,12 +16643,12 @@ var wp;
       label: (0, import_html_entities2.decodeEntities)(userCategory.name),
       name: userCategory.slug
     })) || [];
-    dispatch({
+    dispatch2({
       type: "RECEIVE_USER_PATTERN_CATEGORIES",
       patternCategories: mappedPatternCategories
     });
   };
-  var getNavigationFallbackId2 = () => async ({ dispatch, select, registry }) => {
+  var getNavigationFallbackId2 = () => async ({ dispatch: dispatch2, select: select2, registry }) => {
     const fallback = await (0, import_api_fetch8.default)({
       path: (0, import_url6.addQueryArgs)("/wp-block-editor/v1/navigation-fallback", {
         _embed: true
@@ -16295,31 +16656,31 @@ var wp;
     });
     const record = fallback?._embedded?.self;
     registry.batch(() => {
-      dispatch.receiveNavigationFallbackId(fallback?.id);
+      dispatch2.receiveNavigationFallbackId(fallback?.id);
       if (!record) {
         return;
       }
-      const existingFallbackEntityRecord = select.getEntityRecord(
+      const existingFallbackEntityRecord = select2.getEntityRecord(
         "postType",
         "wp_navigation",
         fallback.id
       );
       const invalidateNavigationQueries = !existingFallbackEntityRecord;
-      dispatch.receiveEntityRecords(
+      dispatch2.receiveEntityRecords(
         "postType",
         "wp_navigation",
         record,
         void 0,
         invalidateNavigationQueries
       );
-      dispatch.finishResolution("getEntityRecord", [
+      dispatch2.finishResolution("getEntityRecord", [
         "postType",
         "wp_navigation",
         fallback.id
       ]);
     });
   };
-  var getDefaultTemplateId2 = (query) => async ({ dispatch, registry, resolveSelect }) => {
+  var getDefaultTemplateId2 = (query) => async ({ dispatch: dispatch2, registry, resolveSelect }) => {
     const template = await (0, import_api_fetch8.default)({
       path: (0, import_url6.addQueryArgs)("/wp/v2/templates/lookup", query)
     });
@@ -16328,11 +16689,11 @@ var wp;
     if (id2) {
       template.id = id2;
       registry.batch(() => {
-        dispatch.receiveDefaultTemplateId(query, id2);
-        dispatch.receiveEntityRecords("postType", template.type, [
+        dispatch2.receiveDefaultTemplateId(query, id2);
+        dispatch2.receiveEntityRecords("postType", template.type, [
           template
         ]);
-        dispatch.finishResolution("getEntityRecord", [
+        dispatch2.finishResolution("getEntityRecord", [
           "postType",
           template.type,
           id2
@@ -16343,7 +16704,7 @@ var wp;
   getDefaultTemplateId2.shouldInvalidate = (action) => {
     return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site";
   };
-  var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch, registry, resolveSelect }) => {
+  var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch: dispatch2, registry, resolveSelect }) => {
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -16394,7 +16755,7 @@ var wp;
         });
       }
       registry.batch(() => {
-        dispatch.receiveRevisions(
+        dispatch2.receiveRevisions(
           kind,
           name,
           recordKey,
@@ -16411,7 +16772,7 @@ var wp;
             recordKey,
             record[key]
           ]);
-          dispatch.finishResolutions(
+          dispatch2.finishResolutions(
             "getRevision",
             resolutionsArgs
           );
@@ -16420,7 +16781,7 @@ var wp;
     }
   };
   getRevisions2.shouldInvalidate = (action, kind, name, recordKey) => action.type === "SAVE_ENTITY_RECORD_FINISH" && name === action.name && kind === action.kind && !action.error && recordKey === action.recordId;
-  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch, resolveSelect }) => {
+  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch: dispatch2, resolveSelect }) => {
     const configs = await resolveSelect.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
@@ -16450,10 +16811,10 @@ var wp;
       return;
     }
     if (record) {
-      dispatch.receiveRevisions(kind, name, recordKey, record, query);
+      dispatch2.receiveRevisions(kind, name, recordKey, record, query);
     }
   };
-  var getRegisteredPostMeta2 = (postType) => async ({ dispatch, resolveSelect }) => {
+  var getRegisteredPostMeta2 = (postType) => async ({ dispatch: dispatch2, resolveSelect }) => {
     let options;
     try {
       const {
@@ -16468,13 +16829,13 @@ var wp;
       return;
     }
     if (options) {
-      dispatch.receiveRegisteredPostMeta(
+      dispatch2.receiveRegisteredPostMeta(
         postType,
         options?.schema?.properties?.meta?.properties
       );
     }
   };
-  var getEntitiesConfig2 = (kind) => async ({ dispatch }) => {
+  var getEntitiesConfig2 = (kind) => async ({ dispatch: dispatch2 }) => {
     const loader = additionalEntityConfigLoaders.find(
       (l) => l.kind === kind
     );
@@ -16486,21 +16847,21 @@ var wp;
       if (!configs.length) {
         return;
       }
-      dispatch.addEntities(configs);
+      dispatch2.addEntities(configs);
     } catch {
     }
   };
-  var getEditorSettings2 = () => async ({ dispatch }) => {
+  var getEditorSettings2 = () => async ({ dispatch: dispatch2 }) => {
     const settings = await (0, import_api_fetch8.default)({
       path: "/wp-block-editor/v1/settings"
     });
-    dispatch.receiveEditorSettings(settings);
+    dispatch2.receiveEditorSettings(settings);
   };
-  var getEditorAssets2 = () => async ({ dispatch }) => {
+  var getEditorAssets2 = () => async ({ dispatch: dispatch2 }) => {
     const assets = await (0, import_api_fetch8.default)({
       path: "/wp-block-editor/v1/assets"
     });
-    dispatch.receiveEditorAssets(assets);
+    dispatch2.receiveEditorAssets(assets);
   };
 
   // packages/core-data/build-module/locks/utils.mjs
@@ -16708,12 +17069,12 @@ var wp;
   }
 
   // packages/core-data/build-module/hooks/use-entity-record.mjs
-  var import_data7 = __toESM(require_data(), 1);
+  var import_data8 = __toESM(require_data(), 1);
   var import_deprecated4 = __toESM(require_deprecated(), 1);
   var import_element3 = __toESM(require_element(), 1);
 
   // packages/core-data/build-module/hooks/use-query-select.mjs
-  var import_data6 = __toESM(require_data(), 1);
+  var import_data7 = __toESM(require_data(), 1);
 
   // node_modules/memize/dist/index.js
   function memize(fn, options) {
@@ -16804,8 +17165,8 @@ var wp;
     "getCachedResolvers"
   ];
   function useQuerySelect(mapQuerySelect, deps) {
-    return (0, import_data6.useSelect)((select, registry) => {
-      const resolve = (store2) => enrichSelectors(select(store2));
+    return (0, import_data7.useSelect)((select2, registry) => {
+      const resolve = (store2) => enrichSelectors(select2(store2));
       return mapQuerySelect(resolve, registry);
     }, deps);
   }
@@ -16853,7 +17214,7 @@ var wp;
   // packages/core-data/build-module/hooks/use-entity-record.mjs
   var EMPTY_OBJECT2 = {};
   function useEntityRecord(kind, name, recordId, options = { enabled: true }) {
-    const { editEntityRecord: editEntityRecord2, saveEditedEntityRecord: saveEditedEntityRecord2 } = (0, import_data7.useDispatch)(store);
+    const { editEntityRecord: editEntityRecord2, saveEditedEntityRecord: saveEditedEntityRecord2 } = (0, import_data8.useDispatch)(store);
     const mutations = (0, import_element3.useMemo)(
       () => ({
         edit: (record2, editOptions = {}) => editEntityRecord2(kind, name, recordId, record2, editOptions),
@@ -16864,8 +17225,8 @@ var wp;
       }),
       [editEntityRecord2, kind, name, recordId, saveEditedEntityRecord2]
     );
-    const { editedRecord, hasEdits, edits } = (0, import_data7.useSelect)(
-      (select) => {
+    const { editedRecord, hasEdits, edits } = (0, import_data8.useSelect)(
+      (select2) => {
         if (!options.enabled) {
           return {
             editedRecord: EMPTY_OBJECT2,
@@ -16874,17 +17235,17 @@ var wp;
           };
         }
         return {
-          editedRecord: select(store).getEditedEntityRecord(
+          editedRecord: select2(store).getEditedEntityRecord(
             kind,
             name,
             recordId
           ),
-          hasEdits: select(store).hasEditsForEntityRecord(
+          hasEdits: select2(store).hasEditsForEntityRecord(
             kind,
             name,
             recordId
           ),
-          edits: select(store).getEntityRecordNonTransientEdits(
+          edits: select2(store).getEntityRecordNonTransientEdits(
             kind,
             name,
             recordId
@@ -16924,7 +17285,7 @@ var wp;
   // packages/core-data/build-module/hooks/use-entity-records.mjs
   var import_url7 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
-  var import_data8 = __toESM(require_data(), 1);
+  var import_data9 = __toESM(require_data(), 1);
   var import_element4 = __toESM(require_element(), 1);
   var EMPTY_ARRAY = [];
   function useEntityRecords(kind, name, queryArgs = {}, options = { enabled: true }) {
@@ -16941,8 +17302,8 @@ var wp;
       },
       [kind, name, queryAsString, options.enabled]
     );
-    const { totalItems, totalPages } = (0, import_data8.useSelect)(
-      (select) => {
+    const { totalItems, totalPages } = (0, import_data9.useSelect)(
+      (select2) => {
         if (!options.enabled) {
           return {
             totalItems: null,
@@ -16950,12 +17311,12 @@ var wp;
           };
         }
         return {
-          totalItems: select(store).getEntityRecordsTotalItems(
+          totalItems: select2(store).getEntityRecordsTotalItems(
             kind,
             name,
             queryArgs
           ),
-          totalPages: select(store).getEntityRecordsTotalPages(
+          totalPages: select2(store).getEntityRecordsTotalPages(
             kind,
             name,
             queryArgs
@@ -16979,8 +17340,8 @@ var wp;
     return useEntityRecords(kind, name, queryArgs, options);
   }
   function useEntityRecordsWithPermissions(kind, name, queryArgs = {}, options = { enabled: true }) {
-    const entityConfig = (0, import_data8.useSelect)(
-      (select) => select(store).getEntityConfig(kind, name),
+    const entityConfig = (0, import_data9.useSelect)(
+      (select2) => select2(store).getEntityConfig(kind, name),
       [kind, name]
     );
     const { records: data, ...ret } = useEntityRecords(
@@ -17009,10 +17370,10 @@ var wp;
       ) ?? [],
       [data, entityConfig?.key]
     );
-    const permissions = (0, import_data8.useSelect)(
-      (select) => {
+    const permissions = (0, import_data9.useSelect)(
+      (select2) => {
         const { getEntityRecordsPermissions: getEntityRecordsPermissions2 } = unlock(
-          select(store)
+          select2(store)
         );
         return getEntityRecordsPermissions2(kind, name, ids);
       },
@@ -17101,7 +17462,7 @@ var wp;
 
   // packages/core-data/build-module/hooks/use-entity-block-editor.mjs
   var import_element6 = __toESM(require_element(), 1);
-  var import_data9 = __toESM(require_data(), 1);
+  var import_data10 = __toESM(require_data(), 1);
   var import_blocks4 = __toESM(require_blocks(), 1);
 
   // packages/core-data/build-module/hooks/use-entity-id.mjs
@@ -17115,12 +17476,12 @@ var wp;
   var import_rich_text2 = __toESM(require_rich_text(), 1);
 
   // packages/core-data/build-module/footnotes/get-rich-text-values-cached.mjs
-  var import_block_editor = __toESM(require_block_editor(), 1);
+  var import_block_editor2 = __toESM(require_block_editor(), 1);
   var unlockedApis;
   var cache = /* @__PURE__ */ new WeakMap();
   function getRichTextValuesCached(block) {
     if (!unlockedApis) {
-      unlockedApis = unlock(import_block_editor.privateApis);
+      unlockedApis = unlock(import_block_editor2.privateApis);
     }
     if (!cache.has(block)) {
       const values = unlockedApis.getRichTextValues([block]);
@@ -17252,13 +17613,13 @@ var wp;
   function useEntityBlockEditor(kind, name, { id: _id } = {}) {
     const providerId = useEntityId(kind, name);
     const id2 = _id ?? providerId;
-    const { getEntityRecord: getEntityRecord3, getEntityRecordEdits: getEntityRecordEdits2 } = (0, import_data9.useSelect)(STORE_NAME);
-    const { content, editedBlocks, meta } = (0, import_data9.useSelect)(
-      (select) => {
+    const { getEntityRecord: getEntityRecord3, getEntityRecordEdits: getEntityRecordEdits2 } = (0, import_data10.useSelect)(STORE_NAME);
+    const { content, editedBlocks, meta } = (0, import_data10.useSelect)(
+      (select2) => {
         if (!id2) {
           return {};
         }
-        const { getEditedEntityRecord: getEditedEntityRecord3 } = select(STORE_NAME);
+        const { getEditedEntityRecord: getEditedEntityRecord3 } = select2(STORE_NAME);
         const editedRecord = getEditedEntityRecord3(kind, name, id2);
         return {
           editedBlocks: editedRecord.blocks,
@@ -17268,7 +17629,7 @@ var wp;
       },
       [kind, name, id2]
     );
-    const { __unstableCreateUndoLevel: __unstableCreateUndoLevel2, editEntityRecord: editEntityRecord2 } = (0, import_data9.useDispatch)(STORE_NAME);
+    const { __unstableCreateUndoLevel: __unstableCreateUndoLevel2, editEntityRecord: editEntityRecord2 } = (0, import_data10.useDispatch)(STORE_NAME);
     const blocks = (0, import_element6.useMemo)(() => {
       if (!id2) {
         return void 0;
@@ -17341,13 +17702,13 @@ var wp;
 
   // packages/core-data/build-module/hooks/use-entity-prop.mjs
   var import_element7 = __toESM(require_element(), 1);
-  var import_data10 = __toESM(require_data(), 1);
+  var import_data11 = __toESM(require_data(), 1);
   function useEntityProp(kind, name, prop, _id) {
     const providerId = useEntityId(kind, name);
     const id2 = _id ?? providerId;
-    const { value, fullValue } = (0, import_data10.useSelect)(
-      (select) => {
-        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select(STORE_NAME);
+    const { value, fullValue } = (0, import_data11.useSelect)(
+      (select2) => {
+        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select2(STORE_NAME);
         const record = getEntityRecord3(kind, name, id2);
         const editedRecord = getEditedEntityRecord3(kind, name, id2);
         return record && editedRecord ? {
@@ -17357,7 +17718,7 @@ var wp;
       },
       [kind, name, id2, prop]
     );
-    const { editEntityRecord: editEntityRecord2 } = (0, import_data10.useDispatch)(STORE_NAME);
+    const { editEntityRecord: editEntityRecord2 } = (0, import_data11.useDispatch)(STORE_NAME);
     const setValue = (0, import_element7.useCallback)(
       (newValue) => {
         editEntityRecord2(kind, name, id2, {
@@ -17461,10 +17822,10 @@ var wp;
     },
     resolvers: { ...resolvers_exports, ...entityResolvers }
   });
-  var store = (0, import_data11.createReduxStore)(STORE_NAME, storeConfig());
+  var store = (0, import_data12.createReduxStore)(STORE_NAME, storeConfig());
   unlock(store).registerPrivateSelectors(private_selectors_exports);
   unlock(store).registerPrivateActions(private_actions_exports);
-  (0, import_data11.register)(store);
+  (0, import_data12.register)(store);
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
