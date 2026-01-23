@@ -12202,6 +12202,7 @@ var wp;
     "maxUploadFileSize",
     "allowedMimeTypes",
     "bodyPlaceholder",
+    "canEditCSS",
     "canLockBlocks",
     "canUpdateBlockBindings",
     "capabilities",
@@ -16755,23 +16756,21 @@ var wp;
           inheritedValue: settings
         }
       ),
-      canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(import_components49.PanelBody, { title: (0, import_i18n80.__)("Advanced"), initialOpen: false, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("p", { children: (0, import_i18n80.sprintf)(
-          // translators: %s: is the name of a block e.g., 'Image' or 'Table'.
-          (0, import_i18n80.__)(
-            "Add your own CSS to customize the appearance of the %s block. You do not need to include a CSS selector, just add the property and value."
-          ),
-          blockType?.title
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
-          StylesAdvancedPanel,
-          {
-            value: style,
-            onChange: setStyle2,
-            inheritedValue: inheritedStyle
-          }
-        )
-      ] })
+      canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_components49.PanelBody, { title: (0, import_i18n80.__)("Advanced"), initialOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+        StylesAdvancedPanel,
+        {
+          value: style,
+          onChange: setStyle2,
+          inheritedValue: inheritedStyle,
+          help: (0, import_i18n80.sprintf)(
+            // translators: %s: is the name of a block e.g., 'Image' or 'Table'.
+            (0, import_i18n80.__)(
+              "Add your own CSS to customize the appearance of the %s block. You do not need to include a CSS selector, just add the property and value."
+            ),
+            blockType?.title
+          )
+        }
+      ) })
     ] });
   }
   var screen_block_default = ScreenBlock;

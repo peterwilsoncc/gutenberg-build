@@ -11335,7 +11335,8 @@ var wp;
       lock: false,
       reusable: false,
       renaming: false,
-      visibility: false
+      visibility: false,
+      customCSS: false
     },
     editorStyle: "wp-block-freeform-editor"
   };
@@ -28817,7 +28818,8 @@ ${js}
       html: false,
       interactivity: {
         clientNavigation: true
-      }
+      },
+      customCSS: false
     },
     editorStyle: "wp-block-html-editor"
   };
@@ -37071,7 +37073,8 @@ ${js}
       visibility: false,
       interactivity: {
         clientNavigation: true
-      }
+      },
+      customCSS: false
     }
   };
 
@@ -37205,7 +37208,8 @@ ${js}
       visibility: false,
       interactivity: {
         clientNavigation: true
-      }
+      },
+      customCSS: false
     },
     editorStyle: "wp-block-more-editor"
   };
@@ -43884,7 +43888,8 @@ ${js}
       visibility: false,
       interactivity: {
         clientNavigation: true
-      }
+      },
+      customCSS: false
     },
     editorStyle: "wp-block-nextpage-editor"
   };
@@ -56686,7 +56691,8 @@ ${js}
       renaming: false,
       interactivity: {
         clientNavigation: true
-      }
+      },
+      customCSS: false
     }
   };
 
@@ -58541,7 +58547,8 @@ ${js}
     supports: {
       className: false,
       customClassName: false,
-      html: false
+      html: false,
+      customCSS: false
     },
     editorStyle: "wp-block-shortcode-editor"
   };

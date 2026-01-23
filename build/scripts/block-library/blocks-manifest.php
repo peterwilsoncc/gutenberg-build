@@ -599,7 +599,8 @@ return array(
 			'renaming' => false,
 			'interactivity' => array(
 				'clientNavigation' => true
-			)
+			),
+			'customCSS' => false
 		)
 	),
 	'breadcrumbs' => array(
@@ -2873,7 +2874,8 @@ return array(
 			'lock' => false,
 			'reusable' => false,
 			'renaming' => false,
-			'visibility' => false
+			'visibility' => false,
+			'customCSS' => false
 		),
 		'editorStyle' => 'wp-block-freeform-editor'
 	),
@@ -3335,7 +3337,8 @@ return array(
 			'html' => false,
 			'interactivity' => array(
 				'clientNavigation' => true
-			)
+			),
+			'customCSS' => false
 		),
 		'editorStyle' => 'wp-block-html-editor'
 	),
@@ -4198,7 +4201,8 @@ return array(
 			'visibility' => false,
 			'interactivity' => array(
 				'clientNavigation' => true
-			)
+			),
+			'customCSS' => false
 		)
 	),
 	'more' => array(
@@ -4231,7 +4235,8 @@ return array(
 			'visibility' => false,
 			'interactivity' => array(
 				'clientNavigation' => true
-			)
+			),
+			'customCSS' => false
 		),
 		'editorStyle' => 'wp-block-more-editor'
 	),
@@ -4668,7 +4673,8 @@ return array(
 			'visibility' => false,
 			'interactivity' => array(
 				'clientNavigation' => true
-			)
+			),
+			'customCSS' => false
 		),
 		'editorStyle' => 'wp-block-nextpage-editor'
 	),
@@ -7291,7 +7297,8 @@ return array(
 		'supports' => array(
 			'className' => false,
 			'customClassName' => false,
-			'html' => false
+			'html' => false,
+			'customCSS' => false
 		),
 		'editorStyle' => 'wp-block-shortcode-editor'
 	),
