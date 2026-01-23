@@ -70455,14 +70455,19 @@ var wp;
     const [fontSize, setFontSize] = (0, import_element258.useState)(null);
     const hasFitTextSupport2 = (0, import_blocks109.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
-    const { blockAttributes, parentId } = (0, import_data182.useSelect)(
+    const { blockAttributes, parentId, blockMode } = (0, import_data182.useSelect)(
       (select3) => {
         if (!clientId || !hasFitTextSupport2 || !fitText) {
           return EMPTY_OBJECT4;
         }
+        const _blockMode = select3(store).getBlockMode(clientId);
+        if (_blockMode === "html") {
+          return { blockMode: _blockMode };
+        }
         return {
           blockAttributes: select3(store).getBlockAttributes(clientId),
-          parentId: select3(store).getBlockRootClientId(clientId)
+          parentId: select3(store).getBlockRootClientId(clientId),
+          blockMode: _blockMode
         };
       },
       [clientId, hasFitTextSupport2, fitText]
@@ -70490,7 +70495,7 @@ var wp;
       setFontSize(optimalSize);
     }, [blockElement, clientId, hasFitTextSupport2, fitText]);
     (0, import_element258.useEffect)(() => {
-      if (!fitText || !blockElement || !clientId || !hasFitTextSupport2) {
+      if (!fitText || !blockElement || !clientId || !hasFitTextSupport2 || blockMode === "html") {
         return;
       }
       const currentElement = blockElement;
@@ -70538,10 +70543,11 @@ var wp;
       parentId,
       applyFitText,
       blockElement,
-      hasFitTextSupport2
+      hasFitTextSupport2,
+      blockMode
     ]);
     (0, import_element258.useEffect)(() => {
-      if (fitText && blockElement && hasFitTextSupport2) {
+      if (fitText && blockElement && hasFitTextSupport2 && blockMode !== "html") {
         const frameId = window.requestAnimationFrame(() => {
           if (blockElement) {
             applyFitText();
@@ -70554,7 +70560,8 @@ var wp;
       fitText,
       applyFitText,
       blockElement,
-      hasFitTextSupport2
+      hasFitTextSupport2,
+      blockMode
     ]);
     return { fontSize };
   }
