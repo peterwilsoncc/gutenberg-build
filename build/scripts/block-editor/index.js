@@ -50721,6 +50721,7 @@ var wp;
                 children: (0, import_i18n162.__)("Use featured image")
               }
             ),
+            typeof children === "function" ? children({ onClose }) : children,
             mediaURL && onReset && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
               import_components170.MenuItem,
               {
@@ -50730,8 +50731,7 @@ var wp;
                 },
                 children: (0, import_i18n162.__)("Reset")
               }
-            ),
-            typeof children === "function" ? children({ onClose }) : children
+            )
           ] }),
           onSelectURL && /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("form", { className: "block-editor-media-flow__url-input", children: [
             /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("span", { className: "block-editor-media-replace-flow__image-url-label", children: (0, import_i18n162.__)("Current media URL:") }),
