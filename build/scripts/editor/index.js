@@ -12458,7 +12458,7 @@ var wp;
           "wp_block",
           "wp_navigation"
         ].includes(postType2),
-        ...window.__experimentalHideBlocksBasedOnScreenSize && deviceType2 ? { [deviceTypeKey]: deviceType2 } : {}
+        ...deviceType2 ? { [deviceTypeKey]: deviceType2 } : {}
       };
       return blockEditorSettings;
     }, [
