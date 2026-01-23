@@ -14,6 +14,9 @@
 			"selector": "pre",
 			"__unstablePreserveWhiteSpace": true,
 			"role": "content"
+		},
+		"textAlign": {
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -43,7 +46,6 @@
 			"fontSize": true,
 			"__experimentalFontFamily": true,
 			"lineHeight": true,
-			"textAlign": true,
 			"__experimentalFontStyle": true,
 			"__experimentalFontWeight": true,
 			"__experimentalLetterSpacing": true,

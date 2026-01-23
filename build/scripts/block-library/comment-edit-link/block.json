@@ -12,6 +12,9 @@
 		"linkTarget": {
 			"type": "string",
 			"default": "_self"
+		},
+		"textAlign": {
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -37,7 +40,6 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,

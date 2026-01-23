@@ -18,8 +18,7 @@
 		"lock": false,
 		"reusable": false,
 		"renaming": false,
-		"visibility": false,
-		"customCSS": false
+		"visibility": false
 	},
 	"editorStyle": "wp-block-freeform-editor"
 }

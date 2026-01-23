@@ -373,8 +373,7 @@ function gutenberg_register_vendor_scripts( $scripts ) {
 		$scripts,
 		'react',
 		gutenberg_url( 'build/scripts/vendors/react' . $extension ),
-		// WordPress Core in `wp_register_development_scripts` sets `wp-react-refresh-entry` as a dependency to `react` when `SCRIPT_DEBUG` is true.
-		// We need to preserve that here.
+		// See https://github.com/pmmmwh/react-refresh-webpack-plugin/blob/main/docs/TROUBLESHOOTING.md#externalising-react.
 		SCRIPT_DEBUG ? array( 'wp-react-refresh-entry', 'wp-polyfill' ) : array( 'wp-polyfill' ),
 		'18'
 	);

@@ -1505,7 +1505,6 @@ var getNodesWithStyles = (tree, blockSelectors) => {
     ([blockName, node]) => {
       const blockStyles = pickStyleKeys(node);
       const typedNode = node;
-      const variationNodesToAdd = [];
       if (typedNode?.variations) {
         const variations = {};
         Object.entries(typedNode.variations).forEach(
@@ -1520,7 +1519,7 @@ var getNodesWithStyles = (tree, blockSelectors) => {
               typedVariation?.elements ?? {}
             ).forEach(([element, elementStyles]) => {
               if (elementStyles && import_blocks.__EXPERIMENTAL_ELEMENTS[element]) {
-                variationNodesToAdd.push({
+                nodes.push({
                   styles: elementStyles,
                   selector: scopeSelector(
                     variationSelector,
@@ -1553,7 +1552,7 @@ var getNodesWithStyles = (tree, blockSelectors) => {
                 if (!variationBlockSelector || typeof blockSelectors === "string") {
                   return;
                 }
-                variationNodesToAdd.push({
+                nodes.push({
                   selector: variationBlockSelector,
                   duotoneSelector: variationDuotoneSelector,
                   featureSelectors: variationFeatureSelectors,
@@ -1569,7 +1568,7 @@ var getNodesWithStyles = (tree, blockSelectors) => {
                     variationBlockElementStyles
                   ]) => {
                     if (variationBlockElementStyles && import_blocks.__EXPERIMENTAL_ELEMENTS[variationBlockElement]) {
-                      variationNodesToAdd.push({
+                      nodes.push({
                         styles: variationBlockElementStyles,
                         selector: scopeSelector(
                           variationBlockSelector,
@@ -1611,7 +1610,6 @@ var getNodesWithStyles = (tree, blockSelectors) => {
           }
         }
       );
-      nodes.push(...variationNodesToAdd);
     }
   );
   return nodes;
@@ -1816,16 +1814,6 @@ var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGa
                     styleVariations.css,
                     `:root :where(${styleVariationSelector})`
                   );
-                }
-                if (hasLayoutSupport && styleVariations?.spacing?.blockGap) {
-                  const variationSelectorWithBlock = styleVariationSelector + selector;
-                  ruleset += getLayoutStyles({
-                    style: styleVariations,
-                    selector: variationSelectorWithBlock,
-                    hasBlockGapSupport: true,
-                    hasFallbackGapSupport,
-                    fallbackGapValue
-                  });
                 }
               }
             }
