@@ -30849,6 +30849,7 @@ var wp;
           onSelect: () => {
             onClose();
           },
+          onClose,
           rootClientId,
           clientId,
           isAppender,
