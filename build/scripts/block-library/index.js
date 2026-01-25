@@ -48458,7 +48458,7 @@ ${js}
     const rawOrRenderedExcerpt = (rawExcerpt || strippedRenderedExcerpt).trim();
     let trimmedExcerpt = "";
     if (wordCountType === "words") {
-      trimmedExcerpt = rawOrRenderedExcerpt.split(" ", excerptLength).join(" ");
+      trimmedExcerpt = rawOrRenderedExcerpt.split(/\s+/, excerptLength).join(" ");
     } else if (wordCountType === "characters_excluding_spaces") {
       const excerptWithSpaces = rawOrRenderedExcerpt.split("", excerptLength).join("");
       const numberOfSpaces = excerptWithSpaces.length - excerptWithSpaces.replaceAll(" ", "").length;
