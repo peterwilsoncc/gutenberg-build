@@ -15723,6 +15723,10 @@ var wp;
       name,
       recordId
     );
+    const editsWithMerges = Object.keys(edits).reduce((acc, key) => {
+      acc[key] = mergedEdits[key] ? { ...editedRecord[key], ...edits[key] } : edits[key];
+      return acc;
+    }, {});
     const edit = {
       kind,
       name,
@@ -15731,8 +15735,7 @@ var wp;
       // so that the property is not considered dirty.
       edits: Object.keys(edits).reduce((acc, key) => {
         const recordValue = record[key];
-        const editedRecordValue = editedRecord[key];
-        const value = mergedEdits[key] ? { ...editedRecordValue, ...edits[key] } : edits[key];
+        const value = editsWithMerges[key];
         acc[key] = (0, import_es67.default)(recordValue, value) ? void 0 : value;
         return acc;
       }, {})
@@ -15744,7 +15747,7 @@ var wp;
         getSyncManager()?.update(
           objectType,
           objectId,
-          edit.edits,
+          editsWithMerges,
           LOCAL_EDITOR_ORIGIN
         );
       }
