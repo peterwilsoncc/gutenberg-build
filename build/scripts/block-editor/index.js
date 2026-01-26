@@ -13410,6 +13410,11 @@ var wp;
       const firstParentClientId = select3.getBlockRootClientId(clientId);
       if (firstParentClientId) {
         dispatch.selectBlock(firstParentClientId, -1);
+      } else {
+        const nextBlockClientId = select3.getNextBlockClientId(clientId);
+        if (nextBlockClientId) {
+          dispatch.selectBlock(nextBlockClientId, 0);
+        }
       }
     }
   };
