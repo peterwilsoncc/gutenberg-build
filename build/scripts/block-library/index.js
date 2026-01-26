@@ -41597,11 +41597,32 @@ ${js}
       ),
       [clientId]
     );
+    const hasSetOverlayDefault = (0, import_element76.useRef)(false);
     (0, import_element76.useEffect)(() => {
-      if (isWithinOverlay && overlayMenu !== "never") {
+      if (!isWithinOverlay) {
+        return;
+      }
+      if (overlayMenu !== "never") {
         setAttributes({ overlayMenu: "never" });
       }
-    }, [isWithinOverlay, overlayMenu, setAttributes]);
+      if (!hasSetOverlayDefault.current && !ref) {
+        hasSetOverlayDefault.current = true;
+        setAttributes({
+          submenuVisibility: "always",
+          layout: {
+            ...attributes2.layout,
+            orientation: "vertical"
+          },
+          showSubmenuIcon: false
+        });
+      }
+    }, [
+      attributes2.layout,
+      isWithinOverlay,
+      overlayMenu,
+      ref,
+      setAttributes
+    ]);
     const isResponsive = "never" !== overlayMenu;
     const blockProps = (0, import_block_editor156.useBlockProps)({
       ref: navRef,
