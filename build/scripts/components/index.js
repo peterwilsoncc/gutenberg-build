@@ -12540,9 +12540,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element2 = __toESM(require_element(), 1);
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   var CompositeGroup22 = (0, import_element2.forwardRef)(function CompositeGroup3(props, ref) {
-    var _props$store;
     const context = useCompositeContext2();
-    const store = (_props$store = props.store) !== null && _props$store !== void 0 ? _props$store : context.store;
+    const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(CompositeGroup, {
       store,
       ...props,
@@ -12554,9 +12553,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element3 = __toESM(require_element(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   var CompositeGroupLabel22 = (0, import_element3.forwardRef)(function CompositeGroupLabel3(props, ref) {
-    var _props$store;
     const context = useCompositeContext2();
-    const store = (_props$store = props.store) !== null && _props$store !== void 0 ? _props$store : context.store;
+    const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(CompositeGroupLabel, {
       store,
       ...props,
@@ -12568,9 +12566,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element4 = __toESM(require_element(), 1);
   var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   var CompositeHover22 = (0, import_element4.forwardRef)(function CompositeHover3(props, ref) {
-    var _props$store;
     const context = useCompositeContext2();
-    const store = (_props$store = props.store) !== null && _props$store !== void 0 ? _props$store : context.store;
+    const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(CompositeHover, {
       store,
       ...props,
@@ -12582,9 +12579,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element5 = __toESM(require_element(), 1);
   var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   var CompositeItem22 = (0, import_element5.forwardRef)(function CompositeItem3(props, ref) {
-    var _props$store;
     const context = useCompositeContext2();
-    const store = (_props$store = props.store) !== null && _props$store !== void 0 ? _props$store : context.store;
+    const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(CompositeItem, {
       store,
       ...props,
@@ -12596,9 +12592,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element6 = __toESM(require_element(), 1);
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   var CompositeRow22 = (0, import_element6.forwardRef)(function CompositeRow3(props, ref) {
-    var _props$store;
     const context = useCompositeContext2();
-    const store = (_props$store = props.store) !== null && _props$store !== void 0 ? _props$store : context.store;
+    const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(CompositeRow, {
       store,
       ...props,
@@ -12610,9 +12605,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element7 = __toESM(require_element(), 1);
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var CompositeTypeahead22 = (0, import_element7.forwardRef)(function CompositeTypeahead3(props, ref) {
-    var _props$store;
     const context = useCompositeContext2();
-    const store = (_props$store = props.store) !== null && _props$store !== void 0 ? _props$store : context.store;
+    const store = props.store ?? context.store;
     return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(CompositeTypeahead, {
       store,
       ...props,
@@ -12651,7 +12645,7 @@ If there's a particular need for this, please submit a feature request at https:
       orientation,
       rtl: rtl2
     });
-    const store = storeProp !== null && storeProp !== void 0 ? storeProp : internalStore;
+    const store = storeProp ?? internalStore;
     const contextValue = (0, import_element8.useMemo)(() => ({
       store
     }), [store]);
@@ -20691,8 +20685,7 @@ If there's a particular need for this, please submit a feature request at https:
     return !isValueDefined(value) || isEmptyString;
   }
   function getDefinedValue(values = [], fallbackValue) {
-    var _values$find;
-    return (_values$find = values.find(isValueDefined)) !== null && _values$find !== void 0 ? _values$find : fallbackValue;
+    return values.find(isValueDefined) ?? fallbackValue;
   }
   var stringToNumber = (value) => {
     return parseFloat(value);
@@ -22916,8 +22909,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 
   // packages/components/build-module/utils/font.mjs
   function font(value) {
-    var _FONT$value;
-    return (_FONT$value = font_values_default[value]) !== null && _FONT$value !== void 0 ? _FONT$value : "";
+    return font_values_default[value] ?? "";
   }
 
   // packages/components/build-module/utils/breakpoint-values.mjs
@@ -23169,10 +23161,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     "middle center right": "bottom",
     "middle center top": "bottom"
   };
-  var positionToPlacement = (position2) => {
-    var _POSITION_TO_PLACEMEN;
-    return (_POSITION_TO_PLACEMEN = POSITION_TO_PLACEMENT[position2]) !== null && _POSITION_TO_PLACEMEN !== void 0 ? _POSITION_TO_PLACEMEN : "bottom";
-  };
+  var positionToPlacement = (position2) => POSITION_TO_PLACEMENT[position2] ?? "bottom";
   var PLACEMENT_TO_ANIMATION_ORIGIN = {
     top: {
       originX: 0.5,
@@ -23278,7 +23267,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     getAnchorRect,
     fallbackReferenceElement
   }) => {
-    var _referenceElement;
     let referenceElement = null;
     if (anchor) {
       referenceElement = anchor;
@@ -23303,15 +23291,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } else if (getAnchorRect) {
       referenceElement = {
         getBoundingClientRect() {
-          var _rect$x, _rect$y, _rect$width, _rect$height;
           const rect = getAnchorRect(fallbackReferenceElement);
-          return new window.DOMRect((_rect$x = rect.x) !== null && _rect$x !== void 0 ? _rect$x : rect.left, (_rect$y = rect.y) !== null && _rect$y !== void 0 ? _rect$y : rect.top, (_rect$width = rect.width) !== null && _rect$width !== void 0 ? _rect$width : rect.right - rect.left, (_rect$height = rect.height) !== null && _rect$height !== void 0 ? _rect$height : rect.bottom - rect.top);
+          return new window.DOMRect(rect.x ?? rect.left, rect.y ?? rect.top, rect.width ?? rect.right - rect.left, rect.height ?? rect.bottom - rect.top);
         }
       };
     } else if (fallbackReferenceElement) {
       referenceElement = fallbackReferenceElement.parentElement;
     }
-    return (_referenceElement = referenceElement) !== null && _referenceElement !== void 0 ? _referenceElement : null;
+    return referenceElement ?? null;
   };
   var computePopoverPosition = (c3) => c3 === null || Number.isNaN(c3) ? void 0 : Math.round(c3);
 
@@ -23448,7 +23435,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
       }
     }, [value]);
     const config = (0, import_element14.useMemo)(() => {
-      return (0, import_deepmerge.default)(parentContext !== null && parentContext !== void 0 ? parentContext : {}, value !== null && value !== void 0 ? value : {}, {
+      return (0, import_deepmerge.default)(parentContext ?? {}, value ?? {}, {
         isMergeableObject: isPlainObject
       });
     }, [parentContext, value]);
@@ -24044,12 +24031,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     value = "center",
     ...props
   }) {
-    var _ref11, _ref25;
     return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives.SVG, {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: `0 0 ${BASE_SIZE} ${BASE_SIZE}`,
-      width: (_ref11 = size3 !== null && size3 !== void 0 ? size3 : width) !== null && _ref11 !== void 0 ? _ref11 : BASE_SIZE,
-      height: (_ref25 = size3 !== null && size3 !== void 0 ? size3 : height) !== null && _ref25 !== void 0 ? _ref25 : BASE_SIZE,
+      width: size3 ?? width ?? BASE_SIZE,
+      height: size3 ?? height ?? BASE_SIZE,
       role: "presentation",
       className: clsx_default("component-alignment-matrix-control-icon", className2),
       style: {
@@ -24453,7 +24439,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     const cx3 = useCx();
     const classes = (0, import_element19.useMemo)(() => {
       const base = /* @__PURE__ */ css({
-        alignItems: align !== null && align !== void 0 ? align : isColumn ? "normal" : "center",
+        alignItems: align ?? (isColumn ? "normal" : "center"),
         flexDirection: direction,
         flexWrap: wrap ? "wrap" : void 0,
         gap: space(gap),
@@ -25575,7 +25561,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
     } = props;
     return {
       ...otherProps,
-      __next40pxDefaultSize: __next40pxDefaultSize !== null && __next40pxDefaultSize !== void 0 ? __next40pxDefaultSize : __next36pxDefaultSize
+      __next40pxDefaultSize: __next40pxDefaultSize ?? __next36pxDefaultSize
     };
   }
 
@@ -27238,19 +27224,17 @@ This message will only show in development mode. It won't appear in production. 
     });
     (0, import_element28.useLayoutEffect)(() => {
       if (currentStateRef.current._event !== void 0 && state.value !== refPropsRef.current.value && !state.isDirty) {
-        var _state$value;
-        refPropsRef.current.onChangeHandler((_state$value = state.value) !== null && _state$value !== void 0 ? _state$value : "", {
+        refPropsRef.current.onChangeHandler(state.value ?? "", {
           event: currentStateRef.current._event
         });
       }
     }, [state.value, state.isDirty]);
     (0, import_element28.useLayoutEffect)(() => {
       if (initialState.value !== currentStateRef.current.value && !currentStateRef.current.isDirty) {
-        var _initialState$value;
         dispatch({
           type: CONTROL,
           payload: {
-            value: (_initialState$value = initialState.value) !== null && _initialState$value !== void 0 ? _initialState$value : ""
+            value: initialState.value ?? ""
           }
         });
       }
@@ -27432,7 +27416,7 @@ This message will only show in development mode. It won't appear in production. 
       onKeyDown: withIgnoreIMEEvents(handleOnKeyDown),
       ref,
       inputSize: size3,
-      value: value !== null && value !== void 0 ? value : "",
+      value: value ?? "",
       type
     });
   }
@@ -27809,32 +27793,26 @@ This message will only show in development mode. It won't appear in production. 
       description: describedBy
     };
     if (isSmall) {
-      var _computedSize;
-      (_computedSize = computedSize) !== null && _computedSize !== void 0 ? _computedSize : computedSize = "small";
+      computedSize ??= "small";
     }
     if (isPrimary) {
-      var _computedVariant;
-      (_computedVariant = computedVariant) !== null && _computedVariant !== void 0 ? _computedVariant : computedVariant = "primary";
+      computedVariant ??= "primary";
     }
     if (isTertiary) {
-      var _computedVariant2;
-      (_computedVariant2 = computedVariant) !== null && _computedVariant2 !== void 0 ? _computedVariant2 : computedVariant = "tertiary";
+      computedVariant ??= "tertiary";
     }
     if (isSecondary) {
-      var _computedVariant3;
-      (_computedVariant3 = computedVariant) !== null && _computedVariant3 !== void 0 ? _computedVariant3 : computedVariant = "secondary";
+      computedVariant ??= "secondary";
     }
     if (isDefault) {
-      var _computedVariant4;
       (0, import_deprecated4.default)("wp.components.Button `isDefault` prop", {
         since: "5.4",
         alternative: 'variant="secondary"'
       });
-      (_computedVariant4 = computedVariant) !== null && _computedVariant4 !== void 0 ? _computedVariant4 : computedVariant = "secondary";
+      computedVariant ??= "secondary";
     }
     if (isLink) {
-      var _computedVariant5;
-      (_computedVariant5 = computedVariant) !== null && _computedVariant5 !== void 0 ? _computedVariant5 : computedVariant = "link";
+      computedVariant ??= "link";
     }
     return {
       ...newProps,
@@ -28273,7 +28251,7 @@ This message will only show in development mode. It won't appear in production. 
     const baseSpin = ensureNumber(spinFactor) * baseStep;
     const constrainValue = (value, stepOverride) => {
       if (!isStepAny) {
-        value = ensureValidStep(value, min3, stepOverride !== null && stepOverride !== void 0 ? stepOverride : baseStep);
+        value = ensureValidStep(value, min3, stepOverride ?? baseStep);
       }
       return `${clamp4(value, min3, max3)}`;
     };
@@ -28375,9 +28353,8 @@ This message will only show in development mode. It won't appear in production. 
       type: typeProp,
       value: valueProp,
       __unstableStateReducer: (state, action) => {
-        var _stateReducerProp;
         const baseState = numberControlStateReducer(state, action);
-        return (_stateReducerProp = stateReducerProp?.(baseState, action)) !== null && _stateReducerProp !== void 0 ? _stateReducerProp : baseState;
+        return stateReducerProp?.(baseState, action) ?? baseState;
       },
       size: size3,
       __shouldNotWarnDeprecated36pxSize: true,
@@ -28700,8 +28677,7 @@ This message will only show in development mode. It won't appear in production. 
     return (0, import_remove_accents.default)(value).normalize("NFKC").toLocaleLowerCase().replace(ALL_UNICODE_DASH_CHARACTERS, "-");
   };
   function kebabCase(str) {
-    var _str$toString;
-    let input = (_str$toString = str?.toString?.()) !== null && _str$toString !== void 0 ? _str$toString : "";
+    let input = str?.toString?.() ?? "";
     input = input.replace(/['\u2019]/, "");
     return paramCase(input, {
       splitRegexp: [
@@ -29191,7 +29167,6 @@ This message will only show in development mode. It won't appear in production. 
     name,
     children
   }) {
-    var _slot$fillProps;
     const registry = (0, import_element41.useContext)(context_default);
     const instanceRef = (0, import_element41.useRef)({});
     const childrenRef = (0, import_element41.useRef)(children);
@@ -29223,7 +29198,7 @@ This message will only show in development mode. It won't appear in production. 
     if (!portalEl) {
       return null;
     }
-    const wrappedChildren = typeof children === "function" ? children((_slot$fillProps = slot.fillProps) !== null && _slot$fillProps !== void 0 ? _slot$fillProps : {}) : children;
+    const wrappedChildren = typeof children === "function" ? children(slot.fillProps ?? {}) : children;
     return (0, import_element41.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime104.jsx)(style_provider_default, {
       document: portalEl.ownerDocument,
       children: wrappedChildren
@@ -29252,7 +29227,6 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function Slot(props) {
-    var _useObservableValue;
     const {
       name,
       children,
@@ -29268,7 +29242,7 @@ This message will only show in development mode. It won't appear in production. 
       });
       return () => registry.unregisterSlot(name, instance);
     }, [registry, name]);
-    let fills = (_useObservableValue = (0, import_compose12.useObservableValue)(registry.fills, name)) !== null && _useObservableValue !== void 0 ? _useObservableValue : [];
+    let fills = (0, import_compose12.useObservableValue)(registry.fills, name) ?? [];
     const currentSlot = (0, import_compose12.useObservableValue)(registry.slots, name);
     if (!currentSlot || currentSlot.instance !== instanceRef.current) {
       fills = [];
@@ -29528,10 +29502,9 @@ This message will only show in development mode. It won't appear in production. 
         rects,
         elements: elements2
       }) {
-        var _elements$floating;
         const {
           firstElementChild
-        } = (_elements$floating = elements2.floating) !== null && _elements$floating !== void 0 ? _elements$floating : {};
+        } = elements2.floating ?? {};
         if (!(firstElementChild instanceof HTMLElement)) {
           return;
         }
@@ -29653,10 +29626,9 @@ This message will only show in development mode. It won't appear in production. 
     const middleware2 = [...placementProp === "overlay" ? overlayMiddlewares() : [], offset2(offsetProp), computedFlipProp && flip2(), computedResizeProp && size2({
       padding: OVERFLOW_PADDING,
       apply(sizeProps) {
-        var _refs$floating$curren;
         const {
           firstElementChild
-        } = (_refs$floating$curren = refs.floating.current) !== null && _refs$floating$curren !== void 0 ? _refs$floating$curren : {};
+        } = refs.floating.current ?? {};
         if (!(firstElementChild instanceof HTMLElement)) {
           return;
         }
@@ -29899,8 +29871,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function getAutoCompleterUI(autocompleter) {
-    var _autocompleter$useIte;
-    const useItems = (_autocompleter$useIte = autocompleter.useItems) !== null && _autocompleter$useIte !== void 0 ? _autocompleter$useIte : getDefaultUseItems(autocompleter);
+    const useItems = autocompleter.useItems ?? getDefaultUseItems(autocompleter);
     function AutocompleterUI({
       filterValue,
       instanceId,
@@ -30549,7 +30520,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [isControlled]);
     if (isControlled) {
       return {
-        value: valueProp !== null && valueProp !== void 0 ? valueProp : "",
+        value: valueProp ?? "",
         defaultValue: void 0
       };
     }
@@ -30579,7 +30550,7 @@ This message will only show in development mode. It won't appear in production. 
       defaultValue: defaultValue2
     } = useComputeControlledOrUncontrolledValue(valueProp);
     const wrappedOnChangeProp = onChangeProp ? (v3) => {
-      onChangeProp(v3 !== null && v3 !== void 0 ? v3 : void 0);
+      onChangeProp(v3 ?? void 0);
     } : void 0;
     const radio = useRadioStore({
       defaultValue: defaultValue2,
@@ -30683,15 +30654,14 @@ This message will only show in development mode. It won't appear in production. 
     height: 0
   };
   function getElementOffsetRect(element) {
-    var _offsetParent$getBoun, _offsetParent$scrollL, _offsetParent$scrollT;
     const rect = element.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) {
       return;
     }
     const offsetParent = element.offsetParent;
-    const offsetParentRect = (_offsetParent$getBoun = offsetParent?.getBoundingClientRect()) !== null && _offsetParent$getBoun !== void 0 ? _offsetParent$getBoun : NULL_ELEMENT_OFFSET_RECT;
-    const offsetParentScrollX = (_offsetParent$scrollL = offsetParent?.scrollLeft) !== null && _offsetParent$scrollL !== void 0 ? _offsetParent$scrollL : 0;
-    const offsetParentScrollY = (_offsetParent$scrollT = offsetParent?.scrollTop) !== null && _offsetParent$scrollT !== void 0 ? _offsetParent$scrollT : 0;
+    const offsetParentRect = offsetParent?.getBoundingClientRect() ?? NULL_ELEMENT_OFFSET_RECT;
+    const offsetParentScrollX = offsetParent?.scrollLeft ?? 0;
+    const offsetParentScrollY = offsetParent?.scrollTop ?? 0;
     const computedWidth = parseFloat(getComputedStyle(element).width);
     const computedHeight = parseFloat(getComputedStyle(element).height);
     const scaleX = computedWidth / rect.width;
@@ -31567,7 +31537,7 @@ This message will only show in development mode. It won't appear in production. 
       initial
     } = settings;
     const [state, setInternalState] = use_controlled_state_default(floatClamp(valueProp, min3, max3), {
-      initial: floatClamp(initial !== null && initial !== void 0 ? initial : null, min3, max3),
+      initial: floatClamp(initial ?? null, min3, max3),
       fallback: null
     });
     const setState = (0, import_element67.useCallback)((nextValue) => {
@@ -32062,7 +32032,7 @@ This message will only show in development mode. It won't appear in production. 
     const [value, setValue] = useControlledRangeValue({
       min: min3,
       max: max3,
-      value: valueProp !== null && valueProp !== void 0 ? valueProp : null,
+      value: valueProp ?? null,
       initial: initialPosition
     });
     const isResetPendent = (0, import_element70.useRef)(false);
@@ -32113,9 +32083,9 @@ This message will only show in development mode. It won't appear in production. 
       }
     };
     const handleOnReset = () => {
-      const resetValue = Number.isNaN(resetFallbackValue) ? null : resetFallbackValue !== null && resetFallbackValue !== void 0 ? resetFallbackValue : null;
+      const resetValue = Number.isNaN(resetFallbackValue) ? null : resetFallbackValue ?? null;
       setValue(resetValue);
-      onChange(resetValue !== null && resetValue !== void 0 ? resetValue : void 0);
+      onChange(resetValue ?? void 0);
     };
     const handleShowTooltip = () => setShowTooltip(true);
     const handleHideTooltip = () => setShowTooltip(false);
@@ -32171,7 +32141,7 @@ This message will only show in development mode. It won't appear in production. 
             onMouseLeave,
             ref: (0, import_compose29.useMergeRefs)([inputRef, forwardedRef]),
             step,
-            value: inputSliderValue !== null && inputSliderValue !== void 0 ? inputSliderValue : void 0
+            value: inputSliderValue ?? void 0
           }), /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(RangeRail, {
             "aria-hidden": true,
             disabled,
@@ -33408,8 +33378,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n19 = __toESM(require_i18n(), 1);
   k([names_default, a11y_default]);
   var isSimpleCSSColor = (value) => {
-    const valueIsCssVariable = /var\(/.test(value !== null && value !== void 0 ? value : "");
-    const valueIsColorMix = /color-mix\(/.test(value !== null && value !== void 0 ? value : "");
+    const valueIsCssVariable = /var\(/.test(value ?? "");
+    const valueIsColorMix = /color-mix\(/.test(value ?? "");
     return !valueIsCssVariable && !valueIsColorMix;
   };
   var extractColorNameFromCurrentValue = (currentValue, colors = [], showMultiplePalettes = false) => {
@@ -33972,7 +33942,7 @@ This message will only show in development mode. It won't appear in production. 
   var CSS_UNITS = [allUnits.px, allUnits["%"], allUnits.em, allUnits.rem, allUnits.vw, allUnits.vh];
   var DEFAULT_UNIT = allUnits.px;
   function getParsedQuantityAndUnit(rawValue, fallbackUnit, allowedUnits) {
-    const initialValue2 = fallbackUnit ? `${rawValue !== null && rawValue !== void 0 ? rawValue : ""}${fallbackUnit}` : rawValue;
+    const initialValue2 = fallbackUnit ? `${rawValue ?? ""}${fallbackUnit}` : rawValue;
     return parseQuantityAndUnitFromRawValue(initialValue2, allowedUnits);
   }
   function hasUnits(units) {
@@ -33999,7 +33969,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   function getValidParsedQuantityAndUnit(rawValue, allowedUnits, fallbackQuantity, fallbackUnit) {
     const [parsedQuantity, parsedUnit] = parseQuantityAndUnitFromRawValue(rawValue, allowedUnits);
-    const quantityToReturn = parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : fallbackQuantity;
+    const quantityToReturn = parsedQuantity ?? fallbackQuantity;
     let unitToReturn = parsedUnit || fallbackUnit;
     if (!unitToReturn && hasUnits(allowedUnits)) {
       unitToReturn = allowedUnits[0].value;
@@ -34371,7 +34341,7 @@ This message will only show in development mode. It won't appear in production. 
         version: "6.2"
       });
     }
-    const nonNullValueProp = valueProp !== null && valueProp !== void 0 ? valueProp : void 0;
+    const nonNullValueProp = valueProp ?? void 0;
     const [units, reFirstCharacterOfUnits] = (0, import_element83.useMemo)(() => {
       const list = getUnitsWithCurrentUnit(nonNullValueProp, unitProp, unitsProp);
       const [{
@@ -34414,7 +34384,7 @@ This message will only show in development mode. It won't appear in production. 
       const {
         data
       } = changeProps;
-      let nextValue = `${parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : ""}${nextUnitValue}`;
+      let nextValue = `${parsedQuantity ?? ""}${nextUnitValue}`;
       if (isResetValueOnUnitChange && data?.default !== void 0) {
         nextValue = `${data.default}${nextUnitValue}`;
       }
@@ -34446,9 +34416,8 @@ This message will only show in development mode. It won't appear in production. 
     }) : null;
     let step = props.step;
     if (!step && units) {
-      var _activeUnit$step;
       const activeUnit = units.find((option) => option.value === unit);
-      step = (_activeUnit$step = activeUnit?.step) !== null && _activeUnit$step !== void 0 ? _activeUnit$step : 1;
+      step = activeUnit?.step ?? 1;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(ValueInput, {
       ...props,
@@ -34465,7 +34434,7 @@ This message will only show in development mode. It won't appear in production. 
       size: size3,
       suffix: inputSuffix,
       type: isPressEnterToChange ? "text" : "number",
-      value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : "",
+      value: parsedQuantity ?? "",
       step,
       onFocus: onFocusProp,
       __unstableStateReducer
@@ -35805,7 +35774,6 @@ This message will only show in development mode. It won't appear in production. 
     presetKey,
     ...props
   }) {
-    var _CUSTOM_VALUE_SETTING, _CUSTOM_VALUE_SETTING2;
     const defaultValuesToModify = getSidesToModify(side, sides3);
     const handleOnFocus = (event) => {
       onFocus(event, {
@@ -35874,14 +35842,11 @@ This message will only show in development mode. It won't appear in production. 
       value: 0,
       label: "",
       tooltip: (0, import_i18n28.__)("None")
-    }, ...presets.map((preset, index2) => {
-      var _preset$name;
-      return {
-        value: index2 + 1,
-        label: "",
-        tooltip: (_preset$name = preset.name) !== null && _preset$name !== void 0 ? _preset$name : preset.slug
-      };
-    })] : [];
+    }, ...presets.map((preset, index2) => ({
+      value: index2 + 1,
+      label: "",
+      tooltip: preset.name ?? preset.slug
+    }))] : [];
     return /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(InputWrapper, {
       expanded: true,
       children: [/* @__PURE__ */ (0, import_jsx_runtime155.jsx)(FlexedBoxControlIcon, {
@@ -35918,9 +35883,9 @@ This message will only show in development mode. It won't appear in production. 
             handleOnValueChange(newValue !== void 0 ? [newValue, computedUnit].join("") : void 0);
           },
           min: isFinite(min3) ? min3 : 0,
-          max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : "px"]?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
-          step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : "px"]?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
-          value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
+          max: CUSTOM_VALUE_SETTINGS[computedUnit ?? "px"]?.max ?? 10,
+          step: CUSTOM_VALUE_SETTINGS[computedUnit ?? "px"]?.step ?? 0.1,
+          value: parsedQuantity ?? 0,
           withInputField: false
         })]
       }), hasPresets && !showCustomValueControl && /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(FlexedRangeControl, {
@@ -36418,12 +36383,11 @@ This message will only show in development mode. It won't appear in production. 
     };
     let computedElevation = elevation;
     if (isElevated) {
-      var _computedElevation;
       (0, import_deprecated11.default)("Card isElevated prop", {
         since: "5.9",
         alternative: "elevation"
       });
-      (_computedElevation = computedElevation) !== null && _computedElevation !== void 0 ? _computedElevation : computedElevation = 2;
+      computedElevation ??= 2;
     }
     if (typeof computedElevation !== "undefined") {
       propsToReturn.elevation = computedElevation;
@@ -36713,8 +36677,8 @@ This message will only show in development mode. It won't appear in production. 
     marginStart,
     marginEnd
   }) => /* @__PURE__ */ css(rtl({
-    [MARGIN_DIRECTIONS[orientation].start]: space(marginStart !== null && marginStart !== void 0 ? marginStart : margin),
-    [MARGIN_DIRECTIONS[orientation].end]: space(marginEnd !== null && marginEnd !== void 0 ? marginEnd : margin)
+    [MARGIN_DIRECTIONS[orientation].start]: space(marginStart ?? margin),
+    [MARGIN_DIRECTIONS[orientation].end]: space(marginEnd ?? margin)
   })(), false ? "" : ";label:renderMargin;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFvQ0MiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uL3V0aWxzL3NwYWNlJztcbmltcG9ydCB7IHJ0bCB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB0eXBlIHsgRGl2aWRlclByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5cbmNvbnN0IE1BUkdJTl9ESVJFQ1RJT05TOiBSZWNvcmQ8XG5cdE5vbk51bGxhYmxlPCBEaXZpZGVyUHJvcHNbICdvcmllbnRhdGlvbicgXSA+LFxuXHRSZWNvcmQ8ICdzdGFydCcgfCAnZW5kJywgc3RyaW5nID5cbj4gPSB7XG5cdHZlcnRpY2FsOiB7XG5cdFx0c3RhcnQ6ICdtYXJnaW5MZWZ0Jyxcblx0XHRlbmQ6ICdtYXJnaW5SaWdodCcsXG5cdH0sXG5cdGhvcml6b250YWw6IHtcblx0XHRzdGFydDogJ21hcmdpblRvcCcsXG5cdFx0ZW5kOiAnbWFyZ2luQm90dG9tJyxcblx0fSxcbn07XG5cbi8vIFJlbmRlcnMgdGhlIGNvcnJlY3QgbWFyZ2lucyBnaXZlbiB0aGUgRGl2aWRlcidzIGBvcmllbnRhdGlvbmAgYW5kIHRoZSB3cml0aW5nIGRpcmVjdGlvbi5cbi8vIFdoZW4gYm90aCB0aGUgZ2VuZXJpYyBgbWFyZ2luYCBhbmQgdGhlIHNwZWNpZmljIGBtYXJnaW5TdGFydHxtYXJnaW5FbmRgIHByb3BzIGFyZSBkZWZpbmVkLFxuLy8gdGhlIGxhdHRlciB3aWxsIHRha2UgcHJpb3JpdHkuXG5jb25zdCByZW5kZXJNYXJnaW4gPSAoIHtcblx0J2FyaWEtb3JpZW50YXRpb24nOiBvcmllbnRhdGlvbiA9ICdob3Jpem9udGFsJyxcblx0bWFyZ2luLFxuXHRtYXJnaW5TdGFydCxcblx0bWFyZ2luRW5kLFxufTogRGl2aWRlclByb3BzICkgPT5cblx0Y3NzKFxuXHRcdHJ0bCgge1xuXHRcdFx0WyBNQVJHSU5fRElSRUNUSU9OU1sgb3JpZW50YXRpb24gXS5zdGFydCBdOiBzcGFjZShcblx0XHRcdFx0bWFyZ2luU3RhcnQgPz8gbWFyZ2luXG5cdFx0XHQpLFxuXHRcdFx0WyBNQVJHSU5fRElSRUNUSU9OU1sgb3JpZW50YXRpb24gXS5lbmQgXTogc3BhY2UoXG5cdFx0XHRcdG1hcmdpbkVuZCA/PyBtYXJnaW5cblx0XHRcdCksXG5cdFx0fSApKClcblx0KTtcblxuY29uc3QgcmVuZGVyRGlzcGxheSA9ICgge1xuXHQnYXJpYS1vcmllbnRhdGlvbic6IG9yaWVudGF0aW9uID0gJ2hvcml6b250YWwnLFxufTogRGl2aWRlclByb3BzICkgPT4ge1xuXHRyZXR1cm4gb3JpZW50YXRpb24gPT09ICd2ZXJ0aWNhbCdcblx0XHQ/IGNzcyggeyBkaXNwbGF5OiAnaW5saW5lJyB9IClcblx0XHQ6IHVuZGVmaW5lZDtcbn07XG5cbmNvbnN0IHJlbmRlckJvcmRlciA9ICgge1xuXHQnYXJpYS1vcmllbnRhdGlvbic6IG9yaWVudGF0aW9uID0gJ2hvcml6b250YWwnLFxufTogRGl2aWRlclByb3BzICkgPT4ge1xuXHRyZXR1cm4gY3NzKCB7XG5cdFx0WyBvcmllbnRhdGlvbiA9PT0gJ3ZlcnRpY2FsJyA/ICdib3JkZXJSaWdodCcgOiAnYm9yZGVyQm90dG9tJyBdOlxuXHRcdFx0JzFweCBzb2xpZCBjdXJyZW50Q29sb3InLFxuXHR9ICk7XG59O1xuXG5jb25zdCByZW5kZXJTaXplID0gKCB7XG5cdCdhcmlhLW9yaWVudGF0aW9uJzogb3JpZW50YXRpb24gPSAnaG9yaXpvbnRhbCcsXG59OiBEaXZpZGVyUHJvcHMgKSA9PlxuXHRjc3MoIHtcblx0XHRoZWlnaHQ6IG9yaWVudGF0aW9uID09PSAndmVydGljYWwnID8gJ2F1dG8nIDogMCxcblx0XHR3aWR0aDogb3JpZW50YXRpb24gPT09ICd2ZXJ0aWNhbCcgPyAwIDogJ2F1dG8nLFxuXHR9ICk7XG5cbmV4cG9ydCBjb25zdCBEaXZpZGVyVmlldyA9IHN0eWxlZC5ocjwgRGl2aWRlclByb3BzID5gXG5cdGJvcmRlcjogMDtcblx0bWFyZ2luOiAwO1xuXG5cdCR7IHJlbmRlckRpc3BsYXkgfVxuXHQkeyByZW5kZXJCb3JkZXIgfVxuXHQkeyByZW5kZXJTaXplIH1cblx0JHsgcmVuZGVyTWFyZ2luIH1cbmA7XG4iXX0= */");
   var _ref7 = false ? {
     name: "1u4hpl4",
@@ -37791,7 +37755,7 @@ This message will only show in development mode. It won't appear in production. 
   function getGradientAstWithDefault(value) {
     let gradientAST;
     let hasGradient = !!value;
-    const valueToParse = value !== null && value !== void 0 ? value : DEFAULT_GRADIENT;
+    const valueToParse = value ?? DEFAULT_GRADIENT;
     try {
       gradientAST = import_gradient_parser.default.parse(valueToParse)[0];
     } catch (error) {
@@ -37910,8 +37874,7 @@ This message will only show in development mode. It won't appear in production. 
     hasGradient,
     onChange
   }) => {
-    var _gradientAST$orientat;
-    const angle = (_gradientAST$orientat = gradientAST?.orientation?.value) !== null && _gradientAST$orientat !== void 0 ? _gradientAST$orientat : DEFAULT_LINEAR_GRADIENT_ANGLE;
+    const angle = gradientAST?.orientation?.value ?? DEFAULT_LINEAR_GRADIENT_ANGLE;
     const onAngleChange = (newAngle) => {
       onChange(serializeGradient({
         ...gradientAST,
@@ -38443,7 +38406,6 @@ This message will only show in development mode. It won't appear in production. 
         isOpen,
         onToggle
       }) => {
-        var _toggleProps$showTool;
         const openOnArrowDown = (event) => {
           if (disableOpenOnArrowDown) {
             return;
@@ -38456,7 +38418,7 @@ This message will only show in development mode. It won't appear in production. 
         const {
           as: Toggle = button_default,
           ...restToggleProps
-        } = toggleProps !== null && toggleProps !== void 0 ? toggleProps : {};
+        } = toggleProps ?? {};
         const mergedToggleProps = mergeProps2({
           className: clsx_default("components-dropdown-menu__toggle", {
             "is-opened": isOpen
@@ -38481,7 +38443,7 @@ This message will only show in development mode. It won't appear in production. 
           "aria-expanded": isOpen,
           label,
           text,
-          showTooltip: (_toggleProps$showTool = toggleProps?.showTooltip) !== null && _toggleProps$showTool !== void 0 ? _toggleProps$showTool : true,
+          showTooltip: toggleProps?.showTooltip ?? true,
           children: mergedToggleProps.children
         });
       },
@@ -38613,7 +38575,6 @@ This message will only show in development mode. It won't appear in production. 
   function deduplicateElementSlugs(elements2) {
     const slugCounts = {};
     return elements2.map((element) => {
-      var _newSlug;
       let newSlug;
       const {
         slug
@@ -38624,7 +38585,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return {
         ...element,
-        slug: (_newSlug = newSlug) !== null && _newSlug !== void 0 ? _newSlug : slug
+        slug: newSlug ?? slug
       };
     });
   }
@@ -38742,7 +38703,7 @@ This message will only show in development mode. It won't appear in production. 
             onChange: (nextName) => onChange({
               ...element,
               name: nextName,
-              slug: slugPrefix + kebabCase(nextName !== null && nextName !== void 0 ? nextName : "")
+              slug: slugPrefix + kebabCase(nextName ?? "")
             })
           }) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(NameContainer, {
             children: element.name.trim().length ? element.name : (
@@ -38959,7 +38920,7 @@ This message will only show in development mode. It won't appear in production. 
               })
             );
           },
-          element: elements2[editingElement !== null && editingElement !== void 0 ? editingElement : -1],
+          element: elements2[editingElement ?? -1],
           popoverProps
         }), !isEditing && (isGradient ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(gradient_picker_default, {
           gradients,
@@ -39258,7 +39219,6 @@ This message will only show in development mode. It won't appear in production. 
   });
   var getIndexOfMatchingSuggestion = (selectedSuggestion, matchingSuggestions) => selectedSuggestion === null ? -1 : matchingSuggestions.indexOf(selectedSuggestion);
   function ComboboxControl(props) {
-    var _currentOption$label;
     const {
       __next40pxDefaultSize = false,
       value: valueProp,
@@ -39283,7 +39243,7 @@ This message will only show in development mode. It won't appear in production. 
       onChange: onChangeProp
     });
     const currentOption = options2.find((option) => option.value === value);
-    const currentLabel = (_currentOption$label = currentOption?.label) !== null && _currentOption$label !== void 0 ? _currentOption$label : "";
+    const currentLabel = currentOption?.label ?? "";
     const instanceId = (0, import_compose46.useInstanceId)(ComboboxControl, "combobox-control");
     const [selectedSuggestion, setSelectedSuggestion] = (0, import_element117.useState)(currentOption || null);
     const [isExpanded, setIsExpanded] = (0, import_element117.useState)(false);
@@ -39497,8 +39457,7 @@ This message will only show in development mode. It won't appear in production. 
     __unstableUseCompositeState: "Composite"
   };
   function proxyComposite(ProxiedComponent, propMap = {}) {
-    var _ProxiedComponent$dis;
-    const displayName = (_ProxiedComponent$dis = ProxiedComponent.displayName) !== null && _ProxiedComponent$dis !== void 0 ? _ProxiedComponent$dis : "";
+    const displayName = ProxiedComponent.displayName ?? "";
     const Component9 = (legacyProps) => {
       (0, import_deprecated14.default)(`wp.components.${displayName}`, {
         since: "6.7",
@@ -39768,9 +39727,8 @@ This message will only show in development mode. It won't appear in production. 
       };
     }, [dismissers, nestedDismissers]);
     (0, import_element120.useEffect)(() => {
-      var _bodyOpenClasses$get;
       const theClass = bodyOpenClassName;
-      const oneMore = 1 + ((_bodyOpenClasses$get = bodyOpenClasses.get(theClass)) !== null && _bodyOpenClasses$get !== void 0 ? _bodyOpenClasses$get : 0);
+      const oneMore = 1 + (bodyOpenClasses.get(theClass) ?? 0);
       bodyOpenClasses.set(theClass, oneMore);
       document.body.classList.add(bodyOpenClassName);
       return () => {
@@ -39807,8 +39765,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     }
     const onContentContainerScroll = (0, import_element120.useCallback)((e3) => {
-      var _e$currentTarget$scro;
-      const scrollY2 = (_e$currentTarget$scro = e3?.currentTarget?.scrollTop) !== null && _e$currentTarget$scro !== void 0 ? _e$currentTarget$scro : -1;
+      const scrollY2 = e3?.currentTarget?.scrollTop ?? -1;
       if (!hasScrolledContent && scrollY2 > 0) {
         setHasScrolledContent(true);
       } else if (hasScrolledContent && scrollY2 <= 0) {
@@ -39966,8 +39923,8 @@ This message will only show in development mode. It won't appear in production. 
         handleEvent(onConfirm)(event);
       }
     }, [handleEvent, onConfirm]);
-    const cancelLabel = cancelButtonText !== null && cancelButtonText !== void 0 ? cancelButtonText : (0, import_i18n39.__)("Cancel");
-    const confirmLabel = confirmButtonText !== null && confirmButtonText !== void 0 ? confirmButtonText : (0, import_i18n39.__)("OK");
+    const cancelLabel = cancelButtonText ?? (0, import_i18n39.__)("Cancel");
+    const confirmLabel = confirmButtonText ?? (0, import_i18n39.__)("OK");
     return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(import_jsx_runtime189.Fragment, {
       children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(modal_default, {
         onRequestClose: handleEvent(onCancel),
@@ -40178,7 +40135,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       value: currentValue
     } = useStoreState(store);
-    const computedRenderSelectedValue = (0, import_element122.useMemo)(() => renderSelectedValue !== null && renderSelectedValue !== void 0 ? renderSelectedValue : defaultRenderSelectedValue, [renderSelectedValue]);
+    const computedRenderSelectedValue = (0, import_element122.useMemo)(() => renderSelectedValue ?? defaultRenderSelectedValue, [renderSelectedValue]);
     return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Select22, {
       ...restProps,
       size: size3,
@@ -40257,13 +40214,12 @@ This message will only show in development mode. It won't appear in production. 
     children,
     ...props
   }) {
-    var _customSelectContext$;
     const customSelectContext = (0, import_element123.useContext)(CustomSelectContext);
     return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(SelectItem22, {
       store: customSelectContext?.store,
-      size: (_customSelectContext$ = customSelectContext?.size) !== null && _customSelectContext$ !== void 0 ? _customSelectContext$ : "default",
+      size: customSelectContext?.size ?? "default",
       ...props,
-      children: [children !== null && children !== void 0 ? children : props.value, /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(SelectedItemCheck, {
+      children: [children ?? props.value, /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(SelectedItemCheck, {
         children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(icon_default2, {
           icon: check_default
         })
@@ -40300,7 +40256,6 @@ This message will only show in development mode. It won't appear in production. 
     return (0, import_i18n41.sprintf)((0, import_i18n41.__)("Currently selected: %s"), currentName);
   }
   function CustomSelectControl(props) {
-    var _options$map$find;
     const {
       __next40pxDefaultSize = false,
       __shouldNotWarnDeprecated36pxSize,
@@ -40375,9 +40330,9 @@ This message will only show in development mode. It won't appear in production. 
       }, key);
     });
     const currentValue = useStoreState(store, "value");
-    const selectedOption = (_options$map$find = options2?.map(applyOptionDeprecations)?.find(({
+    const selectedOption = options2?.map(applyOptionDeprecations)?.find(({
       key
-    }) => currentValue === key)) !== null && _options$map$find !== void 0 ? _options$map$find : options2[0];
+    }) => currentValue === key) ?? options2[0];
     const renderSelectedValue = () => {
       if (!showSelectedHint || !selectedOption.hint) {
         return selectedOption?.name;
@@ -41099,8 +41054,7 @@ This message will only show in development mode. It won't appear in production. 
     return new UTCDateMini((0, import_date2.getDate)(timezoneless).getTime());
   }
   function validateInputElementTarget(event) {
-    var _ownerDocument$defaul;
-    const HTMLInputElementInstance = (_ownerDocument$defaul = event.target?.ownerDocument.defaultView?.HTMLInputElement) !== null && _ownerDocument$defaul !== void 0 ? _ownerDocument$defaul : HTMLInputElement;
+    const HTMLInputElementInstance = event.target?.ownerDocument.defaultView?.HTMLInputElement ?? HTMLInputElement;
     if (!(event.target instanceof HTMLInputElementInstance)) {
       return false;
     }
@@ -41120,7 +41074,7 @@ This message will only show in development mode. It won't appear in production. 
     onMonthPreviewed,
     startOfWeek: weekStartsOn = 0
   }) {
-    const date = inputToDate(currentDate !== null && currentDate !== void 0 ? currentDate : /* @__PURE__ */ new Date());
+    const date = inputToDate(currentDate ?? /* @__PURE__ */ new Date());
     const {
       calendar,
       viewing,
@@ -41571,10 +41525,10 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const [date, setDate] = (0, import_element127.useState)(() => (
       // Truncate the date at the minutes, see: #15495.
-      startOfMinute(inputToDate(currentTime !== null && currentTime !== void 0 ? currentTime : /* @__PURE__ */ new Date()))
+      startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date()))
     ));
     (0, import_element127.useEffect)(() => {
-      setDate(startOfMinute(inputToDate(currentTime !== null && currentTime !== void 0 ? currentTime : /* @__PURE__ */ new Date())));
+      setDate(startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
     }, [currentTime]);
     const monthOptions = [{
       value: "01",
@@ -42306,7 +42260,7 @@ This message will only show in development mode. It won't appear in production. 
         background: getGradientFromCSSColors(colors, "135deg"),
         color: "transparent"
       };
-      const tooltipText = name !== null && name !== void 0 ? name : (0, import_i18n48.sprintf)(
+      const tooltipText = name ?? (0, import_i18n48.sprintf)(
         // translators: %s: duotone code e.g: "dark-grayscale" or "7f7f7f-ffffff".
         (0, import_i18n48.__)("Duotone code: %s"),
         slug
@@ -42864,8 +42818,7 @@ This message will only show in development mode. It won't appear in production. 
       });
     };
     const getFinalValue = (value) => {
-      var _resolvePoint;
-      const resolvedValue = (_resolvePoint = resolvePoint?.(value)) !== null && _resolvePoint !== void 0 ? _resolvePoint : value;
+      const resolvedValue = resolvePoint?.(value) ?? value;
       resolvedValue.x = Math.max(0, Math.min(resolvedValue.x, 1));
       resolvedValue.y = Math.max(0, Math.min(resolvedValue.y, 1));
       const roundToTwoDecimalPlaces = (n3) => Math.round(n3 * 100) / 100;
@@ -43076,7 +43029,6 @@ This message will only show in development mode. It won't appear in production. 
       };
     })];
     const selectedOption = (0, import_element137.useMemo)(() => {
-      var _options$find;
       if (value === void 0) {
         return DEFAULT_OPTION;
       }
@@ -43086,7 +43038,7 @@ This message will only show in development mode. It won't appear in production. 
           return optionBySlug;
         }
       }
-      return (_options$find = options2.find((option) => option.value === value)) !== null && _options$find !== void 0 ? _options$find : DEFAULT_OPTION;
+      return options2.find((option) => option.value === value) ?? DEFAULT_OPTION;
     }, [value, valueMode, options2]);
     return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(StyledCustomSelectControl, {
       __next40pxDefaultSize,
@@ -43294,7 +43246,7 @@ This message will only show in development mode. It won't appear in production. 
               label: (0, import_i18n55.__)("Font size"),
               labelPosition: "top",
               hideLabelFromVision: true,
-              value: hasUnits2 ? `${valueQuantity !== null && valueQuantity !== void 0 ? valueQuantity : ""}${valueUnit !== null && valueUnit !== void 0 ? valueUnit : ""}` : resolvedValueForControls,
+              value: hasUnits2 ? `${valueQuantity ?? ""}${valueUnit ?? ""}` : resolvedValueForControls,
               onChange: (newValue) => {
                 setUserRequestedCustom(true);
                 if (newValue === void 0 || newValue === "") {
@@ -43326,7 +43278,7 @@ This message will only show in development mode. It won't appear in production. 
                   if (newValue === void 0) {
                     onChange?.(void 0);
                   } else if (hasUnits2) {
-                    onChange?.(newValue + (valueUnit !== null && valueUnit !== void 0 ? valueUnit : "px"));
+                    onChange?.(newValue + (valueUnit ?? "px"));
                   } else {
                     onChange?.(newValue);
                   }
@@ -44131,10 +44083,9 @@ This message will only show in development mode. It won't appear in production. 
       }
     }, [children]);
     if (import_element142.Children.count(children)) {
-      var _Children$map;
-      pages = (_Children$map = import_element142.Children.map(children, (child) => ({
+      pages = import_element142.Children.map(children, (child) => ({
         content: child
-      }))) !== null && _Children$map !== void 0 ? _Children$map : [];
+      })) ?? [];
     }
     const canGoBack = currentPage > 0;
     const canGoForward = currentPage < pages.length - 1;
@@ -44274,7 +44225,7 @@ This message will only show in development mode. It won't appear in production. 
     eventName
   }) {
     const target = (0, import_element145.useRef)(null);
-    const element = Object.entries(shortcuts !== null && shortcuts !== void 0 ? shortcuts : {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(KeyboardShortcut, {
+    const element = Object.entries(shortcuts ?? {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(KeyboardShortcut, {
       shortcut,
       callback,
       bindGlobal,
@@ -45118,7 +45069,7 @@ This message will only show in development mode. It won't appear in production. 
         size: "small",
         icon: close_small_default,
         label: onClose ? (0, import_i18n64.__)("Close search") : (0, import_i18n64.__)("Reset search"),
-        onClick: onClose !== null && onClose !== void 0 ? onClose : onReset
+        onClick: onClose ?? onReset
       })
     });
   }
@@ -45150,10 +45101,10 @@ This message will only show in development mode. It won't appear in production. 
       type: "search",
       size: size3,
       className: clsx_default("components-search-control", className2),
-      onChange: (nextValue) => onChange(nextValue !== null && nextValue !== void 0 ? nextValue : ""),
+      onChange: (nextValue) => onChange(nextValue ?? ""),
       autoComplete: "off",
       placeholder,
-      value: value !== null && value !== void 0 ? value : "",
+      value: value ?? "",
       prefix: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(InputControlPrefixWrapper, {
         variant: "icon",
         children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(StyledIcon, {
@@ -45875,7 +45826,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return screens.filter((s3) => s3.id !== screen.id);
   }
   function goTo(state, path, options2 = {}) {
-    var _focusSelectorsCopy2;
     const {
       focusSelectors
     } = state;
@@ -45900,8 +45850,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     let focusSelectorsCopy;
     function getFocusSelectorsCopy() {
-      var _focusSelectorsCopy;
-      focusSelectorsCopy = (_focusSelectorsCopy = focusSelectorsCopy) !== null && _focusSelectorsCopy !== void 0 ? _focusSelectorsCopy : new Map(state.focusSelectors);
+      focusSelectorsCopy = focusSelectorsCopy ?? new Map(state.focusSelectors);
       return focusSelectorsCopy;
     }
     if (focusTargetSelector && currentLocation.path) {
@@ -45924,7 +45873,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         focusTargetSelector: currentFocusSelector,
         skipFocus
       },
-      focusSelectors: (_focusSelectorsCopy2 = focusSelectorsCopy) !== null && _focusSelectorsCopy2 !== void 0 ? _focusSelectorsCopy2 : focusSelectors
+      focusSelectors: focusSelectorsCopy ?? focusSelectors
     };
   }
   function goToParent(state, options2 = {}) {
@@ -46051,15 +46000,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       currentLocation,
       matchedPath
     } = routerState;
-    const navigatorContextValue = (0, import_element164.useMemo)(() => {
-      var _matchedPath$params;
-      return {
-        location: currentLocation,
-        params: (_matchedPath$params = matchedPath?.params) !== null && _matchedPath$params !== void 0 ? _matchedPath$params : {},
-        match: matchedPath?.id,
-        ...methods
-      };
-    }, [currentLocation, matchedPath, methods]);
+    const navigatorContextValue = (0, import_element164.useMemo)(() => ({
+      location: currentLocation,
+      params: matchedPath?.params ?? {},
+      match: matchedPath?.id,
+      ...methods
+    }), [currentLocation, matchedPath, methods]);
     const cx3 = useCx();
     const classes = (0, import_element164.useMemo)(() => cx3(navigatorWrapper, className2), [className2, cx3]);
     return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(component_default, {
@@ -46225,7 +46171,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       if (!elementToFocus) {
         const [firstTabbable] = import_dom32.focus.tabbable.find(wrapperEl);
-        elementToFocus = firstTabbable !== null && firstTabbable !== void 0 ? firstTabbable : wrapperEl;
+        elementToFocus = firstTabbable ?? wrapperEl;
       }
       locationRef.current.hasRestoredFocus = true;
       elementToFocus.focus();
@@ -47233,7 +47179,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: checked,
       defaultValue: defaultChecked,
       setValue: (newValue) => {
-        onChange?.(newValue !== null && newValue !== void 0 ? newValue : void 0);
+        onChange?.(newValue ?? void 0);
       },
       rtl: (0, import_i18n73.isRTL)()
     });
@@ -50550,13 +50496,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
         if (canExpandCollapse) {
           if (keyCode === import_keycodes2.LEFT) {
-            var _activeRow$getAttribu;
             if (activeRow.getAttribute("data-expanded") === "true" || activeRow.getAttribute("aria-expanded") === "true") {
               onCollapseRow(activeRow);
               event.preventDefault();
               return;
             }
-            const level = Math.max(parseInt((_activeRow$getAttribu = activeRow?.getAttribute("aria-level")) !== null && _activeRow$getAttribu !== void 0 ? _activeRow$getAttribu : "1", 10) - 1, 1);
+            const level = Math.max(parseInt(activeRow?.getAttribute("aria-level") ?? "1", 10) - 1, 1);
             const rows = Array.from(treeGridElement.querySelectorAll('[role="row"]'));
             let parentRow = activeRow;
             const currentRowIndex = rows.indexOf(activeRow);
@@ -50777,8 +50722,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const ref = (0, import_element215.useRef)(null);
     const [isFocusingRegions, setIsFocusingRegions] = (0, import_element215.useState)(false);
     function focusRegion(offset3) {
-      var _ref$current$querySel;
-      const regions = Array.from((_ref$current$querySel = ref.current?.querySelectorAll('[role="region"][tabindex="-1"]')) !== null && _ref$current$querySel !== void 0 ? _ref$current$querySel : []);
+      const regions = Array.from(ref.current?.querySelectorAll('[role="region"][tabindex="-1"]') ?? []);
       if (!regions.length) {
         return;
       }
@@ -51206,7 +51150,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.Item can only be rendered inside a Menu component");
     }
-    const computedStore = store !== null && store !== void 0 ? store : menuContext.store;
+    const computedStore = store ?? menuContext.store;
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(Item3, {
       ref,
       ...props,
@@ -51495,8 +51439,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ref,
       modal,
       store: menuContext.store,
-      gutter: gutter !== null && gutter !== void 0 ? gutter : menuContext.store.parent ? 0 : 8,
-      shift: shift3 !== null && shift3 !== void 0 ? shift3 : menuContext.store.parent ? -4 : 0,
+      gutter: gutter ?? (menuContext.store.parent ? 0 : 8),
+      shift: shift3 ?? (menuContext.store.parent ? -4 : 0),
       hideOnHoverOutside: false,
       "data-side": appliedPlacementSide,
       "data-submenu": !!menuContext.store.parent || void 0,
@@ -51522,7 +51466,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useContextSystem(props, "Menu");
     const parentContext = (0, import_element232.useContext)(Context2);
     const rtl2 = (0, import_i18n79.isRTL)();
-    let computedPlacement = placement !== null && placement !== void 0 ? placement : parentContext?.store ? "right-start" : "bottom-start";
+    let computedPlacement = placement ?? (parentContext?.store ? "right-start" : "bottom-start");
     if (rtl2) {
       if (/right/.test(computedPlacement)) {
         computedPlacement = computedPlacement.replace("right", "left");
@@ -51851,11 +51795,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     render,
     ...otherProps
   }, ref) {
-    var _useTabsContext;
     const {
       store,
       instanceId
-    } = (_useTabsContext = useTabsContext()) !== null && _useTabsContext !== void 0 ? _useTabsContext : {};
+    } = useTabsContext() ?? {};
     if (!store) {
       true ? (0, import_warning12.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.") : void 0;
       return null;
@@ -51973,10 +51916,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     children,
     ...otherProps
   }, ref) {
-    var _useTabsContext;
     const {
       store
-    } = (_useTabsContext = useTabsContext()) !== null && _useTabsContext !== void 0 ? _useTabsContext : {};
+    } = useTabsContext() ?? {};
     const selectedId = useStoreState(store, "selectedId");
     const activeId = useStoreState(store, "activeId");
     const selectOnMove = useStoreState(store, "selectOnMove");
@@ -52013,15 +51955,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(StyledTabList, {
       ref: refs,
       store,
-      render: (props) => {
-        var _props$tabIndex;
-        return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("div", {
-          ...props,
-          // Fallback to -1 to prevent browsers from making the tablist
-          // tabbable when it is a scrolling container.
-          tabIndex: (_props$tabIndex = props.tabIndex) !== null && _props$tabIndex !== void 0 ? _props$tabIndex : -1
-        });
-      },
+      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("div", {
+        ...props,
+        // Fallback to -1 to prevent browsers from making the tablist
+        // tabbable when it is a scrolling container.
+        tabIndex: props.tabIndex ?? -1
+      }),
       onBlur,
       "data-select-on-move": selectOnMove ? "true" : "false",
       ...otherProps,
@@ -56512,7 +56451,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       mode: "single"
     });
     const onChange = (0, import_element241.useCallback)((selected2, triggerDate, modifiers, e3) => {
-      onSelect?.(selected2 !== null && selected2 !== void 0 ? selected2 : void 0, triggerDate, modifiers, e3);
+      onSelect?.(selected2 ?? void 0, triggerDate, modifiers, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
       defaultValue: defaultSelected,
@@ -56525,7 +56464,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...props,
       mode: "single",
       numberOfMonths: clampNumberOfMonths(numberOfMonths),
-      selected: selected !== null && selected !== void 0 ? selected : void 0,
+      selected: selected ?? void 0,
       onSelect: setSelected
     });
   };
@@ -56548,14 +56487,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       let previewHighlight;
       let potentialNewRange;
       if (hoveredDate < selected.from) {
-        var _selected$to;
         previewHighlight = {
           from: hoveredDate,
           to: selected.from
         };
         potentialNewRange = {
           from: hoveredDate,
-          to: (_selected$to = selected.to) !== null && _selected$to !== void 0 ? _selected$to : selected.from
+          to: selected.to ?? selected.from
         };
       } else if (selected.to && hoveredDate > selected.from && hoveredDate < selected.to) {
         previewHighlight = {
@@ -56567,9 +56505,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           to: hoveredDate
         };
       } else if (hoveredDate > selected.from) {
-        var _selected$to2;
         previewHighlight = {
-          from: (_selected$to2 = selected.to) !== null && _selected$to2 !== void 0 ? _selected$to2 : selected.from,
+          from: selected.to ?? selected.from,
           to: hoveredDate
         };
         potentialNewRange = {
@@ -56617,7 +56554,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       mode: "range"
     });
     const onChange = (0, import_element242.useCallback)((selected2, triggerDate, modifiers2, e3) => {
-      onSelect?.(selected2 !== null && selected2 !== void 0 ? selected2 : void 0, triggerDate, modifiers2, e3);
+      onSelect?.(selected2 ?? void 0, triggerDate, modifiers2, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
       defaultValue: defaultSelected,
@@ -56650,7 +56587,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       excludeDisabled,
       min: min3,
       max: max3,
-      selected: selected !== null && selected !== void 0 ? selected : void 0,
+      selected: selected ?? void 0,
       onSelect: setSelected,
       onDayMouseEnter: (date) => setHoveredDate(date),
       onDayMouseLeave: () => setHoveredDate(void 0),
@@ -56728,18 +56665,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [getValidityTarget]);
     (0, import_element243.useEffect)(() => {
-      var _validityTarget$close;
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
-        var _target$form$elements;
         event.preventDefault();
         const target = event.target;
-        const firstErrorInForm = Array.from((_target$form$elements = target.form?.elements) !== null && _target$form$elements !== void 0 ? _target$form$elements : []).find((el) => !el.validity.valid);
+        const firstErrorInForm = Array.from(target.form?.elements ?? []).find((el) => !el.validity.valid);
         if (!target.form || firstErrorInForm === target) {
           target.focus();
         }
       };
-      const radioSibilings = validityTarget?.type === "radio" && validityTarget?.name ? Array.from((_validityTarget$close = validityTarget?.closest(`.${className}`)?.querySelectorAll(`input[type="radio"][name="${validityTarget?.name}"]`)) !== null && _validityTarget$close !== void 0 ? _validityTarget$close : []).filter((sibling) => sibling !== validityTarget) : [];
+      const radioSibilings = validityTarget?.type === "radio" && validityTarget?.name ? Array.from(validityTarget?.closest(`.${className}`)?.querySelectorAll(`input[type="radio"][name="${validityTarget?.name}"]`) ?? []).filter((sibling) => sibling !== validityTarget) : [];
       validityTarget?.addEventListener("invalid", suppressNativePopover);
       radioSibilings.forEach((sibling) => sibling.addEventListener("invalid", suppressNativePopover));
       return () => {
@@ -56775,8 +56710,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           break;
         }
         case "invalid": {
-          var _customValidity$messa;
-          validityTarget?.setCustomValidity((_customValidity$messa = customValidity.message) !== null && _customValidity$messa !== void 0 ? _customValidity$messa : "");
+          validityTarget?.setCustomValidity(customValidity.message ?? "");
           setErrorMessage(validityTarget?.validationMessage);
           setStatusMessage(void 0);
           break;
@@ -56877,7 +56811,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     (0, import_element245.useEffect)(() => {
       const input = validityTargetRef.current?.querySelector('input[role="combobox"]');
       if (input) {
-        input.required = required !== null && required !== void 0 ? required : false;
+        input.required = required ?? false;
       }
     }, [required]);
     return (
@@ -57112,7 +57046,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
     (0, import_element253.useEffect)(() => {
       if (validityTargetRef.current) {
-        validityTargetRef.current.required = required !== null && required !== void 0 ? required : false;
+        validityTargetRef.current.required = required ?? false;
       }
     }, [required]);
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {

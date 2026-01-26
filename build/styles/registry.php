@@ -43,14 +43,14 @@ return array(
 		'dependencies' => array(),
 	),
 	array(
-		'handle' => 'wp-widgets',
-		'path' => 'widgets/style',
-		'dependencies' => array('wp-block-editor', 'wp-components'),
-	),
-	array(
 		'handle' => 'wp-commands',
 		'path' => 'commands/style',
 		'dependencies' => array('wp-components'),
+	),
+	array(
+		'handle' => 'wp-widgets',
+		'path' => 'widgets/style',
+		'dependencies' => array('wp-block-editor', 'wp-components'),
 	),
 	array(
 		'handle' => 'wp-format-library',
@@ -63,14 +63,14 @@ return array(
 		'dependencies' => array('wp-block-editor', 'wp-components', 'wp-editor'),
 	),
 	array(
-		'handle' => 'wp-block-editor',
-		'path' => 'block-editor/style',
-		'dependencies' => array('wp-commands', 'wp-components', 'wp-preferences', 'wp-theme'),
-	),
-	array(
 		'handle' => 'wp-media-utils',
 		'path' => 'media-utils/style',
 		'dependencies' => array('wp-components', 'wp-theme'),
+	),
+	array(
+		'handle' => 'wp-block-editor',
+		'path' => 'block-editor/style',
+		'dependencies' => array('wp-commands', 'wp-components', 'wp-preferences', 'wp-theme'),
 	),
 	array(
 		'handle' => 'wp-customize-widgets',
