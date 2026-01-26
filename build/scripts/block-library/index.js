@@ -18198,8 +18198,12 @@ var wp;
 
   // packages/block-library/build-module/cover/edit/embed-video-url-input.mjs
   var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
-  function EmbedVideoUrlInput({ onSubmit, onClose }) {
-    const [url, setUrl] = (0, import_element21.useState)("");
+  function EmbedVideoUrlInput({
+    onSubmit,
+    onClose,
+    initialUrl = ""
+  }) {
+    const [url, setUrl] = (0, import_element21.useState)(initialUrl);
     const [error, setError] = (0, import_element21.useState)("");
     const handleConfirm = () => {
       if (!url) {
@@ -18263,7 +18267,14 @@ var wp;
     onSelectEmbedUrl,
     blockEditingMode
   }) {
-    const { contentPosition, id, useFeaturedImage, minHeight, minHeightUnit } = attributes2;
+    const {
+      contentPosition,
+      id,
+      useFeaturedImage,
+      minHeight,
+      minHeightUnit,
+      backgroundType
+    } = attributes2;
     const { hasInnerBlocks, url } = currentSettings;
     const [prevMinHeightValue, setPrevMinHeightValue] = (0, import_element22.useState)(minHeight);
     const [prevMinHeightUnit, setPrevMinHeightUnit] = (0, import_element22.useState)(minHeightUnit);
@@ -18351,7 +18362,8 @@ var wp;
           onSubmit: (embedUrl) => {
             onSelectEmbedUrl(embedUrl);
           },
-          onClose: () => setIsEmbedUrlInputOpen(false)
+          onClose: () => setIsEmbedUrlInputOpen(false),
+          initialUrl: backgroundType === EMBED_VIDEO_BACKGROUND_TYPE ? url : ""
         }
       )
     ] });
