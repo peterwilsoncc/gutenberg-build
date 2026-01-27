@@ -21988,6 +21988,7 @@ var wp;
     const settings2 = useSpecificEditorSettings();
     const { initialBlockSelection, ...editorSettings } = settings2;
     const { resetZoomLevel } = unlock((0, import_data46.useDispatch)(import_block_editor18.store));
+    const { setCurrentRevisionId } = unlock((0, import_data46.useDispatch)(import_editor19.store));
     const { createSuccessNotice } = (0, import_data46.useDispatch)(import_notices3.store);
     const history = useHistory11();
     const onActionPerformed = (0, import_element55.useCallback)(
@@ -22088,6 +22089,7 @@ var wp;
                       tooltipPosition: "middle right",
                       onClick: () => {
                         resetZoomLevel();
+                        setCurrentRevisionId(null);
                         history.navigate(
                           getNavigationPath(
                             location,

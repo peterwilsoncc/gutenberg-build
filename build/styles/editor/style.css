@@ -4989,6 +4989,9 @@ div.dataviews-view-list {
     margin-inline-end: 8px;
   }
 }
+.editor-revisions-header .editor-header__center {
+  clip-path: none;
+}
 
 /**
  * Buttons on the right side
@@ -5839,6 +5842,25 @@ div.dataviews-view-list {
     transform: translateX(0%);
   }
 }
+.editor-revisions-header__slider {
+  width: 100%;
+}
+.editor-revisions-header__slider .components-range-control__tooltip {
+  white-space: nowrap;
+}
+
+.editor-revisions-header__no-revisions {
+  color: #757575;
+  font-size: 13px;
+}
+
+.editor-revisions-canvas__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 .editor-post-saved-state {
   display: flex;
   align-items: center;
@@ -6310,6 +6332,11 @@ textarea.editor-post-text-editor::placeholder {
 .editor-sidebar *::before,
 .editor-sidebar *::after {
   box-sizing: inherit;
+}
+.editor-sidebar__revisions-block-message {
+  padding: 16px;
+  color: #757575;
+  font-size: 13px;
 }
 
 .editor-site-discussion-dropdown__content .components-popover__content {

@@ -7151,9 +7151,8 @@ var wp;
   }) {
     const caption = attributes2[attributeKey];
     const prevCaption = (0, import_compose4.usePrevious)(caption);
-    const { PrivateRichText: RichText68 } = unlock(import_block_editor14.privateApis);
-    const isCaptionEmpty = RichText68.isEmpty(caption);
-    const isPrevCaptionEmpty = RichText68.isEmpty(prevCaption);
+    const isCaptionEmpty = import_block_editor14.RichText.isEmpty(caption);
+    const isPrevCaptionEmpty = import_block_editor14.RichText.isEmpty(prevCaption);
     const [showCaption, setShowCaption] = (0, import_element6.useState)(!isCaptionEmpty);
     (0, import_element6.useEffect)(() => {
       if (!isCaptionEmpty && isPrevCaptionEmpty) {
@@ -7190,8 +7189,8 @@ var wp;
           label: showCaption ? removeLabel : addLabel
         }
       ) }),
-      showCaption && (!RichText68.isEmpty(caption) || isSelected) && /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
-        RichText68,
+      showCaption && (!import_block_editor14.RichText.isEmpty(caption) || isSelected) && /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+        import_block_editor14.RichText,
         {
           identifier: attributeKey,
           tagName,
