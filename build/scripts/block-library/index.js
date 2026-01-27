@@ -10081,6 +10081,9 @@ var wp;
       if (context === "list-view" && (customName || hasContent)) {
         return customName || text;
       }
+      if (context === "breadcrumb" && customName) {
+        return customName;
+      }
     }
   };
   if (window.__experimentalContentOnlyInspectorFields) {
@@ -20611,6 +20614,9 @@ var wp;
       if (context === "list-view" && (customName || hasSummary)) {
         return customName || summary;
       }
+      if (context === "breadcrumb" && customName) {
+        return customName;
+      }
       if (context === "accessibility") {
         return !hasSummary ? (0, import_i18n56.__)("Details. Empty.") : (0, import_i18n56.sprintf)(
           /* translators: %s: accessibility text; summary title. */
@@ -28222,6 +28228,9 @@ ${url}
       if (context === "list-view" && (customName || hasContent)) {
         return customName || content;
       }
+      if (context === "breadcrumb" && customName) {
+        return customName;
+      }
       if (context === "accessibility") {
         return !hasContent ? (0, import_i18n82.sprintf)(
           /* translators: accessibility text. %s: heading level. */
@@ -31797,7 +31806,7 @@ ${js}
     },
     __experimentalLabel(attributes2, { context }) {
       const customName = attributes2?.metadata?.name;
-      if (context === "list-view" && customName) {
+      if ((context === "list-view" || context === "breadcrumb") && customName) {
         return customName;
       }
       if (context === "accessibility") {
@@ -34751,6 +34760,9 @@ ${js}
       if (context === "list-view" && (customName || hasContent)) {
         return customName || content;
       }
+      if (context === "breadcrumb" && customName) {
+        return customName;
+      }
     }
   };
   if (window.__experimentalContentOnlyInspectorFields) {
@@ -37330,7 +37342,7 @@ ${js}
     example: {},
     __experimentalLabel(attributes2, { context }) {
       const customName = attributes2?.metadata?.name;
-      if (context === "list-view" && customName) {
+      if ((context === "list-view" || context === "breadcrumb") && customName) {
         return customName;
       }
       if (context === "accessibility") {
@@ -44073,8 +44085,8 @@ ${js}
     __experimentalLabel(attributes2, { context }) {
       const { label } = attributes2;
       const customName = attributes2?.metadata?.name;
-      if (context === "list-view" && (customName || label)) {
-        return attributes2?.metadata?.name || label;
+      if ((context === "list-view" || context === "breadcrumb") && customName) {
+        return customName;
       }
       return label;
     },
@@ -46141,7 +46153,7 @@ ${js}
     },
     __experimentalLabel(attributes2, { context }) {
       const customName = attributes2?.metadata?.name;
-      if (context === "list-view" && customName) {
+      if ((context === "list-view" || context === "breadcrumb") && customName) {
         return customName;
       }
       if (context === "accessibility") {

@@ -17901,7 +17901,8 @@ var wp;
                   BlockTitle,
                   {
                     clientId: parentClientId,
-                    maximumLength: 35
+                    maximumLength: 35,
+                    context: "breadcrumb"
                   }
                 )
               }
@@ -17919,7 +17920,14 @@ var wp;
             {
               className: "block-editor-block-breadcrumb__current",
               "aria-current": "true",
-              children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(BlockTitle, { clientId, maximumLength: 35 })
+              children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+                BlockTitle,
+                {
+                  clientId,
+                  maximumLength: 35,
+                  context: "breadcrumb"
+                }
+              )
             }
           )
         ]
@@ -73955,7 +73963,7 @@ var wp;
     if (supportsBlockNaming) {
       settings2.__experimentalLabel = (attributes, { context }) => {
         const { metadata } = attributes;
-        if (context === "list-view" && metadata?.name) {
+        if ((context === "list-view" || context === "breadcrumb") && metadata?.name) {
           return metadata.name;
         }
       };
