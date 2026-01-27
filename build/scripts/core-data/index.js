@@ -11942,9 +11942,6 @@ var wp;
   // packages/sync/build-module/providers/index.mjs
   var import_hooks = __toESM(require_hooks(), 1);
   var providerCreators = null;
-  function getDefaultProviderCreators() {
-    return [];
-  }
   function isProviderCreator(creator) {
     return "function" === typeof creator;
   }
@@ -11954,7 +11951,8 @@ var wp;
     }
     const filteredProviderCreators = (0, import_hooks.applyFilters)(
       "sync.providers",
-      getDefaultProviderCreators()
+      []
+      // Replace with `getDefaultProviderCreators()` to enable sync
     );
     if (!Array.isArray(filteredProviderCreators)) {
       providerCreators = [];
