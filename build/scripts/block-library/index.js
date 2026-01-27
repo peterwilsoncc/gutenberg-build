@@ -15363,9 +15363,6 @@ var wp;
     textdomain: "default",
     usesContext: ["postId", "postType"],
     attributes: {
-      textAlign: {
-        type: "string"
-      },
       showPostTitle: {
         type: "boolean",
         default: true
@@ -15406,6 +15403,7 @@ var wp;
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -15435,26 +15433,21 @@ var wp;
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
   var import_url4 = __toESM(require_url(), 1);
   var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
-  function Edit12({
-    attributes: {
-      textAlign,
+  function Edit12(props) {
+    useDeprecatedTextAlign(props);
+    const { attributes: attributes2, setAttributes, context } = props;
+    const {
       showPostTitle,
       showCommentsCount,
-      level,
+      level = 2,
       levelOptions
-    },
-    setAttributes,
-    context: { postType, postId }
-  }) {
+    } = attributes2;
+    const { postId, postType } = context;
     const TagName2 = "h" + level;
     const [commentsCount, setCommentsCount] = (0, import_element18.useState)();
     const [rawTitle] = (0, import_core_data14.useEntityProp)("postType", postType, "title", postId);
     const isSiteEditor = typeof postId === "undefined";
-    const blockProps = (0, import_block_editor60.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+    const blockProps = (0, import_block_editor60.useBlockProps)();
     const {
       threadCommentsDepth,
       threadComments,
@@ -15491,23 +15484,14 @@ var wp;
         setCommentsCount(0);
       });
     }, [postId]);
-    const blockControls = /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(import_block_editor60.BlockControls, { group: "block", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
-        import_block_editor60.AlignmentControl,
-        {
-          value: textAlign,
-          onChange: (newAlign) => setAttributes({ textAlign: newAlign })
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
-        import_block_editor60.HeadingLevelDropdown,
-        {
-          value: level,
-          options: levelOptions,
-          onChange: (newLevel) => setAttributes({ level: newLevel })
-        }
-      )
-    ] });
+    const blockControls = /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(import_block_editor60.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
+      import_block_editor60.HeadingLevelDropdown,
+      {
+        value: level,
+        options: levelOptions,
+        onChange: (newLevel) => setAttributes({ level: newLevel })
+      }
+    ) });
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(import_block_editor60.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(
       import_components29.__experimentalToolsPanel,
       {
@@ -15607,6 +15591,79 @@ var wp;
   }
 
   // packages/block-library/build-module/comments-title/deprecated.mjs
+  var v23 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      showPostTitle: {
+        type: "boolean",
+        default: true
+      },
+      showCommentsCount: {
+        type: "boolean",
+        default: true
+      },
+      level: {
+        type: "number",
+        default: 2
+      },
+      levelOptions: {
+        type: "array"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      html: false,
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      },
+      color: {
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true,
+          __experimentalFontFamily: true,
+          __experimentalFontStyle: true,
+          __experimentalFontWeight: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    migrate: (oldAttributes) => {
+      const { singleCommentLabel, multipleCommentsLabel, ...newAttributes } = oldAttributes;
+      return migrate_text_align_default(newAttributes);
+    },
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || !!attributes2.className?.match(
+        /\bhas-text-align-(left|center|right)\b/
+      );
+    },
+    save: () => null
+  };
   var v110 = {
     attributes: {
       textAlign: {
@@ -15677,12 +15734,12 @@ var wp;
     },
     migrate: (oldAttributes) => {
       const { singleCommentLabel, multipleCommentsLabel, ...newAttributes } = oldAttributes;
-      return newAttributes;
+      return migrate_text_align_default(newAttributes);
     },
     isEligible: ({ multipleCommentsLabel, singleCommentLabel }) => multipleCommentsLabel || singleCommentLabel,
     save: () => null
   };
-  var deprecated_default13 = [v110];
+  var deprecated_default13 = [v23, v110];
 
   // packages/block-library/build-module/comments-title/index.mjs
   var { name: name29 } = block_default30;
@@ -17387,7 +17444,7 @@ var wp;
       ];
     }
   };
-  var v23 = {
+  var v24 = {
     attributes: {
       ...blockAttributes2,
       title: {
@@ -17526,7 +17583,7 @@ var wp;
       ];
     }
   };
-  var deprecated_default14 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v23, v111];
+  var deprecated_default14 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v24, v111];
 
   // packages/block-library/build-module/cover/edit/index.mjs
   var import_core_data16 = __toESM(require_core_data(), 1);
@@ -21700,7 +21757,7 @@ ${url}
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes3 } = block_default7;
-  var v24 = {
+  var v25 = {
     attributes: blockAttributes3,
     save({ attributes: attributes2 }) {
       const { url, caption, type, providerNameSlug } = attributes2;
@@ -21738,7 +21795,7 @@ ${url}
       ] });
     }
   };
-  var deprecated5 = [v24, v113];
+  var deprecated5 = [v25, v113];
   var deprecated_default15 = deprecated5;
 
   // packages/block-library/build-module/embed/index.mjs
@@ -21879,7 +21936,7 @@ ${url}
       ] });
     }
   };
-  var v25 = {
+  var v26 = {
     attributes: {
       id: {
         type: "number"
@@ -22084,7 +22141,7 @@ ${url}
       ] });
     }
   };
-  var deprecated6 = [v32, v25, v114];
+  var deprecated6 = [v32, v26, v114];
   var deprecated_default16 = deprecated6;
 
   // packages/block-library/build-module/file/edit.mjs
@@ -23514,7 +23571,7 @@ ${url}
   var getNameFromLabelV1 = (content) => {
     return (0, import_remove_accents.default)((0, import_dom2.__unstableStripHTML)(content)).replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase().replace(/(^-+)|(-+$)/g, "");
   };
-  var v26 = {
+  var v27 = {
     attributes: {
       type: {
         type: "string",
@@ -23720,7 +23777,7 @@ ${url}
       );
     }
   };
-  var deprecated7 = [v26, v116];
+  var deprecated7 = [v27, v116];
   var deprecated_default18 = deprecated7;
 
   // packages/block-library/build-module/form-input/edit.mjs
@@ -25093,7 +25150,7 @@ ${url}
       return runV2Migration(attributes2);
     }
   };
-  var v27 = {
+  var v28 = {
     attributes: {
       images: {
         type: "array",
@@ -25294,7 +25351,7 @@ ${url}
       return runV2Migration(attributes2);
     }
   };
-  var deprecated_default19 = [v72, v62, v52, v42, v33, v27, v117];
+  var deprecated_default19 = [v72, v62, v52, v42, v33, v28, v117];
 
   // packages/block-library/build-module/gallery/edit.mjs
   var import_components45 = __toESM(require_components(), 1);
@@ -27620,7 +27677,7 @@ ${url}
       );
     }
   };
-  var v28 = {
+  var v29 = {
     attributes: {
       ...blockAttributes4,
       customTextColor: {
@@ -27874,7 +27931,7 @@ ${url}
       );
     }
   };
-  var deprecated9 = [v63, v53, v43, v34, v28, v118];
+  var deprecated9 = [v63, v53, v43, v34, v29, v118];
   var deprecated_default21 = deprecated9;
 
   // packages/block-library/build-module/heading/edit.mjs
@@ -29024,7 +29081,7 @@ ${js}
       );
     }
   };
-  var v29 = {
+  var v210 = {
     attributes: {
       url: {
         type: "string",
@@ -29964,7 +30021,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("figure", { ...import_block_editor109.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var deprecated_default22 = [v82, v73, v64, v54, v44, v35, v29, v119];
+  var deprecated_default22 = [v82, v73, v64, v54, v44, v35, v210, v119];
 
   // packages/block-library/build-module/image/edit.mjs
   var import_blob12 = __toESM(require_blob(), 1);
@@ -33211,7 +33268,7 @@ ${js}
     },
     migrate: migrateToListV2
   };
-  var v210 = {
+  var v211 = {
     attributes: {
       ordered: {
         type: "boolean",
@@ -33370,7 +33427,7 @@ ${js}
       );
     }
   };
-  var deprecated_default25 = [v36, v210, v121, v0];
+  var deprecated_default25 = [v36, v211, v121, v0];
 
   // packages/block-library/build-module/list/edit.mjs
   var import_block_editor118 = __toESM(require_block_editor(), 1);
@@ -35743,7 +35800,7 @@ ${js}
       ] });
     }
   };
-  var v211 = {
+  var v212 = {
     attributes: {
       ...v0Attributes,
       backgroundColor: {
@@ -35883,7 +35940,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default27 = [v74, v65, v55, v45, v37, v211, v124];
+  var deprecated_default27 = [v74, v65, v55, v45, v37, v212, v124];
 
   // packages/block-library/build-module/media-text/edit.mjs
   var import_i18n104 = __toESM(require_i18n(), 1);
@@ -48197,7 +48254,7 @@ ${js}
       return attributes2?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes2?.metadata?.bindings?.datetime?.args?.key;
     }
   };
-  var v212 = {
+  var v213 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -48326,7 +48383,7 @@ ${js}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default30 = [v38, v212, v125];
+  var deprecated_default30 = [v38, v213, v125];
 
   // packages/block-library/build-module/post-date/variations.mjs
   var import_i18n162 = __toESM(require_i18n(), 1);
@@ -51735,7 +51792,7 @@ ${js}
       };
     }
   };
-  var v213 = {
+  var v214 = {
     attributes: blockAttributes6,
     save({ attributes: attributes2 }) {
       const {
@@ -51877,7 +51934,7 @@ ${js}
       };
     }
   };
-  var deprecated_default32 = [v57, v47, v39, v213, v127, v02];
+  var deprecated_default32 = [v57, v47, v39, v214, v127, v02];
 
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n177 = __toESM(require_i18n(), 1);
@@ -54430,7 +54487,7 @@ ${js}
       return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_block_editor208.InnerBlocks.Content, {});
     }
   };
-  var v214 = {
+  var v215 = {
     attributes: {
       queryId: {
         type: "number"
@@ -54736,7 +54793,7 @@ ${js}
       return migrateDisplayLayout(withTaxQuery, innerBlocks);
     }
   };
-  var deprecated14 = [v67, v58, v48, v310, v214, v128];
+  var deprecated14 = [v67, v58, v48, v310, v215, v128];
   var deprecated_default33 = deprecated14;
 
   // packages/block-library/build-module/query/index.mjs
@@ -56384,7 +56441,7 @@ ${js}
       return migrateTextAlign3(...migrateToQuoteV2(attributes2));
     }
   };
-  var v215 = {
+  var v216 = {
     attributes: {
       value: {
         type: "string",
@@ -56506,7 +56563,7 @@ ${js}
       );
     }
   };
-  var deprecated_default36 = [v49, v311, v215, v130, v03];
+  var deprecated_default36 = [v49, v311, v216, v130, v03];
 
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n208 = __toESM(require_i18n(), 1);
@@ -57141,7 +57198,7 @@ ${js}
 
   // packages/block-library/build-module/block/deprecated.mjs
   var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
-  var v216 = {
+  var v217 = {
     attributes: {
       ref: {
         type: "number"
@@ -57243,7 +57300,7 @@ ${js}
       };
     }
   };
-  var deprecated_default37 = [v216, v131];
+  var deprecated_default37 = [v217, v131];
 
   // packages/block-library/build-module/block/index.mjs
   var { name: name90 } = block_default89;
@@ -62960,7 +63017,7 @@ ${js}
       attribute: "data-align"
     }
   };
-  var v217 = {
+  var v218 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -63203,7 +63260,7 @@ ${js}
       ] });
     }
   };
-  var deprecated_default43 = [v410, v312, v217, v136];
+  var deprecated_default43 = [v410, v312, v218, v136];
 
   // packages/block-library/build-module/table/edit.mjs
   var import_element119 = __toESM(require_element(), 1);
@@ -69622,7 +69679,7 @@ ${js}
     },
     migrate: migrate_text_align_default
   };
-  var v218 = {
+  var v219 = {
     attributes: {
       content: {
         type: "string",
@@ -69729,7 +69786,7 @@ ${js}
       );
     }
   };
-  var deprecated_default45 = [v313, v218, v137];
+  var deprecated_default45 = [v313, v219, v137];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n261 = __toESM(require_i18n(), 1);

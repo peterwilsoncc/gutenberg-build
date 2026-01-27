@@ -2101,9 +2101,6 @@ return array(
 			'postType'
 		),
 		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'showPostTitle' => array(
 				'type' => 'boolean',
 				'default' => true
@@ -2144,6 +2141,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,
