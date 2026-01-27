@@ -1430,18 +1430,13 @@ function useRender(params) {
 
 // packages/ui/build-module/stack/stack.mjs
 var import_element3 = __toESM(require_element(), 1);
-var css = `@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;
-
-@layer wp-ui-components {
-	.style-module__stack__Gc4EG {
-		display: flex;
-	}
+if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "71d20935c2");
+  style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
+  document.head.appendChild(style);
 }
-`;
-document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
-var style_default = {
-  "stack": "style-module__stack__Gc4EG"
-};
+var style_default = { "stack": "_19ce0419607e1896__stack" };
 var Stack = (0, import_element3.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
   const style = {
     gap: gap && `var(--wpds-dimension-gap-${gap})`,
@@ -16803,52 +16798,12 @@ var AddNavigationModal = ({
 };
 
 // routes/navigation-list/style.scss
-var css2 = `/**
- * SCSS Variables.
- *
- * Please use variables from this sheet to ensure consistency across the UI.
- * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
- * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
- */
-/**
- * Colors
- */
-/**
- * Fonts & basic variables.
- */
-/**
- * Typography
- */
-/**
- * Grid System.
- * https://make.wordpress.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-wordpress/
- */
-/**
- * Radius scale.
- */
-/**
- * Elevation scale.
- */
-/**
- * Dimensions.
- */
-/**
- * Mobile specific styles
- */
-/**
- * Editor styles.
- */
-/**
- * Block & Editor UI.
- */
-/**
- * Block paddings.
- */
-/**
- * React Native specific.
- * These variables do not appear to be used anywhere else.
- */`;
-document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css2));
+if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='4cd54e4f28']")) {
+  const style = document.createElement("style");
+  style.setAttribute("data-wp-hash", "4cd54e4f28");
+  style.appendChild(document.createTextNode(""));
+  document.head.appendChild(style);
+}
 
 // routes/navigation-list/stage.tsx
 var { useEntityRecordsWithPermissions } = unlock2(import_core_data2.privateApis);

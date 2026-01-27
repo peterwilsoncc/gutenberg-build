@@ -8859,12 +8859,12 @@ var wp;
     }
     return config2;
   }
-  function processCSSNesting(css2, blockSelector) {
+  function processCSSNesting(css, blockSelector) {
     let processedCSS = "";
-    if (!css2 || css2.trim() === "") {
+    if (!css || css.trim() === "") {
       return processedCSS;
     }
-    const parts = css2.split("&");
+    const parts = css.split("&");
     parts.forEach((part) => {
       if (!part || part.trim() === "") {
         return;
@@ -20566,13 +20566,13 @@ var wp;
               }
             });
           }
-          const css2 = userStyles?.css || variation.styles?.css ? {
+          const css = userStyles?.css || variation.styles?.css ? {
             css: `${variation.styles?.css || ""} ${userStyles?.css || ""}`
           } : {};
           const blocks = Object.keys(blockStyles).length > 0 ? { blocks: blockStyles } : {};
           const styles = {
             ...variation.styles,
-            ...css2,
+            ...css,
             ...blocks
           };
           return {
@@ -24370,18 +24370,13 @@ var wp;
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element67 = __toESM(require_element(), 1);
-  var css = `@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;
-
-@layer wp-ui-components {
-	.style-module__stack__Gc4EG {
-		display: flex;
-	}
-}
-`;
-  document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
-  var style_default = {
-    "stack": "style-module__stack__Gc4EG"
-  };
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-wp-hash", "71d20935c2");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
+    document.head.appendChild(style);
+  }
+  var style_default = { "stack": "_19ce0419607e1896__stack" };
   var Stack = (0, import_element67.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
     const style = {
       gap: gap && `var(--wpds-dimension-gap-${gap})`,

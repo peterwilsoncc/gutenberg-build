@@ -11947,12 +11947,12 @@ var wp;
     }
     return config;
   }
-  function processCSSNesting(css2, blockSelector) {
+  function processCSSNesting(css, blockSelector) {
     let processedCSS = "";
-    if (!css2 || css2.trim() === "") {
+    if (!css || css.trim() === "") {
       return processedCSS;
     }
-    const parts = css2.split("&");
+    const parts = css.split("&");
     parts.forEach((part) => {
       if (!part || part.trim() === "") {
         return;
@@ -30976,13 +30976,13 @@ var wp;
               }
             });
           }
-          const css2 = userStyles?.css || variation.styles?.css ? {
+          const css = userStyles?.css || variation.styles?.css ? {
             css: `${variation.styles?.css || ""} ${userStyles?.css || ""}`
           } : {};
           const blocks = Object.keys(blockStyles).length > 0 ? { blocks: blockStyles } : {};
           const styles = {
             ...variation.styles,
-            ...css2,
+            ...css,
             ...blocks
           };
           return {
@@ -47372,8 +47372,8 @@ var wp;
   var containValues = ["paint", "layout", "strict", "content"];
   function isContainingBlock(elementOrCss) {
     const webkit = isWebKit();
-    const css2 = isElement(elementOrCss) ? getComputedStyle2(elementOrCss) : elementOrCss;
-    return transformProperties.some((value) => css2[value] ? css2[value] !== "none" : false) || (css2.containerType ? css2.containerType !== "normal" : false) || !webkit && (css2.backdropFilter ? css2.backdropFilter !== "none" : false) || !webkit && (css2.filter ? css2.filter !== "none" : false) || willChangeValues.some((value) => (css2.willChange || "").includes(value)) || containValues.some((value) => (css2.contain || "").includes(value));
+    const css = isElement(elementOrCss) ? getComputedStyle2(elementOrCss) : elementOrCss;
+    return transformProperties.some((value) => css[value] ? css[value] !== "none" : false) || (css.containerType ? css.containerType !== "normal" : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== "none" : false) || !webkit && (css.filter ? css.filter !== "none" : false) || willChangeValues.some((value) => (css.willChange || "").includes(value)) || containValues.some((value) => (css.contain || "").includes(value));
   }
   function getContainingBlock(element) {
     let currentNode = getParentNode(element);
@@ -47714,9 +47714,9 @@ var wp;
 
   // node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs
   function getCssDimensions(element) {
-    const css2 = getComputedStyle2(element);
-    let width = parseFloat(css2.width) || 0;
-    let height = parseFloat(css2.height) || 0;
+    const css = getComputedStyle2(element);
+    let width = parseFloat(css.width) || 0;
+    let height = parseFloat(css.height) || 0;
     const hasOffset = isHTMLElement(element);
     const offsetWidth = hasOffset ? element.offsetWidth : width;
     const offsetHeight = hasOffset ? element.offsetHeight : height;
@@ -47810,9 +47810,9 @@ var wp;
       while (currentIFrame && offsetParent && offsetWin !== currentWin) {
         const iframeScale = getScale(currentIFrame);
         const iframeRect = currentIFrame.getBoundingClientRect();
-        const css2 = getComputedStyle2(currentIFrame);
-        const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css2.paddingLeft)) * iframeScale.x;
-        const top = iframeRect.top + (currentIFrame.clientTop + parseFloat(css2.paddingTop)) * iframeScale.y;
+        const css = getComputedStyle2(currentIFrame);
+        const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
+        const top = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
         x2 *= iframeScale.x;
         y3 *= iframeScale.y;
         width *= iframeScale.x;
@@ -48448,18 +48448,13 @@ var wp;
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element161 = __toESM(require_element(), 1);
-  var css = `@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;
-
-@layer wp-ui-components {
-	.style-module__stack__Gc4EG {
-		display: flex;
-	}
-}
-`;
-  document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
-  var style_default = {
-    "stack": "style-module__stack__Gc4EG"
-  };
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-wp-hash", "71d20935c2");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
+    document.head.appendChild(style);
+  }
+  var style_default = { "stack": "_19ce0419607e1896__stack" };
   var Stack = (0, import_element161.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
     const style = {
       gap: gap && `var(--wpds-dimension-gap-${gap})`,

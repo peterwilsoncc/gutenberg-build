@@ -2338,12 +2338,12 @@ var wp;
         }
         showSourceCode(color) {
           if (!this.source) return "";
-          let css3 = this.source;
+          let css = this.source;
           if (color == null) color = pico.isColorSupported;
           if (terminalHighlight) {
-            if (color) css3 = terminalHighlight(css3);
+            if (color) css = terminalHighlight(css);
           }
-          let lines = css3.split(/\r?\n/);
+          let lines = css.split(/\r?\n/);
           let start2 = Math.max(this.line - 3, 0);
           let end = Math.min(this.line + 2, lines.length);
           let maxWidth = String(end).length;
@@ -2399,9 +2399,9 @@ var wp;
         }
       }
       var PreviousMap = class {
-        constructor(css3, opts) {
+        constructor(css, opts) {
           if (opts.map === false) return;
-          this.loadAnnotation(css3);
+          this.loadAnnotation(css);
           this.inline = this.startWith(this.annotation, "data:");
           let prev = opts.map ? opts.map.prev : void 0;
           let text = this.loadMap(opts.from, prev);
@@ -2438,13 +2438,13 @@ var wp;
           if (typeof map !== "object") return false;
           return typeof map.mappings === "string" || typeof map._mappings === "string" || Array.isArray(map.sections);
         }
-        loadAnnotation(css3) {
-          let comments = css3.match(/\/\*\s*# sourceMappingURL=/gm);
+        loadAnnotation(css) {
+          let comments = css.match(/\/\*\s*# sourceMappingURL=/gm);
           if (!comments) return;
-          let start2 = css3.lastIndexOf(comments.pop());
-          let end = css3.indexOf("*/", start2);
+          let start2 = css.lastIndexOf(comments.pop());
+          let end = css.indexOf("*/", start2);
           if (start2 > -1 && end > -1) {
-            this.annotation = this.getAnnotationURL(css3.substring(start2, end));
+            this.annotation = this.getAnnotationURL(css.substring(start2, end));
           }
         }
         loadFile(path) {
@@ -2517,11 +2517,11 @@ var wp;
       var sourceMapAvailable = Boolean(SourceMapConsumer && SourceMapGenerator);
       var pathAvailable = Boolean(resolve && isAbsolute);
       var Input = class {
-        constructor(css3, opts = {}) {
-          if (css3 === null || typeof css3 === "undefined" || typeof css3 === "object" && !css3.toString) {
-            throw new Error(`PostCSS received ${css3} instead of CSS string`);
+        constructor(css, opts = {}) {
+          if (css === null || typeof css === "undefined" || typeof css === "object" && !css.toString) {
+            throw new Error(`PostCSS received ${css} instead of CSS string`);
           }
-          this.css = css3.toString();
+          this.css = css.toString();
           if (this.css[0] === "\uFEFF" || this.css[0] === "\uFFFE") {
             this.hasBOM = true;
             this.css = this.css.slice(1);
@@ -4142,11 +4142,11 @@ var wp;
       var RE_BAD_BRACKET = /.[\r\n"'(/\\]/;
       var RE_HEX_ESCAPE = /[\da-f]/i;
       module.exports = function tokenizer(input, options = {}) {
-        let css3 = input.css.valueOf();
+        let css = input.css.valueOf();
         let ignore = options.ignoreErrors;
         let code, next, quote, content, escape;
         let escaped, escapePos, prev, n2, currentToken;
-        let length = css3.length;
+        let length = css.length;
         let pos = 0;
         let buffer = [];
         let returned = [];
@@ -4163,7 +4163,7 @@ var wp;
           if (returned.length) return returned.pop();
           if (pos >= length) return;
           let ignoreUnclosed = opts ? opts.ignoreUnclosed : false;
-          code = css3.charCodeAt(pos);
+          code = css.charCodeAt(pos);
           switch (code) {
             case NEWLINE:
             case SPACE3:
@@ -4173,9 +4173,9 @@ var wp;
               next = pos;
               do {
                 next += 1;
-                code = css3.charCodeAt(next);
+                code = css.charCodeAt(next);
               } while (code === SPACE3 || code === NEWLINE || code === TAB5 || code === CR || code === FEED);
-              currentToken = ["space", css3.slice(pos, next)];
+              currentToken = ["space", css.slice(pos, next)];
               pos = next - 1;
               break;
             }
@@ -4192,12 +4192,12 @@ var wp;
             }
             case OPEN_PARENTHESES: {
               prev = buffer.length ? buffer.pop()[1] : "";
-              n2 = css3.charCodeAt(pos + 1);
+              n2 = css.charCodeAt(pos + 1);
               if (prev === "url" && n2 !== SINGLE_QUOTE && n2 !== DOUBLE_QUOTE && n2 !== SPACE3 && n2 !== NEWLINE && n2 !== TAB5 && n2 !== FEED && n2 !== CR) {
                 next = pos;
                 do {
                   escaped = false;
-                  next = css3.indexOf(")", next + 1);
+                  next = css.indexOf(")", next + 1);
                   if (next === -1) {
                     if (ignore || ignoreUnclosed) {
                       next = pos;
@@ -4207,16 +4207,16 @@ var wp;
                     }
                   }
                   escapePos = next;
-                  while (css3.charCodeAt(escapePos - 1) === BACKSLASH) {
+                  while (css.charCodeAt(escapePos - 1) === BACKSLASH) {
                     escapePos -= 1;
                     escaped = !escaped;
                   }
                 } while (escaped);
-                currentToken = ["brackets", css3.slice(pos, next + 1), pos, next];
+                currentToken = ["brackets", css.slice(pos, next + 1), pos, next];
                 pos = next;
               } else {
-                next = css3.indexOf(")", pos + 1);
-                content = css3.slice(pos, next + 1);
+                next = css.indexOf(")", pos + 1);
+                content = css.slice(pos, next + 1);
                 if (next === -1 || RE_BAD_BRACKET.test(content)) {
                   currentToken = ["(", "(", pos];
                 } else {
@@ -4232,7 +4232,7 @@ var wp;
               next = pos;
               do {
                 escaped = false;
-                next = css3.indexOf(quote, next + 1);
+                next = css.indexOf(quote, next + 1);
                 if (next === -1) {
                   if (ignore || ignoreUnclosed) {
                     next = pos + 1;
@@ -4242,71 +4242,71 @@ var wp;
                   }
                 }
                 escapePos = next;
-                while (css3.charCodeAt(escapePos - 1) === BACKSLASH) {
+                while (css.charCodeAt(escapePos - 1) === BACKSLASH) {
                   escapePos -= 1;
                   escaped = !escaped;
                 }
               } while (escaped);
-              currentToken = ["string", css3.slice(pos, next + 1), pos, next];
+              currentToken = ["string", css.slice(pos, next + 1), pos, next];
               pos = next;
               break;
             }
             case AT: {
               RE_AT_END.lastIndex = pos + 1;
-              RE_AT_END.test(css3);
+              RE_AT_END.test(css);
               if (RE_AT_END.lastIndex === 0) {
-                next = css3.length - 1;
+                next = css.length - 1;
               } else {
                 next = RE_AT_END.lastIndex - 2;
               }
-              currentToken = ["at-word", css3.slice(pos, next + 1), pos, next];
+              currentToken = ["at-word", css.slice(pos, next + 1), pos, next];
               pos = next;
               break;
             }
             case BACKSLASH: {
               next = pos;
               escape = true;
-              while (css3.charCodeAt(next + 1) === BACKSLASH) {
+              while (css.charCodeAt(next + 1) === BACKSLASH) {
                 next += 1;
                 escape = !escape;
               }
-              code = css3.charCodeAt(next + 1);
+              code = css.charCodeAt(next + 1);
               if (escape && code !== SLASH && code !== SPACE3 && code !== NEWLINE && code !== TAB5 && code !== CR && code !== FEED) {
                 next += 1;
-                if (RE_HEX_ESCAPE.test(css3.charAt(next))) {
-                  while (RE_HEX_ESCAPE.test(css3.charAt(next + 1))) {
+                if (RE_HEX_ESCAPE.test(css.charAt(next))) {
+                  while (RE_HEX_ESCAPE.test(css.charAt(next + 1))) {
                     next += 1;
                   }
-                  if (css3.charCodeAt(next + 1) === SPACE3) {
+                  if (css.charCodeAt(next + 1) === SPACE3) {
                     next += 1;
                   }
                 }
               }
-              currentToken = ["word", css3.slice(pos, next + 1), pos, next];
+              currentToken = ["word", css.slice(pos, next + 1), pos, next];
               pos = next;
               break;
             }
             default: {
-              if (code === SLASH && css3.charCodeAt(pos + 1) === ASTERISK) {
-                next = css3.indexOf("*/", pos + 2) + 1;
+              if (code === SLASH && css.charCodeAt(pos + 1) === ASTERISK) {
+                next = css.indexOf("*/", pos + 2) + 1;
                 if (next === 0) {
                   if (ignore || ignoreUnclosed) {
-                    next = css3.length;
+                    next = css.length;
                   } else {
                     unclosed("comment");
                   }
                 }
-                currentToken = ["comment", css3.slice(pos, next + 1), pos, next];
+                currentToken = ["comment", css.slice(pos, next + 1), pos, next];
                 pos = next;
               } else {
                 RE_WORD_END.lastIndex = pos + 1;
-                RE_WORD_END.test(css3);
+                RE_WORD_END.test(css);
                 if (RE_WORD_END.lastIndex === 0) {
-                  next = css3.length - 1;
+                  next = css.length - 1;
                 } else {
                   next = RE_WORD_END.lastIndex - 2;
                 }
-                currentToken = ["word", css3.slice(pos, next + 1), pos, next];
+                currentToken = ["word", css.slice(pos, next + 1), pos, next];
                 buffer.push(currentToken);
                 pos = next;
               }
@@ -5030,8 +5030,8 @@ var wp;
       var Container = require_container();
       var Parser = require_parser();
       var Input = require_input();
-      function parse4(css3, opts) {
-        let input = new Input(css3, opts);
+      function parse4(css, opts) {
+        let input = new Input(css, opts);
         let parser = new Parser(input);
         try {
           parser.parse();
@@ -5142,24 +5142,24 @@ var wp;
       var parse4 = require_parse();
       var Result = require_result();
       var NoWorkResult = class {
-        constructor(processor, css3, opts) {
-          css3 = css3.toString();
+        constructor(processor, css, opts) {
+          css = css.toString();
           this.stringified = false;
           this._processor = processor;
-          this._css = css3;
+          this._css = css;
           this._opts = opts;
           this._map = void 0;
           let root;
           let str = stringify2;
           this.result = new Result(this._processor, root, this._opts);
-          this.result.css = css3;
+          this.result.css = css;
           let self = this;
           Object.defineProperty(this.result, "root", {
             get() {
               return self.root;
             }
           });
-          let map = new MapGenerator(str, root, this._opts, css3);
+          let map = new MapGenerator(str, root, this._opts, css);
           if (map.isMap()) {
             let [generatedCSS, generatedMap] = map.generate();
             if (generatedCSS) {
@@ -5375,18 +5375,18 @@ var wp;
       }
       var postcss = {};
       var LazyResult = class _LazyResult {
-        constructor(processor, css3, opts) {
+        constructor(processor, css, opts) {
           this.stringified = false;
           this.processed = false;
           let root;
-          if (typeof css3 === "object" && css3 !== null && (css3.type === "root" || css3.type === "document")) {
-            root = cleanMarks(css3);
-          } else if (css3 instanceof _LazyResult || css3 instanceof Result) {
-            root = cleanMarks(css3.root);
-            if (css3.map) {
+          if (typeof css === "object" && css !== null && (css.type === "root" || css.type === "document")) {
+            root = cleanMarks(css);
+          } else if (css instanceof _LazyResult || css instanceof Result) {
+            root = cleanMarks(css.root);
+            if (css.map) {
               if (typeof opts.map === "undefined") opts.map = {};
               if (!opts.map.inline) opts.map.inline = false;
-              opts.map.prev = css3.map;
+              opts.map.prev = css.map;
             }
           } else {
             let parser = parse4;
@@ -5394,7 +5394,7 @@ var wp;
             if (opts.parser) parser = opts.parser;
             if (parser.parse) parser = parser.parse;
             try {
-              root = parser(css3, opts);
+              root = parser(css, opts);
             } catch (error) {
               this.processed = true;
               this.error = error;
@@ -5791,11 +5791,11 @@ var wp;
           }
           return normalized;
         }
-        process(css3, opts = {}) {
+        process(css, opts = {}) {
           if (!this.plugins.length && !opts.parser && !opts.stringifier && !opts.syntax) {
-            return new NoWorkResult(this, css3, opts);
+            return new NoWorkResult(this, css, opts);
           } else {
-            return new LazyResult(this, css3, opts);
+            return new LazyResult(this, css, opts);
           }
         }
         use(plugin) {
@@ -17191,13 +17191,13 @@ var wp;
   function useLayout() {
     return (0, import_element17.useContext)(Layout);
   }
-  function LayoutStyle({ layout = {}, css: css3, ...props }) {
+  function LayoutStyle({ layout = {}, css, ...props }) {
     const layoutType = getLayoutType(layout.type);
     const [blockGapSupport] = useSettings("spacing.blockGap");
     const hasBlockGapSupport = blockGapSupport !== null;
     if (layoutType) {
-      if (css3) {
-        return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("style", { children: css3 });
+      if (css) {
+        return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("style", { children: css });
       }
       const layoutStyle = layoutType.getLayoutStyle?.({
         hasBlockGapSupport,
@@ -21947,99 +21947,12 @@ var wp;
 
   // packages/block-editor/build-module/components/block-visibility/modal.mjs
   var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
-  var css = `/**
- * SCSS Variables.
- *
- * Please use variables from this sheet to ensure consistency across the UI.
- * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
- * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
- */
-/**
- * Colors
- */
-/**
- * Fonts & basic variables.
- */
-/**
- * Typography
- */
-/**
- * Grid System.
- * https://make.wordpress.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-wordpress/
- */
-/**
- * Radius scale.
- */
-/**
- * Elevation scale.
- */
-/**
- * Dimensions.
- */
-/**
- * Mobile specific styles
- */
-/**
- * Editor styles.
- */
-/**
- * Block & Editor UI.
- */
-/**
- * Block paddings.
- */
-/**
- * React Native specific.
- * These variables do not appear to be used anywhere else.
- */
-.block-editor-block-visibility-modal {
-  z-index: 1000001;
-}
-.block-editor-block-visibility-modal__options {
-  border: 0;
-  padding: 0;
-  list-style: none;
-  margin: 24px 0;
-}
-.block-editor-block-visibility-modal__options-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 0 16px 0;
-  gap: 24px;
-}
-.block-editor-block-visibility-modal__options-item:last-child {
-  margin: 0;
-}
-.block-editor-block-visibility-modal__options-item--everywhere {
-  flex-direction: column;
-  align-items: start;
-}
-.block-editor-block-visibility-modal__options-checkbox--everywhere {
-  font-weight: 600;
-}
-.block-editor-block-visibility-modal__options-icon--checked {
-  fill: #ddd;
-}
-.block-editor-block-visibility-modal__sub-options {
-  width: 100%;
-  padding-inline-start: 12px;
-}
-.block-editor-block-visibility-modal__description {
-  font-size: 12px;
-  color: #757575;
-}
-
-.block-editor-block-visibility-info {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin: 0 16px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-}
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvcnVubmVyL3dvcmsvZ3V0ZW5iZXJnL2d1dGVuYmVyZy9wYWNrYWdlcy9ibG9jay1lZGl0b3Ivc3JjL2NvbXBvbmVudHMvYmxvY2stdmlzaWJpbGl0eSIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vbm9kZV9tb2R1bGVzL0B3b3JkcHJlc3MvYmFzZS1zdHlsZXMvX3ZhcmlhYmxlcy5zY3NzIiwiLi4vLi4vLi4vLi4vLi4vbm9kZV9tb2R1bGVzL0B3b3JkcHJlc3MvYmFzZS1zdHlsZXMvX2NvbG9ycy5zY3NzIiwic3R5bGUuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQ0FBO0FBQUE7QUFBQTtBRFVBO0FBQUE7QUFBQTtBQU9BO0FBQUE7QUFBQTtBQTZCQTtBQUFBO0FBQUE7QUFBQTtBQWlCQTtBQUFBO0FBQUE7QUFXQTtBQUFBO0FBQUE7QUFnQkE7QUFBQTtBQUFBO0FBeUJBO0FBQUE7QUFBQTtBQUtBO0FBQUE7QUFBQTtBQWVBO0FBQUE7QUFBQTtBQW1CQTtBQUFBO0FBQUE7QUFTQTtBQUFBO0FBQUE7QUFBQTtBRS9KQTtFQUNDOztBQUVBO0VBQ0M7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBLEtGc0NZOztBRW5DYjtFQUNDOztBQUdEO0VBQ0M7RUFDQTs7QUFHRDtFQUNDOztBQUdEO0VBQ0MsTUR4QlE7O0FDNEJWO0VBQ0M7RUFDQSxzQkZhYTs7QUVWZDtFQUNDLFdGdEJnQjtFRXVCaEIsT0R0Q1M7OztBQzBDWDtFQUNDLGFGQ2M7RUVBZDtFQUNBO0VBQ0E7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBTQ1NTIFZhcmlhYmxlcy5cbiAqXG4gKiBQbGVhc2UgdXNlIHZhcmlhYmxlcyBmcm9tIHRoaXMgc2hlZXQgdG8gZW5zdXJlIGNvbnNpc3RlbmN5IGFjcm9zcyB0aGUgVUkuXG4gKiBEb24ndCBhZGQgdG8gdGhpcyBzaGVldCB1bmxlc3MgeW91J3JlIHByZXR0eSBzdXJlIHRoZSB2YWx1ZSB3aWxsIGJlIHJldXNlZCBpbiBtYW55IHBsYWNlcy5cbiAqIEZvciBleGFtcGxlLCBkb24ndCBhZGQgcnVsZXMgdG8gdGhpcyBzaGVldCB0aGF0IGFmZmVjdCBibG9jayB2aXN1YWxzLiBJdCdzIHB1cmVseSBmb3IgVUkuXG4gKi9cblxuQHVzZSBcIi4vY29sb3JzXCI7XG5cbi8qKlxuICogRm9udHMgJiBiYXNpYyB2YXJpYWJsZXMuXG4gKi9cblxuJGRlZmF1bHQtZm9udDogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LFwiU2Vnb2UgVUlcIiwgUm9ib3RvLCBPeHlnZW4tU2FucywgVWJ1bnR1LCBDYW50YXJlbGwsXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmOyAvLyBUb2RvOiBkZXByZWNhdGUgaW4gZmF2b3Igb2YgJGZhbWlseSB2YXJpYWJsZXNcbiRkZWZhdWx0LWxpbmUtaGVpZ2h0OiAxLjQ7IC8vIFRvZG86IGRlcHJlY2F0ZSBpbiBmYXZvciBvZiAkbGluZS1oZWlnaHQgdG9rZW5zXG5cbi8qKlxuICogVHlwb2dyYXBoeVxuICovXG5cbi8vIFNpemVzXG4kZm9udC1zaXplLXgtc21hbGw6IDExcHg7XG4kZm9udC1zaXplLXNtYWxsOiAxMnB4O1xuJGZvbnQtc2l6ZS1tZWRpdW06IDEzcHg7XG4kZm9udC1zaXplLWxhcmdlOiAxNXB4O1xuJGZvbnQtc2l6ZS14LWxhcmdlOiAyMHB4O1xuJGZvbnQtc2l6ZS0yeC1sYXJnZTogMzJweDtcblxuLy8gTGluZSBoZWlnaHRzXG4kZm9udC1saW5lLWhlaWdodC14LXNtYWxsOiAxNnB4O1xuJGZvbnQtbGluZS1oZWlnaHQtc21hbGw6IDIwcHg7XG4kZm9udC1saW5lLWhlaWdodC1tZWRpdW06IDI0cHg7XG4kZm9udC1saW5lLWhlaWdodC1sYXJnZTogMjhweDtcbiRmb250LWxpbmUtaGVpZ2h0LXgtbGFyZ2U6IDMycHg7XG4kZm9udC1saW5lLWhlaWdodC0yeC1sYXJnZTogNDBweDtcblxuLy8gV2VpZ2h0c1xuJGZvbnQtd2VpZ2h0LXJlZ3VsYXI6IDQwMDtcbiRmb250LXdlaWdodC1tZWRpdW06IDQ5OTsgLy8gZW5zdXJlcyBmYWxsYmFjayB0byA0MDAgKGluc3RlYWQgb2YgNjAwKVxuXG4vLyBGYW1pbGllc1xuJGZvbnQtZmFtaWx5LWhlYWRpbmdzOiAtYXBwbGUtc3lzdGVtLCBcInN5c3RlbS11aVwiLCBcIlNlZ29lIFVJXCIsIFJvYm90bywgT3h5Z2VuLVNhbnMsIFVidW50dSwgQ2FudGFyZWxsLCBcIkhlbHZldGljYSBOZXVlXCIsIHNhbnMtc2VyaWY7XG4kZm9udC1mYW1pbHktYm9keTogLWFwcGxlLXN5c3RlbSwgXCJzeXN0ZW0tdWlcIiwgXCJTZWdvZSBVSVwiLCBSb2JvdG8sIE94eWdlbi1TYW5zLCBVYnVudHUsIENhbnRhcmVsbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmO1xuJGZvbnQtZmFtaWx5LW1vbm86IE1lbmxvLCBDb25zb2xhcywgbW9uYWNvLCBtb25vc3BhY2U7XG5cbi8qKlxuICogR3JpZCBTeXN0ZW0uXG4gKiBodHRwczovL21ha2Uud29yZHByZXNzLm9yZy9kZXNpZ24vMjAxOS8xMC8zMS9wcm9wb3NhbC1hLWNvbnNpc3RlbnQtc3BhY2luZy1zeXN0ZW0tZm9yLXdvcmRwcmVzcy9cbiAqL1xuXG4kZ3JpZC11bml0OiA4cHg7XG4kZ3JpZC11bml0LTA1OiAwLjUgKiAkZ3JpZC11bml0O1x0Ly8gNHB4XG4kZ3JpZC11bml0LTEwOiAxICogJGdyaWQtdW5pdDtcdFx0Ly8gOHB4XG4kZ3JpZC11bml0LTE1OiAxLjUgKiAkZ3JpZC11bml0O1x0Ly8gMTJweFxuJGdyaWQtdW5pdC0yMDogMiAqICRncmlkLXVuaXQ7XHRcdC8vIDE2cHhcbiRncmlkLXVuaXQtMzA6IDMgKiAkZ3JpZC11bml0O1x0XHQvLyAyNHB4XG4kZ3JpZC11bml0LTQwOiA0ICogJGdyaWQtdW5pdDtcdFx0Ly8gMzJweFxuJGdyaWQtdW5pdC01MDogNSAqICRncmlkLXVuaXQ7XHRcdC8vIDQwcHhcbiRncmlkLXVuaXQtNjA6IDYgKiAkZ3JpZC11bml0O1x0XHQvLyA0OHB4XG4kZ3JpZC11bml0LTcwOiA3ICogJGdyaWQtdW5pdDtcdFx0Ly8gNTZweFxuJGdyaWQtdW5pdC04MDogOCAqICRncmlkLXVuaXQ7XHRcdC8vIDY0cHhcblxuLyoqXG4gKiBSYWRpdXMgc2NhbGUuXG4gKi9cblxuJHJhZGl1cy14LXNtYWxsOiAxcHg7ICAgLy8gQXBwbGllZCB0byBlbGVtZW50cyBsaWtlIGJ1dHRvbnMgbmVzdGVkIHdpdGhpbiBwcmltaXRpdmVzIGxpa2UgaW5wdXRzLlxuJHJhZGl1cy1zbWFsbDogMnB4OyAgICAgLy8gQXBwbGllZCB0byBtb3N0IHByaW1pdGl2ZXMuXG4kcmFkaXVzLW1lZGl1bTogNHB4OyAgICAvLyBBcHBsaWVkIHRvIGNvbnRhaW5lcnMgd2l0aCBzbWFsbGVyIHBhZGRpbmcuXG4kcmFkaXVzLWxhcmdlOiA4cHg7ICAgICAvLyBBcHBsaWVkIHRvIGNvbnRhaW5lcnMgd2l0aCBsYXJnZXIgcGFkZGluZy5cbiRyYWRpdXMtZnVsbDogOTk5OXB4OyAgIC8vIEZvciBwaWxscy5cbiRyYWRpdXMtcm91bmQ6IDUwJTsgICAgIC8vIEZvciBjaXJjbGVzIGFuZCBvdmFscy5cblxuLyoqXG4gKiBFbGV2YXRpb24gc2NhbGUuXG4gKi9cblxuLy8gRm9yIHNlY3Rpb25zIGFuZCBjb250YWluZXJzIHRoYXQgZ3JvdXAgcmVsYXRlZCBjb250ZW50IGFuZCBjb250cm9scywgd2hpY2ggbWF5IG92ZXJsYXAgb3RoZXIgY29udGVudC4gRXhhbXBsZTogUHJldmlldyBGcmFtZS5cbiRlbGV2YXRpb24teC1zbWFsbDogMCAxcHggMXB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMyksIDAgMXB4IDJweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpLCAwIDNweCAzcHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAyKSwgMCA0cHggNHB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMSk7XG5cbi8vIEZvciBjb21wb25lbnRzIHRoYXQgcHJvdmlkZSBjb250ZXh0dWFsIGZlZWRiYWNrIHdpdGhvdXQgYmVpbmcgaW50cnVzaXZlLiBHZW5lcmFsbHkgbm9uLWludGVycnVwdGl2ZS4gRXhhbXBsZTogVG9vbHRpcHMsIFNuYWNrYmFyLlxuJGVsZXZhdGlvbi1zbWFsbDogMCAxcHggMnB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNSksIDAgMnB4IDNweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDQpLCAwIDZweCA2cHggcmdiYShjb2xvcnMuJGJsYWNrLCAwLjAzKSwgMCA4cHggOHB4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wMik7XG5cbi8vIEZvciBjb21wb25lbnRzIHRoYXQgb2ZmZXIgYWRkaXRpb25hbCBhY3Rpb25zLiBFeGFtcGxlOiBNZW51cywgQ29tbWFuZCBQYWxldHRlXG4kZWxldmF0aW9uLW1lZGl1bTogMCAycHggM3B4IHJnYmEoY29sb3JzLiRibGFjaywgMC4wNSksIDAgNHB4IDVweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDQpLCAwIDEycHggMTJweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDMpLCAwIDE2cHggMTZweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpO1xuXG4vLyBGb3IgY29tcG9uZW50cyB0aGF0IGNvbmZpcm0gZGVjaXNpb25zIG9yIGhhbmRsZSBuZWNlc3NhcnkgaW50ZXJydXB0aW9ucy4gRXhhbXBsZTogTW9kYWxzLlxuJGVsZXZhdGlvbi1sYXJnZTogMCA1cHggMTVweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDgpLCAwIDE1cHggMjdweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDcpLCAwIDMwcHggMzZweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDQpLCAwIDUwcHggNDNweCByZ2JhKGNvbG9ycy4kYmxhY2ssIDAuMDIpO1xuXG4vKipcbiAqIERpbWVuc2lvbnMuXG4gKi9cblxuJGljb24tc2l6ZTogMjRweDtcbiRidXR0b24tc2l6ZTogMzZweDtcbiRidXR0b24tc2l6ZS1uZXh0LWRlZmF1bHQtNDBweDogNDBweDsgLy8gdHJhbnNpdGlvbmFyeSB2YXJpYWJsZSBmb3IgbmV4dCBkZWZhdWx0IGJ1dHRvbiBzaXplXG4kYnV0dG9uLXNpemUtc21hbGw6IDI0cHg7XG4kYnV0dG9uLXNpemUtY29tcGFjdDogMzJweDtcbiRoZWFkZXItaGVpZ2h0OiA2NHB4O1xuJHBhbmVsLWhlYWRlci1oZWlnaHQ6ICRncmlkLXVuaXQtNjA7XG4kbmF2LXNpZGViYXItd2lkdGg6IDMwMHB4O1xuJGFkbWluLWJhci1oZWlnaHQ6IDMycHg7XG4kYWRtaW4tYmFyLWhlaWdodC1iaWc6IDQ2cHg7XG4kYWRtaW4tc2lkZWJhci13aWR0aDogMTYwcHg7XG4kYWRtaW4tc2lkZWJhci13aWR0aC1iaWc6IDE5MHB4O1xuJGFkbWluLXNpZGViYXItd2lkdGgtY29sbGFwc2VkOiAzNnB4O1xuJG1vZGFsLW1pbi13aWR0aDogMzUwcHg7XG4kbW9kYWwtd2lkdGgtc21hbGw6IDM4NHB4O1xuJG1vZGFsLXdpZHRoLW1lZGl1bTogNTEycHg7XG4kbW9kYWwtd2lkdGgtbGFyZ2U6IDg0MHB4O1xuJHNwaW5uZXItc2l6ZTogMTZweDtcbiRjYW52YXMtcGFkZGluZzogJGdyaWQtdW5pdC0yMDtcbiRwYWxldHRlLW1heC1oZWlnaHQ6IDM2OHB4O1xuXG4vKipcbiAqIE1vYmlsZSBzcGVjaWZpYyBzdHlsZXNcbiAqL1xuJG1vYmlsZS10ZXh0LW1pbi1mb250LXNpemU6IDE2cHg7IC8vIEFueSBmb250IHNpemUgYmVsb3cgMTZweCB3aWxsIGNhdXNlIE1vYmlsZSBTYWZhcmkgdG8gXCJ6b29tIGluXCIuXG5cbi8qKlxuICogRWRpdG9yIHN0eWxlcy5cbiAqL1xuXG4kc2lkZWJhci13aWR0aDogMjgwcHg7XG4kY29udGVudC13aWR0aDogODQwcHg7XG4kd2lkZS1jb250ZW50LXdpZHRoOiAxMTAwcHg7XG4kd2lkZ2V0LWFyZWEtd2lkdGg6IDcwMHB4O1xuJHNlY29uZGFyeS1zaWRlYmFyLXdpZHRoOiAzNTBweDtcbiRlZGl0b3ItZm9udC1zaXplOiAxNnB4O1xuJGRlZmF1bHQtYmxvY2stbWFyZ2luOiAyOHB4OyAvLyBUaGlzIHZhbHVlIHByb3ZpZGVzIGEgY29uc2lzdGVudCwgY29udGlndW91cyBzcGFjaW5nIGJldHdlZW4gYmxvY2tzLlxuJHRleHQtZWRpdG9yLWZvbnQtc2l6ZTogMTVweDtcbiRlZGl0b3ItbGluZS1oZWlnaHQ6IDEuODtcbiRlZGl0b3ItaHRtbC1mb250OiAkZm9udC1mYW1pbHktbW9ubztcblxuLyoqXG4gKiBCbG9jayAmIEVkaXRvciBVSS5cbiAqL1xuXG4kYmxvY2stdG9vbGJhci1oZWlnaHQ6ICRncmlkLXVuaXQtNjA7XG4kYm9yZGVyLXdpZHRoOiAxcHg7XG4kYm9yZGVyLXdpZHRoLWZvY3VzLWZhbGxiYWNrOiAycHg7IC8vIFRoaXMgZXhpc3RzIGFzIGEgZmFsbGJhY2ssIGFuZCBpcyBpZGVhbGx5IG92ZXJyaWRkZW4gYnkgdmFyKC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzKSB1bmxlc3MgaW4gc29tZSBTQVNTIG1hdGggY2FzZXMuXG4kYm9yZGVyLXdpZHRoLXRhYjogMS41cHg7XG4kaGVscHRleHQtZm9udC1zaXplOiAxMnB4O1xuJHJhZGlvLWlucHV0LXNpemU6IDE2cHg7XG4kcmFkaW8taW5wdXQtc2l6ZS1zbTogMjRweDsgLy8gV2lkdGggJiBoZWlnaHQgZm9yIHNtYWxsIHZpZXdwb3J0cy5cblxuLy8gRGVwcmVjYXRlZCwgcGxlYXNlIGF2b2lkIHVzaW5nIHRoZXNlLlxuJGJsb2NrLXBhZGRpbmc6IDE0cHg7IC8vIFVzZWQgdG8gZGVmaW5lIHNwYWNlIGJldHdlZW4gYmxvY2sgZm9vdHByaW50IGFuZCBzdXJyb3VuZGluZyBib3JkZXJzLlxuJHJhZGl1cy1ibG9jay11aTogJHJhZGl1cy1zbWFsbDtcbiRzaGFkb3ctcG9wb3ZlcjogJGVsZXZhdGlvbi14LXNtYWxsO1xuJHNoYWRvdy1tb2RhbDogJGVsZXZhdGlvbi1sYXJnZTtcbiRkZWZhdWx0LWZvbnQtc2l6ZTogJGZvbnQtc2l6ZS1tZWRpdW07XG5cbi8qKlxuICogQmxvY2sgcGFkZGluZ3MuXG4gKi9cblxuLy8gUGFkZGluZyBmb3IgYmxvY2tzIHdpdGggYSBiYWNrZ3JvdW5kIGNvbG9yIChlLmcuIHBhcmFncmFwaCBvciBncm91cCkuXG4kYmxvY2stYmctcGFkZGluZy0tdjogMS4yNWVtO1xuJGJsb2NrLWJnLXBhZGRpbmctLWg6IDIuMzc1ZW07XG5cblxuLyoqXG4gKiBSZWFjdCBOYXRpdmUgc3BlY2lmaWMuXG4gKiBUaGVzZSB2YXJpYWJsZXMgZG8gbm90IGFwcGVhciB0byBiZSB1c2VkIGFueXdoZXJlIGVsc2UuXG4gKi9cblxuLy8gRGltZW5zaW9ucy5cbiRtb2JpbGUtaGVhZGVyLXRvb2xiYXItaGVpZ2h0OiA0NHB4O1xuJG1vYmlsZS1oZWFkZXItdG9vbGJhci1leHBhbmRlZC1oZWlnaHQ6IDUycHg7XG4kbW9iaWxlLWZsb2F0aW5nLXRvb2xiYXItaGVpZ2h0OiA0NHB4O1xuJG1vYmlsZS1mbG9hdGluZy10b29sYmFyLW1hcmdpbjogOHB4O1xuJG1vYmlsZS1jb2xvci1zd2F0Y2g6IDQ4cHg7XG5cbi8vIEJsb2NrIFVJLlxuJG1vYmlsZS1ibG9jay10b29sYmFyLWhlaWdodDogNDRweDtcbiRkaW1tZWQtb3BhY2l0eTogMTtcbiRibG9jay1lZGdlLXRvLWNvbnRlbnQ6IDE2cHg7XG4kc29saWQtYm9yZGVyLXNwYWNlOiAxMnB4O1xuJGRhc2hlZC1ib3JkZXItc3BhY2U6IDZweDtcbiRibG9jay1zZWxlY3RlZC1tYXJnaW46IDNweDtcbiRibG9jay1zZWxlY3RlZC1ib3JkZXItd2lkdGg6IDFweDtcbiRibG9jay1zZWxlY3RlZC1wYWRkaW5nOiAwO1xuJGJsb2NrLXNlbGVjdGVkLWNoaWxkLW1hcmdpbjogNXB4O1xuJGJsb2NrLXNlbGVjdGVkLXRvLWNvbnRlbnQ6ICRibG9jay1lZGdlLXRvLWNvbnRlbnQgLSAkYmxvY2stc2VsZWN0ZWQtbWFyZ2luIC0gJGJsb2NrLXNlbGVjdGVkLWJvcmRlci13aWR0aDtcbiIsIi8qKlxuICogQ29sb3JzXG4gKi9cblxuLy8gV29yZFByZXNzIGdyYXlzLlxuJGJsYWNrOiAjMDAwO1x0XHRcdC8vIFVzZSBvbmx5IHdoZW4geW91IHRydWx5IG5lZWQgcHVyZSBibGFjay4gRm9yIFVJLCB1c2UgJGdyYXktOTAwLlxuJGdyYXktOTAwOiAjMWUxZTFlO1xuJGdyYXktODAwOiAjMmYyZjJmO1xuJGdyYXktNzAwOiAjNzU3NTc1O1x0XHQvLyBNZWV0cyA0LjY6MSAoNC41OjEgaXMgbWluaW11bSkgdGV4dCBjb250cmFzdCBhZ2FpbnN0IHdoaXRlLlxuJGdyYXktNjAwOiAjOTQ5NDk0O1x0XHQvLyBNZWV0cyAzOjEgVUkgb3IgbGFyZ2UgdGV4dCBjb250cmFzdCBhZ2FpbnN0IHdoaXRlLlxuJGdyYXktNDAwOiAjY2NjO1xuJGdyYXktMzAwOiAjZGRkO1x0XHQvLyBVc2VkIGZvciBtb3N0IGJvcmRlcnMuXG4kZ3JheS0yMDA6ICNlMGUwZTA7XHRcdC8vIFVzZWQgc3BhcmluZ2x5IGZvciBsaWdodCBib3JkZXJzLlxuJGdyYXktMTAwOiAjZjBmMGYwO1x0XHQvLyBVc2VkIGZvciBsaWdodCBncmF5IGJhY2tncm91bmRzLlxuJHdoaXRlOiAjZmZmO1xuXG4vLyBPcGFjaXRpZXMgJiBhZGRpdGlvbmFsIGNvbG9ycy5cbiRkYXJrLWdyYXktcGxhY2Vob2xkZXI6IHJnYmEoJGdyYXktOTAwLCAwLjYyKTtcbiRtZWRpdW0tZ3JheS1wbGFjZWhvbGRlcjogcmdiYSgkZ3JheS05MDAsIDAuNTUpO1xuJGxpZ2h0LWdyYXktcGxhY2Vob2xkZXI6IHJnYmEoJHdoaXRlLCAwLjY1KTtcblxuLy8gQWxlcnQgY29sb3JzLlxuJGFsZXJ0LXllbGxvdzogI2YwYjg0OTtcbiRhbGVydC1yZWQ6ICNjYzE4MTg7XG4kYWxlcnQtZ3JlZW46ICM0YWI4NjY7XG5cbi8vIERlcHJlY2F0ZWQsIHBsZWFzZSBhdm9pZCB1c2luZyB0aGVzZS5cbiRkYXJrLXRoZW1lLWZvY3VzOiAkd2hpdGU7XHQvLyBGb2N1cyBjb2xvciB3aGVuIHRoZSB0aGVtZSBpcyBkYXJrLlxuIiwiQHVzZSBcIkB3b3JkcHJlc3MvYmFzZS1zdHlsZXMvdmFyaWFibGVzXCIgYXMgKjtcbkB1c2UgXCJAd29yZHByZXNzL2Jhc2Utc3R5bGVzL2NvbG9yc1wiIGFzICo7XG5AdXNlIFwiQHdvcmRwcmVzcy9iYXNlLXN0eWxlcy96LWluZGV4XCIgYXMgKjtcblxuLmJsb2NrLWVkaXRvci1ibG9jay12aXNpYmlsaXR5LW1vZGFsIHtcblx0ei1pbmRleDogei1pbmRleChcIi5ibG9jay1lZGl0b3ItYmxvY2stdmlzaWJpbGl0eS1tb2RhbFwiKTtcblxuXHQmX19vcHRpb25zIHtcblx0XHRib3JkZXI6IDA7XG5cdFx0cGFkZGluZzogMDtcblx0XHRsaXN0LXN0eWxlOiBub25lO1xuXHRcdG1hcmdpbjogJGdyaWQtdW5pdC0zMCAwO1xuXG5cdFx0Ji1pdGVtIHtcblx0XHRcdGRpc3BsYXk6IGZsZXg7XG5cdFx0XHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRcdFx0anVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuXHRcdFx0bWFyZ2luOiAwIDAgJGdyaWQtdW5pdC0yMCAwO1xuXHRcdFx0Z2FwOiAkZ3JpZC11bml0LTMwO1xuXHRcdH1cblxuXHRcdCYtaXRlbTpsYXN0LWNoaWxkIHtcblx0XHRcdG1hcmdpbjogMDtcblx0XHR9XG5cblx0XHQmLWl0ZW0tLWV2ZXJ5d2hlcmUge1xuXHRcdFx0ZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcblx0XHRcdGFsaWduLWl0ZW1zOiBzdGFydDtcblx0XHR9XG5cblx0XHQmLWNoZWNrYm94LS1ldmVyeXdoZXJlIHtcblx0XHRcdGZvbnQtd2VpZ2h0OiA2MDA7XG5cdFx0fVxuXG5cdFx0Ji1pY29uLS1jaGVja2VkIHtcblx0XHRcdGZpbGw6ICRncmF5LTMwMDtcblx0XHR9XG5cdH1cblxuXHQmX19zdWItb3B0aW9ucyB7XG5cdFx0d2lkdGg6IDEwMCU7XG5cdFx0cGFkZGluZy1pbmxpbmUtc3RhcnQ6ICRncmlkLXVuaXQtMTU7XG5cdH1cblxuXHQmX19kZXNjcmlwdGlvbiB7XG5cdFx0Zm9udC1zaXplOiAkZm9udC1zaXplLXNtYWxsO1xuXHRcdGNvbG9yOiAkZ3JheS03MDA7XG5cdH1cbn1cblxuLmJsb2NrLWVkaXRvci1ibG9jay12aXNpYmlsaXR5LWluZm8ge1xuXHRwYWRkaW5nLXRvcDogJGdyaWQtdW5pdC0wNTtcblx0cGFkZGluZy1ib3R0b206ICRncmlkLXVuaXQtMDU7XG5cdG1hcmdpbjogMCAkZ3JpZC11bml0LTIwICRncmlkLXVuaXQtMjA7XG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGp1c3RpZnktY29udGVudDogc3RhcnQ7XG59XG4iXX0= */`;
-  document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='6c1fe6ec90']")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-wp-hash", "6c1fe6ec90");
+    style.appendChild(document.createTextNode(".block-editor-block-visibility-modal{z-index:1000001}.block-editor-block-visibility-modal__options{border:0;list-style:none;margin:24px 0;padding:0}.block-editor-block-visibility-modal__options-item{align-items:center;display:flex;gap:24px;justify-content:space-between;margin:0 0 16px}.block-editor-block-visibility-modal__options-item:last-child{margin:0}.block-editor-block-visibility-modal__options-item--everywhere{align-items:start;flex-direction:column}.block-editor-block-visibility-modal__options-checkbox--everywhere{font-weight:600}.block-editor-block-visibility-modal__options-icon--checked{fill:#ddd}.block-editor-block-visibility-modal__sub-options{padding-inline-start:12px;width:100%}.block-editor-block-visibility-modal__description{color:#757575;font-size:12px}.block-editor-block-visibility-info{align-items:center;display:flex;justify-content:start;margin:0 16px 16px;padding-bottom:4px;padding-top:4px}"));
+    document.head.appendChild(style);
+  }
   var DEFAULT_VIEWPORT_CHECKBOX_VALUES = {
     [BLOCK_VISIBILITY_VIEWPORTS.mobile.key]: false,
     [BLOCK_VISIBILITY_VIEWPORTS.tablet.key]: false,
@@ -27040,9 +26953,9 @@ var wp;
     );
     return stringify(tokenized);
   }
-  function transformStyle({ css: css3, ignoredSelectors = [], baseURL }, wrapperSelector = "", transformOptions) {
+  function transformStyle({ css, ignoredSelectors = [], baseURL }, wrapperSelector = "", transformOptions) {
     if (!wrapperSelector && !baseURL) {
-      return css3;
+      return css;
     }
     try {
       const excludedSelectors = [
@@ -27071,7 +26984,7 @@ var wp;
           }),
           baseURL && (0, import_postcss_urlrebase.default)({ rootUrl: baseURL })
         ].filter(Boolean)
-      ).process(css3, {}).css;
+      ).process(css, {}).css;
     } catch (error) {
       if (error instanceof import_css_syntax_error.default) {
         console.warn(
@@ -27094,12 +27007,12 @@ var wp;
       cacheByWrapperSelector.set(wrapperSelector, cache);
     }
     return styles.map((style) => {
-      let css3 = cache.get(style);
-      if (!css3) {
-        css3 = transformStyle(style, wrapperSelector, transformOptions);
-        cache.set(style, css3);
+      let css = cache.get(style);
+      if (!css) {
+        css = transformStyle(style, wrapperSelector, transformOptions);
+        cache.set(style, css);
       }
-      return css3;
+      return css;
     });
   };
   var transform_styles_default = transformStyles;
@@ -27168,7 +27081,7 @@ var wp;
           ref: useDarkThemeBodyClassName(transformedStyles, scope)
         }
       ),
-      transformedStyles.map((css3, index) => /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("style", { children: css3 }, index)),
+      transformedStyles.map((css, index) => /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("style", { children: css }, index)),
       /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
         import_components33.SVG,
         {
@@ -34194,19 +34107,19 @@ var wp;
     const allowPositionStyles = hasPositionBlockSupport && !isPositionDisabled;
     const id = (0, import_compose59.useInstanceId)(POSITION_BLOCK_PROPS_REFERENCE);
     const positionSelector = `.wp-container-${id}.wp-container-${id}`;
-    let css3;
+    let css;
     if (allowPositionStyles) {
-      css3 = getPositionCSS({
+      css = getPositionCSS({
         selector: positionSelector,
         style
       }) || "";
     }
     const className = clsx_default({
-      [`wp-container-${id}`]: allowPositionStyles && !!css3,
+      [`wp-container-${id}`]: allowPositionStyles && !!css,
       // Only attach a container class if there is generated CSS to be attached.
-      [`is-position-${style?.position?.type}`]: allowPositionStyles && !!css3 && !!style?.position?.type
+      [`is-position-${style?.position?.type}`]: allowPositionStyles && !!css && !!style?.position?.type
     });
-    useStyleOverride({ css: css3 });
+    useStyleOverride({ css });
     return { className };
   }
 
@@ -39079,12 +38992,12 @@ var wp;
     });
     return result;
   };
-  function processCSSNesting(css3, blockSelector) {
+  function processCSSNesting(css, blockSelector) {
     let processedCSS = "";
-    if (!css3 || css3.trim() === "") {
+    if (!css || css.trim() === "") {
       return processedCSS;
     }
-    const parts = css3.split("&");
+    const parts = css.split("&");
     parts.forEach((part) => {
       if (!part || part.trim() === "") {
         return;
@@ -58205,8 +58118,8 @@ var wp;
   var import_element207 = __toESM(require_element(), 1);
   var import_i18n195 = __toESM(require_i18n(), 1);
   var import_jsx_runtime369 = __toESM(require_jsx_runtime(), 1);
-  function validateCSS(css3) {
-    if (typeof css3 === "string" && /<\/?\w/.test(css3)) {
+  function validateCSS(css) {
+    if (typeof css === "string" && /<\/?\w/.test(css)) {
       return false;
     }
     return true;
@@ -60830,12 +60743,12 @@ var wp;
     return skipSerialization;
   }
   var pendingStyleOverrides = /* @__PURE__ */ new WeakMap();
-  function useStyleOverride({ id, css: css3 }) {
-    return usePrivateStyleOverride({ id, css: css3 });
+  function useStyleOverride({ id, css }) {
+    return usePrivateStyleOverride({ id, css });
   }
   function usePrivateStyleOverride({
     id,
-    css: css3,
+    css,
     assets,
     __unstableType,
     variation,
@@ -60847,13 +60760,13 @@ var wp;
     const registry = (0, import_data175.useRegistry)();
     const fallbackId = (0, import_element220.useId)();
     (0, import_element220.useEffect)(() => {
-      if (!css3 && !assets) {
+      if (!css && !assets) {
         return;
       }
       const _id = id || fallbackId;
       const override = {
         id,
-        css: css3,
+        css,
         assets,
         __unstableType,
         variation,
@@ -60886,7 +60799,7 @@ var wp;
       };
     }, [
       id,
-      css3,
+      css,
       clientId,
       assets,
       __unstableType,
@@ -62704,18 +62617,13 @@ var wp;
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element228 = __toESM(require_element(), 1);
-  var css2 = `@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;
-
-@layer wp-ui-components {
-	.style-module__stack__Gc4EG {
-		display: flex;
-	}
-}
-`;
-  document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css2));
-  var style_default = {
-    "stack": "style-module__stack__Gc4EG"
-  };
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-wp-hash", "71d20935c2");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
+    document.head.appendChild(style);
+  }
+  var style_default = { "stack": "_19ce0419607e1896__stack" };
   var Stack = (0, import_element228.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
     const style = {
       gap: gap && `var(--wpds-dimension-gap-${gap})`,
@@ -71973,9 +71881,9 @@ var wp;
   function CustomCSSControl({ blockName, setAttributes, style }) {
     const blockType = (0, import_blocks115.getBlockType)(blockName);
     function onChange(newStyle) {
-      const css3 = newStyle?.css?.trim() ? newStyle.css : void 0;
+      const css = newStyle?.css?.trim() ? newStyle.css : void 0;
       setAttributes({
-        style: cleanEmptyObject({ ...newStyle, css: css3 })
+        style: cleanEmptyObject({ ...newStyle, css })
       });
     }
     const cssHelpText = (0, import_i18n235.sprintf)(
@@ -72304,7 +72212,7 @@ var wp;
     const selector3 = `.${selectorPrefix}${id}`;
     const hasBlockGapSupport = blockGapSupport !== null;
     const fullLayoutType = getLayoutType(usedLayout?.type || "default");
-    const css3 = fullLayoutType?.getLayoutStyle?.({
+    const css = fullLayoutType?.getLayoutStyle?.({
       blockName: name,
       selector: selector3,
       layout: usedLayout,
@@ -72314,12 +72222,12 @@ var wp;
     });
     const layoutClassNames = clsx_default(
       {
-        [`${selectorPrefix}${id}`]: !!css3
+        [`${selectorPrefix}${id}`]: !!css
         // Only attach a container class if there is generated CSS to be attached.
       },
       layoutClasses
     );
-    useStyleOverride({ css: css3 });
+    useStyleOverride({ css });
     return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(
       BlockListBlock2,
       {
@@ -73396,40 +73304,40 @@ var wp;
         throw new Error("rowSpan must be a number");
       }
     }
-    let css3 = "";
+    let css = "";
     if (shouldRenderChildLayoutStyles) {
       if (selfStretch === "fixed" && flexSize) {
-        css3 = `${selector3} {
+        css = `${selector3} {
 				flex-basis: ${flexSize};
 				box-sizing: border-box;
 			}`;
       } else if (selfStretch === "fill") {
-        css3 = `${selector3} {
+        css = `${selector3} {
 				flex-grow: 1;
 			}`;
       } else if (columnStart && columnSpan) {
-        css3 = `${selector3} {
+        css = `${selector3} {
 				grid-column: ${columnStart} / span ${columnSpan};
 			}`;
       } else if (columnStart) {
-        css3 = `${selector3} {
+        css = `${selector3} {
 				grid-column: ${columnStart};
 			}`;
       } else if (columnSpan) {
-        css3 = `${selector3} {
+        css = `${selector3} {
 				grid-column: span ${columnSpan};
 			}`;
       }
       if (rowStart && rowSpan) {
-        css3 += `${selector3} {
+        css += `${selector3} {
 				grid-row: ${rowStart} / span ${rowSpan};
 			}`;
       } else if (rowStart) {
-        css3 += `${selector3} {
+        css += `${selector3} {
 				grid-row: ${rowStart};
 			}`;
       } else if (rowSpan) {
-        css3 += `${selector3} {
+        css += `${selector3} {
 				grid-row: span ${rowSpan};
 			}`;
       }
@@ -73457,7 +73365,7 @@ var wp;
         const containerQueryValue = numColsToBreakAt * parentColumnValue + (numColsToBreakAt - 1) * defaultGapValue;
         const minimumContainerQueryValue = parentColumnValue * 2 + defaultGapValue - 1;
         const gridColumnValue = columnSpan && columnSpan > 1 ? "1/-1" : "auto";
-        css3 += `@container (max-width: ${Math.max(
+        css += `@container (max-width: ${Math.max(
           containerQueryValue,
           minimumContainerQueryValue
         )}${parentColumnUnit}) {
@@ -73468,8 +73376,8 @@ var wp;
 			}`;
       }
     }
-    useStyleOverride({ css: css3 });
-    if (!css3) {
+    useStyleOverride({ css });
+    if (!css) {
       return;
     }
     return { className: `wp-container-content-${id}` };

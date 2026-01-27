@@ -2124,18 +2124,13 @@ var wp;
 
   // packages/ui/build-module/stack/stack.mjs
   var import_element2 = __toESM(require_element(), 1);
-  var css = `@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;
-
-@layer wp-ui-components {
-	.style-module__stack__Gc4EG {
-		display: flex;
-	}
-}
-`;
-  document.head.appendChild(document.createElement("style")).appendChild(document.createTextNode(css));
-  var style_default = {
-    "stack": "style-module__stack__Gc4EG"
-  };
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='71d20935c2']")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-wp-hash", "71d20935c2");
+    style.appendChild(document.createTextNode("@layer wp-ui-utilities, wp-ui-components, wp-ui-compositions, wp-ui-overrides;@layer wp-ui-components{._19ce0419607e1896__stack{display:flex}}"));
+    document.head.appendChild(style);
+  }
+  var style_default = { "stack": "_19ce0419607e1896__stack" };
   var Stack = (0, import_element2.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
     const style = {
       gap: gap && `var(--wpds-dimension-gap-${gap})`,
