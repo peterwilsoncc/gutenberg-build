@@ -55,7 +55,6 @@ var require_preferences = __commonJS({
 // routes/post-list/route.ts
 var import_data4 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
-import { notFound } from "@wordpress/route";
 
 // packages/views/build-module/preference-keys.mjs
 function generatePreferenceKey(kind, name, slug) {
@@ -271,18 +270,6 @@ function viewToQuery(view, postType) {
 
 // routes/post-list/route.ts
 var route = {
-  beforeLoad: async ({ params }) => {
-    try {
-      const postType = await (0, import_data4.resolveSelect)(import_core_data2.store).getPostType(
-        params.type
-      );
-      if (!postType) {
-        throw notFound();
-      }
-    } catch {
-      throw notFound();
-    }
-  },
   title: async ({ params }) => {
     const postType = await (0, import_data4.resolveSelect)(import_core_data2.store).getPostType(
       params.type

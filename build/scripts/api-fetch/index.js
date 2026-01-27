@@ -49,6 +49,7 @@ var wp;
   // packages/api-fetch/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
+    apiFetch: () => apiFetch,
     default: () => index_default
   });
   var import_i18n3 = __toESM(require_i18n(), 1);

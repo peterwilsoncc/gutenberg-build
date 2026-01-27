@@ -9,6 +9,9 @@
 	"textdomain": "default",
 	"usesContext": [ "postId", "postType" ],
 	"attributes": {
+		"textAlign": {
+			"type": "string"
+		},
 		"showPostTitle": {
 			"type": "boolean",
 			"default": true
@@ -49,7 +52,6 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,

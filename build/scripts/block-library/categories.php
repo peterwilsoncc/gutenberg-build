@@ -47,9 +47,6 @@ function gutenberg_render_block_core_categories( $attributes, $content, $block )
 			$taxonomy->labels->singular_name
 		);
 
-		// Pre-select the current term using query var.
-		$args['selected'] = get_query_var( $taxonomy->query_var );
-
 		$show_label     = empty( $attributes['showLabel'] ) ? ' screen-reader-text' : '';
 		$default_label  = $taxonomy->label;
 		$label_text     = ! empty( $attributes['label'] ) ? wp_kses_post( $attributes['label'] ) : $default_label;
@@ -113,8 +110,7 @@ function gutenberg_build_dropdown_script_block_core_categories( $dropdown_id ) {
 				if ( 'escape' === dropdown.dataset.lastkey ) {
 					return;
 				}
-				// Only navigate if a valid term is selected (not the default "Select [taxonomy]" option)
-				if ( dropdown.value && dropdown.value !== '-1' && dropdown instanceof HTMLSelectElement ) {
+				if ( dropdown.value && dropdown instanceof HTMLSelectElement ) {
 					const url = new URL( homeUrl );
 					url.searchParams.set( dropdown.name, dropdown.value );
 					location.href = url.href;

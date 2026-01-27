@@ -155,13 +155,8 @@ function gutenberg_render_block_style_variation_support_styles( $parsed_block ) 
 	);
 
 	$config = array(
-		'version'  => WP_Theme_JSON_Gutenberg::LATEST_SCHEMA,
-		'settings' => array(
-			'spacing' => array(
-				'blockGap' => true,
-			),
-		),
-		'styles'   => array(
+		'version' => WP_Theme_JSON_Gutenberg::LATEST_SCHEMA,
+		'styles'  => array(
 			'elements' => $elements_data,
 			'blocks'   => $blocks_data,
 		),
