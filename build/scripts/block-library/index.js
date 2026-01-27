@@ -70150,6 +70150,7 @@ ${js}
   var import_i18n265 = __toESM(require_i18n(), 1);
   var import_data163 = __toESM(require_data(), 1);
   var import_notices20 = __toESM(require_notices(), 1);
+  var import_url21 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/video/edit-common-settings.mjs
   var import_i18n263 = __toESM(require_i18n(), 1);
@@ -70721,8 +70722,9 @@ ${js}
     }
     function onSelectURL(newSrc) {
       if (newSrc !== src) {
+        const url = (0, import_url21.prependHTTPS)(newSrc);
         const embedBlock = createUpgradedEmbedBlock({
-          attributes: { url: newSrc }
+          attributes: { url }
         });
         if (void 0 !== embedBlock && onReplace) {
           onReplace(embedBlock);
@@ -70730,7 +70732,7 @@ ${js}
         }
         setAttributes({
           blob: void 0,
-          src: newSrc,
+          src: url,
           id: void 0,
           poster: void 0
         });
