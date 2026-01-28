@@ -44300,6 +44300,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/index.js
   var import_data79 = __toESM(require_data());
+  var import_url14 = __toESM(require_url());
+  var import_components155 = __toESM(require_components());
 
   // packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
   var import_core_data45 = __toESM(require_core_data());
@@ -44897,8 +44899,6 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/page-patterns/index.js
-  var import_url14 = __toESM(require_url());
-  var import_components155 = __toESM(require_components());
   var { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider3 } = unlock(import_block_editor56.privateApis);
   var { usePostActions, patternTitleField } = unlock(import_editor31.privateApis);
   var { useLocation: useLocation25, useHistory: useHistory19 } = unlock(import_router31.privateApis);
@@ -45053,7 +45053,13 @@ If there's a particular need for this, please submit a feature request at https:
               children: (0, import_i18n138.__)("Reset view")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(PatternsActions, {})
+          /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
+            PatternsActions,
+            {
+              categoryId,
+              postType: postType2
+            }
+          )
         ] }),
         children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
           dataviews_default,
