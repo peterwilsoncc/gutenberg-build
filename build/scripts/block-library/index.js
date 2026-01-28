@@ -67608,7 +67608,7 @@ ${js}
                 postType: "wp_template_part"
               });
             },
-            children: window?.__experimentalContentOnlyPatternInsertion ? (0, import_i18n249.__)("Edit section") : (0, import_i18n249.__)("Edit")
+            children: (0, import_i18n249.__)("Edit section")
           }
         ) }),
         canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(import_block_editor269.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(

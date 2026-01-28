@@ -35467,9 +35467,6 @@ var wp;
   var import_core_data55 = __toESM(require_core_data(), 1);
   function useEditedSectionDetails() {
     return (0, import_data78.useSelect)((select5) => {
-      if (!window?.__experimentalContentOnlyPatternInsertion) {
-        return null;
-      }
       const {
         getBlockAttributes: getBlockAttributes2,
         getBlockName: getBlockName2,
