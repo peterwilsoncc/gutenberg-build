@@ -33002,7 +33002,7 @@ var wp;
             isDropZoneDisabled: isZoomOut2() && sectionRootClientId !== ""
           };
         }
-        const { hasBlockSupport: hasBlockSupport46, getBlockType: getBlockType25 } = select3(import_blocks44.store);
+        const { hasBlockSupport: hasBlockSupport47, getBlockType: getBlockType25 } = select3(import_blocks44.store);
         const blockName = getBlockName2(clientId);
         const blockEditingMode = getBlockEditingMode2(clientId);
         const parentClientId2 = getBlockRootClientId2(clientId);
@@ -33013,7 +33013,7 @@ var wp;
           _isDropZoneDisabled = clientId !== sectionRootClientId;
         }
         return {
-          __experimentalCaptureToolbars: hasBlockSupport46(
+          __experimentalCaptureToolbars: hasBlockSupport47(
             blockName,
             "__experimentalExposeControlsToChildren",
             false
@@ -59629,13 +59629,13 @@ var wp;
   }) {
     const settings2 = useBlockSettings(blockName);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data166.useDispatch)(store);
-    const { hasButton, hasHeading } = (0, import_data166.useSelect)(
+    const { hasButtons, hasHeading } = (0, import_data166.useSelect)(
       (select3) => {
         const blockNames = select3(store).getBlockNamesByClientId(
           contentClientIds
         );
         return {
-          hasButton: blockNames.includes("core/button"),
+          hasButtons: blockNames.includes("core/buttons"),
           hasHeading: blockNames.includes("core/heading")
         };
       },
@@ -59656,7 +59656,7 @@ var wp;
         defaultControls: {
           text: true,
           background: true,
-          button: hasButton,
+          button: hasButtons,
           heading: hasHeading
         }
       }
@@ -60070,20 +60070,18 @@ var wp;
         const descendants = getClientIdsOfDescendants2(
           renderedBlockClientId
         );
-        const navigationDescendants = /* @__PURE__ */ new Set();
+        const listViewDescendants = /* @__PURE__ */ new Set();
         descendants.forEach((clientId) => {
-          if (getBlockName2(clientId) === "core/navigation") {
-            const navChildren = getClientIdsOfDescendants2(clientId);
-            navChildren.forEach(
-              (childId) => navigationDescendants.add(childId)
+          const blockName = getBlockName2(clientId);
+          if (blockName === "core/navigation" || (0, import_blocks93.hasBlockSupport)(blockName, "listView")) {
+            const listViewChildren = getClientIdsOfDescendants2(clientId);
+            listViewChildren.forEach(
+              (childId) => listViewDescendants.add(childId)
             );
           }
         });
         return descendants.filter((current) => {
-          if (navigationDescendants.has(current)) {
-            return false;
-          }
-          return getBlockName2(current) !== "core/list-item" && getBlockEditingMode2(current) === "contentOnly";
+          return !listViewDescendants.has(current) && getBlockEditingMode2(current) === "contentOnly";
         });
       },
       [isSectionBlock2, renderedBlockClientId]
