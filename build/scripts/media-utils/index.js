@@ -765,6 +765,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/notices
+  var require_notices = __commonJS({
+    "package-external:@wordpress/notices"(exports, module) {
+      module.exports = window.wp.notices;
+    }
+  });
+
   // packages/media-utils/build-module/index.mjs
   var index_exports = {};
   __export(index_exports, {
@@ -17655,6 +17662,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var mime_type_default = mimeTypeField;
 
+  // packages/media-utils/build-module/components/media-upload-modal/index.mjs
+  var import_notices = __toESM(require_notices(), 1);
+  var import_blob2 = __toESM(require_blob(), 1);
+
   // packages/media-utils/build-module/lock-unlock.mjs
   var import_private_apis2 = __toESM(require_private_apis(), 1);
   var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
@@ -17667,6 +17678,8 @@ If there's a particular need for this, please submit a feature request at https:
   var { useEntityRecordsWithPermissions } = unlock2(import_core_data4.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
+  var NOTICES_CONTEXT = "media-modal";
+  var NOTICE_ID_UPLOAD_PROGRESS = "media-modal-upload-progress";
   function MediaUploadModal({
     allowedTypes = ["image"],
     multiple = false,
@@ -17687,6 +17700,17 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return Array.isArray(value) ? value.map(String) : [String(value)];
     });
+    const {
+      createSuccessNotice,
+      createErrorNotice,
+      createInfoNotice,
+      removeNotice
+    } = (0, import_data9.useDispatch)(import_notices.store);
+    const { invalidateResolution } = (0, import_data9.useDispatch)(import_core_data4.store);
+    const notices = (0, import_data9.useSelect)(
+      (select) => select(import_notices.store).getNotices(NOTICES_CONTEXT),
+      []
+    );
     const [view, setView] = (0, import_element59.useState)(() => ({
       type: LAYOUT_PICKER_GRID2,
       fields: [],
@@ -17808,18 +17832,84 @@ If there's a particular need for this, please submit a feature request at https:
       onClose?.();
     }, [onClose]);
     const handleUpload = onUpload || uploadMedia;
+    const handleUploadComplete = (0, import_element59.useCallback)(
+      (attachments) => {
+        const allComplete = attachments.every(
+          (attachment) => attachment.id && attachment.url && !(0, import_blob2.isBlobURL)(attachment.url)
+        );
+        if (allComplete && attachments.length > 0) {
+          createSuccessNotice(
+            (0, import_i18n65.sprintf)(
+              // translators: %s: number of files
+              (0, import_i18n65._n)(
+                "Uploaded %s file",
+                "Uploaded %s files",
+                attachments.length
+              ),
+              attachments.length.toLocaleString()
+            ),
+            {
+              type: "snackbar",
+              context: NOTICES_CONTEXT,
+              id: NOTICE_ID_UPLOAD_PROGRESS
+            }
+          );
+          invalidateResolution("getEntityRecords", [
+            "postType",
+            "attachment",
+            queryArgs
+          ]);
+        }
+      },
+      [createSuccessNotice, invalidateResolution, queryArgs]
+    );
+    const handleUploadError = (0, import_element59.useCallback)(
+      (error) => {
+        createErrorNotice(error.message, {
+          type: "snackbar",
+          context: NOTICES_CONTEXT,
+          id: NOTICE_ID_UPLOAD_PROGRESS
+        });
+      },
+      [createErrorNotice]
+    );
     const handleFileSelect = (0, import_element59.useCallback)(
       (event) => {
         const files = event.target.files;
         if (files && files.length > 0) {
           const filesArray = Array.from(files);
+          createInfoNotice(
+            (0, import_i18n65.sprintf)(
+              // translators: %s: number of files
+              (0, import_i18n65._n)(
+                "Uploading %s file",
+                "Uploading %s files",
+                filesArray.length
+              ),
+              filesArray.length.toLocaleString()
+            ),
+            {
+              type: "snackbar",
+              context: NOTICES_CONTEXT,
+              id: NOTICE_ID_UPLOAD_PROGRESS,
+              explicitDismiss: true
+            }
+          );
           handleUpload({
             allowedTypes,
-            filesList: filesArray
+            filesList: filesArray,
+            onFileChange: handleUploadComplete,
+            onError: handleUploadError
           });
         }
       },
-      [allowedTypes, handleUpload]
+      [
+        allowedTypes,
+        handleUpload,
+        createInfoNotice,
+        handleUploadComplete,
+        handleUploadError
+      ]
     );
     const paginationInfo = (0, import_element59.useMemo)(
       () => ({
@@ -17899,9 +17989,28 @@ If there's a particular need for this, please submit a feature request at https:
                   );
                 }
                 if (filteredFiles.length > 0) {
+                  createInfoNotice(
+                    (0, import_i18n65.sprintf)(
+                      // translators: %s: number of files
+                      (0, import_i18n65._n)(
+                        "Uploading %s file",
+                        "Uploading %s files",
+                        filteredFiles.length
+                      ),
+                      filteredFiles.length.toLocaleString()
+                    ),
+                    {
+                      type: "snackbar",
+                      context: NOTICES_CONTEXT,
+                      id: NOTICE_ID_UPLOAD_PROGRESS,
+                      explicitDismiss: true
+                    }
+                  );
                   handleUpload({
                     allowedTypes,
-                    filesList: filteredFiles
+                    filesList: filteredFiles,
+                    onFileChange: handleUploadComplete,
+                    onError: handleUploadError
                   });
                 }
               },
@@ -17925,6 +18034,16 @@ If there's a particular need for this, please submit a feature request at https:
               search,
               searchLabel,
               itemListLabel: (0, import_i18n65.__)("Media items")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+            import_components53.SnackbarList,
+            {
+              notices: notices.filter(
+                ({ type }) => type === "snackbar"
+              ),
+              className: "media-upload-modal__snackbar",
+              onRemove: (id) => removeNotice(id, NOTICES_CONTEXT)
             }
           )
         ]
