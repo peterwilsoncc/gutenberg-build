@@ -29524,7 +29524,8 @@ This message will only show in development mode. It won't appear in production. 
           const referenceElement = refs.reference.current;
           const floatingElement = refs.floating.current;
           const isBlurFromThisPopover = referenceElement && "contains" in referenceElement && referenceElement.contains(blurTarget) || floatingElement?.contains(blurTarget);
-          if (!isBlurFromThisPopover) {
+          const ownerDocument = floatingElement?.ownerDocument;
+          if (!isBlurFromThisPopover && !("relatedTarget" in event && event.relatedTarget) && ownerDocument?.activeElement === ownerDocument?.body) {
             return;
           }
           if (onFocusOutside) {
