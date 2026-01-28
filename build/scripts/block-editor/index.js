@@ -71945,7 +71945,7 @@ var wp;
       return {};
     }
     return {
-      className: customCSSIdentifier
+      className: `has-custom-css ${customCSSIdentifier}`
     };
   }
   function addSaveProps10(props, blockType, attributes) {
