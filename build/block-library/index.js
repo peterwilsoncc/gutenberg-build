@@ -7983,7 +7983,6 @@ var wp;
       }
     },
     supports: {
-      html: false,
       className: false,
       customClassName: false,
       lock: false,
