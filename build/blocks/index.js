@@ -5495,12 +5495,13 @@ var wp;
   var ICON_COLORS = ["#191e23", "#f8f9f9"];
   function isUnmodifiedBlock(block, role) {
     const blockAttributes = getBlockType(block.name)?.attributes ?? {};
-    const attributesToCheck = role ? Object.entries(blockAttributes).filter(([key, definition]) => {
+    const attributesByRole = role ? Object.entries(blockAttributes).filter(([key, definition]) => {
       if (role === "content" && key === "metadata") {
-        return true;
+        return Object.keys(block.attributes[key]?.bindings ?? {}).length > 0;
       }
       return definition.role === role || definition.__experimentalRole === role;
-    }) : Object.entries(blockAttributes);
+    }) : [];
+    const attributesToCheck = !!attributesByRole.length ? attributesByRole : Object.entries(blockAttributes);
     return attributesToCheck.every(([key, definition]) => {
       const value = block.attributes[key];
       if (definition.hasOwnProperty("default")) {
