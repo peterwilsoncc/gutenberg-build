@@ -42160,13 +42160,46 @@ var wp;
       const slug = fontFamilies?.find(
         ({ fontFamily: f2 }) => f2 === newValue
       )?.slug;
-      onChange(
-        setImmutably(
-          value,
-          ["typography", "fontFamily"],
-          slug ? `var:preset|font-family|${slug}` : newValue || void 0
-        )
+      let updatedValue = setImmutably(
+        value,
+        ["typography", "fontFamily"],
+        slug ? `var:preset|font-family|${slug}` : newValue || void 0
       );
+      const newFontFamilyFaces = fontFamilies?.find(({ fontFamily: f2 }) => f2 === newValue)?.fontFace ?? [];
+      const { fontStyles, fontWeights } = getFontStylesAndWeights(newFontFamilyFaces);
+      const hasFontStyle = fontStyles?.some(
+        ({ value: fs }) => fs === fontStyle
+      );
+      const hasFontWeight = fontWeights?.some(
+        ({ value: fw }) => fw?.toString() === fontWeight?.toString()
+      );
+      if (!hasFontStyle || !hasFontWeight) {
+        const { nearestFontStyle, nearestFontWeight } = findNearestStyleAndWeight(
+          newFontFamilyFaces,
+          fontStyle,
+          fontWeight
+        );
+        if (nearestFontStyle || nearestFontWeight) {
+          updatedValue = {
+            ...updatedValue,
+            typography: {
+              ...updatedValue?.typography,
+              fontStyle: nearestFontStyle || void 0,
+              fontWeight: nearestFontWeight || void 0
+            }
+          };
+        } else if (fontStyle || fontWeight) {
+          updatedValue = {
+            ...updatedValue,
+            typography: {
+              ...updatedValue?.typography,
+              fontStyle: void 0,
+              fontWeight: void 0
+            }
+          };
+        }
+      }
+      onChange(updatedValue);
     };
     const hasFontFamily = () => !!value?.typography?.fontFamily;
     const resetFontFamily = () => setFontFamily(void 0);
@@ -42208,11 +42241,6 @@ var wp;
     const hasFontWeights = settings2?.typography?.fontWeight;
     const fontStyle = decodeValue(inheritedValue?.typography?.fontStyle);
     const fontWeight = decodeValue(inheritedValue?.typography?.fontWeight);
-    const { nearestFontStyle, nearestFontWeight } = findNearestStyleAndWeight(
-      fontFamilyFaces,
-      fontStyle,
-      fontWeight
-    );
     const setFontAppearance = (0, import_element133.useCallback)(
       ({ fontStyle: newFontStyle, fontWeight: newFontWeight }) => {
         if (newFontStyle !== fontStyle || newFontWeight !== fontWeight) {
@@ -42232,21 +42260,6 @@ var wp;
     const resetFontAppearance = (0, import_element133.useCallback)(() => {
       setFontAppearance({});
     }, [setFontAppearance]);
-    (0, import_element133.useEffect)(() => {
-      if (nearestFontStyle && nearestFontWeight) {
-        setFontAppearance({
-          fontStyle: nearestFontStyle,
-          fontWeight: nearestFontWeight
-        });
-      } else {
-        resetFontAppearance();
-      }
-    }, [
-      nearestFontStyle,
-      nearestFontWeight,
-      resetFontAppearance,
-      setFontAppearance
-    ]);
     const hasLineHeightEnabled = useHasLineHeightControl(settings2);
     const lineHeight = decodeValue(inheritedValue?.typography?.lineHeight);
     const setLineHeight = (newValue) => {
