@@ -13883,17 +13883,42 @@ function ValidatedDateControl({
     setCustomValidity(void 0);
   }, [inputRefs]);
   (0, import_element42.useEffect)(() => {
-    if (isTouched) {
-      const timeoutId = setTimeout(() => {
-        if (validity) {
-          setCustomValidity(getCustomValidity(isValid2, validity));
-        } else {
-          validateRefs();
-        }
-      }, 0);
-      return () => clearTimeout(timeoutId);
+    const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
+    const result = validity ? getCustomValidity(isValid2, validity) : void 0;
+    for (const ref of refs) {
+      const input = ref.current;
+      if (input) {
+        input.setCustomValidity(
+          result?.type === "invalid" && result.message ? result.message : ""
+        );
+      }
     }
-    return void 0;
+  }, [inputRefs, isValid2, validity]);
+  (0, import_element42.useEffect)(() => {
+    const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
+    const handleInvalid = (event) => {
+      event.preventDefault();
+      setIsTouched(true);
+    };
+    for (const ref of refs) {
+      ref.current?.addEventListener("invalid", handleInvalid);
+    }
+    return () => {
+      for (const ref of refs) {
+        ref.current?.removeEventListener("invalid", handleInvalid);
+      }
+    };
+  }, [inputRefs, setIsTouched]);
+  (0, import_element42.useEffect)(() => {
+    if (!isTouched) {
+      return;
+    }
+    const result = validity ? getCustomValidity(isValid2, validity) : void 0;
+    if (result) {
+      setCustomValidity(result);
+    } else {
+      validateRefs();
+    }
   }, [isTouched, isValid2, validity, validateRefs]);
   const onBlur = (event) => {
     if (isTouched) {
