@@ -60493,14 +60493,19 @@ var wp;
   function useFitText({ fitText, name, clientId }) {
     const hasFitTextSupport2 = (0, import_blocks104.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
     const blockElement = useBlockElement(clientId);
-    const { blockAttributes, parentId } = (0, import_data171.useSelect)(
+    const { blockAttributes, parentId, blockMode } = (0, import_data171.useSelect)(
       (select2) => {
         if (!clientId || !hasFitTextSupport2 || !fitText) {
           return EMPTY_OBJECT3;
         }
+        const _blockMode = select2(store).getBlockMode(clientId);
+        if (_blockMode === "html") {
+          return { blockMode: _blockMode };
+        }
         return {
           blockAttributes: select2(store).getBlockAttributes(clientId),
-          parentId: select2(store).getBlockRootClientId(clientId)
+          parentId: select2(store).getBlockRootClientId(clientId),
+          blockMode: _blockMode
         };
       },
       [clientId, hasFitTextSupport2, fitText]
@@ -60527,7 +60532,7 @@ var wp;
       optimizeFitText(blockElement, applyFontSize);
     }, [blockElement, clientId, hasFitTextSupport2, fitText]);
     (0, import_element219.useEffect)(() => {
-      if (!fitText || !blockElement || !clientId || !hasFitTextSupport2) {
+      if (!fitText || !blockElement || !clientId || !hasFitTextSupport2 || blockMode === "html") {
         return;
       }
       const currentElement = blockElement;
@@ -60575,10 +60580,11 @@ var wp;
       parentId,
       applyFitText,
       blockElement,
-      hasFitTextSupport2
+      hasFitTextSupport2,
+      blockMode
     ]);
     (0, import_element219.useEffect)(() => {
-      if (fitText && blockElement && hasFitTextSupport2) {
+      if (fitText && blockElement && hasFitTextSupport2 && blockMode !== "html") {
         const frameId = window.requestAnimationFrame(() => {
           if (blockElement) {
             applyFitText();
@@ -60591,7 +60597,8 @@ var wp;
       fitText,
       applyFitText,
       blockElement,
-      hasFitTextSupport2
+      hasFitTextSupport2,
+      blockMode
     ]);
   }
   function addSaveProps8(props, blockType, attributes) {
