@@ -60439,13 +60439,17 @@ var wp;
     const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
     const range2 = document.createRange();
     range2.selectNodeContents(textElement);
+    let maxclientHeight = textElement.clientHeight;
     while (minSize <= maxSize) {
       const midSize = Math.floor((minSize + maxSize) / 2);
       applyFontSize(midSize);
       const rect = range2.getBoundingClientRect();
       const textWidth = rect.width;
       const fitsWidth = textElement.scrollWidth <= textElement.clientWidth && textWidth <= textElement.clientWidth - paddingLeft - paddingRight;
-      const fitsHeight = alreadyHasScrollableHeight || textElement.scrollHeight <= textElement.clientHeight;
+      const fitsHeight = alreadyHasScrollableHeight || textElement.scrollHeight <= textElement.clientHeight || textElement.scrollHeight <= maxclientHeight;
+      if (textElement.clientHeight > maxclientHeight) {
+        maxclientHeight = textElement.clientHeight;
+      }
       if (fitsWidth && fitsHeight) {
         bestSize = midSize;
         minSize = midSize + 1;
