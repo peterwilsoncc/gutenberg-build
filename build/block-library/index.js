@@ -1619,6 +1619,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
       "button",
       {
+        type: "button",
         className: "wp-block-accordion-heading__toggle",
         style: spacingProps.style,
         children: [
@@ -1879,7 +1880,126 @@ var wp;
       ) });
     }
   };
-  var deprecated_default = [v1];
+  var v2 = {
+    attributes: {
+      openByDefault: {
+        type: "boolean",
+        default: false
+      },
+      title: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: ".wp-block-accordion-heading__toggle-title",
+        role: "content"
+      },
+      level: {
+        type: "number"
+      },
+      iconPosition: {
+        type: "string",
+        enum: ["left", "right"],
+        default: "right"
+      },
+      showIcon: {
+        type: "boolean",
+        default: true
+      }
+    },
+    supports: {
+      anchor: true,
+      color: {
+        background: true,
+        gradients: true
+      },
+      align: false,
+      interactivity: true,
+      spacing: {
+        padding: true,
+        __experimentalDefaultControls: {
+          padding: true
+        },
+        __experimentalSkipSerialization: true,
+        __experimentalSelector: ".wp-block-accordion-heading__toggle"
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      typography: {
+        __experimentalSkipSerialization: [
+          "textDecoration",
+          "letterSpacing"
+        ],
+        fontSize: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true,
+          fontFamily: true
+        }
+      },
+      shadow: true,
+      visibility: false,
+      lock: false
+    },
+    save({ attributes: attributes3 }) {
+      const { level, title, iconPosition, showIcon } = attributes3;
+      const TagName2 = "h" + (level || 3);
+      const typographyProps = (0, import_block_editor8.getTypographyClassesAndStyles)(attributes3);
+      const blockProps = import_block_editor8.useBlockProps.save();
+      const spacingProps = (0, import_block_editor8.__experimentalGetSpacingClassesAndStyles)(attributes3);
+      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        "button",
+        {
+          className: "wp-block-accordion-heading__toggle",
+          style: spacingProps.style,
+          children: [
+            showIcon && iconPosition === "left" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              "span",
+              {
+                className: "wp-block-accordion-heading__toggle-icon",
+                "aria-hidden": "true",
+                children: "+"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              import_block_editor8.RichText.Content,
+              {
+                className: "wp-block-accordion-heading__toggle-title",
+                tagName: "span",
+                value: title,
+                style: {
+                  letterSpacing: typographyProps.style.letterSpacing,
+                  textDecoration: typographyProps.style.textDecoration
+                }
+              }
+            ),
+            showIcon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              "span",
+              {
+                className: "wp-block-accordion-heading__toggle-icon",
+                "aria-hidden": "true",
+                children: "+"
+              }
+            )
+          ]
+        }
+      ) });
+    }
+  };
+  var deprecated_default = [v1, v2];
 
   // packages/block-library/build-module/accordion-heading/index.js
   var { name: name3 } = block_default3;
@@ -13793,7 +13913,7 @@ var wp;
       ];
     }
   };
-  var v2 = {
+  var v22 = {
     attributes: {
       ...blockAttributes2,
       title: {
@@ -13924,7 +14044,7 @@ var wp;
       ];
     }
   };
-  var deprecated_default11 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v2, v16];
+  var deprecated_default11 = [v142, v132, v122, v112, v102, v9, v8, v7, v6, v5, v4, v3, v22, v16];
 
   // packages/block-library/build-module/cover/edit/index.js
   var import_jsx_runtime208 = __toESM(require_jsx_runtime());
@@ -17761,7 +17881,7 @@ ${url}
   var import_jsx_runtime220 = __toESM(require_jsx_runtime());
   var import_block_editor76 = __toESM(require_block_editor());
   var { attributes: blockAttributes3 } = block_default7;
-  var v22 = {
+  var v23 = {
     attributes: blockAttributes3,
     save({ attributes: attributes3 }) {
       const { url, caption, type, providerNameSlug } = attributes3;
@@ -17799,7 +17919,7 @@ ${url}
       ] });
     }
   };
-  var deprecated4 = [v22, v17];
+  var deprecated4 = [v23, v17];
   var deprecated_default12 = deprecated4;
 
   // packages/block-library/build-module/embed/index.js
@@ -17939,7 +18059,7 @@ ${url}
       ] });
     }
   };
-  var v23 = {
+  var v24 = {
     attributes: {
       id: {
         type: "number"
@@ -18144,7 +18264,7 @@ ${url}
       ] });
     }
   };
-  var deprecated5 = [v32, v23, v18];
+  var deprecated5 = [v32, v24, v18];
   var deprecated_default13 = deprecated5;
 
   // packages/block-library/build-module/file/edit.js
@@ -19537,7 +19657,7 @@ ${url}
   var getNameFromLabelV1 = (content) => {
     return (0, import_remove_accents.default)((0, import_dom.__unstableStripHTML)(content)).replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase().replace(/(^-+)|(-+$)/g, "");
   };
-  var v24 = {
+  var v25 = {
     attributes: {
       type: {
         type: "string",
@@ -19743,7 +19863,7 @@ ${url}
       );
     }
   };
-  var deprecated6 = [v24, v110];
+  var deprecated6 = [v25, v110];
   var deprecated_default15 = deprecated6;
 
   // packages/block-library/build-module/form-input/edit.js
@@ -21123,7 +21243,7 @@ ${url}
       return runV2Migration(attributes3);
     }
   };
-  var v25 = {
+  var v26 = {
     attributes: {
       images: {
         type: "array",
@@ -21324,7 +21444,7 @@ ${url}
       return runV2Migration(attributes3);
     }
   };
-  var deprecated_default16 = [v72, v62, v52, v42, v33, v25, v111];
+  var deprecated_default16 = [v72, v62, v52, v42, v33, v26, v111];
 
   // packages/block-library/build-module/gallery/edit.js
   var import_jsx_runtime238 = __toESM(require_jsx_runtime());
@@ -23651,7 +23771,7 @@ ${url}
       );
     }
   };
-  var v26 = {
+  var v27 = {
     attributes: {
       ...blockAttributes4,
       customTextColor: {
@@ -23812,7 +23932,7 @@ ${url}
       return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(TagName2, { ...import_block_editor100.useBlockProps.save({ className }), children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_block_editor100.RichText.Content, { value: content }) });
     }
   };
-  var deprecated8 = [v53, v43, v34, v26, v113];
+  var deprecated8 = [v53, v43, v34, v27, v113];
   var deprecated_default18 = deprecated8;
 
   // packages/block-library/build-module/heading/edit.js
@@ -24602,7 +24722,7 @@ ${url}
       );
     }
   };
-  var v27 = {
+  var v28 = {
     attributes: {
       url: {
         type: "string",
@@ -25542,7 +25662,7 @@ ${url}
       return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("figure", { ...import_block_editor107.useBlockProps.save({ className: classes }), children: figure });
     }
   };
-  var deprecated_default19 = [v82, v73, v63, v54, v44, v35, v27, v114];
+  var deprecated_default19 = [v82, v73, v63, v54, v44, v35, v28, v114];
 
   // packages/block-library/build-module/image/edit.js
   var import_jsx_runtime256 = __toESM(require_jsx_runtime());
@@ -28515,7 +28635,7 @@ ${url}
     },
     migrate: migrateToListV2
   };
-  var v28 = {
+  var v29 = {
     attributes: {
       ordered: {
         type: "boolean",
@@ -28674,7 +28794,7 @@ ${url}
       );
     }
   };
-  var deprecated_default21 = [v36, v28, v115, v0];
+  var deprecated_default21 = [v36, v29, v115, v0];
 
   // packages/block-library/build-module/list/edit.js
   var import_jsx_runtime263 = __toESM(require_jsx_runtime());
@@ -30973,7 +31093,7 @@ ${url}
       ] });
     }
   };
-  var v29 = {
+  var v210 = {
     attributes: {
       ...v0Attributes,
       backgroundColor: {
@@ -31113,7 +31233,7 @@ ${url}
       ] });
     }
   };
-  var deprecated_default23 = [v74, v64, v55, v45, v37, v29, v117];
+  var deprecated_default23 = [v74, v64, v55, v45, v37, v210, v117];
 
   // packages/block-library/build-module/media-text/edit.js
   var import_jsx_runtime273 = __toESM(require_jsx_runtime());
@@ -41950,7 +42070,7 @@ ${url}
       return attributes3?.metadata?.bindings?.datetime?.source === "core/post-data" && !!attributes3?.metadata?.bindings?.datetime?.args?.key;
     }
   };
-  var v210 = {
+  var v211 = {
     attributes: {
       textAlign: {
         type: "string"
@@ -42079,7 +42199,7 @@ ${url}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default26 = [v38, v210, v118];
+  var deprecated_default26 = [v38, v211, v118];
 
   // packages/block-library/build-module/post-date/variations.js
   var import_i18n147 = __toESM(require_i18n());
@@ -45470,7 +45590,7 @@ ${url}
       };
     }
   };
-  var v211 = {
+  var v212 = {
     attributes: blockAttributes6,
     save({ attributes: attributes3 }) {
       const {
@@ -45612,7 +45732,7 @@ ${url}
       };
     }
   };
-  var deprecated_default28 = [v57, v47, v39, v211, v120, v02];
+  var deprecated_default28 = [v57, v47, v39, v212, v120, v02];
 
   // packages/block-library/build-module/pullquote/edit.js
   var import_jsx_runtime344 = __toESM(require_jsx_runtime());
@@ -48114,7 +48234,7 @@ ${url}
       return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_block_editor196.InnerBlocks.Content, {});
     }
   };
-  var v212 = {
+  var v213 = {
     attributes: {
       queryId: {
         type: "number"
@@ -48364,7 +48484,7 @@ ${url}
     },
     migrate: migrateDisplayLayout
   };
-  var deprecated12 = [v58, v48, v310, v212, v121];
+  var deprecated12 = [v58, v48, v310, v213, v121];
   var deprecated_default29 = deprecated12;
 
   // packages/block-library/build-module/query/index.js
@@ -50011,7 +50131,7 @@ ${url}
       return migrateTextAlign2(...migrateToQuoteV2(attributes3));
     }
   };
-  var v213 = {
+  var v214 = {
     attributes: {
       value: {
         type: "string",
@@ -50133,7 +50253,7 @@ ${url}
       );
     }
   };
-  var deprecated_default32 = [v49, v311, v213, v124, v03];
+  var deprecated_default32 = [v49, v311, v214, v124, v03];
 
   // packages/block-library/build-module/quote/edit.js
   var import_jsx_runtime380 = __toESM(require_jsx_runtime());
@@ -50719,7 +50839,7 @@ ${url}
 
   // packages/block-library/build-module/block/deprecated.js
   var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
-  var v214 = {
+  var v215 = {
     attributes: {
       ref: {
         type: "number"
@@ -50821,7 +50941,7 @@ ${url}
       };
     }
   };
-  var deprecated_default33 = [v214, v125];
+  var deprecated_default33 = [v215, v125];
 
   // packages/block-library/build-module/block/index.js
   var { name: name89 } = block_default88;
@@ -55965,7 +56085,7 @@ ${url}
       attribute: "data-align"
     }
   };
-  var v215 = {
+  var v216 = {
     attributes: {
       hasFixedLayout: {
         type: "boolean",
@@ -56208,7 +56328,7 @@ ${url}
       ] });
     }
   };
-  var deprecated_default39 = [v410, v312, v215, v129];
+  var deprecated_default39 = [v410, v312, v216, v129];
 
   // packages/block-library/build-module/table/edit.js
   var import_jsx_runtime452 = __toESM(require_jsx_runtime());
@@ -61341,7 +61461,7 @@ ${url}
       );
     }
   };
-  var v216 = {
+  var v217 = {
     attributes: {
       content: {
         type: "string",
@@ -61381,7 +61501,7 @@ ${url}
       return style2?.typography?.fontFamily;
     }
   };
-  var deprecated_default40 = [v216, v130];
+  var deprecated_default40 = [v217, v130];
 
   // packages/block-library/build-module/verse/edit.js
   var import_jsx_runtime488 = __toESM(require_jsx_runtime());
