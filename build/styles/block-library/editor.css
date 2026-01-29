@@ -1929,6 +1929,13 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   margin-left: 0.1em;
 }
 
+.wp-block-post-author__transform {
+  background: #f0f0f0;
+  border-radius: 2px;
+  margin: 16px;
+  padding: 16px;
+}
+
 .wp-block-post-excerpt .wp-block-post-excerpt__excerpt.is-inline {
   display: inline;
 }

@@ -4949,9 +4949,9 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/post-author',
-		'title' => 'Author',
+		'title' => 'Author (deprecated)',
 		'category' => 'theme',
-		'description' => 'Display post author details such as name, avatar, and bio.',
+		'description' => 'This block is deprecated. Please use the Avatar block, the Author Name block, and the Author Biography block instead.',
 		'textdomain' => 'default',
 		'attributes' => array(
 			'textAlign' => array(
@@ -4988,6 +4988,7 @@ return array(
 			'queryId'
 		),
 		'supports' => array(
+			'inserter' => false,
 			'anchor' => true,
 			'html' => false,
 			'spacing' => array(
