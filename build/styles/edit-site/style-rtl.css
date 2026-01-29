@@ -2746,6 +2746,11 @@ div.dataviews-view-list {
   gap: 16px;
 }
 
+.dataforms-layouts-details__summary-content {
+  display: inline-flex;
+  min-height: 24px;
+}
+
 .dataforms-layouts-details__content {
   padding-top: 12px;
 }
