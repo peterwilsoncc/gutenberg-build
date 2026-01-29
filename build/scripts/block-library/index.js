@@ -48626,7 +48626,9 @@ ${js}
         "aria-label": (0, import_i18n163.__)("Excerpt text"),
         value: isSelected ? rawOrRenderedExcerpt : (!isTrimmed ? rawOrRenderedExcerpt : trimmedExcerpt + ELLIPSIS) || (0, import_i18n163.__)("No excerpt found"),
         onChange: setExcerpt,
-        tagName: "p"
+        tagName: "p",
+        allowedFormats: [],
+        preserveWhiteSpace: true
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("p", { className: excerptClassName, children: !isTrimmed ? rawOrRenderedExcerpt || (0, import_i18n163.__)("No excerpt found") : trimmedExcerpt + ELLIPSIS });
     return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(import_jsx_runtime353.Fragment, { children: [
