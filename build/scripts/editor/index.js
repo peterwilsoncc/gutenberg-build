@@ -57790,6 +57790,7 @@ var wp;
   var import_element214 = __toESM(require_element(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
   var import_block_editor98 = __toESM(require_block_editor(), 1);
+  var import_preferences25 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/constants.mjs
   var collabHistorySidebarName = "edit-post/collab-history-sidebar";
@@ -59596,22 +59597,20 @@ var wp;
     const isLargeViewport = (0, import_compose65.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element214.useRef)(null);
     const showFloatingSidebar = isLargeViewport;
-    const { clientId, blockCommentId, isDistractionFree } = (0, import_data235.useSelect)(
-      (select5) => {
-        const {
-          getBlockAttributes: getBlockAttributes2,
-          getSelectedBlockClientId: getSelectedBlockClientId2,
-          getSettings: getSettings10
-        } = select5(import_block_editor98.store);
-        const _clientId = getSelectedBlockClientId2();
-        return {
-          clientId: _clientId,
-          blockCommentId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null,
-          isDistractionFree: getSettings10().isDistractionFree
-        };
-      },
-      []
-    );
+    const { clientId, blockCommentId } = (0, import_data235.useSelect)((select5) => {
+      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor98.store);
+      const _clientId = getSelectedBlockClientId2();
+      return {
+        clientId: _clientId,
+        blockCommentId: _clientId ? getBlockAttributes2(_clientId)?.metadata?.noteId : null
+      };
+    }, []);
+    const { isDistractionFree } = (0, import_data235.useSelect)((select5) => {
+      const { get } = select5(import_preferences25.store);
+      return {
+        isDistractionFree: get("core", "distractionFree")
+      };
+    }, []);
     const {
       resultComments,
       unresolvedSortedThreads,
@@ -59733,7 +59732,7 @@ var wp;
   var import_i18n262 = __toESM(require_i18n(), 1);
   var import_data238 = __toESM(require_data(), 1);
   var import_element215 = __toESM(require_element(), 1);
-  var import_preferences27 = __toESM(require_preferences(), 1);
+  var import_preferences28 = __toESM(require_preferences(), 1);
   var import_compose66 = __toESM(require_compose(), 1);
   var import_core_data125 = __toESM(require_core_data(), 1);
 
@@ -59741,7 +59740,7 @@ var wp;
   var import_components248 = __toESM(require_components(), 1);
   var import_data236 = __toESM(require_data(), 1);
   var import_i18n260 = __toESM(require_i18n(), 1);
-  var import_preferences25 = __toESM(require_preferences(), 1);
+  var import_preferences26 = __toESM(require_preferences(), 1);
   var import_core_data124 = __toESM(require_core_data(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesActionMenu({
@@ -59753,7 +59752,7 @@ var wp;
     const onReset = () => {
       setUser({ styles: {}, settings: {} });
     };
-    const { toggle } = (0, import_data236.useDispatch)(import_preferences25.store);
+    const { toggle } = (0, import_data236.useDispatch)(import_preferences26.store);
     const { canEditCSS } = (0, import_data236.useSelect)((select5) => {
       const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select5(import_core_data124.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
@@ -59851,7 +59850,7 @@ var wp;
   var import_data237 = __toESM(require_data(), 1);
   var import_components249 = __toESM(require_components(), 1);
   var import_i18n261 = __toESM(require_i18n(), 1);
-  var import_preferences26 = __toESM(require_preferences(), 1);
+  var import_preferences27 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide-image.mjs
   var import_jsx_runtime408 = __toESM(require_jsx_runtime(), 1);
@@ -59871,11 +59870,11 @@ var wp;
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
-    const { toggle } = (0, import_data237.useDispatch)(import_preferences26.store);
+    const { toggle } = (0, import_data237.useDispatch)(import_preferences27.store);
     const { isActive, isStylesOpen } = (0, import_data237.useSelect)((select5) => {
       const sidebar = select5(store2).getActiveComplementaryArea("core");
       return {
-        isActive: !!select5(import_preferences26.store).get(
+        isActive: !!select5(import_preferences27.store).get(
           "core/edit-site",
           "welcomeGuideStyles"
         ),
@@ -59989,7 +59988,7 @@ var wp;
         select5(store)
       );
       const _isVisualEditorMode = "visual" === select5(store).getEditorMode();
-      const _showListViewByDefault = select5(import_preferences27.store).get(
+      const _showListViewByDefault = select5(import_preferences28.store).get(
         "core",
         "showListViewByDefault"
       );
@@ -60236,13 +60235,13 @@ var wp;
   var import_compose67 = __toESM(require_compose(), 1);
   var import_data242 = __toESM(require_data(), 1);
   var import_element218 = __toESM(require_element(), 1);
-  var import_preferences30 = __toESM(require_preferences(), 1);
+  var import_preferences31 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
   var import_data240 = __toESM(require_data(), 1);
-  var import_preferences28 = __toESM(require_preferences(), 1);
+  var import_preferences29 = __toESM(require_preferences(), 1);
   var import_jsx_runtime412 = __toESM(require_jsx_runtime(), 1);
-  var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences28.privateApis);
+  var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences29.privateApis);
   function EnablePublishSidebarOption(props) {
     const isChecked = (0, import_data240.useSelect)((select5) => {
       return select5(store).isPublishSidebarEnabled();
@@ -60260,7 +60259,7 @@ var wp;
 
   // packages/editor/build-module/components/block-visibility/index.mjs
   var import_data241 = __toESM(require_data(), 1);
-  var import_preferences29 = __toESM(require_preferences(), 1);
+  var import_preferences30 = __toESM(require_preferences(), 1);
   var import_blocks38 = __toESM(require_blocks(), 1);
   var import_element217 = __toESM(require_element(), 1);
   var import_components252 = __toESM(require_components(), 1);
@@ -60281,7 +60280,7 @@ var wp;
       return {
         blockTypes: select5(import_blocks38.store).getBlockTypes(),
         allowedBlockTypes: select5(store).getEditorSettings().allowedBlockTypes,
-        hiddenBlockTypes: select5(import_preferences29.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY10
+        hiddenBlockTypes: select5(import_preferences30.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY10
       };
     }, []);
     const allowedBlockTypes = (0, import_element217.useMemo)(() => {
@@ -60364,7 +60363,7 @@ var wp;
     PreferencesModalTabs,
     PreferencesModalSection,
     PreferenceToggleControl
-  } = unlock(import_preferences30.privateApis);
+  } = unlock(import_preferences31.privateApis);
   function EditorPreferencesModal({ extraSections = {} }) {
     const isActive = (0, import_data242.useSelect)((select5) => {
       return select5(store2).isModalActive("editor/preferences");
@@ -60380,7 +60379,7 @@ var wp;
     const showBlockBreadcrumbsOption = (0, import_data242.useSelect)(
       (select5) => {
         const { getEditorSettings: getEditorSettings2 } = select5(store);
-        const { get } = select5(import_preferences30.store);
+        const { get } = select5(import_preferences31.store);
         const isRichEditingEnabled = getEditorSettings2().richEditingEnabled;
         const isDistractionFreeEnabled = get("core", "distractionFree");
         return !isDistractionFreeEnabled && isLargeViewport && isRichEditingEnabled;
@@ -60388,7 +60387,7 @@ var wp;
       [isLargeViewport]
     );
     const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data242.useDispatch)(store);
-    const { set: setPreference } = (0, import_data242.useDispatch)(import_preferences30.store);
+    const { set: setPreference } = (0, import_data242.useDispatch)(import_preferences31.store);
     const sections = (0, import_element218.useMemo)(
       () => [
         {
