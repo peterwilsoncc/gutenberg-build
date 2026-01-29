@@ -59675,9 +59675,7 @@ var wp;
               comments: resultComments,
               newNoteFormState,
               setNewNoteFormState,
-              commentSidebarRef,
-              reflowComments,
-              commentLastUpdated
+              commentSidebarRef
             }
           )
         }
