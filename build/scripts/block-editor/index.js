@@ -73457,12 +73457,20 @@ var wp;
     isManualPlacement,
     parentLayout
   }) {
-    const { rootClientId, isVisible } = (0, import_data190.useSelect)(
+    const {
+      rootClientId,
+      isVisible,
+      parentBlockVisibility,
+      blockBlockVisibility,
+      deviceType
+    } = (0, import_data190.useSelect)(
       (select3) => {
         const {
           getBlockRootClientId: getBlockRootClientId2,
           getBlockEditingMode: getBlockEditingMode2,
-          getTemplateLock: getTemplateLock2
+          getTemplateLock: getTemplateLock2,
+          getBlockAttributes: getBlockAttributes3,
+          getSettings: getSettings8
         } = select3(store);
         const _rootClientId = getBlockRootClientId2(clientId);
         if (getTemplateLock2(_rootClientId) || getBlockEditingMode2(_rootClientId) !== "default") {
@@ -73471,17 +73479,32 @@ var wp;
             isVisible: false
           };
         }
+        const parentAttributes = getBlockAttributes3(_rootClientId);
+        const blockAttributes = getBlockAttributes3(clientId);
+        const settings2 = getSettings8();
         return {
           rootClientId: _rootClientId,
-          isVisible: true
+          isVisible: true,
+          parentBlockVisibility: parentAttributes?.metadata?.blockVisibility,
+          blockBlockVisibility: blockAttributes?.metadata?.blockVisibility,
+          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value
         };
       },
       [clientId]
     );
+    const { isBlockCurrentlyHidden: isParentBlockCurrentlyHidden } = useBlockVisibility({
+      blockVisibility: parentBlockVisibility,
+      deviceType
+    });
+    const { isBlockCurrentlyHidden: isBlockItselfCurrentlyHidden } = useBlockVisibility({
+      blockVisibility: blockBlockVisibility,
+      deviceType
+    });
     const [resizerBounds, setResizerBounds] = (0, import_element272.useState)();
-    if (!isVisible) {
+    if (!isVisible || isParentBlockCurrentlyHidden) {
       return null;
     }
+    const showResizer = allowSizingOnChildren && !isBlockItselfCurrentlyHidden;
     function updateLayout(layout) {
       setAttributes({
         style: {
@@ -73502,7 +73525,7 @@ var wp;
           parentLayout
         }
       ),
-      allowSizingOnChildren && /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
+      showResizer && /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
         GridItemResizer,
         {
           clientId,
@@ -73955,24 +73978,36 @@ var wp;
     useGridLayoutSync(props);
   }
   function GridTools2({ clientId, layout }) {
-    const isVisible = (0, import_data194.useSelect)(
+    const { isVisible, blockVisibility: blockVisibility2, deviceType } = (0, import_data194.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
           isDraggingBlocks: isDraggingBlocks2,
           getTemplateLock: getTemplateLock2,
-          getBlockEditingMode: getBlockEditingMode2
+          getBlockEditingMode: getBlockEditingMode2,
+          getBlockAttributes: getBlockAttributes3,
+          getSettings: getSettings8
         } = select3(store);
         if (!isDraggingBlocks2() && !isBlockSelected2(clientId) || getTemplateLock2(clientId) || getBlockEditingMode2(clientId) !== "default") {
-          return false;
+          return { isVisible: false };
         }
-        return true;
+        const attributes = getBlockAttributes3(clientId);
+        const settings2 = getSettings8();
+        return {
+          isVisible: true,
+          blockVisibility: attributes?.metadata?.blockVisibility,
+          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value
+        };
       },
       [clientId]
     );
+    const { isBlockCurrentlyHidden } = useBlockVisibility({
+      blockVisibility: blockVisibility2,
+      deviceType
+    });
     return /* @__PURE__ */ (0, import_jsx_runtime461.jsxs)(import_jsx_runtime461.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(GridLayoutSync, { clientId }),
-      isVisible && /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(GridVisualizer, { clientId, parentLayout: layout })
+      isVisible && !isBlockCurrentlyHidden && /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(GridVisualizer, { clientId, parentLayout: layout })
     ] });
   }
   var addGridVisualizerToBlockEdit = (0, import_compose110.createHigherOrderComponent)(
