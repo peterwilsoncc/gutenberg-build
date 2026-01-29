@@ -350,13 +350,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/block-editor
-  var require_block_editor = __commonJS({
-    "package-external:@wordpress/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
-    }
-  });
-
   // node_modules/diff/dist/diff.js
   var require_diff = __commonJS({
     "node_modules/diff/dist/diff.js"(exports, module) {
@@ -1475,6 +1468,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/block-editor
+  var require_block_editor = __commonJS({
+    "package-external:@wordpress/block-editor"(exports, module) {
+      module.exports = window.wp.blockEditor;
+    }
+  });
+
   // package-external:@wordpress/rich-text
   var require_rich_text = __commonJS({
     "package-external:@wordpress/rich-text"(exports, module) {
@@ -1599,8 +1599,8 @@ var wp;
   var if_matching_action_default = ifMatchingAction;
 
   // packages/core-data/build-module/utils/forward-resolver.mjs
-  var forwardResolver = (resolverName) => (...args2) => async ({ resolveSelect }) => {
-    await resolveSelect[resolverName](...args2);
+  var forwardResolver = (resolverName) => (...args2) => async ({ resolveSelect: resolveSelect2 }) => {
+    await resolveSelect2[resolverName](...args2);
   };
   var forward_resolver_default = forwardResolver;
 
@@ -1965,10 +1965,6 @@ var wp;
 
   // packages/core-data/build-module/awareness/post-editor-awareness.mjs
   var import_data3 = __toESM(require_data(), 1);
-  var import_block_editor = __toESM(require_block_editor(), 1);
-
-  // packages/core-data/build-module/awareness/base-awareness.mjs
-  var import_data2 = __toESM(require_data(), 1);
 
   // node_modules/yjs/dist/yjs.mjs
   var yjs_exports = {};
@@ -11774,6 +11770,11 @@ var wp;
   var AwarenessState = class extends AwarenessWithEqualityChecks {
     /** CUSTOM PROPERTIES */
     /**
+     * Whether the setUp method has been called, to avoid running it multiple
+     * times.
+     */
+    hasSetupRun = false;
+    /**
      * We keep track of all seen states during the current session for two reasons:
      *
      * 1. So that we can represent recently disconnected users in our UI, even
@@ -11799,9 +11800,18 @@ var wp;
     throttleTimeouts = /* @__PURE__ */ new Map();
     /** CUSTOM METHODS */
     /**
-     * Set up the awareness state.
+     * Set up the awareness state. This method is idempotent and will only run
+     * once. Subclasses should override `onSetUp()` instead of this method to
+     * add their own setup logic.
+     *
+     * This is defined as a readonly arrow function property to prevent
+     * subclasses from overriding it.
      */
-    setUp() {
+    setUp = () => {
+      if (this.hasSetupRun) {
+        return;
+      }
+      this.hasSetupRun = true;
       this.on(
         "change",
         ({ added, removed, updated }) => {
@@ -11821,6 +11831,15 @@ var wp;
           this.updateSubscribers();
         }
       );
+      this.onSetUp();
+    };
+    /**
+     * Get the most recent state from the last processed change event.
+     *
+     * @return An array of EnhancedState< State >.
+     */
+    getCurrentState() {
+      return Array.from(this.previousSnapshot.values());
     }
     /**
      * Get all seen states in this session to enable debug reporting.
@@ -12266,7 +12285,6 @@ var wp;
         entityStates.delete(entityId);
       };
       const awareness = syncConfig.createAwareness?.(ydoc, objectId);
-      awareness?.setUp();
       const onRecordUpdate = (_events, transaction) => {
         if (transaction.local && !(transaction.origin instanceof UndoManager)) {
           return;
@@ -12495,6 +12513,12 @@ var wp;
     };
   }
 
+  // packages/core-data/build-module/awareness/post-editor-awareness.mjs
+  var import_block_editor = __toESM(require_block_editor(), 1);
+
+  // packages/core-data/build-module/awareness/base-awareness.mjs
+  var import_data2 = __toESM(require_data(), 1);
+
   // packages/core-data/build-module/name.mjs
   var STORE_NAME = "core";
 
@@ -12586,19 +12610,18 @@ var wp;
 
   // packages/core-data/build-module/awareness/base-awareness.mjs
   var BaseAwarenessState = class extends AwarenessState {
-    setUp() {
-      super.setUp();
-      this.setCurrentUserInfo();
+    onSetUp() {
+      void this.setCurrentUserInfo();
     }
     /**
      * Set the current user info in the local state.
      */
-    setCurrentUserInfo() {
+    async setCurrentUserInfo() {
       const states = this.getStates();
       const otherUserColors = Array.from(states.entries()).filter(
         ([clientId, state]) => state.userInfo && clientId !== this.clientID
       ).map(([, state]) => state.userInfo.color).filter(Boolean);
-      const currentUser2 = (0, import_data2.select)(STORE_NAME).getCurrentUser();
+      const currentUser2 = await (0, import_data2.resolveSelect)(STORE_NAME).getCurrentUser();
       const userInfo = generateUserInfo(currentUser2, otherUserColors);
       this.setLocalStateField("userInfo", userInfo);
     }
@@ -12803,8 +12826,8 @@ var wp;
       ...baseEqualityFieldChecks,
       editorState: this.areEditorStatesEqual
     };
-    setUp() {
-      super.setUp();
+    onSetUp() {
+      super.onSetUp();
       this.subscribeToUserSelectionChanges();
     }
     /**
@@ -12884,6 +12907,78 @@ var wp;
         return state1 === state2;
       }
       return areSelectionsStatesEqual(state1.selection, state2.selection);
+    }
+    /**
+     * Get the absolute position index from a selection cursor.
+     *
+     * @param selection - The selection cursor.
+     * @return The absolute position index, or null if not found.
+     */
+    getAbsolutePositionIndex(selection) {
+      return yjs_exports.createAbsolutePositionFromRelativePosition(
+        selection.cursorPosition.relativePosition,
+        this.doc
+      )?.index ?? null;
+    }
+    /**
+     * Type guard to check if a struct is a Y.Item (not Y.GC)
+     * @param struct - The struct to check.
+     * @return True if the struct is a Y.Item, false otherwise.
+     */
+    isYItem(struct) {
+      return "content" in struct;
+    }
+    /**
+     * Get data for debugging, using the awareness state.
+     *
+     * @return {YDocDebugData} The debug data.
+     */
+    getDebugData() {
+      const ydoc = this.doc;
+      const docData = Object.fromEntries(
+        Array.from(ydoc.share, ([key, value]) => [
+          key,
+          value.toJSON()
+        ])
+      );
+      const userMapData = new Map(
+        Array.from(this.getSeenStates().entries()).map(
+          ([clientId, userState]) => [
+            String(clientId),
+            {
+              name: userState.userInfo.name,
+              wpUserId: userState.userInfo.id
+            }
+          ]
+        )
+      );
+      const serializableClientItems = {};
+      ydoc.store.clients.forEach((structs, clientId) => {
+        const items2 = structs.filter(this.isYItem);
+        serializableClientItems[clientId] = items2.map((item) => {
+          const { left, right, ...rest } = item;
+          return {
+            ...rest,
+            left: left ? {
+              id: left.id,
+              length: left.length,
+              origin: left.origin,
+              content: left.content
+            } : null,
+            right: right ? {
+              id: right.id,
+              length: right.length,
+              origin: right.origin,
+              content: right.content
+            } : null
+          };
+        });
+      });
+      return {
+        doc: docData,
+        clients: serializableClientItems,
+        userMap: Object.fromEntries(userMapData)
+      };
     }
   };
 
@@ -14690,24 +14785,24 @@ var wp;
     return state.navigationFallbackId;
   }
   var getBlockPatternsForPostType = (0, import_data7.createRegistrySelector)(
-    (select4) => (0, import_data7.createSelector)(
-      (state, postType) => select4(STORE_NAME).getBlockPatterns().filter(
+    (select3) => (0, import_data7.createSelector)(
+      (state, postType) => select3(STORE_NAME).getBlockPatterns().filter(
         ({ postTypes }) => !postTypes || Array.isArray(postTypes) && postTypes.includes(postType)
       ),
-      () => [select4(STORE_NAME).getBlockPatterns()]
+      () => [select3(STORE_NAME).getBlockPatterns()]
     )
   );
   var getEntityRecordsPermissions = (0, import_data7.createRegistrySelector)(
-    (select4) => (0, import_data7.createSelector)(
+    (select3) => (0, import_data7.createSelector)(
       (state, kind, name, ids) => {
         const normalizedIds = Array.isArray(ids) ? ids : [ids];
         return normalizedIds.map((id2) => ({
-          delete: select4(STORE_NAME).canUser("delete", {
+          delete: select3(STORE_NAME).canUser("delete", {
             kind,
             name,
             id: id2
           }),
-          update: select4(STORE_NAME).canUser("update", {
+          update: select3(STORE_NAME).canUser("update", {
             kind,
             name,
             id: id2
@@ -14734,9 +14829,9 @@ var wp;
     return value.toString();
   }
   var getHomePage = (0, import_data7.createRegistrySelector)(
-    (select4) => (0, import_data7.createSelector)(
+    (select3) => (0, import_data7.createSelector)(
       () => {
-        const siteData = select4(STORE_NAME).getEntityRecord(
+        const siteData = select3(STORE_NAME).getEntityRecord(
           "root",
           "__unstableBase"
         );
@@ -14747,7 +14842,7 @@ var wp;
         if (homepageId) {
           return { postType: "page", postId: homepageId };
         }
-        const frontPageTemplateId = select4(
+        const frontPageTemplateId = select3(
           STORE_NAME
         ).getDefaultTemplateId({
           slug: "front-page"
@@ -14768,21 +14863,21 @@ var wp;
       ]
     )
   );
-  var getPostsPageId = (0, import_data7.createRegistrySelector)((select4) => () => {
-    const siteData = select4(STORE_NAME).getEntityRecord(
+  var getPostsPageId = (0, import_data7.createRegistrySelector)((select3) => () => {
+    const siteData = select3(STORE_NAME).getEntityRecord(
       "root",
       "__unstableBase"
     );
     return siteData?.show_on_front === "page" ? normalizePageId(siteData.page_for_posts) : null;
   });
   var getTemplateId = (0, import_data7.createRegistrySelector)(
-    (select4) => (state, postType, postId) => {
-      const homepage = unlock(select4(STORE_NAME)).getHomePage();
+    (select3) => (state, postType, postId) => {
+      const homepage = unlock(select3(STORE_NAME)).getHomePage();
       if (!homepage) {
         return;
       }
       if (postType === "page" && postType === homepage?.postType && postId.toString() === homepage?.postId) {
-        const templates = select4(STORE_NAME).getEntityRecords(
+        const templates = select3(STORE_NAME).getEntityRecords(
           "postType",
           "wp_template",
           {
@@ -14797,7 +14892,7 @@ var wp;
           return id2;
         }
       }
-      const editedEntity = select4(STORE_NAME).getEditedEntityRecord(
+      const editedEntity = select3(STORE_NAME).getEditedEntityRecord(
         "postType",
         postType,
         postId
@@ -14805,15 +14900,15 @@ var wp;
       if (!editedEntity) {
         return;
       }
-      const postsPageId = unlock(select4(STORE_NAME)).getPostsPageId();
+      const postsPageId = unlock(select3(STORE_NAME)).getPostsPageId();
       if (postType === "page" && postsPageId === postId.toString()) {
-        return select4(STORE_NAME).getDefaultTemplateId({
+        return select3(STORE_NAME).getDefaultTemplateId({
           slug: "home"
         });
       }
       const currentTemplateSlug = editedEntity.template;
       if (currentTemplateSlug) {
-        const currentTemplate = select4(STORE_NAME).getEntityRecords("postType", "wp_template", {
+        const currentTemplate = select3(STORE_NAME).getEntityRecords("postType", "wp_template", {
           per_page: -1
         })?.find(({ slug }) => slug === currentTemplateSlug);
         if (currentTemplate) {
@@ -14826,7 +14921,7 @@ var wp;
       } else {
         slugToCheck = postType === "page" ? "page" : `single-${postType}`;
       }
-      return select4(STORE_NAME).getDefaultTemplateId({
+      return select3(STORE_NAME).getDefaultTemplateId({
         slug: slugToCheck
       });
     }
@@ -14841,8 +14936,8 @@ var wp;
   // packages/core-data/build-module/selectors.mjs
   var EMPTY_OBJECT = {};
   var isRequestingEmbedPreview = (0, import_data8.createRegistrySelector)(
-    (select4) => (state, url) => {
-      return select4(STORE_NAME).isResolving("getEmbedPreview", [
+    (select3) => (state, url) => {
+      return select3(STORE_NAME).isResolving("getEmbedPreview", [
         url
       ]);
     }
@@ -15259,8 +15354,8 @@ var wp;
     );
   }
   var hasFetchedAutosaves = (0, import_data8.createRegistrySelector)(
-    (select4) => (state, postType, postId) => {
-      return select4(STORE_NAME).hasFinishedResolution("getAutosaves", [
+    (select3) => (state, postType, postId) => {
+      return select3(STORE_NAME).hasFinishedResolution("getAutosaves", [
         postType,
         postId
       ]);
@@ -15665,9 +15760,9 @@ var wp;
       preview
     };
   }
-  var deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = import_api_fetch3.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect }) => {
+  var deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = import_api_fetch3.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     logEntityDeprecation(kind, name, "deleteEntityRecord");
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -15729,17 +15824,17 @@ var wp;
       dispatch3.__unstableReleaseStoreLock(lock2);
     }
   };
-  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select4, dispatch: dispatch3 }) => {
+  var editEntityRecord = (kind, name, recordId, edits, options = {}) => ({ select: select3, dispatch: dispatch3 }) => {
     logEntityDeprecation(kind, name, "editEntityRecord");
-    const entityConfig = select4.getEntityConfig(kind, name);
+    const entityConfig = select3.getEntityConfig(kind, name);
     if (!entityConfig) {
       throw new Error(
         `The entity being edited (${kind}, ${name}) does not have a loaded config.`
       );
     }
     const { mergedEdits = {} } = entityConfig;
-    const record = select4.getRawEntityRecord(kind, name, recordId);
-    const editedRecord = select4.getEditedEntityRecord(
+    const record = select3.getRawEntityRecord(kind, name, recordId);
+    const editedRecord = select3.getEditedEntityRecord(
       kind,
       name,
       recordId
@@ -15776,7 +15871,7 @@ var wp;
       }
     }
     if (!options.undoIgnore) {
-      select4.getUndoManager().addRecord(
+      select3.getUndoManager().addRecord(
         [
           {
             id: { kind, name, recordId },
@@ -15797,8 +15892,8 @@ var wp;
       ...edit
     });
   };
-  var undo = () => ({ select: select4, dispatch: dispatch3 }) => {
-    const undoRecord = select4.getUndoManager().undo();
+  var undo = () => ({ select: select3, dispatch: dispatch3 }) => {
+    const undoRecord = select3.getUndoManager().undo();
     if (!undoRecord) {
       return;
     }
@@ -15807,8 +15902,8 @@ var wp;
       record: undoRecord
     });
   };
-  var redo = () => ({ select: select4, dispatch: dispatch3 }) => {
-    const redoRecord = select4.getUndoManager().redo();
+  var redo = () => ({ select: select3, dispatch: dispatch3 }) => {
+    const redoRecord = select3.getUndoManager().redo();
     if (!redoRecord) {
       return;
     }
@@ -15817,16 +15912,16 @@ var wp;
       record: redoRecord
     });
   };
-  var __unstableCreateUndoLevel = () => ({ select: select4 }) => {
-    select4.getUndoManager().addRecord();
+  var __unstableCreateUndoLevel = () => ({ select: select3 }) => {
+    select3.getUndoManager().addRecord();
   };
   var saveEntityRecord = (kind, name, record, {
     isAutosave = false,
     __unstableFetch = import_api_fetch3.default,
     throwOnError = false
-  } = {}) => async ({ select: select4, resolveSelect, dispatch: dispatch3 }) => {
+  } = {}) => async ({ select: select3, resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
     logEntityDeprecation(kind, name, "saveEntityRecord");
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -15845,7 +15940,7 @@ var wp;
       for (const [key, value] of Object.entries(record)) {
         if (typeof value === "function") {
           const evaluatedValue = value(
-            select4.getEditedEntityRecord(kind, name, recordId)
+            select3.getEditedEntityRecord(kind, name, recordId)
           );
           dispatch3.editEntityRecord(
             kind,
@@ -15875,11 +15970,11 @@ var wp;
       }
       try {
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
-        const persistedRecord = !isNewRecord ? select4.getRawEntityRecord(kind, name, recordId) : {};
+        const persistedRecord = !isNewRecord ? select3.getRawEntityRecord(kind, name, recordId) : {};
         if (isAutosave) {
-          const currentUser2 = select4.getCurrentUser();
+          const currentUser2 = select3.getCurrentUser();
           const currentUserId = currentUser2 ? currentUser2.id : void 0;
-          const autosavePost = await resolveSelect.getAutosave(
+          const autosavePost = await resolveSelect2.getAutosave(
             persistedRecord.type,
             persistedRecord.id,
             currentUserId
@@ -16039,12 +16134,12 @@ var wp;
     ]);
     return results;
   };
-  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select4, dispatch: dispatch3, resolveSelect }) => {
+  var saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select: select3, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     logEntityDeprecation(kind, name, "saveEditedEntityRecord");
-    if (!select4.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select3.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16052,7 +16147,7 @@ var wp;
       return;
     }
     const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
-    const edits = select4.getEntityRecordNonTransientEdits(
+    const edits = select3.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
@@ -16060,16 +16155,16 @@ var wp;
     const record = { [entityIdKey]: recordId, ...edits };
     return await dispatch3.saveEntityRecord(kind, name, record, options);
   };
-  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select: select4, dispatch: dispatch3, resolveSelect }) => {
+  var __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({ select: select3, dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     logEntityDeprecation(
       kind,
       name,
       "__experimentalSaveSpecifiedEntityEdits"
     );
-    if (!select4.hasEditsForEntityRecord(kind, name, recordId)) {
+    if (!select3.hasEditsForEntityRecord(kind, name, recordId)) {
       return;
     }
-    const edits = select4.getEntityRecordNonTransientEdits(
+    const edits = select3.getEntityRecordNonTransientEdits(
       kind,
       name,
       recordId
@@ -16078,7 +16173,7 @@ var wp;
     for (const item of itemsToSave) {
       setNestedValue(editsToSave, item, getNestedValue(edits, item));
     }
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16133,9 +16228,9 @@ var wp;
       templateId
     };
   }
-  var receiveRevisions = (kind, name, recordKey, records, query, invalidateCache = false, meta) => async ({ dispatch: dispatch3, resolveSelect }) => {
+  var receiveRevisions = (kind, name, recordKey, records, query, invalidateCache = false, meta) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     logEntityDeprecation(kind, name, "receiveRevisions");
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16169,13 +16264,13 @@ var wp;
       registeredPostMeta: registeredPostMeta2
     };
   }
-  var editMediaEntity = (recordId, edits = {}, { __unstableFetch = import_api_fetch4.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect }) => {
+  var editMediaEntity = (recordId, edits = {}, { __unstableFetch = import_api_fetch4.default, throwOnError = false } = {}) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     if (!recordId) {
       return;
     }
     const kind = "postType";
     const name = "attachment";
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.kind === kind && config.name === name
     );
@@ -16501,8 +16596,8 @@ var wp;
     const currentUser2 = await (0, import_api_fetch8.default)({ path: "/wp/v2/users/me" });
     dispatch3.receiveCurrentUser(currentUser2);
   };
-  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select4, dispatch: dispatch3, registry, resolveSelect }) => {
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+  var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select3, dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -16527,7 +16622,7 @@ var wp;
         };
       }
       if (query !== void 0 && query._fields) {
-        const hasRecord = select4.hasEntityRecord(
+        const hasRecord = select3.hasEntityRecord(
           kind,
           name,
           key,
@@ -16597,7 +16692,7 @@ var wp;
                 });
               },
               // Get the current entity record (with edits)
-              getEditedRecord: async () => await resolveSelect.getEditedEntityRecord(
+              getEditedRecord: async () => await resolveSelect2.getEditedEntityRecord(
                 kind,
                 name,
                 key
@@ -16660,8 +16755,8 @@ var wp;
   };
   var getRawEntityRecord2 = forward_resolver_default("getEntityRecord");
   var getEditedEntityRecord2 = forward_resolver_default("getEntityRecord");
-  var getEntityRecords2 = (kind, name, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+  var getEntityRecords2 = (kind, name, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -16852,8 +16947,8 @@ var wp;
   };
   var getEntityRecordsTotalItems2 = forward_resolver_default("getEntityRecords");
   var getEntityRecordsTotalPages2 = forward_resolver_default("getEntityRecords");
-  var getCurrentTheme2 = () => async ({ dispatch: dispatch3, resolveSelect }) => {
-    const activeThemes = await resolveSelect.getEntityRecords(
+  var getCurrentTheme2 = () => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+    const activeThemes = await resolveSelect2.getEntityRecords(
       "root",
       "theme",
       { status: "active" }
@@ -16871,7 +16966,7 @@ var wp;
       dispatch3.receiveEmbedPreview(url, false);
     }
   };
-  var canUser2 = (requestedAction, resource, id2) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
+  var canUser2 = (requestedAction, resource, id2) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
     if (!ALLOWED_RESOURCE_ACTIONS.includes(requestedAction)) {
       throw new Error(`'${requestedAction}' is not a valid action.`);
     }
@@ -16894,7 +16989,7 @@ var wp;
       if (!resource.kind || !resource.name) {
         throw new Error("The entity resource object is not valid.");
       }
-      const configs = await resolveSelect.getEntitiesConfig(
+      const configs = await resolveSelect2.getEntitiesConfig(
         resource.kind
       );
       const entityConfig = configs.find(
@@ -16937,12 +17032,12 @@ var wp;
   var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ dispatch: dispatch3 }) => {
     await dispatch3(canUser2("update", { kind, name, id: recordId }));
   };
-  var getAutosaves2 = (postType, postId) => async ({ dispatch: dispatch3, resolveSelect }) => {
+  var getAutosaves2 = (postType, postId) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     const {
       rest_base: restBase,
       rest_namespace: restNamespace = "wp/v2",
       supports
-    } = await resolveSelect.getPostType(postType);
+    } = await resolveSelect2.getPostType(postType);
     if (!supports?.autosave) {
       return;
     }
@@ -16953,11 +17048,11 @@ var wp;
       dispatch3.receiveAutosaves(postId, autosaves2);
     }
   };
-  var getAutosave2 = (postType, postId) => async ({ resolveSelect }) => {
-    await resolveSelect.getAutosaves(postType, postId);
+  var getAutosave2 = (postType, postId) => async ({ resolveSelect: resolveSelect2 }) => {
+    await resolveSelect2.getAutosaves(postType, postId);
   };
-  var __experimentalGetCurrentGlobalStylesId2 = () => async ({ dispatch: dispatch3, resolveSelect }) => {
-    const activeThemes = await resolveSelect.getEntityRecords(
+  var __experimentalGetCurrentGlobalStylesId2 = () => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+    const activeThemes = await resolveSelect2.getEntityRecords(
       "root",
       "theme",
       { status: "active" }
@@ -16972,8 +17067,8 @@ var wp;
       dispatch3.__experimentalReceiveCurrentGlobalStylesId(id2);
     }
   };
-  var __experimentalGetCurrentThemeBaseGlobalStyles2 = () => async ({ resolveSelect, dispatch: dispatch3 }) => {
-    const currentTheme2 = await resolveSelect.getCurrentTheme();
+  var __experimentalGetCurrentThemeBaseGlobalStyles2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
+    const currentTheme2 = await resolveSelect2.getCurrentTheme();
     const themeGlobalStyles = await (0, import_api_fetch8.default)({
       path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}?context=view`
     });
@@ -16982,8 +17077,8 @@ var wp;
       themeGlobalStyles
     );
   };
-  var __experimentalGetCurrentThemeGlobalStylesVariations2 = () => async ({ resolveSelect, dispatch: dispatch3 }) => {
-    const currentTheme2 = await resolveSelect.getCurrentTheme();
+  var __experimentalGetCurrentThemeGlobalStylesVariations2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
+    const currentTheme2 = await resolveSelect2.getCurrentTheme();
     const variations = await (0, import_api_fetch8.default)({
       path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}/variations?context=view`
     });
@@ -16992,9 +17087,9 @@ var wp;
       variations
     );
   };
-  var getCurrentThemeGlobalStylesRevisions2 = () => async ({ resolveSelect, dispatch: dispatch3 }) => {
-    const globalStylesId = await resolveSelect.__experimentalGetCurrentGlobalStylesId();
-    const record = globalStylesId ? await resolveSelect.getEntityRecord(
+  var getCurrentThemeGlobalStylesRevisions2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
+    const globalStylesId = await resolveSelect2.__experimentalGetCurrentGlobalStylesId();
+    const record = globalStylesId ? await resolveSelect2.getEntityRecord(
       "root",
       "globalStyles",
       globalStylesId
@@ -17031,8 +17126,8 @@ var wp;
     });
     dispatch3({ type: "RECEIVE_BLOCK_PATTERN_CATEGORIES", categories });
   };
-  var getUserPatternCategories2 = () => async ({ dispatch: dispatch3, resolveSelect }) => {
-    const patternCategories = await resolveSelect.getEntityRecords(
+  var getUserPatternCategories2 = () => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+    const patternCategories = await resolveSelect2.getEntityRecords(
       "taxonomy",
       "wp_pattern_category",
       {
@@ -17051,7 +17146,7 @@ var wp;
       patternCategories: mappedPatternCategories
     });
   };
-  var getNavigationFallbackId2 = () => async ({ dispatch: dispatch3, select: select4, registry }) => {
+  var getNavigationFallbackId2 = () => async ({ dispatch: dispatch3, select: select3, registry }) => {
     const fallback = await (0, import_api_fetch8.default)({
       path: (0, import_url6.addQueryArgs)("/wp-block-editor/v1/navigation-fallback", {
         _embed: true
@@ -17063,7 +17158,7 @@ var wp;
       if (!record) {
         return;
       }
-      const existingFallbackEntityRecord = select4.getEntityRecord(
+      const existingFallbackEntityRecord = select3.getEntityRecord(
         "postType",
         "wp_navigation",
         fallback.id
@@ -17083,11 +17178,11 @@ var wp;
       ]);
     });
   };
-  var getDefaultTemplateId2 = (query) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
+  var getDefaultTemplateId2 = (query) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
     const template = await (0, import_api_fetch8.default)({
       path: (0, import_url6.addQueryArgs)("/wp/v2/templates/lookup", query)
     });
-    await resolveSelect.getEntitiesConfig("postType");
+    await resolveSelect2.getEntitiesConfig("postType");
     const id2 = window?.__experimentalTemplateActivate ? template?.wp_id || template?.id : template?.id;
     if (id2) {
       template.id = id2;
@@ -17107,8 +17202,8 @@ var wp;
   getDefaultTemplateId2.shouldInvalidate = (action) => {
     return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site";
   };
-  var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect }) => {
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+  var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -17184,8 +17279,8 @@ var wp;
     }
   };
   getRevisions2.shouldInvalidate = (action, kind, name, recordKey) => action.type === "SAVE_ENTITY_RECORD_FINISH" && name === action.name && kind === action.kind && !action.error && recordKey === action.recordId;
-  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch: dispatch3, resolveSelect }) => {
-    const configs = await resolveSelect.getEntitiesConfig(kind);
+  var getRevision2 = (kind, name, recordKey, revisionKey, query) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
+    const configs = await resolveSelect2.getEntitiesConfig(kind);
     const entityConfig = configs.find(
       (config) => config.name === name && config.kind === kind
     );
@@ -17217,13 +17312,13 @@ var wp;
       dispatch3.receiveRevisions(kind, name, recordKey, record, query);
     }
   };
-  var getRegisteredPostMeta2 = (postType) => async ({ dispatch: dispatch3, resolveSelect }) => {
+  var getRegisteredPostMeta2 = (postType) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     let options;
     try {
       const {
         rest_namespace: restNamespace = "wp/v2",
         rest_base: restBase
-      } = await resolveSelect.getPostType(postType) || {};
+      } = await resolveSelect2.getPostType(postType) || {};
       options = await (0, import_api_fetch8.default)({
         path: `${restNamespace}/${restBase}/?context=edit`,
         method: "OPTIONS"
@@ -17568,8 +17663,8 @@ var wp;
     "getCachedResolvers"
   ];
   function useQuerySelect(mapQuerySelect, deps) {
-    return (0, import_data9.useSelect)((select4, registry) => {
-      const resolve = (store2) => enrichSelectors(select4(store2));
+    return (0, import_data9.useSelect)((select3, registry) => {
+      const resolve = (store2) => enrichSelectors(select3(store2));
       return mapQuerySelect(resolve, registry);
     }, deps);
   }
@@ -17629,7 +17724,7 @@ var wp;
       [editEntityRecord2, kind, name, recordId, saveEditedEntityRecord2]
     );
     const { editedRecord, hasEdits, edits } = (0, import_data10.useSelect)(
-      (select4) => {
+      (select3) => {
         if (!options.enabled) {
           return {
             editedRecord: EMPTY_OBJECT2,
@@ -17638,17 +17733,17 @@ var wp;
           };
         }
         return {
-          editedRecord: select4(store).getEditedEntityRecord(
+          editedRecord: select3(store).getEditedEntityRecord(
             kind,
             name,
             recordId
           ),
-          hasEdits: select4(store).hasEditsForEntityRecord(
+          hasEdits: select3(store).hasEditsForEntityRecord(
             kind,
             name,
             recordId
           ),
-          edits: select4(store).getEntityRecordNonTransientEdits(
+          edits: select3(store).getEntityRecordNonTransientEdits(
             kind,
             name,
             recordId
@@ -17706,7 +17801,7 @@ var wp;
       [kind, name, queryAsString, options.enabled]
     );
     const { totalItems, totalPages } = (0, import_data11.useSelect)(
-      (select4) => {
+      (select3) => {
         if (!options.enabled) {
           return {
             totalItems: null,
@@ -17714,12 +17809,12 @@ var wp;
           };
         }
         return {
-          totalItems: select4(store).getEntityRecordsTotalItems(
+          totalItems: select3(store).getEntityRecordsTotalItems(
             kind,
             name,
             queryArgs
           ),
-          totalPages: select4(store).getEntityRecordsTotalPages(
+          totalPages: select3(store).getEntityRecordsTotalPages(
             kind,
             name,
             queryArgs
@@ -17744,7 +17839,7 @@ var wp;
   }
   function useEntityRecordsWithPermissions(kind, name, queryArgs = {}, options = { enabled: true }) {
     const entityConfig = (0, import_data11.useSelect)(
-      (select4) => select4(store).getEntityConfig(kind, name),
+      (select3) => select3(store).getEntityConfig(kind, name),
       [kind, name]
     );
     const { records: data, ...ret } = useEntityRecords(
@@ -17774,9 +17869,9 @@ var wp;
       [data, entityConfig?.key]
     );
     const permissions = (0, import_data11.useSelect)(
-      (select4) => {
+      (select3) => {
         const { getEntityRecordsPermissions: getEntityRecordsPermissions2 } = unlock(
-          select4(store)
+          select3(store)
         );
         return getEntityRecordsPermissions2(kind, name, ids);
       },
@@ -18018,11 +18113,11 @@ var wp;
     const id2 = _id ?? providerId;
     const { getEntityRecord: getEntityRecord3, getEntityRecordEdits: getEntityRecordEdits2 } = (0, import_data12.useSelect)(STORE_NAME);
     const { content, editedBlocks, meta } = (0, import_data12.useSelect)(
-      (select4) => {
+      (select3) => {
         if (!id2) {
           return {};
         }
-        const { getEditedEntityRecord: getEditedEntityRecord3 } = select4(STORE_NAME);
+        const { getEditedEntityRecord: getEditedEntityRecord3 } = select3(STORE_NAME);
         const editedRecord = getEditedEntityRecord3(kind, name, id2);
         return {
           editedBlocks: editedRecord.blocks,
@@ -18110,8 +18205,8 @@ var wp;
     const providerId = useEntityId(kind, name);
     const id2 = _id ?? providerId;
     const { value, fullValue } = (0, import_data13.useSelect)(
-      (select4) => {
-        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select4(STORE_NAME);
+      (select3) => {
+        const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select3(STORE_NAME);
         const record = getEntityRecord3(kind, name, id2);
         const editedRecord = getEditedEntityRecord3(kind, name, id2);
         return record && editedRecord ? {
