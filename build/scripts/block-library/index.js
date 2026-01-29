@@ -35013,6 +35013,7 @@ ${js}
   var import_i18n102 = __toESM(require_i18n(), 1);
   var DEFAULT_MEDIA_SIZE_SLUG4 = "full";
   var WIDTH_CONSTRAINT_PERCENTAGE = 15;
+  var LINK_DESTINATION_NONE3 = "none";
   var LINK_DESTINATION_MEDIA3 = "media";
   var LINK_DESTINATION_ATTACHMENT3 = "attachment";
   var TEMPLATE10 = [
@@ -36189,12 +36190,33 @@ ${js}
       if (mediaType === "image") {
         src = media.sizes?.large?.url || media.media_details?.sizes?.large?.source_url;
       }
+      let newLinkDestination = linkDestination;
       let newHref = href;
-      if (linkDestination === LINK_DESTINATION_MEDIA3) {
-        newHref = media.url;
-      }
-      if (linkDestination === LINK_DESTINATION_ATTACHMENT3) {
-        newHref = media.link;
+      if (mediaType === "image") {
+        if (!newLinkDestination) {
+          switch (window?.wp?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE3) {
+            case "file":
+            case LINK_DESTINATION_MEDIA3:
+              newLinkDestination = LINK_DESTINATION_MEDIA3;
+              break;
+            case "post":
+            case LINK_DESTINATION_ATTACHMENT3:
+              newLinkDestination = LINK_DESTINATION_ATTACHMENT3;
+              break;
+            case LINK_DESTINATION_NONE3:
+            default:
+              newLinkDestination = LINK_DESTINATION_NONE3;
+              break;
+          }
+        }
+        switch (newLinkDestination) {
+          case LINK_DESTINATION_MEDIA3:
+            newHref = media.url;
+            break;
+          case LINK_DESTINATION_ATTACHMENT3:
+            newHref = media.link;
+            break;
+        }
       }
       setAttributes({
         mediaAlt: media.alt,
@@ -36203,6 +36225,7 @@ ${js}
         mediaUrl: src || media.url,
         mediaLink: media.link || void 0,
         href: newHref,
+        linkDestination: newLinkDestination,
         focalPoint: void 0,
         useFeaturedImage: false
       });
