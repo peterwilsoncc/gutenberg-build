@@ -2190,6 +2190,252 @@ var wp;
     }
   });
 
+  // node_modules/diff/lib/diff/base.js
+  var require_base = __commonJS({
+    "node_modules/diff/lib/diff/base.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      exports.default = Diff;
+      function Diff() {
+      }
+      Diff.prototype = {
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        diff: function diff(oldString, newString) {
+          var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
+          var callback = options.callback;
+          if (typeof options === "function") {
+            callback = options;
+            options = {};
+          }
+          this.options = options;
+          var self = this;
+          function done(value) {
+            if (callback) {
+              setTimeout(function() {
+                callback(void 0, value);
+              }, 0);
+              return true;
+            } else {
+              return value;
+            }
+          }
+          oldString = this.castInput(oldString);
+          newString = this.castInput(newString);
+          oldString = this.removeEmpty(this.tokenize(oldString));
+          newString = this.removeEmpty(this.tokenize(newString));
+          var newLen = newString.length, oldLen = oldString.length;
+          var editLength = 1;
+          var maxEditLength = newLen + oldLen;
+          var bestPath = [{
+            newPos: -1,
+            components: []
+          }];
+          var oldPos = this.extractCommon(bestPath[0], newString, oldString, 0);
+          if (bestPath[0].newPos + 1 >= newLen && oldPos + 1 >= oldLen) {
+            return done([{
+              value: this.join(newString),
+              count: newString.length
+            }]);
+          }
+          function execEditLength() {
+            for (var diagonalPath = -1 * editLength; diagonalPath <= editLength; diagonalPath += 2) {
+              var basePath = (
+                /*istanbul ignore start*/
+                void 0
+              );
+              var addPath = bestPath[diagonalPath - 1], removePath = bestPath[diagonalPath + 1], _oldPos = (removePath ? removePath.newPos : 0) - diagonalPath;
+              if (addPath) {
+                bestPath[diagonalPath - 1] = void 0;
+              }
+              var canAdd = addPath && addPath.newPos + 1 < newLen, canRemove = removePath && 0 <= _oldPos && _oldPos < oldLen;
+              if (!canAdd && !canRemove) {
+                bestPath[diagonalPath] = void 0;
+                continue;
+              }
+              if (!canAdd || canRemove && addPath.newPos < removePath.newPos) {
+                basePath = clonePath(removePath);
+                self.pushComponent(basePath.components, void 0, true);
+              } else {
+                basePath = addPath;
+                basePath.newPos++;
+                self.pushComponent(basePath.components, true, void 0);
+              }
+              _oldPos = self.extractCommon(basePath, newString, oldString, diagonalPath);
+              if (basePath.newPos + 1 >= newLen && _oldPos + 1 >= oldLen) {
+                return done(buildValues(self, basePath.components, newString, oldString, self.useLongestToken));
+              } else {
+                bestPath[diagonalPath] = basePath;
+              }
+            }
+            editLength++;
+          }
+          if (callback) {
+            (function exec() {
+              setTimeout(function() {
+                if (editLength > maxEditLength) {
+                  return callback();
+                }
+                if (!execEditLength()) {
+                  exec();
+                }
+              }, 0);
+            })();
+          } else {
+            while (editLength <= maxEditLength) {
+              var ret = execEditLength();
+              if (ret) {
+                return ret;
+              }
+            }
+          }
+        },
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        pushComponent: function pushComponent(components, added, removed) {
+          var last = components[components.length - 1];
+          if (last && last.added === added && last.removed === removed) {
+            components[components.length - 1] = {
+              count: last.count + 1,
+              added,
+              removed
+            };
+          } else {
+            components.push({
+              count: 1,
+              added,
+              removed
+            });
+          }
+        },
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        extractCommon: function extractCommon(basePath, newString, oldString, diagonalPath) {
+          var newLen = newString.length, oldLen = oldString.length, newPos = basePath.newPos, oldPos = newPos - diagonalPath, commonCount = 0;
+          while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(newString[newPos + 1], oldString[oldPos + 1])) {
+            newPos++;
+            oldPos++;
+            commonCount++;
+          }
+          if (commonCount) {
+            basePath.components.push({
+              count: commonCount
+            });
+          }
+          basePath.newPos = newPos;
+          return oldPos;
+        },
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        equals: function equals(left, right) {
+          if (this.options.comparator) {
+            return this.options.comparator(left, right);
+          } else {
+            return left === right || this.options.ignoreCase && left.toLowerCase() === right.toLowerCase();
+          }
+        },
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        removeEmpty: function removeEmpty(array) {
+          var ret = [];
+          for (var i3 = 0; i3 < array.length; i3++) {
+            if (array[i3]) {
+              ret.push(array[i3]);
+            }
+          }
+          return ret;
+        },
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        castInput: function castInput(value) {
+          return value;
+        },
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        tokenize: function tokenize(value) {
+          return value.split("");
+        },
+        /*istanbul ignore start*/
+        /*istanbul ignore end*/
+        join: function join(chars) {
+          return chars.join("");
+        }
+      };
+      function buildValues(diff, components, newString, oldString, useLongestToken) {
+        var componentPos = 0, componentLen = components.length, newPos = 0, oldPos = 0;
+        for (; componentPos < componentLen; componentPos++) {
+          var component = components[componentPos];
+          if (!component.removed) {
+            if (!component.added && useLongestToken) {
+              var value = newString.slice(newPos, newPos + component.count);
+              value = value.map(function(value2, i3) {
+                var oldValue = oldString[oldPos + i3];
+                return oldValue.length > value2.length ? oldValue : value2;
+              });
+              component.value = diff.join(value);
+            } else {
+              component.value = diff.join(newString.slice(newPos, newPos + component.count));
+            }
+            newPos += component.count;
+            if (!component.added) {
+              oldPos += component.count;
+            }
+          } else {
+            component.value = diff.join(oldString.slice(oldPos, oldPos + component.count));
+            oldPos += component.count;
+            if (componentPos && components[componentPos - 1].added) {
+              var tmp = components[componentPos - 1];
+              components[componentPos - 1] = components[componentPos];
+              components[componentPos] = tmp;
+            }
+          }
+        }
+        var lastComponent = components[componentLen - 1];
+        if (componentLen > 1 && typeof lastComponent.value === "string" && (lastComponent.added || lastComponent.removed) && diff.equals("", lastComponent.value)) {
+          components[componentLen - 2].value += lastComponent.value;
+          components.pop();
+        }
+        return components;
+      }
+      function clonePath(path) {
+        return {
+          newPos: path.newPos,
+          components: path.components.slice(0)
+        };
+      }
+    }
+  });
+
+  // node_modules/diff/lib/diff/array.js
+  var require_array = __commonJS({
+    "node_modules/diff/lib/diff/array.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      exports.diffArrays = diffArrays2;
+      exports.arrayDiff = void 0;
+      var _base = _interopRequireDefault(require_base());
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+      var arrayDiff = new /*istanbul ignore start*/
+      _base.default();
+      exports.arrayDiff = arrayDiff;
+      arrayDiff.tokenize = function(value) {
+        return value.slice();
+      };
+      arrayDiff.join = arrayDiff.removeEmpty = function(value) {
+        return value;
+      };
+      function diffArrays2(oldArr, newArr, callback) {
+        return arrayDiff.diff(oldArr, newArr, callback);
+      }
+    }
+  });
+
   // vendor-external:react-dom
   var require_react_dom = __commonJS({
     "vendor-external:react-dom"(exports, module) {
@@ -46603,6 +46849,43 @@ var wp;
   }
   var visual_editor_default = VisualEditor;
 
+  // packages/editor/build-module/components/post-revisions-preview/preserve-client-ids.mjs
+  var import_array = __toESM(require_array(), 1);
+  function preserveClientIds(newBlocks, prevBlocks) {
+    if (!prevBlocks?.length || !newBlocks?.length) {
+      return newBlocks;
+    }
+    const newSigs = newBlocks.map((block) => block.name);
+    const prevSigs = prevBlocks.map((block) => block.name);
+    const diffResult = (0, import_array.diffArrays)(prevSigs, newSigs);
+    let newIndex = 0;
+    let prevIndex = 0;
+    const result = [];
+    for (const chunk of diffResult) {
+      if (chunk.removed) {
+        prevIndex += chunk.count;
+      } else if (chunk.added) {
+        for (let i3 = 0; i3 < chunk.count; i3++) {
+          result.push(newBlocks[newIndex++]);
+        }
+      } else {
+        for (let i3 = 0; i3 < chunk.count; i3++) {
+          const newBlock = newBlocks[newIndex++];
+          const prevBlock = prevBlocks[prevIndex++];
+          result.push({
+            ...newBlock,
+            clientId: prevBlock.clientId,
+            innerBlocks: preserveClientIds(
+              newBlock.innerBlocks,
+              prevBlock.innerBlocks
+            )
+          });
+        }
+      }
+    }
+    return result;
+  }
+
   // packages/editor/build-module/components/post-revisions-preview/revisions-canvas.mjs
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider4 } = unlock(import_block_editor81.privateApis);
@@ -46620,10 +46903,11 @@ var wp;
       },
       []
     );
+    const previousBlocksRef = (0, import_element154.useRef)([]);
     const blocks = (0, import_element154.useMemo)(() => {
-      const parsedBlocks = (0, import_blocks33.parse)(revision?.content?.raw ?? "");
+      let parsedBlocks = (0, import_blocks33.parse)(revision?.content?.raw ?? "");
       if (postType2 === "wp_navigation") {
-        return [
+        parsedBlocks = [
           (0, import_blocks33.createBlock)(
             "core/navigation",
             { templateLock: false },
@@ -46631,7 +46915,12 @@ var wp;
           )
         ];
       }
-      return parsedBlocks;
+      const blocksWithStableIds = preserveClientIds(
+        parsedBlocks,
+        previousBlocksRef.current
+      );
+      previousBlocksRef.current = blocksWithStableIds;
+      return blocksWithStableIds;
     }, [revision?.content?.raw, postType2]);
     const settings = (0, import_element154.useMemo)(
       () => ({
