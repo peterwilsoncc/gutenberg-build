@@ -849,15 +849,44 @@ function dequal(foo, bar) {
   return foo !== foo && bar !== bar;
 }
 
+// packages/views/build-module/use-view.mjs
+var import_element = __toESM(require_element(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
+
 // packages/views/build-module/preference-keys.mjs
 function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
+// packages/views/build-module/filter-utils.mjs
+function mergeActiveFilters(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  const preserved = (view.filters ?? []).filter(
+    (f2) => !activeFields.has(f2.field)
+  );
+  return {
+    ...view,
+    filters: [...preserved, ...activeFilters]
+  };
+}
+function stripActiveFilterFields(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  return {
+    ...view,
+    filters: (view.filters ?? []).filter(
+      (f2) => !activeFields.has(f2.field)
+    )
+  };
+}
+
 // packages/views/build-module/use-view.mjs
-var import_element = __toESM(require_element(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_preferences = __toESM(require_preferences(), 1);
 function omit(obj, keys) {
   const result = { ...obj };
   for (const key of keys) {
@@ -866,7 +895,15 @@ function omit(obj, keys) {
   return result;
 }
 function useView(config) {
-  const { kind, name, slug, defaultView, queryParams, onChangeQueryParams } = config;
+  const {
+    kind,
+    name,
+    slug,
+    defaultView,
+    activeFilters,
+    queryParams,
+    onChangeQueryParams
+  } = config;
   const preferenceKey = generatePreferenceKey(kind, name, slug);
   const persistedView = (0, import_data.useSelect)(
     (select2) => {
@@ -882,12 +919,15 @@ function useView(config) {
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
   const view = (0, import_element.useMemo)(() => {
-    return {
-      ...baseView,
-      page,
-      search
-    };
-  }, [baseView, page, search]);
+    return mergeActiveFilters(
+      {
+        ...baseView,
+        page,
+        search
+      },
+      activeFilters
+    );
+  }, [baseView, page, search, activeFilters]);
   const isModified = !!persistedView;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
@@ -895,12 +935,23 @@ function useView(config) {
         page: newView?.page,
         search: newView?.search
       };
-      const preferenceView = omit(newView, ["page", "search"]);
+      const preferenceView = stripActiveFilterFields(
+        omit(newView, ["page", "search"]),
+        activeFilters
+      );
       if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
         onChangeQueryParams(urlParams);
       }
-      if (!dequal(baseView, preferenceView)) {
-        if (dequal(preferenceView, defaultView)) {
+      const comparableBaseView = stripActiveFilterFields(
+        baseView,
+        activeFilters
+      );
+      const comparableDefaultView = stripActiveFilterFields(
+        defaultView,
+        activeFilters
+      );
+      if (!dequal(comparableBaseView, preferenceView)) {
+        if (dequal(preferenceView, comparableDefaultView)) {
           set("core/views", preferenceKey, void 0);
         } else {
           set("core/views", preferenceKey, preferenceView);
@@ -913,6 +964,7 @@ function useView(config) {
       search,
       baseView,
       defaultView,
+      activeFilters,
       set,
       preferenceKey
     ]
@@ -16695,9 +16747,9 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/template-part-list/stage.tsx
-var import_core_data4 = __toESM(require_core_data());
+var import_core_data3 = __toESM(require_core_data());
 var import_components49 = __toESM(require_components());
-var import_data11 = __toESM(require_data());
+var import_data10 = __toESM(require_data());
 var import_element57 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_i18n45 = __toESM(require_i18n());
@@ -17027,8 +17079,6 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
 );
 
 // routes/template-part-list/view-utils.ts
-var import_data10 = __toESM(require_data());
-var import_core_data3 = __toESM(require_core_data());
 var NAVIGATION_OVERLAY_TEMPLATE_PART_AREA = "navigation-overlay";
 var DEFAULT_VIEW = {
   type: "grid",
@@ -17048,85 +17098,40 @@ var DEFAULT_LAYOUTS = {
 var DEFAULT_VIEWS = [
   {
     slug: "all",
-    label: "All Template Parts",
-    view: {
-      ...DEFAULT_VIEW
-    }
+    label: "All Template Parts"
   },
   {
     slug: "header",
-    label: "Headers",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "area",
-          operator: "is",
-          value: "header"
-        }
-      ]
-    }
+    label: "Headers"
   },
   {
     slug: "footer",
-    label: "Footers",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "area",
-          operator: "is",
-          value: "footer"
-        }
-      ]
-    }
+    label: "Footers"
   },
   {
     slug: "sidebar",
-    label: "Sidebars",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "area",
-          operator: "is",
-          value: "sidebar"
-        }
-      ]
-    }
+    label: "Sidebars"
   },
   {
     slug: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA,
-    label: "Overlays",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "area",
-          operator: "is",
-          value: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA
-        }
-      ]
-    }
+    label: "Overlays"
   },
   {
     slug: "uncategorized",
-    label: "General",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "area",
-          operator: "is",
-          value: "uncategorized"
-        }
-      ]
-    }
+    label: "General"
   }
 ];
-function getDefaultView(postType, area) {
-  const viewConfig = DEFAULT_VIEWS.find((v2) => v2.slug === area);
-  return viewConfig?.view || DEFAULT_VIEW;
+function getActiveFiltersForTab(area) {
+  if (area === "all") {
+    return [];
+  }
+  return [
+    {
+      field: "area",
+      operator: "is",
+      value: area
+    }
+  ];
 }
 function viewToQuery(view) {
   const result = {};
@@ -17184,7 +17189,7 @@ if (typeof document !== "undefined" && !document.head.querySelector("style[data-
 }
 
 // routes/template-part-list/stage.tsx
-var { useEntityRecordsWithPermissions } = unlock2(import_core_data4.privateApis);
+var { useEntityRecordsWithPermissions } = unlock2(import_core_data3.privateApis);
 var { usePostActions, usePostFields } = unlock2(import_editor.privateApis);
 var { Tabs } = unlock2(import_components49.privateApis);
 function getItemId(item) {
@@ -17197,22 +17202,24 @@ function TemplatePartList() {
   });
   const navigate = useNavigate();
   const searchParams = useSearch({ from: "/template-parts/list/$area" });
-  const postTypeObject = (0, import_data11.useSelect)(
-    (select2) => select2(import_core_data4.store).getPostType("wp_template_part"),
+  const postTypeObject = (0, import_data10.useSelect)(
+    (select2) => select2(import_core_data3.store).getPostType("wp_template_part"),
     []
   );
   const labels = postTypeObject?.labels;
-  const canCreateRecord = (0, import_data11.useSelect)(
-    (select2) => select2(import_core_data4.store).canUser("create", {
+  const canCreateRecord = (0, import_data10.useSelect)(
+    (select2) => select2(import_core_data3.store).canUser("create", {
       kind: "postType",
       name: "wp_template_part"
     }),
     []
   );
   const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element57.useState)(false);
-  const defaultView = (0, import_element57.useMemo)(() => {
-    return getDefaultView(postTypeObject, area);
-  }, [postTypeObject, area]);
+  const defaultView = DEFAULT_VIEW;
+  const activeFilters = (0, import_element57.useMemo)(
+    () => getActiveFiltersForTab(area),
+    [area]
+  );
   const handleQueryParamsChange = (0, import_element57.useCallback)(
     (params) => {
       navigate({
@@ -17227,8 +17234,9 @@ function TemplatePartList() {
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
     name: "wp_template_part",
-    slug: area,
+    slug: "default-new",
     defaultView,
+    activeFilters,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });

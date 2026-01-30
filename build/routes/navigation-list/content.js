@@ -956,15 +956,44 @@ function dequal(foo, bar) {
   return foo !== foo && bar !== bar;
 }
 
+// packages/views/build-module/use-view.mjs
+var import_element2 = __toESM(require_element(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
+
 // packages/views/build-module/preference-keys.mjs
 function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
+// packages/views/build-module/filter-utils.mjs
+function mergeActiveFilters(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  const preserved = (view.filters ?? []).filter(
+    (f2) => !activeFields.has(f2.field)
+  );
+  return {
+    ...view,
+    filters: [...preserved, ...activeFilters]
+  };
+}
+function stripActiveFilterFields(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  return {
+    ...view,
+    filters: (view.filters ?? []).filter(
+      (f2) => !activeFields.has(f2.field)
+    )
+  };
+}
+
 // packages/views/build-module/use-view.mjs
-var import_element2 = __toESM(require_element(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_preferences = __toESM(require_preferences(), 1);
 function omit(obj, keys) {
   const result = { ...obj };
   for (const key of keys) {
@@ -973,7 +1002,15 @@ function omit(obj, keys) {
   return result;
 }
 function useView(config) {
-  const { kind, name, slug, defaultView, queryParams, onChangeQueryParams } = config;
+  const {
+    kind,
+    name,
+    slug,
+    defaultView,
+    activeFilters,
+    queryParams,
+    onChangeQueryParams
+  } = config;
   const preferenceKey = generatePreferenceKey(kind, name, slug);
   const persistedView = (0, import_data.useSelect)(
     (select2) => {
@@ -989,12 +1026,15 @@ function useView(config) {
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
   const view = (0, import_element2.useMemo)(() => {
-    return {
-      ...baseView,
-      page,
-      search
-    };
-  }, [baseView, page, search]);
+    return mergeActiveFilters(
+      {
+        ...baseView,
+        page,
+        search
+      },
+      activeFilters
+    );
+  }, [baseView, page, search, activeFilters]);
   const isModified = !!persistedView;
   const updateView = (0, import_element2.useCallback)(
     (newView) => {
@@ -1002,12 +1042,23 @@ function useView(config) {
         page: newView?.page,
         search: newView?.search
       };
-      const preferenceView = omit(newView, ["page", "search"]);
+      const preferenceView = stripActiveFilterFields(
+        omit(newView, ["page", "search"]),
+        activeFilters
+      );
       if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
         onChangeQueryParams(urlParams);
       }
-      if (!dequal(baseView, preferenceView)) {
-        if (dequal(preferenceView, defaultView)) {
+      const comparableBaseView = stripActiveFilterFields(
+        baseView,
+        activeFilters
+      );
+      const comparableDefaultView = stripActiveFilterFields(
+        defaultView,
+        activeFilters
+      );
+      if (!dequal(comparableBaseView, preferenceView)) {
+        if (dequal(preferenceView, comparableDefaultView)) {
           set("core/views", preferenceKey, void 0);
         } else {
           set("core/views", preferenceKey, preferenceView);
@@ -1020,6 +1071,7 @@ function useView(config) {
       search,
       baseView,
       defaultView,
+      activeFilters,
       set,
       preferenceKey
     ]
@@ -16861,7 +16913,7 @@ function NavigationList() {
   const { view, updateView, isModified, resetToDefault } = useView({
     kind: "postType",
     name: NAVIGATION_POST_TYPE2,
-    slug: "all",
+    slug: "default-new",
     defaultView,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange

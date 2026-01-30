@@ -835,15 +835,44 @@ function dequal(foo, bar) {
   return foo !== foo && bar !== bar;
 }
 
+// packages/views/build-module/use-view.mjs
+var import_element = __toESM(require_element(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
+
 // packages/views/build-module/preference-keys.mjs
 function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
+// packages/views/build-module/filter-utils.mjs
+function mergeActiveFilters(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  const preserved = (view.filters ?? []).filter(
+    (f2) => !activeFields.has(f2.field)
+  );
+  return {
+    ...view,
+    filters: [...preserved, ...activeFilters]
+  };
+}
+function stripActiveFilterFields(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  return {
+    ...view,
+    filters: (view.filters ?? []).filter(
+      (f2) => !activeFields.has(f2.field)
+    )
+  };
+}
+
 // packages/views/build-module/use-view.mjs
-var import_element = __toESM(require_element(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_preferences = __toESM(require_preferences(), 1);
 function omit(obj, keys) {
   const result = { ...obj };
   for (const key of keys) {
@@ -852,7 +881,15 @@ function omit(obj, keys) {
   return result;
 }
 function useView(config) {
-  const { kind, name, slug, defaultView, queryParams, onChangeQueryParams } = config;
+  const {
+    kind,
+    name,
+    slug,
+    defaultView,
+    activeFilters,
+    queryParams,
+    onChangeQueryParams
+  } = config;
   const preferenceKey = generatePreferenceKey(kind, name, slug);
   const persistedView = (0, import_data.useSelect)(
     (select2) => {
@@ -868,12 +905,15 @@ function useView(config) {
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
   const view = (0, import_element.useMemo)(() => {
-    return {
-      ...baseView,
-      page,
-      search
-    };
-  }, [baseView, page, search]);
+    return mergeActiveFilters(
+      {
+        ...baseView,
+        page,
+        search
+      },
+      activeFilters
+    );
+  }, [baseView, page, search, activeFilters]);
   const isModified = !!persistedView;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
@@ -881,12 +921,23 @@ function useView(config) {
         page: newView?.page,
         search: newView?.search
       };
-      const preferenceView = omit(newView, ["page", "search"]);
+      const preferenceView = stripActiveFilterFields(
+        omit(newView, ["page", "search"]),
+        activeFilters
+      );
       if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
         onChangeQueryParams(urlParams);
       }
-      if (!dequal(baseView, preferenceView)) {
-        if (dequal(preferenceView, defaultView)) {
+      const comparableBaseView = stripActiveFilterFields(
+        baseView,
+        activeFilters
+      );
+      const comparableDefaultView = stripActiveFilterFields(
+        defaultView,
+        activeFilters
+      );
+      if (!dequal(comparableBaseView, preferenceView)) {
+        if (dequal(preferenceView, comparableDefaultView)) {
           set("core/views", preferenceKey, void 0);
         } else {
           set("core/views", preferenceKey, preferenceView);
@@ -899,6 +950,7 @@ function useView(config) {
       search,
       baseView,
       defaultView,
+      activeFilters,
       set,
       preferenceKey
     ]
@@ -16686,87 +16738,44 @@ var DEFAULT_LAYOUTS = {
 var DEFAULT_VIEWS = [
   {
     slug: "all",
-    label: "All",
-    view: {
-      ...DEFAULT_VIEW
-    }
+    label: "All"
   },
   {
     slug: "publish",
-    label: "Published",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "status",
-          operator: "is",
-          value: "publish"
-        }
-      ]
-    }
+    label: "Published"
   },
   {
     slug: "draft",
-    label: "Draft",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "status",
-          operator: "is",
-          value: "draft"
-        }
-      ]
-    }
+    label: "Draft"
   },
   {
     slug: "pending",
-    label: "Pending",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "status",
-          operator: "is",
-          value: "pending"
-        }
-      ]
-    }
+    label: "Pending"
   },
   {
     slug: "private",
-    label: "Private",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "status",
-          operator: "is",
-          value: "private"
-        }
-      ]
-    }
+    label: "Private"
   },
   {
     slug: "trash",
-    label: "Trash",
-    view: {
-      ...DEFAULT_VIEW,
-      filters: [
-        {
-          field: "status",
-          operator: "is",
-          value: "trash"
-        }
-      ]
-    }
+    label: "Trash"
   }
 ];
-function getDefaultView(postType, slug) {
-  const viewConfig = DEFAULT_VIEWS.find((v2) => v2.slug === slug);
-  const baseView = viewConfig?.view || DEFAULT_VIEW;
+function getActiveFiltersForTab(slug) {
+  if (slug === "all") {
+    return [];
+  }
+  return [
+    {
+      field: "status",
+      operator: "is",
+      value: slug
+    }
+  ];
+}
+function getDefaultView(postType) {
   return {
-    ...baseView,
+    ...DEFAULT_VIEW,
     showLevels: postType?.hierarchical
   };
 }
@@ -16878,8 +16887,12 @@ function PostList() {
     [postType]
   );
   const defaultView = (0, import_element56.useMemo)(() => {
-    return getDefaultView(postTypeObject, slug);
-  }, [postTypeObject, slug]);
+    return getDefaultView(postTypeObject);
+  }, [postTypeObject]);
+  const activeFilters = (0, import_element56.useMemo)(
+    () => getActiveFiltersForTab(slug),
+    [slug]
+  );
   const handleQueryParamsChange = (0, import_element56.useCallback)(
     (params) => {
       navigate({
@@ -16894,8 +16907,9 @@ function PostList() {
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
     name: postType,
-    slug,
+    slug: "default-new",
     defaultView,
+    activeFilters,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });

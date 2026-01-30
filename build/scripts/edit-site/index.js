@@ -1006,7 +1006,7 @@ var wp;
   });
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_block_library3 = __toESM(require_block_library(), 1);
-  var import_data83 = __toESM(require_data(), 1);
+  var import_data82 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element159 = __toESM(require_element(), 1);
   var import_editor45 = __toESM(require_editor(), 1);
@@ -1646,10 +1646,10 @@ var wp;
   unlock(store).registerPrivateActions(private_actions_exports);
 
   // packages/edit-site/build-module/components/app/index.mjs
-  var import_data82 = __toESM(require_data(), 1);
+  var import_data81 = __toESM(require_data(), 1);
   var import_router41 = __toESM(require_router(), 1);
   var import_element158 = __toESM(require_element(), 1);
-  var import_core_data65 = __toESM(require_core_data(), 1);
+  var import_core_data64 = __toESM(require_core_data(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
   function r(e2) {
@@ -6592,7 +6592,7 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/index.mjs
-  var import_data81 = __toESM(require_data(), 1);
+  var import_data80 = __toESM(require_data(), 1);
   var import_element157 = __toESM(require_element(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.mjs
@@ -41408,15 +41408,44 @@ If there's a particular need for this, please submit a feature request at https:
     return foo !== foo && bar !== bar;
   }
 
+  // packages/views/build-module/use-view.mjs
+  var import_element131 = __toESM(require_element(), 1);
+  var import_data62 = __toESM(require_data(), 1);
+  var import_preferences11 = __toESM(require_preferences(), 1);
+
   // packages/views/build-module/preference-keys.mjs
   function generatePreferenceKey(kind, name2, slug) {
     return `dataviews-${kind}-${name2}-${slug}`;
   }
 
+  // packages/views/build-module/filter-utils.mjs
+  function mergeActiveFilters(view, activeFilters) {
+    if (!activeFilters || activeFilters.length === 0) {
+      return view;
+    }
+    const activeFields = new Set(activeFilters.map((f2) => f2.field));
+    const preserved = (view.filters ?? []).filter(
+      (f2) => !activeFields.has(f2.field)
+    );
+    return {
+      ...view,
+      filters: [...preserved, ...activeFilters]
+    };
+  }
+  function stripActiveFilterFields(view, activeFilters) {
+    if (!activeFilters || activeFilters.length === 0) {
+      return view;
+    }
+    const activeFields = new Set(activeFilters.map((f2) => f2.field));
+    return {
+      ...view,
+      filters: (view.filters ?? []).filter(
+        (f2) => !activeFields.has(f2.field)
+      )
+    };
+  }
+
   // packages/views/build-module/use-view.mjs
-  var import_element131 = __toESM(require_element(), 1);
-  var import_data62 = __toESM(require_data(), 1);
-  var import_preferences11 = __toESM(require_preferences(), 1);
   function omit3(obj, keys) {
     const result = { ...obj };
     for (const key of keys) {
@@ -41425,7 +41454,15 @@ If there's a particular need for this, please submit a feature request at https:
     return result;
   }
   function useView(config2) {
-    const { kind, name: name2, slug, defaultView, queryParams, onChangeQueryParams } = config2;
+    const {
+      kind,
+      name: name2,
+      slug,
+      defaultView,
+      activeFilters,
+      queryParams,
+      onChangeQueryParams
+    } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
     const persistedView = (0, import_data62.useSelect)(
       (select3) => {
@@ -41441,12 +41478,15 @@ If there's a particular need for this, please submit a feature request at https:
     const page = Number(queryParams?.page ?? baseView.page ?? 1);
     const search = queryParams?.search ?? baseView.search ?? "";
     const view = (0, import_element131.useMemo)(() => {
-      return {
-        ...baseView,
-        page,
-        search
-      };
-    }, [baseView, page, search]);
+      return mergeActiveFilters(
+        {
+          ...baseView,
+          page,
+          search
+        },
+        activeFilters
+      );
+    }, [baseView, page, search, activeFilters]);
     const isModified = !!persistedView;
     const updateView = (0, import_element131.useCallback)(
       (newView) => {
@@ -41454,12 +41494,23 @@ If there's a particular need for this, please submit a feature request at https:
           page: newView?.page,
           search: newView?.search
         };
-        const preferenceView = omit3(newView, ["page", "search"]);
+        const preferenceView = stripActiveFilterFields(
+          omit3(newView, ["page", "search"]),
+          activeFilters
+        );
         if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
           onChangeQueryParams(urlParams);
         }
-        if (!dequal(baseView, preferenceView)) {
-          if (dequal(preferenceView, defaultView)) {
+        const comparableBaseView = stripActiveFilterFields(
+          baseView,
+          activeFilters
+        );
+        const comparableDefaultView = stripActiveFilterFields(
+          defaultView,
+          activeFilters
+        );
+        if (!dequal(comparableBaseView, preferenceView)) {
+          if (dequal(preferenceView, comparableDefaultView)) {
             set("core/views", preferenceKey, void 0);
           } else {
             set("core/views", preferenceKey, preferenceView);
@@ -41472,6 +41523,7 @@ If there's a particular need for this, please submit a feature request at https:
         search,
         baseView,
         defaultView,
+        activeFilters,
         set,
         preferenceKey
       ]
@@ -41491,7 +41543,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data63 = __toESM(require_data(), 1);
   var import_preferences12 = __toESM(require_preferences(), 1);
   async function loadView(config2) {
-    const { kind, name: name2, slug, defaultView, queryParams } = config2;
+    const { kind, name: name2, slug, defaultView, activeFilters, queryParams } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
     const persistedView = (0, import_data63.select)(import_preferences12.store).get(
       "core/views",
@@ -41500,11 +41552,14 @@ If there's a particular need for this, please submit a feature request at https:
     const baseView = persistedView ?? defaultView;
     const page = queryParams?.page ?? 1;
     const search = queryParams?.search ?? "";
-    return {
-      ...baseView,
-      page,
-      search
-    };
+    return mergeActiveFilters(
+      {
+        ...baseView,
+        page,
+        search
+      },
+      activeFilters
+    );
   }
 
   // packages/edit-site/build-module/components/page-patterns/index.mjs
@@ -42235,7 +42290,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { view, updateView, isModified, resetToDefault } = useView({
       kind: "postType",
       name: postType2,
-      slug: categoryId,
+      slug: "default",
       defaultView: DEFAULT_VIEW,
       queryParams: {
         page: query.pageNumber,
@@ -44052,21 +44107,17 @@ If there's a particular need for this, please submit a feature request at https:
     filters: [],
     ...defaultLayouts2.grid
   };
-  function getDefaultView(activeView) {
-    return {
-      ...DEFAULT_VIEW2,
-      sort: activeView === "user" ? {
-        field: "date",
-        direction: "desc"
-      } : DEFAULT_VIEW2.sort,
-      filters: !["active", "user"].includes(activeView) ? [
-        {
-          field: "author",
-          operator: "isAny",
-          value: [activeView]
-        }
-      ] : []
-    };
+  function getActiveFiltersForTab(activeView) {
+    if (activeView === "active" || activeView === "user") {
+      return [];
+    }
+    return [
+      {
+        field: "author",
+        operator: "isAny",
+        value: [activeView]
+      }
+    ];
   }
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
@@ -44079,14 +44130,17 @@ If there's a particular need for this, please submit a feature request at https:
     const { activeView = "active", postId } = query;
     const [selection, setSelection] = (0, import_element146.useState)([postId]);
     const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element146.useState)(false);
-    const defaultView = (0, import_element146.useMemo)(() => {
-      return getDefaultView(activeView);
-    }, [activeView]);
+    const defaultView = DEFAULT_VIEW2;
+    const activeFilters = (0, import_element146.useMemo)(
+      () => getActiveFiltersForTab(activeView),
+      [activeView]
+    );
     const { view, updateView, isModified, resetToDefault } = useView({
       kind: "postType",
       name: TEMPLATE_POST_TYPE,
-      slug: activeView,
+      slug: "default",
       defaultView,
+      activeFilters,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -44297,10 +44351,10 @@ If there's a particular need for this, please submit a feature request at https:
       [postTypeActions, setActiveTemplateAction, editAction, activeView]
     );
     const onChangeView = (0, import_compose28.useEvent)((newView) => {
+      updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
       }
-      updateView(newView);
     });
     const duplicateAction = actions.find(
       (action) => action.id === "duplicate-post"
@@ -45705,14 +45759,17 @@ If there's a particular need for this, please submit a feature request at https:
     const { path, query } = useLocation29();
     const { activeView = "active", postId } = query;
     const [selection, setSelection] = (0, import_element151.useState)([postId]);
-    const defaultView = (0, import_element151.useMemo)(() => {
-      return getDefaultView(activeView);
-    }, [activeView]);
+    const defaultView = DEFAULT_VIEW2;
+    const activeFilters = (0, import_element151.useMemo)(
+      () => getActiveFiltersForTab(activeView),
+      [activeView]
+    );
     const { view, updateView, isModified, resetToDefault } = useView({
       kind: "postType",
       name: TEMPLATE_POST_TYPE,
-      slug: activeView,
+      slug: "default",
       defaultView,
+      activeFilters,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -45782,10 +45839,10 @@ If there's a particular need for this, please submit a feature request at https:
       [postTypeActions, editAction]
     );
     const onChangeView = (0, import_compose31.useEvent)((newView) => {
+      updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
       }
-      updateView(newView);
     });
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
       page_default,
@@ -45837,8 +45894,9 @@ If there's a particular need for this, please submit a feature request at https:
     const view = await loadView({
       kind: "postType",
       name: "wp_template",
-      slug: activeView,
-      defaultView: getDefaultView(activeView)
+      slug: "default",
+      defaultView: DEFAULT_VIEW2,
+      activeFilters: getActiveFiltersForTab(activeView)
     });
     return view.type === "list";
   }
@@ -45907,8 +45965,6 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
   var import_router40 = __toESM(require_router(), 1);
   var import_i18n156 = __toESM(require_i18n(), 1);
-  var import_data80 = __toESM(require_data(), 1);
-  var import_core_data64 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
   var import_components162 = __toESM(require_components(), 1);
@@ -45968,7 +46024,7 @@ If there's a particular need for this, please submit a feature request at https:
     grid: {},
     list: {}
   };
-  var DEFAULT_POST_BASE = {
+  var DEFAULT_VIEW3 = {
     type: "list",
     filters: [],
     perPage: 20,
@@ -45988,14 +46044,14 @@ If there's a particular need for this, please submit a feature request at https:
         title: postType2?.labels?.all_items || (0, import_i18n152.__)("All items"),
         slug: "all",
         icon: pages_default,
-        view: DEFAULT_POST_BASE
+        view: DEFAULT_VIEW3
       },
       {
         title: (0, import_i18n152.__)("Published"),
         slug: "published",
         icon: published_default,
         view: {
-          ...DEFAULT_POST_BASE,
+          ...DEFAULT_VIEW3,
           filters: [
             {
               field: "status",
@@ -46011,7 +46067,7 @@ If there's a particular need for this, please submit a feature request at https:
         slug: "future",
         icon: scheduled_default,
         view: {
-          ...DEFAULT_POST_BASE,
+          ...DEFAULT_VIEW3,
           filters: [
             {
               field: "status",
@@ -46027,7 +46083,7 @@ If there's a particular need for this, please submit a feature request at https:
         slug: "drafts",
         icon: drafts_default,
         view: {
-          ...DEFAULT_POST_BASE,
+          ...DEFAULT_VIEW3,
           filters: [
             {
               field: "status",
@@ -46043,7 +46099,7 @@ If there's a particular need for this, please submit a feature request at https:
         slug: "pending",
         icon: pending_default,
         view: {
-          ...DEFAULT_POST_BASE,
+          ...DEFAULT_VIEW3,
           filters: [
             {
               field: "status",
@@ -46059,7 +46115,7 @@ If there's a particular need for this, please submit a feature request at https:
         slug: "private",
         icon: not_allowed_default,
         view: {
-          ...DEFAULT_POST_BASE,
+          ...DEFAULT_VIEW3,
           filters: [
             {
               field: "status",
@@ -46075,7 +46131,7 @@ If there's a particular need for this, please submit a feature request at https:
         slug: "trash",
         icon: trash_default,
         view: {
-          ...DEFAULT_POST_BASE,
+          ...DEFAULT_VIEW3,
           type: "table",
           layout: defaultLayouts3.table.layout,
           filters: [
@@ -46090,11 +46146,28 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ];
   }
-  var getDefaultView2 = (postType2, activeView) => {
-    return getDefaultViews(postType2).find(
-      ({ slug }) => slug === activeView
-    )?.view;
+  var SLUG_TO_STATUS = {
+    published: "publish",
+    future: "future",
+    drafts: "draft",
+    pending: "pending",
+    private: "private",
+    trash: "trash"
   };
+  function getActiveFiltersForTab2(activeView) {
+    const status = SLUG_TO_STATUS[activeView];
+    if (!status) {
+      return [];
+    }
+    return [
+      {
+        field: "status",
+        operator: OPERATOR_IS_ANY,
+        value: status,
+        isLocked: true
+      }
+    ];
+  }
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
@@ -46162,7 +46235,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [title, setTitle] = (0, import_element153.useState)("");
     const { saveEntityRecord } = (0, import_data77.useDispatch)(import_core_data60.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data77.useDispatch)(import_notices10.store);
-    const { resolveSelect: resolveSelect3 } = (0, import_data77.useRegistry)();
+    const { resolveSelect: resolveSelect2 } = (0, import_data77.useRegistry)();
     async function createPost(event) {
       event.preventDefault();
       if (isCreatingPost) {
@@ -46170,7 +46243,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setIsCreatingPost(true);
       try {
-        const postTypeObject = await resolveSelect3(import_core_data60.store).getPostType(postType2);
+        const postTypeObject = await resolveSelect2(import_core_data60.store).getPostType(postType2);
         const newPage = await saveEntityRecord(
           "postType",
           postType2,
@@ -46302,17 +46375,17 @@ If there's a particular need for this, please submit a feature request at https:
     const { path, query } = useLocation32();
     const { activeView = "all", postId, quickEdit = false } = query;
     const history = useHistory25();
-    const postTypeObject = (0, import_data78.useSelect)(
-      (select3) => {
-        const { getPostType: getPostType2 } = select3(import_core_data62.store);
-        return getPostType2(postType2);
-      },
-      [postType2]
+    const defaultView = DEFAULT_VIEW3;
+    const activeFilters = (0, import_element155.useMemo)(
+      () => getActiveFiltersForTab2(activeView),
+      [activeView]
     );
     const { view, updateView, isModified, resetToDefault } = useView({
       kind: "postType",
       name: postType2,
-      slug: activeView,
+      slug: "default",
+      defaultView,
+      activeFilters,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -46325,14 +46398,13 @@ If there's a particular need for this, please submit a feature request at https:
             search: newQueryParams.search || void 0
           })
         );
-      },
-      defaultView: getDefaultView2(postTypeObject, activeView)
+      }
     });
     const onChangeView = (0, import_compose32.useEvent)((newView) => {
+      updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
       }
-      updateView(newView);
     });
     const [selection, setSelection] = (0, import_element155.useState)(postId?.split(",") ?? []);
     const onChangeSelection = (0, import_element155.useCallback)(
@@ -46705,12 +46777,12 @@ If there's a particular need for this, please submit a feature request at https:
   var { useLocation: useLocation33 } = unlock(import_router40.privateApis);
   async function isListView(query) {
     const { activeView = "all" } = query;
-    const postTypeObject = await (0, import_data80.resolveSelect)(import_core_data64.store).getPostType("page");
     const view = await loadView({
       kind: "postType",
       name: "page",
-      slug: activeView,
-      defaultView: getDefaultView2(postTypeObject, activeView)
+      slug: "default",
+      defaultView: DEFAULT_VIEW3,
+      activeFilters: getActiveFiltersForTab2(activeView)
     });
     return view.type === "list";
   }
@@ -46890,8 +46962,8 @@ If there's a particular need for this, please submit a feature request at https:
     notFoundRoute
   ];
   function useRegisterSiteEditorRoutes() {
-    const registry = (0, import_data81.useRegistry)();
-    const { registerRoute: registerRoute2 } = unlock((0, import_data81.useDispatch)(store));
+    const registry = (0, import_data80.useRegistry)();
+    const { registerRoute: registerRoute2 } = unlock((0, import_data80.useDispatch)(store));
     (0, import_element157.useEffect)(() => {
       registry.batch(() => {
         routes2.forEach(registerRoute2);
@@ -46909,10 +46981,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function App() {
     useRegisterSiteEditorRoutes();
-    const { routes: routes3, currentTheme, editorSettings } = (0, import_data82.useSelect)((select3) => {
+    const { routes: routes3, currentTheme, editorSettings } = (0, import_data81.useSelect)((select3) => {
       return {
         routes: unlock(select3(store)).getRoutes(),
-        currentTheme: select3(import_core_data65.store).getCurrentTheme(),
+        currentTheme: select3(import_core_data64.store).getCurrentTheme(),
         // This is a temp solution until the has_theme_json value is available for the current theme.
         editorSettings: select3(store).getSettings()
       };
@@ -46989,13 +47061,13 @@ If there's a particular need for this, please submit a feature request at https:
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
     const root = (0, import_element159.createRoot)(target);
-    (0, import_data83.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
+    (0, import_data82.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
     const coreBlocks = (0, import_block_library3.__experimentalGetCoreBlocks)().filter(
       ({ name: name2 }) => name2 !== "core/freeform"
     );
     (0, import_block_library3.registerCoreBlocks)(coreBlocks);
     registerCoreBlockBindingsSources();
-    (0, import_data83.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
+    (0, import_data82.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });
     (0, import_widgets.registerWidgetGroupBlock)({ inserter: false });
     if (true) {
@@ -47003,13 +47075,13 @@ If there's a particular need for this, please submit a feature request at https:
         enableFSEBlocks: true
       });
     }
-    (0, import_data83.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
+    (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
       welcomeGuide: true,
       welcomeGuideStyles: true,
       welcomeGuidePage: true,
       welcomeGuideTemplate: true
     });
-    (0, import_data83.dispatch)(import_preferences13.store).setDefaults("core", {
+    (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core", {
       allowRightClickOverrides: true,
       distractionFree: false,
       editorMode: "visual",
@@ -47024,12 +47096,12 @@ If there's a particular need for this, please submit a feature request at https:
       enableChoosePatternModal: true
     });
     if (window.__experimentalMediaProcessing) {
-      (0, import_data83.dispatch)(import_preferences13.store).setDefaults("core/media", {
+      (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core/media", {
         requireApproval: true,
         optimizeOnUpload: true
       });
     }
-    (0, import_data83.dispatch)(store).updateSettings(settings2);
+    (0, import_data82.dispatch)(store).updateSettings(settings2);
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(

@@ -869,15 +869,44 @@ function dequal(foo, bar) {
   return foo !== foo && bar !== bar;
 }
 
+// packages/views/build-module/use-view.mjs
+var import_element = __toESM(require_element(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
+
 // packages/views/build-module/preference-keys.mjs
 function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
+// packages/views/build-module/filter-utils.mjs
+function mergeActiveFilters(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  const preserved = (view.filters ?? []).filter(
+    (f2) => !activeFields.has(f2.field)
+  );
+  return {
+    ...view,
+    filters: [...preserved, ...activeFilters]
+  };
+}
+function stripActiveFilterFields(view, activeFilters) {
+  if (!activeFilters || activeFilters.length === 0) {
+    return view;
+  }
+  const activeFields = new Set(activeFilters.map((f2) => f2.field));
+  return {
+    ...view,
+    filters: (view.filters ?? []).filter(
+      (f2) => !activeFields.has(f2.field)
+    )
+  };
+}
+
 // packages/views/build-module/use-view.mjs
-var import_element = __toESM(require_element(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_preferences = __toESM(require_preferences(), 1);
 function omit(obj, keys) {
   const result = { ...obj };
   for (const key of keys) {
@@ -886,7 +915,15 @@ function omit(obj, keys) {
   return result;
 }
 function useView(config) {
-  const { kind, name, slug, defaultView, queryParams, onChangeQueryParams } = config;
+  const {
+    kind,
+    name,
+    slug,
+    defaultView,
+    activeFilters,
+    queryParams,
+    onChangeQueryParams
+  } = config;
   const preferenceKey = generatePreferenceKey(kind, name, slug);
   const persistedView = (0, import_data.useSelect)(
     (select2) => {
@@ -902,12 +939,15 @@ function useView(config) {
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
   const view = (0, import_element.useMemo)(() => {
-    return {
-      ...baseView,
-      page,
-      search
-    };
-  }, [baseView, page, search]);
+    return mergeActiveFilters(
+      {
+        ...baseView,
+        page,
+        search
+      },
+      activeFilters
+    );
+  }, [baseView, page, search, activeFilters]);
   const isModified = !!persistedView;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
@@ -915,12 +955,23 @@ function useView(config) {
         page: newView?.page,
         search: newView?.search
       };
-      const preferenceView = omit(newView, ["page", "search"]);
+      const preferenceView = stripActiveFilterFields(
+        omit(newView, ["page", "search"]),
+        activeFilters
+      );
       if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
         onChangeQueryParams(urlParams);
       }
-      if (!dequal(baseView, preferenceView)) {
-        if (dequal(preferenceView, defaultView)) {
+      const comparableBaseView = stripActiveFilterFields(
+        baseView,
+        activeFilters
+      );
+      const comparableDefaultView = stripActiveFilterFields(
+        defaultView,
+        activeFilters
+      );
+      if (!dequal(comparableBaseView, preferenceView)) {
+        if (dequal(preferenceView, comparableDefaultView)) {
           set("core/views", preferenceKey, void 0);
         } else {
           set("core/views", preferenceKey, preferenceView);
@@ -933,6 +984,7 @@ function useView(config) {
       search,
       baseView,
       defaultView,
+      activeFilters,
       set,
       preferenceKey
     ]
@@ -16925,6 +16977,10 @@ var DEFAULT_VIEW = {
   mediaField: "preview",
   filters: []
 };
+var DEFAULT_VIEW_LEGACY = {
+  ...DEFAULT_VIEW,
+  fields: ["author"]
+};
 var DEFAULT_LAYOUTS = {
   table: {
     showMedia: false
@@ -16936,52 +16992,29 @@ var DEFAULT_LAYOUTS = {
     showMedia: false
   }
 };
-function getDefaultView(activeView) {
-  if (activeView === "user") {
-    return {
-      ...DEFAULT_VIEW,
-      sort: {
-        field: "date",
-        direction: "desc"
-      },
-      fields: ["author", "active", "slug", "theme"]
-    };
+function getActiveFiltersForTab(activeView) {
+  if (activeView === "active" || activeView === "user") {
+    return [];
   }
-  if (activeView === "active" || !activeView) {
-    return {
-      ...DEFAULT_VIEW
-    };
-  }
-  return {
-    ...DEFAULT_VIEW,
-    filters: [
-      {
-        field: "author",
-        operator: "isAny",
-        value: [activeView]
-      }
-    ]
-  };
+  return [
+    {
+      field: "author",
+      operator: "isAny",
+      value: [activeView]
+    }
+  ];
 }
-function getDefaultViewLegacy(activeView) {
-  if (activeView === "all" || !activeView) {
-    return {
-      ...DEFAULT_VIEW,
-      fields: ["author"]
-      // Remove 'active' and 'slug' fields
-    };
+function getActiveFiltersForTabLegacy(activeView) {
+  if (activeView === "all") {
+    return [];
   }
-  return {
-    ...DEFAULT_VIEW,
-    fields: ["author"],
-    filters: [
-      {
-        field: "author",
-        operator: "isAny",
-        value: [activeView]
-      }
-    ]
-  };
+  return [
+    {
+      field: "author",
+      operator: "isAny",
+      value: [activeView]
+    }
+  ];
 }
 
 // routes/template-list/fields/preview.tsx
@@ -18600,9 +18633,11 @@ function TemplateListActivation() {
     []
   );
   const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element63.useState)(null);
-  const defaultView = (0, import_element63.useMemo)(() => {
-    return getDefaultView(activeView);
-  }, [activeView]);
+  const defaultView = DEFAULT_VIEW;
+  const activeFilters = (0, import_element63.useMemo)(
+    () => getActiveFiltersForTab(activeView),
+    [activeView]
+  );
   const handleQueryParamsChange = (0, import_element63.useCallback)(
     (params) => {
       navigate({
@@ -18617,8 +18652,9 @@ function TemplateListActivation() {
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
     name: "wp_template",
-    slug: activeView,
+    slug: "default-new",
     defaultView,
+    activeFilters,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });
@@ -18918,9 +18954,11 @@ function TemplateListLegacy() {
     (select2) => select2(import_core_data11.store).getPostType("wp_template"),
     []
   );
-  const defaultView = (0, import_element65.useMemo)(() => {
-    return getDefaultViewLegacy(activeView);
-  }, [activeView]);
+  const defaultView = DEFAULT_VIEW_LEGACY;
+  const activeFilters = (0, import_element65.useMemo)(
+    () => getActiveFiltersForTabLegacy(activeView),
+    [activeView]
+  );
   const handleQueryParamsChange = (0, import_element65.useCallback)(
     (params) => {
       navigate({
@@ -18935,8 +18973,9 @@ function TemplateListLegacy() {
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
     name: "wp_template",
-    slug: activeView,
+    slug: "default-new",
     defaultView,
+    activeFilters,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });
