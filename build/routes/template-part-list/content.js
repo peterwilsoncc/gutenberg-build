@@ -4012,7 +4012,7 @@ function ListItem({
                 gap: "sm",
                 justify: "start",
                 align: "flex-start",
-                style: { flex: 1 },
+                style: { flex: 1, minWidth: 0 },
                 children: [
                   renderedMediaField,
                   /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
@@ -4026,9 +4026,8 @@ function ListItem({
                           /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                             "div",
                             {
-                              className: "dataviews-title-field",
+                              className: "dataviews-title-field dataviews-view-list__title-field",
                               id: labelId,
-                              style: { flex: 1 },
                               children: renderedTitleField
                             }
                           ),
