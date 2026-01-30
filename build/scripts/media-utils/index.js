@@ -14434,8 +14434,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           className: clsx_default(
             "components-validated-control__indicator",
-            customValidity.type === "invalid" ? "is-invalid" : void 0,
-            customValidity.type === "valid" ? "is-valid" : void 0
+            customValidity.type === "invalid" ? "is-invalid" : void 0
           ),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(

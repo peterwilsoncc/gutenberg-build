@@ -51557,8 +51557,7 @@ var wp;
         {
           className: clsx_default(
             "components-validated-control__indicator",
-            customValidity.type === "invalid" ? "is-invalid" : void 0,
-            customValidity.type === "valid" ? "is-valid" : void 0
+            customValidity.type === "invalid" ? "is-invalid" : void 0
           ),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
@@ -54298,7 +54297,7 @@ var wp;
           if (key === "children" && validation && typeof validation === "object") {
             return isFormValid(validation);
           }
-          return validation.type === "valid";
+          return validation.type !== "invalid" && validation.type !== "validating";
         }
       );
     });
@@ -54362,6 +54361,7 @@ var wp;
       if (!current[segment]) {
         current[segment] = {};
       }
+      current[segment] = { ...current[segment] };
       current = current[segment];
     }
     const finalKey = path[path.length - 1];
@@ -54369,6 +54369,36 @@ var wp;
       ...current[finalKey] || {},
       ...fieldValidity
     };
+    return result;
+  }
+  function removeValidationProperty(formValidity, path, property) {
+    if (!formValidity || path.length === 0) {
+      return formValidity;
+    }
+    const result = { ...formValidity };
+    let current = result;
+    for (let i3 = 0; i3 < path.length - 1; i3++) {
+      const segment = path[i3];
+      if (!current[segment]) {
+        return formValidity;
+      }
+      current[segment] = { ...current[segment] };
+      current = current[segment];
+    }
+    const finalKey = path[path.length - 1];
+    if (!current[finalKey]) {
+      return formValidity;
+    }
+    const fieldValidity = { ...current[finalKey] };
+    delete fieldValidity[property];
+    if (Object.keys(fieldValidity).length === 0) {
+      delete current[finalKey];
+    } else {
+      current[finalKey] = fieldValidity;
+    }
+    if (Object.keys(result).length === 0) {
+      return void 0;
+    }
     return result;
   }
   function handleElementsValidationAsync(promise, formField, promiseHandler) {
@@ -54414,6 +54444,14 @@ var wp;
           );
           return newFormValidity;
         });
+      } else {
+        setFormValidity((prev) => {
+          return removeValidationProperty(
+            prev,
+            [...path, formField.id],
+            "elements"
+          );
+        });
       }
     }).catch((error) => {
       if (currentToken !== elementsCounterRef.current[formField.id]) {
@@ -54452,17 +54490,11 @@ var wp;
       }
       if (result === null) {
         setFormValidity((prev) => {
-          const newFormValidity = setValidityAtPath(
+          return removeValidationProperty(
             prev,
-            {
-              custom: {
-                type: "valid",
-                message: (0, import_i18n228.__)("Valid")
-              }
-            },
-            [...path, formField.id]
+            [...path, formField.id],
+            "custom"
           );
-          return newFormValidity;
         });
         return;
       }
@@ -54576,19 +54608,6 @@ var wp;
         }
       };
     }
-    if (!!formField.field && formField.field.isValid.elements && formField.field.hasElements && typeof formField.field.getElements === "function") {
-      handleElementsValidationAsync(
-        formField.field.getElements(),
-        formField,
-        promiseHandler
-      );
-      return {
-        elements: {
-          type: "validating",
-          message: (0, import_i18n228.__)("Validating\u2026")
-        }
-      };
-    }
     let customError;
     if (!!formField.field && formField.field.isValid.custom) {
       try {
@@ -54626,14 +54645,27 @@ var wp;
         }
       };
     }
+    const fieldValidity = {};
+    if (!!formField.field && formField.field.isValid.elements && formField.field.hasElements && typeof formField.field.getElements === "function") {
+      handleElementsValidationAsync(
+        formField.field.getElements(),
+        formField,
+        promiseHandler
+      );
+      fieldValidity.elements = {
+        type: "validating",
+        message: (0, import_i18n228.__)("Validating\u2026")
+      };
+    }
     if (customError instanceof Promise) {
       handleCustomValidationAsync(customError, formField, promiseHandler);
-      return {
-        custom: {
-          type: "validating",
-          message: (0, import_i18n228.__)("Validating\u2026")
-        }
+      fieldValidity.custom = {
+        type: "validating",
+        message: (0, import_i18n228.__)("Validating\u2026")
       };
+    }
+    if (Object.keys(fieldValidity).length > 0) {
+      return fieldValidity;
     }
     if (formField.children.length > 0) {
       const result = {};
