@@ -21947,9 +21947,9 @@ var wp;
 
   // packages/block-editor/build-module/components/block-visibility/modal.mjs
   var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
-  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='b1ef6f43cb']")) {
+  if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='6c1fe6ec90']")) {
     const style = document.createElement("style");
-    style.setAttribute("data-wp-hash", "b1ef6f43cb");
+    style.setAttribute("data-wp-hash", "6c1fe6ec90");
     style.appendChild(document.createTextNode(".block-editor-block-visibility-modal{z-index:1000001}.block-editor-block-visibility-modal__options{border:0;list-style:none;margin:24px 0;padding:0}.block-editor-block-visibility-modal__options-item{align-items:center;display:flex;gap:24px;justify-content:space-between;margin:0 0 16px}.block-editor-block-visibility-modal__options-item:last-child{margin:0}.block-editor-block-visibility-modal__options-item--everywhere{align-items:start;flex-direction:column}.block-editor-block-visibility-modal__options-checkbox--everywhere{font-weight:600}.block-editor-block-visibility-modal__options-icon--checked{fill:#ddd}.block-editor-block-visibility-modal__sub-options{padding-inline-start:12px;width:100%}.block-editor-block-visibility-modal__description{color:#757575;font-size:12px}.block-editor-block-visibility-info{align-items:center;display:flex;justify-content:start;margin:0 16px 16px;padding-bottom:4px;padding-top:4px}"));
     document.head.appendChild(style);
   }
@@ -72495,6 +72495,39 @@ var wp;
       0
     );
   }
+  function getGridRect(gridElement, rect) {
+    const columnGap = parseFloat(getComputedCSS2(gridElement, "column-gap"));
+    const rowGap = parseFloat(getComputedCSS2(gridElement, "row-gap"));
+    const gridColumnTracks = getGridTracks(
+      getComputedCSS2(gridElement, "grid-template-columns"),
+      columnGap
+    );
+    const gridRowTracks = getGridTracks(
+      getComputedCSS2(gridElement, "grid-template-rows"),
+      rowGap
+    );
+    const columnStart = getClosestTrack(gridColumnTracks, rect.left) + 1;
+    const rowStart = getClosestTrack(gridRowTracks, rect.top) + 1;
+    const columnEnd = getClosestTrack(gridColumnTracks, rect.right, "end") + 1;
+    const rowEnd = getClosestTrack(gridRowTracks, rect.bottom, "end") + 1;
+    return new GridRect({
+      columnStart,
+      columnEnd,
+      rowStart,
+      rowEnd
+    });
+  }
+  function getGridItemRect(gridItemElement) {
+    return getGridRect(
+      gridItemElement.parentElement,
+      new window.DOMRect(
+        gridItemElement.offsetLeft,
+        gridItemElement.offsetTop,
+        gridItemElement.offsetWidth,
+        gridItemElement.offsetHeight
+      )
+    );
+  }
   function getGridInfo(gridElement) {
     const gridTemplateColumns = getComputedCSS2(
       gridElement,
@@ -72542,7 +72575,12 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
   var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
-  function GridVisualizer({ clientId, contentRef, parentLayout }) {
+  function GridVisualizer({
+    clientId,
+    contentRef,
+    parentLayout,
+    childGridClientId
+  }) {
     const isDistractionFree = (0, import_data187.useSelect)(
       (select3) => select3(store).getSettings().isDistractionFree,
       []
@@ -72558,16 +72596,24 @@ var wp;
         gridClientId: clientId,
         gridElement,
         isManualGrid,
-        ref: contentRef
+        ref: contentRef,
+        childGridClientId
       }
     );
   }
   var GridVisualizerGrid = (0, import_element269.forwardRef)(
-    ({ gridClientId, gridElement, isManualGrid }, ref) => {
+    ({ gridClientId, gridElement, isManualGrid, childGridClientId }, ref) => {
       const [gridInfo, setGridInfo] = (0, import_element269.useState)(
         () => getGridInfo(gridElement)
       );
       const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element269.useState)(false);
+      const childGridElement = useBlockElement(childGridClientId);
+      const childGridRect = (0, import_element269.useMemo)(() => {
+        if (!childGridElement) {
+          return null;
+        }
+        return getGridItemRect(childGridElement);
+      }, [childGridElement]);
       (0, import_element269.useEffect)(() => {
         const resizeCallback = () => setGridInfo(getGridInfo(gridElement));
         const borderBoxSpy = new window.ResizeObserver(resizeCallback);
@@ -72611,22 +72657,40 @@ var wp;
                 ManualGridVisualizer,
                 {
                   gridClientId,
-                  gridInfo
+                  gridInfo,
+                  childGridRect
                 }
-              ) : Array.from({ length: gridInfo.numItems }, (_, i2) => /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
-                GridVisualizerCell,
+              ) : /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
+                AutoGridVisualizer,
                 {
-                  color: gridInfo.currentColor
-                },
-                i2
-              ))
+                  gridInfo,
+                  childGridRect
+                }
+              )
             }
           )
         }
       );
     }
   );
-  function ManualGridVisualizer({ gridClientId, gridInfo }) {
+  function AutoGridVisualizer({ gridInfo, childGridRect }) {
+    return range(1, gridInfo.numRows).map(
+      (row) => range(1, gridInfo.numColumns).map((column) => {
+        let color = gridInfo.currentColor;
+        if (childGridRect?.contains(column, row)) {
+          color = "transparent";
+        }
+        return /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
+          GridVisualizerCell,
+          {
+            color
+          },
+          `${row}-${column}`
+        );
+      })
+    );
+  }
+  function ManualGridVisualizer({ gridClientId, gridInfo, childGridRect }) {
     const [highlightedRect, setHighlightedRect] = (0, import_element269.useState)(null);
     const gridItemStyles = (0, import_data187.useSelect)(
       (select3) => {
@@ -72663,6 +72727,11 @@ var wp;
     }, [gridItemStyles]);
     return range(1, gridInfo.numRows).map(
       (row) => range(1, gridInfo.numColumns).map((column) => {
+        const isChildGridCell = childGridRect?.contains(column, row);
+        let color = gridInfo.currentColor;
+        if (isChildGridCell) {
+          color = "transparent";
+        }
         const isCellOccupied = occupiedRects.some(
           (rect) => rect.contains(column, row)
         );
@@ -72670,9 +72739,9 @@ var wp;
         return /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
           GridVisualizerCell,
           {
-            color: gridInfo.currentColor,
+            color,
             className: isHighlighted && "is-highlighted",
-            children: isCellOccupied ? /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
+            children: isCellOccupied && !isChildGridCell ? /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
               GridVisualizerDropZone,
               {
                 column,
@@ -73545,7 +73614,8 @@ var wp;
       isVisible,
       parentBlockVisibility,
       blockBlockVisibility,
-      deviceType
+      deviceType,
+      isChildBlockAGrid
     } = (0, import_data190.useSelect)(
       (select3) => {
         const {
@@ -73570,7 +73640,9 @@ var wp;
           isVisible: true,
           parentBlockVisibility: parentAttributes?.metadata?.blockVisibility,
           blockBlockVisibility: blockAttributes?.metadata?.blockVisibility,
-          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value
+          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value,
+          // Check if the selected child block is itself a grid.
+          isChildBlockAGrid: blockAttributes?.layout?.type === "grid"
         };
       },
       [clientId]
@@ -73584,6 +73656,7 @@ var wp;
       deviceType
     });
     const [resizerBounds, setResizerBounds] = (0, import_element272.useState)();
+    const childGridClientId = isChildBlockAGrid ? clientId : void 0;
     if (!isVisible || isParentBlockCurrentlyHidden) {
       return null;
     }
@@ -73605,7 +73678,8 @@ var wp;
         {
           clientId: rootClientId,
           contentRef: setResizerBounds,
-          parentLayout
+          parentLayout,
+          childGridClientId
         }
       ),
       showResizer && /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
@@ -74061,25 +74135,34 @@ var wp;
     useGridLayoutSync(props);
   }
   function GridTools2({ clientId, layout }) {
-    const { isVisible, blockVisibility: blockVisibility2, deviceType } = (0, import_data194.useSelect)(
+    const { isVisible, blockVisibility: blockVisibility2, deviceType, isAnyAncestorHidden } = (0, import_data194.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
+          hasSelectedInnerBlock: hasSelectedInnerBlock2,
           isDraggingBlocks: isDraggingBlocks2,
           getTemplateLock: getTemplateLock2,
           getBlockEditingMode: getBlockEditingMode2,
           getBlockAttributes: getBlockAttributes3,
           getSettings: getSettings8
         } = select3(store);
-        if (!isDraggingBlocks2() && !isBlockSelected2(clientId) || getTemplateLock2(clientId) || getBlockEditingMode2(clientId) !== "default") {
+        if (!isDraggingBlocks2() && !isBlockSelected2(clientId) || getTemplateLock2(clientId) || getBlockEditingMode2(clientId) !== "default" || hasSelectedInnerBlock2(clientId)) {
           return { isVisible: false };
         }
+        const { isBlockParentHiddenAtViewport: isBlockParentHiddenAtViewport2 } = unlock(
+          select3(store)
+        );
         const attributes = getBlockAttributes3(clientId);
         const settings2 = getSettings8();
+        const currentDeviceType = settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value;
         return {
           isVisible: true,
           blockVisibility: attributes?.metadata?.blockVisibility,
-          deviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.value
+          deviceType: currentDeviceType,
+          isAnyAncestorHidden: isBlockParentHiddenAtViewport2(
+            clientId,
+            currentDeviceType
+          )
         };
       },
       [clientId]
@@ -74090,7 +74173,13 @@ var wp;
     });
     return /* @__PURE__ */ (0, import_jsx_runtime463.jsxs)(import_jsx_runtime463.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(GridLayoutSync, { clientId }),
-      isVisible && !isBlockCurrentlyHidden && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(GridVisualizer, { clientId, parentLayout: layout })
+      isVisible && !isBlockCurrentlyHidden && !isAnyAncestorHidden && /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(
+        GridVisualizer,
+        {
+          clientId,
+          parentLayout: layout
+        }
+      )
     ] });
   }
   var addGridVisualizerToBlockEdit = (0, import_compose110.createHigherOrderComponent)(
