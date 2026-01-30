@@ -49421,7 +49421,7 @@ var wp;
       {
         id: val,
         title: val,
-        url: type === "URL" ? (0, import_url6.prependHTTP)(val) : val,
+        url: type === "URL" ? (0, import_url6.prependHTTPS)(val) : val,
         type
       }
     ]);
@@ -53752,7 +53752,7 @@ var wp;
             (destination) => destination.url === urlInput
           )?.linkDestination || LINK_DESTINATION_CUSTOM;
           onChangeUrl({
-            href: (0, import_url11.prependHTTP)(urlInput),
+            href: (0, import_url11.prependHTTPS)(urlInput),
             linkDestination: selectedDestination,
             lightbox: { enabled: false }
           });

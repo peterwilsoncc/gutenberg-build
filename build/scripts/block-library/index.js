@@ -9414,7 +9414,7 @@ var wp;
       updatedRel = updatedRel?.replace(relRegex, "").trim();
     }
     return {
-      url: (0, import_url2.prependHTTP)(url),
+      url: (0, import_url2.prependHTTPS)(url),
       linkTarget: newLinkTarget,
       rel: updatedRel || void 0
     };
@@ -58841,7 +58841,7 @@ ${js}
     function onSubmitURL(event) {
       event.preventDefault();
       if (feedURL) {
-        setAttributes({ feedURL: (0, import_url17.prependHTTP)(feedURL) });
+        setAttributes({ feedURL: (0, import_url17.prependHTTPS)(feedURL) });
         setIsEditing(false);
       }
     }
