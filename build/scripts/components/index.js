@@ -56812,6 +56812,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     DateRangeCalendar,
     TZDate,
     Picker,
+    useDrag,
     ValidatedInputControl,
     ValidatedCheckboxControl,
     ValidatedComboboxControl,
