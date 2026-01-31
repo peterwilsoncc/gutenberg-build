@@ -22049,7 +22049,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(import_editor19.EditorKeyboardShortcutsRegister, {}),
       isEditMode && /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(BlockKeyboardShortcuts, {}),
       !isReady ? /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(CanvasLoader, { id: loadingProgressId }) : null,
-      isEditMode && /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+      isEditMode && isReady && /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
         WelcomeGuide,
         {
           postType: postWithTemplate ? context.postType : postType2
