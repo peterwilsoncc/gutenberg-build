@@ -17443,7 +17443,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!fileName) {
       return "";
     }
-    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.__experimentalTruncate, { children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_jsx_runtime104.Fragment, { children: fileName });
+    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components51.__experimentalTruncate, { limit: TRUNCATE_LENGTH, ellipsizeMode: "tail", children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_jsx_runtime104.Fragment, { children: fileName });
   }
 
   // packages/media-fields/build-module/filename/index.mjs

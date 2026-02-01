@@ -9370,7 +9370,7 @@ var wp;
     if (!fileName) {
       return "";
     }
-    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components25.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components25.__experimentalTruncate, { children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_jsx_runtime106.Fragment, { children: fileName });
+    return fileName.length > TRUNCATE_LENGTH ? /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components25.Tooltip, { text: fileName, children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components25.__experimentalTruncate, { limit: TRUNCATE_LENGTH, ellipsizeMode: "tail", children: fileName }) }) : /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_jsx_runtime106.Fragment, { children: fileName });
   }
 
   // packages/media-fields/build-module/filename/index.mjs
