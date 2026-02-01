@@ -7323,6 +7323,12 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/is-url-like.mjs
   var import_url = __toESM(require_url(), 1);
+  function isHashLink(val) {
+    return val?.startsWith("#") && (0, import_url.isValidFragment)(val);
+  }
+  function isRelativePath(val) {
+    return val?.startsWith("/") || val?.startsWith("./") || val?.startsWith("../");
+  }
   function isURLLike(val) {
     const hasSpaces = val.includes(" ");
     if (hasSpaces) {
@@ -7332,8 +7338,7 @@ var wp;
     const protocolIsValid = (0, import_url.isValidProtocol)(protocol);
     const mayBeTLD = hasPossibleTLD(val);
     const isWWW = val?.startsWith("www.");
-    const isInternal = val?.startsWith("#") && (0, import_url.isValidFragment)(val);
-    return protocolIsValid || isWWW || isInternal || mayBeTLD;
+    return protocolIsValid || isWWW || isHashLink(val) || mayBeTLD || isRelativePath(val);
   }
   function hasPossibleTLD(url, maxLength = 6) {
     const cleanedURL = url.split(/[?#]/)[0];
@@ -49071,6 +49076,7 @@ var wp;
   var import_data146 = __toESM(require_data(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
   var import_deprecated23 = __toESM(require_deprecated(), 1);
+  var import_url8 = __toESM(require_url(), 1);
 
   // packages/block-editor/build-module/components/link-control/settings-drawer.mjs
   var import_components160 = __toESM(require_components(), 1);
@@ -49200,9 +49206,9 @@ var wp;
       label: (0, import_i18n152.__)("Attachment")
     }
   };
-  function SearchItemIcon({ isURL: isURL3, suggestion }) {
+  function SearchItemIcon({ isURL: isURL4, suggestion }) {
     let icon = null;
-    if (isURL3) {
+    if (isURL4) {
       icon = globe_default;
     } else if (suggestion.type in TYPES) {
       icon = TYPES[suggestion.type].icon;
@@ -49262,17 +49268,17 @@ var wp;
     suggestion,
     searchTerm,
     onClick,
-    isURL: isURL3 = false,
+    isURL: isURL4 = false,
     shouldShowType = false
   }) => {
-    const info = isURL3 ? (0, import_i18n152.__)("Press ENTER to add this link") : getURLForDisplay(suggestion.url);
+    const info = isURL4 ? (0, import_i18n152.__)("Press ENTER to add this link") : getURLForDisplay(suggestion.url);
     return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
       import_components162.MenuItem,
       {
         ...itemProps,
         info,
         iconPosition: "left",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(SearchItemIcon, { suggestion, isURL: isURL3 }),
+        icon: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(SearchItemIcon, { suggestion, isURL: isURL4 }),
         onClick,
         shortcut: shouldShowType && getVisualTypeName(suggestion),
         className: "block-editor-link-control__search-item",
@@ -49531,7 +49537,8 @@ var wp;
       createSuggestionButtonText,
       hideLabelFromVision = false,
       suffix,
-      isEntity = false
+      isEntity = false,
+      customValidity: customValidityProp
     }, ref) => {
       const genericSearchHandler = useSearchHandler(
         suggestionsQuery,
@@ -49597,6 +49604,8 @@ var wp;
             __experimentalFetchLinkSuggestions: searchHandler,
             __experimentalHandleURLSuggestions: true,
             __experimentalShowInitialSuggestions: showInitialSuggestions,
+            customValidity: customValidityProp,
+            markWhenOptional: true,
             onSubmit: (suggestion, event) => {
               const hasSuggestion = suggestion || focusedSuggestion;
               if (!hasSuggestion && !value?.trim()?.length) {
@@ -50035,6 +50044,7 @@ var wp;
       withCreateSuggestion = true;
     }
     const [settingsOpen, setSettingsOpen] = (0, import_element171.useState)(false);
+    const [customValidity, setCustomValidity] = (0, import_element171.useState)(void 0);
     const { advancedSettingsPreference } = (0, import_data146.useSelect)((select3) => {
       const prefsStore = select3(import_preferences4.store);
       return {
@@ -50089,11 +50099,46 @@ var wp;
         isMountingRef.current = true;
       };
     }, []);
+    (0, import_element171.useEffect)(() => {
+      if (customValidity?.type === "invalid") {
+        const inputElement = searchInputRef.current;
+        if (inputElement && typeof inputElement.reportValidity === "function") {
+          inputElement.reportValidity();
+        }
+      }
+    }, [customValidity]);
     const hasLinkValue = value?.url?.trim()?.length > 0;
     const stopEditing = () => {
       setIsEditingLink(false);
     };
+    const validateUrl = (urlToValidate) => {
+      const invalidResult = {
+        type: "invalid",
+        message: (0, import_i18n159.__)("Please enter a valid URL.")
+      };
+      const validResult = {
+        type: "valid"
+      };
+      const trimmedValue = urlToValidate?.trim();
+      if (!trimmedValue?.length || !isURLLike(trimmedValue)) {
+        return invalidResult;
+      }
+      if (isHashLink(trimmedValue) || isRelativePath(trimmedValue)) {
+        return validResult;
+      }
+      const urlToCheck = (0, import_url8.prependHTTPS)(trimmedValue);
+      return (0, import_url8.isURL)(urlToCheck) ? validResult : invalidResult;
+    };
     const handleSelectSuggestion = (updatedValue) => {
+      const isEntitySuggestion = updatedValue && updatedValue.id && updatedValue.type && !LINK_ENTRY_TYPES.includes(updatedValue.type);
+      if (!isEntitySuggestion) {
+        const urlToValidate = updatedValue?.url || currentUrlInputValue;
+        const validation = validateUrl(urlToValidate);
+        if (validation.type === "invalid") {
+          setCustomValidity(validation);
+          return;
+        }
+      }
       if (updatedValue?.kind === "taxonomy" && updatedValue?.url) {
         entityUrlFallbackRef.current = updatedValue.url;
       }
@@ -50114,9 +50159,29 @@ var wp;
         // any "title" value provided by the "suggestion".
         title: internalControlValue?.title || updatedValue?.title
       });
+      setCustomValidity(void 0);
       stopEditing();
     };
-    const handleSubmit = () => {
+    const validateAndSetValidity = () => {
+      if (currentInputIsEmpty) {
+        return false;
+      }
+      const trimmedValue = currentUrlInputValue.trim();
+      const isEntityLink = internalControlValue && internalControlValue.id && internalControlValue.type && !LINK_ENTRY_TYPES.includes(internalControlValue.type);
+      const urlUnchanged = value?.url === trimmedValue;
+      if (isEntityLink && urlUnchanged) {
+        setCustomValidity(void 0);
+        return true;
+      }
+      const validation = validateUrl(currentUrlInputValue);
+      if (validation.type === "invalid") {
+        setCustomValidity(validation);
+        return false;
+      }
+      setCustomValidity(void 0);
+      return true;
+    };
+    const submitUrlValue = () => {
       if (valueHasChanges) {
         onChange({
           ...value,
@@ -50125,6 +50190,13 @@ var wp;
         });
       }
       stopEditing();
+      setCustomValidity(void 0);
+    };
+    const handleSubmit = () => {
+      if (!validateAndSetValidity()) {
+        return;
+      }
+      submitUrlValue();
     };
     const handleSubmitWithEnter = (event) => {
       const { keyCode } = event;
@@ -50140,6 +50212,7 @@ var wp;
       event.preventDefault();
       event.stopPropagation();
       resetInternalValues();
+      setCustomValidity(void 0);
       if (hasLinkValue) {
         stopEditing();
       } else {
@@ -50167,11 +50240,15 @@ var wp;
     }, [shouldFocusSearchInput]);
     const currentUrlInputValue = propInputValue || internalControlValue?.url || "";
     const currentInputIsEmpty = !currentUrlInputValue?.trim()?.length;
+    (0, import_element171.useEffect)(() => {
+      setCustomValidity(void 0);
+    }, [currentUrlInputValue]);
+    const isUrlValid = !customValidity;
     const shownUnlinkControl = onRemove && value && !isEditingLink && !isCreatingPage;
     const showActions = isEditingLink && hasLinkValue;
     const showTextControl = hasLinkValue && hasTextControl;
     const isEditing = (isEditingLink || !value) && !isCreatingPage;
-    const isDisabled = !valueHasChanges || currentInputIsEmpty;
+    const isDisabled = currentInputIsEmpty || !isUrlValid || value && !valueHasChanges;
     const showSettings = !!settings2?.length && isEditingLink && hasLinkValue;
     const previewValue = (0, import_element171.useMemo)(() => {
       if (value?.kind === "taxonomy" && !value?.url && entityUrlFallbackRef.current) {
@@ -50237,6 +50314,7 @@ var wp;
                       createSuggestionButtonText,
                       hideLabelFromVision: !showTextControl,
                       isEntity,
+                      customValidity,
                       suffix: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
                         SearchSuffixControl,
                         {
@@ -50776,7 +50854,7 @@ var wp;
 
   // packages/block-editor/build-module/components/url-popover/link-viewer-url.mjs
   var import_components170 = __toESM(require_components(), 1);
-  var import_url8 = __toESM(require_url(), 1);
+  var import_url9 = __toESM(require_url(), 1);
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   function LinkViewerURL({ url, urlLabel, className }) {
     const linkClassName = clsx_default(
@@ -50786,7 +50864,7 @@ var wp;
     if (!url) {
       return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("span", { className: linkClassName });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(import_components170.ExternalLink, { className: linkClassName, href: url, children: urlLabel || (0, import_url8.filterURLForDisplay)((0, import_url8.safeDecodeURI)(url)) });
+    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(import_components170.ExternalLink, { className: linkClassName, href: url, children: urlLabel || (0, import_url9.filterURLForDisplay)((0, import_url9.safeDecodeURI)(url)) });
   }
 
   // packages/block-editor/build-module/components/url-popover/link-viewer.mjs
@@ -50841,9 +50919,10 @@ var wp;
   var import_components172 = __toESM(require_components(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
   var import_data148 = __toESM(require_data(), 1);
-  var import_url9 = __toESM(require_url(), 1);
+  var import_url10 = __toESM(require_url(), 1);
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   var import_react4 = __toESM(require_react(), 1);
+  var { ValidatedInputControl } = unlock(import_components172.privateApis);
   function isFunction(maybeFunc) {
     return typeof maybeFunc === "function";
   }
@@ -50919,7 +50998,7 @@ var wp;
       }
       const isInitialSuggestions = !value?.length;
       value = value.trim();
-      if (!isInitialSuggestions && (value.length < 2 || !handleURLSuggestions && (0, import_url9.isURL)(value))) {
+      if (!isInitialSuggestions && (value.length < 2 || !handleURLSuggestions && (0, import_url10.isURL)(value))) {
         this.suggestionsRequest?.cancel?.();
         this.suggestionsRequest = null;
         this.setState({
@@ -51115,7 +51194,9 @@ var wp;
         value = "",
         hideLabelFromVision = false,
         help = null,
-        disabled = false
+        disabled = false,
+        customValidity,
+        markWhenOptional
       } = this.props;
       const {
         loading,
@@ -51163,11 +51244,27 @@ var wp;
         suffix: this.props.suffix,
         help
       };
+      const validationProps = {
+        customValidity,
+        // Suppress the "(Required)" indicator in the label.
+        // The field is still required for validation, but the indicator
+        // can be hidden when markWhenOptional is set to true.
+        ...markWhenOptional !== void 0 && {
+          markWhenOptional
+        }
+      };
       if (renderControl) {
         return renderControl(controlProps, inputProps, loading);
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(import_components172.BaseControl, { ...controlProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components172.__experimentalInputControl, { ...inputProps, __next40pxDefaultSize: true }),
+      return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(import_components172.BaseControl, { __nextHasNoMarginBottom: true, ...controlProps, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
+          ValidatedInputControl,
+          {
+            ...inputProps,
+            ...validationProps,
+            __next40pxDefaultSize: true
+          }
+        ),
         loading && /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components172.Spinner, {})
       ] });
     }
@@ -52420,7 +52517,7 @@ var wp;
   // packages/block-editor/build-module/components/rich-text/event-listeners/paste-handler.mjs
   var import_blocks84 = __toESM(require_blocks(), 1);
   var import_rich_text9 = __toESM(require_rich_text(), 1);
-  var import_url10 = __toESM(require_url(), 1);
+  var import_url11 = __toESM(require_url(), 1);
 
   // packages/block-editor/build-module/components/rich-text/utils.mjs
   var import_element178 = __toESM(require_element(), 1);
@@ -52511,7 +52608,7 @@ var wp;
       }
       let mode2 = "INLINE";
       const trimmedPlainText = plainText.trim();
-      if (__unstableEmbedURLOnPaste && (0, import_rich_text9.isEmpty)(value) && (0, import_url10.isURL)(trimmedPlainText) && // For the link pasting feature, allow only http(s) protocols.
+      if (__unstableEmbedURLOnPaste && (0, import_rich_text9.isEmpty)(value) && (0, import_url11.isURL)(trimmedPlainText) && // For the link pasting feature, allow only http(s) protocols.
       /^https?:/.test(trimmedPlainText)) {
         mode2 = "BLOCKS";
       }
@@ -53677,7 +53774,7 @@ var wp;
   var import_element191 = __toESM(require_element(), 1);
   var import_dom37 = __toESM(require_dom(), 1);
   var import_components184 = __toESM(require_components(), 1);
-  var import_url11 = __toESM(require_url(), 1);
+  var import_url12 = __toESM(require_url(), 1);
   var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
   var LINK_DESTINATION_NONE = "none";
   var LINK_DESTINATION_CUSTOM = "custom";
@@ -53769,7 +53866,7 @@ var wp;
             (destination) => destination.url === urlInput
           )?.linkDestination || LINK_DESTINATION_CUSTOM;
           onChangeUrl({
-            href: (0, import_url11.prependHTTPS)(urlInput),
+            href: (0, import_url12.prependHTTPS)(urlInput),
             linkDestination: selectedDestination,
             lightbox: { enabled: false }
           });
@@ -58374,7 +58471,7 @@ var wp;
   var import_components205 = __toESM(require_components(), 1);
   var import_i18n197 = __toESM(require_i18n(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
-  var import_url12 = __toESM(require_url(), 1);
+  var import_url13 = __toESM(require_url(), 1);
   var import_element207 = __toESM(require_element(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_dom38 = __toESM(require_dom(), 1);
@@ -58496,7 +58593,7 @@ var wp;
     if (!hasImageValue) {
       return;
     }
-    const imgLabel = label || (0, import_url12.getFilename)(imgUrl) || (0, import_i18n197.__)("Add background image");
+    const imgLabel = label || (0, import_url13.getFilename)(imgUrl) || (0, import_i18n197.__)("Add background image");
     return /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
       import_components205.Dropdown,
       {
@@ -58643,7 +58740,7 @@ var wp;
       })
     );
     const canRemove = !hasValue && hasBackgroundImageValue(inheritedValue);
-    const imgLabel = title || (0, import_url12.getFilename)(url) || (0, import_i18n197.__)("Add background image");
+    const imgLabel = title || (0, import_url13.getFilename)(url) || (0, import_i18n197.__)("Add background image");
     return /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)("div", { className: "block-editor-global-styles-background-panel__image-tools-panel-item", children: [
       isUploading2 && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(LoadingSpinner, {}),
       /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
@@ -65306,7 +65403,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
-  var { DateCalendar, ValidatedInputControl } = unlock3(import_components228.privateApis);
+  var { DateCalendar, ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components228.privateApis);
   var formatDateTime = (date) => {
     if (!date) {
       return "";
@@ -65423,7 +65520,7 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
-            ValidatedInputControl,
+            ValidatedInputControl2,
             {
               ref: inputControlRef,
               __next40pxDefaultSize: true,
@@ -66075,7 +66172,7 @@ var wp;
   var import_components230 = __toESM(require_components(), 1);
   var import_element235 = __toESM(require_element(), 1);
   var import_jsx_runtime407 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components230.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components230.privateApis);
   function ValidatedText({
     data,
     field,
@@ -66098,7 +66195,7 @@ var wp;
       [data, setValue, onChange]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
-      ValidatedInputControl2,
+      ValidatedInputControl3,
       {
         required: !!isValid2.required,
         customValidity: getCustomValidity(isValid2, validity),
@@ -66667,7 +66764,7 @@ var wp;
   var import_components241 = __toESM(require_components(), 1);
   var import_element244 = __toESM(require_element(), 1);
   var import_jsx_runtime421 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl3, Picker } = unlock3(import_components241.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl4, Picker } = unlock3(import_components241.privateApis);
   var ColorPicker = ({
     color,
     onColorChange
@@ -66732,7 +66829,7 @@ var wp;
       [data, onChange, setValue]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime421.jsx)(
-      ValidatedInputControl3,
+      ValidatedInputControl4,
       {
         required: !!field.isValid?.required,
         customValidity: getCustomValidity(isValid2, validity),
@@ -70238,7 +70335,7 @@ var wp;
   var import_components253 = __toESM(require_components(), 1);
   var import_element258 = __toESM(require_element(), 1);
   var import_i18n230 = __toESM(require_i18n(), 1);
-  var import_url15 = __toESM(require_url(), 1);
+  var import_url16 = __toESM(require_url(), 1);
   var import_jsx_runtime442 = __toESM(require_jsx_runtime(), 1);
   var NEW_TAB_REL2 = "noreferrer noopener";
   var NEW_TAB_TARGET = "_blank";
@@ -70265,7 +70362,7 @@ var wp;
       updatedRel = updatedRel?.replace(relRegex, "").trim();
     }
     return {
-      url: (0, import_url15.prependHTTP)(url),
+      url: (0, import_url16.prependHTTP)(url),
       linkTarget: newLinkTarget,
       rel: updatedRel || void 0
     };
