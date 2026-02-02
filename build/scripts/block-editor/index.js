@@ -22218,34 +22218,26 @@ var wp;
     } = options;
     const isLargerThanMobile = (0, import_compose15.useViewportMatch)("mobile", ">=");
     const isLargerThanTablet = (0, import_compose15.useViewportMatch)("medium", ">=");
-    const currentViewport = (0, import_element31.useMemo)(() => {
-      if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.mobile.key) {
-        return BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
-      }
-      if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.tablet.key) {
-        return BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
-      }
-      if (!isLargerThanMobile) {
-        return BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
-      }
-      if (isLargerThanMobile && !isLargerThanTablet) {
-        return BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
-      }
-      return BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
-    }, [deviceType, isLargerThanMobile, isLargerThanTablet]);
-    const isBlockCurrentlyHidden = (0, import_element31.useMemo)(() => {
-      if (blockVisibility2 === false) {
-        return true;
-      }
-      if (blockVisibility2?.viewport?.[currentViewport] === false) {
-        return true;
-      }
-      return false;
-    }, [blockVisibility2, currentViewport]);
-    return {
-      isBlockCurrentlyHidden,
-      currentViewport
-    };
+    let currentViewport;
+    if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.mobile.key) {
+      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
+    } else if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.tablet.key) {
+      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
+    } else if (!isLargerThanMobile) {
+      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
+    } else if (isLargerThanMobile && !isLargerThanTablet) {
+      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
+    } else {
+      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
+    }
+    const isBlockCurrentlyHidden = blockVisibility2 === false || blockVisibility2?.viewport?.[currentViewport] === false;
+    return (0, import_element31.useMemo)(
+      () => ({
+        isBlockCurrentlyHidden,
+        currentViewport
+      }),
+      [isBlockCurrentlyHidden, currentViewport]
+    );
   }
 
   // packages/block-editor/build-module/components/block-visibility/viewport-toolbar.mjs
