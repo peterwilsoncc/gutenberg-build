@@ -6386,9 +6386,9 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/pullquote',
-		'title' => 'Pullquote (deprecated)',
+		'title' => 'Pullquote',
 		'category' => 'text',
-		'description' => 'This block is deprecated. Please use the Quote block instead.',
+		'description' => 'Give special visual emphasis to a quote from your text.',
 		'textdomain' => 'default',
 		'attributes' => array(
 			'value' => array(
@@ -6437,7 +6437,6 @@ return array(
 					'minHeight' => false
 				)
 			),
-			'inserter' => false,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
