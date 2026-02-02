@@ -24287,6 +24287,49 @@ var wp;
   var import_blocks24 = __toESM(require_blocks(), 1);
   var noop5 = () => {
   };
+  function cloneBlockWithMapping(block, mapping) {
+    const clonedBlock = (0, import_blocks24.cloneBlock)(block);
+    mapping.externalToInternal.set(block.clientId, clonedBlock.clientId);
+    mapping.internalToExternal.set(clonedBlock.clientId, block.clientId);
+    if (block.innerBlocks?.length) {
+      clonedBlock.innerBlocks = block.innerBlocks.map((innerBlock) => {
+        const clonedInner = cloneBlockWithMapping(innerBlock, mapping);
+        return clonedInner;
+      });
+    }
+    return clonedBlock;
+  }
+  function restoreExternalIds(blocks2, mapping) {
+    return blocks2.map((block) => {
+      const externalId = mapping.internalToExternal.get(block.clientId);
+      return {
+        ...block,
+        // Use external ID if available, otherwise keep internal ID (for new blocks)
+        clientId: externalId ?? block.clientId,
+        innerBlocks: restoreExternalIds(block.innerBlocks, mapping)
+      };
+    });
+  }
+  function restoreSelectionIds(selection2, mapping) {
+    const { selectionStart, selectionEnd, initialPosition: initialPosition2 } = selection2;
+    const restoreClientId = (selectionState) => {
+      if (!selectionState?.clientId) {
+        return selectionState;
+      }
+      const externalId = mapping.internalToExternal.get(
+        selectionState.clientId
+      );
+      return {
+        ...selectionState,
+        clientId: externalId ?? selectionState.clientId
+      };
+    };
+    return {
+      selectionStart: restoreClientId(selectionStart),
+      selectionEnd: restoreClientId(selectionEnd),
+      initialPosition: initialPosition2
+    };
+  }
   function useBlockSync({
     clientId = null,
     value: controlledBlocks,
@@ -24311,6 +24354,10 @@ var wp;
     );
     const pendingChangesRef = (0, import_element39.useRef)({ incoming: null, outgoing: [] });
     const subscribedRef = (0, import_element39.useRef)(false);
+    const idMappingRef = (0, import_element39.useRef)({
+      externalToInternal: /* @__PURE__ */ new Map(),
+      internalToExternal: /* @__PURE__ */ new Map()
+    });
     const setControlledBlocks = () => {
       if (!controlledBlocks) {
         return;
@@ -24319,8 +24366,10 @@ var wp;
       if (clientId) {
         registry.batch(() => {
           setHasControlledInnerBlocks2(clientId, true);
+          idMappingRef.current.externalToInternal.clear();
+          idMappingRef.current.internalToExternal.clear();
           const storeBlocks = controlledBlocks.map(
-            (block) => (0, import_blocks24.cloneBlock)(block)
+            (block) => cloneBlockWithMapping(block, idMappingRef.current)
           );
           if (subscribedRef.current) {
             pendingChangesRef.current.incoming = storeBlocks;
@@ -24410,14 +24459,17 @@ var wp;
         const didPersistenceChange = previousAreBlocksDifferent && !areBlocksDifferent && newIsPersistent && !isPersistent;
         if (areBlocksDifferent || didPersistenceChange) {
           isPersistent = newIsPersistent;
-          pendingChangesRef.current.outgoing.push(blocks2);
+          const blocksForParent = clientId ? restoreExternalIds(blocks2, idMappingRef.current) : blocks2;
+          const selection2 = {
+            selectionStart: getSelectionStart2(),
+            selectionEnd: getSelectionEnd2(),
+            initialPosition: getSelectedBlocksInitialCaretPosition2()
+          };
+          const selectionForParent = clientId ? restoreSelectionIds(selection2, idMappingRef.current) : selection2;
+          pendingChangesRef.current.outgoing.push(blocksForParent);
           const updateParent = isPersistent ? onChangeRef.current : onInputRef.current;
-          updateParent(blocks2, {
-            selection: {
-              selectionStart: getSelectionStart2(),
-              selectionEnd: getSelectionEnd2(),
-              initialPosition: getSelectedBlocksInitialCaretPosition2()
-            }
+          updateParent(blocksForParent, {
+            selection: selectionForParent
           });
         }
         previousAreBlocksDifferent = areBlocksDifferent;
