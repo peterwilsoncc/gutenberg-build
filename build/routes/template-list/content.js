@@ -880,30 +880,57 @@ function generatePreferenceKey(kind, name, slug) {
 }
 
 // packages/views/build-module/filter-utils.mjs
-function mergeActiveFilters(view, activeFilters) {
-  if (!activeFilters || activeFilters.length === 0) {
+function mergeActiveViewOverrides(view, activeViewOverrides, defaultView) {
+  if (!activeViewOverrides) {
     return view;
   }
-  const activeFields = new Set(activeFilters.map((f2) => f2.field));
-  const preserved = (view.filters ?? []).filter(
-    (f2) => !activeFields.has(f2.field)
-  );
-  return {
-    ...view,
-    filters: [...preserved, ...activeFilters]
-  };
-}
-function stripActiveFilterFields(view, activeFilters) {
-  if (!activeFilters || activeFilters.length === 0) {
-    return view;
-  }
-  const activeFields = new Set(activeFilters.map((f2) => f2.field));
-  return {
-    ...view,
-    filters: (view.filters ?? []).filter(
+  let result = view;
+  if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
+    const activeFields = new Set(
+      activeViewOverrides.filters.map((f2) => f2.field)
+    );
+    const preserved = (view.filters ?? []).filter(
       (f2) => !activeFields.has(f2.field)
-    )
-  };
+    );
+    result = {
+      ...result,
+      filters: [...preserved, ...activeViewOverrides.filters]
+    };
+  }
+  if (activeViewOverrides.sort) {
+    const isDefaultSort = defaultView && view.sort?.field === defaultView.sort?.field && view.sort?.direction === defaultView.sort?.direction;
+    if (isDefaultSort) {
+      result = {
+        ...result,
+        sort: activeViewOverrides.sort
+      };
+    }
+  }
+  return result;
+}
+function stripActiveViewOverrides(view, activeViewOverrides, defaultView) {
+  if (!activeViewOverrides) {
+    return view;
+  }
+  let result = view;
+  if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
+    const activeFields = new Set(
+      activeViewOverrides.filters.map((f2) => f2.field)
+    );
+    result = {
+      ...result,
+      filters: (view.filters ?? []).filter(
+        (f2) => !activeFields.has(f2.field)
+      )
+    };
+  }
+  if (activeViewOverrides.sort && view.sort?.field === activeViewOverrides.sort.field && view.sort?.direction === activeViewOverrides.sort.direction) {
+    result = {
+      ...result,
+      sort: defaultView?.sort
+    };
+  }
+  return result;
 }
 
 // packages/views/build-module/use-view.mjs
@@ -920,7 +947,7 @@ function useView(config) {
     name,
     slug,
     defaultView,
-    activeFilters,
+    activeViewOverrides,
     queryParams,
     onChangeQueryParams
   } = config;
@@ -939,15 +966,16 @@ function useView(config) {
   const page = Number(queryParams?.page ?? baseView.page ?? 1);
   const search = queryParams?.search ?? baseView.search ?? "";
   const view = (0, import_element.useMemo)(() => {
-    return mergeActiveFilters(
+    return mergeActiveViewOverrides(
       {
         ...baseView,
         page,
         search
       },
-      activeFilters
+      activeViewOverrides,
+      defaultView
     );
-  }, [baseView, page, search, activeFilters]);
+  }, [baseView, page, search, activeViewOverrides, defaultView]);
   const isModified = !!persistedView;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
@@ -955,20 +983,23 @@ function useView(config) {
         page: newView?.page,
         search: newView?.search
       };
-      const preferenceView = stripActiveFilterFields(
+      const preferenceView = stripActiveViewOverrides(
         omit(newView, ["page", "search"]),
-        activeFilters
+        activeViewOverrides,
+        defaultView
       );
       if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
         onChangeQueryParams(urlParams);
       }
-      const comparableBaseView = stripActiveFilterFields(
+      const comparableBaseView = stripActiveViewOverrides(
         baseView,
-        activeFilters
+        activeViewOverrides,
+        defaultView
       );
-      const comparableDefaultView = stripActiveFilterFields(
+      const comparableDefaultView = stripActiveViewOverrides(
         defaultView,
-        activeFilters
+        activeViewOverrides,
+        defaultView
       );
       if (!dequal(comparableBaseView, preferenceView)) {
         if (dequal(preferenceView, comparableDefaultView)) {
@@ -984,7 +1015,7 @@ function useView(config) {
       search,
       baseView,
       defaultView,
-      activeFilters,
+      activeViewOverrides,
       set,
       preferenceKey
     ]
@@ -16996,29 +17027,38 @@ var DEFAULT_LAYOUTS = {
     showMedia: false
   }
 };
-function getActiveFiltersForTab(activeView) {
-  if (activeView === "active" || activeView === "user") {
-    return [];
+function getActiveViewOverridesForTab(activeView) {
+  if (activeView === "user") {
+    return {
+      sort: { field: "date", direction: "desc" }
+    };
   }
-  return [
-    {
-      field: "author",
-      operator: "isAny",
-      value: [activeView]
-    }
-  ];
+  if (activeView === "active") {
+    return {};
+  }
+  return {
+    filters: [
+      {
+        field: "author",
+        operator: "isAny",
+        value: [activeView]
+      }
+    ]
+  };
 }
-function getActiveFiltersForTabLegacy(activeView) {
+function getActiveViewOverridesForTabLegacy(activeView) {
   if (activeView === "all") {
-    return [];
+    return {};
   }
-  return [
-    {
-      field: "author",
-      operator: "isAny",
-      value: [activeView]
-    }
-  ];
+  return {
+    filters: [
+      {
+        field: "author",
+        operator: "isAny",
+        value: [activeView]
+      }
+    ]
+  };
 }
 
 // routes/template-list/fields/preview.tsx
@@ -18638,8 +18678,8 @@ function TemplateListActivation() {
   );
   const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element63.useState)(null);
   const defaultView = DEFAULT_VIEW;
-  const activeFilters = (0, import_element63.useMemo)(
-    () => getActiveFiltersForTab(activeView),
+  const activeViewOverrides = (0, import_element63.useMemo)(
+    () => getActiveViewOverridesForTab(activeView),
     [activeView]
   );
   const handleQueryParamsChange = (0, import_element63.useCallback)(
@@ -18658,7 +18698,7 @@ function TemplateListActivation() {
     name: "wp_template",
     slug: "default-new",
     defaultView,
-    activeFilters,
+    activeViewOverrides,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });
@@ -18959,8 +18999,8 @@ function TemplateListLegacy() {
     []
   );
   const defaultView = DEFAULT_VIEW_LEGACY;
-  const activeFilters = (0, import_element65.useMemo)(
-    () => getActiveFiltersForTabLegacy(activeView),
+  const activeViewOverrides = (0, import_element65.useMemo)(
+    () => getActiveViewOverridesForTabLegacy(activeView),
     [activeView]
   );
   const handleQueryParamsChange = (0, import_element65.useCallback)(
@@ -18979,7 +19019,7 @@ function TemplateListLegacy() {
     name: "wp_template",
     slug: "default-new",
     defaultView,
-    activeFilters,
+    activeViewOverrides,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });

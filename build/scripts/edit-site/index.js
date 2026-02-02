@@ -41456,30 +41456,57 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/filter-utils.mjs
-  function mergeActiveFilters(view, activeFilters) {
-    if (!activeFilters || activeFilters.length === 0) {
+  function mergeActiveViewOverrides(view, activeViewOverrides, defaultView) {
+    if (!activeViewOverrides) {
       return view;
     }
-    const activeFields = new Set(activeFilters.map((f2) => f2.field));
-    const preserved = (view.filters ?? []).filter(
-      (f2) => !activeFields.has(f2.field)
-    );
-    return {
-      ...view,
-      filters: [...preserved, ...activeFilters]
-    };
-  }
-  function stripActiveFilterFields(view, activeFilters) {
-    if (!activeFilters || activeFilters.length === 0) {
-      return view;
-    }
-    const activeFields = new Set(activeFilters.map((f2) => f2.field));
-    return {
-      ...view,
-      filters: (view.filters ?? []).filter(
+    let result = view;
+    if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
+      const activeFields = new Set(
+        activeViewOverrides.filters.map((f2) => f2.field)
+      );
+      const preserved = (view.filters ?? []).filter(
         (f2) => !activeFields.has(f2.field)
-      )
-    };
+      );
+      result = {
+        ...result,
+        filters: [...preserved, ...activeViewOverrides.filters]
+      };
+    }
+    if (activeViewOverrides.sort) {
+      const isDefaultSort = defaultView && view.sort?.field === defaultView.sort?.field && view.sort?.direction === defaultView.sort?.direction;
+      if (isDefaultSort) {
+        result = {
+          ...result,
+          sort: activeViewOverrides.sort
+        };
+      }
+    }
+    return result;
+  }
+  function stripActiveViewOverrides(view, activeViewOverrides, defaultView) {
+    if (!activeViewOverrides) {
+      return view;
+    }
+    let result = view;
+    if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
+      const activeFields = new Set(
+        activeViewOverrides.filters.map((f2) => f2.field)
+      );
+      result = {
+        ...result,
+        filters: (view.filters ?? []).filter(
+          (f2) => !activeFields.has(f2.field)
+        )
+      };
+    }
+    if (activeViewOverrides.sort && view.sort?.field === activeViewOverrides.sort.field && view.sort?.direction === activeViewOverrides.sort.direction) {
+      result = {
+        ...result,
+        sort: defaultView?.sort
+      };
+    }
+    return result;
   }
 
   // packages/views/build-module/use-view.mjs
@@ -41496,7 +41523,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: name2,
       slug,
       defaultView,
-      activeFilters,
+      activeViewOverrides,
       queryParams,
       onChangeQueryParams
     } = config2;
@@ -41515,15 +41542,16 @@ If there's a particular need for this, please submit a feature request at https:
     const page = Number(queryParams?.page ?? baseView.page ?? 1);
     const search = queryParams?.search ?? baseView.search ?? "";
     const view = (0, import_element131.useMemo)(() => {
-      return mergeActiveFilters(
+      return mergeActiveViewOverrides(
         {
           ...baseView,
           page,
           search
         },
-        activeFilters
+        activeViewOverrides,
+        defaultView
       );
-    }, [baseView, page, search, activeFilters]);
+    }, [baseView, page, search, activeViewOverrides, defaultView]);
     const isModified = !!persistedView;
     const updateView = (0, import_element131.useCallback)(
       (newView) => {
@@ -41531,20 +41559,23 @@ If there's a particular need for this, please submit a feature request at https:
           page: newView?.page,
           search: newView?.search
         };
-        const preferenceView = stripActiveFilterFields(
+        const preferenceView = stripActiveViewOverrides(
           omit3(newView, ["page", "search"]),
-          activeFilters
+          activeViewOverrides,
+          defaultView
         );
         if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
           onChangeQueryParams(urlParams);
         }
-        const comparableBaseView = stripActiveFilterFields(
+        const comparableBaseView = stripActiveViewOverrides(
           baseView,
-          activeFilters
+          activeViewOverrides,
+          defaultView
         );
-        const comparableDefaultView = stripActiveFilterFields(
+        const comparableDefaultView = stripActiveViewOverrides(
           defaultView,
-          activeFilters
+          activeViewOverrides,
+          defaultView
         );
         if (!dequal(comparableBaseView, preferenceView)) {
           if (dequal(preferenceView, comparableDefaultView)) {
@@ -41560,7 +41591,7 @@ If there's a particular need for this, please submit a feature request at https:
         search,
         baseView,
         defaultView,
-        activeFilters,
+        activeViewOverrides,
         set,
         preferenceKey
       ]
@@ -41580,7 +41611,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data63 = __toESM(require_data(), 1);
   var import_preferences12 = __toESM(require_preferences(), 1);
   async function loadView(config2) {
-    const { kind, name: name2, slug, defaultView, activeFilters, queryParams } = config2;
+    const { kind, name: name2, slug, defaultView, activeViewOverrides, queryParams } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
     const persistedView = (0, import_data63.select)(import_preferences12.store).get(
       "core/views",
@@ -41589,13 +41620,14 @@ If there's a particular need for this, please submit a feature request at https:
     const baseView = persistedView ?? defaultView;
     const page = queryParams?.page ?? 1;
     const search = queryParams?.search ?? "";
-    return mergeActiveFilters(
+    return mergeActiveViewOverrides(
       {
         ...baseView,
         page,
         search
       },
-      activeFilters
+      activeViewOverrides,
+      defaultView
     );
   }
 
@@ -44144,17 +44176,24 @@ If there's a particular need for this, please submit a feature request at https:
     filters: [],
     ...defaultLayouts2.grid
   };
-  function getActiveFiltersForTab(activeView) {
-    if (activeView === "active" || activeView === "user") {
-      return [];
+  function getActiveViewOverridesForTab(activeView) {
+    if (activeView === "user") {
+      return {
+        sort: { field: "date", direction: "desc" }
+      };
     }
-    return [
-      {
-        field: "author",
-        operator: "isAny",
-        value: [activeView]
-      }
-    ];
+    if (activeView === "active") {
+      return {};
+    }
+    return {
+      filters: [
+        {
+          field: "author",
+          operator: "isAny",
+          value: [activeView]
+        }
+      ]
+    };
   }
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
@@ -44168,8 +44207,8 @@ If there's a particular need for this, please submit a feature request at https:
     const [selection, setSelection] = (0, import_element146.useState)([postId]);
     const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element146.useState)(false);
     const defaultView = DEFAULT_VIEW2;
-    const activeFilters = (0, import_element146.useMemo)(
-      () => getActiveFiltersForTab(activeView),
+    const activeViewOverrides = (0, import_element146.useMemo)(
+      () => getActiveViewOverridesForTab(activeView),
       [activeView]
     );
     const { view, updateView, isModified, resetToDefault } = useView({
@@ -44177,7 +44216,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: TEMPLATE_POST_TYPE,
       slug: "default",
       defaultView,
-      activeFilters,
+      activeViewOverrides,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -45797,8 +45836,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { activeView = "active", postId } = query;
     const [selection, setSelection] = (0, import_element151.useState)([postId]);
     const defaultView = DEFAULT_VIEW2;
-    const activeFilters = (0, import_element151.useMemo)(
-      () => getActiveFiltersForTab(activeView),
+    const activeViewOverrides = (0, import_element151.useMemo)(
+      () => getActiveViewOverridesForTab(activeView),
       [activeView]
     );
     const { view, updateView, isModified, resetToDefault } = useView({
@@ -45806,7 +45845,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: TEMPLATE_POST_TYPE,
       slug: "default",
       defaultView,
-      activeFilters,
+      activeViewOverrides,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -45933,7 +45972,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: "wp_template",
       slug: "default",
       defaultView: DEFAULT_VIEW2,
-      activeFilters: getActiveFiltersForTab(activeView)
+      activeViewOverrides: getActiveViewOverridesForTab(activeView)
     });
     return view.type === "list";
   }
@@ -46191,19 +46230,21 @@ If there's a particular need for this, please submit a feature request at https:
     private: "private",
     trash: "trash"
   };
-  function getActiveFiltersForTab2(activeView) {
+  function getActiveViewOverridesForTab2(activeView) {
     const status = SLUG_TO_STATUS[activeView];
     if (!status) {
-      return [];
+      return {};
     }
-    return [
-      {
-        field: "status",
-        operator: OPERATOR_IS_ANY,
-        value: status,
-        isLocked: true
-      }
-    ];
+    return {
+      filters: [
+        {
+          field: "status",
+          operator: OPERATOR_IS_ANY,
+          value: status,
+          isLocked: true
+        }
+      ]
+    };
   }
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
@@ -46413,8 +46454,8 @@ If there's a particular need for this, please submit a feature request at https:
     const { activeView = "all", postId, quickEdit = false } = query;
     const history = useHistory25();
     const defaultView = DEFAULT_VIEW3;
-    const activeFilters = (0, import_element155.useMemo)(
-      () => getActiveFiltersForTab2(activeView),
+    const activeViewOverrides = (0, import_element155.useMemo)(
+      () => getActiveViewOverridesForTab2(activeView),
       [activeView]
     );
     const { view, updateView, isModified, resetToDefault } = useView({
@@ -46422,7 +46463,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: postType2,
       slug: "default",
       defaultView,
-      activeFilters,
+      activeViewOverrides,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -46819,7 +46860,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: "page",
       slug: "default",
       defaultView: DEFAULT_VIEW3,
-      activeFilters: getActiveFiltersForTab2(activeView)
+      activeViewOverrides: getActiveViewOverridesForTab2(activeView)
     });
     return view.type === "list";
   }
