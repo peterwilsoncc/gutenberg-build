@@ -4901,6 +4901,7 @@ return array(
 				'lineHeight' => true,
 				'textAlign' => true,
 				'textColumns' => true,
+				'textIndent' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalTextDecoration' => true,
 				'__experimentalFontStyle' => true,
@@ -4917,6 +4918,12 @@ return array(
 			'__unstablePasteTextInline' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
+			)
+		),
+		'selectors' => array(
+			'root' => 'p',
+			'typography' => array(
+				'textIndent' => '.wp-block-paragraph + .wp-block-paragraph'
 			)
 		),
 		'editorStyle' => 'wp-block-paragraph-editor',

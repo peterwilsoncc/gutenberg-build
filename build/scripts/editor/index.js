@@ -9972,6 +9972,7 @@ var wp;
     "typography.textAlign",
     "typography.textColumns",
     "typography.textDecoration",
+    "typography.textIndent",
     "typography.textTransform",
     "typography.writingMode"
   ];
@@ -11464,6 +11465,26 @@ var wp;
     });
     return combinedSelectors.join(", ");
   }
+  var updateParagraphTextIndentSelector = (featureDeclarations, settings, blockName) => {
+    if (blockName !== "core/paragraph") {
+      return featureDeclarations;
+    }
+    const blockSettings = settings?.blocks?.["core/paragraph"];
+    const textIndentSetting = blockSettings?.typography?.textIndent ?? settings?.typography?.textIndent ?? "subsequent";
+    if (textIndentSetting !== "all") {
+      return featureDeclarations;
+    }
+    const oldSelector = ".wp-block-paragraph + .wp-block-paragraph";
+    const newSelector = ".wp-block-paragraph";
+    if (oldSelector in featureDeclarations) {
+      const declarations = featureDeclarations[oldSelector];
+      const updated = { ...featureDeclarations };
+      delete updated[oldSelector];
+      updated[newSelector] = declarations;
+      return updated;
+    }
+    return featureDeclarations;
+  };
   var getFeatureDeclarations = (selectors, styles) => {
     const declarations = {};
     Object.entries(selectors).forEach(([feature, selector]) => {
@@ -11815,7 +11836,8 @@ var wp;
             selector: blockSelectors[blockName].selector,
             styles: blockStyles,
             featureSelectors: blockSelectors[blockName].featureSelectors,
-            styleVariationSelectors: blockSelectors[blockName].styleVariationSelectors
+            styleVariationSelectors: blockSelectors[blockName].styleVariationSelectors,
+            name: blockName
           });
         }
         Object.entries(typedNode?.elements ?? {}).forEach(
@@ -11940,12 +11962,18 @@ var wp;
           hasLayoutSupport,
           featureSelectors,
           styleVariationSelectors,
-          skipSelectorWrapper
+          skipSelectorWrapper,
+          name: name2
         }) => {
           if (featureSelectors) {
-            const featureDeclarations = getFeatureDeclarations(
+            let featureDeclarations = getFeatureDeclarations(
               featureSelectors,
               styles
+            );
+            featureDeclarations = updateParagraphTextIndentSelector(
+              featureDeclarations,
+              tree.settings,
+              name2
             );
             Object.entries(featureDeclarations).forEach(
               ([cssSelector, declarations]) => {
@@ -12003,9 +12031,14 @@ var wp;
                 const styleVariations = styles?.variations?.[styleVariationName];
                 if (styleVariations) {
                   if (featureSelectors) {
-                    const featureDeclarations = getFeatureDeclarations(
+                    let featureDeclarations = getFeatureDeclarations(
                       featureSelectors,
                       styleVariations
+                    );
+                    featureDeclarations = updateParagraphTextIndentSelector(
+                      featureDeclarations,
+                      tree.settings,
+                      name2
                     );
                     Object.entries(
                       featureDeclarations
@@ -16815,6 +16848,7 @@ var wp;
     AdvancedPanel: StylesAdvancedPanel
   } = unlock3(import_block_editor22.privateApis);
   function ScreenBlock({ name: name2, variation }) {
+    const { user: userConfig, onChange: onChangeGlobalStyles } = (0, import_element49.useContext)(GlobalStylesContext);
     let prefixParts = [];
     if (variation) {
       prefixParts = ["variations", variation].concat(prefixParts);
@@ -16915,6 +16949,29 @@ var wp;
         });
       }
     };
+    const onChangeTypography = (newStyle) => {
+      const { settings: newSettings, ...styleWithoutSettings } = newStyle;
+      if (newSettings?.typography) {
+        let updatedConfig = setStyle(
+          userConfig,
+          prefix,
+          styleWithoutSettings,
+          name2
+        );
+        updatedConfig = setSetting(
+          updatedConfig,
+          "typography",
+          {
+            ...userSettings.typography,
+            ...newSettings.typography
+          },
+          name2
+        );
+        onChangeGlobalStyles(updatedConfig);
+      } else {
+        setStyle2(styleWithoutSettings);
+      }
+    };
     const onChangeBorders = (newStyle) => {
       if (!newStyle?.border) {
         setStyle2(newStyle);
@@ -16971,8 +17028,9 @@ var wp;
         {
           inheritedValue: inheritedStyle,
           value: style,
-          onChange: setStyle2,
-          settings
+          onChange: onChangeTypography,
+          settings,
+          isGlobalStyles: true
         }
       ),
       hasDimensionsPanel && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
