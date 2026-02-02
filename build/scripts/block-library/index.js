@@ -30032,6 +30032,7 @@ ${js}
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
+  var import_url10 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/image/image.mjs
   var import_blob11 = __toESM(require_blob(), 1);
@@ -31301,10 +31302,11 @@ ${js}
       setTemporaryURL();
     }
     function onSelectURL(newURL) {
-      if (newURL !== url) {
+      const normalizedNewURL = (0, import_url10.getProtocol)(newURL) ? newURL : (0, import_url10.prependHTTPS)(newURL);
+      if (normalizedNewURL !== url) {
         setAttributes({
           blob: void 0,
-          url: newURL,
+          url: normalizedNewURL,
           id: void 0,
           sizeSlug: getSettings2().imageDefaultSize
         });
@@ -39931,7 +39933,7 @@ ${js}
   }
 
   // packages/block-library/build-module/navigation/edit/manage-menus-button.mjs
-  var import_url10 = __toESM(require_url(), 1);
+  var import_url11 = __toESM(require_url(), 1);
   var import_components79 = __toESM(require_components(), 1);
   var import_i18n126 = __toESM(require_i18n(), 1);
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
@@ -39950,7 +39952,7 @@ ${js}
         variant: "link",
         disabled,
         className,
-        href: (0, import_url10.addQueryArgs)("edit.php", {
+        href: (0, import_url11.addQueryArgs)("edit.php", {
           post_type: "wp_navigation"
         }),
         children: (0, import_i18n126.__)("Manage menus")
@@ -40156,7 +40158,7 @@ ${js}
 
   // packages/block-library/build-module/navigation-link/shared/update-attributes.mjs
   var import_escape_html = __toESM(require_escape_html(), 1);
-  var import_url11 = __toESM(require_url(), 1);
+  var import_url12 = __toESM(require_url(), 1);
   var shouldSeverEntityLink = (originalUrl, newUrl) => {
     if (!originalUrl || !newUrl) {
       return false;
@@ -40185,8 +40187,8 @@ ${js}
     }
     const originalHostname = originalUrlObj.hostname;
     const newHostname = newUrlObj.hostname;
-    const originalPath = normalizePath((0, import_url11.getPath)(originalUrlObj.toString()));
-    const newPath = normalizePath((0, import_url11.getPath)(newUrlObj.toString()));
+    const originalPath = normalizePath((0, import_url12.getPath)(originalUrlObj.toString()));
+    const newPath = normalizePath((0, import_url12.getPath)(newUrlObj.toString()));
     if (originalHostname !== newHostname || originalPath !== newPath) {
       return true;
     }
@@ -40239,7 +40241,7 @@ ${js}
     const kind = isCustomLink ? "custom" : newKind;
     const attributes2 = {
       // Passed `url` may already be encoded. To prevent double encoding, decodeURI is executed to revert to the original string.
-      ...newUrl !== void 0 ? { url: newUrl ? encodeURI((0, import_url11.safeDecodeURI)(newUrl)) : newUrl } : {},
+      ...newUrl !== void 0 ? { url: newUrl ? encodeURI((0, import_url12.safeDecodeURI)(newUrl)) : newUrl } : {},
       ...label && { label },
       ...void 0 !== opensInNewTab && { opensInNewTab },
       ...kind && { kind },
@@ -40795,7 +40797,7 @@ ${js}
 
   // packages/block-library/build-module/navigation-link/shared/use-link-preview.mjs
   var import_i18n133 = __toESM(require_i18n(), 1);
-  var import_url12 = __toESM(require_url(), 1);
+  var import_url13 = __toESM(require_url(), 1);
   var import_block_editor151 = __toESM(require_block_editor(), 1);
   var { useRemoteUrlData } = unlock(import_block_editor151.privateApis);
   function capitalize(str) {
@@ -40805,7 +40807,7 @@ ${js}
     if (!url) {
       return { displayUrl: "", isExternal: false };
     }
-    let displayUrl = (0, import_url12.safeDecodeURI)(url);
+    let displayUrl = (0, import_url13.safeDecodeURI)(url);
     let isExternal = false;
     try {
       const linkUrl = new URL(url);
@@ -40820,7 +40822,7 @@ ${js}
         isExternal = true;
       }
     } catch (e2) {
-      displayUrl = (0, import_url12.safeDecodeURI)(url);
+      displayUrl = (0, import_url13.safeDecodeURI)(url);
     }
     return { displayUrl, isExternal };
   }
@@ -40882,7 +40884,7 @@ ${js}
       hasBinding,
       isEntityAvailable
     });
-    const displayTitle = url ? title || richData?.title || (0, import_url12.safeDecodeURI)(url) : (0, import_i18n133.__)("Add link");
+    const displayTitle = url ? title || richData?.title || (0, import_url13.safeDecodeURI)(url) : (0, import_i18n133.__)("Add link");
     return {
       title: displayTitle,
       url: displayUrl,
@@ -43158,7 +43160,7 @@ ${js}
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
   var import_block_editor159 = __toESM(require_block_editor(), 1);
-  var import_url13 = __toESM(require_url(), 1);
+  var import_url14 = __toESM(require_url(), 1);
   var import_element78 = __toESM(require_element(), 1);
   var import_compose35 = __toESM(require_compose(), 1);
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
@@ -43301,7 +43303,7 @@ ${js}
         return;
       }
       isNewLink.current = false;
-      if ((0, import_url13.isURL)((0, import_url13.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
+      if ((0, import_url14.isURL)((0, import_url14.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
         selectLabelText(ref);
       } else {
         selectBlock(clientId, null);
@@ -43870,7 +43872,7 @@ ${js}
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n142 = __toESM(require_i18n(), 1);
   var import_block_editor162 = __toESM(require_block_editor(), 1);
-  var import_url14 = __toESM(require_url(), 1);
+  var import_url15 = __toESM(require_url(), 1);
   var import_element79 = __toESM(require_element(), 1);
   var import_a11y4 = __toESM(require_a11y(), 1);
   var import_blocks66 = __toESM(require_blocks(), 1);
@@ -43987,7 +43989,7 @@ ${js}
     }, [isSelected]);
     (0, import_element79.useEffect)(() => {
       if (isLinkOpen && url) {
-        if ((0, import_url14.isURL)((0, import_url14.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
+        if ((0, import_url15.isURL)((0, import_url15.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
           selectLabelText(ref);
         }
       }
@@ -48538,7 +48540,7 @@ ${js}
   var import_block_editor184 = __toESM(require_block_editor(), 1);
   var import_element91 = __toESM(require_element(), 1);
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
-  var import_url15 = __toESM(require_url(), 1);
+  var import_url16 = __toESM(require_url(), 1);
   var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
   function PostCommentsCountEdit({
     attributes: attributes2,
@@ -48559,7 +48561,7 @@ ${js}
       }
       const currentPostId = postId;
       (0, import_api_fetch3.default)({
-        path: (0, import_url15.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url16.addQueryArgs)("/wp/v2/comments", {
           post: postId
         }),
         parse: false
@@ -48816,7 +48818,7 @@ ${js}
   var import_element92 = __toESM(require_element(), 1);
   var import_data100 = __toESM(require_data(), 1);
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
-  var import_url16 = __toESM(require_url(), 1);
+  var import_url17 = __toESM(require_url(), 1);
   var import_i18n162 = __toESM(require_i18n(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
@@ -48835,7 +48837,7 @@ ${js}
       }
       const currentPostId = postId;
       (0, import_api_fetch4.default)({
-        path: (0, import_url16.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url17.addQueryArgs)("/wp/v2/comments", {
           post: postId
         }),
         parse: false
@@ -58987,7 +58989,7 @@ ${js}
   var import_components139 = __toESM(require_components(), 1);
   var import_element113 = __toESM(require_element(), 1);
   var import_i18n216 = __toESM(require_i18n(), 1);
-  var import_url17 = __toESM(require_url(), 1);
+  var import_url18 = __toESM(require_url(), 1);
   var import_server_side_render5 = __toESM(require_server_side_render(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
   var import_jsx_runtime410 = __toESM(require_jsx_runtime(), 1);
@@ -59017,7 +59019,7 @@ ${js}
     function onSubmitURL(event) {
       event.preventDefault();
       if (feedURL) {
-        setAttributes({ feedURL: (0, import_url17.prependHTTPS)(feedURL) });
+        setAttributes({ feedURL: (0, import_url18.prependHTTPS)(feedURL) });
         setIsEditing(false);
       }
     }
@@ -63606,14 +63608,14 @@ ${js}
   }
 
   // packages/block-library/build-module/tab/slug-from-label.mjs
-  var import_url18 = __toESM(require_url(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   function slugFromLabel(label, tabIndex) {
     const htmlDocument = new window.DOMParser().parseFromString(
       label,
       "text/html"
     );
     if (htmlDocument.body?.textContent) {
-      return (0, import_url18.cleanForSlug)(htmlDocument.body.textContent);
+      return (0, import_url19.cleanForSlug)(htmlDocument.body.textContent);
     }
     return `tab-panel-${tabIndex}`;
   }
@@ -66002,7 +66004,7 @@ ${js}
   var import_data140 = __toESM(require_data(), 1);
   var import_dom11 = __toESM(require_dom(), 1);
   var import_element123 = __toESM(require_element(), 1);
-  var import_url19 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
   var import_block_editor256 = __toESM(require_block_editor(), 1);
   function getLatestHeadings(select9, clientId) {
     const {
@@ -66035,7 +66037,7 @@ ${js}
     let headingPage = 1;
     let headingPageLink = null;
     if (typeof permalink === "string") {
-      headingPageLink = isPaginated ? (0, import_url19.addQueryArgs)(permalink, { page: headingPage }) : permalink;
+      headingPageLink = isPaginated ? (0, import_url20.addQueryArgs)(permalink, { page: headingPage }) : permalink;
     }
     for (const blockClientId of allBlockClientIds) {
       const blockName = getBlockName(blockClientId);
@@ -66045,8 +66047,8 @@ ${js}
           break;
         }
         if (typeof permalink === "string") {
-          headingPageLink = (0, import_url19.addQueryArgs)(
-            (0, import_url19.removeQueryArgs)(permalink, ["page"]),
+          headingPageLink = (0, import_url20.addQueryArgs)(
+            (0, import_url20.removeQueryArgs)(permalink, ["page"]),
             { page: headingPage }
           );
         }
@@ -71571,7 +71573,7 @@ ${js}
   var import_i18n268 = __toESM(require_i18n(), 1);
   var import_data165 = __toESM(require_data(), 1);
   var import_notices22 = __toESM(require_notices(), 1);
-  var import_url21 = __toESM(require_url(), 1);
+  var import_url22 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/video/edit-common-settings.mjs
   var import_i18n266 = __toESM(require_i18n(), 1);
@@ -71754,7 +71756,7 @@ ${js}
   var import_block_editor291 = __toESM(require_block_editor(), 1);
   var import_data164 = __toESM(require_data(), 1);
   var import_element140 = __toESM(require_element(), 1);
-  var import_url20 = __toESM(require_url(), 1);
+  var import_url21 = __toESM(require_url(), 1);
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
   var { Badge: Badge2 } = unlock(import_components181.privateApis);
   var ALLOWED_TYPES = ["text/vtt"];
@@ -71824,7 +71826,7 @@ ${js}
       ...track
     });
     const { src, label, srcLang, kind, default: isDefaultTrack } = trackState;
-    const fileName = src.startsWith("blob:") ? "" : (0, import_url20.getFilename)(src) || "";
+    const fileName = src.startsWith("blob:") ? "" : (0, import_url21.getFilename)(src) || "";
     return /* @__PURE__ */ (0, import_jsx_runtime540.jsxs)(
       import_components181.__experimentalVStack,
       {
@@ -72143,7 +72145,7 @@ ${js}
     }
     function onSelectURL(newSrc) {
       if (newSrc !== src) {
-        const url = (0, import_url21.prependHTTPS)(newSrc);
+        const url = (0, import_url22.prependHTTPS)(newSrc);
         const embedBlock = createUpgradedEmbedBlock({
           attributes: { url }
         });
