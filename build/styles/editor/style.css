@@ -2642,7 +2642,7 @@ button.font-library__upload-area {
   position: relative;
 }
 
-.dataviews-view-grid .dataviews-view-grid__card .dataviews-view-grid__title-actions {
+.dataviews-view-grid .dataviews-view-grid__card .dataviews-view-grid__title {
   padding: 8px 0 4px;
 }
 
@@ -2683,6 +2683,10 @@ button.font-library__upload-area {
   position: relative;
 }
 
+.dataviews-view-grid .dataviews-view-grid__media.dataviews-view-grid__media--placeholder {
+  aspect-ratio: 3/1;
+}
+
 .dataviews-view-grid .dataviews-view-grid__media img {
   object-fit: cover;
   width: 100%;
@@ -2699,6 +2703,15 @@ button.font-library__upload-area {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   pointer-events: none;
+}
+
+.dataviews-view-grid .dataviews-view-grid__media .dataviews-view-grid__media-placeholder {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 4px;
+  box-shadow: none;
+  background: #f0f0f0;
 }
 
 .dataviews-view-grid .dataviews-view-grid__fields {
@@ -2778,6 +2791,7 @@ button.font-library__upload-area {
 
 .dataviews-view-grid__card .dataviews-view-grid__media-actions {
   position: absolute;
+  z-index: 1;
   top: 4px;
   opacity: 0;
   right: 4px;

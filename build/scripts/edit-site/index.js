@@ -26263,16 +26263,17 @@ var wp;
     const id = getItemId2(item);
     const instanceId = (0, import_compose15.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
-    const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+    const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
+    const rendersMediaField = showMedia && mediaField?.render;
+    const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
       mediaField.render,
       {
         item,
         field: mediaField,
         config: config2
       }
-    ) : null;
+    ) : mediaPlaceholder;
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(titleField.render, { item, field: titleField }) : null;
-    const shouldRenderMedia = showMedia && renderedMediaField;
     let mediaA11yProps;
     let titleA11yProps;
     if (isItemClickable(item) && onClickItem) {
@@ -26317,19 +26318,21 @@ var wp;
           }
         },
         children: [
-          shouldRenderMedia && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
             ItemClickWrapper,
             {
               item,
               isItemClickable,
               onClickItem,
               renderItemLink,
-              className: "dataviews-view-grid__media",
+              className: clsx_default("dataviews-view-grid__media", {
+                "dataviews-view-grid__media--placeholder": !rendersMediaField
+              }),
               ...mediaA11yProps,
               children: renderedMediaField
             }
           ),
-          hasBulkActions && shouldRenderMedia && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+          hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
             DataViewsSelectionCheckbox,
             {
               item,
@@ -26340,41 +26343,23 @@ var wp;
               disabled: !hasBulkAction
             }
           ),
-          !showTitle && shouldRenderMedia && !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(ItemActions, { item, actions, isCompact: true }) }),
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
-            Stack,
+          !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(ItemActions, { item, actions, isCompact: true }) }),
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { className: "dataviews-view-grid__title", children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+            ItemClickWrapper,
             {
-              direction: "row",
-              gap: "xs",
-              className: "dataviews-view-grid__title-actions",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
-                  ItemClickWrapper,
-                  {
-                    item,
-                    isItemClickable,
-                    onClickItem,
-                    renderItemLink,
-                    className: "dataviews-view-grid__title-field dataviews-title-field",
-                    ...titleA11yProps,
-                    title: titleField?.getValueFormatted({
-                      item,
-                      field: titleField
-                    }) || void 0,
-                    children: renderedTitleField
-                  }
-                ),
-                !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
-                  ItemActions,
-                  {
-                    item,
-                    actions,
-                    isCompact: true
-                  }
-                )
-              ]
+              item,
+              isItemClickable,
+              onClickItem,
+              renderItemLink,
+              className: "dataviews-view-grid__title-field dataviews-title-field",
+              ...titleA11yProps,
+              title: titleField?.getValueFormatted({
+                item,
+                field: titleField
+              }) || void 0,
+              children: renderedTitleField
             }
-          ),
+          ) }),
           /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(Stack, { direction: "column", gap: "2xs", children: [
             showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
               descriptionField2.render,
