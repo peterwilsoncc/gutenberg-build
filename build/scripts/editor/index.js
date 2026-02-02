@@ -2048,10 +2048,10 @@ var wp;
         };
         return function(d3, b3) {
           extendStatics(d3, b3);
-          function __254() {
+          function __255() {
             this.constructor = d3;
           }
-          d3.prototype = b3 === null ? Object.create(b3) : (__254.prototype = b3.prototype, new __254());
+          d3.prototype = b3 === null ? Object.create(b3) : (__255.prototype = b3.prototype, new __255());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t4) {
@@ -14424,6 +14424,21 @@ var wp;
       // The warning is only shown when a user manipulates templates or template parts.
       postTypes: ["wp_template", "wp_template_part"],
       callback(removedBlocks) {
+        const removedPostContentBlocks = removedBlocks.filter(
+          ({ name: name2 }) => name2 === "core/post-content"
+        );
+        if (removedPostContentBlocks.length) {
+          return {
+            description: (0, import_i18n66.__)(
+              "This block displays the content of posts and pages using this template."
+            ),
+            warning: (0, import_i18n66.__)(
+              "If you delete it, posts or pages using this template will not display any content."
+            ),
+            subtext: (0, import_i18n66.__)("Visitors will see blank pages."),
+            requireConfirmation: true
+          };
+        }
         const removedTemplateBlocks = removedBlocks.filter(
           ({ name: name2 }) => TEMPLATE_BLOCKS.includes(name2)
         );
@@ -23061,12 +23076,12 @@ var wp;
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__254) {
+            } catch (__255) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__254) {
+            } catch (__255) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);

@@ -74856,6 +74856,7 @@ var wp;
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
+    const [confirmed, setConfirmed] = (0, import_element279.useState)(false);
     const { clientIds, selectPrevious, message: message2 } = (0, import_data196.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
     );
@@ -74870,9 +74871,16 @@ var wp;
         setBlockRemovalRules2();
       };
     }, [rules, setBlockRemovalRules2]);
+    (0, import_element279.useEffect)(() => {
+      setConfirmed(false);
+    }, [clientIds]);
     if (!message2) {
       return;
     }
+    const isStructured = typeof message2 === "object" && message2 !== null;
+    const description = isStructured ? message2.description : message2;
+    const requireConfirmation = isStructured && message2.requireConfirmation;
+    const isRemoveDisabled = requireConfirmation && !confirmed;
     const onConfirmRemoval = () => {
       privateRemoveBlocks2(
         clientIds,
@@ -74882,14 +74890,30 @@ var wp;
       );
       clearBlockRemovalPrompt2();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
       import_components273.Modal,
       {
-        title: (0, import_i18n243.__)("Be careful!"),
+        title: (0, import_i18n243.__)("Confirm deletion"),
         onRequestClose: clearBlockRemovalPrompt2,
         size: "medium",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime468.jsx)("p", { children: message2 }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)(import_components273.__experimentalVStack, { spacing: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime468.jsx)("p", { children: description }),
+            isStructured && (message2.warning || message2.subtext) && /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)("p", { children: [
+              message2.warning && /* @__PURE__ */ (0, import_jsx_runtime468.jsx)("strong", { children: message2.warning }),
+              message2.warning && message2.subtext && " ",
+              message2.subtext
+            ] })
+          ] }),
+          requireConfirmation && /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
+            import_components273.CheckboxControl,
+            {
+              __nextHasNoMarginBottom: true,
+              label: (0, import_i18n243.__)("I understand the consequences"),
+              checked: confirmed,
+              onChange: setConfirmed
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime468.jsxs)(import_components273.__experimentalHStack, { justify: "right", children: [
             /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
               import_components273.Button,
@@ -74905,12 +74929,14 @@ var wp;
               {
                 variant: "primary",
                 onClick: onConfirmRemoval,
+                disabled: isRemoveDisabled,
+                accessibleWhenDisabled: true,
                 __next40pxDefaultSize: true,
                 children: (0, import_i18n243.__)("Delete")
               }
             )
           ] })
-        ]
+        ] })
       }
     );
   }
