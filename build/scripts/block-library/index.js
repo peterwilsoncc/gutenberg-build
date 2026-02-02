@@ -52847,6 +52847,51 @@ ${js}
         type: "string"
       }
     },
+    supports: {
+      anchor: true,
+      align: ["left", "right", "wide", "full"],
+      color: {
+        gradients: true,
+        background: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true,
+          fontAppearance: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      __experimentalStyle: {
+        typography: {
+          fontSize: "1.5em",
+          lineHeight: "1.6"
+        }
+      }
+    },
     save({ attributes: attributes2 }) {
       const { textAlign, citation, value } = attributes2;
       const shouldShowCitation = !import_block_editor202.RichText.isEmpty(citation);
@@ -52875,6 +52920,21 @@ ${js}
   var v48 = {
     attributes: {
       ...blockAttributes6
+    },
+    supports: {
+      anchor: true,
+      align: ["left", "right", "wide", "full"],
+      color: {
+        gradients: true,
+        background: true,
+        link: true
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
     },
     save({ attributes: attributes2 }) {
       const {
