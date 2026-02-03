@@ -46199,7 +46199,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
       import_components190.RangeControl,
       {
-        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
         className: "editor-revisions-header__slider",
         hideLabelFromVision: true,

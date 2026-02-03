@@ -51311,7 +51311,7 @@ var wp;
       if (renderControl) {
         return renderControl(controlProps, inputProps, loading);
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(import_components172.BaseControl, { __nextHasNoMarginBottom: true, ...controlProps, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(import_components172.BaseControl, { ...controlProps, children: [
         /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
           ValidatedInputControl,
           {
@@ -55329,7 +55329,6 @@ var wp;
         withSlider && /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components194.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(import_components194.__experimentalSpacer, { marginX: 2, marginBottom: 0, children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
           import_components194.RangeControl,
           {
-            __nextHasNoMarginBottom: true,
             __next40pxDefaultSize,
             __shouldNotWarnDeprecated36pxSize: true,
             label: (0, import_i18n186.__)("Line indent"),
@@ -55927,7 +55926,6 @@ var wp;
                 isGlobalStyles && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
                   import_components195.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n187.__)("Indent all paragraphs"),
                     checked: isTextIndentAll,
                     onChange: onToggleTextIndentAll,
@@ -75060,7 +75058,6 @@ var wp;
           requireConfirmation && /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
             import_components273.CheckboxControl,
             {
-              __nextHasNoMarginBottom: true,
               label: (0, import_i18n243.__)("I understand the consequences"),
               checked: confirmed,
               onChange: setConfirmed

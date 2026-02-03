@@ -39001,7 +39001,6 @@ ${js}
                 import_components72.SelectControl,
                 {
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true,
                   label: (0, import_i18n118.__)("Overlay template"),
                   hideLabelFromVision: true,
                   "aria-labelledby": headingId,
@@ -42005,7 +42004,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(
                     import_components88.__experimentalToggleGroupControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       __next40pxDefaultSize: true,
                       label: (0, import_i18n138.__)("Submenu Visibility"),
                       value: submenuVisibility,
@@ -46828,7 +46826,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
                   import_components97.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n153.__)("Show Tracklist"),
                     onChange: toggleAttribute("showTracklist"),
                     checked: showTracklist
@@ -46847,7 +46844,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
                     import_components97.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n153.__)(
                         "Show artist name in Tracklist"
                       ),
@@ -46869,7 +46865,6 @@ ${js}
                   children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
                     import_components97.ToggleControl,
                     {
-                      __nextHasNoMarginBottom: true,
                       label: (0, import_i18n153.__)("Show number in Tracklist"),
                       onChange: toggleAttribute(
                         "showNumbers"
@@ -46890,7 +46885,6 @@ ${js}
                 children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
                   import_components97.ToggleControl,
                   {
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n153.__)("Show images"),
                     onChange: toggleAttribute("showImages"),
                     checked: showImages
@@ -46909,7 +46903,6 @@ ${js}
                   import_components97.SelectControl,
                   {
                     __next40pxDefaultSize: true,
-                    __nextHasNoMarginBottom: true,
                     label: (0, import_i18n153.__)("Order"),
                     value: order,
                     options: [
@@ -47168,7 +47161,6 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
           import_components98.TextControl,
           {
-            __nextHasNoMarginBottom: true,
             __next40pxDefaultSize: true,
             label: (0, import_i18n154.__)("Artist"),
             value: artist ? (0, import_dom9.__unstableStripHTML)(artist) : "",
@@ -47180,7 +47172,6 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
           import_components98.TextControl,
           {
-            __nextHasNoMarginBottom: true,
             __next40pxDefaultSize: true,
             label: (0, import_i18n154.__)("Album"),
             value: album ? (0, import_dom9.__unstableStripHTML)(album) : "",
@@ -47192,7 +47183,6 @@ ${js}
         /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
           import_components98.TextControl,
           {
-            __nextHasNoMarginBottom: true,
             __next40pxDefaultSize: true,
             label: (0, import_i18n154.__)("Title"),
             value: title ? (0, import_dom9.__unstableStripHTML)(title) : "",
