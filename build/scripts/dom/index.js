@@ -116,6 +116,9 @@ var wp;
       if (!isVisible(element)) {
         return false;
       }
+      if (element.closest("[inert]")) {
+        return false;
+      }
       const { nodeName } = element;
       if ("AREA" === nodeName) {
         return isValidFocusableArea(

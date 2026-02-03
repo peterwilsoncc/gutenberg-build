@@ -25063,9 +25063,6 @@ var wp;
       targetRect = target.getBoundingClientRect();
     }
     function isTabCandidate(node) {
-      if (node.closest("[inert]")) {
-        return;
-      }
       if (node.children.length === 1 && isInSameBlock(node, node.firstElementChild) && node.firstElementChild.getAttribute("contenteditable") === "true") {
         return;
       }
