@@ -2963,7 +2963,7 @@ var wp;
     renderItemLink,
     isItemClickable: isItemClickable2
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Stack, { direction: "row", gap: "sm", align: "flex-start", justify: "flex-start", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
       mediaField && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         ItemClickWrapper,
         {
@@ -3090,7 +3090,7 @@ var wp;
     isVisible: isVisible2,
     onToggleVisibility
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components5.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(Stack, { direction: "row", gap: "xs", justify: "flex-start", align: "center", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components5.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(Stack, { direction: "row", gap: "sm", justify: "flex-start", align: "center", children: [
       /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { style: { height: 24, width: 24 }, children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_components5.Icon, { icon: check_default }) }),
       /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { className: "dataviews-view-config__label", children: field.label })
     ] }) });
@@ -3825,7 +3825,7 @@ var wp;
               children: renderedTitleField
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Stack, { direction: "column", gap: "2xs", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(Stack, { direction: "column", gap: "xs", children: [
             showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
               descriptionField2.render,
               {
@@ -3838,7 +3838,7 @@ var wp;
               {
                 direction: "row",
                 className: "dataviews-view-grid__badge-fields",
-                gap: "xs",
+                gap: "sm",
                 wrap: "wrap",
                 align: "top",
                 justify: "flex-start",
@@ -3865,7 +3865,7 @@ var wp;
               {
                 direction: "column",
                 className: "dataviews-view-grid__fields",
-                gap: "2xs",
+                gap: "xs",
                 children: regularFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
                     import_components8.Flex,
@@ -4054,12 +4054,12 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, {
       // Render multiple groups.
       children: [
-        hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Stack, { direction: "column", gap: "md", children: Array.from(dataByGroup.entries()).map(
+        hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
           ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
             Stack,
             {
               direction: "column",
-              gap: "xs",
+              gap: "sm",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n18.sprintf)(
                   // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
@@ -4245,7 +4245,7 @@ var wp;
       Stack,
       {
         direction: "row",
-        gap: "sm",
+        gap: "md",
         className: "dataviews-view-list__item-actions",
         children: [
           primaryAction && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
@@ -4346,7 +4346,7 @@ var wp;
                 Stack,
                 {
                   direction: "row",
-                  gap: "sm",
+                  gap: "md",
                   justify: "start",
                   align: "flex-start",
                   style: { flex: 1, minWidth: 0 },
@@ -4356,7 +4356,7 @@ var wp;
                       Stack,
                       {
                         direction: "column",
-                        gap: "2xs",
+                        gap: "xs",
                         className: "dataviews-view-list__field-wrapper",
                         children: [
                           /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(Stack, { direction: "row", align: "center", children: [
@@ -4549,14 +4549,14 @@ var wp;
             Stack,
             {
               direction: "column",
-              gap: "md",
+              gap: "lg",
               className: clsx_default("dataviews-view-list", className),
               children: Array.from(dataByGroup.entries()).map(
                 ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
                   Stack,
                   {
                     direction: "column",
-                    gap: "xs",
+                    gap: "sm",
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n19.sprintf)(
                         // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
@@ -4740,9 +4740,9 @@ var wp;
     const verticalGap = (0, import_element15.useMemo)(() => {
       switch (density) {
         case "comfortable":
-          return "sm";
+          return "md";
         default:
-          return "xs";
+          return "sm";
       }
     }, [density]);
     return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
@@ -4758,12 +4758,12 @@ var wp;
           density === "balanced" && "is-balanced",
           density === "comfortable" && "is-comfortable"
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(Stack, { direction: "row", gap: "md", justify: "start", align: "flex-start", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
           /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
             Stack,
             {
               direction: "column",
-              gap: "2xs",
+              gap: "xs",
               align: "center",
               className: "dataviews-view-activity__item-type",
               children: renderedMediaField
@@ -4900,7 +4900,7 @@ var wp;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const groupedEntries = dataByGroup ? Array.from(dataByGroup.entries()) : [];
     if (hasData && groupField && dataByGroup) {
-      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Stack, { direction: "column", gap: "xs", className: wrapperClassName, children: groupedEntries.map(
+      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Stack, { direction: "column", gap: "sm", className: wrapperClassName, children: groupedEntries.map(
         ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
           ActivityGroup,
           {
@@ -4982,7 +4982,7 @@ var wp;
         className: "dataviews-pagination",
         justify: "end",
         align: "center",
-        gap: "lg",
+        gap: "xl",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
             Stack,
@@ -4990,7 +4990,7 @@ var wp;
               direction: "row",
               justify: "flex-start",
               align: "center",
-              gap: "2xs",
+              gap: "xs",
               className: "dataviews-pagination__page-select",
               children: (0, import_element16.createInterpolateElement)(
                 (0, import_i18n21.sprintf)(
@@ -5024,7 +5024,7 @@ var wp;
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(Stack, { direction: "row", gap: "2xs", align: "center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
             /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
               import_components13.Button,
               {
@@ -5113,7 +5113,7 @@ var wp;
     const [actionInProgress, setActionInProgress] = (0, import_element17.useState)(
       null
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Stack, { direction: "row", gap: "2xs", children: actions.map((action) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Stack, { direction: "row", gap: "xs", children: actions.map((action) => {
       if (!("callback" in action)) {
         return null;
       }
@@ -5169,14 +5169,14 @@ var wp;
         justify: "space-between",
         align: "center",
         className: "dataviews-footer",
-        gap: "xs",
+        gap: "sm",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
             Stack,
             {
               direction: "row",
               className: "dataviews-picker-footer__bulk-selection",
-              gap: "sm",
+              gap: "md",
               align: "center",
               children: [
                 isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
@@ -5301,7 +5301,7 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "dataviews-view-picker-grid__title-field dataviews-title-field", children: renderedTitleField })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(Stack, { direction: "column", gap: "2xs", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(Stack, { direction: "column", gap: "xs", children: [
             showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
               descriptionField2.render,
               {
@@ -5314,7 +5314,7 @@ var wp;
               {
                 direction: "row",
                 className: "dataviews-view-picker-grid__badge-fields",
-                gap: "xs",
+                gap: "sm",
                 wrap: "wrap",
                 align: "top",
                 justify: "flex-start",
@@ -5341,7 +5341,7 @@ var wp;
               {
                 direction: "column",
                 className: "dataviews-view-picker-grid__fields",
-                gap: "2xs",
+                gap: "xs",
                 children: regularFields.map((field) => {
                   return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
                     import_components15.Flex,
@@ -5395,7 +5395,7 @@ var wp;
       Stack,
       {
         direction: "column",
-        gap: "xs",
+        gap: "sm",
         role: "group",
         "aria-labelledby": headerId,
         children: [
@@ -5482,7 +5482,7 @@ var wp;
               Stack,
               {
                 direction: "column",
-                gap: "md",
+                gap: "lg",
                 children,
                 ...props
               }
@@ -12887,7 +12887,7 @@ If there's a particular need for this, please submit a feature request at https:
       Stack,
       {
         direction: "row",
-        gap: "xs",
+        gap: "sm",
         justify: "flex-start",
         className: "dataviews-filters__summary-operators-container",
         align: "center",
@@ -13340,7 +13340,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         direction: "row",
         justify: "flex-start",
-        gap: "xs",
+        gap: "sm",
         style: { width: "fit-content" },
         wrap: "wrap",
         className,
@@ -13845,13 +13845,13 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 direction: "column",
                 className: "dataviews-view-config",
-                gap: "lg",
+                gap: "xl",
                 children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(SettingsSection, { title: (0, import_i18n37.__)("Appearance"), children: [
                   /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
                     Stack,
                     {
                       direction: "row",
-                      gap: "xs",
+                      gap: "sm",
                       className: "is-divided-in-two",
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SortFieldControl, {}),
@@ -14042,7 +14042,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "xs", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", children: [
           /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
             import_components30.__experimentalNumberControl,
             {
@@ -14187,7 +14187,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: displayLabel,
         help: description,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "md", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "lg", children: [
           /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
             DateCalendar,
             {
@@ -14525,12 +14525,12 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "md", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
                 Stack,
                 {
                   direction: "row",
-                  gap: "xs",
+                  gap: "sm",
                   wrap: "wrap",
                   justify: "flex-start",
                   children: [
@@ -14707,12 +14707,12 @@ If there's a particular need for this, please submit a feature request at https:
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "md", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
                 Stack,
                 {
                   direction: "row",
-                  gap: "xs",
+                  gap: "sm",
                   wrap: "wrap",
                   justify: "flex-start",
                   children: [
@@ -14750,7 +14750,7 @@ If there's a particular need for this, please submit a feature request at https:
                 Stack,
                 {
                   direction: "row",
-                  gap: "xs",
+                  gap: "sm",
                   justify: "space-between",
                   className: "dataviews-controls__date-range-inputs",
                   children: [
@@ -16855,13 +16855,13 @@ If there's a particular need for this, please submit a feature request at https:
           align: "top",
           justify: "space-between",
           className: "dataviews__view-actions",
-          gap: "2xs",
+          gap: "xs",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
               Stack,
               {
                 direction: "row",
-                gap: "xs",
+                gap: "sm",
                 justify: "start",
                 className: "dataviews__search",
                 children: [
@@ -16870,7 +16870,7 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Stack, { direction: "row", gap: "2xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(dataviews_view_config_default, {}) })
+            /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(dataviews_view_config_default, {}) })
           ]
         }
       ),

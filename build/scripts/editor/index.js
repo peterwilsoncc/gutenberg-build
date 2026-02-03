@@ -48688,13 +48688,12 @@ var wp;
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime334.jsx)("div", { ...props });
   var capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-  var getSpacingValue = (property, target, value) => `var(--wpds-dimension-${property}-${target}-${value}, var(--wpds-dimension-${property}-surface-${value}))`;
-  var getDimensionVariantStyles = (property, target, value) => typeof value !== "object" ? { [property]: getSpacingValue(property, target, value) } : Object.keys(value).reduce(
+  var getSpacingValue = (property, value) => `var(--wpds-dimension-${property}-${value}, var(--wpds-dimension-${property}-${value}))`;
+  var getDimensionVariantStyles = (property, value) => typeof value !== "object" ? { [property]: getSpacingValue(property, value) } : Object.keys(value).reduce(
     (result, key) => ({
       ...result,
       [property + capitalize(key)]: getSpacingValue(
         property,
-        target,
         value[key]
       )
     }),
@@ -48719,10 +48718,7 @@ var wp;
       style.color = `var(--wpds-color-fg-${target}-${color}, var(--wpds-color-fg-content-${color}))`;
     }
     if (padding) {
-      Object.assign(
-        style,
-        getDimensionVariantStyles("padding", target, padding)
-      );
+      Object.assign(style, getDimensionVariantStyles("padding", padding));
     }
     if (borderRadius) {
       style.borderRadius = `var(--wpds-border-radius-${target}-${borderRadius}, var(--wpds-border-radius-${borderRadius}))`;
@@ -48791,7 +48787,7 @@ var wp;
       Box,
       {
         ...intentStyles,
-        padding: { inline: "xs", block: "2xs" },
+        padding: { inline: "sm", block: "xs" },
         borderRadius: "lg",
         render: render4,
         style: {
@@ -51248,7 +51244,7 @@ var wp;
         className: clsx_default(className, "dataviews-controls__relative-date"),
         label,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(Stack, { direction: "row", gap: "xs", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(Stack, { direction: "row", gap: "sm", children: [
           /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
             import_components199.__experimentalNumberControl,
             {
@@ -51393,7 +51389,7 @@ var wp;
         label: displayLabel,
         help: description,
         hideLabelFromVision,
-        children: /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(Stack, { direction: "column", gap: "md", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(Stack, { direction: "column", gap: "lg", children: [
           /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
             DateCalendar,
             {
@@ -51731,12 +51727,12 @@ var wp;
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(Stack, { direction: "column", gap: "md", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
                 Stack,
                 {
                   direction: "row",
-                  gap: "xs",
+                  gap: "sm",
                   wrap: "wrap",
                   justify: "flex-start",
                   children: [
@@ -51913,12 +51909,12 @@ var wp;
             className: "dataviews-controls__date",
             label: displayLabel,
             hideLabelFromVision,
-            children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(Stack, { direction: "column", gap: "md", children: [
+            children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(Stack, { direction: "column", gap: "lg", children: [
               /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
                 Stack,
                 {
                   direction: "row",
-                  gap: "xs",
+                  gap: "sm",
                   wrap: "wrap",
                   justify: "flex-start",
                   children: [
@@ -51956,7 +51952,7 @@ var wp;
                 Stack,
                 {
                   direction: "row",
-                  gap: "xs",
+                  gap: "sm",
                   justify: "space-between",
                   className: "dataviews-controls__date-range-inputs",
                   children: [
@@ -54013,7 +54009,7 @@ var wp;
       {
         direction: "column",
         className: "dataforms-layouts-regular__header",
-        gap: "md",
+        gap: "lg",
         children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_components215.__experimentalHeading, { level: 2, size: 13, children: title }) })
       }
     );
@@ -54061,7 +54057,7 @@ var wp;
         {
           direction: "row",
           className: "dataforms-layouts-regular__field",
-          gap: "xs",
+          gap: "sm",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
               "div",
@@ -54222,8 +54218,8 @@ var wp;
       {
         direction: "column",
         className: "dataforms-layouts-panel__dropdown-header",
-        gap: "md",
-        children: /* @__PURE__ */ (0, import_jsx_runtime364.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
+        gap: "lg",
+        children: /* @__PURE__ */ (0, import_jsx_runtime364.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
           title && /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(import_components217.__experimentalHeading, { level: 2, size: 13, children: title }),
           /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(import_components217.__experimentalSpacer, { style: { flex: 1 } }),
           onClose && /* @__PURE__ */ (0, import_jsx_runtime364.jsx)(
@@ -54941,7 +54937,7 @@ var wp;
             {
               direction: "row",
               className: "dataforms-layouts-panel__modal-footer",
-              gap: "sm",
+              gap: "md",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components218.__experimentalSpacer, { style: { flex: 1 } }),
                 /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
@@ -55128,7 +55124,7 @@ var wp;
       Stack,
       {
         direction: "row",
-        gap: "xs",
+        gap: "sm",
         className: "dataforms-layouts-panel__field-label-error-content",
         justify: "flex-start",
         children: [
@@ -55189,7 +55185,7 @@ var wp;
         Stack,
         {
           direction: "row",
-          gap: "xs",
+          gap: "sm",
           className: "dataforms-layouts-panel__field dataforms-layouts-panel__field--label-position-none",
           children: [
             showError && /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components219.Tooltip, { text: errorMessage, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
@@ -55209,7 +55205,7 @@ var wp;
       Stack,
       {
         direction: "row",
-        gap: "xs",
+        gap: "sm",
         ref: setPopoverAnchor,
         className: "dataforms-layouts-panel__field",
         children: [
@@ -55518,7 +55514,7 @@ var wp;
       {
         direction: "column",
         className: "dataforms-layouts-row__header",
-        gap: "md",
+        gap: "lg",
         children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(import_components221.__experimentalHeading, { level: 2, size: 13, children: title }) })
       }
     );
@@ -55539,7 +55535,7 @@ var wp;
       };
       return /* @__PURE__ */ (0, import_jsx_runtime369.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
         !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(Header3, { title: field.label }),
-        /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "md", children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
           DataFormLayout,
           {
             data,
@@ -55649,7 +55645,7 @@ var wp;
             {
               direction: "row",
               align: "center",
-              gap: "sm",
+              gap: "md",
               className: "dataforms-layouts-details__summary-content",
               children: [
                 summaryContent,
@@ -55690,7 +55686,7 @@ var wp;
         {
           direction: "column",
           className: "dataforms-layouts__wrapper",
-          gap: "md",
+          gap: "lg",
           children
         }
       )
@@ -55703,7 +55699,7 @@ var wp;
         {
           direction: "column",
           className: "dataforms-layouts__wrapper",
-          gap: "xs",
+          gap: "sm",
           children
         }
       )
@@ -55716,7 +55712,7 @@ var wp;
         {
           direction: "column",
           className: "dataforms-layouts__wrapper",
-          gap: "lg",
+          gap: "xl",
           children
         }
       )
@@ -55732,12 +55728,12 @@ var wp;
         {
           direction: "column",
           className: "dataforms-layouts__wrapper",
-          gap: "md",
+          gap: "lg",
           children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
             Stack,
             {
               direction: "row",
-              gap: "md",
+              gap: "lg",
               align: layout.alignment,
               children
             }
@@ -55756,7 +55752,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
   var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
-  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "md", children });
+  var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
   function DataFormLayout({
     data,
     form,
