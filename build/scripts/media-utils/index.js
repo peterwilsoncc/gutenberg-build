@@ -17688,7 +17688,7 @@ If there's a particular need for this, please submit a feature request at https:
   var NOTICES_CONTEXT = "media-modal";
   var NOTICE_ID_UPLOAD_PROGRESS = "media-modal-upload-progress";
   function MediaUploadModal({
-    allowedTypes = ["image"],
+    allowedTypes,
     multiple = false,
     value,
     onSelect,
@@ -17754,7 +17754,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       });
       if (!filters.media_type) {
-        filters.media_type = allowedTypes.includes("*") ? void 0 : allowedTypes;
+        filters.media_type = allowedTypes?.includes("*") ? void 0 : allowedTypes;
       }
       return {
         per_page: view.perPage || 20,
@@ -17945,10 +17945,10 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const acceptTypes = (0, import_element59.useMemo)(() => {
-      if (allowedTypes.includes("*")) {
+      if (allowedTypes?.includes("*")) {
         return void 0;
       }
-      return allowedTypes.join(",");
+      return allowedTypes?.join(",");
     }, [allowedTypes]);
     if (!isOpen) {
       return null;
