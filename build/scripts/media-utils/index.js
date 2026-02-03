@@ -17727,7 +17727,10 @@ If there's a particular need for this, please submit a feature request at https:
       search: "",
       page: 1,
       perPage: 20,
-      filters: []
+      filters: [],
+      layout: {
+        previewSize: 170
+      }
     }));
     const queryArgs = (0, import_element59.useMemo)(() => {
       const filters = {};
