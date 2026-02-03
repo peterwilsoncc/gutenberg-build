@@ -108,7 +108,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect80(
+          useEffect79(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -134,7 +134,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React37 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState85 = React37.useState, useEffect80 = React37.useEffect, useLayoutEffect24 = React37.useLayoutEffect, useDebugValue = React37.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React37 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState85 = React37.useState, useEffect79 = React37.useEffect, useLayoutEffect24 = React37.useLayoutEffect, useDebugValue = React37.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React37.useSyncExternalStore ? React37.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -48845,7 +48845,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     help,
     className: className2,
     onChange,
-    disabled
+    disabled,
+    ...additionalProps
   }, ref) {
     function onChangeToggle(event) {
       onChange(event.target.checked);
@@ -48881,7 +48882,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           onChange: onChangeToggle,
           "aria-describedby": describedBy,
           disabled,
-          ref
+          ref,
+          ...additionalProps
         }), /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(component_default5, {
           as: "label",
           htmlFor: id3,
@@ -56725,11 +56727,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element253.useRef)(null);
     const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
-    (0, import_element253.useEffect)(() => {
-      if (validityTargetRef.current) {
-        validityTargetRef.current.required = required ?? false;
-      }
-    }, [required]);
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -56737,6 +56734,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(toggle_control_default, {
         ref: mergedRefs,
+        required,
         ...restProps
       })
     });
