@@ -47501,18 +47501,18 @@ ${js}
             shouldInsertPostAuthorNameBlock && (0, import_blocks78.createBlock)("core/post-author-name", {
               isLink,
               linkTarget,
-              textAlign,
               style: {
                 typography: {
-                  fontSize: "1em"
+                  fontSize: "1em",
+                  textAlign
                 }
               }
             }),
             shouldInsertPostAuthorBiographyBlock && (0, import_blocks78.createBlock)("core/post-author-biography", {
-              textAlign,
               style: {
                 typography: {
-                  fontSize: "0.7em"
+                  fontSize: "0.7em",
+                  textAlign
                 }
               }
             })
@@ -48143,14 +48143,9 @@ ${js}
       {
         type: "block",
         blocks: ["core/post-author"],
-        transform: ({ textAlign }) => (0, import_blocks80.createBlock)("core/post-author-name", { textAlign })
-      }
-    ],
-    to: [
-      {
-        type: "block",
-        blocks: ["core/post-author"],
-        transform: ({ textAlign }) => (0, import_blocks80.createBlock)("core/post-author", { textAlign })
+        transform: ({ textAlign }) => (0, import_blocks80.createBlock)("core/post-author-name", {
+          style: { typography: { textAlign } }
+        })
       }
     ]
   };
