@@ -30269,14 +30269,14 @@ ${js}
                 title: value
               }),
               disabled: lockTitleControls,
-              help: lockTitleControls ? /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_jsx_runtime268.Fragment, { children: lockTitleControlsMessage }) : /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)(import_jsx_runtime268.Fragment, { children: [
+              help: lockTitleControls ? /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_jsx_runtime268.Fragment, { children: lockTitleControlsMessage }) : (0, import_element41.createInterpolateElement)(
                 (0, import_i18n90.__)(
-                  "Describe the role of this image on the page."
+                  "Describe the role of this image on the page. <a>(Note: many devices and browsers do not display this text.)</a>"
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_components51.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute", children: (0, import_i18n90.__)(
-                  "(Note: many devices and browsers do not display this text.)"
-                ) })
-              ] })
+                {
+                  a: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_components51.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute" })
+                }
+              )
             }
           ) })
         }
@@ -30880,14 +30880,14 @@ ${js}
           value: title || "",
           onChange: onSetTitle,
           readOnly: lockTitleControls,
-          help: lockTitleControls ? /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_jsx_runtime268.Fragment, { children: lockTitleControlsMessage }) : /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)(import_jsx_runtime268.Fragment, { children: [
+          help: lockTitleControls ? /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_jsx_runtime268.Fragment, { children: lockTitleControlsMessage }) : (0, import_element41.createInterpolateElement)(
             (0, import_i18n90.__)(
-              "Describe the role of this image on the page."
+              "Describe the role of this image on the page. <a>(Note: many devices and browsers do not display this text.)</a>"
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_components51.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute", children: (0, import_i18n90.__)(
-              "(Note: many devices and browsers do not display this text.)"
-            ) })
-          ] })
+            {
+              a: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(import_components51.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute" })
+            }
+          )
         }
       ) })
     ] });
