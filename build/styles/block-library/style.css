@@ -4361,7 +4361,7 @@ ul.wp-block-rss.is-grid li {
   padding: var(--wp--preset--spacing--30);
 }
 
-.wp-block-tab-panels {
+.wp-block-tab-panel {
   flex-grow: 1;
   min-width: 0;
 }

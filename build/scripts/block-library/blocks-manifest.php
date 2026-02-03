@@ -7946,7 +7946,7 @@ return array(
 			)
 		),
 		'parent' => array(
-			'core/tab-panels'
+			'core/tab-panel'
 		),
 		'usesContext' => array(
 			'core/tabs-activeTabIndex',
@@ -7993,12 +7993,12 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'style' => 'file:./style-index.css'
 	),
-	'tab-panels' => array(
+	'tab-panel' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'__experimental' => true,
 		'apiVersion' => 3,
-		'name' => 'core/tab-panels',
-		'title' => 'Tab Panels',
+		'name' => 'core/tab-panel',
+		'title' => 'Tab Panel',
 		'description' => 'Container for tab panel content in a tabbed interface.',
 		'version' => '1.0.0',
 		'category' => 'design',
@@ -8392,7 +8392,7 @@ return array(
 		'textdomain' => 'default',
 		'allowedBlocks' => array(
 			'core/tabs-menu',
-			'core/tab-panels'
+			'core/tab-panel'
 		),
 		'attributes' => array(
 			'activeTabIndex' => array(
@@ -8458,7 +8458,7 @@ return array(
 					)
 				),
 				array(
-					'name' => 'core/tab-panels',
+					'name' => 'core/tab-panel',
 					'attributes' => array(
 						
 					),
