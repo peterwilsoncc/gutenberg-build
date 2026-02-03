@@ -13519,6 +13519,7 @@ function Checkbox({
   onChange,
   data,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
@@ -13531,6 +13532,7 @@ function Checkbox({
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       hidden: hideLabelFromVision,
       label,
@@ -13703,6 +13705,7 @@ function CalendarDateTimeControl({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
@@ -13783,7 +13786,12 @@ function CalendarDateTimeControl({
   const {
     timezone: { string: timezoneString }
   } = (0, import_date3.getSettings)();
-  const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n33.__)("Required")})` : label;
+  let displayLabel = label;
+  if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
+    displayLabel = `${label} (${(0, import_i18n33.__)("Required")})`;
+  } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
+    displayLabel = `${label} (${(0, import_i18n33.__)("Optional")})`;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
     import_components31.BaseControl,
     {
@@ -13829,6 +13837,7 @@ function DateTime({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   operator,
   validity
 }) {
@@ -13852,6 +13861,7 @@ function DateTime({
       field,
       onChange,
       hideLabelFromVision,
+      markWhenOptional,
       validity
     }
   );
@@ -14050,6 +14060,7 @@ function CalendarDateControl({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const {
@@ -14113,7 +14124,12 @@ function CalendarDateControl({
   const {
     timezone: { string: timezoneString }
   } = (0, import_date4.getSettings)();
-  const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n34.__)("Required")})` : label;
+  let displayLabel = label;
+  if (isValid2?.required && !markWhenOptional) {
+    displayLabel = `${label} (${(0, import_i18n34.__)("Required")})`;
+  } else if (!isValid2?.required && markWhenOptional) {
+    displayLabel = `${label} (${(0, import_i18n34.__)("Optional")})`;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     ValidatedDateControl,
     {
@@ -14204,6 +14220,7 @@ function CalendarDateRangeControl({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { id, label, getValue, setValue, format: fieldFormat } = field;
@@ -14295,7 +14312,12 @@ function CalendarDateRangeControl({
     [value, updateDateRange]
   );
   const { timezone } = (0, import_date4.getSettings)();
-  const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n34.__)("Required")})` : label;
+  let displayLabel = label;
+  if (field.isValid?.required && !markWhenOptional) {
+    displayLabel = `${label} (${(0, import_i18n34.__)("Required")})`;
+  } else if (!field.isValid?.required && markWhenOptional) {
+    displayLabel = `${label} (${(0, import_i18n34.__)("Optional")})`;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
     ValidatedDateControl,
     {
@@ -14410,6 +14432,7 @@ function DateControl({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   operator,
   validity
 }) {
@@ -14434,6 +14457,7 @@ function DateControl({
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity
       }
     );
@@ -14445,6 +14469,7 @@ function DateControl({
       field,
       onChange,
       hideLabelFromVision,
+      markWhenOptional,
       validity
     }
   );
@@ -14463,6 +14488,7 @@ function ValidatedText({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   type,
   prefix,
   suffix,
@@ -14483,6 +14509,7 @@ function ValidatedText({
     ValidatedInputControl2,
     {
       required: !!isValid2.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
@@ -14508,6 +14535,7 @@ function Email({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
@@ -14518,6 +14546,7 @@ function Email({
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity,
         type: "email",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components34.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(import_components34.Icon, { icon: envelope_default }) })
@@ -14534,6 +14563,7 @@ function Telephone({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
@@ -14544,6 +14574,7 @@ function Telephone({
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity,
         type: "tel",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components35.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components35.Icon, { icon: mobile_default }) })
@@ -14560,6 +14591,7 @@ function Url({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
@@ -14570,6 +14602,7 @@ function Url({
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity,
         type: "url",
         prefix: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_components36.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_components36.Icon, { icon: link_default }) })
@@ -14644,6 +14677,7 @@ function ValidatedNumber({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   operator,
   validity
 }) {
@@ -14697,6 +14731,7 @@ function ValidatedNumber({
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       help: description,
@@ -14733,6 +14768,7 @@ function Radio({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -14752,6 +14788,7 @@ function Radio({
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       help: description,
@@ -14773,6 +14810,7 @@ function Select({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -14793,6 +14831,7 @@ function Select({
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       value,
@@ -14814,6 +14853,7 @@ function Text2({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   config,
   validity
 }) {
@@ -14826,6 +14866,7 @@ function Text2({
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity,
         prefix: prefix ? (0, import_element47.createElement)(prefix) : void 0,
         suffix: suffix ? (0, import_element47.createElement)(suffix) : void 0
@@ -14844,6 +14885,7 @@ function Toggle({
   onChange,
   data,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -14856,6 +14898,7 @@ function Toggle({
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       hidden: hideLabelFromVision,
       label,
@@ -14876,6 +14919,7 @@ function Textarea({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   config,
   validity
 }) {
@@ -14890,6 +14934,7 @@ function Textarea({
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
@@ -14915,6 +14960,7 @@ function ToggleGroup({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { getValue, setValue, isValid: isValid2 } = field;
@@ -14938,6 +14984,7 @@ function ToggleGroup({
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       __next40pxDefaultSize: true,
       isBlock: true,
@@ -14968,6 +15015,7 @@ function ArrayControl({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
@@ -15004,6 +15052,7 @@ function ArrayControl({
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label: hideLabelFromVision ? void 0 : label,
       value: arrayValueAsElements,
@@ -15255,6 +15304,7 @@ function Color({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
@@ -15275,6 +15325,7 @@ function Color({
     ValidatedInputControl3,
     {
       required: !!field.isValid?.required,
+      markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
       label,
       placeholder,
@@ -15304,6 +15355,7 @@ function Password({
   field,
   onChange,
   hideLabelFromVision,
+  markWhenOptional,
   validity
 }) {
   const [isVisible2, setIsVisible] = (0, import_element53.useState)(false);
@@ -15318,6 +15370,7 @@ function Password({
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
         suffix: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components45.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(

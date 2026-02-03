@@ -65280,6 +65280,7 @@ var wp;
     onChange,
     data,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
@@ -65292,6 +65293,7 @@ var wp;
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
@@ -65464,6 +65466,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
@@ -65544,7 +65547,12 @@ var wp;
     const {
       timezone: { string: timezoneString }
     } = (0, import_date5.getSettings)();
-    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n212.__)("Required")})` : label;
+    let displayLabel = label;
+    if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
+      displayLabel = `${label} (${(0, import_i18n212.__)("Required")})`;
+    } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
+      displayLabel = `${label} (${(0, import_i18n212.__)("Optional")})`;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
       import_components228.BaseControl,
       {
@@ -65590,6 +65598,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     operator,
     validity
   }) {
@@ -65613,6 +65622,7 @@ var wp;
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity
       }
     );
@@ -65811,6 +65821,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const {
@@ -65874,7 +65885,12 @@ var wp;
     const {
       timezone: { string: timezoneString }
     } = (0, import_date6.getSettings)();
-    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n213.__)("Required")})` : label;
+    let displayLabel = label;
+    if (isValid2?.required && !markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n213.__)("Required")})`;
+    } else if (!isValid2?.required && markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n213.__)("Optional")})`;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
       ValidatedDateControl,
       {
@@ -65965,6 +65981,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { id, label, getValue, setValue, format: fieldFormat } = field;
@@ -66056,7 +66073,12 @@ var wp;
       [value, updateDateRange]
     );
     const { timezone } = (0, import_date6.getSettings)();
-    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n213.__)("Required")})` : label;
+    let displayLabel = label;
+    if (field.isValid?.required && !markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n213.__)("Required")})`;
+    } else if (!field.isValid?.required && markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n213.__)("Optional")})`;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
       ValidatedDateControl,
       {
@@ -66171,6 +66193,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     operator,
     validity
   }) {
@@ -66195,6 +66218,7 @@ var wp;
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity
         }
       );
@@ -66206,6 +66230,7 @@ var wp;
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity
       }
     );
@@ -66224,6 +66249,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     type,
     prefix: prefix2,
     suffix,
@@ -66244,6 +66270,7 @@ var wp;
       ValidatedInputControl3,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -66269,6 +66296,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
@@ -66279,6 +66307,7 @@ var wp;
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: "email",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(import_components231.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(import_components231.Icon, { icon: envelope_default }) })
@@ -66295,6 +66324,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
@@ -66305,6 +66335,7 @@ var wp;
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: "tel",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(import_components232.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(import_components232.Icon, { icon: mobile_default }) })
@@ -66321,6 +66352,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
@@ -66331,6 +66363,7 @@ var wp;
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: "url",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components233.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components233.Icon, { icon: link_default }) })
@@ -66405,6 +66438,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     operator,
     validity
   }) {
@@ -66458,6 +66492,7 @@ var wp;
       ValidatedNumberControl,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
@@ -66494,6 +66529,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -66513,6 +66549,7 @@ var wp;
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
@@ -66534,6 +66571,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -66554,6 +66592,7 @@ var wp;
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         value,
@@ -66575,6 +66614,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     config: config2,
     validity
   }) {
@@ -66587,6 +66627,7 @@ var wp;
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           prefix: prefix2 ? (0, import_element239.createElement)(prefix2) : void 0,
           suffix: suffix ? (0, import_element239.createElement)(suffix) : void 0
@@ -66605,6 +66646,7 @@ var wp;
     onChange,
     data,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -66617,6 +66659,7 @@ var wp;
       ValidatedToggleControl,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
@@ -66637,6 +66680,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     config: config2,
     validity
   }) {
@@ -66651,6 +66695,7 @@ var wp;
       ValidatedTextareaControl,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -66676,6 +66721,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { getValue, setValue, isValid: isValid2 } = field;
@@ -66699,6 +66745,7 @@ var wp;
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         __next40pxDefaultSize: true,
         isBlock: true,
@@ -66729,6 +66776,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
@@ -66765,6 +66813,7 @@ var wp;
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label: hideLabelFromVision ? void 0 : label,
         value: arrayValueAsElements,
@@ -66858,6 +66907,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
@@ -66878,6 +66928,7 @@ var wp;
       ValidatedInputControl4,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -66907,6 +66958,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const [isVisible, setIsVisible] = (0, import_element245.useState)(false);
@@ -66921,6 +66973,7 @@ var wp;
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: isVisible ? "text" : "password",
           suffix: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(import_components242.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
@@ -68182,6 +68235,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { fields } = (0, import_element247.useContext)(dataform_context_default);
@@ -68245,6 +68299,7 @@ var wp;
                 field: fieldDefinition,
                 onChange,
                 hideLabelFromVision: true,
+                markWhenOptional,
                 validity
               },
               fieldDefinition.id
@@ -68269,6 +68324,7 @@ var wp;
         field: fieldDefinition,
         onChange,
         hideLabelFromVision: labelPosition === "none" ? true : hideLabelFromVision,
+        markWhenOptional,
         validity
       }
     ) });
@@ -68487,13 +68543,14 @@ var wp;
               form,
               onChange,
               validity: formValidity,
-              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
+              children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
                 FieldLayout,
                 {
                   data,
                   field: childField,
                   onChange,
                   hideLabelFromVision: (form?.fields ?? []).length < 2,
+                  markWhenOptional,
                   validity: childFieldValidity
                 },
                 childField.id
@@ -69082,13 +69139,14 @@ var wp;
               form,
               onChange: handleOnChange,
               validity,
-              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
+              children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
                 FieldLayout,
                 {
                   data: modalData,
                   field: childField,
                   onChange: handleOnChange,
                   hideLabelFromVision: form.fields.length < 2,
+                  markWhenOptional,
                   validity: childFieldValidity
                 },
                 childField.id
@@ -69538,6 +69596,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { fields } = (0, import_element253.useContext)(dataform_context_default);
@@ -69660,6 +69719,7 @@ var wp;
               field,
               onChange,
               hideLabelFromVision: hideLabelFromVision || withHeader,
+              markWhenOptional,
               validity
             }
           )
@@ -69688,6 +69748,7 @@ var wp;
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const layout = field.layout;
@@ -69718,6 +69779,7 @@ var wp;
                     field: childField,
                     onChange,
                     hideLabelFromVision,
+                    markWhenOptional,
                     validity: childFieldValidity
                   }
                 )
@@ -69738,6 +69800,7 @@ var wp;
         data,
         field,
         onChange,
+        markWhenOptional,
         validity
       }
     ) }) });
@@ -69925,6 +69988,13 @@ var wp;
     as
   }) {
     const { fields: fieldDefinitions } = (0, import_element255.useContext)(dataform_context_default);
+    const markWhenOptional = (0, import_element255.useMemo)(() => {
+      const requiredCount = fieldDefinitions.filter(
+        (f2) => !!f2.isValid?.required
+      ).length;
+      const optionalCount = fieldDefinitions.length - requiredCount;
+      return requiredCount > optionalCount;
+    }, [fieldDefinitions]);
     function getFieldDefinition2(field) {
       return fieldDefinitions.find(
         (fieldDefinition) => fieldDefinition.id === field.id
@@ -69944,7 +70014,8 @@ var wp;
         return children(
           FieldLayout,
           formField,
-          validity?.[formField.id]
+          validity?.[formField.id],
+          markWhenOptional
         );
       }
       return /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
@@ -69953,6 +70024,7 @@ var wp;
           data,
           field: formField,
           onChange,
+          markWhenOptional,
           validity: validity?.[formField.id]
         },
         formField.id

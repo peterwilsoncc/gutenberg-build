@@ -36339,6 +36339,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     data,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
@@ -36351,6 +36352,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedCheckboxControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
@@ -36523,6 +36525,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
@@ -36603,7 +36606,12 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       timezone: { string: timezoneString }
     } = (0, import_date4.getSettings)();
-    const displayLabel = isValid2?.required && !hideLabelFromVision ? `${label} (${(0, import_i18n115.__)("Required")})` : label;
+    let displayLabel = label;
+    if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
+      displayLabel = `${label} (${(0, import_i18n115.__)("Required")})`;
+    } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
+      displayLabel = `${label} (${(0, import_i18n115.__)("Optional")})`;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
       import_components122.BaseControl,
       {
@@ -36649,6 +36657,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     operator,
     validity
   }) {
@@ -36672,6 +36681,7 @@ If there's a particular need for this, please submit a feature request at https:
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity
       }
     );
@@ -36870,6 +36880,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const {
@@ -36933,7 +36944,12 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       timezone: { string: timezoneString }
     } = (0, import_date5.getSettings)();
-    const displayLabel = isValid2?.required ? `${label} (${(0, import_i18n116.__)("Required")})` : label;
+    let displayLabel = label;
+    if (isValid2?.required && !markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n116.__)("Required")})`;
+    } else if (!isValid2?.required && markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n116.__)("Optional")})`;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
       ValidatedDateControl,
       {
@@ -37024,6 +37040,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { id, label, getValue, setValue, format: fieldFormat } = field;
@@ -37115,7 +37132,12 @@ If there's a particular need for this, please submit a feature request at https:
       [value, updateDateRange]
     );
     const { timezone } = (0, import_date5.getSettings)();
-    const displayLabel = field.isValid?.required ? `${label} (${(0, import_i18n116.__)("Required")})` : label;
+    let displayLabel = label;
+    if (field.isValid?.required && !markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n116.__)("Required")})`;
+    } else if (!field.isValid?.required && markWhenOptional) {
+      displayLabel = `${label} (${(0, import_i18n116.__)("Optional")})`;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
       ValidatedDateControl,
       {
@@ -37230,6 +37252,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     operator,
     validity
   }) {
@@ -37254,6 +37277,7 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity
         }
       );
@@ -37265,6 +37289,7 @@ If there's a particular need for this, please submit a feature request at https:
         field,
         onChange,
         hideLabelFromVision,
+        markWhenOptional,
         validity
       }
     );
@@ -37283,6 +37308,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     type,
     prefix: prefix2,
     suffix,
@@ -37303,6 +37329,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedInputControl2,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -37328,6 +37355,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
@@ -37338,6 +37366,7 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: "email",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components125.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components125.Icon, { icon: envelope_default }) })
@@ -37354,6 +37383,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
@@ -37364,6 +37394,7 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: "tel",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_components126.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_components126.Icon, { icon: mobile_default }) })
@@ -37380,6 +37411,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
@@ -37390,6 +37422,7 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: "url",
           prefix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(import_components127.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(import_components127.Icon, { icon: link_default }) })
@@ -37464,6 +37497,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     operator,
     validity
   }) {
@@ -37517,6 +37551,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedNumberControl,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
@@ -37553,6 +37588,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -37572,6 +37608,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedRadioControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         help: description,
@@ -37593,6 +37630,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -37613,6 +37651,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedSelectControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         value,
@@ -37634,6 +37673,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     config: config2,
     validity
   }) {
@@ -37646,6 +37686,7 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           prefix: prefix2 ? (0, import_element112.createElement)(prefix2) : void 0,
           suffix: suffix ? (0, import_element112.createElement)(suffix) : void 0
@@ -37664,6 +37705,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     data,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
@@ -37676,6 +37718,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedToggleControl,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         hidden: hideLabelFromVision,
         label,
@@ -37696,6 +37739,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     config: config2,
     validity
   }) {
@@ -37710,6 +37754,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedTextareaControl,
       {
         required: !!isValid2.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -37735,6 +37780,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { getValue, setValue, isValid: isValid2 } = field;
@@ -37758,6 +37804,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         __next40pxDefaultSize: true,
         isBlock: true,
@@ -37788,6 +37835,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, placeholder, getValue, setValue, isValid: isValid2 } = field;
@@ -37824,6 +37872,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label: hideLabelFromVision ? void 0 : label,
         value: arrayValueAsElements,
@@ -37917,6 +37966,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
@@ -37937,6 +37987,7 @@ If there's a particular need for this, please submit a feature request at https:
       ValidatedInputControl3,
       {
         required: !!field.isValid?.required,
+        markWhenOptional,
         customValidity: getCustomValidity(isValid2, validity),
         label,
         placeholder,
@@ -37966,6 +38017,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const [isVisible2, setIsVisible] = (0, import_element118.useState)(false);
@@ -37980,6 +38032,7 @@ If there's a particular need for this, please submit a feature request at https:
           field,
           onChange,
           hideLabelFromVision,
+          markWhenOptional,
           validity,
           type: isVisible2 ? "text" : "password",
           suffix: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(import_components136.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
@@ -39447,6 +39500,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { fields } = (0, import_element121.useContext)(dataform_context_default);
@@ -39510,6 +39564,7 @@ If there's a particular need for this, please submit a feature request at https:
                 field: fieldDefinition,
                 onChange,
                 hideLabelFromVision: true,
+                markWhenOptional,
                 validity
               },
               fieldDefinition.id
@@ -39534,6 +39589,7 @@ If there's a particular need for this, please submit a feature request at https:
         field: fieldDefinition,
         onChange,
         hideLabelFromVision: labelPosition === "none" ? true : hideLabelFromVision,
+        markWhenOptional,
         validity
       }
     ) });
@@ -39752,13 +39808,14 @@ If there's a particular need for this, please submit a feature request at https:
               form,
               onChange,
               validity: formValidity,
-              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
+              children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
                 FieldLayout,
                 {
                   data,
                   field: childField,
                   onChange,
                   hideLabelFromVision: (form?.fields ?? []).length < 2,
+                  markWhenOptional,
                   validity: childFieldValidity
                 },
                 childField.id
@@ -40347,13 +40404,14 @@ If there's a particular need for this, please submit a feature request at https:
               form,
               onChange: handleOnChange,
               validity,
-              children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
+              children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
                 FieldLayout,
                 {
                   data: modalData,
                   field: childField,
                   onChange: handleOnChange,
                   hideLabelFromVision: form.fields.length < 2,
+                  markWhenOptional,
                   validity: childFieldValidity
                 },
                 childField.id
@@ -40803,6 +40861,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const { fields } = (0, import_element127.useContext)(dataform_context_default);
@@ -40925,6 +40984,7 @@ If there's a particular need for this, please submit a feature request at https:
               field,
               onChange,
               hideLabelFromVision: hideLabelFromVision || withHeader,
+              markWhenOptional,
               validity
             }
           )
@@ -40953,6 +41013,7 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     onChange,
     hideLabelFromVision,
+    markWhenOptional,
     validity
   }) {
     const layout = field.layout;
@@ -40983,6 +41044,7 @@ If there's a particular need for this, please submit a feature request at https:
                     field: childField,
                     onChange,
                     hideLabelFromVision,
+                    markWhenOptional,
                     validity: childFieldValidity
                   }
                 )
@@ -41003,6 +41065,7 @@ If there's a particular need for this, please submit a feature request at https:
         data,
         field,
         onChange,
+        markWhenOptional,
         validity
       }
     ) }) });
@@ -41190,6 +41253,13 @@ If there's a particular need for this, please submit a feature request at https:
     as
   }) {
     const { fields: fieldDefinitions } = (0, import_element129.useContext)(dataform_context_default);
+    const markWhenOptional = (0, import_element129.useMemo)(() => {
+      const requiredCount = fieldDefinitions.filter(
+        (f2) => !!f2.isValid?.required
+      ).length;
+      const optionalCount = fieldDefinitions.length - requiredCount;
+      return requiredCount > optionalCount;
+    }, [fieldDefinitions]);
     function getFieldDefinition2(field) {
       return fieldDefinitions.find(
         (fieldDefinition) => fieldDefinition.id === field.id
@@ -41209,7 +41279,8 @@ If there's a particular need for this, please submit a feature request at https:
         return children(
           FieldLayout,
           formField,
-          validity?.[formField.id]
+          validity?.[formField.id],
+          markWhenOptional
         );
       }
       return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
@@ -41218,6 +41289,7 @@ If there's a particular need for this, please submit a feature request at https:
           data,
           field: formField,
           onChange,
+          markWhenOptional,
           validity: validity?.[formField.id]
         },
         formField.id
