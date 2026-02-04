@@ -38725,7 +38725,7 @@ ${js}
     const { saveEntityRecord } = (0, import_data66.useDispatch)(import_core_data33.store);
     const pattern = (0, import_data66.useSelect)(
       (select9) => unlock(select9(import_block_editor141.store)).getPatternBySlug(
-        "gutenberg/navigation-overlay"
+        "core/navigation-overlay"
       ),
       []
     );
@@ -41664,7 +41664,6 @@ ${js}
     );
     const hasAlreadyRendered = isPreviewMode ? false : recursionDetected;
     const blockEditingMode = (0, import_block_editor156.useBlockEditingMode)();
-    const isOverlayExperimentEnabled = typeof window !== "undefined" && window.__experimentalNavigationOverlays === true;
     const { menus: classicMenus } = useNavigationEntities();
     const [showNavigationMenuStatusNotice, hideNavigationMenuStatusNotice] = use_navigation_notice_default({
       name: "block-library/core/navigation/status"
@@ -41945,7 +41944,7 @@ ${js}
     );
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const stylingInspectorControls = /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor156.InspectorControls, { children: (!isOverlayExperimentEnabled || hasSubmenus) && /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor156.InspectorControls, { children: hasSubmenus && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
         import_components88.__experimentalToolsPanel,
         {
           label: (0, import_i18n138.__)("Display"),
@@ -41959,140 +41958,102 @@ ${js}
             });
           },
           dropdownMenuProps,
-          children: [
-            !isOverlayExperimentEnabled && /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, { children: [
-              isResponsive && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                OverlayMenuPreviewButton,
-                {
-                  isResponsive,
-                  overlayMenuPreview,
-                  setOverlayMenuPreview,
-                  hasIcon,
-                  icon: icon3,
-                  setAttributes,
-                  overlayMenuPreviewClasses,
-                  overlayMenuPreviewId,
-                  containerStyle: {
-                    gridColumn: "span 2"
-                  }
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                import_components88.__experimentalToolsPanelItem,
-                {
-                  hasValue: () => overlayMenu !== "mobile",
-                  label: (0, import_i18n138.__)("Overlay Visibility"),
-                  onDeselect: () => setAttributes({
-                    overlayMenu: "mobile"
-                  }),
-                  isShownByDefault: true,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                    OverlayVisibilityControl,
-                    {
-                      overlayMenu,
-                      setAttributes
-                    }
-                  )
-                }
-              )
-            ] }),
-            hasSubmenus && /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("h3", { className: "wp-block-navigation__submenu-header", children: (0, import_i18n138.__)("Submenus") }),
-              /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                import_components88.__experimentalToolsPanelItem,
-                {
-                  hasValue: () => submenuVisibility !== "hover",
-                  label: (0, import_i18n138.__)("Submenu Visibility"),
-                  onDeselect: () => setAttributes({
-                    submenuVisibility: "hover"
-                  }),
-                  isShownByDefault: true,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(
-                    import_components88.__experimentalToggleGroupControl,
-                    {
-                      __next40pxDefaultSize: true,
-                      label: (0, import_i18n138.__)("Submenu Visibility"),
-                      value: submenuVisibility,
-                      onChange: (value) => {
-                        const newAttributes = {
-                          submenuVisibility: value
-                        };
-                        const prevSubmenuVisibility = submenuVisibility;
-                        if (value === "always") {
-                          newAttributes.showSubmenuIcon = false;
-                        } else if (value === "click" || prevSubmenuVisibility === "always") {
-                          newAttributes.showSubmenuIcon = true;
+          children: hasSubmenus && /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_jsx_runtime322.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("h3", { className: "wp-block-navigation__submenu-header", children: (0, import_i18n138.__)("Submenus") }),
+            /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+              import_components88.__experimentalToolsPanelItem,
+              {
+                hasValue: () => submenuVisibility !== "hover",
+                label: (0, import_i18n138.__)("Submenu Visibility"),
+                onDeselect: () => setAttributes({
+                  submenuVisibility: "hover"
+                }),
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(
+                  import_components88.__experimentalToggleGroupControl,
+                  {
+                    __next40pxDefaultSize: true,
+                    label: (0, import_i18n138.__)("Submenu Visibility"),
+                    value: submenuVisibility,
+                    onChange: (value) => {
+                      const newAttributes = {
+                        submenuVisibility: value
+                      };
+                      const prevSubmenuVisibility = submenuVisibility;
+                      if (value === "always") {
+                        newAttributes.showSubmenuIcon = false;
+                      } else if (value === "click" || prevSubmenuVisibility === "always") {
+                        newAttributes.showSubmenuIcon = true;
+                      }
+                      setAttributes(newAttributes);
+                    },
+                    isBlock: true,
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+                        import_components88.__experimentalToggleGroupControlOption,
+                        {
+                          value: "hover",
+                          label: (0, import_i18n138.__)("Hover")
                         }
-                        setAttributes(newAttributes);
-                      },
-                      isBlock: true,
-                      children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                          import_components88.__experimentalToggleGroupControlOption,
-                          {
-                            value: "hover",
-                            label: (0, import_i18n138.__)("Hover")
-                          }
-                        ),
-                        /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                          import_components88.__experimentalToggleGroupControlOption,
-                          {
-                            value: "click",
-                            label: (0, import_i18n138.__)("Click")
-                          }
-                        ),
-                        orientation === "vertical" && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                          import_components88.__experimentalToggleGroupControlOption,
-                          {
-                            value: "always",
-                            label: (0, import_i18n138.__)("Always")
-                          }
-                        )
-                      ]
-                    }
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                import_components88.__experimentalToolsPanelItem,
-                {
-                  hasValue: () => !showSubmenuIcon,
-                  label: (0, import_i18n138.__)("Show arrow"),
-                  onDeselect: () => setAttributes({
-                    showSubmenuIcon: true
-                  }),
-                  isDisabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
-                  isShownByDefault: true,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                    import_components88.ToggleControl,
-                    {
-                      checked: showSubmenuIcon,
-                      onChange: (value) => {
-                        setAttributes({
-                          showSubmenuIcon: value
-                        });
-                      },
-                      disabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
-                      label: (0, import_i18n138.__)("Show arrow")
-                    }
-                  )
-                }
-              ),
-              submenuAccessibilityNotice && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                import_components88.Notice,
-                {
-                  spokenMessage: null,
-                  status: "warning",
-                  isDismissible: false,
-                  className: "wp-block-navigation__submenu-accessibility-notice",
-                  children: submenuAccessibilityNotice
-                }
-              )
-            ] })
-          ]
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+                        import_components88.__experimentalToggleGroupControlOption,
+                        {
+                          value: "click",
+                          label: (0, import_i18n138.__)("Click")
+                        }
+                      ),
+                      orientation === "vertical" && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+                        import_components88.__experimentalToggleGroupControlOption,
+                        {
+                          value: "always",
+                          label: (0, import_i18n138.__)("Always")
+                        }
+                      )
+                    ]
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+              import_components88.__experimentalToolsPanelItem,
+              {
+                hasValue: () => !showSubmenuIcon,
+                label: (0, import_i18n138.__)("Show arrow"),
+                onDeselect: () => setAttributes({
+                  showSubmenuIcon: true
+                }),
+                isDisabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
+                isShownByDefault: true,
+                children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+                  import_components88.ToggleControl,
+                  {
+                    checked: showSubmenuIcon,
+                    onChange: (value) => {
+                      setAttributes({
+                        showSubmenuIcon: value
+                      });
+                    },
+                    disabled: computedSubmenuVisibility === "click" || computedSubmenuVisibility === "always",
+                    label: (0, import_i18n138.__)("Show arrow")
+                  }
+                )
+              }
+            ),
+            submenuAccessibilityNotice && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+              import_components88.Notice,
+              {
+                spokenMessage: null,
+                status: "warning",
+                isDismissible: false,
+                className: "wp-block-navigation__submenu-accessibility-notice",
+                children: submenuAccessibilityNotice
+              }
+            )
+          ] })
         }
       ) }),
-      isOverlayExperimentEnabled && !isWithinOverlay && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor156.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+      !isWithinOverlay && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_block_editor156.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
         OverlayPanel,
         {
           overlayMenu,
@@ -44469,7 +44430,6 @@ ${js}
   // packages/block-library/build-module/navigation-overlay-close/block.json
   var block_default57 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
-    __experimental: true,
     apiVersion: 3,
     name: "core/navigation-overlay-close",
     title: "Navigation Overlay Close",
@@ -68677,11 +68637,7 @@ ${js}
 
   // packages/block-library/build-module/template-part/edit/index.mjs
   var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
-  var SUPPORTED_AREAS = ["header", "footer"];
-  function getSupportedAreas() {
-    const isOverlayExperimentEnabled = typeof window !== "undefined" && window.__experimentalNavigationOverlays === true;
-    return isOverlayExperimentEnabled ? [...SUPPORTED_AREAS, "navigation-overlay"] : SUPPORTED_AREAS;
-  }
+  var SUPPORTED_AREAS = ["header", "footer", "navigation-overlay"];
   function ReplaceButton({
     isEntityAvailable,
     area,
@@ -68694,8 +68650,7 @@ ${js}
       templatePartId
     );
     const hasReplacements = !!templateParts.length;
-    const supportedAreas = getSupportedAreas();
-    const canReplace = isEntityAvailable && hasReplacements && supportedAreas.includes(area);
+    const canReplace = isEntityAvailable && hasReplacements && SUPPORTED_AREAS.includes(area);
     if (!canReplace) {
       return null;
     }
@@ -68713,8 +68668,7 @@ ${js}
   }
   function TemplatesList({ area, clientId, isEntityAvailable, onSelect }) {
     const blockPatterns = useAlternativeBlockPatterns(area, clientId);
-    const supportedAreas = getSupportedAreas();
-    const canReplace = isEntityAvailable && !!blockPatterns.length && supportedAreas.includes(area);
+    const canReplace = isEntityAvailable && !!blockPatterns.length && SUPPORTED_AREAS.includes(area);
     if (!canReplace) {
       return null;
     }
@@ -72816,6 +72770,7 @@ ${js}
       table_of_contents_exports,
       home_link_exports,
       loginout_exports,
+      navigation_overlay_close_exports,
       term_count_exports,
       term_description_exports,
       term_name_exports,
@@ -72837,9 +72792,6 @@ ${js}
       blocks.push(form_input_exports);
       blocks.push(form_submit_button_exports);
       blocks.push(form_submission_notification_exports);
-    }
-    if (window?.__experimentalNavigationOverlays) {
-      blocks.push(navigation_overlay_close_exports);
     }
     if (window?.__experimentalEnableBlockExperiments) {
       blocks.push(playlist_exports);

@@ -4510,7 +4510,6 @@ return array(
 	),
 	'navigation-overlay-close' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'__experimental' => true,
 		'apiVersion' => 3,
 		'name' => 'core/navigation-overlay-close',
 		'title' => 'Navigation Overlay Close',
