@@ -23,16 +23,6 @@ return array(
 		'asset' => 'latex-to-mathml/loader.min.asset.php',
 	),
 	array(
-		'id' => '@wordpress/interactivity-router',
-		'path' => 'interactivity-router/index',
-		'asset' => 'interactivity-router/index.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/interactivity-router/full-page',
-		'path' => 'interactivity-router/full-page',
-		'asset' => 'interactivity-router/full-page.min.asset.php',
-	),
-	array(
 		'id' => '@wordpress/a11y',
 		'path' => 'a11y/index',
 		'asset' => 'a11y/index.min.asset.php',
@@ -41,6 +31,16 @@ return array(
 		'id' => '@wordpress/abilities',
 		'path' => 'abilities/index',
 		'asset' => 'abilities/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/interactivity-router',
+		'path' => 'interactivity-router/index',
+		'asset' => 'interactivity-router/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/interactivity-router/full-page',
+		'path' => 'interactivity-router/full-page',
+		'asset' => 'interactivity-router/full-page.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/core-abilities',
@@ -71,6 +71,11 @@ return array(
 		'id' => '@wordpress/boot',
 		'path' => 'boot/index',
 		'asset' => 'boot/index.min.asset.php',
+	),
+	array(
+		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
+		'path' => 'block-editor/utils/fit-text-frontend',
+		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/block-library/accordion/view',
@@ -116,11 +121,6 @@ return array(
 		'id' => '@wordpress/block-library/tabs/view',
 		'path' => 'block-library/tabs/view',
 		'asset' => 'block-library/tabs/view.min.asset.php',
-	),
-	array(
-		'id' => '@wordpress/block-editor/utils/fit-text-frontend',
-		'path' => 'block-editor/utils/fit-text-frontend',
-		'asset' => 'block-editor/utils/fit-text-frontend.min.asset.php',
 	),
 	array(
 		'id' => '@wordpress/boot',
