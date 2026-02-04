@@ -66841,12 +66841,8 @@ ${js}
     version: "1.0.0",
     category: "design",
     textdomain: "default",
-    parent: [
-      "core/tabs"
-    ],
-    allowedBlocks: [
-      "core/tabs-menu-item"
-    ],
+    parent: ["core/tabs"],
+    allowedBlocks: ["core/tabs-menu-item"],
     usesContext: [
       "core/tabs-list",
       "core/tabs-id",
@@ -67415,9 +67411,7 @@ ${js}
     version: "1.0.0",
     category: "design",
     textdomain: "default",
-    parent: [
-      "core/tabs-menu"
-    ],
+    parent: ["core/tabs-menu"],
     usesContext: [
       "core/tabs-menu-item-index",
       "core/tabs-menu-item-id",
