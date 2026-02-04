@@ -2891,6 +2891,13 @@ var wp;
     }
     return state;
   }
+  function selectedNote(state = {}, action) {
+    switch (action.type) {
+      case "SELECT_NOTE":
+        return { noteId: action.noteId, options: action.options };
+    }
+    return state;
+  }
   var reducer_default2 = (0, import_data2.combineReducers)({
     postId,
     postType,
@@ -2914,6 +2921,7 @@ var wp;
     showStylebook,
     canvasMinHeight,
     revisionId,
+    selectedNote,
     dataviews: reducer_default
   });
 
@@ -5213,6 +5221,7 @@ var wp;
     restoreRevision: () => restoreRevision,
     revertTemplate: () => revertTemplate2,
     saveDirtyEntities: () => saveDirtyEntities,
+    selectNote: () => selectNote,
     setCanvasMinHeight: () => setCanvasMinHeight,
     setCurrentRevisionId: () => setCurrentRevisionId,
     setCurrentTemplateId: () => setCurrentTemplateId,
@@ -33683,6 +33692,13 @@ var wp;
       id: "editor-revision-restored"
     });
   };
+  function selectNote(noteId, options = { focus: false }) {
+    return {
+      type: "SELECT_NOTE",
+      noteId,
+      options
+    };
+  }
 
   // packages/editor/build-module/store/private-selectors.mjs
   var private_selectors_exports = {};
@@ -33698,10 +33714,12 @@ var wp;
     getListViewToggleRef: () => getListViewToggleRef,
     getPostBlocksByName: () => getPostBlocksByName,
     getPostIcon: () => getPostIcon,
+    getSelectedNote: () => getSelectedNote,
     getShowStylebook: () => getShowStylebook,
     getStylesPath: () => getStylesPath,
     hasPostMetaChanges: () => hasPostMetaChanges,
     isEntityReady: () => isEntityReady2,
+    isNoteFocused: () => isNoteFocused,
     isRevisionsMode: () => isRevisionsMode
   });
   var import_fast_deep_equal = __toESM(require_fast_deep_equal(), 1);
@@ -33906,6 +33924,12 @@ var wp;
       return revisions.find((r4) => r4.id === revisionId2) ?? null;
     }
   );
+  function getSelectedNote(state) {
+    return state.selectedNote?.noteId;
+  }
+  function isNoteFocused(state) {
+    return !!state.selectedNote?.options?.focus;
+  }
 
   // packages/editor/build-module/store/index.mjs
   var storeConfig = {
@@ -58236,7 +58260,7 @@ var wp;
     if (!container) {
       return;
     }
-    const threadSelector = commentId ? `[role=treeitem][id="comment-thread-${commentId}"]` : "[role=treeitem]:not([id])";
+    const threadSelector = commentId && commentId !== "new" ? `[role=treeitem][id="comment-thread-${commentId}"]` : "[role=treeitem]:not([id])";
     const selector = additionalSelector ? `${threadSelector} ${additionalSelector}` : threadSelector;
     return new Promise((resolve) => {
       if (container.querySelector(selector)) {
@@ -58965,8 +58989,6 @@ var wp;
   var { useBlockElement: useBlockElement2 } = unlock(import_block_editor94.privateApis);
   function AddComment({
     onSubmit,
-    newNoteFormState,
-    setNewNoteFormState,
     commentSidebarRef,
     reflowComments = noop6,
     isFloating = false,
@@ -58979,14 +59001,19 @@ var wp;
         clientId: getSelectedBlockClientId2()
       };
     }, []);
+    const selectedNote2 = (0, import_data232.useSelect)(
+      (select5) => unlock(select5(store)).getSelectedNote(),
+      []
+    );
     const blockElement = useBlockElement2(clientId);
     const { toggleBlockSpotlight } = unlock((0, import_data232.useDispatch)(import_block_editor94.store));
+    const { selectNote: selectNote2 } = unlock((0, import_data232.useDispatch)(store));
     const unselectThread = () => {
-      setNewNoteFormState("closed");
+      selectNote2(void 0);
       blockElement?.focus();
       toggleBlockSpotlight(clientId, false);
     };
-    if (newNoteFormState !== "open" || !clientId) {
+    if (selectedNote2 !== "new" || !clientId) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime405.jsxs)(
@@ -59012,7 +59039,7 @@ var wp;
             return;
           }
           toggleBlockSpotlight(clientId, false);
-          setNewNoteFormState("closed");
+          selectNote2(void 0);
         },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components245.__experimentalHStack, { alignment: "left", spacing: "3", children: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(comment_author_info_default, {}) }),
@@ -59021,8 +59048,8 @@ var wp;
             {
               onSubmit: async (inputComment) => {
                 const { id } = await onSubmit({ content: inputComment });
+                selectNote2(id);
                 focusCommentThread(id, commentSidebarRef.current);
-                setNewNoteFormState("creating");
               },
               onCancel: unselectThread,
               reflowComments,
@@ -59044,18 +59071,17 @@ var wp;
     onEditComment,
     onAddReply,
     onCommentDelete,
-    newNoteFormState,
-    setNewNoteFormState,
     commentSidebarRef,
     reflowComments,
     isFloating = false,
     commentLastUpdated
   }) {
     const [heights, setHeights] = (0, import_element213.useState)({});
-    const [selectedThread, setSelectedThread] = (0, import_element213.useState)(null);
     const [boardOffsets, setBoardOffsets] = (0, import_element213.useState)({});
     const [blockRefs, setBlockRefs] = (0, import_element213.useState)({});
-    const { setCanvasMinHeight: setCanvasMinHeight2 } = unlock((0, import_data233.useDispatch)(store));
+    const { setCanvasMinHeight: setCanvasMinHeight2, selectNote: selectNote2 } = unlock(
+      (0, import_data233.useDispatch)(store)
+    );
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data233.useDispatch)(import_block_editor95.store)
     );
@@ -59072,13 +59098,22 @@ var wp;
         orderedBlockIds: getClientIdsWithDescendants2()
       };
     }, []);
+    const { selectedNote: selectedNote2, noteFocused } = (0, import_data233.useSelect)((select5) => {
+      const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
+        select5(store)
+      );
+      return {
+        selectedNote: getSelectedNote2(),
+        noteFocused: isNoteFocused2()
+      };
+    }, []);
     const relatedBlockElement = useBlockElement3(selectedBlockClientId);
     const threads = (0, import_element213.useMemo)(() => {
       const t4 = [...noteThreads];
       const orderedThreads = [];
-      if (isFloating && newNoteFormState === "open") {
+      if (isFloating && selectedNote2 === "new") {
         const newNoteThread = {
-          id: "new-note-thread",
+          id: "new",
           blockClientId: selectedBlockClientId,
           content: { rendered: "" }
         };
@@ -59100,7 +59135,7 @@ var wp;
     }, [
       noteThreads,
       isFloating,
-      newNoteFormState,
+      selectedNote2,
       selectedBlockClientId,
       orderedBlockIds
     ]);
@@ -59110,30 +59145,34 @@ var wp;
       const prevThread = threads[currentIndex - 1];
       await onCommentDelete(comment);
       if (comment.parent !== 0) {
-        setSelectedThread(comment.parent);
+        selectNote2(comment.parent);
         focusCommentThread(comment.parent, commentSidebarRef.current);
         return;
       }
       if (nextThread) {
-        setSelectedThread(nextThread.id);
+        selectNote2(nextThread.id);
         focusCommentThread(nextThread.id, commentSidebarRef.current);
       } else if (prevThread) {
-        setSelectedThread(prevThread.id);
+        selectNote2(prevThread.id);
         focusCommentThread(prevThread.id, commentSidebarRef.current);
       } else {
-        setSelectedThread(null);
-        setNewNoteFormState("closed");
+        selectNote2(void 0);
         relatedBlockElement?.focus();
       }
     };
     (0, import_element213.useEffect)(() => {
-      setSelectedThread(
-        newNoteFormState === "open" ? "new-note-thread" : blockCommentId
-      );
-    }, [blockCommentId, newNoteFormState]);
-    const setBlockRef = (0, import_element213.useCallback)((id, blockRef) => {
-      setBlockRefs((prev) => ({ ...prev, [id]: blockRef }));
-    }, []);
+      selectNote2(blockCommentId ?? void 0);
+    }, [blockCommentId, selectNote2]);
+    (0, import_element213.useEffect)(() => {
+      if (noteFocused && selectedNote2) {
+        focusCommentThread(
+          selectedNote2,
+          commentSidebarRef.current,
+          selectedNote2 === "new" ? "textarea" : void 0
+        );
+        selectNote2(selectedNote2);
+      }
+    }, [noteFocused, selectedNote2, selectNote2, commentSidebarRef]);
     (0, import_element213.useEffect)(() => {
       const calculateAllOffsets = () => {
         const offsets = {};
@@ -59141,7 +59180,7 @@ var wp;
           return { offsets, minHeight: 0 };
         }
         const selectedThreadIndex = threads.findIndex(
-          (t4) => t4.id === selectedThread
+          (t4) => t4.id === selectedNote2
         );
         const breakIndex = selectedThreadIndex === -1 ? 0 : selectedThreadIndex;
         const selectedThreadData = threads[breakIndex];
@@ -59221,7 +59260,7 @@ var wp;
       blockRefs,
       isFloating,
       threads,
-      selectedThread,
+      selectedNote2,
       setCanvasMinHeight2
     ]);
     const handleThreadNavigation = (event, thread, isSelected) => {
@@ -59230,15 +59269,13 @@ var wp;
       }
       const currentIndex = threads.findIndex((t4) => t4.id === thread.id);
       if ((event.key === "Enter" || event.key === "ArrowRight") && event.currentTarget === event.target && !isSelected) {
-        setNewNoteFormState("closed");
-        setSelectedThread(thread.id);
+        selectNote2(thread.id);
         if (!!thread.blockClientId) {
           selectBlock2(thread.blockClientId, null);
           toggleBlockSpotlight(thread.blockClientId, true);
         }
       } else if ((event.key === "Enter" || event.key === "ArrowLeft") && event.currentTarget === event.target && isSelected || event.key === "Escape") {
-        setSelectedThread(null);
-        setNewNoteFormState("closed");
+        selectNote2(void 0);
         if (thread.blockClientId) {
           toggleBlockSpotlight(thread.blockClientId, false);
         }
@@ -59258,25 +59295,24 @@ var wp;
         );
       }
     };
+    const setBlockRef = (0, import_element213.useCallback)((id, blockRef) => {
+      setBlockRefs((prev) => ({ ...prev, [id]: blockRef }));
+    }, []);
     const hasThreads = Array.isArray(threads) && threads.length > 0;
     if (!hasThreads && !isFloating) {
       return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
-          newNoteFormState,
-          setNewNoteFormState,
           commentSidebarRef
         }
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsxs)(import_jsx_runtime406.Fragment, { children: [
-      !isFloating && newNoteFormState === "open" && /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
+      !isFloating && selectedNote2 === "new" && /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
-          newNoteFormState,
-          setNewNoteFormState,
           commentSidebarRef
         }
       ),
@@ -59287,22 +59323,18 @@ var wp;
           onAddReply,
           onCommentDelete: handleDelete,
           onEditComment,
-          isSelected: selectedThread === thread.id,
-          setSelectedThread,
-          setNewNoteFormState,
+          isSelected: selectedNote2 === thread.id,
           commentSidebarRef,
           reflowComments,
           isFloating,
           calculatedOffset: boardOffsets[thread.id] ?? 0,
           setHeights,
           setBlockRef,
-          selectedThread,
           commentLastUpdated,
-          newNoteFormState,
           onKeyDown: (event) => handleThreadNavigation(
             event,
             thread,
-            selectedThread === thread.id
+            selectedNote2 === thread.id
           )
         },
         thread.id
@@ -59315,21 +59347,22 @@ var wp;
     onAddReply,
     onCommentDelete,
     isSelected,
-    setNewNoteFormState,
     commentSidebarRef,
     reflowComments,
     isFloating,
     calculatedOffset,
     setHeights,
     setBlockRef,
-    setSelectedThread,
-    selectedThread,
     commentLastUpdated,
-    newNoteFormState,
     onKeyDown
   }) {
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data233.useDispatch)(import_block_editor95.store)
+    );
+    const { selectNote: selectNote2 } = unlock((0, import_data233.useDispatch)(store));
+    const selectedNote2 = (0, import_data233.useSelect)(
+      (select5) => unlock(select5(store)).getSelectedNote(),
+      []
     );
     const relatedBlockElement = useBlockElement3(thread.blockClientId);
     const debouncedToggleBlockHighlight = (0, import_compose64.useDebounce)(
@@ -59341,7 +59374,7 @@ var wp;
       calculatedOffset,
       setHeights,
       setBlockRef,
-      selectedThread,
+      selectedThread: selectedNote2,
       commentLastUpdated
     });
     const isKeyboardTabbingRef = (0, import_element213.useRef)(false);
@@ -59355,12 +59388,12 @@ var wp;
       toggleBlockHighlight(thread.blockClientId, true);
     };
     const onBlur = (event) => {
-      const isNoteFocused = event.relatedTarget?.closest(
+      const isNoteFocused2 = event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__thread"
       );
       const isDialogFocused = event.relatedTarget?.closest('[role="dialog"]');
       const isTabbing = isKeyboardTabbingRef.current;
-      if (isNoteFocused && !isTabbing) {
+      if (isNoteFocused2 && !isTabbing) {
         return;
       }
       if (isDialogFocused) {
@@ -59373,16 +59406,14 @@ var wp;
       unselectThread();
     };
     const handleCommentSelect = () => {
-      setNewNoteFormState("closed");
-      setSelectedThread(thread.id);
+      selectNote2(thread.id);
       toggleBlockSpotlight(thread.blockClientId, true);
       if (!!thread.blockClientId) {
         selectBlock2(thread.blockClientId, null);
       }
     };
     const unselectThread = () => {
-      setSelectedThread(null);
-      setNewNoteFormState("closed");
+      selectNote2(void 0);
       toggleBlockSpotlight(thread.blockClientId, false);
     };
     const allReplies = thread?.reply || [];
@@ -59401,13 +59432,11 @@ var wp;
       (0, import_i18n257.__)("Original block deleted. Note: %s"),
       commentExcerpt
     );
-    if (thread.id === "new-note-thread" && newNoteFormState === "open" && isFloating) {
+    if (isFloating && thread.id === "new") {
       return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
         AddComment,
         {
           onSubmit: onAddReply,
-          newNoteFormState,
-          setNewNoteFormState,
           commentSidebarRef,
           reflowComments,
           isFloating,
@@ -59508,7 +59537,7 @@ var wp;
               variant: "tertiary",
               className: "editor-collab-sidebar-panel__more-reply-button",
               onClick: () => {
-                setSelectedThread(thread.id);
+                selectNote2(thread.id);
                 focusCommentThread(
                   thread.id,
                   commentSidebarRef.current
@@ -59918,8 +59947,6 @@ var wp;
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
   function NotesSidebarContent({
-    newNoteFormState,
-    setNewNoteFormState,
     styles,
     comments,
     commentSidebarRef,
@@ -59949,8 +59976,6 @@ var wp;
             onEditComment: onEdit,
             onAddReply: onCreate,
             onCommentDelete: onDelete,
-            newNoteFormState,
-            setNewNoteFormState,
             commentSidebarRef,
             reflowComments,
             commentLastUpdated,
@@ -59961,13 +59986,12 @@ var wp;
     );
   }
   function NotesSidebar({ postId: postId2 }) {
-    const [newNoteFormState, setNewNoteFormState] = (0, import_element215.useState)("closed");
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data235.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data235.useDispatch)(store2);
     const { toggleBlockSpotlight } = unlock((0, import_data235.useDispatch)(import_block_editor98.store));
+    const { selectNote: selectNote2 } = unlock((0, import_data235.useDispatch)(store));
     const isLargeViewport = (0, import_compose65.useViewportMatch)("medium");
     const commentSidebarRef = (0, import_element215.useRef)(null);
-    const showFloatingSidebar = isLargeViewport;
     const { clientId, blockCommentId } = (0, import_data235.useSelect)((select5) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select5(import_block_editor98.store);
       const _clientId = getSelectedBlockClientId2();
@@ -59982,6 +60006,11 @@ var wp;
         isDistractionFree: get("core", "distractionFree")
       };
     }, []);
+    const selectedNote2 = (0, import_data235.useSelect)(
+      (select5) => unlock(select5(store)).getSelectedNote(),
+      []
+    );
+    const showFloatingSidebar = isLargeViewport;
     const {
       resultComments,
       unresolvedSortedThreads,
@@ -59989,7 +60018,7 @@ var wp;
       commentLastUpdated
     } = useBlockComments(postId2);
     useEnableFloatingSidebar(
-      showFloatingSidebar && (unresolvedSortedThreads.length > 0 || newNoteFormState !== "closed")
+      showFloatingSidebar && (unresolvedSortedThreads.length > 0 || selectedNote2 !== void 0)
     );
     const { merged: GlobalStyles } = useGlobalStylesContext();
     const backgroundColor = GlobalStyles?.styles?.color?.background;
@@ -60010,11 +60039,11 @@ var wp;
       if (!SIDEBARS.includes(currentArea)) {
         return;
       }
-      setNewNoteFormState(!currentThread ? "open" : "closed");
+      selectNote2(currentThread ? currentThread.id : "new");
       focusCommentThread(
         currentThread?.id,
         commentSidebarRef.current,
-        // Focus a comment thread when there's a selected block with a comment.
+        // Focus the textarea when creating a new note.
         !currentThread ? "textarea" : void 0
       );
       toggleBlockSpotlight(clientId, true);
@@ -60044,8 +60073,6 @@ var wp;
             NotesSidebarContent,
             {
               comments: resultComments,
-              newNoteFormState,
-              setNewNoteFormState,
               commentSidebarRef
             }
           )
@@ -60064,8 +60091,6 @@ var wp;
             NotesSidebarContent,
             {
               comments: unresolvedSortedThreads,
-              newNoteFormState,
-              setNewNoteFormState,
               commentSidebarRef,
               reflowComments,
               commentLastUpdated,
