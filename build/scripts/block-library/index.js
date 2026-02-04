@@ -18293,6 +18293,7 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
             import_components32.TextControl,
             {
+              type: "url",
               __next40pxDefaultSize: true,
               label: (0, import_i18n49.__)("Video URL"),
               value: url,
