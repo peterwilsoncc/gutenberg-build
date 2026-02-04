@@ -26453,6 +26453,7 @@ var wp;
     return {
       isZoomedOut,
       scaleContainerWidth,
+      containerWidth,
       contentResizeListener,
       containerResizeListener
     };
@@ -26460,6 +26461,7 @@ var wp;
 
   // packages/block-editor/build-module/components/iframe/index.mjs
   var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
+  var ViewportWidthProvider = import_compose32.useViewportMatch.__experimentalWidthProvider;
   function bubbleEvent(event, Constructor, frame) {
     const init = {};
     for (const key in event) {
@@ -26598,6 +26600,7 @@ var wp;
     const {
       contentResizeListener,
       containerResizeListener,
+      containerWidth,
       isZoomedOut,
       scaleContainerWidth
     } = useScaleCanvas({
@@ -26690,7 +26693,7 @@ var wp;
                 ),
                 children: [
                   contentResizeListener,
-                  /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(import_components32.__experimentalStyleProvider, { document: iframeDocument, children })
+                  /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(import_components32.__experimentalStyleProvider, { document: iframeDocument, children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(ViewportWidthProvider, { value: containerWidth, children }) })
                 ]
               }
             ),
