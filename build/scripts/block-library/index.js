@@ -27547,7 +27547,11 @@ ${url}
           name: "core/heading",
           attributes: {
             content: (0, import_i18n79.__)("La Mancha"),
-            textAlign: "center"
+            style: {
+              typography: {
+                textAlign: "center"
+              }
+            }
           }
         },
         {
