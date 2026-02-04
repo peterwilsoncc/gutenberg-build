@@ -18481,11 +18481,65 @@ var wp;
     return [value, setValue, fullValue];
   }
 
+  // packages/core-data/build-module/hooks/use-post-editor-awareness-state.mjs
+  var import_element8 = __toESM(require_element(), 1);
+  var defaultState = {
+    activeUsers: [],
+    getAbsolutePositionIndex: () => null,
+    getDebugData: () => ({
+      doc: {},
+      clients: {},
+      userMap: {}
+    }),
+    isCurrentUserDisconnected: false
+  };
+  function getAwarenessState(awareness, newState) {
+    const activeUsers = newState ?? awareness.getCurrentState();
+    return {
+      activeUsers,
+      getAbsolutePositionIndex: (selection) => awareness.getAbsolutePositionIndex(selection),
+      getDebugData: () => awareness.getDebugData(),
+      isCurrentUserDisconnected: activeUsers.find((user) => user.isMe)?.isConnected === false
+    };
+  }
+  function usePostEditorAwarenessState(postId, postType) {
+    const [state, setState] = (0, import_element8.useState)(defaultState);
+    (0, import_element8.useEffect)(() => {
+      if (null === postId || null === postType) {
+        setState(defaultState);
+        return;
+      }
+      const objectType = `postType/${postType}`;
+      const objectId = postId.toString();
+      const awareness = getSyncManager()?.getAwareness(
+        objectType,
+        objectId
+      );
+      if (!awareness) {
+        setState(defaultState);
+        return;
+      }
+      awareness.setUp();
+      setState(getAwarenessState(awareness));
+      const unsubscribe = awareness?.onStateChange(
+        (newState) => {
+          setState(getAwarenessState(awareness, newState));
+        }
+      );
+      return unsubscribe;
+    }, [postId, postType]);
+    return state;
+  }
+  function useActiveCollaborators(postId, postType) {
+    return usePostEditorAwarenessState(postId, postType).activeUsers;
+  }
+
   // packages/core-data/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
     useEntityRecordsWithPermissions,
-    RECEIVE_INTERMEDIATE_RESULTS
+    RECEIVE_INTERMEDIATE_RESULTS,
+    useActiveCollaborators
   });
 
   // packages/core-data/build-module/index.mjs
