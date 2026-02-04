@@ -13558,13 +13558,13 @@ var wp;
       index
     );
   }
-  function insertBlock(block, index, rootClientId, updateSelection, meta) {
+  function insertBlock(block, index, rootClientId, updateSelection, initialPosition2, meta) {
     return insertBlocks(
       [block],
       index,
       rootClientId,
       updateSelection,
-      0,
+      initialPosition2,
       meta
     );
   }
